@@ -13,14 +13,6 @@ export class AppComponent {
 
   public toggle(): void {
     this.isActive = !this.isActive;
-    //this.isOpen();
-  }
-  public isOpen(): void {
-    if (this.isActive === true) {
-      this.open = '>>';
-    } else {
-      this.open = '<<';
-    }
   }
 }
 

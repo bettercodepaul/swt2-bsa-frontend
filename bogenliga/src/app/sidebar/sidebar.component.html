@@ -1,0 +1,50 @@
+
+<nav id="sidebar" class="{{comp.isActive? 'inactive' : ''}}" class="navbar bg-dark navbar-dark fixed-left">
+  <div style="flex-grow: 1">
+    <!-- Sidebar Header -->
+    <div class="sidebar-header">
+      <h3>Bogenliga</h3>
+      <strong>BL</strong>
+    </div>
+
+    <!-- Sidebar Links -->
+    <ul class="list-unstyled components">
+      <li>
+        <a href="#" class="sidebar-link">
+          <i class="fas fa-briefcase"></i>
+          <i class="material-icons">home</i>
+          {{comp.isActive? '' : 'HOME'}}
+        </a>
+        <a href="#">
+          <i class="fas fa-briefcase"></i>
+          <i class="material-icons">file_copy</i>
+          {{comp.isActive? '' : 'VERWALTUNG'}}
+        </a>
+      </li>
+      <li class="active">
+        <a href="#">
+          <i class="fas fa-home"></i>
+          <i class="material-icons">play_arrow</i>
+          {{comp.isActive? '' : 'WETTKAMPF'}}
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fas fa-briefcase"></i>
+          <i class="material-icons">today</i>
+          {{comp.isActive? '' : 'SPORTJAHRESPLAN'}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sidebarFooter {{comp.isActive? 'inactive' : ''}}" style="flex-grow: 0">
+
+    <a type="button" id="sidebarCollapseBottom" class="btn-outline-dark" (click)="comp.toggle()">
+      <i class="material-icons">{{comp.isActive? 'chevron_right' : 'chevron_left'}}</i>
+      <i class="material-icons">{{comp.isActive? 'chevron_right' : 'chevron_left'}}</i>
+    </a>
+
+  </div>
+
+</nav>
