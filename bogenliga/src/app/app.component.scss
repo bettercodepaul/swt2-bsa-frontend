@@ -22,10 +22,25 @@ a, a:hover, a:focus {
   transition: all 0.3s;
 }
 
+img {
+  margin: 10px;
+}
+
 // wrapper
 .wrapper {
   display: flex;
   align-items: stretch;
+}
+
+.flexContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.footerContainer {
+  width: 300px;
 }
 
 // content side
