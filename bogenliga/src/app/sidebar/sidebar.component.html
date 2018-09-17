@@ -10,29 +10,34 @@
     <!-- Sidebar Links -->
     <ul class="list-unstyled components">
       <li>
-        <a href="#" class="sidebar-link">
-          <i class="fas fa-briefcase"></i>
-          <i class="material-icons">home</i>
-          {{comp.isActive? '' : 'HOME'}}
+        <a href="#" >
+          <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
+            <i class="material-icons">home</i>
+            {{comp.isActive? '' : 'HOME'}}
+          </div>
         </a>
+
         <a href="#">
-          <i class="fas fa-briefcase"></i>
+          <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
           <i class="material-icons">file_copy</i>
           {{comp.isActive? '' : 'VERWALTUNG'}}
+          </div>
         </a>
       </li>
       <li class="active">
         <a href="#">
-          <i class="fas fa-home"></i>
+          <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
           <i class="material-icons">play_arrow</i>
           {{comp.isActive? '' : 'WETTKAMPF'}}
+          </div>
         </a>
       </li>
       <li>
         <a href="#">
-          <i class="fas fa-briefcase"></i>
+          <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
           <i class="material-icons">today</i>
           {{comp.isActive? '' : 'SPORTJAHRESPLAN'}}
+          </div>
         </a>
       </li>
     </ul>

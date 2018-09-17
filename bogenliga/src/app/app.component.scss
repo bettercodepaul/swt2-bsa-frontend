@@ -4,8 +4,6 @@ body {
   background: #fafafa;
   min-width: 500px;
   overflow: scroll;
-
-  padding-bottom: 70px;
 }
 
 p {
@@ -23,6 +21,10 @@ a, a:hover, a:focus {
 }
 
 img {
+
+}
+
+.logo {
   margin: 10px;
 }
 
@@ -43,6 +45,22 @@ img {
   width: 300px;
 }
 
+.material-icons {
+  font-size: 30px;
+}
+
+.sidebar-link {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: start;
+}
+
+.sidebar-link.inactive {
+  justify-content: center;
+}
+
 // content side
 #content {
   width: 100%;
@@ -52,12 +70,14 @@ img {
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  min-height: 100vh;
+  min-height: calc(100vh - 68px); //full view - Navbar on top
+  margin-top: 68px; //height of NavBar
   background: #343a40;
   color: #fff;
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
+  position: fixed; // stays fixed on the side while scrolling
 }
 
 #sidebar ul p {
