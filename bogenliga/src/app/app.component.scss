@@ -28,10 +28,28 @@ img {
   margin: 10px;
 }
 
+.material-icons {
+  font-size: 30px;
+}
+
 // wrapper
 .wrapper {
   display: flex;
   align-items: stretch;
+}
+
+// content side
+#content {
+  padding-top: 68px; //for the NavBar
+  padding-left: 80px; //for the Sidebar
+}
+
+#content-without-footer {
+  padding: 30px;
+}
+
+#footer {
+
 }
 
 .flexContainer {
@@ -43,27 +61,6 @@ img {
 
 .footerContainer {
   width: 300px;
-}
-
-.material-icons {
-  font-size: 30px;
-}
-
-.sidebar-link {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  align-content: start;
-}
-
-.sidebar-link.inactive {
-  justify-content: center;
-}
-
-// content side
-#content {
-  width: 100%;
 }
 
 // active sidebar
@@ -111,7 +108,18 @@ img {
   border-bottom: 1px solid #fff;
 }
 
-// inactive sidebar
+.sidebar-link {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: start;
+}
+
+.sidebar-link.inactive {
+  justify-content: center;
+}
+
 #sidebar.inactive {
   min-width: 80px;
   max-width: 80px;
@@ -155,6 +163,8 @@ ul ul a {
   padding-left: 30px !important;
   background: #555555;
 }
+
+// Dropdown
 
 /* Same dropdown links padding*/
 #sidebar.active ul ul a {
