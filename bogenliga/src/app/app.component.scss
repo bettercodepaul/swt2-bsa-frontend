@@ -11,7 +11,7 @@ p {
   font-size: 1.1em;
   font-weight: 300;
   line-height: 1.7em;
-  color: #999;
+  color: #444;
 }
 
 a, a:hover, a:focus {
@@ -73,7 +73,7 @@ img {
   max-width: 250px;
   min-height: calc(100vh - 68px); //full view - Navbar on top
   margin-top: 68px; //height of NavBar
-  background: #343a40;
+  background: #02bdd5;//#343a40;
   color: #fff;
   transition: all 0.3s;
   display: flex;
@@ -94,13 +94,13 @@ img {
   color: #fff;
 }
 #sidebar ul li a:hover {
-  color: #555555;
+  color: #02bdd5;//#555555;
   background: #fff;
 }
 
 #sidebar .sidebar-header {
   padding: 20px;
-  background: #343a40;
+  background: #02bdd5;//#343a40;
 }
 
 #sidebar .sidebar-header strong {
@@ -162,7 +162,7 @@ img {
 
 #sidebar ul li.inactive > a, a[aria-expanded="true"] {
   color: #fff;
-  background: #555555;
+  background: #02bdd5;//#555555;
 }
 
 .sidebarFooter {
@@ -174,7 +174,7 @@ img {
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
-  background: #555555;
+  background: #02bdd5;//#555555;
 }
 
 // Dropdown
@@ -199,13 +199,14 @@ ul ul a {
 #sidebarCollapseBottom {
   width: 40px;
   height: 40px;
-  background: #343a40;
+  background: #02bdd5;//#343a40;
   display: flex;
   flex-basis: 100%;
+  //border: 1px solid #343a40;
 }
 
 #sidebarCollapseBottom:hover {
-  background: #555555;
+  background: #02bdd5;//#555555;
 }
 
 #sidebarCollapseBottom span {
@@ -213,7 +214,7 @@ ul ul a {
   height: 2px;
   margin: 0 auto;
   display: block;
-  background: #555;
+  background: #02bdd5;//#555;
   transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
   opacity: 1;
   margin: 5px auto;
@@ -248,7 +249,7 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 .button-login {
-  background-color: #4CAF50;
+  background-color: #02bdd5;//#4CAF50;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -292,6 +293,16 @@ span.psw {
   padding-top: 16px;
 }
 
+
+
+
+.bg-dark {
+  background-color: #02bdd5!important;
+}
+
+
+
+
 // for small devices
 @media (max-width: 768px) {
   #sidebar {
@@ -313,7 +324,7 @@ span.psw {
     height: 2px;
     margin: 0 auto;
     display: block;
-    background: #555;
+    background: #02bdd5; //#555;
     transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
     opacity: 1;
     margin: 5px auto;

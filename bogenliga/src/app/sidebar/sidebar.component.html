@@ -45,7 +45,7 @@
 
   <div class="sidebarFooter {{comp.isActive? 'inactive' : ''}}" style="flex-grow: 0">
 
-    <a type="button" id="sidebarCollapseBottom" class="btn-outline-dark" (click)="comp.toggle()">
+    <a type="button" id="sidebarCollapseBottom" (click)="comp.toggle()">
       <i class="material-icons">{{comp.isActive? 'chevron_right' : 'chevron_left'}}</i>
       <i class="material-icons">{{comp.isActive? 'chevron_right' : 'chevron_left'}}</i>
     </a>
