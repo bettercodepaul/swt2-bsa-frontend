@@ -1,25 +1,26 @@
+<h1>{{ 'language.login' | translate }}</h1>
 <div id="login">
-<form action="action_page.php">
-  <div class="imgcontainer">
-    <img src="../assets/img/logo.png" alt="Logo" class="avatar">
-  </div>
+  <form action="action_page.php">
+    <div class="imgcontainer">
+      <img src="../assets/img/logo.png" alt="Logo" class="avatar">
+    </div>
 
-  <div class="container">
-    <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname" required>
+    <div class="container">
+      <label for="uname"><b>{{ 'language.username' | translate }}</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
+      <label for="psw"><b>{{ 'language.password' | translate }}</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
 
-    <button type="submit" class="button-login">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
-  </div>
+      <button type="submit" class="button-login">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember">{{ 'language.logged' | translate }}
+      </label>
+    </div>
 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
-  </div>
-</form>
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" class="cancelbtn">Cancel</button>
+      <span class="psw"><a href="#">{{ 'language.forgot' | translate }}</a></span>
+    </div>
+  </form>
 </div>
