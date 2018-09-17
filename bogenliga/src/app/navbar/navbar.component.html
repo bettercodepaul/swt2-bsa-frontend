@@ -7,7 +7,9 @@
     <span></span>
   </button>
 
-  <img class="navbar-brand" src="../assets/img/logo.png" style="width:40px;">
+  <ul>
+	<a routerLink="/home"><img class="navbar-brand" src="../assets/img/logo.png" style="width:40px;"></a>
+  </ul>
 
   <!-- Links -->
   <ul class="navbar-nav">
@@ -23,8 +25,11 @@
   </ul>
 
   <ul id="navbar-right" class="navbar-nav ml-auto">
-    <button (click)="comp.useLanguage('en')">en</button>
-    <button (click)="comp.useLanguage('de')">de</button>
+    <button (click)="comp.useLanguage('en')" class="btn btn-link">en</button>
+    <button (click)="comp.useLanguage('de')" class="btn btn-link">de</button>
+	<li>
+	  <a routerLink="/login"><i class="material-icons">person</i>Login</a>
+	</li>
     <li class="nav-item">
       <a class="nav-link" href="#"><i class="material-icons">settings_applications</i></a>
     </li>
