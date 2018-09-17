@@ -12,17 +12,19 @@
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">Link 1</a>
+      <a class="nav-link" href="#">{{ 'language.link1' | translate }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Link 2</a>
+      <a class="nav-link" href="#">{{ 'language.link2' | translate }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Link 3</a>
+      <a class="nav-link" href="#">{{ 'language.link3' | translate }}</a>
     </li>
   </ul>
 
   <ul id="navbar-right" class="navbar-nav ml-auto">
+    <button (click)="comp.useLanguage('en')">en</button>
+    <button (click)="comp.useLanguage('de')">de</button>
     <li class="nav-item">
       <a class="nav-link" href="#"><i class="material-icons">settings_applications</i></a>
     </li>

@@ -30,6 +30,7 @@ img {
 
 .material-icons {
   font-size: 30px;
+  padding-top: 5px;
 }
 
 // wrapper
@@ -114,6 +115,15 @@ img {
   flex-direction: row;
   align-items: center;
   align-content: start;
+}
+
+.sidebar-text {
+  padding-left: 10px; //more space to Icon
+  padding-top: 10px; //Icon and Text on one baseline
+}
+
+.sidebar-text.inactive {
+  display: none;
 }
 
 .sidebar-link.inactive {

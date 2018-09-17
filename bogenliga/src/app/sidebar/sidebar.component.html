@@ -3,8 +3,8 @@
   <div style="flex-grow: 1">
     <!-- Sidebar Header -->
     <div class="sidebar-header">
-      <h3>Bogenliga</h3>
-      <strong>BL</strong>
+      <h3>{{ 'language.title' | translate }}</h3>
+      <strong>{{ 'language.titleshort' | translate }}</strong>
     </div>
 
     <!-- Sidebar Links -->
@@ -13,14 +13,14 @@
         <a href="#" >
           <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
             <i class="material-icons">home</i>
-            {{comp.isActive? '' : 'HOME'}}
+            <div class="sidebar-text {{comp.isActive? 'inactive' : ''}}">{{ 'language.home' | translate }}</div>
           </div>
         </a>
 
         <a href="#">
           <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
           <i class="material-icons">file_copy</i>
-          {{comp.isActive? '' : 'VERWALTUNG'}}
+            <div class="sidebar-text {{comp.isActive? 'inactive' : ''}}">{{ 'language.verwaltung' | translate }}</div>
           </div>
         </a>
       </li>
@@ -28,7 +28,7 @@
         <a href="#">
           <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
           <i class="material-icons">play_arrow</i>
-          {{comp.isActive? '' : 'WETTKAMPF'}}
+            <div class="sidebar-text {{comp.isActive? 'inactive' : ''}}">{{ 'language.wettkampf' | translate }}</div>
           </div>
         </a>
       </li>
@@ -36,7 +36,7 @@
         <a href="#">
           <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
           <i class="material-icons">today</i>
-          {{comp.isActive? '' : 'SPORTJAHRESPLAN'}}
+            <div class="sidebar-text {{comp.isActive? 'inactive' : ''}}">{{ 'language.sportjahresplan' | translate }}</div>
           </div>
         </a>
       </li>
