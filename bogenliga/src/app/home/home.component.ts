@@ -9,7 +9,7 @@ import {AppComponent} from '../app.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public comp: AppComponent) { }
+  constructor() { }
 
   ngOnInit() {
   }

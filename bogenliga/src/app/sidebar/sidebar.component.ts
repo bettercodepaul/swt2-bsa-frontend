@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AppComponent} from '../app.component';
 
 @Component({
@@ -9,8 +9,18 @@ import {AppComponent} from '../app.component';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(public comp: AppComponent) { }
+  @Input()
+  public isActive: boolean;
+
+  @Output()
+  public toggle = new EventEmitter<void>();
+
+  constructor() { }
 
   ngOnInit() {
+  }
+
+  public toggleSidebar() {
+    this.toggle.emit();
   }
 }

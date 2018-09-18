@@ -1,10 +1,10 @@
 <div class="wrapper">
 
   <!-- NavBar  -->
-  <bla-navbar></bla-navbar>
+  <bla-navbar [isActive]="isActive" (toggle)="toggle()"> </bla-navbar>
 
   <!-- Sidebar  -->
-  <bla-sidebar></bla-sidebar>
+  <bla-sidebar [isActive]="isActive" (toggle)="toggle()"></bla-sidebar>
 
   <!-- Page Content -->
   <div id="content">
@@ -16,24 +16,24 @@
     <div id="footer" class="jumbotron jumbotron-fluid">
       <div class="flexContainer">
         <div class="footerContainer">
-          <h2>{{ 'language.support' | translate }}</h2>
+          <h2>{{ 'APP.SUPPORT' | translate }}</h2>
           <a href="https://www.gras-it.de/" target="_blank"><img class="logo" src="../assets/img/IT-Solutions_Logo.png"></a>
           <a href="https://www.exxcellent.de/" target="_blank"><img class="logo" src="../assets/img/EXX-logo.svg"></a>
           <a href="https://www.reutlingen-university.de/" target="_blank"><img class="logo" src="../assets/img/HR-Logo.svg"></a>
         </div>
         <div class="footerContainer">
-          <h2>{{ 'language.title' | translate }}</h2>
-          <p>{{ 'language.about' | translate }}</p>
+          <h2>{{ 'APP.TITLE' | translate }}</h2>
+          <p>{{ 'APP.ABOUT' | translate }}</p>
           <ul class="nav flex-column">
-            <li><a href="#">{{ 'language.kontakt' | translate }}</a></li>
-            <li><a href="#">{{ 'language.impressum' | translate }}</a></li>
+            <li><a href="#">{{ 'APP.KONTAKT' | translate }}</a></li>
+            <li><a href="#">{{ 'APP.IMPRESSUM' | translate }}</a></li>
           </ul>
         </div>
       </div>
     </div>
 
     <div id="socialmedia">
-      <div><p>{{ 'language.copyright' | translate }}</p></div>
+      <div><p>{{ 'APP.COPYRIGHT' | translate }}</p></div>
       <div>
         <a class="btn" href="https://www.facebook.com/" target="_blank">Facebook</a>
         <a class="btn" href="https://twitter.com/" target="_blank">Twitter</a>

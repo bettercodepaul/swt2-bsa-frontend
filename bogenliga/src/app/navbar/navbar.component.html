@@ -1,7 +1,7 @@
 
 <nav id="navbar" class="navbar navbar-expand bg-dark navbar-dark fixed-top">
 
-  <button type="button" id="sidebarCollapseNavBar" class="btn-outline-light" (click)="comp.toggle()">
+  <button type="button" id="sidebarCollapseNavBar" class="btn-outline-light" (click)="toggleNavbar()">
     <span></span>
     <span></span>
     <span></span>
@@ -14,26 +14,25 @@
   <!-- Links -->
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">{{ 'language.link1' | translate }}</a>
+      <a class="nav-link" href="#">{{ 'NAVBAR.LINK01' | translate }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">{{ 'language.link2' | translate }}</a>
+      <a class="nav-link" href="#">{{ 'NAVBAR.LINK02' | translate }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">{{ 'language.link3' | translate }}</a>
+      <a class="nav-link" href="#">{{ 'NAVBAR.LINK03' | translate }}</a>
     </li>
   </ul>
 
   <ul id="navbar-right" class="nav navbar-nav ml-auto navbar-right">
-    <button (click)="comp.useLanguage('en')" class="btn btn-link">en</button>
-    <button (click)="comp.useLanguage('de')" class="btn btn-link">de</button>
+    <button (click)="useLanguage('en')" class="btn btn-link">en</button>
+    <button (click)="useLanguage('de')" class="btn btn-link">de</button>
     <button class="nav-item"  class="btn btn-link">
       <a  class="nav-link" routerLink="/login">Login</a>
     </button>
     <li class="nav-item">
       <a class="nav-link" href="#"><i class="material-icons">settings_applications</i></a>
     </li>
-
   </ul>
 
 </nav>

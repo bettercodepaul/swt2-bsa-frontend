@@ -1,30 +1,38 @@
 {
-  "language": {
-    "title": "Bogenliga",
-    "titleshort": "BL",
-    "text": "This is a simple demonstration app for ngx-translate",
+  "NAVBAR": {
+    "LINK01": "Link 1",
+    "LINK02": "Link 2",
+    "LINK03": "Link 3"
+  },
 
-    "content": "Er hörte leise Schritte hinter sich. Das bedeutete nichts Gutes. Wer würde ihm schon folgen, spät in der Nacht und dazu noch in dieser engen Gasse mitten im übel beleumundeten Hafenviertel? Gerade jetzt, wo er das Ding seines Lebens gedreht hatte und mit der Beute verschwinden wollte! Hatte einer seiner zahllosen Kollegen dieselbe Idee gehabt, ihn beobachtet und abgewartet, um ihn nun um die Früchte seiner Arbeit zu erleichtern? Oder gehörten die Schritte hinter ihm zu einem der unzähligen Gesetzeshüter dieser Stadt, und die stählerne Acht um seine Handgelenke würde gleich zuschnappen? Er konnte die Aufforderung stehen zu bleiben schon hören. Gehetzt sah er sich um. Plötzlich erblickte er den schmalen Durchgang. Blitzartig drehte er sich nach rechts und verschwand zwischen den beiden Gebäuden. Beinahe wäre er dabei über den umgestürzten Mülleimer gefallen, der mitten im Weg lag. Er versuchte, sich in der Dunkelheit seinen Weg zu ertasten und erstarrte: Anscheinend gab es keinen anderen Ausweg aus diesem kleinen Hof als den Durchgang, durch den er gekommen war. Die Schritte wurden lauter und lauter, er sah eine dunkle Gestalt um die Ecke biegen. Fieberhaft irrten seine Augen durch die nächtliche Dunkelheit und suchten einen Ausweg.",
-    "support": "Mit freundlicher Unterstützung von:",
-    "about": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschafts Bogensport ziehen.",
+  "SIDEBAR": {
+    "TITLE": "Bogenliga",
+    "TITLESHORT": "BL",
+    "HOME": "HOME",
+    "VERWALTUNG": "VERWALTUNG",
+    "WETTKAMPF": "WETTKAMPF",
+    "SPORTJAHRESPLAN": "SPORTJAHRESPLAN"
+  },
 
-    "kontakt": "Kontakt",
-    "impressum": "Impressum",
-    "home": "HOME",
-    "verwaltung": "VERWALTUNG",
-    "wettkampf": "WETTKAMPF",
-    "sportjahresplan": "SPORTJAHRESPLAN",
+  "APP": {
+    "SUPPORT": "Mit freundlicher Unterstützung von:",
+    "TITLE": "Bogenliga",
+    "ABOUT": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschafts Bogensport ziehen.",
+    "KONTAKT": "Kontakt",
+    "IMPRESSUM": "Impressum",
+    "COPYRIGHT": "Copyright: 2018"
+  },
 
-    "link1": "Link 1",
-    "link2": "Link 2",
-    "link3": "Link 3",
+  "LOGIN": {
+    "TITLE": "Login",
+    "USERNAME": "Benutzername",
+    "PASSWORD": "Passwort",
+    "LOGGED": "Eingelogged bleiben?",
+    "FORGOT": "Passwort vergessen?"
+  },
 
-    "copyright": "Copyright: 2018",
-    "login": "Login",
-
-    "username": "Benutzername",
-    "password": "Passwort",
-    "logged": "Eingelogged bleiben?",
-    "forgot": "Passwort vergessen?"
+  "HOME": {
+    "TITLE": "Bogenliga",
+    "CONTENT": "Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues."
   }
 }

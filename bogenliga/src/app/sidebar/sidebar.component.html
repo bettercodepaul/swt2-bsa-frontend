@@ -1,53 +1,53 @@
 
-<nav id="sidebar" class="{{comp.isActive? 'inactive' : ''}}" class="navbar bg-dark navbar-dark fixed-left">
+<nav id="sidebar" class="{{isActive? 'inactive' : ''}}" class="navbar bg-dark navbar-dark fixed-left">
   <div style="flex-grow: 1">
     <!-- Sidebar Header -->
     <div class="sidebar-header">
-      <h3>{{ 'language.title' | translate }}</h3>
-      <strong>{{ 'language.titleshort' | translate }}</strong>
+      <h3>{{ 'SIDEBAR.TITLE' | translate }}</h3>
+      <strong>{{ 'SIDEBAR.TITLESHORT' | translate }}</strong>
     </div>
 
     <!-- Sidebar Links -->
     <ul class="list-unstyled components">
       <li>
         <a routerLink="/home" >
-          <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
+          <div class="sidebar-link {{isActive? 'inactive' : ''}}">
             <i class="material-icons">home</i>
-            <div class="sidebar-text {{comp.isActive? 'inactive' : ''}}">{{ 'language.home' | translate }}</div>
+            <div class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.HOME' | translate }}</div>
           </div>
         </a>
 
         <a href="#">
-          <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
+          <div class="sidebar-link {{isActive? 'inactive' : ''}}">
           <i class="material-icons">file_copy</i>
-            <div class="sidebar-text {{comp.isActive? 'inactive' : ''}}">{{ 'language.verwaltung' | translate }}</div>
+            <div class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.VERWALTUNG' | translate }}</div>
           </div>
         </a>
       </li>
       <li class="active">
         <a href="#">
-          <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
+          <div class="sidebar-link {{isActive? 'inactive' : ''}}">
           <i class="material-icons">play_arrow</i>
-            <div class="sidebar-text {{comp.isActive? 'inactive' : ''}}">{{ 'language.wettkampf' | translate }}</div>
+            <div class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.WETTKAMPF' | translate }}</div>
           </div>
         </a>
       </li>
       <li>
         <a href="#">
-          <div class="sidebar-link {{comp.isActive? 'inactive' : ''}}">
+          <div class="sidebar-link {{isActive? 'inactive' : ''}}">
           <i class="material-icons">today</i>
-            <div class="sidebar-text {{comp.isActive? 'inactive' : ''}}">{{ 'language.sportjahresplan' | translate }}</div>
+            <div class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.SPORTJAHRESPLAN' | translate }}</div>
           </div>
         </a>
       </li>
     </ul>
   </div>
 
-  <div class="sidebarFooter {{comp.isActive? 'inactive' : ''}}" style="flex-grow: 0">
+  <div class="sidebarFooter {{isActive? 'inactive' : ''}}" style="flex-grow: 0">
 
-    <a type="button" id="sidebarCollapseBottom" (click)="comp.toggle()">
-      <i class="material-icons">{{comp.isActive? 'chevron_right' : 'chevron_left'}}</i>
-      <i class="material-icons">{{comp.isActive? 'chevron_right' : 'chevron_left'}}</i>
+    <a type="button" id="sidebarCollapseBottom" (click)="toggleSidebar()">
+      <i class="material-icons">{{isActive? 'chevron_right' : 'chevron_left'}}</i>
+      <i class="material-icons">{{isActive? 'chevron_right' : 'chevron_left'}}</i>
     </a>
 
   </div>
