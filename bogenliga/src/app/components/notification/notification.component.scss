@@ -1,0 +1,14 @@
+#notification-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.modal-content {
+  border: 0;
+}
+
+.btn-notification {
+  min-width: 6rem;
+}

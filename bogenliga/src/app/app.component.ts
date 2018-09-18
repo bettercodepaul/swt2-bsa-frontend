@@ -1,5 +1,11 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import {
+  Notification,
+  NotificationOrigin,
+  NotificationSeverity,
+  NotificationType
+} from './components/notification/types';
 
 @Component({
   selector: 'bla-root',
@@ -10,6 +16,13 @@ export class AppComponent {
   title = 'bla';
   open =  '';
 
+  public notification: Notification = {
+    title: 'Title',
+    description: 'Description',
+    severity: NotificationSeverity.QUESTION,
+    origin: NotificationOrigin.SYSTEM,
+    type: NotificationType.OK_CANCEL
+  };
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('de');
   }
