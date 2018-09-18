@@ -1,12 +1,12 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {AppComponent} from '../app.component';
-import {TranslateService} from "@ngx-translate/core";
+import {AppComponent} from '../../app.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'bla-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./../app.component.scss',
-              './navbar.component.scss']
+  styleUrls: ['./navbar.component.scss',
+              './../../app.component.scss']
 })
 export class NavbarComponent implements OnInit {
 

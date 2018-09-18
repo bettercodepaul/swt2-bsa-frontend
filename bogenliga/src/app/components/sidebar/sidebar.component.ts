@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AppComponent} from '../app.component';
+import {AppComponent} from '../../app.component';
 
 @Component({
   selector: 'bla-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./../app.component.scss',
-              './sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss',
+              './../../app.component.scss']
 })
 export class SidebarComponent implements OnInit {
 
