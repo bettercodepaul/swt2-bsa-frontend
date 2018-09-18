@@ -1,6 +1,7 @@
 import {NotificationOrigin} from './notification-origin.enum';
 import {NotificationType} from './notification-type.enum';
 import {NotificationSeverity} from './notification-severity.enum';
+import {NotificationUserAction} from './notification-user-action.enum';
 
 export class Notification {
   public title: string;
@@ -8,4 +9,5 @@ export class Notification {
   public severity: NotificationSeverity = NotificationSeverity.INFO;
   public origin: NotificationOrigin = NotificationOrigin.SYSTEM;
   public type?: NotificationType = NotificationType.OK;
+  public userAction?: NotificationUserAction = NotificationUserAction.PENDING;
 }

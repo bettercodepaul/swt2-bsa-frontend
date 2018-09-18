@@ -1,5 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Notification, NotificationSeverity, NotificationType} from './types';
+import {select, Store} from '@ngrx/store';
+import {
+  ACCEPT_NOTIFICATION,
+  AppState,
+  DECLINE_NOTIFICATION,
+  SHOW_NOTIFICATION
+} from '../../modules/shared/redux-store';
 
 @Component({
   selector: 'bla-notification',
@@ -10,9 +17,14 @@ export class NotificationComponent implements OnInit {
 
   @Input() public notification: Notification;
 
+  public notificationId = 'notification';
+  public visible = false;
+
   public NotificationType = NotificationType;
 
-  constructor() { }
+  constructor(private store: Store<AppState>) {
+    store.pipe(select('notificationState'));
+  }
 
   ngOnInit() {
   }
@@ -33,5 +45,30 @@ export class NotificationComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+
+  public showNotification() {
+    this.store.dispatch({ type: SHOW_NOTIFICATION });
+  }
+  public declineNotification(event: any) {
+    // TODO detect backdrop
+
+    if (!!event) {
+      const target = event.target || event.srcElement || event.currentTarget;
+
+      if (!!target) {
+        const idAttr = target.attributes.id;
+
+        console.log(idAttr);
+
+        if (!idAttr) {
+          this.store.dispatch({type: DECLINE_NOTIFICATION});
+        }
+      }
+    }
+  }
+  public acceptNotification() {
+    this.store.dispatch({ type: ACCEPT_NOTIFICATION });
   }
 }

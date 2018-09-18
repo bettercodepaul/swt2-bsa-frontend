@@ -6,13 +6,20 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { NotificationComponent } from './components/notification/notification.component';
+import { NotificationComponent } from './components/notification';
 
 // import ngx-translate and the http loader
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import { RoutingModule } from './routing.module';
+
+
+import {ActionReducerMap, StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
+
+
 
 @NgModule({
   declarations: [
@@ -33,7 +40,10 @@ import { RoutingModule } from './routing.module';
         deps: [HttpClient]
       }
     }),
-    RoutingModule
+    RoutingModule,
+    /* REDUX-STORE */
+    StoreModule.forRoot(APP_REDUCERS),
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent]

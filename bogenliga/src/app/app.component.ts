@@ -6,6 +6,7 @@ import {
   NotificationSeverity,
   NotificationType
 } from './components/notification/types';
+import {NotificationUserAction} from './components/notification/types/notification-user-action.enum';
 
 @Component({
   selector: 'bla-root',
@@ -21,7 +22,8 @@ export class AppComponent {
     description: 'Description',
     severity: NotificationSeverity.QUESTION,
     origin: NotificationOrigin.SYSTEM,
-    type: NotificationType.OK_CANCEL
+    type: NotificationType.OK_CANCEL,
+    userAction: NotificationUserAction.PENDING
   };
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('de');
@@ -32,7 +34,6 @@ export class AppComponent {
   public toggle(): void {
     this.isActive = !this.isActive;
   }
-
 
 }
 

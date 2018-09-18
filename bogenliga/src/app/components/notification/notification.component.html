@@ -1,18 +1,20 @@
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#notification">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#notification" (click)="showNotification()">
   Launch demo modal
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="notification" tabindex="-1" role="dialog" aria-labelledby="notification" aria-hidden="true">
+
+
+<div class="modal fade" [id]="notificationId" data-backdrop="true" tabindex="-1" role="dialog" aria-labelledby="notification" aria-hidden="true" (click)="declineNotification($event)">
   <div class="modal-dialog modal-dialog-centered" role="document"  [ngSwitch]="notification.type">
     <div class="modal-content" >
       <div class="modal-header">
         <h4 class="modal-title" id="notification-title">
           <i class="material-icons">{{resolveIcon(notification.severity)}}</i> {{notification.title}}
         </h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="declineNotification()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -21,17 +23,17 @@
       </div>
 
       <div id="notification-buttons-ok" class="modal-footer" *ngSwitchCase="NotificationType.OK">
-          <button type="button" class="btn btn-primary btn-notification">{{ 'NOTIFICATION.BUTTON.OK' | translate }}</button>
+          <button type="button" class="btn btn-primary btn-notification" data-dismiss="modal" (click)="acceptNotification()">{{ 'NOTIFICATION.BUTTON.OK' | translate }}</button>
       </div>
 
       <div id="notification-buttons-ok-cancel" class="modal-footer" *ngSwitchCase="NotificationType.OK_CANCEL">
-          <button type="button" class="btn btn-secondary btn-notification" data-dismiss="modal">{{ 'NOTIFICATION.BUTTON.CANCEL' | translate }}</button>
-          <button type="button" class="btn btn-primary btn-notification">{{ 'NOTIFICATION.BUTTON.OK' | translate }}</button>
+          <button  type="button" class="btn btn-secondary btn-notification" data-dismiss="modal" (click)="declineNotification($event)">{{ 'NOTIFICATION.BUTTON.CANCEL' | translate }}</button>
+          <button type="button" class="btn btn-primary btn-notification" data-dismiss="modal" (click)="acceptNotification()">{{ 'NOTIFICATION.BUTTON.OK' | translate }}</button>
       </div>
 
       <div id="notification-buttons-yes-no" class="modal-footer" *ngSwitchCase="NotificationType.YES_NO">
-        <button type="button" class="btn btn-secondary btn-notification" data-dismiss="modal">{{ 'NOTIFICATION.BUTTON.NO' | translate }}</button>
-        <button type="button" class="btn btn-primary btn-notification">{{ 'NOTIFICATION.BUTTON.YES' | translate }}</button>
+        <button type="button" class="btn btn-secondary btn-notification" data-dismiss="modal" (click)="declineNotification($event)">{{ 'NOTIFICATION.BUTTON.NO' | translate }}</button>
+        <button type="button" class="btn btn-primary btn-notification" data-dismiss="modal" (click)="acceptNotification()">{{ 'NOTIFICATION.BUTTON.YES' | translate }}</button>
       </div>
     </div>
   </div>
