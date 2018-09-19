@@ -19,6 +19,7 @@ import {ActionReducerMap, StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
 import {OverviewComponent} from './modules/settings/components/overview/overview.component';
+import {DetailsComponent} from './modules/settings/components/details/details.component';
 
 
 
@@ -30,7 +31,8 @@ import {OverviewComponent} from './modules/settings/components/overview/overview
     LoginComponent,
     HomeComponent,
     NotificationComponent,
-    OverviewComponent
+    OverviewComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
