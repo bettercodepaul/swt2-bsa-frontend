@@ -155,22 +155,4 @@
   #sidebar.inactive {
     margin-left: -80px;
   }
-
-  #sidebarCollapseNavBar {
-    visibility: visible;
-    width: 40px;
-    height: 40px;
-    background: #f5f5f5;
-  }
-
-  #sidebarCollapseNavBar span {
-    width: 80%;
-    height: 2px;
-    margin: 0 auto;
-    display: block;
-    background: #02bdd5; //#555;
-    transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
-    opacity: 1;
-    margin: 5px auto;
-  }
 }

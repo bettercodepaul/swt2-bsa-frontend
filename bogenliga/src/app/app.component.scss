@@ -38,10 +38,14 @@ ul ul a {
 }
 
 // content side
-#content {
+.content {
   padding-top: 68px; //for the NavBar
-  padding-left: 80px; //for the Sidebar
+  padding-left: 250px; //for the Sidebar
   width: 100%;
+}
+
+.content.inactive {
+  padding-left: 80px; //for the Sidebar
 }
 
 #content-without-footer {
@@ -70,9 +74,15 @@ ul ul a {
 
 // for small devices
 @media (max-width: 768px) {
-  #content {
+  .content.inactive {
     padding-top: 68px; //for the NavBar
     padding-left: 0px;
+    width: 100%;
+  }
+
+  .content {
+    padding-top: 68px; //for the NavBar
+    padding-left: 0px; //for the Sidebar
     width: 100%;
   }
 }

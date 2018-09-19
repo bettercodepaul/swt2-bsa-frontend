@@ -7,7 +7,7 @@
   <bla-sidebar [isActive]="isActive" (toggle)="toggle()"></bla-sidebar>
 
   <!-- Page Content -->
-  <div id="content">
+  <div class="content {{isActive? 'inactive' : ''}}">
   
     <div id="content-without-footer">
 	  <router-outlet></router-outlet>

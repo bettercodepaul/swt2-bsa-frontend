@@ -18,6 +18,7 @@ import { RoutingModule } from './routing.module';
 import {ActionReducerMap, StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
+import {OverviewComponent} from './modules/settings/components/overview/overview.component';
 
 
 
@@ -28,7 +29,8 @@ import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
     NavbarComponent,
     LoginComponent,
     HomeComponent,
-    NotificationComponent
+    NotificationComponent,
+    OverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +47,7 @@ import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
     StoreModule.forRoot(APP_REDUCERS),
     EffectsModule.forRoot([]),
   ],
+  exports: [TranslateModule],
   providers: [],
   bootstrap: [AppComponent]
 })

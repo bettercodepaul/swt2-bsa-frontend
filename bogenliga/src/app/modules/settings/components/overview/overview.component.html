@@ -1,0 +1,24 @@
+<h1>{{ 'TABLE.TITLE' | translate }}</h1>
+<table id="example" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+  <tr>
+    <th>{{ 'TABLE.KEY' | translate }}</th>
+    <th>{{ 'TABLE.VALUE' | translate }}</th>
+    <th>{{ 'TABLE.ACTION' | translate }}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of datas">
+    <td>{{data.key}}</td>
+    <td>{{data.value}}</td>
+    <td>Buttons</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <th>{{ 'TABLE.KEY' | translate }}</th>
+    <th>{{ 'TABLE.VALUE' | translate }}</th>
+    <th>{{ 'TABLE.ACTION' | translate }}</th>
+  </tr>
+  </tfoot>
+</table>

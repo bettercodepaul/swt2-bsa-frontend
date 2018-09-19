@@ -42,6 +42,13 @@
       "CANCEL": "Abbrechen",
       "YES": "Ja",
       "NO": "Nein"
+    },
+
+    "TABLE": {
+      "TITLE": "Tabelle",
+      "KEY": "Schlüssel",
+      "VALUE:": "Wert",
+      "ACTION": "Aktion"
     }
   }
 }
