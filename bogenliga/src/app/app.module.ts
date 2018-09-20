@@ -21,6 +21,8 @@ import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
 import {OverviewComponent} from './modules/settings/components/overview/overview.component';
 import {DetailsComponent} from './modules/settings/components/details/details.component';
 
+import { NgxPaginationModule } from 'ngx-pagination';
+
 
 
 @NgModule({
@@ -47,7 +49,7 @@ import {DetailsComponent} from './modules/settings/components/details/details.co
     RoutingModule,
     /* REDUX-STORE */
     StoreModule.forRoot(APP_REDUCERS),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([])
   ],
   exports: [TranslateModule],
   providers: [],

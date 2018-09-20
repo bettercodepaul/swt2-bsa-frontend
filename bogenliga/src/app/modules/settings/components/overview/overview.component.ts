@@ -6,22 +6,50 @@ import { Data } from './../../types/data';
 
 import { DATA } from './../../mock-data';
 
+import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+
 @Component({
   selector: 'bla-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss',
         './../../../../app.component.scss']
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements OnInit, AfterViewInit {
+  @ViewChildren('pages') pages: QueryList<ElementRef>;
 
   datas: Data[];
   keyAufsteigend = true;
   valueAufsteigend = false;
 
-  constructor(private dataService: DataService) { }
+  activePage: number;
+  pageCount: Array<any> = [1, 2, 3, 4]; // link to the pages
+  maxOnPage = 4; // how many items can be shown on the page
+  first = 0;
+  last = 3;
+
+  @HostListener('click', ['$event']) onclick(event: any) {
+    if (event.target.parentElement.innerText >= 1 || event.target.parentElement.innerText <= 3) {
+      (this.activePage as number) = +event.target.parentElement.innerText;
+      this.clearActive();
+      this.renderer.addClass(event.target.parentElement, 'active');
+    }
+    this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
+    this.last = +this.activePage * this.maxOnPage - 1;
+  }
+
+  constructor(private renderer: Renderer2, private el: ElementRef, private dataService: DataService) { }
 
   ngOnInit() {
     this.getData();
+    this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+  }
+
+  ngAfterViewInit() {
+    this.clearActive();
+    this.renderer.addClass(this.pages.first.nativeElement, 'active');
+    this.activePage = 1;
+    this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
+    this.last = +this.activePage * this.maxOnPage - 1;
   }
 
   getData(): void {
@@ -50,5 +78,33 @@ export class OverviewComponent implements OnInit {
       this.valueAufsteigend = true;
       this.keyAufsteigend = false;
     }
+  }
+
+  clearActive() {
+    this.pages.forEach(element => {
+      this.renderer.removeClass(element.nativeElement, 'active');
+    });
+  }
+
+  firstPage() {
+    this.clearActive();
+    const firstPage = this.pages.first.nativeElement;
+    (this.activePage as number) = +firstPage.innerText;
+    this.clearActive();
+    this.renderer.addClass(firstPage, 'active');
+
+    this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
+    this.last = +this.activePage * this.maxOnPage;
+  }
+
+  lastPage() {
+    this.clearActive();
+    const lastPage = this.pages.last.nativeElement;
+    (this.activePage as number) = +lastPage.innerText;
+    this.clearActive();
+    this.renderer.addClass(lastPage, 'active');
+
+    this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
+    this.last = +this.activePage * this.maxOnPage;
   }
 }
