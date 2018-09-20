@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Observable, of } from 'rxjs';
+
 import { Data } from './../types/data';
 import { DATA } from './../mock-data';
 
@@ -10,7 +12,7 @@ export class DataService {
 
   constructor() { }
 
-  getData(): Data[] {
-    return DATA;
+  getData(): Observable<Data[]> {
+    return of(DATA);
   }
 }

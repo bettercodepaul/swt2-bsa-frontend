@@ -187,6 +187,34 @@ div.table-responsive>div.dataTables_wrapper>div.row>div[class^="col-"]:last-chil
   padding-right:0;
 }
 
+// Pagination Backgroundcolor
+.page-item.active .page-link {
+  background-color: #02bdd5;
+  border-color:#02bdd5;
+}
+
 button {
   margin: 5px;
+  height:50px;
+  width:50px;
 }
+
+.button-column {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-link {
+  color: #02bdd5;
+}
+
+.material-icons {
+  font-size: 20px;
+  padding-top: 0px;
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+}
+

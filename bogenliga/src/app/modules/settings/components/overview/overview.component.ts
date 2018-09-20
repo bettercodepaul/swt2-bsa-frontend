@@ -11,8 +11,8 @@ import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit } from '@
 @Component({
   selector: 'bla-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss',
-        './../../../../app.component.scss']
+  styleUrls: ['./../../../../app.component.scss',
+                    './overview.component.scss']
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChildren('pages') pages: QueryList<ElementRef>;
@@ -23,9 +23,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   activePage: number;
   pageCount: Array<any> = [1, 2, 3, 4]; // link to the pages
-  maxOnPage = 4; // how many items can be shown on the page
+  maxOnPage = 8; // how many items can be shown on the page
   first = 0;
-  last = 3;
+  last = this.maxOnPage - 1;
 
   @HostListener('click', ['$event']) onclick(event: any) {
     if (event.target.parentElement.innerText >= 1 || event.target.parentElement.innerText <= 3) {
@@ -53,7 +53,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   getData(): void {
-    this.datas = this.dataService.getData();
+    this.dataService.getData().subscribe(datas => this.datas = datas);
   }
 
   sortDataByKey(): void {
