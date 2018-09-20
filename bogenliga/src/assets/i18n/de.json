@@ -49,6 +49,12 @@
       "KEY": "Schlüssel",
       "VALUE:": "Wert",
       "ACTION": "Aktion"
+    },
+
+    "DETAILS": {
+      "TITLE": "Entität-Details",
+      "DELETE": "Löschen",
+      "SAVE": "Save"
     }
   }
 }

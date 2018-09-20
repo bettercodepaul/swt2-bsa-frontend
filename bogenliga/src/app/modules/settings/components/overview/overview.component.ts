@@ -1,10 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, OnDestroy, HostListener } from '@angular/core';
-import {AppComponent} from '../../../../app.component';
 
 import { DataService } from '../../services/data.service';
 import { Data } from './../../types/data';
-
-import { DATA } from './../../mock-data';
 
 import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 
@@ -42,6 +39,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getData();
     this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+    this.dataService.setIndexSelectedData(-1);
+    console.log(this.dataService.getIndexSelectedData());
   }
 
   ngAfterViewInit() {
@@ -106,5 +105,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
     this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
     this.last = +this.activePage * this.maxOnPage;
+  }
+
+  onSelect(data: number): void {
+    this.dataService.setIndexSelectedData(data);
   }
 }
