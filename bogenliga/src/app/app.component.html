@@ -1,10 +1,10 @@
 <div class="wrapper">
 
   <!-- NavBar  -->
-  <bla-navbar [isActive]="isActive" (toggle)="toggle()"> </bla-navbar>
+  <bla-navbar> </bla-navbar>
 
   <!-- Sidebar  -->
-  <bla-sidebar [isActive]="isActive" (toggle)="toggle()"></bla-sidebar>
+  <bla-sidebar></bla-sidebar>
 
   <!-- Page Content -->
   <div class="content {{isActive? 'inactive' : ''}}">
