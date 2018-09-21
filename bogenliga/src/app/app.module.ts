@@ -21,8 +21,6 @@ import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
 import {OverviewComponent} from './modules/settings/components/overview/overview.component';
 import {DetailsComponent} from './modules/settings/components/details/details.component';
 
-import { NgxPaginationModule } from 'ngx-pagination';
-
 
 
 @NgModule({
@@ -42,7 +40,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useFactory: createTranslateLoader,
         deps: [HttpClient]
       }
     }),
@@ -57,7 +55,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 })
 export class AppModule {}
 
-// required for AOT compilation
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+// AoT requires an exported function for factories
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

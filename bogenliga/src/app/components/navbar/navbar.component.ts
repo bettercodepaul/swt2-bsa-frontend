@@ -25,6 +25,10 @@ export class NavbarComponent implements OnInit {
     this.toggle.emit();
   }
 
+  /**
+   * Changes the language used on the Website
+   * @param language
+   */
   useLanguage(language: string) {
     this.translate.use(language);
   }

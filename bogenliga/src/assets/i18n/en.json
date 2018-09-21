@@ -54,7 +54,10 @@
     "DETAILS": {
       "TITLE": "Entität-Details",
       "DELETE": "Delete",
-      "SAVE": "Save"
+      "SAVE": "Save",
+      "KEY": "Key",
+      "VALUE": "Value",
+      "VERSION": "Releasenumber"
     }
   }
 }
