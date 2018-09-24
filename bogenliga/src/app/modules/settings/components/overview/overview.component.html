@@ -1,7 +1,7 @@
 <h1>{{ 'TABLE.TITLE' | translate }}</h1>
 
 <div class="menu">
-  <button class="btn btn-success addData" routerLink="/details"><i class="material-icons">add</i></button>
+  <button class="btn btn-success addData" routerLink="/settings/details"><i class="material-icons">add</i></button>
 
 </div>
 
@@ -22,7 +22,7 @@
     <th *ngIf="datas.indexOf(data) >= first && datas.indexOf(data) <= last" scope="row" colspan="2">{{data.key}}</th>
     <td *ngIf="datas.indexOf(data) >= first && datas.indexOf(data) <= last" colspan="2">{{data.value}}</td>
     <td class="button-column" *ngIf="datas.indexOf(data) >= first && datas.indexOf(data) <= last">
-      <a routerLink="/details" (click)="onSelect(datas.indexOf(data))"><i class="material-icons">playlist_add</i></a>
+      <a routerLink="/settings/details" (click)="onSelect(datas.indexOf(data))"><i class="material-icons">playlist_add</i></a>
       <a><i class="material-icons">cancel</i></a>
     </td>
   </tr>

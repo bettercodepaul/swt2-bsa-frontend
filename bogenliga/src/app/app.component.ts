@@ -7,8 +7,8 @@ import {
   NotificationType
 } from './components/notification/types';
 import {NotificationUserAction} from './components/notification/types/notification-user-action.enum';
-import {select, Store} from "@ngrx/store";
-import {AppState, SidebarState} from "./modules/shared/redux-store";
+import {select, Store} from '@ngrx/store';
+import {AppState, SidebarState} from './modules/shared/redux-store';
 
 @Component({
   selector: 'bla-root',

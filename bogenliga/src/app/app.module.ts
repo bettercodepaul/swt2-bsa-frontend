@@ -12,14 +12,13 @@ import { NotificationComponent } from './components/notification';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import { RoutingModule } from './routing.module';
+import {ROUTES} from './app.routing';
 
 
-import {ActionReducerMap, StoreModule} from '@ngrx/store';
+import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
-import {OverviewComponent} from './modules/settings/components/overview/overview.component';
-import {DetailsComponent} from './modules/settings/components/details/details.component';
+import {RouterModule} from '@angular/router';
 
 
 
@@ -30,9 +29,7 @@ import {DetailsComponent} from './modules/settings/components/details/details.co
     NavbarComponent,
     LoginComponent,
     HomeComponent,
-    NotificationComponent,
-    OverviewComponent,
-    DetailsComponent
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +41,7 @@ import {DetailsComponent} from './modules/settings/components/details/details.co
         deps: [HttpClient]
       }
     }),
-    RoutingModule,
+    RouterModule.forRoot(ROUTES),
     /* REDUX-STORE */
     StoreModule.forRoot(APP_REDUCERS),
     EffectsModule.forRoot([])

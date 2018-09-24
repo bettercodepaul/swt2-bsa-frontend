@@ -5,7 +5,6 @@ import { Data } from './../../types/data';
 
 import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
-import {RoutingModule} from '../../../../routing.module';
 
 
 @Component({
