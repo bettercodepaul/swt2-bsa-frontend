@@ -14,7 +14,7 @@
         <h4 class="modal-title" id="notification-title">
           <i class="material-icons">{{resolveIcon(notification.severity)}}</i> {{notification.title}}
         </h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="declineNotification()">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="declineNotification($event)">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>

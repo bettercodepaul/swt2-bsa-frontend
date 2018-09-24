@@ -10,8 +10,8 @@ import {SETTINGS_ROUTES} from './settings.routing';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule,
-    RouterModule.forChild(SETTINGS_ROUTES)
+    RouterModule.forChild(SETTINGS_ROUTES),
+    SharedModule
   ],
   declarations: [OverviewComponent, DetailsComponent]
 })

@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '../../services/data.service';
 import { Data } from './../../types/data';
-import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
+import {TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'bla-details',
