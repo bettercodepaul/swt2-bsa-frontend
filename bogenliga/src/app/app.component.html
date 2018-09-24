@@ -19,12 +19,6 @@
     <div id="footer" class="jumbotron jumbotron-fluid">
       <div class="flexContainer">
         <div class="footerContainer">
-          <h2>{{ 'APP.SUPPORT' | translate }}</h2>
-          <a href="https://www.gras-it.de/" target="_blank"><img class="logo" src="../assets/img/IT-Solutions_Logo.png"></a>
-          <a href="https://www.exxcellent.de/" target="_blank"><img class="logo" src="../assets/img/EXX-logo.svg"></a>
-          <a href="https://www.reutlingen-university.de/" target="_blank"><img class="logo" src="../assets/img/HR-Logo.svg"></a>
-        </div>
-        <div class="footerContainer">
           <h2>{{ 'APP.TITLE' | translate }}</h2>
           <p>{{ 'APP.ABOUT' | translate }}</p>
           <ul class="nav flex-column">
@@ -32,18 +26,33 @@
             <li><a href="#">{{ 'APP.IMPRESSUM' | translate }}</a></li>
           </ul>
         </div>
+        <div class="footerContainer">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div id="socialmedia">
-      <div><p>{{ 'APP.COPYRIGHT' | translate }}</p></div>
-      <div>
-        <a class="btn" href="https://www.facebook.com/" target="_blank">Facebook</a>
-        <a class="btn" href="https://twitter.com/" target="_blank">Twitter</a>
-        <a class="btn" href="https://www.linkedin.com/" target="_blank">LinkedIn</a>
+    <footer id=support>
+      <div class="footer-copyright text-center py-3">
+        <p>{{ 'APP.SUPPORT' | translate }}</p>
+        <a href="https://www.exxcellent.de/" target="_blank"><img class="logoExxcellent" src="../assets/img/EXX-logo.svg"></a>
+        <a href="https://www.reutlingen-university.de/" target="_blank"><img class="logoHR" src="../assets/img/HR-Logo.svg"></a>
+        <a href="https://www.gras-it.de/" target="_blank"><img class="logoItSolutions" src="../assets/img/IT-Solutions_Logo.png"></a>
       </div>
-    </div>
-
+    </footer>
   </div>
 
 </div>

@@ -5,5 +5,5 @@ import {sidebarReducer} from './feature/sidebar';
 
 export const APP_REDUCERS: ActionReducerMap<AppState> = {
   notificationState: notificationReducer,
-  sidebarState: sidebarReducer
+  sidebarState: sidebarReducer,
 };

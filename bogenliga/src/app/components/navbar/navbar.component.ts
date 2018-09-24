@@ -4,7 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ACCEPT_NOTIFICATION} from '../../modules/shared/redux-store/feature/notification';
 import {select, Store} from '@ngrx/store';
 import {AppState, SidebarState} from '../../modules/shared/redux-store';
-import {SHOW_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';
+import {TOGGLE_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';
 
 @Component({
   selector: 'bla-navbar',
@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
   public isActive: boolean;
 
   constructor(private translate: TranslateService, private store: Store<AppState>) {
-    store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.showSidebar );
+    store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );
   }
 
   ngOnInit() {
@@ -32,6 +32,6 @@ export class NavbarComponent implements OnInit {
   }
 
   public toggleNavbar() {
-    this.store.dispatch({ type: SHOW_SIDEBAR });
+    this.store.dispatch({ type: TOGGLE_SIDEBAR });
   }
 }

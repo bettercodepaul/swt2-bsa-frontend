@@ -4,17 +4,17 @@ import {NotificationUserAction} from '../../../../../components/notification/typ
 import {Notification} from '../../../../../components/notification/types';
 
 export const initialSidebarState: SidebarState = {
-  showSidebar: true,
+  toggleSidebar: true,
 };
 
 export function sidebarReducer(state = initialSidebarState, action: Actions.SidebarActions): SidebarState {
   let newState: SidebarState;
 
   switch (action.type) {
-    case Actions.SHOW_SIDEBAR: {
+    case Actions.TOGGLE_SIDEBAR: {
       newState = {
         ...state,
-        showSidebar: !state.showSidebar
+        toggleSidebar: !state.toggleSidebar
       };
       break;
     }
