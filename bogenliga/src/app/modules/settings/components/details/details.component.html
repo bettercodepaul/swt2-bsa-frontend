@@ -1,5 +1,6 @@
 <h1>{{ 'DETAILS.TITLE' | translate }}</h1>
 
+<!-- Data selected -->
 <div *ngIf="dataIndex >= 0">
   <h2>{{ 'DETAILS.KEY' | translate }}: {{datas[dataIndex].key}} {{ 'DETAILS.VERSION' | translate }}:</h2>
 
@@ -11,43 +12,49 @@
       <div class="form-group row">
         <label for="inputKeyData" class="col-sm-2 col-form-label">{{ 'DETAILS.KEY' | translate }}</label>
         <div class="col-sm-10">
-          <input type="number" min="0" step="1" data-bind="value:replyNumber" class="form-control" id="inputKeyData" placeholder="{{datas[dataIndex].key}}">
-          <small id="keyHelpBlockData" class="form-text text-muted">Key must be unique.</small>
+          <input class="form-control" type="text" id="inputKeyData" placeholder="{{datas[dataIndex].key}}" readonly>
         </div>
       </div>
       <div class="form-group row">
         <label for="inputValueData" class="col-sm-2 col-form-label">{{ 'DETAILS.VALUE' | translate }}</label>
         <div class="col-sm-10">
-          <input class="form-control" id="inputValueData" placeholder="{{datas[dataIndex].value}}">
+          <input type="number" min="0" step="1" data-bind="value:replyNumber" class="form-control" id="inputValueData" placeholder="{{datas[dataIndex].value}}">
         </div>
       </div>
     </form>
 
+    <div class="menu">
+      <a routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
+      <a routerLink="/settings/overview"><button type="button" class="btn btn-danger">{{ 'DETAILS.DELETE' | translate }}</button></a>
+      <a routerLink="/settings/details"><button type="button" class="btn btn-success">{{ 'DETAILS.SAVE' | translate }}</button></a>
+    </div>
+
   </div>
 </div>
 
+<!-- No Data selected -->
 <div *ngIf="dataIndex < 0">
 
   <form>
     <div class="form-group row">
       <label for="inputKey" class="col-sm-2 col-form-label">{{ 'DETAILS.KEY' | translate }}</label>
       <div class="col-sm-10">
-        <input type="number" min="0" step="1" data-bind="value:replyNumber" class="form-control" id="inputKey" placeholder="Key">
-        <small id="keyHelpBlock" class="form-text text-muted">Key must be unique.</small>
+        <input class="form-control" type="text" id="inputKey" placeholder="Key" readonly>
       </div>
     </div>
     <div class="form-group row">
       <label for="inputValue" class="col-sm-2 col-form-label">{{ 'DETAILS.VALUE' | translate }}</label>
       <div class="col-sm-10">
-        <input class="form-control" id="inputValue" placeholder="Value">
+        <input type="number" min="0" step="1" data-bind="value:replyNumber" class="form-control" id="inputValue" placeholder="Value">
       </div>
     </div>
   </form>
 
+  <div class="menu">
+    <a routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
+    <a routerLink="/settings/overview"><button type="button" class="btn btn-danger" disabled>{{ 'DETAILS.DELETE' | translate }}</button></a>
+    <a routerLink="/settings/details"><button type="button" class="btn btn-success">{{ 'DETAILS.SAVE' | translate }}</button></a>
+  </div>
+
 </div>
 
-<div class="menu">
-  <a routerLink="/settings/overview"><button class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
-  <a routerLink="/settings/overview"><button class="btn btn-danger">{{ 'DETAILS.DELETE' | translate }}</button></a>
-  <a><button class="btn btn-success">{{ 'DETAILS.SAVE' | translate }}</button></a>
-</div>

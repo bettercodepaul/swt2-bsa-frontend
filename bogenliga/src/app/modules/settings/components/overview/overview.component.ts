@@ -65,36 +65,36 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * uses key (number) of the data to sort the array
+   * uses key (character) of the data to sort the array
    * either from lowest to highest
    * or highest to lowest
    */
   sortDataByKey(): void {
-    if (this.keyAufsteigend === true) {
-      this.datas.sort((b, a) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
-      this.keyAufsteigend = false;
-      this.valueAufsteigend = false;
-    } else {
+    if (this.valueAufsteigend === true) {
       this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
-      this.keyAufsteigend = true;
       this.valueAufsteigend = false;
+      this.keyAufsteigend = false;
+    } else {
+      this.datas.sort((b, a) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+      this.valueAufsteigend = true;
+      this.keyAufsteigend = false;
     }
   }
 
   /**
-   * uses value (character) of the data to sort the array
+   * uses value (number) of the data to sort the array
    * either from lowest to highest
    * or highest to lowest
    */
   sortDataByValue(): void {
-    if (this.valueAufsteigend === true) {
-      this.datas.sort((b, a) => a.value < b.value ? -1 : a.value > b.value ? 1 : 0);
-      this.valueAufsteigend = false;
-      this.keyAufsteigend = false;
-    } else {
+    if (this.keyAufsteigend === true) {
       this.datas.sort((a, b) => a.value < b.value ? -1 : a.value > b.value ? 1 : 0);
-      this.valueAufsteigend = true;
       this.keyAufsteigend = false;
+      this.valueAufsteigend = false;
+    } else {
+      this.datas.sort((b, a) => a.value < b.value ? -1 : a.value > b.value ? 1 : 0);
+      this.keyAufsteigend = true;
+      this.valueAufsteigend = false;
     }
   }
 

@@ -1,4 +1,4 @@
 export class Data {
-  key: number;
-  value: string;
+  key: string;
+  value: number;
 }
