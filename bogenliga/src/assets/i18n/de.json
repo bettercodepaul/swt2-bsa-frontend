@@ -1,8 +1,6 @@
 {
   "NAVBAR": {
-    "LINK01": "Link 1",
-    "LINK02": "Link 2",
-    "LINK03": "Link 3"
+    "TITLE": "Bogenliga DE"
   },
 
   "SIDEBAR": {
@@ -32,7 +30,7 @@
   },
 
   "HOME": {
-    "TITLE": "Bogenliga",
+    "TITLE": "Bogenliga DE",
     "WELCOME": "Herzlich Willkommen",
     "CONTENT": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschafts Bogensport ziehen."
   },

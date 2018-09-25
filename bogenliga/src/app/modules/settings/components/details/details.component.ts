@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DataService } from '../../services/data.service';
-import { Data } from './../../types/data';
+import { Data } from '../../types/data';
 import {TranslateModule, TranslatePipe } from '@ngx-translate/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {isUndefined} from 'util';
+import {catchError, map} from 'rxjs/operators';
 
 @Component({
   selector: 'bla-details',
@@ -15,16 +16,16 @@ import {isUndefined} from 'util';
 })
 export class DetailsComponent implements OnInit {
 
-  dataIndex = -1;
-  datas: Data[];
+  dataSelected = false;
+  data: Data = new Data();
   // settingsKey: string;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getData();
+    // this.getData();
     this.initDialog();
-    this.dataIndex = this.dataService.getIndexSelectedData();
+    // this.dataIndex = this.dataService.getIndexSelectedData();
   }
 
   /**
@@ -32,7 +33,8 @@ export class DetailsComponent implements OnInit {
    * uses the one on the index or none
    */
   getData(): void {
-    this.dataService.getData().subscribe(datas => this.datas = datas);
+    // this.dataService.getData().subscribe(datas => this.datas = datas);
+    // this.dataService.findAll().subscribe(datas => this.datas = datas);
   }
 
   private initDialog(): void {
@@ -41,7 +43,23 @@ export class DetailsComponent implements OnInit {
       if (!isUndefined(params['key'])) {
         settingsKey = params['key'];
         console.log(settingsKey);
+        this.dataService.findByKey(settingsKey).subscribe(data => this.data = data);
+        this.dataSelected = true;
       }
     });
+  }
+
+  saveNewData(): void {
+    this.dataService.addOne(new Data(this.data.key, this.data.value))
+      .pipe(
+        map(response => {
+          const jsonObject = response.json();
+          console.log(JSON.stringify(jsonObject));
+        }),
+        catchError(error => {
+          console.log(error);
+          return error;
+        })
+      );
   }
 }

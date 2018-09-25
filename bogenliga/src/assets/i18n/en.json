@@ -1,8 +1,6 @@
 {
   "NAVBAR": {
-    "LINK01": "link 1",
-    "LINK02": "link 2",
-    "LINK03": "link 3"
+    "TITLE": "Bowleague DE"
   },
 
   "SIDEBAR": {
@@ -32,7 +30,7 @@
   },
 
   "HOME": {
-    "TITLE": "Bowleague",
+    "TITLE": "Bowleague DE",
     "WELCOME": "Welcome",
     "CONTENT": "to the website of Bogenliga DE. Here you can find all the important information about archery. Let it inspire you."
   },

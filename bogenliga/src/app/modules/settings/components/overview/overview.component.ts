@@ -45,8 +45,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     this.getData();
-    this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
-    this.dataService.setIndexSelectedData(-1);
+    // this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+    // this.dataService.setIndexSelectedData(-1);
   }
 
   ngAfterViewInit() {
@@ -61,7 +61,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    *gets Data from the Service for the Table
    */
   getData(): void {
-    this.dataService.getData().subscribe(datas => this.datas = datas);
+    // this.dataService.getData().subscribe(datas => this.datas = datas);
+    this.dataService.findAll().subscribe(datas => this.datas = datas);
   }
 
   /**
@@ -124,13 +125,5 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
     this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
     this.last = +this.activePage * this.maxOnPage;
-  }
-
-  /**
-   * Hands index of selected item over to service
-   * @param data
-   */
-  onSelect(data: number): void {
-    this.dataService.setIndexSelectedData(data);
   }
 }

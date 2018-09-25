@@ -12,7 +12,7 @@ export abstract class CommonDataService {
 
   constructor() {
     this.dataServiceConfig = {
-      baseUrl: 'localhost:9000'
+      baseUrl: 'http://localhost:9000'
     };
   }
 

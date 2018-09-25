@@ -22,7 +22,7 @@
     <td *ngIf="datas.indexOf(data) >= first && datas.indexOf(data) <= last" scope="row" colspan="2">{{data.key}}</td>
     <td *ngIf="datas.indexOf(data) >= first && datas.indexOf(data) <= last" colspan="2">{{data.value}}</td>
     <td class="button-column" *ngIf="datas.indexOf(data) >= first && datas.indexOf(data) <= last">
-      <a routerLink="{{'/settings/details/' + data.key}}" (click)="onSelect(datas.indexOf(data))"><i class="material-icons">playlist_add</i></a>
+      <a routerLink="{{'/settings/details/' + data.key}}"><i class="material-icons">playlist_add</i></a>
       <a><i class="material-icons">cancel</i></a>
     </td>
   </tr>

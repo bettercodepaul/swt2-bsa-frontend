@@ -18,6 +18,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
 import {RouterModule} from '@angular/router';
 import {ROUTES} from './app.routing';
+import {FormsModule} from '@angular/forms';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -46,9 +47,10 @@ export function createTranslateLoader(http: HttpClient) {
     RouterModule.forRoot(ROUTES),
     /* REDUX-STORE */
     StoreModule.forRoot(APP_REDUCERS),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    FormsModule
   ],
-  exports: [TranslateModule],
+  exports: [TranslateModule ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -8,35 +8,24 @@ import {CommonDataService} from './common-data-provider.service';
 import {RestClient} from './rest-client.class';
 import {UriBuilder} from '../types/uri-builder.class';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class DataService extends CommonDataService {
-
-  indexSelectedData = -1;
-
-  serviceSubUrl = 'settings';
+  serviceSubUrl = 'v1/configuration';
 
   constructor(private restClient: RestClient) {
     super();
   }
 
-  getData(): Observable<Data[]> {
-    return of(DATA);
-  }
-
-  getIndexSelectedData(): number {
-    return this.indexSelectedData;
-  }
-
-  setIndexSelectedData(index: number) {
-    this.indexSelectedData = index;
-  }
-
   addOne(data: Data): Observable<any> {
     return this.restClient.POST(new UriBuilder()
       .fromPath(this.getUrl())
-      .path('' + data)
       .build(), data );
   }
 

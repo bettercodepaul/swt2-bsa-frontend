@@ -5,13 +5,15 @@ import { DetailsComponent } from './components/details/details.component';
 import {SharedModule} from '../shared/shared.module';
 import {RouterModule} from '@angular/router';
 import {SETTINGS_ROUTES} from './settings.routing';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(SETTINGS_ROUTES),
-    SharedModule
+    SharedModule,
+    FormsModule
   ],
   declarations: [OverviewComponent, DetailsComponent]
 })
