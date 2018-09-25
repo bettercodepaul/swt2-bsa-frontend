@@ -45,7 +45,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   ngOnInit() {
     this.getData();
-    // this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+    // this.sortDataByKey();
     // this.dataService.setIndexSelectedData(-1);
   }
 
@@ -125,5 +125,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
     this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
     this.last = +this.activePage * this.maxOnPage;
+  }
+
+  deleteThisData(key: string): void {
+    this.dataService.deleteByKey(key).subscribe();
   }
 }

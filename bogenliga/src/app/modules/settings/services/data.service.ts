@@ -29,8 +29,11 @@ export class DataService extends CommonDataService {
       .build(), data );
   }
 
-  changeByKey(key: string): Observable<any> {
-    return ; // PUT
+  update(data: Data): Observable<any> {
+    return this.restClient.PUT(
+      new UriBuilder()
+        .fromPath(this.getUrl())
+        .build(), data);
   }
 
   deleteByKey(key: string): Observable<any> {

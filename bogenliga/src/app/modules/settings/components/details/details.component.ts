@@ -18,6 +18,7 @@ export class DetailsComponent implements OnInit {
 
   dataSelected = false;
   data: Data = new Data();
+  dataKey = '';
   // settingsKey: string;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) { }
@@ -43,6 +44,7 @@ export class DetailsComponent implements OnInit {
       if (!isUndefined(params['key'])) {
         settingsKey = params['key'];
         console.log(settingsKey);
+        this.dataKey = settingsKey;
         this.dataService.findByKey(settingsKey).subscribe(data => this.data = data);
         this.dataSelected = true;
       }
@@ -50,16 +52,14 @@ export class DetailsComponent implements OnInit {
   }
 
   saveNewData(): void {
-    this.dataService.addOne(new Data(this.data.key, this.data.value))
-      .pipe(
-        map(response => {
-          const jsonObject = response.json();
-          console.log(JSON.stringify(jsonObject));
-        }),
-        catchError(error => {
-          console.log(error);
-          return error;
-        })
-      );
+    this.dataService.addOne(new Data(this.data.key, this.data.value)).subscribe();
+  }
+
+  saveData(): void {
+    this.dataService.update(this.data).subscribe();
+  }
+
+  deleteThisData(): void {
+    this.dataService.deleteByKey(this.dataKey).subscribe();
   }
 }

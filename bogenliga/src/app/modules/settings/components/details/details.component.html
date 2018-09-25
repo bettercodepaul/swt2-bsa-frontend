@@ -12,21 +12,21 @@
       <div class="form-group row">
         <label for="inputKeyData" class="col-sm-2 col-form-label">{{ 'DETAILS.KEY' | translate }}</label>
         <div class="col-sm-10">
-          <input class="form-control" type="text" id="inputKeyData" placeholder="{{data.key}}" readonly>
+          <input class="form-control" type="text" id="inputKeyData" [(ngModel)]="data.key" name="key" placeholder="{{data.key}}" readonly>
         </div>
       </div>
       <div class="form-group row">
         <label for="inputValueData" class="col-sm-2 col-form-label">{{ 'DETAILS.VALUE' | translate }}</label>
         <div class="col-sm-10">
-          <input class="form-control" type="text" id="inputValueData" placeholder="{{data.value}}">
+          <input class="form-control" type="text" id="inputValueData" [(ngModel)]="data.value" name="value" placeholder="{{data.value}}">
         </div>
       </div>
     </form>
 
     <div class="menu">
       <a routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
-      <a routerLink="/settings/overview"><button type="button" class="btn btn-danger">{{ 'DETAILS.DELETE' | translate }}</button></a>
-      <a routerLink="/settings/details"><button type="button" class="btn btn-success">{{ 'DETAILS.SAVE' | translate }}</button></a>
+      <a routerLink="/settings/overview"><button type="button" class="btn btn-danger" (click)="deleteThisData()">{{ 'DETAILS.DELETE' | translate }}</button></a>
+      <a routerLink="/settings/overview"><button type="button" class="btn btn-success" (click)="saveData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
     </div>
 
   </div>
@@ -54,10 +54,9 @@
 
   <div class="menu">
     <a routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
-    <a routerLink="/settings/overview"><button type="button" class="btn btn-danger" disabled>{{ 'DETAILS.DELETE' | translate }}</button></a>
-    <a routerLink="/settings/details"><button type="button" class="btn btn-success" (click)="saveNewData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
+    <a routerLink="/settings/overview"><button type="button" class="btn btn-success" (click)="saveNewData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
   </div>
 
 </div>
 
-<pre><code>{{data|json}}</code></pre>
+<!-- <pre><code>{{data|json}}</code></pre> -->

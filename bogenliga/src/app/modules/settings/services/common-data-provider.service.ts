@@ -29,6 +29,6 @@ export abstract class CommonDataService {
   abstract findAll(): Observable<Data[]>;
   abstract findByKey(key: string): Observable<Data>;
   abstract deleteByKey(key: string): Observable<any>;
-  abstract changeByKey(key: string): Observable<any>;
+  abstract update(data: Data): Observable<any>;
   abstract addOne(data: Data): Observable<any>;
 }

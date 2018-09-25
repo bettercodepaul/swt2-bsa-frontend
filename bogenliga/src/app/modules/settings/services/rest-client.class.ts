@@ -26,7 +26,7 @@ export class RestClient {
     return this.http.get(url, httpOptions);
   }
 
-  public POST(url: string, payload: Data): Observable<any> {
+  public POST(url: string, payload: Data): Observable<Data> {
     console.log('Send POST request to ' + url + ' with payload ' + JSON.stringify(payload));
 
     return this.http.post<Data>(url, payload , httpOptions);
