@@ -22,8 +22,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   valueAufsteigend = false;
 
   activePage: number;
-  pageCount: Array<any> = [1, 2, 3, 4]; // link to the pages
-  maxOnPage = 8; // how many items can be shown on the page
+  pageCount: Array<any> = [1, 2]; // link to the pages
+  maxOnPage = 10; // how many items can be shown on the page
   first = 0;
   last = this.maxOnPage - 1;
 

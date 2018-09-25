@@ -34,14 +34,14 @@ export class DataService extends CommonDataService {
   }
 
   addOne(data: Data): Observable<any> {
-    return this.restClient.PUT(new UriBuilder()
+    return this.restClient.POST(new UriBuilder()
       .fromPath(this.getUrl())
-      .path('' + key)
+      .path('' + data)
       .build(), data );
   }
 
   changeByKey(key: string): Observable<any> {
-    return ;
+    return ; // PUT
   }
 
   deleteByKey(key: string): Observable<any> {
