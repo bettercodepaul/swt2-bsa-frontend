@@ -1,20 +1,20 @@
 {
   "NAVBAR": {
-    "TITLE": "Bowleague DE"
+    "TITLE": "Archery League GER"
   },
 
   "SIDEBAR": {
-    "TITLE": "Bowleague",
+    "TITLE": "Archery League",
     "TITLESHORT": "bl",
     "HOME": "HOME",
     "VERWALTUNG": "MANAGEMENT",
-    "WETTKAMPF": "COMPETITION",
+    "WETTKAMPF": "COMPETITIONS",
     "SPORTJAHRESPLAN": "YEARLY SPORT PLAN"
   },
 
   "APP": {
     "SUPPORT": "With support from:",
-    "TITLE": "Bowleague",
+    "TITLE": "Archery League",
     "ABOUT": "On this Website of the german Bowleague you can find all the important Information. Let it inspire you.",
     "KONTAKT": "Contact",
     "IMPRESSUM": "Copyright",
@@ -30,9 +30,13 @@
   },
 
   "HOME": {
-    "TITLE": "Bowleague DE",
+    "TITLE": "Archery League GER",
     "WELCOME": "Welcome",
-    "CONTENT": "to the website of Bogenliga DE. Here you can find all the important information about archery. Let it inspire you."
+    "WETTKAEMPFE": "Our next competitions",
+    "FURTHER": "further information",
+    "CONTENT": "to the website of Archery League GER. Here you can find all the important information about archery. Let it inspire you.",
+    "BOX1HEADING": "STUDENT CUP 2018",
+    "BOX1CONTENT": "Be there..."
   },
 
   "NOTIFICATION": {
@@ -41,22 +45,28 @@
       "CANCEL": "Cancel",
       "YES": "Yes",
       "NO": "No"
-    },
-
-    "TABLE": {
-      "TITLE": "Table",
-      "KEY": "Key",
-      "VALUE:": "Value",
-      "ACTION": "Action"
-    },
-
-    "DETAILS": {
-      "TITLE": "Entität-Details",
-      "DELETE": "Delete",
-      "SAVE": "Save",
-      "KEY": "Key",
-      "VALUE": "Value",
-      "VERSION": "Releasenumber"
     }
+  },
+
+  "TABLE": {
+    "TITLE": "Table",
+    "KEY": "Key",
+    "VALUE": "Value",
+    "ACTION": "Action",
+    "DAY": "Day",
+    "DATE": "Date",
+    "TIME": "Time",
+    "LIGA": "League",
+    "PLACE": "Place",
+    "CDAY": "Competition Day"
+  },
+
+  "DETAILS": {
+    "TITLE": "Entität-Details",
+    "DELETE": "Delete",
+    "SAVE": "Save",
+    "KEY": "Key",
+    "VALUE": "Value",
+    "VERSION": "Releasenumber"
   }
 }

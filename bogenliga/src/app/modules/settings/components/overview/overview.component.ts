@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, EventEmitter, OnDestroy, HostListener } from '@angular/core';
+import {Component, OnInit, Input, EventEmitter, OnDestroy, HostListener, OnChanges, SimpleChanges} from '@angular/core';
 
 import { DataService } from '../../services/data.service';
 import { Data } from './../../types/data';
 
-import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit, AfterViewChecked } from '@angular/core';
 import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
 
 
@@ -14,10 +14,10 @@ import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
                     './overview.component.scss'],
   providers: [ TranslatePipe ]
 })
-export class OverviewComponent implements OnInit, AfterViewInit {
+export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChildren('pages') pages: QueryList<ElementRef>;
 
-  datas: Data[];
+  datas: Data[] = [];
   keyAufsteigend = true;
   valueAufsteigend = false;
 
@@ -62,7 +62,29 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   getData(): void {
     // this.dataService.getData().subscribe(datas => this.datas = datas);
-    this.dataService.findAll().subscribe(datas => this.datas = datas);
+    this.dataService.findAll().subscribe(datas => {
+      this.datas = datas;
+      this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+      this.calculatePagination(this.datas.length);
+      // if last object of last page is deletet -> change to one page bevore
+      if (this.activePage > this.pageCount.length) {
+        this.activePage = this.activePage - 1;
+      }
+    });
+  }
+
+  /**
+   * counts how many pages are needed
+   * makes an array with the pagenumbers
+   * @param datacount
+   */
+  calculatePagination(datacount: number) {
+    const pages = Math.ceil(datacount / this.maxOnPage); // Math.ceil always gives back same ore higher number -> 7,03 is 8
+    const pagination = new Array(pages);
+    for (let i = 0; i < pagination.length; i++) {
+      pagination[i] = i + 1;
+    }
+    this.pageCount = pagination;
   }
 
   /**
@@ -128,6 +150,12 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   deleteThisData(key: string): void {
-    this.dataService.deleteByKey(key).subscribe();
+    this.dataService.deleteByKey(key).subscribe(data => {
+      this.getData();
+
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
   }
 }

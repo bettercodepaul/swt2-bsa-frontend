@@ -1,4 +1,4 @@
-// active sidebar
+// basic sidebar css
 #sidebar {
   min-width: 250px;
   max-width: 250px;
@@ -13,6 +13,7 @@
   opacity: 0.9;
 }
 
+// basic sidebar inactive css
 #sidebar.inactive {
   min-width: 80px;
   max-width: 80px;
@@ -20,11 +21,13 @@
   opacity: 0.4;
 }
 
+// basic css list and paragraph
 #sidebar ul p {
   color: #fff;
   padding: 10px;
 }
 
+// basic css list and link
 #sidebar ul li a {
   padding: 10px;
   font-size: 1.1em;
@@ -32,19 +35,32 @@
   text-align: left;
   color: #fff;
 }
+// basic css list and link with hover
 #sidebar ul li a:hover {
-  color: #02bdd5;//#555555;
+  color: #02bdd5;
   background: #fff;
 }
 
+// Sidebar Header
 #sidebar .sidebar-header {
   padding: 20px;
-  background: #02bdd5;//#343a40;
+  background: #02bdd5;
 }
 
-#sidebar .sidebar-header strong {
+// Sidebar Header Title
+#sidebar.inactive .sidebar-header h3 {
   display: none;
 }
+
+// Sidebar Header Titleshort
+#sidebar .sidebar-header p {
+  display: none;
+}
+#sidebar.inactive .sidebar-header p {
+  display: block;
+  color: #fff;
+}
+
 
 #sidebar ul.components {
   padding: 20px 0;
@@ -70,14 +86,6 @@
 
 .sidebar-link.inactive {
   justify-content: center;
-}
-
-#sidebar.inactive .sidebar-header h3 {
-  display: none;
-}
-
-#sidebar.inactive .sidebar-header strong {
-  display: block;
 }
 
 #sidebar.inactive ul li a {

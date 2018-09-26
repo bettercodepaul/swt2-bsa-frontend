@@ -1,0 +1,21 @@
+.homeContent {
+  margin: 5px;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  align-content: space-around;
+  flex-wrap: wrap;
+}
+
+.flexChild {
+  flex: 1 0 40%; // 40% -> to in one row
+  // width: 500px;
+  margin: 20px;
+  margin-top: 50px;
+}
+
+.mosaikImg {
+  width: 90%;
+}

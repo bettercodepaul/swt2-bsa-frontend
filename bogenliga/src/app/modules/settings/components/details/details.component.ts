@@ -53,6 +53,7 @@ export class DetailsComponent implements OnInit {
 
   saveNewData(): void {
     this.dataService.addOne(new Data(this.data.key, this.data.value)).subscribe();
+    this.data = new Data(); // reset data
   }
 
   saveData(): void {

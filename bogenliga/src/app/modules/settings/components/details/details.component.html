@@ -2,9 +2,9 @@
 
 <!-- Data selected -->
 <div *ngIf="dataSelected == true">
-  <h2>{{ 'DETAILS.KEY' | translate }}: {{data.key}} {{ 'DETAILS.VERSION' | translate }}:</h2>
+  <h3>{{ 'DETAILS.KEY' | translate }}: {{data.key}} {{ 'DETAILS.VERSION' | translate }}:</h3>
 
-  <h2>{{data.value}}</h2>
+  <h3>{{data.value}}</h3>
 
   <div>
 
@@ -26,7 +26,7 @@
     <div class="menu">
       <a routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
       <a routerLink="/settings/overview"><button type="button" class="btn btn-danger" (click)="deleteThisData()">{{ 'DETAILS.DELETE' | translate }}</button></a>
-      <a routerLink="/settings/overview"><button type="button" class="btn btn-success" (click)="saveData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
+      <a routerLink="{{'/settings/details/' + data.key}}"><button type="button" class="btn btn-success" (click)="saveData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
     </div>
 
   </div>
@@ -54,7 +54,7 @@
 
   <div class="menu">
     <a routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
-    <a routerLink="/settings/overview"><button type="button" class="btn btn-success" (click)="saveNewData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
+    <a routerLink="/settings/details"><button type="button" class="btn btn-success" (click)="saveNewData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
   </div>
 
 </div>
