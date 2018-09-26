@@ -2,19 +2,20 @@
 
 <!-- Data selected -->
 <div *ngIf="dataSelected == true">
-  <h3>{{ 'DETAILS.KEY' | translate }}: {{data.key}} {{ 'DETAILS.VERSION' | translate }}:</h3>
 
-  <h3>{{data.value}}</h3>
+  <h3>{{ 'DETAILS.KEY' | translate }}: {{data.key}}</h3>
+  <h3>{{ 'DETAILS.VERSION' | translate }}:</h3>
 
   <div>
-
     <form class="needs-validation" novalidate>
+      <!-- Input Key -->
       <div class="form-group row">
         <label for="inputKeyData" class="col-sm-2 col-form-label">{{ 'DETAILS.KEY' | translate }}</label>
         <div class="col-sm-10">
           <input class="form-control" type="text" id="inputKeyData" [(ngModel)]="data.key" name="key" placeholder="{{data.key}}" readonly>
         </div>
       </div>
+      <!-- Input Value -->
       <div class="form-group row">
         <label for="inputValueData" class="col-sm-2 col-form-label">{{ 'DETAILS.VALUE' | translate }}</label>
         <div class="col-sm-10">
@@ -23,6 +24,7 @@
       </div>
     </form>
 
+    <!-- Button Footer -->
     <div class="menu">
       <a routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
       <a routerLink="/settings/overview"><button type="button" class="btn btn-danger" (click)="deleteThisData()">{{ 'DETAILS.DELETE' | translate }}</button></a>
@@ -36,12 +38,14 @@
 <div *ngIf="dataSelected == false">
 
   <form>
+    <!-- Input Key -->
     <div class="form-group row">
       <label for="inputKey" class="col-sm-2 col-form-label">{{ 'DETAILS.KEY' | translate }}</label>
       <div class="col-sm-10">
         <input class="form-control" type="text" id="inputKey" [(ngModel)]="data.key" name="key" placeholder="Key"> <!-- readonly -->
       </div>
     </div>
+    <!-- Input Value -->
     <div class="form-group row">
       <label for="inputValue" class="col-sm-2 col-form-label">{{ 'DETAILS.VALUE' | translate }}</label>
       <div class="col-sm-10">
@@ -52,6 +56,7 @@
     </div>
   </form>
 
+  <!-- Button Footer -->
   <div class="menu">
     <a routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
     <a routerLink="/settings/details"><button type="button" class="btn btn-success" (click)="saveNewData()">{{ 'DETAILS.SAVE' | translate }}</button></a>

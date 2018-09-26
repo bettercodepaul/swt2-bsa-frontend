@@ -1,10 +1,10 @@
-import {Component, OnInit, Input, EventEmitter, OnDestroy, HostListener, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 
 import { DataService } from '../../services/data.service';
-import { Data } from './../../types/data';
+import { Data } from '../../types/data';
 
-import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit, AfterViewChecked } from '@angular/core';
-import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
+import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { TranslatePipe} from '@ngx-translate/core';
 
 
 @Component({
@@ -14,18 +14,18 @@ import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
                     './overview.component.scss'],
   providers: [ TranslatePipe ]
 })
-export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
+export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChildren('pages') pages: QueryList<ElementRef>;
 
-  datas: Data[] = [];
-  keyAufsteigend = true;
-  valueAufsteigend = false;
+  datas: Data[] = []; // data for table
+  keyAufsteigend = true; // if sorted with key aufsteigend
+  valueAufsteigend = false; // if sorted with value aufsteigend
 
-  activePage: number;
+  activePage: number; // number of current page
   pageCount: Array<any> = [1, 2]; // link to the pages
   maxOnPage = 10; // how many items can be shown on the page
-  first = 0;
-  last = this.maxOnPage - 1;
+  first = 0; // first item index on page
+  last = this.maxOnPage - 1; // last item index on page
 
   @HostListener('click', ['$event']) onclick(event: any) {
     if (event.target.parentElement.innerText >= 1 || event.target.parentElement.innerText <= 3) {
@@ -45,8 +45,6 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
    */
   ngOnInit() {
     this.getData();
-    // this.sortDataByKey();
-    // this.dataService.setIndexSelectedData(-1);
   }
 
   ngAfterViewInit() {
@@ -59,6 +57,8 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
 
   /**
    *gets Data from the Service for the Table
+   * sorts it by key
+   * calculates pagination
    */
   getData(): void {
     // this.dataService.getData().subscribe(datas => this.datas = datas);
@@ -66,8 +66,6 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
       this.datas = datas;
       this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
       this.calculatePagination(this.datas.length);
-      console.log(this.activePage);
-      console.log(this.pageCount.length)
       // if last object of last page is deletet -> change to one page bevore
       if (this.activePage > this.pageCount.length) {
         this.activePage = this.activePage - 1;
@@ -83,7 +81,7 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
    * @param datacount
    */
   calculatePagination(datacount: number) {
-    const pages = Math.ceil(datacount / this.maxOnPage); // Math.ceil always gives back same ore higher number -> 7,03 is 8
+    const pages = Math.ceil(datacount / this.maxOnPage); // Math.ceil always gives back same ore higher number -> 7.03 is 8
     const pagination = new Array(pages);
     for (let i = 0; i < pagination.length; i++) {
       pagination[i] = i + 1;
@@ -153,12 +151,15 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
     this.last = +this.activePage * this.maxOnPage;
   }
 
+  /**
+   * deletes data in this row
+   * calls service
+   * gets data from database
+   * @param key
+   */
   deleteThisData(key: string): void {
     this.dataService.deleteByKey(key).subscribe(data => {
       this.getData();
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
   }
 }

@@ -14,7 +14,7 @@ import {TOGGLE_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';
 })
 export class NavbarComponent implements OnInit {
 
-  public isActive: boolean;
+  public isActive: boolean; // for class and css to know if sidebar is wide or small
 
   constructor(private translate: TranslateService, private store: Store<AppState>) {
     store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );
@@ -31,6 +31,9 @@ export class NavbarComponent implements OnInit {
     this.translate.use(language);
   }
 
+  /**
+   * tells store that sidebar button was used -> Sidebar needs to change
+   */
   public toggleNavbar() {
     this.store.dispatch({ type: TOGGLE_SIDEBAR });
   }

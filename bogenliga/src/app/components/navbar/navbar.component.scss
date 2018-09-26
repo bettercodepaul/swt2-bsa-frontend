@@ -1,4 +1,4 @@
-
+// text color of bootstrap
 .navbar-dark .navbar-nav .nav-link {
   color: #fff;
 }
@@ -7,24 +7,27 @@
   padding: 0px;
 }
 
+// Toggle hidden while Webview
 #sidebarCollapseNavBar {
   visibility: hidden;
 }
 
+// change from bootstrap original color
 .bg-dark {
   background-color: #02bdd5!important;
 }
-
 .btn-link {
   color: #fff;
 }
 
+// Logo img
 .logo {
   margin: 10px;
 }
 
 // for small devices
 @media (max-width: 768px) {
+  // Toggle shown while in mobile view
   #sidebarCollapseNavBar {
     visibility: visible;
     width: 40px;
@@ -32,6 +35,7 @@
     background: #f5f5f5;
   }
 
+  // Toggle style of rows
   #sidebarCollapseNavBar span {
     width: 80%;
     height: 2px;

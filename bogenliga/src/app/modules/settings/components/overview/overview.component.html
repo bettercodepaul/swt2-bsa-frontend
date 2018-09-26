@@ -7,6 +7,7 @@
 
 
 <table id="example" class="table table-hover table-sm table-responsive-sm thead-light" style="width:100%">
+  <!-- Table Head with Headings and sort buttons -->
   <thead>
   <tr>
     <th><h3>{{ 'TABLE.KEY' | translate }}</h3></th>
@@ -16,8 +17,11 @@
     <th><h3>{{ 'TABLE.ACTION' | translate }}</h3></th>
   </tr>
   </thead>
-  <tbody>
 
+  <!-- Table Body with Data -->
+  <tbody>
+  <!-- ngFor: for loop throug data, ngIf: show if condition true -->
+  <!-- shows data if it is on the shown page of table -->
   <tr *ngFor="let data of datas">
     <td *ngIf="datas.indexOf(data) >= first && datas.indexOf(data) <= last" scope="row" colspan="2">{{data.key}}</td>
     <td *ngIf="datas.indexOf(data) >= first && datas.indexOf(data) <= last" colspan="2">{{data.value}}</td>
@@ -26,8 +30,9 @@
       <a (click)="deleteThisData(data.key)"><i class="material-icons">cancel</i></a>
     </td>
   </tr>
-
   </tbody>
+
+  <!-- Table Foot with Headings -->
   <tfoot>
   <tr>
     <th><h3>{{ 'TABLE.KEY' | translate }}</h3></th>
@@ -56,4 +61,3 @@
     </li>
   </ul>
 </nav>
-<!--/Pagination -->

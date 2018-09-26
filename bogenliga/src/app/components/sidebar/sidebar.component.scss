@@ -61,7 +61,6 @@
   color: #fff;
 }
 
-
 #sidebar ul.components {
   padding: 20px 0;
   border-bottom: 1px solid #fff;
@@ -131,6 +130,7 @@
   transform: translateX(50%);
 }
 
+// Button to change small to wide / wide to small
 #sidebarCollapseBottom {
   width: 40px;
   height: 40px;
@@ -139,11 +139,10 @@
   flex-basis: 100%;
   //border: 1px solid #343a40;
 }
-
 #sidebarCollapseBottom:hover {
   background: #02bdd5;//#555555;
 }
-
+// rows in button
 #sidebarCollapseBottom span {
   width: 80%;
   height: 2px;

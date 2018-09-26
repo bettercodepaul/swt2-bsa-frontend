@@ -16,17 +16,14 @@ import {catchError, map} from 'rxjs/operators';
 })
 export class DetailsComponent implements OnInit {
 
-  dataSelected = false;
+  dataSelected = false; // is data selceted -> chooses view
   data: Data = new Data();
-  dataKey = '';
-  // settingsKey: string;
+  dataKey = ''; // key for url -> which data is selected
 
   constructor(private dataService: DataService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // this.getData();
     this.initDialog();
-    // this.dataIndex = this.dataService.getIndexSelectedData();
   }
 
   /**
@@ -40,10 +37,10 @@ export class DetailsComponent implements OnInit {
 
   private initDialog(): void {
     this.route.params.subscribe(params => {
+      // if there is a key -> set dataKey to string, set data to selected object
       let settingsKey;
       if (!isUndefined(params['key'])) {
         settingsKey = params['key'];
-        console.log(settingsKey);
         this.dataKey = settingsKey;
         this.dataService.findByKey(settingsKey).subscribe(data => this.data = data);
         this.dataSelected = true;
@@ -51,15 +48,28 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * Add new data to database
+   * calls service
+   * resets data of this for next input
+   */
   saveNewData(): void {
     this.dataService.addOne(new Data(this.data.key, this.data.value)).subscribe();
     this.data = new Data(); // reset data
   }
 
+  /**
+   * updates already existing data in database
+   * calls service
+   */
   saveData(): void {
     this.dataService.update(this.data).subscribe();
   }
 
+  /**
+   * delete selected data from database
+   * calls service
+   */
   deleteThisData(): void {
     this.dataService.deleteByKey(this.dataKey).subscribe();
   }

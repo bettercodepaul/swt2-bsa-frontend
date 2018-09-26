@@ -1,4 +1,3 @@
-
 <nav id="sidebar" class="{{isActive? 'inactive' : ''}}" class="navbar bg-dark navbar-dark fixed-left">
   <div style="flex-grow: 1">
     <!-- Sidebar Header -->
@@ -43,13 +42,12 @@
     </ul>
   </div>
 
+  <!-- Sidebar Footer -->
   <div class="sidebarFooter {{isActive? 'inactive' : ''}}" style="flex-grow: 0">
-
     <a type="button" id="sidebarCollapseBottom" (click)="toggleSidebar()">
       <i class="material-icons">{{isActive? 'chevron_right' : 'chevron_left'}}</i>
       <i class="material-icons">{{isActive? 'chevron_right' : 'chevron_left'}}</i>
     </a>
-
   </div>
 
 </nav>

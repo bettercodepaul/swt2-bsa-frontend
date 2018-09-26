@@ -1,16 +1,17 @@
 
 <nav id="navbar" class="navbar navbar-expand bg-dark navbar-dark fixed-top">
 
+  <!-- Burger Toggle -->
   <button type="button" id="sidebarCollapseNavBar" class="btn-outline-light" (click)="toggleNavbar()">
     <span></span>
     <span></span>
     <span></span>
   </button>
 
+  <!-- Logo and Titel -->
   <ul>
 	  <a routerLink="/home"><img class="navbar-brand" src="../assets/img/logo.png" style="width:45px; padding-top: 10px;"></a>
   </ul>
-
   <a routerLink="/home"><h3>{{'NAVBAR.TITLE' | translate }}</h3></a>
 
   <!-- Links -->
