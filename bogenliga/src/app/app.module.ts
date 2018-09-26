@@ -19,6 +19,7 @@ import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
 import {RouterModule} from '@angular/router';
 import {ROUTES} from './app.routing';
 import {FormsModule} from '@angular/forms';
+import { WettkaempfeComponent } from './components/wettkaempfe/wettkaempfe.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -32,7 +33,8 @@ export function createTranslateLoader(http: HttpClient) {
     NavbarComponent,
     LoginComponent,
     HomeComponent,
-    NotificationComponent
+    NotificationComponent,
+    WettkaempfeComponent
   ],
   imports: [
     BrowserModule,

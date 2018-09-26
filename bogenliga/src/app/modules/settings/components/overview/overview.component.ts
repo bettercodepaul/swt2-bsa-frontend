@@ -66,9 +66,13 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
       this.datas = datas;
       this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
       this.calculatePagination(this.datas.length);
+      console.log(this.activePage);
+      console.log(this.pageCount.length)
       // if last object of last page is deletet -> change to one page bevore
       if (this.activePage > this.pageCount.length) {
         this.activePage = this.activePage - 1;
+        this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
+        this.last = +this.activePage * this.maxOnPage - 1;
       }
     });
   }
@@ -152,7 +156,6 @@ export class OverviewComponent implements OnInit, AfterViewInit, OnChanges {
   deleteThisData(key: string): void {
     this.dataService.deleteByKey(key).subscribe(data => {
       this.getData();
-
     });
   }
 
