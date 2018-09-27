@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './modules/login/components/login/login.component';
+import { HomeComponent } from './modules/home/components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotificationComponent } from './components/notification';
@@ -19,7 +19,10 @@ import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
 import {RouterModule} from '@angular/router';
 import {ROUTES} from './app.routing';
 import {FormsModule} from '@angular/forms';
-import { WettkaempfeComponent } from './components/wettkaempfe/wettkaempfe.component';
+import { WettkaempfeComponent } from './modules/wettkampf/components/wettkaempfe/wettkaempfe.component';
+import {HomeModule} from "./modules/home/home.module";
+import {WettkampfModule} from "./modules/wettkampf/wettkampf.module";
+import {LoginModule} from "./modules/login/login.module";
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -31,10 +34,7 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     SidebarComponent,
     NavbarComponent,
-    LoginComponent,
-    HomeComponent,
-    NotificationComponent,
-    WettkaempfeComponent
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +50,10 @@ export function createTranslateLoader(http: HttpClient) {
     /* REDUX-STORE */
     StoreModule.forRoot(APP_REDUCERS),
     EffectsModule.forRoot([]),
-    FormsModule
+    FormsModule,
+    HomeModule,
+    WettkampfModule,
+    LoginModule
   ],
   exports: [TranslateModule ],
   providers: [],

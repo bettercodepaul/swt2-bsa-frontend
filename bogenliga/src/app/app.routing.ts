@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LoginComponent } from './components/login/login.component';
-import { HomeComponent } from './components/home/home.component';
-import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
-import {WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.component';
+import { LoginComponent } from './modules/login/components/login/login.component';
+import { HomeComponent } from './modules/home/components/home/home.component';
 
 export const ROUTES: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'wettkaempfe', component: WettkaempfeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'wettkaempfe', loadChildren: 'src/app/modules/wettkampf/wettkampf.module#WettkampfModule' },
   { path: 'settings', loadChildren: 'src/app/modules/settings/settings.module#SettingsModule' }
 ];

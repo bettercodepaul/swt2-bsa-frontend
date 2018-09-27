@@ -4,7 +4,7 @@ import {OverviewComponent} from './components/overview/overview.component';
 
 
 export const SETTINGS_ROUTES: Routes = [
-  { path: '', redirectTo: '/overview', pathMatch: 'full' },
+  { path: '', redirectTo: 'overview', pathMatch: 'full' },
   { path: 'overview', component: OverviewComponent},
   { path: 'details', component: DetailsComponent},
   { path: 'details/:key', component: DetailsComponent}
