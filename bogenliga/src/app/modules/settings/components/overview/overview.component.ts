@@ -15,7 +15,8 @@ import { TranslatePipe} from '@ngx-translate/core';
   providers: [ TranslatePipe ]
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
-  @ViewChildren('pages') pages: QueryList<ElementRef>;
+  // pages of the pagination -> overview.component.html
+  @ViewChildren('pages') pages: QueryList<ElementRef>; // https://angular.io/api/core/ViewChild
 
   datas: Data[] = []; // data for table
   keyAufsteigend = true; // if sorted with key aufsteigend
@@ -27,12 +28,14 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   first = 0; // first item index on page
   last = this.maxOnPage - 1; // last item index on page
 
-  @HostListener('click', ['$event']) onclick(event: any) {
+  @HostListener('click', ['$event']) onclick(event: any) { // https://angular.io/api/core/HostListener
     if (event.target.parentElement.innerText >= 1 || event.target.parentElement.innerText <= 3) {
       (this.activePage as number) = +event.target.parentElement.innerText;
+      // clears active from all pages and adds it only to current page
       this.clearActive();
       this.renderer.addClass(event.target.parentElement, 'active');
     }
+    // Calculate first and last item of page
     this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
     this.last = +this.activePage * this.maxOnPage - 1;
   }
@@ -47,6 +50,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     this.getData();
   }
 
+  /**
+   * makes sure only first page is labeld active
+   * sets active page to first page
+   * calculates first and last item on the page
+   */
   ngAfterViewInit() {
     this.clearActive();
     this.renderer.addClass(this.pages.first.nativeElement, 'active');
@@ -123,12 +131,21 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * makes sure no page is labeld active
+   */
   clearActive() {
     this.pages.forEach(element => {
       this.renderer.removeClass(element.nativeElement, 'active');
     });
   }
 
+  /**
+   * sets first page to first item of pages
+   * makes sure only first class is active
+   * calculates first and last item of first page
+   * activated when link to first page is used
+   */
   firstPage() {
     this.clearActive();
     const firstPage = this.pages.first.nativeElement;
@@ -140,6 +157,12 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     this.last = +this.activePage * this.maxOnPage;
   }
 
+  /**
+   * sets last page to last item of pages
+   * makes sure only last class is active
+   * calculates first and last item of last page
+   * activated when link to last page is used
+   */
   lastPage() {
     this.clearActive();
     const lastPage = this.pages.last.nativeElement;

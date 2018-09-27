@@ -5,7 +5,6 @@ body {
   min-width: 500px;
   overflow: scroll;
 }
-
 p {
   font-family: 'Poppins', sans-serif;
   font-size: 1.1em;
@@ -13,21 +12,20 @@ p {
   line-height: 1.7em;
   color: #444;
 }
-
 a, a:hover, a:focus {
   color: inherit;
   text-decoration: none;
   transition: all 0.3s;
 }
-
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
   background: #02bdd5;//#555555;
 }
 
+// Icons from https://material.io/tools/icons/?style=baseline
 .material-icons {
-  font-size: 30px;
+  font-size: 30px; // size of the image
   padding-top: 5px;
 }
 
@@ -43,17 +41,14 @@ ul ul a {
   padding-left: 250px; //for the Sidebar
   width: 100%;
 }
-
 .content.inactive {
   padding-left: 80px; //for the Sidebar
 }
-
 #content-without-footer {
   padding-right: 80px;
   padding: 30px;
 }
-
-#support {
+#support { // footer with Logos
   display: flex;
   justify-content: center;
   padding-left: 30px;
@@ -61,34 +56,32 @@ ul ul a {
   padding-top: 5px;
   background-color: #DCDCDC;
 }
-
+// bootstrap changes
 .jumbotron {
   margin-bottom: 0px;
   background-color: #E8E8E8;
 }
-
+// covers the footer Containers of the footer
 .flexContainer {
   width: 100%;
   display: flex;
   justify-content: space-around;
   flex-direction: row;
 }
-
 .footerContainer {
   width: 500px;
   padding: 15px;
 }
 
+// Logo CSS
 .logoItSolutions {
   height: 40px;
   margin: 10px;
 }
-
 .logoExxcellent {
   height: 40px;
   margin: 10px;
 }
-
 .logoHR {
   height: 40px;
   margin: 10px;
