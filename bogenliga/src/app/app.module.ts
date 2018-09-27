@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './modules/login/components/login/login.component';
-import { HomeComponent } from './modules/home/components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotificationComponent } from './components/notification';
@@ -16,13 +15,14 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
-import {RouterModule} from '@angular/router';
+import {RouterModule, RouterOutlet} from '@angular/router';
 import {ROUTES} from './app.routing';
 import {FormsModule} from '@angular/forms';
 import { WettkaempfeComponent } from './modules/wettkampf/components/wettkaempfe/wettkaempfe.component';
-import {HomeModule} from "./modules/home/home.module";
+import {HomeModule} from './modules/home/home.module';
 import {WettkampfModule} from "./modules/wettkampf/wettkampf.module";
 import {LoginModule} from "./modules/login/login.module";
+import {RouterTestingModule} from '@angular/router/testing';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {

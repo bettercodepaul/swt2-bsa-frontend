@@ -1,13 +1,13 @@
-import { SettingsModule } from './login.module';
+import { LoginModule } from './login.module';
 
 describe('SettingsModule', () => {
-  let settingsModule: SettingsModule;
+  let loginModule: LoginModule;
 
   beforeEach(() => {
-    settingsModule = new SettingsModule();
+    loginModule = new LoginModule();
   });
 
   it('should create an instance', () => {
-    expect(settingsModule).toBeTruthy();
+    expect(loginModule).toBeTruthy();
   });
 });

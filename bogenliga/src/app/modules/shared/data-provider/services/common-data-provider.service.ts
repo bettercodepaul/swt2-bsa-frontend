@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { Data } from '../types/Data';
-import { UriBuilder } from '../types/uri-builder.class';
-import { DataServiceConfig } from './../types/data-service-config.interface';
+import { Data } from '../../../settings/types/data';
+import { UriBuilder } from '../../../settings/types/uri-builder.class';
+import { DataServiceConfig } from '../../../settings/types/data-service-config.interface';
 
 import { Observable } from 'rxjs';
+import {TransferObject} from '../models/transfer-object.interface';
 
 export abstract class CommonDataService {
   abstract serviceSubUrl: string;
@@ -27,8 +28,8 @@ export abstract class CommonDataService {
   }
 
   abstract findAll(): Observable<Data[]>;
-  abstract findByKey(key: string): Observable<Data>;
-  abstract deleteByKey(key: string): Observable<any>;
-  abstract update(data: Data): Observable<any>;
-  abstract addOne(data: Data): Observable<any>;
+  abstract findById(key: string | number): Observable<any>;
+  abstract deleteById(key: string | number): Observable<any>;
+  abstract update(payload: TransferObject): Observable<any>;
+  abstract addOne(payload: TransferObject): Observable<any>;
 }

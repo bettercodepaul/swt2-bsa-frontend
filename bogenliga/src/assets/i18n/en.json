@@ -58,7 +58,8 @@
     "TIME": "Time",
     "LIGA": "League",
     "PLACE": "Place",
-    "CDAY": "Competition Day"
+    "CDAY": "Competition Day",
+    "NODATA": "No data to display..."
   },
 
   "DETAILS": {

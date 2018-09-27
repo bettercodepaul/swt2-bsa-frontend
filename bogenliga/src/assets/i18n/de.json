@@ -58,7 +58,8 @@
     "TIME": "Uhrzeit",
     "LIGA": "Liga",
     "PLACE": "Ort",
-    "CDAY": "Wettkampftag"
+    "CDAY": "Wettkampftag",
+    "NODATA": "Es gibt keine Daten zum anzeigen..."
   },
 
   "DETAILS": {

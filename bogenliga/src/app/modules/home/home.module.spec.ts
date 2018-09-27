@@ -1,13 +1,13 @@
-import { SettingsModule } from './home.module';
+import { HomeModule } from './home.module';
 
 describe('SettingsModule', () => {
-  let settingsModule: SettingsModule;
+  let homeModule: HomeModule;
 
   beforeEach(() => {
-    settingsModule = new SettingsModule();
+    homeModule = new HomeModule();
   });
 
   it('should create an instance', () => {
-    expect(settingsModule).toBeTruthy();
+    expect(homeModule).toBeTruthy();
   });
 });

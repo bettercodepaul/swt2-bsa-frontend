@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Data} from '../types/data';
+import {Data} from '../../../settings/types/data';
+import {TransferObject} from '../models/transfer-object.interface';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,13 +27,13 @@ export class RestClient {
     return this.http.get(url, httpOptions);
   }
 
-  public POST(url: string, payload: Data): Observable<Data> {
+  public POST(url: string, payload: TransferObject): Observable<any> {
     console.log('Send POST request to ' + url + ' with payload ' + JSON.stringify(payload));
 
-    return this.http.post<Data>(url, payload , httpOptions);
+    return this.http.post(url, payload , httpOptions);
   }
 
-  public PUT(url: string, payload: Data): Observable<any> {
+  public PUT(url: string, payload: TransferObject): Observable<any> {
     console.log('Send PUT request to ' + url + ' with payload ' + JSON.stringify(payload));
 
     return this.http.put(url, payload, httpOptions);

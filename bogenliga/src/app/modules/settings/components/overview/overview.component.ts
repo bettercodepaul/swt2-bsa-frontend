@@ -181,7 +181,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * @param key
    */
   deleteThisData(key: string): void {
-    this.dataService.deleteByKey(key).subscribe(data => {
+    this.dataService.deleteById(key).subscribe(data => {
       this.getData();
     });
   }

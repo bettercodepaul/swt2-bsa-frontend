@@ -1,13 +1,13 @@
-import { SettingsModule } from './wettkampf.module';
+import { WettkampfModule } from './wettkampf.module';
 
 describe('SettingsModule', () => {
-  let settingsModule: SettingsModule;
+  let wettkampfModule: WettkampfModule;
 
   beforeEach(() => {
-    settingsModule = new SettingsModule();
+    wettkampfModule = new WettkampfModule();
   });
 
   it('should create an instance', () => {
-    expect(settingsModule).toBeTruthy();
+    expect(wettkampfModule).toBeTruthy();
   });
 });

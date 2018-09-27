@@ -1,4 +1,6 @@
-export class Data {
+import {TransferObject} from '../../shared/data-provider/models/transfer-object.interface';
+
+export class Data implements TransferObject {
   key: string;
   value: string;
 
@@ -6,6 +8,5 @@ export class Data {
     this.key = key ? key : '';
     this.value = value ? value : '';
   }
-
 }
 

@@ -30,6 +30,9 @@
       <a (click)="deleteThisData(data.key)"><i class="material-icons">cancel</i></a>
     </td>
   </tr>
+  <tr *ngIf="datas.length == 0">
+    <td colspan="5" id="noData">{{ 'TABLE.NODATA' | translate }}</td>
+  </tr>
   </tbody>
 
   <!-- Table Foot with Headings -->

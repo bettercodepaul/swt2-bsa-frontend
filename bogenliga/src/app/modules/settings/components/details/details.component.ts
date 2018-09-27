@@ -42,7 +42,7 @@ export class DetailsComponent implements OnInit {
       if (!isUndefined(params['key'])) {
         settingsKey = params['key'];
         this.dataKey = settingsKey;
-        this.dataService.findByKey(settingsKey).subscribe(data => this.data = data);
+        this.dataService.findById(settingsKey).subscribe(data => this.data = data);
         this.dataSelected = true;
       }
     });
@@ -71,6 +71,6 @@ export class DetailsComponent implements OnInit {
    * calls service
    */
   deleteThisData(): void {
-    this.dataService.deleteByKey(this.dataKey).subscribe();
+    this.dataService.deleteById(this.dataKey).subscribe();
   }
 }

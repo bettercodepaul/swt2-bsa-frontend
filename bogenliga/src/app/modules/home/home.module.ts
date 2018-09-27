@@ -14,6 +14,6 @@ import {HomeComponent} from './components/home/home.component';
     SharedModule,
     FormsModule
   ],
-  declarations: [ HomeComponent]
+  declarations: [ HomeComponent ]
 })
 export class HomeModule {}

@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {LOGIN_ROUTES} from './login.routing';
 import {FormsModule} from '@angular/forms';
 import {LoginComponent} from './components/login/login.component';
+import {AppComponent} from '../../app.component';
 
 
 @NgModule({
