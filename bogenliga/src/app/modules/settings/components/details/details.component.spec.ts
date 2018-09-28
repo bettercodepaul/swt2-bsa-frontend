@@ -40,4 +40,12 @@ describe('DetailsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('after saveNewData(), data should be reset', () => {
+    component.data.key = 'dummyKey';
+    component.data.value = 'dummyValue';
+    component.saveNewData();
+    expect(component.data.key).toBe('');
+    expect(component.data.value).toBe('');
+  });
 });

@@ -8,13 +8,9 @@ import {CommonDataService} from '../../shared/data-provider/services/common-data
 import {RestClient} from '../../shared/data-provider/services/rest-client.class';
 import {UriBuilder} from '../types/uri-builder.class';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
-
-
 
 export class DataService extends CommonDataService {
   serviceSubUrl = 'v1/configuration';

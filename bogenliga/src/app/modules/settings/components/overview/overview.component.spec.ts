@@ -23,7 +23,7 @@ describe('OverviewComponent', () => {
         LoginModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule
+        HttpClientModule,
       ]
     })
     .compileComponents();

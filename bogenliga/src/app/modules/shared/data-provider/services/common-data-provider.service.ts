@@ -4,8 +4,9 @@ import { Data } from '../../../settings/types/data';
 import { UriBuilder } from '../../../settings/types/uri-builder.class';
 import { DataServiceConfig } from '../../../settings/types/data-service-config.interface';
 
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {TransferObject} from '../models/transfer-object.interface';
+import {HttpErrorResponse} from '@angular/common/http';
 
 export abstract class CommonDataService {
   abstract serviceSubUrl: string;
@@ -32,4 +33,8 @@ export abstract class CommonDataService {
   abstract deleteById(key: string | number): Observable<any>;
   abstract update(payload: TransferObject): Observable<any>;
   abstract addOne(payload: TransferObject): Observable<any>;
+
+
 }
+
+
