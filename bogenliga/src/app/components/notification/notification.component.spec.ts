@@ -5,13 +5,15 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {ROUTES} from '../../app.routing';
 import {HomeModule} from '../../modules/home/home.module';
 import {LoginModule} from '../../modules/login/login.module';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {createTranslateLoader} from '../../app.module';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {TranslateModule} from '@ngx-translate/core';
+import {HttpClientModule} from '@angular/common/http';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../modules/shared/redux-store';
+import {AppModule} from '../../app.module';
+import {Component, ViewChild} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
-describe('NotificationComponent', () => {
+xdescribe('NotificationComponent', () => {
   let component: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
 
