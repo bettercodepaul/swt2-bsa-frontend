@@ -19,8 +19,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChildren('pages') pages: QueryList<ElementRef>; // https://angular.io/api/core/ViewChild
 
   datas: Data[] = []; // data for table
-  keyAufsteigend = false; // if sorted with key aufsteigend
-  valueAufsteigend = false; // if sorted with value aufsteigend
+  keyAscending = false; // if sorted with key aufsteigend
+  valueAscending = false; // if sorted with value aufsteigend
 
   activePage = 1; // number of current page
   pageCount: Array<any> = [1, 2]; // link to the pages
@@ -102,14 +102,14 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * or highest to lowest
    */
   sortDataByKey(): void {
-    if (this.keyAufsteigend === false) {
+    if (this.keyAscending === false) {
       this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
-      this.valueAufsteigend = false;
-      this.keyAufsteigend = true;
+      this.valueAscending = false;
+      this.keyAscending = true;
     } else {
       this.datas.sort((b, a) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
-      this.valueAufsteigend = false;
-      this.keyAufsteigend = false;
+      this.valueAscending = false;
+      this.keyAscending = false;
     }
   }
 
@@ -119,14 +119,14 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * or highest to lowest
    */
   sortDataByValue(): void {
-    if (this.valueAufsteigend === false) {
+    if (this.valueAscending === false) {
       this.datas.sort((a, b) => a.value < b.value ? -1 : a.value > b.value ? 1 : 0);
-      this.keyAufsteigend = false;
-      this.valueAufsteigend = true;
+      this.keyAscending = false;
+      this.valueAscending = true;
     } else {
       this.datas.sort((b, a) => a.value < b.value ? -1 : a.value > b.value ? 1 : 0);
-      this.keyAufsteigend = false;
-      this.valueAufsteigend = false;
+      this.keyAscending = false;
+      this.valueAscending = false;
     }
   }
 
