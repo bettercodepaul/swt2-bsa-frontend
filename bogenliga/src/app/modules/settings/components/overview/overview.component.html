@@ -48,7 +48,7 @@
 </table>
 
 <!--Pagination -->
-<nav class="my-4">
+<nav *ngIf="pageCount.length > 0"class="my-4">
   <ul class="d-flex justify-content-center pagination pagination-circle pg-blue mb-0">
     <!--First-->
     <li class="page-item">

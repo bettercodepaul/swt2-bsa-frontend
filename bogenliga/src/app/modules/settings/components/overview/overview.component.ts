@@ -19,10 +19,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChildren('pages') pages: QueryList<ElementRef>; // https://angular.io/api/core/ViewChild
 
   datas: Data[] = []; // data for table
-  keyAufsteigend = true; // if sorted with key aufsteigend
+  keyAufsteigend = false; // if sorted with key aufsteigend
   valueAufsteigend = false; // if sorted with value aufsteigend
 
-  activePage: number; // number of current page
+  activePage = 1; // number of current page
   pageCount: Array<any> = [1, 2]; // link to the pages
   maxOnPage = 10; // how many items can be shown on the page
   first = 0; // first item index on page
@@ -53,7 +53,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   ngAfterViewInit() {
     this.clearActive();
-    this.renderer.addClass(this.pages.first.nativeElement, 'active');
+    if (this.pages.length > 0) {
+      this.renderer.addClass(this.pages.first.nativeElement, 'active');
+    }
     this.activePage = 1;
     this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
     this.last = +this.activePage * this.maxOnPage - 1;
@@ -68,7 +70,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     // this.dataService.getData().subscribe(datas => this.datas = datas);
     this.dataService.findAll().subscribe(datas => {
       this.datas = datas;
-      this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+      this.sortDataByKey();
+      // this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
       this.calculatePagination(this.datas.length);
       // if last object of last page is deleted -> change to one page before
       if (this.activePage > this.pageCount.length) {
@@ -99,13 +102,13 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * or highest to lowest
    */
   sortDataByKey(): void {
-    if (this.valueAufsteigend === true) {
+    if (this.keyAufsteigend === false) {
       this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
       this.valueAufsteigend = false;
-      this.keyAufsteigend = false;
+      this.keyAufsteigend = true;
     } else {
       this.datas.sort((b, a) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
-      this.valueAufsteigend = true;
+      this.valueAufsteigend = false;
       this.keyAufsteigend = false;
     }
   }
@@ -116,13 +119,13 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * or highest to lowest
    */
   sortDataByValue(): void {
-    if (this.keyAufsteigend === true) {
+    if (this.valueAufsteigend === false) {
       this.datas.sort((a, b) => a.value < b.value ? -1 : a.value > b.value ? 1 : 0);
       this.keyAufsteigend = false;
-      this.valueAufsteigend = false;
+      this.valueAufsteigend = true;
     } else {
       this.datas.sort((b, a) => a.value < b.value ? -1 : a.value > b.value ? 1 : 0);
-      this.keyAufsteigend = true;
+      this.keyAufsteigend = false;
       this.valueAufsteigend = false;
     }
   }
@@ -131,9 +134,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * makes sure no page is labeled active
    */
   clearActive() {
-    this.pages.forEach(element => {
-      this.renderer.removeClass(element.nativeElement, 'active');
-    });
+    if (this.pages.length > 0) {
+      this.pages.forEach(element => {
+        this.renderer.removeClass(element.nativeElement, 'active');
+      });
+    }
   }
 
   /**
@@ -144,11 +149,12 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   firstPage() {
     this.clearActive();
-    const firstPage = this.pages.first.nativeElement;
-    (this.activePage as number) = +firstPage.innerText;
-    this.clearActive();
-    this.renderer.addClass(firstPage, 'active');
-
+    if (this.pages.length > 0) {
+      const firstPage = this.pages.first.nativeElement;
+      (this.activePage as number) = +firstPage.innerText;
+      this.clearActive();
+      this.renderer.addClass(firstPage, 'active');
+    }
     this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
     this.last = +this.activePage * this.maxOnPage;
   }
@@ -161,11 +167,12 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   lastPage() {
     this.clearActive();
-    const lastPage = this.pages.last.nativeElement;
-    (this.activePage as number) = +lastPage.innerText;
-    this.clearActive();
-    this.renderer.addClass(lastPage, 'active');
-
+    if (this.pages.length > 0) {
+      const lastPage = this.pages.last.nativeElement;
+      (this.activePage as number) = +lastPage.innerText;
+      this.clearActive();
+      this.renderer.addClass(lastPage, 'active');
+    }
     this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
     this.last = +this.activePage * this.maxOnPage;
   }
