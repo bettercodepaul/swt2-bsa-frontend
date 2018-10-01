@@ -10,10 +10,14 @@ import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../../shared/redux-store';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {DataService} from '../../services/data.service';
+import {Data} from '../../types/data';
+import {Observable} from 'rxjs';
 
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
   let fixture: ComponentFixture<DetailsComponent>;
+  let service: DataService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,6 +38,7 @@ describe('DetailsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DetailsComponent);
     component = fixture.componentInstance;
+    service = TestBed.get(DataService);
     fixture.detectChanges();
   });
 
@@ -44,6 +49,9 @@ describe('DetailsComponent', () => {
   it('after saveNewData(), data should be reset', () => {
     component.data.key = 'dummyKey';
     component.data.value = 'dummyValue';
+    spyOn(service, 'addOne').and.callFake(function(data: Data): Observable<any> {
+      return new Observable<any>(); // return is not important in this test -> function shouldnt continue saving to backend
+    });
     component.saveNewData();
     expect(component.data.key).toBe('');
     expect(component.data.value).toBe('');

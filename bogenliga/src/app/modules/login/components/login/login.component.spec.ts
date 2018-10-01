@@ -21,8 +21,7 @@ describe('LoginComponent', () => {
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         TranslateModule.forRoot(),
-        StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule
+        StoreModule.forRoot(APP_REDUCERS)
       ]
     })
     .compileComponents();

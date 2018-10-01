@@ -42,10 +42,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   constructor(private renderer: Renderer2, private el: ElementRef, private dataService: DataService) { }
 
-  /**
-   * gets Data and sorts it from lowest to highest key
-   * sets Index of selected Item to -1 -> none selected
-   */
   ngOnInit() {
     this.getData();
   }
@@ -74,7 +70,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       this.datas = datas;
       this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
       this.calculatePagination(this.datas.length);
-      // if last object of last page is deletet -> change to one page bevore
+      // if last object of last page is deleted -> change to one page before
       if (this.activePage > this.pageCount.length) {
         this.activePage = this.activePage - 1;
         this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
@@ -85,7 +81,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   /**
    * counts how many pages are needed
-   * makes an array with the pagenumbers
+   * makes an array with the page numbers
    * @param datacount
    */
   calculatePagination(datacount: number) {
@@ -132,7 +128,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * makes sure no page is labeld active
+   * makes sure no page is labeled active
    */
   clearActive() {
     this.pages.forEach(element => {

@@ -1,7 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {AppComponent} from '../../app.component';
 import {TranslateService} from '@ngx-translate/core';
-import {ACCEPT_NOTIFICATION} from '../../modules/shared/redux-store/feature/notification';
 import {select, Store} from '@ngrx/store';
 import {AppState, SidebarState} from '../../modules/shared/redux-store';
 import {TOGGLE_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';

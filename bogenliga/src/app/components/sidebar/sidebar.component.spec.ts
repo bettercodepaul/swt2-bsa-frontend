@@ -23,8 +23,7 @@ describe('SidebarComponent', () => {
         HomeModule,
         LoginModule,
         TranslateModule.forRoot(),
-        StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule
+        StoreModule.forRoot(APP_REDUCERS)
       ]
     })
     .compileComponents();
