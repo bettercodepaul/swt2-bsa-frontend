@@ -1,6 +1,7 @@
 import {HomePage} from './home.po';
 import {Support} from './support.po';
 import {Footer} from './footer.po';
+import {Navbar} from './navbar.po';
 
 describe('Home Page', () => {
   let page: HomePage;
@@ -75,5 +76,41 @@ describe('Footer', () => {
   it('should link to Impressum und Datenschutz', () => {
     expect(footer.getImpressumUndDatenschutz()).toEqual('Impressum und Datenschutz');
   });
+});
 
+describe('Navbar', () => {
+  let navbar: Navbar;
+
+  beforeEach(() => {
+    navbar = new Navbar();
+    navbar.navigateToHome();
+  });
+
+  it('should exist', () => {
+    expect(navbar.getNavbar()).toBeTruthy();
+  });
+
+  it('Toggle should exist', () => {
+    expect(navbar.getToggle).toBeTruthy();
+  });
+
+  it('Logo should exist', () => {
+    expect(navbar.getLogo()).toBeTruthy();
+  });
+
+  it('Title should exist', () => {
+    expect(navbar.getTitel()).toBeTruthy();
+  });
+
+  it('should have translate de', () => {
+    expect(navbar.getDe()).toEqual('de');
+  });
+
+  it('should have translate en', () => {
+    expect(navbar.getEn()).toEqual('en');
+  });
+
+  it('Settings should exist', () => {
+    expect(navbar.getSettings).toBeTruthy();
+  });
 });
