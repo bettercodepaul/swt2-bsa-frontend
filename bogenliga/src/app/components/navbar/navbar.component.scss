@@ -1,6 +1,7 @@
 // text color of bootstrap
 .navbar-dark .navbar-nav .nav-link {
   color: #fff;
+  padding: 0px;
 }
 
 .navbar-brand {
@@ -15,6 +16,8 @@
 // change from bootstrap original color
 .bg-dark {
   background-color: #02bdd5!important;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 .btn-link {
   color: #fff;

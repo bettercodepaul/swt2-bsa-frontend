@@ -2,15 +2,15 @@
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  min-height: calc(100vh - 87px); //full view - Navbar on top
-  margin-top: 87px; //height of NavBar
+  min-height: calc(100vh - 71px); //full view - Navbar on top
+  margin-top: 71px; //height of NavBar
   background: #02bdd5;//#343a40;
   color: #fff;
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
   position: fixed; // stays fixed on the side while scrolling
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 // basic sidebar inactive css

@@ -16,30 +16,8 @@
     <!-- Notification -->
     <bla-notification [notification]="notification"></bla-notification>
 
-    <!-- Jumbotron Footer with picture -->
-    <div id="footer" class="jumbotron jumbotron-fluid">
-
-      <div class="flexContainer">
-
-        <div class="footerContainer">
-          <h3>{{ 'APP.TITLE' | translate }}</h3>
-          <p>{{ 'APP.ABOUT' | translate }}</p>
-          <ul class="nav flex-column">
-            <li><a href="#">{{ 'APP.KONTAKT' | translate }}</a></li>
-            <li><a href="#">{{ 'APP.IMPRESSUM' | translate }}</a></li>
-          </ul>
-        </div>
-
-        <div class="footerContainer">
-          <img class="mosaikImg" width="90%" src="../../assets/img/Bogen.PNG">
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- Support Footer -->
-    <footer id=support>
+    <!-- footer with logos -->
+    <footer id="footer" class="jumbotron jumbotron-fluid">
       <div class="footer-copyright text-center py-3">
         <p>{{ 'APP.SUPPORT' | translate }}</p>
         <a href="https://www.exxcellent.de/" target="_blank"><img class="logoExxcellent" src="../assets/img/EXX-logo.png"></a>
@@ -47,6 +25,15 @@
         <a href="https://www.gras-it.de/" target="_blank"><img class="logoItSolutions" src="../assets/img/IT-Solutions_Logo.png"></a>
       </div>
     </footer>
+
+    <!-- Support Footer -->
+    <div id="support" class="navbar navbar-expand-sm bg-light justify-content-center">
+      <ul class="nav">
+        <li class="nav-item"><a class="navbar-brand" href="#">{{ 'APP.KONTAKT' | translate }}</a></li>
+        <li class="nav-item"><a class="navbar-brand" href="#">{{ 'APP.IMPRESSUM' | translate }}</a></li>
+      </ul>
+    </div>
+
   </div>
 
 </div>
