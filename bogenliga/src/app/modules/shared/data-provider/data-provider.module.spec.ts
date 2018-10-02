@@ -11,7 +11,7 @@ import {FormsModule} from '@angular/forms';
 import {TestBed} from '@angular/core/testing';
 import {DetailsComponent} from '../../settings/components/details/details.component';
 
-xdescribe('DataProviderModule', () => {
+describe('DataProviderModule', () => {
   let dataProviderModule: DataProviderModule;
 
   beforeEach(() => {

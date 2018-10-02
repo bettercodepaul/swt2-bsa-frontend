@@ -189,10 +189,25 @@ describe('OverviewComponent', () => {
   it('calculate first page', () => {
     component.activePage = 2;
     component.maxOnPage = 5;
-    component.first = 1;
-    component.last = 5;
+    component.first = 6;
+    component.last = 10;
     fixture.detectChanges();
     component.calculatePagination(9);
+    fixture.detectChanges();
+    component.firstPage();
+    fixture.detectChanges();
+    expect(component.first).toBe(1);
+    expect(component.last).toBe(5);
+    expect(component.activePage).toBe(1);
+  });
+
+  it('calculate first page no data', () => {
+    component.activePage = 2;
+    component.maxOnPage = 5;
+    component.first = 6;
+    component.last = 10;
+    fixture.detectChanges();
+    component.calculatePagination(0);
     fixture.detectChanges();
     component.firstPage();
     fixture.detectChanges();
@@ -214,6 +229,21 @@ describe('OverviewComponent', () => {
     expect(component.first).toBe(7);
     expect(component.last).toBe(9);
     expect(component.activePage).toBe(3);
+  });
+
+  it('calculate last page no data', () => {
+    component.activePage = 1;
+    component.first = 1;
+    component.last = 3;
+    component.maxOnPage = 3;
+    fixture.detectChanges();
+    component.calculatePagination(0);
+    fixture.detectChanges();
+    component.lastPage();
+    fixture.detectChanges();
+    expect(component.first).toBe(1);
+    expect(component.last).toBe(3);
+    expect(component.activePage).toBe(1);
   });
 
 });

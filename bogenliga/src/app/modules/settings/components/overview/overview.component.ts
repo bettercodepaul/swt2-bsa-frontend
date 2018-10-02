@@ -25,8 +25,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   activePage = 1; // number of current page
   pageCount: Array<any> = [1, 2]; // link to the pages
   maxOnPage = 10; // how many items can be shown on the page
-  first = 0; // first item index on page
-  last = this.maxOnPage - 1; // last item index on page
+  first = 1; // first item on page
+  last = this.maxOnPage; // last item on page
 
   @HostListener('click', ['$event']) onclick(event: any) { // https://angular.io/api/core/HostListener
     if (event.target.parentElement.innerText >= 1 || event.target.parentElement.innerText <= 3) {
@@ -154,9 +154,14 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       (this.activePage as number) = +firstPage.innerText;
       this.clearActive();
       this.renderer.addClass(firstPage, 'active');
+      this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
+      this.last = +this.activePage * this.maxOnPage;
+    } else {
+      this.clearActive();
+      this.activePage = 1;
+      this.first = 1;
+      this.last = this.maxOnPage;
     }
-    this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
-    this.last = +this.activePage * this.maxOnPage;
   }
 
   /**
@@ -172,9 +177,14 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       (this.activePage as number) = +lastPage.innerText;
       this.clearActive();
       this.renderer.addClass(lastPage, 'active');
+      this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
+      this.last = +this.activePage * this.maxOnPage;
+    } else {
+      this.clearActive();
+      this.activePage = 1;
+      this.first = 1;
+      this.last = this.maxOnPage;
     }
-    this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1;
-    this.last = +this.activePage * this.maxOnPage;
   }
 
   /**

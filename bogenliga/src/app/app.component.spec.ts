@@ -14,6 +14,10 @@ import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {SettingsModule} from './modules/settings/settings.module';
 import {Component, NgModule, NgModuleFactoryLoader} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {SETTINGS_ROUTES} from './modules/settings/settings.routing';
+import {OverviewComponent} from './modules/settings/components/overview/overview.component';
+import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 
 
 describe('AppComponent', () => {
@@ -33,8 +37,11 @@ describe('AppComponent', () => {
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         LoginModule,
+        SettingsModule,
+        WettkampfModule,
         TranslateModule.forRoot(),
-        StoreModule.forRoot(APP_REDUCERS)
+        StoreModule.forRoot(APP_REDUCERS),
+        HttpClientModule
       ]
     }).compileComponents();
   }));
@@ -76,7 +83,45 @@ describe('AppComponent', () => {
     expect(location.path()).toBe('/login');
   }));
 
-  // Test naviagtion to wettkaempfe
+  it('navigate to "wettkaempfe" takes you to /wettkaempfe', fakeAsync(() => {
+    router.initialNavigation();
+    const loader = TestBed.get(NgModuleFactoryLoader);
+    loader.stubbedModules = {lazyModule: WettkampfModule};
+    router.resetConfig([
+      {path: 'wettkaempfe', loadChildren: 'lazyModule'},
+    ]);
+    spyOn(loader, 'load').and.callThrough();
+    router.navigate(['wettkaempfe']);
+    tick();
+    expect(location.path()).toBe('/wettkaempfe/wettkaempfe');
+    expect(loader.load.calls.count()).toBe(1);
+  }));
 
-  // Test navigation to settings
+  it('navigate to "settings" takes you to /settings/overview', fakeAsync(() => {
+    router.initialNavigation();
+    const loader = TestBed.get(NgModuleFactoryLoader);
+    loader.stubbedModules = {lazyModule: SettingsModule};
+    router.resetConfig([
+      {path: 'settings', loadChildren: 'lazyModule'},
+    ]);
+    spyOn(loader, 'load').and.callThrough();
+    router.navigate(['settings']);
+    tick();
+    expect(location.path()).toBe('/settings/overview');
+    expect(loader.load.calls.count()).toBe(1);
+  }));
+
+  it('navigate to "settings/details" takes you to /settings/details', fakeAsync(() => {
+    router.initialNavigation();
+    const loader = TestBed.get(NgModuleFactoryLoader);
+    loader.stubbedModules = {lazyModule: SettingsModule};
+    router.resetConfig([
+      {path: 'settings', loadChildren: 'lazyModule'},
+    ]);
+    spyOn(loader, 'load').and.callThrough();
+    router.navigate(['settings/details']);
+    tick();
+    expect(location.path()).toBe('/settings/details');
+    expect(loader.load.calls.count()).toBe(1);
+  }));
 });

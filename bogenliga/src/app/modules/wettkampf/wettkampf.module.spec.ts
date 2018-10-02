@@ -7,7 +7,6 @@ import {SidebarComponent} from '../../components/sidebar/sidebar.component';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {NotificationComponent} from '../../components/notification';
 import {RouterTestingModule} from '@angular/router/testing';
-import {ROUTES} from '../../app.routing';
 import {HomeModule} from '../home/home.module';
 import {LoginModule} from '../login/login.module';
 import {TranslateModule} from '@ngx-translate/core';
