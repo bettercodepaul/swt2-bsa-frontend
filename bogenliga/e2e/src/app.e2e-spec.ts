@@ -1,4 +1,5 @@
 import {HomePage} from './home.po';
+import {Support} from './support.po';
 import {Footer} from './footer.po';
 
 describe('Home Page', () => {
@@ -7,6 +8,10 @@ describe('Home Page', () => {
   beforeEach(() => {
     page = new HomePage();
     page.navigateToHome();
+  });
+
+  it('should exist', () => {
+    expect(page.getHome()).toBeTruthy();
   });
 
   it('should display welcome message', () => {
@@ -30,6 +35,27 @@ describe('Home Page', () => {
   });
 });
 
+describe('Support', () => {
+  let support: Support;
+
+  beforeEach(() => {
+    support = new Support();
+    support.navigateToHome();
+  });
+
+  it('should exist', () => {
+    expect(support.getSupport()).toBeTruthy();
+  });
+
+  it('should display Support', () => {
+    expect(support.getParagraph()).toBeTruthy();
+  });
+
+  it('should display Logos', () => {
+    expect(support.getLogos()).toBeTruthy();
+  });
+});
+
 describe('Footer', () => {
   let footer: Footer;
 
@@ -38,27 +64,16 @@ describe('Footer', () => {
     footer.navigateToHome();
   });
 
-  it('should have flexChildren', () => {
-    expect(footer.getFlexContainer).toBeTruthy();
+  it('should exist', () => {
+    expect(footer.getFooter()).toBeTruthy();
   });
 
-  it('should display Heading', () => {
-    expect(footer.getHeading()).toBeTruthy();
-  });
-
-  it('should display Paragraph', () => {
-    expect(footer.getParagraph()).toBeTruthy();
-  });
-
-  it('should display Impressum', () => {
-    expect(footer.getImpressum()).toEqual('Impressum');
-  });
-
-  it('should display Kontakt', () => {
+  it('should link to Kontakt', () => {
     expect(footer.getKontakt()).toEqual('Kontakt');
   });
 
-  it('should have an Image', () => {
-    expect(footer.getImage).toBeTruthy();
+  it('should link to Impressum und Datenschutz', () => {
+    expect(footer.getImpressumUndDatenschutz()).toEqual('Impressum und Datenschutz');
   });
+
 });

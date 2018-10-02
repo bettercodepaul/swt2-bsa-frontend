@@ -9,31 +9,15 @@ export class Footer {
     return element(by.css('#footer'));
   }
 
-  getFlexContainer() {
-    return this.getFooter().element(by.css('.flexContainer'));
-  }
-
   getLinks() {
-    return this.getFooter().element(by.css('ul'));
+    return this.getFooter().all(by.css('li'));
   }
 
   getKontakt() {
-    return this.getLinks().all(by.css('li')).get(0).getText();
+    return this.getLinks().get(0).getText();
   }
 
-  getImpressum() {
-    return this.getLinks().all(by.css('li')).get(1).getText();
-  }
-
-  getHeading() {
-    return this.getFooter().element(by.css('h3')).getText();
-  }
-
-  getParagraph() {
-    return this.getFooter().element(by.css('p')).getText();
-  }
-
-  getImage() {
-    return this.getFooter().element(by.css('img'));
+  getImpressumUndDatenschutz() {
+    return this.getLinks().get(1).getText();
   }
 }
