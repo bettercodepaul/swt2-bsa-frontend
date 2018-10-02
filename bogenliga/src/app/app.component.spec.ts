@@ -13,10 +13,8 @@ import {APP_REDUCERS} from './modules/shared/redux-store';
 import {Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {SettingsModule} from './modules/settings/settings.module';
-import {Component, NgModule, NgModuleFactoryLoader} from '@angular/core';
+import {NgModuleFactoryLoader} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {SETTINGS_ROUTES} from './modules/settings/settings.routing';
-import {OverviewComponent} from './modules/settings/components/overview/overview.component';
 import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 
 
