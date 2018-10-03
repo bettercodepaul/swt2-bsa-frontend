@@ -1,17 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {Data} from '../../../settings/types/data';
 import {TransferObject} from '../models/transfer-object.interface';
 import {catchError, retry} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': 'my-auth-token',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE, OPTIONS'
   })
 };
 
@@ -34,7 +31,7 @@ export class RestClient {
   public POST(url: string, payload: TransferObject): Observable<any> {
     console.log('Send POST request to ' + url + ' with payload ' + JSON.stringify(payload));
 
-    return this.http.post(url, payload , httpOptions).pipe(
+    return this.http.post(url, payload, httpOptions).pipe(
       retry(3), // retry a failed request up to 3 times
       catchError(this.handleError)
     );
@@ -67,7 +64,7 @@ export class RestClient {
       // The response body may contain clues as to what went wrong,
       console.error(
         `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `body was: ${JSON.stringify(error.error)}`);
     }
     // return an observable with a user-facing error message
     return throwError(

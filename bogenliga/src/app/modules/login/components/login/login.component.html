@@ -62,7 +62,9 @@
                    for="loginRememberMe">{{ 'LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
           </div>
 
-          <bla-button [disabled]="!loginForm.valid">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</bla-button>
+          <bla-button [disabled]="!loginForm.valid"
+                      (onClick)="onLogin($event)">{{ 'LOGIN.BUTTON.LOGIN' | translate }}
+          </bla-button>
 
         </div>
       </form>

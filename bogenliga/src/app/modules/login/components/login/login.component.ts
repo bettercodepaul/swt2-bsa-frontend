@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Credentials} from '../../types/credentials.class';
+import {CredentialsDO} from '../../types/credentials-do.class';
+import {LoginDataProviderService} from '../../services/login-data-provider.service';
 
 @Component({
   selector: 'bla-login',
@@ -9,11 +10,16 @@ import {Credentials} from '../../types/credentials.class';
 })
 export class LoginComponent implements OnInit {
 
-  public credentials = new Credentials();
+  public credentials = new CredentialsDO();
 
-  constructor() { }
+  constructor(private loginDataProviderService: LoginDataProviderService) {
+  }
 
   ngOnInit() {
   }
 
+  public onLogin($event: any): void {
+
+    this.loginDataProviderService.signIn(this.credentials);
+  }
 }

@@ -1,15 +1,13 @@
-import { Injectable } from '@angular/core';
-import {CommonDataService} from '../../shared/data-provider/services/common-data-provider.service';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {RestClient} from '../../shared/data-provider/services/rest-client.class';
 import {Data} from '../../settings/types/data';
-import {UriBuilder} from '../../settings/types/uri-builder.class';
 import {Wettkampf} from '../types/wettkampf';
+import {CommonDataProviderService, RestClient, UriBuilder} from '../../shared/data-provider';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WettkampfdataService extends CommonDataService {
+export class WettkampfdataService extends CommonDataProviderService {
   serviceSubUrl: string;
 
   constructor(private restClient: RestClient) {

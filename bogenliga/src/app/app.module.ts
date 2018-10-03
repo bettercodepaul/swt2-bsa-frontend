@@ -8,7 +8,7 @@ import {NotificationComponent} from './components/notification';
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
@@ -20,6 +20,7 @@ import {HomeModule} from './modules/home/home.module';
 import {SharedModule} from './modules/shared/shared.module';
 import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 import {LoginModule} from './modules/login/login.module';
+import {JwtInterceptor} from './modules/shared/data-provider/services/jwt-interceptor.class';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -54,7 +55,10 @@ export function createTranslateLoader(http: HttpClient) {
     SharedModule
   ],
   exports: [TranslateModule ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

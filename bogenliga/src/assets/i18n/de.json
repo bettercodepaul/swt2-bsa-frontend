@@ -27,7 +27,7 @@
       "LOGIN": "Login"
     },
     "USERNAME": {
-      "LABEL": "E-Mail-Adresse",
+      "LABEL": "Bitte E-Mail-Adresse eingeben",
       "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
       "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
     },

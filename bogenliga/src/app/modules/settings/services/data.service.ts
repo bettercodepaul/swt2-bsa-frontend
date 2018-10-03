@@ -1,18 +1,15 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { Data } from './../types/data';
-import { DATA } from './../mock-data';
-import {CommonDataService} from '../../shared/data-provider/services/common-data-provider.service';
-import {RestClient} from '../../shared/data-provider/services/rest-client.class';
-import {UriBuilder} from '../types/uri-builder.class';
+import {Data} from '../types/data';
+import {CommonDataProviderService, RestClient, UriBuilder} from '../../shared/data-provider';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class DataService extends CommonDataService {
+export class DataService extends CommonDataProviderService {
   serviceSubUrl = 'v1/configuration';
 
   constructor(private restClient: RestClient) {
