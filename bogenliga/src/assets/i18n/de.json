@@ -22,11 +22,21 @@
   },
 
   "LOGIN": {
-    "TITLE": "Login",
-    "USERNAME": "Benutzername",
-    "PASSWORD": "Passwort",
-    "LOGGED": "Eingelogged bleiben?",
-    "FORGOT": "Passwort vergessen?"
+    "HEADER": "Bitte einloggen:",
+    "BUTTON": {
+      "LOGIN": "Login"
+    },
+    "USERNAME": {
+      "LABEL": "E-Mail-Adresse",
+      "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben"
+    },
+    "PASSWORD": {
+      "LABEL": "Passwort",
+      "PLACEHOLDER": "Bitte Passwort eingeben"
+    },
+    "REMEMBER_ME": {
+      "LABEL": "E-Mail-Adresse merken?"
+    }
   },
 
   "HOME": {

@@ -7,32 +7,37 @@
   <bla-sidebar></bla-sidebar>
 
   <!-- Page Content -->
-  <div class="content {{isActive? 'inactive' : ''}}">
-  
-    <div id="content-without-footer">
-	  <router-outlet></router-outlet>
+  <div class="content {{isActive? 'inactive' : ''}}"
+       style="display: flex; flex-direction: column">
+
+    <div id="content-without-footer"
+         style="height: 100%">
+      <router-outlet></router-outlet>
     </div>
 
-    <!-- Notification -->
-    <bla-notification [notification]="notification"></bla-notification>
-
-    <!-- footer with logos -->
-    <footer id="support" class="jumbotron jumbotron-fluid">
-      <div class="footer-copyright text-center py-3">
+    <!-- Footer -->
+    <footer id="support">
+      <div class="jumbotron jumbotron-fluid footer-copyright text-center py-3">
         <p>{{ 'APP.SUPPORT' | translate }}</p>
         <a href="https://www.exxcellent.de/" target="_blank"><img alt="Exxcellent Logo" class="logoExxcellent" src="../assets/img/EXX-logo.png"></a>
         <a href="https://www.reutlingen-university.de/" target="_blank"><img alt="Hochschule Reutlingen Logo" class="logoHR" src="../assets/img/HR-Logo.png"></a>
         <a href="https://www.gras-it.de/" target="_blank"><img alt="IT-Solutions Logo" class="logoItSolutions" src="../assets/img/IT-Solutions_Logo.png"></a>
       </div>
+
+      <div id="footer"
+           style="flex-grow: 0"
+           class="navbar navbar-expand-sm bg-light justify-content-center">
+        <ul class="nav">
+          <li class="nav-item"><a class="navbar-brand"
+                                  href="#">{{ 'APP.KONTAKT' | translate }}</a></li>
+          <li class="nav-item"><a class="navbar-brand"
+                                  href="#">{{ 'APP.IMPRESSUM' | translate }}</a></li>
+        </ul>
+      </div>
     </footer>
 
-    <!-- Footer -->
-    <div id="footer" class="navbar navbar-expand-sm bg-light justify-content-center">
-      <ul class="nav">
-        <li class="nav-item"><a class="navbar-brand" href="#">{{ 'APP.KONTAKT' | translate }}</a></li>
-        <li class="nav-item"><a class="navbar-brand" href="#">{{ 'APP.IMPRESSUM' | translate }}</a></li>
-      </ul>
-    </div>
+    <!-- Notification -->
+    <!--<bla-notification [notification]="notification"></bla-notification>-->
 
   </div>
 

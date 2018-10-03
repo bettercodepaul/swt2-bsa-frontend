@@ -1,10 +1,5 @@
 // body, paragraph and link style
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #fafafa;
-  min-width: 500px;
-  overflow: scroll;
-}
+
 p {
   font-family: 'Poppins', sans-serif;
   font-size: 1.1em;
@@ -33,6 +28,7 @@ ul ul a {
 .wrapper {
   display: flex;
   align-items: stretch;
+  height: 100%;
 }
 
 // content side
@@ -48,6 +44,7 @@ ul ul a {
   padding-right: 80px;
   padding: 30px;
 }
+
 #footer { // footer with Logos
   display: flex;
   justify-content: center;

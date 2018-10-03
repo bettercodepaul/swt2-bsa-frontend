@@ -1,31 +1,55 @@
-
 <div id="login">
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body login-dialog">
 
-  <form action="action_page.php">
+      <form action="action_page.php">
 
-    <!-- Logo -->
-    <div class="imgcontainer">
-      <img src="../assets/img/logo.png" alt="Logo" class="avatar">
+        <!-- Logo -->
+        <div class="imgcontainer">
+          <img src="../assets/img/logo.png"
+               alt="Logo"
+               class="avatar">
+
+          <h1 class="h3 mb-3 font-weight-normal">{{ 'LOGIN.HEADER' | translate }}</h1>
+        </div>
+
+        <!-- Input -->
+        <div class="container">
+          <div class="form-group">
+            <label for="loginEmail">{{ 'LOGIN.USERNAME.LABEL' | translate }}</label>
+            <input type="email"
+                   class="form-control"
+                   name="loginEmail"
+                   id="loginEmail"
+                   aria-describedby="emailHelp"
+                   placeholder="{{ 'LOGIN.USERNAME.LABEL' | translate }}">
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">{{ 'LOGIN.PASSWORD.LABEL' | translate }}</label>
+            <input type="password"
+                   class="form-control"
+                   id="loginPassword"
+                   name="loginPassword"
+                   placeholder="{{ 'LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
+          </div>
+
+          <div class="form-group form-check">
+            <input type="checkbox"
+                   class="form-check-input"
+                   id="loginRememberMe"
+                   name="loginRememberMe">
+            <label class="form-check-label"
+                   for="loginRememberMe">{{ 'LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
+          </div>
+
+          <button type="button"
+                  class="btn btn-lg btn-primary btn-block">{{ 'LOGIN.BUTTON.LOGIN' | translate }}
+          </button>
+        </div>
+      </form>
+
+
     </div>
-
-    <!-- Input -->
-    <div class="container">
-      <label for="uname"><b>{{ 'LOGIN.USERNAME' | translate }}</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
-
-      <label for="psw"><b>{{ 'LOGIN.PASSWORD' | translate }}</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-
-      <button type="submit" class="button-login">Login</button>
-      <label>
-        <input type="checkbox" checked="checked" name="remember">{{ 'LOGIN.LOGGED' | translate }}
-      </label>
-    </div>
-
-    <!-- Footer Login -->
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" class="cancelbtn">Cancel</button>
-      <span class="psw"><a href="#">{{ 'LOGIN.FORGOT' | translate }}</a></span>
-    </div>
-  </form>
+  </div>
 </div>
