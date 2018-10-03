@@ -1,0 +1,11 @@
+<button
+  [id]="id"
+  [name]="id"
+  *ngIf="visible"
+  (click)="onButtonClick()"
+  [disabled]="isDisabled()"
+  [type]="buttonType"
+  class="btn btn-lg btn-primary btn-block">
+  <!-- TODO make class configurable -->
+  <ng-content></ng-content>
+</button>

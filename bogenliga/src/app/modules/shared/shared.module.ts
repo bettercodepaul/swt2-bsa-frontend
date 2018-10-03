@@ -1,17 +1,21 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { TranslateModule } from '@ngx-translate/core';
-import {HttpModule} from '@angular/http';
-import {HttpClientModule} from '@angular/common/http';
+import {TranslateModule} from '@ngx-translate/core';
+import {ButtonComponent} from './components/buttons/button/button.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
     // TranslateModule.forChild()
     ],
-  exports: [TranslateModule ],
-  declarations: []
+  exports: [
+    TranslateModule,
+    FormsModule,
+    ButtonComponent],
+  declarations: [ButtonComponent]
 })
 export class SharedModule {}

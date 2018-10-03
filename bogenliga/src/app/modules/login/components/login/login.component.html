@@ -2,7 +2,8 @@
   <div class="card mb-4 shadow-sm">
     <div class="card-body login-dialog">
 
-      <form action="action_page.php">
+      <form id="loginForm"
+            #loginForm="ngForm">
 
         <!-- Logo -->
         <div class="imgcontainer">
@@ -21,8 +22,16 @@
                    class="form-control"
                    name="loginEmail"
                    id="loginEmail"
-                   aria-describedby="emailHelp"
+                   #loginEmail="ngModel"
+                   [(ngModel)]="credentials.username"
+                   required
+                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+                   [class.is-invalid]="loginEmail.invalid && !loginEmail.untouched"
                    placeholder="{{ 'LOGIN.USERNAME.LABEL' | translate }}">
+
+            <div class="invalid-feedback">
+              {{ 'LOGIN.USERNAME.ERROR' | translate }}
+            </div>
           </div>
 
           <div class="form-group">
@@ -31,21 +40,30 @@
                    class="form-control"
                    id="loginPassword"
                    name="loginPassword"
+                   #loginPassword="ngModel"
+                   [(ngModel)]="credentials.password"
+                   required
+                   minlength="3"
+                   [class.is-invalid]="loginPassword.invalid && !loginPassword.untouched"
                    placeholder="{{ 'LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
+
+            <div class="invalid-feedback">
+              {{ 'LOGIN.PASSWORD.ERROR' | translate }}
+            </div>
           </div>
 
           <div class="form-group form-check">
             <input type="checkbox"
                    class="form-check-input"
                    id="loginRememberMe"
-                   name="loginRememberMe">
+                   name="loginRememberMe"
+                   [(ngModel)]="credentials.rememberMe">
             <label class="form-check-label"
                    for="loginRememberMe">{{ 'LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
           </div>
 
-          <button type="button"
-                  class="btn btn-lg btn-primary btn-block">{{ 'LOGIN.BUTTON.LOGIN' | translate }}
-          </button>
+          <bla-button [disabled]="!loginForm.valid">{{ 'LOGIN.BUTTON.LOGIN' | translate }}</bla-button>
+
         </div>
       </form>
 

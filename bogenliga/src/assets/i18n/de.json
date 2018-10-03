@@ -28,11 +28,13 @@
     },
     "USERNAME": {
       "LABEL": "E-Mail-Adresse",
-      "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben"
+      "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
+      "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
     },
     "PASSWORD": {
       "LABEL": "Passwort",
-      "PLACEHOLDER": "Bitte Passwort eingeben"
+      "PLACEHOLDER": "Bitte Passwort eingeben",
+      "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
     },
     "REMEMBER_ME": {
       "LABEL": "E-Mail-Adresse merken?"
