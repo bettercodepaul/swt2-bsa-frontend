@@ -70,7 +70,7 @@ export class LocalDataProviderService {
    * @param key
    * @return value
    */
-  public get(key: string): string {
+  public get(key: string): any {
     const sessionStorageAvailable: boolean = isStorageAvailable(sessionStorage);
     const localStorageAvailable: boolean = isStorageAvailable(localStorage);
 

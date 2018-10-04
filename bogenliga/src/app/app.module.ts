@@ -53,7 +53,7 @@ export function createTranslateLoader(http: HttpClient) {
     HomeModule,
     WettkampfModule,
     LoginModule,
-    SharedModule
+    SharedModule.forRoot()
   ],
   exports: [TranslateModule ],
   /* HTTP INTERCEPTORS */

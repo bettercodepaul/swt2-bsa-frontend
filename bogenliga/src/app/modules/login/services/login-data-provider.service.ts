@@ -6,7 +6,7 @@ import {CredentialsDTO} from '../types/model/credentials-dto.class';
 import {CredentialsDO} from '../types/credentials-do.class';
 import {TransferObject} from '../../shared/data-provider/models/transfer-object.interface';
 import {HttpClient} from '@angular/common/http';
-import {LocalDataProviderService} from '../../shared/local-data-provider/services/local-data-provider.service';
+import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ import {LocalDataProviderService} from '../../shared/local-data-provider/service
 export class LoginDataProviderService extends CommonDataProviderService {
   serviceSubUrl = 'v1/user/signin';
 
-  constructor(private restClient: RestClient, private httpClient: HttpClient, private localDataProvider: LocalDataProviderService) {
+  constructor(private restClient: RestClient, private httpClient: HttpClient, private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -31,8 +31,11 @@ export class LoginDataProviderService extends CommonDataProviderService {
       console.log(data);
       // store user details and jwt token in local storage to keep user logged in between page refreshes
 
-      this.localDataProvider.setSessionScoped('current_user', JSON.stringify(data));
+      this.currentUserService.persistCurrentUser(new UserSignInDTO(data));
 
+    }, error => {
+      // TODO correct error handling
+      console.warn(JSON.stringify(error));
     });
 
 
