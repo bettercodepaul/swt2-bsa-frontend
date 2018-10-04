@@ -12,7 +12,7 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
-import {APP_REDUCERS} from './modules/shared/redux-store/app.reducer';
+import {APP_REDUCERS} from './modules/shared/redux-store';
 import {RouterModule} from '@angular/router';
 import {ROUTES} from './app.routing';
 import {FormsModule} from '@angular/forms';
@@ -20,7 +20,7 @@ import {HomeModule} from './modules/home/home.module';
 import {SharedModule} from './modules/shared/shared.module';
 import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 import {LoginModule} from './modules/login/login.module';
-import {JwtInterceptor} from './modules/shared/data-provider/services/jwt-interceptor.class';
+import {JwtInterceptor} from './modules/shared/data-provider';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -37,6 +37,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -48,13 +49,14 @@ export function createTranslateLoader(http: HttpClient) {
     /* REDUX-STORE */
     StoreModule.forRoot(APP_REDUCERS),
     EffectsModule.forRoot([]),
-    FormsModule,
+    /* BOGENLIGA */
     HomeModule,
     WettkampfModule,
     LoginModule,
     SharedModule
   ],
   exports: [TranslateModule ],
+  /* HTTP INTERCEPTORS */
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
 

@@ -6,6 +6,7 @@ import {CredentialsDTO} from '../types/model/credentials-dto.class';
 import {CredentialsDO} from '../types/credentials-do.class';
 import {TransferObject} from '../../shared/data-provider/models/transfer-object.interface';
 import {HttpClient} from '@angular/common/http';
+import {LocalDataProviderService} from '../../shared/local-data-provider/services/local-data-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,13 @@ import {HttpClient} from '@angular/common/http';
 export class LoginDataProviderService extends CommonDataProviderService {
   serviceSubUrl = 'v1/user/signin';
 
-  constructor(private restClient: RestClient, private httpClient: HttpClient) {
+  constructor(private restClient: RestClient, private httpClient: HttpClient, private localDataProvider: LocalDataProviderService) {
     super();
   }
 
 
   signIn(credentialsDO: CredentialsDO): any {
+
 
     let credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password);
 
@@ -29,7 +31,7 @@ export class LoginDataProviderService extends CommonDataProviderService {
       console.log(data);
       // store user details and jwt token in local storage to keep user logged in between page refreshes
 
-      localStorage.setItem('currentUser', JSON.stringify(data));
+      this.localDataProvider.setSessionScoped('current_user', JSON.stringify(data));
 
     });
 

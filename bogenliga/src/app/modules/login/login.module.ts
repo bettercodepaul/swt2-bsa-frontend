@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {LOGIN_ROUTES} from './login.routing';
 import {LoginComponent} from './components/login/login.component';
 import {FormsModule} from '@angular/forms';
+import {LocalDataProviderModule} from '../shared/local-data-provider/local-data-provider.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {FormsModule} from '@angular/forms';
     CommonModule,
     RouterModule.forChild(LOGIN_ROUTES),
     SharedModule,
-    FormsModule
+    FormsModule,
+    LocalDataProviderModule
   ],
   declarations: [LoginComponent]
 })

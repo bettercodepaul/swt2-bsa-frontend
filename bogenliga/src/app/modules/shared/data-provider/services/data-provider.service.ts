@@ -1,5 +1,5 @@
 import {DataServiceConfig} from '../../../settings/types/data-service-config.interface';
-import {UriBuilder} from './uri-builder.class';
+import {UriBuilder} from './utils/uri-builder.class';
 
 export abstract class DataProviderService {
   abstract serviceSubUrl: string;
