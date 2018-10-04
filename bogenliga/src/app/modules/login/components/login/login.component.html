@@ -1,87 +1,94 @@
 <div id="login">
-  <div class="card mb-4 shadow-sm">
-    <div class="card-body login-dialog">
+  <div>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body login-dialog">
 
-      <form id="loginForm"
-            #loginForm="ngForm">
+        <form id="loginForm"
+              #loginForm="ngForm">
 
-        <!-- Logo -->
-        <div class="imgcontainer">
-          <img src="../assets/img/logo.png"
-               alt="Logo"
-               class="avatar">
+          <!-- Logo -->
+          <div class="imgcontainer">
+            <img src="../assets/img/logo.png"
+                 alt="Logo"
+                 class="avatar">
 
-          <h1 class="h3 mb-3 font-weight-normal">{{ 'LOGIN.HEADER' | translate }}</h1>
-        </div>
+            <h1 class="h3 mb-3 font-weight-normal">{{ 'LOGIN.HEADER' | translate }}</h1>
+          </div>
 
-        <!-- Input -->
-        <div class="container">
-          <div class="form-group">
-            <label for="loginEmail">{{ 'LOGIN.USERNAME.LABEL' | translate }}</label>
-            <input type="email"
-                   class="form-control"
-                   name="loginEmail"
-                   id="loginEmail"
-                   #loginEmail="ngModel"
-                   [(ngModel)]="credentials.username"
-                   required
-                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
-                   [class.is-invalid]="loginEmail.invalid && !loginEmail.untouched"
-                   placeholder="{{ 'LOGIN.USERNAME.LABEL' | translate }}">
+          <!-- Input -->
+          <div class="container">
+            <div class="form-group">
+              <label for="loginEmail">{{ 'LOGIN.USERNAME.LABEL' | translate }}</label>
+              <input type="email"
+                     class="form-control"
+                     name="loginEmail"
+                     id="loginEmail"
+                     #loginEmail="ngModel"
+                     [(ngModel)]="credentials.username"
+                     required
+                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+                     [class.is-invalid]="loginEmail.invalid && !loginEmail.untouched"
+                     placeholder="{{ 'LOGIN.USERNAME.LABEL' | translate }}">
 
-            <div class="invalid-feedback">
-              {{ 'LOGIN.USERNAME.ERROR' | translate }}
+              <div class="invalid-feedback">
+                {{ 'LOGIN.USERNAME.ERROR' | translate }}
+              </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="loginPassword">{{ 'LOGIN.PASSWORD.LABEL' | translate }}</label>
-            <input type="password"
-                   class="form-control"
-                   id="loginPassword"
-                   name="loginPassword"
-                   #loginPassword="ngModel"
-                   [(ngModel)]="credentials.password"
-                   required
-                   minlength="3"
-                   [class.is-invalid]="loginPassword.invalid && !loginPassword.untouched"
-                   placeholder="{{ 'LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
+            <div class="form-group">
+              <label for="loginPassword">{{ 'LOGIN.PASSWORD.LABEL' | translate }}</label>
+              <input type="password"
+                     class="form-control"
+                     id="loginPassword"
+                     name="loginPassword"
+                     #loginPassword="ngModel"
+                     [(ngModel)]="credentials.password"
+                     required
+                     minlength="3"
+                     [class.is-invalid]="loginPassword.invalid && !loginPassword.untouched"
+                     placeholder="{{ 'LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
 
-            <div class="invalid-feedback">
-              {{ 'LOGIN.PASSWORD.ERROR' | translate }}
+              <div class="invalid-feedback">
+                {{ 'LOGIN.PASSWORD.ERROR' | translate }}
+              </div>
             </div>
+
+            <div class="form-group form-check">
+              <input type="checkbox"
+                     class="form-check-input"
+                     id="loginRememberMe"
+                     name="loginRememberMe"
+                     [(ngModel)]="credentials.rememberMe">
+              <label class="form-check-label"
+                     for="loginRememberMe">{{ 'LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
+            </div>
+
+            <bla-button [disabled]="!loginForm.valid"
+                        (onClick)="onLogin($event)">{{ 'LOGIN.BUTTON.LOGIN' | translate }}
+            </bla-button>
+
           </div>
+        </form>
 
-          <div class="form-group form-check">
-            <input type="checkbox"
-                   class="form-check-input"
-                   id="loginRememberMe"
-                   name="loginRememberMe"
-                   [(ngModel)]="credentials.rememberMe">
-            <label class="form-check-label"
-                   for="loginRememberMe">{{ 'LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
-          </div>
 
-          <bla-button [disabled]="!loginForm.valid"
-                      (onClick)="onLogin($event)">{{ 'LOGIN.BUTTON.LOGIN' | translate }}
-          </bla-button>
+      </div>
 
-        </div>
-      </form>
+    </div>
+    <div class="alert alert-primary"
+         role="alert">
+      <h4>Hinweis:</h4>
+      <p>Username: admin@bogenliga.de <br>Password: admin<br>Rolle: ADMIN</p>
+      <p>Username: moderator@bogenliga.de <br>Password: moderator<br>Rolle: MODERATOR</p>
+      <p>Username: user@bogenliga.de <br>Password: user <br>Rolle: USER</p>
+      <p>Username: Malorie.Artman@bogenliga.de <br>Password: swt2 <br>Rolle: USER</p>
+      <p>Username: Nicholas.Corle@bogenliga.de <br>Password: swt2 <br>Rolle: MODERATOR</p>
 
 
     </div>
-
   </div>
 
-
 </div>
-<div class="alert alert-primary"
-     role="alert">
-  <p>Username: admin@bogenliga.de</p>
-  <p>Password: admin</p>
 
-</div>
 
 
 
