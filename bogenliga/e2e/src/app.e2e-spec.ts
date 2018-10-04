@@ -8,6 +8,7 @@ import {stringify} from 'querystring';
 import {SettingsOverview} from './settings_overview.po';
 import {Wettkampf} from '../../src/app/modules/wettkampf/types/wettkampf';
 import {Wettkaempfe} from './wettkaempfe.po';
+import {SettingsDetails} from './settings_details.po';
 
 describe('Home Page', () => {
   let page: HomePage;
@@ -56,6 +57,7 @@ describe('Support', () => {
   let home: HomePage;
   let settingsOverview: SettingsOverview;
   let sidebar: Sidebar;
+  let settingsDetails: SettingsDetails;
 
   beforeEach(() => {
     support = new Support();
@@ -91,9 +93,10 @@ describe('Support', () => {
     settingsOverview = new SettingsOverview();
     settingsOverview.navigateToSettingsOverview();
     expect(support.isSupportPresent()).toBeTruthy();
-
     // Settings Details
-
+    settingsDetails = new SettingsDetails();
+    settingsDetails.navigateToSettingsDetails();
+    expect(support.isSupportPresent()).toBeTruthy();
   });
 });
 
@@ -102,6 +105,7 @@ describe('Footer', () => {
   let home: HomePage;
   let settingsOverview: SettingsOverview;
   let sidebar: Sidebar;
+  let settingsDetails: SettingsDetails;
 
   beforeEach(() => {
     footer = new Footer();
@@ -137,9 +141,10 @@ describe('Footer', () => {
     settingsOverview = new SettingsOverview();
     settingsOverview.navigateToSettingsOverview();
     expect(footer.isFooterPresent()).toBeTruthy();
-
     // Settings Details
-
+    settingsDetails = new SettingsDetails();
+    settingsDetails.navigateToSettingsDetails();
+    expect(footer.isFooterPresent()).toBeTruthy();
   });
 });
 
@@ -148,6 +153,7 @@ describe('Navbar', () => {
   let home: HomePage;
   let settingsOverview: SettingsOverview;
   let sidebar: Sidebar;
+  let settingsDetails: SettingsDetails;
 
   beforeEach(() => {
     navbar = new Navbar();
@@ -200,7 +206,9 @@ describe('Navbar', () => {
     settingsOverview.navigateToSettingsOverview();
     expect(navbar.isNavbarPresent()).toBeTruthy();
     // Settings Details
-
+    settingsDetails = new SettingsDetails();
+    settingsDetails.navigateToSettingsDetails();
+    expect(navbar.isNavbarPresent()).toBeTruthy();
   });
 });
 
@@ -208,6 +216,7 @@ describe('Sidebar', () => {
   let sidebar: Sidebar;
   let home: HomePage;
   let settingsOverview: SettingsOverview;
+  let settingsDetails: SettingsDetails;
 
   beforeEach(() => {
     sidebar = new Sidebar();
@@ -274,7 +283,9 @@ describe('Sidebar', () => {
     settingsOverview.navigateToSettingsOverview();
     expect(sidebar.isSidebarPresent()).toBeTruthy();
     // Settings Details
-
+    settingsDetails = new SettingsDetails();
+    settingsDetails.navigateToSettingsDetails();
+    expect(sidebar.isSidebarPresent()).toBeTruthy();
   });
 });
 
@@ -310,6 +321,78 @@ describe('Settings Overview', () => {
 
   it('table should have at least one row', () => {
     expect(overview.getFirstRowData()).toBeTruthy();
+  });
+});
+
+describe('Settings Details', () => {
+  let details: SettingsDetails;
+  let overview: SettingsOverview;
+
+  beforeEach(() => {
+    details = new SettingsDetails();
+    overview = new SettingsOverview();
+    details.navigateToSettingsDetails();
+  });
+
+  it('should exist', () => {
+    expect(details.getSettingsDetails()).toBeTruthy();
+  });
+
+  it('should display Settings Detials header', () => {
+    expect(details.getHeading()).toBeTruthy();
+  });
+
+  xit('should display Settings Detials key if data selected', () => {
+
+  });
+
+  it('should not display Settings Detials key if no data selected', () => {
+    // navigate to Details without selecting data
+    overview.navigateToSettingsOverview();
+    overview.getAddButton().click();
+    expect(details.isKeyPresent()).toBeFalsy();
+  });
+
+  xit('should display Settings Detials version if data selected', () => {
+    // navigate to Details with selecting data
+    overview.navigateToSettingsOverview();
+    overview.getFirstDetailsButtons().click();
+    expect(details.isVersionPresent()).toBeTruthy();
+  });
+
+  it('should not display Settings Detials version if no data selected', () => {
+    // navigate to Details without selecting data
+    overview.navigateToSettingsOverview();
+    overview.getAddButton().click();
+    expect(details.isVersionPresent()).toBeFalsy();
+  });
+
+  xit('should have label for Key Input', () => {
+
+  });
+
+  xit('should have label for Value Input', () => {
+
+  });
+
+  xit('should have non edible Key Input', () => {
+
+  });
+
+  xit('should have Value Input', () => {
+
+  });
+
+  xit('should have Back Button', () => {
+
+  });
+
+  xit('should have Delete Button only when data is selected', () => {
+
+  });
+
+  xit('should have Save Button', () => {
+
   });
 });
 

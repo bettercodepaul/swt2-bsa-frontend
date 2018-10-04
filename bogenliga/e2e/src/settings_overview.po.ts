@@ -39,6 +39,8 @@ export class SettingsOverview {
     return this.getTableRow().last().getText();
   }
 
+
+
   /* Pagination */
   // tested in Unit Tests
 }
