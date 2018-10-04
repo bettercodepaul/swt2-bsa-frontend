@@ -24,7 +24,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   activePage = 1; // number of current page
   pageCount: Array<any> = [1, 2]; // link to the pages
-  maxOnPage = 10; // how many items can be shown on the page
+  maxOnPage = 8; // how many items can be shown on the page
   first = 1; // first item on page
   last = this.maxOnPage; // last item on page
 
@@ -70,6 +70,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     // this.dataService.getData().subscribe(datas => this.datas = datas);
     this.dataService.findAll().subscribe(datas => {
       this.datas = datas;
+      this.keyAscending = false; // if sorted with key aufsteigend
+      this.valueAscending = false; // if sorted with value aufsteigend
       this.sortDataByKey();
       // this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
       this.calculatePagination(this.datas.length);

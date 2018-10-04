@@ -61,14 +61,14 @@ describe('OverviewComponent', () => {
     expect(fixture.debugElement.query(By.css('.my-4'))).toBeNull(); // ngif object is not rendered
   });
 
-  it('pagination with datacount > 0 -> pagination visible', () => {
+  it('pagination with data for more than 1 page -> pagination visible', () => {
     let pagination = fixture.debugElement.query(By.css('.my-4'));
     fixture.detectChanges();
     component.activePage = 1;
-    component.maxOnPage = 10;
+    component.maxOnPage = 5;
     component.calculatePagination(15);
     fixture.detectChanges();
-    expect(component.pageCount.length).toBe(2);
+    expect(component.pageCount.length).toBe(3);
     expect(pagination).toBeTruthy();
   });
 

@@ -6,7 +6,7 @@ export class HomePage {
   }
 
   getHome() {
-    return element(by.css('.homePage'));
+    return element(by.css('#homePage'));
   }
 
   /* Heading */
@@ -24,7 +24,7 @@ export class HomePage {
   }
 
   /* Table */
-  getUnsereWettkaempfe() {
+  getTable() {
     return this.getHome().element(by.css('table'));
   }
 

@@ -5,6 +5,7 @@ import {Navbar} from './navbar.po';
 import {browser, by} from 'protractor';
 import {Sidebar} from './sidebar.po';
 import {stringify} from 'querystring';
+import {SettingsOverview} from './settings_overview.po';
 
 describe('Home Page', () => {
   let page: HomePage;
@@ -35,6 +36,10 @@ describe('Home Page', () => {
     expect(page.getFlexChildren).toBeTruthy();
   });
 
+  it('table should have a table', () => {
+    expect(page.getTable()).toBeTruthy();
+  });
+
   it('table should have a table header', () => {
     expect(page.getTableHeader()).toContain('Datum Uhrzeit Liga Ort');
   });
@@ -47,6 +52,8 @@ describe('Home Page', () => {
 describe('Support', () => {
   let support: Support;
   let home: HomePage;
+  let settingsOverview: SettingsOverview;
+  let sidebar: Sidebar;
 
   beforeEach(() => {
     support = new Support();
@@ -79,6 +86,9 @@ describe('Support', () => {
     // Login
 
     // Settings Overview
+    settingsOverview = new SettingsOverview();
+    settingsOverview.navigateToSettingsOverview();
+    expect(support.isSupportPresent()).toBeTruthy();
 
     // Settings Details
 
@@ -88,6 +98,8 @@ describe('Support', () => {
 describe('Footer', () => {
   let footer: Footer;
   let home: HomePage;
+  let settingsOverview: SettingsOverview;
+  let sidebar: Sidebar;
 
   beforeEach(() => {
     footer = new Footer();
@@ -120,6 +132,9 @@ describe('Footer', () => {
     // Login
 
     // Settings Overview
+    settingsOverview = new SettingsOverview();
+    settingsOverview.navigateToSettingsOverview();
+    expect(footer.isFooterPresent()).toBeTruthy();
 
     // Settings Details
 
@@ -129,6 +144,8 @@ describe('Footer', () => {
 describe('Navbar', () => {
   let navbar: Navbar;
   let home: HomePage;
+  let settingsOverview: SettingsOverview;
+  let sidebar: Sidebar;
 
   beforeEach(() => {
     navbar = new Navbar();
@@ -177,7 +194,9 @@ describe('Navbar', () => {
     // Login
 
     // Settings Overview
-
+    settingsOverview = new SettingsOverview();
+    settingsOverview.navigateToSettingsOverview();
+    expect(navbar.isNavbarPresent()).toBeTruthy();
     // Settings Details
 
   });
@@ -186,6 +205,7 @@ describe('Navbar', () => {
 describe('Sidebar', () => {
   let sidebar: Sidebar;
   let home: HomePage;
+  let settingsOverview: SettingsOverview;
 
   beforeEach(() => {
     sidebar = new Sidebar();
@@ -248,8 +268,45 @@ describe('Sidebar', () => {
     // Login
 
     // Settings Overview
-
+    settingsOverview = new SettingsOverview();
+    settingsOverview.navigateToSettingsOverview();
+    expect(sidebar.isSidebarPresent()).toBeTruthy();
     // Settings Details
 
+  });
+});
+
+describe('Settings Overview', () => {
+  let overview: SettingsOverview;
+
+  beforeEach(() => {
+    overview = new SettingsOverview();
+    overview.navigateToSettingsOverview();
+  });
+
+  it('should exist', () => {
+    expect(overview.getSettingsOverview()).toBeTruthy();
+  });
+
+  it('should display header', () => {
+    expect(overview.getHeading()).toBeTruthy();
+  });
+
+  it('should have an add button', () => {
+    expect(overview.getAddButton()).toBeTruthy();
+  });
+
+  // link to details from button
+
+  it('table should have a table', () => {
+    expect(overview.getTable()).toBeTruthy();
+  });
+
+  it('table should have a table header', () => {
+    expect(overview.getTableHeader()).toBeTruthy();
+  });
+
+  it('table should have at least one row', () => {
+    expect(overview.getFirstRowData()).toBeTruthy();
   });
 });
