@@ -13,6 +13,7 @@ import {By} from '@angular/platform-browser';
 import {DataService} from '../../services/data.service';
 import {Data} from '../../types/data';
 import {Observable} from 'rxjs';
+import {SharedModule} from '../../../shared/shared.module';
 
 describe('OverviewComponent', () => {
   let component: OverviewComponent;
@@ -28,7 +29,8 @@ describe('OverviewComponent', () => {
         LoginModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule
+        HttpClientModule,
+        SharedModule
       ]
     })
     .compileComponents();

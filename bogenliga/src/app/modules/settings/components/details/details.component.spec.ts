@@ -13,6 +13,7 @@ import {FormsModule} from '@angular/forms';
 import {DataService} from '../../services/data.service';
 import {Data} from '../../types/data';
 import {Observable} from 'rxjs';
+import {SharedModule} from '../../../shared/shared.module';
 
 describe('DetailsComponent', () => {
   let component: DetailsComponent;
@@ -29,7 +30,8 @@ describe('DetailsComponent', () => {
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        SharedModule
       ]
     })
     .compileComponents();

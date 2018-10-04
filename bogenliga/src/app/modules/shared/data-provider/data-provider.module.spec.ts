@@ -10,6 +10,7 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {TestBed} from '@angular/core/testing';
 import {DetailsComponent} from '../../settings/components/details/details.component';
+import {SharedModule} from '../shared.module';
 
 describe('DataProviderModule', () => {
   let dataProviderModule: DataProviderModule;
@@ -23,7 +24,8 @@ describe('DataProviderModule', () => {
         LoginModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        FormsModule
+        FormsModule,
+        SharedModule
       ]
     })
       .compileComponents();

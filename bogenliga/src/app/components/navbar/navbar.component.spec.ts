@@ -10,6 +10,7 @@ import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../modules/shared/redux-store';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {createTranslateLoader} from '../../app.module';
+import {SharedModule} from '../../modules/shared/shared.module';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -30,7 +31,8 @@ describe('NavbarComponent', () => {
           }
         }),
         StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule
+        HttpClientModule,
+        SharedModule
       ]
     },
       )

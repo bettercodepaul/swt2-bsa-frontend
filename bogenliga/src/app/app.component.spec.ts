@@ -16,6 +16,7 @@ import {SettingsModule} from './modules/settings/settings.module';
 import {NgModuleFactoryLoader} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
+import {SharedModule} from './modules/shared/shared.module';
 
 
 describe('AppComponent', () => {
@@ -39,7 +40,8 @@ describe('AppComponent', () => {
         WettkampfModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule
+        HttpClientModule,
+        SharedModule
       ]
     }).compileComponents();
   }));

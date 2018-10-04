@@ -10,6 +10,7 @@ import {createTranslateLoader} from '../../app.module';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../modules/shared/redux-store';
+import {SharedModule} from '../../modules/shared/shared.module';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -23,7 +24,8 @@ describe('SidebarComponent', () => {
         HomeModule,
         LoginModule,
         TranslateModule.forRoot(),
-        StoreModule.forRoot(APP_REDUCERS)
+        StoreModule.forRoot(APP_REDUCERS),
+        SharedModule
       ]
     })
     .compileComponents();

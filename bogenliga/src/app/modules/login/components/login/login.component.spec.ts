@@ -9,6 +9,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../../shared/redux-store';
 import {HttpClientModule} from '@angular/common/http';
+import {SharedModule} from '../../../shared/shared.module';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -21,7 +22,8 @@ describe('LoginComponent', () => {
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         TranslateModule.forRoot(),
-        StoreModule.forRoot(APP_REDUCERS)
+        StoreModule.forRoot(APP_REDUCERS),
+        SharedModule
       ]
     })
     .compileComponents();
