@@ -2,8 +2,8 @@
   <div style="flex-grow: 1">
     <!-- Sidebar Header -->
     <div class="sidebar-header">
-      <h3>{{ 'SIDEBAR.TITLE' | translate }}</h3>
-      <p>{{ 'SIDEBAR.TITLESHORT' | translate }}</p>
+      <h3 id="title" *ngIf="!isActive">{{ 'SIDEBAR.TITLE' | translate }}</h3>
+      <p id="shortTitle" *ngIf="isActive">{{ 'SIDEBAR.TITLESHORT' | translate }}</p>
     </div>
 
     <!-- Sidebar Links -->
@@ -12,14 +12,14 @@
         <a routerLink="/home" >
           <div class="sidebar-link {{isActive? 'inactive' : ''}}">
             <i class="material-icons">home</i>
-            <div class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.HOME' | translate }}</div>
+            <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.HOME' | translate }}</div>
           </div>
         </a>
 
         <a href="#">
           <div class="sidebar-link {{isActive? 'inactive' : ''}}">
           <i class="material-icons">file_copy</i>
-            <div class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.VERWALTUNG' | translate }}</div>
+            <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.VERWALTUNG' | translate }}</div>
           </div>
         </a>
       </li>
@@ -27,7 +27,7 @@
         <a routerLink="/wettkaempfe">
           <div class="sidebar-link {{isActive? 'inactive' : ''}}">
           <i class="material-icons">play_arrow</i>
-            <div class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.WETTKAMPF' | translate }}</div>
+            <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.WETTKAMPF' | translate }}</div>
           </div>
         </a>
       </li>
@@ -35,7 +35,7 @@
         <a href="#">
           <div class="sidebar-link {{isActive? 'inactive' : ''}}">
           <i class="material-icons">today</i>
-            <div class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.SPORTJAHRESPLAN' | translate }}</div>
+            <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.SPORTJAHRESPLAN' | translate }}</div>
           </div>
         </a>
       </li>

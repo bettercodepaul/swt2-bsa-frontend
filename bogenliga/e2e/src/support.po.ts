@@ -9,6 +9,10 @@ export class Support {
     return element(by.css('#footer'));
   }
 
+  isSupportPresent() {
+    return browser.isElementPresent(this.getSupport());
+  }
+
   getParagraph() {
     return this.getSupport().all(by.css('p')).getText();
   }

@@ -9,6 +9,10 @@ export class Navbar {
     return element(by.css('#navbar'));
   }
 
+  isNavbarPresent() {
+    return browser.isElementPresent(this.getNavbar());
+  }
+
   getButton() {
     return this.getNavbar().all(by.css('button'));
   }

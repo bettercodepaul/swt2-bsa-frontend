@@ -47,15 +47,7 @@
   background: #02bdd5;
 }
 
-// Sidebar Header Title
-#sidebar.inactive .sidebar-header h3 {
-  display: none;
-}
-
 // Sidebar Header Titleshort
-#sidebar .sidebar-header p {
-  display: none;
-}
 #sidebar.inactive .sidebar-header p {
   display: block;
   color: #fff;
@@ -77,10 +69,6 @@
 .sidebar-text {
   padding-left: 10px; //more space to Icon
   padding-top: 10px; //Icon and Text on one baseline
-}
-
-.sidebar-text.inactive {
-  display: none;
 }
 
 .sidebar-link.inactive {
