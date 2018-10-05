@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AppComponent} from '../../app.component';
 import {select, Store} from '@ngrx/store';
 import {AppState, TOGGLE_SIDEBAR, SidebarState} from '../../modules/shared/redux-store';
+import {SIDE_BAR_CONFIG} from './sidebar.config';
 
 
 @Component({
@@ -13,6 +14,7 @@ import {AppState, TOGGLE_SIDEBAR, SidebarState} from '../../modules/shared/redux
 export class SidebarComponent implements OnInit {
 
   public isActive: boolean; // for class and css to know if sidebar is wide or small
+  public CONFIG = SIDE_BAR_CONFIG;
 
   constructor(private store: Store<AppState>) {
     store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );

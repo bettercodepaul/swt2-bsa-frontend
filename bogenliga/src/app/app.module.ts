@@ -21,6 +21,7 @@ import {SharedModule} from './modules/shared/shared.module';
 import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 import {LoginModule} from './modules/login/login.module';
 import {JwtInterceptor} from './modules/shared/data-provider';
+import { SidebarItemComponent } from './components/sidebar/components/sidebar-item/sidebar-item.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -32,7 +33,8 @@ export function createTranslateLoader(http: HttpClient) {
     AppComponent,
     SidebarComponent,
     NavbarComponent,
-    NotificationComponent
+    NotificationComponent,
+    SidebarItemComponent
   ],
   imports: [
     BrowserModule,

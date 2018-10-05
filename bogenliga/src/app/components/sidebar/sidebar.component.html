@@ -6,7 +6,7 @@
       <p id="shortTitle" *ngIf="isActive">{{ 'SIDEBAR.TITLESHORT' | translate }}</p>
     </div>
 
-    <!-- Sidebar Links -->
+    <!-- Sidebar Links
     <ul class="list-unstyled components">
       <li>
         <a routerLink="/home" >
@@ -34,12 +34,24 @@
       <li>
         <a routerLink="/sportjahresplan">
           <div class="sidebar-link {{isActive? 'inactive' : ''}}">
-          <i class="material-icons">today</i>
+            <i class="material-icons">today</i>
             <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.SPORTJAHRESPLAN' | translate }}</div>
           </div>
         </a>
       </li>
-    </ul>
+    </ul> -->
+
+
+    <!-- Sidebar links config -->
+      <ul class="list-unstyled components">
+        <li *ngFor="let item of CONFIG">
+          <a routerLink="{{item.route}}">
+            <bla-sidebar-item label="{{ item.label | translate }}"
+                               [icon]="item.icon"></bla-sidebar-item>
+          </a>
+        </li>
+      </ul>
+
   </div>
 
   <!-- Sidebar Footer -->

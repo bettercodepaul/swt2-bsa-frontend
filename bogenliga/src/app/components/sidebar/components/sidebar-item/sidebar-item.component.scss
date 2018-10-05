@@ -1,0 +1,16 @@
+.sidebar-link {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: start;
+}
+
+.sidebar-link.inactive {
+  justify-content: center;
+}
+
+.sidebar-text {
+  padding-left: 10px; //more space to Icon
+  padding-top: 10px; //Icon and Text on one baseline
+}
