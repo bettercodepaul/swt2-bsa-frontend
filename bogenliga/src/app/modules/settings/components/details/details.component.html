@@ -20,7 +20,7 @@
         <div class="form-group row">
           <label id="labelValueData"for="inputValueData" class="col-sm-2 col-form-label">{{ 'DETAILS.VALUE' | translate }}</label>
           <div class="col-sm-10">
-            <input class="form-control" type="text" id="inputValueData" [(ngModel)]="data.value" name="value" placeholder="{{data.value}}">
+            <input (keyup.enter)="saveData()" class="form-control" type="text" id="inputValueData" [(ngModel)]="data.value" name="value" placeholder="{{data.value}}">
           </div>
         </div>
       </form>
@@ -50,7 +50,7 @@
       <div class="form-group row">
         <label id="labelValueNoData"for="inputValueNoData" class="col-sm-2 col-form-label">{{ 'DETAILS.VALUE' | translate }}</label>
         <div class="col-sm-10">
-          <input class="form-control" type="text" id="inputValueNoData" [(ngModel)]="data.value" name="value" placeholder="Value"> <!-- readonly -->
+          <input (keyup.enter)="saveNewData()" class="form-control" type="text" id="inputValueNoData" [(ngModel)]="data.value" name="value" placeholder="Value"> <!-- readonly -->
           <!-- number input
           <input type="number" min="0" step="1" data-bind="value:replyNumber" [value]="data.value" class="form-control" id="inputValue" placeholder="Value"> -->
         </div>
