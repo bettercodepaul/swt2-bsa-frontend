@@ -40,7 +40,7 @@ export class SettingsOverview {
   }
 
   getFirstDetailsButton() {
-    return this.getTable().element(by.css('.detailsButton'));
+    return this.getTable().all(by.css('.detailsButton')).get(0);
   }
 
 
