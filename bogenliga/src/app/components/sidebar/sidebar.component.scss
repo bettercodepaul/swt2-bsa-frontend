@@ -11,6 +11,7 @@
   flex-direction: column;
   position: fixed; // stays fixed on the side while scrolling
   opacity: 0.8;
+  z-index: 12; // layers of the rest of the page
 }
 
 // basic sidebar inactive css
@@ -129,6 +130,8 @@
 @media (max-width: 768px) {
   #sidebar {
     margin-left: 0;
+    margin-top: 54px; //height of NavBar
+    min-height: calc(100vh - 54px); //full view - Navbar on top
   }
   #sidebar.inactive {
     margin-left: -80px;

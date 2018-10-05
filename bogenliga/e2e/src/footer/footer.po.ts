@@ -17,11 +17,7 @@ export class Footer {
     return this.getFooter().all(by.css('li'));
   }
 
-  getKontakt() {
-    return this.getLinks().get(0).getText();
-  }
-
   getImpressumUndDatenschutz() {
-    return this.getLinks().get(1).getText();
+    return this.getLinks().get(0).getText();
   }
 }

@@ -32,16 +32,8 @@ describe('Navbar', () => {
     expect(navbar.getTitel()).toBeTruthy();
   });
 
-  it('should have translate de', () => {
-    expect(navbar.getDe()).toEqual('de');
-  });
-
-  it('should have translate en', () => {
-    expect(navbar.getEn()).toEqual('en');
-  });
-
-  it('Settings should exist', () => {
-    expect(navbar.getSettings).toBeTruthy();
+  it('Login should exist', () => {
+    expect(navbar.getLogin()).toBeTruthy();
   });
 
   it('should be visible on all pages', () => {

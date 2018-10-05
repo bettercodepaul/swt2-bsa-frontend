@@ -11,5 +11,6 @@ export const ROUTES: Routes = [
   { path: 'wettkaempfe', loadChildren: 'src/app/modules/wettkampf/wettkampf.module#WettkampfModule' },
   { path: 'settings', loadChildren: 'src/app/modules/settings/settings.module#SettingsModule' },
   { path: 'verwaltung', loadChildren: 'src/app/modules/verwaltung/verwaltung.module#VerwaltungModule' },
-  { path: 'sportjahresplan', loadChildren: 'src/app/modules/sportjahresplan/sportjahresplan.module#SportjahresplanModule' }
+  { path: 'sportjahresplan', loadChildren: 'src/app/modules/sportjahresplan/sportjahresplan.module#SportjahresplanModule' },
+  { path: 'impressum', loadChildren: 'src/app/modules/impressum/impressum.module#ImpressumModule' }
 ];

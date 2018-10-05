@@ -18,10 +18,6 @@ describe('Footer', () => {
     expect(footer.getFooter()).toBeTruthy();
   });
 
-  it('should link to Kontakt', () => {
-    expect(footer.getKontakt()).toEqual('Kontakt');
-  });
-
   it('should link to Impressum und Datenschutz', () => {
     expect(footer.getImpressumUndDatenschutz()).toEqual('Impressum und Datenschutz');
   });
