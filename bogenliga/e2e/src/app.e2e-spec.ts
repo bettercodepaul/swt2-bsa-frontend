@@ -356,7 +356,7 @@ describe('Settings Details', () => {
   xit('should display Settings Detials version if data selected', () => {
     // navigate to Details with selecting data
     overview.navigateToSettingsOverview();
-    overview.getFirstDetailsButtons().click();
+    overview.getFirstDetailsButton().click();
     expect(details.isVersionPresent()).toBeTruthy();
   });
 

@@ -39,6 +39,10 @@ export class SettingsOverview {
     return this.getTableRow().last().getText();
   }
 
+  getFirstDetailsButton() {
+    return this.getTable().element(by.css('.detailsButton'));
+  }
+
 
 
   /* Pagination */

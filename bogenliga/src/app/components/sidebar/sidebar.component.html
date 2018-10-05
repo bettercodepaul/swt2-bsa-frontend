@@ -16,7 +16,7 @@
           </div>
         </a>
 
-        <a href="#">
+        <a routerLink="/verwaltung">
           <div class="sidebar-link {{isActive? 'inactive' : ''}}">
           <i class="material-icons">file_copy</i>
             <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.VERWALTUNG' | translate }}</div>
@@ -32,7 +32,7 @@
         </a>
       </li>
       <li>
-        <a href="#">
+        <a routerLink="/sportjahresplan">
           <div class="sidebar-link {{isActive? 'inactive' : ''}}">
           <i class="material-icons">today</i>
             <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.SPORTJAHRESPLAN' | translate }}</div>
