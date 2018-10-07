@@ -2,10 +2,11 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {TranslateModule} from '@ngx-translate/core';
-import {ButtonComponent} from './components/buttons/button/button.component';
+import {ButtonComponent} from './components/buttons';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {CurrentUserService} from './services/current-user/current-user.service';
+import {CurrentUserService} from './services/current-user';
+import {AlertComponent} from './components/alerts';
 
 
 @NgModule({
@@ -19,8 +20,9 @@ import {CurrentUserService} from './services/current-user/current-user.service';
     TranslateModule,
     FormsModule,
     HttpClientModule,
-    ButtonComponent],
-  declarations: [ButtonComponent]
+    ButtonComponent,
+    AlertComponent],
+  declarations: [ButtonComponent, AlertComponent]
 })
 export class SharedModule {
 

@@ -1,0 +1,17 @@
+<div class="alert"
+     [ngClass]="getAlertClass()"
+     role="alert">
+  <div *ngIf="hasHeadline()">
+    <h4 class="alert-heading">
+      <span>
+          <i class="fa"
+             [ngClass]="getAlertHeadingIconClass()"></i>
+      </span>
+      <span> {{ header }}</span>
+    </h4>
+    <hr>
+  </div>
+
+  <ng-content></ng-content>
+</div>
+

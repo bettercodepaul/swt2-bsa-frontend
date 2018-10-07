@@ -39,6 +39,16 @@
     },
     "REMEMBER_ME": {
       "LABEL": "E-Mail-Adresse merken?"
+    },
+    "NOTIFICATION": {
+      "LOGIN_SUCCESSFUL": {
+        "HEADER": "Login erfolgreich",
+        "TEXT": "Sie haben sich erfolgreich angemeldet."
+      },
+      "LOGIN_FAILURE": {
+        "HEADER": "Login fehlgeschlagen",
+        "TEXT": "Die Anmeldedaten sind falsch."
+      }
     }
   },
 

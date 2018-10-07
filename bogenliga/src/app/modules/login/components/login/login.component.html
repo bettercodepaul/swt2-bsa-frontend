@@ -73,10 +73,17 @@
           </div>
         </form>
 
-
       </div>
 
     </div>
+
+
+    <bla-alert header="{{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.HEADER' | translate }}"
+               [alertType]="AlertType.SUCCESS">
+      {{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.TEXT' | translate }}
+    </bla-alert>
+
+
     <div class="alert alert-primary"
          role="alert">
       <h4>Testbenutzer:</h4>
