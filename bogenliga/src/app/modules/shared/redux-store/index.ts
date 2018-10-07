@@ -1,3 +1,3 @@
 export * from './feature';
-export * from './app.state';
+export {AppState, NOTIFICATION_STATE, SIDEBAR_STATE} from './app.state';
 export * from './app.reducer';

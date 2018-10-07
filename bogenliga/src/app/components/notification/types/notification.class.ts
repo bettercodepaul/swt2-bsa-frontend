@@ -4,6 +4,7 @@ import {NotificationSeverity} from './notification-severity.enum';
 import {NotificationUserAction} from './notification-user-action.enum';
 
 export class Notification {
+  public id: string;
   public title: string;
   public description: string;
   public severity: NotificationSeverity = NotificationSeverity.INFO;

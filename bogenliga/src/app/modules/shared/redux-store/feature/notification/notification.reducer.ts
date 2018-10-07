@@ -14,7 +14,7 @@ export function notificationReducer(state = initialNavigationState, action: Acti
   switch (action.type) {
     case Actions.SHOW_NOTIFICATION: {
       newState = {
-        ...state,
+        notification: action.payload,
         showNotification: true
       };
       break;
