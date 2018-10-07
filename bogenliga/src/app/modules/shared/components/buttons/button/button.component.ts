@@ -12,6 +12,7 @@ export class ButtonComponent implements OnInit {
   @Input() public visible = true;
   @Input() public disabled = false;
   @Input() public loading = false;
+  @Input() public minWidth: string;
 
   @Input() public buttonType: ButtonType = ButtonType.PRIMARY;
   @Input() public buttonSize: ButtonSize = ButtonSize.NORMAL;

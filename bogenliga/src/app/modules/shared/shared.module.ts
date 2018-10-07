@@ -2,11 +2,11 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {TranslateModule} from '@ngx-translate/core';
-import {ButtonComponent} from './components/buttons';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {CurrentUserService} from './services/current-user';
-import {AlertComponent} from './components/alerts';
+import {AlertComponent, ButtonComponent, ModalDialogComponent} from './components';
+import {RestClient} from './data-provider';
 
 
 @NgModule({
@@ -14,22 +14,26 @@ import {AlertComponent} from './components/alerts';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    // TranslateModule.forChild()
+    TranslateModule.forChild(),
     ],
   exports: [
     TranslateModule,
     FormsModule,
     HttpClientModule,
     ButtonComponent,
-    AlertComponent],
-  declarations: [ButtonComponent, AlertComponent]
+    AlertComponent,
+    ModalDialogComponent],
+  declarations: [
+    ButtonComponent,
+    AlertComponent,
+    ModalDialogComponent]
 })
 export class SharedModule {
 
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [CurrentUserService]
+      providers: [CurrentUserService, RestClient]
     };
   }
 

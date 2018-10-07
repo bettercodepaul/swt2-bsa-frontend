@@ -1,0 +1,70 @@
+<div
+  class="modal"
+  [class.show]="visible"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog">
+  <div class="modal-dialog animation "
+       [class.fade-in]="visible"
+       style="padding-top: 10%;"
+       role="document">
+    <div class="modal-content"
+         [ngSwitch]="modalDialogOption">
+      <div class="modal-header">
+        <!-- display complex header with <h5> inside the modal dialog element tags -->
+        <ng-content select="h5"
+                    class="modal-title"></ng-content>
+
+        <!-- display simple text header with attribute value -->
+        <h5 *ngIf="!!header"
+            class="modal-title">{{ header }}</h5>
+      </div>
+
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+
+
+      <div class="modal-footer modal-dialog-ok"
+           *ngSwitchCase="ModalDialogOption.OK">
+        <bla-button [buttonType]="ButtonType.PRIMARY"
+                    [minWidth]="minOptionButtonWidth"
+                    (onClick)="closeDialog(ModalDialogResult.OK)">
+          {{ 'NOTIFICATION.BUTTON.OK' | translate }}
+        </bla-button>
+      </div>
+
+      <div class="modal-footer modal-dialog-ok-cancel"
+           *ngSwitchCase="ModalDialogOption.OK_CANCEL">
+        <bla-button [buttonType]="ButtonType.SECONDARY"
+                    [minWidth]="minOptionButtonWidth"
+                    (onClick)="closeDialog(ModalDialogResult.CANCEL)">
+          {{ 'NOTIFICATION.BUTTON.CANCEL' | translate }}
+        </bla-button>
+        <bla-button [buttonType]="ButtonType.PRIMARY"
+                    [minWidth]="minOptionButtonWidth"
+                    (onClick)="closeDialog(ModalDialogResult.OK)">
+          {{ 'NOTIFICATION.BUTTON.OK' | translate }}
+        </bla-button>
+      </div>
+      <div class="modal-footer modal-dialog-yes-no"
+           *ngSwitchCase="ModalDialogOption.YES_NO">
+
+        <bla-button [buttonType]="ButtonType.SECONDARY"
+                    [minWidth]="minOptionButtonWidth"
+                    (onClick)="closeDialog(ModalDialogResult.NO)">
+          {{ 'NOTIFICATION.BUTTON.NO' | translate }}
+        </bla-button>
+        <bla-button [buttonType]="ButtonType.PRIMARY"
+                    [minWidth]="minOptionButtonWidth"
+                    (onClick)="closeDialog(ModalDialogResult.YES)">
+          {{ 'NOTIFICATION.BUTTON.YES' | translate }}
+        </bla-button>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
