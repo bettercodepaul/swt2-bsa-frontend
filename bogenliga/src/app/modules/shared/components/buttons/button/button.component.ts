@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ButtonType} from '../types/button-type.enum';
+import {ButtonSize} from '../types/button-size.enum';
 
 @Component({
   selector: 'bla-button',
@@ -10,7 +12,9 @@ export class ButtonComponent implements OnInit {
   @Input() public visible = true;
   @Input() public disabled = false;
   @Input() public loading = false;
-  @Input() public buttonType = 'button';
+
+  @Input() public buttonType: ButtonType = ButtonType.PRIMARY;
+  @Input() public buttonSize: ButtonSize = ButtonSize.NORMAL;
 
   /**
    * The value is send via the event emitter to the parent component
@@ -47,5 +51,60 @@ export class ButtonComponent implements OnInit {
     } else {
       this.onClick.emit(this.value);
     }
+  }
+
+  public getButtonClass(): string {
+    let buttonClass = 'btn-primary';
+    switch (this.buttonType) {
+      case ButtonType.SECONDARY:
+        buttonClass = 'btn-secondary';
+        break;
+      case ButtonType.SUCCESS:
+        buttonClass = 'btn-success';
+        break;
+      case ButtonType.WARNING:
+        buttonClass = 'btn-warning';
+        break;
+      case ButtonType.DANGER:
+        buttonClass = 'btn-danger';
+        break;
+      case ButtonType.LINK:
+        buttonClass = 'btn-link';
+        break;
+      case ButtonType.PRIMARY_OUTLINE:
+        buttonClass = 'btn-outline-primary';
+        break;
+      case ButtonType.SECONDARY_OUTLINE:
+        buttonClass = 'btn-outline-secondary';
+        break;
+      case ButtonType.SUCCESS_OUTLINE:
+        buttonClass = 'btn-outline-success';
+        break;
+      case ButtonType.WARNING_OUTLINE:
+        buttonClass = 'btn-outline-warning';
+        break;
+      case ButtonType.DANGER_OUTLINE:
+        buttonClass = 'btn-outline-danger';
+        break;
+      // default
+      case ButtonType.PRIMARY:
+      default:
+        buttonClass = 'btn-primary';
+    }
+
+    buttonClass += ' ';
+
+    switch (this.buttonSize) {
+      case ButtonSize.LARGE_BLOCK:
+        buttonClass += 'btn-lg btn-block';
+        break;
+      case ButtonSize.SMALL:
+        buttonClass += 'btn-sm';
+        break;
+      case ButtonSize.NORMAL:
+      default:
+    }
+
+    return buttonClass;
   }
 }

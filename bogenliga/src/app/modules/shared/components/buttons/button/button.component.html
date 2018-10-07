@@ -4,8 +4,19 @@
   *ngIf="visible"
   (click)="onButtonClick()"
   [disabled]="isDisabled()"
-  [type]="buttonType"
-  class="btn btn-lg btn-primary btn-block">
+  type="button"
+  class="btn"
+  [ngClass]="getButtonClass()"
+
+
+>
   <!-- TODO make class configurable -->
-  <ng-content></ng-content>
+
+  <!-- show content of the <bla-button> element -->
+  <ng-content *ngIf="!loading"></ng-content>
+
+  <!-- show loading indicator -->
+  <i *ngIf="loading"
+     class="fas fa-sync fa-spin"></i>
+
 </button>
