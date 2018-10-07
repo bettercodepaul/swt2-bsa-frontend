@@ -1,5 +1,18 @@
 <div id="login">
   <div>
+
+    <bla-alert [visible]="(loginResult === LoginResult.SUCCESS)"
+               header="{{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.HEADER' | translate }}"
+               [alertType]="AlertType.SUCCESS">
+      {{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.TEXT' | translate }}
+    </bla-alert>
+
+    <bla-alert [visible]="(loginResult === LoginResult.FAILURE)"
+               header="{{ 'LOGIN.NOTIFICATION.LOGIN_FAILURE.HEADER' | translate }}"
+               [alertType]="AlertType.DANGER">
+      {{ 'LOGIN.NOTIFICATION.LOGIN_FAILURE.TEXT' | translate }}
+    </bla-alert>
+
     <div class="card mb-4 shadow-sm">
       <div class="card-body login-dialog">
 
@@ -27,7 +40,7 @@
                      [(ngModel)]="credentials.username"
                      required
                      pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
-                     [class.is-invalid]="loginEmail.invalid && !loginEmail.untouched"
+                     [class.is-invalid]="(loginEmail.invalid && !loginEmail.untouched) || (loginResult === LoginResult.FAILURE)"
                      placeholder="{{ 'LOGIN.USERNAME.LABEL' | translate }}">
 
               <div class="invalid-feedback">
@@ -45,7 +58,7 @@
                      [(ngModel)]="credentials.password"
                      required
                      minlength="3"
-                     [class.is-invalid]="loginPassword.invalid && !loginPassword.untouched"
+                     [class.is-invalid]="(loginPassword.invalid && !loginPassword.untouched) || (loginResult === LoginResult.FAILURE)"
                      placeholder="{{ 'LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
 
               <div class="invalid-feedback">
@@ -76,12 +89,6 @@
       </div>
 
     </div>
-
-
-    <bla-alert header="{{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.HEADER' | translate }}"
-               [alertType]="AlertType.SUCCESS">
-      {{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.TEXT' | translate }}
-    </bla-alert>
 
 
     <bla-alert header="Testbenutzer:"

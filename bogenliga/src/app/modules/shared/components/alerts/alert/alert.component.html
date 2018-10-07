@@ -1,5 +1,7 @@
-<div class="alert"
+<div [id]="id"
+     class="alert"
      [ngClass]="getAlertClass()"
+     *ngIf="visible"
      role="alert">
   <div *ngIf="hasHeadline()">
     <h4 class="alert-heading">
