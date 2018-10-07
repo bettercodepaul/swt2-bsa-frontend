@@ -21,7 +21,7 @@ import {SharedModule} from './modules/shared/shared.module';
 import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 import {LoginModule} from './modules/login/login.module';
 import {JwtInterceptor} from './modules/shared/data-provider';
-import { SidebarItemComponent } from './components/sidebar/components/sidebar-item/sidebar-item.component';
+import {SidebarItemComponent} from './components/sidebar/components/sidebar-item/sidebar-item.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -47,7 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    RouterModule.forRoot(ROUTES),
+    RouterModule.forRoot(ROUTES, {useHash: true}),
     /* REDUX-STORE */
     StoreModule.forRoot(APP_REDUCERS),
     EffectsModule.forRoot([]),
