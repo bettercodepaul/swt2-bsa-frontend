@@ -63,7 +63,10 @@
                      for="loginRememberMe">{{ 'LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
             </div>
 
-            <bla-button [disabled]="!loginForm.valid"
+            <bla-button [id]="'loginButton'"
+                        [buttonSize]="ButtonSize.LARGE_BLOCK"
+                        [disabled]="!loginForm.valid"
+                        [loading]="loading"
                         (onClick)="onLogin($event)">{{ 'LOGIN.BUTTON.LOGIN' | translate }}
             </bla-button>
 
@@ -76,7 +79,7 @@
     </div>
     <div class="alert alert-primary"
          role="alert">
-      <h4>Hinweis:</h4>
+      <h4>Testbenutzer:</h4>
       <p>Username: admin@bogenliga.de <br>Password: admin<br>Rolle: ADMIN</p>
       <p>Username: moderator@bogenliga.de <br>Password: moderator<br>Rolle: MODERATOR</p>
       <p>Username: user@bogenliga.de <br>Password: user <br>Rolle: USER</p>
