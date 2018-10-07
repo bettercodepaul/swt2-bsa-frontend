@@ -1,10 +1,26 @@
-import {Component, OnInit, HostListener} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  QueryList,
+  Renderer2,
+  ViewChildren
+} from '@angular/core';
 
-import { DataService } from '../../services/data.service';
-import { Data } from '../../types/data';
-
-import { ViewChildren, QueryList, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
-import { TranslatePipe} from '@ngx-translate/core';
+import {DataService} from '../../services/data.service';
+import {Data} from '../../types/data';
+import {TranslatePipe} from '@ngx-translate/core';
+import {Store} from '@ngrx/store';
+import {AppState, ShowNotification} from '../../../shared/redux-store';
+import {
+  Notification,
+  NotificationOrigin,
+  NotificationSeverity,
+  NotificationType
+} from '../../../../components/notification/types';
+import {NotificationUserAction} from '../../../../components/notification/types/notification-user-action.enum';
 
 
 @Component({
@@ -28,6 +44,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   first = 1; // first item on page
   last = this.maxOnPage; // last item on page
 
+  constructor(private renderer: Renderer2, private el: ElementRef, private dataService: DataService, private store: Store<AppState>) {
+  }
+
   @HostListener('click', ['$event']) onclick(event: any) { // https://angular.io/api/core/HostListener
     if (event.target.parentElement.innerText >= 1 || event.target.parentElement.innerText <= 3) {
       (this.activePage as number) = +event.target.parentElement.innerText;
@@ -39,8 +58,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
     this.last = +this.activePage * this.maxOnPage - 1;
   }
-
-  constructor(private renderer: Renderer2, private el: ElementRef, private dataService: DataService) { }
 
   ngOnInit() {
     this.getData();
@@ -81,6 +98,20 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
         this.last = +this.activePage * this.maxOnPage - 1;
       }
+    }, error => {
+
+      // TODO example notification; wrong service...
+      const notification: Notification = {
+        id: 'identifier',
+        title: 'Loading failed',
+        description: error,
+        severity: NotificationSeverity.ERROR,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.PENDING
+      };
+
+      this.store.dispatch(new ShowNotification(notification));
     });
   }
 
