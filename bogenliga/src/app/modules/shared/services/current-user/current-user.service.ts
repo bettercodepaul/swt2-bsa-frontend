@@ -55,7 +55,16 @@ export class CurrentUserService {
 
   private getCurrentUser(): UserSignInDTO {
     const currentUserValue = this.localDataProviderService.get(CURRENT_USER_KEY);
+    if ( currentUserValue != null ) {
+      return UserSignInDTO.copyFromJson(JSON.parse(currentUserValue));
+    }
+    return new UserSignInDTO();
+  }
 
-    return new UserSignInDTO(JSON.parse(currentUserValue));
+  public isLoggedIn(): boolean {
+    if (this.getUserId() === null ) {
+      return true;
+    }
+    return false;
   }
 }

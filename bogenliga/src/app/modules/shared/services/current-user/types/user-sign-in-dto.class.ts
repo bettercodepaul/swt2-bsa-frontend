@@ -9,27 +9,37 @@ export class UserSignInDTO implements DataTransferObject {
   jwt: string;
   permissions: UserPermission[];
 
-  constructor(json: {
+  static copyFromJson(json: {
     id: number,
     version: number,
     email: string,
     jwt: string,
     permissions?: string[]
-  }) {
-    this.id = json.id;
-    this.version = json.version;
-    this.email = json.email;
-    this.jwt = json.jwt;
+  }): UserSignInDTO {
+    const userSign = new UserSignInDTO();
+    userSign.id = json.id;
+    userSign.version = json.version;
+    userSign.email = json.email;
+    userSign.jwt = json.jwt;
 
-    this.permissions = [];
+    userSign.permissions = [];
 
     // map string list to enum list
     if (json.permissions) {
       json.permissions.forEach(permission => {
         const userPermission = UserPermission[permission];
-        this.permissions.push(userPermission);
+        userSign.permissions.push(userPermission);
       });
     }
+    return userSign;
+  }
+
+  constructor() {
+    this.id = 0;
+    this.version = 0;
+    this.email = null;
+    this.jwt = null;
+    this.permissions = null;
   }
 
 }

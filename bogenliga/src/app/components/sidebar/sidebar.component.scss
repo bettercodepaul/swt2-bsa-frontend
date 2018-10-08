@@ -109,6 +109,7 @@
   background: #02bdd5;//#343a40;
   display: flex;
   flex-basis: 100%;
+  cursor: pointer;
   //border: 1px solid #343a40;
 }
 #sidebarCollapseBottom:hover {
@@ -130,8 +131,8 @@
 @media (max-width: 768px) {
   #sidebar {
     margin-left: 0;
-    margin-top: 54px; //height of NavBar
-    min-height: calc(100vh - 54px); //full view - Navbar on top
+    margin-top: 40px; //height of NavBar
+    min-height: calc(100vh - 40px); //full view - Navbar on top
   }
   #sidebar.inactive {
     margin-left: -80px;

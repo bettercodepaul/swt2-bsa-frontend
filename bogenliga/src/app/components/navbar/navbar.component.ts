@@ -3,6 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
 import {AppState, SidebarState} from '../../modules/shared/redux-store';
 import {TOGGLE_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';
+import {CurrentUserService} from '../../modules/shared/services/current-user';
 
 @Component({
   selector: 'bla-navbar',
@@ -14,7 +15,7 @@ export class NavbarComponent implements OnInit {
 
   public isActive: boolean; // for class and css to know if sidebar is wide or small
 
-  constructor(private translate: TranslateService, private store: Store<AppState>) {
+  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService) {
     store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );
   }
 

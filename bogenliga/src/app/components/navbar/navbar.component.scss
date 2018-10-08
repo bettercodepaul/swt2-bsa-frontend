@@ -32,6 +32,15 @@
   color: black;
 }
 
+.btn {
+  outline: none;
+}
+
+// Dropdown triangle
+.navbar-dark[_ngcontent-c1] .navbar-nav[_ngcontent-c1] .nav-link[_ngcontent-c1] {
+  color: black;
+}
+
 // for small devices
 @media (max-width: 768px) {
   // Toggle shown while in mobile view
