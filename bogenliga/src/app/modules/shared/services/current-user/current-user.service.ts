@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 import {UserPermission} from './types/user-permission.enum';
 import {LocalDataProviderService} from '../../local-data-provider/services/local-data-provider.service';
 import {UserSignInDTO} from './types/user-sign-in-dto.class';
+import {TOGGLE_SIDEBAR} from "../../redux-store/feature/sidebar";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../redux-store";
+import {LOGIN} from "../../redux-store/feature/user";
 
 const CURRENT_USER_KEY = 'current_user';
 
@@ -12,11 +16,12 @@ const CURRENT_USER_KEY = 'current_user';
 export class CurrentUserService {
 
 
-  constructor(private localDataProviderService: LocalDataProviderService) {
+  constructor(private localDataProviderService: LocalDataProviderService, private store: Store<AppState>) {
   }
 
   public persistCurrentUser(currentUser: UserSignInDTO): void {
-    this.localDataProviderService.setSessionScoped(CURRENT_USER_KEY, JSON.stringify(currentUser));
+    this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
+    this.store.dispatch({ type: LOGIN, user: this.localDataProviderService.get(CURRENT_USER_KEY) });
   }
 
   public getEmail(): string {
@@ -66,5 +71,9 @@ export class CurrentUserService {
       return true;
     }
     return false;
+  }
+
+  public logout() {
+    this.localDataProviderService.remove(CURRENT_USER_KEY);
   }
 }

@@ -5,6 +5,9 @@ import {CredentialsDTO} from '../types/model/credentials-dto.class';
 import {CredentialsDO} from '../types/credentials-do.class';
 import {HttpClient} from '@angular/common/http';
 import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
+import {Store} from "@ngrx/store";
+import {AppState} from "../../shared/redux-store";
+import {LOGOUT} from "../../shared/redux-store/feature/user";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,7 @@ import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-u
 export class LoginDataProviderService extends DataProviderService {
   serviceSubUrl = 'v1/user/signin';
 
-  constructor(private restClient: RestClient, private httpClient: HttpClient, private currentUserService: CurrentUserService) {
+  constructor(private restClient: RestClient, private httpClient: HttpClient, private currentUserService: CurrentUserService, private store: Store<AppState>) {
     super();
   }
 
@@ -41,7 +44,7 @@ export class LoginDataProviderService extends DataProviderService {
         console.log(data);
         // store user details and jwt token in local storage to keep user logged in between page refreshes
 
-        this.currentUserService.persistCurrentUser(new UserSignInDTO(data));
+        this.currentUserService.persistCurrentUser(UserSignInDTO.copyFromJson(data));
 
         resolve(true);
 
@@ -49,6 +52,9 @@ export class LoginDataProviderService extends DataProviderService {
 
         // TODO correct error handling
         console.warn(JSON.stringify(error));
+
+        this.store.dispatch({ type: LOGOUT, user: null });
+        this.currentUserService.logout();
 
         reject(false);
 

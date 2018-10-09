@@ -21,16 +21,16 @@
     <button (click)="useLanguage('de')" class="btn btn-link">de</button> -->
     <button class="nav-item"  class="btn btn-link">
       <!-- Login Button -->
-      <a *ngIf="!userService.isLoggedIn()" class="login" class="nav-link" routerLink="/login"><button class="btn btn-light">Login</button></a>
+      <a *ngIf="!isLoggedIn" class="login" class="nav-link" routerLink="/login"><button class="btn btn-light">Login</button></a>
       <!-- Profil Dropdown -->
-      <li *ngIf="userService.isLoggedIn()" class="nav-item dropdown">
+      <li *ngIf="isLoggedIn" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><i class="material-icons">account_circle</i></a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-header">Profil Einstellungen</div>
           <a class="dropdown-item" href="#">Profil und Account</a>
           <a class="dropdown-item" href="#">Einstellungen</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="/home">Logout</a>
+          <a class="dropdown-item" routerLink="/home" (click)="logout()">Logout</a>
         </div>
       </li>
     </button>

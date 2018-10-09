@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { Data } from '../../types/data';
 import {TranslateModule, TranslatePipe } from '@ngx-translate/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from 'util';
 import {catchError, map} from 'rxjs/operators';
 
@@ -20,7 +20,7 @@ export class DetailsComponent implements OnInit {
   data: Data = new Data();
   dataKey = ''; // key for url -> which data is selected
 
-  constructor(private dataService: DataService, private route: ActivatedRoute) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.initDialog();
@@ -54,8 +54,9 @@ export class DetailsComponent implements OnInit {
    * resets data of this for next input
    */
   saveNewData(): void {
-    this.dataService.addOne(new Data(this.data.key, this.data.value)).subscribe();
-    this.data = new Data(); // reset data
+    this.dataService.addOne(new Data(this.data.key, this.data.value)).subscribe(datas => {
+      this.data = new Data(); // reset data
+    });
   }
 
   /**
@@ -71,6 +72,8 @@ export class DetailsComponent implements OnInit {
    * calls service
    */
   deleteThisData(): void {
-    this.dataService.deleteById(this.dataKey).subscribe();
+    this.dataService.deleteById(this.dataKey).subscribe(datas => {
+      this.router.navigate(['/settings/overview']);
+    });
   }
 }

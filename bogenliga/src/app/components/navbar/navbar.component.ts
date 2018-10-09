@@ -1,9 +1,10 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, AfterViewInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
 import {AppState, SidebarState} from '../../modules/shared/redux-store';
 import {TOGGLE_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';
 import {CurrentUserService} from '../../modules/shared/services/current-user';
+import {LOGOUT, UserState} from "../../modules/shared/redux-store/feature/user";
 
 @Component({
   selector: 'bla-navbar',
@@ -14,12 +15,15 @@ import {CurrentUserService} from '../../modules/shared/services/current-user';
 export class NavbarComponent implements OnInit {
 
   public isActive: boolean; // for class and css to know if sidebar is wide or small
+  private isLoggedIn: boolean;
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService) {
     store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );
+    store.pipe(select('userState')).subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn );
   }
 
   ngOnInit() {
+
   }
 
   /**
@@ -35,5 +39,10 @@ export class NavbarComponent implements OnInit {
    */
   public toggleNavbar() {
     this.store.dispatch({ type: TOGGLE_SIDEBAR });
+  }
+
+  public logout() {
+    this.store.dispatch({ type: LOGOUT, user: null });
+    this.userService.logout();
   }
 }

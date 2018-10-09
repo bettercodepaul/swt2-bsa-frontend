@@ -28,7 +28,7 @@
       <!-- Button Footer -->
       <div class="menu">
         <a id="backData" routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
-        <a id="deleteData" routerLink="/settings/overview"><button type="button" class="btn btn-danger" (click)="deleteThisData()">{{ 'DETAILS.DELETE' | translate }}</button></a>
+        <a id="deleteData"><button type="button" class="btn btn-danger" (click)="deleteThisData()">{{ 'DETAILS.DELETE' | translate }}</button></a>
         <a id="saveData" routerLink="{{'/settings/details/' + data.key}}"><button type="button" class="btn btn-success" (click)="saveData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
       </div>
 
