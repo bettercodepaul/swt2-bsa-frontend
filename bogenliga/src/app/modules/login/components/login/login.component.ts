@@ -14,8 +14,7 @@ const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 @Component({
   selector: 'bla-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss',
-    './../../../../app.component.scss']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -25,6 +24,15 @@ export class LoginComponent implements OnInit {
   public ButtonSize = ButtonSize;
   public AlertType = AlertType;
   public LoginResult = LoginResult;
+
+  // TODO: remove after development
+  public testAdminUser: CredentialsDO = new CredentialsDO('admin@bogenliga.de', 'admin');
+  public testModeratorUser: CredentialsDO = new CredentialsDO('moderator@bogenliga.de', 'moderator');
+  public testUserUser: CredentialsDO = new CredentialsDO('user@bogenliga.de', 'user');
+  public testDummyModeratorUser: CredentialsDO = new CredentialsDO('Nicholas.Corle@bogenliga.de', 'swt2');
+  public testDummyUserUser: CredentialsDO = new CredentialsDO('Malorie.Artman@bogenliga.de', 'swt2');
+  // TODO: remove after development
+
   private destinationRouteAfterLogin = '/home';
 
   constructor(private loginDataProviderService: LoginDataProviderService, private route: ActivatedRoute, private router: Router) {
@@ -59,6 +67,12 @@ export class LoginComponent implements OnInit {
           this.handleFailedLogin();
         }
       );
+  }
+
+  // TODO: remove after development
+  public onAutoLogin($event: CredentialsDO): void {
+    this.credentials = $event;
+    this.onLogin(null);
   }
 
   private handleFailedLogin() {
