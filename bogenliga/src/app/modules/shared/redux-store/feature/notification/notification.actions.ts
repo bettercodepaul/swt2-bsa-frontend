@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {Notification} from '../../../../../components/notification/types';
+import {Notification} from '../../../services/notification';
 
 export const SHOW_NOTIFICATION = '[Navigation] Show Notification';
 export const ACCEPT_NOTIFICATION = '[Navigation] Accept Notification';

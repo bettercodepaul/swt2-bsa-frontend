@@ -1,7 +1,5 @@
 import {SidebarState} from './sidebar.state';
 import * as Actions from './sidebar.actions';
-import {NotificationUserAction} from '../../../../../components/notification/types/notification-user-action.enum';
-import {Notification} from '../../../../../components/notification/types';
 
 export const initialSidebarState: SidebarState = {
   toggleSidebar: true,

@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {TransferObject} from '../models/transfer-object.interface';
-import {catchError, retry} from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,7 +23,6 @@ export class RestClient {
     console.log('Send GET request to ' + url);
 
     return this.http.get(url, httpOptions).pipe(
-      retry(3), // retry a failed request up to 3 times
       catchError(this.handleError)
     );
   }
@@ -32,7 +31,6 @@ export class RestClient {
     console.log('Send POST request to ' + url + ' with payload ' + JSON.stringify(payload));
 
     return this.http.post(url, payload, httpOptions).pipe(
-      retry(3), // retry a failed request up to 3 times
       catchError(this.handleError)
     );
   }
@@ -41,7 +39,6 @@ export class RestClient {
     console.log('Send PUT request to ' + url + ' with payload ' + JSON.stringify(payload));
 
     return this.http.put(url, payload, httpOptions).pipe(
-      retry(3), // retry a failed request up to 3 times
       catchError(this.handleError)
     );
   }
@@ -50,7 +47,6 @@ export class RestClient {
     console.log('Send DELETE request to ' + url);
 
     return this.http.delete(url, httpOptions).pipe(
-      retry(3), // retry a failed request up to 3 times
       catchError(this.handleError)
     );
   }

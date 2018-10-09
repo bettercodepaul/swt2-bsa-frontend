@@ -13,14 +13,7 @@ import {DataService} from '../../services/data.service';
 import {Data} from '../../types/data';
 import {TranslatePipe} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
-import {AppState, ShowNotification} from '../../../shared/redux-store';
-import {
-  Notification,
-  NotificationOrigin,
-  NotificationSeverity,
-  NotificationType
-} from '../../../../components/notification/types';
-import {NotificationUserAction} from '../../../../components/notification/types/notification-user-action.enum';
+import {AppState} from '../../../shared/redux-store';
 
 
 @Component({
@@ -98,20 +91,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
         this.last = +this.activePage * this.maxOnPage - 1;
       }
-    }, error => {
-
-      // TODO example notification; wrong service...
-      const notification: Notification = {
-        id: 'identifier',
-        title: 'Loading failed',
-        description: error,
-        severity: NotificationSeverity.ERROR,
-        origin: NotificationOrigin.SYSTEM,
-        type: NotificationType.OK,
-        userAction: NotificationUserAction.PENDING
-      };
-
-      this.store.dispatch(new ShowNotification(notification));
     });
   }
 

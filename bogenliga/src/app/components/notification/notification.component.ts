@@ -1,16 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Notification, NotificationOrigin, NotificationSeverity, NotificationType} from './types';
-import {select, Store} from '@ngrx/store';
-import {
-  ACCEPT_NOTIFICATION,
-  AppState,
-  DECLINE_NOTIFICATION,
-  NOTIFICATION_STATE,
-  NotificationState,
-  ShowNotification
-} from '../../modules/shared/redux-store';
 import {ModalDialogOption, ModalDialogResult} from '../../modules/shared/components/modals';
-import {NotificationUserAction} from './types/notification-user-action.enum';
+import {
+  Notification,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
+} from '../../modules/shared/services/notification';
+import {NotificationState} from '../../modules/shared/redux-store/feature/notification';
+import {ButtonSize} from '../../modules/shared/components/buttons';
 
 @Component({
   selector: 'bla-notification',
@@ -24,9 +22,13 @@ export class NotificationComponent implements OnInit {
 
   public ModalDialogOption = ModalDialogOption;
   public NotificationType = NotificationType;
+  public ButtonSize = ButtonSize;
 
-  constructor(private store: Store<AppState>) {
-    this.observeNewNotifications(store);
+  constructor(private notificationService: NotificationService) {
+    this.notificationService.observeNotifications().subscribe((state: NotificationState) => {
+      this.showDialog = state.showNotification;
+      this.notification = state.notification;
+    });
   }
 
 
@@ -56,6 +58,12 @@ export class NotificationComponent implements OnInit {
     return alertHeadingClass;
   }
 
+  public showRaw(): void {
+    const windowWithRawData = window.open('#');
+    windowWithRawData.document.write(this.notification.details);
+  }
+
+
   /**
    * I handle the user´s choice
    *
@@ -64,11 +72,13 @@ export class NotificationComponent implements OnInit {
    * @param $event of {@code ModalDialogResult}
    */
   public modalDialogResult($event: ModalDialogResult): void {
+
     if ($event === ModalDialogResult.OK || $event === ModalDialogResult.YES) {
-      this.store.dispatch({type: ACCEPT_NOTIFICATION});
+      this.notificationService.updateNotification(NotificationUserAction.ACCEPTED);
 
     } else {
-      this.store.dispatch({type: DECLINE_NOTIFICATION});
+      this.notificationService.updateNotification(NotificationUserAction.DECLINED);
+
     }
   }
 
@@ -79,32 +89,5 @@ export class NotificationComponent implements OnInit {
    */
   public getModalDialogOption(): ModalDialogOption {
     return ModalDialogOption[NotificationType[this.notification.type]];
-  }
-
-  public showNotification() {
-
-    const notification: Notification = {
-      id: 'identifier',
-      title: 'Title',
-      description: 'Description',
-      severity: NotificationSeverity.ERROR,
-      origin: NotificationOrigin.SYSTEM,
-      type: NotificationType.OK,
-      userAction: NotificationUserAction.PENDING
-    };
-
-    this.store.dispatch(new ShowNotification(notification));
-  }
-
-  /**
-   * I select the {@code NOTIFICATION_STATE} of the application redux state and map the values to local copies.
-   *
-   * @param store implementation
-   */
-  private observeNewNotifications(store: Store<AppState>) {
-    store.pipe(select(NOTIFICATION_STATE)).subscribe((state: NotificationState) => {
-      this.showDialog = state.showNotification;
-      this.notification = state.notification;
-    });
   }
 }

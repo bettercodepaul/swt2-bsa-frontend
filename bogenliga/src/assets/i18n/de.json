@@ -68,6 +68,19 @@
       "CANCEL": "Abbrechen",
       "YES": "Ja",
       "NO": "Nein"
+    },
+    "ERROR": {
+      "GENERIC_ERROR": {
+        "TITLE": "Fehler"
+      },
+      "UNEXPECTED_ERROR": {
+        "TITLE": "Unerwarteter Fehler",
+        "DESCRIPTION": "Es ist ein unerwarteter Fehler im Server aufgetreten."
+      },
+      "NO_PERMISSION_ERROR": {
+        "TITLE": "Keine Berechtigung",
+        "DESCRIPTION": "Sie haben keine Rechte diese Seite zu sehen oder Daten für diese Seite abzurufen."
+      }
     }
   },
 

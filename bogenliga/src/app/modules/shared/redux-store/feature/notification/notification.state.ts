@@ -1,4 +1,4 @@
-import {Notification} from '../../../../../components/notification/types';
+import {Notification} from '../../../services/notification';
 
 export interface NotificationState {
   showNotification: boolean;

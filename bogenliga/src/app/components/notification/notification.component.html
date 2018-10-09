@@ -4,7 +4,37 @@
   <h5 class="modal-dialog-header">
     <i class="fa"
        [ngClass]="getModalDialogHeadingIconClass()"></i>
-    {{notification.title}}
+    {{notification.title | translate }}
   </h5>
-  <div class="modal-dialog-content">{{notification.description}}</div>
+  <div class="modal-dialog-content">
+    {{notification.description | translate}}
+  </div>
+
+
+  <div class="modal-dialog-details"
+       style="">
+
+    <a
+      data-toggle="collapse"
+      href="#collapseErrorMessage"
+      aria-expanded="false"
+      aria-controls="collapseErrorMessage">
+      <i class="fas fa-caret-down"></i> Mehr Informationen anzeigen
+    </a>
+
+    <div class="collapse"
+         id="collapseErrorMessage">
+      <div class="card card-body modal-dialog-error">
+        <!-- show pre formatted payload -->
+        <pre><code>{{notification.details}}</code></pre>
+
+        <bla-button [buttonSize]="ButtonSize.SMALL"
+                    (onClick)="showRaw()">
+          <i class="fas fa-file-export"></i> Fenster mit Rohdaten öffnen
+        </bla-button>
+      </div>
+    </div>
+
+
+  </div>
 </bla-modal-dialog>

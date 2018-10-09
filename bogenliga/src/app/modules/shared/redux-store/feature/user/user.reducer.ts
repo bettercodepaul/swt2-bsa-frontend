@@ -1,7 +1,5 @@
 import {UserState} from './user.state';
 import * as Actions from './user.actions';
-import {NotificationUserAction} from '../../../../../components/notification/types/notification-user-action.enum';
-import {Notification} from '../../../../../components/notification/types';
 
 export const initialUserState: UserState = {
   isLoggedIn: false,

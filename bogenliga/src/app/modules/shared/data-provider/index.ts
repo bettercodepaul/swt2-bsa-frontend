@@ -8,3 +8,4 @@ export * from './models/data-transfer-object.interface';
 export * from './models/versioned-data-transfer-object.interface';
 
 export * from './interceptors/jwt-interceptor.class';
+export * from './interceptors/error-interceptor.class';

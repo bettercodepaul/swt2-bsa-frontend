@@ -7,6 +7,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {CurrentUserService} from './services/current-user';
 import {AlertComponent, ButtonComponent, ModalDialogComponent} from './components';
 import {RestClient} from './data-provider';
+import {ErrorHandlingService} from './services/error-handling';
+import {NotificationService} from './services/notification';
 
 
 @NgModule({
@@ -14,8 +16,7 @@ import {RestClient} from './data-provider';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    TranslateModule.forChild(),
-    ],
+    TranslateModule.forChild()],
   exports: [
     TranslateModule,
     FormsModule,
@@ -33,7 +34,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [CurrentUserService, RestClient]
+      providers: [CurrentUserService, ErrorHandlingService, NotificationService, RestClient]
     };
   }
 
