@@ -4,7 +4,7 @@ import {select, Store} from '@ngrx/store';
 import {AppState, SidebarState} from '../../modules/shared/redux-store';
 import {TOGGLE_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';
 import {CurrentUserService} from '../../modules/shared/services/current-user';
-import {LOGOUT, UserState} from "../../modules/shared/redux-store/feature/user";
+import {LOGOUT, UserState} from '../../modules/shared/redux-store/feature/user';
 
 @Component({
   selector: 'bla-navbar',

@@ -5,7 +5,7 @@ import { Data } from '../../types/data';
 import {TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from 'util';
-import {catchError, map} from 'rxjs/operators';
+import {catchError, delay, map} from 'rxjs/operators';
 
 @Component({
   selector: 'bla-details',
@@ -19,6 +19,7 @@ export class DetailsComponent implements OnInit {
   dataSelected = false; // is data selceted -> chooses view
   data: Data = new Data();
   dataKey = ''; // key for url -> which data is selected
+  private destinationRouteAfterDelete = '/settings/overview';
 
   constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
 
@@ -72,8 +73,8 @@ export class DetailsComponent implements OnInit {
    * calls service
    */
   deleteThisData(): void {
-    this.dataService.deleteById(this.dataKey).subscribe(datas => {
-      this.router.navigate(['/settings/overview']);
+    this.dataService.deleteById(this.dataKey).subscribe(v => {
+      this.router.navigateByUrl(this.destinationRouteAfterDelete);
     });
   }
 }
