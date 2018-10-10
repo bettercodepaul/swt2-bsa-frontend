@@ -44,13 +44,17 @@
 
     <!-- Sidebar links config -->
       <ul class="list-unstyled components">
-        <li *ngFor="let item of CONFIG">
-          <a routerLink="{{item.route}}">
-            <bla-sidebar-item label="{{ item.label | translate }}"
-                               [icon]="item.icon"></bla-sidebar-item>
-          </a>
-        </li>
+        <ng-container *ngFor="let item of CONFIG">
+          <li *ngIf="hasUserPermissions(item.permissons)">
+            <a routerLink="{{item.route}}">
+              <bla-sidebar-item label="{{ item.label | translate }}"
+                                [icon]="item.icon"></bla-sidebar-item>
+            </a>
+          </li>
+        </ng-container>
       </ul>
+
+
 
   </div>
 

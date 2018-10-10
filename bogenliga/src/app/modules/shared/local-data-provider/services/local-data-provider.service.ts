@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {isStorageAvailable} from 'angular-webstorage-service';
 import {LocalStorageDataProvider} from './data-sources/local-storage-data-provider.class';
 import {SessionStorageDataProvider} from './data-sources/session-storage-data-provider.class';
+import {isNullOrUndefined} from "util";
 
 /**
  * I provider data from the local user client and abstract the data source.
@@ -77,10 +78,12 @@ export class LocalDataProviderService {
     let value = null;
     if (sessionStorageAvailable) {
       value = this.sessionStorageDataProvider.get(key);
+      console.log('value: ' + JSON.stringify(value));
     }
 
-    if (!value && localStorageAvailable) {
+    if (isNullOrUndefined(value) && localStorageAvailable) {
       value = this.localStorageDataProvider.get(key);
+      console.log('value: ' + JSON.stringify(value));
     }
 
     return value;
