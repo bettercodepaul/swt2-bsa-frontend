@@ -13,9 +13,10 @@ import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../shared/redux-store';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
-import {SharedModule} from "../shared/shared.module";
+import {SharedModule} from '../shared/shared.module';
+import {SidebarItemComponent} from '../../components/sidebar/components/sidebar-item/sidebar-item.component';
 
-describe('SettingsModule', () => {
+describe('WettkampfModule', () => {
   let wettkampfModule: WettkampfModule;
   let location: Location;
   let router: Router;
@@ -26,6 +27,7 @@ describe('SettingsModule', () => {
       declarations: [
         AppComponent,
         SidebarComponent,
+        SidebarItemComponent,
         NavbarComponent,
         NotificationComponent
       ],
