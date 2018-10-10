@@ -9,7 +9,6 @@ export class ShowNotification implements Action {
   readonly type = SHOW_NOTIFICATION;
 
   constructor(public payload: Notification) {
-    console.log('ShowNotification constructor: ' + JSON.stringify(payload));
   }
 }
 

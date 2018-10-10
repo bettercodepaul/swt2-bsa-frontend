@@ -116,6 +116,18 @@ export class ErrorHandlingService {
   private handleHttpConnectionError(statusCode: number, errorDto: ErrorDTO) {
     console.error('Connection error');
 
+    const connectionError = 'CONNECTION_ERROR';
 
+    const notification: Notification = {
+      id: connectionError,
+      title: 'NOTIFICATION.ERROR.' + connectionError + '.TITLE',
+      description: 'NOTIFICATION.ERROR.' + connectionError + '.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.SYSTEM,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.notificationService.showNotification(notification);
   }
 }

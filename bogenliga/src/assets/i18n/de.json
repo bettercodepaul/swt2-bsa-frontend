@@ -80,6 +80,10 @@
       "NO_PERMISSION_ERROR": {
         "TITLE": "Keine Berechtigung",
         "DESCRIPTION": "Sie haben keine Rechte diese Seite zu sehen oder Daten für diese Seite abzurufen."
+      },
+      "CONNECTION_ERROR": {
+        "TITLE": "Verbindungsprobleme",
+        "DESCRIPTION": "Der Service konnte nicht erreicht werden. Bitte probieren sie es später erneut."
       }
     }
   },
