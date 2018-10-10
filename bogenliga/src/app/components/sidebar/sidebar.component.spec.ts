@@ -11,6 +11,10 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../modules/shared/redux-store';
 import {SharedModule} from '../../modules/shared/shared.module';
+import {SettingsModule} from '../../modules/settings/settings.module';
+import {WettkampfModule} from '../../modules/wettkampf/wettkampf.module';
+import {FormsModule} from '@angular/forms';
+import {SidebarItemComponent} from './components/sidebar-item/sidebar-item.component';
 
 describe('SidebarComponent', () => {
   let component: SidebarComponent;
@@ -18,14 +22,22 @@ describe('SidebarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SidebarComponent ],
+      declarations: [
+        SidebarComponent,
+        SidebarItemComponent ],
       imports: [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         LoginModule,
+        SettingsModule,
+        WettkampfModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        SharedModule
+        HttpClientModule,
+        SharedModule,
+        HomeModule,
+        WettkampfModule,
+        FormsModule
       ]
     })
     .compileComponents();

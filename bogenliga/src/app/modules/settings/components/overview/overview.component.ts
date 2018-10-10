@@ -31,8 +31,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   keyAscending = false; // if sorted with key aufsteigend
   valueAscending = false; // if sorted with value aufsteigend
 
+  paginationVisible = true;
+
   activePage = 1; // number of current page
-  pageCount: Array<any> = [1, 2]; // link to the pages
+  pageCount: Array<any> = []; // link to the pages
   maxOnPage = 8; // how many items can be shown on the page
   first = 1; // first item on page
   last = this.maxOnPage; // last item on page
@@ -100,12 +102,21 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * @param datacount
    */
   calculatePagination(datacount: number) {
-    const pages = Math.ceil(datacount / this.maxOnPage); // Math.ceil always gives back same ore higher number -> 7.03 is 8
-    const pagination = new Array(pages);
-    for (let i = 0; i < pagination.length; i++) {
-      pagination[i] = i + 1;
+    if (datacount === 0) {
+      this.pageCount = [];
+    } else {
+      const pages = Math.ceil(datacount / this.maxOnPage); // Math.ceil always gives back same ore higher number -> 7.03 is 8
+      const pagination = new Array(pages);
+      for (let i = 0; i < pagination.length; i++) {
+        pagination[i] = i + 1;
+      }
+      this.pageCount = pagination;
     }
-    this.pageCount = pagination;
+    if ( this.pageCount === null || this.pageCount.length < 1 ) {
+      this.paginationVisible = false
+    } else {
+      this.paginationVisible = true;
+    }
   }
 
   /**

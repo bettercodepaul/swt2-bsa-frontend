@@ -9,6 +9,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {HttpClientModule} from '@angular/common/http';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../modules/shared/redux-store';
+import {SharedModule} from "../../modules/shared/shared.module";
 
 xdescribe('NotificationComponent', () => {
   let component: NotificationComponent;
@@ -23,7 +24,8 @@ xdescribe('NotificationComponent', () => {
         LoginModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule
+        HttpClientModule,
+        SharedModule
       ]
     })
     .compileComponents();

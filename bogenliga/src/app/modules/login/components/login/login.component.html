@@ -58,6 +58,7 @@
                      [(ngModel)]="credentials.password"
                      required
                      minlength="3"
+                     (keyup.enter)="onLogin($event)"
                      [class.is-invalid]="(loginPassword.invalid && !loginPassword.untouched) || (loginResult === LoginResult.FAILURE)"
                      placeholder="{{ 'LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
 

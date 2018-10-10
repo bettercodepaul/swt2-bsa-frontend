@@ -13,6 +13,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../shared/redux-store';
 import {HttpClientModule} from '@angular/common/http';
+import {SharedModule} from "../../shared/shared.module";
 
 xdescribe('WettkampfdataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -30,7 +31,8 @@ xdescribe('WettkampfdataService', () => {
         HomeModule,
         LoginModule,
         TranslateModule.forRoot(),
-        StoreModule.forRoot(APP_REDUCERS)
+        StoreModule.forRoot(APP_REDUCERS),
+        SharedModule
       ]
     }).compileComponents();
   }));

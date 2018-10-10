@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { DetailsComponent } from './details.component';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -48,14 +48,17 @@ describe('DetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('after saveNewData(), data should be reset', () => {
+  it('after saveNewData(), data should be reset', fakeAsync(() => {
     component.data.key = 'dummyKey';
     component.data.value = 'dummyValue';
-    spyOn(service, 'addOne').and.callFake(function(data: Data): Observable<any> {
-      return new Observable<any>(); // return is not important in this test -> function shouldnt continue saving to backend
+    spyOn(service, 'addOne').and.callFake(function(): Observable<any> {
+      return new Observable<any>(); // return is not important in this test -> function should not continue saving to backend
     });
+    fixture.detectChanges();
     component.saveNewData();
-    expect(component.data.key).toBe('');
-    expect(component.data.value).toBe('');
-  });
+    tick();
+    fixture.detectChanges();
+    expect(component.data.key).toEqual('');
+    expect(component.data.value).toEqual('');
+  }));
 });

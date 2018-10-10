@@ -17,6 +17,8 @@ import {NgModuleFactoryLoader} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 import {SharedModule} from './modules/shared/shared.module';
+import {FormsModule} from '@angular/forms';
+import {SidebarItemComponent} from './components/sidebar/components/sidebar-item/sidebar-item.component';
 
 
 describe('AppComponent', () => {
@@ -30,7 +32,8 @@ describe('AppComponent', () => {
         AppComponent,
         SidebarComponent,
         NavbarComponent,
-        NotificationComponent
+        NotificationComponent,
+        SidebarItemComponent
       ],
       imports: [
         RouterTestingModule.withRoutes(ROUTES),
@@ -41,7 +44,10 @@ describe('AppComponent', () => {
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
         HttpClientModule,
-        SharedModule
+        SharedModule,
+        HomeModule,
+        WettkampfModule,
+        FormsModule
       ]
     }).compileComponents();
   }));

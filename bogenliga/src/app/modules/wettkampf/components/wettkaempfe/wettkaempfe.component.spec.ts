@@ -9,6 +9,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../../shared/redux-store';
 import {HttpClientModule} from '@angular/common/http';
+import {SharedModule} from "../../../shared/shared.module";
 
 describe('WettkaempfeComponent', () => {
   let component: WettkaempfeComponent;
@@ -23,7 +24,8 @@ describe('WettkaempfeComponent', () => {
         LoginModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule
+        HttpClientModule,
+        SharedModule
       ]
     })
     .compileComponents();

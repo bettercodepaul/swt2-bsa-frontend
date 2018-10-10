@@ -15,6 +15,6 @@ import {FormsModule} from '@angular/forms';
     SharedModule,
     FormsModule
   ],
-  declarations: [OverviewComponent, DetailsComponent]
+  declarations: [OverviewComponent, DetailsComponent ]
 })
 export class SettingsModule {}

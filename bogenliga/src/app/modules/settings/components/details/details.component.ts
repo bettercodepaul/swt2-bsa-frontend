@@ -54,10 +54,9 @@ export class DetailsComponent implements OnInit {
    * calls service
    * resets data of this for next input
    */
-  saveNewData(): void {
-    this.dataService.addOne(new Data(this.data.key, this.data.value)).subscribe(datas => {
-      this.data = new Data(); // reset data
-    });
+  public saveNewData(): void {
+    this.dataService.addOne(new Data(this.data.key, this.data.value)).subscribe();
+    this.data = new Data()
   }
 
   /**

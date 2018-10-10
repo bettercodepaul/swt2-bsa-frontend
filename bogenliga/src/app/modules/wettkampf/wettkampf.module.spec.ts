@@ -13,6 +13,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../shared/redux-store';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
+import {SharedModule} from "../shared/shared.module";
 
 describe('SettingsModule', () => {
   let wettkampfModule: WettkampfModule;
@@ -34,7 +35,8 @@ describe('SettingsModule', () => {
         LoginModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        WettkampfModule
+        WettkampfModule,
+        SharedModule
       ]
     }).compileComponents();
   }));

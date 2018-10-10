@@ -50,6 +50,16 @@ describe('OverviewComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should calculate pagination with no data', () => {
+    let pagination = fixture.debugElement.query(By.css('.my-4')).nativeElement;
+    fixture.detectChanges();
+    component.activePage = 1;
+    component.maxOnPage = 10;
+    component.calculatePagination(0);
+    fixture.detectChanges();
+    expect(component.pageCount.length).toBe(0);
+  });
+
   it('pagination with datacount 0 -> no pagination', () => {
     let pagination = fixture.debugElement.query(By.css('.my-4')).nativeElement;
     fixture.detectChanges();
