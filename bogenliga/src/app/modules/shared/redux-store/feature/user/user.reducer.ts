@@ -13,6 +13,7 @@ export function userReducer(state = initialUserState, action: Actions.UserAction
     case Actions.LOGIN: {
       newState = {
         ...state,
+        user: action.payload,
         isLoggedIn: true
       };
       break;
@@ -20,6 +21,7 @@ export function userReducer(state = initialUserState, action: Actions.UserAction
     case Actions.LOGOUT: {
       newState = {
         ...state,
+        user: null,
         isLoggedIn: false
       };
       break;
@@ -28,6 +30,6 @@ export function userReducer(state = initialUserState, action: Actions.UserAction
       // do nothing
       return state;
   }
-  console.log('REDUX [SidebarReducer] ' + action.type + ' with new state ' + JSON.stringify(newState));
+  console.log('REDUX [UserReducer] ' + action.type + ' with new state ' + JSON.stringify(newState));
   return newState;
 }

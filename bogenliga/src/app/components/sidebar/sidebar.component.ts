@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AppComponent} from '../../app.component';
+import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import {AppState, TOGGLE_SIDEBAR, SidebarState} from '../../modules/shared/redux-store';
+import {AppState, SidebarState, TOGGLE_SIDEBAR} from '../../modules/shared/redux-store';
 import {SIDE_BAR_CONFIG} from './sidebar.config';
-import {CurrentUserService, UserPermission} from "../../modules/shared/services/current-user";
+import {CurrentUserService, UserPermission} from '../../modules/shared/services/current-user';
 
 
 @Component({

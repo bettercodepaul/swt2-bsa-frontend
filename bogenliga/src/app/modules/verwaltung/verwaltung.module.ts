@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { VerwaltungComponent } from './components/verwaltung/verwaltung.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {VerwaltungComponent} from './components/verwaltung/verwaltung.component';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared/shared.module';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
+import {VerwaltungGuard} from './guards/verwaltung.guard';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import {VERWALTUNG_ROUTES} from './verwaltung.routing';
     SharedModule,
     FormsModule
   ],
-  declarations: [VerwaltungComponent]
+  declarations: [VerwaltungComponent],
+  providers: [VerwaltungGuard]
 })
 export class VerwaltungModule { }

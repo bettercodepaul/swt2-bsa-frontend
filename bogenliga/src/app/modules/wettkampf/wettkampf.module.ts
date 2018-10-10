@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {SharedModule} from '../shared/shared.module';
 import {RouterModule} from '@angular/router';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
 import {FormsModule} from '@angular/forms';
 import {WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.component';
+import {WettkampfGuard} from './guards/wettkampf.guard';
 
 
 @NgModule({
@@ -14,6 +15,7 @@ import {WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.compone
     SharedModule,
     FormsModule
   ],
-  declarations: [WettkaempfeComponent]
+  declarations: [WettkaempfeComponent],
+  providers: [WettkampfGuard]
 })
 export class WettkampfModule {}
