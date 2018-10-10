@@ -8,7 +8,6 @@ export class Login implements Action {
   readonly type = LOGIN;
 
   constructor(public payload: UserSignInDTO) {
-    console.log('Login constructor: ' + JSON.stringify(payload));
   }
 }
 

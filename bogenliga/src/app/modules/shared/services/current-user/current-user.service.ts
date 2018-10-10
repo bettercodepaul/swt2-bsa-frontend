@@ -24,13 +24,23 @@ export class CurrentUserService {
       this.isUserLoggedIn = state.isLoggedIn;
       this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
     });
+
+    this.loadCurrentUser();
   }
 
   public persistCurrentUser(currentUser: UserSignInDTO): void {
-    // TODO this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
+    this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
     this.store.dispatch(new Login(currentUser));
-
   }
+
+  public loadCurrentUser(): void {
+    console.log('Load current user from storage');
+    const currentUserValue = this.localDataProviderService.get(CURRENT_USER_KEY);
+    if (currentUserValue != null) {
+      this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue))));
+    }
+  }
+
 
   public getEmail(): string {
     return this.getCurrentUser().email;
