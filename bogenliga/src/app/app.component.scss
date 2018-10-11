@@ -1,14 +1,23 @@
 // body, paragraph and link style
 
+/* Farbkonzept Website */
+$primary: #02bdd5; // Links, Navbar
+$primary-light: #b4ffff; // Sidebar-Background
+$primary-dark: #007c91; // Sidebar-Font
+$secondary: #ffc107;
+$secondary-light: #fff350;
+$secondary-dark: #ff833a;
+
+
 a, a:hover, a:focus {
-  color: inherit;
+  color: $primary;
   text-decoration: none;
   transition: all 0.3s;
 }
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
-  background: #02bdd5;
+  background: $primary;
 }
 
 // Icons from https://material.io/tools/icons/?style=baseline
@@ -112,6 +121,6 @@ ul ul a {
   ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #02bdd5;
+    background: $primary;
   }
 }

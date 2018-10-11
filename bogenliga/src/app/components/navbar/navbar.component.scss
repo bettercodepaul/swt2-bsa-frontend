@@ -1,6 +1,15 @@
 // text color of bootstrap
+
+/* Farbkonzept Website */
+$primary: #02bdd5; // Links, Navbar
+$primary-light: #b4ffff; // Sidebar-Background
+$primary-dark: #007c91; // Sidebar-Font
+$secondary: #ffc107;
+$secondary-light: #fff350;
+$secondary-dark: #ff833a;
+
 .navbar-dark .navbar-nav .nav-link {
-  color: #fff;
+  color: $primary-light;
   padding: 0px;
 }
 
@@ -15,12 +24,12 @@
 
 // change from bootstrap original color
 .bg-dark {
-  background-color: #02bdd5!important;
+  background-color: $primary!important;
   padding-top: 0px;
   padding-bottom: 0px;
 }
 .btn-link {
-  color: #fff;
+  color: $primary-light;
 }
 
 // Logo img

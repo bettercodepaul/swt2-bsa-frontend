@@ -14,7 +14,8 @@ const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 @Component({
   selector: 'bla-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss',
+    './../../../../app.component.scss']
 })
 export class LoginComponent implements OnInit {
 

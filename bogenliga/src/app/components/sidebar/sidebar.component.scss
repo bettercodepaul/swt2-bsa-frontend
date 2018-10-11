@@ -1,11 +1,20 @@
 // basic sidebar css
+
+/* Farbkonzept Website */
+$primary: #02bdd5; // Links, Navbar
+$primary-light: #b4ffff; // Sidebar-Background
+$primary-dark: #007c91; // Sidebar-Font
+$secondary: #ffc107;
+$secondary-light: #fff350;
+$secondary-dark: #ff833a;
+
 #sidebar {
   min-width: 250px;
   max-width: 250px;
   min-height: calc(100vh - 71px); //full view - Navbar on top
   margin-top: 71px; //height of NavBar
-  background: #02bdd5;//#343a40;
-  color: #fff;
+  background: $primary-light;//#343a40;
+  color: $primary-dark;
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
@@ -19,12 +28,12 @@
   min-width: 80px;
   max-width: 80px;
   text-align: center;
-  opacity: 0.4;
+  //opacity: 0.4;
 }
 
 // basic css list and paragraph
 #sidebar ul p {
-  color: #fff;
+  color: $primary-dark;
   padding: 10px;
 }
 
@@ -34,29 +43,29 @@
   font-size: 1.1em;
   display: block;
   text-align: left;
-  color: #fff;
+  color: $primary-dark;
 }
 // basic css list and link with hover
 #sidebar ul li a:hover {
-  color: #02bdd5;
-  background: #fff;
+  color: $primary-light;
+  background: $primary-dark;
 }
 
 // Sidebar Header
 #sidebar .sidebar-header {
   padding: 20px;
-  background: #02bdd5;
+  background: $primary-light;
 }
 
 // Sidebar Header Titleshort
 #sidebar.inactive .sidebar-header p {
   display: block;
-  color: #fff;
+  color: $primary-dark;
 }
 
 #sidebar ul.components {
   padding: 20px 0;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid $primary-dark;
 }
 
 #sidebar.inactive ul li a {
@@ -73,8 +82,8 @@
 }
 
 #sidebar ul li.inactive > a, a[aria-expanded="true"] {
-  color: #fff;
-  background: #02bdd5;//#555555;
+  color: $primary-dark;
+  background: $primary-light;
 }
 
 .sidebarFooter {
@@ -106,14 +115,18 @@
 #sidebarCollapseBottom {
   width: 40px;
   height: 40px;
-  background: #02bdd5;//#343a40;
+  background:$primary-light;
   display: flex;
   flex-basis: 100%;
   cursor: pointer;
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+  color: $primary-dark;
   //border: 1px solid #343a40;
 }
 #sidebarCollapseBottom:hover {
-  background: #02bdd5;//#555555;
+  background: $primary-light;
 }
 // rows in button
 #sidebarCollapseBottom span {
@@ -121,7 +134,7 @@
   height: 2px;
   margin: 0 auto;
   display: block;
-  background: #02bdd5;//#555;
+  background: $primary-light;
   transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
   opacity: 1;
   margin: 5px auto;
