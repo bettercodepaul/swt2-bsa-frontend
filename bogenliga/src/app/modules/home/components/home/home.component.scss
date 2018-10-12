@@ -2,7 +2,7 @@
 $primary: #02bdd5; // Links, Navbar
 $primary-light: #b4ffff; // Sidebar-Background
 $primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107; // hover Tables, Button
+$secondary: #ffc107; // hover Tables
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
@@ -33,10 +33,4 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: $secondary;
-}
-
-button:hover {
-  //color: $secondary;
-  background-color: $secondary;
-  border-color: $secondary;
 }

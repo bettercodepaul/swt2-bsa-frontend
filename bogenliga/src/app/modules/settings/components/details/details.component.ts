@@ -7,6 +7,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from 'util';
 import {catchError, delay, map} from 'rxjs/operators';
 
+import { faArrowLeft  } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'bla-details',
   templateUrl: './details.component.html',
@@ -15,6 +17,8 @@ import {catchError, delay, map} from 'rxjs/operators';
   providers: [ TranslatePipe, TranslateModule ]
 })
 export class DetailsComponent implements OnInit {
+
+  faArrowLeft = faArrowLeft;
 
   dataSelected = false; // is data selceted -> chooses view
   data: Data = new Data();

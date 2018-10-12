@@ -15,6 +15,11 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../shared/redux-store';
 
+import { faPlus  } from '@fortawesome/free-solid-svg-icons';
+import { faSort  } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle  } from '@fortawesome/free-solid-svg-icons';
+import { faMinusCircle  } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'bla-overview',
@@ -26,6 +31,11 @@ import {AppState} from '../../../shared/redux-store';
 export class OverviewComponent implements OnInit, AfterViewInit {
   // pages of the pagination -> overview.component.html
   @ViewChildren('pages') pages: QueryList<ElementRef>; // https://angular.io/api/core/ViewChild
+
+  faPlus = faPlus;
+  faSort = faSort;
+  faInfoCircle = faInfoCircle;
+  faMinusCircle = faMinusCircle;
 
   datas: Data[] = []; // data for table
   keyAscending = false; // if sorted with key aufsteigend

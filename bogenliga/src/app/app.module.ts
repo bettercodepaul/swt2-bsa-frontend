@@ -22,6 +22,7 @@ import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 import {LoginModule} from './modules/login/login.module';
 import {ErrorInterceptor, JwtInterceptor} from './modules/shared/data-provider';
 import {SidebarItemComponent} from './components/sidebar/components/sidebar-item/sidebar-item.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -55,7 +56,8 @@ export function createTranslateLoader(http: HttpClient) {
     HomeModule,
     WettkampfModule,
     LoginModule,
-    SharedModule.forRoot()
+    SharedModule.forRoot(),
+    FontAwesomeModule
   ],
   exports: [TranslateModule ],
   /* HTTP INTERCEPTORS */

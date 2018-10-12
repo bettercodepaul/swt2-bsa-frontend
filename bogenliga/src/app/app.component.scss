@@ -2,7 +2,7 @@
 $primary: #02bdd5; // Links, Navbar
 $primary-light: #b4ffff; // Sidebar-Background
 $primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107; // hover Tables, Button
+$secondary: #ffc107; // hover Tables
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
@@ -19,12 +19,6 @@ ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
   background: $primary;
-}
-
-// Icons from https://material.io/tools/icons/?style=baseline
-.material-icons {
-  font-size: 30px; // size of the image
-  padding-top: 5px;
 }
 
 // wrapper
@@ -100,8 +94,6 @@ ul ul a {
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: $secondary;
 }
-
-
 
 // for small devices
 @media (max-width: 768px) {

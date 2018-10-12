@@ -2,7 +2,7 @@
 $primary: #02bdd5; // Links, Navbar
 $primary-light: #b4ffff; // Sidebar-Background
 $primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107; // hover Tables, Button
+$secondary: #ffc107; // hover Tables
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
@@ -201,29 +201,12 @@ div.table-responsive>div.dataTables_wrapper>div.row>div[class^="col-"]:last-chil
   border-color: $primary;
 }
 
-.page-item:hover {
-  color: $secondary-dark;
-}
-
 button {
   margin: 5px;
-  height:30px;
-  width:30px;
 }
 
 .btn-link {
   color: black;
-}
-
-.btn-link:hover {
-  color: $secondary-dark;
-  background-color: transparent;
-  border-color: transparent;
-}
-
-.material-icons {
-  font-size: 15px;
-  padding-top: 0px;
 }
 
 .menu {
@@ -234,10 +217,3 @@ button {
 #noData {
   text-align: center;
 }
-
-button:hover {
-  //color: $secondary;
-  background-color: $secondary;
-  border-color: $secondary;
-}
-
