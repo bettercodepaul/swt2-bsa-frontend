@@ -1,3 +1,4 @@
+<!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
 <nav id="sidebar" class="{{isActive? 'inactive' : ''}}" class="navbar bg-dark navbar-dark fixed-left">
   <div style="flex-grow: 1">
     <!-- Sidebar Header -->
@@ -61,8 +62,7 @@
   <!-- Sidebar Footer -->
   <div class="sidebarFooter {{isActive? 'inactive' : ''}}" style="flex-grow: 0">
     <a type="button" id="sidebarCollapseBottom" (click)="toggleSidebar()">
-      <i class="material-icons">{{isActive? 'chevron_right' : 'chevron_left'}}</i>
-      <i class="material-icons">{{isActive? 'chevron_right' : 'chevron_left'}}</i>
+      <fa-icon [icon]="isActive? faAngleDoubleRight : faAngleDoubleLeft"></fa-icon>
     </a>
   </div>
 

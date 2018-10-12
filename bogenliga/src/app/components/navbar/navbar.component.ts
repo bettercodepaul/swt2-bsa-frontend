@@ -6,6 +6,9 @@ import {TOGGLE_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';
 import {CurrentUserService} from '../../modules/shared/services/current-user';
 import {LOGOUT, UserState} from '../../modules/shared/redux-store/feature/user';
 
+import { faBars  } from '@fortawesome/free-solid-svg-icons';
+import { faUserCircle  } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'bla-navbar',
   templateUrl: './navbar.component.html',
@@ -16,6 +19,9 @@ export class NavbarComponent implements OnInit {
 
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   private isLoggedIn: boolean;
+
+  faBars = faBars;
+  faUserCircle = faUserCircle;
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService) {
     store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );

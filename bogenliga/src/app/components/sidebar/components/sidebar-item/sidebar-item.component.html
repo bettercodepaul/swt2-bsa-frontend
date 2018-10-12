@@ -1,6 +1,6 @@
 <div class="sidebar-link {{isActive? 'inactive' : ''}}">
 
-  <i class="material-icons">{{ icon }}</i>
+  <fa-icon [icon]="icon"></fa-icon>
   <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ label }}</div>
 
 </div>

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {AppState, SidebarState} from '../../../../modules/shared/redux-store';
+import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 
 @Component({
   selector: 'bla-sidebar-item',
@@ -10,7 +11,7 @@ import {AppState, SidebarState} from '../../../../modules/shared/redux-store';
 })
 export class SidebarItemComponent implements OnInit {
   @Input() public label: string;
-  @Input() public icon: string;
+  @Input() public icon: IconDefinition;
 
   public isActive: boolean;
 

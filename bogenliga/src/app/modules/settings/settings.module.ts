@@ -7,6 +7,7 @@ import {RouterModule} from '@angular/router';
 import {SETTINGS_ROUTES} from './settings.routing';
 import {FormsModule} from '@angular/forms';
 import {SettingsGuard} from './guards/settings.guard';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {SettingsGuard} from './guards/settings.guard';
     CommonModule,
     RouterModule.forChild(SETTINGS_ROUTES),
     SharedModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   declarations: [OverviewComponent, DetailsComponent],
   providers: [SettingsGuard] // provide Guards here

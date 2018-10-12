@@ -1,11 +1,9 @@
-
+<!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
 <nav id="navbar" class="navbar navbar-expand bg-dark navbar-dark fixed-top">
 
   <!-- Burger Toggle -->
   <button type="button" id="sidebarCollapseNavBar" (click)="toggleNavbar()">
-    <span></span>
-    <span></span>
-    <span></span>
+    <fa-icon [icon]="faBars"></fa-icon>
   </button>
 
   <!-- Logo and Titel -->
@@ -24,7 +22,7 @@
       <a *ngIf="!isLoggedIn" class="login" class="nav-link" routerLink="/login"><button class="btn btn-light">Login</button></a>
       <!-- Profil Dropdown -->
       <li *ngIf="isLoggedIn" class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><i class="material-icons">account_circle</i></a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><fa-icon [icon]="faUserCircle"></fa-icon></a>
         <div class="dropdown-menu dropdown-menu-right">
           <div class="dropdown-header">Profil Einstellungen</div>
           <a class="dropdown-item" href="#">Profil und Account</a>
@@ -34,10 +32,6 @@
         </div>
       </li>
     </button>
-    <!--
-    <li class="nav-item">
-      <a class="nav-link" routerLink="/settings/"><i class="material-icons">settings_applications</i></a>
-    </li> -->
   </ul>
 
 </nav>

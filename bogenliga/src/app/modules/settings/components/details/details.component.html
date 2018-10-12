@@ -1,3 +1,4 @@
+<!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
 <div id="settingsDetails">
   <h1 id="heading">{{ 'DETAILS.TITLE' | translate }}</h1>
 
@@ -27,7 +28,7 @@
 
       <!-- Button Footer -->
       <div class="menu">
-        <a id="backData" routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
+        <a id="backData" routerLink="/settings/overview"><button type="button" class="btn"><fa-icon [icon]="faArrowLeft"></fa-icon></button></a>
         <a id="deleteData"><button type="button" class="btn btn-danger" (click)="deleteThisData()">{{ 'DETAILS.DELETE' | translate }}</button></a>
         <a id="saveData" routerLink="{{'/settings/details/' + data.key}}"><button type="button" class="btn btn-success" (click)="saveData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
       </div>
@@ -59,7 +60,7 @@
 
     <!-- Button Footer -->
     <div class="menu">
-      <a id="backNoData"routerLink="/settings/overview"><button type="button" class="btn"><i class="material-icons">keyboard_arrow_left</i></button></a>
+      <a id="backNoData"routerLink="/settings/overview"><button type="button" class="btn"><fa-icon [icon]="faArrowLeft"></fa-icon></button></a>
       <a id="saveNoData" routerLink="/settings/details"><button type="button" class="btn btn-success" (click)="saveNewData()">{{ 'DETAILS.SAVE' | translate }}</button></a>
     </div>
 
