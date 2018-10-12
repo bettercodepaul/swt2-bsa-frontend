@@ -1,18 +1,19 @@
-// body, paragraph and link style
-
 /* Farbkonzept Website */
 $primary: #02bdd5; // Links, Navbar
 $primary-light: #b4ffff; // Sidebar-Background
 $primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107;
+$secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
-$secondary-dark: #ff833a;
+$secondary-dark: #ff833a; // hover Links, Logo
 
-
-a, a:hover, a:focus {
+// body, paragraph and link style
+a {
   color: $primary;
   text-decoration: none;
   transition: all 0.3s;
+}
+a:hover, a:focus {
+  color: $secondary-dark;
 }
 ul ul a {
   font-size: 0.9em !important;
@@ -87,6 +88,20 @@ ul ul a {
   height: 40px;
   margin: 10px;
 }
+
+.navbar-brand {
+  color: black;
+}
+
+.blackLink {
+  color: black;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: $secondary;
+}
+
+
 
 // for small devices
 @media (max-width: 768px) {

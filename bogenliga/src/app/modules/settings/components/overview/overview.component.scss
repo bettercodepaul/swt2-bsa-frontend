@@ -1,3 +1,11 @@
+/* Farbkonzept Website */
+$primary: #02bdd5; // Links, Navbar
+$primary-light: #b4ffff; // Sidebar-Background
+$primary-dark: #007c91; // Sidebar-Font
+$secondary: #ffc107; // hover Tables, Button
+$secondary-light: #fff350;
+$secondary-dark: #ff833a; // hover Links, Logo
+
 table.dataTable {
   clear:both;
   margin-top:6px !important;
@@ -189,8 +197,12 @@ div.table-responsive>div.dataTables_wrapper>div.row>div[class^="col-"]:last-chil
 
 // Pagination Backgroundcolor
 .page-item.active .page-link {
-  background-color: #02bdd5;
-  border-color:#02bdd5;
+  background-color: $primary;
+  border-color: $primary;
+}
+
+.page-item:hover {
+  color: $secondary-dark;
 }
 
 button {
@@ -200,7 +212,13 @@ button {
 }
 
 .btn-link {
-  color: #02bdd5;
+  color: black;
+}
+
+.btn-link:hover {
+  color: $secondary-dark;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 .material-icons {
@@ -215,5 +233,11 @@ button {
 
 #noData {
   text-align: center;
+}
+
+button:hover {
+  //color: $secondary;
+  background-color: $secondary;
+  border-color: $secondary;
 }
 

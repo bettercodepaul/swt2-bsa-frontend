@@ -4,9 +4,9 @@
 $primary: #02bdd5; // Links, Navbar
 $primary-light: #b4ffff; // Sidebar-Background
 $primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107;
+$secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
-$secondary-dark: #ff833a;
+$secondary-dark: #ff833a; // hover Links, Logo
 
 .navbar-dark .navbar-nav .nav-link {
   color: $primary-light;
@@ -15,6 +15,10 @@ $secondary-dark: #ff833a;
 
 .navbar-brand {
   padding: 0px;
+}
+
+.navbar-brand:hover {
+  color: $secondary-dark;
 }
 
 // Toggle hidden while Webview
@@ -47,6 +51,14 @@ $secondary-dark: #ff833a;
 
 // Dropdown triangle
 .navbar-dark[_ngcontent-c1] .navbar-nav[_ngcontent-c1] .nav-link[_ngcontent-c1] {
+  color: black;
+}
+
+.headingLink {
+  color: black;
+}
+
+.headingLink:hover {
   color: black;
 }
 
