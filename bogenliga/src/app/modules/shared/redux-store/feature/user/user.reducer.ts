@@ -3,7 +3,7 @@ import * as Actions from './user.actions';
 
 export const initialUserState: UserState = {
   isLoggedIn: false,
-  user: null
+  user:       null
 };
 
 export function userReducer(state = initialUserState, action: Actions.UserActions): UserState {
@@ -13,7 +13,7 @@ export function userReducer(state = initialUserState, action: Actions.UserAction
     case Actions.LOGIN: {
       newState = {
         ...state,
-        user: action.payload,
+        user:       action.payload,
         isLoggedIn: true
       };
       break;
@@ -21,7 +21,7 @@ export function userReducer(state = initialUserState, action: Actions.UserAction
     case Actions.LOGOUT: {
       newState = {
         ...state,
-        user: null,
+        user:       null,
         isLoggedIn: false
       };
       break;

@@ -8,13 +8,14 @@ import {SPORTJAHRESPLAN_ROUTES} from './sportjahresplan.routing';
 import {SportjahresplanGuard} from './guards/sportjahresplan.guard';
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(SPORTJAHRESPLAN_ROUTES),
     SharedModule,
     FormsModule
   ],
   declarations: [SportjahresplanComponent],
-  providers: [SportjahresplanGuard]
+  providers:    [SportjahresplanGuard]
 })
-export class SportjahresplanModule { }
+export class SportjahresplanModule {
+}

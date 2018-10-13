@@ -1,4 +1,4 @@
-import { SportjahresplanModule } from './sportjahresplan.module';
+import {SportjahresplanModule} from './sportjahresplan.module';
 
 describe('SportjahresplanModule', () => {
   let sportjahresplanModule: SportjahresplanModule;

@@ -78,14 +78,14 @@ export class ErrorHandlingService {
 
 
     const notification: Notification = {
-      id: errorDto.errorCode,
-      title: 'NOTIFICATION.ERROR.' + errorDto.errorCode + '.TITLE',
+      id:          errorDto.errorCode,
+      title:       'NOTIFICATION.ERROR.' + errorDto.errorCode + '.TITLE',
       description: 'NOTIFICATION.ERROR.' + errorDto.errorCode + '.DESCRIPTION',
-      details: errorDto.errorMessage,
-      severity: NotificationSeverity.ERROR,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.OK,
-      userAction: NotificationUserAction.PENDING
+      details:     errorDto.errorMessage,
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
     };
 
     this.notificationService.showNotification(notification);
@@ -100,14 +100,14 @@ export class ErrorHandlingService {
 
 
     const notification: Notification = {
-      id: errorDto.errorCode,
-      title: 'NOTIFICATION.ERROR.' + errorDto.errorCode + '.TITLE',
+      id:          errorDto.errorCode,
+      title:       'NOTIFICATION.ERROR.' + errorDto.errorCode + '.TITLE',
       description: 'NOTIFICATION.ERROR.' + errorDto.errorCode + '.DESCRIPTION',
-      details: errorDto.errorMessage,
-      severity: NotificationSeverity.ERROR,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.OK,
-      userAction: NotificationUserAction.PENDING
+      details:     errorDto.errorMessage,
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
     };
 
     this.notificationService.showNotification(notification);
@@ -118,13 +118,13 @@ export class ErrorHandlingService {
     const connectionError = 'CONNECTION_ERROR';
 
     const notification: Notification = {
-      id: connectionError,
-      title: 'NOTIFICATION.ERROR.' + connectionError + '.TITLE',
+      id:          connectionError,
+      title:       'NOTIFICATION.ERROR.' + connectionError + '.TITLE',
       description: 'NOTIFICATION.ERROR.' + connectionError + '.DESCRIPTION',
-      severity: NotificationSeverity.ERROR,
-      origin: NotificationOrigin.SYSTEM,
-      type: NotificationType.OK,
-      userAction: NotificationUserAction.PENDING
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.SYSTEM,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
     };
 
     this.notificationService.showNotification(notification);

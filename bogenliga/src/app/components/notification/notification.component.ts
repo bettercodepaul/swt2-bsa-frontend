@@ -11,9 +11,9 @@ import {NotificationState} from '../../modules/shared/redux-store/feature/notifi
 import {ButtonSize} from '../../modules/shared/components/buttons';
 
 @Component({
-  selector: 'bla-notification',
+  selector:    'bla-notification',
   templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.scss']
+  styleUrls:   ['./notification.component.scss']
 })
 export class NotificationComponent implements OnInit {
 

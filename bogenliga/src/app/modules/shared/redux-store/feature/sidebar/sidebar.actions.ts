@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import {Action} from '@ngrx/store';
 
 export const TOGGLE_SIDEBAR = '[Sidebar] Show Notification';
 

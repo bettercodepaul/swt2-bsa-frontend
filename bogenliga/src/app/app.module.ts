@@ -37,15 +37,15 @@ export function createTranslateLoader(http: HttpClient) {
     NotificationComponent,
     SidebarItemComponent
   ],
-  imports: [
+  imports:      [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     TranslateModule.forRoot({
       loader: {
-        provide: TranslateLoader,
+        provide:    TranslateLoader,
         useFactory: createTranslateLoader,
-        deps: [HttpClient]
+        deps:       [HttpClient]
       }
     }),
     RouterModule.forRoot(ROUTES, {useHash: true}),
@@ -59,15 +59,16 @@ export function createTranslateLoader(http: HttpClient) {
     SharedModule.forRoot(),
     FontAwesomeModule
   ],
-  exports: [TranslateModule ],
+  exports:      [TranslateModule],
   /* HTTP INTERCEPTORS */
-  providers: [
+  providers:    [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap:    [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
 
 

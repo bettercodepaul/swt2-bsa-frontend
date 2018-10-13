@@ -87,11 +87,11 @@ export class CurrentUserService {
     const userPermissions: UserPermission[] = this.getPermissions();
 
     // preconditions
-    if (requiredPermissions.length > 0 && this.isUserLoggedIn === false ) { // no user and data needs permission --> access denied
+    if (requiredPermissions.length > 0 && this.isUserLoggedIn === false) { // no user and data needs permission --> access denied
       return false;
     } else if (requiredPermissions.length === 0) { // no permissions needed
       return true;
-    } else if (requiredPermissions.length > 0 && this.isUserLoggedIn === false ) { // no user and data needs permission --> access denied
+    } else if (requiredPermissions.length > 0 && this.isUserLoggedIn === false) { // no user and data needs permission --> access denied
       return false;
     } else if (isNullOrUndefined(userPermissions) || userPermissions.length === 0) {
       // permissions needed but user has none
@@ -131,10 +131,10 @@ export class CurrentUserService {
 
   private observeUserState() {
     this.store.pipe(select(state => state.userState))
-      .subscribe((state: UserState) => {
-        this.isUserLoggedIn = state.isLoggedIn;
-        this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
-      });
+        .subscribe((state: UserState) => {
+          this.isUserLoggedIn = state.isLoggedIn;
+          this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
+        });
   }
 
   private observeSessionExpiredNotifications() {

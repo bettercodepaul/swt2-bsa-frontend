@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { OverviewComponent } from './overview.component';
+import {OverviewComponent} from './overview.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ROUTES} from '../../../../app.routing';
 import {TranslateModule} from '@ngx-translate/core';
@@ -22,8 +22,8 @@ describe('OverviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OverviewComponent ],
-      imports: [
+      declarations: [OverviewComponent],
+      imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         LoginModule,
@@ -33,14 +33,14 @@ describe('OverviewComponent', () => {
         SharedModule
       ]
     })
-    .compileComponents();
+           .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(OverviewComponent);
     component = fixture.componentInstance;
     service = TestBed.get(DataService);
-    spyOn(service, 'findAll').and.callFake(function(): Observable<Data[]> {
+    spyOn(service, 'findAll').and.callFake(function (): Observable<Data[]> {
       return new Observable<Data[]>(); // return no data, because data is manually added
     });
     fixture.detectChanges();

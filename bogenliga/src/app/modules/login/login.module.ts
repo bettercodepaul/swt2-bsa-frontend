@@ -9,7 +9,7 @@ import {LocalDataProviderModule} from '../shared/local-data-provider/local-data-
 
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(LOGIN_ROUTES),
     SharedModule,
@@ -18,4 +18,5 @@ import {LocalDataProviderModule} from '../shared/local-data-provider/local-data-
   ],
   declarations: [LoginComponent]
 })
-export class LoginModule {}
+export class LoginModule {
+}

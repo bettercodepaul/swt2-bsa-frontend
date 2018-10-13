@@ -5,10 +5,10 @@ import {ModalDialogResult} from '../types/modal-dialog-result.enum';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-  selector: 'bla-modal-dialog',
+  selector:    'bla-modal-dialog',
   templateUrl: './modal-dialog.component.html',
-  styleUrls: ['./modal-dialog.component.scss'],
-  providers: [TranslatePipe]
+  styleUrls:   ['./modal-dialog.component.scss'],
+  providers:   [TranslatePipe]
 })
 export class ModalDialogComponent implements OnInit {
 

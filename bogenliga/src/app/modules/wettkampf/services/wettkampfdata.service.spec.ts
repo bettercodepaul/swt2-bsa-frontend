@@ -25,7 +25,7 @@ xdescribe('WettkampfdataService', () => {
         NavbarComponent,
         NotificationComponent
       ],
-      imports: [
+      imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         LoginModule,

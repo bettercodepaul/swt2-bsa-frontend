@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {UserDataProviderService} from '../../services/user-data-provider.service';
 
 @Component({
-  selector: 'bla-user-profile',
+  selector:    'bla-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss'],
-  providers: []
+  styleUrls:   ['./user-profile.component.scss'],
+  providers:   []
 })
 export class UserProfileComponent implements OnInit {
 

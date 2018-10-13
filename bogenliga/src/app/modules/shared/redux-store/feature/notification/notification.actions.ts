@@ -15,7 +15,9 @@ export class ShowNotification implements Action {
 export class AcceptNotification implements Action {
   readonly type = ACCEPT_NOTIFICATION;
 }
+
 export class DeclineNotification implements Action {
   readonly type = DECLINE_NOTIFICATION;
 }
+
 export type NotificationAction = ShowNotification | AcceptNotification | DeclineNotification;

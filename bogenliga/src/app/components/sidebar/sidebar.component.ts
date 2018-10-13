@@ -6,20 +6,21 @@ import {CurrentUserService, UserPermission} from '../../modules/shared/services/
 
 
 @Component({
-  selector: 'bla-sidebar',
+  selector:    'bla-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss',
-              './../../app.component.scss']
+  styleUrls:   [
+    './sidebar.component.scss',
+    './../../app.component.scss'
+  ]
 })
 export class SidebarComponent implements OnInit {
 
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public CONFIG = SIDE_BAR_CONFIG;
 
-  public switch = this.isActive ? 'angle-double-right' : 'angle-double-left';
-
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService ) {
-    store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService) {
+    store.pipe(select(state => state.sidebarState))
+         .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
   ngOnInit() {
@@ -29,10 +30,14 @@ export class SidebarComponent implements OnInit {
    * tells store that sidebar button was used -> Sidebar needs to change
    */
   public toggleSidebar() {
-    this.store.dispatch({ type: TOGGLE_SIDEBAR });
+    this.store.dispatch({type: TOGGLE_SIDEBAR});
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     return this.currentUserService.hasAnyPermisson(userPermissions);
+  }
+
+  public getSidebarCollapseIcon(): string {
+    return this.isActive ? 'angle-double-right' : 'angle-double-left';
   }
 }

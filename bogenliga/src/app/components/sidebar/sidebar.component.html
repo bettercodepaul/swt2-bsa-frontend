@@ -1,10 +1,13 @@
 <!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
-<nav id="sidebar" class="{{isActive? 'inactive' : ''}}" class="navbar bg-dark navbar-dark fixed-left">
+<nav id="sidebar"
+     [class.inactive]="isActive">
   <div style="flex-grow: 1">
     <!-- Sidebar Header -->
     <div class="sidebar-header">
-      <h3 id="title" *ngIf="!isActive">{{ 'SIDEBAR.TITLE' | translate }}</h3>
-      <p id="shortTitle" *ngIf="isActive">{{ 'SIDEBAR.TITLESHORT' | translate }}</p>
+      <h3 id="title"
+          *ngIf="!isActive">{{ 'SIDEBAR.TITLE' | translate }}</h3>
+      <p id="shortTitle"
+         *ngIf="isActive">{{ 'SIDEBAR.TITLESHORT' | translate }}</p>
     </div>
 
     <!-- Sidebar Links
@@ -44,24 +47,26 @@
 
 
     <!-- Sidebar links config -->
-      <ul class="list-unstyled components">
-        <ng-container *ngFor="let item of CONFIG">
-          <li *ngIf="hasUserPermissions(item.permissons)">
-            <a routerLink="{{item.route}}">
-              <bla-sidebar-item label="{{ item.label | translate }}"
-                                [icon]="item.icon"></bla-sidebar-item>
-            </a>
-          </li>
-        </ng-container>
-      </ul>
-git
+    <ul class="list-unstyled components">
+      <ng-container *ngFor="let item of CONFIG">
+        <li *ngIf="hasUserPermissions(item.permissons)">
+          <a routerLink="{{item.route}}">
+            <bla-sidebar-item label="{{ item.label | translate }}"
+                              [icon]="item.icon"></bla-sidebar-item>
+          </a>
+        </li>
+      </ng-container>
+    </ul>
   </div>
 
   <!-- Sidebar Footer -->
-  <div class="sidebarFooter {{isActive? 'inactive' : ''}}" style="flex-grow: 0">
-    <a type="button" id="sidebarCollapseBottom" (click)="toggleSidebar()">
-      <fa-icon [icon]="switch"></fa-icon>
+  <div id="sidebarFooter"
+       [class.inactive]="isActive">
+
+    <a id="sidebarCollapseBottom"
+       (click)="toggleSidebar()">
+      <bla-sidebar-item label="{{ 'SIDEBAR.COLLAPSE' | translate }}"
+                        [icon]="getSidebarCollapseIcon()"></bla-sidebar-item>
     </a>
   </div>
-
 </nav>

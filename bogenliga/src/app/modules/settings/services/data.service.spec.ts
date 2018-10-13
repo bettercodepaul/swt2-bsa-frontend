@@ -1,6 +1,6 @@
 import {async, TestBed} from '@angular/core/testing';
 
-import { DataService } from './data.service';
+import {DataService} from './data.service';
 import {AppComponent} from '../../../app.component';
 import {SidebarComponent} from '../../../components/sidebar/sidebar.component';
 import {NavbarComponent} from '../../../components/navbar/navbar.component';
@@ -12,7 +12,6 @@ import {LoginModule} from '../../login/login.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../shared/redux-store';
-import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from '../../shared/shared.module';
 
 xdescribe('DataService', () => {
@@ -26,7 +25,7 @@ xdescribe('DataService', () => {
         NavbarComponent,
         NotificationComponent
       ],
-      imports: [
+      imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         LoginModule,

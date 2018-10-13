@@ -6,6 +6,6 @@ import {userReducer} from './feature/user';
 
 export const APP_REDUCERS: ActionReducerMap<AppState> = {
   notificationState: notificationReducer,
-  sidebarState: sidebarReducer,
-  userState: userReducer,
+  sidebarState:      sidebarReducer,
+  userState:         userReducer,
 };

@@ -15,18 +15,17 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../shared/redux-store';
 
-import { faPlus  } from '@fortawesome/free-solid-svg-icons';
-import { faSort  } from '@fortawesome/free-solid-svg-icons';
-import { faInfoCircle  } from '@fortawesome/free-solid-svg-icons';
-import { faMinusCircle  } from '@fortawesome/free-solid-svg-icons';
+import {faInfoCircle, faMinusCircle, faPlus, faSort} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
-  selector: 'bla-overview',
+  selector:    'bla-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./../../../../app.component.scss',
-                    './overview.component.scss'],
-  providers: [ TranslatePipe ]
+  styleUrls:   [
+    './../../../../app.component.scss',
+    './overview.component.scss'
+  ],
+  providers:   [TranslatePipe]
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
   // pages of the pagination -> overview.component.html
@@ -115,14 +114,15 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     if (datacount === 0) {
       this.pageCount = [];
     } else {
-      const pages = Math.ceil(datacount / this.maxOnPage); // Math.ceil always gives back same ore higher number -> 7.03 is 8
+      const pages = Math.ceil(datacount / this.maxOnPage); // Math.ceil always gives back same ore higher number ->
+                                                           // 7.03 is 8
       const pagination = new Array(pages);
       for (let i = 0; i < pagination.length; i++) {
         pagination[i] = i + 1;
       }
       this.pageCount = pagination;
     }
-    if ( this.pageCount === null || this.pageCount.length < 1 ) {
+    if (this.pageCount === null || this.pageCount.length < 1) {
       this.paginationVisible = false
     } else {
       this.paginationVisible = true;

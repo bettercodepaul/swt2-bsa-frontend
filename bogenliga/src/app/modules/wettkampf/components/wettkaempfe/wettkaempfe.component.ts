@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'bla-wettkaempfe',
+  selector:    'bla-wettkaempfe',
   templateUrl: './wettkaempfe.component.html',
-  styleUrls: ['./../../../../app.component.scss',
-    './wettkaempfe.component.scss']
+  styleUrls:   [
+    './../../../../app.component.scss',
+    './wettkaempfe.component.scss'
+  ]
 })
 export class WettkaempfeComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

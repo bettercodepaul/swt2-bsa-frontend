@@ -17,7 +17,7 @@ export class WettkampfdataService extends CommonDataProviderService {
   addOne(data: Wettkampf): Observable<any> {
     return this.restClient.POST(new UriBuilder()
       .fromPath(this.getUrl())
-      .build(), data );
+      .build(), data);
   }
 
   update(data: Wettkampf): Observable<any> {

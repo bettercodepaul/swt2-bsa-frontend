@@ -23,38 +23,40 @@ library.add(fas, far, fab); // add all icon types
 
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     FormsModule,
     HttpClientModule,
     TranslateModule.forChild(),
     FontAwesomeModule
   ],
-  exports: [
+  exports:      [
     TranslateModule,
     FormsModule,
     HttpClientModule,
     FontAwesomeModule,
     ButtonComponent,
     AlertComponent,
-    ModalDialogComponent],
+    ModalDialogComponent
+  ],
   declarations: [
     ButtonComponent,
     AlertComponent,
-    ModalDialogComponent]
+    ModalDialogComponent
+  ]
 })
 export class SharedModule {
 
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: SharedModule,
+      ngModule:  SharedModule,
       providers: [CurrentUserService, ErrorHandlingService, NotificationService, RestClient]
     };
   }
 
   static forChild(): ModuleWithProviders {
     return {
-      ngModule: SharedModule,
+      ngModule:  SharedModule,
       providers: []
     };
   }

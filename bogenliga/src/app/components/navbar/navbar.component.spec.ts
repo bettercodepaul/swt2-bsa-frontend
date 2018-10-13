@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NavbarComponent } from './navbar.component';
+import {NavbarComponent} from './navbar.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ROUTES} from '../../app.routing';
 import {HomeModule} from '../../modules/home/home.module';
@@ -18,25 +18,25 @@ describe('NavbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ],
-      imports: [
-        RouterTestingModule.withRoutes(ROUTES),
-        HomeModule,
-        LoginModule,
-        TranslateModule.forRoot({
-          loader: {
-            provide: TranslateLoader,
-            useFactory: createTranslateLoader,
-            deps: [HttpClient]
-          }
-        }),
-        StoreModule.forRoot(APP_REDUCERS),
-        HttpClientModule,
-        SharedModule
-      ]
-    },
-      )
-    .compileComponents();
+        declarations: [NavbarComponent],
+        imports:      [
+          RouterTestingModule.withRoutes(ROUTES),
+          HomeModule,
+          LoginModule,
+          TranslateModule.forRoot({
+            loader: {
+              provide:    TranslateLoader,
+              useFactory: createTranslateLoader,
+              deps:       [HttpClient]
+            }
+          }),
+          StoreModule.forRoot(APP_REDUCERS),
+          HttpClientModule,
+          SharedModule
+        ]
+      },
+    )
+           .compileComponents();
   }));
 
   beforeEach(() => {

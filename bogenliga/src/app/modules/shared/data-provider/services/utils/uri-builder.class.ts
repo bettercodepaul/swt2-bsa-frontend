@@ -1,7 +1,8 @@
 export class UriBuilder {
   private uri = '';
 
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Create a new instance representing a relative URI initialized from a URI path.

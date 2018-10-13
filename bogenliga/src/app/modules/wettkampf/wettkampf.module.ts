@@ -9,13 +9,14 @@ import {WettkampfGuard} from './guards/wettkampf.guard';
 
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(WETTKAMPF_ROUTES),
     SharedModule,
     FormsModule
   ],
   declarations: [WettkaempfeComponent],
-  providers: [WettkampfGuard]
+  providers:    [WettkampfGuard]
 })
-export class WettkampfModule {}
+export class WettkampfModule {
+}

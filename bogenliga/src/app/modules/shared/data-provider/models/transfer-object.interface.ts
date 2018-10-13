@@ -1,1 +1,2 @@
-export interface TransferObject {}
+export interface TransferObject {
+}

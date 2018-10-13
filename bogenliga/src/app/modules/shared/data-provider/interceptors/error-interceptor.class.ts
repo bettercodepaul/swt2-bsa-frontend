@@ -20,23 +20,23 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     return next.handle(request)
 
-      .pipe(
-        // add retries
-        retry(MAX_RETRIES),
-        // add error handling
-        catchError(
-          (error: any, caught: Observable<HttpEvent<any>>) => {
+               .pipe(
+                 // add retries
+                 retry(MAX_RETRIES),
+                 // add error handling
+                 catchError(
+                   (error: any, caught: Observable<HttpEvent<any>>) => {
 
-            // handle connection (0), client (4xx), server (5xx) and custom error codes (9xx)
-            if (error.status === 0 || error.status >= 400) {
+                     // handle connection (0), client (4xx), server (5xx) and custom error codes (9xx)
+                     if (error.status === 0 || error.status >= 400) {
 
-              return this.errorHandlingService.handleHttpError(error);
-              // caught and handle the error
-              // return of(error);
-            }
+                       return this.errorHandlingService.handleHttpError(error);
+                       // caught and handle the error
+                       // return of(error);
+                     }
 
-            throw error;
-          })
-      );
+                     throw error;
+                   })
+               );
   }
 }

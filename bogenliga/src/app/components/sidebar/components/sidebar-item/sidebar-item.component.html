@@ -1,7 +1,12 @@
-<div class="sidebar-link {{isActive? 'inactive' : ''}}">
+<div class="sidebar-link"
+     [class.inactive]="isActive">
 
-  <fa-icon [icon]="icon"></fa-icon>
-  <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ label }}</div>
+  <fa-icon [icon]="icon"
+           size="lg"></fa-icon>
+  <span *ngIf="!isActive"
+        class="sidebar-text"
+        [class.inactive]="isActive">{{ label }}
+  </span>
 
 </div>
 

@@ -1,4 +1,4 @@
-import { VerwaltungModule } from './verwaltung.module';
+import {VerwaltungModule} from './verwaltung.module';
 
 describe('VerwaltungModule', () => {
   let verwaltungModule: VerwaltungModule;

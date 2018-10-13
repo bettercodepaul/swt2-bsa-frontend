@@ -17,8 +17,8 @@ describe('WettkaempfeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WettkaempfeComponent ],
-      imports: [
+      declarations: [WettkaempfeComponent],
+      imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         LoginModule,
@@ -28,7 +28,7 @@ describe('WettkaempfeComponent', () => {
         SharedModule
       ]
     })
-    .compileComponents();
+           .compileComponents();
   }));
 
   beforeEach(() => {

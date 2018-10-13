@@ -1,4 +1,4 @@
-import { LoginModule } from './login.module';
+import {LoginModule} from './login.module';
 
 describe('SettingsModule', () => {
   let loginModule: LoginModule;

@@ -3,7 +3,7 @@ import {ButtonType} from '../types/button-type.enum';
 import {ButtonSize} from '../types/button-size.enum';
 
 @Component({
-  selector: 'bla-button',
+  selector:    'bla-button',
   templateUrl: './button.component.html'
 })
 export class ButtonComponent implements OnInit {

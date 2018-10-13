@@ -1,4 +1,4 @@
-import { ImpressumModule } from './impressum.module';
+import {ImpressumModule} from './impressum.module';
 
 describe('ImpressumModule', () => {
   let impressumModule: ImpressumModule;

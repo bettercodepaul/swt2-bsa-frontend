@@ -16,8 +16,8 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
-      imports: [
+      declarations: [LoginComponent],
+      imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         TranslateModule.forRoot(),
@@ -26,7 +26,7 @@ describe('LoginComponent', () => {
         LocalDataProviderModule
       ]
     })
-    .compileComponents();
+           .compileComponents();
   }));
 
   beforeEach(() => {

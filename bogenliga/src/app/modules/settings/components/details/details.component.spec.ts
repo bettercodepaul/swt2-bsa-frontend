@@ -1,6 +1,6 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { DetailsComponent } from './details.component';
+import {DetailsComponent} from './details.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ROUTES} from '../../../../app.routing';
 import {HomeModule} from '../../../home/home.module';
@@ -11,7 +11,6 @@ import {APP_REDUCERS} from '../../../shared/redux-store';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {DataService} from '../../services/data.service';
-import {Data} from '../../types/data';
 import {Observable} from 'rxjs';
 import {SharedModule} from '../../../shared/shared.module';
 
@@ -22,8 +21,8 @@ describe('DetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DetailsComponent ],
-      imports: [
+      declarations: [DetailsComponent],
+      imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         LoginModule,
@@ -34,7 +33,7 @@ describe('DetailsComponent', () => {
         SharedModule
       ]
     })
-    .compileComponents();
+           .compileComponents();
   }));
 
   beforeEach(() => {
@@ -51,8 +50,9 @@ describe('DetailsComponent', () => {
   it('after saveNewData(), data should be reset', fakeAsync(() => {
     component.data.key = 'dummyKey';
     component.data.value = 'dummyValue';
-    spyOn(service, 'addOne').and.callFake(function(): Observable<any> {
-      return new Observable<any>(); // return is not important in this test -> function should not continue saving to backend
+    spyOn(service, 'addOne').and.callFake(function (): Observable<any> {
+      return new Observable<any>(); // return is not important in this test -> function should not continue saving to
+                                    // backend
     });
     fixture.detectChanges();
     component.saveNewData();

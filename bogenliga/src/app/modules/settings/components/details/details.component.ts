@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { DataService } from '../../services/data.service';
-import { Data } from '../../types/data';
-import {TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import {DataService} from '../../services/data.service';
+import {Data} from '../../types/data';
+import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from 'util';
-import {catchError, delay, map} from 'rxjs/operators';
 
-import { faArrowLeft  } from '@fortawesome/free-solid-svg-icons';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'bla-details',
+  selector:    'bla-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss',
-        './../../../../app.component.scss'],
-  providers: [ TranslatePipe, TranslateModule ]
+  styleUrls:   [
+    './details.component.scss',
+    './../../../../app.component.scss'
+  ],
+  providers:   [TranslatePipe, TranslateModule]
 })
 export class DetailsComponent implements OnInit {
 
@@ -25,7 +26,8 @@ export class DetailsComponent implements OnInit {
   dataKey = ''; // key for url -> which data is selected
   private destinationRouteAfterDelete = '/settings/overview';
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
     this.initDialog();
@@ -38,19 +40,6 @@ export class DetailsComponent implements OnInit {
   getData(): void {
     // this.dataService.getData().subscribe(datas => this.datas = datas);
     // this.dataService.findAll().subscribe(datas => this.datas = datas);
-  }
-
-  private initDialog(): void {
-    this.route.params.subscribe(params => {
-      // if there is a key -> set dataKey to string, set data to selected object
-      let settingsKey;
-      if (!isUndefined(params['key'])) {
-        settingsKey = params['key'];
-        this.dataKey = settingsKey;
-        this.dataService.findById(settingsKey).subscribe(data => this.data = data);
-        this.dataSelected = true;
-      }
-    });
   }
 
   /**
@@ -78,6 +67,19 @@ export class DetailsComponent implements OnInit {
   deleteThisData(): void {
     this.dataService.deleteById(this.dataKey).subscribe(v => {
       this.router.navigateByUrl(this.destinationRouteAfterDelete);
+    });
+  }
+
+  private initDialog(): void {
+    this.route.params.subscribe(params => {
+      // if there is a key -> set dataKey to string, set data to selected object
+      let settingsKey;
+      if (!isUndefined(params['key'])) {
+        settingsKey = params['key'];
+        this.dataKey = settingsKey;
+        this.dataService.findById(settingsKey).subscribe(data => this.data = data);
+        this.dataSelected = true;
+      }
     });
   }
 }

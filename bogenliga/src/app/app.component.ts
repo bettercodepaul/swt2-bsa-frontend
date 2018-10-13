@@ -3,17 +3,16 @@ import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
 import {AppState, SidebarState} from './modules/shared/redux-store';
 import {NavigationEnd, Router} from '@angular/router';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
-import { faBars  } from '@fortawesome/free-solid-svg-icons';
+import {faBars, faCoffee} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'bla-root',
+  selector:    'bla-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls:   ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'bla';
-  open =  '';
+  open = '';
   faCoffee = faCoffee;
   faBars = faBars;
 
@@ -21,7 +20,7 @@ export class AppComponent implements OnInit {
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router) {
     translate.setDefaultLang('de');
-    store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );
+    store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
   ngOnInit() {

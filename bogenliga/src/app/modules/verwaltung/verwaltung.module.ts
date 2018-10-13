@@ -8,13 +8,14 @@ import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {VerwaltungGuard} from './guards/verwaltung.guard';
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
     SharedModule,
     FormsModule
   ],
   declarations: [VerwaltungComponent],
-  providers: [VerwaltungGuard]
+  providers:    [VerwaltungGuard]
 })
-export class VerwaltungModule { }
+export class VerwaltungModule {
+}

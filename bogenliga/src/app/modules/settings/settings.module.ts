@@ -11,7 +11,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(SETTINGS_ROUTES),
     SharedModule,
@@ -19,6 +19,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     FontAwesomeModule
   ],
   declarations: [OverviewComponent, DetailsComponent],
-  providers: [SettingsGuard] // provide Guards here
+  providers:    [SettingsGuard] // provide Guards here
 })
-export class SettingsModule {}
+export class SettingsModule {
+}

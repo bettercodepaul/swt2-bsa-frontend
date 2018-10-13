@@ -6,7 +6,7 @@ import {SessionStorageDataProvider} from './services/data-sources/session-storag
 import {LocalStorageDataProvider} from './services/data-sources/local-storage-data-provider.class';
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     StorageServiceModule
   ],
@@ -16,7 +16,7 @@ export class LocalDataProviderModule {
 
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: LocalDataProviderModule,
+      ngModule:  LocalDataProviderModule,
       providers: [LocalDataProviderService, SessionStorageDataProvider, LocalStorageDataProvider]
     };
   }

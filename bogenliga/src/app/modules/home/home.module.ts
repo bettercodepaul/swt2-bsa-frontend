@@ -9,13 +9,14 @@ import {HomeGuard} from './guards/home.guard';
 
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(HOME_ROUTES),
     SharedModule,
     FormsModule
   ],
   declarations: [HomeComponent],
-  providers: [HomeGuard] // provide Guards here
+  providers:    [HomeGuard] // provide Guards here
 })
-export class HomeModule {}
+export class HomeModule {
+}

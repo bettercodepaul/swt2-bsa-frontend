@@ -1,7 +1,7 @@
-import { WettkampfModule } from './wettkampf.module';
+import {WettkampfModule} from './wettkampf.module';
 import {Location} from '@angular/common';
 import {Router} from '@angular/router';
-import {async, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {async, TestBed} from '@angular/core/testing';
 import {AppComponent} from '../../app.component';
 import {SidebarComponent} from '../../components/sidebar/sidebar.component';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
@@ -31,7 +31,7 @@ describe('WettkampfModule', () => {
         NavbarComponent,
         NotificationComponent
       ],
-      imports: [
+      imports:      [
         RouterTestingModule.withRoutes(WETTKAMPF_ROUTES),
         HomeModule,
         LoginModule,

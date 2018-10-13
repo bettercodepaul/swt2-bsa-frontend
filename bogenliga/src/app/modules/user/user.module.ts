@@ -9,14 +9,14 @@ import {FormsModule} from '@angular/forms';
 import {USER_ROUTES} from './user.routing';
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(USER_ROUTES),
     SharedModule,
     FormsModule
   ],
   declarations: [UserProfileComponent, UserComponent],
-  providers: [UserGuard]
+  providers:    [UserGuard]
 })
 export class UserModule {
 }

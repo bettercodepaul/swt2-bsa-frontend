@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SportjahresplanComponent } from './sportjahresplan.component';
+import {SportjahresplanComponent} from './sportjahresplan.component';
 
 describe('SportjahresplanComponent', () => {
   let component: SportjahresplanComponent;
@@ -8,9 +8,9 @@ describe('SportjahresplanComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SportjahresplanComponent ]
+      declarations: [SportjahresplanComponent]
     })
-    .compileComponents();
+           .compileComponents();
   }));
 
   beforeEach(() => {

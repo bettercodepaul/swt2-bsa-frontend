@@ -12,10 +12,12 @@ import {delay, tap} from 'rxjs/operators';
 const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 
 @Component({
-  selector: 'bla-login',
+  selector:    'bla-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss',
-    './../../../../app.component.scss']
+  styleUrls:   [
+    './login.component.scss',
+    './../../../../app.component.scss'
+  ]
 })
 export class LoginComponent implements OnInit {
 
@@ -62,10 +64,10 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     this.loginDataProviderService.signIn(this.credentials)
-      .then(
-        () => this.handleSuccessfulLogin(),
-        (loginResult: LoginResult) => this.showFailedLogin(loginResult)
-      );
+        .then(
+          () => this.handleSuccessfulLogin(),
+          (loginResult: LoginResult) => this.showFailedLogin(loginResult)
+        );
   }
 
   // TODO: remove after development

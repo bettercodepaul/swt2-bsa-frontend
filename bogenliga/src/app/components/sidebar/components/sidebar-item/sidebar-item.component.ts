@@ -4,10 +4,12 @@ import {AppState, SidebarState} from '../../../../modules/shared/redux-store';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 
 @Component({
-  selector: 'bla-sidebar-item',
+  selector:    'bla-sidebar-item',
   templateUrl: './sidebar-item.component.html',
-  styleUrls: ['./sidebar-item.component.scss',
-              '../../sidebar.component.scss']
+  styleUrls:   [
+    './sidebar-item.component.scss',
+    '../../sidebar.component.scss'
+  ]
 })
 export class SidebarItemComponent implements OnInit {
   @Input() public label: string;
@@ -16,7 +18,8 @@ export class SidebarItemComponent implements OnInit {
   public isActive: boolean;
 
   constructor(private store: Store<AppState>) {
-    store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );
+    store.pipe(select(state => state.sidebarState))
+         .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
   ngOnInit() {

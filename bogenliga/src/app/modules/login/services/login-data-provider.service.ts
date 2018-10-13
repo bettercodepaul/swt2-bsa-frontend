@@ -28,8 +28,8 @@ export class LoginDataProviderService extends DataProviderService {
    * @param store to access the application state managed by the redux store
    */
   constructor(private restClient: RestClient,
-              private currentUserService: CurrentUserService,
-              private store: Store<AppState>) {
+    private currentUserService: CurrentUserService,
+    private store: Store<AppState>) {
     super();
   }
 
@@ -72,21 +72,21 @@ export class LoginDataProviderService extends DataProviderService {
   private sendSignInRequest(credentialsDTO: CredentialsDTO, resolve, reject) {
 
     this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).build(), credentialsDTO)
-      .subscribe(userDataJson => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        this.currentUserService.persistCurrentUser(UserSignInDTO.copyFromJson(userDataJson));
-        resolve(LoginResult.SUCCESS);
+        .subscribe(userDataJson => {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          this.currentUserService.persistCurrentUser(UserSignInDTO.copyFromJson(userDataJson));
+          resolve(LoginResult.SUCCESS);
 
-      }, (error: HttpErrorResponse) => {
+        }, (error: HttpErrorResponse) => {
 
-        this.store.dispatch({ type: LOGOUT, user: null });
-        this.currentUserService.logout();
+          this.store.dispatch({type: LOGOUT, user: null});
+          this.currentUserService.logout();
 
-        if (error.status === 0) {
-          reject(LoginResult.CONNECTION_PROBLEM);
-        } else {
-          reject(LoginResult.FAILURE);
-        }
-      });
+          if (error.status === 0) {
+            reject(LoginResult.CONNECTION_PROBLEM);
+          } else {
+            reject(LoginResult.FAILURE);
+          }
+        });
   }
 }

@@ -17,8 +17,8 @@ xdescribe('NotificationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationComponent ],
-      imports: [
+      declarations: [NotificationComponent],
+      imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
         LoginModule,
@@ -28,7 +28,7 @@ xdescribe('NotificationComponent', () => {
         SharedModule
       ]
     })
-    .compileComponents();
+           .compileComponents();
   }));
 
   beforeEach(() => {

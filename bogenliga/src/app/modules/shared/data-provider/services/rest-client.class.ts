@@ -7,7 +7,7 @@ import {catchError} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Origin':  '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE, OPTIONS'
   })
 };
@@ -17,7 +17,8 @@ const httpOptions = {
 })
 
 export class RestClient {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   public GET(url: string): Observable<any> {
     console.log('Send GET request to ' + url);

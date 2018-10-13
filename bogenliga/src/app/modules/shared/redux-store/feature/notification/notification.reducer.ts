@@ -4,7 +4,7 @@ import {Notification, NotificationUserAction} from '../../../services/notificati
 
 export const initialNavigationState: NotificationState = {
   showNotification: false,
-  notification: new Notification()
+  notification:     new Notification()
 };
 
 export function notificationReducer(state = initialNavigationState, action: Actions.NotificationAction): NotificationState {
@@ -13,23 +13,23 @@ export function notificationReducer(state = initialNavigationState, action: Acti
   switch (action.type) {
     case Actions.SHOW_NOTIFICATION: {
       newState = {
-        notification: action.payload,
+        notification:     action.payload,
         showNotification: true
       };
       break;
     }
     case Actions.ACCEPT_NOTIFICATION: {
-      const modifiedState = newState = { ...state };
-        modifiedState.notification.userAction = NotificationUserAction.ACCEPTED;
-        modifiedState.showNotification = false;
+      const modifiedState = newState = {...state};
+      modifiedState.notification.userAction = NotificationUserAction.ACCEPTED;
+      modifiedState.showNotification = false;
 
       break;
     }
     case Actions.DECLINE_NOTIFICATION: {
       const modifiedState = newState = {...state};
 
-       modifiedState.notification.userAction = NotificationUserAction.DECLINED;
-       modifiedState.showNotification = false;
+      modifiedState.notification.userAction = NotificationUserAction.DECLINED;
+      modifiedState.showNotification = false;
 
       break;
     }

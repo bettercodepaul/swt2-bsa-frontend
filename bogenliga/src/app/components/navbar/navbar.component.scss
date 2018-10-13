@@ -28,10 +28,11 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 // change from bootstrap original color
 .bg-dark {
-  background-color: $primary!important;
+  background-color: $primary !important;
   padding-top: 0px;
   padding-bottom: 0px;
 }
+
 .btn-link {
   color: $primary-light;
 }
@@ -70,9 +71,9 @@ $secondary-dark: #ff833a; // hover Links, Logo
     width: 40px;
     height: 40px;
     background: none;
-    border:none;
-    margin:0;
-    padding:0;
+    border: none;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
     outline: none;
   }
