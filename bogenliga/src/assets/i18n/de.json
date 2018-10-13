@@ -84,6 +84,10 @@
       "CONNECTION_ERROR": {
         "TITLE": "Verbindungsprobleme",
         "DESCRIPTION": "Der Service konnte nicht erreicht werden. Bitte probieren sie es später erneut."
+      },
+      "NO_SESSION_ERROR": {
+        "TITLE": "Sitzung abgelaufen",
+        "DESCRIPTION": "Ihre Sitzung ist abgelaufen. Sie werden auf die Login-Seite weitergeleitet. Bitte melden Sie sich dort erneut an."
       }
     }
   },

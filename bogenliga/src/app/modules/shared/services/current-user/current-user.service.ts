@@ -6,6 +6,9 @@ import {select, Store} from '@ngrx/store';
 import {AppState, Login, Logout} from '../../redux-store';
 import {UserState} from '../../redux-store/feature/user';
 import {isNullOrUndefined} from 'util';
+import {filter, map} from 'rxjs/operators';
+import {Notification, NotificationUserAction} from '../notification/types';
+import {Router} from '@angular/router';
 
 const CURRENT_USER_KEY = 'current_user';
 
@@ -19,12 +22,10 @@ export class CurrentUserService {
   private isUserLoggedIn: boolean;
   private currentUser: UserSignInDTO = new UserSignInDTO();
 
-  constructor(private localDataProviderService: LocalDataProviderService, private store: Store<AppState>) {
-    store.pipe(select('userState')).subscribe((state: UserState) => {
-      this.isUserLoggedIn = state.isLoggedIn;
-      this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
-    });
-
+  constructor(private localDataProviderService: LocalDataProviderService, private store: Store<AppState>, private router: Router) {
+    this.observeUserState();
+    this.observeSessionExpiredNotifications();
+    
     this.loadCurrentUser();
   }
 
@@ -40,7 +41,6 @@ export class CurrentUserService {
       this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue))));
     }
   }
-
 
   public getEmail(): string {
     return this.getCurrentUser().email;
@@ -115,6 +115,26 @@ export class CurrentUserService {
 
   }
 
+  private observeUserState() {
+    this.store.pipe(select(state => state.userState))
+      .subscribe((state: UserState) => {
+        this.isUserLoggedIn = state.isLoggedIn;
+        this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
+      });
+  }
+
+  private observeSessionExpiredNotifications() {
+    this.store.pipe(
+      select(state => state.notificationState),
+      filter(notificationState => !isNullOrUndefined(notificationState.notification)),
+      map(notificationState => notificationState.notification),
+      filter(notification => notification.id === 'NO_SESSION_ERROR'),
+      filter(notification => notification.userAction === NotificationUserAction.ACCEPTED)
+    ).subscribe((notification: Notification) => {
+      this.logout();
+      this.router.navigateByUrl('login');
+    });
+  }
 
   private getCurrentUser(): UserSignInDTO {
     return this.currentUser;
