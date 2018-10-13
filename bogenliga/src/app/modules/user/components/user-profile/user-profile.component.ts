@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserDataProviderService} from "../../services/user-data-provider.service";
+import {UserDataProviderService} from '../../services/user-data-provider.service';
 
 @Component({
   selector: 'bla-user-profile',

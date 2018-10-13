@@ -26,7 +26,7 @@ export class CurrentUserService {
   constructor(private localDataProviderService: LocalDataProviderService, private store: Store<AppState>, private router: Router) {
     this.observeUserState();
     this.observeSessionExpiredNotifications();
-    
+
     this.loadCurrentUser();
   }
 

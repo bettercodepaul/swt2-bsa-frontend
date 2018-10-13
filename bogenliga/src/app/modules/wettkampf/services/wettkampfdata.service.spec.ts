@@ -1,6 +1,6 @@
 import {async, TestBed} from '@angular/core/testing';
 
-import { WettkampfdataService } from './wettkampfdata.service';
+import {WettkampfdataService} from './wettkampfdata.service';
 import {AppComponent} from '../../../app.component';
 import {SidebarComponent} from '../../../components/sidebar/sidebar.component';
 import {NavbarComponent} from '../../../components/navbar/navbar.component';
@@ -12,8 +12,7 @@ import {LoginModule} from '../../login/login.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../shared/redux-store';
-import {HttpClientModule} from '@angular/common/http';
-import {SharedModule} from "../../shared/shared.module";
+import {SharedModule} from '../../shared/shared.module';
 
 xdescribe('WettkampfdataService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

@@ -5,12 +5,6 @@ export class ErrorDTO implements DataTransferObject {
   param: string[];
   errorMessage: string;
 
-  constructor(errorCode?: string, param?: string[], errorMessage?: string) {
-    this.errorCode = !!errorCode ? errorCode : '';
-    this.param = !!param ? param : [];
-    this.errorMessage = !!errorMessage ? errorMessage : '';
-  }
-
   static copyFromJson(json: {
     errorCode: string,
     param: string[],
@@ -24,5 +18,9 @@ export class ErrorDTO implements DataTransferObject {
     return userSign;
   }
 
-
+  constructor(errorCode?: string, param?: string[], errorMessage?: string) {
+    this.errorCode = !!errorCode ? errorCode : '';
+    this.param = !!param ? param : [];
+    this.errorMessage = !!errorMessage ? errorMessage : '';
+  }
 }
