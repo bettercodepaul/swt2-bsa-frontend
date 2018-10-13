@@ -1,6 +1,11 @@
 {
   "NAVBAR": {
-    "TITLE": "Bogenliga DE"
+    "TITLE": "Bogenliga DE",
+    "USER_DROPDOWN": {
+      "PROFILE": "Profil und Account",
+      "SETTINGS": "Einstellungen",
+      "LOGOUT": "Logout"
+    }
   },
 
   "SIDEBAR": {

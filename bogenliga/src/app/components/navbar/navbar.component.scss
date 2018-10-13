@@ -8,72 +8,51 @@ $secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
-.navbar-dark .navbar-nav .nav-link {
-  color: $primary-light;
-  padding: 0px;
+#navbar {
+  height: 4em;
+  border-bottom: 1px solid rgba(0, 0, 0, .125);
 }
 
-.navbar-brand {
-  padding: 0px;
-}
-
-.navbar-brand:hover {
-  color: $secondary-dark;
+#navbar a {
+  color: #007c91;
+  text-decoration: none;
 }
 
 // Toggle hidden while Webview
 #sidebarCollapseNavBar {
-  visibility: hidden;
+  display: none;
 }
 
-// change from bootstrap original color
-.bg-dark {
-  background-color: $primary !important;
-  padding-top: 0px;
-  padding-bottom: 0px;
+#navbar-header {
+  padding-left: 2.7em;
 }
 
-.btn-link {
-  color: $primary-light;
+#navbar-brand {
+  margin-left: 1.1em;
 }
 
-// Logo img
-.logo {
-  margin: 10px;
+.navbar-dark {
+  background-color: $primary;
+  padding: 0;
 }
 
-.material-icons {
-  color: black;
+// scale dropdown triangle
+.dropdown-toggle::after {
+  vertical-align: .35em;
+  border-top: .5em solid;
+  border-right: .4em solid transparent;
+  border-left: .4em solid transparent;
 }
 
-.btn {
-  outline: none;
-}
-
-// Dropdown triangle
-.navbar-dark[_ngcontent-c1] .navbar-nav[_ngcontent-c1] .nav-link[_ngcontent-c1] {
-  color: black;
-}
-
-.headingLink {
-  color: black;
-}
-
-.headingLink:hover {
-  color: black;
-}
 
 // for small devices
 @media (max-width: 768px) {
   // Toggle shown while in mobile view
   #sidebarCollapseNavBar {
-    visibility: visible;
-    width: 40px;
-    height: 40px;
+    display: block;
     background: none;
     border: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 0 0 1em;
     cursor: pointer;
     outline: none;
   }
@@ -82,7 +61,6 @@ $secondary-dark: #ff833a; // hover Links, Logo
   #sidebarCollapseNavBar span {
     width: 80%;
     height: 2px;
-    margin: 0 auto;
     display: block;
     //background: #02bdd5; //#555;
     background: black;
@@ -91,7 +69,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
     margin: 5px auto;
   }
 
-  .navbar-brand {
+  #navbar-brand, #navbar-header {
     display: none;
   }
 }

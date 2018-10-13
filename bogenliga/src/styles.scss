@@ -8,8 +8,19 @@ $secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
+* {
+  box-sizing: border-box;
+}
+
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
 body {
   height: 100%;
+  position: relative;
 }
 
 .animation.fade-in {

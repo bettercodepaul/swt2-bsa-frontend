@@ -1,50 +1,12 @@
-<!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
 <nav id="sidebar"
      [class.inactive]="isActive">
   <div style="flex-grow: 1">
+    
     <!-- Sidebar Header -->
     <div class="sidebar-header">
       <h3 id="title"
-          *ngIf="!isActive">{{ 'SIDEBAR.TITLE' | translate }}</h3>
-      <p id="shortTitle"
-         *ngIf="isActive">{{ 'SIDEBAR.TITLESHORT' | translate }}</p>
+          *ngIf="!isActive">{{'NAVBAR.TITLE' | translate }}</h3>
     </div>
-
-    <!-- Sidebar Links
-    <ul class="list-unstyled components">
-      <li>
-        <a routerLink="/home" >
-          <div class="sidebar-link {{isActive? 'inactive' : ''}}">
-            <i class="material-icons">home</i>
-            <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.HOME' | translate }}</div>
-          </div>
-        </a>
-
-        <a routerLink="/verwaltung">
-          <div class="sidebar-link {{isActive? 'inactive' : ''}}">
-          <i class="material-icons">file_copy</i>
-            <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.VERWALTUNG' | translate }}</div>
-          </div>
-        </a>
-      </li>
-      <li class="active">
-        <a routerLink="/wettkaempfe">
-          <div class="sidebar-link {{isActive? 'inactive' : ''}}">
-          <i class="material-icons">play_arrow</i>
-            <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.WETTKAMPF' | translate }}</div>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/sportjahresplan">
-          <div class="sidebar-link {{isActive? 'inactive' : ''}}">
-            <i class="material-icons">today</i>
-            <div *ngIf="!isActive" class="sidebar-text {{isActive? 'inactive' : ''}}">{{ 'SIDEBAR.SPORTJAHRESPLAN' | translate }}</div>
-          </div>
-        </a>
-      </li>
-    </ul> -->
-
 
     <!-- Sidebar links config -->
     <ul class="list-unstyled components">

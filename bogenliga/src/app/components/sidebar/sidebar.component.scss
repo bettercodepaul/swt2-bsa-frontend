@@ -8,11 +8,14 @@ $secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
+$navbar-height: 4em;
+$sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
+
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  min-height: calc(100vh - 71px); //full view - Navbar on top
-  margin-top: 71px; //height of NavBar
+  min-height: calc(100vh - 4em); //full view - Navbar on top
+  margin-top: $navbar-height; //height of NavBar
   background: $primary-light; //#343a40;
   color: $primary-dark;
   transition: all 0.3s;
@@ -20,6 +23,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
   flex-direction: column;
   position: fixed; // stays fixed on the side while scrolling
   z-index: 12; // layers of the rest of the page
+  border-right: $sidebar-border-style;
 }
 
 // basic sidebar inactive css
@@ -53,32 +57,24 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 // Sidebar Header
 #sidebar .sidebar-header {
-  padding: 20px;
-  background: $primary-light;
+  display: none;
 }
 
 // Sidebar Header Titleshort
 #sidebar.inactive .sidebar-header p {
-  display: block;
   color: $primary-dark;
 }
 
 #sidebar ul.components {
   padding: 20px 0;
-  border-bottom: 2px solid $primary-dark;
+  border-bottom: $sidebar-border-style;
 }
 
 #sidebar.inactive ul li a {
-  padding: 20px 10px;
   text-align: center;
-  font-size: 0.85em;
 }
 
-#sidebar.inactive ul li a i {
-  margin-right: 0;
-  font-size: 1.8em;
-  margin-bottom: 5px;
-}
+
 
 #sidebar ul li.inactive > a, a[aria-expanded="true"] {
   color: $primary-dark;
@@ -86,7 +82,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
 }
 
 #sidebarFooter {
-  border-top: 2px solid $primary-dark;
+  border-top: $sidebar-border-style;
 }
 
 // Dropdown
@@ -132,8 +128,15 @@ $secondary-dark: #ff833a; // hover Links, Logo
 @media (max-width: 768px) {
   #sidebar {
     margin-left: 0;
-    margin-top: 40px; //height of NavBar
-    min-height: calc(100vh - 40px); //full view - Navbar on top
+    margin-top: $navbar-height; //height of NavBar
+    min-height: calc(100vh); //full view - Navbar on top
+  }
+  #sidebar a {
+    padding-left: 1em;
+  }
+  #sidebar .sidebar-header {
+    display: block;
+    padding: 1em 0 0 1em;
   }
   #sidebar.inactive {
     margin-left: -80px;

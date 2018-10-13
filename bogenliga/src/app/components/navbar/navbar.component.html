@@ -1,59 +1,52 @@
 <!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
 <nav id="navbar"
-     class="navbar navbar-expand bg-dark navbar-dark fixed-top">
+     class="navbar navbar-expand navbar-dark fixed-top shadow-sm">
 
   <!-- Burger Toggle -->
-  <button type="button"
-          id="sidebarCollapseNavBar"
-          (click)="toggleNavbar()">
-    <fa-icon [icon]="faBars"></fa-icon>
-  </button>
+  <a id="sidebarCollapseNavBar"
+     (click)="toggleNavbar()">
+    <fa-icon [icon]="isActive ? 'bars' : 'times'"
+             size="2x"></fa-icon>
+  </a>
 
   <!-- Logo and Titel -->
-  <ul>
-    <a routerLink="/home"><img class="navbar-brand"
-                               src="../assets/img/logo.png"
-                               style="width:45px; padding-top: 10px;"></a>
-  </ul>
-  <a class="headingLink"
-     routerLink="/home"><h3>{{'NAVBAR.TITLE' | translate }}</h3></a>
+  <a id="navbar-brand"
+     routerLink="/home">
+    <img
+      src="../assets/img/logo.png"
+      style="width:45px;">
+  </a>
+
+  <a id="navbar-header"
+     routerLink="/home">
+    <h3>{{'NAVBAR.TITLE' | translate }}</h3>
+  </a>
+
 
   <!-- Links -->
-  <ul id="navbar-right"
-      class="nav navbar-nav ml-auto navbar-right">
-    <!--
-    <button (click)="useLanguage('en')" class="btn btn-link">en</button>
-    <button (click)="useLanguage('de')" class="btn btn-link">de</button> -->
-    <button class="nav-item"
-            class="btn btn-link">
-      <!-- Login Button -->
+  <div id="navbar-right"
+       class="nav navbar-nav ml-auto navbar-right">
+
+    <!-- Login Button -->
+
       <a *ngIf="!isLoggedIn"
-         class="login"
          class="nav-link"
          routerLink="/user/login">
         <button class="btn btn-light">Login</button>
       </a>
+
       <!-- Profil Dropdown -->
-      <li *ngIf="isLoggedIn"
-          class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle"
-           data-toggle="dropdown"
-           href="#">
-          <fa-icon [icon]="faUserCircle"></fa-icon>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <div class="dropdown-header">Profil Einstellungen</div>
-          <a class="dropdown-item"
-             routerLink="/user/profile">Profil und Account</a>
-          <a class="dropdown-item"
-             href="#">Einstellungen</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item"
-             routerLink="/home"
-             (click)="logout()">Logout</a>
-        </div>
-      </li>
-    </button>
-  </ul>
+
+    <a *ngIf="isLoggedIn"
+       class="dropdown nav-link dropdown-toggle"
+       (click)="toggleUserDropdown()">
+      <fa-icon icon="user-circle"
+               size="2x"></fa-icon>
+    </a>
+
+    <bla-user-dropdown *ngIf="isUserDropdownVisible"
+                       (onAction)="toggleUserDropdown()"></bla-user-dropdown>
+
+  </div>
 
 </nav>

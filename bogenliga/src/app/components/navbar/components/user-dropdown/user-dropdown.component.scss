@@ -1,0 +1,12 @@
+.dropdown-menu {
+  display: block;
+}
+
+a, a:not([href]):not([tabindex]) {
+  color: #007c91;
+}
+
+a:active, a:not([href]):not([tabindex]):active {
+  color: #007c91;
+  background-color: #02bdd5;
+}
