@@ -1,5 +1,5 @@
 <div id="login">
-  <div>
+  <div id="login-dialog">
 
     <bla-alert [visible]="(loginResult === LoginResult.SUCCESS)"
                header="{{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.HEADER' | translate }}"
@@ -11,6 +11,12 @@
                header="{{ 'LOGIN.NOTIFICATION.LOGIN_FAILURE.HEADER' | translate }}"
                [alertType]="AlertType.DANGER">
       {{ 'LOGIN.NOTIFICATION.LOGIN_FAILURE.TEXT' | translate }}
+    </bla-alert>
+
+    <bla-alert [visible]="(loginResult === LoginResult.CONNECTION_PROBLEM)"
+               header="{{ 'LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.HEADER' | translate }}"
+               [alertType]="AlertType.WARNING">
+      {{ 'LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.TEXT' | translate }}
     </bla-alert>
 
     <div class="card mb-4 shadow-sm">

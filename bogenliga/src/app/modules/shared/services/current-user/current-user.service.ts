@@ -11,6 +11,7 @@ import {Notification, NotificationUserAction} from '../notification/types';
 import {Router} from '@angular/router';
 
 const CURRENT_USER_KEY = 'current_user';
+const LOGIN_EMAIL_KEY = 'login_email';
 
 
 @Injectable({
@@ -114,6 +115,19 @@ export class CurrentUserService {
     this.store.dispatch(new Logout());
 
   }
+
+  public rememberUsername(email: string) {
+    this.localDataProviderService.setPermanently(LOGIN_EMAIL_KEY, email);
+  }
+
+  public getRememberedUsername(): string {
+    return this.localDataProviderService.get(LOGIN_EMAIL_KEY);
+  }
+
+  public forgetUsername(): void {
+    return this.localDataProviderService.remove(LOGIN_EMAIL_KEY);
+  }
+
 
   private observeUserState() {
     this.store.pipe(select(state => state.userState))

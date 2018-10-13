@@ -1,5 +1,6 @@
 export enum LoginResult {
   PENDING,
   SUCCESS,
-  FAILURE
+  FAILURE,
+  CONNECTION_PROBLEM
 }

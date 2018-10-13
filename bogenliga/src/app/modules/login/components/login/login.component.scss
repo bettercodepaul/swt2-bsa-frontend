@@ -11,6 +11,11 @@ $secondary-dark: #ff833a; // hover Links, Logo
   display: flex;
   justify-content: center;
 }
+
+#login-dialog {
+  width: 500px;
+  max-width: 500px;
+}
 /* Center the avatar image inside this container */
 .imgcontainer {
   text-align: center;

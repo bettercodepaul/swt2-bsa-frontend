@@ -4,7 +4,7 @@ import {LoginDataProviderService} from '../../services/login-data-provider.servi
 import {ButtonSize} from '../../../shared/components/buttons';
 import {AlertType} from '../../../shared/components/alerts';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isUndefined} from 'util';
+import {isNullOrUndefined, isUndefined} from 'util';
 import {LoginResult} from '../../types/login-result.enum';
 import {of} from 'rxjs';
 import {delay, tap} from 'rxjs/operators';
@@ -45,6 +45,8 @@ export class LoginComponent implements OnInit {
         this.destinationRouteAfterLogin = params[LOGIN_REDIRECT_QUERY_PARAM];
       }
     });
+
+    this.initRememberedUsername();
   }
 
   /**
@@ -61,12 +63,8 @@ export class LoginComponent implements OnInit {
 
     this.loginDataProviderService.signIn(this.credentials)
       .then(
-        () => {
-          this.handleSuccessfulLogin();
-        },
-        () => {
-          this.handleFailedLogin();
-        }
+        () => this.handleSuccessfulLogin(),
+        (loginResult: LoginResult) => this.showFailedLogin(loginResult)
       );
   }
 
@@ -76,9 +74,17 @@ export class LoginComponent implements OnInit {
     this.onLogin(null);
   }
 
-  private handleFailedLogin() {
+  private initRememberedUsername() {
+    this.credentials.username = this.loginDataProviderService.getEmailAddress();
+
+    if (!isNullOrUndefined(this.credentials.username)) {
+      this.credentials.rememberMe = true;
+    }
+  }
+
+  private showFailedLogin(loginResult: LoginResult) {
     this.loading = false;
-    this.loginResult = LoginResult.FAILURE;
+    this.loginResult = loginResult;
   }
 
   private handleSuccessfulLogin() {

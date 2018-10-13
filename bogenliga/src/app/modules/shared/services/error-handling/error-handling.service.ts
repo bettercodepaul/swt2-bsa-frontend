@@ -49,6 +49,7 @@ export class ErrorHandlingService {
       this.handleHttpServerError(statusCode, errorDto);
     } else if (errorCategory === 0) {
       this.handleHttpConnectionError(statusCode, errorDto);
+      throw httpError;
     } else {
       this.handleUnexpectedError(statusCode, errorDto);
     }
@@ -114,8 +115,6 @@ export class ErrorHandlingService {
   }
 
   private handleHttpConnectionError(statusCode: number, errorDto: ErrorDTO) {
-    console.error('Connection error');
-
     const connectionError = 'CONNECTION_ERROR';
 
     const notification: Notification = {
