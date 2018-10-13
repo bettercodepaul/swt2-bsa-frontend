@@ -4,7 +4,6 @@ import {AppState, SidebarState, TOGGLE_SIDEBAR} from '../../modules/shared/redux
 import {SIDE_BAR_CONFIG} from './sidebar.config';
 import {CurrentUserService, UserPermission} from '../../modules/shared/services/current-user';
 
-import {faAngleDoubleRight, faAngleDoubleLeft} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'bla-sidebar',
@@ -14,15 +13,10 @@ import {faAngleDoubleRight, faAngleDoubleLeft} from '@fortawesome/free-solid-svg
 })
 export class SidebarComponent implements OnInit {
 
-  faAngleDoubleLeft = faAngleDoubleLeft;
-  faAngleDoubleRight = faAngleDoubleRight;
-
-
-
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public CONFIG = SIDE_BAR_CONFIG;
 
-  switch = this.isActive ? 'faAngleDoubleRight' : 'faAngleDoubleLeft';
+  public switch = this.isActive ? 'angle-double-right' : 'angle-double-left';
 
   constructor(private store: Store<AppState>, private currentUserService: CurrentUserService ) {
     store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar );

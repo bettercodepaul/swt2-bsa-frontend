@@ -9,6 +9,17 @@ import {AlertComponent, ButtonComponent, ModalDialogComponent} from './component
 import {RestClient} from './data-provider';
 import {ErrorHandlingService} from './services/error-handling';
 import {NotificationService} from './services/notification';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+/*
+ * define font awesome icon libraries
+ */
+import {library} from '@fortawesome/fontawesome-svg-core';
+import {fas} from '@fortawesome/free-solid-svg-icons';
+import {fab} from '@fortawesome/free-brands-svg-icons';
+import {far} from '@fortawesome/free-regular-svg-icons';
+
+// Add an icon to the library for convenient access in other components
+library.add(fas, far, fab); // add all icon types
 
 
 @NgModule({
@@ -16,11 +27,14 @@ import {NotificationService} from './services/notification';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    TranslateModule.forChild()],
+    TranslateModule.forChild(),
+    FontAwesomeModule
+  ],
   exports: [
     TranslateModule,
     FormsModule,
     HttpClientModule,
+    FontAwesomeModule,
     ButtonComponent,
     AlertComponent,
     ModalDialogComponent],

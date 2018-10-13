@@ -16,7 +16,7 @@
   <ng-content *ngIf="!loading"></ng-content>
 
   <!-- show loading indicator -->
-  <i *ngIf="loading"
-     class="fas fa-sync fa-spin"></i>
-
+  <fa-icon *ngIf="loading"
+           icon="sync"
+           [spin]="true"></fa-icon>
 </button>
