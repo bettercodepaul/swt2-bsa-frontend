@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {UserPermission} from './types/user-permission.enum';
-import {LocalDataProviderService} from '../../local-data-provider/services/local-data-provider.service';
+import {LocalDataProviderService} from '../../local-data-provider/services';
 import {UserSignInDTO} from './types/user-sign-in-dto.class';
 import {select, Store} from '@ngrx/store';
 import {AppState, Login, Logout} from '../../redux-store';

@@ -3,12 +3,11 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {LoginComponent} from './login.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ROUTES} from '../../../../app.routing';
-import {HomeModule} from '../../../home/home.module';
+import {HomeModule} from '../../../home';
 import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../../shared/redux-store';
-import {SharedModule} from '../../../shared/shared.module';
-import {LocalDataProviderModule} from '../../../shared/local-data-provider/local-data-provider.module';
+import {SharedModule} from '../../../shared';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -22,8 +21,7 @@ describe('LoginComponent', () => {
         HomeModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        SharedModule,
-        LocalDataProviderModule
+        SharedModule
       ]
     })
            .compileComponents();

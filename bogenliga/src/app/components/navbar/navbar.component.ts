@@ -21,9 +21,9 @@ export class NavbarComponent implements OnInit {
 
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public ButtonType = ButtonType;
-  faBars = faBars;
-  faUserCircle = faUserCircle;
-  private isLoggedIn: boolean;
+  public faBars = faBars;
+  public faUserCircle = faUserCircle;
+  public isLoggedIn: boolean;
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService) {
     store.pipe(select('sidebarState')).subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
    * Changes the language used on the Website
    * @param language
    */
-  useLanguage(language: string) {
+  public useLanguage(language: string) {
     this.translate.use(language);
   }
 

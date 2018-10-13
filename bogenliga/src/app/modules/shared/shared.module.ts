@@ -1,24 +1,24 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {TranslateModule} from '@ngx-translate/core';
-import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
-import {CurrentUserService} from './services/current-user';
-import {AlertComponent, ButtonComponent, ModalDialogComponent} from './components';
-import {RestClient} from './data-provider';
-import {ErrorHandlingService} from './services/error-handling';
-import {NotificationService} from './services/notification';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-/*
- * define font awesome icon libraries
- */
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {fas} from '@fortawesome/free-solid-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
+import {TranslateModule} from '@ngx-translate/core';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {AlertComponent, ButtonComponent, ModalDialogComponent} from './components';
+import {RestClient} from './data-provider';
+import * as SharedService from './services';
+import * as LocalDataProvider from './local-data-provider/services';
+import {StorageServiceModule} from 'angular-webstorage-service';
 
-// Add an icon to the library for convenient access in other components
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+
+/*
+ * define font awesome icon libraries
+ */
 library.add(fas, far, fab); // add all icon types
 
 
@@ -28,7 +28,8 @@ library.add(fas, far, fab); // add all icon types
     FormsModule,
     HttpClientModule,
     TranslateModule.forChild(),
-    FontAwesomeModule
+    FontAwesomeModule,
+    StorageServiceModule
   ],
   exports:      [
     TranslateModule,
@@ -50,7 +51,15 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule:  SharedModule,
-      providers: [CurrentUserService, ErrorHandlingService, NotificationService, RestClient]
+      providers: [
+        SharedService.CurrentUserService,
+        SharedService.ErrorHandlingService,
+        SharedService.NotificationService,
+        LocalDataProvider.LocalDataProviderService,
+        LocalDataProvider.LocalStorageDataProvider,
+        LocalDataProvider.SessionStorageDataProvider,
+        RestClient
+      ]
     };
   }
 

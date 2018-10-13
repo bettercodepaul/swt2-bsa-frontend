@@ -4,6 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
+import {SidebarItemComponent} from './components/sidebar/components/sidebar-item/sidebar-item.component';
 import {NotificationComponent} from './components/notification';
 // import ngx-translate and the http loader
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
@@ -16,13 +17,8 @@ import {APP_REDUCERS} from './modules/shared/redux-store';
 import {RouterModule} from '@angular/router';
 import {ROUTES} from './app.routing';
 import {FormsModule} from '@angular/forms';
-import {HomeModule} from './modules/home/home.module';
-import {SharedModule} from './modules/shared/shared.module';
-import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
-import {LoginModule} from './modules/login/login.module';
-import {ErrorInterceptor, JwtInterceptor} from './modules/shared/data-provider';
-import {SidebarItemComponent} from './components/sidebar/components/sidebar-item/sidebar-item.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {HomeModule} from './modules/home';
+import {ErrorInterceptor, JwtInterceptor, SharedModule} from './modules/shared';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -33,9 +29,9 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [
     AppComponent,
     SidebarComponent,
+    SidebarItemComponent,
     NavbarComponent,
     NotificationComponent,
-    SidebarItemComponent
   ],
   imports:      [
     BrowserModule,
@@ -48,16 +44,13 @@ export function createTranslateLoader(http: HttpClient) {
         deps:       [HttpClient]
       }
     }),
-    RouterModule.forRoot(ROUTES, {useHash: true}),
+    RouterModule.forRoot(ROUTES, {useHash: true, enableTracing: true}),
     /* REDUX-STORE */
     StoreModule.forRoot(APP_REDUCERS),
     EffectsModule.forRoot([]),
     /* BOGENLIGA */
     HomeModule,
-    WettkampfModule,
-    LoginModule,
     SharedModule.forRoot(),
-    FontAwesomeModule
   ],
   exports:      [TranslateModule],
   /* HTTP INTERCEPTORS */

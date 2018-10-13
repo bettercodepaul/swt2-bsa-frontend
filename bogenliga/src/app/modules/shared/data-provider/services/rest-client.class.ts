@@ -15,7 +15,6 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
 export class RestClient {
   constructor(private http: HttpClient) {
   }
