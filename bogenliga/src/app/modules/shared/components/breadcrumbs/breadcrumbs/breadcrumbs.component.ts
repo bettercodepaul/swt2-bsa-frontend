@@ -2,7 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {TranslatePipe} from '@ngx-translate/core';
 import {BreadcrumbDO} from '../types/breadcrumb-dto.class';
-import {isNumber} from 'util';
+import {isNullOrUndefined, isNumber} from 'util';
+import {CommonComponent} from '../../common-component.class';
 
 @Component({
   selector:    'bla-breadcrumbs',
@@ -10,14 +11,18 @@ import {isNumber} from 'util';
   styleUrls:   ['./breadcrumbs.component.scss'],
   providers:   [TranslatePipe]
 })
-export class BreadcrumbsComponent implements OnInit {
+export class BreadcrumbsComponent extends CommonComponent implements OnInit {
 
-  @Input() public moduleTranslationKey = 'MANAGEMENT';
+  @Input() public moduleTranslationKey;
 
   constructor(private router: Router, private translate: TranslatePipe) {
+    super();
   }
 
   ngOnInit() {
+    if (isNullOrUndefined(this.moduleTranslationKey)) {
+      console.warn('BreadcrumbsComponent: Property "moduleTranslationKey" must be defined');
+    }
   }
 
   public getBreadCrumbs(): BreadcrumbDO[] {

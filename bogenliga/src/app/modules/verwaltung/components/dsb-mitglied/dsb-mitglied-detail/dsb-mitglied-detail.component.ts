@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
 
 @Component({
   selector:    'bla-dsb-mitglied-detail',
@@ -6,6 +7,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls:   ['./dsb-mitglied-detail.component.scss']
 })
 export class DsbMitgliedDetailComponent implements OnInit {
+
+  public config = DSB_MITGLIED_DETAIL_CONFIG;
 
   constructor() {
   }

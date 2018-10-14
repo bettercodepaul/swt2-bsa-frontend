@@ -12,7 +12,10 @@ import {
   AlertComponent,
   BreadcrumbsComponent,
   ButtonComponent,
+  CommonDialogComponent,
+  DetailDialogComponent,
   ModalDialogComponent,
+  OverviewDialogComponent,
   PageHeadingComponent
 } from './components';
 import {RestClient} from './data-provider';
@@ -48,14 +51,20 @@ library.add(fas, far, fab); // add all icon types
     AlertComponent,
     ModalDialogComponent,
     PageHeadingComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    OverviewDialogComponent,
+    CommonDialogComponent,
+    DetailDialogComponent
   ],
   declarations: [
     ButtonComponent,
     AlertComponent,
     ModalDialogComponent,
     PageHeadingComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    OverviewDialogComponent,
+    CommonDialogComponent,
+    DetailDialogComponent
   ]
 })
 export class SharedModule {

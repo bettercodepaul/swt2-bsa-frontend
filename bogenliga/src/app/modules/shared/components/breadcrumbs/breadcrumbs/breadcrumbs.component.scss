@@ -17,3 +17,12 @@
 
   padding-right: .5rem;
 }
+
+// for small devices
+@media (max-width: 768px) {
+
+  #breadcrumb-container {
+    display: none;
+  }
+
+}
