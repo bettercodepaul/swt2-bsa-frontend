@@ -28,6 +28,7 @@ import {StorageServiceModule} from 'angular-webstorage-service';
 
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {RouterModule} from '@angular/router';
+import {TruncationPipe} from './pipes';
 
 /*
  * define font awesome icon libraries
@@ -60,7 +61,8 @@ library.add(fas, far, fab); // add all icon types
     DetailDialogComponent,
     DataTableComponent,
     TableEmptyPlaceholderComponent,
-    TableLoadingPlaceholderComponent
+    TableLoadingPlaceholderComponent,
+    TruncationPipe
   ],
   declarations: [
     ButtonComponent,
@@ -73,7 +75,8 @@ library.add(fas, far, fab); // add all icon types
     DetailDialogComponent,
     DataTableComponent,
     TableEmptyPlaceholderComponent,
-    TableLoadingPlaceholderComponent
+    TableLoadingPlaceholderComponent,
+    TruncationPipe
   ]
 })
 export class SharedModule {
