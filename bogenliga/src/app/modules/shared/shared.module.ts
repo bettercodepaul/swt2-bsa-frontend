@@ -8,13 +8,20 @@ import {far} from '@fortawesome/free-regular-svg-icons';
 import {TranslateModule} from '@ngx-translate/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {AlertComponent, ButtonComponent, ModalDialogComponent} from './components';
+import {
+  AlertComponent,
+  BreadcrumbsComponent,
+  ButtonComponent,
+  ModalDialogComponent,
+  PageHeadingComponent
+} from './components';
 import {RestClient} from './data-provider';
 import * as SharedService from './services';
 import * as LocalDataProvider from './local-data-provider/services';
 import {StorageServiceModule} from 'angular-webstorage-service';
 
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {RouterModule} from '@angular/router';
 
 /*
  * define font awesome icon libraries
@@ -28,6 +35,7 @@ library.add(fas, far, fab); // add all icon types
     FormsModule,
     HttpClientModule,
     TranslateModule.forChild(),
+    RouterModule,
     FontAwesomeModule,
     StorageServiceModule
   ],
@@ -38,12 +46,16 @@ library.add(fas, far, fab); // add all icon types
     FontAwesomeModule,
     ButtonComponent,
     AlertComponent,
-    ModalDialogComponent
+    ModalDialogComponent,
+    PageHeadingComponent,
+    BreadcrumbsComponent
   ],
   declarations: [
     ButtonComponent,
     AlertComponent,
-    ModalDialogComponent
+    ModalDialogComponent,
+    PageHeadingComponent,
+    BreadcrumbsComponent
   ]
 })
 export class SharedModule {

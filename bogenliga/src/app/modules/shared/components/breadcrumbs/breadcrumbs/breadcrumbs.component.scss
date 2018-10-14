@@ -1,0 +1,19 @@
+.breadcrumb {
+  border-radius: 0;
+}
+
+.breadcrumb-item a, .breadcrumb-item a:visited {
+  color: #02bdd5;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  color: #ff833a;
+}
+
+.breadcrumb-item::before {
+  color: #6c757d;
+  content: "/";
+
+  padding-right: .5rem;
+}

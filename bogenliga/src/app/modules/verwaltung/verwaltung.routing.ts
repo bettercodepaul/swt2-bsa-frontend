@@ -1,9 +1,15 @@
 import {Routes} from '@angular/router';
-import {VerwaltungComponent} from './components/verwaltung/verwaltung.component';
-import {VerwaltungGuard} from './guards/verwaltung.guard';
 
+import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard} from './guards';
+import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComponent} from './components';
 
 export const VERWALTUNG_ROUTES: Routes = [
-  {path: '', redirectTo: 'verwaltung', pathMatch: 'full', canActivate: [VerwaltungGuard]},
-  {path: 'verwaltung', component: VerwaltungComponent, canActivate: [VerwaltungGuard]}
+  {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
+  {
+    path:        'dsbmitglieder',
+    component:   DsbMitgliedOverviewComponent,
+    pathMatch:   'full',
+    canActivate: [DsbMitgliedOverviewGuard]
+  },
+  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]}
 ];
