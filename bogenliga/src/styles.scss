@@ -23,6 +23,31 @@ body {
   position: relative;
 }
 
+/*
+ * global Typography
+ */
+
+// body, paragraph and link style
+a, a:visited {
+  color: $primary;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: $secondary-dark;
+  transition: ease-in-out 0.3s;
+  text-decoration: none;
+}
+
+.color-black, a.color-black, a:visited.color-black {
+  color: #000;
+  text-decoration: none;
+}
+
+/*
+ * global animations
+ */
+
 .animation.fade-in {
   -webkit-animation: fadein 0.3s;
   -moz-animation: fadein 0.3s;

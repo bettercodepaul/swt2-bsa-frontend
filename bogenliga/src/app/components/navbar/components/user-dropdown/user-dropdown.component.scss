@@ -4,6 +4,7 @@
 
 a, a:not([href]):not([tabindex]) {
   color: #007c91;
+  cursor: pointer;
 }
 
 a:active, a:not([href]):not([tabindex]):active {

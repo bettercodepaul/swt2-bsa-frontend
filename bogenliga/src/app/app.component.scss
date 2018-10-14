@@ -6,17 +6,6 @@ $secondary: #ffc107; // hover Tables
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
-// body, paragraph and link style
-a {
-  color: $primary;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-a:hover, a:focus {
-  color: $secondary-dark;
-}
-
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
@@ -89,13 +78,6 @@ ul ul a {
   margin: 10px;
 }
 
-.navbar-brand {
-  color: black;
-}
-
-.blackLink {
-  color: black;
-}
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: $secondary;
