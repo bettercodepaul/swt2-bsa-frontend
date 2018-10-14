@@ -1,7 +1,7 @@
 <nav id="sidebar"
      [class.inactive]="isActive">
   <div style="flex-grow: 1">
-    
+
     <!-- Sidebar Header -->
     <div class="sidebar-header">
       <h3 id="title"
@@ -32,3 +32,9 @@
     </a>
   </div>
 </nav>
+
+
+<div id="sidebar-backdrop"
+     [class.backdrop-visible]="!isActive"
+     [class.backdrop-hidden]="isActive"
+     (click)="toggleSidebar()"></div>

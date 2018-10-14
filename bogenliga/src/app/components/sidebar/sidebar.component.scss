@@ -124,6 +124,12 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   opacity: 1;
 }
 
+// hide sidebar backdrop on desktop clients
+#sidebar-backdrop {
+  display: none;
+}
+
+
 // for small devices
 @media (max-width: 768px) {
   #sidebar {
@@ -143,5 +149,29 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   }
   #sidebarFooter {
     display: none;
+  }
+
+  // show sidebar backdrop on mobile devices
+  #sidebar-backdrop {
+    transition-duration: 0.4s;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-property: background-color, visibility;
+    top: 52px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    display: block;
+    z-index: 3;
+  }
+
+  .backdrop-visible {
+    background-color: rgba(0, 0, 0, 0.6);
+    visibility: visible;
+  }
+
+  .backdrop-hidden {
+    background-color: rgba(0, 0, 0, 0);
+    visibility: hidden;
   }
 }
