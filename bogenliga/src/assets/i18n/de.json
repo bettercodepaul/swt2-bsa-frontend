@@ -76,7 +76,16 @@
       "TITLE": "Verwaltung"
     },
     "DSBMITGLIEDER": {
-      "TITLE": "DSB Mitglieder - Übersicht"
+      "TITLE": "DSB Mitglieder - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "VORNAME": "Vorname",
+          "NACHNAME": "Nachname",
+          "GEBURTSDATUM": "Geburtsdatum",
+          "MITGLIEDSNUMMER": "Mitgliedsnummer"
+        }
+      }
     },
     "DSBMITGLIEDER_DETAIL": {
       "TITLE": "DSB Mitglied - Details"
@@ -112,8 +121,22 @@
       }
     }
   },
+  "BREADCRUMB": {
+    "NEW_ENTITY": "Neu"
+  },
 
   "TABLE": {
+    "HEADERS": {
+      "ACTION": "Aktion"
+    },
+    "ACTIONS": {
+      "VIEW": "Ansehen",
+      "EDIT": "Editieren",
+      "DELETE": "Löschen"
+    },
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen",
+
     "TITLE": "Tabelle",
     "KEY": "Schlüssel",
     "VALUE": "Wert",

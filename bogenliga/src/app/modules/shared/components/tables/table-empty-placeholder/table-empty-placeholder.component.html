@@ -1,0 +1,18 @@
+<!-- placeholder for empty tables -->
+<tr *ngIf="visible">
+  <td style="text-align: center"
+      [colSpan]="colspan">
+
+    <div style="display: flex; flex-direction: column; align-items: center">
+      <fa-icon [icon]="['far', 'meh-rolling-eyes']"
+               size="4x"
+               style="margin-top: 2em; margin-bottom: 2em;">
+
+      </fa-icon>
+
+      <p>{{'TABLE.NO_ENTRIES_FOUND' | translate}}</p>
+    </div>
+
+
+  </td>
+</tr>

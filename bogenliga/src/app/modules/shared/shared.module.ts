@@ -13,10 +13,13 @@ import {
   BreadcrumbsComponent,
   ButtonComponent,
   CommonDialogComponent,
+  DataTableComponent,
   DetailDialogComponent,
   ModalDialogComponent,
   OverviewDialogComponent,
-  PageHeadingComponent
+  PageHeadingComponent,
+  TableEmptyPlaceholderComponent,
+  TableLoadingPlaceholderComponent
 } from './components';
 import {RestClient} from './data-provider';
 import * as SharedService from './services';
@@ -54,7 +57,10 @@ library.add(fas, far, fab); // add all icon types
     BreadcrumbsComponent,
     OverviewDialogComponent,
     CommonDialogComponent,
-    DetailDialogComponent
+    DetailDialogComponent,
+    DataTableComponent,
+    TableEmptyPlaceholderComponent,
+    TableLoadingPlaceholderComponent
   ],
   declarations: [
     ButtonComponent,
@@ -64,7 +70,10 @@ library.add(fas, far, fab); // add all icon types
     BreadcrumbsComponent,
     OverviewDialogComponent,
     CommonDialogComponent,
-    DetailDialogComponent
+    DetailDialogComponent,
+    DataTableComponent,
+    TableEmptyPlaceholderComponent,
+    TableLoadingPlaceholderComponent
   ]
 })
 export class SharedModule {

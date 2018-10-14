@@ -1,6 +1,6 @@
-import {TransferObject} from './transfer-object.interface';
+import {DataTransferObject} from './data-transfer-object.interface';
 
-export interface VersionedDataTransferObject extends TransferObject {
+export interface VersionedDataTransferObject extends DataTransferObject {
   id: number;
   version: number;
 }

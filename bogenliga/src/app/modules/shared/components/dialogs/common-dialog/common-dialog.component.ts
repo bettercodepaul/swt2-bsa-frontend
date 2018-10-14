@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommonComponent} from '../../common-component.class';
 import {CommonDialogConfig} from '..';
+import {CommonComponent} from '../../common';
 
 @Component({
   selector:    'bla-common-dialog',

@@ -1,0 +1,132 @@
+<table class="table table-hover table-sm table-responsive-sm thead-light"
+       [id]="id"
+       *ngIf="visible">
+  <!-- Table Head with Headings and sort buttons -->
+  <thead>
+
+  <tr>
+    <th *ngFor="let column of config.columns"
+        [style.width]="getColumnWidth(column.width)">
+
+      <!-- sortable columns -->
+      <div>
+        {{ column.translationKey | translate}}
+        <span id="{{column.translationKey.toLowerCase()}}Sorted"
+              (click)="sortColumn(column)">
+            <fa-icon [icon]="getSortingIcon(column)"></fa-icon>
+        </span>
+      </div>
+    </th>
+
+    <!-- action column should not be sortable -->
+    <th [style.width]="getColumnWidth(config.actions.width)"
+        *ngIf="hasActions()">
+      <div>
+        {{ config.actions.localizationKeys.actionColum | translate}}
+      </div>
+    </th>
+
+  </tr>
+
+  </thead>
+
+
+  <tbody *ngIf="!isLoading() && !isEmptyTable()">
+  <tr *ngFor="let row of rows"
+      [id]="getRowId(row)">
+
+    <!-- data columns -->
+    <td *ngFor="let column of config.columns"
+        [id]="getCellId(row, column)"
+        [ngSwitch]="column.type"
+        [class]="getStyleClass(row, column)">
+
+          <span *ngSwitchCase="TableColumnType.TEXT">
+            {{formatText(row, column)}}
+          </span>
+
+
+      <span *ngSwitchCase="TableColumnType.NUMBER">
+            {{formatNumber(row, column)}}
+          </span>
+
+
+      <span *ngSwitchCase="TableColumnType.DATE">
+            {{ row.getText(column) | date: 'dd.MM.yyyy' }}
+
+            <!--{{formatDate(row, column)}}-->
+
+          </span>
+
+      <span *ngSwitchCase="TableColumnType.TRANSLATION_KEY">
+           {{getLocalizedText(row, column)}}
+          </span>
+
+      <span *ngSwitchCase="TableColumnType.CUSTOM_MAPPING">
+           {{getMappedText(row, column)}}
+          </span>
+
+      <span *ngSwitchDefault>
+            {{formatText(row, column)}}
+          </span>
+    </td>
+
+    <!-- action column -->
+    <td id="{{id + 'Actions'}}"
+        *ngIf="hasActions()">
+        <span *ngFor="let action of config.actions.actionTypes">
+          <a (click)="onIconClicked(row, action)"
+             [title]="determineTitle(row, action) | translate">
+             <fa-icon *ngIf="isActionVisible(row, action)"
+                      [icon]="determineIcon(row, action)"
+
+                      class="table-icon"
+             >
+          </fa-icon>
+          </a>
+
+
+        </span>
+    </td>
+
+  </tr>
+  </tbody>
+
+  <!-- placeholder for empty tables -->
+  <tbody bla-table-empty-placeholder
+         [visible]="!isLoading() && isEmptyTable()"
+         [colspan]="getNumberOfColumns()">
+  </tbody>
+
+  <!-- placeholder for loading tables -->
+  <tbody bla-table-loading-placeholder
+         [visible]="isLoading()"
+         [colspan]="getNumberOfColumns()">
+  </tbody>
+
+  <tfoot>
+
+  </tfoot>
+
+</table>
+
+
+<!--Pagination -->
+<div class="my-4">
+  <ul class="d-flex justify-content-center pagination pagination-circle pg-blue mb-0">
+    <!--First-->
+    <li class="page-item">
+      <a class="page-link">First</a>
+    </li>
+    <!--Numbers-->
+    <li #pages
+        *ngFor="let page of [1,2,3]"
+        class="page-item">
+      <a class="page-link">{{page}}</a>
+    </li>
+    <!--Last-->
+    <li class="page-item">
+      <a class="page-link">Last</a>
+    </li>
+  </ul>
+</div>

@@ -3,7 +3,6 @@ import {Router} from '@angular/router';
 import {TranslatePipe} from '@ngx-translate/core';
 import {BreadcrumbDO} from '../types/breadcrumb-dto.class';
 import {isNullOrUndefined, isNumber} from 'util';
-import {CommonComponent} from '../../common-component.class';
 
 @Component({
   selector:    'bla-breadcrumbs',
@@ -11,12 +10,11 @@ import {CommonComponent} from '../../common-component.class';
   styleUrls:   ['./breadcrumbs.component.scss'],
   providers:   [TranslatePipe]
 })
-export class BreadcrumbsComponent extends CommonComponent implements OnInit {
+export class BreadcrumbsComponent implements OnInit {
 
   @Input() public moduleTranslationKey;
 
   constructor(private router: Router, private translate: TranslatePipe) {
-    super();
   }
 
   ngOnInit() {
@@ -26,17 +24,12 @@ export class BreadcrumbsComponent extends CommonComponent implements OnInit {
   }
 
   public getBreadCrumbs(): BreadcrumbDO[] {
-
-    console.log('URL: ' + this.router.url);
-
     const breadCrumbs: BreadcrumbDO[] = [];
 
     const urlSegments = this.router.url.split('/');
     let route = '';
     for (let i = 1; i < urlSegments.length; i++) {
       const urlSegment = urlSegments[i];
-
-      console.log('Segment: ' + urlSegment);
 
       if (urlSegment.trim().length > 0) {
         const translationKey = `${this.moduleTranslationKey}.${urlSegment.toUpperCase()}.TITLE`; // page translation key
@@ -54,8 +47,16 @@ export class BreadcrumbsComponent extends CommonComponent implements OnInit {
 
           breadCrumbs.push(breadCrumb);
 
-        } else if (isNumber(+urlSegment)) {
+        } else if (urlSegment === 'add') {
+          const breadCrumb = new BreadcrumbDO(
+            this.translate.transform('BREADCRUMB.NEW_ENTITY'),
+            route,
+            (i === urlSegments.length - 1)
+          );
 
+          breadCrumbs.push(breadCrumb);
+
+        } else if (isNumber(+urlSegment)) {
           const breadCrumb = new BreadcrumbDO(
             urlSegment,
             route,
@@ -64,12 +65,8 @@ export class BreadcrumbsComponent extends CommonComponent implements OnInit {
 
           breadCrumbs.push(breadCrumb);
         }
-
-
       }
     }
-
-    console.log('BreadCrumbs: ' + JSON.stringify(breadCrumbs));
 
     return breadCrumbs;
   }

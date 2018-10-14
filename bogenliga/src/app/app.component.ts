@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router) {
     translate.setDefaultLang('de');
+    translate.use('de');
     store.pipe(select(state => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }

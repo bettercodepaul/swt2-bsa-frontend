@@ -4,3 +4,4 @@ export * from './local-data-provider';
 export * from './redux-store';
 export * from './components';
 export * from './services';
+export * from './pipes';

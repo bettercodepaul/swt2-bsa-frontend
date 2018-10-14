@@ -1,0 +1,16 @@
+<tr *ngIf="visible">
+  <td style="text-align: center; "
+      [colSpan]="colspan">
+    <div style="display: flex; flex-direction: column; align-items: center">
+      <fa-icon icon="sync"
+               [spin]="'true'"
+               size="4x"
+               style="margin-top: 2em; margin-bottom: 2em;">
+
+      </fa-icon>
+
+      <p>{{'TABLE.LOADING' | translate}}</p>
+    </div>
+
+  </td>
+</tr>

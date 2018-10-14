@@ -17,8 +17,8 @@ export class UriBuilder {
    * Append path to the existing path.
    * @param pathElement
    */
-  public path(pathElement: string): UriBuilder {
-    this.uri = this.appendPath(this.uri, pathElement);
+  public path(pathElement: string | number): UriBuilder {
+    this.uri = this.appendPath(this.uri, '' + pathElement);
     return this;
   }
 
