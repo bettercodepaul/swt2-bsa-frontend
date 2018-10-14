@@ -6,8 +6,6 @@ import {AlertType} from '../../../shared/components/alerts';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
 import {LoginResult} from '../../types/login-result.enum';
-import {of} from 'rxjs';
-import {delay, tap} from 'rxjs/operators';
 
 const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 
@@ -89,11 +87,6 @@ export class LoginComponent implements OnInit {
   private handleSuccessfulLogin() {
     this.loading = false;
     this.loginResult = LoginResult.SUCCESS;
-
-    // timeout function
-    of(true).pipe(
-      tap(v => console.log('Login successful. Delay between login success notification and redirect...')),
-      delay(2000)
-    ).subscribe(v => this.router.navigateByUrl(this.destinationRouteAfterLogin));
+    this.router.navigateByUrl(this.destinationRouteAfterLogin);
   }
 }
