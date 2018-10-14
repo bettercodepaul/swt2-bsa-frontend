@@ -13,5 +13,4 @@ export const ROUTES: Routes = [
     loadChildren: 'src/app/modules/sportjahresplan/sportjahresplan.module#SportjahresplanModule'
   },
   {path: 'user', loadChildren: 'src/app/modules/user/user.module#UserModule'},
-  {path: 'impressum', loadChildren: 'src/app/modules/impressum/impressum.module#ImpressumModule'}
 ];

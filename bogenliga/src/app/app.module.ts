@@ -46,7 +46,7 @@ export function createTranslateLoader(http: HttpClient) {
         deps:       [HttpClient]
       }
     }),
-    RouterModule.forRoot(ROUTES, {useHash: true, enableTracing: true}),
+    RouterModule.forRoot(ROUTES, {useHash: true}),
     /* REDUX-STORE */
     StoreModule.forRoot(APP_REDUCERS),
     EffectsModule.forRoot([]),

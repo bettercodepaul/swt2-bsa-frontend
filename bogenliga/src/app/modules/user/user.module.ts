@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {UserProfileComponent} from './components/user-profile/user-profile.component';
 import {UserGuard} from './guards/user.guard';
-import {UserComponent} from './components/user/user.component';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {USER_ROUTES} from './user.routing';
@@ -16,7 +15,7 @@ import {SharedModule} from '../shared';
     SharedModule.forChild(),
     FormsModule
   ],
-  declarations: [LoginComponent, UserProfileComponent, UserComponent],
+  declarations: [LoginComponent, UserProfileComponent],
   providers:    [UserGuard]
 })
 export class UserModule {

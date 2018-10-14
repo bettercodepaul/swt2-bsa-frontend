@@ -146,7 +146,7 @@ export class CurrentUserService {
       filter(notification => notification.userAction === NotificationUserAction.ACCEPTED)
     ).subscribe((notification: Notification) => {
       this.logout();
-      this.router.navigateByUrl('login');
+      this.router.navigateByUrl('user/login');
     });
   }
 
