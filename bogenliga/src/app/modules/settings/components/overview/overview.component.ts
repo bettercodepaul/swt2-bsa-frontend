@@ -40,7 +40,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   keyAscending = false; // if sorted with key aufsteigend
   valueAscending = false; // if sorted with value aufsteigend
 
-  paginationVisible = true;
+  paginationVisible = false;
 
   activePage = 1; // number of current page
   pageCount: Array<any> = []; // link to the pages
@@ -94,7 +94,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       this.keyAscending = false; // if sorted with key aufsteigend
       this.valueAscending = false; // if sorted with value aufsteigend
       this.sortDataByKey();
-      // this.datas.sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
       this.calculatePagination(this.datas.length);
       // if last object of last page is deleted -> change to one page before
       if (this.activePage > this.pageCount.length) {
@@ -102,7 +101,21 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.first = +this.activePage * this.maxOnPage - this.maxOnPage + 1 - 1;
         this.last = +this.activePage * this.maxOnPage - 1;
       }
+      // to check for visibility
+      this.isPaginationVisible();
     });
+  }
+
+  /**
+   * checks if Pagination should be shown or not
+   * depends on page count
+   */
+  isPaginationVisible() {
+    if (this.pageCount === null || this.pageCount.length < 2) {
+      this.paginationVisible = false
+    } else {
+      this.paginationVisible = true;
+    }
   }
 
   /**
@@ -122,11 +135,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       }
       this.pageCount = pagination;
     }
-    if (this.pageCount === null || this.pageCount.length < 1) {
-      this.paginationVisible = false
-    } else {
-      this.paginationVisible = true;
-    }
+    this.isPaginationVisible();
   }
 
   /**

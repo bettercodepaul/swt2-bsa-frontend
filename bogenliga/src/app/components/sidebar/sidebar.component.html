@@ -14,7 +14,8 @@
         <li *ngIf="hasUserPermissions(item.permissons)">
           <a routerLink="{{item.route}}">
             <bla-sidebar-item label="{{ item.label | translate }}"
-                              [icon]="item.icon"></bla-sidebar-item>
+                              [icon]="item.icon"
+                              [subitems]="item.subitems"></bla-sidebar-item>
           </a>
         </li>
       </ng-container>

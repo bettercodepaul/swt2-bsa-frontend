@@ -20,6 +20,7 @@ import {FormsModule} from '@angular/forms';
 import {HomeModule} from './modules/home';
 import {ErrorInterceptor, JwtInterceptor, SharedModule} from './modules/shared';
 import {UserDropdownComponent} from './components/navbar/components/user-dropdown/user-dropdown.component';
+import { SidebarSubitemComponent } from './components/sidebar/components/sidebar-subitem/sidebar-subitem.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -34,6 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
     NavbarComponent,
     NotificationComponent,
     UserDropdownComponent,
+    SidebarSubitemComponent,
   ],
   imports:      [
     BrowserModule,

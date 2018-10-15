@@ -1,0 +1,9 @@
+<div class="sidebar-subink"
+     [class.inactive]="isActive">
+
+  <span *ngIf="!isActive"
+        class="sidebar-subtext"
+        [class.inactive]="isActive">{{ label }}
+  </span>
+
+</div>

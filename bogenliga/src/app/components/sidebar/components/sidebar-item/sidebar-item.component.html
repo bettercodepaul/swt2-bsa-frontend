@@ -8,5 +8,19 @@
         [class.inactive]="isActive">{{ label }}
   </span>
 
+  <!-- Dropdown Menu -->
+
+    <ng-container *ngIf="!existSubitems(subitems)">
+      <div  class="dropdown-item">
+      <ng-container *ngFor="let subitem of subitems">
+        <ng-container *ngIf="hasUserPermissions(subitem.permissons)">
+          <a class="nav-link dropdown-toggle" routerLink="{{subitem.route}}">
+            <bla-sidebar-subitem label="{{ subitem.label | translate }}"></bla-sidebar-subitem>
+          </a>
+        </ng-container>
+      </ng-container>
+      </div>
+    </ng-container>
+
 </div>
 
