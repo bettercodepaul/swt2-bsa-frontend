@@ -17,18 +17,6 @@ export class Sidebar {
     return this.getSidebar().element(by.css('#title'));
   }
 
-  isTitlePresent() {
-    return browser.isElementPresent(this.getTitle());
-  }
-
-  getShortTitle() {
-    return this.getSidebar().element(by.css('#shortTitle'));
-  }
-
-  isShortTitlePresent() {
-    return browser.isElementPresent(this.getShortTitle());
-  }
-
   getIcons() {
     return this.getSidebar().all(by.css('i'));
   }

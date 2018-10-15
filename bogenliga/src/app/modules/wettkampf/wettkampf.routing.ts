@@ -4,6 +4,5 @@ import {WettkampfGuard} from './guards/wettkampf.guard';
 
 
 export const WETTKAMPF_ROUTES: Routes = [
-  {path: '', redirectTo: 'wettkaempfe', pathMatch: 'full', canActivate: [WettkampfGuard]},
-  {path: 'wettkaempfe', component: WettkaempfeComponent, canActivate: [WettkampfGuard]}
+  {path: '', component: WettkaempfeComponent, canActivate: [WettkampfGuard]}
 ];

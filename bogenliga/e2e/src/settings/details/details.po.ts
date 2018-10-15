@@ -1,5 +1,5 @@
 import { browser, by, element } from 'protractor';
-
+// Propaply doesnt work because of right management
 export class SettingsDetails {
   navigateToSettingsDetails() {
     return browser.get('/settings/details');
