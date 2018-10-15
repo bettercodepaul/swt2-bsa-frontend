@@ -5,7 +5,6 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {ROUTES} from '../../../../app.routing';
 import {TranslateModule} from '@ngx-translate/core';
 import {HomeModule} from '../../../home/home.module';
-import {LoginModule} from '../../../login/login.module';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../../shared/redux-store';
 import {HttpClientModule} from '@angular/common/http';
@@ -26,7 +25,6 @@ describe('OverviewComponent', () => {
       imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
-        LoginModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
         HttpClientModule,

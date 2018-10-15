@@ -8,13 +8,13 @@ import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {NotificationComponent} from '../../components/notification';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HomeModule} from '../home/home.module';
-import {LoginModule} from '../login/login.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../shared/redux-store';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
 import {SharedModule} from '../shared/shared.module';
 import {SidebarItemComponent} from '../../components/sidebar/components/sidebar-item/sidebar-item.component';
+import {UserDropdownComponent} from '../../components/navbar/components/user-dropdown/user-dropdown.component';
 
 describe('WettkampfModule', () => {
   let wettkampfModule: WettkampfModule;
@@ -29,12 +29,12 @@ describe('WettkampfModule', () => {
         SidebarComponent,
         SidebarItemComponent,
         NavbarComponent,
-        NotificationComponent
+        NotificationComponent,
+        UserDropdownComponent
       ],
       imports:      [
         RouterTestingModule.withRoutes(WETTKAMPF_ROUTES),
         HomeModule,
-        LoginModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
         WettkampfModule,

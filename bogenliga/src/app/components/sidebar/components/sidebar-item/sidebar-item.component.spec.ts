@@ -4,7 +4,6 @@ import {SidebarItemComponent} from './sidebar-item.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ROUTES} from '../../../../app.routing';
 import {HomeModule} from '../../../../modules/home/home.module';
-import {LoginModule} from '../../../../modules/login/login.module';
 import {SettingsModule} from '../../../../modules/settings/settings.module';
 import {WettkampfModule} from '../../../../modules/wettkampf/wettkampf.module';
 import {TranslateModule} from '@ngx-translate/core';
@@ -24,7 +23,6 @@ describe('SidebarItemComponent', () => {
       imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
-        LoginModule,
         SettingsModule,
         WettkampfModule,
         TranslateModule.forRoot(),

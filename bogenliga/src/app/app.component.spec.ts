@@ -6,7 +6,6 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {NotificationComponent} from './components/notification';
 import {HomeModule} from './modules/home/home.module';
-import {LoginModule} from './modules/login/login.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from './modules/shared/redux-store';
@@ -19,6 +18,7 @@ import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 import {SharedModule} from './modules/shared/shared.module';
 import {FormsModule} from '@angular/forms';
 import {SidebarItemComponent} from './components/sidebar/components/sidebar-item/sidebar-item.component';
+import {UserDropdownComponent} from './components/navbar/components/user-dropdown/user-dropdown.component';
 
 
 describe('AppComponent', () => {
@@ -33,12 +33,12 @@ describe('AppComponent', () => {
         SidebarComponent,
         NavbarComponent,
         NotificationComponent,
-        SidebarItemComponent
+        SidebarItemComponent,
+        UserDropdownComponent
       ],
       imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
-        LoginModule,
         SettingsModule,
         WettkampfModule,
         TranslateModule.forRoot(),
@@ -80,13 +80,6 @@ describe('AppComponent', () => {
     router.navigate(['home']);
     tick();
     expect(location.path()).toBe('/home');
-  }));
-
-  it('navigate to "login" takes you to /login', fakeAsync(() => {
-    router.initialNavigation();
-    router.navigate(['login']);
-    tick();
-    expect(location.path()).toBe('/login');
   }));
 
   it('navigate to "wettkaempfe" takes you to /wettkaempfe', fakeAsync(() => {

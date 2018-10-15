@@ -4,7 +4,6 @@ import {SidebarComponent} from './sidebar.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ROUTES} from '../../app.routing';
 import {HomeModule} from '../../modules/home/home.module';
-import {LoginModule} from '../../modules/login/login.module';
 import {TranslateModule} from '@ngx-translate/core';
 import {HttpClientModule} from '@angular/common/http';
 import {StoreModule} from '@ngrx/store';
@@ -28,7 +27,6 @@ describe('SidebarComponent', () => {
       imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
-        LoginModule,
         SettingsModule,
         WettkampfModule,
         TranslateModule.forRoot(),
