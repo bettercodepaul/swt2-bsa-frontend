@@ -9,7 +9,7 @@ import {
 import {select, Store} from '@ngrx/store';
 import {AppState, NOTIFICATION_STATE} from '../../redux-store';
 import {Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {isNullOrUndefined} from 'util';
 
 @Injectable({
@@ -36,7 +36,8 @@ export class NotificationService {
     return this.store.pipe(
       select(NOTIFICATION_STATE),
       filter(state => !isNullOrUndefined(state)),
-      filter(state => state.notification.id === notificationId));
+      filter(state => state.notification.id === notificationId),
+      map(state => state.notification));
   }
 
   public updateNotification(userAction: NotificationUserAction) {

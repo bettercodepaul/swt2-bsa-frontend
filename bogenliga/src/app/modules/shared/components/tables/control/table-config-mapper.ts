@@ -11,19 +11,19 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
   icons:            {
     edit:    {
       active:   'edit',
-      inactive: ''
+      inactive: 'edit'
     },
     delete:  {
       active:   'trash',
-      inactive: '',
+      inactive: 'trash',
     },
     view:    {
       active:   'eye',
-      inactive: ''
+      inactive: 'eye'
     },
     loading: {
       active:   'sync',
-      inactive: ''
+      inactive: 'sync'
     }
   },
   localizationKeys: {

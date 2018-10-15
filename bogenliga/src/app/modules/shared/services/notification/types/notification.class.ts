@@ -7,6 +7,7 @@ export class Notification {
   public id: string;
   public title: string;
   public description: string;
+  public descriptionParam?: string;
   public details?: string;
   public severity: NotificationSeverity = NotificationSeverity.INFO;
   public origin: NotificationOrigin = NotificationOrigin.SYSTEM;

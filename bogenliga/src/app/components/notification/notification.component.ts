@@ -9,11 +9,14 @@ import {
 } from '../../modules/shared/services/notification';
 import {NotificationState} from '../../modules/shared/redux-store/feature/notification';
 import {ButtonSize} from '../../modules/shared/components/buttons';
+import {TranslatePipe} from '@ngx-translate/core';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector:    'bla-notification',
   templateUrl: './notification.component.html',
-  styleUrls:   ['./notification.component.scss']
+  styleUrls:   ['./notification.component.scss'],
+  providers:   [TranslatePipe]
 })
 export class NotificationComponent implements OnInit {
 
@@ -24,7 +27,7 @@ export class NotificationComponent implements OnInit {
   public NotificationType = NotificationType;
   public ButtonSize = ButtonSize;
 
-  constructor(private notificationService: NotificationService) {
+  constructor(private notificationService: NotificationService, private translatePipe: TranslatePipe) {
     this.notificationService.observeNotifications().subscribe((state: NotificationState) => {
       this.showDialog = state.showNotification;
       this.notification = state.notification;
@@ -89,5 +92,15 @@ export class NotificationComponent implements OnInit {
    */
   public getModalDialogOption(): ModalDialogOption {
     return ModalDialogOption[NotificationType[this.notification.type]];
+  }
+
+  public getDescription(): string {
+    let translated = this.translatePipe.transform(this.notification.description);
+
+    if (!isNullOrUndefined(this.notification.descriptionParam)) {
+      translated = translated.replace('%s', this.notification.descriptionParam);
+    }
+
+    return translated;
   }
 }

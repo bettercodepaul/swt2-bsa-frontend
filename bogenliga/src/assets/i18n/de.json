@@ -85,6 +85,12 @@
           "GEBURTSDATUM": "Geburtsdatum",
           "MITGLIEDSNUMMER": "Mitgliedsnummer"
         }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "DSB Mitglied löschen",
+          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
       }
     },
     "DSBMITGLIEDER_DETAIL": {

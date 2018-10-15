@@ -7,6 +7,17 @@ import {Response} from '../../../../shared/data-provider';
 import {DsbMitgliedDTO} from '../../../types/datatransfer/dsb-mitglied-dto.class';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {Router} from '@angular/router';
+import {
+  Notification,
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
+} from '../../../../shared/services/notification';
+import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
+
+export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
 
 @Component({
   selector:    'bla-dsb-mitglied-overview',
@@ -18,18 +29,13 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
   public config = DSB_MITGLIED_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
-  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService, private router: Router) {
+  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 
   ngOnInit() {
-    this.loading = true;
-
-    this.dsbMitgliedDataProvider.findAll2()
-        .then((response: Response<DsbMitgliedDTO[]>) => this.handleSuccess(response))
-        .catch((response: Response<DsbMitgliedDTO[]>) => this.handleFailure(response));
+    this.loadTableRows();
   }
-
 
   public onView(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
@@ -41,26 +47,55 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
   }
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
+    // show loading icon
+    const id = versionedDataObject.id;
 
+    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+
+    const notification: Notification = {
+      id:               NOTIFICATION_DELETE_DSB_MITGLIED,
+      title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.DESCRIPTION',
+      descriptionParam: '' + id,
+      severity:         NotificationSeverity.QUESTION,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.YES_NO,
+      userAction:       NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED)
+        .subscribe(myNotification => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.dsbMitgliedDataProvider.deleteById2(id)
+                .then(response => this.loadTableRows())
+                .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
+          }
+        });
+
+    this.notificationService.showNotification(notification);
+
+  }
+
+  private loadTableRows() {
+    this.loading = true;
+
+    this.dsbMitgliedDataProvider.findAll2()
+        .then((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + versionedDataObject.id);
   }
 
-  private handleFailure(response: Response<DsbMitgliedDTO[]>): void {
+  private handleLoadTableRowsFailure(response: Response<DsbMitgliedDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleSuccess(response: Response<DsbMitgliedDTO[]>): void {
-    const rows: TableRow[] = [];
-
-    response.payload.forEach(mitglied => rows.push(new TableRow({payload: mitglied})));
-
-
-    this.rows = rows;
-
+  private handleLoadTableRowsSuccess(response: Response<DsbMitgliedDTO[]>): void {
+    this.rows = []; // reset array to ensure change detection
+    this.rows = toTableRows(response.payload);
     this.loading = false;
   }
 }

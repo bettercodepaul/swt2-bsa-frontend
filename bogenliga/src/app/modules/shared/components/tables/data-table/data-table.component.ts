@@ -166,6 +166,11 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
     return !(row.hiddenActions.indexOf(action) > -1);
   }
 
+
+  public hasLoadingActions(row: TableRow): boolean {
+    return row.loadingActions.length > 0;
+  }
+
   /**
    *
    * @param row current row with the action config

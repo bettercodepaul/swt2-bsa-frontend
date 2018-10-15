@@ -33,7 +33,8 @@
 
   <tbody *ngIf="!isLoading() && !isEmptyTable()">
   <tr *ngFor="let row of rows"
-      [id]="getRowId(row)">
+      [id]="getRowId(row)"
+      [class.disabled]="hasLoadingActions(row)">
 
     <!-- data columns -->
     <td *ngFor="let column of config.columns"
@@ -79,10 +80,9 @@
              [title]="determineTitle(row, action) | translate">
              <fa-icon *ngIf="isActionVisible(row, action)"
                       [icon]="determineIcon(row, action)"
-
-                      class="table-icon"
-             >
-          </fa-icon>
+                      [spin]="determineIcon(row, action) === 'sync'"
+                      class="table-icon">
+             </fa-icon>
           </a>
 
 
