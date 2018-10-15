@@ -5,6 +5,8 @@ export * from './headings';
 export * from './breadcrumbs';
 export * from './dialogs';
 export * from './tables';
+export * from './forms';
+export * from './layouts';
 
 export * from './common/common-component.class';
 export * from './common/common-secured-component.class';

@@ -29,7 +29,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
                      // handle connection (0), client (4xx), server (5xx) and custom error codes (9xx)
                      if (error.status === 0 || error.status >= 400) {
-
                        return this.errorHandlingService.handleHttpError(error);
                        // caught and handle the error
                        // return of(error);

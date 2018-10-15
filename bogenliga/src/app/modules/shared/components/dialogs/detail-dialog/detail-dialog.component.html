@@ -3,6 +3,13 @@
 <div class="dialog-content">
   <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
 
+  <div class="detail-dialog-form">
+
+    <bla-horizontal-form class="column-1"
+                         [config]="config.formConfig"
+                         [content]="formContent"
+                         [loading]="loading"></bla-horizontal-form>
+  </div>
 
   <ng-content></ng-content>
 </div>

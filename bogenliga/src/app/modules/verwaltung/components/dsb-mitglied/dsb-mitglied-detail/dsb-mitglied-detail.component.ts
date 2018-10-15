@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
 import {Response} from '../../../../shared/data-provider';
-import {DsbMitgliedDTO} from '../../../types/datatransfer/dsb-mitglied-dto.class';
-import {CommonComponent} from '../../../../shared/components';
+import {CommonComponent, FormContent, toFormContent} from '../../../../shared/components';
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from 'util';
@@ -20,7 +19,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public config = DSB_MITGLIED_DETAIL_CONFIG;
 
-  public currentMitglied: DsbMitgliedDTO;
+  public currentMitglied: FormContent;
 
   constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
     private router: Router,
@@ -33,15 +32,20 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
     this.route.params.subscribe(params => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.dsbMitgliedDataProvider.findById2(params[ID_PATH_PARAM])
-            .then((response: Response<DsbMitgliedDO>) => this.handleSuccess(response))
-            .catch((response: Response<DsbMitgliedDO>) => this.handleFailure(response));
+        const id = params[ID_PATH_PARAM];
+        if (id === 'add') {
+          this.currentMitglied = toFormContent(new DsbMitgliedDO());
+        } else {
+          this.dsbMitgliedDataProvider.findById2(params[ID_PATH_PARAM])
+              .then((response: Response<DsbMitgliedDO>) => this.handleSuccess(response))
+              .catch((response: Response<DsbMitgliedDO>) => this.handleFailure(response));
+        }
       }
     });
   }
 
   private handleSuccess(response: Response<DsbMitgliedDO>) {
-    this.currentMitglied = response.payload;
+    this.currentMitglied = toFormContent(response.payload);
   }
 
   private handleFailure(response: Response<DsbMitgliedDO>) {

@@ -21,6 +21,8 @@ const HTTP_UNPROCESSABLE_ENTITY = 422;
 const HTTP_INTERNAL_SERVER_ERROR = 500;
 const HTTP_SERVICE_UNAVAILABLE = 503;
 
+const UNEXPECTED_ERROR = 'UNEXPECTED_ERROR';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,17 +33,10 @@ export class ErrorHandlingService {
 
   // handle http errors
   public handleHttpError(httpError: any): Observable<any> {
-
-    if (isNullOrUndefined(httpError) || isNullOrUndefined(httpError.error)) {
-      this.handleUnexpectedError(-1, null);
-    }
-
     const errorDto: ErrorDTO = httpError.error;
 
     const statusCode = httpError.status;
     const errorCategory: number = Math.round(statusCode / 100);
-
-    console.log(errorCategory);
 
     if (errorCategory === 4) {
       this.handleHttpClientError(statusCode, errorDto);
@@ -55,14 +50,24 @@ export class ErrorHandlingService {
     }
 
     return of(httpError);
+
   }
 
   // create notification
   private handleUnexpectedError(statusCode: number, errorDto: ErrorDTO) {
-    console.error('Unexpected error: ' + statusCode);
+    console.error('Unexpected error: ' + statusCode + `body was: ${JSON.stringify(errorDto)}`);
 
-    console.error(
-      `body was: ${JSON.stringify(errorDto)}`);
+    const notification: Notification = {
+      id:          UNEXPECTED_ERROR,
+      title:       'NOTIFICATION.ERROR.' + UNEXPECTED_ERROR + '.TITLE',
+      description: 'NOTIFICATION.ERROR.' + UNEXPECTED_ERROR + '.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.showNotification(notification);
   }
 
   private handleHttpClientError(statusCode: number, errorDto: ErrorDTO) {
@@ -70,7 +75,8 @@ export class ErrorHandlingService {
 
     if (statusCode === HTTP_FORBIDDEN) {
       console.error('FORBIDDEN');
-
+    } else if (statusCode === HTTP_BAD_REQUEST && isNullOrUndefined(errorDto)) {
+      errorDto = {errorCode: 'BAD_REQUEST', errorMessage: null, param: null};
     }
 
     console.warn(
@@ -92,11 +98,7 @@ export class ErrorHandlingService {
   }
 
   private handleHttpServerError(statusCode: number, errorDto: ErrorDTO) {
-    console.error('Server error');
-
-
-    console.warn(
-      `body was: ${JSON.stringify(errorDto)}`);
+    console.error(`Server error: body was: ${JSON.stringify(errorDto)}`);
 
 
     const notification: Notification = {

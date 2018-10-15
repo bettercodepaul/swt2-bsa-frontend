@@ -1,0 +1,31 @@
+<form>
+
+
+  <div class="form-group row"
+       *ngFor="let property of config.properties">
+    <label for="{{ 'formField_' + property.propertyName }}"
+           class="col-sm-2 col-form-label">{{ property.translationKey | translate }}</label>
+    <div class="col-sm-10">
+      <input type="text"
+             class="form-control"
+             id="{{ 'formField_' + property.propertyName }}"
+             [value]="content.getText(property)"
+             placeholder="{{ property.translationKey | translate }}">
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <button type="submit"
+              class="btn btn-primary">Sign in
+      </button>
+    </div>
+  </div>
+</form>
+
+
+<pre><code>{{ content | json }}</code></pre>
+
+<pre><code>{{ config | json }}</code></pre>
+
