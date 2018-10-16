@@ -1,4 +1,5 @@
 import {DetailDialogConfig} from '../../../../shared/components/dialogs';
+import {FormPropertyType} from '../../../../shared/components/forms';
 
 export const DSB_MITGLIED_DETAIL_CONFIG: DetailDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -7,24 +8,39 @@ export const DSB_MITGLIED_DETAIL_CONFIG: DetailDialogConfig = {
   formConfig: {
     properties: [
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.ID',
-        propertyName:   'id',
-      },
-      {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.VORNAME',
+        translationKey: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL',
         propertyName:   'vorname',
+        type:           FormPropertyType.TEXT,
+        required:       true,
+        regex:          '.*'
       },
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.NACHNAME',
+        translationKey: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.LABEL',
         propertyName:   'nachname',
+        type:           FormPropertyType.TEXT,
+        required:       true,
+        regex:          '.*'
       },
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.GEBURTSDATUM',
+        translationKey: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.LABEL',
         propertyName:   'geburtsdatum',
+        type:           FormPropertyType.TEXT,
+        required:       true,
+        regex:          '.*'
       },
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.MITGLIEDSNUMMER',
+        translationKey: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.LABEL',
         propertyName:   'mitgliedsnummer',
+        type:           FormPropertyType.TEXT,
+        required:       true,
+        regex:          '.*'
+      },
+      {
+        translationKey: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.LABEL',
+        propertyName:   'nationalitaet',
+        type:           FormPropertyType.TEXT,
+        required:       false,
+        regex:          '[D|F|A|C]'
       }
     ]
   }

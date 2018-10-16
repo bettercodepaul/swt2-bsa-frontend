@@ -6,7 +6,7 @@ import {fas} from '@fortawesome/free-solid-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {TranslateModule} from '@ngx-translate/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {
   AlertComponent,
@@ -45,6 +45,7 @@ library.add(fas, far, fab); // add all icon types
   imports:      [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     TranslateModule.forChild(),
     RouterModule,
@@ -54,6 +55,7 @@ library.add(fas, far, fab); // add all icon types
   exports:      [
     TranslateModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     FontAwesomeModule,
     ButtonComponent,
