@@ -9,17 +9,43 @@
     </div>
 
     <!-- Sidebar links config -->
-    <ul class="list-unstyled components">
+    <nav class="list-unstyled components">
       <ng-container *ngFor="let item of CONFIG">
+
         <li *ngIf="hasUserPermissions(item.permissons)">
+
+          <!-- Item of Navigation -->
           <a routerLink="{{item.route}}">
             <bla-sidebar-item label="{{ item.label | translate }}"
                               [icon]="item.icon"
                               [subitems]="item.subitems"></bla-sidebar-item>
           </a>
+
+          <div *ngIf="existSubitems(item.subitems)" class="nav-subitems-{{isActive? 'active' : 'inactive'}}">
+            <!-- Button for Dropdown -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" attr.data-target="#collapsibleNavbar{{ label }}">
+              <fa-icon class="navbar-toggler-icon" [icon]="faCaretDown" size="lg"></fa-icon>
+            </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar{{ label }}">
+              <ul class="navbar-nav">
+                <ng-container *ngFor="let subitem of item.subitems">
+                  <ng-container *ngIf="hasUserPermissions(subitem.permissons)">
+                    <li class="nav-item">
+                      <button class="nav-link" routerLink="{{subitem.route}}">
+                        <bla-sidebar-subitem label="{{ subitem.label | translate }}"></bla-sidebar-subitem>
+                      </button>
+                    </li>
+                  </ng-container>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+
         </li>
       </ng-container>
-    </ul>
+    </nav>
   </div>
 
   <!-- Sidebar Footer -->
