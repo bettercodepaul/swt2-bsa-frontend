@@ -146,6 +146,15 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   }
 }
 
+.nav-link {
+  color: $primary-dark;
+}
+
+.nav-link:hover {
+  color: $primary-light;
+  background: $primary-dark;
+}
+
 // hover over complete element -> text and toggle need to change
 .sidebar-text-toggle:hover {
   color: $primary-light;
@@ -158,6 +167,10 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   .navbar-text {
     color: $primary-light;
   }
+}
+
+.selected {
+  border-left: 8px solid $primary-dark;
 }
 
 // for small devices

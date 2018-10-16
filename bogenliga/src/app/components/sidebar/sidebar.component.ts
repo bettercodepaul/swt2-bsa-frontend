@@ -6,6 +6,7 @@ import {CurrentUserService, UserPermission} from '../../modules/shared/services/
 import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
 import {isNullOrUndefined} from 'util';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class SidebarComponent implements OnInit {
 
   faCaretDown = faCaretDown;
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService) {
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router) {
     store.pipe(select(state => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
@@ -53,6 +54,14 @@ export class SidebarComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  isSelected(itemroute: string): boolean {
+    const urlSegments = this.router.url.split('/');
+    if (itemroute === ('/' + urlSegments[1])) {
+      return true;
+    }
+    return false;
   }
 
 }

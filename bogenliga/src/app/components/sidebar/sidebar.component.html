@@ -12,10 +12,10 @@
     <nav class="list-unstyled components">
       <ng-container *ngFor="let item of CONFIG">
 
-        <li *ngIf="hasUserPermissions(item.permissons)">
+        <li *ngIf="hasUserPermissions(item.permissons)" [class.selected]="isSelected(item.route)">
 
           <!-- Item of Navigation (with Button for Dropdown) -->
-          <div class="sidebar-text-toggle"[class.flexBox]="!isActive">
+          <div class="sidebar-text-toggle" [class.flexBox]="!isActive" >
 
             <a routerLink="{{item.route}}"  class="navbar-text" [class.flexChild]="!isActive">
               <bla-sidebar-item label="{{ item.label | translate }}"
