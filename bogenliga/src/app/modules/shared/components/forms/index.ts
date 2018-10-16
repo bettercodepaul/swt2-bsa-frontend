@@ -4,5 +4,6 @@ export * from './types/form-config.interface';
 export * from './types/form-property-config.interface';
 export * from './types/form-action-type.enum';
 export * from './types/form-content.class';
+export * from './types/form-protperty-type.enum';
 
 export * from './control/form-content-mapper.function';

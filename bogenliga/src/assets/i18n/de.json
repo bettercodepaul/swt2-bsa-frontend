@@ -94,7 +94,34 @@
       }
     },
     "DSBMITGLIEDER_DETAIL": {
-      "TITLE": "DSB Mitglied - Details"
+      "TITLE": "DSB Mitglied - Details",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "Vorname",
+          "PLACEHOLDER": "Bitte einen Vornamen eingeben",
+          "ERROR": "Bitte einen gültigen Vornamen eingeben."
+        },
+        "NACHNAME": {
+          "LABEL": "Nachname",
+          "PLACEHOLDER": "Bitte einen Nachnamen eingeben",
+          "ERROR": "Bitte einen gültigen Nachnamen eingeben."
+        },
+        "GEBURTSDATUM": {
+          "LABEL": "Geburtsdatum",
+          "PLACEHOLDER": "Bitte ein Geburtsdatum eingeben",
+          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Mitgliedsnummer",
+          "PLACEHOLDER": "Bitte eine Mitgliedsnummer eingeben",
+          "ERROR": "Bitte eine gültige Mitgliedsnummer eingeben."
+        },
+        "NATIONALITAET": {
+          "LABEL": "Nationalität",
+          "PLACEHOLDER": "Bitte eine Nationalität eingeben",
+          "ERROR": "Bitte eine gültige Nationalität eingeben."
+        }
+      }
     }
   },
 

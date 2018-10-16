@@ -1,16 +1,28 @@
-<form>
+<form *ngIf="showContent()"
+      [formGroup]="form">
 
 
   <div class="form-group row"
        *ngFor="let property of config.properties">
     <label for="{{ 'formField_' + property.propertyName }}"
-           class="col-sm-2 col-form-label">{{ property.translationKey | translate }}</label>
+           class="col-sm-2 col-form-label">
+      <span>{{ property.translationKey | translate }}</span>
+      <span *ngIf="property.required"> *</span>
+    </label>
     <div class="col-sm-10">
-      <input type="text"
+      <input [type]="getPropteryType(property)"
              class="form-control"
+             [required]="property.required"
+             [pattern]="property.regex"
              id="{{ 'formField_' + property.propertyName }}"
+
              [value]="content.getText(property)"
+
              placeholder="{{ property.translationKey | translate }}">
+
+      <div class="invalid-feedback">
+        {{ 'LOGIN.USERNAME.ERROR' | translate }}
+      </div>
     </div>
   </div>
 
