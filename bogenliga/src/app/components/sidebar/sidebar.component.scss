@@ -1,5 +1,3 @@
-// basic sidebar css
-
 /* Farbkonzept Website */
 $primary: #02bdd5; // Links, Navbar
 $primary-light: #b4ffff; // Sidebar-Background
@@ -31,7 +29,6 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   min-width: 80px;
   max-width: 80px;
   text-align: center;
-  //opacity: 0.4;
 }
 
 // basic css list and paragraph
@@ -46,14 +43,14 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   font-size: 1.1em;
   display: block;
   text-align: left;
-  color: $primary-dark;
+  //color: $primary-dark;
 }
 
-// basic css list and link with hover
-#sidebar a:hover {
-  color: $primary-light;
-  background: $primary-dark;
-}
+//// basic css list and link with hover
+//#sidebar a:hover {
+//  color: $primary-light;
+//  background: $primary-dark;
+//}
 
 // Sidebar Header
 #sidebar .sidebar-header {
@@ -73,8 +70,6 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 #sidebar.inactive ul li a {
   text-align: center;
 }
-
-
 
 #sidebar ul li.inactive > a, a[aria-expanded="true"] {
   color: $primary-dark;
@@ -129,6 +124,41 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   display: none;
 }
 
+.flexBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidbar-dropdown-toggle {
+  color: $primary-dark;
+  outline: none;
+}
+
+.sidebar-text-toggle {
+  color: $primary-dark;
+
+  .sidbar-dropdown-toggle {
+    color: $primary-dark;
+  }
+
+  .navbar-text {
+    color: $primary-dark;
+  }
+}
+
+// hover over complete element -> text and toggle need to change
+.sidebar-text-toggle:hover {
+  color: $primary-light;
+  background: $primary-dark;
+
+  .sidbar-dropdown-toggle {
+    color: $primary-light;
+  }
+
+  .navbar-text {
+    color: $primary-light;
+  }
+}
 
 // for small devices
 @media (max-width: 768px) {

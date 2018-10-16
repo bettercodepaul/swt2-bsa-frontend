@@ -47,7 +47,12 @@ export class SidebarComponent implements OnInit {
   }
 
   existSubitems(subitems: SideBarNavigationSubitem[]): boolean {
-    return !isNullOrUndefined(subitems);
+    if (isNullOrUndefined(subitems)) {
+      return false;
+    } else if (subitems.length === 0) {
+      return false;
+    }
+    return true;
   }
 
 }
