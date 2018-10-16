@@ -57,11 +57,7 @@ export class SidebarComponent implements OnInit {
   }
 
   isSelected(itemroute: string): boolean {
-    const urlSegments = this.router.url.split('/');
-    if (itemroute === ('/' + urlSegments[1])) {
-      return true;
-    }
-    return false;
+    return (this.router.url.indexOf(itemroute) >= 0);
   }
 
 }

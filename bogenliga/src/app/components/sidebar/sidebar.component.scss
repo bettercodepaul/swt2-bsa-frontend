@@ -173,6 +173,10 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   border-left: 8px solid $primary-dark;
 }
 
+.subselected {
+  font-weight: 800;
+}
+
 // for small devices
 @media (max-width: 768px) {
   #sidebar {
