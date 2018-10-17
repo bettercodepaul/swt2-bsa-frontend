@@ -12,11 +12,13 @@
 >
   <!-- TODO make class configurable -->
 
-  <!-- show content of the <bla-button> element -->
-  <ng-content *ngIf="!loading"></ng-content>
-
   <!-- show loading indicator -->
   <fa-icon *ngIf="loading"
            icon="sync"
            [spin]="true"></fa-icon>
+
+  <!-- show content of the <bla-button> element -->
+  <ng-content></ng-content>
+
+
 </button>

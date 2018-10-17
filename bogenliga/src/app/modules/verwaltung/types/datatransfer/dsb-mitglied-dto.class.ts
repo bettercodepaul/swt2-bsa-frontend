@@ -23,15 +23,15 @@ export class DsbMitgliedDTO implements DataTransferObject {
     version?: number
   } = {}): DsbMitgliedDTO {
     const copy = new DsbMitgliedDTO();
-    copy.id = optional.id || -1;
+    copy.id = optional.id || null;
     copy.vorname = optional.vorname || '';
     copy.nachname = optional.nachname || '';
     copy.geburtsdatum = optional.geburtsdatum || '';
     copy.nationalitaet = optional.nationalitaet || '';
     copy.mitgliedsnummer = optional.mitgliedsnummer || '';
-    copy.vereinsId = optional.vereinsId || -1;
-    copy.userId = optional.userId || -1;
-    copy.version = optional.version || -1;
+    copy.vereinsId = optional.vereinsId || null;
+    copy.userId = optional.userId || null;
+    copy.version = optional.version || null;
 
     return copy;
   }

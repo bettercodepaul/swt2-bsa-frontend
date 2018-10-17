@@ -147,6 +147,31 @@
           "LABEL": "Nationalität",
           "PLACEHOLDER": "Bitte eine Nationalität eingeben",
           "ERROR": "Bitte eine gültige Nationalität eingeben."
+        },
+        "VEREIN": {
+          "LABEL": "Verein",
+          "PLACEHOLDER": "Bitte eine Vereinsid eingeben",
+          "ERROR": "Bitte eine gültige Vereinsid eingeben."
+        },
+        "SAVE": "Speichern",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "DSB Mitglied löschen",
+          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Das DSB Mitglied konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
         }
       }
     }
@@ -186,6 +211,18 @@
       "BAD_REQUEST": {
         "TITLE": "Ungültige Anfrage",
         "DESCRIPTION": "Ihre Anfrage wurde vom Server abgewiesen."
+      },
+      "INVALID_ARGUMENT_ERROR": {
+        "TITLE": "Ungültige Anfrage",
+        "DESCRIPTION": "Ihre Anfrage wurde vom Server abgewiesen."
+      },
+      "DATABASE_ERROR": {
+        "TITLE": "Datenbankfehler",
+        "DESCRIPTION": "Ihre Anfrage wurde von der Datenbank abgewiesen."
+      },
+      "ENTITY_NOT_FOUND_ERROR": {
+        "TITLE": "Nicht gefunden",
+        "DESCRIPTION": "Die angeforderte Resource wurde nicht gefunden."
       }
     }
   },

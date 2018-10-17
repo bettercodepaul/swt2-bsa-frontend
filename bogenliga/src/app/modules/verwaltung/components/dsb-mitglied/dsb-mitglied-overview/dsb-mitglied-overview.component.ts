@@ -53,7 +53,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_DSB_MITGLIED,
+      id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
       title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.TITLE',
       description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
@@ -63,7 +63,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.dsbMitgliedDataProvider.deleteById(id)

@@ -109,24 +109,3 @@
   </tfoot>
 
 </table>
-
-
-<!--Pagination -->
-<div class="my-4">
-  <ul class="d-flex justify-content-center pagination pagination-circle pg-blue mb-0">
-    <!--First-->
-    <li class="page-item">
-      <a class="page-link">First</a>
-    </li>
-    <!--Numbers-->
-    <li #pages
-        *ngFor="let page of [1,2,3]"
-        class="page-item">
-      <a class="page-link">{{page}}</a>
-    </li>
-    <!--Last-->
-    <li class="page-item">
-      <a class="page-link">Last</a>
-    </li>
-  </ul>
-</div>

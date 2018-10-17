@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {isNullOrUndefined} from 'util';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ErrorDTO} from './types/error-dto.class';
 import {
   Notification,
@@ -49,7 +49,8 @@ export class ErrorHandlingService {
       this.handleUnexpectedError(statusCode, errorDto);
     }
 
-    return of(httpError);
+    throw httpError;
+
 
   }
 
