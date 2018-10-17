@@ -42,6 +42,11 @@
       "TITLE": "Wettkämpfe"
     }
   },
+  "SPORTJAHRESPLAN": {
+    "SPORTJAHRESPLAN": {
+      "TITLE": "Sportjahresplan"
+    }
+  },
   "USER": {
     "USER": {
       "TITLE": "Benutzer"

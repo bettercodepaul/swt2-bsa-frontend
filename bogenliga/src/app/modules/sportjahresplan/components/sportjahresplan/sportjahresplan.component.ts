@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {SPORTJAHRESPLAN_CONFIG} from './sportjahresplan.config';
 
 @Component({
   selector:    'bla-sportjahresplan',
@@ -6,6 +7,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls:   ['./sportjahresplan.component.scss']
 })
 export class SportjahresplanComponent implements OnInit {
+
+  public config = SPORTJAHRESPLAN_CONFIG;
 
   constructor() {
   }

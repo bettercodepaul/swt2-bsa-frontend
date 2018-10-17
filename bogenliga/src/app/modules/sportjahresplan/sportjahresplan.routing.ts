@@ -4,6 +4,5 @@ import {SportjahresplanGuard} from './guards/sportjahresplan.guard';
 
 
 export const SPORTJAHRESPLAN_ROUTES: Routes = [
-  {path: '', redirectTo: 'sportjahresplan', pathMatch: 'full', canActivate: [SportjahresplanGuard]},
-  {path: 'sportjahresplan', component: SportjahresplanComponent, canActivate: [SportjahresplanGuard]}
+  {path: '', pathMatch: 'full', component: SportjahresplanComponent, canActivate: [SportjahresplanGuard]},
 ];
