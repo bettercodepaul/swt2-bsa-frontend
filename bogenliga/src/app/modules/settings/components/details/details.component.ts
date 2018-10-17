@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 
-import {DataService} from '../../services/data.service';
 import {Data} from '../../types/data';
 import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from 'util';
 
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import {SettingsDataProviderService} from '../../services/settings-data-provider.service';
+import {Response} from '../../../shared/data-provider';
 
 @Component({
   selector:    'bla-details',
@@ -26,7 +27,7 @@ export class DetailsComponent implements OnInit {
   dataKey = ''; // key for url -> which data is selected
   private destinationRouteAfterDelete = '/settings/overview';
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) {
+  constructor(private dataService: SettingsDataProviderService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -48,7 +49,7 @@ export class DetailsComponent implements OnInit {
    * resets data of this for next input
    */
   public saveNewData(): void {
-    this.dataService.addOne(new Data(this.data.key, this.data.value)).subscribe();
+    this.dataService.addOne(new Data(this.data.key, this.data.value)).then(((response: Response<Data>) => console.log('Setting persisted')));
     this.data = new Data()
   }
 
@@ -57,7 +58,7 @@ export class DetailsComponent implements OnInit {
    * calls service
    */
   saveData(): void {
-    this.dataService.update(this.data).subscribe();
+    this.dataService.update(this.data).then(((response: Response<Data>) => console.log('Setting updated')));
   }
 
   /**
@@ -65,7 +66,8 @@ export class DetailsComponent implements OnInit {
    * calls service
    */
   deleteThisData(): void {
-    this.dataService.deleteById(this.dataKey).subscribe(v => {
+    this.dataService.deleteById(this.dataKey).then((response: Response<void>) => {
+      console.log('Setting deleted');
       this.router.navigateByUrl(this.destinationRouteAfterDelete);
     });
   }
@@ -77,7 +79,7 @@ export class DetailsComponent implements OnInit {
       if (!isUndefined(params['key'])) {
         settingsKey = params['key'];
         this.dataKey = settingsKey;
-        this.dataService.findById(settingsKey).subscribe(data => this.data = data);
+        this.dataService.findById(settingsKey).then((response: Response<Data>) => this.data = response.payload);
         this.dataSelected = true;
       }
     });

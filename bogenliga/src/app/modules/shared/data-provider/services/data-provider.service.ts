@@ -1,5 +1,6 @@
 import {DataServiceConfig} from '../../../settings/types/data-service-config.interface';
 import {UriBuilder} from './utils/uri-builder.class';
+import {environment} from '../../../../../environments/environment';
 
 export abstract class DataProviderService {
   abstract serviceSubUrl: string;
@@ -7,7 +8,7 @@ export abstract class DataProviderService {
 
   constructor() {
     this.dataServiceConfig = {
-      baseUrl: 'http://localhost:9000'
+      baseUrl: environment.backendBaseUrl
     };
   }
 

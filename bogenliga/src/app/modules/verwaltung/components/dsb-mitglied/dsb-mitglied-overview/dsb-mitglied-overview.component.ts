@@ -66,7 +66,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.dsbMitgliedDataProvider.deleteById2(id)
+            this.dsbMitgliedDataProvider.deleteById(id)
                 .then(response => this.loadTableRows())
                 .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
           }
@@ -79,7 +79,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
   private loadTableRows() {
     this.loading = true;
 
-    this.dsbMitgliedDataProvider.findAll2()
+    this.dsbMitgliedDataProvider.findAll()
         .then((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }

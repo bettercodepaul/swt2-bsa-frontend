@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {
-  CommonDataProviderService,
+  DataProviderService,
   DataTransferObject,
   RequestResult,
   Response,
@@ -12,14 +12,13 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {Observable} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
-import {TransferObject} from '../../shared/data-provider/models/transfer-object.interface';
 import {DsbMitgliedDO} from '../types/dsb-mitglied-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/dsb-mitglied-mapper';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DsbMitgliedDataProviderService extends CommonDataProviderService {
+export class DsbMitgliedDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/dsbmitglied';
 
@@ -31,13 +30,13 @@ export class DsbMitgliedDataProviderService extends CommonDataProviderService {
     return undefined;
   }
 
-  deleteById2(id: number): Promise<any> {
+  deleteById(id: number): Promise<Response<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.DELETE(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .subscribe(noData => {
+      this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+          .then(noData => {
             resolve({result: RequestResult.SUCCESS});
 
           }, (error: HttpErrorResponse) => {
@@ -52,13 +51,13 @@ export class DsbMitgliedDataProviderService extends CommonDataProviderService {
   }
 
 
-  public findAll2(): Promise<Response<DsbMitgliedDO[]>> {
+  public findAll(): Promise<Response<DsbMitgliedDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET(this.getUrl())
-          .subscribe((data: VersionedDataTransferObject[]) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
+          .then((data: VersionedDataTransferObject[]) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
 
@@ -74,13 +73,13 @@ export class DsbMitgliedDataProviderService extends CommonDataProviderService {
   }
 
 
-  findById2(id: number): Promise<Response<DsbMitgliedDO>> {
+  public findById(id: string | number): Promise<Response<DsbMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .subscribe((data: VersionedDataTransferObject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+          .then((data: VersionedDataTransferObject) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
@@ -95,19 +94,7 @@ export class DsbMitgliedDataProviderService extends CommonDataProviderService {
     });
   }
 
-  update(payload: DataTransferObject): Observable<DataTransferObject> {
-    return undefined;
-  }
-
-  findAll(): Observable<TransferObject[]> {
-    return this.restClient.GET(this.getUrl());
-  }
-
-  findById(key: string | number): Observable<TransferObject> {
-    return undefined;
-  }
-
-  deleteById(key: string | number): Observable<any> {
+  public update(payload: VersionedDataTransferObject): Promise<Response<DsbMitgliedDO>> {
     return undefined;
   }
 }

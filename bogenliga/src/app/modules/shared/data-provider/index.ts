@@ -1,5 +1,4 @@
 export * from './services/utils/uri-builder.class';
-export * from './services/common-data-provider.service';
 export * from './services/data-provider.service';
 export * from './services/rest-client.class';
 

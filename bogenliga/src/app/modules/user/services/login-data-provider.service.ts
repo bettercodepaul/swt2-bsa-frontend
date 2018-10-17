@@ -71,10 +71,10 @@ export class LoginDataProviderService extends DataProviderService {
    */
   private sendSignInRequest(credentialsDTO: CredentialsDTO, resolve, reject) {
 
-    this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).build(), credentialsDTO)
-        .subscribe(userDataJson => {
+    this.restClient.POST<UserSignInDTO>(new UriBuilder().fromPath(this.getUrl()).build(), credentialsDTO)
+        .then((data: UserSignInDTO) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          this.currentUserService.persistCurrentUser(UserSignInDTO.copyFromJson(userDataJson));
+          this.currentUserService.persistCurrentUser(data);
           resolve(LoginResult.SUCCESS);
 
         }, (error: HttpErrorResponse) => {
