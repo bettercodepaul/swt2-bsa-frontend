@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {WETTKAEMPFE_CONFIG} from './wettkaempfe.config';
 
 @Component({
   selector:    'bla-wettkaempfe',
@@ -9,6 +10,8 @@ import {Component, OnInit} from '@angular/core';
   ]
 })
 export class WettkaempfeComponent implements OnInit {
+
+  public config = WETTKAEMPFE_CONFIG;
 
   constructor() {
   }
