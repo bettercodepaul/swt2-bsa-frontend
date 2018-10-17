@@ -1,6 +1,9 @@
-import {CommonDialogConfig} from '../../../shared/components/dialogs';
+import {NavigationDialogConfig} from '../../../shared/components/dialogs';
 
-export const SPORTJAHRESPLAN_CONFIG: CommonDialogConfig = {
+export const SPORTJAHRESPLAN_CONFIG: NavigationDialogConfig = {
   moduleTranslationKey:    'SPORTJAHRESPLAN',
-  pageTitleTranslationKey: 'SPORTJAHRESPLAN.SPORTJAHRESPLAN.TITLE'
+  pageTitleTranslationKey: 'SPORTJAHRESPLAN.SPORTJAHRESPLAN.TITLE',
+  navigationCardsConfig:   {
+    navigationCards: []
+  }
 };
