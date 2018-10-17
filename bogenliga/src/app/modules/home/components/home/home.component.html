@@ -1,81 +1,85 @@
-<div id="homePage">
-  <h1 class="homeHeading">{{'HOME.WELCOME' | translate }}</h1>
-  <p class="homeText">{{ 'HOME.CONTENT' | translate }}</p>
+<bla-common-dialog [config]="config">
 
-  <div class="homeContent">
+  <div id="homePage">
+    <h2 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h2>
+    <p class="homeText">{{ 'HOME.HOME.CONTENT' | translate }}</p>
 
-    <!-- Row 1 -->
-    <div class="flexChild">
-      <img class="mosaikImg"
-           src="../../../../../assets/img/home_group.png">
+    <div class="homeContent">
+
+      <!-- Row 1 -->
+      <div class="flexChild">
+        <img class="mosaikImg"
+             src="../../../../../assets/img/home_group.png">
+      </div>
+
+      <div class="flexChild">
+        <h3><a class="blackLink"
+               routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
+
+        <table id="example"
+               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+               style="width:100%">
+          <!-- headlines -->
+          <thead>
+          <tr>
+            <th>{{ 'TABLE.DATE' | translate }}</th>
+            <th>{{ 'TABLE.TIME' | translate }}</th>
+            <th>{{ 'TABLE.LIGA' | translate }}</th>
+            <th>{{ 'TABLE.PLACE' | translate }}</th>
+          </tr>
+          </thead>
+
+          <!-- Rows -->
+          <tbody>
+          <tr>
+            <td>03.11.2018</td>
+            <td>14:00</td>
+            <td>2. Bundesliga</td>
+            <td>Welzheim</td>
+          </tr>
+
+          <tr>
+            <td>17.11.2018</td>
+            <td>14:00</td>
+            <td>Landesliga Nord Recurve</td>
+            <td>Welzheim</td>
+          </tr>
+
+          <tr>
+            <td>17.11.2018</td>
+            <td>10:00</td>
+            <td>Landesliga A Compound</td>
+            <td>Hochdorf o. Essendorf</td>
+
+          <tr>
+            <td>17.11.2018</td>
+            <td>14:00</td>
+            <td>Württembergliga Compound</td>
+            <td>Hochdorf o. Essendorf</td>
+          </tr>
+
+          <tr>
+            <td>18.11.2018</td>
+            <td>10:00</td>
+            <td>Landesliga Süd Recurve</td>
+            <td>Hochdorf o. Essendorf</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="flexChild">
+        <h3>{{ 'HOME.HOME.BOX1HEADING' | translate }}</h3>
+        <p>{{ 'HOME.HOME.BOX1CONTENT' | translate }}</p>
+      </div>
+
+      <div class="flexChild">
+        <img class="mosaikImg"
+             src="../../../../../assets/img/home_halle.png">
+      </div>
+
     </div>
-
-    <div class="flexChild">
-      <h3><a class="blackLink"
-             routerLink="/wettkaempfe">{{ 'HOME.WETTKAEMPFE' | translate }}</a></h3>
-
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:100%">
-        <!-- headlines -->
-        <thead>
-        <tr>
-          <th>{{ 'TABLE.DATE' | translate }}</th>
-          <th>{{ 'TABLE.TIME' | translate }}</th>
-          <th>{{ 'TABLE.LIGA' | translate }}</th>
-          <th>{{ 'TABLE.PLACE' | translate }}</th>
-        </tr>
-        </thead>
-
-        <!-- Rows -->
-        <tbody>
-        <tr>
-          <td>03.11.2018</td>
-          <td>14:00</td>
-          <td>2. Bundesliga</td>
-          <td>Welzheim</td>
-        </tr>
-
-        <tr>
-          <td>17.11.2018</td>
-          <td>14:00</td>
-          <td>Landesliga Nord Recurve</td>
-          <td>Welzheim</td>
-        </tr>
-
-        <tr>
-          <td>17.11.2018</td>
-          <td>10:00</td>
-          <td>Landesliga A Compound</td>
-          <td>Hochdorf o. Essendorf</td>
-
-        <tr>
-          <td>17.11.2018</td>
-          <td>14:00</td>
-          <td>Württembergliga Compound</td>
-          <td>Hochdorf o. Essendorf</td>
-        </tr>
-
-        <tr>
-          <td>18.11.2018</td>
-          <td>10:00</td>
-          <td>Landesliga Süd Recurve</td>
-          <td>Hochdorf o. Essendorf</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="flexChild">
-      <h3>{{ 'HOME.BOX1HEADING' | translate }}</h3>
-      <p>{{ 'HOME.BOX1CONTENT' | translate }}</p>
-    </div>
-
-    <div class="flexChild">
-      <img class="mosaikImg"
-           src="../../../../../assets/img/home_halle.png">
-    </div>
-
-  </div>
 </div>
+
+</bla-common-dialog>

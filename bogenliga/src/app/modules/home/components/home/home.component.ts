@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {HOME_CONFIG} from './home.config';
 
 @Component({
   selector:    'bla-home',
@@ -9,6 +10,8 @@ import {Component, OnInit} from '@angular/core';
   ]
 })
 export class HomeComponent implements OnInit {
+
+  public config = HOME_CONFIG;
 
   constructor() {
   }

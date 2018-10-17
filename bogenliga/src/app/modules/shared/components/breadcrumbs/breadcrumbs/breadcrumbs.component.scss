@@ -12,12 +12,6 @@
   color: #ff833a;
 }
 
-.breadcrumb-item::before {
-  color: #6c757d;
-  content: "/";
-
-  padding-right: .5rem;
-}
 
 // for small devices
 @media (max-width: 768px) {
