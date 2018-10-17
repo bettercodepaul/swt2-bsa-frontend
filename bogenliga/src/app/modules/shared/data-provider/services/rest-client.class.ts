@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {throwError} from 'rxjs';
 import {TransferObject} from '../models/transfer-object.interface';
 import {catchError} from 'rxjs/operators';
 
@@ -19,36 +19,64 @@ export class RestClient {
   constructor(private http: HttpClient) {
   }
 
-  public GET(url: string): Observable<any> {
+  /**
+   * Perform a GET request to receive a response of the given type T
+   *
+   * @param url of the REST resource
+   * @constructor type of response T
+   */
+  public GET<T>(url: string): Promise<T> {
     console.log('Send GET request to ' + url);
 
-    return this.http.get(url, httpOptions).pipe(
+    return this.http.get<T>(url, httpOptions).pipe(
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
-  public POST(url: string, payload: TransferObject): Observable<any> {
+  /**
+   * Perform a POST request to create a new instance of the given payload and
+   * receive a response of the given type T
+   *
+   * @param url of the REST resource
+   * @param payload
+   * @constructor type of response T
+   */
+  public POST<T>(url: string, payload: TransferObject): Promise<T> {
     console.log('Send POST request to ' + url + ' with payload ' + JSON.stringify(payload));
 
-    return this.http.post(url, payload, httpOptions).pipe(
+    return this.http.post<T>(url, payload, httpOptions).pipe(
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
-  public PUT(url: string, payload: TransferObject): Observable<any> {
+  /**
+   * Perform a PUT request to update an existing instance of the given payload and
+   * receive a response of the given type T
+   *
+   * @param url of the REST resource
+   * @param payload
+   * @constructor type of response T
+   */
+  public PUT<T>(url: string, payload: TransferObject): Promise<T> {
     console.log('Send PUT request to ' + url + ' with payload ' + JSON.stringify(payload));
 
-    return this.http.put(url, payload, httpOptions).pipe(
+    return this.http.put<T>(url, payload, httpOptions).pipe(
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
-  public DELETE(url: string): Observable<any> {
+  /**
+   * Perform a DELETE request to delete an existing instance with a given id with the url
+   *
+   * @param url of the REST resource
+   * @constructor type of response T
+   */
+  public DELETE<T>(url: string): Promise<T> {
     console.log('Send DELETE request to ' + url);
 
-    return this.http.delete(url, httpOptions).pipe(
+    return this.http.delete<T>(url, httpOptions).pipe(
       catchError(this.handleError)
-    );
+    ).toPromise();
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -9,13 +9,14 @@ import {
   ViewChildren
 } from '@angular/core';
 
-import {DataService} from '../../services/data.service';
 import {Data} from '../../types/data';
 import {TranslatePipe} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../shared/redux-store';
 
 import {faInfoCircle, faMinusCircle, faPlus, faSort} from '@fortawesome/free-solid-svg-icons';
+import {SettingsDataProviderService} from '../../services/settings-data-provider.service';
+import {Response} from '../../../shared/data-provider';
 
 
 @Component({
@@ -48,7 +49,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   first = 1; // first item on page
   last = this.maxOnPage; // last item on page
 
-  constructor(private renderer: Renderer2, private el: ElementRef, private dataService: DataService, private store: Store<AppState>) {
+  constructor(private renderer: Renderer2, private el: ElementRef, private dataService: SettingsDataProviderService, private store: Store<AppState>) {
   }
 
   @HostListener('click', ['$event']) onclick(event: any) { // https://angular.io/api/core/HostListener
@@ -89,8 +90,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   getData(): void {
     // this.dataService.getData().subscribe(datas => this.datas = datas);
-    this.dataService.findAll().subscribe(datas => {
-      this.datas = datas;
+    this.dataService.findAll().then((response: Response<Data[]>) => {
+      this.datas = response.payload;
       this.keyAscending = false; // if sorted with key aufsteigend
       this.valueAscending = false; // if sorted with value aufsteigend
       this.sortDataByKey();
@@ -236,7 +237,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * @param key
    */
   deleteThisData(key: string): void {
-    this.dataService.deleteById(key).subscribe(data => {
+    this.dataService.deleteById(key).then((data: Response<void>) => {
       this.getData();
     });
   }

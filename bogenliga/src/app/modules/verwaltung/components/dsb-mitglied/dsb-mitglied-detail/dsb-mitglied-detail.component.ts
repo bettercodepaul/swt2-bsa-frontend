@@ -36,7 +36,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
         if (id === 'add') {
           this.currentMitglied = toFormContent(new DsbMitgliedDO());
         } else {
-          this.dsbMitgliedDataProvider.findById2(params[ID_PATH_PARAM])
+          this.dsbMitgliedDataProvider.findById(params[ID_PATH_PARAM])
               .then((response: Response<DsbMitgliedDO>) => this.handleSuccess(response))
               .catch((response: Response<DsbMitgliedDO>) => this.handleFailure(response));
         }
