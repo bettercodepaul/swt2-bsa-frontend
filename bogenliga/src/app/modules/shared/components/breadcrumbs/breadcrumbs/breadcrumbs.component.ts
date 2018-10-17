@@ -39,7 +39,7 @@ export class BreadcrumbsComponent implements OnInit {
 
       if (urlSegment.trim().length > 0) {
         // start always with home
-        if (urlSegment.toUpperCase() !== 'HOME') {
+        if (i === 1 && urlSegment.toUpperCase() !== 'HOME') {
           breadCrumbs.push(homeBreadCrumb);
         }
 
