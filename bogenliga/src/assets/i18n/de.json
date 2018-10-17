@@ -27,37 +27,42 @@
     "IMPRESSUM": "Impressum und Datenschutz",
     "COPYRIGHT": "Copyright: 2018"
   },
-
-  "LOGIN": {
-    "HEADER": "Bitte einloggen:",
-    "BUTTON": {
-      "LOGIN": "Login"
+  "USER": {
+    "USER": {
+      "TITLE": "Benutzer"
     },
-    "USERNAME": {
-      "LABEL": "Bitte E-Mail-Adresse eingeben",
-      "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
-      "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
-    },
-    "PASSWORD": {
-      "LABEL": "Passwort",
-      "PLACEHOLDER": "Bitte Passwort eingeben",
-      "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
-    },
-    "REMEMBER_ME": {
-      "LABEL": "E-Mail-Adresse merken?"
-    },
-    "NOTIFICATION": {
-      "LOGIN_SUCCESSFUL": {
-        "HEADER": "Login erfolgreich",
-        "TEXT": "Sie haben sich erfolgreich angemeldet."
+    "LOGIN": {
+      "TITLE": "Login",
+      "HEADER": "Bitte einloggen:",
+      "BUTTON": {
+        "LOGIN": "Login"
       },
-      "LOGIN_FAILURE": {
-        "HEADER": "Login fehlgeschlagen",
-        "TEXT": "Die Anmeldedaten sind falsch."
+      "USERNAME": {
+        "LABEL": "Bitte E-Mail-Adresse eingeben",
+        "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
+        "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
       },
-      "LOGIN_CONNECTION_PROBLEM": {
-        "HEADER": "Login nicht möglich",
-        "TEXT": "Es konnte keine Verbindung zum Login-Server aufgebaut werden, um ihre Berechtigungen zu prüfen."
+      "PASSWORD": {
+        "LABEL": "Passwort",
+        "PLACEHOLDER": "Bitte Passwort eingeben",
+        "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
+      },
+      "REMEMBER_ME": {
+        "LABEL": "E-Mail-Adresse merken?"
+      },
+      "NOTIFICATION": {
+        "LOGIN_SUCCESSFUL": {
+          "HEADER": "Login erfolgreich",
+          "TEXT": "Sie haben sich erfolgreich angemeldet."
+        },
+        "LOGIN_FAILURE": {
+          "HEADER": "Login fehlgeschlagen",
+          "TEXT": "Die Anmeldedaten sind falsch."
+        },
+        "LOGIN_CONNECTION_PROBLEM": {
+          "HEADER": "Login nicht möglich",
+          "TEXT": "Es konnte keine Verbindung zum Login-Server aufgebaut werden, um ihre Berechtigungen zu prüfen."
+        }
       }
     }
   },

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserDataProviderService} from '../../services/user-data-provider.service';
+import {USER_PROFILE_CONFIG} from './user-profile.config';
 
 @Component({
   selector:    'bla-user-profile',
@@ -9,6 +10,7 @@ import {UserDataProviderService} from '../../services/user-data-provider.service
 })
 export class UserProfileComponent implements OnInit {
 
+  public config = USER_PROFILE_CONFIG;
   public dsbMitglieder: any;
 
   constructor(private userDataProviderService: UserDataProviderService) {

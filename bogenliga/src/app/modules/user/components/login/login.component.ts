@@ -6,6 +6,7 @@ import {AlertType} from '../../../shared/components/alerts';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
 import {LoginResult} from '../../types/login-result.enum';
+import {USER_LOGIN_CONFIG} from './login.config';
 
 const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
   public testDummyUserUser: CredentialsDO = new CredentialsDO('Malorie.Artman@bogenliga.de', 'swt2');
   // TODO: remove after development
 
+  public config = USER_LOGIN_CONFIG;
   private destinationRouteAfterLogin = '/home';
 
   constructor(private loginDataProviderService: LoginDataProviderService, private route: ActivatedRoute, private router: Router) {

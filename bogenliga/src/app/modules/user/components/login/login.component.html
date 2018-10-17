@@ -1,139 +1,139 @@
-<div id="login">
-  <div id="login-dialog">
+<bla-common-dialog [config]="config">
 
-    <bla-alert [visible]="(loginResult === LoginResult.SUCCESS)"
-               header="{{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.HEADER' | translate }}"
-               [alertType]="AlertType.SUCCESS">
-      {{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.TEXT' | translate }}
-    </bla-alert>
+  <div id="login">
+    <div id="login-dialog">
 
-    <bla-alert [visible]="(loginResult === LoginResult.FAILURE)"
-               header="{{ 'LOGIN.NOTIFICATION.LOGIN_FAILURE.HEADER' | translate }}"
-               [alertType]="AlertType.DANGER">
-      {{ 'LOGIN.NOTIFICATION.LOGIN_FAILURE.TEXT' | translate }}
-    </bla-alert>
+      <bla-alert [visible]="(loginResult === LoginResult.SUCCESS)"
+                 header="{{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.HEADER' | translate }}"
+                 [alertType]="AlertType.SUCCESS">
+        {{ 'USER.LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.TEXT' | translate }}
+      </bla-alert>
 
-    <bla-alert [visible]="(loginResult === LoginResult.CONNECTION_PROBLEM)"
-               header="{{ 'LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.HEADER' | translate }}"
-               [alertType]="AlertType.WARNING">
-      {{ 'LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.TEXT' | translate }}
-    </bla-alert>
+      <bla-alert [visible]="(loginResult === LoginResult.FAILURE)"
+                 header="{{ 'LOGIN.NOTIFICATION.LOGIN_FAILURE.HEADER' | translate }}"
+                 [alertType]="AlertType.DANGER">
+        {{ 'USER.LOGIN.NOTIFICATION.LOGIN_FAILURE.TEXT' | translate }}
+      </bla-alert>
 
-    <div class="card mb-4 shadow-sm">
-      <div class="card-body login-dialog">
+      <bla-alert [visible]="(loginResult === LoginResult.CONNECTION_PROBLEM)"
+                 header="{{ 'LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.HEADER' | translate }}"
+                 [alertType]="AlertType.WARNING">
+        {{ 'USER.LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.TEXT' | translate }}
+      </bla-alert>
 
-        <form id="loginForm"
-              #loginForm="ngForm">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body login-dialog">
 
-          <!-- Logo -->
-          <div class="imgcontainer">
-            <img src="../assets/img/logo.png"
-                 alt="Logo"
-                 class="avatar">
+          <form id="loginForm"
+                #loginForm="ngForm">
 
-            <h1 class="h3 mb-3 font-weight-normal">{{ 'LOGIN.HEADER' | translate }}</h1>
-          </div>
+            <!-- Logo -->
+            <div class="imgcontainer">
+              <img src="../assets/img/logo.png"
+                   alt="Logo"
+                   class="avatar">
 
-          <!-- Input -->
-          <div class="container">
-            <div class="form-group">
-              <label for="loginEmail">{{ 'LOGIN.USERNAME.LABEL' | translate }}</label>
-              <input type="email"
-                     class="form-control"
-                     name="loginEmail"
-                     id="loginEmail"
-                     #loginEmail="ngModel"
-                     [(ngModel)]="credentials.username"
-                     required
-                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
-                     [class.is-invalid]="(loginEmail.invalid && !loginEmail.untouched) || (loginResult === LoginResult.FAILURE)"
-                     placeholder="{{ 'LOGIN.USERNAME.LABEL' | translate }}">
+              <h5 class="h3 mb-3 font-weight-normal">{{ 'USER.LOGIN.HEADER' | translate }}</h5>
+            </div>
 
-              <div class="invalid-feedback">
-                {{ 'LOGIN.USERNAME.ERROR' | translate }}
+            <!-- Input -->
+            <div class="container">
+              <div class="form-group">
+                <label for="loginEmail">{{ 'USER.LOGIN.USERNAME.LABEL' | translate }}</label>
+                <input type="email"
+                       class="form-control"
+                       name="loginEmail"
+                       id="loginEmail"
+                       #loginEmail="ngModel"
+                       [(ngModel)]="credentials.username"
+                       required
+                       pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+                       [class.is-invalid]="(loginEmail.invalid && !loginEmail.untouched) || (loginResult === LoginResult.FAILURE)"
+                       placeholder="{{ 'USER.LOGIN.USERNAME.LABEL' | translate }}">
+
+                <div class="invalid-feedback">
+                  {{ 'USER.OGIN.USERNAME.ERROR' | translate }}
+                </div>
               </div>
-            </div>
 
-            <div class="form-group">
-              <label for="loginPassword">{{ 'LOGIN.PASSWORD.LABEL' | translate }}</label>
-              <input type="password"
-                     class="form-control"
-                     id="loginPassword"
-                     name="loginPassword"
-                     #loginPassword="ngModel"
-                     [(ngModel)]="credentials.password"
-                     required
-                     minlength="3"
-                     (keyup.enter)="onLogin($event)"
-                     [class.is-invalid]="(loginPassword.invalid && !loginPassword.untouched) || (loginResult === LoginResult.FAILURE)"
-                     placeholder="{{ 'LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
+              <div class="form-group">
+                <label for="loginPassword">{{ 'USER.LOGIN.PASSWORD.LABEL' | translate }}</label>
+                <input type="password"
+                       class="form-control"
+                       id="loginPassword"
+                       name="loginPassword"
+                       #loginPassword="ngModel"
+                       [(ngModel)]="credentials.password"
+                       required
+                       minlength="3"
+                       (keyup.enter)="onLogin($event)"
+                       [class.is-invalid]="(loginPassword.invalid && !loginPassword.untouched) || (loginResult === LoginResult.FAILURE)"
+                       placeholder="{{ 'USER.LOGIN.PASSWORD.PLACEHOLDER' | translate }}">
 
-              <div class="invalid-feedback">
-                {{ 'LOGIN.PASSWORD.ERROR' | translate }}
+                <div class="invalid-feedback">
+                  {{ 'USER.LOGIN.PASSWORD.ERROR' | translate }}
+                </div>
               </div>
+
+              <div class="form-group form-check">
+                <input type="checkbox"
+                       class="form-check-input"
+                       id="loginRememberMe"
+                       name="loginRememberMe"
+                       [(ngModel)]="credentials.rememberMe">
+                <label class="form-check-label"
+                       for="loginRememberMe">{{ 'USER.LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
+              </div>
+
+              <bla-button [id]="'loginButton'"
+                          [buttonSize]="ButtonSize.LARGE_BLOCK"
+                          [disabled]="!loginForm.valid"
+                          [loading]="loading"
+                          (onClick)="onLogin($event)">{{ 'USER.LOGIN.BUTTON.LOGIN' | translate }}
+              </bla-button>
+
             </div>
+          </form>
 
-            <div class="form-group form-check">
-              <input type="checkbox"
-                     class="form-check-input"
-                     id="loginRememberMe"
-                     name="loginRememberMe"
-                     [(ngModel)]="credentials.rememberMe">
-              <label class="form-check-label"
-                     for="loginRememberMe">{{ 'LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
-            </div>
-
-            <bla-button [id]="'loginButton'"
-                        [buttonSize]="ButtonSize.LARGE_BLOCK"
-                        [disabled]="!loginForm.valid"
-                        [loading]="loading"
-                        (onClick)="onLogin($event)">{{ 'LOGIN.BUTTON.LOGIN' | translate }}
-            </bla-button>
-
-          </div>
-        </form>
+        </div>
 
       </div>
 
+      <bla-alert header="Testbenutzer:"
+                 [alertType]="AlertType.INFO">
+        <p>Username: admin@bogenliga.de <br>Password: admin<br>Rolle: ADMIN<br>
+          <bla-button [buttonSize]="ButtonSize.SMALL"
+                      [value]="testAdminUser"
+                      (onClick)="onAutoLogin($event)">Login als Admin
+          </bla-button>
+        </p>
+        <p>Username: moderator@bogenliga.de <br>Password: moderator<br>Rolle: MODERATOR<br>
+          <bla-button [buttonSize]="ButtonSize.SMALL"
+                      [value]="testModeratorUser"
+                      (onClick)="onAutoLogin($event)">Login als Moderator
+          </bla-button>
+        </p>
+        <p>Username: user@bogenliga.de <br>Password: user <br>Rolle: USER<br>
+          <bla-button [buttonSize]="ButtonSize.SMALL"
+                      [value]="testUserUser"
+                      (onClick)="onAutoLogin($event)">Login als User
+          </bla-button>
+        </p>
+        <p>Username: Malorie.Artman@bogenliga.de <br>Password: swt2 <br>Rolle: USER<br>
+          <bla-button [buttonSize]="ButtonSize.SMALL"
+                      [value]="testDummyUserUser"
+                      (onClick)="onAutoLogin($event)">Login als Test-Benutzer
+          </bla-button>
+        </p>
+        <p>Username: Nicholas.Corle@bogenliga.de <br>Password: swt2 <br>Rolle: MODERATOR<br>
+          <bla-button [buttonSize]="ButtonSize.SMALL"
+                      [value]="testDummyModeratorUser"
+                      (onClick)="onAutoLogin($event)">Login als Test-Moderator
+          </bla-button>
+        </p>
+      </bla-alert>
     </div>
 
-    <bla-alert header="Testbenutzer:"
-               [alertType]="AlertType.INFO">
-      <p>Username: admin@bogenliga.de <br>Password: admin<br>Rolle: ADMIN<br>
-        <bla-button [buttonSize]="ButtonSize.SMALL"
-                    [value]="testAdminUser"
-                    (onClick)="onAutoLogin($event)">Login als Admin
-        </bla-button>
-      </p>
-      <p>Username: moderator@bogenliga.de <br>Password: moderator<br>Rolle: MODERATOR<br>
-        <bla-button [buttonSize]="ButtonSize.SMALL"
-                    [value]="testModeratorUser"
-                    (onClick)="onAutoLogin($event)">Login als Moderator
-        </bla-button>
-      </p>
-      <p>Username: user@bogenliga.de <br>Password: user <br>Rolle: USER<br>
-        <bla-button [buttonSize]="ButtonSize.SMALL"
-                    [value]="testUserUser"
-                    (onClick)="onAutoLogin($event)">Login als User
-        </bla-button>
-      </p>
-      <p>Username: Malorie.Artman@bogenliga.de <br>Password: swt2 <br>Rolle: USER<br>
-        <bla-button [buttonSize]="ButtonSize.SMALL"
-                    [value]="testDummyUserUser"
-                    (onClick)="onAutoLogin($event)">Login als Test-Benutzer
-        </bla-button>
-      </p>
-      <p>Username: Nicholas.Corle@bogenliga.de <br>Password: swt2 <br>Rolle: MODERATOR<br>
-        <bla-button [buttonSize]="ButtonSize.SMALL"
-                    [value]="testDummyModeratorUser"
-                    (onClick)="onAutoLogin($event)">Login als Test-Moderator
-        </bla-button>
-      </p>
-    </bla-alert>
   </div>
 
-</div>
-
-
-
-
+</bla-common-dialog>
