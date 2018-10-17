@@ -34,6 +34,7 @@ import {StorageServiceModule} from 'angular-webstorage-service';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {RouterModule} from '@angular/router';
 import {TruncationPipe} from './pipes';
+import {NavigationCardsComponent} from './components/navigation-cards';
 
 /*
  * define font awesome icon libraries
@@ -75,6 +76,7 @@ library.add(fas, far, fab); // add all icon types
     ColLayoutComponent,
     GridLayoutComponent,
     RowLayoutComponent,
+    NavigationCardsComponent,
   ],
   declarations: [
     ButtonComponent,
@@ -94,6 +96,7 @@ library.add(fas, far, fab); // add all icon types
     ColLayoutComponent,
     GridLayoutComponent,
     RowLayoutComponent,
+    NavigationCardsComponent,
   ]
 })
 export class SharedModule {

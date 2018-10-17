@@ -1,0 +1,22 @@
+<bla-grid-layout>
+
+  <div class="card navigation-card"
+       *ngFor="let card of config.navigationCards">
+    <a class="card-header-link"
+       [routerLink]="card.route">
+      <div class="card-header">
+        <fa-icon [icon]="card.icon"
+                 size="3x"></fa-icon>
+      </div>
+    </a>
+
+    <div class="card-body">
+      <h5 class="card-title">{{ card.labelKey | translate }}</h5>
+      <p class="card-text">{{ card.descriptionKey | translate }}</p>
+      <button class="btn btn-primary"
+              [routerLink]="card.route">{{ card.labelKey | translate }}
+      </button>
+    </div>
+  </div>
+
+</bla-grid-layout>
