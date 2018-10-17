@@ -20,6 +20,7 @@ import {
   GridLayoutComponent,
   HorizontalFormComponent,
   ModalDialogComponent,
+  NavigationDialogComponent,
   OverviewDialogComponent,
   PageHeadingComponent,
   RowLayoutComponent,
@@ -77,6 +78,7 @@ library.add(fas, far, fab); // add all icon types
     GridLayoutComponent,
     RowLayoutComponent,
     NavigationCardsComponent,
+    NavigationDialogComponent
   ],
   declarations: [
     ButtonComponent,
@@ -97,6 +99,7 @@ library.add(fas, far, fab); // add all icon types
     GridLayoutComponent,
     RowLayoutComponent,
     NavigationCardsComponent,
+    NavigationDialogComponent,
   ]
 })
 export class SharedModule {
