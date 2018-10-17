@@ -24,6 +24,12 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   public getBreadCrumbs(): BreadcrumbDO[] {
+    const homeBreadCrumb = new BreadcrumbDO(
+      this.translate.transform('HOME.HOME.TITLE'),
+      '/home',
+      false
+    );
+
     const breadCrumbs: BreadcrumbDO[] = [];
 
     const urlSegments = this.router.url.split('/');
@@ -32,6 +38,11 @@ export class BreadcrumbsComponent implements OnInit {
       const urlSegment = urlSegments[i];
 
       if (urlSegment.trim().length > 0) {
+        // start always with home
+        if (urlSegment.toUpperCase() !== 'HOME') {
+          breadCrumbs.push(homeBreadCrumb);
+        }
+
         const translationKey = `${this.moduleTranslationKey}.${urlSegment.toUpperCase()}.TITLE`; // page translation key
         const label = this.translate.transform(`${translationKey}`);
 
