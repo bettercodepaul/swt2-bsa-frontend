@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector:    'bla-grid-layout',
@@ -7,6 +7,8 @@ import {Component, OnInit} from '@angular/core';
 })
 export class GridLayoutComponent implements OnInit {
 
+  @Input() public alignCenter = false;
+  
   constructor() {
   }
 
