@@ -91,7 +91,13 @@
 
   "MANAGEMENT": {
     "VERWALTUNG": {
-      "TITLE": "Verwaltung"
+      "TITLE": "Verwaltung",
+      "NAVIGATION": {
+        "DSBMITGLIEDER": {
+          "LABEL": "DSB Mitglieder",
+          "DESCRIPTION": "Verwaltung der DSB Mitglieder"
+        }
+      }
     },
     "DSBMITGLIEDER": {
       "TITLE": "DSB Mitglieder - Übersicht",
