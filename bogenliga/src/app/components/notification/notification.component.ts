@@ -30,7 +30,7 @@ export class NotificationComponent implements OnInit {
   constructor(private notificationService: NotificationService, private translatePipe: TranslatePipe) {
     this.notificationService.observeNotifications().subscribe((state: NotificationState) => {
       this.showDialog = state.showNotification;
-      this.notification = state.notification;
+      this.notification = isNullOrUndefined(state.notification) ? new Notification() : state.notification;
     });
   }
 
@@ -44,18 +44,18 @@ export class NotificationComponent implements OnInit {
    * @return string with icon identifier
    */
   public getModalDialogHeadingIconClass(): string {
-    let alertHeadingClass = 'fa-info-circle';
+    let alertHeadingClass = 'info-circle';
     switch (this.notification.severity) {
       case NotificationSeverity.QUESTION:
-        alertHeadingClass = 'fa-question-circle';
+        alertHeadingClass = 'question-circle';
         break;
       case NotificationSeverity.ERROR:
-        alertHeadingClass = 'fa-exclamation-circle';
+        alertHeadingClass = 'exclamation-circle';
         break;
       // default
       case NotificationSeverity.INFO:
       default:
-        alertHeadingClass = 'fa-info-circle';
+        alertHeadingClass = 'info-circle';
     }
 
     return alertHeadingClass;

@@ -3,6 +3,7 @@ import {Notification, NotificationUserAction} from './types';
 import {
   ACCEPT_NOTIFICATION,
   DECLINE_NOTIFICATION,
+  DISCARD_NOTIFICATION,
   NotificationState,
   ShowNotification
 } from '../../redux-store/feature/notification';
@@ -36,6 +37,7 @@ export class NotificationService {
     return this.store.pipe(
       select(NOTIFICATION_STATE),
       filter(state => !isNullOrUndefined(state)),
+      filter(state => !isNullOrUndefined(state.notification)),
       filter(state => state.notification.id === notificationId),
       map(state => state.notification));
   }
@@ -48,6 +50,12 @@ export class NotificationService {
       this.store.dispatch({type: DECLINE_NOTIFICATION});
 
     }
+  }
+
+  public discardNotification() {
+    console.log('DISCARD NOTIFICATION');
+    this.store.dispatch({type: DISCARD_NOTIFICATION});
+
   }
 
   public observeNotifications(): Observable<NotificationState> {

@@ -33,6 +33,14 @@ export function notificationReducer(state = initialNavigationState, action: Acti
 
       break;
     }
+    case Actions.DISCARD_NOTIFICATION: {
+      const modifiedState = newState = {...state};
+
+      modifiedState.notification = null;
+      modifiedState.showNotification = false;
+
+      break;
+    }
     default:
       // do nothing
       return state;
