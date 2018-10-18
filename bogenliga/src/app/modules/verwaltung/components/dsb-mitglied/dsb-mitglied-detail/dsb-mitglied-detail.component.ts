@@ -47,23 +47,13 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   ngOnInit() {
     this.loading = true;
 
-    this.notificationService.discardNotification();
-
-    this.route.params.subscribe(params => {
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        const id = params[ID_PATH_PARAM];
-        if (id === 'add') {
-          this.currentMitglied = new DsbMitgliedDO();
-          this.loading = false;
-          this.deleteLoading = false;
-          this.saveLoading = false;
-        } else {
-          this.loadById(params[ID_PATH_PARAM]);
-        }
-      }
-    });
+    this.parseIdFromUrl();
   }
 
+  /**
+   * Handle on save event
+   *
+   */
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
@@ -101,9 +91,12 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
 
         });
-    // show response message
   }
 
+  /**
+   * Handle on update event
+   *
+   */
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
 
@@ -143,6 +136,10 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     // show response message
   }
 
+  /**
+   * Handle on delete event
+   *
+   */
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
@@ -175,6 +172,24 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public entityExists(): boolean {
     return this.currentMitglied.id > 0;
+  }
+
+  private parseIdFromUrl() {
+    this.notificationService.discardNotification();
+
+    this.route.params.subscribe(params => {
+      if (!isUndefined(params[ID_PATH_PARAM])) {
+        const id = params[ID_PATH_PARAM];
+        if (id === 'add') {
+          this.currentMitglied = new DsbMitgliedDO();
+          this.loading = false;
+          this.deleteLoading = false;
+          this.saveLoading = false;
+        } else {
+          this.loadById(params[ID_PATH_PARAM]);
+        }
+      }
+    });
   }
 
   private loadById(id: number) {

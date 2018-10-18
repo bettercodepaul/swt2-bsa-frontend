@@ -79,9 +79,12 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
   private loadTableRows() {
     this.loading = true;
 
-    this.dsbMitgliedDataProvider.findAll()
-        .then((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
+    // TODO implement
+    // findAll mitglieder
+
+    this.rows = [];
+
+    this.loading = false;
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {

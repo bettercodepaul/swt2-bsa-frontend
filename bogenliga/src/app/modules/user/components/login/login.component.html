@@ -4,19 +4,19 @@
     <div id="login-dialog">
 
       <bla-alert [visible]="(loginResult === LoginResult.SUCCESS)"
-                 header="{{ 'LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.HEADER' | translate }}"
+                 header="{{ 'USER.LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.HEADER' | translate }}"
                  [alertType]="AlertType.SUCCESS">
         {{ 'USER.LOGIN.NOTIFICATION.LOGIN_SUCCESSFUL.TEXT' | translate }}
       </bla-alert>
 
       <bla-alert [visible]="(loginResult === LoginResult.FAILURE)"
-                 header="{{ 'LOGIN.NOTIFICATION.LOGIN_FAILURE.HEADER' | translate }}"
+                 header="{{ 'USER.LOGIN.NOTIFICATION.LOGIN_FAILURE.HEADER' | translate }}"
                  [alertType]="AlertType.DANGER">
         {{ 'USER.LOGIN.NOTIFICATION.LOGIN_FAILURE.TEXT' | translate }}
       </bla-alert>
 
       <bla-alert [visible]="(loginResult === LoginResult.CONNECTION_PROBLEM)"
-                 header="{{ 'LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.HEADER' | translate }}"
+                 header="{{ 'USER.LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.HEADER' | translate }}"
                  [alertType]="AlertType.WARNING">
         {{ 'USER.LOGIN.NOTIFICATION.LOGIN_CONNECTION_PROBLEM.TEXT' | translate }}
       </bla-alert>

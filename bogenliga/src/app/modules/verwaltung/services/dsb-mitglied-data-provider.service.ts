@@ -11,7 +11,7 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DsbMitgliedDO} from '../types/dsb-mitglied-do.class';
-import {fromPayload, fromPayloadArray} from '../mapper/dsb-mitglied-mapper';
+import {fromPayload} from '../mapper/dsb-mitglied-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -64,27 +64,10 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     });
   }
 
-
-  public findAll(): Promise<Response<DsbMitgliedDO[]>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
-          .then((data: VersionedDataTransferObject[]) => {
-
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
-  }
+  // TODO implement
+  // public findAll(): Promise<Response<DsbMitgliedDO[]>> {
+  //
+  // }
 
 
   public findById(id: string | number): Promise<Response<DsbMitgliedDO>> {
