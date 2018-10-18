@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
     // scrolls up to top after page change
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
         return;
       }
       window.scrollTo(0, 0)

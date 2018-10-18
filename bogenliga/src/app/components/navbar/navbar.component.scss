@@ -47,6 +47,12 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 // for small devices
 @media (max-width: 768px) {
+
+  .navbar-dark {
+    padding: 0 1em 0 0;
+  }
+
+
   // Toggle shown while in mobile view
   #sidebarCollapseNavBar {
     display: block;

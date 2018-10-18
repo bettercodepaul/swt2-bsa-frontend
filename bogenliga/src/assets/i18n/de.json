@@ -154,6 +154,7 @@
           "ERROR": "Bitte eine gültige Vereinsid eingeben."
         },
         "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
       "NOTIFICATION": {
@@ -254,7 +255,9 @@
     "CDAY": "Wettkampftag",
     "NODATA": "Es gibt keine Daten zum anzeigen..."
   },
-
+  "DIALOG": {
+    "LOADING": "Einträge werden geladen"
+  },
   "DETAILS": {
     "TITLE": "Entität-Details",
     "DELETE": "Löschen",

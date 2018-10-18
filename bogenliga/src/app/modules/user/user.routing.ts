@@ -6,5 +6,6 @@ import {LoginComponent} from './components/login/login.component';
 
 export const USER_ROUTES: Routes = [
   {path: '', pathMatch: 'full', component: UserProfileComponent, canActivate: [UserGuard]},
+  {path: 'profile', redirectTo: '', pathMatch: 'full'},
   {path: 'login', component: LoginComponent, canActivate: [UserGuard]},
 ];

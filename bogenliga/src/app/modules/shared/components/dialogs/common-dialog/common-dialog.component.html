@@ -4,8 +4,21 @@
 
   <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
 
-  <ng-content></ng-content>
+  <ng-content *ngIf="!loading"></ng-content>
 
+  <div *ngIf="loading"
+       class="dialog-loading-indicator">
+
+    <fa-icon icon="sync"
+             [spin]="'true'"
+             size="4x"
+             style="margin-top: 2em; margin-bottom: 2em;">
+
+    </fa-icon>
+
+    <p>{{'DIALOG.LOADING' | translate}}</p>
+
+  </div>
 </div>
 
 
