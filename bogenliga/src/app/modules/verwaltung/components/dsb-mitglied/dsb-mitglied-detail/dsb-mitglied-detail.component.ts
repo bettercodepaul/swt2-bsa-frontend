@@ -20,6 +20,7 @@ const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
 const NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS = 'dsb_mitglied_detail_delete_success';
 const NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE = 'dsb_mitglied_detail_delete_failure';
 const NOTIFICATION_SAVE_DSB_MITGLIED = 'dsb_mitglied_detail_save';
+const NOTIFICATION_UPDATE_DSB_MITGLIED = 'dsb_mitglied_detail_update';
 
 
 @Component({
@@ -99,6 +100,45 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
           this.saveLoading = false;
 
 
+        });
+    // show response message
+  }
+
+  public onUpdate(ignore: any): void {
+    this.saveLoading = true;
+
+    // persist
+    this.dsbMitgliedDataProvider.update(this.currentMitglied)
+        .then((response: Response<DsbMitgliedDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+
+            const id = this.currentMitglied.id;
+
+            const notification: Notification = {
+              id:          NOTIFICATION_UPDATE_DSB_MITGLIED + id,
+              title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSB_MITGLIED + id)
+                .subscribe(myNotification => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                    this.router.navigateByUrl('/verwaltung/dsbmitglieder');
+                  }
+                });
+
+            this.notificationService.showNotification(notification);
+          }
+        }, (response: Response<DsbMitgliedDO>) => {
+          console.log('Failed');
+          this.saveLoading = false;
         });
     // show response message
   }

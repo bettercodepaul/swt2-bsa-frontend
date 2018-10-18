@@ -53,7 +53,6 @@ export class NotificationService {
   }
 
   public discardNotification() {
-    console.log('DISCARD NOTIFICATION');
     this.store.dispatch({type: DISCARD_NOTIFICATION});
 
   }

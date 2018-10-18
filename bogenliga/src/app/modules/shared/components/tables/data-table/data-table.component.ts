@@ -46,7 +46,6 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
 
     // if no sorter implementation is passed, use the default sorter
     if (!this.tableSorter) {
-      console.log('No sorter implementation found. Use default sorter');
       this.tableSorter = new DefaultTableSorter(this.config);
     }
 
