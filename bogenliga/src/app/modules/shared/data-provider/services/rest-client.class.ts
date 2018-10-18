@@ -7,8 +7,7 @@ import {catchError} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Access-Control-Allow-Origin':  '*',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE, OPTIONS'
+    // 'demo header':  'demo header value',
   })
 };
 
