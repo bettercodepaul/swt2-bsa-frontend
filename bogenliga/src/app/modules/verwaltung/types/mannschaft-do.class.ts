@@ -1,6 +1,6 @@
 import {VersionedDataObject} from '../../shared/data-provider/models/versioned-data-object.interface';
 
-export class DsbMitgliedDO implements VersionedDataObject {
+export class MannschaftDO implements VersionedDataObject {
   id: number;
   version: number;
 
