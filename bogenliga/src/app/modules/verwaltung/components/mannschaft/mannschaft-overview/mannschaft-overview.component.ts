@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DSB_MITGLIED_OVERVIEW_CONFIG} from './dsb-mitglied-overview.config';
+import {DSB_MITGLIED_OVERVIEW_CONFIG} from './mannschaft-overview.config';
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {CommonComponent} from '../../../../shared/components/common';
@@ -21,10 +21,10 @@ export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
 
 @Component({
   selector:    'bla-dsb-mitglied-overview',
-  templateUrl: './dsb-mitglied-overview.component.html',
-  styleUrls:   ['./dsb-mitglied-overview.component.scss']
+  templateUrl: './mannschaft-overview.component.html',
+  styleUrls:   ['./mannschaft-overview.component.scss']
 })
-export class DsbMitgliedOverviewComponent extends CommonComponent implements OnInit {
+export class MannschaftOverviewComponent extends CommonComponent implements OnInit {
 
   public config = DSB_MITGLIED_OVERVIEW_CONFIG;
   public rows: TableRow[];
