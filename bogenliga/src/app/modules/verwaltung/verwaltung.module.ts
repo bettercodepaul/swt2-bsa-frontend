@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard} from './guards';
 import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComponent} from './components';
+import { WettkampfklasseOverviewComponent } from './components/wettkampfklasse/wettkampfklasse-overview/wettkampfklasse-overview.component';
 
 @NgModule({
   imports:      [
@@ -14,7 +15,7 @@ import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComp
     SharedModule,
     FormsModule
   ],
-  declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent],
+  declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent, WettkampfklasseOverviewComponent],
   providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard]
 })
 export class VerwaltungModule {
