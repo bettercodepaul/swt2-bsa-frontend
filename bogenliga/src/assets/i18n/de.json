@@ -99,6 +99,10 @@
         "DSBMITGLIEDER": {
           "LABEL": "DSB Mitglieder",
           "DESCRIPTION": "Verwaltung der DSB Mitglieder"
+        },
+        "KLASSEN": {
+          "LABEL": "(Wettkampf-) Klassen",
+          "DESCRIPTION": "Verwaltung der Klassen"
         }
       }
     },
@@ -111,6 +115,25 @@
           "NACHNAME": "Nachname",
           "GEBURTSDATUM": "Geburtsdatum",
           "MITGLIEDSNUMMER": "Mitgliedsnummer"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "DSB Mitglied löschen",
+          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "KLASSEN": {
+      "TITLE": "KLASSEN - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "KLASSENR": "KlassenNR",
+          "KLASSENAME": "Klassen Name",
+          "KLASSEALTERMIN": "Alter Min",
+          "KLASSEALTERMAX": "Alter Max"
+
         }
       },
       "NOTIFICATION": {
