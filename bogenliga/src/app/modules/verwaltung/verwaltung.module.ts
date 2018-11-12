@@ -4,7 +4,7 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
-import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard, MannschaftOverviewGuard} from './guards';
+import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard, MannschaftOverviewGuard, MannschaftDetailGuard} from './guards';
 import {
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
@@ -20,7 +20,7 @@ import {
     FormsModule
   ],
   declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent, MannschaftDetailComponent, MannschaftOverviewComponent],
-  providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard]
+  providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard, MannschaftOverviewGuard, MannschaftDetailGuard]
 })
 export class VerwaltungModule {
 }
