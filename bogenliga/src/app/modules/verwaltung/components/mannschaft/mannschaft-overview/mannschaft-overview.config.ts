@@ -3,38 +3,38 @@ import {TableColumnSortOrder} from '../../../../shared/components/tables/types/t
 import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
 import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
 
-export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
+export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.DSBMITGLIEDER.TITLE',
+  pageTitleTranslationKey: 'MANAGEMENT.MANSCHAFT.TITLE',
 
   tableConfig: {
     columns: [
       {
-        translationKey:   'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.ID',
+        translationKey:   'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.ID',
         propertyName:     'id',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.VORNAME',
+        translationKey: 'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.VORNAME',
         propertyName:   'vorname',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.NACHNAME',
+        translationKey: 'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.NACHNAME',
         propertyName:   'nachname',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.GEBURTSDATUM',
+        translationKey: 'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.GEBURTSDATUM',
         propertyName:   'geburtsdatum',
         type:           TableColumnType.DATE,
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.MITGLIEDSNUMMER',
-        propertyName:   'mitgliedsnummer',
+        translationKey: 'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.MANNSCHAFTSNUMMER',
+        propertyName:   'mannschaftsnummer',
         width:          20,
       }
     ],
