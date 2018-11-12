@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {DSB_MANNSCHAFT_OVERVIEW_CONFIG} from './mannschaft-overview.config';
-import {MannschaftDataProviderService} from '../../../services/mannschaft-data-provider.service';
+import {DSB_MANNSCHAFT_OVERVIEW_CONFIG} from './dsb-mannschaft-overview.config';
+import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {CommonComponent} from '../../../../shared/components/common';
 import {Response} from '../../../../shared/data-provider';
@@ -21,15 +21,15 @@ export const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_overview_delete';
 
 @Component({
   selector:    'bla-mannschaft-overview',
-  templateUrl: './mannschaft-overview.component.html',
-  styleUrls:   ['./mannschaft-overview.component.scss']
+  templateUrl: './dsb-mannschaft-overview.component.html',
+  styleUrls:   ['./dsb-mannschaft-overview.component.scss']
 })
-export class MannschaftOverviewComponent extends CommonComponent implements OnInit {
+export class DsbMannschaftOverviewComponent extends CommonComponent implements OnInit {
 
   public config = DSB_MANNSCHAFT_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
-  constructor(private MannschaftDataProvider: MannschaftDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private MannschaftDataProvider: DsbMannschaftDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 

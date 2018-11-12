@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {MANNSCHAFT_DETAIL_CONFIG} from './mannschaft-detail.config';
+import {DSBMANNSCHAFT_DETAIL_CONFIG} from './dsb-mannschaft-detail.config';
 import {Response} from '../../../../shared/data-provider';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {MannschaftDataProviderService} from '../../../services/mannschaft-data-provider.service';
+import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
-import {MannschaftDO} from '../../../types/mannschaft-do.class';
+import {DsbMannschaftDO} from '../../../types/dsb-mannschaft-do.class';
 import {
   Notification,
   NotificationOrigin,
@@ -16,28 +16,28 @@ import {
 } from '../../../../shared/services/notification';
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
-const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
-const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
-const NOTIFICATION_SAVE_MANNSCHAFT = 'mannschaft_detail_save';
-const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
+const NOTIFICATION_DELETE_DSBMANNSCHAFT = 'dsbmannschaft_detail_delete';
+const NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS = 'dsbmannschaft_detail_delete_success';
+const NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE = 'dsbmannschaft_detail_delete_failure';
+const NOTIFICATION_SAVE_DSBMANNSCHAFT = 'dsbmannschaft_detail_save';
+const NOTIFICATION_UPDATE_DSBMANNSCHAFT = 'dsbmannschaft_detail_update';
 
 
 @Component({
-  selector:    'bla-mannschaft-detail',
-  templateUrl: './mannschaft-detail.component.html',
-  styleUrls:   ['./mannschaft-detail.component.scss']
+  selector:    'bla-dsb-mannschaft-detail',
+  templateUrl: './dsb-mannschaft-detail.component.html',
+  styleUrls:   ['./dsb-mannschaft-detail.component.scss']
 })
-export class MannschaftDetailComponent extends CommonComponent implements OnInit {
+export class DsbMannschaftDetailComponent extends CommonComponent implements OnInit {
 
-  public config = MANNSCHAFT_DETAIL_CONFIG;
+  public config = DSBMANNSCHAFT_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentMannschaft: MannschaftDO = new MannschaftDO();
+  public currentDsbMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
 
   public deleteLoading = false;
   public saveLoading = false;
 
-  constructor(private MannschaftDataProvider: MannschaftDataProviderService,
+  constructor(private DsbMannschaftDataProvider: DsbMannschaftDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
@@ -53,7 +53,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
-          this.currentMannschaft = new MannschaftDO();
+          this.currentDsbMannschaft = new DsbMannschaftDO();
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
@@ -68,34 +68,34 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.saveLoading = true;
 
     // persist
-    this.MannschaftDataProvider.create(this.currentMannschaft)
-        .then((response: Response<MannschaftDO>) => {
+    this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft)
+        .then((response: Response<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_MANNSCHAFT,
-              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              id:          NOTIFICATION_SAVE_DSBMANNSCHAFT,
+              title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_MANNSCHAFT)
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_DSBMANNSCHAFT)
                 .subscribe(myNotification => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/mannschaft/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/dsb-mannschaft/' + response.payload.id);
                   }
                 });
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<MannschaftDO>) => {
+        }, (response: Response<DsbMannschaftDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -108,35 +108,35 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.saveLoading = true;
 
     // persist
-    this.MannschaftDataProvider.update(this.currentMannschaft)
-        .then((response: Response<MannschaftDO>) => {
+    this.DsbMannschaftDataProvider.update(this.currentDsbMannschaft)
+        .then((response: Response<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
 
-            const id = this.currentMannschaft.id;
+            const id = this.currentDsbMannschaft.id;
 
             const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_MANNSCHAFT + id,
-              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              id:          NOTIFICATION_UPDATE_DSBMANNSCHAFT + id,
+              title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT + id)
+            this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSBMANNSCHAFT + id)
                 .subscribe(myNotification => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/mannschaft');
+                    this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
                   }
                 });
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<MannschaftDO>) => {
+        }, (response: Response<DsbMannschaftDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -147,12 +147,12 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.deleteLoading = true;
     this.notificationService.discardNotification();
 
-    const id = this.currentMannschaft.id;
+    const id = this.currentDsbMannschaft.id;
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
-      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      id:               NOTIFICATION_DELETE_DSBMANNSCHAFT + id,
+      title:            'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
@@ -160,11 +160,11 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT + id)
         .subscribe(myNotification => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.MannschaftDataProvider.deleteById(id)
+            this.DsbMannschaftDataProvider.deleteById(id)
                 .then(response => this.handleDeleteSuccess(response))
                 .catch(response => this.handleDeleteFailure(response));
           }
@@ -174,21 +174,21 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   }
 
   public entityExists(): boolean {
-    return this.currentMannschaft.id > 0;
+    return this.currentDsbMannschaft.id > 0;
   }
 
   private loadById(id: number) {
-    this.MannschaftDataProvider.findById(id)
-        .then((response: Response<MannschaftDO>) => this.handleSuccess(response))
-        .catch((response: Response<MannschaftDO>) => this.handleFailure(response));
+    this.DsbMannschaftDataProvider.findById(id)
+        .then((response: Response<DsbMannschaftDO>) => this.handleSuccess(response))
+        .catch((response: Response<DsbMannschaftDO>) => this.handleFailure(response));
   }
 
-  private handleSuccess(response: Response<MannschaftDO>) {
-    this.currentMannschaft = response.payload;
+  private handleSuccess(response: Response<DsbMannschaftDO>) {
+    this.currentDsbMannschaft = response.payload;
     this.loading = false;
   }
 
-  private handleFailure(response: Response<MannschaftDO>) {
+  private handleFailure(response: Response<DsbMannschaftDO>) {
     this.loading = false;
 
   }
@@ -196,19 +196,19 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleDeleteSuccess(response: Response<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS,
-      title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
-      description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS,
+      title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/mannschaft');
+            this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
             this.deleteLoading = false;
           }
         });
@@ -219,16 +219,16 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleDeleteFailure(response: Response<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_MANNSCHAFT_FAILURE,
-      title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE,
+      title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
+      description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT_FAILURE)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
