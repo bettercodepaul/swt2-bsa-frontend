@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
 
 @Injectable()
-export class MannschaftOverviewGuard implements CanActivate {
+export class DsbMannschaftDetailGuard implements CanActivate {
   constructor() {
   }
 

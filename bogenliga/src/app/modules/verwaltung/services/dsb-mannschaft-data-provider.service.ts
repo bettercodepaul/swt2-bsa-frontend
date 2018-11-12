@@ -10,21 +10,21 @@ import {
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
 import {HttpErrorResponse} from '@angular/common/http';
-import {MannschaftDO} from '../types/mannschaft-do.class';
+import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/mannschaft-mapper';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MannschaftDataProviderService extends DataProviderService {
+export class DsbMannschaftDataProviderService extends DataProviderService {
 
-  serviceSubUrl = 'v1/mannschaft';
+  serviceSubUrl = 'v1/dsbmannschaft';
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
     super();
   }
 
-  public create(payload: MannschaftDO): Promise<Response<MannschaftDO>> {
+  public create(payload: DsbMannschaftDO): Promise<Response<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -65,7 +65,7 @@ export class MannschaftDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<Response<MannschaftDO[]>> {
+  public findAll(): Promise<Response<DsbMannschaftDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -87,7 +87,7 @@ export class MannschaftDataProviderService extends DataProviderService {
   }
 
 
-  public findById(id: string | number): Promise<Response<MannschaftDO>> {
+  public findById(id: string | number): Promise<Response<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -108,7 +108,7 @@ export class MannschaftDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<MannschaftDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<Response<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
