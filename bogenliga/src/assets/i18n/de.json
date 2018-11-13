@@ -99,6 +99,10 @@
         "DSBMITGLIEDER": {
           "LABEL": "DSB Mitglieder",
           "DESCRIPTION": "Verwaltung der DSB Mitglieder"
+        },
+        "DSBMANNSCHAFTEN": {
+          "LABEL": "Mannschaften",
+          "DESCRIPTION": "Verwaltung der Mannschaften"
         }
       }
     },
