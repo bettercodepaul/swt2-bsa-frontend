@@ -43,6 +43,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
   }
 
   ngOnInit() {
+    console.log("detail")
     this.loading = true;
 
     this.notificationService.discardNotification();

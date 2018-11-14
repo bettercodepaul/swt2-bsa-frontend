@@ -38,12 +38,12 @@ export class WettkampfklasseOverviewComponent extends CommonComponent implements
 
   public onView(versionedDataObject: VersionedDataObject): void {
     console.log('click on view');
-    // this.navigateToDetailDialog(versionedDataObject);
+    this.navigateToDetailDialog(versionedDataObject);
   }
 
   public onEdit(versionedDataObject: VersionedDataObject): void {
     console.log('click on edit');
-    // this.navigateToDetailDialog(versionedDataObject);
+    this.navigateToDetailDialog(versionedDataObject);
   }
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
@@ -96,5 +96,10 @@ export class WettkampfklasseOverviewComponent extends CommonComponent implements
     this.rows = toTableRows(response.payload);
     console.log(this.rows);
     this.loading = false;
+  }
+
+  private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
+    console.log(versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/klassen/' + versionedDataObject.id);
   }
 }
