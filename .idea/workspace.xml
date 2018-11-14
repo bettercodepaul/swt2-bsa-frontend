@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b63bff8-862e-477b-965b-a24f372aa50a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-overview/dsb-mitglied-overview.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-overview/dsb-mitglied-overview.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-overview/dsb-mitglied-overview.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-overview/dsb-mitglied-overview.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bogenliga/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="0b63bff8-862e-477b-965b-a24f372aa50a" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,13 +68,22 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-105103223">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-82">
+            <state relative-caret-position="1248">
               <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
             </state>
           </provider>
@@ -93,7 +92,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.config.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
+            <state relative-caret-position="64">
               <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
             </state>
           </provider>
@@ -102,7 +101,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
+            <state relative-caret-position="427">
               <caret line="230" column="79" selection-start-line="230" selection-start-column="79" selection-end-line="230" selection-end-column="79" />
               <folding>
                 <element signature="e#0#48#0" expanded="true" />
@@ -147,11 +146,12 @@
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
+      <autoscrollFromSource ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -162,19 +162,6 @@
             <path>
               <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
               <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="dist" type="462c0819:PsiDirectoryNode" />
               <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -351,17 +338,18 @@
       <workItem from="1541772189216" duration="333000" />
       <workItem from="1541797404880" duration="792000" />
       <workItem from="1541854418145" duration="4915000" />
+      <workItem from="1542205827046" duration="26000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8142000" />
+    <option name="totallyTimeSpent" value="8168000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26172465" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.266062" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -404,13 +392,7 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/components/navbar/components/user-dropdown/user-dropdown.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#96#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/app.component.html">
       <provider selected="true" editor-type-id="text-editor" />
@@ -422,13 +404,7 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/guards/dsb-mitglied-detail.guard.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.html">
       <provider selected="true" editor-type-id="text-editor" />
@@ -453,28 +429,28 @@
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.scss">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-235" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1248">
+          <caret line="78" column="14" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.config.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
+        <state relative-caret-position="64">
           <caret line="4" column="49" selection-start-line="4" selection-start-column="49" selection-end-line="4" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
+        <state relative-caret-position="427">
           <caret line="230" column="79" selection-start-line="230" selection-start-column="79" selection-end-line="230" selection-end-column="79" />
           <folding>
             <element signature="e#0#48#0" expanded="true" />
