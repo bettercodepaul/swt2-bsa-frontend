@@ -88,7 +88,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
                 .subscribe(myNotification => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/klasse/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/klassen/' + response.payload.id);
                   }
                 });
 
@@ -129,7 +129,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
                 .subscribe(myNotification => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/klasse');
+                    this.router.navigateByUrl('/verwaltung/klassen');
                   }
                 });
 
@@ -178,7 +178,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/klasse');
+            this.router.navigateByUrl('/verwaltung/klassen');
             this.deleteLoading = false;
           }
         });
