@@ -5,11 +5,11 @@
         class="horizontal-form half-page"
         #dsbMitgliedForm="ngForm">
 
-    <!-- VORNAME -->
+    <!-- WETTKAMPF ID -->
     <div class="form-group row">
       <label for="wettkampfKlasseId"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -21,19 +21,19 @@
                #wettkampfKlasseId="ngModel"
                [(ngModel)]="currentWettkampfklasse.id"
                [class.is-invalid]="wettkampfKlasseId.invalid && !wettkampfKlasseId.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.ERROR' | translate }}
         </div>
       </div>
     </div>
 
-    <!-- NACHNAME -->
+    <!-- WETTKAMPFNAME -->
     <div class="form-group row">
       <label for="wettkampfKlasseNr"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -45,19 +45,19 @@
                #wettkampfKlasseNr="ngModel"
                [(ngModel)]="currentWettkampfklasse.klasseNr"
                [class.is-invalid]="wettkampfKlasseNr.invalid && !wettkampfKlasseNr.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.ERROR' | translate }}
         </div>
       </div>
     </div>
 
-    <!-- GEBURTSDATUM -->
+    <!-- WETTKAMPF_ALTER_MIN -->
     <div class="form-group row">
       <label for="wettkampfKlasseName"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -70,20 +70,20 @@
                #wettkampfKlasseName="ngModel"
                [(ngModel)]="currentWettkampfklasse.klasseName"
                [class.is-invalid]="wettkampfKlasseName.invalid && !wettkampfKlasseName.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.ERROR' | translate }}
         </div>
       </div>
     </div>
 
 
-    <!-- MITGLIEDSNUMMER -->
+    <!-- WETTKAMPF_ALTER_MAX -->
     <div class="form-group row">
       <label for="wettkampfKlasseAlterMin"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -95,19 +95,19 @@
                #wettkampfKlasseAlterMin="ngModel"
                [(ngModel)]="currentWettkampfklasse.klasseAlterMin"
                [class.is-invalid]="wettkampfKlasseAlterMin.invalid && !wettkampfKlasseAlterMin.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.ERROR' | translate }}
         </div>
       </div>
     </div>
 
-    <!-- NATIONALITAET -->
+    <!-- WETTKAMPF_NR -->
     <div class="form-group row">
       <label for="wettkampfKlasseAlterMax"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -120,10 +120,10 @@
                #wettkampfKlasseAlterMax="ngModel"
                [(ngModel)]="currentWettkampfklasse.klasseAlterMax"
                [class.is-invalid]="wettkampfKlasseAlterMax.invalid && !wettkampfKlasseAlterMax.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.ERROR' | translate }}
         </div>
       </div>
     </div>
