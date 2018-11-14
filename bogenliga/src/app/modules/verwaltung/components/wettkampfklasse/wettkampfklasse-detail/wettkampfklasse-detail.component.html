@@ -5,7 +5,8 @@
         class="horizontal-form half-page"
         #dsbMitgliedForm="ngForm">
 
-    <!-- WETTKAMPF ID -->
+
+    <!-- WETTKAMPF ID
     <div class="form-group row">
       <label for="wettkampfKlasseId"
              class="col-sm-3 col-form-label">
@@ -27,13 +28,13 @@
           {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.ERROR' | translate }}
         </div>
       </div>
-    </div>
+    </div>-->
 
-    <!-- WETTKAMPFNAME -->
+    <!-- WETTKAMPFKLASSE_NR -->
     <div class="form-group row">
       <label for="wettkampfKlasseNr"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -45,6 +46,30 @@
                #wettkampfKlasseNr="ngModel"
                [(ngModel)]="currentWettkampfklasse.klasseNr"
                [class.is-invalid]="wettkampfKlasseNr.invalid && !wettkampfKlasseNr.untouched"
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- WETTKAMPFKLASSE_NAME -->
+    <div class="form-group row">
+      <label for="wettkampfKlasseName"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="wettkampfKlasseName"
+               name="wettkampfKlasseName"
+               #wettkampfKlasseName="ngModel"
+               [(ngModel)]="currentWettkampfklasse.klasseName"
+               [class.is-invalid]="wettkampfKlasseName.invalid && !wettkampfKlasseName.untouched"
                placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -53,37 +78,12 @@
       </div>
     </div>
 
+
     <!-- WETTKAMPF_ALTER_MIN -->
-    <div class="form-group row">
-      <label for="wettkampfKlasseName"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-               id="wettkampfKlasseName"
-               name="wettkampfKlasseName"
-               #wettkampfKlasseName="ngModel"
-               [(ngModel)]="currentWettkampfklasse.klasseName"
-               [class.is-invalid]="wettkampfKlasseName.invalid && !wettkampfKlasseName.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-
-    <!-- WETTKAMPF_ALTER_MAX -->
     <div class="form-group row">
       <label for="wettkampfKlasseAlterMin"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -95,35 +95,34 @@
                #wettkampfKlasseAlterMin="ngModel"
                [(ngModel)]="currentWettkampfklasse.klasseAlterMin"
                [class.is-invalid]="wettkampfKlasseAlterMin.invalid && !wettkampfKlasseAlterMin.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.ERROR' | translate }}
         </div>
       </div>
     </div>
 
-    <!-- WETTKAMPF_NR -->
+    <!-- WETTKAMPF_ALTER_MAX -->
     <div class="form-group row">
       <label for="wettkampfKlasseAlterMax"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <input type="text"
                class="form-control"
                required
-               pattern="[D|AT|CH|FR|IT|GB]"
                id="wettkampfKlasseAlterMax"
                name="wettkampfKlasseAlterMax"
                #wettkampfKlasseAlterMax="ngModel"
                [(ngModel)]="currentWettkampfklasse.klasseAlterMax"
                [class.is-invalid]="wettkampfKlasseAlterMax.invalid && !wettkampfKlasseAlterMax.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.ERROR' | translate }}
         </div>
       </div>
     </div>
