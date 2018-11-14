@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {WETTKAMPFKLASSE_DETAIL_CONFIG} from './wettkampfklasse-detail.config';
 import {Response} from '../../../../shared/data-provider';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {WettkampfklassenDataProviderService} from '../../../services/wettkampfklassen-data-provider.service.service';
+import {WettkampfklassenDataProviderService} from '../../../services/wettkampfklassen-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
-import {WettkampfKlasseDO} from '../modules/verwaltung/types/wettkampfklasse-do.class';
+import {WettkampfKlasseDO} from '../../../types/wettkampfklasse-do.class';
 import {
   Notification,
   NotificationOrigin,
@@ -30,7 +30,7 @@ const NOTIFICATION_UPDATE_DSB_MITGLIED = 'dsb_mitglied_detail_update';
 export class WettkampfklasseDetailComponent extends CommonComponent implements OnInit {
   public config = WETTKAMPFKLASSE_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentMitglied: WettkampfKlasseDO = new WettkampfKlasseDO();
+  public currentWettkampfklasse: WettkampfKlasseDO = new WettkampfKlasseDO();
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -51,7 +51,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
-          this.currentMitglied = new WettkampfKlasseDO();
+          this.currentWettkampfklasse = new WettkampfKlasseDO();
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
@@ -66,7 +66,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
     this.saveLoading = true;
 
     // persist
-    this.wettkampfklasseDataProvider.create(this.currentMitglied)
+    this.wettkampfklasseDataProvider.create(this.currentWettkampfklasse)
         .then((response: Response<WettkampfKlasseDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
@@ -75,8 +75,8 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
             const notification: Notification = {
               id:          NOTIFICATION_SAVE_DSB_MITGLIED,
-              title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              title:       'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
@@ -87,7 +87,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
                 .subscribe(myNotification => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/klasse/' + response.payload.id);
                   }
                 });
 
@@ -106,18 +106,18 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
     this.saveLoading = true;
 
     // persist
-    this.wettkampfklasseDataProvider.update(this.currentMitglied)
+    this.wettkampfklasseDataProvider.update(this.currentWettkampfklasse)
         .then((response: Response<WettkampfKlasseDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
 
-            const id = this.currentMitglied.id;
+            const id = this.currentWettkampfklasse.id;
 
             const notification: Notification = {
               id:          NOTIFICATION_UPDATE_DSB_MITGLIED + id,
-              title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              title:       'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
@@ -128,7 +128,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
                 .subscribe(myNotification => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/dsbmitglieder');
+                    this.router.navigateByUrl('/verwaltung/klasse');
                   }
                 });
 
@@ -141,38 +141,9 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
     // show response message
   }
 
-  public onDelete(ignore: any): void {
-    this.deleteLoading = true;
-    this.notificationService.discardNotification();
-
-    const id = this.currentMitglied.id;
-
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
-      title:            'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
-        .subscribe(myNotification => {
-
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.wettkampfklasseDataProvider.deleteById(id)
-                .then(response => this.handleDeleteSuccess(response))
-                .catch(response => this.handleDeleteFailure(response));
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-  }
 
   public entityExists(): boolean {
-    return this.currentMitglied.id > 0;
+    return this.currentWettkampfklasse.id > 0;
   }
 
   private loadById(id: number) {
@@ -182,7 +153,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
   }
 
   private handleSuccess(response: Response<WettkampfKlasseDO>) {
-    this.currentMitglied = response.payload;
+    this.currentWettkampfklasse = response.payload;
     this.loading = false;
   }
 
@@ -195,8 +166,8 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS,
-      title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
-      description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
+      title:       'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      description: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
@@ -206,7 +177,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/dsbmitglieder');
+            this.router.navigateByUrl('/verwaltung/klasse');
             this.deleteLoading = false;
           }
         });
@@ -218,8 +189,8 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE,
-      title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
+      title:       'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
+      description: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,

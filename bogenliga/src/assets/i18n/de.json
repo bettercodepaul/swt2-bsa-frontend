@@ -233,7 +233,7 @@
   },
   "NOTIFICATION": {
     "DELETE": {
-      "TITLE": "DSB Mitglied löschen",
+      "TITLE": "Wettkampfklasse löschen",
       "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
     },
     "DELETE_SUCCESS": {
