@@ -1,8 +1,7 @@
 import {Routes} from '@angular/router';
 
-import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard} from './guards';
-import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComponent} from './components';
-import {WettkampfklasseOverviewComponent} from './components/wettkampfklasse/wettkampfklasse-overview/wettkampfklasse-overview.component';
+import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard, WettkampfklasseOverviewGuard, WettkampfklasseDetailGuard} from './guards';
+import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComponent, WettkampfklasseOverviewComponent, WettkampfklasseDetailComponent} from './components';
 
 export const VERWALTUNG_ROUTES: Routes = [
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
@@ -16,7 +15,8 @@ export const VERWALTUNG_ROUTES: Routes = [
     path:        'klassen',
     component:   WettkampfklasseOverviewComponent,
     pathMatch:   'full',
-    canActivate: [DsbMitgliedOverviewGuard]
+    canActivate: [WettkampfklasseOverviewGuard]
   },
-  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]}
+  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
+  {path: 'klassen/:id', component: WettkampfklasseDetailComponent, canActivate: [WettkampfklasseDetailGuard]}
 ];
