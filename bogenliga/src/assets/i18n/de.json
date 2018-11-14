@@ -198,58 +198,59 @@
           "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
         }
       }
+    },"WETTKAMPFKLASSE_DETAIL": {
+      "TITLE": "Wettkampfklasse - Details",
+      "FORM": {
+        "WETTKAMPF_ID": {
+          "LABEL": "Wettkampf-ID",
+          "PLACEHOLDER": "Bitte eine ID eingeben",
+          "ERROR": "Bitte eine gültige ID eingeben."
+        },
+        "WETTKAMPFNAME": {
+          "LABEL": "Wettkampfname",
+          "PLACEHOLDER": "Bitte einen Wettkampfnamen eingeben",
+          "ERROR": "Bitte einen gültigen Wettkampfnamen eingeben."
+        },
+        "WETTKAMPF_ALTER_MIN": {
+          "LABEL": "Wettkampf Alter min.",
+          "PLACEHOLDER": "Bitte ein Alter eingeben",
+          "ERROR": "Bitte ein gültiges Alter eingeben."
+        },
+        "WETTKAMPF_ALTER_MAX": {
+          "LABEL": "Wettkampf Alter max.",
+          "PLACEHOLDER": "Bitte ein Alter eingeben",
+          "ERROR": "Bitte ein gültiges Alter eingeben."
+        },
+        "WETTKAMPF_NR": {
+          "LABEL": "Wettkampfnummer",
+          "PLACEHOLDER": "Bitte eine Wettkampfnummer eingeben",
+          "ERROR": "Bitte eine gültige Wettkampfnummer eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Wettkampfklasse löschen",
+          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+        }
+      }
     }
-  },"WETTKAMPFKLASSE_DETAIL": {
-  "TITLE": "Wettkampfklasse - Details",
-  "FORM": {
-    "WETTKAMPF_ID": {
-      "LABEL": "Wettkampf-ID",
-      "PLACEHOLDER": "Bitte eine ID eingeben",
-      "ERROR": "Bitte eine gültige ID eingeben."
-    },
-    "WETTKAMPFNAME": {
-      "LABEL": "Wettkampfname",
-      "PLACEHOLDER": "Bitte einen Wettkampfnamen eingeben",
-      "ERROR": "Bitte einen gültigen Wettkampfnamen eingeben."
-    },
-    "WETTKAMPF_ALTER_MIN": {
-      "LABEL": "Wettkampf Alter min.",
-      "PLACEHOLDER": "Bitte ein Alter eingeben",
-      "ERROR": "Bitte ein gültiges Alter eingeben."
-    },
-    "WETTKAMPF_ALTER_MAX": {
-      "LABEL": "Wettkampf Alter max.",
-      "PLACEHOLDER": "Bitte ein Alter eingeben",
-      "ERROR": "Bitte ein gültiges Alter eingeben."
-    },
-    "WETTKAMPF_NR": {
-      "LABEL": "Wettkampfnummer",
-      "PLACEHOLDER": "Bitte eine Wettkampfnummer eingeben",
-      "ERROR": "Bitte eine gültige Wettkampfnummer eingeben."
-    },
-    "SAVE": "Speichern",
-    "UPDATE": "Aktualisieren",
-    "DELETE": "Löschen"
   },
-  "NOTIFICATION": {
-    "DELETE": {
-      "TITLE": "Wettkampfklasse löschen",
-      "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-    },
-    "DELETE_SUCCESS": {
-      "TITLE": "Erfolg",
-      "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
-    },
-    "DELETE_FAILURE": {
-      "TITLE": "Fehler beim Löschen",
-      "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
-    },
-    "SAVE": {
-      "TITLE": "Erfolg",
-      "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
-    }
-  }
-},
+
 
 
   "NOTIFICATION": {
