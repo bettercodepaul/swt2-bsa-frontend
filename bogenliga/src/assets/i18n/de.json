@@ -153,6 +153,9 @@
           "PLACEHOLDER": "Bitte eine Vereinsid eingeben",
           "ERROR": "Bitte eine gültige Vereinsid eingeben."
         },
+        "KAMPFRICHTER": {
+          "LABEL": "Kampfrichter"
+        },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
