@@ -1,0 +1,187 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="dsbMitgliedForm"
+        class="horizontal-form half-page"
+        #dsbMitgliedForm="ngForm">
+
+    <!-- VORNAME -->
+    <div class="form-group row">
+      <label for="dsbMitgliedVorname"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="dsbMitgliedVorname"
+               name="dsbMitgliedVorname"
+               #dsbMitgliedVorname="ngModel"
+               [(ngModel)]="currentMitglied.vorname"
+               [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- NACHNAME -->
+    <div class="form-group row">
+      <label for="dsbMitgliedNachname"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="dsbMitgliedNachname"
+               name="dsbMitgliedNachname"
+               #dsbMitgliedNachname="ngModel"
+               [(ngModel)]="currentMitglied.nachname"
+               [class.is-invalid]="dsbMitgliedNachname.invalid && !dsbMitgliedNachname.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- GEBURTSDATUM -->
+    <div class="form-group row">
+      <label for="dsbMitgliedGeburtsdatum"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+               id="dsbMitgliedGeburtsdatum"
+               name="dsbMitgliedGeburtsdatum"
+               #dsbMitgliedGeburtsdatum="ngModel"
+               [(ngModel)]="currentMitglied.geburtsdatum"
+               [class.is-invalid]="dsbMitgliedGeburtsdatum.invalid && !dsbMitgliedGeburtsdatum.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- MITGLIEDSNUMMER -->
+    <div class="form-group row">
+      <label for="dsbMitgliedMitgliedsnummer"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="dsbMitgliedMitgliedsnummer"
+               name="dsbMitgliedMitgliedsnummer"
+               #dsbMitgliedMitgliedsnummer="ngModel"
+               [(ngModel)]="currentMitglied.mitgliedsnummer"
+               [class.is-invalid]="dsbMitgliedMitgliedsnummer.invalid && !dsbMitgliedMitgliedsnummer.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- NATIONALITAET -->
+    <div class="form-group row">
+      <label for="dsbMitgliedNationalitaet"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               pattern="[D|AT|CH|FR|IT|GB]"
+               id="dsbMitgliedNationalitaet"
+               name="dsbMitgliedNationalitaet"
+               #dsbMitgliedNationalitaet="ngModel"
+               [(ngModel)]="currentMitglied.nationalitaet"
+               [class.is-invalid]="dsbMitgliedNationalitaet.invalid && !dsbMitgliedNationalitaet.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO: VEREIN ID, use dropdown list -->
+    <div class="form-group row">
+      <label for="dsbMitgliedVerein"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="number"
+               class="form-control"
+               required
+               min="1"
+               id="dsbMitgliedVerein"
+               name="dsbMitgliedVerein"
+               #dsbMitgliedVerein="ngModel"
+               [(ngModel)]="currentMitglied.vereinsId"
+               [class.is-invalid]="dsbMitgliedVerein.invalid && !dsbMitgliedVerein.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'dsbMitgliedSaveButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'dsbMitgliedUpdateButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
+        </bla-button>
+
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.DELETE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>
