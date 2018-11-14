@@ -106,6 +106,15 @@
         }
       }
     },
+    "DSBMANNSCHAFT":{
+      "TITLE": "DSB Mannschaften - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "VEREIN": "Verein"
+        }
+      }
+    },
     "DSBMITGLIEDER": {
       "TITLE": "DSB Mitglieder - Übersicht",
       "TABLE": {
