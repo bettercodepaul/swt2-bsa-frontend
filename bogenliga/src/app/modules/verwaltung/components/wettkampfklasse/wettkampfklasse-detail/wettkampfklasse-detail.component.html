@@ -1,0 +1,161 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="dsbMitgliedForm"
+        class="horizontal-form half-page"
+        #dsbMitgliedForm="ngForm">
+
+
+    <!-- WETTKAMPF ID
+    <div class="form-group row">
+      <label for="wettkampfKlasseId"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="wettkampfKlasseId"
+               name="wettkampfKlasseId"
+               #wettkampfKlasseId="ngModel"
+               [(ngModel)]="currentWettkampfklasse.id"
+               [class.is-invalid]="wettkampfKlasseId.invalid && !wettkampfKlasseId.untouched"
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.ERROR' | translate }}
+        </div>
+      </div>
+    </div>-->
+
+    <!-- WETTKAMPFKLASSE_NR -->
+    <div class="form-group row">
+      <label for="wettkampfKlasseNr"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="wettkampfKlasseNr"
+               name="wettkampfKlasseNr"
+               #wettkampfKlasseNr="ngModel"
+               maxlength="2"
+               [(ngModel)]="currentWettkampfklasse.klasseNr"
+               [class.is-invalid]="wettkampfKlasseNr.invalid && !wettkampfKlasseNr.untouched"
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- WETTKAMPFKLASSE_NAME -->
+    <div class="form-group row">
+      <label for="wettkampfKlasseName"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="wettkampfKlasseName"
+               name="wettkampfKlasseName"
+               #wettkampfKlasseName="ngModel"
+               [(ngModel)]="currentWettkampfklasse.klasseName"
+               [class.is-invalid]="wettkampfKlasseName.invalid && !wettkampfKlasseName.untouched"
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- WETTKAMPF_ALTER_MIN -->
+    <div class="form-group row">
+      <label for="wettkampfKlasseAlterMin"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="wettkampfKlasseAlterMin"
+               name="wettkampfKlasseAlterMin"
+               #wettkampfKlasseAlterMin="ngModel"
+               [(ngModel)]="currentWettkampfklasse.klasseAlterMin"
+               [class.is-invalid]="wettkampfKlasseAlterMin.invalid && !wettkampfKlasseAlterMin.untouched"
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- WETTKAMPF_ALTER_MAX -->
+    <div class="form-group row">
+      <label for="wettkampfKlasseAlterMax"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="wettkampfKlasseAlterMax"
+               name="wettkampfKlasseAlterMax"
+               #wettkampfKlasseAlterMax="ngModel"
+               [(ngModel)]="currentWettkampfklasse.klasseAlterMax"
+               [class.is-invalid]="wettkampfKlasseAlterMax.invalid && !wettkampfKlasseAlterMax.untouched"
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'dsbMitgliedSaveButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'dsbMitgliedUpdateButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
+        </bla-button>
+
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.DELETE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>
