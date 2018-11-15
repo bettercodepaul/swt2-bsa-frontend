@@ -1,6 +1,9 @@
-import {CommonDialogConfig} from '../../../shared/components/dialogs';
+import {NavigationDialogConfig} from '../../../shared/components/dialogs';
 
-export const VEREINE_CONFIG: CommonDialogConfig = {
+export const VEREINE_CONFIG: NavigationDialogConfig = {
   moduleTranslationKey:    'VEREINE',
-  pageTitleTranslationKey: 'VEREINE.VEREINE.TITLE'
+  pageTitleTranslationKey: 'VEREINE.VEREINE.TITLE',
+  navigationCardsConfig:   {
+    navigationCards: []
+  }
 };
