@@ -159,7 +159,7 @@
         "GEBURTSDATUM": {
           "LABEL": "Geburtsdatum",
           "PLACEHOLDER": "Bitte ein Geburtsdatum eingeben",
-          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben."
+          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: JJJJ-MM-TT)."
         },
         "MITGLIEDSNUMMER": {
           "LABEL": "Mitgliedsnummer",
@@ -224,7 +224,7 @@
         "WETTKAMPF_NR": {
           "LABEL": "Wettkampfnummer",
           "PLACEHOLDER": "Bitte eine Wettkampfnummer eingeben",
-          "ERROR": "Bitte eine gültige Wettkampfnummer eingeben."
+          "ERROR": "Bitte eine gültige Wettkampfnummer eingeben (max. 2 Zeichen lang)."
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
