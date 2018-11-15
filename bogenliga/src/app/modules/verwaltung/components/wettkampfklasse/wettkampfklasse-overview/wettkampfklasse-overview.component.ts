@@ -37,45 +37,15 @@ export class WettkampfklasseOverviewComponent extends CommonComponent implements
 
 
   public onView(versionedDataObject: VersionedDataObject): void {
-    console.log('click on view');
     this.navigateToDetailDialog(versionedDataObject);
   }
 
   public onEdit(versionedDataObject: VersionedDataObject): void {
-    console.log('click on edit');
     this.navigateToDetailDialog(versionedDataObject);
   }
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
-    console.log('click on delete');
-    /*
-    // show loading icon
-    const id = versionedDataObject.id;
-
-    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
-
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
-      title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
-
-     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
-     .subscribe(myNotification => {
-     if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-     this.dsbMitgliedDataProvider.deleteById(id)
-     .then(response => this.loadTableRows())
-     .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
-     }
-     });
-
-     this.notificationService.showNotification(notification);
-     */
+    //TODO
    }
 
   private loadTableRows() {
@@ -98,7 +68,6 @@ export class WettkampfklasseOverviewComponent extends CommonComponent implements
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    console.log(versionedDataObject.id);
     this.router.navigateByUrl('/verwaltung/klassen/' + versionedDataObject.id);
   }
 }

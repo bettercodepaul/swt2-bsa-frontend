@@ -35,7 +35,6 @@ export class WettkampfklassenDataProviderService  extends DataProviderService {
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
         .then((data: VersionedDataTransferObject[]) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-
         }, (error: HttpErrorResponse) => {
 
           if (error.status === 0) {
