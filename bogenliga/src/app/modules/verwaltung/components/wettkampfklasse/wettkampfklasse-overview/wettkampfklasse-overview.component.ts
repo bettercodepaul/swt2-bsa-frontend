@@ -94,7 +94,6 @@ export class WettkampfklasseOverviewComponent extends CommonComponent implements
   private handleLoadTableRowsSuccess(response: Response<WettkampfKlasseDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
-    console.log(this.rows);
     this.loading = false;
   }
 
