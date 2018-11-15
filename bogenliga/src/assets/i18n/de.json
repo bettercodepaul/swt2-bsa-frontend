@@ -14,6 +14,7 @@
     "HOME": "HOME",
     "VERWALTUNG": "VERWALTUNG",
     "WETTKAMPF": "WETTKAEMPFE",
+    "VEREINE": "VEREINE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
     "SETTINGS": "EINSTELLUNGEN",
     "COLLAPSE": "Einklappen"
@@ -45,6 +46,11 @@
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
       "TITLE": "Wettkämpfe"
+    }
+  },
+  "VEREINE":{
+    "VEREINE":{
+      "TITLE": "Vereine"
     }
   },
   "SPORTJAHRESPLAN": {
