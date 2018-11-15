@@ -29,7 +29,7 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
       {
         translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSEALTERMIN',
         propertyName:   'klasseAlterMin',
-        type:           TableColumnType.DATE,
+        type:           TableColumnType.NUMBER,
         width:          20,
       },
       {
