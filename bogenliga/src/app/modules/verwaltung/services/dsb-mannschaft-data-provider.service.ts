@@ -11,7 +11,7 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
-import {fromPayload, fromPayloadArray} from '../mapper/mannschaft-mapper';
+import {fromPayload, fromPayloadArray} from '../mapper/dsb-mannschaft-mapper';
 
 @Injectable({
   providedIn: 'root'
