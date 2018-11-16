@@ -10,6 +10,7 @@ export class DsbMitgliedDTO implements DataTransferObject {
   vereinsId: number;
   userId: number;
   version: number;
+  kampfrichter: boolean;
 
   static copyFrom(optional: {
     id?: number,
@@ -21,6 +22,7 @@ export class DsbMitgliedDTO implements DataTransferObject {
     vereinsId?: number,
     userId?: number,
     version?: number
+    kampfrichter?: boolean;
   } = {}): DsbMitgliedDTO {
     const copy = new DsbMitgliedDTO();
     copy.id = optional.id || null;
@@ -32,6 +34,7 @@ export class DsbMitgliedDTO implements DataTransferObject {
     copy.vereinsId = optional.vereinsId || null;
     copy.userId = optional.userId || null;
     copy.version = optional.version || null;
+    copy.kampfrichter = optional.kampfrichter;
 
     return copy;
   }

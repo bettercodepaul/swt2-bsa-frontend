@@ -159,7 +159,11 @@
         <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.KAMPFRICHTER.LABEL' | translate }}</span>
       </label>
       <div class="col-sm-2">
-        <input type="checkbox" class="form-control" id="dsbMitgliedKampfrichter">
+        <input type="checkbox" class="form-control" id="dsbMitgliedKampfrichter"
+               name="dsbMitgliedKampfrichter"
+               #dsbMitgliedKampfrichter="ngModel"
+               [(ngModel)]="currentMitglied.kampfrichter"
+               [class.is-invalid]="dsbMitgliedKampfrichter.invalid && !dsbMitgliedKampfrichter.untouched">
       </div>
     </div>
 
