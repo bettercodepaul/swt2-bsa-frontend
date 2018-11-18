@@ -7,7 +7,6 @@
       "LOGOUT": "Logout"
     }
   },
-
   "SIDEBAR": {
     "TITLE": "Bogenliga",
     "TITLESHORT": "BL",
@@ -18,7 +17,6 @@
     "SETTINGS": "EINSTELLUNGEN",
     "COLLAPSE": "Einklappen"
   },
-
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
     "TITLE": "Bogenliga",
@@ -27,7 +25,6 @@
     "IMPRESSUM": "Impressum und Datenschutz",
     "COPYRIGHT": "Copyright: 2018"
   },
-
   "HOME": {
     "HOME": {
       "TITLE": "Home",
@@ -91,7 +88,6 @@
       }
     }
   },
-
   "MANAGEMENT": {
     "VERWALTUNG": {
       "TITLE": "Verwaltung",
@@ -103,6 +99,10 @@
         "KLASSEN": {
           "LABEL": "(Wettkampf-) Klassen",
           "DESCRIPTION": "Verwaltung der Klassen"
+        },
+        "VEREINE": {
+          "LABEL": "Vereine",
+          "DESCRIPTION": "Verwaltung der Vereine"
         }
       }
     },
@@ -133,13 +133,30 @@
           "KLASSENAME": "Klassen Name",
           "KLASSEALTERMIN": "Alter Min",
           "KLASSEALTERMAX": "Alter Max"
-
         }
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mitglied löschen",
-          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Klasse löschen",
+          "DESCRIPTION": "Wollen Sie die Klasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "VEREINE": {
+      "TITLE": "Vereine - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Verein Name",
+          "IDENTIFIER": "Identifier",
+          "REGION_ID": "Region ID",
+          "REGION_NAME": "Region Name"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Verein löschen",
+          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
@@ -198,7 +215,8 @@
           "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
         }
       }
-    },"WETTKAMPFKLASSE_DETAIL": {
+    },
+    "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
         "WETTKAMPF_ID": {
@@ -250,9 +268,6 @@
       }
     }
   },
-
-
-
   "NOTIFICATION": {
     "BUTTON": {
       "OK": "OK",
@@ -305,7 +320,6 @@
   "BREADCRUMB": {
     "NEW_ENTITY": "Neu"
   },
-
   "TABLE": {
     "HEADERS": {
       "ACTION": "Aktion"
@@ -317,7 +331,6 @@
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
-
     "TITLE": "Tabelle",
     "KEY": "Schlüssel",
     "VALUE": "Wert",
