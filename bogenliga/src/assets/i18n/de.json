@@ -103,6 +103,19 @@
         "KLASSEN": {
           "LABEL": "(Wettkampf-) Klassen",
           "DESCRIPTION": "Verwaltung der Klassen"
+        },
+        "DSBMANNSCHAFTEN": {
+          "LABEL": "Mannschaften",
+          "DESCRIPTION": "Verwaltung der Mannschaften"
+        }
+      }
+    },
+    "DSBMANNSCHAFT":{
+      "TITLE": "DSB Mannschaften - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "VEREIN": "Verein"
         }
       }
     },
