@@ -15,7 +15,12 @@ export class DsbMannschaftDTO implements DataTransferObject {
     version?: number
   } = {}): DsbMannschaftDTO {
     const copy = new DsbMannschaftDTO();
-    copy.id = optional.id || null;
+    // show '0' value
+    if (optional.id >= 0) {
+      copy.id = optional.id;
+    } else {
+      copy.id = null;
+    }
     copy.vereinsId = optional.vereinsId || null;
     copy.userId = optional.userId || null;
     copy.version = optional.version || null;
