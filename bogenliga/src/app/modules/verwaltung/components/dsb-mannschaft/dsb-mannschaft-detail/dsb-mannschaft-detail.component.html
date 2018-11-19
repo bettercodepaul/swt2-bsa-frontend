@@ -92,7 +92,7 @@
                required
                id="dsbMannschaftsnummer"
                name="dsbMannschaftsnummer"
-               #Mannschaftsnummer="ngModel"
+               #dsbMannschaftsnummer="ngModel"
                [(ngModel)]="currentDsbMannschaft.dsbmannschaftsnummer"
                [class.is-invalid]="dsbMannschaftsnummer.invalid && !dsbMannschaftsnummer.untouched"
                placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTSNUMMER.PLACEHOLDER' | translate }}">
@@ -143,7 +143,7 @@
                id="mannschaftVerein"
                name="mannschaftVerein"
                #mannschaftVerein="ngModel"
-               [(ngModel)]="currentMannschaft.vereinsId"
+               [(ngModel)]="currentDsbMannschaft.vereinsId"
                [class.is-invalid]="mannschaftVerein.invalid && !mannschaftVerein.untouched"
                placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.VEREIN.PLACEHOLDER' | translate }}">
 

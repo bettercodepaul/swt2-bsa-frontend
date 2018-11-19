@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {DSB_MITGLIED_DETAIL_CONFIG} from './mannschaft-detail.config';
+import {DSB_MANNSCAHFT_DETAIL_CONFIG} from './mannschaft-detail.config';
 import {Response} from '../../../../shared/data-provider';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {DsbMitgliedDataProviderService} from '../../../services/mannschaft-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
-import {DsbMitgliedDO} from '../../../types/mannschaft-do.class';
 import {
   Notification,
   NotificationOrigin,
@@ -14,6 +12,8 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
+import {DsbMannschaftDO} from '../../../types/dsb-mannschaft-do.class';
+import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
@@ -30,14 +30,14 @@ const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
 })
 export class MannschaftDetailComponent extends CommonComponent implements OnInit {
 
-  public config = DSB_MANNSCHAFT_CONFIG;
+  public config = DSB_MANNSCAHFT_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentMitglied: MannschaftDO = new MannschaftDO();
+  public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
 
   public deleteLoading = false;
   public saveLoading = false;
 
-  constructor(private MannschaftDataProvider: MannschaftDataProviderService,
+  constructor(private MannschaftDataProvider: DsbMannschaftDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
@@ -53,7 +53,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
-          this.currentMannschaft = new MannschaftDO();
+          this.currentMannschaft = new DsbMannschaftDO();
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
@@ -69,14 +69,14 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     // persist
     this.MannschaftDataProvider.create(this.currentMannschaft)
-        .then((response: Response<MannschaftDO>) => {
+        .then((response: Response<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_DSB_MITGLIED,
+              id: NOTIFICATION_SAVE_MANNSCHAFT,
               title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
               description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
@@ -95,7 +95,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<DsbMitgliedDO>) => {
+        }, (response: Response<DsbMannschaftDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -109,7 +109,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     // persist
     this.MannschaftDataProvider.update(this.currentMannschaft)
-        .then((response: Response<MannschaftDO>) => {
+        .then((response: Response<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -136,7 +136,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<MannschaftDO>) => {
+        }, (response: Response<DsbMannschaftDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -179,16 +179,16 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   private loadById(id: number) {
     this.MannschaftDataProvider.findById(id)
-        .then((response: Response<DsbMitgliedDO>) => this.handleSuccess(response))
-        .catch((response: Response<DsbMitgliedDO>) => this.handleFailure(response));
+        .then((response: Response<DsbMannschaftDO>) => this.handleSuccess(response))
+        .catch((response: Response<DsbMannschaftDO>) => this.handleFailure(response));
   }
 
-  private handleSuccess(response: Response<MannschaftDO>) {
+  private handleSuccess(response: Response<DsbMannschaftDO>) {
     this.currentMannschaft = response.payload;
     this.loading = false;
   }
 
-  private handleFailure(response: Response<MannschaftDO>) {
+  private handleFailure(response: Response<DsbMannschaftDO>) {
     this.loading = false;
 
   }

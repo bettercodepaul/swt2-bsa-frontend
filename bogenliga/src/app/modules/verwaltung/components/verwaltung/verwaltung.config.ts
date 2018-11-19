@@ -18,10 +18,10 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         route:          'klassen'
       },
       {
-        labelKey:         'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.LABEL',
-        descriptionKey:   'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.DESCRIPTION',
-        icon:             'teams',
-        route:            'dsbmannschaft'
+        labelKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.DESCRIPTION',
+        icon: 'campground',
+        route: 'dsbmannschaft'
       }
     ]
   }
