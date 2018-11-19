@@ -4,8 +4,14 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
-import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard, WettkampfklasseDetailGuard, WettkampfklasseOverviewGuard} from './guards';
-import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComponent, WettkampfklasseDetailComponent, WettkampfklasseOverviewComponent} from './components';
+import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard, DsbMannschaftOverviewGuard, DsbMannschaftDetailGuard,  WettkampfklasseDetailGuard, WettkampfklasseOverviewGuard} from './guards';
+import {
+  DsbMitgliedDetailComponent,
+  DsbMitgliedOverviewComponent,
+  DsbMannschaftDetailComponent, DsbMannschaftOverviewComponent,
+  WettkampfklasseDetailComponent, WettkampfklasseOverviewComponent
+  VerwaltungComponent
+} from './components';
 
 @NgModule({
   imports:      [
@@ -14,8 +20,8 @@ import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComp
     SharedModule,
     FormsModule
   ],
-  declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent, WettkampfklasseOverviewComponent, WettkampfklasseDetailComponent],
-  providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard, WettkampfklasseOverviewGuard, WettkampfklasseDetailGuard]
+  declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent, DsbMannschaftDetailComponent, DsbMannschaftOverviewComponent, WettkampfklasseOverviewComponent, WettkampfklasseDetailComponent],
+  providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard, DsbMannschaftOverviewGuard, DsbMannschaftDetailGuard, WettkampfklasseOverviewGuard, WettkampfklasseDetailGuard]
 })
 export class VerwaltungModule {
 }
