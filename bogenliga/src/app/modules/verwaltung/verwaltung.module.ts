@@ -4,13 +4,23 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
-import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard, DsbMannschaftOverviewGuard, DsbMannschaftDetailGuard,  WettkampfklasseDetailGuard, WettkampfklasseOverviewGuard} from './guards';
 import {
+  DsbMannschaftDetailGuard,
+  DsbMannschaftOverviewGuard,
+  DsbMitgliedDetailGuard,
+  DsbMitgliedOverviewGuard,
+  VerwaltungGuard,
+  WettkampfklasseDetailGuard,
+  WettkampfklasseOverviewGuard
+} from './guards';
+import {
+  DsbMannschaftDetailComponent,
+  DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
-  DsbMannschaftDetailComponent, DsbMannschaftOverviewComponent,
-  WettkampfklasseDetailComponent, WettkampfklasseOverviewComponent
-  VerwaltungComponent
+  VerwaltungComponent,
+  WettkampfklasseDetailComponent,
+  WettkampfklasseOverviewComponent
 } from './components';
 
 @NgModule({
@@ -20,8 +30,24 @@ import {
     SharedModule,
     FormsModule
   ],
-  declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent, DsbMannschaftDetailComponent, DsbMannschaftOverviewComponent, WettkampfklasseOverviewComponent, WettkampfklasseDetailComponent],
-  providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard, DsbMannschaftOverviewGuard, DsbMannschaftDetailGuard, WettkampfklasseOverviewGuard, WettkampfklasseDetailGuard]
+  declarations: [
+    VerwaltungComponent,
+    DsbMitgliedOverviewComponent,
+    DsbMitgliedDetailComponent,
+    DsbMannschaftDetailComponent,
+    DsbMannschaftOverviewComponent,
+    WettkampfklasseOverviewComponent,
+    WettkampfklasseDetailComponent
+  ],
+  providers: [
+    VerwaltungGuard,
+    DsbMitgliedOverviewGuard,
+    DsbMitgliedDetailGuard,
+    DsbMannschaftOverviewGuard,
+    DsbMannschaftDetailGuard,
+    WettkampfklasseOverviewGuard,
+    WettkampfklasseDetailGuard
+  ]
 })
 export class VerwaltungModule {
 }

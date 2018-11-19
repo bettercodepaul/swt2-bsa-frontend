@@ -5,35 +5,35 @@ import {TableColumnType} from '../../../../shared/components/tables/types/table-
 
 export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.MANSCHAFT.TITLE',
+  pageTitleTranslationKey: 'MANAGEMENT.DSBMANNSCHAFT.TITLE',
 
   tableConfig: {
     columns: [
       {
-        translationKey:   'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.ID',
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.ID',
         propertyName:     'id',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.VORNAME',
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.VORNAME',
         propertyName:   'vorname',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.NACHNAME',
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.NACHNAME',
         propertyName:   'nachname',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.GEBURTSDATUM',
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.GEBURTSDATUM',
         propertyName:   'geburtsdatum',
         type:           TableColumnType.DATE,
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.MANNSCHAFT.TABLE.HEADERS.MANNSCHAFTSNUMMER',
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.MANNSCHAFTSNUMMER',
         propertyName:   'mannschaftsnummer',
         width:          20,
       }
