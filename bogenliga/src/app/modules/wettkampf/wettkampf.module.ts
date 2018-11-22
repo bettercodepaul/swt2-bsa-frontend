@@ -6,6 +6,7 @@ import {WETTKAMPF_ROUTES} from './wettkampf.routing';
 import {FormsModule} from '@angular/forms';
 import {WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.component';
 import {WettkampfGuard} from './guards/wettkampf.guard';
+import { SetzlisteComponent } from './components/setzliste/setzliste.component';
 
 
 @NgModule({
@@ -13,9 +14,9 @@ import {WettkampfGuard} from './guards/wettkampf.guard';
     CommonModule,
     RouterModule.forChild(WETTKAMPF_ROUTES),
     SharedModule,
-    FormsModule
+    FormsModule,
   ],
-  declarations: [WettkaempfeComponent],
+  declarations: [WettkaempfeComponent, SetzlisteComponent],
   providers:    [WettkampfGuard]
 })
 export class WettkampfModule {
