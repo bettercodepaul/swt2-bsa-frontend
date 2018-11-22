@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAEMPFE_CONFIG} from './wettkaempfe.config';
+import {Router} from '@angular/router';
 
 @Component({
   selector:    'bla-wettkaempfe',
