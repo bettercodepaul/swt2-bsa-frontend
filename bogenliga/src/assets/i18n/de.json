@@ -111,7 +111,8 @@
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
-          "VEREIN": "Verein"
+          "MANNSCHAFTSNUMMER": "Mannschaftsnummer",
+          "VEREIN": "Vereinsnummer"
         }
       }
     },
