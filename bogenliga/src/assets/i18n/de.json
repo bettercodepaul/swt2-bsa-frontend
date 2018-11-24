@@ -266,6 +266,47 @@
           "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
         }
       }
+    },
+    "VEREIN_DETAIL": {
+      "TITLE": "Verein - Details",
+      "FORM": {
+        "VEREIN_NAME": {
+          "LABEL": "Verein-Name",
+          "PLACEHOLDER": "Bitte einen Namen eingeben",
+          "ERROR": "Bitte einen gültigen Namen eingeben."
+        },
+        "VEREIN_IDENTIFIER": {
+          "LABEL": "Verein-Identifier",
+          "PLACEHOLDER": "Bitte einen Identifier eingeben",
+          "ERROR": "Bitte einen gültigen Identifier eingeben."
+        },
+        "VEREIN_REGION": {
+          "LABEL": "Region",
+          "PLACEHOLDER": "Bitte eine Region auswählen",
+          "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Wettkampfklasse löschen",
+          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+        }
+      }
     }
   },
   "NOTIFICATION": {

@@ -21,6 +21,7 @@ import {
 import {VereinDetailComponent} from './components/verein/verein-detail/verein-detail.component';
 import {VereinOverviewComponent} from './components/verein/verein-overview/verein-overview.component';
 import {VereinOverviewGuard} from './guards/verein-overview.guard';
+import {VereinDetailGuard} from './guards/verein-detail.guard';
 
 @NgModule({
   imports: [
@@ -30,7 +31,7 @@ import {VereinOverviewGuard} from './guards/verein-overview.guard';
     FormsModule
   ],
   declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent, WettkampfklasseOverviewComponent, WettkampfklasseDetailComponent, VereinDetailComponent, VereinOverviewComponent],
-  providers: [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard, WettkampfklasseOverviewGuard, WettkampfklasseDetailGuard, VereinOverviewGuard]
+  providers: [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard, WettkampfklasseOverviewGuard, WettkampfklasseDetailGuard, VereinOverviewGuard, VereinDetailGuard]
 })
 export class VerwaltungModule {
 }
