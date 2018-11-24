@@ -17,23 +17,14 @@ export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.VORNAME',
-        propertyName:   'vorname',
-        width:          20,
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBVEREINNUMMER',
+        propertyName:     'vereinsnummer',
+        width:            7,
+        type:             TableColumnType.NUMBER,
+        currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.NACHNAME',
-        propertyName:   'nachname',
-        width:          20,
-      },
-      {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.GEBURTSDATUM',
-        propertyName:   'geburtsdatum',
-        type:           TableColumnType.DATE,
-        width:          20,
-      },
-      {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.MANNSCHAFTSNUMMER',
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBMANNSCHAFTNUMMER',
         propertyName:   'mannschaftsnummer',
         width:          20,
       }
