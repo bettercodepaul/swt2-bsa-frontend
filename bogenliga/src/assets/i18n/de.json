@@ -115,6 +115,8 @@
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
+          "DSBVEREINNUMMER": "Vereinsnummer",
+          "DSBMANNSCHAFTNUMMER": "Mannschaftsummer",
           "VEREIN": "Verein"
         }
       }
@@ -238,6 +240,46 @@
           "LABEL": "Wettkampfnummer",
           "PLACEHOLDER": "Bitte eine Wettkampfnummer eingeben",
           "ERROR": "Bitte eine gültige Wettkampfnummer eingeben (max. 2 Zeichen lang)."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Wettkampfklasse löschen",
+          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+        }
+      }
+    }, "DSBMANNSCHAFT_DETAIL": {
+      "TITLE": "Mannschaft - Details",
+      "FORM": {
+        "DSBMANNSCHAFT_ID": {
+          "LABEL": "Mannschaft-ID",
+          "PLACEHOLDER": "Bitte eine ID eingeben",
+          "ERROR": "Bitte eine gültige ID eingeben."
+        },
+        "DSBVEREINNUMMER": {
+          "LABEL": "Vereinsnummer",
+          "PLACEHOLDER": "Bitte eine Vereinsnummer eingeben",
+          "ERROR": "Bitte eine gültige Vereinsnummer eingeben."
+        },
+        "DSBMANNSCHAFTNUMMER": {
+          "LABEL": "Nummer",
+          "PLACEHOLDER": "Bitte eine Nummer eingeben",
+          "ERROR": "Bitte eine gültige Nummer eingeben."
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
