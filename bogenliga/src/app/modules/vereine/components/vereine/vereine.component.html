@@ -1,42 +1,5 @@
-<bla-navigation-dialog [config]="config"></bla-navigation-dialog>
-<div class="content-wrapper">
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Verein Auswählen
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">Verein 1</a>
-      <a class="dropdown-item" href="#">Verein 2</a>
-      <a class="dropdown-item" href="#">Verein 3</a>
-    </div>
-    <div class="table-wrapper">
-      <table class="table ownTable">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Region ID</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>1</td>
-          <td>SV Schwieberdingen</td>
-          <td>7</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>SSV Ehingen</td>
-          <td>6</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>SBC Magstadt</td>
-          <td>6</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
+<bla-overview-dialog [config]="config"
+                     [rows]="rows"
+                     [loading]="loading"
+                     (onViewClicked)="onView($event)">
+</bla-overview-dialog>
