@@ -13,6 +13,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {VereinDO} from '../../../types/verein-do.class';
 import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
 import {VEREIN_DETAIL_CONFIG} from './verein-detail.config';
+import {RegionDataProviderService} from '../../../services/region-data-provider.service';
+import {RegionDO} from '../../../types/region-do.class';
+import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
+
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
@@ -20,12 +24,6 @@ const NOTIFICATION_DELETE_VEREIN_SUCCESS = 'verein_detail_delete_success';
 const NOTIFICATION_DELETE_VEREIN_FAILURE = 'verein_detail_delete_failure';
 const NOTIFICATION_SAVE_VEREIN = 'verein_detail_save';
 const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
-
-
-interface CurrentRegion {
-  id: number;
-  name: string;
-}
 
 @Component({
   selector:    'bla-verein-detail',
@@ -37,25 +35,14 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   public config = VEREIN_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentVerein: VereinDO = new VereinDO();
+  public currentRegion: RegionDO = new RegionDO();
+  public regionen: Array<RegionDO> = [new RegionDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
 
-  public regionenMock = [
-    {
-      id:   1,
-      name: 'Reutlingen'
-    },
-    {
-      id:   2,
-      name: 'Metzingen'
-    }
-  ];
-  public region: CurrentRegion = this.regionenMock[0];
-
-
-
   constructor(private vereinProvider: VereinDataProviderService,
+    private regionProvider: RegionDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
@@ -66,6 +53,8 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.loading = true;
 
     this.notificationService.discardNotification();
+
+    this.loadRegions(); //Request all regions from the backend
 
     this.route.params.subscribe(params => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -86,6 +75,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
     // persist
+    this.currentVerein.regionId = this.currentRegion.id; //Set selected region id
     this.vereinProvider.create(this.currentVerein)
         .then((response: Response<VereinDO>) => {
           if (!isNullOrUndefined(response)
@@ -201,9 +191,19 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         .catch((response: Response<VereinDO>) => this.handleFailure(response));
   }
 
+  private loadRegions() {
+    this.regionProvider.findAll()
+        .then((response: Response<RegionDO[]>) => this.handleResponseArraySuccess(response))
+        .catch((response: Response<RegionDTO[]>) => this.handleResponseArrayFailure(response));
+  }
+
+
+
   private handleSuccess(response: Response<VereinDO>) {
     this.currentVerein = response.payload;
     this.loading = false;
+
+    this.currentRegion = this.regionen.filter(region=> region.id === this.currentVerein.regionId)[0];
   }
 
   private handleFailure(response: Response<VereinDO>) {
@@ -225,7 +225,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN_SUCCESS)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/klassen');
+            this.router.navigateByUrl('/verwaltung/vereine');
             this.deleteLoading = false;
           }
         });
@@ -255,4 +255,16 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
+  private handleResponseArrayFailure(response: Response<RegionDTO[]>): void {
+    this.regionen = [];
+    this.loading = false;
+  }
+
+  private handleResponseArraySuccess(response: Response<RegionDO[]>): void {
+    this.regionen = []; // reset array to ensure change detection
+    this.regionen = response.payload;
+
+    console.log(response);
+    this.loading = false;
+  }
 }
