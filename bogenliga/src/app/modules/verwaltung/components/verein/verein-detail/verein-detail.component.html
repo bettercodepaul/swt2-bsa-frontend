@@ -68,7 +68,6 @@
                 [(ngModel)]="currentRegion">
           <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
         </select>
-        {{this.currentRegion.id}}
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.ERROR' | translate }}
         </div>
