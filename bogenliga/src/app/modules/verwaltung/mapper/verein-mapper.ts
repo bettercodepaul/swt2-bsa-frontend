@@ -1,5 +1,4 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {WettkampfKlasseDTO} from '../types/datatransfer/wettkampfklasse-dto.class';
 import {VereinDTO} from '../types/datatransfer/verein-dto.class';
 
 export function fromPayload(payload: VersionedDataTransferObject): VereinDTO {

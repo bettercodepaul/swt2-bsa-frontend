@@ -65,10 +65,10 @@
                 id="vereinRegion"
                 name="vereinRegion"
                 #vereinRegion="ngModel"
-                [(ngModel)]="region">
-          <option [ngValue]="region" *ngFor="let region of regionenMock"> {{region.name}}</option>
+                [(ngModel)]="currentRegion">
+          <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
         </select>
-        {{this.region.id}}
+        {{this.currentRegion.id}}
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.ERROR' | translate }}
         </div>

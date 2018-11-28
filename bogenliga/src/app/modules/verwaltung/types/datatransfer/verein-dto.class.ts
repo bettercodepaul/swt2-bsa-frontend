@@ -18,7 +18,11 @@ export class VereinDTO implements DataTransferObject {
     version?: number
   } = {}): VereinDTO {
     const copy = new VereinDTO();
-    copy.id = optional.id || null;
+    if (optional.id >= 0) {
+      copy.id = optional.id;
+    } else {
+      copy.id = null;
+    }
     copy.name = optional.name || '';
     copy.identifier = optional.identifier || '';
     copy.regionId = optional.regionId || null;
