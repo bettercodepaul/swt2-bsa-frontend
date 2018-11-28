@@ -76,6 +76,9 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
     // persist
     this.currentVerein.regionId = this.currentRegion.id; //Set selected region id
+
+    console.log("Saving verein: ", this.currentVerein);
+
     this.vereinProvider.create(this.currentVerein)
         .then((response: Response<VereinDO>) => {
           if (!isNullOrUndefined(response)
@@ -263,8 +266,8 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   private handleResponseArraySuccess(response: Response<RegionDO[]>): void {
     this.regionen = []; // reset array to ensure change detection
     this.regionen = response.payload;
+    this.currentRegion = this.regionen[0]; // Set first element of object as selected.
 
-    console.log(response);
     this.loading = false;
   }
 }

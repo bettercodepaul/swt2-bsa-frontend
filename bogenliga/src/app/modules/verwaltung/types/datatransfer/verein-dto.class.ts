@@ -23,9 +23,15 @@ export class VereinDTO implements DataTransferObject {
     } else {
       copy.id = null;
     }
+
+    if (optional.regionId >= 0) {
+      copy.regionId = optional.regionId;
+    } else {
+      copy.regionId = null;
+    }
+
     copy.name = optional.name || '';
     copy.identifier = optional.identifier || '';
-    copy.regionId = optional.regionId || null;
     copy.regionName = optional.regionName || '';
 
     copy.version = optional.version || null;
