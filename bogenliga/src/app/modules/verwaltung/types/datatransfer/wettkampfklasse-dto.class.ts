@@ -17,7 +17,14 @@ export class WettkampfKlasseDTO implements DataTransferObject {
     version?: number
   } = {}): WettkampfKlasseDTO {
     const copy = new WettkampfKlasseDTO();
-    copy.id = optional.id || null;
+
+    // show '0' value
+    if (optional.id >= 0) {
+      copy.id = optional.id;
+    } else {
+      copy.id = null;
+    }
+
     copy.klasseName = optional.klasseName || '';
     copy.klasseAlterMin = optional.klasseAlterMin || null;
     copy.klasseAlterMax = optional.klasseAlterMax || null;

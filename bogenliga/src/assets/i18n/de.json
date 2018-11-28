@@ -100,6 +100,10 @@
           "LABEL": "(Wettkampf-) Klassen",
           "DESCRIPTION": "Verwaltung der Klassen"
         },
+        "DSBMANNSCHAFTEN": {
+          "LABEL": "Mannschaften",
+          "DESCRIPTION": "Verwaltung der Mannschaften"
+        },
         "VEREINE": {
           "LABEL": "Vereine",
           "DESCRIPTION": "Verwaltung der Vereine"
