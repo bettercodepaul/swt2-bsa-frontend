@@ -119,6 +119,8 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
     // persist
+    this.currentVerein.regionId = this.currentRegion.id; //Set selected region id
+
     this.vereinProvider.update(this.currentVerein)
         .then((response: Response<VereinDO>) => {
           if (!isNullOrUndefined(response)
