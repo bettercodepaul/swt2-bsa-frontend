@@ -5,26 +5,30 @@ import {SharedModule} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {
-  DsbMannschaftDetailGuard,
-  DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
+  DsbMannschaftDetailGuard,
+  DsbMannschaftOverviewGuard,
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
-  WettkampfklasseOverviewGuard
+  WettkampfklasseOverviewGuard,
+  VereinOverviewGuard,
+  VereinDetailGuard
 } from './guards';
 import {
-  DsbMannschaftDetailComponent,
-  DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
+  DsbMannschaftDetailComponent,
+  DsbMannschaftOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
-  WettkampfklasseOverviewComponent
+  WettkampfklasseOverviewComponent,
+  VereinOverviewComponent,
+  VereinDetailComponent
 } from './components';
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
     SharedModule,
@@ -37,16 +41,20 @@ import {
     DsbMannschaftDetailComponent,
     DsbMannschaftOverviewComponent,
     WettkampfklasseOverviewComponent,
-    WettkampfklasseDetailComponent
+    WettkampfklasseDetailComponent,
+    VereinDetailComponent,
+    VereinOverviewComponent
   ],
-  providers: [
+  providers:    [
     VerwaltungGuard,
     DsbMitgliedOverviewGuard,
     DsbMitgliedDetailGuard,
     DsbMannschaftOverviewGuard,
     DsbMannschaftDetailGuard,
     WettkampfklasseOverviewGuard,
-    WettkampfklasseDetailGuard
+    WettkampfklasseDetailGuard,
+    VereinOverviewGuard,
+    VereinDetailGuard
   ]
 })
 export class VerwaltungModule {
