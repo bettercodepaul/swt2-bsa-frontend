@@ -1,5 +1,12 @@
-<bla-overview-dialog [config]="config"
-                     [rows]="rows"
-                     [loading]="loading"
-                     (onViewClicked)="onView($event)">
+<bla-overview-dialog
+  [config]="config"
+  [rows]="rows"
+  [loading]="loading"
+  (onViewClicked)="onView($event)"
+>
+  <!-- link muss dropdown sein -->
+  <!--<bla-mannschaft></bla-mannschaft> -->
 </bla-overview-dialog>
+
+<bla-mannschaft></bla-mannschaft>
+<p>TEST VEREIN</p>
