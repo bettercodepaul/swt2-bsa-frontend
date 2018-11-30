@@ -119,6 +119,12 @@
           "DSBMANNSCHAFTNUMMER": "Mannschaftsummer",
           "VEREIN": "Verein"
         }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "DSB Mannschaft löschen",
+          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
       }
     },
     "DSBMITGLIEDER": {
@@ -288,19 +294,19 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Wettkampfklasse löschen",
-          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+          "DESCRIPTION": "Die Mannschaft wurde erfolgreich gelöscht."
         },
         "DELETE_FAILURE": {
           "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+          "DESCRIPTION": "Die Mannschaft konnte nicht gelöscht werden."
         },
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Die Mannschaft wurde erfolgreich gespeichert."
         }
       }
     }
