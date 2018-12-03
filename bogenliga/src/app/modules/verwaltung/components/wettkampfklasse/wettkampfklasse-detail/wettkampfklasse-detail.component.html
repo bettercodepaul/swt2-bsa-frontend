@@ -84,7 +84,7 @@
     <div class="form-group row">
       <label for="wettkampfKlasseJahrgangMin"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -94,12 +94,14 @@
                id="wettkampfKlasseJahrgangMin"
                name="wettkampfKlasseJahrgangMin"
                #wettkampfKlasseJahrgangMin="ngModel"
+               maxlength="4"
+               pattern="[0-9]{4}"
                [(ngModel)]="currentWettkampfklasse.klasseJahrgangMin"
                [class.is-invalid]="wettkampfKlasseJahrgangMin.invalid && !wettkampfKlasseJahrgangMin.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MIN.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -108,7 +110,7 @@
     <div class="form-group row">
       <label for="wettkampfKlasseJahrgangMax"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -118,12 +120,14 @@
                id="wettkampfKlasseJahrgangMax"
                name="wettkampfKlasseJahrgangMax"
                #wettkampfKlasseJahrgangMax="ngModel"
+               maxlength="4"
+               pattern="[0-9]{4}"
                [(ngModel)]="currentWettkampfklasse.klasseJahrgangMax"
                [class.is-invalid]="wettkampfKlasseJahrgangMax.invalid && !wettkampfKlasseJahrgangMax.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ALTER_MAX.ERROR' | translate }}
+          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.ERROR' | translate }}
         </div>
       </div>
     </div>
