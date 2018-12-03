@@ -1,7 +1,7 @@
 import {SideBarNavigationItem} from './types/sidebar-navigation-item.interface';
 import {UserPermission} from '../../modules/shared/services/current-user';
 
-import {faArchive, faBullseye, faCalendarAlt, faCog, faHome, faAddressBook} from '@fortawesome/free-solid-svg-icons';
+import {faArchive, faBullseye, faCalendarAlt, faCog, faHome, faSitemap} from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   {
@@ -13,7 +13,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   },
   {
     label: 'SIDEBAR.VEREINE',
-    icon: faAddressBook,
+    icon: faSitemap,
     route: '/vereine',
     permissons: [],
     subitems: []

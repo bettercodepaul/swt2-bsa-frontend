@@ -1,12 +1,12 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {VereinDTO} from '../types/datatransfer/vereine-dto.class';
+import {VereineDTO} from '../types/datatransfer/vereine-dto.class';
 
-export function fromPayload(payload: VersionedDataTransferObject): VereinDTO {
-  return VereinDTO.copyFrom(payload);
+export function fromPayload(payload: VersionedDataTransferObject): VereineDTO {
+  return VereineDTO.copyFrom(payload);
 }
 
-export function fromPayloadArray(payload: VersionedDataTransferObject[]): VereinDTO[] {
-  const list: VereinDTO[] = [];
+export function fromPayloadArray(payload: VersionedDataTransferObject[]): VereineDTO[] {
+  const list: VereineDTO[] = [];
   payload.forEach(single => list.push(fromPayload(single)));
   return list;
 }

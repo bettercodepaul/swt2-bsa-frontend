@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {VereineComponent}from "./components/vereine/vereine.component";
+import {VereineComponent}from './components/vereine/vereine.component';
 
 
 
