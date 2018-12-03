@@ -1,4 +1,5 @@
 import {OverviewDialogConfig} from '../../../shared/components/dialogs';
+import {TableActionType} from '../../../shared/components/tables/types/table-action-type.enum';
 
 export const VEREINE_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'VEREINE',
@@ -25,6 +26,10 @@ export const VEREINE_CONFIG: OverviewDialogConfig = {
         propertyName:   'regionName',
         width:          20,
       }
-      ]
+      ],
+    actions: {
+      actionTypes: [TableActionType.VIEW],
+      width:       6
+    },
   }
 };
