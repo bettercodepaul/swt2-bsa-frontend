@@ -6,7 +6,7 @@ export class WettkampfKlasseDO implements VersionedDataObject {
   version: number;
 
   klasseName: string;
-  klasseAlterMin: number;
-  klasseAlterMax: number;
+  klasseJahrgangMin: number;
+  klasseJahrgangMax: number;
   klasseNr: number;
 }
