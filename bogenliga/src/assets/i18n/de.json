@@ -47,7 +47,15 @@
   },
   "VEREINE":{
     "VEREINE":{
-      "TITLE": "Vereine"
+      "TITLE": "Vereine",
+      "TABLE": {
+        "HEADERS": {
+          "NAME": "Name des Vereins",
+          "IDENTIFIER": "Identifier",
+          "REGION_ID": "Region ID",
+          "REGION_NAME": "Region Name"
+        }
+      }
     }
   },
   "SPORTJAHRESPLAN": {
