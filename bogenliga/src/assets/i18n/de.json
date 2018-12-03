@@ -144,8 +144,8 @@
           "ID": "ID",
           "KLASSENR": "KlassenNR",
           "KLASSENAME": "Klassen Name",
-          "KLASSEALTERMIN": "Alter Min",
-          "KLASSEALTERMAX": "Alter Max"
+          "KLASSEALTERMIN": "Jahrgang Min",
+          "KLASSEALTERMAX": "Jahrgang Max"
 
         }
       },
@@ -225,12 +225,12 @@
           "ERROR": "Bitte einen gültigen Wettkampfnamen eingeben."
         },
         "WETTKAMPF_ALTER_MIN": {
-          "LABEL": "Wettkampf Alter min.",
+          "LABEL": "Wettkampf Jahrgang min.",
           "PLACEHOLDER": "Bitte ein Alter eingeben",
           "ERROR": "Bitte ein gültiges Alter eingeben."
         },
         "WETTKAMPF_ALTER_MAX": {
-          "LABEL": "Wettkampf Alter max.",
+          "LABEL": "Wettkampf Jahrgang max.",
           "PLACEHOLDER": "Bitte ein Alter eingeben",
           "ERROR": "Bitte ein gültiges Alter eingeben."
         },
