@@ -116,7 +116,7 @@
         "HEADERS": {
           "ID": "ID",
           "DSBVEREINNUMMER": "Vereinsnummer",
-          "DSBMANNSCHAFTNUMMER": "Mannschaftsummer",
+          "DSBMANNSCHAFTNUMMER": "Mannschaftsnummer",
           "VEREIN": "Verein"
         }
       },
