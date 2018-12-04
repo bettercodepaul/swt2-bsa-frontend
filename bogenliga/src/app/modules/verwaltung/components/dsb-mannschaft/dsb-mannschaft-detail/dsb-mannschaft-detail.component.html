@@ -65,7 +65,7 @@
                id="dsbVereinsnummer"
                name="dsbVeriensnummer"
                #dsbMannschaftsnummer="ngModel"
-               [(ngModel)]="currentDsbMannschaft.vereinsId"
+               [(ngModel)]="currentDsbMannschaft.vereinId"
                [class.is-invalid]="dsbMannschaftsnummer.invalid && !dsbMannschaftsnummer.untouched"
                placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBVEREINNUMMER.PLACEHOLDER' | translate }}">
 
@@ -91,7 +91,7 @@
                id="DsbMannschaftNummer"
                name="DsbMannschaftNummer"
                #mannschaftVerein="ngModel"
-               [(ngModel)]="currentDsbMannschaft.mannschaftsnummer"
+               [(ngModel)]="currentDsbMannschaft.nummer"
                [class.is-invalid]="mannschaftVerein.invalid && !mannschaftVerein.untouched"
                placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.PLACEHOLDER' | translate }}">
 
