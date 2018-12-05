@@ -143,7 +143,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
 
   public entityExists(): boolean {
-    return this.currentWettkampfklasse.id > 0;
+    return this.currentWettkampfklasse.id >= 0;
   }
 
   private loadById(id: number) {
