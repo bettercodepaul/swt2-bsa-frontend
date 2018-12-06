@@ -61,42 +61,39 @@
       "FORM": {
         "VORNAME": {
           "LABEL": "Vorname",
-          "PLACEHOLDER": "Bitte einen Vornamen eingeben",
-          "ERROR": "Bitte einen gültigen Vornamen eingeben."
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
         "NACHNAME": {
           "LABEL": "Nachname",
-          "PLACEHOLDER": "Bitte einen Nachnamen eingeben",
-          "ERROR": "Bitte einen gültigen Nachnamen eingeben."
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
         "EMAIL": {
           "LABEL": "Email",
-          "PLACEHOLDER": "Bitte eine Email eingeben",
-          "ERROR": "Bitte eine gültige Email eingeben."
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
         "GEBURTSDATUM": {
           "LABEL": "Geburtsdatum",
-          "PLACEHOLDER": "Bitte ein Geburtsdatum eingeben",
-          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: JJJJ-MM-TT)."
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
         "MITGLIEDSNUMMER": {
           "LABEL": "Mitgliedsnummer",
-          "PLACEHOLDER": "Bitte eine Mitgliedsnummer eingeben",
-          "ERROR": "Bitte eine gültige Mitgliedsnummer eingeben."
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
         "NATIONALITAET": {
           "LABEL": "Nationalität",
-          "PLACEHOLDER": "Bitte eine Nationalität eingeben",
-          "ERROR": "Bitte eine gültige Nationalität eingeben."
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
         "VEREIN": {
           "LABEL": "Verein",
-          "PLACEHOLDER": "Bitte eine Vereinsid eingeben",
-          "ERROR": "Bitte eine gültige Vereinsid eingeben."
-        },
-        "SAVE": "Speichern",
-        "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        }
       }
     },
     "LOGIN": {
