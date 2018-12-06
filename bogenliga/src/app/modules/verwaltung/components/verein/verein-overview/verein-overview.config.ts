@@ -3,43 +3,42 @@ import {TableColumnSortOrder} from '../../../../shared/components/tables/types/t
 import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
 import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
 
-export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
+export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.KLASSEN.TITLE',
+  pageTitleTranslationKey: 'MANAGEMENT.VEREINE.TITLE',
 
   tableConfig: {
     columns: [
       {
-        translationKey:   'MANAGEMENT.KLASSEN.TABLE.HEADERS.ID',
+        translationKey:   'MANAGEMENT.VEREINE.TABLE.HEADERS.ID',
         propertyName:     'id',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSENR',
-        propertyName:   'klasseNr',
+        translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.NAME',
+        propertyName:   'name',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSENAME',
-        propertyName:   'klasseName',
+        translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.IDENTIFIER',
+        propertyName:   'identifier',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSEALTERMIN',
-        propertyName:   'klasseJahrgangMin',
-        type:           TableColumnType.NUMBER,
+        translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.REGION_ID',
+        propertyName:   'regionId',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSEALTERMAX',
-        propertyName:   'klasseJahrgangMax',
+        translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.REGION_NAME',
+        propertyName:   'regionName',
         width:          20,
       }
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, /**TableActionType.DELETE**/],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
   }
