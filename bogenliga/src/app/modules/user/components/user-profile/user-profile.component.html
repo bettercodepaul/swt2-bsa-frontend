@@ -14,8 +14,8 @@
       </label>
       <div class="col-sm-9">
         <input type="text"
-               class="form-control"
-               required
+               readonly
+               class="form-control-plaintext"
                id="userProfileVorname"
                name="userProfileVorname"
                #userProfileVorname="ngModel"
@@ -38,8 +38,8 @@
       </label>
       <div class="col-sm-9">
         <input type="text"
-               class="form-control"
-               required
+               readonly
+               class="form-control-plaintext"
                id="userProfileNachname"
                name="userProfileNachname"
                #userProfileNachname="ngModel"
@@ -62,8 +62,8 @@
       </label>
       <div class="col-sm-9">
         <input type="text"
-               class="form-control"
-               required
+               readonly
+               class="form-control-plaintext"
                id="userProfileEmail"
                name="userProfileEmail"
                #userProfileEmail="ngModel"
@@ -86,8 +86,8 @@
       </label>
       <div class="col-sm-9">
         <input type="text"
-               class="form-control"
-               required
+               readonly
+               class="form-control-plaintext"
                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
                id="userProfileGeburtsdatum"
                name="userProfileGeburtsdatum"
@@ -112,8 +112,8 @@
       </label>
       <div class="col-sm-9">
         <input type="text"
-               class="form-control"
-               required
+               readonly
+               class="form-control-plaintext"
                id="userProfileMitgliedsnummer"
                name="userProfileMitgliedsnummer"
                #userProfileMitgliedsnummer="ngModel"
@@ -136,8 +136,8 @@
       </label>
       <div class="col-sm-9">
         <input type="text"
-               class="form-control"
-               required
+               readonly
+               class="form-control-plaintext"
                pattern="[D|AT|CH|FR|IT|GB]"
                id="userProfileNationalitaet"
                name="userProfileNationalitaet"
@@ -160,10 +160,9 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="number"
-               class="form-control"
-               required
-               min="1"
+        <input type="text"
+               readonly
+               class="form-control-plaintext"
                id="userProfileVerein"
                name="userProfileVerein"
                #userProfileVerein="ngModel"
@@ -174,29 +173,6 @@
         <div class="invalid-feedback">
           {{ 'USER.PROFILE.FORM.VEREIN.ERROR' | translate }}
         </div>
-      </div>
-    </div>
-
-
-    <div class="form-group row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-9 button-box">
-
-
-        <bla-button *ngIf="!entityExists()"
-                    [id]="'userProfileSaveButton'"
-                    [disabled]="!userProfileForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onSave($event)">
-          {{ 'USER.PROFILE.FORM.SAVE' | translate }}
-        </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'userProfileUpdateButton'"
-                    [disabled]="!userProfileForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
-          {{ 'USER.PROFILE.FORM.UPDATE' | translate }}
-        </bla-button>
       </div>
     </div>
   </form>
