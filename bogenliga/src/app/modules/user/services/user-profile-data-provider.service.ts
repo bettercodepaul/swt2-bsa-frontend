@@ -101,6 +101,28 @@ export class UserProfileDataProviderService extends DataProviderService {
     });
   }
 
+  public findCurrentUserProfile(): Promise<Response<UserProfileDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    let id = this.currentUserService.getUserId();
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+        .then((data: VersionedDataTransferObject) => {
+
+          resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
   public update(payload: VersionedDataTransferObject): Promise<Response<UserProfileDO>> {
     // return promise
     // sign in success -> resolve promise
