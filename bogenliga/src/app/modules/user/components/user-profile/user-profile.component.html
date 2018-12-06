@@ -197,13 +197,6 @@
                     (onClick)="onUpdate($event)">
           {{ 'USER.PROFILE.FORM.UPDATE' | translate }}
         </bla-button>
-
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.DANGER"
-                    [loading]="deleteLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'USER.PROFILE.FORM.DELETE' | translate }}
-        </bla-button>
       </div>
     </div>
   </form>
