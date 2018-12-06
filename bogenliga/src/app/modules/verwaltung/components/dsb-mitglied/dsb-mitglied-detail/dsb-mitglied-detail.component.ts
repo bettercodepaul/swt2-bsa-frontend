@@ -174,7 +174,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   }
 
   public entityExists(): boolean {
-    return this.currentMitglied.id > 0;
+    return this.currentMitglied.id >= 0;
   }
 
   private loadById(id: number) {
