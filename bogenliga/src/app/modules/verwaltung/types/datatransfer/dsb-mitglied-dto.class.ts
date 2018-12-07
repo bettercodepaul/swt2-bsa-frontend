@@ -41,7 +41,7 @@ export class DsbMitgliedDTO implements DataTransferObject {
     copy.vereinsId = optional.vereinsId || null;
     copy.userId = optional.userId || null;
     copy.version = optional.version || null;
-    copy.kampfrichter = optional.kampfrichter;
+    copy.kampfrichter = optional.kampfrichter || false;
 
     return copy;
   }
