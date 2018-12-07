@@ -124,6 +124,23 @@
         }
       }
     },
+    "DSBMANNSCHAFT": {
+      "TITLE": "DSB Mannschaften - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "DSBVEREINNUMMER": "Vereinsnummer",
+          "DSBMANNSCHAFTNUMMER": "Mannschaftsnummer",
+          "VEREIN": "Verein"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "DSB Mannschaft löschen",
+          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
     "DSBMITGLIEDER": {
       "TITLE": "DSB Mitglieder - Übersicht",
       "TABLE": {
@@ -284,24 +301,23 @@
           "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
         }
       }
-    },
-    "VEREIN_DETAIL": {
-      "TITLE": "Verein - Details",
+    }, "DSBMANNSCHAFT_DETAIL": {
+      "TITLE": "Mannschaft - Details",
       "FORM": {
-        "VEREIN_NAME": {
-          "LABEL": "Verein-Name",
-          "PLACEHOLDER": "Bitte einen Namen eingeben",
-          "ERROR": "Bitte einen gültigen Namen eingeben."
+        "DSBMANNSCHAFT_ID": {
+          "LABEL": "Mannschaft-ID",
+          "PLACEHOLDER": "Bitte eine ID eingeben",
+          "ERROR": "Bitte eine gültige ID eingeben."
         },
-        "VEREIN_IDENTIFIER": {
-          "LABEL": "Verein-Identifier",
-          "PLACEHOLDER": "Bitte einen Identifier eingeben",
-          "ERROR": "Bitte einen gültigen Identifier eingeben."
+        "DSBVEREINNUMMER": {
+          "LABEL": "Vereinsnummer",
+          "PLACEHOLDER": "Bitte eine Vereinsnummer eingeben",
+          "ERROR": "Bitte eine gültige Vereinsnummer eingeben."
         },
-        "VEREIN_REGION": {
-          "LABEL": "Region",
-          "PLACEHOLDER": "Bitte eine Region auswählen",
-          "ERROR": "Bitte eine gültige Region eingeben."
+        "DSBMANNSCHAFTNUMMER": {
+          "LABEL": "Nummer",
+          "PLACEHOLDER": "Bitte eine Nummer eingeben",
+          "ERROR": "Bitte eine gültige Nummer eingeben."
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
@@ -310,19 +326,19 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Wettkampfklasse löschen",
-          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+          "DESCRIPTION": "Die Mannschaft wurde erfolgreich gelöscht."
         },
         "DELETE_FAILURE": {
           "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+          "DESCRIPTION": "Die Mannschaft konnte nicht gelöscht werden."
         },
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Die Mannschaft wurde erfolgreich gespeichert."
         }
       }
     }
