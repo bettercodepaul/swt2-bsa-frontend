@@ -187,7 +187,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   }
 
   public entityExists(): boolean {
-    return this.currentVerein.id > 0;
+    return this.currentVerein.id >= 0;
   }
 
   private loadById(id: number) {

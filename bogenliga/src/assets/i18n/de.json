@@ -67,6 +67,46 @@
     "USER": {
       "TITLE": "Benutzer"
     },
+    "PROFILE": {
+      "TITLE": "Benutzerprofil",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "Vorname",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "NACHNAME": {
+          "LABEL": "Nachname",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "EMAIL": {
+          "LABEL": "Email",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "GEBURTSDATUM": {
+          "LABEL": "Geburtsdatum",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Mitgliedsnummer",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "NATIONALITAET": {
+          "LABEL": "Nationalität",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "VEREIN": {
+          "LABEL": "Verein",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        }
+      }
+    },
     "LOGIN": {
       "TITLE": "Login",
       "HEADER": "Bitte einloggen:",
@@ -166,8 +206,8 @@
           "ID": "ID",
           "KLASSENR": "KlassenNR",
           "KLASSENAME": "Klassen Name",
-          "KLASSEALTERMIN": "Alter Min",
-          "KLASSEALTERMAX": "Alter Max"
+          "KLASSEALTERMIN": "Jahrgang Min",
+          "KLASSEALTERMAX": "Jahrgang Max"
         }
       },
       "NOTIFICATION": {
@@ -264,15 +304,15 @@
           "PLACEHOLDER": "Bitte einen Wettkampfnamen eingeben",
           "ERROR": "Bitte einen gültigen Wettkampfnamen eingeben."
         },
-        "WETTKAMPF_ALTER_MIN": {
-          "LABEL": "Wettkampf Alter min.",
-          "PLACEHOLDER": "Bitte ein Alter eingeben",
-          "ERROR": "Bitte ein gültiges Alter eingeben."
+        "WETTKAMPF_JAHRGANG_MIN": {
+          "LABEL": "Wettkampf Jahrgang min.",
+          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
         },
-        "WETTKAMPF_ALTER_MAX": {
-          "LABEL": "Wettkampf Alter max.",
-          "PLACEHOLDER": "Bitte ein Alter eingeben",
-          "ERROR": "Bitte ein gültiges Alter eingeben."
+        "WETTKAMPF_JAHRGANG_MAX": {
+          "LABEL": "Wettkampf Jahrgang max.",
+          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
         },
         "WETTKAMPF_NR": {
           "LABEL": "Wettkampfnummer",

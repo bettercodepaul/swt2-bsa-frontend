@@ -3,16 +3,16 @@ import {DataTransferObject} from '../../../shared/data-provider';
 export class WettkampfKlasseDTO implements DataTransferObject {
   id: number;
   klasseName: string;
-  klasseAlterMin: number;
-  klasseAlterMax: number;
+  klasseJahrgangMin: number;
+  klasseJahrgangMax: number;
   klasseNr: number;
   version: number;
 
   static copyFrom(optional: {
     id?: number,
     klasseName?: string,
-    klasseAlterMin?: number,
-    klasseAlterMax?: number,
+    klasseJahrgangMin?: number,
+    klasseJahrgangMax?: number,
     klasseNr?: number,
     version?: number
   } = {}): WettkampfKlasseDTO {
@@ -26,8 +26,8 @@ export class WettkampfKlasseDTO implements DataTransferObject {
     }
 
     copy.klasseName = optional.klasseName || '';
-    copy.klasseAlterMin = optional.klasseAlterMin || null;
-    copy.klasseAlterMax = optional.klasseAlterMax || null;
+    copy.klasseJahrgangMin = optional.klasseJahrgangMin || null;
+    copy.klasseJahrgangMax = optional.klasseJahrgangMax || null;
     copy.klasseNr = optional.klasseNr || null;
 
     copy.version = optional.version || null;
