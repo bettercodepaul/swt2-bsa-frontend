@@ -28,7 +28,17 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
         label:      'DSB Mitglieder',
         route:      '/verwaltung/dsbmitglieder',
         permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
-      }
+      },
+      {
+        label:      'Klassen',
+        route:      '/verwaltung/klassen',
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+      },
+      {
+        label:      'Vereine',
+        route:      '/verwaltung/vereine',
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+      },
     ]
   },
   {
