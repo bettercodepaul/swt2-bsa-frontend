@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b63bff8-862e-477b-965b-a24f372aa50a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1889d523-99bd-455a-accc-806b23873d29.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1889d523-99bd-455a-accc-806b23873d29.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/wettkampf.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/wettkampf.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/wettkampf.routing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/wettkampf.routing.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/datatransfer/dsb-mitglied-dto.class.ts" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/datatransfer/dsb-mitglied-dto.class.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bogenliga/src/assets/i18n/de.json" beforeDir="false" afterPath="$PROJECT_DIR$/bogenliga/src/assets/i18n/de.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,29 +18,53 @@
     <session id="-105103223">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="11" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.11" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.22" value="1" />
+          <entry key="project.open.time.26" value="1" />
+          <entry key="project.open.time.28" value="1" />
+          <entry key="project.open.time.31" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
+          <entry key="Angular2LanguageService" value="6" />
+          <entry key="TsLintLanguageService" value="5" />
           <entry key="TypeScriptServerServiceImpl" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="1" />
-          <entry key="json" value="1" />
-          <entry key="scss" value="1" />
+          <entry key="html" value="3" />
+          <entry key="json" value="2" />
+          <entry key="scss" value="3" />
+          <entry key="ts" value="17" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="HTML" value="3" />
+          <entry key="JSON" value="2" />
+          <entry key="SCSS" value="3" />
+          <entry key="TypeScript" value="17" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="html" value="1" />
+          <entry key="json" value="10" />
+          <entry key="ts" value="18" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
           <entry key="HTML" value="1" />
-          <entry key="JSON" value="1" />
-          <entry key="SCSS" value="1" />
+          <entry key="JSON" value="10" />
+          <entry key="TypeScript" value="18" />
         </counts>
       </usages-collector>
     </session>
@@ -94,119 +112,69 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/wettkampfklasse/wettkampfklasse-detail/wettkampfklasse-detail.component.spec.ts">
+        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#73#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="86" column="11" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="11" />
-              <folding>
-                <element signature="e#0#48#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/wettkampf.routing.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/wettkampf.module.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            <state relative-caret-position="-1248">
+              <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.html">
+        <entry file="file://$PROJECT_DIR$/bogenliga/src/assets/i18n/de.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="10" column="46" lean-forward="true" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-              <folding>
-                <element signature="n#style#0;n#table#0;n#div#0;n#bla-navigation-dialog#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="225">
+              <caret line="192" column="41" selection-start-line="192" selection-start-column="41" selection-end-line="192" selection-end-column="41" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-              <folding>
-                <element signature="n#style#0;n#table#0;n#div#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="46" lean-forward="true" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.spec.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#71#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.scss">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.ts">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.config.ts">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/services/dsb-mitglied-data-provider.service.ts">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/datatransfer/dsb-mitglied-dto.class.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2295">
-              <folding>
-                <element signature="e#0#48#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="348">
+              <caret line="43" column="49" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="49" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.ts">
+        <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/dsb-mitglied-do.class.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-              <folding>
-                <element signature="e#0#48#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="240">
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>kam</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -221,6 +189,9 @@
         <option value="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.html" />
         <option value="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.ts" />
         <option value="$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.html" />
+        <option value="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.html" />
+        <option value="$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/datatransfer/dsb-mitglied-dto.class.ts" />
+        <option value="$PROJECT_DIR$/bogenliga/src/assets/i18n/de.json" />
       </list>
     </option>
   </component>
@@ -552,10 +523,9 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="652" />
-    <option name="y" value="20" />
-    <option name="width" value="708" />
-    <option name="height" value="688" />
+    <option name="x" value="-10" />
+    <option name="width" value="1390" />
+    <option name="height" value="1756" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -658,9 +628,7 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
               <item name="verwaltung" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="dsb-mitglied" type="462c0819:PsiDirectoryNode" />
-              <item name="dsb-mitglied-overview" type="462c0819:PsiDirectoryNode" />
+              <item name="types" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
@@ -670,84 +638,8 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
               <item name="verwaltung" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="verwaltung" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="verwaltung" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampfklasse" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="verwaltung" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampfklasse" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampfklasse-detail" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="verwaltung" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampfklasse" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampfklasse-overview" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampf" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampf" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampf" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="setzliste" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="frontend" type="462c0819:PsiDirectoryNode" />
-              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkampf" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="wettkaempfe" type="462c0819:PsiDirectoryNode" />
+              <item name="types" type="462c0819:PsiDirectoryNode" />
+              <item name="datatransfer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
@@ -755,6 +647,14 @@
               <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="bogenliga" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="i18n" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -769,9 +669,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../backend" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.tslint" value="C:\Users\besmi\Desktop\SWT2\swt2-bsa-infrastructure\project\frontend\bogenliga\node_modules\tslint" />
+    <property name="node.js.selected.package.tslint" value="C:\Users\rodio\SWT_V2\swt2-bsa-infrastructure\project\frontend\bogenliga\node_modules\tslint" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="C:\Users\besmi\Desktop\SWT2\swt2-bsa-infrastructure\project\frontend\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\rodio\SWT_V2\swt2-bsa-infrastructure\project\frontend\node_modules\typescript\lib" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -823,17 +723,23 @@
       <workItem from="1542800942879" duration="1112000" />
       <workItem from="1542904947148" duration="7558000" />
       <workItem from="1542915338033" duration="3717000" />
+      <workItem from="1543321891502" duration="756000" />
+      <workItem from="1543402039829" duration="3285000" />
+      <workItem from="1543491286625" duration="3635000" />
+      <workItem from="1543581625987" duration="609000" />
+      <workItem from="1544179175810" duration="1373000" />
+      <workItem from="1544186096351" duration="378000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13264000" />
+    <option name="totallyTimeSpent" value="24265000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1551" height="839" extended-state="6" />
+    <frame x="-6" y="-6" width="1381" height="885" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17437962" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29402873" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -842,16 +748,16 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49962208" visible="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4973545" weight="0.32831737" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50037795" side_tool="true" weight="0.32968536" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50415725" side_tool="true" visible="true" weight="0.32831737" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TypeScript" order="11" weight="0.3286119" />
+      <window_info anchor="bottom" id="TypeScript" order="11" sideWeight="0.49584278" visible="true" weight="0.32831737" />
       <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -875,30 +781,11 @@
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/verwaltung.routing.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/services/dsb-mitglied-data-provider.service.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/app.component.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/components/notification/notification.component.scss">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/guards/dsb-mitglied-detail.guard.ts">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/guards/dsb-mitglied-overview.guard.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/guards/index.ts">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/guards/verwaltung.guard.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/verwaltung.module.spec.ts">
       <provider selected="true" editor-type-id="text-editor" />
@@ -907,23 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-173" />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/datatransfer/dsb-mitglied-dto.class.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="43" column="45" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/dsb-mitglied-do.class.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/mannschaft/mannschaft-detail/mannschaft-detail.config.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -975,13 +845,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.spec.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#73#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.ts">
       <provider selected="true" editor-type-id="text-editor" />
@@ -1007,47 +871,15 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/wettkampfklasse/wettkampfklasse-overview/wettkampfklasse-overview.component.spec.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#73#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/wettkampfklasse/wettkampfklasse-detail/wettkampfklasse-detail.component.spec.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#73#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="86" column="11" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/wettkampf.routing.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1069,37 +901,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2295">
-          <folding>
-            <element signature="e#0#48#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/wettkaempfe/wettkaempfe.component.spec.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/wettkampf/components/setzliste/setzliste.component.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="17" column="21" lean-forward="true" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1107,9 +918,90 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="10" column="46" lean-forward="true" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#div#0;n#bla-navigation-dialog#0;n#!!top" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/app.component.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/datatransfer/dsb-mannschaft-dto.class.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/mapper/dsb-mitglied-mapper.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/guards/dsb-mitglied-detail.guard.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/guards/verwaltung.guard.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.config.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-389" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="86" column="11" selection-start-line="86" selection-start-column="11" selection-end-line="86" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/guards/dsb-mitglied-overview.guard.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.scss">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.config.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/services/dsb-mitglied-data-provider.service.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/dsb-mitglied-do.class.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/types/datatransfer/dsb-mitglied-dto.class.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="43" column="49" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/app/modules/verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1248">
+          <caret line="71" column="24" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bogenliga/src/assets/i18n/de.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="192" column="41" selection-start-line="192" selection-start-column="41" selection-end-line="192" selection-end-column="41" />
         </state>
       </provider>
     </entry>
