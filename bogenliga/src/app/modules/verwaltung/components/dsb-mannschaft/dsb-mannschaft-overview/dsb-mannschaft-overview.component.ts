@@ -85,7 +85,7 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/dsb-mannschaft/' + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/dsbmannschaft/' + versionedDataObject.id);
   }
 
   private handleLoadTableRowsFailure(response: Response<DsbMannschaftDTO[]>): void {
