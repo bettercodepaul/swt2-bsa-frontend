@@ -272,8 +272,8 @@
     }, "DSBMANNSCHAFT_DETAIL": {
       "TITLE": "Mannschaft - Details",
       "FORM": {
-        "DSBMANNSCHAFT_ID": {
-          "LABEL": "Mannschaft-ID",
+        "BENUTZER_ID": {
+          "LABEL": "Benutzer-ID",
           "PLACEHOLDER": "Bitte eine ID eingeben",
           "ERROR": "Bitte eine gültige ID eingeben."
         },
@@ -283,7 +283,7 @@
           "ERROR": "Bitte eine gültige Vereinsnummer eingeben."
         },
         "DSBMANNSCHAFTNUMMER": {
-          "LABEL": "Nummer",
+          "LABEL": "Mannschaftsnummer",
           "PLACEHOLDER": "Bitte eine Nummer eingeben",
           "ERROR": "Bitte eine gültige Nummer eingeben."
         },

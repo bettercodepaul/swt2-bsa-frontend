@@ -5,53 +5,6 @@
         class="horizontal-form half-page"
         #dsbMitgliedForm="ngForm">
 
-<!--
-    <div class="form-group row">
-      <label for="dsbMannschaftsnummer"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               id="dsbMannschaftsnummer"
-               name="dsbMannschaftsnummer"
-               #dsbMannschaftsnummer="ngModel"
-               [(ngModel)]="currentDsbMannschaft.mannschaftsnummer"
-               [class.is-invalid]="dsbMannschaftsnummer.invalid && !dsbMannschaftsnummer.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.ERROR' | translate }}
-        </div>
-      </div>
-    </div> -->
-
-    <div class="form-group row">
-      <label for="dsbMannschaftID"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFT_ID.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               id="dsbMannschaftID"
-               name="dsbMannschaftID"
-               #dsbMannschaftsnummer="ngModel"
-               [(ngModel)]="currentDsbMannschaft.id"
-               [class.is-invalid]="dsbMannschaftsnummer.invalid && !dsbMannschaftsnummer.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFT_ID.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFT_ID.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
     <div class="form-group row">
       <label for="dsbVereinsnummer"
              class="col-sm-3 col-form-label">
@@ -63,10 +16,10 @@
                class="form-control"
                required
                id="dsbVereinsnummer"
-               name="dsbVeriensnummer"
-               #dsbMannschaftsnummer="ngModel"
+               name="dsbVereinsnummer"
+               #dsbVereinsnummer="ngModel"
                [(ngModel)]="currentDsbMannschaft.vereinId"
-               [class.is-invalid]="dsbMannschaftsnummer.invalid && !dsbMannschaftsnummer.untouched"
+               [class.is-invalid]="dsbVereinsnummer.invalid && !dsbVereinsnummer.untouched"
                placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBVEREINNUMMER.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -75,6 +28,30 @@
       </div>
     </div>
 
+
+
+    <div class="form-group row">
+      <label for="benutzerID"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.BENUTZER_ID.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="benutzerID"
+               name="benutzerID"
+               #benutzerID="ngModel"
+               [(ngModel)]="currentDsbMannschaft.benutzerId"
+               [class.is-invalid]="benutzerID.invalid && !benutzerID.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.BENUTZER_ID.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.BENUTZER_ID.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
 
     <!-- TODO: VEREIN ID, use dropdown list -->
     <div class="form-group row">
@@ -90,9 +67,9 @@
                min="1"
                id="DsbMannschaftNummer"
                name="DsbMannschaftNummer"
-               #mannschaftVerein="ngModel"
+               #DsbMannschaftNummer="ngModel"
                [(ngModel)]="currentDsbMannschaft.nummer"
-               [class.is-invalid]="mannschaftVerein.invalid && !mannschaftVerein.untouched"
+               [class.is-invalid]="DsbMannschaftNummer.invalid && !DsbMannschaftNummer.untouched"
                placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
