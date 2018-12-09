@@ -17,6 +17,7 @@ import {VEREIN_MANNSCHAFTEN_CONFIG} from './vereine-mannschaften.config';
 
 const ID_PATH_PARAM = 'id';
 
+
 @Component({
   selector: 'bla-vereine-mannschaften',
   templateUrl: './vereine-mannschaften.component.html',
@@ -90,4 +91,5 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
     this.rows = toTableRows(response.payload);
     this.loading = false;
   }
+
 }
