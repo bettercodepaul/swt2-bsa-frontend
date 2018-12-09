@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {SharedModule} from '../shared';
 import {RouterModule} from '@angular/router';
-import { VereineComponent } from './components/vereine/vereine.component';
+
+import {SharedModule} from '../shared';
+import {VereineComponent} from './components/vereine/vereine.component';
 import {VEREINE_ROUTES} from './vereine.routing';
-import { MannschaftComponent } from '../mannschaft/components/mannschaft/mannschaft.component'
+import {VereineMannschaftenComponent} from "./components/mannschaften/vereine-mannschaften.component";
+
 
 
 @NgModule({
@@ -13,6 +15,7 @@ import { MannschaftComponent } from '../mannschaft/components/mannschaft/mannsch
     RouterModule.forChild(VEREINE_ROUTES),
     SharedModule.forChild()
   ],
-  declarations: [VereineComponent, MannschaftComponent]
+  exports:[RouterModule, SharedModule],
+  declarations: [VereineComponent, VereineMannschaftenComponent]
 })
 export class VereineModule { }
