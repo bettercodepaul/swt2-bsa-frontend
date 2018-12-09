@@ -35,7 +35,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   }
 
   private navigateToDetailDialog(vereineDO: VereineDO) {
-    this.router.navigateByUrl('/vereine/' + vereineDO.identifier);
+    this.router.navigateByUrl('/vereine/' + vereineDO.id);
   }
 
   private loadTableRows() {
