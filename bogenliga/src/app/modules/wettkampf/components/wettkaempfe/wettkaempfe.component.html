@@ -25,6 +25,11 @@
         <td>Welzheim</td>
         <td>1. Wettkampf</td>
         <a routerLink="setzliste"><button>Setztliste</button></a>
+        <bla-button
+                    [id]="'setzlistePDF'"
+                    (onClick)="getSetzlisteAsPDF(1)">
+        Setzliste
+        </bla-button>
       </tr>
 
       <tr class="table-warning">
