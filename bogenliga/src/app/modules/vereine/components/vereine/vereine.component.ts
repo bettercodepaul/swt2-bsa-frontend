@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+
 import {VEREINE_CONFIG} from './vereine.config';
 import {CommonComponent} from '../../../shared/components/common';
 import {TableRow} from '../../../shared/components/tables/types/table-row.class';
 import {Response} from '../../../shared/data-provider';
-import {Router} from '@angular/router';
 import {NotificationService} from '../../../shared/services/notification';
 import {VereineDataProviderService} from '../../services/vereine-data-provider.service';
 import {toTableRows} from '../../../shared/components/tables';
@@ -29,12 +30,12 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.loadTableRows();
   }
 
-  public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
+  public onView(vereineDO: VereineDO): void {
+    this.navigateToDetailDialog(vereineDO);
   }
 
-  private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/vereine/' + versionedDataObject.id);
+  private navigateToDetailDialog(vereineDO: VereineDO) {
+    this.router.navigateByUrl('/vereine/' + vereineDO.identifier);
   }
 
   private loadTableRows() {
