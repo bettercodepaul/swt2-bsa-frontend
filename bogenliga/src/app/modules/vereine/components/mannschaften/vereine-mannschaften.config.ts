@@ -1,6 +1,9 @@
-import {CommonDialogConfig} from '../../../shared/components/dialogs';
+import {CommonDialogConfig, NavigationDialogConfig} from '../../../shared/components/dialogs';
 
-export const VEREIN_MANNSCHAFTEN_CONFIG: CommonDialogConfig = {
+export const VEREIN_MANNSCHAFTEN_CONFIG: NavigationDialogConfig = {
   moduleTranslationKey:    'VEREINE',
   pageTitleTranslationKey: 'VEREINE.VEREINE.TITLE',
+  navigationCardsConfig:   {
+    navigationCards: []
+  }
 };
