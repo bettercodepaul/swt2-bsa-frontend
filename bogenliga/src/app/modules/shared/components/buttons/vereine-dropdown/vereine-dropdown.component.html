@@ -1,4 +1,4 @@
 <div class="p-3">
-  <bla-button (onClick)="toggleDropdown()">Mannschaften</bla-button>
-  <bla-dropdown *ngIf="dropdownIsVisible"></bla-dropdown>
+  <bla-button class="" (click)="toggleDropdown()">Mannschaften &#9660;</bla-button>
+  <bla-dropdown class="bg-primary" *ngIf="dropdownIsVisible" (clicked)="navigateToMannschaft($event)" [currentVerein]="currentVerein" [mannschaften]="mannschaften"></bla-dropdown>
 </div>

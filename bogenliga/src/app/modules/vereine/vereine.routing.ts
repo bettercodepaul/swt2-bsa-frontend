@@ -7,5 +7,6 @@ import {VereineMannschaftenComponent} from './components/mannschaften/vereine-ma
 
 export const VEREINE_ROUTES: Routes = [
   {path: '', component: VereineComponent},
-  {path: ':id', component: VereineMannschaftenComponent}
+  {path: ':id', component: VereineMannschaftenComponent},
+  {path: ':id/:mannschaft', component: VereineMannschaftenComponent}
 ];

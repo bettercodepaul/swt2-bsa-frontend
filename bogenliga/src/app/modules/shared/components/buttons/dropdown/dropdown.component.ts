@@ -1,4 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {DsbMannschaftDO} from '../../../../verwaltung/types/dsb-mannschaft-do.class';
+import {VereineDO} from '../../../../vereine/types/vereine-do.class';
 
 @Component({
   selector:    'bla-dropdown',
@@ -10,10 +12,18 @@ export class DropdownComponent implements OnInit {
 
   @Output() public onAction = new EventEmitter<void>();
 
+  @Input() mannschaften: DsbMannschaftDO[] = [];
+  @Input() currentVerein: VereineDO;
+  @Output() clicked: EventEmitter<string> = new EventEmitter();
+
   constructor() {
   }
 
   ngOnInit() {
+  }
+
+  private onClick(id: string) {
+    this.clicked.emit(id);
   }
 
 }
