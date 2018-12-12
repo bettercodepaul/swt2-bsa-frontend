@@ -15,6 +15,9 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 import {MannschaftsMitgliedDO} from '../../../types/mannschaftsmitglied-do.class';
+import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
+import {VereinDO} from '../../../types/verein-do.class';
+import {VereinDataProviderService} from "../../../services/verein-data-provider.service";
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSBMANNSCHAFT = 'dsbmannschaft_detail_delete';
@@ -35,11 +38,14 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
   public ButtonType = ButtonType;
   public currentDsbMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
   public currentMannschaftsMitglied: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
+  public currentVerein: VereinDO = new VereinDO();
+  public verein: Array<VereinDO> = [new VereinDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
 
   constructor(private DsbMannschaftDataProvider: DsbMannschaftDataProviderService,
+    private vereinProvider: VereinDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
@@ -185,6 +191,12 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
         .catch((response: Response<DsbMannschaftDO>) => this.handleFailure(response));
   }
 
+  private loadVerein() {
+    this.vereinProvider.findAll()
+      .then((response: Response<VereinDO[]>) => this.handleResponseArraySuccess(response))
+      .catch((response: Response<VereinDTO[]>) => this.handleResponseArrayFailure(response));
+  }
+
   private handleSuccess(response: Response<DsbMannschaftDO>) {
     this.currentDsbMannschaft = response.payload;
     this.loading = false;
@@ -238,5 +250,15 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
         });
 
     this.notificationService.showNotification(notification);
+  }
+  private handleResponseArraySuccess(response: Response<VereinDTO[]>): void {
+    this.verein = [];
+    this.verein = response.payload;
+    this.currentVerein = this.verein[0];
+    this.loading = false;
+  }
+  private handleResponseArrayFailure(response: Response<VereinDTO[]>): void {
+    this.verein = [];
+    this.loading = false;
   }
 }
