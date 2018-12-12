@@ -27,9 +27,5 @@ export const VEREINE_CONFIG: OverviewDialogConfig = {
         width:          20,
       }
       ],
-    actions: {
-      actionTypes: [TableActionType.VIEW],
-      width:       6
-    },
   }
 };
