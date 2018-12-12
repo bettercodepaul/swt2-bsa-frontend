@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DSB_MANNSCHAFT_OVERVIEW_CONFIG} from './dsb-mannschaft-overview.config';
+import {DSB_MANNSCHAFT_OVERVIEW_CONFIG} from '../../dsb-mannschaft/dsb-mannschaft-overview/dsb-mannschaft-overview.config';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {CommonComponent} from '../../../../shared/components/common';
