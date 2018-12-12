@@ -6,6 +6,8 @@ import {SharedModule} from '../shared';
 import {VereineComponent} from './components/vereine/vereine.component';
 import {VEREINE_ROUTES} from './vereine.routing';
 import {VereineMannschaftenComponent} from './components/mannschaften/vereine-mannschaften.component';
+import {VereineTableComponent} from './components/vereine-table/vereine-table.component';
+import {VereineDataTableComponent} from './components/vereine-data-table/vereine-data-table.component';
 
 
 
@@ -16,6 +18,9 @@ import {VereineMannschaftenComponent} from './components/mannschaften/vereine-ma
     SharedModule.forChild()
   ],
   exports: [RouterModule, SharedModule],
-  declarations: [VereineComponent, VereineMannschaftenComponent]
+  declarations: [VereineComponent,
+                VereineMannschaftenComponent,
+                VereineTableComponent,
+                VereineDataTableComponent]
 })
 export class VereineModule { }
