@@ -20,7 +20,7 @@ export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {
         translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBVEREINNUMMER',
         propertyName:     'vereinId',
         width:            7,
-        type:             TableColumnType.TEXT,
+        type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {

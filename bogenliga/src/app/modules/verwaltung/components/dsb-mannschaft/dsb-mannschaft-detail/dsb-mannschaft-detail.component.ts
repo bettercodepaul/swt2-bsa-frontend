@@ -17,7 +17,7 @@ import {
 import {MannschaftsMitgliedDO} from '../../../types/mannschaftsmitglied-do.class';
 import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
 import {VereinDO} from '../../../types/verein-do.class';
-import {VereinDataProviderService} from "../../../services/verein-data-provider.service";
+import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSBMANNSCHAFT = 'dsbmannschaft_detail_delete';
