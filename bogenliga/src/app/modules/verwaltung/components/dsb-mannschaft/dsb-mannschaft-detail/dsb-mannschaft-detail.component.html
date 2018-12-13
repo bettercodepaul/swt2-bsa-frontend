@@ -17,7 +17,7 @@
                id="vereinsName"
                name="vereinsName"
                #vereinsName="ngModel"
-               [(ngModel)]="currentDsbMannschaft.vereinId = currentVerein.vereinId">
+               [(ngModel)]="currentVerein">
           <option [ngValue]="vereine" *ngFor="let vereine of verein"> {{vereine.name}}</option>
         </select>
 
