@@ -77,7 +77,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.saveLoading = true;
 
     // persist
-    this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft, this.currentMannschaftsMitglied)
+    this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft, this.currentVerein)
         .then((response: Response<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
@@ -110,6 +110,39 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
 
         });
+    this.vereinProvider.findById(this.currentVerein.vereinId)
+      .then((response: Response<VereinDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)
+          && !isNullOrUndefined(response.payload.vereinId)) {
+          console.log('Saved with id: ' + response.payload.vereinId);
+
+          const notification: Notification = {
+            id:          NOTIFICATION_SAVE_DSBMANNSCHAFT,
+            title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+            description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+            severity:    NotificationSeverity.INFO,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
+
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_DSBMANNSCHAFT)
+            .subscribe(myNotification => {
+              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                this.saveLoading = false;
+                this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.id);
+              }
+            });
+
+          this.notificationService.showNotification(notification);
+        }
+      }, (response: Response<DsbMannschaftDO>) => {
+        console.log('Failed');
+        this.saveLoading = false;
+
+
+      });
     // show response message
   }
 
