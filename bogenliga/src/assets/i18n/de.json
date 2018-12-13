@@ -278,8 +278,8 @@
           "ERROR": "Bitte eine gültige ID eingeben."
         },
         "DSBVEREINNUMMER": {
-          "LABEL": "Vereinsnummer",
-          "PLACEHOLDER": "Bitte eine Vereinsnummer eingeben",
+          "LABEL": "Vereinsname",
+          "PLACEHOLDER": "Bitte einen Vereinsnamen auswählen",
           "ERROR": "Bitte eine gültige Vereinsnummer eingeben."
         },
         "DSBMANNSCHAFTNUMMER": {

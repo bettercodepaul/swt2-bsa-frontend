@@ -23,11 +23,30 @@ export class DsbMannschaftDTO implements DataTransferObject {
     } else {
       copy.id = null;
     }
-    copy.benutzerId = optional.benutzerId || null;
+
+    if (optional.benutzerId >= 0) {
+      copy.benutzerId = optional.benutzerId;
+    } else {
+      copy.benutzerId = null;
+    }
+
+    if (optional.vereinId >= 0) {
+      copy.vereinId = optional.vereinId;
+    } else {
+      copy.vereinId = null;
+    }
+
+    if (optional.nummer >= 0) {
+      copy.nummer = optional.nummer;
+    } else {
+      copy.nummer = null;
+    }
+    if (optional.veranstaltungID >= 0) {
+      copy.veranstaltungID = optional.veranstaltungID;
+    } else {
+      copy.veranstaltungID = null;
+    }
     copy.version = optional.version || null;
-    copy.vereinId = optional.vereinId || null;
-    copy.nummer = optional.nummer || '';
-    copy.veranstaltungID = optional.veranstaltungID || null;
 
     return copy;
   }
