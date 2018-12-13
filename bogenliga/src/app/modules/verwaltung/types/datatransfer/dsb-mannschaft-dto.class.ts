@@ -2,7 +2,7 @@ import {DataTransferObject} from '../../../shared/data-provider';
 
 export class DsbMannschaftDTO implements DataTransferObject {
   id: number;
-  nummer: number;
+  nummer: string;
   vereinId: number;
   benutzerId: number;
   version: number;
@@ -10,7 +10,7 @@ export class DsbMannschaftDTO implements DataTransferObject {
 
   static copyFrom(optional: {
     id?: number,
-    nummer?: number,
+    nummer?: string,
     vereinId?: number,
     benutzerId?: number,
     version?: number,
@@ -35,18 +35,13 @@ export class DsbMannschaftDTO implements DataTransferObject {
     } else {
       copy.vereinId = null;
     }
-
-    if (optional.nummer >= 0) {
-      copy.nummer = optional.nummer;
-    } else {
-      copy.nummer = null;
-    }
     if (optional.veranstaltungID >= 0) {
       copy.veranstaltungID = optional.veranstaltungID;
     } else {
       copy.veranstaltungID = null;
     }
     copy.version = optional.version || null;
+    copy.nummer = optional.nummer || '';
 
     return copy;
   }
