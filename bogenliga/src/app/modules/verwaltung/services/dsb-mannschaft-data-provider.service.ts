@@ -11,7 +11,7 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
-import {MannschaftsMitgliedDO} from '../types/mannschaftsmitglied-do.class';
+import {VereinDO} from '../types/verein-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/dsb-mannschaft-mapper';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     super();
   }
 
-  public create(payload: DsbMannschaftDO, payload2: MannschaftsMitgliedDO): Promise<Response<DsbMannschaftDO>> {
+  public create(payload: DsbMannschaftDO, payload2: VereinDO): Promise<Response<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

@@ -15,6 +15,7 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 import {MannschaftsMitgliedDO} from '../../../types/mannschaftsmitglied-do.class';
+import {VereinDO} from '../../../types/verein-do.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSBMANNSCHAFT = 'dsbmannschaft_detail_delete';
@@ -35,6 +36,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
   public ButtonType = ButtonType;
   public currentDsbMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
   public currentMannschaftsMitglied: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
+  public currentVerein: VereinDO = new VereinDO();
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -70,7 +72,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.saveLoading = true;
 
     // persist
-    this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft, this.currentMannschaftsMitglied)
+    this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft, this.currentVerein )
       .then((response: Response<DsbMannschaftDO>) => {
         if (!isNullOrUndefined(response)
           && !isNullOrUndefined(response.payload)
