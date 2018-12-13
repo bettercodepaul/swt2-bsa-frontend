@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DsbMannschaftDO} from '../../../../verwaltung/types/dsb-mannschaft-do.class';
 import {VereineDO} from '../../../../vereine/types/vereine-do.class';
 import {Router} from '@angular/router';
+import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 
 @Component({
   selector:    'bla-vereine-dropdown',
@@ -11,13 +12,13 @@ import {Router} from '@angular/router';
 
 export class VereineDropdownComponent implements OnInit {
 
-  @Output() onClick = new EventEmitter<any>();
+  @Output() onMannschaftClick = new EventEmitter<any>();
   @Input() mannschaften: DsbMannschaftDO[] = [];
   @Input() currentVerein: VereineDO;
 
   public dropdownIsVisible = false;
 
-  constructor(private router: Router) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -27,8 +28,7 @@ export class VereineDropdownComponent implements OnInit {
     this.dropdownIsVisible = !this.dropdownIsVisible;
   }
 
-  public navigateToMannschaft(id: string) {
-    this.router.navigateByUrl('/vereine/' + this.currentVerein.id + '/' + id);
-    this.toggleDropdown();
+  public onClick(versionedDataObject: VersionedDataObject) {
+    this.onMannschaftClick.emit(versionedDataObject);
   }
 }

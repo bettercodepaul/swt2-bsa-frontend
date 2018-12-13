@@ -10,8 +10,6 @@ import {VereineDO} from '../../../../vereine/types/vereine-do.class';
 
 export class DropdownComponent implements OnInit {
 
-  @Output() public onAction = new EventEmitter<void>();
-
   @Input() mannschaften: DsbMannschaftDO[] = [];
   @Input() currentVerein: VereineDO;
   @Output() clicked: EventEmitter<string> = new EventEmitter();
