@@ -88,7 +88,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
 
-  public findById(id: string | number): Promise<Response<DsbMannschaftDO>> {
+  public findById(id: string | number): Promise<Response<MannschaftsMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -109,7 +109,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<DsbMannschaftDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<Response<MannschaftsMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
