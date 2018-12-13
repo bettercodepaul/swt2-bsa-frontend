@@ -66,7 +66,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
 
-  public findAll(): Promise<Response<DsbMannschaftDO[]>> {
+  public findAll(): Promise<Response<MannschaftsMitgliedDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

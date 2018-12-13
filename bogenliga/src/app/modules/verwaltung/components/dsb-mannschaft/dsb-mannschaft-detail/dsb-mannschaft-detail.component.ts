@@ -56,6 +56,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.loading = true;
 
     this.notificationService.discardNotification();
+    this.loadVerein();
 
     this.route.params.subscribe(params => {
       if (!isUndefined(params[ID_PATH_PARAM])) {

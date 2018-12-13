@@ -20,13 +20,15 @@ export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {
         translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBVEREINNUMMER',
         propertyName:     'vereinId',
         width:            7,
-        type:             TableColumnType.NUMBER,
+        type:             TableColumnType.TEXT,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBMANNSCHAFTNUMMER',
-        propertyName:   'nummer',
-        width:          20,
+        translationKey:   'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBMANNSCHAFTNUMMER',
+        propertyName:     'nummer',
+        width:            20,
+        type:             TableColumnType.NUMBER,
+        currentSortOrder: TableColumnSortOrder.ASCENDING
       }
     ],
     actions: {
