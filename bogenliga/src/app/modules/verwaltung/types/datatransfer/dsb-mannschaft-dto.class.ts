@@ -2,7 +2,7 @@ import {DataTransferObject} from '../../../shared/data-provider';
 
 export class DsbMannschaftDTO implements DataTransferObject {
   id: number;
-  nummer: string;
+  nummer: number;
   vereinId: number;
   benutzerId: number;
   version: number;
@@ -10,7 +10,7 @@ export class DsbMannschaftDTO implements DataTransferObject {
 
   static copyFrom(optional: {
     id?: number,
-    nummer?: string,
+    nummer?: number,
     vereinId?: number,
     benutzerId?: number,
     version?: number,
