@@ -1,10 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import{Location} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
 
 import {CommonComponent} from '../../../shared/components/common';
 import {TableRow} from '../../../shared/components/tables/types/table-row.class';
 import {DsbMannschaftDataProviderService} from '../../../verwaltung/services/dsb-mannschaft-data-provider.service';
-import {toTableRows} from '../../../shared/components/tables';
 import {Response} from '../../../shared/data-provider';
 import {DsbMannschaftDTO} from '../../../verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {VereineDataProviderService} from '../../services/vereine-data-provider.service';
@@ -17,6 +15,7 @@ import {VEREIN_MANNSCHAFTEN_CONFIG} from './vereine-mannschaften.config';
 import {DsbMannschaftDO} from '../../../verwaltung/types/dsb-mannschaft-do.class';
 
 const ID_PATH_PARAM = 'id';
+const MANNSCHAFT_PATH_PARAM = 'mannschaft';
 
 
 @Component({
@@ -30,14 +29,14 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
   public currentVerein: VereinDO = new VereinDO();
   public rows: TableRow[];
   public mannschaften: DsbMannschaftDO[];
+  public currentMannschaft: DsbMannschaftDO;
 
   constructor(private DsbMannschaftDataProvider: DsbMannschaftDataProviderService,
               private vereinProvider: VereineDataProviderService,
               private regionProvider: RegionDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
-              private notificationService: NotificationService,
-              private _location: Location) {
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -48,16 +47,9 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
     this.route.params.subscribe(params => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        const id = params[ID_PATH_PARAM];
         this.loadVereinById(params[ID_PATH_PARAM]);
       }
     });
-
-    this.loadMannschaften();
-  }
-
-  private test() {
-    console.log('Test!');
   }
 
   private loadVereinById(id: number) {
@@ -68,6 +60,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
   private handleSuccess(response: Response<VereinDO>) {
     this.currentVerein = response.payload;
+    this.loadMannschaften();
     this.loading = false;
   }
 
@@ -89,6 +82,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
     this.mannschaften = response.payload;
 
     this.filterMannschaften();
+    this.setCurrentMansnchaft();
     this.loading = false;
   }
 
@@ -97,25 +91,39 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
+  private setCurrentMansnchaft() {
+
+    this.route.params.subscribe(params => {
+      if (!isUndefined(params[MANNSCHAFT_PATH_PARAM])) {
+        console.log(params[MANNSCHAFT_PATH_PARAM]);
+        console.log(this.mannschaften);
+        for (let mannschaft of this.mannschaften) {
+          if (mannschaft.id  === parseInt(params[MANNSCHAFT_PATH_PARAM], 10)) {
+            console.log('CurrentMannschaft');
+            console.log(this.currentMannschaft);
+            this.currentMannschaft = mannschaft;
+          }
+        }
+      }
+    });
+
+  }
+
   private filterMannschaften(): void {
-    // TODO log
-    // console.log(this.currentVerein);
     let filteredMannschaften = [];
     for (let mannschaft of this.mannschaften) {
-      // TODO log
-      // console.log(mannschaft.vereinId + ' ' + this.currentVerein.id);
       if (mannschaft.vereinId === this.currentVerein.id) {
         filteredMannschaften.push(mannschaft);
       }
     }
     this.mannschaften = filteredMannschaften;
-
-    // TODO Log
-    // console.log('Filtered Mannschaften:');
-    // console.log(this.mannschaften);
   }
 
   private backClicked(): void {
     this.router.navigateByUrl('/vereine');
+  }
+
+  private navigateToMannschaft(mannschaft: DsbMannschaftDO) {
+    this.router.navigateByUrl('/vereine/' + this.currentVerein.id + '/' + mannschaft.id);
   }
 }

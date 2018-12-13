@@ -36,7 +36,8 @@
   <tr *ngFor="let row of rows"
       [id]="getRowId(row)"
       (click)="onRow(row.payload)"
-      [class.disabled]="hasLoadingActions(row)">
+      [class.disabled]="hasLoadingActions(row)"
+      class="row-clickable">
 
     <!-- data columns -->
     <td *ngFor="let column of config.columns"
