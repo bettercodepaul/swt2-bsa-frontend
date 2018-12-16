@@ -1,0 +1,25 @@
+.dropdown-item {
+  cursor: pointer
+}
+
+.dropdown-item:active {
+  color: #007c91;
+  background-color: #02bdd5;
+}
+
+.bla-dropdown-menu {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  text-align: left;
+}
+
+.dropdown-toggle::after {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+
+.dropdown-menu {
+  width: 100%;
+}

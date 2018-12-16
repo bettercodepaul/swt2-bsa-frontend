@@ -432,6 +432,11 @@
   "DIALOG": {
     "LOADING": "Einträge werden geladen"
   },
+  "DROPDOWN": {
+    "PLEASE_SELECT_ITEM": "Bitte einen Eintrag auswählen...",
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen..."
+  },
   "DETAILS": {
     "TITLE": "Entität-Details",
     "DELETE": "Löschen",

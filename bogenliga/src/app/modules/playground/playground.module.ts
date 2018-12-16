@@ -16,7 +16,8 @@ import {PLAYGROUND_ROUTES} from './playground.routing';
   ],
   declarations: [
     PlaygroundComponents.TooltipExampleComponent,
-    PlaygroundComponent
+    PlaygroundComponents.DropdownMenuExampleComponent,
+    PlaygroundComponent,
   ]
 })
 export class PlaygroundModule {
