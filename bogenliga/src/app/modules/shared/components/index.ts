@@ -8,6 +8,7 @@ export * from './tables';
 export * from './forms';
 export * from './layouts';
 export * from './tooltips';
+export * from './dropdowns';
 
 export * from './common/common-component.class';
 export * from './common/common-secured-component.class';
