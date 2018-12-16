@@ -6,6 +6,7 @@ import {SharedModule} from '../shared';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {RouterModule} from '@angular/router';
 import {PLAYGROUND_ROUTES} from './playground.routing';
+import {LayoutExampleComponent} from './components/playground/components/layout-example/layout-example.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {PLAYGROUND_ROUTES} from './playground.routing';
     PlaygroundComponents.DropdownMenuExampleComponent,
     PlaygroundComponents.SelectionlistExampleComponent,
     PlaygroundComponent,
+    LayoutExampleComponent,
   ]
 })
 export class PlaygroundModule {
