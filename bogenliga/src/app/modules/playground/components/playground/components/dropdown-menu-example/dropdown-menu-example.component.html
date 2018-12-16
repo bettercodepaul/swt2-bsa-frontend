@@ -6,21 +6,27 @@
   Das Ein- und Ausblenden wird über Angular gesteuert. Der Style wird von Bootstrap genutzt.
 </p>
 
-<bla-col-layout>
+<div class="playground-row">
+  <bla-col-layout>
   <p class="playground-label">
     Dropdown Menü mit einer Liste von DTOs mit ID:
+    <br>
+    Auswahl: {{ getSelectedDTO() }}
   </p>
 
   <bla-dropdown-menu [id]="'playground-dropdown-menu'"
                      [items]="getVersionedDataObjects()"
                      [optionFieldSelector]="'name'"
+                     (onSelect)="onSelect($event)"
                      style="width: 50%;">
   </bla-dropdown-menu>
 
-</bla-col-layout>
+  </bla-col-layout>
+</div>
 
 <!-- preselected item -->
-<bla-col-layout>
+<div class="playground-row">
+  <bla-col-layout>
   <p class="playground-label">
     Dropdown Menü mit Vorauswahl (per ID):
   </p>
@@ -31,10 +37,12 @@
                      style="width: 50%;">
   </bla-dropdown-menu>
 
-</bla-col-layout>
+  </bla-col-layout>
+</div>
 
 
-<bla-col-layout>
+<div class="playground-row">
+  <bla-col-layout>
   <p class="playground-label">
     Deaktiviertes Dropdown Menü mit Vorauswahl (per ID):
   </p>
@@ -46,10 +54,12 @@
                      style="width: 50%;">
   </bla-dropdown-menu>
 
-</bla-col-layout>
+  </bla-col-layout>
+</div>
 
 
-<bla-col-layout>
+<div class="playground-row">
+  <bla-col-layout>
   <p class="playground-label">
     Dropdown Menü mit Ladeindikator (bitte Seite neu laden, um die 5 Sek. Verzögerung zu sehen):
   </p>
@@ -61,10 +71,12 @@
                      style="width: 50%;">
   </bla-dropdown-menu>
 
-</bla-col-layout>
+  </bla-col-layout>
+</div>
 
 <!-- empty list -->
-<bla-col-layout>
+<div class="playground-row">
+  <bla-col-layout>
   <p class="playground-label">
     Dropdown Menü mit leerer Liste:
   </p>
@@ -74,10 +86,12 @@
                      style="width: 50%;">
   </bla-dropdown-menu>
 
-</bla-col-layout>
+  </bla-col-layout>
+</div>
 
 
-<bla-col-layout>
+<div class="playground-row">
+  <bla-col-layout>
   <p class="playground-label">
     Dropdown Menü ohne Parameter:
   </p>
@@ -85,5 +99,6 @@
   <bla-dropdown-menu style="width: 50%;">
   </bla-dropdown-menu>
 
-</bla-col-layout>
+  </bla-col-layout>
+</div>
 

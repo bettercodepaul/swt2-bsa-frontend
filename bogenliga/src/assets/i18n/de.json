@@ -437,6 +437,11 @@
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen..."
   },
+  "SELECTIONLIST": {
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen...",
+    "SEARCH_PLACEHOLDER": "Suchbegriff eingeben"
+  },
   "DETAILS": {
     "TITLE": "Entität-Details",
     "DELETE": "Löschen",

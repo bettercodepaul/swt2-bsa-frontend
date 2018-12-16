@@ -5,34 +5,41 @@ import {delay} from 'rxjs/operators';
 import {isNullOrUndefined} from 'util';
 
 @Component({
-  selector: 'bla-dropdown-menu-example',
-  templateUrl: './dropdown-menu-example.component.html',
-  styleUrls: ['./dropdown-menu-example.component.scss']
+  selector: 'bla-selectionlist-example',
+  templateUrl: './selectionlist-example.component.html',
+  styleUrls: ['./selectionlist-example.component.scss']
 })
-export class DropdownMenuExampleComponent implements OnInit {
+export class SelectionlistExampleComponent implements OnInit {
 
   public loading = true;
-  public selectedDTO: PlaygroundVersionedDataObject;
+  public selectedDTOs: PlaygroundVersionedDataObject[];
+  public multipleSelections = true;
 
   constructor() {
   }
 
   ngOnInit() {
-
     of(true).pipe(delay(5000)).subscribe(ignore => this.loading = false);
   }
 
 
-  public onSelect($event: PlaygroundVersionedDataObject): void {
-    this.selectedDTO = $event;
+  public onSelect($event: PlaygroundVersionedDataObject[]): void {
+    this.selectedDTOs = [];
+    this.selectedDTOs = $event;
   }
 
   public getSelectedDTO(): string {
-    if (isNullOrUndefined(this.selectedDTO)) {
+    if (isNullOrUndefined(this.selectedDTOs)) {
       return '';
     } else {
-      console.log('Dropdown Menü: selectedDTO = ' + JSON.stringify(this.selectedDTO));
-      return this.selectedDTO['name'];
+      console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
+      const names: string[] = [];
+
+      this.selectedDTOs.forEach(item => {
+        names.push(item.name);
+      });
+
+      return names.join(', ');
     }
   }
 
@@ -51,6 +58,11 @@ export class DropdownMenuExampleComponent implements OnInit {
       new PlaygroundVersionedDataObject(3, 'Schütze 3'),
       new PlaygroundVersionedDataObject(4, 'Schütze 4'),
       new PlaygroundVersionedDataObject(5, 'Schütze 5'),
+      new PlaygroundVersionedDataObject(6, 'Schütze 6'),
+      new PlaygroundVersionedDataObject(7, 'Schütze 7'),
+      new PlaygroundVersionedDataObject(8, 'Schütze 8'),
+      new PlaygroundVersionedDataObject(9, 'Schütze 9'),
+      new PlaygroundVersionedDataObject(10, 'Schütze 10'),
     ];
   }
 }
