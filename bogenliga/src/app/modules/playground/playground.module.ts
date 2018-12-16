@@ -17,6 +17,7 @@ import {PLAYGROUND_ROUTES} from './playground.routing';
   declarations: [
     PlaygroundComponents.TooltipExampleComponent,
     PlaygroundComponents.DropdownMenuExampleComponent,
+    PlaygroundComponents.SelectionlistExampleComponent,
     PlaygroundComponent,
   ]
 })

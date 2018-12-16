@@ -24,7 +24,9 @@ import {
   NavigationDialogComponent,
   OverviewDialogComponent,
   PageHeadingComponent,
+  QuicksearchListComponent,
   RowLayoutComponent,
+  SelectionlistComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
   TooltipComponent
@@ -83,6 +85,8 @@ library.add(fas, far, fab); // add all icon types
     NavigationDialogComponent,
     TooltipComponent,
     DropdownMenuComponent,
+    SelectionlistComponent,
+    QuicksearchListComponent
   ],
   declarations: [
     ButtonComponent,
@@ -106,6 +110,8 @@ library.add(fas, far, fab); // add all icon types
     NavigationDialogComponent,
     TooltipComponent,
     DropdownMenuComponent,
+    SelectionlistComponent,
+    QuicksearchListComponent
   ]
 })
 export class SharedModule {
