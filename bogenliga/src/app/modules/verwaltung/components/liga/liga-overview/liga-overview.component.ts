@@ -25,12 +25,11 @@ export class LigaOverviewComponent implements OnInit {
     this.loadTableRows();
   }
 
-  private loadTableRows() {
-    this.loading = true;
 
-    this.ligaDataProvider.findAll()
-        .then((response: Response<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsFailure(response))
+
+  private loadTableRows() {
+    
   }
+
 
 }
