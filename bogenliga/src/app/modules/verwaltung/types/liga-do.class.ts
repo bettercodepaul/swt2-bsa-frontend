@@ -3,6 +3,7 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 
 export class LigaDO implements VersionedDataObject {
   id: number;
+  version: number;
   name: string;
   regionId: number;
   regionName: string;
