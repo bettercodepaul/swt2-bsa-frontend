@@ -4,8 +4,8 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
-import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, VerwaltungGuard} from './guards';
-import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComponent} from './components';
+import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, BenutzerDetailGuard, BenutzerOverviewGuard, VerwaltungGuard} from './guards';
+import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, BenutzerDetailComponent, BenutzerOverviewComponent, VerwaltungComponent} from './components';
 
 @NgModule({
   imports:      [
@@ -14,8 +14,8 @@ import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, VerwaltungComp
     SharedModule,
     FormsModule
   ],
-  declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent],
-  providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard]
+  declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent, BenutzerOverviewComponent, BenutzerDetailComponent],
+  providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard, BenutzerOverviewGuard, BenutzerDetailGuard]
 })
 export class VerwaltungModule {
 }
