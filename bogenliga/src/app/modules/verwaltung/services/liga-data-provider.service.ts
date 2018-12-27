@@ -8,9 +8,9 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {fromPayload, fromPayloadArray} from '../mapper/liga-mapper';
 import {HttpErrorResponse} from '@angular/common/http';
-import {WettkampfKlasseDO} from '../types/liga-do.class';
+import {LigaDO} from '../types/liga-do.class';
+import {fromPayload, fromPayloadArray} from '../mapper/liga-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -81,7 +81,7 @@ export class LigaDataProviderService  extends DataProviderService {
           });
     });
   }
-  public create(payload: WettkampfKlasseDO): Promise<Response<LigaDO>> {
+  public create(payload: LigaDO): Promise<Response<LigaDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
