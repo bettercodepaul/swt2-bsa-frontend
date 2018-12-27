@@ -149,25 +149,32 @@
 
         }
       },
-      "LIGA": {
-        "TITLE": "Liga - Übersicht",
-        "TABLE": {
-          "HEADERS": {
-            "ID": "ID",
-            "LIGANAME": "Liga Name",
-            "REGIONID": "Region ID",
-            "REGIONNAME": "Region Name",
-            "UEBERGEORDNETID": "Liga Uebergeordnet ID",
-            "UEBERGEORDNETNAME": "Liga Uebergeornet Name",
-            "VERANTWORTLICHID": "Liga Verantwortlich ID",
-            "VERANTWORTLICHMAIL": "Liga Verantwortlich Mail"
-
-          }
-        },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "DSB Mitglied löschen",
           "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "LIGA": {
+      "TITLE": "Liga - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "LIGANAME": "Liga Name",
+          "REGIONID": "Region ID",
+          "REGIONNAME": "Region Name",
+          "UEBERGEORDNETID": "Liga Uebergeordnet ID",
+          "UEBERGEORDNETNAME": "Liga Uebergeornet Name",
+          "VERANTWORTLICHID": "Liga Verantwortlich ID",
+          "VERANTWORTLICHMAIL": "Liga Verantwortlich Mail"
+
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Liga Mitglied löschen",
+          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
