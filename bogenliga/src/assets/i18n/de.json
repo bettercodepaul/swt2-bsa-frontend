@@ -91,7 +91,6 @@
       }
     }
   },
-
   "MANAGEMENT": {
     "VERWALTUNG": {
       "TITLE": "Verwaltung",
@@ -99,6 +98,10 @@
         "DSBMITGLIEDER": {
           "LABEL": "DSB Mitglieder",
           "DESCRIPTION": "Verwaltung der DSB Mitglieder"
+        },
+        "BENUTZER": {
+          "LABEL": "Benutzer",
+          "DESCRIPTION": "Verwaltung der Benutzer-Accounts"
         }
       }
     },
@@ -175,9 +178,64 @@
           "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
         }
       }
+    },
+    "BENUTZER": {
+      "TITLE": "Benutzer - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "EMAIL": "E-Mail"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Benutzer löschen",
+          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "BENUTZER_DETAIL": {
+      "TITLE": "Benutzer - Details",
+      "FORM": {
+        "EMAIL": {
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Bitte eine gültige E-Mail Adresse eingeben",
+          "ERROR": "Bitte eine gültige E-Mail eingeben."
+        },
+        "PASSWORD": {
+          "LABEL": "Passwort",
+          "PLACEHOLDER": "Bitte ein sicheres Passwort wählen",
+          "ERROR": "Bitte ein sicheres Passwort wählen."
+        },
+        "VERIFYPASSWORD": {
+          "LABEL": "Passwort-Verfikation",
+          "PLACEHOLDER": "Bitte das Passwort wiederholen",
+          "ERROR": "Passworte stimmen nicht überein"
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Benutzer löschen",
+          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Der Benutzer wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Der Benutzer konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Der Benutzer wurde erfolgreich gespeichert."
+        }
+      }
     }
   },
-
   "NOTIFICATION": {
     "BUTTON": {
       "OK": "OK",

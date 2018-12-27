@@ -1,0 +1,115 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="benutzerForm"
+        class="horizontal-form half-page"
+        #benutzerForm="ngForm">
+
+    <!-- E-Mail -->
+    <div class="form-group row">
+      <label for="benutzerEmail"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="email"
+               class="form-control"
+               required
+               id="benutzerEmail"
+               name="benutzerEmail"
+               [disabled]="editEmail"
+               #benutzerEmail="ngModel"
+               [(ngModel)]="currentBenutzer.email"
+               [class.is-invalid]="benutzerEmail.invalid && !benutzerEmail.untouched"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group row">
+      <label for="benutzerPassword"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="password"
+               class="form-control"
+               required
+               id="benutzerPassword"
+               name="benutzerPassword"
+               #benutzerPassword="ngModel"
+               [(ngModel)]="currentBenutzer.password"
+               [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- VerifyPassword -->
+    <div class="form-group row">
+      <label for="benutzerVerifyPassword"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="password"
+               class="form-control"
+               required
+               id="benutzerVerifyPassword"
+               name="benutzerVerifyPassword"
+               #benutzerVerifyPassword="ngModel"
+               [(ngModel)]="currentBenutzer.verifypassword"
+               [class.is-invalid]="benutzerVerifyPassword.invalid && !benutzerVerifyPassword.untouched && benutzerVerifyPassword.value.match(benutzerPassword.value)===null"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- gewünscht?: wie ordnen wir einem Benutzer eine DSB Mitgliegsnummer zu? und damit einen Namen -->
+
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'benutzerSaveButton'"
+                    [disabled]="!benutzerForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'benutzerUpdateButton'"
+                    [disabled]="!benutzerForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.UPDATE' | translate }}
+        </bla-button>
+
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.DELETE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>
