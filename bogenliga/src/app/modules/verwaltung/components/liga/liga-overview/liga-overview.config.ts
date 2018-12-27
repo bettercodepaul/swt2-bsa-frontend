@@ -23,38 +23,38 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
       },
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.REGIONID',
-        propertyName:   'RegionId',
+        propertyName:   'regionId',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.REGIONNAME',
-        propertyName:   'RegionName',
+        propertyName:   'regionName',
         width:          20,
       },
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.UEBERGEORDNETID',
-        propertyName:   'UebergeordnetId',
+        propertyName:   'ligaUebergeordnetId',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.UEBERGEORDNETNAME',
-        propertyName:   'UebergeordnetName',
+        propertyName:   'ligaUebergeordnetName',
         width:          20,
       },
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.VERANTWORTLICHID',
-        propertyName:   'VerantwortlichId',
+        propertyName:   'ligaVerantwortlichId',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.VERANTWORTLICHMAIL',
-        propertyName:   'VerantwortlichMail',
+        propertyName:   'ligaVerantwortlichMail',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING

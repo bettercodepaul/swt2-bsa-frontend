@@ -6,6 +6,9 @@ import {Router} from '@angular/router';
 import {NotificationService} from '../../../../shared/services/notification';
 import {Response} from '../../../../shared/data-provider';
 import {WettkampfKlasseDTO} from '../../../types/datatransfer/wettkampfklasse-dto.class';
+import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {toTableRows} from '../../../../shared/components/tables';
+import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
 
 @Component({
   selector: 'bla-liga-overview',
@@ -26,9 +29,39 @@ export class LigaOverviewComponent implements OnInit {
   }
 
 
+  public onView(versionedDataObject: VersionedDataObject): void {
+    this.navigateToDetailDialog(versionedDataObject);
+  }
+
+  public onEdit(versionedDataObject: VersionedDataObject): void {
+    this.navigateToDetailDialog(versionedDataObject);
+  }
+
+  public onDelete(versionedDataObject: VersionedDataObject): void {
+    //TODO
+  }
 
   private loadTableRows() {
-    
+    this.loading = true;
+
+    this.ligaDataProvider.findAll()
+        .then((response: Response<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: Response<LigaDTO[]>) => this.handleLoadTableRowsFailure(response))
+  }
+
+  private handleLoadTableRowsFailure(response: Response<LigaDTO[]>): void {
+    this.rows = [];
+    this.loading = false;
+  }
+
+  private handleLoadTableRowsSuccess(response: Response<LigaDTO[]>): void {
+    this.rows = []; // reset array to ensure change detection
+    this.rows = toTableRows(response.payload);
+    this.loading = false;
+  }
+
+  private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
+    this.router.navigateByUrl('/verwaltung/liga/' + versionedDataObject.id);
   }
 
 
