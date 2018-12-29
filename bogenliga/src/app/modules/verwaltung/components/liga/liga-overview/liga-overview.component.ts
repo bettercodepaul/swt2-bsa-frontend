@@ -5,23 +5,23 @@ import {LigaDataProviderService} from '../../../services/liga-data-provider.serv
 import {Router} from '@angular/router';
 import {NotificationService} from '../../../../shared/services/notification';
 import {Response} from '../../../../shared/data-provider';
-import {WettkampfKlasseDTO} from '../../../types/datatransfer/wettkampfklasse-dto.class';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {toTableRows} from '../../../../shared/components/tables';
 import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
+import {CommonComponent} from '../../../../shared/components/common';
 
 @Component({
   selector: 'bla-liga-overview',
   templateUrl: './liga-overview.component.html',
   styleUrls: ['./liga-overview.component.scss']
 })
-export class LigaOverviewComponent implements OnInit {
+export class LigaOverviewComponent extends CommonComponent implements OnInit {
 
   public config = LIGA_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
   constructor(private ligaDataProvider: LigaDataProviderService, private router: Router, private notificationService: NotificationService) {
-   // super();
+    super();
   }
 
   ngOnInit() {
