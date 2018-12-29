@@ -56,7 +56,7 @@ export class LigaOverviewComponent extends CommonComponent implements OnInit {
 
   private handleLoadTableRowsSuccess(response: Response<LigaDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
-    this.rows = toTableRows(response.payload);
+   /** this.rows = toTableRows(response.payload);**/
     this.loading = false;
   }
 

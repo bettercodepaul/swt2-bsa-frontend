@@ -9,13 +9,13 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
   tableConfig: {
     columns: [
-      {
+      /**{
         translationKey:   'MANAGEMENT.LIGA.TABLE.HEADERS.ID',
         propertyName:     'id',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
-      },
+      },**/
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.LIGANAME',
         propertyName:   'ligaName',
