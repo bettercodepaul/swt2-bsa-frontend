@@ -1,0 +1,29 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+  <form id="ligaForm"
+        class="horizontal-form half-page"
+        #ligaForm="ngForm">
+
+    <!-- VORNAME -->
+    <div class="form-group row">
+      <label for="dsbMitgliedVorname"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="dsbMitgliedVorname"
+               name="dsbMitgliedVorname"
+               #dsbMitgliedVorname="ngModel"
+               [(ngModel)]="currentMitglied.vorname"
+               [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>

@@ -23,6 +23,7 @@ import {
   WettkampfklasseOverviewComponent
 } from './components';
 import { LigaOverviewComponent } from './components/liga/liga-overview/liga-overview.component';
+import { LigaDetailComponent } from './components/liga/liga-detail/liga-detail.component';
 
 @NgModule({
   imports:      [
@@ -39,7 +40,8 @@ import { LigaOverviewComponent } from './components/liga/liga-overview/liga-over
     DsbMannschaftOverviewComponent,
     WettkampfklasseOverviewComponent,
     WettkampfklasseDetailComponent,
-    LigaOverviewComponent
+    LigaOverviewComponent,
+    LigaDetailComponent
   ],
   providers: [
     VerwaltungGuard,
