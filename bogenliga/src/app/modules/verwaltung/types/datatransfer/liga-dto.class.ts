@@ -1,6 +1,7 @@
 import {DataTransferObject} from '../../../shared/data-provider';
 
 export class LigaDTO implements DataTransferObject {
+  //TODO:  if else for every number
   id: number;
   name: string;
   regionId: number;
@@ -9,6 +10,7 @@ export class LigaDTO implements DataTransferObject {
   ligaUebergeordnetName: string;
   ligaVerantwortlichId: number;
   ligaVerantwortlichMail: string;
+  version: number;
 
   static copyFrom(optional: {
     id?: number,
@@ -18,7 +20,8 @@ export class LigaDTO implements DataTransferObject {
     ligaUebergeordnetId?: number,
     ligaUebergeordnetName?: string,
     ligaVerantwortlichId?: number,
-    ligaVerantwortlichMail?: string
+    ligaVerantwortlichMail?: string,
+    version?: number
   } = {}): LigaDTO {
     const copy = new LigaDTO();
 
