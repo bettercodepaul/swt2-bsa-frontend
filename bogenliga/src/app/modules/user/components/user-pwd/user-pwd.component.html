@@ -1,0 +1,134 @@
+<bla-common-dialog [config]="config",
+                   [loading]="loading">
+
+    <form id="userPwdForm"
+          class="horizontal-form half-page"
+          #userPwdForm="ngForm">
+
+      <!-- Email - Username -->
+      <div class="form-group row">
+        <label for="userPwdFormEmail"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'USER.PWD.FORM.EMAIL.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 required
+                 id="userPwdFormEmail"
+                 name="userPwdFormEmail"
+                 #userPwdFormEmail="ngModel"
+                 [(ngModel)]="credentials.username"
+                 [class.is-invalid]="userPwdFormEmail.invalid && !userPwdFormEmail.untouched"
+                 placeholder="{{ 'USER.PWD.FORM.EMAIL.PLACEHOLDER' | translate }}">
+
+          <div class="invalid-feedback">
+            {{ 'USER.PWD.FORM.EMAIL.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Password -->
+      <div class="form-group row">
+        <label for="userPwdFormPassword"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'USER.PWD.FORM.PASSWORD.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="password"
+                 class="form-control"
+                 required
+                 id="userPwdFormPassword"
+                 name="userPwdFormPassword"
+                 #userPwdFormPassword="ngModel"
+                 [(ngModel)]="credentials.password"
+                 [class.is-invalid]="userPwdFormPassword.invalid && !userPwdFormPassword.untouched"
+                 placeholder="{{ 'USER.PWD.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+
+          <div class="invalid-feedback">
+            {{ 'USER.PWD.FORM.PASSWORD.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
+      <!-- New Password -->
+      <div class="form-group row">
+        <label for="userPwdFormNewPwd"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'USER.PWD.FORM.NEWPASSWORD.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="password"
+                 class="form-control"
+                 required
+                 id="userPwdFormNewPwd"
+                 name="userPwdFormNewPwd"
+                 #userPwdFormPassword="ngModel"
+                 [(ngModel)]="credentials.newpassword"
+                 [class.is-invalid]="userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched"
+                 placeholder="{{ 'USER.PWD.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+
+          <div class="invalid-feedback">
+            {{ 'USER.PWD.FORM.PASSWORD.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Verify New Password -->
+      <div class="form-group row">
+        <label for="userPwdFormVerifyPwd"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'USER.PWD.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="password"
+                 class="form-control"
+                 required
+                 id="userPwdFormVerifyPwd"
+                 name="userPwdFormVerifyPwd"
+                 #userPwdFormPassword="ngModel"
+                 [(ngModel)]="credentials.verifypassword"
+                 [class.is-invalid]="userPwdFormVerifyPwd.invalid && !userPwdFormVerifyPwd.untouched"
+                 placeholder="{{ 'USER.PWD.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+
+          <div class="invalid-feedback">
+            {{ 'USER.PWD.FORM.VERIFYPASSWORD.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9 button-box">
+
+
+          <bla-button *ngIf="!entityExists()"
+                      [id]="'userPwdSaveButton'"
+                      [disabled]="!userPwdForm.valid"
+                      [loading]="loading"
+                      (onClick)="onSave($event)">
+            {{ 'USER.PWD.FORM.SAVE' | translate }}
+          </bla-button>
+          <bla-button *ngIf="entityExists()"
+                      [id]="'userPwdUpdateButton'"
+                      [disabled]="!userPwdForm.valid"
+                      [loading]="loading"
+                      (onClick)="onUpdate($event)">
+            {{ 'USER.PWD.FORM.UPDATE' | translate }}
+          </bla-button>
+        </div>
+      </div>
+    </form>
+
+
+</bla-common-dialog>
+
+
+
+
