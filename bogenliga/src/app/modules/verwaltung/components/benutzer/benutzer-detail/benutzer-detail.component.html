@@ -5,7 +5,7 @@
         class="horizontal-form half-page"
         #benutzerForm="ngForm">
 
-    <!-- E-Mail -->
+    <!-- VORNAME -->
     <div class="form-group row">
       <label for="benutzerEmail"
              class="col-sm-3 col-form-label">
@@ -13,14 +13,13 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="email"
+        <input type="text"
                class="form-control"
                required
                id="benutzerEmail"
                name="benutzerEmail"
-               [disabled]="editEmail"
                #benutzerEmail="ngModel"
-               [(ngModel)]="currentBenutzer.email"
+               [(ngModel)]="currentCredentials.username"
                [class.is-invalid]="benutzerEmail.invalid && !benutzerEmail.untouched"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
 
@@ -30,7 +29,7 @@
       </div>
     </div>
 
-    <!-- Password -->
+    <!-- Passwort -->
     <div class="form-group row">
       <label for="benutzerPassword"
              class="col-sm-3 col-form-label">
@@ -44,7 +43,7 @@
                id="benutzerPassword"
                name="benutzerPassword"
                #benutzerPassword="ngModel"
-               [(ngModel)]="currentBenutzer.password"
+               [(ngModel)]="currentCredentials.newpassword"
                [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.PLACEHOLDER' | translate }}">
 
@@ -54,7 +53,7 @@
       </div>
     </div>
 
-    <!-- VerifyPassword -->
+    <!-- Password verification -->
     <div class="form-group row">
       <label for="benutzerVerifyPassword"
              class="col-sm-3 col-form-label">
@@ -68,8 +67,8 @@
                id="benutzerVerifyPassword"
                name="benutzerVerifyPassword"
                #benutzerVerifyPassword="ngModel"
-               [(ngModel)]="currentBenutzer.verifypassword"
-               [class.is-invalid]="benutzerVerifyPassword.invalid && !benutzerVerifyPassword.untouched && benutzerVerifyPassword.value.match(benutzerPassword.value)===null"
+               [(ngModel)]="currentCredentials.verifypassword"
+               [class.is-invalid]="benutzerVerifyPassword.invalid && !benutzerVerifyPassword.untouched"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -77,9 +76,6 @@
         </div>
       </div>
     </div>
-
-
-    <!-- gewünscht?: wie ordnen wir einem Benutzer eine DSB Mitgliegsnummer zu? und damit einen Namen -->
 
 
     <div class="form-group row">
@@ -93,20 +89,6 @@
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
           {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.SAVE' | translate }}
-        </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'benutzerUpdateButton'"
-                    [disabled]="!benutzerForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.UPDATE' | translate }}
-        </bla-button>
-
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.DANGER"
-                    [loading]="deleteLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.DELETE' | translate }}
         </bla-button>
       </div>
     </div>

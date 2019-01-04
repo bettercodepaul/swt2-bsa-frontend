@@ -3,6 +3,7 @@
     "TITLE": "Bogenliga DE",
     "USER_DROPDOWN": {
       "PROFILE": "Profil und Account",
+      "PWD": "Passwort ändern",
       "SETTINGS": "Einstellungen",
       "LOGOUT": "Logout"
     }
@@ -56,7 +57,37 @@
     "USER": {
       "TITLE": "Benutzer"
     },
-    "LOGIN": {
+    "PROFILE": {
+      "TITLE": "Benutzerprofil"
+    },
+    "PWD": {
+      "TITLE": "Passwort ändern",
+      "FORM": {
+        "SAVE": "Anlegen",
+        "UPDATE": "Aktualisieren",
+        "EMAIL": {
+          "LABLE": "Username/Email",
+          "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
+          "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
+        },
+        "PASSWORD": {
+          "LABEL": "Altes Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
+        },
+        "NEWPASSWORD": {
+          "LABEL": "Neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
+        },
+        "VERIFYPASSWORD": {
+          "LABEL": "Verifikation neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Passwort nicht identisch zum neuen Password"
+        }
+      }
+    },
+     "LOGIN": {
       "TITLE": "Login",
       "HEADER": "Bitte einloggen:",
       "BUTTON": {
@@ -179,6 +210,35 @@
         }
       }
     },
+    "BENUTZER_DETAIL": {
+      "TITLE": "BENUTZER - Details",
+      "FORM": {
+        "EMAIL": {
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
+          "ERROR": "Bitte eine gültige Email eingeben."
+        },
+        "PASSWORD": {
+          "LABEL": "Passwort",
+          "PLACEHOLDER": "Bitte ein Passwort eingeben",
+          "ERROR": "Bitte einen gültiges Passwort eingeben."
+        },
+        "VERIFYPASSWORD": {
+          "LABEL": "Passwort Verifikation",
+          "PLACEHOLDER": "Bitte das Passwort weiderholen",
+          "ERROR": "Passworte sind nicht identisch."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Das Benutzer wurde erfolgreich gespeichert."
+        }
+      }
+    },
     "BENUTZER": {
       "TITLE": "Benutzer - Übersicht",
       "TABLE": {
@@ -191,47 +251,6 @@
         "DELETE": {
           "TITLE": "Benutzer löschen",
           "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-        }
-      }
-    },
-    "BENUTZER_DETAIL": {
-      "TITLE": "Benutzer - Details",
-      "FORM": {
-        "EMAIL": {
-          "LABEL": "E-Mail",
-          "PLACEHOLDER": "Bitte eine gültige E-Mail Adresse eingeben",
-          "ERROR": "Bitte eine gültige E-Mail eingeben."
-        },
-        "PASSWORD": {
-          "LABEL": "Passwort",
-          "PLACEHOLDER": "Bitte ein sicheres Passwort wählen",
-          "ERROR": "Bitte ein sicheres Passwort wählen."
-        },
-        "VERIFYPASSWORD": {
-          "LABEL": "Passwort-Verfikation",
-          "PLACEHOLDER": "Bitte das Passwort wiederholen",
-          "ERROR": "Passworte stimmen nicht überein"
-        },
-        "SAVE": "Speichern",
-        "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
-      },
-      "NOTIFICATION": {
-        "DELETE": {
-          "TITLE": "Benutzer löschen",
-          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-        },
-        "DELETE_SUCCESS": {
-          "TITLE": "Erfolg",
-          "DESCRIPTION": "Der Benutzer wurde erfolgreich gelöscht."
-        },
-        "DELETE_FAILURE": {
-          "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Der Benutzer konnte nicht gelöscht werden."
-        },
-        "SAVE": {
-          "TITLE": "Erfolg",
-          "DESCRIPTION": "Der Benutzer wurde erfolgreich gespeichert."
         }
       }
     }

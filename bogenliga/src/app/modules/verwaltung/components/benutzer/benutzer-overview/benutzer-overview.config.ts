@@ -10,20 +10,13 @@ export const BENUTZER_OVERVIEW_CONFIG: OverviewDialogConfig = {
   tableConfig: {
     columns: [
       {
-        translationKey:   'MANAGEMENT.BENUTZER.TABLE.HEADERS.ID',
-        propertyName:     'id',
-        width:            7,
-        type:             TableColumnType.NUMBER,
-        currentSortOrder: TableColumnSortOrder.ASCENDING
-      },
-      {
         translationKey: 'MANAGEMENT.BENUTZER.TABLE.HEADERS.EMAIL',
         propertyName:   'email',
         width:          20,
       }
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
+      actionTypes: [TableActionType.DELETE],
       width:       6
     },
   }
