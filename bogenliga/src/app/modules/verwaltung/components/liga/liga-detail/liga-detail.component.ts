@@ -4,15 +4,18 @@ import {LIGA_DETAIL_CONFIG} from '../../liga/liga-detail/liga-detail.config';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
 import {ButtonType} from '../../../../shared/components/buttons';
 import {LigaDO} from '../../../types/liga-do.class';
+import {Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
+
 import {
   Notification,
   NotificationOrigin,
   NotificationService,
   NotificationSeverity, NotificationType, NotificationUserAction
 } from '../../../../shared/services/notification';
-import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
 import {Response} from '../../../../shared/data-provider';
+
 
 
 const ID_PATH_PARAM = 'id';
@@ -37,7 +40,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
 
   constructor(private ligaDataProvider: LigaDataProviderService,
     private router: Router,
-    private route: AcitvatedRoute,
+    private route: ActivatedRoute,
     private notificationService: NotificationService) {
     super();
   }

@@ -38,7 +38,7 @@ export class LigaOverviewComponent extends CommonComponent implements OnInit {
   }
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
-    //TODO
+    // TODO
   }
 
   private loadTableRows() {

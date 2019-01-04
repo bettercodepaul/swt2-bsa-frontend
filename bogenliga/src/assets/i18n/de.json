@@ -107,6 +107,10 @@
         "DSBMANNSCHAFTEN": {
           "LABEL": "Mannschaften",
           "DESCRIPTION": "Verwaltung der Mannschaften"
+        },
+        "LIGA":{
+          "LABEL": "Ligen",
+          "DESCRIPTION": "Verwaltung der Ligen"
         }
       }
     },
@@ -283,6 +287,52 @@
           "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
         }
       }
+    },
+    "LIGA_DETAIL":{
+      "TITLE" : "Liga - Details",
+      "FORM" : {
+        "NAME" : {
+          "LABEL" : "Liga Name",
+          "PLACEHOLDER" : "Geben Sie einen Name für die Liga ein",
+          "ERROR" : "Bitte geben Sie einen gültigen Namen ein"
+        },
+        "REGION" : {
+          "LABEL" : "Liga Region",
+          "PLACEHOLDER" : "Wählen Sie eine Region",
+          "ERROR" : "Wählen Sie bitte eine gültige Region"
+        },
+        "UEBERGEORDNET" : {
+          "LABEL" : "Uebergeordnete Liga",
+          "PLACEHOLDER" : "Wählen Sie eine übergeordnete Liga",
+          "ERROR" : "Bitte wählen Sie eine gültige uebergeordnete Liga"
+        },
+        "VERANTWORTLICH_MAIL" : {
+          "LABEL" : "Email des Liga Verantwortlichen",
+          "PLACEHOLDER" : "Geben Sie die Email des Liga Verantwortlichen ein",
+          "ERROR" : "Geben Sie bitte eine gültige Email ein"
+        },
+        "SAVE" : "Seichern",
+        "UPDATE" : "Aktualisieren",
+        "DELETE" : "Löschen"
+      },
+          "NOTIFICATION" : {
+            "DELETE" : {
+              "TITLE" : "Liga löschen",
+              "DESCRIPTION" : "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+            },
+            "DELETE_SUCCESS": {
+              "TITLE": "Erfolg",
+              "DESCRIPTION": "Die Liga wurde erfolgreich gelöscht."
+            },
+            "DELETE_FAILURE": {
+              "TITLE": "Fehler beim Löschen",
+              "DESCRIPTION": "Die Liga konnte nicht gelöscht werden."
+            },
+            "SAVE" : {
+              "TITLE" : "Erfolg",
+              "DESCRIPTION" : "Neue Liga erfoglreich gespeichert"
+            }
+          }
     }
   },
 
