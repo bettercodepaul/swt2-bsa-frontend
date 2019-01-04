@@ -1,7 +1,19 @@
 import {Routes} from '@angular/router';
 
-import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, BenutzerDetailGuard, BenutzerOverviewGuard, VerwaltungGuard} from './guards';
-import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, BenutzerDetailComponent, BenutzerOverviewComponent,  VerwaltungComponent} from './components';
+import {
+  DsbMitgliedDetailGuard,
+  DsbMitgliedOverviewGuard,
+  BenutzerDetailGuard,
+  BenutzerOverviewGuard,
+  VerwaltungGuard
+} from './guards';
+import {
+  DsbMitgliedDetailComponent,
+  DsbMitgliedOverviewComponent,
+  BenutzerDetailComponent,
+  BenutzerOverviewComponent,
+  VerwaltungComponent
+} from './components';
 
 export const VERWALTUNG_ROUTES: Routes = [
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
@@ -11,14 +23,13 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch:   'full',
     canActivate: [DsbMitgliedOverviewGuard]
   },
-  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
-
-  {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
   {
     path:        'benutzer',
     component:   BenutzerOverviewComponent,
     pathMatch:   'full',
     canActivate: [BenutzerOverviewGuard]
   },
-  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]}
+  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
+  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
 ];
+

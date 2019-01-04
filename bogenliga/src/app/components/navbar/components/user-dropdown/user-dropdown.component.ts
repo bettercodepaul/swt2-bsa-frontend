@@ -26,6 +26,12 @@ export class UserDropdownComponent implements OnInit, OnChanges {
     this.router.navigateByUrl('/user/profile');
   }
 
+  public showUserPwd(): void {
+    this.onAction.emit();
+
+    this.router.navigateByUrl('/user/pwd');
+  }
+
   public logout() {
     this.onAction.emit();
 

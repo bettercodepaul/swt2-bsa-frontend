@@ -12,6 +12,7 @@ import {CurrentUserService} from '../../shared/services/current-user';
 import {HttpErrorResponse} from '@angular/common/http';
 import {BenutzerDO} from '../types/benutzer-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/benutzer-mapper';
+import {CredentialsDTO} from "../../user/types/model/credentials-dto.class";
 
 @Injectable({
   providedIn: 'root'
@@ -24,23 +25,23 @@ export class BenutzerDataProviderService extends DataProviderService {
     super();
   }
 
-  public create(payload: BenutzerDO): Promise<Response<BenutzerDO>> {
+  public create(payload: CredentialsDTO): Promise<Response<BenutzerDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-          .then((data: VersionedDataTransferObject) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+        .then((data: VersionedDataTransferObject) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
-          }, (error: HttpErrorResponse) => {
+        }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     });
   }
 
@@ -108,23 +109,4 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<BenutzerDO>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-          .then((data: VersionedDataTransferObject) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
-
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
-  }
 }

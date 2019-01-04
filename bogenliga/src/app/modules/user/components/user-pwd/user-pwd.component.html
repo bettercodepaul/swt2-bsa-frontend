@@ -68,7 +68,7 @@
                  name="userPwdFormNewPwd"
                  #userPwdFormPassword="ngModel"
                  [(ngModel)]="credentials.newpassword"
-                 [class.is-invalid]="userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched"
+                 [class.is-invalid]="userPwdFormPassword.invalid && !userPwdFormPassword.untouched"
                  placeholder="{{ 'USER.PWD.FORM.PASSWORD.PLACEHOLDER' | translate }}">
 
           <div class="invalid-feedback">
@@ -90,9 +90,9 @@
                  required
                  id="userPwdFormVerifyPwd"
                  name="userPwdFormVerifyPwd"
-                 #userPwdFormPassword="ngModel"
+                 #userPwdFormVerifyPassword="ngModel"
                  [(ngModel)]="credentials.verifypassword"
-                 [class.is-invalid]="userPwdFormVerifyPwd.invalid && !userPwdFormVerifyPwd.untouched"
+                 [class.is-invalid]="userPwdFormVerifyPassword.invalid && !userPwdFormVerifyPassword.untouched"
                  placeholder="{{ 'USER.PWD.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
 
           <div class="invalid-feedback">
@@ -108,14 +108,7 @@
         <div class="col-sm-9 button-box">
 
 
-          <bla-button *ngIf="!entityExists()"
-                      [id]="'userPwdSaveButton'"
-                      [disabled]="!userPwdForm.valid"
-                      [loading]="loading"
-                      (onClick)="onSave($event)">
-            {{ 'USER.PWD.FORM.SAVE' | translate }}
-          </bla-button>
-          <bla-button *ngIf="entityExists()"
+          <bla-button
                       [id]="'userPwdUpdateButton'"
                       [disabled]="!userPwdForm.valid"
                       [loading]="loading"
