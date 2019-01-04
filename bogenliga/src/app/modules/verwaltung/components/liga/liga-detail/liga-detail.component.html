@@ -39,16 +39,13 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="number"
-               class="form-control"
-               required
-               min ="1"
-               id="ligaRegion"
-               name="ligaRegion"
-               #ligaRegion="ngModel"
-               [(ngModel)]="currentLiga.regionName"
-               [class.is-invalid]="ligaRegion.invalid && !ligaRegion.untouched"
-               placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.PLACEHOLDER' | translate }}">
+        <select class="form-control"
+                id="ligaRegion"
+                name="ligaRegion"
+                #vereinRegion="ngModel"
+                [(ngModel)]="currentRegion">
+          <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
+        </select>
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.ERROR' | translate }}
@@ -64,16 +61,16 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="number"
-               class="form-control"
-               required
-               min ="1"
-               id="ligaUebergeordnet"
-               name="ligaUebergeordnet"
-               #ligaRegion="ngModel"
-               [(ngModel)]="currentLiga.ligaUebergeordnetName"
-               [class.is-invalid]="ligaRegion.invalid && !ligaRegion.untouched"
-               placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
+        <select class="form-control"
+                id="ligaUebergeordnet"
+                name="ligaUebergeordnet"
+                #ligaUebergeordnet="ngModel"
+                [(ngModel)]="currentUebergeordnet">
+          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of uebergeordnete"> {{ubergeordnet.ligaUebergeordnetName}}</option>
+
+          placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
+        </select>
+
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.ERROR' | translate }}
