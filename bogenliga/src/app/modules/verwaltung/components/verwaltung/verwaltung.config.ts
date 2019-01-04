@@ -18,11 +18,16 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         route:          'klassen'
       },
       {
-        labelKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.LABEL',
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.DESCRIPTION',
-        icon: 'campground',
-        route: 'dsbmannschaft'
-      }
-    ]
+        icon:           'campground',
+        route:          'dsbmannschaft'
+      },
+      {
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
+        icon:           'users',
+        route:          'liga'
+      }]
   }
 };

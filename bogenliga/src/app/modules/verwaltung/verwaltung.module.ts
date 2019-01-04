@@ -11,7 +11,8 @@ import {
   DsbMitgliedOverviewGuard,
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
-  WettkampfklasseOverviewGuard
+  WettkampfklasseOverviewGuard,
+
 } from './guards';
 import {
   DsbMannschaftDetailComponent,
@@ -24,6 +25,8 @@ import {
 } from './components';
 import { LigaOverviewComponent } from './components/liga/liga-overview/liga-overview.component';
 import { LigaDetailComponent } from './components/liga/liga-detail/liga-detail.component';
+import {LigaDetailGuard} from './guards/liga-detail.guard';
+import {LigaOverviewGuard} from './guards/liga-overview.guard';
 
 @NgModule({
   imports:      [
@@ -50,7 +53,9 @@ import { LigaDetailComponent } from './components/liga/liga-detail/liga-detail.c
     DsbMannschaftOverviewGuard,
     DsbMannschaftDetailGuard,
     WettkampfklasseOverviewGuard,
-    WettkampfklasseDetailGuard
+    WettkampfklasseDetailGuard,
+    LigaDetailGuard,
+    LigaOverviewGuard
   ]
 })
 export class VerwaltungModule {
