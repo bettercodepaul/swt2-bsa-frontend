@@ -44,6 +44,7 @@
                 name="ligaRegion"
                 #vereinRegion="ngModel"
                 [(ngModel)]="currentRegion">
+
           <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
         </select>
 
