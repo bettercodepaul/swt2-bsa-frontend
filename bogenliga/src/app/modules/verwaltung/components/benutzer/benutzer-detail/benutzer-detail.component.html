@@ -13,7 +13,7 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="text"
+        <input type="email"
                class="form-control"
                required
                id="benutzerEmail"
@@ -21,6 +21,7 @@
                #benutzerEmail="ngModel"
                [(ngModel)]="currentCredentials.username"
                [class.is-invalid]="benutzerEmail.invalid && !benutzerEmail.untouched"
+               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -43,6 +44,7 @@
                id="benutzerPassword"
                name="benutzerPassword"
                #benutzerPassword="ngModel"
+               minlength="8"
                [(ngModel)]="currentCredentials.newpassword"
                [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.PLACEHOLDER' | translate }}">
@@ -54,6 +56,7 @@
     </div>
 
     <!-- Password verification -->
+    <!-- TODO Prüfung auf Identität der PWD funktioniert nicht -->
     <div class="form-group row">
       <label for="benutzerVerifyPassword"
              class="col-sm-3 col-form-label">
@@ -68,7 +71,7 @@
                name="benutzerVerifyPassword"
                #benutzerVerifyPassword="ngModel"
                [(ngModel)]="currentCredentials.verifypassword"
-               [class.is-invalid]="benutzerVerifyPassword.invalid && !benutzerVerifyPassword.untouched"
+               [class.is-invalid]="(benutzerVerifyPassword.invalid && !benutzerVerifyPassword.untouched && (benutzerVerifyPassword.value!=benutzerPassword.value))"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">

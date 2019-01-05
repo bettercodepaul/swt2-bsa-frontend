@@ -5,6 +5,7 @@ import {CredentialsDO} from '../../types/credentials-do.class';
 import {CredentialsDTO} from "../../types/model/credentials-dto.class";
 import {LoginResult} from "../../types/login-result.enum";
 import {CurrentUserService} from "../../../shared/services/current-user";
+import {AlertType} from "../../../shared/components/alerts";
 
 @Component({
   selector:    'bla-user-pwd',
@@ -18,6 +19,9 @@ export class UserPwdComponent implements OnInit {
   public credentials: CredentialsDO;
   public currentUserDTO: CredentialsDTO;
   public updatedUserDTO: CredentialsDTO;
+  public loginResult: LoginResult = LoginResult.PENDING;
+  public LoginResult = LoginResult;
+  public AlertType = AlertType;
 
 
   public loading = false;
@@ -48,10 +52,12 @@ export class UserPwdComponent implements OnInit {
 
   private showFailedUpdate(loginResult: LoginResult) {
     this.loading = false;
+    this.loginResult = loginResult;
   }
 
   private handleSuccessUpdate() {
     this.loading = false;
+    this.loginResult = LoginResult.SUCCESS;
   }
 
 }

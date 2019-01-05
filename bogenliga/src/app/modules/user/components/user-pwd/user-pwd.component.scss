@@ -1,0 +1,30 @@
+/* Farbkonzept Website */
+$primary: #02bdd5; // Links, Navbar
+$primary-light: #b4ffff; // Sidebar-Background
+$primary-dark: #007c91; // Sidebar-Font
+$secondary: #ffc107; // hover Tables
+$secondary-light: #fff350;
+$secondary-dark: #ff833a; // hover Links, Logo
+
+// Login Stlye
+#pwd {
+  display: flex;
+  justify-content: center;
+}
+
+#userPwd-dialog {
+  width: 500px;
+  max-width: 500px;
+}
+
+/* Center the avatar image inside this container */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+/* Avatar image */
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
