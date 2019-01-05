@@ -18,15 +18,8 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
       },**/
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.LIGANAME',
-        propertyName:   'ligaName',
+        propertyName:   'name',
         width:          20,
-      },
-      {
-        translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.REGIONID',
-        propertyName:   'regionId',
-        width:            7,
-        type:             TableColumnType.NUMBER,
-        currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.REGIONNAME',
@@ -34,23 +27,9 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.UEBERGEORDNETID',
-        propertyName:   'ligaUebergeordnetId',
-        width:            7,
-        type:             TableColumnType.NUMBER,
-        currentSortOrder: TableColumnSortOrder.ASCENDING
-      },
-      {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.UEBERGEORDNETNAME',
         propertyName:   'ligaUebergeordnetName',
         width:          20,
-      },
-      {
-        translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.VERANTWORTLICHID',
-        propertyName:   'ligaVerantwortlichId',
-        width:            7,
-        type:             TableColumnType.NUMBER,
-        currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.VERANTWORTLICHMAIL',
@@ -61,7 +40,7 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
       }
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, /**TableActionType.DELETE**/],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
   }
