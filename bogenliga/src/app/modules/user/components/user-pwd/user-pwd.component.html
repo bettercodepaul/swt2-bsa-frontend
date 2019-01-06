@@ -38,23 +38,25 @@
             <!-- Input -->
             <div class="container">
               <div class="form-group">
-                <label for="userPwdFormEmail">{{ 'USER.PWD.EMAIL.LABEL' | translate }}</label>
+                <label for="userPwdFormEmail">{{ 'USER.PWD.FORM.EMAIL.LABEL' | translate }}</label>
                 <input type="email"
                        class="form-control"
                        name="userPwdFormEmail"
                        id="userPwdFormEmail"
                        #userPwdFormEmail="ngModel"
                        [(ngModel)]="credentials.username"
-                       readonly
-                       placeholder="{{ 'USER.PWD.EMAIL.LABEL' | translate }}">
+                       required
+                       pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+                       [class.is-invalid]="(userPwdFormEmail.invalid && !userPwdFormEmail.untouched)"
+                       placeholder="{{ 'USER.PWD.FORM.EMAIL.LABEL' | translate }}">
 
                 <div class="invalid-feedback">
-                  {{ 'USER.PWD.EMAIL.ERROR' | translate }}
+                  {{ 'USER.PWD.FORM.EMAIL.ERROR' | translate }}
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="userPwdFormPassword">{{ 'USER.PWD.PASSWORD.LABEL' | translate }}</label>
+                <label for="userPwdFormPassword">{{ 'USER.PWD.FORM.PASSWORD.LABEL' | translate }}</label>
                 <input type="password"
                        class="form-control"
                        id="userPwdFormPassword"
@@ -62,16 +64,15 @@
                        #userPwdFormPassword="ngModel"
                        [(ngModel)]="credentials.password"
                        required
-                       minlength="3"
                        [class.is-invalid]="(userPwdFormPassword.invalid && !userPwdFormPassword.untouched)"
-                       placeholder="{{ 'USER.PWD.PASSWORD.PLACEHOLDER' | translate }}">
+                       placeholder="{{ 'USER.PWD.FORM.PASSWORD.PLACEHOLDER' | translate }}">
 
                 <div class="invalid-feedback">
-                  {{ 'USER.PWD.NEWPASSWORD.ERROR' | translate }}
+                  {{ 'USER.PWD.FORM.PASSWORD.ERROR' | translate }}
                 </div>
               </div>
               <div class="form-group">
-                <label for="userPwdFormNewPwd">{{ 'USER.PWD.NEWPASSWORD.LABEL' | translate }}</label>
+                <label for="userPwdFormNewPwd">{{ 'USER.PWD.FORM.NEWPASSWORD.LABEL' | translate }}</label>
                 <input type="password"
                        class="form-control"
                        id="userPwdFormNewPwd"
@@ -81,15 +82,15 @@
                        required
                        minlength="8"
                        [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
-                       placeholder="{{ 'USER.PWD.NEWPASSWORD.PLACEHOLDER' | translate }}">
+                       placeholder="{{ 'USER.PWD.FORM.NEWPASSWORD.PLACEHOLDER' | translate }}">
 
                 <div class="invalid-feedback">
-                  {{ 'USER.PWD.NEWPASSWORD.ERROR' | translate }}
+                  {{ 'USER.PWD.FORM.NEWPASSWORD.ERROR' | translate }}
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="userPwdFormVerifyPwd">{{ 'USER.PWD.VERIFYPASSWORD.LABEL' | translate }}</label>
+                <label for="userPwdFormVerifyPwd">{{ 'USER.PWD.FORM.VERIFYPASSWORD.LABEL' | translate }}</label>
                 <input type="password"
                        class="form-control"
                        id="userPwdFormVerifyPwd"
@@ -98,11 +99,11 @@
                        [(ngModel)]="credentials.verifypassword"
                        required
                        minlength="8"
-                       [class.is-invalid]="(userPwdFormVerifyPwd.invalid && !userPwdFormVerifyPwd.untouched && (userPwdFormVerifyPwd.value != userPwdFormNewPwd.value))"
-                       placeholder="{{ 'USER.PWD.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+                       [class.is-invalid]="userPwdFormVerifyPwd.value != userPwdFormNewPwd.value"
+                       placeholder="{{ 'USER.PWD.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
 
                 <div class="invalid-feedback">
-                  {{ 'USER.PWD.VERIFYPASSWORD.ERROR' | translate }}
+                  {{ 'USER.PWD.FORM.VERIFYPASSWORD.ERROR' | translate }}
                 </div>
               </div>
 
