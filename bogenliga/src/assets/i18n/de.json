@@ -68,14 +68,14 @@
       "FORM": {
         "UPDATE": "Aktualisieren",
         "EMAIL": {
-          "LABLE": "Username/E-Mail",
+          "LABEL": "E-Mail-Adresse",
           "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
           "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
         },
         "PASSWORD": {
-          "LABEL": "Altes Passwort",
+          "LABEL": "Aktuelles Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Bitte ein gültiges Passwort mit mehr als 8 Zeichen eingeben."
+          "ERROR": "Bitte ein gültiges Passwort eingeben."
         },
         "NEWPASSWORD": {
           "LABEL": "Neues Passwort",
@@ -241,7 +241,7 @@
         },
         "VERIFYPASSWORD": {
           "LABEL": "Passwort Verifikation",
-          "PLACEHOLDER": "Bitte das Passwort weiderholen",
+          "PLACEHOLDER": "Bitte das Passwort wiederholen",
           "ERROR": "Passworte sind nicht identisch."
         },
         "SAVE": "Speichern",

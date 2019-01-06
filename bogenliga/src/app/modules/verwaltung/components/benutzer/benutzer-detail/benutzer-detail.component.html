@@ -71,7 +71,7 @@
                name="benutzerVerifyPassword"
                #benutzerVerifyPassword="ngModel"
                [(ngModel)]="currentCredentials.verifypassword"
-               [class.is-invalid]="(benutzerVerifyPassword.invalid && !benutzerVerifyPassword.untouched && (benutzerVerifyPassword.value!=benutzerPassword.value))"
+               [class.is-invalid]="benutzerVerifyPassword.value != benutzerPassword.value"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
