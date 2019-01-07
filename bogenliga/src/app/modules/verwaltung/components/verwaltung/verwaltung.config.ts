@@ -28,6 +28,12 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga'
+      },
+      {
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.SPORTJAHR.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.SPORTJAHR.DESCRIPTION',
+        icon:           'cogs',
+        route:          'sportjahr'
       }]
   }
 };

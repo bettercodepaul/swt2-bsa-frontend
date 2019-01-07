@@ -9,7 +9,8 @@ import {
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard,
   LigaDetailGuard,
-  LigaOverviewGuard
+  LigaOverviewGuard,
+  SportjahrLigaAuswahlGuard
 } from './guards';
 import {
   DsbMannschaftDetailComponent,
@@ -20,7 +21,8 @@ import {
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent,
   LigaDetailComponent,
-  LigaOverviewComponent
+  LigaOverviewComponent,
+  SportjahrLigaAuswahlComponent
 } from './components';
 
 
@@ -36,9 +38,9 @@ export const VERWALTUNG_ROUTES: Routes = [
   ,
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
   {
-    path: 'dsbmannschaft',
-    component: DsbMannschaftOverviewComponent,
-    pathMatch: 'full',
+    path:        'dsbmannschaft',
+    component:   DsbMannschaftOverviewComponent,
+    pathMatch:   'full',
     canActivate: [DsbMannschaftOverviewGuard]
   },
   {path: 'dsbmannschaft/:id', component: DsbMannschaftDetailComponent, canActivate: [DsbMannschaftDetailGuard]},
@@ -48,11 +50,18 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch:   'full',
     canActivate: [WettkampfklasseOverviewGuard]
   },
-  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]}
-  ,
-  {path: 'klassen/:id', component: WettkampfklasseDetailComponent, canActivate: [WettkampfklasseDetailGuard]}
-  ,
-  { path: 'liga', component:   LigaOverviewComponent, canActivate: [LigaOverviewGuard]}
-  ,
-  { path: 'liga/:id', component : LigaDetailComponent, canActivate : [LigaDetailGuard]}
+  {path: 'klassen/:id', component: WettkampfklasseDetailComponent, canActivate: [WettkampfklasseDetailGuard]},
+  {
+    path:        'liga',
+    component:   LigaOverviewComponent,
+    pathMatch:   'full',
+    canActivate: [LigaOverviewGuard]
+  },
+  {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]},
+  {
+    path: 'sportjahr',
+    component: SportjahrLigaAuswahlComponent,
+    pathMatch: 'full',
+    canActivate: [SportjahrLigaAuswahlGuard]
+  }
 ];
