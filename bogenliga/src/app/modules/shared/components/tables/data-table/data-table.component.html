@@ -35,7 +35,9 @@
   <tbody *ngIf="!isLoading() && !isEmptyTable()">
   <tr *ngFor="let row of rows"
       [id]="getRowId(row)"
-      [class.disabled]="hasLoadingActions(row)">
+      (click)="hasActions() == false && onRowClicked(row.payload)"
+      [style.cursor]="!hasActions() ? 'pointer' : 'default'"
+      [class.disabled]="hasLoadingActions(row)"> <!-- Click event is only active if table has no action items -->
 
     <!-- data columns -->
     <td *ngFor="let column of config.columns"
@@ -76,7 +78,7 @@
     <!-- action column -->
     <td id="{{id + 'Actions'}}"
         *ngIf="hasActions()">
-        <span *ngFor="let action of config.actions.actionTypes">
+        <span *ngFor="let action of config.actions.actionTypes" class="action_icon">
           <a (click)="onIconClicked(row, action)"
              [title]="determineTitle(row, action) | translate">
              <fa-icon *ngIf="isActionVisible(row, action)"

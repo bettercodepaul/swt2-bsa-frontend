@@ -26,6 +26,7 @@ import {
   RowLayoutComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
+  SimpleOverviewDialogComponent
 } from './components';
 import {RestClient} from './data-provider';
 import * as SharedService from './services';
@@ -78,7 +79,8 @@ library.add(fas, far, fab); // add all icon types
     GridLayoutComponent,
     RowLayoutComponent,
     NavigationCardsComponent,
-    NavigationDialogComponent
+    NavigationDialogComponent,
+    SimpleOverviewDialogComponent
   ],
   declarations: [
     ButtonComponent,
@@ -100,6 +102,7 @@ library.add(fas, far, fab); // add all icon types
     RowLayoutComponent,
     NavigationCardsComponent,
     NavigationDialogComponent,
+    SimpleOverviewDialogComponent
   ]
 })
 export class SharedModule {
