@@ -8,7 +8,7 @@ import {
   DsbMannschaftDetailGuard,
   DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
-  DsbMitgliedOverviewGuard,
+  DsbMitgliedOverviewGuard, SportjahrLigaAuswahlGuard,
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard,
@@ -27,6 +27,7 @@ import { LigaOverviewComponent } from './components/liga/liga-overview/liga-over
 import { LigaDetailComponent } from './components/liga/liga-detail/liga-detail.component';
 import {LigaDetailGuard} from './guards/liga-detail.guard';
 import {LigaOverviewGuard} from './guards/liga-overview.guard';
+import { SportjahrLigaAuswahlComponent } from './components/sportjahr/sportjahr-liga-auswahl/sportjahr-liga-auswahl.component';
 
 @NgModule({
   imports:      [
@@ -44,7 +45,8 @@ import {LigaOverviewGuard} from './guards/liga-overview.guard';
     WettkampfklasseOverviewComponent,
     WettkampfklasseDetailComponent,
     LigaOverviewComponent,
-    LigaDetailComponent
+    LigaDetailComponent,
+    SportjahrLigaAuswahlComponent
   ],
   providers: [
     VerwaltungGuard,
@@ -55,7 +57,8 @@ import {LigaOverviewGuard} from './guards/liga-overview.guard';
     WettkampfklasseOverviewGuard,
     WettkampfklasseDetailGuard,
     LigaDetailGuard,
-    LigaOverviewGuard
+    LigaOverviewGuard,
+    SportjahrLigaAuswahlGuard
   ]
 })
 export class VerwaltungModule {

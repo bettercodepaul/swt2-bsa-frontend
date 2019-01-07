@@ -111,6 +111,10 @@
         "LIGA":{
           "LABEL": "Ligen",
           "DESCRIPTION": "Verwaltung der Ligen"
+        },
+        "SPORTJAHR":{
+          "LABEL": "Sportjahre",
+          "DESCRIPTION": "Verwaltung der Sportjahre"
         }
       }
     },
@@ -237,7 +241,8 @@
           "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
         }
       }
-    },"WETTKAMPFKLASSE_DETAIL": {
+    },
+    "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
         "WETTKAMPF_ID": {
@@ -333,6 +338,24 @@
               "DESCRIPTION" : "Neue Liga erfoglreich gespeichert"
             }
           }
+    },
+    "SPORTJAHR": {
+      "TITLE": "Liga auswählen",
+      "TABLE": {
+        "HEADERS": {
+          "LIGANAME": "Liga Name",
+          "REGIONNAME": "Region Name",
+          "UEBERGEORDNETNAME": "Liga Uebergeornet Name",
+          "VERANTWORTLICHMAIL": "Liga Verantwortlich Mail"
+
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Liga Mitglied löschen",
+          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
     }
   },
 
