@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {USER_PWD_CONFIG} from './user-pwd.config';
 import {UserPwdDataProviderService} from '../../services/user-pwd-data-provider.service';
-import {CredentialsDO} from '../../types/credentials-do.class';
-import {CredentialsDTO} from "../../types/model/credentials-dto.class";
+import {ChangeCredentialsDO} from '../../types/changecredentials-do.class';
 import {LoginResult} from "../../types/login-result.enum";
 import {AlertType} from "../../../shared/components/alerts";
 
@@ -14,9 +13,7 @@ import {AlertType} from "../../../shared/components/alerts";
 export class UserPwdComponent implements OnInit {
 
   public config = USER_PWD_CONFIG;
-  public credentials: CredentialsDO = new CredentialsDO(null, null);
-  public currentUserDTO: CredentialsDTO;
-  public updatedUserDTO: CredentialsDTO;
+  public changecredentials: ChangeCredentialsDO = new ChangeCredentialsDO();
   public loginResult: LoginResult = LoginResult.PENDING;
   public LoginResult = LoginResult;
   public AlertType = AlertType;
@@ -37,12 +34,8 @@ export class UserPwdComponent implements OnInit {
 //    this.loading = true;
 
     // persist
-    this.currentUserDTO = new CredentialsDTO(this.credentials.username, this.credentials.password);
-    this.updatedUserDTO = new CredentialsDTO(this.credentials.username, this.credentials.newpassword);
 
-    // TODO mit currentUserDTO das aktuelle Passwort prüfen
-
-    this.userPwdDataProvider.update(this.updatedUserDTO)
+    this.userPwdDataProvider.update(this.changecredentials)
       .then(
         () => this.handleSuccessUpdate(),
         (loginResult: LoginResult) => this.showFailedUpdate(loginResult)

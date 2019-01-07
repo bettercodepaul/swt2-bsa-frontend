@@ -10,7 +10,8 @@ import {
 } from '../../shared/data-provider';
 import {HttpErrorResponse} from '@angular/common/http';
 import {LoginResult} from "../types/login-result.enum";
-import {CredentialsDTO} from "../types/model/credentials-dto.class";
+import {ChangeCredentialsDTO} from "../types/model/changecredentials-dto.class";
+import {ChangeCredentialsDO} from "../types/changecredentials-do.class";
 
 @Injectable({
   providedIn: 'root'
@@ -23,16 +24,17 @@ export class UserPwdDataProviderService extends DataProviderService {
     super();
   }
 
-  public update(credentialsDTO: CredentialsDTO): Promise<LoginResult> {
+  public update(changecredentialsDO: ChangeCredentialsDO): Promise<LoginResult> {
 
     return new Promise((resolve, reject) => {
-      this.sendupdaterequest(credentialsDTO, resolve, reject);
+      let changeCredentialsDTO = new ChangeCredentialsDTO(changecredentialsDO.password, changecredentialsDO.newpassword)
+      this.sendupdaterequest(changeCredentialsDTO, resolve, reject);
     });
   }
 
 
-  public sendupdaterequest(credentialsDTO: CredentialsDTO, resolve, reject) {
-    this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), credentialsDTO)
+  public sendupdaterequest(changeCredentialsDTO: ChangeCredentialsDTO, resolve, reject) {
+    this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), changeCredentialsDTO)
       .then((data: VersionedDataTransferObject) => {
         resolve(RequestResult.SUCCESS);
 

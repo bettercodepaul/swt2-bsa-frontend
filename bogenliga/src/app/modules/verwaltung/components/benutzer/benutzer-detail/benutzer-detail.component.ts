@@ -91,7 +91,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
                 .subscribe(myNotification => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/benutzer/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/benutzer');
                   }
                 });
 
