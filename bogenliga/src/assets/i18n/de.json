@@ -177,7 +177,7 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Liga Mitglied löschen",
+          "TITLE": "Liga löschen",
           "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
