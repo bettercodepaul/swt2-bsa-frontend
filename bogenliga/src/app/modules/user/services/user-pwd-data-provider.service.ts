@@ -24,10 +24,10 @@ export class UserPwdDataProviderService extends DataProviderService {
     super();
   }
 
-  public update(changecredentialsDO: ChangeCredentialsDO): Promise<LoginResult> {
+  public update(changeCredentialsDO: ChangeCredentialsDO): Promise<LoginResult> {
 
     return new Promise((resolve, reject) => {
-      let changeCredentialsDTO = new ChangeCredentialsDTO(changecredentialsDO.password, changecredentialsDO.newpassword)
+      let changeCredentialsDTO = new ChangeCredentialsDTO(changeCredentialsDO.password, changeCredentialsDO.newPassword)
       this.sendupdaterequest(changeCredentialsDTO, resolve, reject);
     });
   }
