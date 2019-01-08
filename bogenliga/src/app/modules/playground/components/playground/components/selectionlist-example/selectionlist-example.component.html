@@ -1,0 +1,217 @@
+<h4>Auswahllisten</h4>
+
+<h5>bla-selectionlist</h5>
+<a name="bla-selectionlist"></a>
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Auswahlliste mit einer Liste von DTOs mit ID. Nur Single-Select möglich.
+      <br>
+      Auswahl: {{ getSelectedDTO() }}
+    </p>
+
+    <bla-selectionlist [id]="'quickSearch'"
+                       [items]="getVersionedDataObjects()"
+                       [optionFieldSelector]="'name'"
+                       (onSelect)="onSelect($event)"
+                       [multipleSelections]="!multipleSelections"
+                       style="width: 50%; height: 10em;">
+
+    </bla-selectionlist>
+
+  </bla-col-layout>
+</div>
+
+
+<!-- preselected item -->
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Auswahlliste mit Vorauswahl (per ID):
+      <br>
+      Auswahl: {{ getSelectedDTO() }}
+    </p>
+
+    <bla-selectionlist [items]="getVersionedDataObjects()"
+                       [optionFieldSelector]="'name'"
+                       [selectedItemIds]="[3, 4]"
+                       (onSelect)="onSelect($event)"
+                       [multipleSelections]="multipleSelections"
+                       style="width: 50%; height: 10em;">
+    </bla-selectionlist>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Deaktivierte Auswahlliste mit Vorauswahl (per ID):
+    </p>
+
+    <bla-selectionlist [items]="getVersionedDataObjects()"
+                       [optionFieldSelector]="'name'"
+                       [selectedItemIds]="[3, 4]"
+                       disabled="true"
+                       style="width: 50%; height: 10em;">
+    </bla-selectionlist>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Auswahlliste mit Ladeindikator (bitte Seite neu laden, um die 5 Sek. Verzögerung zu sehen):
+    </p>
+
+    <bla-selectionlist [items]="getVersionedDataObjects()"
+                       [optionFieldSelector]="'name'"
+                       [selectedItemIds]="[3, 4]"
+                       [loading]="isLoading()"
+                       style="width: 50%; height: 10em;">
+    </bla-selectionlist>
+
+  </bla-col-layout>
+</div>
+
+<!-- empty list -->
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Auswahlliste mit leerer Liste:
+    </p>
+
+    <bla-selectionlist [items]="getEmptyList()"
+                       [optionFieldSelector]="'name'"
+                       style="width: 50%; height: 10em;">
+    </bla-selectionlist>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Auswahlliste ohne Parameter:
+    </p>
+
+    <bla-selectionlist style="width: 50%; height: 10em;">
+
+    </bla-selectionlist>
+
+  </bla-col-layout>
+</div>
+
+
+<h5>bla-quicksearch-list</h5>
+<a name="bla-quicksearch-list"></a>
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Quicksearch Auswahlliste mit einer Liste von DTOs mit ID.
+      Nur Single-Select möglich.
+      <br>
+      Auswahl: {{ getSelectedDTO() }}
+    </p>
+
+    <bla-quicksearch-list [items]="getVersionedDataObjects()"
+                          [optionFieldSelector]="'name'"
+                          (onSelect)="onSelect($event)"
+                          [multipleSelections]="!multipleSelections"
+                          selectionListHeight="15em"
+                          style="width: 50%;">
+
+    </bla-quicksearch-list>
+
+  </bla-col-layout>
+</div>
+
+
+<!-- preselected item -->
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Quicksearch Auswahlliste mit Vorauswahl (per ID) mit Multi-Select:
+      <br>
+      Auswahl: {{ getSelectedDTO() }}
+    </p>
+
+    <bla-quicksearch-list [items]="getVersionedDataObjects()"
+                          [optionFieldSelector]="'name'"
+                          (onSelect)="onSelect($event)"
+                          [selectedItemIds]="[3, 4]"
+                          [multipleSelections]="multipleSelections"
+                          style="width: 50%;">
+    </bla-quicksearch-list>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Deaktivierte Quicksearch Auswahlliste mit Vorauswahl (per ID):
+    </p>
+
+    <bla-quicksearch-list [items]="getVersionedDataObjects()"
+                          [optionFieldSelector]="'name'"
+                          [selectedItemIds]="[3, 4]"
+                          disabled="true"
+                          style="width: 50%;">
+    </bla-quicksearch-list>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Quicksearch Auswahlliste mit Ladeindikator (bitte Seite neu laden, um die 5 Sek. Verzögerung zu sehen):
+    </p>
+
+    <bla-quicksearch-list [items]="getVersionedDataObjects()"
+                          [optionFieldSelector]="'name'"
+                          [selectedItemIds]="[3, 4]"
+                          [loading]="isLoading()"
+                          style="width: 50%;">
+    </bla-quicksearch-list>
+
+  </bla-col-layout>
+</div>
+
+<!-- empty list -->
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Quicksearch Auswahlliste mit leerer Liste:
+    </p>
+
+    <bla-quicksearch-list [items]="getEmptyList()"
+                          [optionFieldSelector]="'name'"
+                          style="width: 50%;">
+    </bla-quicksearch-list>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Quicksearch Auswahlliste ohne Parameter:
+    </p>
+
+    <bla-quicksearch-list style="width: 50%;">
+
+    </bla-quicksearch-list>
+
+  </bla-col-layout>
+</div>
