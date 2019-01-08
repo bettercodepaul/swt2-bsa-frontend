@@ -33,6 +33,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public ButtonType = ButtonType;
   public currentBenutzer: BenutzerDO = new BenutzerDO();
   public currentCredentials: CredentialsDO = new CredentialsDO();
+  public  verifyCredentials: CredentialsDO = new CredentialsDO();
   public currentCredentialsDTO: CredentialsDTO;
 
   public saveLoading = false;
@@ -54,6 +55,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
           this.currentCredentials = new CredentialsDO();
+          this.verifyCredentials = new CredentialsDO();
           this.currentBenutzer = new BenutzerDO();
           this.loading = false;
           this.saveLoading = false;
@@ -69,7 +71,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
     // persist
 
-    this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.newpassword);
+    this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password);
     this.benutzerDataProvider.create(this.currentCredentialsDTO)
         .then((response: Response<BenutzerDO>) => {
           if (!isNullOrUndefined(response)

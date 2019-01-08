@@ -45,7 +45,7 @@
                name="benutzerPassword"
                #benutzerPassword="ngModel"
                minlength="8"
-               [(ngModel)]="currentCredentials.newpassword"
+               [(ngModel)]="currentCredentials.password"
                [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.PLACEHOLDER' | translate }}">
 
@@ -70,7 +70,7 @@
                id="benutzerVerifyPassword"
                name="benutzerVerifyPassword"
                #benutzerVerifyPassword="ngModel"
-               [(ngModel)]="currentCredentials.verifypassword"
+               [(ngModel)]="verifyCredentials.password"
                [class.is-invalid]="benutzerVerifyPassword.value != benutzerPassword.value"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
 

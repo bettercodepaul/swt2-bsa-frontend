@@ -44,7 +44,7 @@
                        id="userPwdFormPassword"
                        name="userPwdFormPassword"
                        #userPwdFormPassword="ngModel"
-                       [(ngModel)]="credentials.password"
+                       [(ngModel)]="changeCredentials.password"
                        required
                        [class.is-invalid]="(userPwdFormPassword.invalid && !userPwdFormPassword.untouched)"
                        placeholder="{{ 'USER.PWD.FORM.PASSWORD.PLACEHOLDER' | translate }}">
@@ -60,7 +60,7 @@
                        id="userPwdFormNewPwd"
                        name="userPwdFormNewPwd"
                        #userPwdFormNewPwd="ngModel"
-                       [(ngModel)]="credentials.newpassword"
+                       [(ngModel)]="changeCredentials.newPassword"
                        required
                        minlength="8"
                        [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
@@ -78,7 +78,7 @@
                        id="userPwdFormVerifyPwd"
                        name="userPwdFormVerifyPwd"
                        #userPwdFormVerifyPwd="ngModel"
-                       [(ngModel)]="credentials.verifypassword"
+                       [(ngModel)]="changeCredentials.verifyPassword"
                        required
                        minlength="8"
                        [class.is-invalid]="userPwdFormVerifyPwd.value != userPwdFormNewPwd.value"
@@ -92,7 +92,6 @@
               <bla-button
                 [id]="'userPwdUpdateButton'"
                 [disabled]="!userPwdForm.valid"
-                [loading]="loading"
                 (onClick)="onUpdate($event)">{{ 'USER.PWD.FORM.UPDATE' | translate }}
               </bla-button>
 

@@ -13,7 +13,7 @@ import {AlertType} from "../../../shared/components/alerts";
 export class UserPwdComponent implements OnInit {
 
   public config = USER_PWD_CONFIG;
-  public changecredentials: ChangeCredentialsDO = new ChangeCredentialsDO();
+  public changeCredentials: ChangeCredentialsDO = new ChangeCredentialsDO();
   public loginResult: LoginResult = LoginResult.PENDING;
   public LoginResult = LoginResult;
   public AlertType = AlertType;
@@ -35,7 +35,7 @@ export class UserPwdComponent implements OnInit {
 
     // persist
 
-    this.userPwdDataProvider.update(this.changecredentials)
+    this.userPwdDataProvider.update(this.changeCredentials)
       .then(
         () => this.handleSuccessUpdate(),
         (loginResult: LoginResult) => this.showFailedUpdate(loginResult)

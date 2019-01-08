@@ -2,12 +2,12 @@ import {DataObject} from '../../shared/data-provider';
 
 export class ChangeCredentialsDO implements DataObject {
   password: string;
-  newpassword: string;
-  verifypassword: string;
+  newPassword: string;
+  verifyPassword: string;
 
-  constructor(username?: string, password?: string) {
+  constructor(password?: string, newPassword?: string) {
     this.password = !!password ? password : '';
-    this.newpassword = !!password ? password : '';
-    this.verifypassword = !!password ? password : '';
+    this.newPassword = !!newPassword ? newPassword : '';
+    this.verifyPassword = !!newPassword ? newPassword : '';
   }
 }

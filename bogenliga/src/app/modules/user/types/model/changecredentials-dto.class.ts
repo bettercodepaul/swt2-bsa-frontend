@@ -2,11 +2,11 @@ import {DataTransferObject} from '../../../shared/data-provider';
 
 export class ChangeCredentialsDTO implements DataTransferObject {
   password: string;
-  newpassword: string;
+  newPassword: string;
 
-  constructor(password: string, newpassword: string) {
+  constructor(password: string, newPassword: string) {
     this.password = password;
-    this.newpassword = newpassword;
+    this.newPassword = newPassword;
   }
 
 }
