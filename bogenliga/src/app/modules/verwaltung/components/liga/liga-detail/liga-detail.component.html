@@ -31,7 +31,7 @@
 
 
 
-    <!-- REGION -->
+    <!-- Region -->
     <div class="form-group row">
       <label for="ligaRegion"
              class="col-sm-3 col-form-label">
@@ -66,8 +66,8 @@
                 id="ligaUebergeordnet"
                 name="ligaUebergeordnet"
                 #ligaUebergeordnet="ngModel"
-                [(ngModel)]="currentUebergeordnet">
-          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of uebergeordnete"> {{ubergeordnet.ligaUebergeordnetName}}</option>
+                [(ngModel)]="currentUbergeordneteLiga">
+          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of allUebergeordnete"> {{uebergeordnet.name}}</option>
 
           placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
         </select>
@@ -80,7 +80,8 @@
     </div>
 
 
-    <!-- Verantwortlicher Email -->
+
+    <!-- Verantwortlicher -->
     <div class="form-group row">
       <label for="ligaRegion"
              class="col-sm-3 col-form-label">
@@ -88,22 +89,23 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="number"
-               class="form-control"
-               required
-               min ="1"
-               id="ligaVerantwortlichMail"
-               name="ligaVerantwortlichMail"
-               #ligaRegion="ngModel"
-               [(ngModel)]="currentLiga.ligaVerantwortlichMail"
-               [class.is-invalid]="ligaRegion.invalid && !ligaRegion.untouched"
-               placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.PLACEHOLDER' | translate }}">
+        <select class="form-control"
+                id="ligaVerantwortlicher"
+                name="ligaVerantwortlicher"
+                #ligaUebergeordnet="ngModel"
+                [(ngModel)]="currentUser">
+          <option [ngValue]="user" *ngFor="let user of allUsers"> {{user.email}}</option>
+
+          placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.PLACEHOLDER' | translate }}">
+        </select>
+
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.ERROR' | translate }}
         </div>
       </div>
     </div>
+
 
 
 

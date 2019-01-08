@@ -32,14 +32,28 @@ export class LigaDTO implements DataTransferObject {
       copy.id = null;
     }
 
-    copy.name = optional.name || '';
-    copy.regionId = optional.regionId || null;
-    copy.regionName = optional.regionName || null;
-    copy.ligaUebergeordnetId = optional.ligaUebergeordnetId || null;
-    copy.ligaUebergeordnetName = optional.ligaUebergeordnetName || null;
-    copy.ligaVerantwortlichId = optional.ligaVerantwortlichId || null;
+    if (optional.regionId >= 0) {
+      copy.regionId = optional.regionId
+    } else {
+      copy.regionId = null;
+    }
 
-    copy.ligaVerantwortlichMail = optional.ligaVerantwortlichMail || null;
+    if (optional.ligaUebergeordnetId >= 0) {
+      copy.ligaUebergeordnetId = optional.ligaUebergeordnetId
+    } else {
+      copy.ligaUebergeordnetId = null;
+    }
+
+    if (optional.ligaVerantwortlichId >= 0) {
+      copy.ligaVerantwortlichId = optional.ligaVerantwortlichId
+    } else {
+      copy.ligaVerantwortlichId = null;
+    }
+
+    copy.name = optional.name || '';
+    copy.regionName = optional.regionName || '';
+    copy.ligaUebergeordnetName = optional.ligaUebergeordnetName || '';
+    copy.ligaVerantwortlichMail = optional.ligaVerantwortlichMail || '';
 
     return copy;
   }

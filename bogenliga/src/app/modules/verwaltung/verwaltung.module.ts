@@ -5,31 +5,34 @@ import {SharedModule} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {
-  DsbMannschaftDetailGuard,
-  DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
+  DsbMannschaftDetailGuard,
+  DsbMannschaftOverviewGuard,
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard,
-
+  VereinOverviewGuard,
+  VereinDetailGuard,
+  LigaOverviewGuard,
+  LigaDetailGuard
 } from './guards';
 import {
-  DsbMannschaftDetailComponent,
-  DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
+  DsbMannschaftDetailComponent,
+  DsbMannschaftOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
-  WettkampfklasseOverviewComponent
+  WettkampfklasseOverviewComponent,
+  VereinOverviewComponent,
+  VereinDetailComponent,
+  LigaOverviewComponent,
+  LigaDetailComponent
 } from './components';
-import { LigaOverviewComponent } from './components/liga/liga-overview/liga-overview.component';
-import { LigaDetailComponent } from './components/liga/liga-detail/liga-detail.component';
-import {LigaDetailGuard} from './guards/liga-detail.guard';
-import {LigaOverviewGuard} from './guards/liga-overview.guard';
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
     SharedModule,
@@ -43,10 +46,12 @@ import {LigaOverviewGuard} from './guards/liga-overview.guard';
     DsbMannschaftOverviewComponent,
     WettkampfklasseOverviewComponent,
     WettkampfklasseDetailComponent,
-    LigaOverviewComponent,
-    LigaDetailComponent
+    VereinDetailComponent,
+    VereinOverviewComponent,
+    LigaDetailComponent,
+    LigaOverviewComponent
   ],
-  providers: [
+  providers:    [
     VerwaltungGuard,
     DsbMitgliedOverviewGuard,
     DsbMitgliedDetailGuard,
@@ -54,8 +59,10 @@ import {LigaOverviewGuard} from './guards/liga-overview.guard';
     DsbMannschaftDetailGuard,
     WettkampfklasseOverviewGuard,
     WettkampfklasseDetailGuard,
-    LigaDetailGuard,
-    LigaOverviewGuard
+    VereinOverviewGuard,
+    VereinDetailGuard,
+    LigaOverviewGuard,
+    LigaDetailGuard
   ]
 })
 export class VerwaltungModule {
