@@ -121,21 +121,21 @@
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'ligaUpdateButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.DANGER"
                     [loading]="deleteLoading"
                     (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.DELETE' | translate }}
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.DELETE' | translate }}
         </bla-button>
       </div>
     </div>
