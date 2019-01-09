@@ -158,12 +158,15 @@
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.KAMPFRICHTER.LABEL' | translate }}</span>
       </label>
-      <div class="col-sm-2">
+      <div class="col-sm-8">
         <input type="checkbox" class="form-control" id="dsbMitgliedKampfrichter"
-               name="dsbMitgliedKampfrichter"
+               name="dsbMitgliedKampfrichter" [disabled]="currentMitglied.userId == null ? true: false"
                #dsbMitgliedKampfrichter="ngModel"
                [(ngModel)]="currentMitglied.kampfrichter"
                [class.is-invalid]="dsbMitgliedKampfrichter.invalid && !dsbMitgliedKampfrichter.untouched">
+        <span *ngIf="currentMitglied.userId==null">Mitglied hat noch keinen User-Account. Bitte lege vorher einen an: <a href="#" onClick="return false;;">Userregistrierung</a></span>
+
+
       </div>
     </div>
 

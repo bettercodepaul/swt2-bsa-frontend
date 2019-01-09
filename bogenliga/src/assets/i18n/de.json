@@ -212,6 +212,9 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
+        },
+        "MAIL":{
+          "PLACEHOLDER": "Bitte eine gültige E-Mail angeben"
         }
       }
     },"WETTKAMPFKLASSE_DETAIL": {
