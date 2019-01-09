@@ -181,7 +181,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_LIGA + id,
       title:            'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      description:      'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,

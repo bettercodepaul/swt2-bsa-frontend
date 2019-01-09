@@ -26,6 +26,7 @@ export class LigaOverviewComponent extends CommonComponent implements OnInit {
   public config = LIGA_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
+
   constructor(private ligaDataProvider: LigaDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
@@ -46,14 +47,13 @@ export class LigaOverviewComponent extends CommonComponent implements OnInit {
   public onDelete(versionedDataObject: VersionedDataObject): void {
     // show loading icon
     const id = versionedDataObject.id;
-
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_LIGA + id,
       title:            'MANAGEMENT.LIGA.NOTIFICATION.DELETE.TITLE',
       description:      'MANAGEMENT.LIGA.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
+      descriptionParam: '' + name,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
       type:             NotificationType.YES_NO,

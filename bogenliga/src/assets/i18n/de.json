@@ -176,7 +176,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Liga löschen",
-          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie die Liga mit dem Namen=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
         }
       }
     },
@@ -210,7 +210,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Liga löschen",
-          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie die Liga mit dem Namen=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
