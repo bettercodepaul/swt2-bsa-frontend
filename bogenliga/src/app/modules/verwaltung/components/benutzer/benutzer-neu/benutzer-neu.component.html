@@ -1,0 +1,72 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="benutzerForm"
+        class="horizontal-form half-page"
+        #benutzerForm="ngForm">
+
+    <!-- VORNAME -->
+    <div class="form-group row">
+      <label for="benutzerEmail"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="email"
+               class="form-control"
+               required
+               id="benutzerEmail"
+               name="benutzerEmail"
+               #benutzerEmail="ngModel"
+               [(ngModel)]="currentCredentials.username"
+               [class.is-invalid]="benutzerEmail.invalid && !benutzerEmail.untouched"
+               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Passwort -->
+    <div class="form-group row">
+      <label for="benutzerPassword"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.ROLE.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="password"
+               class="form-control"
+               required
+               id="benutzerPassword"
+               name="benutzerPassword"
+               #benutzerPassword="ngModel"
+               minlength="8"
+               [(ngModel)]="currentCredentials.password"
+               [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.ROLE.PLACEHOLDER' | translate }}">
+      </div>
+    </div>
+
+
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'benutzerSaveButton'"
+                    [disabled]="!benutzerForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.UPDATE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>

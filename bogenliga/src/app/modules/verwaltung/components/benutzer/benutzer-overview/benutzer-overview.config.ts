@@ -13,10 +13,15 @@ export const BENUTZER_OVERVIEW_CONFIG: OverviewDialogConfig = {
         translationKey: 'MANAGEMENT.BENUTZER.TABLE.HEADERS.EMAIL',
         propertyName:   'email',
         width:          20,
+      },
+      {
+        translationKey: 'MANAGEMENT.BENUTZER.TABLE.HEADERS.ROLE',
+        propertyName:   'roleName',
+        width:          20,
       }
     ],
     actions: {
-      actionTypes: [TableActionType.DELETE],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
   }

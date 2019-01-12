@@ -234,6 +234,27 @@
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
           "ERROR": "Bitte eine gültige Email eingeben."
         },
+        "ROLE": {
+          "LABEL": "Rolle",
+          "PLACEHOLDER": "bitte eine Rolle wählen"
+        },
+        "UPDATE": "Aktualisieren"
+       },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Das Benutzer wurde erfolgreich gespeichert."
+        }
+      }
+    },
+    "BENUTZER_NEU": {
+      "TITLE": "BENUTZER - Anlegen",
+      "FORM": {
+        "EMAIL": {
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
+          "ERROR": "Bitte eine gültige Email eingeben."
+        },
         "PASSWORD": {
           "LABEL": "Passwort",
           "PLACEHOLDER": "Bitte ein Passwort eingeben",
