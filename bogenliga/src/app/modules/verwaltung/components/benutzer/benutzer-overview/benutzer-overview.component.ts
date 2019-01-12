@@ -46,6 +46,9 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
     this.navigateToDetailDialog(versionedDataObject);
   }
 
+
+  // beim delete setzen wir das Recht des Users auf "NORIGHTS" und sperren den User so
+  // also eich ein Update auf die Rolle des Benutzers...
   public onDelete(versionedDataObject: VersionedDataObject): void {
     // show loading icon
     const id = versionedDataObject.id;

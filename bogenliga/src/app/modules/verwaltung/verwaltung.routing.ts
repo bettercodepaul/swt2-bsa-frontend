@@ -4,6 +4,7 @@ import {
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   BenutzerDetailGuard,
+  BenutzerNeuGuard,
   BenutzerOverviewGuard,
   VerwaltungGuard
 } from './guards';
@@ -11,6 +12,7 @@ import {
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   BenutzerDetailComponent,
+  BenutzerNeuComponent,
   BenutzerOverviewComponent,
   VerwaltungComponent
 } from './components';
@@ -31,5 +33,6 @@ export const VERWALTUNG_ROUTES: Routes = [
   },
   {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
   {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
+  {path: 'benutzer/neu', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]},
 ];
 
