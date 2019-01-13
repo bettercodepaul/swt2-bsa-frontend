@@ -35,7 +35,6 @@ export class SportjahrOverviewComponent extends CommonComponent  implements OnIn
   }
 
   ngOnInit() {
-
     this.route.params.subscribe(params => {
       if (!isUndefined(params["id"])) {
         const id = params["id"];
@@ -88,15 +87,14 @@ export class SportjahrOverviewComponent extends CommonComponent  implements OnIn
 
   private loadTableRows(id : number) {
     this.loading = true;
-    console.log("ID of Liga", id );
 
-    this.sportjahrDataProvider.findAllById(id)
+    this.sportjahrDataProvider.findAllByLigaId(id)
         .then((response: Response<SportjahrDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: Response<SportjahrDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/dsbmannschaft/' + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/sportjahr/' + versionedDataObject.id);
   }
 
   private handleLoadTableRowsFailure(response: Response<SportjahrDTO[]>): void {
