@@ -34,6 +34,10 @@ export const SPORTJAHR_LIGA_AUSWAHL_CONFIG: OverviewDialogConfig = {
         propertyName:   'ligaleiterEmail',
         width:           20
       }
-    ]
+    ],
+    actions: {
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
+      width:       6
+    },
   }
 };
