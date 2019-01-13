@@ -356,6 +356,24 @@
           "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
+    },
+    "SPORTJAHR_OVERVIEW": {
+      "TITLE" : "Veranstaltungen",
+      "TABLE" : {
+        "HEADERS": {
+          "NAME": "Veranstaltung Name",
+          "SPORTJAHR": "Sportjahr",
+          "DEADLINE": "Meldedeadline",
+          "WETTKAMPFTYPNAME": "Wettkampftyp",
+          "LIGALEITEREMAIL" : "Ligaleiter"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Veranstaltung löschen",
+          "DESCRIPTION": "Wollen Sie die Veranstaltung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
     }
   },
 

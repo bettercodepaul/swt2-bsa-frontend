@@ -8,3 +8,4 @@ export * from './dsb-mannschaft-overview.guard';
 export * from './liga-detail.guard';
 export * from './liga-overview.guard';
 export * from './sportjahr-liga-auswahl.guard';
+export * from './sportjahr-overview.guard';
