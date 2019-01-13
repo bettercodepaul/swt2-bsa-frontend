@@ -52,7 +52,6 @@ export class SportjahrLigaAuswahlComponent extends CommonComponent implements On
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    //TODO Add route to next component
-    //this.router.navigateByUrl('/verwaltung/liga/' + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/sportjahr/liga/' + versionedDataObject.id);
   }
 }

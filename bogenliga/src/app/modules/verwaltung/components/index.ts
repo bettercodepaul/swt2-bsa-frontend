@@ -8,3 +8,4 @@ export * from './dsb-mannschaft/dsb-mannschaft-detail/dsb-mannschaft-detail.comp
 export * from './liga/liga-overview/liga-overview.component';
 export * from './liga/liga-detail/liga-detail.component';
 export * from './sportjahr/sportjahr-liga-auswahl/sportjahr-liga-auswahl.component';
+export * from './sportjahr/sportjahr-overview/sportjahr-overview.component';

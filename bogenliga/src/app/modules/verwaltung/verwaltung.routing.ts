@@ -22,8 +22,10 @@ import {
   WettkampfklasseOverviewComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
-  SportjahrLigaAuswahlComponent
+  SportjahrLigaAuswahlComponent,
+  SportjahrOverviewComponent
 } from './components';
+import {SportjahrOverviewGuard} from './guards/sportjahr-overview.guard';
 
 
 export const VERWALTUNG_ROUTES: Routes = [
@@ -60,8 +62,10 @@ export const VERWALTUNG_ROUTES: Routes = [
   {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]},
   {
     path: 'sportjahr',
+    pathMatch:   'full',
     component: SportjahrLigaAuswahlComponent,
-    pathMatch: 'full',
+
     canActivate: [SportjahrLigaAuswahlGuard]
-  }
+  },
+  {path: 'sportjahr/liga/:id', pathMatch: 'full', component: SportjahrOverviewComponent, canActivate: [SportjahrOverviewGuard]},
 ];
