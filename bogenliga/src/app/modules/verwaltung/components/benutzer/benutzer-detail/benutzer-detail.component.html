@@ -15,13 +15,11 @@
       <div class="col-sm-9">
         <input type="email"
                class="form-control"
-               required
+               disabled
                id="benutzerEmail"
                name="benutzerEmail"
                #benutzerEmail="ngModel"
-               [(ngModel)]="currentCredentials.username"
-               [class.is-invalid]="benutzerEmail.invalid && !benutzerEmail.untouched"
-               pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+               [(ngModel)]="benutzer.email"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -30,53 +28,20 @@
       </div>
     </div>
 
-    <!-- Passwort -->
     <div class="form-group row">
-      <label for="benutzerPassword"
+      <label for="benutzerrolle"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="password"
-               class="form-control"
-               required
-               id="benutzerPassword"
-               name="benutzerPassword"
-               #benutzerPassword="ngModel"
-               minlength="8"
-               [(ngModel)]="currentCredentials.password"
-               [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-    <!-- Password verification -->
-    <!-- TODO Prüfung auf Identität der PWD funktioniert nicht -->
-    <div class="form-group row">
-      <label for="benutzerVerifyPassword"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="password"
-               class="form-control"
-               required
-               id="benutzerVerifyPassword"
-               name="benutzerVerifyPassword"
-               #benutzerVerifyPassword="ngModel"
-               [(ngModel)]="verifyCredentials.password"
-               [class.is-invalid]="benutzerVerifyPassword.value != benutzerPassword.value"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.ERROR' | translate }}
-        </div>
+        <bla-selectionlist [items]="getVersionedDataObjects()"
+                           [optionFieldSelector]="benutzer.roleName"
+                           [selectedItem]="benutzer.roleName"
+                           (onSelect)="onSelect($event)"
+                           [multipleSelections]="multipleSelections"
+                           style="width: 50%; height: 10em;">
+        </bla-selectionlist>
       </div>
     </div>
 
