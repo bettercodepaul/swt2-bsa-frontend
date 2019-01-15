@@ -1,0 +1,43 @@
+.bla-tooltip-top {
+  position: relative;
+  cursor: help;
+}
+
+.bla-tooltip-top::before, .bla-tooltip-top::after {
+  position: absolute;
+  left: 50%;
+  transition: all ease 0.3s;
+  opacity: 0;
+  display: none;
+}
+
+.bla-tooltip-top::before {
+  content: "";
+  top: -20px;
+  margin-left: -8px;
+
+  // triangle of the popup
+  border-width: 10px 8px 0 8px;
+  border-style: solid;
+  border-color: #212529 transparent transparent transparent;
+}
+
+.bla-tooltip-top::after {
+  content: attr(value);
+  color: #fff;
+  text-align: center;
+  top: -20px;
+
+  background: #212529;
+  transform: translateY(-100%);
+  margin-left: -100px;
+  width: 200px;
+  border-radius: 5px;
+  padding: 12px;
+}
+
+// show bla-tooltip-top
+.bla-tooltip-top:hover::before, .bla-tooltip-top:hover::after {
+  opacity: 1;
+  display: block;
+}
