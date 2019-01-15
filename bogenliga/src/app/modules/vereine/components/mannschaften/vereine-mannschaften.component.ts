@@ -88,6 +88,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
   private handleLoadMannschaftenFailure(response: Response<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
+    console.log('Error, could not load Mannschaften: ' + response);
     this.loading = false;
   }
 
