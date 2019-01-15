@@ -13,6 +13,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {BenutzerDO} from '../types/benutzer-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/benutzer-mapper';
 import {CredentialsDTO} from "../../user/types/model/credentials-dto.class";
+import {RoleDO} from "../types/role-do.class";
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +85,27 @@ export class BenutzerDataProviderService extends DataProviderService {
               reject({result: RequestResult.FAILURE});
             }
           });
+    });
+  }
+
+  public findAllRoles(): Promise<Response<RoleDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
+        .then((data: VersionedDataTransferObject[]) => {
+
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     });
   }
 

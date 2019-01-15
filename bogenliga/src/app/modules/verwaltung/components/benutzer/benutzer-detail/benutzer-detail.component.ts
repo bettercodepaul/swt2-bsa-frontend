@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {of} from 'rxjs';
+import {delay} from 'rxjs/operators';
 import {BENUTZER_DETAIL_CONFIG} from './benutzer-detail.config';
 import {Response} from '../../../../shared/data-provider';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
@@ -6,6 +8,8 @@ import {BenutzerDataProviderService} from '../../../services/benutzer-data-provi
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
 import {BenutzerDO} from "../../../types/benutzer-do.class";
+import {RoleDO} from "../../../types/role-do.class";
+import {UserRoleVersionedDataObject} from "../../../types/userRole-versioned-data-object.class";
 import {CredentialsDO} from "../../../../user/types/credentials-do.class";
 import {CredentialsDTO} from "../../../../user/types/model/credentials-dto.class";
 
@@ -17,7 +21,6 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_BENUTZER = 'bentuzer_detail_save';
 
@@ -37,6 +40,9 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public currentCredentialsDTO: CredentialsDTO;
 
   public saveLoading = false;
+  public allRoles: RoleDO[];
+  public selectedDTOs: UserRoleVersionedDataObject[];
+  public multipleSelections = false;
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
     private router: Router,
@@ -63,6 +69,8 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
           this.loadById(params[ID_PATH_PARAM]);
         }
       }
+      of(true).pipe(delay(5000)).subscribe(ignore => this.loading = false);
+
     });
   }
 
@@ -108,6 +116,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     // show response message
   }
 
+
   public entityExists(): boolean {
     return this.currentBenutzer.id > 0;
   }
@@ -127,5 +136,56 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.loading = false;
 
   }
+
+  public onSelect($event: UserRoleVersionedDataObject[]): void {
+    this.selectedDTOs = [];
+    this.selectedDTOs = $event;
+  }
+
+  public getSelectedDTO(): string {
+    if (isNullOrUndefined(this.selectedDTOs)) {
+      return '';
+    } else {
+      console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
+      const names: string[] = [];
+
+      this.selectedDTOs.forEach(item => {
+        names.push(item.name);
+      });
+
+      return names.join(', ');
+    }
+  }
+
+  public getEmptyList(): UserRoleVersionedDataObject[] {
+    return [];
+  }
+
+  public getVersionedDataObjects(): UserRoleVersionedDataObject[] {
+    var index;
+
+    this.allRoles = this.benutzerDataProvider.findAllRoles()
+      .then((response: Response<RoleDO[]>) => this.handleSuccess(response))
+      .catch((response: Response<RoleDO[]>) => this.handleFailure(response));
+
+    for ( index in this.allRoles){
+      new UserRoleVersionedDataObject(index, this.allRoles[index].roleId, this.allRoles[index].roleName,)
+    }
+
+    return [
+      new PlaygroundVersionedDataObject(1, 'Schütze 1'),
+      new PlaygroundVersionedDataObject(2, 'Schütze 2'),
+      new PlaygroundVersionedDataObject(3, 'Schütze 3'),
+      new PlaygroundVersionedDataObject(4, 'Schütze 4'),
+      new PlaygroundVersionedDataObject(5, 'Schütze 5'),
+      new PlaygroundVersionedDataObject(6, 'Schütze 6'),
+      new PlaygroundVersionedDataObject(7, 'Schütze 7'),
+      new PlaygroundVersionedDataObject(8, 'Schütze 8'),
+      new PlaygroundVersionedDataObject(9, 'Schütze 9'),
+      new PlaygroundVersionedDataObject(10, 'Schütze 10'),
+    ];
+  }
+
+
 
 }
