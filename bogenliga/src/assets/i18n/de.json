@@ -8,7 +8,6 @@
       "LOGOUT": "Logout"
     }
   },
-
   "SIDEBAR": {
     "TITLE": "Bogenliga",
     "TITLESHORT": "BL",
@@ -17,9 +16,9 @@
     "WETTKAMPF": "WETTKAEMPFE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
     "SETTINGS": "EINSTELLUNGEN",
+    "PLAYGROUND": "PLAYGROUND",
     "COLLAPSE": "Einklappen"
   },
-
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
     "TITLE": "Bogenliga",
@@ -28,7 +27,6 @@
     "IMPRESSUM": "Impressum und Datenschutz",
     "COPYRIGHT": "Copyright: 2018"
   },
-
   "HOME": {
     "HOME": {
       "TITLE": "Home",
@@ -58,52 +56,88 @@
       "TITLE": "Benutzer"
     },
     "PROFILE": {
-      "TITLE": "Benutzerprofil"
-    },
-    "PWD": {
-      "TITLE": "Passwort ändern",
-      "BUTTON": {
-        "SAVE": "Speichern"
-      },
+      "TITLE": "Benutzerprofil",
       "FORM": {
-        "UPDATE": "Aktualisieren",
+        "VORNAME": {
+          "LABEL": "Vorname",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "NACHNAME": {
+          "LABEL": "Nachname",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
         "EMAIL": {
-          "LABEL": "E-Mail-Adresse",
-          "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
-          "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
+          "LABEL": "Email",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
-        "PASSWORD": {
-          "LABEL": "Aktuelles Passwort",
-          "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Bitte ein gültiges Passwort eingeben."
+        "GEBURTSDATUM": {
+          "LABEL": "Geburtsdatum",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
-        "NEWPASSWORD": {
-          "LABEL": "Neues Passwort",
-          "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Bitte ein gültiges Passwort mit mehr als 8 Zeichen eingeben."
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Mitgliedsnummer",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         },
-        "VERIFYPASSWORD": {
-          "LABEL": "Verifikation neues Passwort",
-          "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Passwort nicht identisch zum neuen Password"
+        "NATIONALITAET": {
+          "LABEL": "Nationalität",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "VEREIN": {
+          "LABEL": "Verein",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
         }
       },
-      "NOTIFICATION": {
-        "PWD_SUCCESSFUL": {
-          "HEADER": "Passwortänderung erfolgreich",
-          "TEXT": "Sie haben das Passwort erfolgreich geändert."
+      "PWD": {
+        "TITLE": "Passwort ändern",
+        "BUTTON": {
+          "SAVE": "Speichern"
         },
-        "PWD_FAILURE": {
-          "HEADER": "Passwortänderung fehlgeschlagen",
-          "TEXT": "Die Anmeldedaten sind unverändert."
+        "FORM": {
+          "UPDATE": "Aktualisieren",
+          "EMAIL": {
+            "LABEL": "E-Mail-Adresse",
+            "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
+            "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
+          },
+          "PASSWORD": {
+            "LABEL": "Aktuelles Passwort",
+            "PLACEHOLDER": "Bitte Passwort eingeben",
+            "ERROR": "Bitte ein gültiges Passwort eingeben."
+          },
+          "NEWPASSWORD": {
+            "LABEL": "Neues Passwort",
+            "PLACEHOLDER": "Bitte Passwort eingeben",
+            "ERROR": "Bitte ein gültiges Passwort mit mehr als 8 Zeichen eingeben."
+          },
+          "VERIFYPASSWORD": {
+            "LABEL": "Verifikation neues Passwort",
+            "PLACEHOLDER": "Bitte Passwort eingeben",
+            "ERROR": "Passwort nicht identisch zum neuen Password"
+          }
         },
-        "PWD_CONNECTION_PROBLEM": {
-          "HEADER": "Passwortänderung nicht möglich",
-          "TEXT": "Es konnte keine Verbindung zum Server aufgebaut werden."
+        "NOTIFICATION": {
+          "PWD_SUCCESSFUL": {
+            "HEADER": "Passwortänderung erfolgreich",
+            "TEXT": "Sie haben das Passwort erfolgreich geändert."
+          },
+          "PWD_FAILURE": {
+            "HEADER": "Passwortänderung fehlgeschlagen",
+            "TEXT": "Die Anmeldedaten sind unverändert."
+          },
+          "PWD_CONNECTION_PROBLEM": {
+            "HEADER": "Passwortänderung nicht möglich",
+            "TEXT": "Es konnte keine Verbindung zum Server aufgebaut werden."
+          }
         }
-      }
-    },
-     "LOGIN": {
+      },
+    "LOGIN": {
       "TITLE": "Login",
       "HEADER": "Bitte einloggen:",
       "BUTTON": {
@@ -149,6 +183,18 @@
         "BENUTZER": {
           "LABEL": "Benutzer",
           "DESCRIPTION": "Verwaltung der Benutzer-Accounts"
+        },
+        "KLASSEN": {
+          "LABEL": "(Wettkampf-) Klassen",
+          "DESCRIPTION": "Verwaltung der Klassen"
+        },
+        "DSBMANNSCHAFTEN": {
+          "LABEL": "Mannschaften",
+          "DESCRIPTION": "Verwaltung der Mannschaften"
+        },
+        "VEREINE": {
+          "LABEL": "Vereine",
+          "DESCRIPTION": "Verwaltung der Vereine"
         }
       }
     },
@@ -170,6 +216,42 @@
         }
       }
     },
+    "KLASSEN": {
+      "TITLE": "Klassen - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "KLASSENR": "KlassenNR",
+          "KLASSENAME": "Klassen Name",
+          "KLASSEALTERMIN": "Jahrgang Min",
+          "KLASSEALTERMAX": "Jahrgang Max"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Klasse löschen",
+          "DESCRIPTION": "Wollen Sie die Klasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "VEREINE": {
+      "TITLE": "Vereine - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Verein Name",
+          "IDENTIFIER": "Identifier",
+          "REGION_ID": "Region ID",
+          "REGION_NAME": "Region Name"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Verein löschen",
+          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
     "DSBMITGLIEDER_DETAIL": {
       "TITLE": "DSB Mitglied - Details",
       "FORM": {
@@ -186,7 +268,7 @@
         "GEBURTSDATUM": {
           "LABEL": "Geburtsdatum",
           "PLACEHOLDER": "Bitte ein Geburtsdatum eingeben",
-          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben."
+          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: JJJJ-MM-TT)."
         },
         "MITGLIEDSNUMMER": {
           "LABEL": "Mitgliedsnummer",
@@ -290,6 +372,98 @@
           "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
+    },
+    "WETTKAMPFKLASSE_DETAIL": {
+      "TITLE": "Wettkampfklasse - Details",
+      "FORM": {
+        "WETTKAMPF_ID": {
+          "LABEL": "Wettkampf-ID",
+          "PLACEHOLDER": "Bitte eine ID eingeben",
+          "ERROR": "Bitte eine gültige ID eingeben."
+        },
+        "WETTKAMPFNAME": {
+          "LABEL": "Wettkampfname",
+          "PLACEHOLDER": "Bitte einen Wettkampfnamen eingeben",
+          "ERROR": "Bitte einen gültigen Wettkampfnamen eingeben."
+        },
+        "WETTKAMPF_JAHRGANG_MIN": {
+          "LABEL": "Wettkampf Jahrgang min.",
+          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
+        },
+        "WETTKAMPF_JAHRGANG_MAX": {
+          "LABEL": "Wettkampf Jahrgang max.",
+          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
+        },
+        "WETTKAMPF_NR": {
+          "LABEL": "Wettkampfnummer",
+          "PLACEHOLDER": "Bitte eine Wettkampfnummer eingeben",
+          "ERROR": "Bitte eine gültige Wettkampfnummer eingeben (max. 2 Zeichen lang)."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Wettkampfklasse löschen",
+          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+        }
+      }
+    },
+    "VEREIN_DETAIL": {
+      "TITLE": "Verein - Details",
+      "FORM": {
+        "VEREIN_NAME": {
+          "LABEL": "Verein-Name",
+          "PLACEHOLDER": "Bitte einen Namen eingeben",
+          "ERROR": "Bitte einen gültigen Namen eingeben."
+        },
+        "VEREIN_IDENTIFIER": {
+          "LABEL": "Verein-Identifier",
+          "PLACEHOLDER": "Bitte einen Identifier eingeben",
+          "ERROR": "Bitte einen gültigen Identifier eingeben."
+        },
+        "VEREIN_REGION": {
+          "LABEL": "Region",
+          "PLACEHOLDER": "Bitte eine Region auswählen",
+          "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Wettkampfklasse löschen",
+          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+        }
+      }
     }
   },
   "NOTIFICATION": {
@@ -344,7 +518,6 @@
   "BREADCRUMB": {
     "NEW_ENTITY": "Neu"
   },
-
   "TABLE": {
     "HEADERS": {
       "ACTION": "Aktion"
@@ -356,7 +529,6 @@
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
-
     "TITLE": "Tabelle",
     "KEY": "Schlüssel",
     "VALUE": "Wert",
@@ -372,6 +544,16 @@
   "DIALOG": {
     "LOADING": "Einträge werden geladen"
   },
+  "DROPDOWN": {
+    "PLEASE_SELECT_ITEM": "Bitte einen Eintrag auswählen...",
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen..."
+  },
+  "SELECTIONLIST": {
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen...",
+    "SEARCH_PLACEHOLDER": "Suchbegriff eingeben"
+  },
   "DETAILS": {
     "TITLE": "Entität-Details",
     "DELETE": "Löschen",
@@ -379,5 +561,10 @@
     "KEY": "Schlüssel",
     "VALUE": "Wert",
     "VERSION": "Version"
+  },
+  "PLAYGROUND": {
+    "PLAYGROUND": {
+      "TITLE": "Komponenten Spielplatz"
+    }
   }
 }
