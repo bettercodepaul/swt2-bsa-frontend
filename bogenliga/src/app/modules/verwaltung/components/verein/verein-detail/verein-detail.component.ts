@@ -31,7 +31,7 @@ const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
   styleUrls:   ['./verein-detail.component.scss']
 })
 export class VereinDetailComponent extends CommonComponent implements OnInit {
-
+  public regionType = "KREIS";
   public config = VEREIN_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentVerein: VereinDO = new VereinDO();
@@ -54,7 +54,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
     this.notificationService.discardNotification();
 
-    this.loadRegions(); //Request all regions from the backend
+    this.loadRegions(this.regionType); //Request all regions from the backend
 
     this.route.params.subscribe(params => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -196,8 +196,8 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         .catch((response: Response<VereinDO>) => this.handleFailure(response));
   }
 
-  private loadRegions() {
-    this.regionProvider.findAll()
+  private loadRegions(type: string) {
+    this.regionProvider.findAllByType(type)
         .then((response: Response<RegionDO[]>) => this.handleResponseArraySuccess(response))
         .catch((response: Response<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
