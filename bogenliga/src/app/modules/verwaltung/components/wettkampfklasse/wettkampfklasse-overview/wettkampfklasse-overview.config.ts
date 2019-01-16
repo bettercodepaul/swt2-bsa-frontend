@@ -9,13 +9,13 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
   tableConfig: {
     columns: [
-      {
+      /**{
         translationKey:   'MANAGEMENT.KLASSEN.TABLE.HEADERS.ID',
         propertyName:     'id',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
-      },
+      },**/
       {
         translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSENR',
         propertyName:   'klasseNr',

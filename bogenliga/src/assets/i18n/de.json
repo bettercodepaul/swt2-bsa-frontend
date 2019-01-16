@@ -478,5 +478,16 @@
     "KEY": "Schlüssel",
     "VALUE": "Wert",
     "VERSION": "Version"
+  },
+  "PLAYGROUND": {
+    "PLAYGROUND": {
+      "TITLE": "Komponenten Spielplatz"
+    }
+  },
+  "FILE_DOWNLOAD": {
+    "NOTIFICATION": {
+      "SUCCESS": "Download erfolgreich gestartet für:",
+      "FAILURE": "Download fehlgeschlagen für:"
+    }
   }
 }
