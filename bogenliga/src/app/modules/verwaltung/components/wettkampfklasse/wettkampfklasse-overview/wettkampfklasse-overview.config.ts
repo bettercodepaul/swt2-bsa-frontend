@@ -9,13 +9,13 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
   tableConfig: {
     columns: [
-      {
+      /**{
         translationKey:   'MANAGEMENT.KLASSEN.TABLE.HEADERS.ID',
         propertyName:     'id',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
-      },
+      },**/
       {
         translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSENR',
         propertyName:   'klasseNr',
@@ -28,18 +28,18 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
       },
       {
         translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSEALTERMIN',
-        propertyName:   'klasseAlterMin',
+        propertyName:   'klasseJahrgangMin',
         type:           TableColumnType.NUMBER,
         width:          20,
       },
       {
         translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSEALTERMAX',
-        propertyName:   'klasseAlterMax',
+        propertyName:   'klasseJahrgangMax',
         width:          20,
       }
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
+      actionTypes: [TableActionType.EDIT, /**TableActionType.DELETE**/],
       width:       6
     },
   }

@@ -7,7 +7,6 @@
       "LOGOUT": "Logout"
     }
   },
-
   "SIDEBAR": {
     "TITLE": "Bogenliga",
     "TITLESHORT": "BL",
@@ -18,7 +17,6 @@
     "SETTINGS": "EINSTELLUNGEN",
     "COLLAPSE": "Einklappen"
   },
-
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
     "TITLE": "Bogenliga",
@@ -27,7 +25,6 @@
     "IMPRESSUM": "Impressum und Datenschutz",
     "COPYRIGHT": "Copyright: 2018"
   },
-
   "HOME": {
     "HOME": {
       "TITLE": "Home",
@@ -91,7 +88,6 @@
       }
     }
   },
-
   "MANAGEMENT": {
     "VERWALTUNG": {
       "TITLE": "Verwaltung",
@@ -107,6 +103,14 @@
         "DSBMANNSCHAFTEN": {
           "LABEL": "Mannschaften",
           "DESCRIPTION": "Verwaltung der Mannschaften"
+        },
+        "LIGA": {
+          "LABEL": "Ligen",
+          "DESCRIPTION": "Verwaltung der Ligen"
+        },
+        "VEREINE": {
+          "LABEL": "Vereine",
+          "DESCRIPTION": "Verwaltung der Vereine"
         }
       }
     },
@@ -144,15 +148,140 @@
           "ID": "ID",
           "KLASSENR": "KlassenNR",
           "KLASSENAME": "Klassen Name",
-          "KLASSEALTERMIN": "Alter Min",
-          "KLASSEALTERMAX": "Alter Max"
-
+          "KLASSEALTERMIN": "Jahrgang Min",
+          "KLASSEALTERMAX": "Jahrgang Max"
         }
       },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "DSB Mitglied löschen",
           "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "LIGA": {
+      "TITLE": "Liga - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "LIGANAME": "Liga Name",
+          "REGIONID": "Region ID",
+          "REGIONNAME": "Region Name",
+          "UEBERGEORDNETID": "Liga Uebergeordnet ID",
+          "UEBERGEORDNETNAME": "Liga Uebergeornet Name",
+          "VERANTWORTLICHID": "Liga Verantwortlich ID",
+          "VERANTWORTLICHMAIL": "Liga Verantwortlich Mail"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Liga löschen",
+          "DESCRIPTION": "Wollen Sie die Liga mit dem Namen=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+        }
+      }
+    },
+    "LIGA_DETAIL": {
+      "TITLE": "Liga - Details",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Liga Name",
+          "PLACEHOLDER": "Bitte geben Sie einen Namen für die Liga ein",
+          "ERROR": "Bitte geben Sie einen gültigen Namen ein"
+        },
+        "REGION": {
+          "LABEL": "Region",
+          "PLACEHOLDER": "Bitte wählen Sie eine Region",
+          "ERROR": "Bitte wählen Sie eine gültige Region"
+        },
+        "UEBERGEORDNET": {
+          "LABEL": "Uebergeordnete Liga",
+          "PLACEHOLDER": "Wählen Sie eine übergeordnete Liga",
+          "ERROR": "Bitte wählen Sie eine gültige übergeordnete Liga"
+        },
+        "VERANTWORTLICH_MAIL": {
+          "LABEL": "Email des Verantwortlichen",
+          "PLACEHOLDER": "Wählen Sie einen Ligaverantwortlichen",
+          "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Liga löschen",
+          "DESCRIPTION": "Wollen Sie die Liga mit dem Namen=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Liga wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Liga konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Liga wurde erfolgreich gespeichert."
+        }
+      }
+    },
+    "VEREINE": {
+      "TITLE": "Vereine - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Verein Name",
+          "IDENTIFIER": "Identifier",
+          "REGION_ID": "Region ID",
+          "REGION_NAME": "Region Name"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Verein löschen",
+          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "VEREIN_DETAIL": {
+      "TITLE": "Verein - Details",
+      "FORM": {
+        "VEREIN_NAME": {
+          "LABEL": "Verein-Name",
+          "PLACEHOLDER": "Bitte einen Namen eingeben",
+          "ERROR": "Bitte einen gültigen Namen eingeben."
+        },
+        "VEREIN_IDENTIFIER": {
+          "LABEL": "Verein-Identifier",
+          "PLACEHOLDER": "Bitte einen Identifier eingeben",
+          "ERROR": "Bitte einen gültigen Identifier eingeben."
+        },
+        "VEREIN_REGION": {
+          "LABEL": "Region",
+          "PLACEHOLDER": "Bitte eine Region auswählen",
+          "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Wettkampfklasse löschen",
+          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
         }
       }
     },
@@ -214,7 +343,8 @@
           "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
         }
       }
-    },"WETTKAMPFKLASSE_DETAIL": {
+    },
+    "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
         "WETTKAMPF_ID": {
@@ -227,15 +357,15 @@
           "PLACEHOLDER": "Bitte einen Wettkampfnamen eingeben",
           "ERROR": "Bitte einen gültigen Wettkampfnamen eingeben."
         },
-        "WETTKAMPF_ALTER_MIN": {
-          "LABEL": "Wettkampf Alter min.",
-          "PLACEHOLDER": "Bitte ein Alter eingeben",
-          "ERROR": "Bitte ein gültiges Alter eingeben."
+        "WETTKAMPF_JAHRGANG_MIN": {
+          "LABEL": "Wettkampf Jahrgang min.",
+          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
         },
-        "WETTKAMPF_ALTER_MAX": {
-          "LABEL": "Wettkampf Alter max.",
-          "PLACEHOLDER": "Bitte ein Alter eingeben",
-          "ERROR": "Bitte ein gültiges Alter eingeben."
+        "WETTKAMPF_JAHRGANG_MAX": {
+          "LABEL": "Wettkampf Jahrgang max.",
+          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
         },
         "WETTKAMPF_NR": {
           "LABEL": "Wettkampfnummer",
@@ -266,9 +396,6 @@
       }
     }
   },
-
-
-
   "NOTIFICATION": {
     "BUTTON": {
       "OK": "OK",
@@ -321,7 +448,6 @@
   "BREADCRUMB": {
     "NEW_ENTITY": "Neu"
   },
-
   "TABLE": {
     "HEADERS": {
       "ACTION": "Aktion"
@@ -333,7 +459,6 @@
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
-
     "TITLE": "Tabelle",
     "KEY": "Schlüssel",
     "VALUE": "Wert",
@@ -356,5 +481,16 @@
     "KEY": "Schlüssel",
     "VALUE": "Wert",
     "VERSION": "Version"
+  },
+  "PLAYGROUND": {
+    "PLAYGROUND": {
+      "TITLE": "Komponenten Spielplatz"
+    }
+  },
+  "FILE_DOWNLOAD": {
+    "NOTIFICATION": {
+      "SUCCESS": "Download erfolgreich gestartet für:",
+      "FAILURE": "Download fehlgeschlagen für:"
+    }
   }
 }

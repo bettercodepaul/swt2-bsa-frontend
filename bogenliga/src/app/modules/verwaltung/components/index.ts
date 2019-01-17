@@ -5,3 +5,8 @@ export * from './wettkampfklasse/wettkampfklasse-overview/wettkampfklasse-overvi
 export * from './wettkampfklasse/wettkampfklasse-detail/wettkampfklasse-detail.component';
 export * from './dsb-mannschaft/dsb-mannschaft-overview/dsb-mannschaft-overview.component';
 export * from './dsb-mannschaft/dsb-mannschaft-detail/dsb-mannschaft-detail.component';
+export * from './verein/verein-detail/verein-detail.component';
+export * from './verein/verein-overview/verein-overview.component';
+export * from './liga/liga-overview/liga-overview.component';
+export * from './liga/liga-detail/liga-detail.component';
+
