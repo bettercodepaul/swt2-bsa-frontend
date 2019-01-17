@@ -9,7 +9,9 @@ import {
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard,
   VereinOverviewGuard,
-  VereinDetailGuard
+  VereinDetailGuard,
+  LigaOverviewGuard,
+  LigaDetailGuard
 } from './guards';
 import {
   DsbMannschaftDetailComponent,
@@ -20,7 +22,9 @@ import {
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent,
   VereinOverviewComponent,
-  VereinDetailComponent
+  VereinDetailComponent,
+  LigaOverviewComponent,
+  LigaDetailComponent
 } from './components';
 
 export const VERWALTUNG_ROUTES: Routes = [
@@ -54,5 +58,12 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch:   'full',
     canActivate: [VereinOverviewGuard]
   },
-  {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]}
+  {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
+  {
+    path:        'liga',
+    component:   LigaOverviewComponent,
+    pathMatch:   'full',
+    canActivate: [LigaOverviewGuard]
+  },
+  {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]}
 ];
