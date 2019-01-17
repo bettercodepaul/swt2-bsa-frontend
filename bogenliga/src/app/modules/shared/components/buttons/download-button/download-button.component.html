@@ -1,0 +1,28 @@
+<button
+  (click)="onFileDownload()"
+  *ngIf="visible"
+  [disabled]="isDisabled()"
+  [id]="id"
+  [name]="id"
+  [ngClass]="getButtonClass()"
+  [style.min-width]="minWidth"
+  class="btn"
+  type="button"
+
+>
+  <!-- TODO make class configurable -->
+
+  <!-- show loading indicator -->
+  <span style="padding-right: 3px">
+    <fa-icon *ngIf="loading"
+             [spin]="true"
+             icon="sync"></fa-icon>
+  </span>
+
+  <!-- show content of the <bla-button> element -->
+  <ng-content></ng-content>
+
+
+</button>
+
+<a #downloadLink>

@@ -1,0 +1,32 @@
+<select #selectModel="ngModel"
+        (ngModelChange)="onSelectionChanged($event)"
+        [(ngModel)]="selectedItemIds"
+        [disabled]="isDisabled()"
+        [id]="id"
+        [multiple]="isMultibleSelectionAllowed()"
+        [name]="id"
+        [size]="getListSize()"
+        class="form-control selection-list">
+
+  <option *ngIf="showEmptyItemListPlaceholder()"
+          class="placeholder-option"
+          disabled
+          value="0">
+    {{ 'SELECTIONLIST.NO_ENTRIES_FOUND' | translate }}
+  </option>
+
+  <option *ngIf="showLoadingPlaceholder()"
+          class="placeholder-option"
+          disabled
+          value="0">
+    {{ 'SELECTIONLIST.LOADING' | translate }}
+  </option>
+
+  <ng-container *ngIf="!showLoadingPlaceholder() && !showEmptyItemListPlaceholder()">
+    <option *ngFor="let item of items"
+            [ngValue]="item.id">
+      {{ item[optionFieldSelector] }}
+    </option>
+  </ng-container>
+
+</select>
