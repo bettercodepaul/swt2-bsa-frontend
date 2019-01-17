@@ -16,6 +16,7 @@ import {DsbMannschaftDO} from '../../../verwaltung/types/dsb-mannschaft-do.class
 import {MannschaftsmitgliederDataProviderService} from '../../services/mannschaftsmitglieder-data-provider.service';
 import {MannschaftsMitgliedDTO} from '../../types/datatransfer/mannschaftsmitglied-dto.class';
 import {MannschaftsmitgliedDO} from '../../types/mannschaftsmitglied-do.class';
+import {toTableRows} from '../../../shared/components/tables';
 
 const ID_PATH_PARAM = 'id';
 const MANNSCHAFT_PATH_PARAM = 'mannschaft';
@@ -88,7 +89,6 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
     this.filterMannschaften();
     this.setCurrentMannschaft();
-    this.loadMannschaftsMitglieder();
     this.loading = false;
   }
 
@@ -96,6 +96,20 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
     this.mannschaften = [];
     console.log('Error, could not load Mannschaften: ' + response);
     this.loading = false;
+  }
+
+  private setCurrentMannschaft() {
+
+    this.route.params.subscribe(params => {
+      if (!isUndefined(params[MANNSCHAFT_PATH_PARAM])) {
+        for (let mannschaft of this.mannschaften) {
+          if (mannschaft.id  === parseInt(params[MANNSCHAFT_PATH_PARAM], 10)) {
+            this.currentMannschaft = mannschaft;
+            this.loadMannschaftsMitglieder();
+          }
+        }
+      }
+    });
   }
 
   private loadMannschaftsMitglieder() {
@@ -108,7 +122,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
   private handleMannschftsmitgliedSuccess(response: Response<MannschaftsMitgliedDTO[]>): void {
     this.mannschaftsMitglieder = response.payload;
-    console.log('Loaded Mannschaften: ' + response);
+    this.mannschaftsMitdliedRows = toTableRows(response.payload);
     this.loading = false;
   }
 
@@ -116,23 +130,6 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
     this.mannschaftsMitglieder = [];
     console.log('Error, could not load Mannschaftsmitglieder: ' + response);
     this.loading = false;
-  }
-
-  private setCurrentMannschaft() {
-
-    this.route.params.subscribe(params => {
-      if (!isUndefined(params[MANNSCHAFT_PATH_PARAM])) {
-        console.log(params[MANNSCHAFT_PATH_PARAM]);
-        console.log(this.mannschaften);
-        for (let mannschaft of this.mannschaften) {
-          if (mannschaft.id  === parseInt(params[MANNSCHAFT_PATH_PARAM], 10)) {
-            console.log('CurrentMannschaft: \n' + this.currentMannschaft);
-            this.currentMannschaft = mannschaft;
-          }
-        }
-      }
-    });
-
   }
 
   private filterMannschaften(): void {
