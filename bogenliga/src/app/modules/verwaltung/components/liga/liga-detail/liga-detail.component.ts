@@ -92,19 +92,19 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
 
-    if(this.currentUbergeordneteLiga.id == undefined) {
+    if(typeof this.currentUbergeordneteLiga === 'undefined') {
       this.currentLiga.ligaUebergeordnetId = null;
     } else {
       this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id
     }
 
-    if(this.currentRegion.id == undefined) {
+    if(typeof this.currentRegion  === 'undefined') {
       this.currentLiga.regionId = null;
     } else {
       this.currentLiga.regionId = this.currentRegion.id;
     }
 
-    if(this.currentUser.id == undefined) {
+    if(typeof this.currentUser  === 'undefined') {
       this.currentLiga.ligaVerantwortlichId = null;
     } else {
       this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
