@@ -7,17 +7,17 @@ export const VEREIN_MANNSCHAFTEN_CONFIG: OverviewDialogConfig = {
     columns: [
       {
         translationKey: 'VEREINE.MANNSCHAFTSMITGLIEDER.TABLE.HEADERS.VORNAME',
-        propertyName:   'name',
+        propertyName:   'dsbMitgliedVorname',
         width:          20,
       },
       {
         translationKey: 'VEREINE.MANNSCHAFTSMITGLIEDER.TABLE.HEADERS.NACHNAME',
-        propertyName:   'identifier',
+        propertyName:   'dsbMitgliedNachname',
         width:          20,
       },
       {
         translationKey: 'VEREINE.MANNSCHAFTSMITGLIEDER.TABLE.HEADERS.EINGESETZT',
-        propertyName:   'regionId',
+        propertyName:   'dsbMitgliedEingesetzt',
         width:          10,
       }
     ],
