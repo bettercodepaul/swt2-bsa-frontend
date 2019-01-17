@@ -53,7 +53,7 @@ export class LigaOverviewComponent extends CommonComponent implements OnInit {
       id:               NOTIFICATION_DELETE_LIGA + id,
       title:            'MANAGEMENT.LIGA.NOTIFICATION.DELETE.TITLE',
       description:      'MANAGEMENT.LIGA.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + name,
+      descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
       type:             NotificationType.YES_NO,
