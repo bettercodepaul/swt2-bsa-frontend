@@ -5,4 +5,8 @@
 
 <h3 class="p-4 tex-center" *ngIf="currentMannschaft != null">Liga: < link zu entsprechender Veranstaltung ></h3>
 <h3 class="p-4 tex-center" *ngIf="currentMannschaft != null">Mannschaftsmitglieder: <b>{{currentVerein.name}} {{currentMannschaft.nummer}}</b></h3>
-<bla-data-table *ngIf="currentMannschaft != null"></bla-data-table>
+<bla-data-table *ngIf="currentMannschaft != null"
+                [config]="config"
+                [rows]="mannschaftsMitdliedRows"
+                [loading]="loading">
+</bla-data-table>
