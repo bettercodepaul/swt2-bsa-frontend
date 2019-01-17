@@ -91,9 +91,9 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
-    this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
-    this.currentLiga.regionId = this.currentRegion.id;
-    this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
+    this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id || null;
+    this.currentLiga.regionId = this.currentRegion.id || null;
+    this.currentLiga.ligaVerantwortlichId = this.currentUser.id || null;
     console.log('Saving Liga: ', this.currentLiga);
     // persist
     this.ligaDataProvider.create(this.currentLiga)
