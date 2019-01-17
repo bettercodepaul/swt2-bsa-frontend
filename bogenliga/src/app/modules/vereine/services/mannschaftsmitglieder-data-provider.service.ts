@@ -9,30 +9,28 @@ import {
 } from '../../shared/data-provider';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {VereineDO} from '../types/vereine-do.class';
-import {fromPayload, fromPayloadArray} from '../mapper/vereine-mapper';
+import {fromPayload, fromPayloadArray} from '../mapper/mannschaftmitglied-mapper';
+import {MannschaftsmitgliedDO} from '../types/mannschaftsmitglied-do.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MannschaftsmitgliederDataProviderService extends DataProviderService {
 
-  serviceSubUrl = 'v1/vereine';
-
+  serviceSubUrl = 'v1/mannschaftsmitglied';
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
     super();
   }
 
-  public findById(id: string | number): Promise<Response<MannschaftsMitgliedDO>> {
+  public findByMannschaftId(id: string | number): Promise<Response<MannschaftsmitgliedDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-        .then((data: VersionedDataTransferObject) => {
-
-          resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+        .then((data: VersionedDataTransferObject[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
 
         }, (error: HttpErrorResponse) => {
 

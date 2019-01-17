@@ -57,6 +57,15 @@
           "REGION_NAME": "Region Name"
         }
       }
+    },
+    "MANNSCHAFTSMITGLIEDER":{
+      "TABLE": {
+        "HEADERS": {
+          "VORNAME": "Vorname",
+          "NACHNAME": "Nachname",
+          "EINGESETZT": "Eingesetzt"
+        }
+      }
     }
   },
   "SPORTJAHRESPLAN": {

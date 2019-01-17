@@ -13,6 +13,9 @@ import {isUndefined} from 'util';
 import {VereinDO} from '../../../verwaltung/types/verein-do.class';
 import {VEREIN_MANNSCHAFTEN_CONFIG} from './vereine-mannschaften.config';
 import {DsbMannschaftDO} from '../../../verwaltung/types/dsb-mannschaft-do.class';
+import {MannschaftsmitgliederDataProviderService} from '../../services/mannschaftsmitglieder-data-provider.service';
+import {MannschaftsMitgliedDTO} from '../../types/datatransfer/mannschaftsmitglied-dto.class';
+import {MannschaftsmitgliedDO} from '../../types/mannschaftsmitglied-do.class';
 
 const ID_PATH_PARAM = 'id';
 const MANNSCHAFT_PATH_PARAM = 'mannschaft';
@@ -27,12 +30,14 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
   public config = VEREIN_MANNSCHAFTEN_CONFIG;
   public currentVerein: VereinDO = new VereinDO();
-  public rows: TableRow[];
+  public mannschaftsMitdliedRows: TableRow[];
   public mannschaften: DsbMannschaftDO[];
   public currentMannschaft: DsbMannschaftDO;
+  public mannschaftsMitglieder: MannschaftsmitgliedDO[];
 
   constructor(private DsbMannschaftDataProvider: DsbMannschaftDataProviderService,
-              private vereinProvider: VereineDataProviderService,
+              private MannschaftsmitgliederDataProvider: MannschaftsmitgliederDataProviderService,
+              private VereinProvider: VereineDataProviderService,
               private regionProvider: RegionDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
@@ -53,18 +58,18 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
   }
 
   private loadVereinById(id: number) {
-    this.vereinProvider.findById(id)
-      .then((response: Response<VereinDO>) => this.handleSuccess(response))
-      .catch((response: Response<VereinDO>) => this.handleFailure(response));
+    this.VereinProvider.findById(id)
+      .then((response: Response<VereinDO>) => this.handleVereinSuccess(response))
+      .catch((response: Response<VereinDO>) => this.handleVereinFailure(response));
   }
 
-  private handleSuccess(response: Response<VereinDO>) {
+  private handleVereinSuccess(response: Response<VereinDO>) {
     this.currentVerein = response.payload;
     this.loadMannschaften();
     this.loading = false;
   }
 
-  private handleFailure(response: Response<VereinDO>) {
+  private handleVereinFailure(response: Response<VereinDO>) {
     this.loading = false;
   }
 
@@ -72,27 +77,48 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
       this.loading = true;
 
     this.DsbMannschaftDataProvider.findAll()
-      .then((response: Response<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
-      .catch((response: Response<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
+      .then((response: Response<DsbMannschaftDTO[]>) => this.handleMannschaftenSuccess(response))
+      .catch((response: Response<DsbMannschaftDTO[]>) => this.handleMannschaftenFailure(response));
   }
 
-  private handleLoadMannschaftenSuccess(response: Response<DsbMannschaftDTO[]>): void {
+  private handleMannschaftenSuccess(response: Response<DsbMannschaftDTO[]>): void {
     this.mannschaften = []; // Reset Array
 
     this.mannschaften = response.payload;
 
     this.filterMannschaften();
-    this.setCurrentMansnchaft();
+    this.setCurrentMannschaft();
+    this.loadMannschaftsMitglieder();
     this.loading = false;
   }
 
-  private handleLoadMannschaftenFailure(response: Response<DsbMannschaftDTO[]>): void {
+  private handleMannschaftenFailure(response: Response<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
     console.log('Error, could not load Mannschaften: ' + response);
     this.loading = false;
   }
 
-  private setCurrentMansnchaft() {
+  private loadMannschaftsMitglieder() {
+    this.loading = true;
+
+    this.MannschaftsmitgliederDataProvider.findByMannschaftId(this.currentMannschaft.id)
+      .then((response: Response<MannschaftsMitgliedDTO[]>) => this.handleMannschftsmitgliedSuccess(response))
+      .catch((response: Response<MannschaftsMitgliedDTO[]>) => this.handleMannschaftsmitgliedFailure(response));
+  }
+
+  private handleMannschftsmitgliedSuccess(response: Response<MannschaftsMitgliedDTO[]>): void {
+    this.mannschaftsMitglieder = response.payload;
+    console.log('Loaded Mannschaften: ' + response);
+    this.loading = false;
+  }
+
+  private handleMannschaftsmitgliedFailure(response: Response<MannschaftsMitgliedDTO[]>): void {
+    this.mannschaftsMitglieder = [];
+    console.log('Error, could not load Mannschaftsmitglieder: ' + response);
+    this.loading = false;
+  }
+
+  private setCurrentMannschaft() {
 
     this.route.params.subscribe(params => {
       if (!isUndefined(params[MANNSCHAFT_PATH_PARAM])) {
@@ -100,8 +126,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
         console.log(this.mannschaften);
         for (let mannschaft of this.mannschaften) {
           if (mannschaft.id  === parseInt(params[MANNSCHAFT_PATH_PARAM], 10)) {
-            console.log('CurrentMannschaft');
-            console.log(this.currentMannschaft);
+            console.log('CurrentMannschaft: \n' + this.currentMannschaft);
             this.currentMannschaft = mannschaft;
           }
         }
