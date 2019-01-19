@@ -15,7 +15,7 @@
       <div class="col-sm-9">
         <input type="email"
                class="form-control"
-               disabled
+               disabled="entityExists()"
                id="benutzerEmail"
                name="benutzerEmail"
                #benutzerEmail="ngModel"
@@ -28,18 +28,65 @@
       </div>
     </div>
 
+    <!-- Passwort -->
     <div class="form-group row">
-      <label for="benutzerrolle"
+      <label for="benutzerPassword"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.ROLE.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="password"
+               class="form-control"
+               required
+               id="benutzerPassword"
+               name="benutzerPassword"
+               #benutzerPassword="ngModel"
+               minlength="8"
+               [(ngModel)]="currentCredentials.password"
+               [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+      </div>
+    </div>
+
+    <!-- Passwort -->
+    <div class="form-group row">
+      <label for="benutzerVerifyPassword"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.ROLE.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="password"
+               class="form-control"
+               required
+               id="benutzerVerifyPassword"
+               name="benutzerVerifyPassword"
+               #benutzerPassword="ngModel"
+               [(ngModel)]="verifyCredentials.password"
+               [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+      </div>
+    </div>
+
+    <!-- Rolle -->
+
+    <div class="form-group row">
+      <label *ngIf="entityExists()"
+             for="benutzerrolle"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <bla-selectionlist [items]="getVersionedDataObjects()"
+        <bla-selectionlist *ngIf="entityExists()"
+                           [items]="getVersionedDataObjects()"
                            [optionFieldSelector]="benutzer.roleName"
                            [selectedItem]="benutzer.roleName"
                            (onSelect)="onSelect($event)"
                            [multipleSelections]="multipleSelections"
+                           name=benutzerrolle"
+                           id="benutzerrolle"
                            style="width: 50%; height: 10em;">
         </bla-selectionlist>
       </div>
@@ -57,6 +104,13 @@
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
           {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'dsbMitgliedUpdateButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
       </div>
     </div>

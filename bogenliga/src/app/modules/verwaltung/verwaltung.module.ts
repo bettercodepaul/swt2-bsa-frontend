@@ -4,16 +4,17 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
-import {DsbMitgliedDetailGuard, DsbMitgliedOverviewGuard, BenutzerDetailGuard, BenutzerNeuGuard, BenutzerOverviewGuard, VerwaltungGuard} from './guards';
-import {DsbMitgliedDetailComponent, DsbMitgliedOverviewComponent, BenutzerDetailComponent, BenutzerNeuComponent, BenutzerOverviewComponent, VerwaltungComponent} from './components';
 import {
+  VerwaltungGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   DsbMannschaftDetailGuard,
   DsbMannschaftOverviewGuard,
-  VerwaltungGuard,
-  WettkampfklasseDetailGuard,
+  BenutzerDetailGuard,
+  BenutzerNeuGuard,
+  BenutzerOverviewGuard,
   WettkampfklasseOverviewGuard,
+  WettkampfklasseDetailGuard,
   VereinOverviewGuard,
   VereinDetailGuard
 } from './guards';
@@ -22,6 +23,9 @@ import {
   DsbMitgliedOverviewComponent,
   DsbMannschaftDetailComponent,
   DsbMannschaftOverviewComponent,
+  BenutzerDetailComponent,
+  BenutzerNeuComponent,
+  BenutzerOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent,
@@ -36,15 +40,15 @@ import {
     SharedModule,
     FormsModule
   ],
-  declarations: [VerwaltungComponent, DsbMitgliedOverviewComponent, DsbMitgliedDetailComponent, BenutzerOverviewComponent, BenutzerDetailComponent, BenutzerNeuComponent],
-  providers:    [VerwaltungGuard, DsbMitgliedOverviewGuard, DsbMitgliedDetailGuard, BenutzerOverviewGuard, BenutzerDetailGuard, BenutzerNeuGuard]
   declarations: [
     VerwaltungComponent,
     DsbMitgliedOverviewComponent,
     DsbMitgliedDetailComponent,
     DsbMannschaftDetailComponent,
     DsbMannschaftOverviewComponent,
-    WettkampfklasseOverviewComponent,
+    BenutzerOverviewComponent,
+    BenutzerDetailComponent,
+    BenutzerNeuComponent,
     WettkampfklasseDetailComponent,
     VereinDetailComponent,
     VereinOverviewComponent
@@ -55,7 +59,9 @@ import {
     DsbMitgliedDetailGuard,
     DsbMannschaftOverviewGuard,
     DsbMannschaftDetailGuard,
-    WettkampfklasseOverviewGuard,
+    BenutzerOverviewGuard,
+    BenutzerDetailGuard,
+    BenutzerNeuGuard,
     WettkampfklasseDetailGuard,
     VereinOverviewGuard,
     VereinDetailGuard
