@@ -1,26 +1,13 @@
 import {Routes} from '@angular/router';
 
 import {
+  DsbMannschaftDetailGuard,
+  DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   BenutzerDetailGuard,
   BenutzerNeuGuard,
   BenutzerOverviewGuard,
-  VerwaltungGuard
-} from './guards';
-import {
-  DsbMitgliedDetailComponent,
-  DsbMitgliedOverviewComponent,
-  BenutzerDetailComponent,
-  BenutzerNeuComponent,
-  BenutzerOverviewComponent,
-  VerwaltungComponent
-} from './components';
-import {
-  DsbMannschaftDetailGuard,
-  DsbMannschaftOverviewGuard,
-  DsbMitgliedDetailGuard,
-  DsbMitgliedOverviewGuard,
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard,
@@ -32,6 +19,9 @@ import {
   DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
+  BenutzerDetailComponent,
+  BenutzerNeuComponent,
+  BenutzerOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent,
@@ -70,7 +60,7 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch:   'full',
     canActivate: [VereinOverviewGuard]
   },
-  {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]}
+  {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
   {
     path:        'benutzer',
     component:   BenutzerOverviewComponent,
@@ -79,6 +69,6 @@ export const VERWALTUNG_ROUTES: Routes = [
   },
   {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
   {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
-  {path: 'benutzer/neu', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]},
+  {path: 'benutzer/add', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]},
 ];
 
