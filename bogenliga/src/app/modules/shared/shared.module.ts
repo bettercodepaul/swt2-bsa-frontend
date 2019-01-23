@@ -17,6 +17,7 @@ import {
   CommonDialogComponent,
   DataTableComponent,
   DetailDialogComponent,
+  DownloadButtonComponent,
   DropdownMenuComponent,
   GridLayoutComponent,
   HorizontalFormComponent,
@@ -86,7 +87,8 @@ library.add(fas, far, fab); // add all icon types
     TooltipComponent,
     DropdownMenuComponent,
     SelectionlistComponent,
-    QuicksearchListComponent
+    QuicksearchListComponent,
+    DownloadButtonComponent
   ],
   declarations: [
     ButtonComponent,
@@ -111,7 +113,8 @@ library.add(fas, far, fab); // add all icon types
     TooltipComponent,
     DropdownMenuComponent,
     SelectionlistComponent,
-    QuicksearchListComponent
+    QuicksearchListComponent,
+    DownloadButtonComponent
   ]
 })
 export class SharedModule {
