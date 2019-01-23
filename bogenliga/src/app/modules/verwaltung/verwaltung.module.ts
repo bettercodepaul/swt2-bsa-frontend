@@ -16,7 +16,9 @@ import {
   WettkampfklasseOverviewGuard,
   WettkampfklasseDetailGuard,
   VereinOverviewGuard,
-  VereinDetailGuard
+  VereinDetailGuard,
+  LigaOverviewGuard,
+  LigaDetailGuard
 } from './guards';
 import {
   DsbMitgliedDetailComponent,
@@ -30,7 +32,9 @@ import {
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent,
   VereinOverviewComponent,
-  VereinDetailComponent
+  VereinDetailComponent,
+  LigaOverviewComponent,
+  LigaDetailComponent
 } from './components';
 
 @NgModule({
@@ -51,7 +55,9 @@ import {
     BenutzerNeuComponent,
     WettkampfklasseDetailComponent,
     VereinDetailComponent,
-    VereinOverviewComponent
+    VereinOverviewComponent,
+    LigaDetailComponent,
+    LigaOverviewComponent
   ],
   providers:    [
     VerwaltungGuard,
@@ -64,7 +70,9 @@ import {
     BenutzerNeuGuard,
     WettkampfklasseDetailGuard,
     VereinOverviewGuard,
-    VereinDetailGuard
+    VereinDetailGuard,
+    LigaOverviewGuard,
+    LigaDetailGuard
   ]
 })
 export class VerwaltungModule {

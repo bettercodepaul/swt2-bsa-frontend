@@ -32,6 +32,11 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
         route:      '/verwaltung/vereine',
         permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
+      {
+        label:      'Ligen',
+        route:      '/verwaltung/liga',
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+      }
     ]
   },
   {

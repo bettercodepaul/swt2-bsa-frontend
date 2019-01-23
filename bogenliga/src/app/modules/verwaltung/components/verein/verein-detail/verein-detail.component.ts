@@ -208,7 +208,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.currentVerein = response.payload;
     this.loading = false;
 
-    this.currentRegion = this.regionen.filter(region=> region.id === this.currentVerein.regionId)[0];
+    this.currentRegion = this.regionen.filter(region => region.id === this.currentVerein.regionId)[0];
   }
 
   private handleFailure(response: Response<VereinDO>) {
