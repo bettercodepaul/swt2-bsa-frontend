@@ -7,7 +7,6 @@
       "LOGOUT": "Logout"
     }
   },
-
   "SIDEBAR": {
     "TITLE": "Bogenliga",
     "TITLESHORT": "BL",
@@ -16,9 +15,9 @@
     "WETTKAMPF": "WETTKAEMPFE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
     "SETTINGS": "EINSTELLUNGEN",
+    "PLAYGROUND": "PLAYGROUND",
     "COLLAPSE": "Einklappen"
   },
-
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
     "TITLE": "Bogenliga",
@@ -27,7 +26,6 @@
     "IMPRESSUM": "Impressum und Datenschutz",
     "COPYRIGHT": "Copyright: 2018"
   },
-
   "HOME": {
     "HOME": {
       "TITLE": "Home",
@@ -55,6 +53,46 @@
   "USER": {
     "USER": {
       "TITLE": "Benutzer"
+    },
+    "PROFILE": {
+      "TITLE": "Benutzerprofil",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "Vorname",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "NACHNAME": {
+          "LABEL": "Nachname",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "EMAIL": {
+          "LABEL": "Email",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "GEBURTSDATUM": {
+          "LABEL": "Geburtsdatum",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Mitgliedsnummer",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "NATIONALITAET": {
+          "LABEL": "Nationalität",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "VEREIN": {
+          "LABEL": "Verein",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        }
+      }
     },
     "LOGIN": {
       "TITLE": "Login",
@@ -91,7 +129,6 @@
       }
     }
   },
-
   "MANAGEMENT": {
     "VERWALTUNG": {
       "TITLE": "Verwaltung",
@@ -107,15 +144,10 @@
         "DSBMANNSCHAFTEN": {
           "LABEL": "Mannschaften",
           "DESCRIPTION": "Verwaltung der Mannschaften"
-        }
-      }
-    },
-    "DSBMANNSCHAFT": {
-      "TITLE": "DSB Mannschaften - Übersicht",
-      "TABLE": {
-        "HEADERS": {
-          "ID": "ID",
-          "VEREIN": "Verein"
+        },
+        "VEREINE": {
+          "LABEL": "Vereine",
+          "DESCRIPTION": "Verwaltung der Vereine"
         }
       }
     },
@@ -144,15 +176,32 @@
           "ID": "ID",
           "KLASSENR": "KlassenNR",
           "KLASSENAME": "Klassen Name",
-          "KLASSEALTERMIN": "Alter Min",
-          "KLASSEALTERMAX": "Alter Max"
-
+          "KLASSEALTERMIN": "Jahrgang Min",
+          "KLASSEALTERMAX": "Jahrgang Max"
         }
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mitglied löschen",
-          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Klasse löschen",
+          "DESCRIPTION": "Wollen Sie die Klasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "VEREINE": {
+      "TITLE": "Vereine - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Verein Name",
+          "IDENTIFIER": "Identifier",
+          "REGION_ID": "Region ID",
+          "REGION_NAME": "Region Name"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Verein löschen",
+          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
@@ -189,9 +238,6 @@
           "PLACEHOLDER": "Bitte eine Vereinsid eingeben",
           "ERROR": "Bitte eine gültige Vereinsid eingeben."
         },
-        "KAMPFRICHTER": {
-          "LABEL": "Kampfrichter - Lizenz"
-        },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
@@ -214,7 +260,8 @@
           "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
         }
       }
-    },"WETTKAMPFKLASSE_DETAIL": {
+    },
+    "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
         "WETTKAMPF_ID": {
@@ -227,15 +274,15 @@
           "PLACEHOLDER": "Bitte einen Wettkampfnamen eingeben",
           "ERROR": "Bitte einen gültigen Wettkampfnamen eingeben."
         },
-        "WETTKAMPF_ALTER_MIN": {
-          "LABEL": "Wettkampf Alter min.",
-          "PLACEHOLDER": "Bitte ein Alter eingeben",
-          "ERROR": "Bitte ein gültiges Alter eingeben."
+        "WETTKAMPF_JAHRGANG_MIN": {
+          "LABEL": "Wettkampf Jahrgang min.",
+          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
         },
-        "WETTKAMPF_ALTER_MAX": {
-          "LABEL": "Wettkampf Alter max.",
-          "PLACEHOLDER": "Bitte ein Alter eingeben",
-          "ERROR": "Bitte ein gültiges Alter eingeben."
+        "WETTKAMPF_JAHRGANG_MAX": {
+          "LABEL": "Wettkampf Jahrgang max.",
+          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
         },
         "WETTKAMPF_NR": {
           "LABEL": "Wettkampfnummer",
@@ -264,11 +311,49 @@
           "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
         }
       }
+    },
+    "VEREIN_DETAIL": {
+      "TITLE": "Verein - Details",
+      "FORM": {
+        "VEREIN_NAME": {
+          "LABEL": "Verein-Name",
+          "PLACEHOLDER": "Bitte einen Namen eingeben",
+          "ERROR": "Bitte einen gültigen Namen eingeben."
+        },
+        "VEREIN_IDENTIFIER": {
+          "LABEL": "Verein-Identifier",
+          "PLACEHOLDER": "Bitte einen Identifier eingeben",
+          "ERROR": "Bitte einen gültigen Identifier eingeben."
+        },
+        "VEREIN_REGION": {
+          "LABEL": "Region",
+          "PLACEHOLDER": "Bitte eine Region auswählen",
+          "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Wettkampfklasse löschen",
+          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+        }
+      }
     }
   },
-
-
-
   "NOTIFICATION": {
     "BUTTON": {
       "OK": "OK",
@@ -321,7 +406,6 @@
   "BREADCRUMB": {
     "NEW_ENTITY": "Neu"
   },
-
   "TABLE": {
     "HEADERS": {
       "ACTION": "Aktion"
@@ -333,7 +417,6 @@
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
-
     "TITLE": "Tabelle",
     "KEY": "Schlüssel",
     "VALUE": "Wert",
@@ -349,6 +432,16 @@
   "DIALOG": {
     "LOADING": "Einträge werden geladen"
   },
+  "DROPDOWN": {
+    "PLEASE_SELECT_ITEM": "Bitte einen Eintrag auswählen...",
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen..."
+  },
+  "SELECTIONLIST": {
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen...",
+    "SEARCH_PLACEHOLDER": "Suchbegriff eingeben"
+  },
   "DETAILS": {
     "TITLE": "Entität-Details",
     "DELETE": "Löschen",
@@ -356,5 +449,16 @@
     "KEY": "Schlüssel",
     "VALUE": "Wert",
     "VERSION": "Version"
+  },
+  "PLAYGROUND": {
+    "PLAYGROUND": {
+      "TITLE": "Komponenten Spielplatz"
+    }
+  },
+  "FILE_DOWNLOAD": {
+    "NOTIFICATION": {
+      "SUCCESS": "Download erfolgreich gestartet für:",
+      "FAILURE": "Download fehlgeschlagen für:"
+    }
   }
 }
