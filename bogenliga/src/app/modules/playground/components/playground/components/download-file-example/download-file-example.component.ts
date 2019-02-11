@@ -1,25 +1,26 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {SetzlisteProviderService} from '../../services/setzliste-provider.service';
-import {Response, UriBuilder} from '../../../shared/data-provider';
+import {HelloResourceProviderService} from '../../../../services/hello-resource-provider.service';
+import {Response, UriBuilder} from '../../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
   NotificationSeverity,
   NotificationType,
   NotificationUserAction
-} from '../../../shared/services/notification/types';
-import {NotificationService} from '../../../shared/services/notification';
-import {environment} from '../../../../../environments/environment';
+} from '../../../../../shared/services/notification/types';
+import {isNullOrUndefined, isUndefined} from 'util';
+import {NotificationService} from '../../../../../shared/services/notification';
+import {environment} from '../../../../../../../environments/environment';
 
 const NOTIFICATION_DOWNLOAD_SUCCESS = 'download_example_success';
 const NOTIFICATION_DOWNLOAD_FAILURE = 'download_example_failure';
 
 
 @Component({
-  selector: 'bla-setzliste-download',
-  templateUrl: './setzliste-download.component.html'
+  selector: 'bla-download-file-example',
+  templateUrl: './download-file-example.component.html'
 })
-export class SetzlisteDownloadComponent implements OnInit {
+export class DownloadFileExampleComponent implements OnInit {
 
   public downloadingFile = false;
 
@@ -27,7 +28,7 @@ export class SetzlisteDownloadComponent implements OnInit {
   private aElementRef: ElementRef;
 
 
-  constructor(private setzlisteService: SetzlisteProviderService,
+  constructor(private helloResourceService: HelloResourceProviderService,
     private notificationService: NotificationService) {
   }
 
@@ -37,7 +38,7 @@ export class SetzlisteDownloadComponent implements OnInit {
   public getDownloadUrl(path: string): string {
     return new UriBuilder()
       .fromPath(environment.backendBaseUrl)
-      .path('v1/download')
+      .path('v1/hello-world/download')
       .path(path)
       .build();
   }
@@ -50,7 +51,7 @@ export class SetzlisteDownloadComponent implements OnInit {
 
     console.log('Invoke ' + fileType + ' download');
 
-    this.setzlisteService.downloadExamplePdf(fileEnding, fileName, this.aElementRef)
+    this.helloResourceService.downloadExamplePdf(fileEnding, fileName, this.aElementRef)
         .then(response => this.handleSuccess(response, fileType))
         .catch(response => this.handleFailure(response, fileType));
 

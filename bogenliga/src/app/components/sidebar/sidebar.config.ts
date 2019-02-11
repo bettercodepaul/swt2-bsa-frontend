@@ -1,7 +1,7 @@
 import {SideBarNavigationItem} from './types/sidebar-navigation-item.interface';
 import {UserPermission} from '../../modules/shared/services/current-user';
 
-import {faArchive, faBullseye, faCalendarAlt, faCog, faHome} from '@fortawesome/free-solid-svg-icons';
+import {faArchive, faBullseye, faCalendarAlt, faCog, faFootballBall, faHome} from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   {
@@ -43,6 +43,13 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     icon:       faCog,
     route:      '/settings',
     permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+    subitems: []
+  },
+  {
+    label: 'SIDEBAR.PLAYGROUND',
+    icon: faFootballBall,
+    route: '/playground',
+    permissons: [],
     subitems: []
   }
 ];
