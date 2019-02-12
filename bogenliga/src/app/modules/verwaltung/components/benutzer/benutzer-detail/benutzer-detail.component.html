@@ -1,96 +1,134 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
+  <h5>bla-selectionlist</h5>
+  <a name="bla-selectionlist"></a>
+
   <form id="benutzerForm"
         class="horizontal-form half-page"
         #benutzerForm="ngForm">
 
-    <!-- VORNAME -->
-    <div class="form-group row">
-      <label for="benutzerEmail"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="email"
-               class="form-control"
-               disabled="entityExists()"
-               id="benutzerEmail"
-               name="benutzerEmail"
-               #benutzerEmail="ngModel"
-               [(ngModel)]="benutzer.email"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.ERROR' | translate }}
+    <div *ngIf="!entityExists(); else elseBlock">
+
+      <!-- username / email -->
+      <div class="form-group row">
+        <label for="benutzerUsername"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="email"
+                 class="form-control"
+                 id="benutzerUsername"
+                 name="benutzerUsername"
+                 #benutzerUsername="ngModel"
+                 [(ngModel)]="currentCredentials.username"
+                 [class.is-invalid]="benutzerUsername.invalid && !benutzerUsername.untouched"
+                 ng-pattern= "/^(([^<>()\[\]\.,;:\s@\”]+(\.[^<>()\[\]\.,;:\s@\”]+)*)|(\”.+\”))@(([^<>()[\]\.,;:\s@\”]+\.)+[^<>()[\]\.,;:\s@\”]{2,})$/i"
+                 placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Passwort -->
-    <div class="form-group row">
-      <label for="benutzerPassword"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.ROLE.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="password"
-               class="form-control"
-               required
-               id="benutzerPassword"
-               name="benutzerPassword"
-               #benutzerPassword="ngModel"
-               minlength="8"
-               [(ngModel)]="currentCredentials.password"
-               [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+      <!-- Passwort -->
+      <div class="form-group row">
+        <label for="benutzerPassword"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="password"
+                 class="form-control"
+                 required
+                 id="benutzerPassword"
+                 name="benutzerPassword"
+                 #benutzerPassword="ngModel"
+                 minlength="8"
+                 [(ngModel)]="currentCredentials.password"
+                 [class.is-invalid]="benutzerPassword.invalid && !benutzerPassword.untouched"
+                 placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+        </div>
       </div>
-    </div>
 
-    <!-- Passwort -->
-    <div class="form-group row">
-      <label for="benutzerVerifyPassword"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.ROLE.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="password"
-               class="form-control"
-               required
-               id="benutzerVerifyPassword"
-               name="benutzerVerifyPassword"
-               #benutzerPassword="ngModel"
-               [(ngModel)]="verifyCredentials.password"
-               [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+      <!-- Passwort -->
+      <div class="form-group row">
+        <label for="benutzerVerifyPassword"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="password"
+                 class="form-control"
+                 required
+                 id="benutzerVerifyPassword"
+                 name="benutzerVerifyPassword"
+                 #benutzerPassword="ngModel"
+                 [(ngModel)]="verifyCredentials.password"
+                 [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
+                 placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+        </div>
       </div>
+
     </div>
 
-    <!-- Rolle -->
+    <ng-template #elseBlock>
 
-    <div class="form-group row">
-      <label *ngIf="entityExists()"
-             for="benutzerrolle"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <bla-selectionlist *ngIf="entityExists()"
-                           [items]="getVersionedDataObjects()"
-                           [optionFieldSelector]="benutzer.roleName"
-                           [selectedItem]="benutzer.roleName"
-                           (onSelect)="onSelect($event)"
-                           [multipleSelections]="multipleSelections"
-                           name=benutzerrolle"
-                           id="benutzerrolle"
-                           style="width: 50%; height: 10em;">
-        </bla-selectionlist>
+      <!-- VORNAME -->
+      <div class="form-group row">
+        <label for="benutzerEmail"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="email"
+                 class="form-control"
+                 disbale=true
+                 id="benutzerEmail"
+                 name="benutzerEmail"
+                 #benutzerEmail="ngModel"
+                 [(ngModel)]="currentCredentials.username"
+                 placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.ERROR' | translate }}
+          </div>
+        </div>
       </div>
-    </div>
+      Content to render when condition is false.
+      <!-- Rolle -->
+
+      <div class="form-group row">
+        <label for="benutzerrolle"
+               id="benutzerrolle"
+               name="benutzerrolle"
+               *ngIf="entityExists()"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <bla-selectionlist *ngIf="entityExists()"
+                             [id]="'quickSearch'"
+                             [items]="getVersionedDataObjects()"
+                             [optionFieldSelector]="currentBenutzerRolleDO.roleName"
+                             (onSelect)="onSelect($event)"
+                             [multipleSelections]="!multipleSelections"
+                             style="width: 50%; height: 10em;">
+
+          </bla-selectionlist>
+        </div>
+      </div>
+
+
+    </ng-template>
+
 
 
     <div class="form-group row">
@@ -106,8 +144,8 @@
           {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
-                    [id]="'dsbMitgliedUpdateButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
+                    [id]="'benutzerUpdateButton'"
+                    [disabled]="!benutzerForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
           {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}

@@ -6,7 +6,6 @@ import {
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   BenutzerDetailGuard,
-  BenutzerNeuGuard,
   BenutzerOverviewGuard,
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
@@ -22,7 +21,6 @@ import {
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   BenutzerDetailComponent,
-  BenutzerNeuComponent,
   BenutzerOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
@@ -50,21 +48,24 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [DsbMannschaftOverviewGuard]
   },
-  {path: 'dsbmannschaft/:id', component: DsbMannschaftDetailComponent, canActivate: [DsbMannschaftDetailGuard]},
+  {path: 'dsbmannschaft/:id', component: DsbMannschaftDetailComponent, canActivate: [DsbMannschaftDetailGuard]}
+  ,
   {
     path:        'klassen',
     component:   WettkampfklasseOverviewComponent,
     pathMatch:   'full',
     canActivate: [WettkampfklasseOverviewGuard]
   },
-  {path: 'klassen/:id', component: WettkampfklasseDetailComponent, canActivate: [WettkampfklasseDetailGuard]},
+  {path: 'klassen/:id', component: WettkampfklasseDetailComponent, canActivate: [WettkampfklasseDetailGuard]}
+  ,
   {
     path:        'vereine',
     component:   VereinOverviewComponent,
     pathMatch:   'full',
     canActivate: [VereinOverviewGuard]
   },
-  {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
+  {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]}
+  ,
   {
     path:        'liga',
     component:   LigaOverviewComponent,
@@ -72,15 +73,13 @@ export const VERWALTUNG_ROUTES: Routes = [
     canActivate: [LigaOverviewGuard]
   },
   {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]}
-  {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
-  {
+  ,
+   {
     path:        'benutzer',
     component:   BenutzerOverviewComponent,
     pathMatch:   'full',
     canActivate: [BenutzerOverviewGuard]
   },
-  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
-  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
-  {path: 'benutzer/add', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]},
+  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]}
 ];
 

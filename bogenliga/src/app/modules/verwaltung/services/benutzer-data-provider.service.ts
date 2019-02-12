@@ -12,8 +12,10 @@ import {CurrentUserService} from '../../shared/services/current-user';
 import {HttpErrorResponse} from '@angular/common/http';
 import {BenutzerDO} from '../types/benutzer-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/benutzer-mapper';
+import {fromPayloadBenutzerRolle, fromPayloadArrayBenutzerRolle} from '../mapper/benutzer-rolle-mapper';
 import {CredentialsDTO} from "../../user/types/model/credentials-dto.class";
-import {RoleDO} from "../types/role-do.class";
+import {BenutzerRolleDO} from "../types/benutzer-rolle-do.class";
+import {BenutzerRolleDTO} from "../types/datatransfer/benutzer-rolle-dto.class";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,26 @@ export class BenutzerDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+        .then((data: VersionedDataTransferObject) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
+  public update(payload: BenutzerRolleDTO): Promise<Response<BenutzerDO>> {//TODO anderes Objekt UserRoleDTO...
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path("uptRole").build(), payload)
         .then((data: VersionedDataTransferObject) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
@@ -67,7 +89,7 @@ export class BenutzerDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<Response<BenutzerDO[]>> {
+  public findAll(): Promise<Response<BenutzerRolleDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -75,7 +97,7 @@ export class BenutzerDataProviderService extends DataProviderService {
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
           .then((data: VersionedDataTransferObject[]) => {
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayBenutzerRolle(data)});
 
           }, (error: HttpErrorResponse) => {
 
@@ -85,6 +107,28 @@ export class BenutzerDataProviderService extends DataProviderService {
               reject({result: RequestResult.FAILURE});
             }
           });
+    });
+  }
+
+
+  public findUserRoleById(id: string | number): Promise<Response<BenutzerRolleDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path("userrole").path(id).build())
+        .then((data: VersionedDataTransferObject) => {
+
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadBenutzerRolle(data)});
+
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     });
   }
 

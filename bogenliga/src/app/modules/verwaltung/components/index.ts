@@ -3,7 +3,6 @@ export * from './dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.compon
 export * from './dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component';
 export * from './benutzer/benutzer-overview/benutzer-overview.component';
 export * from './benutzer/benutzer-detail/benutzer-detail.component';
-export * from './benutzer/benutzer-neu/benutzer-neu.component';
 export * from './wettkampfklasse/wettkampfklasse-overview/wettkampfklasse-overview.component';
 export * from './wettkampfklasse/wettkampfklasse-detail/wettkampfklasse-detail.component';
 export * from './dsb-mannschaft/dsb-mannschaft-overview/dsb-mannschaft-overview.component';
