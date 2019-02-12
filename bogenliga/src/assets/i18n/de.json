@@ -93,50 +93,51 @@
           "PLACEHOLDER": "Keine Daten verfügbar.",
           "ERROR": "Keine Daten verfügbar."
         }
+      }
+    },
+    "PWD": {
+      "TITLE": "Passwort ändern",
+      "BUTTON": {
+        "SAVE": "Speichern"
       },
-      "PWD": {
-        "TITLE": "Passwort ändern",
-        "BUTTON": {
-          "SAVE": "Speichern"
+      "FORM": {
+        "UPDATE": "Aktualisieren",
+        "EMAIL": {
+          "LABEL": "E-Mail-Adresse",
+          "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
+          "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
         },
-        "FORM": {
-          "UPDATE": "Aktualisieren",
-          "EMAIL": {
-            "LABEL": "E-Mail-Adresse",
-            "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
-            "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
-          },
-          "PASSWORD": {
-            "LABEL": "Aktuelles Passwort",
-            "PLACEHOLDER": "Bitte Passwort eingeben",
-            "ERROR": "Bitte ein gültiges Passwort eingeben."
-          },
-          "NEWPASSWORD": {
-            "LABEL": "Neues Passwort",
-            "PLACEHOLDER": "Bitte Passwort eingeben",
-            "ERROR": "Bitte ein gültiges Passwort mit mehr als 8 Zeichen eingeben."
-          },
-          "VERIFYPASSWORD": {
-            "LABEL": "Verifikation neues Passwort",
-            "PLACEHOLDER": "Bitte Passwort eingeben",
-            "ERROR": "Passwort nicht identisch zum neuen Password"
-          }
+        "PASSWORD": {
+          "LABEL": "Aktuelles Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Bitte ein gültiges Passwort eingeben."
         },
-        "NOTIFICATION": {
-          "PWD_SUCCESSFUL": {
-            "HEADER": "Passwortänderung erfolgreich",
-            "TEXT": "Sie haben das Passwort erfolgreich geändert."
-          },
-          "PWD_FAILURE": {
-            "HEADER": "Passwortänderung fehlgeschlagen",
-            "TEXT": "Die Anmeldedaten sind unverändert."
-          },
-          "PWD_CONNECTION_PROBLEM": {
-            "HEADER": "Passwortänderung nicht möglich",
-            "TEXT": "Es konnte keine Verbindung zum Server aufgebaut werden."
-          }
+        "NEWPASSWORD": {
+          "LABEL": "Neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Bitte ein gültiges Passwort mit mehr als 8 Zeichen eingeben."
+        },
+        "VERIFYPASSWORD": {
+          "LABEL": "Verifikation neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Passwort nicht identisch zum neuen Password"
         }
       },
+      "NOTIFICATION": {
+        "PWD_SUCCESSFUL": {
+          "HEADER": "Passwortänderung erfolgreich",
+          "TEXT": "Sie haben das Passwort erfolgreich geändert."
+        },
+        "PWD_FAILURE": {
+          "HEADER": "Passwortänderung fehlgeschlagen",
+          "TEXT": "Die Anmeldedaten sind unverändert."
+        },
+        "PWD_CONNECTION_PROBLEM": {
+          "HEADER": "Passwortänderung nicht möglich",
+          "TEXT": "Es konnte keine Verbindung zum Server aufgebaut werden."
+        }
+      }
+    },
     "LOGIN": {
       "TITLE": "Login",
       "HEADER": "Bitte einloggen:",
@@ -441,37 +442,18 @@
           "LABEL": "Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen"
         },
-        "UPDATE": "Aktualisieren"
-       },
-      "NOTIFICATION": {
-        "SAVE": {
-          "TITLE": "Erfolg",
-          "DESCRIPTION": "Das Benutzer wurde erfolgreich gespeichert."
-        }
-      }
-    },
-    "BENUTZER_NEU": {
-      "TITLE": "BENUTZER - Anlegen",
-      "FORM": {
-        "EMAIL": {
-          "LABEL": "E-Mail",
-          "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
-          "ERROR": "Bitte eine gültige Email eingeben."
-        },
         "PASSWORD": {
-          "LABEL": "Passwort",
-          "PLACEHOLDER": "Bitte ein Passwort eingeben",
-          "ERROR": "Bitte einen gültiges Passwort mit mehr als 8 Zeichen Länge eingeben."
+          "LABEL": "Aktuelles Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Bitte ein gültiges Passwort eingeben."
         },
         "VERIFYPASSWORD": {
-          "LABEL": "Passwort Verifikation",
-          "PLACEHOLDER": "Bitte das Passwort wiederholen",
-          "ERROR": "Passworte sind nicht identisch."
+          "LABEL": "Verifikation neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Passwort nicht identisch zum neuen Password"
         },
-        "SAVE": "Speichern",
-        "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
-      },
+        "UPDATE": "Aktualisieren"
+       },
       "NOTIFICATION": {
         "SAVE": {
           "TITLE": "Erfolg",
@@ -483,8 +465,8 @@
       "TITLE": "Benutzer - Übersicht",
       "TABLE": {
         "HEADERS": {
-          "ID": "ID",
-          "EMAIL": "E-Mail"
+          "EMAIL": "E-Mail",
+          "ROLE": "Rolle"
         }
       },
       "NOTIFICATION": {

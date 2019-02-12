@@ -8,8 +8,10 @@ import {isNullOrUndefined, isUndefined} from 'util';
 import {BenutzerDO} from "../../../types/benutzer-do.class";
 import {CredentialsDO} from "../../../../user/types/credentials-do.class";
 import {CredentialsDTO} from "../../../../user/types/model/credentials-dto.class";
-import {RoleDO} from "../../../types/role-do.class";
 import {RoleDTO} from "../../../types/datatransfer/role-dto.class";
+import {RoleDO} from "../../../types/role-do.class";
+import {BenutzerRolleDTO} from "../../../types/datatransfer/benutzer-rolle-dto.class";
+import {BenutzerRolleDO} from "../../../types/benutzer-rolle-do.class";
 
 import {
   Notification,
@@ -20,12 +22,10 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 import {RoleVersionedDataObject} from "../../../services/models/roles-versioned-data-object.class";
-import {BenutzerDTO} from "../../../types/datatransfer/benutzer-dto.class";
-import {TableRow} from "../../../../shared/components/tables/types/table-row.class";
 import {RoleDataProviderService} from "../../../services/role-data-provider.service";
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_SAVE_BENUTZER = 'bentuzer_detail_save';
+const NOTIFICATION_SAVE_BENUTZER = 'benutzer_detail_save';
 
 
 @Component({
@@ -37,13 +37,15 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   public config = BENUTZER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentBenutzer: BenutzerDO = new BenutzerDO();
   public currentCredentials: CredentialsDO = new CredentialsDO();
   public  verifyCredentials: CredentialsDO = new CredentialsDO();
   public currentCredentialsDTO: CredentialsDTO;
+  public currentBenutzerRolleDTO: BenutzerRolleDTO;
+  public currentBenutzerRolleDO: BenutzerRolleDO;
   public roles: RoleDTO[] = [];
 
   public saveLoading = false;
+  public selectedDTOs: RoleVersionedDataObject[];
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
               private roleDataProvider: RoleDataProviderService,
@@ -61,18 +63,27 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
+        this.currentCredentials = new CredentialsDO();
+        this.verifyCredentials = new CredentialsDO();
+        this.currentBenutzerRolleDO = new BenutzerRolleDO();
+
         if (id === 'add') {
-          this.currentCredentials = new CredentialsDO();
-          this.verifyCredentials = new CredentialsDO();
-          this.currentBenutzer = new BenutzerDO();
           this.loading = false;
           this.saveLoading = false;
+          this.currentBenutzerRolleDO.id = null;
+          this.currentCredentials.username = null;
         } else {
-          this.loadById(params[ID_PATH_PARAM]);
+
+          this.benutzerDataProvider.findUserRoleById(params[ID_PATH_PARAM])
+            .then((response: Response<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO= response.payload)
+            .catch((response: Response<BenutzerRolleDO>) => this.currentBenutzerRolleDO= null);
+
+          this.currentCredentials.username = this.currentBenutzerRolleDO.email;
+
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
           this.roleDataProvider.findAll()
-            .then((response: Response<RoleDTO[]>) => this.getVersionedDataObjects(response))
-            .catch((response: Response<RoleDTO[]>) => this.getEmptyList());
+            .then((response: Response<RoleDO[]>) => this.setVersionedDataObjects(response))
+            .catch((response: Response<RoleDO[]>) => this.getEmptyList());
         }
       }
     });
@@ -120,22 +131,69 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     // show response message
   }
 
+  public onUpdate(ignore: any): void {
+    this.saveLoading = true;
+
+    // persist
+
+    this.currentBenutzerRolleDTO = new BenutzerRolleDTO();
+    this.currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
+    this.currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
+    this.currentBenutzerRolleDTO.roleId = this.currentBenutzerRolleDO.roleId;
+    this.currentBenutzerRolleDTO.roleName = this.currentBenutzerRolleDO.roleName;
+    this.benutzerDataProvider.update(this.currentBenutzerRolleDTO)
+      .then((response: Response<BenutzerDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)
+          && !isNullOrUndefined(response.payload.id)) {
+          console.log('Update with id: ' + response.payload.id);
+
+          const notification: Notification = {
+            id:          NOTIFICATION_SAVE_BENUTZER,
+            title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
+            description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
+            severity:    NotificationSeverity.INFO,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
+
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
+            .subscribe(myNotification => {
+              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                this.saveLoading = false;
+                this.router.navigateByUrl('/verwaltung/benutzer');
+              }
+            });
+
+          this.notificationService.showNotification(notification);
+        }
+      }, (response: Response<BenutzerDO>) => {
+        console.log('Failed');
+        this.saveLoading = false;
+
+
+      });
+    // show response message
+  }
+
+
   public entityExists(): boolean {
-    return this.currentBenutzer.id > 0;
+    return this.currentBenutzerRolleDTO.id > 0;
   }
 
   private loadById(id: number) {
-    this.benutzerDataProvider.findById(id)
-        .then((response: Response<BenutzerDO>) => this.handleSuccess(response))
-        .catch((response: Response<BenutzerDO>) => this.handleFailure(response));
+    this.benutzerDataProvider.findUserRoleById(id)
+        .then((response: Response<BenutzerRolleDO>) => this.handleSuccess(response))
+        .catch((response: Response<BenutzerRolleDO>) => this.handleFailure(response));
   }
 
-  private handleSuccess(response: Response<BenutzerDO>) {
-    this.currentBenutzer = response.payload;
+  private handleSuccess(response: Response<BenutzerRolleDO>) {
+    this.currentBenutzerRolleDO = response.payload;
     this.loading = false;
   }
 
-  private handleFailure(response: Response<BenutzerDO>) {
+  private handleFailure(response: Response<BenutzerRolleDO>) {
     this.loading = false;
 
   }
@@ -143,15 +201,40 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     return [];
   }
 
-  public getVersionedDataObjects(response: Response<RoleDTO[]>): void {
+  public setVersionedDataObjects(response: Response<RoleDTO[]>): void {
 
     this.roles = []; // reset array to ensure change detection
     this.loading = false;
 
-    response.payload.forEach((responseItem =>  this.roles.push(new RoleDTO(responseItem.id, responseItem.roleName)));
+    response.payload.forEach(responseItem =>  this.roles.push(new RoleVersionedDataObject(responseItem.id, responseItem.roleName)));
 
 
     return;
   }
+
+  public getVersionedDataObjects(response: Response<RoleDTO[]>) {
+
+
+    return this.roles;
+  }
+
+  public onSelect($event: RoleVersionedDataObject[]): void {
+    this.selectedDTOs = [];
+    this.selectedDTOs = $event;
+  }
+
+  public getSelectedDTO(): string {
+    if (isNullOrUndefined(this.selectedDTOs)) {
+      return '';
+    } else {
+      console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
+      const names: string[] = [];
+
+      this.selectedDTOs.forEach(item => {names.push(item.roleName);});
+
+      return names.join(', ');
+    }
+  }
+
 
 }

@@ -20,12 +20,5 @@ export class RoleDTO implements DataTransferObject {
     return copy;
   }
 
-  constructor(id: number, roleName: string) {
-    this.id = id;
-    this.roleName = roleName;
-    this.version = 0;
-  }
-
-
 
 }

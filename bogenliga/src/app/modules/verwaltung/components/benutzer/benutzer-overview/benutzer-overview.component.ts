@@ -4,7 +4,7 @@ import {BenutzerDataProviderService} from '../../../services/benutzer-data-provi
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {CommonComponent} from '../../../../shared/components/common';
 import {Response} from '../../../../shared/data-provider';
-import {BenutzerDTO} from '../../../types/datatransfer/benutzer-dto.class';
+import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {Router} from '@angular/router';
 import {
@@ -43,12 +43,11 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
   }
 
   public onEdit(versionedDataObject: VersionedDataObject): void {
+
     this.navigateToDetailDialog(versionedDataObject);
   }
 
 
-  // beim delete setzen wir das Recht des Users auf "NORIGHTS" und sperren den User so
-  // also eich ein Update auf die Rolle des Benutzers...
   public onDelete(versionedDataObject: VersionedDataObject): void {
     // show loading icon
     const id = versionedDataObject.id;
@@ -83,20 +82,20 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
     this.loading = true;
 
     this.benutzerDataProvider.findAll()
-        .then((response: Response<BenutzerDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<BenutzerDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: Response<BenutzerRolleDO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: Response<BenutzerRolleDO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/benutzer/' + versionedDataObject.id);
   }
 
-  private handleLoadTableRowsFailure(response: Response<BenutzerDTO[]>): void {
+  private handleLoadTableRowsFailure(response: Response<BenutzerRolleDO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: Response<BenutzerDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: Response<BenutzerRolleDO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;
