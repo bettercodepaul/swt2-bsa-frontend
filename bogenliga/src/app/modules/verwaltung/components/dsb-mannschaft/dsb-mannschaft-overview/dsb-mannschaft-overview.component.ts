@@ -15,6 +15,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
+
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 
 export const NOTIFICATION_DELETE_DSB_MANNSCHAFT = 'dsb_mannschaft_overview_delete';
@@ -38,7 +39,7 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
+    this.navigateToDetailDialog2(versionedDataObject);
 
   }
 
@@ -85,6 +86,10 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
+    this.router.navigateByUrl('/verwaltung/dsbmannschaft/' + versionedDataObject.id);
+  }
+
+  private navigateToDetailDialog2(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/dsbmannschaft/' + versionedDataObject.id);
   }
 

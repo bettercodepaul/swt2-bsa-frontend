@@ -1,8 +1,8 @@
 <bla-col-layout>
-  <div></div>
-  <div class="centered-content"
-       [ngStyle]="getMaxWidth()">
+  <div [ngStyle]="getWith()"></div>
+  <div [ngStyle]="getMaxWidth()"
+       class="centered-content">
     <ng-content></ng-content>
   </div>
-  <div></div>
+  <div [ngStyle]="getWith()"></div>
 </bla-col-layout>

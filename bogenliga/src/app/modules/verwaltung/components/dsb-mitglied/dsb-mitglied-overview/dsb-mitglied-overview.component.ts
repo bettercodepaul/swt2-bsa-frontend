@@ -84,7 +84,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
         .catch((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
+  private  navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + versionedDataObject.id);
   }
 

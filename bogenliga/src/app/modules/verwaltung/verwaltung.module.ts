@@ -16,15 +16,19 @@ import {
   WettkampfklasseOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
+  VereinOverviewGuard,
+  VereinDetailGuard
 } from './guards';
 import {
-  DsbMannschaftDetailComponent,
-  DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
+  DsbMannschaftDetailComponent,
+  DsbMannschaftOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent,
+  VereinOverviewComponent,
+  VereinDetailComponent,
   LigaOverviewComponent,
   LigaDetailComponent,
   SportjahrLigaAuswahlComponent,
@@ -46,8 +50,10 @@ import {
     DsbMannschaftOverviewComponent,
     WettkampfklasseOverviewComponent,
     WettkampfklasseDetailComponent,
-    LigaOverviewComponent,
+    VereinDetailComponent,
+    VereinOverviewComponent,
     LigaDetailComponent,
+    LigaOverviewComponent,
     SportjahrLigaAuswahlComponent,
     SportjahrOverviewComponent
   ],
@@ -59,8 +65,10 @@ import {
     DsbMannschaftDetailGuard,
     WettkampfklasseOverviewGuard,
     WettkampfklasseDetailGuard,
-    LigaDetailGuard,
+    VereinOverviewGuard,
+    VereinDetailGuard,
     LigaOverviewGuard,
+    LigaDetailGuard,
     SportjahrLigaAuswahlGuard,
     SportjahrOverviewGuard
   ]

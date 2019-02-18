@@ -1,0 +1,58 @@
+<!-- Example single danger button -->
+<div *ngIf="visible"
+     class="btn-group bla-dropdown-menu">
+  <button (click)="toggleMenu()"
+          [disabled]="isDisabled()"
+          [id]="id"
+          [name]="id"
+          class="btn btn-light dropdown-toggle bla-dropdown-menu"
+          type="button">
+    {{ getSelectedItemLabel() }}
+  </button>
+
+  <div *ngIf="isMenuVisible()"
+       class="dropdown-menu show dropdown-menu-left">
+    <span (click)="selectItem(item.id)"
+          *ngFor="let item of items"
+          class="dropdown-item">
+      {{item[optionFieldSelector]}}
+    </span>
+  </div>
+
+</div>
+
+
+<!--
+<div class="select-wrapper">
+  <select (change)="sendSelectedItem()"
+          [(ngModel)]="selectedItemId"
+
+          [disabled]="isDisabled()"
+          [id]="id"
+          [name]="id"
+          [ngStyle]="getCustomStyle()"
+          class="bla-dropdown-menu">
+
+    <option *ngIf="showItemListPlaceholder()"
+            disabled
+            hidden
+            selected
+            value="0">
+      {{ 'DROPDOWN.PLEASE_SELECT_ITEM' | translate }}
+    </option>
+    <option *ngIf="showEmptyItemListPlaceholder()"
+            disabled
+            hidden
+            selected
+            value="0">
+      {{ 'DROPDOWN.NO_ENTRIES_FOUND' | translate }}
+    </option>
+
+    <option *ngFor="let item of items"
+            [ngValue]="item.id">
+      {{item[optionFieldSelector]}}
+    </option>
+
+  </select>
+</div>
+-->
