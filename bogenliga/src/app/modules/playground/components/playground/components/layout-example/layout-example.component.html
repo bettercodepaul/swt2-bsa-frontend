@@ -1,0 +1,146 @@
+<h4>Layouts</h4>
+
+<div class="layout-elements">
+  <p>Die farblichen Elemente haben eine ursprüngliche Größe von 100x100 Pixeln.</p>
+
+  <h5>bla-col-layout</h5>
+  <a name="bla-col-layout"></a>
+  <p>Das "Spalten"-Layout teilt den verfügbaren Platz einer Zeile in gleichgroße Spalten für die Elemente auf.</p>
+
+  <bla-col-layout>
+    <div class="layout-element-1">1</div>
+  </bla-col-layout>
+
+  <bla-col-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+  </bla-col-layout>
+
+  <bla-col-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+  </bla-col-layout>
+
+  <bla-col-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+    <div class="layout-element-4">4</div>
+  </bla-col-layout>
+
+  <h5>bla-grid-layout</h5>
+  <a name="bla-grid-layout"></a>
+  <p>Das Grid-Layout ist für ein responsives Verhalten nützlich. Falls kein Platz mehr in der Zeile ist, werden die
+     restlichen Elemente umgebrochen.</p>
+
+  <p>1 Element</p>
+  <bla-grid-layout>
+    <div class="layout-element-1">1</div>
+  </bla-grid-layout>
+
+  <p>3 Elemente</p>
+  <bla-grid-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+  </bla-grid-layout>
+
+  <p>5 Elemente</p>
+  <bla-grid-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+    <div class="layout-element-4">4</div>
+    <div class="layout-element-5">5</div>
+  </bla-grid-layout>
+
+  <p>7 Elemente</p>
+  <bla-grid-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+    <div class="layout-element-4">4</div>
+    <div class="layout-element-5">5</div>
+    <div class="layout-element-6">6</div>
+    <div class="layout-element-7">7</div>
+  </bla-grid-layout>
+
+
+  <h5>bla-row-layout</h5>
+  <a name="bla-row-layout"></a>
+  <p>Das "Zeilen"-Layout ordnet die Element zeilenweise untereinander an.</p>
+
+  <p>1 Element</p>
+  <bla-row-layout>
+    <div class="layout-element-1">1</div>
+  </bla-row-layout>
+
+  <p>2 Elemente</p>
+  <bla-row-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+  </bla-row-layout>
+
+  <p>3 Elemente</p>
+  <bla-row-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+  </bla-row-layout>
+</div>
+
+<h5>bla-centered-layout</h5>
+<a name="bla-centered-layout"></a>
+<p>Das "Zentrierte"-Layout ordnet die Elemente in einer "Spalte" in der Mitte der Zeile an. Standardmäßig beträgt die
+   Breite der "Spalte" 60%. Bei Webseiten <u>ohne</u> Side-Nav ist dieses Layout häufig vertreten.</p>
+
+<p>1 Element</p>
+<bla-centered-layout>
+  <div class="layout-element-1">1</div>
+</bla-centered-layout>
+
+<p>2 Elemente innerhalb eines "Spalten"-Layouts, damit die div-Tags nebeneinander stehen und der gesamte Platz
+   eingenommen wird. Standardmäßig beträgt die Breite 60%.</p>
+<bla-centered-layout>
+  <bla-col-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+  </bla-col-layout>
+</bla-centered-layout>
+
+<p>3 Elemente innerhalb eines "Spalten"-Layouts, damit die div-Tags nebeneinander stehen und der gesamte Platz
+   eingenommen wird. Standardmäßig beträgt die Breite 60%.</p>
+<bla-centered-layout>
+  <bla-col-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+  </bla-col-layout>
+</bla-centered-layout>
+
+<p>5 Elemente innerhalb eines "Spalten"-Layouts, damit die div-Tags nebeneinander stehen und der gesamte Platz
+   eingenommen wird. Die Breite des Layouts ist auf 75% erhöht worden.</p>
+<bla-centered-layout width="75">
+  <bla-col-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+    <div class="layout-element-4">4</div>
+    <div class="layout-element-5">5</div>
+  </bla-col-layout>
+</bla-centered-layout>
+
+<p>5 Elemente innerhalb eines "Spalten"-Layouts, damit die div-Tags nebeneinander stehen und der gesamte Platz
+   eingenommen wird. Die Breite des Layouts ist auf 100% erhöht worden.</p>
+<bla-centered-layout width="100">
+  <bla-col-layout>
+    <div class="layout-element-1">1</div>
+    <div class="layout-element-2">2</div>
+    <div class="layout-element-3">3</div>
+    <div class="layout-element-4">4</div>
+    <div class="layout-element-5">5</div>
+  </bla-col-layout>
+</bla-centered-layout>
+
+

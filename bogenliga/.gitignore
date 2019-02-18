@@ -1,10 +1,12 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+#log-files
+**/*.log
+
 # compiled output
 /dist
 /tmp
 /out-tsc
-
 # dependencies
 /node_modules
 

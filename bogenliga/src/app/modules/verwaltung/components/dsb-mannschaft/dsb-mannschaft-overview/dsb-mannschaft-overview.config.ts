@@ -10,22 +10,24 @@ export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {
   tableConfig: {
     columns: [
       {
-        translationKey:   'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.ID',
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.ID',
         propertyName:     'id',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey:   'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.MANNSCHAFTSNUMMER',
-        propertyName:     'mannschaftsnummer',
-        width:            20,
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBVEREINNUMMER',
+        propertyName:     'vereinId',
+        width:            7,
+        type:             TableColumnType.NUMBER,
+        currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey:   'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.VEREIN',
-        propertyName:     'vereinsnummer',
-        width:            20,
-      },
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBMANNSCHAFTNUMMER',
+        propertyName:   'nummer',
+        width:          20,
+      }
     ],
     actions: {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],

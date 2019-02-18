@@ -1,0 +1,36 @@
+<h4>Tooltips</h4>
+
+<h5>bla-tooltip</h5>
+
+
+<bla-col-layout>
+  <p class="playground-label">
+    Tooltip für Text:
+  </p>
+
+  <bla-tooltip value="'Tooltip Inhalt'">
+    Text
+  </bla-tooltip>
+
+</bla-col-layout>
+
+
+<bla-col-layout>
+  <p class="playground-label">
+    Tooltip für ein Icon:
+  </p>
+  <bla-tooltip [value]="infoTooltipText">
+    <fa-icon [icon]="infoIcon"
+             size="lg">
+    </fa-icon>
+  </bla-tooltip>
+</bla-col-layout>
+
+<bla-col-layout>
+  <p class="playground-label">
+    Tooltip für einen Button:
+  </p>
+  <bla-tooltip [value]="getTooltipText()">
+    <button class="btn btn-light">Button</button>
+  </bla-tooltip>
+</bla-col-layout>

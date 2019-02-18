@@ -17,15 +17,22 @@ import {
   CommonDialogComponent,
   DataTableComponent,
   DetailDialogComponent,
+  DownloadButtonComponent,
+  DropdownMenuComponent,
+  DropdownComponent,
+  VereineDropdownComponent,
   GridLayoutComponent,
   HorizontalFormComponent,
   ModalDialogComponent,
   NavigationDialogComponent,
   OverviewDialogComponent,
   PageHeadingComponent,
+  QuicksearchListComponent,
   RowLayoutComponent,
+  SelectionlistComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
+  TooltipComponent
 } from './components';
 import {RestClient} from './data-provider';
 import * as SharedService from './services';
@@ -78,10 +85,20 @@ library.add(fas, far, fab); // add all icon types
     GridLayoutComponent,
     RowLayoutComponent,
     NavigationCardsComponent,
-    NavigationDialogComponent
+    NavigationDialogComponent,
+    DropdownComponent,
+    VereineDropdownComponent,
+    NavigationDialogComponent,
+    TooltipComponent,
+    DropdownMenuComponent,
+    SelectionlistComponent,
+    QuicksearchListComponent,
+    DownloadButtonComponent
   ],
   declarations: [
     ButtonComponent,
+    DropdownComponent,
+    VereineDropdownComponent,
     AlertComponent,
     ModalDialogComponent,
     PageHeadingComponent,
@@ -100,6 +117,11 @@ library.add(fas, far, fab); // add all icon types
     RowLayoutComponent,
     NavigationCardsComponent,
     NavigationDialogComponent,
+    TooltipComponent,
+    DropdownMenuComponent,
+    SelectionlistComponent,
+    QuicksearchListComponent,
+    DownloadButtonComponent
   ]
 })
 export class SharedModule {
