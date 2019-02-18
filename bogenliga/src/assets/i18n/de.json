@@ -46,8 +46,8 @@
       "TITLE": "Wettkämpfe"
     }
   },
-  "VEREINE":{
-    "VEREINE":{
+  "VEREINE": {
+    "VEREINE": {
       "TITLE": "Vereine",
       "BACK": "Zurück",
       "TABLE": {
@@ -59,7 +59,7 @@
         }
       }
     },
-    "MANNSCHAFTSMITGLIEDER":{
+    "MANNSCHAFTSMITGLIEDER": {
       "TABLE": {
         "HEADERS": {
           "VORNAME": "Vorname",
@@ -465,49 +465,7 @@
         }
       }
     },
-    "VEREIN_DETAIL": {
-      "TITLE": "Verein - Details",
-      "FORM": {
-        "VEREIN_NAME": {
-          "LABEL": "Verein-Name",
-          "PLACEHOLDER": "Bitte einen Namen eingeben",
-          "ERROR": "Bitte einen gültigen Namen eingeben."
-        },
-        "VEREIN_IDENTIFIER": {
-          "LABEL": "Verein-Identifier",
-          "PLACEHOLDER": "Bitte einen Identifier eingeben",
-          "ERROR": "Bitte einen gültigen Identifier eingeben."
-        },
-        "VEREIN_REGION": {
-          "LABEL": "Region",
-          "PLACEHOLDER": "Bitte eine Region auswählen",
-          "ERROR": "Bitte eine gültige Region eingeben."
-        },
-        "SAVE": "Speichern",
-        "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
-      },
-      "NOTIFICATION": {
-        "DELETE": {
-          "TITLE": "Wettkampfklasse löschen",
-          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-        },
-        "DELETE_SUCCESS": {
-          "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Mannschaft wurde erfolgreich gelöscht."
-        },
-        "DELETE_FAILURE": {
-          "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Die Mannschaft konnte nicht gelöscht werden."
-        },
-        "SAVE": {
-          "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Mannschaft wurde erfolgreich gespeichert."
-        }
-      }
-    }
-  },
-  "DSBMANNSCHAFT_DETAIL": {
+    "DSBMANNSCHAFT_DETAIL": {
       "TITLE": "Mannschaft - Details",
       "FORM": {
         "DSBMANNSCHAFT_ID": {
@@ -642,7 +600,6 @@
     "LOADING": "Einträge werden geladen...",
     "SEARCH_PLACEHOLDER": "Suchbegriff eingeben"
   },
-
   "DETAILS": {
     "TITLE": "Entität-Details",
     "DELETE": "Löschen",
