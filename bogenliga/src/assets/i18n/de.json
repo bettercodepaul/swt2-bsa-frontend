@@ -46,33 +46,17 @@
       "TITLE": "Wettkämpfe"
     }
   },
-  "VEREINE": {
-    "VEREINE": {
-      "TITLE": "Vereine",
-      "BACK": "Zurück",
-      "TABLE": {
-        "HEADERS": {
-          "NAME": "Name des Vereins",
-          "IDENTIFIER": "Identifier",
-          "REGION_ID": "Region ID",
-          "REGION_NAME": "Region Name"
-        }
-      }
-    },
-    "MANNSCHAFTSMITGLIEDER": {
-      "TABLE": {
-        "HEADERS": {
-          "VORNAME": "Vorname",
-          "NACHNAME": "Nachname",
-          "EINGESETZT": "Eingesetzt"
-        }
+  "MANNSCHAFTSMITGLIEDER": {
+    "TABLE": {
+      "HEADERS": {
+        "VORNAME": "Vorname",
+        "NACHNAME": "Nachname",
+        "EINGESETZT": "Eingesetzt"
       }
     }
   },
   "SPORTJAHRESPLAN": {
-    "SPORTJAHRESPLAN": {
-      "TITLE": "Sportjahresplan"
-    }
+    "TITLE": "Sportjahresplan"
   },
   "USER": {
     "USER": {
@@ -194,6 +178,32 @@
           "DSBMANNSCHAFTNUMMER": "Mannschaftsnummer",
           "VEREIN": "Verein"
         }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "DSB Mannschaft löschen",
+          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "DSBMANNSCHAFT_DETAIL": {
+      "TITLE": "DSB Mannschaften - Details",
+      "FORM": {
+        "DSBVEREINNUMMER": {
+          "LABEL": "Vereinsnummer",
+          "PLACEHOLDER": "Vereinsnummer"
+        },
+        "BENUTZER_ID": {
+          "LABEL": "Benutzer-ID",
+          "PLACEHOLDER": "Benutzer-ID"
+        },
+        "DSBMANNSCHAFTNUMMER": {
+          "LABEL": "Mannschaftsnummer",
+          "PLACEHOLDER": "Mannschaftsnummer"
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Ändern",
+        "DELETE": "Löschen"
       },
       "NOTIFICATION": {
         "DELETE": {
@@ -579,8 +589,7 @@
         "DESCRIPTION": "Die Mannschaft wurde erfolgreich gespeichert."
       }
     }
-  }
-},
+  },
   "NOTIFICATION": {
     "BUTTON": {
       "OK": "OK",
