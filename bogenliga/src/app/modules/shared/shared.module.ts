@@ -18,9 +18,8 @@ import {
   DataTableComponent,
   DetailDialogComponent,
   DownloadButtonComponent,
-  DropdownMenuComponent,
   DropdownComponent,
-  VereineDropdownComponent,
+  DropdownMenuComponent,
   GridLayoutComponent,
   HorizontalFormComponent,
   ModalDialogComponent,
@@ -30,10 +29,11 @@ import {
   QuicksearchListComponent,
   RowLayoutComponent,
   SelectionlistComponent,
+  SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  TooltipComponent
-  SimpleOverviewDialogComponent
+  TooltipComponent,
+  VereineDropdownComponent
 } from './components';
 import {RestClient} from './data-provider';
 import * as SharedService from './services';
@@ -52,7 +52,7 @@ library.add(fas, far, fab); // add all icon types
 
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -62,7 +62,7 @@ library.add(fas, far, fab); // add all icon types
     FontAwesomeModule,
     StorageServiceModule
   ],
-  exports:      [
+  exports: [
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
@@ -119,7 +119,7 @@ library.add(fas, far, fab); // add all icon types
     RowLayoutComponent,
     NavigationCardsComponent,
     NavigationDialogComponent,
-    SimpleOverviewDialogComponent
+    SimpleOverviewDialogComponent,
     TooltipComponent,
     DropdownMenuComponent,
     SelectionlistComponent,
@@ -131,7 +131,7 @@ export class SharedModule {
 
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule:  SharedModule,
+      ngModule: SharedModule,
       providers: [
         SharedService.CurrentUserService,
         SharedService.ErrorHandlingService,
@@ -146,7 +146,7 @@ export class SharedModule {
 
   static forChild(): ModuleWithProviders {
     return {
-      ngModule:  SharedModule,
+      ngModule: SharedModule,
       providers: []
     };
   }
