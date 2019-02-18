@@ -77,6 +77,12 @@ export const VERWALTUNG_ROUTES: Routes = [
     canActivate: [SportjahrLigaAuswahlGuard]
   },
   {
+    path: 'sportjahr/liga',
+    pathMatch: 'full',
+    component: LigaOverviewComponent,
+    canActivate: [LigaOverviewGuard]
+  },
+  {
     path: 'sportjahr/liga/:id',
     pathMatch: 'full',
     component: SportjahrOverviewComponent,
