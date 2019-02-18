@@ -161,7 +161,7 @@
           "LABEL": "Ligen",
           "DESCRIPTION": "Verwaltung der Ligen"
         },
-        "SPORTJAHR":{
+        "SPORTJAHR": {
           "LABEL": "Sportjahre",
           "DESCRIPTION": "Verwaltung der Sportjahre"
         }
@@ -170,6 +170,41 @@
         "DELETE": {
           "TITLE": "DSB Mannschaft löschen",
           "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "SPORTJAHR": {
+      "TITLE": "Liga auswählen",
+      "TABLE": {
+        "HEADERS": {
+          "LIGANAME": "Liga Name",
+          "REGIONNAME": "Region Name",
+          "UEBERGEORDNETNAME": "Liga Uebergeornet Name",
+          "VERANTWORTLICHMAIL": "Liga Verantwortlich Mail"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Liga Mitglied löschen",
+          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "SPORTJAHR_OVERVIEW": {
+      "TITLE": "Veranstaltungen",
+      "TABLE": {
+        "HEADERS": {
+          "NAME": "Veranstaltung Name",
+          "SPORTJAHR": "Sportjahr",
+          "DEADLINE": "Meldedeadline",
+          "WETTKAMPFTYPNAME": "Wettkampftyp",
+          "LIGALEITEREMAIL": "Ligaleiter"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Veranstaltung löschen",
+          "DESCRIPTION": "Wollen Sie die Veranstaltung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
@@ -528,24 +563,24 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
-          "NOTIFICATION" : {
-            "DELETE" : {
-              "TITLE" : "Liga löschen",
-              "DESCRIPTION" : "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-            },
-            "DELETE_SUCCESS": {
-              "TITLE": "Erfolg",
-              "DESCRIPTION": "Die Liga wurde erfolgreich gelöscht."
-            },
-            "DELETE_FAILURE": {
-              "TITLE": "Fehler beim Löschen",
-              "DESCRIPTION": "Die Liga konnte nicht gelöscht werden."
-            },
-            "SAVE" : {
-              "TITLE" : "Erfolg",
-              "DESCRIPTION" : "Neue Liga erfoglreich gespeichert"
-            }
-          }
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Liga löschen",
+          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Liga wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Die Liga konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Neue Liga erfoglreich gespeichert"
+        }
+      }
     }
   },
   "DSBMANNSCHAFT_DETAIL": {
@@ -591,42 +626,6 @@
       "SAVE": {
         "TITLE": "Erfolg",
         "DESCRIPTION": "Die Mannschaft wurde erfolgreich gespeichert."
-      }
-    }
-  },
-  "SPORTJAHR": {
-    "TITLE": "Liga auswählen",
-    "TABLE": {
-      "HEADERS": {
-        "LIGANAME": "Liga Name",
-        "REGIONNAME": "Region Name",
-        "UEBERGEORDNETNAME": "Liga Uebergeornet Name",
-        "VERANTWORTLICHMAIL": "Liga Verantwortlich Mail"
-
-      }
-    },
-    "NOTIFICATION": {
-      "DELETE": {
-        "TITLE": "Liga Mitglied löschen",
-        "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-      }
-    }
-  },
-  "SPORTJAHR_OVERVIEW": {
-    "TITLE" : "Veranstaltungen",
-    "TABLE" : {
-      "HEADERS": {
-        "NAME": "Veranstaltung Name",
-        "SPORTJAHR": "Sportjahr",
-        "DEADLINE": "Meldedeadline",
-        "WETTKAMPFTYPNAME": "Wettkampftyp",
-        "LIGALEITEREMAIL" : "Ligaleiter"
-      }
-    },
-    "NOTIFICATION": {
-      "DELETE": {
-        "TITLE": "Veranstaltung löschen",
-        "DESCRIPTION": "Wollen Sie die Veranstaltung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
       }
     }
   },
