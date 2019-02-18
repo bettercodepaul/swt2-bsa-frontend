@@ -9,30 +9,34 @@ import {
   DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
-  SportjahrLigaAuswahlGuard,
-  SportjahrOverviewGuard,
-  VerwaltungGuard,
-  WettkampfklasseDetailGuard,
-  WettkampfklasseOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
+  SportjahrLigaAuswahlGuard,
+  SportjahrOverviewGuard,
+  VereinDetailGuard,
+  VereinOverviewGuard,
+  VerwaltungGuard,
+  WettkampfklasseDetailGuard,
+  WettkampfklasseOverviewGuard
 } from './guards';
 import {
   DsbMannschaftDetailComponent,
   DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
+  LigaDetailComponent,
+  LigaOverviewComponent,
+  SportjahrLigaAuswahlComponent,
+  SportjahrOverviewComponent,
+  VereinDetailComponent,
+  VereinOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
-  WettkampfklasseOverviewComponent,
-  LigaOverviewComponent,
-  LigaDetailComponent,
-  SportjahrLigaAuswahlComponent,
-  SportjahrOverviewComponent
+  WettkampfklasseOverviewComponent
 } from './components';
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
     SharedModule,
@@ -46,8 +50,10 @@ import {
     DsbMannschaftOverviewComponent,
     WettkampfklasseOverviewComponent,
     WettkampfklasseDetailComponent,
-    LigaOverviewComponent,
+    VereinDetailComponent,
+    VereinOverviewComponent,
     LigaDetailComponent,
+    LigaOverviewComponent,
     SportjahrLigaAuswahlComponent,
     SportjahrOverviewComponent
   ],
@@ -59,8 +65,10 @@ import {
     DsbMannschaftDetailGuard,
     WettkampfklasseOverviewGuard,
     WettkampfklasseDetailGuard,
-    LigaDetailGuard,
+    VereinOverviewGuard,
+    VereinDetailGuard,
     LigaOverviewGuard,
+    LigaDetailGuard,
     SportjahrLigaAuswahlGuard,
     SportjahrOverviewGuard
   ]

@@ -1,7 +1,180 @@
-<bla-common-dialog [config]="config">
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form #userProfileForm="ngForm"
+        class="horizontal-form half-page"
+        id="userProfileForm">
+
+    <!-- VORNAME -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"
+             for="userProfileVorname">
+        <span>{{ 'USER.PROFILE.FORM.VORNAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input #userProfileVorname="ngModel"
+               [(ngModel)]="currentUserProfile.vorname"
+               [class.is-invalid]="userProfileVorname.invalid && !userProfileVorname.untouched"
+               class="form-control-plaintext"
+               id="userProfileVorname"
+               name="userProfileVorname"
+               placeholder="{{ 'USER.PROFILE.FORM.VORNAME.PLACEHOLDER' | translate }}"
+               readonly
+               type="text">
+
+        <div class="invalid-feedback">
+          {{ 'USER.PROFILE.FORM.VORNAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- NACHNAME -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"
+             for="userProfileNachname">
+        <span>{{ 'USER.PROFILE.FORM.NACHNAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input #userProfileNachname="ngModel"
+               [(ngModel)]="currentUserProfile.nachname"
+               [class.is-invalid]="userProfileNachname.invalid && !userProfileNachname.untouched"
+               class="form-control-plaintext"
+               id="userProfileNachname"
+               name="userProfileNachname"
+               placeholder="{{ 'USER.PROFILE.FORM.NACHNAME.PLACEHOLDER' | translate }}"
+               readonly
+               type="text">
+
+        <div class="invalid-feedback">
+          {{ 'USER.PROFILE.FORM.NACHNAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"
+             for="userProfileEmail">
+        <span>{{ 'USER.PROFILE.FORM.EMAIL.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input #userProfileEmail="ngModel"
+               [(ngModel)]="currentUserProfile.email"
+               [class.is-invalid]="userProfileEmail.invalid && !userProfileEmail.untouched"
+               class="form-control-plaintext"
+               id="userProfileEmail"
+               name="userProfileEmail"
+               placeholder="{{ 'USER.PROFILE.FORM.EMAIL.PLACEHOLDER' | translate }}"
+               readonly
+               type="text">
+
+        <div class="invalid-feedback">
+          {{ 'USER.PROFILE.FORM.EMAIL.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- GEBURTSDATUM -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"
+             for="userProfileGeburtsdatum">
+        <span>{{ 'USER.PROFILE.FORM.GEBURTSDATUM.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input #userProfileGeburtsdatum="ngModel"
+               [(ngModel)]="currentUserProfile.geburtsdatum"
+               [class.is-invalid]="userProfileGeburtsdatum.invalid && !userProfileGeburtsdatum.untouched"
+               class="form-control-plaintext"
+               id="userProfileGeburtsdatum"
+               name="userProfileGeburtsdatum"
+               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+               placeholder="{{ 'USER.PROFILE.FORM.GEBURTSDATUM.PLACEHOLDER' | translate }}"
+               readonly
+               type="text">
+
+        <div class="invalid-feedback">
+          {{ 'USER.PROFILE.FORM.GEBURTSDATUM.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- MITGLIEDSNUMMER -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"
+             for="userProfileMitgliedsnummer">
+        <span>{{ 'USER.PROFILE.FORM.MITGLIEDSNUMMER.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input #userProfileMitgliedsnummer="ngModel"
+               [(ngModel)]="currentUserProfile.mitgliedsnummer"
+               [class.is-invalid]="userProfileMitgliedsnummer.invalid && !userProfileMitgliedsnummer.untouched"
+               class="form-control-plaintext"
+               id="userProfileMitgliedsnummer"
+               name="userProfileMitgliedsnummer"
+               placeholder="{{ 'USER.PROFILE.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}"
+               readonly
+               type="text">
+
+        <div class="invalid-feedback">
+          {{ 'USER.PROFILE.FORM.MITGLIEDSNUMMER.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- NATIONALITAET -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"
+             for="userProfileNationalitaet">
+        <span>{{ 'USER.PROFILE.FORM.NATIONALITAET.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input #userProfileNationalitaet="ngModel"
+               [(ngModel)]="currentUserProfile.nationalitaet"
+               [class.is-invalid]="userProfileNationalitaet.invalid && !userProfileNationalitaet.untouched"
+               class="form-control-plaintext"
+               id="userProfileNationalitaet"
+               name="userProfileNationalitaet"
+               pattern="[D|AT|CH|FR|IT|GB]"
+               placeholder="{{ 'USER.PROFILE.FORM.NATIONALITAET.PLACEHOLDER' | translate }}"
+               readonly
+               type="text">
+
+        <div class="invalid-feedback">
+          {{ 'USER.PROFILE.FORM.NATIONALITAET.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO: VEREIN ID, use dropdown list -->
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label"
+             for="userProfileVerein">
+        <span>{{ 'USER.PROFILE.FORM.VEREIN.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input #userProfileVerein="ngModel"
+               [(ngModel)]="currentUserProfile.vereinsId"
+               [class.is-invalid]="userProfileVerein.invalid && !userProfileVerein.untouched"
+               class="form-control-plaintext"
+               id="userProfileVerein"
+               name="userProfileVerein"
+               placeholder="{{ 'USER.PROFILE.FORM.VEREIN.PLACEHOLDER' | translate }}"
+               readonly
+               type="text">
+
+        <div class="invalid-feedback">
+          {{ 'USER.PROFILE.FORM.VEREIN.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+  </form>
 
 </bla-common-dialog>
-
-
-
-

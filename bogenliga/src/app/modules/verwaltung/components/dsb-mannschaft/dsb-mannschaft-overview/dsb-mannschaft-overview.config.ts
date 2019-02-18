@@ -4,43 +4,36 @@ import {TableActionType} from '../../../../shared/components/tables/types/table-
 import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
 
 export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {
-  moduleTranslationKey:    'MANAGEMENT',
+  moduleTranslationKey: 'MANAGEMENT',
   pageTitleTranslationKey: 'MANAGEMENT.DSBMANNSCHAFT.TITLE',
 
   tableConfig: {
     columns: [
       {
         translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.ID',
-        propertyName:     'id',
-        width:            7,
-        type:             TableColumnType.NUMBER,
+        propertyName: 'id',
+        width: 7,
+        type: TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.VORNAME',
-        propertyName:   'vorname',
-        width:          20,
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBVEREINNUMMER',
+        propertyName: 'vereinId',
+        width: 7,
+        type: TableColumnType.NUMBER,
+        currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.NACHNAME',
-        propertyName:   'nachname',
-        width:          20,
-      },
-      {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.GEBURTSDATUM',
-        propertyName:   'geburtsdatum',
-        type:           TableColumnType.DATE,
-        width:          20,
-      },
-      {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.MANNSCHAFTSNUMMER',
-        propertyName:   'mannschaftsnummer',
-        width:          20,
+        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBMANNSCHAFTNUMMER',
+        propertyName: 'nummer',
+        width: 20,
+        type: TableColumnType.NUMBER,
+        currentSortOrder: TableColumnSortOrder.ASCENDING
       }
     ],
     actions: {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
-      width:       6
+      width: 6
     },
   }
 };

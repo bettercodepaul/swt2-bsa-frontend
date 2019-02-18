@@ -14,6 +14,10 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
+import {MannschaftsMitgliedDO} from '../../../types/mannschaftsmitglied-do.class';
+import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
+import {VereinDO} from '../../../types/verein-do.class';
+import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSBMANNSCHAFT = 'dsbmannschaft_detail_delete';
@@ -24,20 +28,24 @@ const NOTIFICATION_UPDATE_DSBMANNSCHAFT = 'dsbmannschaft_detail_update';
 
 
 @Component({
-  selector:    'bla-dsb-mannschaft-detail',
+  selector: 'bla-dsb-mannschaft-detail',
   templateUrl: './dsb-mannschaft-detail.component.html',
-  styleUrls:   ['./dsb-mannschaft-detail.component.scss']
+  styleUrls: ['./dsb-mannschaft-detail.component.scss']
 })
 export class DsbMannschaftDetailComponent extends CommonComponent implements OnInit {
 
   public config = DSBMANNSCHAFT_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentDsbMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public currentMannschaftsMitglied: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
+  public currentVerein: VereinDO = new VereinDO();
+  public verein: Array<VereinDO> = [new VereinDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
 
   constructor(private DsbMannschaftDataProvider: DsbMannschaftDataProviderService,
+    private vereinProvider: VereinDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
@@ -48,6 +56,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.loading = true;
 
     this.notificationService.discardNotification();
+    this.loadVerein();
 
     this.route.params.subscribe(params => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -68,7 +77,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.saveLoading = true;
 
     // persist
-    this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft)
+    this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft, this.currentVerein)
         .then((response: Response<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
@@ -76,13 +85,13 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
             console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_DSBMANNSCHAFT,
-              title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+              id: NOTIFICATION_SAVE_DSBMANNSCHAFT,
+              title: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
               description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_DSBMANNSCHAFT)
@@ -101,6 +110,39 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
 
         });
+    // this.vereinProvider.findById(this.currentVerein.vereinId)
+    //   .then((response: Response<VereinDO>) => {
+    //     if (!isNullOrUndefined(response)
+    //       && !isNullOrUndefined(response.payload)
+    //       && !isNullOrUndefined(response.payload.vereinId)) {
+    //       console.log('Saved with id: ' + response.payload.vereinId);
+    //
+    //       const notification: Notification = {
+    //         id:          NOTIFICATION_SAVE_DSBMANNSCHAFT,
+    //         title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+    //         description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+    //         severity:    NotificationSeverity.INFO,
+    //         origin:      NotificationOrigin.USER,
+    //         type:        NotificationType.OK,
+    //         userAction:  NotificationUserAction.PENDING
+    //       };
+    //
+    //       this.notificationService.observeNotification(NOTIFICATION_SAVE_DSBMANNSCHAFT)
+    //         .subscribe(myNotification => {
+    //           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+    //             this.saveLoading = false;
+    //             this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.id);
+    //           }
+    //         });
+    //
+    //       this.notificationService.showNotification(notification);
+    //     }
+    //   }, (response: Response<DsbMannschaftDO>) => {
+    //     console.log('Failed');
+    //     this.saveLoading = false;
+    //
+    //
+    //   });
     // show response message
   }
 
@@ -117,13 +159,13 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
             const id = this.currentDsbMannschaft.id;
 
             const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_DSBMANNSCHAFT + id,
-              title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+              id: NOTIFICATION_UPDATE_DSBMANNSCHAFT + id,
+              title: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
               description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSBMANNSCHAFT + id)
@@ -150,14 +192,14 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     const id = this.currentDsbMannschaft.id;
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_DSBMANNSCHAFT + id,
-      title:            'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      id: NOTIFICATION_DELETE_DSBMANNSCHAFT + id,
+      title: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT + id)
@@ -183,6 +225,12 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
         .catch((response: Response<DsbMannschaftDO>) => this.handleFailure(response));
   }
 
+  private loadVerein() {
+    this.vereinProvider.findAll()
+        .then((response: Response<VereinDO[]>) => this.handleResponseArraySuccess(response))
+        .catch((response: Response<VereinDTO[]>) => this.handleResponseArrayFailure(response));
+  }
+
   private handleSuccess(response: Response<DsbMannschaftDO>) {
     this.currentDsbMannschaft = response.payload;
     this.loading = false;
@@ -196,19 +244,19 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
   private handleDeleteSuccess(response: Response<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS,
-      title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      id: NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS,
+      title: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
       description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
+      severity: NotificationSeverity.INFO,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/dsbmannschaft');
+            this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
             this.deleteLoading = false;
           }
         });
@@ -219,13 +267,13 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
   private handleDeleteFailure(response: Response<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE,
-      title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
+      id: NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE,
+      title: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
       description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
-      severity:    NotificationSeverity.ERROR,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE)
@@ -236,5 +284,17 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
         });
 
     this.notificationService.showNotification(notification);
+  }
+
+  private handleResponseArraySuccess(response: Response<VereinDTO[]>): void {
+    this.verein = [];
+    this.verein = response.payload;
+    this.currentVerein = this.verein[0];
+    this.loading = false;
+  }
+
+  private handleResponseArrayFailure(response: Response<VereinDTO[]>): void {
+    this.verein = [];
+    this.loading = false;
   }
 }
