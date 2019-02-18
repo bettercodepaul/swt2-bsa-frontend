@@ -1,0 +1,8 @@
+<div class="dropdown-fixed col-lg-3">
+  <ul class="">
+    <li class="list-group-item bg-primary dropdown-element" *ngFor="let mannschaft of mannschaften" (click)="onClick(mannschaft)">
+      <a class="text-white">{{currentVerein.name}} {{mannschaft.nummer}}</a>
+    </li>
+  </ul>
+</div>
+
