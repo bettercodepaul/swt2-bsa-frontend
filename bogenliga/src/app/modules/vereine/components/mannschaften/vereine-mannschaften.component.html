@@ -1,0 +1,22 @@
+<bla-common-dialog [config]="config"
+                   class=""><h2>{{currentVerein.name}}</h2></bla-common-dialog>
+
+<bla-button class="p-3"
+            (onClick)="backClicked()">Zurück
+</bla-button>
+<bla-vereine-dropdown *ngIf="!loading"
+                      (onMannschaftClick)="navigateToMannschaft($event)"
+                      [currentVerein]="currentVerein"
+                      [mannschaften]="mannschaften"
+                      class="p-4"></bla-vereine-dropdown>
+
+<h3 class="p-4 tex-center"
+    *ngIf="currentMannschaft != null">Liga: < link zu entsprechender Veranstaltung ></h3>
+<h3 class="p-4 tex-center"
+    *ngIf="currentMannschaft != null">Mannschaftsmitglieder: <b>{{currentVerein.name}} {{currentMannschaft.nummer}}</b>
+</h3>
+<bla-vereine-table *ngIf="mannschaftsMitdliedRows != null"
+                   [config]="config"
+                   [rows]="mannschaftsMitdliedRows"
+                   [loading]="loading">
+</bla-vereine-table>
