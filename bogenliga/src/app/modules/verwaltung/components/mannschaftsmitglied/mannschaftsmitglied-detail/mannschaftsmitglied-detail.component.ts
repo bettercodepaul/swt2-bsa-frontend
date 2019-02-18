@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DSBMANNSCHAFT_DETAIL_CONFIG} from './dsb-mannschaft-detail.config';
+import {DSBMANNSCHAFT_DETAIL_CONFIG} from '../../dsb-mannschaft/dsb-mannschaft-detail/dsb-mannschaft-detail.config';
 import {Response} from '../../../../shared/data-provider';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
@@ -26,7 +26,7 @@ const NOTIFICATION_UPDATE_DSBMANNSCHAFT = 'dsbmannschaft_detail_update';
 
 @Component({
   selector:    'bla-dsb-mannschaft-detail',
-  templateUrl: './dsb-mannschaft-detail.component.html',
+  templateUrl: './mannschaftsmitglied-detail.component.html',
   styleUrls:   ['./dsb-mannschaft-detail.component.scss']
 })
 export class DsbMannschaftDetailComponent extends CommonComponent implements OnInit {
@@ -40,9 +40,9 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
   public saveLoading = false;
 
   constructor(private DsbMannschaftDataProvider: DsbMannschaftDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -71,38 +71,38 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
     // persist
     this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft, this.currentMannschaftsMitglied)
-        .then((response: Response<DsbMannschaftDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
+      .then((response: Response<DsbMannschaftDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)
+          && !isNullOrUndefined(response.payload.id)) {
+          console.log('Saved with id: ' + response.payload.id);
 
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_DSBMANNSCHAFT,
-              title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+          const notification: Notification = {
+            id:          NOTIFICATION_SAVE_DSBMANNSCHAFT,
+            title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+            description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+            severity:    NotificationSeverity.INFO,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_DSBMANNSCHAFT)
-                .subscribe(myNotification => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/dsb-mannschaft/' + response.payload.id);
-                  }
-                });
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_DSBMANNSCHAFT)
+            .subscribe(myNotification => {
+              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                this.saveLoading = false;
+                this.router.navigateByUrl('/verwaltung/dsb-mannschaft/' + response.payload.id);
+              }
+            });
 
-            this.notificationService.showNotification(notification);
-          }
-        }, (response: Response<DsbMannschaftDO>) => {
-          console.log('Failed');
-          this.saveLoading = false;
+          this.notificationService.showNotification(notification);
+        }
+      }, (response: Response<DsbMannschaftDO>) => {
+        console.log('Failed');
+        this.saveLoading = false;
 
 
-        });
+      });
     // show response message
   }
 
@@ -111,37 +111,37 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
     // persist
     this.DsbMannschaftDataProvider.update(this.currentDsbMannschaft)
-        .then((response: Response<DsbMannschaftDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
+      .then((response: Response<DsbMannschaftDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)
+          && !isNullOrUndefined(response.payload.id)) {
 
-            const id = this.currentDsbMannschaft.id;
+          const id = this.currentDsbMannschaft.id;
 
-            const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_DSBMANNSCHAFT + id,
-              title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+          const notification: Notification = {
+            id:          NOTIFICATION_UPDATE_DSBMANNSCHAFT + id,
+            title:       'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+            description: 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+            severity:    NotificationSeverity.INFO,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
 
-            this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSBMANNSCHAFT + id)
-                .subscribe(myNotification => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
-                  }
-                });
+          this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSBMANNSCHAFT + id)
+            .subscribe(myNotification => {
+              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                this.saveLoading = false;
+                this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
+              }
+            });
 
-            this.notificationService.showNotification(notification);
-          }
-        }, (response: Response<DsbMannschaftDO>) => {
-          console.log('Failed');
-          this.saveLoading = false;
-        });
+          this.notificationService.showNotification(notification);
+        }
+      }, (response: Response<DsbMannschaftDO>) => {
+        console.log('Failed');
+        this.saveLoading = false;
+      });
     // show response message
   }
 
@@ -163,14 +163,14 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT + id)
-        .subscribe(myNotification => {
+      .subscribe(myNotification => {
 
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.DsbMannschaftDataProvider.deleteById(id)
-                .then(response => this.handleDeleteSuccess(response))
-                .catch(response => this.handleDeleteFailure(response));
-          }
-        });
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.DsbMannschaftDataProvider.deleteById(id)
+            .then(response => this.handleDeleteSuccess(response))
+            .catch(response => this.handleDeleteFailure(response));
+        }
+      });
 
     this.notificationService.showNotification(notification);
   }
@@ -181,8 +181,8 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
   private loadById(id: number) {
     this.DsbMannschaftDataProvider.findById(id)
-        .then((response: Response<DsbMannschaftDO>) => this.handleSuccess(response))
-        .catch((response: Response<DsbMannschaftDO>) => this.handleFailure(response));
+      .then((response: Response<DsbMannschaftDO>) => this.handleSuccess(response))
+      .catch((response: Response<DsbMannschaftDO>) => this.handleFailure(response));
   }
 
   private handleSuccess(response: Response<DsbMannschaftDO>) {
@@ -208,12 +208,12 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS)
-        .subscribe(myNotification => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
-            this.deleteLoading = false;
-          }
-        });
+      .subscribe(myNotification => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
+          this.deleteLoading = false;
+        }
+      });
 
     this.notificationService.showNotification(notification);
   }
@@ -231,11 +231,11 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE)
-        .subscribe(myNotification => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
-          }
-        });
+      .subscribe(myNotification => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.deleteLoading = false;
+        }
+      });
 
     this.notificationService.showNotification(notification);
   }

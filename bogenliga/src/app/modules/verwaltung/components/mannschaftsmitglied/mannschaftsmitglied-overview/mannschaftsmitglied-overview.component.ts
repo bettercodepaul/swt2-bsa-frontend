@@ -15,7 +15,6 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 
 export const NOTIFICATION_DELETE_DSB_MANNSCHAFT = 'dsb_mannschaft_overview_delete';
@@ -39,7 +38,7 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog2(versionedDataObject);
+    this.navigateToDetailDialog(versionedDataObject);
 
   }
 
@@ -65,13 +64,13 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MANNSCHAFT + id)
-        .subscribe(myNotification => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.DsbMannschaftDataProvider.deleteById(id)
-                .then(response => this.loadTableRows())
-                .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
-          }
-        });
+      .subscribe(myNotification => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.DsbMannschaftDataProvider.deleteById(id)
+            .then(response => this.loadTableRows())
+            .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
+        }
+      });
 
     this.notificationService.showNotification(notification);
 
@@ -81,15 +80,11 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
     this.loading = true;
 
     this.DsbMannschaftDataProvider.findAll()
-        .then((response: Response<DsbMannschaftDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<DsbMannschaftDTO[]>) => this.handleLoadTableRowsFailure(response));
+      .then((response: Response<DsbMannschaftDTO[]>) => this.handleLoadTableRowsSuccess(response))
+      .catch((response: Response<DsbMannschaftDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/dsbmannschaft/' + versionedDataObject.id);
-  }
-
-  private navigateToDetailDialog2(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/dsbmannschaft/' + versionedDataObject.id);
   }
 
