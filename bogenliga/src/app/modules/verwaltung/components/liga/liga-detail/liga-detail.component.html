@@ -1,0 +1,144 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="ligaForm"
+        class="horizontal-form half-page"
+        #dsbMitgliedForm="ngForm">
+
+    <!-- VORNAME -->
+    <div class="form-group row">
+      <label for="ligaName"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="ligaName"
+               name="ligaName"
+               #ligaName="ngModel"
+               [(ngModel)]="currentLiga.name"
+               [class.is-invalid]="ligaName.invalid && !ligaName.untouched"
+               placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Region -->
+    <div class="form-group row">
+      <label for="ligaRegion"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                id="ligaRegion"
+                name="ligaRegion"
+                #vereinRegion="ngModel"
+                [(ngModel)]="currentRegion">
+
+          <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
+        </select>
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Uebergeordnet -->
+    <div class="form-group row">
+      <label for="ligaRegion"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                id="ligaUebergeordnet"
+                name="ligaUebergeordnet"
+                #ligaUebergeordnet="ngModel"
+                [(ngModel)]="currentUbergeordneteLiga">
+          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of allUebergeordnete"> {{uebergeordnet.name}}</option>
+
+          placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
+        </select>
+
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Verantwortlicher -->
+    <div class="form-group row">
+      <label for="ligaRegion"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                id="ligaVerantwortlicher"
+                name="ligaVerantwortlicher"
+                #ligaUebergeordnet="ngModel"
+                [(ngModel)]="currentUser">
+          <option [ngValue]="user" *ngFor="let user of allUsers"> {{user.email}}</option>
+
+          placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.PLACEHOLDER' | translate }}">
+        </select>
+
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- SAVE/UPDATE/DELETE BUTTON -->
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'ligaSaveButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'ligaUpdateButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UPDATE' | translate }}
+        </bla-button>
+
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.DELETE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>

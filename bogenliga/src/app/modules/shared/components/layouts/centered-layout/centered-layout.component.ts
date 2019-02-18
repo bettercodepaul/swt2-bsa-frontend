@@ -17,4 +17,9 @@ export class CenteredLayoutComponent implements OnInit {
   public getMaxWidth(): object {
     return JSON.parse(`{"min-width":"${this.width}", "max-width":"${this.width}%"}`);
   }
+
+  public getWith(): object {
+    const width = (100 - this.width) / 2;
+    return JSON.parse(`{"min-width":"${width}", "max-width":"${width}%"}`);
+  }
 }
