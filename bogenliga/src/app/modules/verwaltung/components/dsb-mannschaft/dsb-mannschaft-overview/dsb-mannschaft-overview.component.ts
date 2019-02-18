@@ -21,9 +21,9 @@ import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from 
 export const NOTIFICATION_DELETE_DSB_MANNSCHAFT = 'dsb_mannschaft_overview_delete';
 
 @Component({
-  selector:    'bla-dsb-mannschaft-overview',
+  selector: 'bla-dsb-mannschaft-overview',
   templateUrl: './dsb-mannschaft-overview.component.html',
-  styleUrls:   ['./dsb-mannschaft-overview.component.scss']
+  styleUrls: ['./dsb-mannschaft-overview.component.scss']
 })
 export class DsbMannschaftOverviewComponent extends CommonComponent implements OnInit {
 
@@ -54,14 +54,14 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_DSB_MANNSCHAFT + id,
-      title:            'MANAGEMENT.DSBMANNSCHAFT.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.DSBMANNSCHAFT.NOTIFICATION.DELETE.DESCRIPTION',
+      id: NOTIFICATION_DELETE_DSB_MANNSCHAFT + id,
+      title: 'MANAGEMENT.DSBMANNSCHAFT.NOTIFICATION.DELETE.TITLE',
+      description: 'MANAGEMENT.DSBMANNSCHAFT.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MANNSCHAFT + id)

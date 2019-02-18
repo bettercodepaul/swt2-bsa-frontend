@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector:    'bla-centered-layout',
+  selector: 'bla-centered-layout',
   templateUrl: './centered-layout.component.html',
-  styleUrls:   ['./centered-layout.component.scss']
+  styleUrls: ['./centered-layout.component.scss']
 })
 export class CenteredLayoutComponent implements OnInit {
   @Input() public width = 60;
