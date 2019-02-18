@@ -15,6 +15,7 @@
     "WETTKAMPF": "WETTKAEMPFE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
     "SETTINGS": "EINSTELLUNGEN",
+    "PLAYGROUND": "PLAYGROUND",
     "COLLAPSE": "Einklappen"
   },
   "APP": {
@@ -52,6 +53,46 @@
   "USER": {
     "USER": {
       "TITLE": "Benutzer"
+    },
+    "PROFILE": {
+      "TITLE": "Benutzerprofil",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "Vorname",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "NACHNAME": {
+          "LABEL": "Nachname",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "EMAIL": {
+          "LABEL": "Email",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "GEBURTSDATUM": {
+          "LABEL": "Geburtsdatum",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Mitgliedsnummer",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "NATIONALITAET": {
+          "LABEL": "Nationalität",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        },
+        "VEREIN": {
+          "LABEL": "Verein",
+          "PLACEHOLDER": "Keine Daten verfügbar.",
+          "ERROR": "Keine Daten verfügbar."
+        }
+      }
     },
     "LOGIN": {
       "TITLE": "Login",
@@ -176,7 +217,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Liga löschen",
-          "DESCRIPTION": "Wollen Sie die Liga mit dem Namen=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
         }
       }
     },
@@ -210,7 +251,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Liga löschen",
-          "DESCRIPTION": "Wollen Sie die Liga mit dem Namen=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
@@ -268,20 +309,20 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Wettkampfklasse löschen",
-          "DESCRIPTION": "Wollen Sie die Wettkampfklasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Verein löschen",
+          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gelöscht."
+          "DESCRIPTION": "Verein wurde erfolgreich gelöscht."
         },
         "DELETE_FAILURE": {
           "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Die Wettkampfklasse konnte nicht gelöscht werden."
+          "DESCRIPTION": "Verein konnte nicht gelöscht werden."
         },
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Verein wurde erfolgreich gespeichert."
         }
       }
     },
@@ -471,6 +512,17 @@
   "DIALOG": {
     "LOADING": "Einträge werden geladen"
   },
+  "DROPDOWN": {
+    "PLEASE_SELECT_ITEM": "Bitte einen Eintrag auswählen...",
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen..."
+  },
+  "SELECTIONLIST": {
+    "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
+    "LOADING": "Einträge werden geladen...",
+    "SEARCH_PLACEHOLDER": "Suchbegriff eingeben"
+  },
+
   "DETAILS": {
     "TITLE": "Entität-Details",
     "DELETE": "Löschen",
