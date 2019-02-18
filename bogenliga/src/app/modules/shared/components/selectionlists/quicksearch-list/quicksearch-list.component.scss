@@ -1,0 +1,19 @@
+.quicksearch-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.quicksearch-list-search {
+}
+
+.quicksearch-list-select {
+  height: 10em;
+}
+
+.input-group-append {
+  flex-grow: unset;
+  height: calc(2.25rem + 2px);
+}
+
+
+

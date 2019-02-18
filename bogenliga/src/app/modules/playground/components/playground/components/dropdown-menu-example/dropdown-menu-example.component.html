@@ -1,0 +1,104 @@
+<h4>Dropdowns</h4>
+
+<h5>bla-dropdown-menu</h5>
+<p>
+  Das "selbstgebaute" Dropdown-Menü basiert auf dem Menü für angemeldete Benutzer (siehe oben links).
+  Das Ein- und Ausblenden wird über Angular gesteuert. Der Style wird von Bootstrap genutzt.
+</p>
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Dropdown Menü mit einer Liste von DTOs mit ID:
+      <br>
+      Auswahl: {{ getSelectedDTO() }}
+    </p>
+
+    <bla-dropdown-menu [id]="'playground-dropdown-menu'"
+                       [items]="getVersionedDataObjects()"
+                       [optionFieldSelector]="'name'"
+                       (onSelect)="onSelect($event)"
+                       style="width: 50%;">
+    </bla-dropdown-menu>
+
+  </bla-col-layout>
+</div>
+
+<!-- preselected item -->
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Dropdown Menü mit Vorauswahl (per ID):
+    </p>
+
+    <bla-dropdown-menu [items]="getVersionedDataObjects()"
+                       [optionFieldSelector]="'name'"
+                       [selectedItemId]="3"
+                       style="width: 50%;">
+    </bla-dropdown-menu>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Deaktiviertes Dropdown Menü mit Vorauswahl (per ID):
+    </p>
+
+    <bla-dropdown-menu [items]="getVersionedDataObjects()"
+                       [optionFieldSelector]="'name'"
+                       [selectedItemId]="3"
+                       disabled="true"
+                       style="width: 50%;">
+    </bla-dropdown-menu>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Dropdown Menü mit Ladeindikator (bitte Seite neu laden, um die 5 Sek. Verzögerung zu sehen):
+    </p>
+
+    <bla-dropdown-menu [items]="getVersionedDataObjects()"
+                       [optionFieldSelector]="'name'"
+                       [selectedItemId]="3"
+                       [loading]="isLoading()"
+                       style="width: 50%;">
+    </bla-dropdown-menu>
+
+  </bla-col-layout>
+</div>
+
+<!-- empty list -->
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Dropdown Menü mit leerer Liste:
+    </p>
+
+    <bla-dropdown-menu [items]="getEmptyList()"
+                       [optionFieldSelector]="'name'"
+                       style="width: 50%;">
+    </bla-dropdown-menu>
+
+  </bla-col-layout>
+</div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Dropdown Menü ohne Parameter:
+    </p>
+
+    <bla-dropdown-menu style="width: 50%;">
+    </bla-dropdown-menu>
+
+  </bla-col-layout>
+</div>
+

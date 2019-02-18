@@ -1,0 +1,48 @@
+<h4>Downloads</h4>
+<a #downloadLink></a>
+
+<h5>PDF-Download</h5>
+<p>
+  <bla-download-button [id]="'downloadPdf'"
+                       [downloadUrl]="getDownloadUrl('pdf')"
+                       [fileName]="'download.pdf'">Download PDF
+  </bla-download-button>
+  {{ getDownloadUrl('pdf') }}
+</p>
+
+<h5>Excel-Download</h5>
+<p>
+  <bla-download-button [id]="'downloadXls'"
+                       [downloadUrl]="getDownloadUrl('xls')"
+                       [fileName]="'download.xls'">Download EXCEL (XLS)
+  </bla-download-button>
+  {{ getDownloadUrl('xls') }}
+</p>
+
+<h5>Word-Download</h5>
+<p>
+  <bla-download-button [id]="'downloadDoc'"
+                       [downloadUrl]="getDownloadUrl('doc')"
+                       [fileName]="'download.doc'">Download WORD (DOC)
+  </bla-download-button>
+  {{ getDownloadUrl('doc') }}
+</p>
+
+<h5>CSV-Download</h5>
+<p>
+  <bla-download-button [id]="'downloadCsv'"
+                       [downloadUrl]="getDownloadUrl('csv')"
+                       [fileName]="'download.csv'">Download CSV
+  </bla-download-button>
+  {{ getDownloadUrl('csv') }}
+</p>
+
+<h5>MDB-Download</h5>
+<p>
+  <bla-download-button [id]="'downloadMdb'"
+                       [downloadUrl]="getDownloadUrl('mdb')"
+                       [fileName]="'download.mdb'">Download MDB (Microsoft Access)
+  </bla-download-button>
+  {{ getDownloadUrl('mdb') }}
+</p>
+

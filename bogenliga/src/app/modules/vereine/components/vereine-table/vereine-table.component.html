@@ -1,0 +1,24 @@
+<div class="dialog-content">
+
+  <!-- Content -->
+  <section class="overview-dialog-content">
+
+    <bla-vereine-data-table (onDeleteEntry)="onDelete($event)"
+                            (onEditEntry)="onEdit($event)"
+                            (onRowClicked)="onRow($event)"
+                            (onViewEntry)="onView($event)"
+                            [config]="config.tableConfig"
+                            [loading]="loading"
+                            [rows]="rows">
+
+    </bla-vereine-data-table>
+
+  </section>
+
+  <!-- Footer -->
+  <section class="overview-dialog-footer">
+
+
+  </section>
+
+</div>

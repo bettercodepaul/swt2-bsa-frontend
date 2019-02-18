@@ -1,0 +1,10 @@
+<div class="p-3">
+  <bla-button (click)="toggleDropdown()"
+              class="">Mannschaften &#9660;
+  </bla-button>
+  <bla-dropdown (clicked)="onClick($event)"
+                *ngIf="dropdownIsVisible"
+                [currentVerein]="currentVerein"
+                [mannschaften]="mannschaften"
+                class="bg-primary"></bla-dropdown>
+</div>
