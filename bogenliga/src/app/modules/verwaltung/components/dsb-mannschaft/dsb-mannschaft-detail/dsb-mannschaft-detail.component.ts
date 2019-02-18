@@ -208,7 +208,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS)
         .subscribe(myNotification => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/dsbmannschaft');
+            this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
             this.deleteLoading = false;
           }
         });

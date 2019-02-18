@@ -5,85 +5,11 @@
         class="horizontal-form half-page"
         #dsbMitgliedForm="ngForm">
 
-    <!--
-    <div class="form-group row">
-      <label for="dsbMitgliedVorname"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               id="dsbMitgliedVorname"
-               name="dsbMitgliedVorname"
-               #dsbMitgliedVorname="ngModel"
-               [(ngModel)]="currentMitglied.vorname"
-               [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-
-    <div class="form-group row">
-      <label for="dsbMitgliedNachname"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               id="dsbMitgliedNachname"
-               name="dsbMitgliedNachname"
-               #dsbMitgliedNachname="ngModel"
-               [(ngModel)]="currentMitglied.nachname"
-               [class.is-invalid]="dsbMitgliedNachname.invalid && !dsbMitgliedNachname.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-
-    <div class="form-group row">
-      <label for="dsbMitgliedGeburtsdatum"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-               id="dsbMitgliedGeburtsdatum"
-               name="dsbMitgliedGeburtsdatum"
-               #dsbMitgliedGeburtsdatum="ngModel"
-               [(ngModel)]="currentMitglied.geburtsdatum"
-               [class.is-invalid]="dsbMitgliedGeburtsdatum.invalid && !dsbMitgliedGeburtsdatum.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.ERROR' | translate }}
-        </div>
-      </div>
-    </div> -->
-
-
-    <!-- MITGLIEDSNUMMER -->
+<!--
     <div class="form-group row">
       <label for="dsbMannschaftsnummer"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTSNUMMER.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -93,46 +19,68 @@
                id="dsbMannschaftsnummer"
                name="dsbMannschaftsnummer"
                #dsbMannschaftsnummer="ngModel"
-               [(ngModel)]="currentDsbMannschaft.dsbmannschaftsnummer"
+               [(ngModel)]="currentDsbMannschaft.mannschaftsnummer"
                [class.is-invalid]="dsbMannschaftsnummer.invalid && !dsbMannschaftsnummer.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTSNUMMER.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTSNUMMER.ERROR' | translate }}
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.ERROR' | translate }}
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!--
     <div class="form-group row">
-      <label for="dsbMitgliedNationalitaet"
+      <label for="dsbMannschaftID"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFT_ID.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <input type="text"
                class="form-control"
                required
-               pattern="[D|AT|CH|FR|IT|GB]"
-               id="dsbMitgliedNationalitaet"
-               name="dsbMitgliedNationalitaet"
-               #dsbMitgliedNationalitaet="ngModel"
-               [(ngModel)]="currentMitglied.nationalitaet"
-               [class.is-invalid]="dsbMitgliedNationalitaet.invalid && !dsbMitgliedNationalitaet.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.PLACEHOLDER' | translate }}">
+               id="dsbMannschaftID"
+               name="dsbMannschaftID"
+               #dsbMannschaftsnummer="ngModel"
+               [(ngModel)]="currentDsbMannschaft.id"
+               [class.is-invalid]="dsbMannschaftsnummer.invalid && !dsbMannschaftsnummer.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFT_ID.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.ERROR' | translate }}
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFT_ID.ERROR' | translate }}
         </div>
       </div>
-    </div> -->
+    </div>
+
+    <div class="form-group row">
+      <label for="dsbVereinsnummer"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBVEREINNUMMER.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="dsbVereinsnummer"
+               name="dsbVeriensnummer"
+               #dsbMannschaftsnummer="ngModel"
+               [(ngModel)]="currentDsbMannschaft.vereinId"
+               [class.is-invalid]="dsbMannschaftsnummer.invalid && !dsbMannschaftsnummer.untouched"
+               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBVEREINNUMMER.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBVEREINNUMMER.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
 
     <!-- TODO: VEREIN ID, use dropdown list -->
     <div class="form-group row">
-      <label for="dsbMannschaftVerein"
+      <label for="DsbMannschaftNummer"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.VEREIN.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -140,15 +88,15 @@
                class="form-control"
                required
                min="1"
-               id="mannschaftVerein"
-               name="mannschaftVerein"
+               id="DsbMannschaftNummer"
+               name="DsbMannschaftNummer"
                #mannschaftVerein="ngModel"
-               [(ngModel)]="currentDsbMannschaft.vereinsId"
+               [(ngModel)]="currentDsbMannschaft.nummer"
                [class.is-invalid]="mannschaftVerein.invalid && !mannschaftVerein.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.VEREIN.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.VEREIN.ERROR' | translate }}
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.DSBMANNSCHAFTNUMMER.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -160,14 +108,14 @@
 
 
         <bla-button *ngIf="!entityExists()"
-                    [id]="'dsbMitgliedSaveButton'"
+                    [id]="'dsbMannschaftSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
-          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
-                    [id]="'dsbMitgliedUpdateButton'"
+                    [id]="'dsbMannschaftUpdateButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
