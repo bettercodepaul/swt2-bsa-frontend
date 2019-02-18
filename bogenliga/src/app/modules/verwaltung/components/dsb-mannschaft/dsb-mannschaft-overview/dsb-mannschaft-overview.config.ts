@@ -24,9 +24,11 @@ export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {
         currentSortOrder: TableColumnSortOrder.ASCENDING
       },
       {
-        translationKey: 'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBMANNSCHAFTNUMMER',
-        propertyName:   'nummer',
-        width:          20,
+        translationKey:   'MANAGEMENT.DSBMANNSCHAFT.TABLE.HEADERS.DSBMANNSCHAFTNUMMER',
+        propertyName:     'nummer',
+        width:            20,
+        type:             TableColumnType.NUMBER,
+        currentSortOrder: TableColumnSortOrder.ASCENDING
       }
     ],
     actions: {
