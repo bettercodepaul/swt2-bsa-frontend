@@ -1,0 +1,30 @@
+import { OnInit, EventEmitter } from '@angular/core';
+import { Popup } from './popup.service';
+import { Size } from "./size";
+import { Options } from "./options";
+export declare class PopupComponent implements OnInit {
+    popupService: Popup;
+    visible: boolean;
+    header: string;
+    confirmBtnContent: string;
+    cancleBtnContent: string;
+    showButtons: boolean;
+    setSize: Size;
+    color: string;
+    confirmBtnStyle: string;
+    cancelBtnStyle: string;
+    wellStyle: any;
+    mainStyle: any;
+    mainClass: string;
+    confirmClick: EventEmitter<any>;
+    cancelClick: EventEmitter<any>;
+    constructor(popupService: Popup);
+    onResize(event: any): void;
+    ngOnInit(): void;
+    private show(options?);
+    setOptions(options: Options): void;
+    private hide();
+    private confirmNo();
+    private confirmYes();
+    private setWidth();
+}

@@ -1,0 +1,33 @@
+<div class="quicksearch-list">
+
+  <div class="input-group mb-3">
+    <input (input)="onSearch($event.target.value)"
+           [disabled]="isDisabled()"
+           [id]="id"
+           [name]="id"
+           [placeholder]="getPlacholder()"
+           class="form-control quicksearch-list-search"
+           type="text">
+    <div class="input-group-append"
+         style="">
+      <span class="input-group-text"
+            id="basic-addon2">
+        <fa-icon [icon]="findIcon"></fa-icon>
+      </span>
+    </div>
+  </div>
+
+  <bla-selectionlist (onSelect)="onItemSelect($event)"
+                     [disabled]="isDisabled()"
+                     [id]="'selectionList' + id"
+                     [items]="getFilteredItems()"
+                     [loading]="loading"
+                     [multipleSelections]="multipleSelections"
+                     [optionFieldSelector]="optionFieldSelector"
+                     [selectedItemIds]="getSelectedItemIds()"
+                     [style.height]="selectionListHeight"
+                     class="quicksearch-list-select">
+
+  </bla-selectionlist>
+
+</div>

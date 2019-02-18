@@ -14,7 +14,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
-        icon:           'users',
+        icon:           'wrench',
         route:          'klassen'
       },
       {
@@ -22,6 +22,12 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.DESCRIPTION',
         icon:           'campground',
         route:          'dsbmannschaft'
+      },
+      {
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.DESCRIPTION',
+        icon:           'sitemap',
+        route:          'vereine'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',

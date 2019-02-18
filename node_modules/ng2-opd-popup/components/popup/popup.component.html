@@ -1,0 +1,15 @@
+<div id="ng2-opd-popup-main"  *ngIf="visible" [ngClass]="mainClass" [ngStyle]="mainStyle">
+    <div class="row">
+        <div style="display: inline-block;width:100%">
+           <div id="ng2-opd-popup-well"  [ngStyle]="wellStyle" class="ng2-opd-popup-well ng2-opd-popup-well-sm">{{popupService.options.header}}</div>
+        </div>
+    <div style="margin:20px;">
+        <ng-content></ng-content>
+        <div *ngIf="popupService.options.showButtons" style="margin-bottom:20px;margin-top:20px;float: right">
+            <button id="cancelBtn" [ngClass]="cancelBtnStyle" type="reset" (click)="confirmNo()">{{popupService.options.cancleBtnContent}}</button>
+            <button id="confirmBtn" [ngClass]="confirmBtnStyle"  (click)="confirmYes()">{{popupService.options.confirmBtnContent}}</button>
+        </div>
+    </div>
+
+</div>
+</div>
