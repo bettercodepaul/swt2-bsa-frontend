@@ -17,16 +17,23 @@ import {
   CommonDialogComponent,
   DataTableComponent,
   DetailDialogComponent,
+  DownloadButtonComponent,
+  DropdownComponent,
+  DropdownMenuComponent,
   GridLayoutComponent,
   HorizontalFormComponent,
   ModalDialogComponent,
   NavigationDialogComponent,
   OverviewDialogComponent,
   PageHeadingComponent,
+  QuicksearchListComponent,
   RowLayoutComponent,
+  SelectionlistComponent,
+  SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  SimpleOverviewDialogComponent
+  TooltipComponent,
+  VereineDropdownComponent
 } from './components';
 import {RestClient} from './data-provider';
 import * as SharedService from './services';
@@ -45,7 +52,7 @@ library.add(fas, far, fab); // add all icon types
 
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -55,7 +62,7 @@ library.add(fas, far, fab); // add all icon types
     FontAwesomeModule,
     StorageServiceModule
   ],
-  exports:      [
+  exports: [
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
@@ -80,10 +87,20 @@ library.add(fas, far, fab); // add all icon types
     RowLayoutComponent,
     NavigationCardsComponent,
     NavigationDialogComponent,
+    DropdownComponent,
+    VereineDropdownComponent,
+    NavigationDialogComponent,
+    TooltipComponent,
+    DropdownMenuComponent,
+    SelectionlistComponent,
+    QuicksearchListComponent,
+    DownloadButtonComponent,
     SimpleOverviewDialogComponent
   ],
   declarations: [
     ButtonComponent,
+    DropdownComponent,
+    VereineDropdownComponent,
     AlertComponent,
     ModalDialogComponent,
     PageHeadingComponent,
@@ -102,14 +119,19 @@ library.add(fas, far, fab); // add all icon types
     RowLayoutComponent,
     NavigationCardsComponent,
     NavigationDialogComponent,
-    SimpleOverviewDialogComponent
+    SimpleOverviewDialogComponent,
+    TooltipComponent,
+    DropdownMenuComponent,
+    SelectionlistComponent,
+    QuicksearchListComponent,
+    DownloadButtonComponent
   ]
 })
 export class SharedModule {
 
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule:  SharedModule,
+      ngModule: SharedModule,
       providers: [
         SharedService.CurrentUserService,
         SharedService.ErrorHandlingService,
@@ -124,7 +146,7 @@ export class SharedModule {
 
   static forChild(): ModuleWithProviders {
     return {
-      ngModule:  SharedModule,
+      ngModule: SharedModule,
       providers: []
     };
   }

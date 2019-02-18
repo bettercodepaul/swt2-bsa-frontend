@@ -11,6 +11,7 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {HttpErrorResponse} from '@angular/common/http';
 import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
+import {VereinDO} from '../types/verein-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/dsb-mannschaft-mapper';
 
 @Injectable({
@@ -24,12 +25,24 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     super();
   }
 
-  public create(payload: DsbMannschaftDO): Promise<Response<DsbMannschaftDO>> {
+  public create(payload: DsbMannschaftDO, payload2: VereinDO): Promise<Response<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+      this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload2)
           .then((data: VersionedDataTransferObject) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 

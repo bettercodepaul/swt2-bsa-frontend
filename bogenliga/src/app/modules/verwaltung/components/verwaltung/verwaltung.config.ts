@@ -1,39 +1,46 @@
 import {NavigationDialogConfig} from '../../../shared/components/dialogs';
 
 export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
-  moduleTranslationKey:    'MANAGEMENT',
+  moduleTranslationKey: 'MANAGEMENT',
   pageTitleTranslationKey: 'MANAGEMENT.VERWALTUNG.TITLE',
-  navigationCardsConfig:   {
+  navigationCardsConfig: {
     navigationCards: [
       {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.LABEL',
+        labelKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.DESCRIPTION',
-        icon:           'users',
-        route:          'dsbmitglieder'
+        icon: 'users',
+        route: 'dsbmitglieder'
       },
       {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
+        labelKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
-        icon:           'users',
-        route:          'klassen'
+        icon: 'wrench',
+        route: 'klassen'
       },
       {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.LABEL',
+        labelKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.DESCRIPTION',
-        icon:           'campground',
-        route:          'dsbmannschaft'
+        icon: 'campground',
+        route: 'dsbmannschaft'
       },
       {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
+        labelKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.DESCRIPTION',
+        icon: 'sitemap',
+        route: 'vereine'
+      },
+      {
+        labelKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
-        icon:           'users',
-        route:          'liga'
+        icon: 'users',
+        route: 'liga'
       },
       {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.SPORTJAHR.LABEL',
+        labelKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.SPORTJAHR.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.SPORTJAHR.DESCRIPTION',
-        icon:           'cogs',
-        route:          'sportjahr'
-      }]
+        icon: 'cogs',
+        route: 'sportjahr'
+      }
+    ]
   }
 };

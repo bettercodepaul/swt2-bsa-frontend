@@ -78,6 +78,18 @@ export class RestClient {
     ).toPromise();
   }
 
+  public DOWNLOAD(url: string): Promise<Blob> {
+
+    let objectUrl: string = null;
+
+    console.log('Download: Send GET request to ' + url);
+
+    return this.http.get(url, {responseType: 'blob'})
+               .pipe(
+                 catchError(this.handleError)
+               ).toPromise();
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

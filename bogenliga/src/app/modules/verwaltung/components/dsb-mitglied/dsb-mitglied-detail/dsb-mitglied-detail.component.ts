@@ -24,9 +24,9 @@ const NOTIFICATION_UPDATE_DSB_MITGLIED = 'dsb_mitglied_detail_update';
 
 
 @Component({
-  selector:    'bla-dsb-mitglied-detail',
+  selector: 'bla-dsb-mitglied-detail',
   templateUrl: './dsb-mitglied-detail.component.html',
-  styleUrls:   ['./dsb-mitglied-detail.component.scss']
+  styleUrls: ['./dsb-mitglied-detail.component.scss']
 })
 export class DsbMitgliedDetailComponent extends CommonComponent implements OnInit {
 
@@ -76,13 +76,13 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
             console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_DSB_MITGLIED,
-              title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
+              id: NOTIFICATION_SAVE_DSB_MITGLIED,
+              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
               description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_DSB_MITGLIED)
@@ -117,13 +117,13 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
             const id = this.currentMitglied.id;
 
             const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_DSB_MITGLIED + id,
-              title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
+              id: NOTIFICATION_UPDATE_DSB_MITGLIED + id,
+              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
               description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSB_MITGLIED + id)
@@ -150,14 +150,14 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     const id = this.currentMitglied.id;
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
-      title:            'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      id: NOTIFICATION_DELETE_DSB_MITGLIED + id,
+      title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
@@ -174,7 +174,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   }
 
   public entityExists(): boolean {
-    return this.currentMitglied.id > 0;
+    return this.currentMitglied.id >= 0;
   }
 
   private loadById(id: number) {
@@ -196,13 +196,13 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   private handleDeleteSuccess(response: Response<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS,
-      title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      id: NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS,
+      title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
       description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
+      severity: NotificationSeverity.INFO,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS)
@@ -219,13 +219,13 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   private handleDeleteFailure(response: Response<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE,
-      title:       'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
+      id: NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE,
+      title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
       description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
-      severity:    NotificationSeverity.ERROR,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE)
