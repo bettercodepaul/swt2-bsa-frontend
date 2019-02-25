@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
 import {LoginResult} from '../../types/login-result.enum';
 import {USER_LOGIN_CONFIG} from './login.config';
+import {environment} from '../../../../../environments/environment';
 
 const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
   public ButtonSize = ButtonSize;
   public AlertType = AlertType;
   public LoginResult = LoginResult;
+  public inProd = environment.production;
 
   // TODO: remove after development
   public testAdminUser: CredentialsDO = new CredentialsDO('admin@bogenliga.de', 'admin');
