@@ -8,4 +8,5 @@ export interface SideBarNavigationItem {
   route: string;
   permissons?: UserPermission[];
   subitems?: SideBarNavigationSubitem[];
+  inProdVisible?: boolean;
 }

@@ -7,6 +7,7 @@ import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.inter
 import {isNullOrUndefined} from 'util';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
+import {environment} from '../../../environments/environment';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class SidebarComponent implements OnInit {
 
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public CONFIG = SIDE_BAR_CONFIG;
+  public inProd = environment.production;
 
   faCaretDown = faCaretDown;
 

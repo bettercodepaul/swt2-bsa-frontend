@@ -100,7 +100,7 @@
       </div>
 
       <!-- Shortcut Login only visible if not in prod mode -->
-      <div *ngIf="inProd === true">
+      <div *ngIf="!(inProd === true)">
         <bla-alert header="Testbenutzer:"
                    [alertType]="AlertType.INFO">
           <p>Username: admin@bogenliga.de <br>Password: admin<br>Rolle: ADMIN<br>
