@@ -53,6 +53,7 @@ export class SportjahrOverviewComponent extends CommonComponent  implements OnIn
   }
 
 
+  public onDelete(any: any): void {}
   /*
   public onDelete(versionedDataObject: VersionedDataObject): void {
     // show loading icon
