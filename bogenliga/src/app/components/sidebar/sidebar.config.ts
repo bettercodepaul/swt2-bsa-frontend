@@ -72,6 +72,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     icon: faFootballBall,
     route: '/playground',
     permissons: [],
-    subitems: []
+    subitems: [],
+    inProdVisible: false
   }
 ];

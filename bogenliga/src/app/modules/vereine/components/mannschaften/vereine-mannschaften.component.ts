@@ -142,7 +142,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
     this.mannschaften = filteredMannschaften;
   }
 
-  private backClicked(): void {
+  public backClicked(): void {
     this.router.navigateByUrl('/vereine');
   }
 
