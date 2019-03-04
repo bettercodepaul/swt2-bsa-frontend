@@ -1,0 +1,31 @@
+<bla-breadcrumbs [moduleTranslationKey]="config.moduleTranslationKey"></bla-breadcrumbs>
+
+<div class="dialog-content">
+
+  <!-- Heading -->
+  <section class="overview-dialog-header">
+    <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
+  </section>
+
+  <!-- Content -->
+  <section class="overview-dialog-content">
+
+    <bla-data-table [config]="config.tableConfig"
+                    [rows]="rows"
+                    [loading]="loading"
+                    (onViewEntry)="onView($event)"
+                    (onEditEntry)="onEdit($event)"
+                    (onDeleteEntry)="onDelete($event)"
+                    (onRowEntry)="onRowClick($event)">
+
+    </bla-data-table>
+
+  </section>
+
+  <!-- Footer -->
+  <section class="overview-dialog-footer">
+
+
+  </section>
+
+</div>

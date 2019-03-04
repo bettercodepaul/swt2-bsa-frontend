@@ -4,7 +4,8 @@ export class DsbMannschaftDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  mannschaftsnummer: string;
-  vereinsId: number;
-  userId: number;
+  vereinId: number;
+  nummer: string;
+  benutzerId: number;
+  veranstaltungID: number;
 }

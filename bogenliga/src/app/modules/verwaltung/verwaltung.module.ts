@@ -5,38 +5,38 @@ import {SharedModule} from '../shared';
 import {FormsModule} from '@angular/forms';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {
-  VerwaltungGuard,
-  DsbMitgliedDetailGuard,
-  DsbMitgliedOverviewGuard,
   DsbMannschaftDetailGuard,
   DsbMannschaftOverviewGuard,
-  BenutzerDetailGuard,
-  BenutzerOverviewGuard,
+  DsbMitgliedDetailGuard,
+  DsbMitgliedOverviewGuard,
+  SportjahrLigaAuswahlGuard,
+  SportjahrOverviewGuard,
+  VerwaltungGuard,
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard,
-  VereinOverviewGuard,
-  VereinDetailGuard,
+  LigaDetailGuard,
   LigaOverviewGuard,
-  LigaDetailGuard
+  VereinOverviewGuard,
+  VereinDetailGuard
 } from './guards';
 import {
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   DsbMannschaftDetailComponent,
   DsbMannschaftOverviewComponent,
-  BenutzerDetailComponent,
-  BenutzerOverviewComponent,
+  VerwaltungComponent,
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent,
-  VerwaltungComponent,
   VereinOverviewComponent,
   VereinDetailComponent,
   LigaOverviewComponent,
-  LigaDetailComponent
+  LigaDetailComponent,
+  SportjahrLigaAuswahlComponent,
+  SportjahrOverviewComponent
 } from './components';
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
     SharedModule,
@@ -48,29 +48,29 @@ import {
     DsbMitgliedDetailComponent,
     DsbMannschaftDetailComponent,
     DsbMannschaftOverviewComponent,
-    BenutzerOverviewComponent,
-    BenutzerDetailComponent,
-    WettkampfklasseDetailComponent,
     WettkampfklasseOverviewComponent,
+    WettkampfklasseDetailComponent,
     VereinDetailComponent,
     VereinOverviewComponent,
     LigaDetailComponent,
-    LigaOverviewComponent
+    LigaOverviewComponent,
+    SportjahrLigaAuswahlComponent,
+    SportjahrOverviewComponent
   ],
-  providers:    [
+  providers: [
     VerwaltungGuard,
     DsbMitgliedOverviewGuard,
     DsbMitgliedDetailGuard,
     DsbMannschaftOverviewGuard,
     DsbMannschaftDetailGuard,
-    BenutzerOverviewGuard,
-    BenutzerDetailGuard,
     WettkampfklasseOverviewGuard,
     WettkampfklasseDetailGuard,
     VereinOverviewGuard,
     VereinDetailGuard,
     LigaOverviewGuard,
-    LigaDetailGuard
+    LigaDetailGuard,
+    SportjahrLigaAuswahlGuard,
+    SportjahrOverviewGuard
   ]
 })
 export class VerwaltungModule {

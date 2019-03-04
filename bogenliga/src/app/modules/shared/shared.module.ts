@@ -18,6 +18,7 @@ import {
   DataTableComponent,
   DetailDialogComponent,
   DownloadButtonComponent,
+  DropdownComponent,
   DropdownMenuComponent,
   GridLayoutComponent,
   HorizontalFormComponent,
@@ -28,9 +29,11 @@ import {
   QuicksearchListComponent,
   RowLayoutComponent,
   SelectionlistComponent,
+  SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  TooltipComponent
+  TooltipComponent,
+  VereineDropdownComponent
 } from './components';
 import {RestClient} from './data-provider';
 import * as SharedService from './services';
@@ -49,7 +52,7 @@ library.add(fas, far, fab); // add all icon types
 
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -59,7 +62,7 @@ library.add(fas, far, fab); // add all icon types
     FontAwesomeModule,
     StorageServiceModule
   ],
-  exports:      [
+  exports: [
     TranslateModule,
     FormsModule,
     ReactiveFormsModule,
@@ -84,14 +87,20 @@ library.add(fas, far, fab); // add all icon types
     RowLayoutComponent,
     NavigationCardsComponent,
     NavigationDialogComponent,
+    DropdownComponent,
+    VereineDropdownComponent,
+    NavigationDialogComponent,
     TooltipComponent,
     DropdownMenuComponent,
     SelectionlistComponent,
     QuicksearchListComponent,
-    DownloadButtonComponent
+    DownloadButtonComponent,
+    SimpleOverviewDialogComponent
   ],
   declarations: [
     ButtonComponent,
+    DropdownComponent,
+    VereineDropdownComponent,
     AlertComponent,
     ModalDialogComponent,
     PageHeadingComponent,
@@ -110,6 +119,7 @@ library.add(fas, far, fab); // add all icon types
     RowLayoutComponent,
     NavigationCardsComponent,
     NavigationDialogComponent,
+    SimpleOverviewDialogComponent,
     TooltipComponent,
     DropdownMenuComponent,
     SelectionlistComponent,
@@ -121,7 +131,7 @@ export class SharedModule {
 
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule:  SharedModule,
+      ngModule: SharedModule,
       providers: [
         SharedService.CurrentUserService,
         SharedService.ErrorHandlingService,
@@ -136,7 +146,7 @@ export class SharedModule {
 
   static forChild(): ModuleWithProviders {
     return {
-      ngModule:  SharedModule,
+      ngModule: SharedModule,
       providers: []
     };
   }

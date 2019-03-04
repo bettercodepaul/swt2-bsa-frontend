@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WETTKAMPFKLASSE_DETAIL_CONFIG} from './wettkampfklasse-detail.config';
 import {Response} from '../../../../shared/data-provider';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
@@ -74,13 +74,13 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
             console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_DSB_MITGLIED,
-              title:       'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.TITLE',
+              id: NOTIFICATION_SAVE_DSB_MITGLIED,
+              title: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.TITLE',
               description: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_DSB_MITGLIED)
@@ -115,13 +115,13 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
             const id = this.currentWettkampfklasse.id;
 
             const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_DSB_MITGLIED + id,
-              title:       'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.TITLE',
+              id: NOTIFICATION_UPDATE_DSB_MITGLIED + id,
+              title: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.TITLE',
               description: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSB_MITGLIED + id)
@@ -165,13 +165,13 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
   private handleDeleteSuccess(response: Response<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS,
-      title:       'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      id: NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS,
+      title: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
       description: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
+      severity: NotificationSeverity.INFO,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS)
@@ -188,13 +188,13 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
   private handleDeleteFailure(response: Response<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE,
-      title:       'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
+      id: NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE,
+      title: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
       description: 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
-      severity:    NotificationSeverity.ERROR,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE)
