@@ -9,13 +9,7 @@ export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
   tableConfig: {
     columns: [
-      {
-        translationKey:   'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.ID',
-        propertyName:     'id',
-        width:            7,
-        type:             TableColumnType.NUMBER,
-        currentSortOrder: TableColumnSortOrder.ASCENDING
-      },
+     
       {
         translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.VORNAME',
         propertyName:   'vorname',

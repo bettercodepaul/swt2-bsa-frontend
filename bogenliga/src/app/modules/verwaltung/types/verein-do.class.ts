@@ -6,6 +6,7 @@ export class VereinDO implements VersionedDataObject {
 
   name: string;
   identifier: string;
+
   regionId: number;
   regionName: string;
 }

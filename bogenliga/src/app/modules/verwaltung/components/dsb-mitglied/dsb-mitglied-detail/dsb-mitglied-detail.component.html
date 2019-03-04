@@ -1,4 +1,4 @@
-<bla-common-dialog [config]="config"
+ <bla-common-dialog [config]="config"
                    [loading]="loading">
 
   <form id="dsbMitgliedForm"
@@ -78,8 +78,9 @@
       </div>
     </div>
 
-
+<!--
     <!-- MITGLIEDSNUMMER -->
+
     <div class="form-group row">
       <label for="dsbMitgliedMitgliedsnummer"
              class="col-sm-3 col-form-label">
@@ -150,6 +151,23 @@
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.ERROR' | translate }}
         </div>
+      </div>
+    </div>
+    <!-- leitend -->
+    <div class="form-group row">
+      <label for="dsbMitgliedKampfrichter"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.KAMPFRICHTER.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-8">
+        <input type="checkbox" class="form-control" id="dsbMitgliedKampfrichter"
+               name="dsbMitgliedKampfrichter" [disabled]="currentMitglied.userId == null ? true: false"
+               #dsbMitgliedKampfrichter="ngModel"
+               [(ngModel)]="currentMitglied.kampfrichter"
+               [class.is-invalid]="dsbMitgliedKampfrichter.invalid && !dsbMitgliedKampfrichter.untouched">
+        <span *ngIf="currentMitglied.userId==null">Mitglied hat noch keinen User-Account. Bitte lege vorher einen an: <a href="#" onClick="return false;;">Userregistrierung</a></span>
+
+
       </div>
     </div>
 

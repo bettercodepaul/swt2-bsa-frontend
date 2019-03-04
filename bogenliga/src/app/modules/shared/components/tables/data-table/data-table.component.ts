@@ -28,6 +28,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   @Output() public onEditEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onViewEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDeleteEntry = new EventEmitter<VersionedDataObject>();
+  @Output() public onRowEntry = new EventEmitter<VersionedDataObject>();
 
 
   // do not remove, the view uses this enum
@@ -311,5 +312,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
 
   private onDelete(affectedRowPayload: VersionedDataObject) {
     this.onDeleteEntry.emit(affectedRowPayload);
+  }
+
+  private onRowClicked(affectedRowPayload: VersionedDataObject) {
+    this.onRowEntry.emit(affectedRowPayload);
   }
 }

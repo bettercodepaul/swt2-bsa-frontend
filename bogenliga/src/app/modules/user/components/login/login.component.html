@@ -99,39 +99,42 @@
 
       </div>
 
-      <bla-alert header="Testbenutzer:"
-                 [alertType]="AlertType.INFO">
-        <p>Username: admin@bogenliga.de <br>Password: admin<br>Rolle: ADMIN<br>
-          <bla-button [buttonSize]="ButtonSize.SMALL"
-                      [value]="testAdminUser"
-                      (onClick)="onAutoLogin($event)">Login als Admin
-          </bla-button>
-        </p>
-        <p>Username: moderator@bogenliga.de <br>Password: moderator<br>Rolle: MODERATOR<br>
-          <bla-button [buttonSize]="ButtonSize.SMALL"
-                      [value]="testModeratorUser"
-                      (onClick)="onAutoLogin($event)">Login als Moderator
-          </bla-button>
-        </p>
-        <p>Username: user@bogenliga.de <br>Password: user <br>Rolle: USER<br>
-          <bla-button [buttonSize]="ButtonSize.SMALL"
-                      [value]="testUserUser"
-                      (onClick)="onAutoLogin($event)">Login als User
-          </bla-button>
-        </p>
-        <p>Username: Malorie.Artman@bogenliga.de <br>Password: swt2 <br>Rolle: USER<br>
-          <bla-button [buttonSize]="ButtonSize.SMALL"
-                      [value]="testDummyUserUser"
-                      (onClick)="onAutoLogin($event)">Login als Test-Benutzer
-          </bla-button>
-        </p>
-        <p>Username: Nicholas.Corle@bogenliga.de <br>Password: swt2 <br>Rolle: MODERATOR<br>
-          <bla-button [buttonSize]="ButtonSize.SMALL"
-                      [value]="testDummyModeratorUser"
-                      (onClick)="onAutoLogin($event)">Login als Test-Moderator
-          </bla-button>
-        </p>
-      </bla-alert>
+      <!-- Shortcut Login only visible if not in prod mode -->
+      <div *ngIf="!(inProd === true)">
+        <bla-alert header="Testbenutzer:"
+                   [alertType]="AlertType.INFO">
+          <p>Username: admin@bogenliga.de <br>Password: admin<br>Rolle: ADMIN<br>
+            <bla-button [buttonSize]="ButtonSize.SMALL"
+                        [value]="testAdminUser"
+                        (onClick)="onAutoLogin($event)">Login als Admin
+            </bla-button>
+          </p>
+          <p>Username: moderator@bogenliga.de <br>Password: moderator<br>Rolle: MODERATOR<br>
+            <bla-button [buttonSize]="ButtonSize.SMALL"
+                        [value]="testModeratorUser"
+                        (onClick)="onAutoLogin($event)">Login als Moderator
+            </bla-button>
+          </p>
+          <p>Username: user@bogenliga.de <br>Password: user <br>Rolle: USER<br>
+            <bla-button [buttonSize]="ButtonSize.SMALL"
+                        [value]="testUserUser"
+                        (onClick)="onAutoLogin($event)">Login als User
+            </bla-button>
+          </p>
+          <p>Username: Malorie.Artman@bogenliga.de <br>Password: swt2 <br>Rolle: USER<br>
+            <bla-button [buttonSize]="ButtonSize.SMALL"
+                        [value]="testDummyUserUser"
+                        (onClick)="onAutoLogin($event)">Login als Test-Benutzer
+            </bla-button>
+          </p>
+          <p>Username: Nicholas.Corle@bogenliga.de <br>Password: swt2 <br>Rolle: MODERATOR<br>
+            <bla-button [buttonSize]="ButtonSize.SMALL"
+                        [value]="testDummyModeratorUser"
+                        (onClick)="onAutoLogin($event)">Login als Test-Moderator
+            </bla-button>
+          </p>
+        </bla-alert>
+      </div>
     </div>
 
   </div>

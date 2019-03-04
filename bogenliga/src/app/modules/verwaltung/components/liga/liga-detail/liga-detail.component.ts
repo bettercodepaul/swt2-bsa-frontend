@@ -91,10 +91,25 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
-    this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
-    this.currentLiga.regionId = this.currentRegion.id;
-    this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
-    console.log('Saving Liga: ', this.currentLiga);
+
+    if(typeof this.currentUbergeordneteLiga === 'undefined') {
+      this.currentLiga.ligaUebergeordnetId = null;
+    } else {
+      this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id
+    }
+
+    if(typeof this.currentRegion  === 'undefined') {
+      this.currentLiga.regionId = null;
+    } else {
+      this.currentLiga.regionId = this.currentRegion.id;
+    }
+
+    if(typeof this.currentUser  === 'undefined') {
+      this.currentLiga.ligaVerantwortlichId = null;
+    } else {
+      this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
+    }
+
     // persist
     this.ligaDataProvider.create(this.currentLiga)
         .then((response: Response<LigaDO>) => {

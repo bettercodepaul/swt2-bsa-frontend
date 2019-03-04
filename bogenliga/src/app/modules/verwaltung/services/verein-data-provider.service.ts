@@ -30,16 +30,16 @@ export class VereinDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
+        .then((data: VersionedDataTransferObject[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+        }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     });
   }
 
@@ -49,17 +49,17 @@ export class VereinDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then(noData => {
-            resolve({result: RequestResult.SUCCESS});
+        .then(noData => {
+          resolve({result: RequestResult.SUCCESS});
 
-          }, (error: HttpErrorResponse) => {
+        }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     });
   }
 
@@ -69,18 +69,18 @@ export class VereinDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then((data: VersionedDataTransferObject) => {
+        .then((data: VersionedDataTransferObject) => {
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+          resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
-          }, (error: HttpErrorResponse) => {
+        }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     });
   }
 
@@ -90,17 +90,17 @@ export class VereinDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-          .then((data: VersionedDataTransferObject) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+        .then((data: VersionedDataTransferObject) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
-          }, (error: HttpErrorResponse) => {
+        }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     });
   }
 
@@ -110,17 +110,17 @@ export class VereinDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-          .then((data: VersionedDataTransferObject) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+        .then((data: VersionedDataTransferObject) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
-          }, (error: HttpErrorResponse) => {
+        }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     });
   }
 }

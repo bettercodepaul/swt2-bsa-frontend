@@ -12,7 +12,7 @@
     <nav class="list-unstyled components">
       <ng-container *ngFor="let item of CONFIG">
 
-        <li *ngIf="hasUserPermissions(item.permissons)" [class.selected]="isSelected(item.route)">
+        <li *ngIf="hasUserPermissions(item.permissons) && !(inProd === true && item.inProdVisible === false)" [class.selected]="isSelected(item.route)">
 
           <!-- Item of Navigation (with Button for Dropdown) -->
           <div class="sidebar-text-toggle" [class.flexBox]="!isActive" >
