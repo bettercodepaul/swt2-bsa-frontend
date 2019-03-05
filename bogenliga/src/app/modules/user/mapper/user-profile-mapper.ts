@@ -1,4 +1,4 @@
-import {UserProfileDTO} from '../types/datatransfer/user-profile-dto.class';
+import {UserProfileDTO} from '../types/model/user-profile-dto.class';
 import {VersionedDataTransferObject} from '../../shared/data-provider';
 
 export function fromPayload(payload: VersionedDataTransferObject): UserProfileDTO {
