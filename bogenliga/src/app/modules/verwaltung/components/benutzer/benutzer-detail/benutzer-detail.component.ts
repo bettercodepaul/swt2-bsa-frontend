@@ -6,8 +6,6 @@ import {BenutzerDataProviderService} from '../../../services/benutzer-data-provi
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from 'util';
 import {BenutzerDO} from "../../../types/benutzer-do.class";
-import {CredentialsDO} from "../../../../user/types/credentials-do.class";
-import {CredentialsDTO} from "../../../../user/types/model/credentials-dto.class";
 import {RoleDTO} from "../../../types/datatransfer/role-dto.class";
 import {RoleDO} from "../../../types/role-do.class";
 import {BenutzerRolleDTO} from "../../../types/datatransfer/benutzer-rolle-dto.class";
@@ -37,12 +35,10 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   public config = BENUTZER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentCredentials: CredentialsDO = new CredentialsDO();
-  public  verifyCredentials: CredentialsDO = new CredentialsDO();
-  public currentCredentialsDTO: CredentialsDTO;
   public currentBenutzerRolleDTO: BenutzerRolleDTO;
   public currentBenutzerRolleDO: BenutzerRolleDO;
   public roles: RoleDTO[] = [];
+  public tobeRole: RoleDO;
 
   public saveLoading = false;
   public selectedDTOs: RoleVersionedDataObject[];
@@ -57,28 +53,19 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.tobeRole = new RoleDO();
 
     this.notificationService.discardNotification();
 
     this.route.params.subscribe(params => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
-        this.currentCredentials = new CredentialsDO();
-        this.verifyCredentials = new CredentialsDO();
         this.currentBenutzerRolleDO = new BenutzerRolleDO();
 
-        if (id === 'add') {
-          this.loading = false;
-          this.saveLoading = false;
-          this.currentBenutzerRolleDO.id = null;
-          this.currentCredentials.username = null;
-        } else {
-
-          this.benutzerDataProvider.findUserRoleById(params[ID_PATH_PARAM])
+        if (id != 'add') {
+          this.benutzerDataProvider.findUserRoleById(id)
             .then((response: Response<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO= response.payload)
             .catch((response: Response<BenutzerRolleDO>) => this.currentBenutzerRolleDO= null);
-
-          this.currentCredentials.username = this.currentBenutzerRolleDO.email;
 
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
           this.roleDataProvider.findAll()
@@ -89,48 +76,6 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     });
   }
 
-  public onSave(ignore: any): void {
-    this.saveLoading = true;
-
-    // persist
-
-    this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password);
-    this.benutzerDataProvider.create(this.currentCredentialsDTO)
-        .then((response: Response<BenutzerDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
-
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_BENUTZER,
-              title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
-
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
-                .subscribe(myNotification => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/benutzer');
-                  }
-                });
-
-            this.notificationService.showNotification(notification);
-          }
-        }, (response: Response<BenutzerDO>) => {
-          console.log('Failed');
-          this.saveLoading = false;
-
-
-        });
-    // show response message
-  }
-
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
 
@@ -139,8 +84,9 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.currentBenutzerRolleDTO = new BenutzerRolleDTO();
     this.currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
     this.currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
-    this.currentBenutzerRolleDTO.roleId = this.currentBenutzerRolleDO.roleId;
-    this.currentBenutzerRolleDTO.roleName = this.currentBenutzerRolleDO.roleName;
+    this.tobeRole = <RoleDO> this.selectedDTOs[0];
+    this.currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
+    this.currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
     this.benutzerDataProvider.update(this.currentBenutzerRolleDTO)
       .then((response: Response<BenutzerDO>) => {
         if (!isNullOrUndefined(response)
@@ -179,7 +125,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
 
   public entityExists(): boolean {
-    return this.currentBenutzerRolleDTO.id > 0;
+    return this.currentBenutzerRolleDO.id > 0;
   }
 
   private loadById(id: number) {
@@ -221,7 +167,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public onSelect($event: RoleVersionedDataObject[]): void {
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
-  }
+   }
 
   public getSelectedDTO(): string {
     if (isNullOrUndefined(this.selectedDTOs)) {

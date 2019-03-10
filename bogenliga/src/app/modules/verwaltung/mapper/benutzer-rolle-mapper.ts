@@ -13,10 +13,6 @@ import {BenutzerRolleDO} from "../types/benutzer-rolle-do.class";
 // }
 
 
-export function toPayloadBenutzerRolle(payload: VersionedDataTransferObject): BenutzerRolleDTO {
-  return BenutzerRolleDTO.copyFrom(payload);
-}
-
 export function fromPayloadBenutzerRolle(payload: VersionedDataTransferObject): BenutzerRolleDO {
 
   const benutzerRolleDTO = BenutzerRolleDTO.copyFrom(payload);

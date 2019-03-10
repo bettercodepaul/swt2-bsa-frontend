@@ -5,9 +5,13 @@ import {
   DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
+  BenutzerDetailGuard,
+  BenutzerNeuGuard,
+  BenutzerOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
   SportjahrLigaAuswahlGuard,
+  SportjahrOverviewGuard,
   VereinDetailGuard,
   VereinOverviewGuard,
   VerwaltungGuard,
@@ -19,6 +23,9 @@ import {
   DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
+  BenutzerDetailComponent,
+  BenutzerNeuComponent,
+  BenutzerOverviewComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
   SportjahrLigaAuswahlComponent,
@@ -29,7 +36,6 @@ import {
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent
 } from './components';
-import {SportjahrOverviewGuard} from './guards/sportjahr-overview.guard';
 
 export const VERWALTUNG_ROUTES: Routes = [
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
@@ -41,7 +47,16 @@ export const VERWALTUNG_ROUTES: Routes = [
   },
   {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]}
   ,
-  {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
+  {
+    path: 'benutzer',
+    component: BenutzerOverviewComponent,
+    pathMatch: 'full',
+    canActivate: [BenutzerOverviewGuard]
+  },
+  {path: 'benutzer/add', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]}
+  ,
+  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]}
+  ,
   {
     path: 'dsbmannschaft',
     component: DsbMannschaftOverviewComponent,

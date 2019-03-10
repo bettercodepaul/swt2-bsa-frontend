@@ -125,7 +125,7 @@
         "NEWPASSWORD": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Bitte ein gültiges Passwort mit mehr als 8 Zeichen eingeben."
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",
@@ -539,21 +539,42 @@
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
           "ERROR": "Bitte eine gültige Email eingeben."
         },
-        "ROLE": {
-          "LABEL": "Rolle",
+        "ROLEOLD": {
+          "LABEL": "Aktuelle Rolle",
+          "PLACEHOLDER": "aktuelle Rolle"
+        },
+        "ROLENEW": {
+          "LABEL": "Zukünftige Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen"
         },
+        "UPDATE": "Aktualisieren"
+      },
+      "NOTIFICATION": {
+        "UPDATE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Rolle des Benutzer wurde erfolgreich geändert."
+        }
+      }
+    },
+    "BENUTZER_NEU": {
+      "TITLE": "BENUTZER - Neuanlage",
+      "FORM": {
+        "EMAIL": {
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Bitte eine E-Mail Adresse als Benutzerkennung eingeben",
+          "ERROR": "Bitte eine gültige Email eingeben."
+        },
         "PASSWORD": {
-          "LABEL": "Aktuelles Passwort",
+          "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Bitte ein gültiges Passwort eingeben."
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",
-          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "PLACEHOLDER": "Bitte Passwort wiederholen",
           "ERROR": "Passwort nicht identisch zum neuen Password"
         },
-        "UPDATE": "Aktualisieren"
+        "SAVE": "Speichern"
       },
       "NOTIFICATION": {
         "SAVE": {
@@ -652,6 +673,10 @@
       "INVALID_ARGUMENT_ERROR": {
         "TITLE": "Ungültige Anfrage",
         "DESCRIPTION": "Ihre Anfrage wurde vom Server abgewiesen."
+      },
+      "INVALID_SIGN_IN_CREDENTIALS": {
+        "TITLE": "Anmeldung nicht erfolgreich",
+        "DESCRIPTION": "Bitte prüfen sie E-Mail-Adresse und Passwort"
       },
       "DATABASE_ERROR": {
         "TITLE": "Datenbankfehler",
