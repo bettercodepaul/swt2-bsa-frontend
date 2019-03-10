@@ -11,10 +11,6 @@ import {VersionedDataTransferObject} from '../../shared/data-provider';
 // }
 
 
-export function toPayload(payload: VersionedDataTransferObject): BenutzerDTO {
-  return BenutzerDTO.copyFrom(payload);
-}
-
 export function fromPayload(payload: VersionedDataTransferObject): BenutzerDTO {
   return BenutzerDTO.copyFrom(payload);
 }

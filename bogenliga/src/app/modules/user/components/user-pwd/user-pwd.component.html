@@ -57,12 +57,13 @@
                 <label for="userPwdFormNewPwd">{{ 'USER.PWD.FORM.NEWPASSWORD.LABEL' | translate }}</label>
                 <input type="password"
                        class="form-control"
+                       required
+                       minlength="8"
+                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"
                        id="userPwdFormNewPwd"
                        name="userPwdFormNewPwd"
                        #userPwdFormNewPwd="ngModel"
                        [(ngModel)]="changeCredentials.newPassword"
-                       required
-                       minlength="8"
                        [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
                        placeholder="{{ 'USER.PWD.FORM.NEWPASSWORD.PLACEHOLDER' | translate }}">
 

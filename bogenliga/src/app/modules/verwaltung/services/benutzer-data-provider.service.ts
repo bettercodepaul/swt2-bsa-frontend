@@ -33,7 +33,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+      this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path("create").build(), payload)
         .then((data: VersionedDataTransferObject) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
@@ -48,7 +48,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: BenutzerRolleDTO): Promise<Response<BenutzerDO>> {//TODO anderes Objekt UserRoleDTO...
+  public update(payload: BenutzerRolleDTO): Promise<Response<BenutzerDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

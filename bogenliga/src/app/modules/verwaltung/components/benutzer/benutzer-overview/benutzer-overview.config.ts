@@ -1,7 +1,5 @@
 import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
-import {TableColumnSortOrder} from '../../../../shared/components/tables/types/table-column-sort-order.enum';
 import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
-import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
 
 export const BENUTZER_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -17,7 +15,7 @@ export const BENUTZER_OVERVIEW_CONFIG: OverviewDialogConfig = {
       {
         translationKey: 'MANAGEMENT.BENUTZER.TABLE.HEADERS.ROLE',
         propertyName:   'roleName',
-        width:          20,
+        width:          10,
       }
     ],
     actions: {

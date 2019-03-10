@@ -12,7 +12,7 @@ export class BenutzerRolleDTO implements DataTransferObject {
     email?: string,
     roleId?: number,
     roleName?: string,
-    version?: number
+    version?: number;
   } = {}): BenutzerRolleDTO {
     const copy = new BenutzerRolleDTO();
     copy.id = optional.id || null;

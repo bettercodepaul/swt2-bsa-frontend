@@ -43,7 +43,6 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
   }
 
   public onEdit(versionedDataObject: VersionedDataObject): void {
-
     this.navigateToDetailDialog(versionedDataObject);
   }
 
