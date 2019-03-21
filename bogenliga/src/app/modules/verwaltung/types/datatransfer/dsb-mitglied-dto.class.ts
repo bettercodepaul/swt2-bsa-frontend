@@ -21,7 +21,7 @@ export class DsbMitgliedDTO implements DataTransferObject {
     mitgliedsnummer?: string,
     vereinsId?: number,
     userId?: number,
-    version?: number
+    version?: number,
     kampfrichter?: boolean;
   } = {}): DsbMitgliedDTO {
     const copy = new DsbMitgliedDTO();

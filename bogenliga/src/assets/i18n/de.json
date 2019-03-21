@@ -3,6 +3,7 @@
     "TITLE": "Bogenliga DE",
     "USER_DROPDOWN": {
       "PROFILE": "Profil und Account",
+      "PWD": "Passwort ändern",
       "SETTINGS": "Einstellungen",
       "LOGOUT": "Logout"
     }
@@ -56,7 +57,9 @@
     }
   },
   "SPORTJAHRESPLAN": {
-    "TITLE": "Sportjahresplan"
+    "SPORTJAHRESPLAN": {
+      "TITLE": "Sportjahresplan"
+    }
   },
   "USER": {
     "USER": {
@@ -99,6 +102,49 @@
           "LABEL": "Verein",
           "PLACEHOLDER": "Keine Daten verfügbar.",
           "ERROR": "Keine Daten verfügbar."
+        }
+      }
+    },
+    "PWD": {
+      "TITLE": "Passwort ändern",
+      "BUTTON": {
+        "SAVE": "Speichern"
+      },
+      "FORM": {
+        "UPDATE": "Aktualisieren",
+        "EMAIL": {
+          "LABEL": "E-Mail-Adresse",
+          "PLACEHOLDER": "Bitte E-Mail-Adresse eingeben",
+          "ERROR": "Bitte eine gültige E-Mail-Adresse eingeben."
+        },
+        "PASSWORD": {
+          "LABEL": "Aktuelles Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Bitte ein gültiges Passwort eingeben."
+        },
+        "NEWPASSWORD": {
+          "LABEL": "Neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl"
+        },
+        "VERIFYPASSWORD": {
+          "LABEL": "Verifikation neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Passwort nicht identisch zum neuen Password"
+        }
+      },
+      "NOTIFICATION": {
+        "PWD_SUCCESSFUL": {
+          "HEADER": "Passwortänderung erfolgreich",
+          "TEXT": "Sie haben das Passwort erfolgreich geändert."
+        },
+        "PWD_FAILURE": {
+          "HEADER": "Passwortänderung fehlgeschlagen",
+          "TEXT": "Die Anmeldedaten sind unverändert."
+        },
+        "PWD_CONNECTION_PROBLEM": {
+          "HEADER": "Passwortänderung nicht möglich",
+          "TEXT": "Es konnte keine Verbindung zum Server aufgebaut werden."
         }
       }
     },
@@ -145,6 +191,10 @@
           "LABEL": "DSB Mitglieder",
           "DESCRIPTION": "Verwaltung der DSB Mitglieder"
         },
+        "BENUTZER": {
+          "LABEL": "Benutzer",
+          "DESCRIPTION": "Verwaltung der Benutzer-Accounts"
+        },
         "KLASSEN": {
           "LABEL": "(Wettkampf-) Klassen",
           "DESCRIPTION": "Verwaltung der Klassen"
@@ -164,12 +214,6 @@
         "SPORTJAHR": {
           "LABEL": "Sportjahre",
           "DESCRIPTION": "Verwaltung der Sportjahre"
-        }
-      },
-      "NOTIFICATION": {
-        "DELETE": {
-          "TITLE": "DSB Mannschaft löschen",
-          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
@@ -284,24 +328,6 @@
         "DELETE": {
           "TITLE": "Klasselöschen",
           "DESCRIPTION": "Wollen Sie die Klasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-        }
-      }
-    },
-    "VEREINE": {
-      "TITLE": "Vereine - Übersicht",
-      "TABLE": {
-        "HEADERS": {
-          "ID": "ID",
-          "NAME": "Verein Name",
-          "IDENTIFIER": "Identifier",
-          "REGION_ID": "Region ID",
-          "REGION_NAME": "Region Name"
-        }
-      },
-      "NOTIFICATION": {
-        "DELETE": {
-          "TITLE": "Verein löschen",
-          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
@@ -490,6 +516,73 @@
         }
       }
     },
+    "BENUTZER": {
+      "TITLE": "Benutzer - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "EMAIL": "E-Mail",
+          "ROLE": "Rolle"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Benutzer löschen",
+          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "BENUTZER_DETAIL": {
+      "TITLE": "BENUTZER - Details",
+      "FORM": {
+        "EMAIL": {
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
+          "ERROR": "Bitte eine gültige Email eingeben."
+        },
+        "ROLEOLD": {
+          "LABEL": "Aktuelle Rolle",
+          "PLACEHOLDER": "aktuelle Rolle"
+        },
+        "ROLENEW": {
+          "LABEL": "Zukünftige Rolle",
+          "PLACEHOLDER": "bitte eine Rolle wählen"
+        },
+        "UPDATE": "Aktualisieren"
+      },
+      "NOTIFICATION": {
+        "UPDATE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Rolle des Benutzer wurde erfolgreich geändert."
+        }
+      }
+    },
+    "BENUTZER_NEU": {
+      "TITLE": "BENUTZER - Neuanlage",
+      "FORM": {
+        "EMAIL": {
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Bitte eine E-Mail Adresse als Benutzerkennung eingeben",
+          "ERROR": "Bitte eine gültige Email eingeben."
+        },
+        "PASSWORD": {
+          "LABEL": "Neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort eingeben",
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl"
+        },
+        "VERIFYPASSWORD": {
+          "LABEL": "Verifikation neues Passwort",
+          "PLACEHOLDER": "Bitte Passwort wiederholen",
+          "ERROR": "Passwort nicht identisch zum neuen Password"
+        },
+        "SAVE": "Speichern"
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Das Benutzer wurde erfolgreich gespeichert."
+        }
+      }
+    },
     "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
@@ -540,93 +633,6 @@
           "DESCRIPTION": "Die Wettkampfklasse wurde erfolgreich gespeichert."
         }
       }
-    },
-    "VEREIN_DETAIL": {
-      "TITLE": "Verein - Details",
-      "FORM": {
-        "VEREIN_NAME": {
-          "LABEL": "Verein-Name",
-          "PLACEHOLDER": "Bitte einen Namen eingeben",
-          "ERROR": "Bitte einen gültigen Namen eingeben."
-        },
-        "VEREIN_IDENTIFIER": {
-          "LABEL": "Verein-Identifier",
-          "PLACEHOLDER": "Bitte einen Identifier eingeben",
-          "ERROR": "Bitte einen gültigen Identifier eingeben."
-        },
-        "VEREIN_REGION": {
-          "LABEL": "Region",
-          "PLACEHOLDER": "Bitte eine Region auswählen",
-          "ERROR": "Bitte eine gültige Region eingeben."
-        },
-        "SAVE": "Speichern",
-        "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
-      },
-      "NOTIFICATION": {
-        "DELETE": {
-          "TITLE": "Liga löschen",
-          "DESCRIPTION": "Wollen Sie die Liga mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-        },
-        "DELETE_SUCCESS": {
-          "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Liga wurde erfolgreich gelöscht."
-        },
-        "DELETE_FAILURE": {
-          "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Die Liga konnte nicht gelöscht werden."
-        },
-        "SAVE": {
-          "TITLE": "Erfolg",
-          "DESCRIPTION": "Neue Liga erfoglreich gespeichert"
-        }
-      }
-    }
-  },
-  "DSBMANNSCHAFT_DETAIL": {
-    "TITLE": "Mannschaft - Details",
-    "FORM": {
-      "DSBMANNSCHAFT_ID": {
-        "LABEL": "Mannschaft-ID",
-        "PLACEHOLDER": "Bitte eine ID eingeben",
-        "ERROR": "Bitte eine gültige ID eingeben."
-      },
-      "BENUTZER_ID": {
-        "LABEL": "Benutzer-ID",
-        "PLACEHOLDER": "Bitte eine ID eingeben",
-        "ERROR": "Bitte eine gültige ID eingeben."
-      },
-      "DSBVEREINNUMMER": {
-        "LABEL": "Vereinsname",
-        "PLACEHOLDER": "Bitte einen Vereinsnamen auswählen",
-        "ERROR": "Bitte eine gültige Vereinsnummer eingeben."
-      },
-      "DSBMANNSCHAFTNUMMER": {
-        "LABEL": "Mannschaftsnummer",
-        "PLACEHOLDER": "Bitte eine Nummer eingeben",
-        "ERROR": "Bitte eine gültige Nummer eingeben."
-      },
-      "SAVE": "Speichern",
-      "UPDATE": "Aktualisieren",
-      "DELETE": "Löschen"
-    },
-    "NOTIFICATION": {
-      "DELETE": {
-        "TITLE": "Wettkampfklasse löschen",
-        "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-      },
-      "DELETE_SUCCESS": {
-        "TITLE": "Erfolg",
-        "DESCRIPTION": "Die Mannschaft wurde erfolgreich gelöscht."
-      },
-      "DELETE_FAILURE": {
-        "TITLE": "Fehler beim Löschen",
-        "DESCRIPTION": "Die Mannschaft konnte nicht gelöscht werden."
-      },
-      "SAVE": {
-        "TITLE": "Erfolg",
-        "DESCRIPTION": "Die Mannschaft wurde erfolgreich gespeichert."
-      }
     }
   },
   "NOTIFICATION": {
@@ -667,6 +673,10 @@
       "INVALID_ARGUMENT_ERROR": {
         "TITLE": "Ungültige Anfrage",
         "DESCRIPTION": "Ihre Anfrage wurde vom Server abgewiesen."
+      },
+      "INVALID_SIGN_IN_CREDENTIALS": {
+        "TITLE": "Anmeldung nicht erfolgreich",
+        "DESCRIPTION": "Bitte prüfen sie E-Mail-Adresse und Passwort"
       },
       "DATABASE_ERROR": {
         "TITLE": "Datenbankfehler",

@@ -12,6 +12,12 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         route:          'dsbmitglieder'
       },
       {
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.DESCRIPTION',
+        icon:           'address-card',
+        route:          'benutzer'
+      },
+      {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
         icon:           'wrench',
