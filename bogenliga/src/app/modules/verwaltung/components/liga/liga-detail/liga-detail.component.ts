@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
 import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
-import {UserProfileDTO} from '../../../../user/types/dataTransfer/user-profile-dto.class';
+import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.class';
 import {
   Notification,
   NotificationOrigin,
