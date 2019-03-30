@@ -5,7 +5,7 @@ import {isUndefined} from '@shared/functions';
 import {CommonComponent} from '../../../shared/components/common';
 import {toTableRows} from '../../../shared/components/tables';
 import {TableRow} from '../../../shared/components/tables/types/table-row.class';
-import {Response} from '../../../shared/data-provider';
+import {BogenligaResponse} from '../../../shared/data-provider';
 import {NotificationService} from '../../../shared/services/notification';
 import {DsbMannschaftDataProviderService} from '../../../verwaltung/services/dsb-mannschaft-data-provider.service';
 import {RegionDataProviderService} from '../../../verwaltung/services/region-data-provider.service';
@@ -60,17 +60,17 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
   private loadVereinById(id: number) {
     this.VereinProvider.findById(id)
-      .then((response: Response<VereinDO>) => this.handleVereinSuccess(response))
-      .catch((response: Response<VereinDO>) => this.handleVereinFailure(response));
+      .then((response: BogenligaResponse<VereinDO>) => this.handleVereinSuccess(response))
+      .catch((response: BogenligaResponse<VereinDO>) => this.handleVereinFailure(response));
   }
 
-  private handleVereinSuccess(response: Response<VereinDO>) {
+  private handleVereinSuccess(response: BogenligaResponse<VereinDO>) {
     this.currentVerein = response.payload;
     this.loadMannschaften();
     this.loading = false;
   }
 
-  private handleVereinFailure(response: Response<VereinDO>) {
+  private handleVereinFailure(response: BogenligaResponse<VereinDO>) {
     this.loading = false;
   }
 
@@ -78,11 +78,11 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
       this.loading = true;
 
       this.DsbMannschaftDataProvider.findAll()
-      .then((response: Response<DsbMannschaftDTO[]>) => this.handleMannschaftenSuccess(response))
-      .catch((response: Response<DsbMannschaftDTO[]>) => this.handleMannschaftenFailure(response));
+      .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleMannschaftenSuccess(response))
+      .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleMannschaftenFailure(response));
   }
 
-  private handleMannschaftenSuccess(response: Response<DsbMannschaftDTO[]>): void {
+  private handleMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = []; // Reset Array
 
     this.mannschaften = response.payload;
@@ -92,7 +92,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
-  private handleMannschaftenFailure(response: Response<DsbMannschaftDTO[]>): void {
+  private handleMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
     console.log('Error, could not load Mannschaften: ' + response);
     this.loading = false;
@@ -116,17 +116,17 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
     this.loading = true;
 
     this.MannschaftsmitgliederDataProvider.findByMannschaftId(this.currentMannschaft.id)
-      .then((response: Response<MannschaftsMitgliedDTO[]>) => this.handleMannschftsmitgliedSuccess(response))
-      .catch((response: Response<MannschaftsMitgliedDTO[]>) => this.handleMannschaftsmitgliedFailure(response));
+      .then((response: BogenligaResponse<MannschaftsMitgliedDTO[]>) => this.handleMannschftsmitgliedSuccess(response))
+      .catch((response: BogenligaResponse<MannschaftsMitgliedDTO[]>) => this.handleMannschaftsmitgliedFailure(response));
   }
 
-  private handleMannschftsmitgliedSuccess(response: Response<MannschaftsMitgliedDTO[]>): void {
+  private handleMannschftsmitgliedSuccess(response: BogenligaResponse<MannschaftsMitgliedDTO[]>): void {
     this.mannschaftsMitglieder = response.payload;
     this.mannschaftsMitdliedRows = toTableRows(response.payload);
     this.loading = false;
   }
 
-  private handleMannschaftsmitgliedFailure(response: Response<MannschaftsMitgliedDTO[]>): void {
+  private handleMannschaftsmitgliedFailure(response: BogenligaResponse<MannschaftsMitgliedDTO[]>): void {
     this.mannschaftsMitglieder = [];
     console.log('Error, could not load Mannschaftsmitglieder: ' + response);
     this.loading = false;

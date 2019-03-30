@@ -1,6 +1,6 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {ElementRef} from '@angular/core';
-import {RequestResult, Response} from '..';
+import {RequestResult, BogenligaResponse} from '..';
 import {DataProviderService} from './data-provider.service';
 import {RestClient} from './rest-client.class';
 
@@ -19,7 +19,7 @@ export abstract class ResourceProviderService extends DataProviderService {
    * @param fileName of the downloaded file
    * @param targetHtmlLinkElement dynamically extended with the resource url
    */
-  public downloadFile(url: string, fileName: string, targetHtmlLinkElement: ElementRef): Promise<Response<string>> {
+  public downloadFile(url: string, fileName: string, targetHtmlLinkElement: ElementRef): Promise<BogenligaResponse<string>> {
     return new Promise((resolve, reject) => {
       this.getRestClient().DOWNLOAD(url)
           .then((resource: Blob) => {

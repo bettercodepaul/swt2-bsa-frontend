@@ -1,6 +1,6 @@
 import {RequestResult} from '..';
 
-export interface Response<T> {
+export interface BogenligaResponse<T> {
   payload?: T;
   result: RequestResult;
 }

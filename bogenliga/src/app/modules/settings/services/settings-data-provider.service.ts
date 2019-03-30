@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {HttpErrorResponse} from '@angular/common/http';
-import {DataProviderService, RequestResult, Response, RestClient, UriBuilder} from '../../shared/data-provider';
+import {DataProviderService, RequestResult, BogenligaResponse, RestClient, UriBuilder} from '../../shared/data-provider';
 import {Data} from '../types/data';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class SettingsDataProviderService extends DataProviderService {
     super();
   }
 
-  public addOne(payload: Data): Promise<Response<Data>> {
+  public addOne(payload: Data): Promise<BogenligaResponse<Data>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -35,7 +35,7 @@ export class SettingsDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: Data): Promise<Response<Data>> {
+  public update(payload: Data): Promise<BogenligaResponse<Data>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -55,7 +55,7 @@ export class SettingsDataProviderService extends DataProviderService {
     });
   }
 
-  public deleteById(key: string): Promise<Response<void>> {
+  public deleteById(key: string): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -75,7 +75,7 @@ export class SettingsDataProviderService extends DataProviderService {
     });
   }
 
-  public findAll(): Promise<Response<Data[]>> {
+  public findAll(): Promise<BogenligaResponse<Data[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -96,7 +96,7 @@ export class SettingsDataProviderService extends DataProviderService {
     });
   }
 
-  public findById(key: string): Promise<Response<Data>> {
+  public findById(key: string): Promise<BogenligaResponse<Data>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

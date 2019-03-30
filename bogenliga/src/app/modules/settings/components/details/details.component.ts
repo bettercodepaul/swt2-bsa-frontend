@@ -6,7 +6,7 @@ import {isUndefined} from '@shared/functions';
 import {Data} from '../../types/data';
 
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import {Response} from '../../../shared/data-provider';
+import {BogenligaResponse} from '../../../shared/data-provider';
 import {SettingsDataProviderService} from '../../services/settings-data-provider.service';
 
 @Component({
@@ -49,7 +49,7 @@ export class DetailsComponent implements OnInit {
    * resets data of this for next input
    */
   public saveNewData(): void {
-    this.dataService.addOne(new Data(this.data.key, this.data.value)).then(((response: Response<Data>) => console.log('Setting persisted')));
+    this.dataService.addOne(new Data(this.data.key, this.data.value)).then(((response: BogenligaResponse<Data>) => console.log('Setting persisted')));
     this.data = new Data();
   }
 
@@ -58,7 +58,7 @@ export class DetailsComponent implements OnInit {
    * calls service
    */
   saveData(): void {
-    this.dataService.update(this.data).then(((response: Response<Data>) => console.log('Setting updated')));
+    this.dataService.update(this.data).then(((response: BogenligaResponse<Data>) => console.log('Setting updated')));
   }
 
   /**
@@ -66,7 +66,7 @@ export class DetailsComponent implements OnInit {
    * calls service
    */
   deleteThisData(): void {
-    this.dataService.deleteById(this.dataKey).then((response: Response<void>) => {
+    this.dataService.deleteById(this.dataKey).then((response: BogenligaResponse<void>) => {
       console.log('Setting deleted');
       this.router.navigateByUrl(this.destinationRouteAfterDelete);
     });
@@ -79,7 +79,7 @@ export class DetailsComponent implements OnInit {
       if (!isUndefined(params.key)) {
         settingsKey = params.key;
         this.dataKey = settingsKey;
-        this.dataService.findById(settingsKey).then((response: Response<Data>) => this.data = response.payload);
+        this.dataService.findById(settingsKey).then((response: BogenligaResponse<Data>) => this.data = response.payload);
         this.dataSelected = true;
       }
     });

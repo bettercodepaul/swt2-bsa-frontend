@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -24,7 +24,7 @@ export class VereinDataProviderService extends DataProviderService {
     super();
   }
 
-  public findAll(): Promise<Response<VereinDO[]>> {
+  public findAll(): Promise<BogenligaResponse<VereinDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -43,7 +43,7 @@ export class VereinDataProviderService extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<Response<void>> {
+  public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -63,7 +63,7 @@ export class VereinDataProviderService extends DataProviderService {
     });
   }
 
-  public findById(id: string | number): Promise<Response<VereinDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<VereinDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -84,7 +84,7 @@ export class VereinDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<VereinDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<VereinDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -104,7 +104,7 @@ export class VereinDataProviderService extends DataProviderService {
     });
   }
 
-  public create(payload: VereinDO): Promise<Response<VereinDO>> {
+  public create(payload: VereinDO): Promise<BogenligaResponse<VereinDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

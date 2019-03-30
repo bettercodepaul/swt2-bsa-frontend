@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -24,7 +24,7 @@ export class RegionDataProviderService extends DataProviderService {
     super();
   }
 
-  public findAll(): Promise<Response<RegionDO[]>> {
+  public findAll(): Promise<BogenligaResponse<RegionDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -43,7 +43,7 @@ export class RegionDataProviderService extends DataProviderService {
     });
   }
 
-  public findAllByType(type: string): Promise<Response<RegionDO[]>> {
+  public findAllByType(type: string): Promise<BogenligaResponse<RegionDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

@@ -1,5 +1,5 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {Response, RestClient, UriBuilder} from '../../shared/data-provider';
+import {BogenligaResponse, RestClient, UriBuilder} from '../../shared/data-provider';
 import {ResourceProviderService} from '../../shared/data-provider/services/resource-provider.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class HelloResourceProviderService extends ResourceProviderService {
     super();
   }
 
-  public downloadExamplePdf(url: string, fileName: string, aElement: ElementRef): Promise<Response<string>> {
+  public downloadExamplePdf(url: string, fileName: string, aElement: ElementRef): Promise<BogenligaResponse<string>> {
     return this.downloadFile(new UriBuilder().fromPath(this.getUrl()).path(url).build(), fileName, aElement);
   }
 

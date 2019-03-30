@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType} from '../../../../shared/components/buttons';
+import {ButtonType} from '@shared/components';
 import {LigaDO} from '../../../types/liga-do.class';
-import {Router} from '@angular/router';
-import {ActivatedRoute} from '@angular/router';
 import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
 import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
 import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.class';
@@ -16,18 +14,14 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
-import {UserProfileDTO} from '../../../../user/types/dataTransfer/user-profile-dto.class';
-import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
 import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
-import {LigaDO} from '../../../types/liga-do.class';
 import {RegionDO} from '../../../types/region-do.class';
-import {LIGA_DETAIL_CONFIG} from '../../liga/liga-detail/liga-detail.config';
+import {LIGA_DETAIL_CONFIG} from './liga-detail.config';
 import {CommonComponent} from '@shared/components';
-
+import {BogenligaResponse} from '@shared/data-provider';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';
@@ -117,7 +111,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
 
     // persist
     this.ligaDataProvider.create(this.currentLiga)
-        .then((response: Response<LigaDO>) => {
+        .then((response: BogenligaResponse<LigaDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -143,7 +137,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<LigaDO>) => {
+        }, (response: BogenligaResponse<LigaDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -159,7 +153,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
     // persist
     this.ligaDataProvider.update(this.currentLiga)
-        .then((response: Response<LigaDO>) => {
+        .then((response: BogenligaResponse<LigaDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -186,7 +180,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<LigaDO>) => {
+        }, (response: BogenligaResponse<LigaDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -228,30 +222,30 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
 
   private loadById(id: number) {
     this.ligaDataProvider.findById(id)
-        .then((response: Response<LigaDO>) => this.handleSuccess(response))
-        .catch((response: Response<LigaDO>) => this.handleFailure(response));
+        .then((response: BogenligaResponse<LigaDO>) => this.handleSuccess(response))
+        .catch((response: BogenligaResponse<LigaDO>) => this.handleFailure(response));
   }
 
   private loadRegions() {
     this.regionProvider.findAll()
-      .then((response: Response<RegionDO[]>) => this.handleResponseArraySuccess(response))
-      .catch((response: Response<RegionDTO[]>) => this.handleResponseArrayFailure(response));
+      .then((response: BogenligaResponse<RegionDO[]>) => this.handleResponseArraySuccess(response))
+      .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
 
   private loadUebergeordnete() {
     this.ligaDataProvider.findAll()
-      .then((response: Response<LigaDO[]>) => this.handlUebergeordnetResponseArraySuccess (response))
-      .catch((response: Response<LigaDTO[]>) => this.handleUebergeordnetResponseArrayFailure (response));
+      .then((response: BogenligaResponse<LigaDO[]>) => this.handlUebergeordnetResponseArraySuccess (response))
+      .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleUebergeordnetResponseArrayFailure (response));
   }
 
   private loadUsers() {
     this.userProvider.findAll()
-        .then( (response: Response<UserProfileDO[]>) => this.handleUserResponseArraySuccess (response))
-        .catch((response: Response<UserProfileDTO[]>) => this.handleUserResponseArrayFailure (response));
+        .then( (response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess (response))
+        .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure (response));
 
   }
 
-  private handleSuccess(response: Response<LigaDO>) {
+  private handleSuccess(response: BogenligaResponse<LigaDO>) {
     this.currentLiga = response.payload;
     this.loading = false;
 
@@ -260,12 +254,12 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.loadUsers();
   }
 
-  private handleFailure(response: Response<LigaDO>) {
+  private handleFailure(response: BogenligaResponse<LigaDO>) {
     this.loading = false;
 
   }
 
-  private handleDeleteSuccess(response: Response<void>): void {
+  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_LIGA_SUCCESS,
@@ -288,7 +282,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleDeleteFailure(response: Response<void>): void {
+  private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_LIGA_FAILURE,
@@ -310,7 +304,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleResponseArraySuccess(response: Response<RegionDO[]>): void {
+  private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
     this.regionen = [];
     this.regionen = response.payload;
     if (this.id === 'add') {
@@ -321,12 +315,12 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.loading = false;
   }
 
-  private handleResponseArrayFailure(response: Response<RegionDTO[]>): void {
+  private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
     this.regionen = [];
     this.loading = false;
   }
 
-  private handlUebergeordnetResponseArraySuccess(response: Response<LigaDO[]>): void {
+  private handlUebergeordnetResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allUebergeordnete = [];
     this.allUebergeordnete = response.payload;
     if (this.id === 'add') {
@@ -337,12 +331,12 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.loading = false;
   }
 
-  private handleUebergeordnetResponseArrayFailure(response: Response<LigaDTO[]>): void {
+  private handleUebergeordnetResponseArrayFailure(response: BogenligaResponse<LigaDTO[]>): void {
     this.allUebergeordnete = [];
     this.loading = false;
   }
 
-  private handleUserResponseArraySuccess(response: Response<UserProfileDO[]>): void {
+  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
     this.allUsers = [];
     this.allUsers = response.payload;
     if (this.id === 'add') {
@@ -353,7 +347,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.loading = false;
   }
 
-  private handleUserResponseArrayFailure(response: Response<UserProfileDTO[]>): void {
+  private handleUserResponseArrayFailure(response: BogenligaResponse<UserProfileDTO[]>): void {
     this.allUsers = [];
     this.loading = false;
   }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -69,7 +69,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
-        .then((response: Response<DsbMitgliedDO>) => {
+        .then((response: BogenligaResponse<DsbMitgliedDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -95,7 +95,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<DsbMitgliedDO>) => {
+        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -109,7 +109,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
     // persist
     this.dsbMitgliedDataProvider.update(this.currentMitglied)
-        .then((response: Response<DsbMitgliedDO>) => {
+        .then((response: BogenligaResponse<DsbMitgliedDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -136,7 +136,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<DsbMitgliedDO>) => {
+        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -179,21 +179,21 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   private loadById(id: number) {
     this.dsbMitgliedDataProvider.findById(id)
-        .then((response: Response<DsbMitgliedDO>) => this.handleSuccess(response))
-        .catch((response: Response<DsbMitgliedDO>) => this.handleFailure(response));
+        .then((response: BogenligaResponse<DsbMitgliedDO>) => this.handleSuccess(response))
+        .catch((response: BogenligaResponse<DsbMitgliedDO>) => this.handleFailure(response));
   }
 
-  private handleSuccess(response: Response<DsbMitgliedDO>) {
+  private handleSuccess(response: BogenligaResponse<DsbMitgliedDO>) {
     this.currentMitglied = response.payload;
     this.loading = false;
   }
 
-  private handleFailure(response: Response<DsbMitgliedDO>) {
+  private handleFailure(response: BogenligaResponse<DsbMitgliedDO>) {
     this.loading = false;
 
   }
 
-  private handleDeleteSuccess(response: Response<void>): void {
+  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS,
@@ -216,7 +216,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     this.notificationService.showNotification(notification);
   }
 
-  private handleDeleteFailure(response: Response<void>): void {
+  private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE,

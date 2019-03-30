@@ -4,7 +4,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -24,7 +24,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     super();
   }
 
-  public create(payload: MannschaftsMitgliedDO): Promise<Response<MannschaftsMitgliedDO>> {
+  public create(payload: MannschaftsMitgliedDO): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -44,7 +44,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     });
   }
 
-  public deleteById(id: number): Promise<Response<void>> {
+  public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -65,7 +65,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
 
-  public findAll(): Promise<Response<MannschaftsMitgliedDO[]>> {
+  public findAll(): Promise<BogenligaResponse<MannschaftsMitgliedDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -87,7 +87,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
 
-  public findById(id: string | number): Promise<Response<MannschaftsMitgliedDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -108,7 +108,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<MannschaftsMitgliedDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

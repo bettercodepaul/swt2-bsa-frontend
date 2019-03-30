@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -28,7 +28,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     super();
   }
 
-  public create(payload: CredentialsDTO): Promise<Response<BenutzerDO>> {
+  public create(payload: CredentialsDTO): Promise<BogenligaResponse<BenutzerDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -48,7 +48,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: BenutzerRolleDTO): Promise<Response<BenutzerDO>> {
+  public update(payload: BenutzerRolleDTO): Promise<BogenligaResponse<BenutzerDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -68,7 +68,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<Response<void>> {
+  public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -89,7 +89,7 @@ export class BenutzerDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<Response<BenutzerRolleDO[]>> {
+  public findAll(): Promise<BogenligaResponse<BenutzerRolleDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -111,7 +111,7 @@ export class BenutzerDataProviderService extends DataProviderService {
   }
 
 
-  public findUserRoleById(id: string | number): Promise<Response<BenutzerRolleDO>> {
+  public findUserRoleById(id: string | number): Promise<BogenligaResponse<BenutzerRolleDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -134,7 +134,7 @@ export class BenutzerDataProviderService extends DataProviderService {
 
 
 
-  public findById(id: string | number): Promise<Response<BenutzerDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<BenutzerDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

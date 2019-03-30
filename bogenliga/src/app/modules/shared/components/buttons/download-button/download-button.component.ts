@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {Response} from '../../../data-provider';
+import {BogenligaResponse} from '../../../data-provider';
 import {NotificationService} from '../../../services/notification';
 import {
   Notification,
@@ -45,7 +45,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
         .catch((response) => this.handleFailure(response));
   }
 
-  private handleSuccess(response: Response<string>): void {
+  private handleSuccess(response: BogenligaResponse<string>): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_SUCCESS,
@@ -68,7 +68,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleFailure(response: Response<void>): void {
+  private handleFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,

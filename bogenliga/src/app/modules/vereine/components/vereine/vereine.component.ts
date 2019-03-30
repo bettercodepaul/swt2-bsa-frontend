@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {CommonComponent} from '../../../shared/components/common';
 import {toTableRows} from '../../../shared/components/tables';
 import {TableRow} from '../../../shared/components/tables/types/table-row.class';
-import {Response} from '../../../shared/data-provider';
+import {BogenligaResponse} from '../../../shared/data-provider';
 import {NotificationService} from '../../../shared/services/notification';
 import {VereineDataProviderService} from '../../services/vereine-data-provider.service';
 import {VereineDTO} from '../../types/datatransfer/vereine-dto.class';
@@ -45,18 +45,18 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.loading = true;
 
     this.vereineDataProvider.findAll()
-      .then((response: Response<VereineDTO[]>) => this.handleLoadTableRowsSuccess(response))
-      .catch((response: Response<VereineDTO[]>) => this.handleLoadTableRowsFailure(response));
+      .then((response: BogenligaResponse<VereineDTO[]>) => this.handleLoadTableRowsSuccess(response))
+      .catch((response: BogenligaResponse<VereineDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private handleLoadTableRowsSuccess(response: Response<VereineDO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<VereineDO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     console.log(this.rows);
     this.loading = false;
   }
 
-  private handleLoadTableRowsFailure(response: Response<VereineDO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<VereineDO[]>): void {
     this.rows = [];
     this.loading = false;
   }

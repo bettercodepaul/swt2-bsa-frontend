@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {CommonComponent} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
@@ -80,20 +80,20 @@ export class VereinOverviewComponent extends CommonComponent implements OnInit {
     this.loading = true;
 
     this.vereinDataProvider.findAll()
-        .then((response: Response<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/vereine/' + versionedDataObject.id);
   }
 
-  private handleLoadTableRowsFailure(response: Response<VereinDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<VereinDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: Response<VereinDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<VereinDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

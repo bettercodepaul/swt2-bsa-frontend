@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -78,7 +78,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
     // persist
     this.DsbMannschaftDataProvider.create(this.currentDsbMannschaft, this.currentVerein)
-        .then((response: Response<DsbMannschaftDO>) => {
+        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -104,7 +104,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<DsbMannschaftDO>) => {
+        }, (response: BogenligaResponse<DsbMannschaftDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -151,7 +151,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
     // persist
     this.DsbMannschaftDataProvider.update(this.currentDsbMannschaft)
-        .then((response: Response<DsbMannschaftDO>) => {
+        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -178,7 +178,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<DsbMannschaftDO>) => {
+        }, (response: BogenligaResponse<DsbMannschaftDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -221,27 +221,27 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
 
   private loadById(id: number) {
     this.DsbMannschaftDataProvider.findById(id)
-        .then((response: Response<DsbMannschaftDO>) => this.handleSuccess(response))
-        .catch((response: Response<DsbMannschaftDO>) => this.handleFailure(response));
+        .then((response: BogenligaResponse<DsbMannschaftDO>) => this.handleSuccess(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleFailure(response));
   }
 
   private loadVerein() {
     this.vereinProvider.findAll()
-        .then((response: Response<VereinDO[]>) => this.handleResponseArraySuccess(response))
-        .catch((response: Response<VereinDTO[]>) => this.handleResponseArrayFailure(response));
+        .then((response: BogenligaResponse<VereinDO[]>) => this.handleResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleResponseArrayFailure(response));
   }
 
-  private handleSuccess(response: Response<DsbMannschaftDO>) {
+  private handleSuccess(response: BogenligaResponse<DsbMannschaftDO>) {
     this.currentDsbMannschaft = response.payload;
     this.loading = false;
   }
 
-  private handleFailure(response: Response<DsbMannschaftDO>) {
+  private handleFailure(response: BogenligaResponse<DsbMannschaftDO>) {
     this.loading = false;
 
   }
 
-  private handleDeleteSuccess(response: Response<void>): void {
+  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS,
@@ -264,7 +264,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.notificationService.showNotification(notification);
   }
 
-  private handleDeleteFailure(response: Response<void>): void {
+  private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE,
@@ -286,14 +286,14 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.notificationService.showNotification(notification);
   }
 
-  private handleResponseArraySuccess(response: Response<VereinDTO[]>): void {
+  private handleResponseArraySuccess(response: BogenligaResponse<VereinDTO[]>): void {
     this.verein = [];
     this.verein = response.payload;
     this.currentVerein = this.verein[0];
     this.loading = false;
   }
 
-  private handleResponseArrayFailure(response: Response<VereinDTO[]>): void {
+  private handleResponseArrayFailure(response: BogenligaResponse<VereinDTO[]>): void {
     this.verein = [];
     this.loading = false;
   }

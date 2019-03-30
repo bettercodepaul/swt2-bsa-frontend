@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {CommonComponent} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
@@ -80,20 +80,20 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
     this.loading = true;
 
     this.dsbMitgliedDataProvider.findAll()
-        .then((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private  navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + versionedDataObject.id);
   }
 
-  private handleLoadTableRowsFailure(response: Response<DsbMitgliedDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: Response<DsbMitgliedDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

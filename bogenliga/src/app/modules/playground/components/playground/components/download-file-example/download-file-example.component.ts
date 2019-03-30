@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {environment} from '../../../../../../../environments/environment';
-import {Response, UriBuilder} from '../../../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '../../../../../shared/data-provider';
 import {NotificationService} from '../../../../../shared/services/notification';
 import {
   Notification,
@@ -56,7 +56,7 @@ export class DownloadFileExampleComponent implements OnInit {
 
   }
 
-  private handleSuccess(response: Response<string>, fileType: string): void {
+  private handleSuccess(response: BogenligaResponse<string>, fileType: string): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_SUCCESS,
@@ -79,7 +79,7 @@ export class DownloadFileExampleComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleFailure(response: Response<void>, fileType: string): void {
+  private handleFailure(response: BogenligaResponse<void>, fileType: string): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,

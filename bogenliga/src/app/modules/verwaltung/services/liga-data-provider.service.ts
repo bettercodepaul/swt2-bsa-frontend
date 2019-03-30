@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -22,7 +22,7 @@ export class LigaDataProviderService  extends DataProviderService {
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
     super();
   }
-  public findAll(): Promise<Response<LigaDO[]>> {
+  public findAll(): Promise<BogenligaResponse<LigaDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -41,7 +41,7 @@ export class LigaDataProviderService  extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<Response<void>> {
+  public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -63,7 +63,7 @@ export class LigaDataProviderService  extends DataProviderService {
 
 
 
-  public findById(id: string | number): Promise<Response<LigaDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<LigaDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -84,7 +84,7 @@ export class LigaDataProviderService  extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<LigaDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<LigaDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -103,7 +103,7 @@ export class LigaDataProviderService  extends DataProviderService {
           });
     });
   }
-  public create(payload: LigaDO): Promise<Response<LigaDO>> {
+  public create(payload: LigaDO): Promise<BogenligaResponse<LigaDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

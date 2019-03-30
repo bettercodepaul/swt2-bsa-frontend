@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CommonComponent} from '../../../../shared/components/common';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
@@ -81,8 +81,8 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
     this.loading = true;
 
     this.DsbMannschaftDataProvider.findAll()
-        .then((response: Response<DsbMannschaftDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<DsbMannschaftDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
@@ -93,12 +93,12 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
     this.router.navigateByUrl('/verwaltung/dsbmannschaft/' + versionedDataObject.id);
   }
 
-  private handleLoadTableRowsFailure(response: Response<DsbMannschaftDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: Response<DsbMannschaftDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

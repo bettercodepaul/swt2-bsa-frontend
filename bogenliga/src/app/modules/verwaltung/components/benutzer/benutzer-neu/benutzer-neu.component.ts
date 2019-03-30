@@ -1,14 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {BENUTZER_NEU_CONFIG} from './benutzer-neu.config';
-import {Response} from '../../../../shared/data-provider';
-import {ButtonType, CommonComponent, toTableRows} from '../../../../shared/components';
+import {BogenligaResponse} from '@shared/data-provider';
+import {ButtonType, CommonComponent} from '../../../../shared/components';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from 'util';
-import {BenutzerDO} from "../../../types/benutzer-do.class";
-import {CredentialsDO} from "../../../../user/types/credentials-do.class";
-import {CredentialsDTO} from "../../../../user/types/model/credentials-dto.class";
-import {RoleDTO} from "../../../types/datatransfer/role-dto.class";
+import {isNullOrUndefined} from '@shared/functions';
+import {BenutzerDO} from '../../../types/benutzer-do.class';
+import {CredentialsDO} from '@user/types/credentials-do.class';
+import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
 
 import {
   Notification,
@@ -18,8 +17,6 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {BenutzerRolleDO} from "../../../types/benutzer-rolle-do.class";
-import {RoleDO} from "../../../types/role-do.class";
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_BENUTZER = 'benutzer_neu_save';
@@ -67,7 +64,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
 
     this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password);
     this.benutzerDataProvider.create(this.currentCredentialsDTO)
-        .then((response: Response<BenutzerDO>) => {
+        .then((response: BogenligaResponse<BenutzerDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -93,7 +90,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<BenutzerDO>) => {
+        }, (response: BogenligaResponse<BenutzerDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
