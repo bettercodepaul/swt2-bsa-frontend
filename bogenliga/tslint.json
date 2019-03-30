@@ -1,21 +1,27 @@
 {
+  "extends": "tslint:recommended",
   "rulesDirectory": [
-    "node_modules/codelyzer"
+    "codelyzer"
   ],
   "rules": {
     "class-name": true,
+    "array-type": false,
+    "arrow-parens": true,
+    "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
+    "deprecation": {
+      "severity": "warn" // ignore warning
+    },
     "comment-format": [
       true,
       "check-space"
     ],
-    "curly": true,
-    "eofline": true,
-    "forin": true,
-    "indent": [
+    "import-blacklist": [
       true,
-      "spaces"
+      "rxjs/Rx"
     ],
     "label-position": true,
+    "interface-name": false,
+    "max-classes-per-file": false,
     "max-line-length": [
       true,
       200
@@ -23,11 +29,16 @@
     "member-access": false,
     "member-ordering": [
       true,
-      "static-before-instance",
-      "variables-before-functions"
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "instance-method"
+        ]
+      }
     ],
-    "no-arg": true,
-    "no-bitwise": true,
+    "no-consecutive-blank-lines": false,
     "no-console": [
       true,
       "debug",
@@ -47,8 +58,7 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
-    "no-unused-variable": true,
-    "no-use-before-declare": true,
+    "no-use-before-declare": true, // ignore warning
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [
@@ -63,9 +73,6 @@
       "single"
     ],
     "radix": true,
-    "semicolon": [
-      "always"
-    ],
     "triple-equals": [
       true,
       "allow-null-check"
@@ -89,7 +96,8 @@
       "check-separator",
       "check-type"
     ],
-
+    "trailing-comma": false,
+    "no-output-on-prefix": false,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,
@@ -98,8 +106,6 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true,
-    "templates-use-public": true,
-    "invoke-injectable": true
+    "directive-class-suffix": true
   }
 }

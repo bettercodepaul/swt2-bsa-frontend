@@ -1,10 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {CommonComponent} from '../../../../shared/components/common';
-import {LIGA_DETAIL_CONFIG} from '../../liga/liga-detail/liga-detail.config';
-import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
-import {RegionDataProviderService} from '../../../services/region-data-provider.service';
-import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
-import {RegionDO} from '../../../types/region-do.class';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType} from '../../../../shared/components/buttons';
 import {LigaDO} from '../../../types/liga-do.class';
 import {Router} from '@angular/router';
@@ -16,12 +12,21 @@ import {
   Notification,
   NotificationOrigin,
   NotificationService,
-  NotificationSeverity, NotificationType, NotificationUserAction
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
 } from '../../../../shared/services/notification';
-import {isNullOrUndefined, isUndefined} from 'util';
-import {Response} from '../../../../shared/data-provider';
+import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
+import {UserProfileDTO} from '../../../../user/types/dataTransfer/user-profile-dto.class';
+import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
+import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
+import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
-
+import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
+import {LigaDO} from '../../../types/liga-do.class';
+import {RegionDO} from '../../../types/region-do.class';
+import {LIGA_DETAIL_CONFIG} from '../../liga/liga-detail/liga-detail.config';
+import {CommonComponent} from '@shared/components';
 
 
 const ID_PATH_PARAM = 'id';
@@ -56,11 +61,11 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
   public id;
 
   constructor(private ligaDataProvider: LigaDataProviderService,
-    private regionProvider: RegionDataProviderService,
-    private userProvider: UserProfileDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private regionProvider: RegionDataProviderService,
+              private userProvider: UserProfileDataProviderService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -68,7 +73,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
 
     this.loading = true;
     this.notificationService.discardNotification();
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
@@ -92,19 +97,19 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
 
-    if(typeof this.currentUbergeordneteLiga === 'undefined') {
+    if (typeof this.currentUbergeordneteLiga === 'undefined') {
       this.currentLiga.ligaUebergeordnetId = null;
     } else {
-      this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id
+      this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
     }
 
-    if(typeof this.currentRegion  === 'undefined') {
+    if (typeof this.currentRegion  === 'undefined') {
       this.currentLiga.regionId = null;
     } else {
       this.currentLiga.regionId = this.currentRegion.id;
     }
 
-    if(typeof this.currentUser  === 'undefined') {
+    if (typeof this.currentUser  === 'undefined') {
       this.currentLiga.ligaVerantwortlichId = null;
     } else {
       this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
@@ -129,7 +134,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_LIGA)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/liga/' + response.payload.id);
@@ -172,7 +177,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_LIGA + id)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/liga');
@@ -205,12 +210,12 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_LIGA + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.ligaDataProvider.deleteById(id)
-                .then(response => this.handleDeleteSuccess(response))
-                .catch(response => this.handleDeleteFailure(response));
+                .then((response) => this.handleDeleteSuccess(response))
+                .catch((response) => this.handleDeleteFailure(response));
           }
         });
 
@@ -242,7 +247,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
   private loadUsers() {
     this.userProvider.findAll()
         .then( (response: Response<UserProfileDO[]>) => this.handleUserResponseArraySuccess (response))
-        .catch((response: Response<UserProfileDTO[]>) => this.handleUserResponseArrayFailure (response))
+        .catch((response: Response<UserProfileDTO[]>) => this.handleUserResponseArrayFailure (response));
 
   }
 
@@ -273,7 +278,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_LIGA_SUCCESS)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.router.navigateByUrl('/verwaltung/liga');
             this.deleteLoading = false;
@@ -296,7 +301,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_LIGA_FAILURE)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
           }
@@ -311,7 +316,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     if (this.id === 'add') {
       this.currentRegion = this.regionen[0];
     } else {
-      this.currentRegion = this.regionen.filter(region => region.id === this.currentLiga.regionId)[0];
+      this.currentRegion = this.regionen.filter((region) => region.id === this.currentLiga.regionId)[0];
     }
     this.loading = false;
   }
@@ -327,7 +332,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     if (this.id === 'add') {
       this.currentUbergeordneteLiga = this.allUebergeordnete[0];
     } else {
-      this.currentUbergeordneteLiga = this.allUebergeordnete.filter(uebergeordnet => uebergeordnet.id === this.currentLiga.ligaUebergeordnetId)[0];
+      this.currentUbergeordneteLiga = this.allUebergeordnete.filter((uebergeordnet) => uebergeordnet.id === this.currentLiga.ligaUebergeordnetId)[0];
     }
     this.loading = false;
   }
@@ -343,7 +348,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
     if (this.id === 'add') {
       this.currentUser = this.allUsers[0];
     } else {
-      this.currentUser = this.allUsers.filter(user => user.id === this.currentLiga.ligaVerantwortlichId)[0];
+      this.currentUser = this.allUsers.filter((user) => user.id === this.currentLiga.ligaVerantwortlichId)[0];
     }
     this.loading = false;
   }

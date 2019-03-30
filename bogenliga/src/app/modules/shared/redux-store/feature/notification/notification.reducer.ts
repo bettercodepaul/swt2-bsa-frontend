@@ -1,6 +1,6 @@
-import {NotificationState} from './notification.state';
-import * as Actions from './notification.actions';
 import {Notification, NotificationUserAction} from '../../../services/notification/types';
+import * as Actions from './notification.actions';
+import {NotificationState} from './notification.state';
 
 export const initialNavigationState: NotificationState = {
   showNotification: false,

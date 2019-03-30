@@ -1,5 +1,5 @@
-import {UserPermission} from '../../../modules/shared/services/current-user';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
+import {UserPermission} from '@shared/services';
 import {SideBarNavigationSubitem} from './sidebar-navigation-subitem.interface';
 
 export interface SideBarNavigationItem {

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {isNullOrUndefined} from '@shared/functions';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
-import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'bla-selectionlist',
@@ -61,12 +61,12 @@ export class SelectionlistComponent implements OnInit, OnChanges {
 
     const selectedItems: VersionedDataObject[] = [];
 
-    $event.forEach(itemId => {
-      this.items.forEach(item => {
+    $event.forEach((itemId) => {
+      this.items.forEach((item) => {
         if (item.id === itemId) {
           selectedItems.push(item);
         }
-      })
+      });
     });
     console.log('On Selection Changed: ' + JSON.stringify(selectedItems));
 

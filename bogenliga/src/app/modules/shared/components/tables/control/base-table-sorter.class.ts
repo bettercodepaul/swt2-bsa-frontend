@@ -1,9 +1,9 @@
-import {TableConfig} from '../types/table-config.interface';
-import {TableColumnConfig} from '../types/table-column-config.interface';
-import {isNullOrUndefined} from 'util';
-import {TableColumnSortOrder} from '../types/table-column-sort-order.enum';
-import {TableRow} from '../types/table-row.class';
+import {isNullOrUndefined} from '@shared/functions';
 import {CustomPropertySortOrder} from '../types/custom-sort-order.class';
+import {TableColumnConfig} from '../types/table-column-config.interface';
+import {TableColumnSortOrder} from '../types/table-column-sort-order.enum';
+import {TableConfig} from '../types/table-config.interface';
+import {TableRow} from '../types/table-row.class';
 
 
 export abstract class BaseTableSorter {
@@ -14,7 +14,7 @@ export abstract class BaseTableSorter {
   constructor(tableConfig: TableConfig) {
     this.config = tableConfig;
 
-    this.config.columns.forEach(column => {
+    this.config.columns.forEach((column) => {
       if (!isNullOrUndefined(column.currentSortOrder)
         && column.currentSortOrder !== TableColumnSortOrder.UNSORTED) {
         // save state to show the (ascending/ descending) sort order icons
@@ -109,7 +109,7 @@ export abstract class BaseTableSorter {
       turnAroundSortOrder = this.setUpSortOrder(overrideSortOrder);
     }
 
-    return function (rowA, rowB) {
+    return function alphabetically(rowA, rowB) {
 
       let payloadA = rowA.getText(currentlySortedColumn);
       let payloadB = rowB.getText(currentlySortedColumn);
@@ -138,7 +138,7 @@ export abstract class BaseTableSorter {
       turnAroundSortOrder = this.setUpSortOrder(overrideSortOrder);
     }
 
-    return function (rowA, rowB) {
+    return function numberSort(rowA, rowB) {
 
       let payloadA = rowA.getText(currentlySortedColumn);
       let payloadB = rowB.getText(currentlySortedColumn);
@@ -177,13 +177,13 @@ export abstract class BaseTableSorter {
       turnAroundSortOrder = this.setUpSortOrder(overrideSortOrder);
     }
 
-    return function (rowA, rowB) {
+    return function dateSort(rowA, rowB) {
       const path = currentlySortedColumn.propertyName
                                         .replace('[', '.')
                                         .replace(']', '')
                                         .split('.');
 
-      const resolvePropertyFunction = function (obj, property) {
+      const resolvePropertyFunction = function resolveProperty(obj, property) {
         return obj[property];
       };
 
@@ -192,8 +192,8 @@ export abstract class BaseTableSorter {
       const payloadB = path.reduce(resolvePropertyFunction, rowB.payload);
 
       // parse date and compare the timestamps
-      let date1: Date = new Date(Date.parse(payloadA));
-      let date2: Date = new Date(Date.parse(payloadB));
+      const date1: Date = new Date(Date.parse(payloadA));
+      const date2: Date = new Date(Date.parse(payloadB));
 
 
       if (date1.getTime() < date2.getTime()) {
@@ -215,8 +215,8 @@ export abstract class BaseTableSorter {
    * @returns {(rowA:any, rowB:any)=>(number|number|number)}
    */
   sortWithCustomPropertySortOrder(currentlySortedColumn: TableColumnConfig,
-    customPropertySortOrder?: CustomPropertySortOrder[],
-    overrideSortOrder?: TableColumnSortOrder) {
+                                  customPropertySortOrder?: CustomPropertySortOrder[],
+                                  overrideSortOrder?: TableColumnSortOrder) {
     let turnAroundSortOrder = this.setUpSortOrder(currentlySortedColumn.currentSortOrder);
 
     if (overrideSortOrder) {
@@ -225,18 +225,18 @@ export abstract class BaseTableSorter {
 
     // return equals/ do nothing, if no custom sort order defined
     if (!customPropertySortOrder) {
-      return function (rowA, rowB) {
+      return function zero(rowA, rowB) {
         return 0;
       };
     }
 
-    return function (rowA, rowB) {
+    return function customSort(rowA, rowB) {
       const path = currentlySortedColumn.propertyName
                                         .replace('[', '.')
                                         .replace(']', '')
                                         .split('.');
 
-      const resolvePropertyFunction = function (obj, property) {
+      const resolvePropertyFunction = function resolveProperty(obj, property) {
         return obj[property];
       };
 
@@ -245,8 +245,8 @@ export abstract class BaseTableSorter {
       const payloadB = path.reduce(resolvePropertyFunction, rowB.payload);
 
       // get the sort priority from the customPropertySortOrder array
-      let priorityA = customPropertySortOrder.find(state => state.property === payloadA).sortOrderPriority;
-      let priorityB = customPropertySortOrder.find(state => state.property === payloadB).sortOrderPriority;
+      const priorityA = customPropertySortOrder.find((state) => state.property === payloadA).sortOrderPriority;
+      const priorityB = customPropertySortOrder.find((state) => state.property === payloadB).sortOrderPriority;
 
 
       if (priorityA < priorityB) {
@@ -261,9 +261,9 @@ export abstract class BaseTableSorter {
 
 
   sortTwoFunctions(compareFn1?: (a: string, b: boolean) => number,
-    compareFn2?: (a: string, b: boolean) => number) {
-    return function (c, d) {
-      let result: number = compareFn1(c, d);
+                   compareFn2?: (a: string, b: boolean) => number) {
+    return function biSort(c, d) {
+      const result: number = compareFn1(c, d);
       if (result === 0) {
         return compareFn2(c, d);
       }

@@ -1,7 +1,7 @@
-import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
-import {TableColumnSortOrder} from '../../../../shared/components/tables/types/table-column-sort-order.enum';
-import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
-import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
+import {OverviewDialogConfig} from '@shared/components';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
+import {TableColumnSortOrder} from '@shared/components/tables/types/table-column-sort-order.enum';
+import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
 
 export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -9,13 +9,6 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
   tableConfig: {
     columns: [
-      /**{
-        translationKey:   'MANAGEMENT.LIGA.TABLE.HEADERS.ID',
-        propertyName:     'id',
-        width:            7,
-        type:             TableColumnType.NUMBER,
-        currentSortOrder: TableColumnSortOrder.ASCENDING
-      },**/
       {
         translationKey: 'MANAGEMENT.LIGA.TABLE.HEADERS.LIGANAME',
         propertyName:   'name',

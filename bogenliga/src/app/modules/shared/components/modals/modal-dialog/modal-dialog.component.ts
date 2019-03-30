@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {TranslatePipe} from '@ngx-translate/core';
 import {ButtonType} from '../../buttons';
 import {ModalDialogOption} from '../types/modal-dialog-option.enum';
 import {ModalDialogResult} from '../types/modal-dialog-result.enum';
-import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector:    'bla-modal-dialog',

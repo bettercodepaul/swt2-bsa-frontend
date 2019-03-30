@@ -1,9 +1,9 @@
 import {TableActionConfig} from '../types/table-action-config.interface';
-import {TableConfig} from '../types/table-config.interface';
-import {TableColumnConfig} from '../types/table-column-config.interface';
-import {TableColumnType} from '../types/table-column-type.enum';
-import {TableColumnSortOrder} from '../types/table-column-sort-order.enum';
 import {TableActionType} from '../types/table-action-type.enum';
+import {TableColumnConfig} from '../types/table-column-config.interface';
+import {TableColumnSortOrder} from '../types/table-column-sort-order.enum';
+import {TableColumnType} from '../types/table-column-type.enum';
+import {TableConfig} from '../types/table-config.interface';
 
 const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
   actionTypes:      [],

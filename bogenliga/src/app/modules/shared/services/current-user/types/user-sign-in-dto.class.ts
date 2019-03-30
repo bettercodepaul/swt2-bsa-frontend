@@ -26,7 +26,7 @@ export class UserSignInDTO implements DataTransferObject {
 
     // map string list to enum list
     if (json.permissions) {
-      json.permissions.forEach(permission => {
+      json.permissions.forEach((permission) => {
         const userPermission = UserPermission[permission];
         userSign.permissions.push(userPermission);
       });

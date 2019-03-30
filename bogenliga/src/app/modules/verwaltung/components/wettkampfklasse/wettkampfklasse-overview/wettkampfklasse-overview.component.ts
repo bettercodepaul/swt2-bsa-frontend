@@ -1,21 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {WETTKAMPFKLASE_OVERVIEW_CONFIG} from './wettkampfklasse-overview.config';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {CommonComponent} from '../../../../shared/components/common';
-import {Response} from '../../../../shared/data-provider';
-import {WettkampfKlasseDTO} from '../../../types/datatransfer/wettkampfklasse-dto.class';
-import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {Router} from '@angular/router';
-import {
-  Notification,
-  NotificationOrigin,
-  NotificationService,
-  NotificationSeverity,
-  NotificationType,
-  NotificationUserAction
-} from '../../../../shared/services/notification';
-import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
+import {CommonComponent} from '../../../../shared/components/common';
+import {toTableRows} from '../../../../shared/components/tables';
+import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
+import {Response} from '../../../../shared/data-provider';
+import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {NotificationService} from '../../../../shared/services/notification';
 import {WettkampfklassenDataProviderService} from '../../../services/wettkampfklassen-data-provider.service';
+import {WettkampfKlasseDTO} from '../../../types/datatransfer/wettkampfklasse-dto.class';
+import {WETTKAMPFKLASE_OVERVIEW_CONFIG} from './wettkampfklasse-overview.config';
 
 @Component({
   selector: 'bla-wettkampfklasse-overview',
@@ -45,7 +38,7 @@ export class WettkampfklasseOverviewComponent extends CommonComponent implements
   }
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
-    //TODO
+    // TODO
    }
 
   private loadTableRows() {
@@ -53,7 +46,7 @@ export class WettkampfklasseOverviewComponent extends CommonComponent implements
 
     this.wettkampfklassenDataProvider.findAll()
         .then((response: Response<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsFailure(response))
+        .catch((response: Response<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private handleLoadTableRowsFailure(response: Response<WettkampfKlasseDTO[]>): void {

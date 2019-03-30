@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {WETTKAEMPFE_CONFIG} from './wettkaempfe.config';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NotificationService} from '../../../shared/services/notification';
 import {CommonComponent} from '../../../shared/components/common';
-import {Response} from '../../../shared/data-provider';
+import {NotificationService} from '../../../shared/services/notification';
+import {WETTKAEMPFE_CONFIG} from './wettkaempfe.config';
+
 export * from '../setzliste-download/setzliste-download.component';
 
 @Component({

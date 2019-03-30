@@ -1,3 +1,4 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {
   DataProviderService,
@@ -7,10 +8,9 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {HttpErrorResponse} from '@angular/common/http';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {VereinDO} from '../types/verein-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/verein-mapper';
+import {VereinDO} from '../types/verein-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,7 @@ export class VereinDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-        .then(noData => {
+        .then((noData) => {
           resolve({result: RequestResult.SUCCESS});
 
         }, (error: HttpErrorResponse) => {

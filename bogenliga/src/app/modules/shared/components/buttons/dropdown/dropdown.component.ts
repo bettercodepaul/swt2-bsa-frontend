@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DsbMannschaftDO} from '../../../../verwaltung/types/dsb-mannschaft-do.class';
 import {VereineDO} from '../../../../vereine/types/vereine-do.class';
+import {DsbMannschaftDO} from '../../../../verwaltung/types/dsb-mannschaft-do.class';
 
 @Component({
   selector:    'bla-dropdown',

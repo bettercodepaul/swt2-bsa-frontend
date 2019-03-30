@@ -1,5 +1,5 @@
-import {TransferObject} from '../../shared/data-provider/models/transfer-object.interface';
 import {Time} from '@angular/common';
+import {TransferObject} from '../../shared/data-provider/models/transfer-object.interface';
 
 export class Wettkampf implements TransferObject {
   id: number;

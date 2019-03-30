@@ -1,4 +1,3 @@
-import {DsbMitgliedDTO} from '../types/datatransfer/dsb-mitglied-dto.class';
 import {VersionedDataTransferObject} from '../../shared/data-provider';
 
 // export function toDO(blob: Blob): Blob {

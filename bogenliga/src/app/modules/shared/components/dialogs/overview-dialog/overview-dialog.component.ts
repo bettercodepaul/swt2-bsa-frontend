@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
+import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 import {CurrentUserService} from '../../../services/current-user';
 import {CommonSecuredComponent} from '../../common/common-secured-component.class';
 import {TableRow} from '../../tables/types/table-row.class';
-import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
+import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
 
 @Component({
   selector:    'bla-overview-dialog',

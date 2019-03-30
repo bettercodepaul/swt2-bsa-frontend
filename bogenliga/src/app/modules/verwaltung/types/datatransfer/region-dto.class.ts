@@ -1,4 +1,4 @@
-import {DataTransferObject} from '../../../shared/data-provider';
+import {DataTransferObject} from '@shared/data-provider';
 
 export class RegionDTO implements DataTransferObject {
   id: number;
@@ -26,7 +26,7 @@ export class RegionDTO implements DataTransferObject {
 
     if (optional.uebergeordnet >= 0) {
       copy.regionUebergeordnet = optional.uebergeordnet;
-    } {
+    } else {
       copy.regionUebergeordnet = null;
     }
 

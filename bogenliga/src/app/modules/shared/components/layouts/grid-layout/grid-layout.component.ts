@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class GridLayoutComponent implements OnInit {
 
   @Input() public alignCenter = false;
-  
+
   constructor() {
   }
 

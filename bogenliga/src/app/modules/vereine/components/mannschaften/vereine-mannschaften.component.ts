@@ -1,22 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 
-import {CommonComponent} from '../../../shared/components/common';
-import {TableRow} from '../../../shared/components/tables/types/table-row.class';
-import {DsbMannschaftDataProviderService} from '../../../verwaltung/services/dsb-mannschaft-data-provider.service';
-import {Response} from '../../../shared/data-provider';
-import {DsbMannschaftDTO} from '../../../verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
-import {VereineDataProviderService} from '../../services/vereine-data-provider.service';
-import {RegionDataProviderService} from '../../../verwaltung/services/region-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {isUndefined} from '@shared/functions';
+import {CommonComponent} from '../../../shared/components/common';
+import {toTableRows} from '../../../shared/components/tables';
+import {TableRow} from '../../../shared/components/tables/types/table-row.class';
+import {Response} from '../../../shared/data-provider';
 import {NotificationService} from '../../../shared/services/notification';
-import {isUndefined} from 'util';
-import {VereinDO} from '../../../verwaltung/types/verein-do.class';
-import {VEREIN_MANNSCHAFTEN_CONFIG} from './vereine-mannschaften.config';
+import {DsbMannschaftDataProviderService} from '../../../verwaltung/services/dsb-mannschaft-data-provider.service';
+import {RegionDataProviderService} from '../../../verwaltung/services/region-data-provider.service';
+import {DsbMannschaftDTO} from '../../../verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDO} from '../../../verwaltung/types/dsb-mannschaft-do.class';
+import {VereinDO} from '../../../verwaltung/types/verein-do.class';
 import {MannschaftsmitgliederDataProviderService} from '../../services/mannschaftsmitglieder-data-provider.service';
+import {VereineDataProviderService} from '../../services/vereine-data-provider.service';
 import {MannschaftsMitgliedDTO} from '../../types/datatransfer/mannschaftsmitglied-dto.class';
 import {MannschaftsmitgliedDO} from '../../types/mannschaftsmitglied-do.class';
-import {toTableRows} from '../../../shared/components/tables';
+import {VEREIN_MANNSCHAFTEN_CONFIG} from './vereine-mannschaften.config';
 
 const ID_PATH_PARAM = 'id';
 const MANNSCHAFT_PATH_PARAM = 'mannschaft';
@@ -51,7 +51,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
     this.notificationService.discardNotification();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.loadVereinById(params[ID_PATH_PARAM]);
       }
@@ -77,7 +77,7 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
   private loadMannschaften() {
       this.loading = true;
 
-    this.DsbMannschaftDataProvider.findAll()
+      this.DsbMannschaftDataProvider.findAll()
       .then((response: Response<DsbMannschaftDTO[]>) => this.handleMannschaftenSuccess(response))
       .catch((response: Response<DsbMannschaftDTO[]>) => this.handleMannschaftenFailure(response));
   }
@@ -100,9 +100,9 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
 
   private setCurrentMannschaft() {
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (!isUndefined(params[MANNSCHAFT_PATH_PARAM])) {
-        for (let mannschaft of this.mannschaften) {
+        for (const mannschaft of this.mannschaften) {
           if (mannschaft.id  === parseInt(params[MANNSCHAFT_PATH_PARAM], 10)) {
             this.currentMannschaft = mannschaft;
             this.loadMannschaftsMitglieder();
@@ -133,8 +133,8 @@ export class VereineMannschaftenComponent extends CommonComponent implements OnI
   }
 
   private filterMannschaften(): void {
-    let filteredMannschaften = [];
-    for (let mannschaft of this.mannschaften) {
+    const filteredMannschaften = [];
+    for (const mannschaft of this.mannschaften) {
       if (mannschaft.vereinId === this.currentVerein.id) {
         filteredMannschaften.push(mannschaft);
       }

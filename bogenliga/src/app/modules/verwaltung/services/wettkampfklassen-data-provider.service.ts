@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 
+import {HttpErrorResponse} from '@angular/common/http';
 import {
   DataProviderService,
   RequestResult,
@@ -9,10 +10,8 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {HttpErrorResponse} from '@angular/common/http';
-import {WettkampfKlasseDO} from '../types/wettkampfklasse-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/wettkampfklasse-mapper';
-
+import {WettkampfKlasseDO} from '../types/wettkampfklasse-do.class';
 
 
 @Injectable({

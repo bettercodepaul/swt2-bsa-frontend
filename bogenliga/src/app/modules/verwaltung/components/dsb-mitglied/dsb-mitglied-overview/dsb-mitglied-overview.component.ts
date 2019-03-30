@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {DSB_MITGLIED_OVERVIEW_CONFIG} from './dsb-mitglied-overview.config';
-import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {CommonComponent} from '../../../../shared/components/common';
-import {Response} from '../../../../shared/data-provider';
-import {DsbMitgliedDTO} from '../../../types/datatransfer/dsb-mitglied-dto.class';
-import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {Router} from '@angular/router';
+import {CommonComponent} from '../../../../shared/components/common';
+import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
+import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
+import {Response} from '../../../../shared/data-provider';
+import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
   NotificationOrigin,
@@ -15,7 +13,9 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
+import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
+import {DsbMitgliedDTO} from '../../../types/datatransfer/dsb-mitglied-dto.class';
+import {DSB_MITGLIED_OVERVIEW_CONFIG} from './dsb-mitglied-overview.config';
 
 export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
 
@@ -64,11 +64,11 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.dsbMitgliedDataProvider.deleteById(id)
-                .then(response => this.loadTableRows())
-                .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
+                .then((response) => this.loadTableRows())
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           }
         });
 

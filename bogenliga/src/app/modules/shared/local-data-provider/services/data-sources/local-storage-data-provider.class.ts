@@ -1,5 +1,5 @@
-import {LOCAL_STORAGE, StorageService} from 'angular-webstorage-service';
 import {Inject, Injectable} from '@angular/core';
+import {LOCAL_STORAGE, StorageService} from 'angular-webstorage-service';
 
 const STORAGE_KEY_PREFIX = 'bogenliga_';
 

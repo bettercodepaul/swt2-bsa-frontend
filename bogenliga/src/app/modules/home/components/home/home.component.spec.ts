@@ -1,12 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {HomeComponent} from './home.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import {ROUTES} from '../../../../app.routing';
-import {TranslateModule} from '@ngx-translate/core';
 import {StoreModule} from '@ngrx/store';
+import {TranslateModule} from '@ngx-translate/core';
+import {ROUTES} from '../../../../app.routing';
 import {APP_REDUCERS} from '../../../shared/redux-store';
 import {SharedModule} from '../../../shared/shared.module';
+import {HomeComponent} from './home.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

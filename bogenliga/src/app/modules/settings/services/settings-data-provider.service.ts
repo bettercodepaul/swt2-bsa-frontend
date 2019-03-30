@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 
-import {Data} from '../types/data';
-import {DataProviderService, RequestResult, Response, RestClient, UriBuilder} from '../../shared/data-provider';
 import {HttpErrorResponse} from '@angular/common/http';
+import {DataProviderService, RequestResult, Response, RestClient, UriBuilder} from '../../shared/data-provider';
+import {Data} from '../types/data';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +61,7 @@ export class SettingsDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(key).build())
-          .then(noData => {
+          .then((noData) => {
             resolve({result: RequestResult.SUCCESS});
 
           }, (error: HttpErrorResponse) => {

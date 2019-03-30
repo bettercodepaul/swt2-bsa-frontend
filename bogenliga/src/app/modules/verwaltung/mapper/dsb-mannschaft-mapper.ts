@@ -1,5 +1,5 @@
-import {DsbMannschaftDTO} from '../types/datatransfer/dsb-mannschaft-dto.class';
 import {VersionedDataTransferObject} from '../../shared/data-provider';
+import {DsbMannschaftDTO} from '../types/datatransfer/dsb-mannschaft-dto.class';
 
 // export function toDO(mannschaftDTO: MannschaftDTO): MannschaftDO {
 //
@@ -15,6 +15,6 @@ export function fromPayload(payload: VersionedDataTransferObject): DsbMannschaft
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): DsbMannschaftDTO[] {
   const list: DsbMannschaftDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }

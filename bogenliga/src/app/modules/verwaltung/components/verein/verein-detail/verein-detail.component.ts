@@ -1,21 +1,23 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
+import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {Response} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
-  NotificationService, NotificationSeverity, NotificationType,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {Response} from '../../../../shared/data-provider';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {isNullOrUndefined, isUndefined} from 'util';
-import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
-import {ActivatedRoute, Router} from '@angular/router';
-import {VereinDO} from '../../../types/verein-do.class';
-import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
-import {VEREIN_DETAIL_CONFIG} from './verein-detail.config';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
-import {RegionDO} from '../../../types/region-do.class';
+import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
 import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
+import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
+import {RegionDO} from '../../../types/region-do.class';
+import {VereinDO} from '../../../types/verein-do.class';
+import {VEREIN_DETAIL_CONFIG} from './verein-detail.config';
 
 
 const ID_PATH_PARAM = 'id';
@@ -31,7 +33,7 @@ const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
   styleUrls:   ['./verein-detail.component.scss']
 })
 export class VereinDetailComponent extends CommonComponent implements OnInit {
-  public regionType = "KREIS";
+  public regionType = 'KREIS';
   public config = VEREIN_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentVerein: VereinDO = new VereinDO();
@@ -42,10 +44,10 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   public saveLoading = false;
 
   constructor(private vereinProvider: VereinDataProviderService,
-    private regionProvider: RegionDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private regionProvider: RegionDataProviderService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -54,9 +56,9 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
     this.notificationService.discardNotification();
 
-    this.loadRegions(this.regionType); //Request all regions from the backend
+    this.loadRegions(this.regionType); // Request all regions from the backend
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
@@ -75,9 +77,9 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
     // persist
-    this.currentVerein.regionId = this.currentRegion.id; //Set selected region id
+    this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
 
-    console.log("Saving verein: ", this.currentVerein);
+    console.log('Saving verein: ', this.currentVerein);
 
     this.vereinProvider.create(this.currentVerein)
         .then((response: Response<VereinDO>) => {
@@ -97,7 +99,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_VEREIN)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.id);
@@ -119,7 +121,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
     // persist
-    this.currentVerein.regionId = this.currentRegion.id; //Set selected region id
+    this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
 
     this.vereinProvider.update(this.currentVerein)
         .then((response: Response<VereinDO>) => {
@@ -140,7 +142,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_VEREIN + id)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/vereine');
@@ -174,12 +176,12 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.vereinProvider.deleteById(id)
-                .then(response => this.handleDeleteSuccess(response))
-                .catch(response => this.handleDeleteFailure(response));
+                .then((response) => this.handleDeleteSuccess(response))
+                .catch((response) => this.handleDeleteFailure(response));
           }
         });
 
@@ -208,7 +210,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.currentVerein = response.payload;
     this.loading = false;
 
-    this.currentRegion = this.regionen.filter(region => region.id === this.currentVerein.regionId)[0];
+    this.currentRegion = this.regionen.filter((region) => region.id === this.currentVerein.regionId)[0];
   }
 
   private handleFailure(response: Response<VereinDO>) {
@@ -228,7 +230,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN_SUCCESS)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.router.navigateByUrl('/verwaltung/vereine');
             this.deleteLoading = false;
@@ -251,7 +253,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN_FAILURE)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
           }

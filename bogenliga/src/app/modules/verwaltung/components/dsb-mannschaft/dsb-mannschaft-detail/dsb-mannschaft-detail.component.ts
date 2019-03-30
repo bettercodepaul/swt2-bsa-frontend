@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DSBMANNSCHAFT_DETAIL_CONFIG} from './dsb-mannschaft-detail.config';
-import {Response} from '../../../../shared/data-provider';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from 'util';
-import {DsbMannschaftDO} from '../../../types/dsb-mannschaft-do.class';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
+import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {Response} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -14,10 +11,13 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {MannschaftsMitgliedDO} from '../../../types/mannschaftsmitglied-do.class';
-import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
-import {VereinDO} from '../../../types/verein-do.class';
+import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
+import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
+import {DsbMannschaftDO} from '../../../types/dsb-mannschaft-do.class';
+import {MannschaftsMitgliedDO} from '../../../types/mannschaftsmitglied-do.class';
+import {VereinDO} from '../../../types/verein-do.class';
+import {DSBMANNSCHAFT_DETAIL_CONFIG} from './dsb-mannschaft-detail.config';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSBMANNSCHAFT = 'dsbmannschaft_detail_delete';
@@ -45,10 +45,10 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
   public saveLoading = false;
 
   constructor(private DsbMannschaftDataProvider: DsbMannschaftDataProviderService,
-    private vereinProvider: VereinDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private vereinProvider: VereinDataProviderService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -58,7 +58,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     this.notificationService.discardNotification();
     this.loadVerein();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
@@ -95,7 +95,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_DSBMANNSCHAFT)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/dsb-mannschaft/' + response.payload.id);
@@ -169,7 +169,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSBMANNSCHAFT + id)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
@@ -203,12 +203,12 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.DsbMannschaftDataProvider.deleteById(id)
-                .then(response => this.handleDeleteSuccess(response))
-                .catch(response => this.handleDeleteFailure(response));
+                .then((response) => this.handleDeleteSuccess(response))
+                .catch((response) => this.handleDeleteFailure(response));
           }
         });
 
@@ -254,7 +254,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_SUCCESS)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.router.navigateByUrl('/verwaltung/dsb-mannschaft');
             this.deleteLoading = false;
@@ -277,7 +277,7 @@ export class DsbMannschaftDetailComponent extends CommonComponent implements OnI
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSBMANNSCHAFT_FAILURE)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
           }

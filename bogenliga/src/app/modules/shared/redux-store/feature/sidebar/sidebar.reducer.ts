@@ -1,5 +1,5 @@
-import {SidebarState} from './sidebar.state';
 import * as Actions from './sidebar.actions';
+import {SidebarState} from './sidebar.state';
 
 export const initialSidebarState: SidebarState = {
   toggleSidebar: true,

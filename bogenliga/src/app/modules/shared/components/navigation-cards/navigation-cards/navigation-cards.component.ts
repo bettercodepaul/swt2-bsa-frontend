@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NavigationCardsConfig} from '../types/navigation-cards-config.interface';
 import {CommonComponent} from '../../common';
+import {NavigationCardsConfig} from '../types/navigation-cards-config.interface';
 
 @Component({
   selector:    'bla-navigation-cards',

@@ -1,17 +1,17 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {isNullOrUndefined} from 'util';
 import {TranslatePipe} from '@ngx-translate/core';
+import {isNullOrUndefined} from '@shared/functions';
 import {CommonComponent} from '../../../shared/components/common';
-import {TruncationPipe} from '../../../shared/pipes';
-import {TableConfig} from '../../../shared/components/tables/types/table-config.interface';
 import {BaseTableSorter} from '../../../shared/components/tables/control/base-table-sorter.class';
-import {VersionedDataObject} from '../../../shared/data-provider/models/versioned-data-object.interface';
-import {TableColumnType} from '../../../shared/components/tables/types/table-column-type.enum';
 import {DefaultTableSorter} from '../../../shared/components/tables/control/default-table-sorter.class';
-import {TableColumnConfig} from '../../../shared/components/tables/types/table-column-config.interface';
-import {TableRow} from '../../../shared/components/tables/types/table-row.class';
-import {TableActionType} from '../../../shared/components/tables/types/table-action-type.enum';
 import {tableConfigWithDefaults} from '../../../shared/components/tables/control/table-config-mapper';
+import {TableActionType} from '../../../shared/components/tables/types/table-action-type.enum';
+import {TableColumnConfig} from '../../../shared/components/tables/types/table-column-config.interface';
+import {TableColumnType} from '../../../shared/components/tables/types/table-column-type.enum';
+import {TableConfig} from '../../../shared/components/tables/types/table-config.interface';
+import {TableRow} from '../../../shared/components/tables/types/table-row.class';
+import {VersionedDataObject} from '../../../shared/data-provider/models/versioned-data-object.interface';
+import {TruncationPipe} from '../../../shared/pipes';
 
 @Component({
   selector:    'bla-vereine-data-table',
@@ -37,7 +37,7 @@ export class VereineDataTableComponent extends CommonComponent implements OnInit
   initialized = false;
 
   constructor(private truncationPipe: TruncationPipe,
-    private translatePipe: TranslatePipe) {
+              private translatePipe: TranslatePipe) {
     super();
   }
 
@@ -141,7 +141,7 @@ export class VereineDataTableComponent extends CommonComponent implements OnInit
       const separator = '.';
 
       return path.replace('[', separator).replace(']', '').split(separator).reduce(
-        function (obj, property) {
+        function getNestedProperty(obj, property) {
           return obj[property];
         }, theObject
       );

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {isNullOrUndefined} from '@shared/functions';
 import {AlertType} from '../types/alert-type.enum';
-import {isNullOrUndefined} from 'util';
 
 @Component({
   selector:    'bla-alert',

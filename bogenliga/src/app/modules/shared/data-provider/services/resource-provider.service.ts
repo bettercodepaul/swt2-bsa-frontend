@@ -1,8 +1,8 @@
-import {DataProviderService} from './data-provider.service';
-import {ElementRef} from '@angular/core';
-import {RestClient} from './rest-client.class';
-import {RequestResult, Response} from '..';
 import {HttpErrorResponse} from '@angular/common/http';
+import {ElementRef} from '@angular/core';
+import {RequestResult, Response} from '..';
+import {DataProviderService} from './data-provider.service';
+import {RestClient} from './rest-client.class';
 
 export abstract class ResourceProviderService extends DataProviderService {
 

@@ -6,16 +6,16 @@ export class MannschaftsMitgliedDTO implements DataTransferObject {
   mannschaftsId: number;
   dsbMitgliedId: number;
   dsbMitgliedEingesetzt: boolean;
-  dsbMitgliedVorname: String;
-  dsbMitgliedNachname: String;
+  dsbMitgliedVorname: string;
+  dsbMitgliedNachname: string;
 
   static copyFrom(optional: {
     id?: number;
     mannschaftsId?: number,
     dsbMitgliedId?: number,
     dsbMitgliedEingesetzt?: boolean,
-    dsbMitgliedVorname?: String,
-    dsbMitgliedNachname?: String,
+    dsbMitgliedVorname?: string,
+    dsbMitgliedNachname?: string,
   } = {}): MannschaftsMitgliedDTO {
     const copy = new MannschaftsMitgliedDTO();
     if (optional.id >= 0) {

@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SharedModule} from '../shared';
-import {RouterModule} from '@angular/router';
-import {WETTKAMPF_ROUTES} from './wettkampf.routing';
+import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {SharedModule} from '../shared';
+import {SetzlisteComponent} from './components/setzliste-old/setzliste.component';
 import {SetzlisteDownloadComponent, WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.component';
 import {WettkampfGuard} from './guards/wettkampf.guard';
-import { SetzlisteComponent } from './components/setzliste-old/setzliste.component';
+import {WETTKAMPF_ROUTES} from './wettkampf.routing';
 
 
 @NgModule({

@@ -1,6 +1,6 @@
 import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
-import {TableColumnSortOrder} from '../../../../shared/components/tables/types/table-column-sort-order.enum';
 import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
+import {TableColumnSortOrder} from '../../../../shared/components/tables/types/table-column-sort-order.enum';
 import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
 
 export const DSB_MANNSCHAFT_OVERVIEW_CONFIG: OverviewDialogConfig = {

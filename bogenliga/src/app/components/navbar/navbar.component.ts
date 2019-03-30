@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
 import {select, Store} from '@ngrx/store';
+import {TranslateService} from '@ngx-translate/core';
+import {ButtonType} from '@shared/components';
 import {AppState, SidebarState} from '../../modules/shared/redux-store';
-import {TOGGLE_SIDEBAR} from '../../modules/shared/redux-store/feature/sidebar';
-import {CurrentUserService} from '../../modules/shared/services/current-user';
-import {UserState} from '../../modules/shared/redux-store/feature/user';
-import {ButtonType} from '../../modules/shared/components/buttons';
+import {TOGGLE_SIDEBAR} from '@shared/redux-store';
+import {UserState} from '@shared/redux-store';
+import {CurrentUserService} from '@shared/services';
 
 @Component({
   selector:    'bla-navbar',
@@ -22,9 +22,9 @@ export class NavbarComponent implements OnInit {
   public isUserDropdownVisible = false;
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService) {
-    store.pipe(select(state => state.sidebarState))
+    store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
-    store.pipe(select(state => state.userState))
+    store.pipe(select((state) => state.userState))
          .subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn);
   }
 

@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {SharedModule} from '../shared';
 import * as PlaygroundComponents from './components/playground/components';
 import {PlaygroundComponent} from './components/playground/playground.component';
-import {SharedModule} from '../shared';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {RouterModule} from '@angular/router';
 import {PLAYGROUND_ROUTES} from './playground.routing';
 
 @NgModule({

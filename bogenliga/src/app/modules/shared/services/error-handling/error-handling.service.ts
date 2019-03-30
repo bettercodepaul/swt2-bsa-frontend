@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {isNullOrUndefined} from 'util';
+import {isNullOrUndefined} from '@shared/functions';
 import {Observable} from 'rxjs';
-import {ErrorDTO} from './types/error-dto.class';
 import {
   Notification,
   NotificationOrigin,
@@ -10,6 +9,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../notification';
+import {ErrorDTO} from './types/error-dto.class';
 
 // client errors
 const HTTP_BAD_REQUEST = 400;

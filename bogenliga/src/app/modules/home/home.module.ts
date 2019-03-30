@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SharedModule} from '../shared';
-import {RouterModule} from '@angular/router';
-import {HOME_ROUTES} from './home.routing';
+import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {SharedModule} from '../shared';
 import {HomeComponent} from './components/home/home.component';
-import {HomeGuard} from './guards/home.guard';
 import {ImpressumComponent} from './components/impressum/impressum.component';
+import {HomeGuard} from './guards/home.guard';
+import {HOME_ROUTES} from './home.routing';
 
 
 @NgModule({

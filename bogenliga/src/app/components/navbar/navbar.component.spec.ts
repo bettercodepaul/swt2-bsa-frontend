@@ -1,16 +1,16 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {NavbarComponent} from './navbar.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {RouterTestingModule} from '@angular/router/testing';
+import {StoreModule} from '@ngrx/store';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {createTranslateLoader} from '../../app.module';
 import {ROUTES} from '../../app.routing';
 import {HomeModule} from '../../modules/home/home.module';
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../modules/shared/redux-store';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {createTranslateLoader} from '../../app.module';
 import {SharedModule} from '../../modules/shared/shared.module';
 import {UserDropdownComponent} from './components/user-dropdown/user-dropdown.component';
+import {NavbarComponent} from './navbar.component';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;

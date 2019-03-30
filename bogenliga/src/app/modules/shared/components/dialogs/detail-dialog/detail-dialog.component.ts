@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DetailDialogConfig} from '../types/detail-dialog-config.interface';
 import {CurrentUserService} from '../../../services/current-user';
 import {CommonSecuredComponent} from '../../common/common-secured-component.class';
 import {FormContent} from '../../forms';
+import {DetailDialogConfig} from '../types/detail-dialog-config.interface';
 
 @Component({
   selector:    'bla-detail-dialog',

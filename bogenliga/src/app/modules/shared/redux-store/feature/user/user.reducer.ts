@@ -1,5 +1,5 @@
-import {UserState} from './user.state';
 import * as Actions from './user.actions';
+import {UserState} from './user.state';
 
 export const initialUserState: UserState = {
   isLoggedIn: false,

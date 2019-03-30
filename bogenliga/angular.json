@@ -52,6 +52,23 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "offline": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.offline.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           }
         },
@@ -63,6 +80,9 @@
           "configurations": {
             "production": {
               "browserTarget": "bogenliga:build:production"
+            },
+            "offline": {
+              "browserTarget": "bogenliga:build:offline"
             }
           }
         },

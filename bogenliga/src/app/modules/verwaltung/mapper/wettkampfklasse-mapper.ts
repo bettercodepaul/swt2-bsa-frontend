@@ -7,7 +7,7 @@ export function fromPayload(payload: VersionedDataTransferObject): WettkampfKlas
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): WettkampfKlasseDTO[] {
   const list: WettkampfKlasseDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   console.log(list);
   return list;
 }

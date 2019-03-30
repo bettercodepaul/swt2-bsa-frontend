@@ -9,14 +9,14 @@ import {
   ViewChildren
 } from '@angular/core';
 
-import {Data} from '../../types/data';
-import {TranslatePipe} from '@ngx-translate/core';
 import {Store} from '@ngrx/store';
+import {TranslatePipe} from '@ngx-translate/core';
 import {AppState} from '../../../shared/redux-store';
+import {Data} from '../../types/data';
 
 import {faInfoCircle, faMinusCircle, faPlus, faSort} from '@fortawesome/free-solid-svg-icons';
-import {SettingsDataProviderService} from '../../services/settings-data-provider.service';
 import {Response} from '../../../shared/data-provider';
+import {SettingsDataProviderService} from '../../services/settings-data-provider.service';
 
 
 @Component({
@@ -84,7 +84,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   *gets Data from the Service for the Table
+   * gets Data from the Service for the Table
    * sorts it by key
    * calculates pagination
    */
@@ -113,7 +113,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   isPaginationVisible() {
     if (this.pageCount === null || this.pageCount.length < 2) {
-      this.paginationVisible = false
+      this.paginationVisible = false;
     } else {
       this.paginationVisible = true;
     }
@@ -178,7 +178,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   clearActive() {
     if (this.pages.length > 0) {
-      this.pages.forEach(element => {
+      this.pages.forEach((element) => {
         this.renderer.removeClass(element.nativeElement, 'active');
       });
     }

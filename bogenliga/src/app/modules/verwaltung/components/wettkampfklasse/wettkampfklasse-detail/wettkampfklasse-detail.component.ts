@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {WETTKAMPFKLASSE_DETAIL_CONFIG} from './wettkampfklasse-detail.config';
-import {Response} from '../../../../shared/data-provider';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {WettkampfklassenDataProviderService} from '../../../services/wettkampfklassen-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from 'util';
-import {WettkampfKlasseDO} from '../../../types/wettkampfklasse-do.class';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
+import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {Response} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -14,6 +11,9 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
+import {WettkampfklassenDataProviderService} from '../../../services/wettkampfklassen-data-provider.service';
+import {WettkampfKlasseDO} from '../../../types/wettkampfklasse-do.class';
+import {WETTKAMPFKLASSE_DETAIL_CONFIG} from './wettkampfklasse-detail.config';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
@@ -36,9 +36,9 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
   public saveLoading = false;
 
   constructor(private wettkampfklasseDataProvider: WettkampfklassenDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -47,7 +47,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
     this.notificationService.discardNotification();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
@@ -84,7 +84,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_DSB_MITGLIED)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/klassen/' + response.payload.id);
@@ -125,7 +125,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSB_MITGLIED + id)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/klassen');
@@ -175,7 +175,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.router.navigateByUrl('/verwaltung/klassen');
             this.deleteLoading = false;
@@ -198,7 +198,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
           }

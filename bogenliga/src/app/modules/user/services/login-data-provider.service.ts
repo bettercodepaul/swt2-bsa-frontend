@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 
-import {DataProviderService, RestClient, UriBuilder} from '../../shared/data-provider';
-import {CredentialsDTO} from '../types/model/credentials-dto.class';
-import {CredentialsDO} from '../types/credentials-do.class';
 import {HttpErrorResponse} from '@angular/common/http';
-import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
 import {Store} from '@ngrx/store';
+import {DataProviderService, RestClient, UriBuilder} from '../../shared/data-provider';
 import {AppState} from '../../shared/redux-store';
 import {LOGOUT} from '../../shared/redux-store/feature/user';
+import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
+import {CredentialsDO} from '../types/credentials-do.class';
 import {LoginResult} from '../types/login-result.enum';
+import {CredentialsDTO} from '../types/model/credentials-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +28,8 @@ export class LoginDataProviderService extends DataProviderService {
    * @param store to access the application state managed by the redux store
    */
   constructor(private restClient: RestClient,
-    private currentUserService: CurrentUserService,
-    private store: Store<AppState>) {
+              private currentUserService: CurrentUserService,
+              private store: Store<AppState>) {
     super();
   }
 
@@ -57,7 +57,7 @@ export class LoginDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      let credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password);
+      const credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password);
       this.sendSignInRequest(credentialsDTO, resolve, reject);
     });
   }

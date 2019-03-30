@@ -1,17 +1,17 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {TranslatePipe} from '@ngx-translate/core';
+import {isNullOrUndefined} from '@shared/functions';
+import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
+import {TruncationPipe} from '../../../pipes';
+import {CommonComponent} from '../../common';
+import {BaseTableSorter} from '../control/base-table-sorter.class';
+import {DefaultTableSorter} from '../control/default-table-sorter.class';
+import {tableConfigWithDefaults} from '../control/table-config-mapper';
+import {TableActionType} from '../types/table-action-type.enum';
+import {TableColumnConfig} from '../types/table-column-config.interface';
+import {TableColumnType} from '../types/table-column-type.enum';
 import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
-import {BaseTableSorter} from '../control/base-table-sorter.class';
-import {CommonComponent} from '../../common';
-import {TableColumnType} from '../types/table-column-type.enum';
-import {DefaultTableSorter} from '../control/default-table-sorter.class';
-import {TableColumnConfig} from '../types/table-column-config.interface';
-import {isNullOrUndefined} from 'util';
-import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
-import {TableActionType} from '../types/table-action-type.enum';
-import {TranslatePipe} from '@ngx-translate/core';
-import {TruncationPipe} from '../../../pipes';
-import {tableConfigWithDefaults} from '../control/table-config-mapper';
 
 @Component({
   selector:    'bla-data-table',
@@ -37,7 +37,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   initialized = false;
 
   constructor(private truncationPipe: TruncationPipe,
-    private translatePipe: TranslatePipe) {
+              private translatePipe: TranslatePipe) {
     super();
   }
 
@@ -137,7 +137,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
       const separator = '.';
 
       return path.replace('[', separator).replace(']', '').split(separator).reduce(
-        function (obj, property) {
+        function getNestedProperty(obj, property) {
           return obj[property];
         }, theObject
       );

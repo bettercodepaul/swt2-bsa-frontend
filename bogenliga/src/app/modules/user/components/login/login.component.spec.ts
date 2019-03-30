@@ -1,13 +1,13 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {LoginComponent} from './login.component';
 import {RouterTestingModule} from '@angular/router/testing';
+import {StoreModule} from '@ngrx/store';
+import {TranslateModule} from '@ngx-translate/core';
 import {ROUTES} from '../../../../app.routing';
 import {HomeModule} from '../../../home';
-import {TranslateModule} from '@ngx-translate/core';
-import {StoreModule} from '@ngrx/store';
-import {APP_REDUCERS} from '../../../shared/redux-store';
 import {SharedModule} from '../../../shared';
+import {APP_REDUCERS} from '../../../shared/redux-store';
+import {LoginComponent} from './login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

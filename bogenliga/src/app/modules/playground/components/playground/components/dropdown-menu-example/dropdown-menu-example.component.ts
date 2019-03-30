@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {PlaygroundVersionedDataObject} from '../../types/playground-versioned-data-object.class';
+import {isNullOrUndefined} from '@shared/functions';
 import {of} from 'rxjs';
 import {delay} from 'rxjs/operators';
-import {isNullOrUndefined} from 'util';
+import {PlaygroundVersionedDataObject} from '../../types/playground-versioned-data-object.class';
 
 @Component({
   selector: 'bla-dropdown-menu-example',
@@ -19,7 +19,7 @@ export class DropdownMenuExampleComponent implements OnInit {
 
   ngOnInit() {
 
-    of(true).pipe(delay(5000)).subscribe(ignore => this.loading = false);
+    of(true).pipe(delay(5000)).subscribe((ignore) => this.loading = false);
   }
 
 
@@ -32,7 +32,7 @@ export class DropdownMenuExampleComponent implements OnInit {
       return '';
     } else {
       console.log('Dropdown Menü: selectedDTO = ' + JSON.stringify(this.selectedDTO));
-      return this.selectedDTO['name'];
+      return this.selectedDTO.name;
     }
   }
 

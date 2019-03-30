@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {select, Store} from '@ngrx/store';
-import {AppState, SidebarState, TOGGLE_SIDEBAR} from '../../modules/shared/redux-store';
-import {SIDE_BAR_CONFIG} from './sidebar.config';
-import {CurrentUserService, UserPermission} from '../../modules/shared/services/current-user';
-import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
-import {isNullOrUndefined} from 'util';
+import {Router} from '@angular/router';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
-import {ActivatedRoute, Router} from '@angular/router';
+import {select, Store} from '@ngrx/store';
 import {environment} from '../../../environments/environment';
+import {isNullOrUndefined} from '@shared/functions';
+import {AppState, SidebarState, TOGGLE_SIDEBAR} from '../../modules/shared/redux-store';
+import {CurrentUserService, UserPermission} from '../../modules/shared/services/current-user';
+import {SIDE_BAR_CONFIG} from './sidebar.config';
+import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
   faCaretDown = faCaretDown;
 
   constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router) {
-    store.pipe(select(state => state.sidebarState))
+    store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
