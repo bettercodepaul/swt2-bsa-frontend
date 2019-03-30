@@ -19,6 +19,7 @@ before_script:
   - sudo dpkg -i google-chrome*.deb
 
 script:
+  - cd bogenliga
   - npm run lint
   #- ng test --watch false
   #- npm run e2e
