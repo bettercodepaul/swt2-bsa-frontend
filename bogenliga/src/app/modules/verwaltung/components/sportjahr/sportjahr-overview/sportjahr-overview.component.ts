@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {Response} from '@shared/data-provider';
+import {BogenligaResponse} from '@shared/data-provider';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {isUndefined} from '@shared/functions';
 import {NotificationService} from '@shared/services';
@@ -46,20 +46,20 @@ export class SportjahrOverviewComponent extends CommonComponent  implements OnIn
     this.loading = true;
 
     this.sportjahrDataProvider.findAllByLigaId(id)
-        .then((response: Response<SportjahrDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<SportjahrDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<SportjahrDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<SportjahrDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/sportjahr/' + versionedDataObject.id);
   }
 
-  private handleLoadTableRowsFailure(response: Response<SportjahrDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<SportjahrDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: Response<SportjahrDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<SportjahrDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

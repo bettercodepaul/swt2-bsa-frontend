@@ -3,7 +3,7 @@ import {BENUTZER_OVERVIEW_CONFIG} from './benutzer-overview.config';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {CommonComponent} from '../../../../shared/components/common';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {Router} from '@angular/router';
@@ -81,20 +81,20 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
     this.loading = true;
 
     this.benutzerDataProvider.findAll()
-        .then((response: Response<BenutzerRolleDO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<BenutzerRolleDO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/benutzer/' + versionedDataObject.id);
   }
 
-  private handleLoadTableRowsFailure(response: Response<BenutzerRolleDO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<BenutzerRolleDO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: Response<BenutzerRolleDO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<BenutzerRolleDO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

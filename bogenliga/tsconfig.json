@@ -4,7 +4,13 @@
     "baseUrl": "./",
     "paths": {
       "@shared/*": ["src/app/modules/shared/*"],
-      "@shared2/*": ["app/modules/shared/*"]
+      "@home/*": ["src/app/modules/home/*"],
+      "@settings/*": ["src/app/modules/settings/*"],
+      "@sportjahresplan/*": ["src/app/modules/sportjahresplan/*"],
+      "@user/*": ["src/app/modules/user/*"],
+      "@verwaltung/*": ["src/app/modules/verwaltung/*"],
+      "@wettkampf/*": ["src/app/modules/wettkampf/*"],
+      "@vereine/*": ["src/app/modules/vereine/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

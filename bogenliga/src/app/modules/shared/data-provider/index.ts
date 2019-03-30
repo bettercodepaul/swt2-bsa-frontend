@@ -10,4 +10,4 @@ export * from './interceptors/jwt-interceptor.class';
 export * from './interceptors/error-interceptor.class';
 
 export * from './types/request-result.enum';
-export * from './types/response.interface';
+export * from './types/bogenliga-response.interface';

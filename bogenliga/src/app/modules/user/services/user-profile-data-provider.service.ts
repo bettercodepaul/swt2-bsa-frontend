@@ -4,7 +4,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -25,7 +25,7 @@ export class UserProfileDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<Response<UserProfileDO[]>> {
+  public findAll(): Promise<BogenligaResponse<UserProfileDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -47,7 +47,7 @@ export class UserProfileDataProviderService extends DataProviderService {
   }
 
 
-  public findById(id: string | number): Promise<Response<UserProfileDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<UserProfileDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -68,7 +68,7 @@ export class UserProfileDataProviderService extends DataProviderService {
     });
   }
 
-  public findCurrentUserProfile(): Promise<Response<UserProfileDO>> {
+  public findCurrentUserProfile(): Promise<BogenligaResponse<UserProfileDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

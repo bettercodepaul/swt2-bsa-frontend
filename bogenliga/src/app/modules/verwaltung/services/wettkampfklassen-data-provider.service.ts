@@ -4,7 +4,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -26,7 +26,7 @@ export class WettkampfklassenDataProviderService  extends DataProviderService {
     super();
   }
 
-  public findAll(): Promise<Response<WettkampfKlasseDO[]>> {
+  public findAll(): Promise<BogenligaResponse<WettkampfKlasseDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -44,7 +44,7 @@ export class WettkampfklassenDataProviderService  extends DataProviderService {
         });
     });
   }
-  public findById(id: string | number): Promise<Response<WettkampfKlasseDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<WettkampfKlasseDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -65,7 +65,7 @@ export class WettkampfklassenDataProviderService  extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<WettkampfKlasseDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<WettkampfKlasseDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -84,7 +84,7 @@ export class WettkampfklassenDataProviderService  extends DataProviderService {
         });
     });
   }
-  public create(payload: WettkampfKlasseDO): Promise<Response<WettkampfKlasseDO>> {
+  public create(payload: WettkampfKlasseDO): Promise<BogenligaResponse<WettkampfKlasseDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

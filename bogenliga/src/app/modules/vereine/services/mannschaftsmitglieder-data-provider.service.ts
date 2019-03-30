@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -23,7 +23,7 @@ export class MannschaftsmitgliederDataProviderService extends DataProviderServic
     super();
   }
 
-  public findByMannschaftId(id: string | number): Promise<Response<MannschaftsmitgliedDO[]>> {
+  public findByMannschaftId(id: string | number): Promise<BogenligaResponse<MannschaftsmitgliedDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

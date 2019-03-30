@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {CommonComponent} from '../../../../shared/components/common';
 import {toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {NotificationService} from '../../../../shared/services/notification';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
@@ -36,16 +36,16 @@ export class SportjahrLigaAuswahlComponent extends CommonComponent implements On
     this.loading = true;
 
     this.ligaDataProvider.findAll()
-        .then((response: Response<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private handleLoadTableRowsFailure(response: Response<LigaDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<LigaDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: Response<LigaDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<LigaDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

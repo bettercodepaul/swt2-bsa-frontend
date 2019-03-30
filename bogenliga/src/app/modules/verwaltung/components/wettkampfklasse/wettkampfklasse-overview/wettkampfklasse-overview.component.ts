@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {CommonComponent} from '../../../../shared/components/common';
 import {toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {NotificationService} from '../../../../shared/services/notification';
 import {WettkampfklassenDataProviderService} from '../../../services/wettkampfklassen-data-provider.service';
@@ -45,16 +45,16 @@ export class WettkampfklasseOverviewComponent extends CommonComponent implements
     this.loading = true;
 
     this.wettkampfklassenDataProvider.findAll()
-        .then((response: Response<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private handleLoadTableRowsFailure(response: Response<WettkampfKlasseDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<WettkampfKlasseDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: Response<WettkampfKlasseDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<WettkampfKlasseDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

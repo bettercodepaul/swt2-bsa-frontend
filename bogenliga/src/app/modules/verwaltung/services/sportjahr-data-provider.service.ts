@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -23,7 +23,7 @@ export class SportjahrDataProviderService extends DataProviderService {
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
     super();
   }
-  public findAllByLigaId(id: string | number): Promise<Response<SportjahrDO[]>> {
+  public findAllByLigaId(id: string | number): Promise<BogenligaResponse<SportjahrDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -44,7 +44,7 @@ export class SportjahrDataProviderService extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<Response<void>> {
+  public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -66,7 +66,7 @@ export class SportjahrDataProviderService extends DataProviderService {
 
 
 
-  public findById(id: string | number): Promise<Response<SportjahrDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<SportjahrDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -87,7 +87,7 @@ export class SportjahrDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<SportjahrDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<SportjahrDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -106,7 +106,7 @@ export class SportjahrDataProviderService extends DataProviderService {
           });
     });
   }
-  public create(payload: LigaDO): Promise<Response<SportjahrDO>> {
+  public create(payload: LigaDO): Promise<BogenligaResponse<SportjahrDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

@@ -15,7 +15,7 @@ import {AppState} from '../../../shared/redux-store';
 import {Data} from '../../types/data';
 
 import {faInfoCircle, faMinusCircle, faPlus, faSort} from '@fortawesome/free-solid-svg-icons';
-import {Response} from '../../../shared/data-provider';
+import {BogenligaResponse} from '../../../shared/data-provider';
 import {SettingsDataProviderService} from '../../services/settings-data-provider.service';
 
 
@@ -90,7 +90,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    */
   getData(): void {
     // this.dataService.getData().subscribe(datas => this.datas = datas);
-    this.dataService.findAll().then((response: Response<Data[]>) => {
+    this.dataService.findAll().then((response: BogenligaResponse<Data[]>) => {
       this.datas = response.payload;
       this.keyAscending = false; // if sorted with key aufsteigend
       this.valueAscending = false; // if sorted with value aufsteigend
@@ -237,7 +237,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
    * @param key
    */
   deleteThisData(key: string): void {
-    this.dataService.deleteById(key).then((data: Response<void>) => {
+    this.dataService.deleteById(key).then((data: BogenligaResponse<void>) => {
       this.getData();
     });
   }

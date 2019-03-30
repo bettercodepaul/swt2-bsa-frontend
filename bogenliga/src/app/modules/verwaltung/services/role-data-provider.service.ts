@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -25,7 +25,7 @@ export class RoleDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<Response<RoleDO[]>> {
+  public findAll(): Promise<BogenligaResponse<RoleDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

@@ -4,7 +4,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -25,7 +25,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     super();
   }
 
-  public create(payload: DsbMannschaftDO, payload2: VereinDO): Promise<Response<DsbMannschaftDO>> {
+  public create(payload: DsbMannschaftDO, payload2: VereinDO): Promise<BogenligaResponse<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -57,7 +57,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<Response<void>> {
+  public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -78,7 +78,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<Response<DsbMannschaftDO[]>> {
+  public findAll(): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -100,7 +100,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
   }
 
 
-  public findById(id: string | number): Promise<Response<DsbMannschaftDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -121,7 +121,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<DsbMannschaftDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

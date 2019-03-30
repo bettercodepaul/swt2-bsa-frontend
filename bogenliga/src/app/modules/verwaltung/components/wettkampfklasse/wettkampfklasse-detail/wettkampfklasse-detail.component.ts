@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -67,7 +67,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
     // persist
     this.wettkampfklasseDataProvider.create(this.currentWettkampfklasse)
-        .then((response: Response<WettkampfKlasseDO>) => {
+        .then((response: BogenligaResponse<WettkampfKlasseDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -93,7 +93,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<WettkampfKlasseDO>) => {
+        }, (response: BogenligaResponse<WettkampfKlasseDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -107,7 +107,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
     // persist
     this.wettkampfklasseDataProvider.update(this.currentWettkampfklasse)
-        .then((response: Response<WettkampfKlasseDO>) => {
+        .then((response: BogenligaResponse<WettkampfKlasseDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -134,7 +134,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<WettkampfKlasseDO>) => {
+        }, (response: BogenligaResponse<WettkampfKlasseDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -148,21 +148,21 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
 
   private loadById(id: number) {
     this.wettkampfklasseDataProvider.findById(id)
-        .then((response: Response<WettkampfKlasseDO>) => this.handleSuccess(response))
-        .catch((response: Response<WettkampfKlasseDO>) => this.handleFailure(response));
+        .then((response: BogenligaResponse<WettkampfKlasseDO>) => this.handleSuccess(response))
+        .catch((response: BogenligaResponse<WettkampfKlasseDO>) => this.handleFailure(response));
   }
 
-  private handleSuccess(response: Response<WettkampfKlasseDO>) {
+  private handleSuccess(response: BogenligaResponse<WettkampfKlasseDO>) {
     this.currentWettkampfklasse = response.payload;
     this.loading = false;
   }
 
-  private handleFailure(response: Response<WettkampfKlasseDO>) {
+  private handleFailure(response: BogenligaResponse<WettkampfKlasseDO>) {
     this.loading = false;
 
   }
 
-  private handleDeleteSuccess(response: Response<void>): void {
+  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS,
@@ -185,7 +185,7 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
     this.notificationService.showNotification(notification);
   }
 
-  private handleDeleteFailure(response: Response<void>): void {
+  private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id: NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE,

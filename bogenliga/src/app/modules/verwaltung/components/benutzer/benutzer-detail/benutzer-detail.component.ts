@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {BENUTZER_DETAIL_CONFIG} from './benutzer-detail.config';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '@shared/data-provider';
 import {ButtonType, CommonComponent, toTableRows} from '../../../../shared/components';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from 'util';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {BenutzerDO} from "../../../types/benutzer-do.class";
 import {RoleDTO} from "../../../types/datatransfer/role-dto.class";
 import {RoleDO} from "../../../types/role-do.class";
@@ -64,13 +64,13 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
         if (id != 'add') {
           this.benutzerDataProvider.findUserRoleById(id)
-            .then((response: Response<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO= response.payload)
-            .catch((response: Response<BenutzerRolleDO>) => this.currentBenutzerRolleDO= null);
+            .then((response: BogenligaResponse<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO= response.payload)
+            .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO= null);
 
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
           this.roleDataProvider.findAll()
-            .then((response: Response<RoleDO[]>) => this.setVersionedDataObjects(response))
-            .catch((response: Response<RoleDO[]>) => this.getEmptyList());
+            .then((response: BogenligaResponse<RoleDO[]>) => this.setVersionedDataObjects(response))
+            .catch((response: BogenligaResponse<RoleDO[]>) => this.getEmptyList());
         }
       }
     });
@@ -88,7 +88,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
     this.currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
     this.benutzerDataProvider.update(this.currentBenutzerRolleDTO)
-      .then((response: Response<BenutzerDO>) => {
+      .then((response: BogenligaResponse<BenutzerDO>) => {
         if (!isNullOrUndefined(response)
           && !isNullOrUndefined(response.payload)
           && !isNullOrUndefined(response.payload.id)) {
@@ -114,7 +114,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
           this.notificationService.showNotification(notification);
         }
-      }, (response: Response<BenutzerDO>) => {
+      }, (response: BogenligaResponse<BenutzerDO>) => {
         console.log('Failed');
         this.saveLoading = false;
 
@@ -130,16 +130,16 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   private loadById(id: number) {
     this.benutzerDataProvider.findUserRoleById(id)
-        .then((response: Response<BenutzerRolleDO>) => this.handleSuccess(response))
-        .catch((response: Response<BenutzerRolleDO>) => this.handleFailure(response));
+        .then((response: BogenligaResponse<BenutzerRolleDO>) => this.handleSuccess(response))
+        .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.handleFailure(response));
   }
 
-  private handleSuccess(response: Response<BenutzerRolleDO>) {
+  private handleSuccess(response: BogenligaResponse<BenutzerRolleDO>) {
     this.currentBenutzerRolleDO = response.payload;
     this.loading = false;
   }
 
-  private handleFailure(response: Response<BenutzerRolleDO>) {
+  private handleFailure(response: BogenligaResponse<BenutzerRolleDO>) {
     this.loading = false;
 
   }
@@ -147,7 +147,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     return [];
   }
 
-  public setVersionedDataObjects(response: Response<RoleDTO[]>): void {
+  public setVersionedDataObjects(response: BogenligaResponse<RoleDTO[]>): void {
 
     this.roles = []; // reset array to ensure change detection
     this.loading = false;
@@ -158,7 +158,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     return;
   }
 
-  public getVersionedDataObjects(response: Response<RoleDTO[]>) {
+  public getVersionedDataObjects() {
 
 
     return this.roles;

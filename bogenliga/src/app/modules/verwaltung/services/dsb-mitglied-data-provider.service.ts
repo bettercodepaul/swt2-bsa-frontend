@@ -4,7 +4,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {
   DataProviderService,
   RequestResult,
-  Response,
+  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
@@ -24,7 +24,7 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     super();
   }
 
-  public create(payload: DsbMitgliedDO): Promise<Response<DsbMitgliedDO>> {
+  public create(payload: DsbMitgliedDO): Promise<BogenligaResponse<DsbMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -44,7 +44,7 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<Response<void>> {
+  public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -65,7 +65,7 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<Response<DsbMitgliedDO[]>> {
+  public findAll(): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -87,7 +87,7 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
   }
 
 
-  public findById(id: string | number): Promise<Response<DsbMitgliedDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<DsbMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -108,7 +108,7 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<Response<DsbMitgliedDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<DsbMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result

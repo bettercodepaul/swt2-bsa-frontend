@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {Response} from '../../../../shared/data-provider';
+import {BogenligaResponse} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -82,7 +82,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     console.log('Saving verein: ', this.currentVerein);
 
     this.vereinProvider.create(this.currentVerein)
-        .then((response: Response<VereinDO>) => {
+        .then((response: BogenligaResponse<VereinDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -108,7 +108,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<DsbMitgliedDO>) => {
+        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -124,7 +124,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
 
     this.vereinProvider.update(this.currentVerein)
-        .then((response: Response<VereinDO>) => {
+        .then((response: BogenligaResponse<VereinDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -151,7 +151,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: Response<DsbMitgliedDO>) => {
+        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -194,30 +194,30 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
   private loadById(id: number) {
     this.vereinProvider.findById(id)
-        .then((response: Response<VereinDO>) => this.handleSuccess(response))
-        .catch((response: Response<VereinDO>) => this.handleFailure(response));
+        .then((response: BogenligaResponse<VereinDO>) => this.handleSuccess(response))
+        .catch((response: BogenligaResponse<VereinDO>) => this.handleFailure(response));
   }
 
   private loadRegions(type: string) {
     this.regionProvider.findAllByType(type)
-        .then((response: Response<RegionDO[]>) => this.handleResponseArraySuccess(response))
-        .catch((response: Response<RegionDTO[]>) => this.handleResponseArrayFailure(response));
+        .then((response: BogenligaResponse<RegionDO[]>) => this.handleResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
 
 
 
-  private handleSuccess(response: Response<VereinDO>) {
+  private handleSuccess(response: BogenligaResponse<VereinDO>) {
     this.currentVerein = response.payload;
     this.loading = false;
 
     this.currentRegion = this.regionen.filter((region) => region.id === this.currentVerein.regionId)[0];
   }
 
-  private handleFailure(response: Response<VereinDO>) {
+  private handleFailure(response: BogenligaResponse<VereinDO>) {
     this.loading = false;
   }
 
-  private handleDeleteSuccess(response: Response<void>): void {
+  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_VEREIN_SUCCESS,
@@ -240,7 +240,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleDeleteFailure(response: Response<void>): void {
+  private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_VEREIN_FAILURE,
@@ -262,12 +262,12 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleResponseArrayFailure(response: Response<RegionDTO[]>): void {
+  private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
     this.regionen = [];
     this.loading = false;
   }
 
-  private handleResponseArraySuccess(response: Response<RegionDO[]>): void {
+  private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
     this.regionen = []; // reset array to ensure change detection
     this.regionen = response.payload;
     this.currentRegion = this.regionen[0]; // Set first element of object as selected.
