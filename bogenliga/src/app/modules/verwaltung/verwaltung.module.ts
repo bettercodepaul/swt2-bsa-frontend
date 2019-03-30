@@ -1,45 +1,45 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
-import {FormsModule} from '@angular/forms';
-import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {
+  BenutzerDetailComponent,
+  BenutzerNeuComponent,
+  BenutzerOverviewComponent,
+  DsbMannschaftDetailComponent,
+  DsbMannschaftOverviewComponent,
+  DsbMitgliedDetailComponent,
+  DsbMitgliedOverviewComponent,
+  LigaDetailComponent,
+  LigaOverviewComponent,
+  SportjahrLigaAuswahlComponent,
+  SportjahrOverviewComponent,
+  VereinDetailComponent,
+  VereinOverviewComponent,
+  VerwaltungComponent,
+  WettkampfklasseDetailComponent,
+  WettkampfklasseOverviewComponent
+} from './components';
+import {
+  BenutzerDetailGuard,
+  BenutzerNeuGuard,
+  BenutzerOverviewGuard,
   DsbMannschaftDetailGuard,
   DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
-  BenutzerDetailGuard,
-  BenutzerNeuGuard,
-  BenutzerOverviewGuard,
-  SportjahrLigaAuswahlGuard,
-  SportjahrOverviewGuard,
-  VerwaltungGuard,
-  WettkampfklasseDetailGuard,
-  WettkampfklasseOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
+  SportjahrLigaAuswahlGuard,
+  SportjahrOverviewGuard,
+  VereinDetailGuard,
   VereinOverviewGuard,
-  VereinDetailGuard
+  VerwaltungGuard,
+  WettkampfklasseDetailGuard,
+  WettkampfklasseOverviewGuard
 } from './guards';
-import {
-  DsbMitgliedDetailComponent,
-  DsbMitgliedOverviewComponent,
-  DsbMannschaftDetailComponent,
-  DsbMannschaftOverviewComponent,
-  BenutzerDetailComponent,
-  BenutzerNeuComponent,
-  BenutzerOverviewComponent,
-  VerwaltungComponent,
-  WettkampfklasseDetailComponent,
-  WettkampfklasseOverviewComponent,
-  VereinOverviewComponent,
-  VereinDetailComponent,
-  LigaOverviewComponent,
-  LigaDetailComponent,
-  SportjahrLigaAuswahlComponent,
-  SportjahrOverviewComponent
-} from './components';
+import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 
 @NgModule({
   imports:      [

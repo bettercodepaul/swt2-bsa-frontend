@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {USER_PWD_CONFIG} from './user-pwd.config';
+import {AlertType} from '../../../shared/components/alerts';
 import {UserPwdDataProviderService} from '../../services/user-pwd-data-provider.service';
 import {ChangeCredentialsDO} from '../../types/changecredentials-do.class';
-import {LoginResult} from "../../types/login-result.enum";
-import {AlertType} from "../../../shared/components/alerts";
+import {LoginResult} from '../../types/login-result.enum';
+import {USER_PWD_CONFIG} from './user-pwd.config';
 
 @Component({
   selector:    'bla-user-pwd',

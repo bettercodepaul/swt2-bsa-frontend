@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {TranslateService} from '@ngx-translate/core';
 import {ButtonType} from '@shared/components';
-import {AppState, SidebarState} from '../../modules/shared/redux-store';
 import {TOGGLE_SIDEBAR} from '@shared/redux-store';
 import {UserState} from '@shared/redux-store';
 import {CurrentUserService} from '@shared/services';
+import {AppState, SidebarState} from '../../modules/shared/redux-store';
 
 @Component({
   selector:    'bla-navbar',

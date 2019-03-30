@@ -1,6 +1,6 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {ElementRef} from '@angular/core';
-import {RequestResult, BogenligaResponse} from '..';
+import {BogenligaResponse, RequestResult} from '..';
 import {DataProviderService} from './data-provider.service';
 import {RestClient} from './rest-client.class';
 

@@ -1,5 +1,5 @@
-import {BenutzerDTO} from '../types/datatransfer/benutzer-dto.class';
 import {VersionedDataTransferObject} from '../../shared/data-provider';
+import {BenutzerDTO} from '../types/datatransfer/benutzer-dto.class';
 
 
 // export function toDO(benutzerDTO: BenutzerDTO): BenutzerDO {
@@ -17,7 +17,7 @@ export function fromPayload(payload: VersionedDataTransferObject): BenutzerDTO {
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): BenutzerDTO[] {
   const list: BenutzerDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }
 

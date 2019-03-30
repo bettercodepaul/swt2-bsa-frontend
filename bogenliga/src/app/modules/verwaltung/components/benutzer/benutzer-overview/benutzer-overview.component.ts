@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {BENUTZER_OVERVIEW_CONFIG} from './benutzer-overview.config';
-import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {CommonComponent} from '../../../../shared/components/common';
-import {BogenligaResponse} from '../../../../shared/data-provider';
-import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
-import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {Router} from '@angular/router';
+import {CommonComponent} from '../../../../shared/components/common';
+import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
+import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
+import {BogenligaResponse} from '../../../../shared/data-provider';
+import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
   NotificationOrigin,
@@ -15,7 +13,9 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
+import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
+import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
+import {BENUTZER_OVERVIEW_CONFIG} from './benutzer-overview.config';
 
 export const NOTIFICATION_DELETE_BENUTZER = 'benutzer_overview_delete';
 
@@ -65,11 +65,11 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_BENUTZER + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.benutzerDataProvider.deleteById(id)
-                .then(response => this.loadTableRows())
-                .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
+                .then((response) => this.loadTableRows())
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           }
         });
 

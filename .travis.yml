@@ -21,6 +21,7 @@ before_script:
 script:
   - cd bogenliga
   - npm ci
+  - npm ci
   - npm run lint
   #- ng test --watch false
   #- npm run e2e

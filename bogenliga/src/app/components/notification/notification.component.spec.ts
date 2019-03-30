@@ -4,10 +4,10 @@ import {HttpClientModule} from '@angular/common/http';
 import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
 import {TranslateModule} from '@ngx-translate/core';
-import {ROUTES} from '../../app.routing';
-import {HomeModule} from '../../modules/home';
 import {APP_REDUCERS} from '@shared/redux-store';
 import {SharedModule} from '@shared/shared.module';
+import {ROUTES} from '../../app.routing';
+import {HomeModule} from '../../modules/home';
 import {NotificationComponent} from './notification.component';
 
 xdescribe('NotificationComponent', () => {

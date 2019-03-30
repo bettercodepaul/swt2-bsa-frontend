@@ -1,8 +1,8 @@
 import {Routes} from '@angular/router';
-import {UserGuard} from './guards/user.guard';
+import {LoginComponent} from './components/login/login.component';
 import {UserProfileComponent} from './components/user-profile/user-profile.component';
 import {UserPwdComponent} from './components/user-pwd/user-pwd.component';
-import {LoginComponent} from './components/login/login.component';
+import {UserGuard} from './guards/user.guard';
 
 
 export const USER_ROUTES: Routes = [
