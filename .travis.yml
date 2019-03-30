@@ -40,7 +40,7 @@ jobs:
         - cd bogenliga
         - npm ci
         - npm install
-        - ng build --deployUrl="/swt2-bsa-frontend/" --baseHref="https://exxcellent.github.io/swt2-bsa-frontend/" --prod --configuration=offline
+        - ng build --deployUrl="/swt2-bsa-frontend/" --prod --configuration=offline
       # DEPLOY GITHUB PAGES
       deploy:
         provider: pages
