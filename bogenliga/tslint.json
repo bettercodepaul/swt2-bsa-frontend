@@ -61,6 +61,8 @@
     "no-use-before-declare": true, // ignore warning
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
+    "import-sources-order": false,
+    "ordered-imports": false,
     "one-line": [
       true,
       "check-open-brace",

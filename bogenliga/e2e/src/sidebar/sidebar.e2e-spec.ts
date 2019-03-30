@@ -1,7 +1,9 @@
-import {Sidebar} from './sidebar.po';
 import {HomePage} from '../home/home.po';
-import {SettingsOverview} from '../settings/overview/overview.po';
+
+import {Sidebar} from './sidebar.po';
+
 import {SettingsDetails} from '../settings/details/details.po';
+import {SettingsOverview} from '../settings/overview/overview.po';
 
 describe('Sidebar', () => {
   let sidebar: Sidebar;

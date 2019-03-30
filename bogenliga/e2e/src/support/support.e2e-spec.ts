@@ -1,14 +1,14 @@
-import {Support} from './support.po';
 import {HomePage} from '../home/home.po';
-import {SettingsOverview} from '../settings/overview/overview.po';
-import {Sidebar} from '../sidebar/sidebar.po';
+
+import {Support} from './support.po';
+
 import {SettingsDetails} from '../settings/details/details.po';
+import {SettingsOverview} from '../settings/overview/overview.po';
 
 describe('Support', () => {
   let support: Support;
   let home: HomePage;
   let settingsOverview: SettingsOverview;
-  let sidebar: Sidebar;
   let settingsDetails: SettingsDetails;
 
   beforeEach(() => {

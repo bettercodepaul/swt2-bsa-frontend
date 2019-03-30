@@ -1,14 +1,15 @@
-import {Navbar} from './navbar.po';
 import {HomePage} from '../home/home.po';
+
+import {Navbar} from './navbar.po';
+
 import {SettingsOverview} from '../settings/overview/overview.po';
-import {Sidebar} from '../sidebar/sidebar.po';
+
 import {SettingsDetails} from '../settings/details/details.po';
 
 describe('Navbar', () => {
   let navbar: Navbar;
   let home: HomePage;
   let settingsOverview: SettingsOverview;
-  let sidebar: Sidebar;
   let settingsDetails: SettingsDetails;
 
   beforeEach(() => {

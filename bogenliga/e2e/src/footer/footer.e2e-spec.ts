@@ -1,5 +1,6 @@
 import {Footer} from './footer.po';
 import {HomePage} from '../home/home.po';
+
 import {SettingsDetails} from '../settings/details/details.po';
 import {SettingsOverview} from '../settings/overview/overview.po';
 
