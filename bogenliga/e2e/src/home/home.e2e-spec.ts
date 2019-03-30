@@ -1,5 +1,6 @@
-import {HomePage} from './home.po';
 import {browser} from 'protractor';
+
+import {HomePage} from './home.po';
 
 describe('Home Page', () => {
   let page: HomePage;
