@@ -1,5 +1,9 @@
+[![Build Status](https://travis-ci.org/exxcellent/swt2-bsa-frontend.svg?branch=master)](https://travis-ci.org/exxcellent/swt2-bsa-frontend)
+
 # swt2-bsa-frontend
 SWT2 - Bogenliga Application - Angular Oberfläche
+
+Ein Beispiel ist unter [GitHub Demo Seite](https://travis-ci.org/exxcellent/swt2-bsa-frontend) verfügbar.
 
 ## Einstieg
 
@@ -12,3 +16,4 @@ Zum Starten der Anwendung führe folgede Befehle aus:
 `npm ci` zum Installieren der Abhängigkeiten
 
 `ng serve -o` zum Öffnen der Anwendung
+
