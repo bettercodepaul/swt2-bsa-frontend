@@ -20,24 +20,25 @@ before_script:
 
 jobs:
   include:
-    - stage: Prepare environment
+    - stage: Run syntax check (tslint)
       script:
         - cd bogenliga
         - npm ci
         - npm install
-    - stage: Run syntax check (tslint)
-      script:
-        - cd bogenliga
         - ng lint
     - stage: Test application
       script:
-        - cd bogenliga
+        #- cd bogenliga
+        #- npm ci
+        #- npm install
         #- ng test --watch false
         #- npm run e2e
         - echo "Skip tests"
     - stage: Build application
       script:
         - cd bogenliga
+        - npm ci
+        - npm install
         - ng build --configuration=offline --base-href "https://exxcellent.github.io/swt2-bsa-frontend"
     - stage: Deploy to github
       script:
