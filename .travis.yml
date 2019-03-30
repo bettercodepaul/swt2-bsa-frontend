@@ -18,22 +18,39 @@ before_script:
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
 
-script:
-  - cd bogenliga
-  - npm ci
-  - npm ci
-  - npm run lint
-  #- ng test --watch false
-  #- npm run e2e
-  - ng build --configuration=offline --base-href "https://exxcellent.github.io/swt2-bsa-frontend"
+jobs:
+  include:
+    - stage: prepare
+      script:
+        - cd bogenliga
+        - npm ci
+        - npm install
+    - stage: tslint
+      script:
+        - npm run lint
+    - stage: test
+      script:
+        #- ng test --watch false
+        #- npm run e2e
+    - stage: build
+      script:
+        - ng build --configuration=offline --base-href "https://exxcellent.github.io/swt2-bsa-frontend"
+    - stage: deploy
+      # DEPLOY GITHUB PAGES
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+        local_dir: dist/swt2-bsa-frontend
+        verbose: true
+        keep-history: true
+        on:
+          branch: master
 
-# DEPLOY GITHUB PAGES
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
-  local_dir: dist/swt2-bsa-frontend
-  verbose: true
-  keep-history: true
-  on:
-    branch: master
+
+stages:
+  - prepare
+  - tslint
+  # - test
+  - build
+  - deploy
