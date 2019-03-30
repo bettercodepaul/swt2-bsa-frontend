@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
+import {ButtonSize} from '@shared/components';
 import {isNullOrUndefined} from '@shared/functions';
+import {NotificationState} from '@shared/redux-store';
 import {
   ModalDialogOption,
   ModalDialogResult,
@@ -10,8 +12,6 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../modules/shared';
-import {ButtonSize} from '@shared/components';
-import {NotificationState} from '@shared/redux-store';
 
 @Component({
   selector:    'bla-notification',

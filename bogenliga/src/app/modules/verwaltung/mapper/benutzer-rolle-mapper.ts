@@ -1,7 +1,7 @@
-import {BenutzerRolleDTO} from '../types/datatransfer/benutzer-rolle-dto.class';
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {BenutzerDO} from "../types/benutzer-do.class";
-import {BenutzerRolleDO} from "../types/benutzer-rolle-do.class";
+import {BenutzerDO} from '../types/benutzer-do.class';
+import {BenutzerRolleDO} from '../types/benutzer-rolle-do.class';
+import {BenutzerRolleDTO} from '../types/datatransfer/benutzer-rolle-dto.class';
 
 
 // export function toDO(benutzerRolleDTO: BenutzerRolleDTO): BenutzerRolleDO {
@@ -29,7 +29,7 @@ export function fromPayloadBenutzerRolle(payload: VersionedDataTransferObject): 
 
 export function fromPayloadArrayBenutzerRolle(payload: VersionedDataTransferObject[]): BenutzerRolleDO[] {
   const list: BenutzerRolleDO[] = [];
-  payload.forEach(single => list.push(fromPayloadBenutzerRolle(single)));
+  payload.forEach((single) => list.push(fromPayloadBenutzerRolle(single)));
   return list;
 }
 

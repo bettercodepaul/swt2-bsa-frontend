@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
 import {TranslateService} from '@ngx-translate/core';
-import {AppState, SidebarState} from './modules/shared/redux-store';
 import {environment} from '../environments/environment';
+import {AppState, SidebarState} from './modules/shared/redux-store';
 
 @Component({
   selector:    'bla-root',

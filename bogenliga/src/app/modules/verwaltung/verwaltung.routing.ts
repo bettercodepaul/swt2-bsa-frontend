@@ -1,31 +1,13 @@
 import {Routes} from '@angular/router';
 
 import {
-  DsbMannschaftDetailGuard,
-  DsbMannschaftOverviewGuard,
-  DsbMitgliedDetailGuard,
-  DsbMitgliedOverviewGuard,
-  BenutzerDetailGuard,
-  BenutzerNeuGuard,
-  BenutzerOverviewGuard,
-  LigaDetailGuard,
-  LigaOverviewGuard,
-  SportjahrLigaAuswahlGuard,
-  SportjahrOverviewGuard,
-  VereinDetailGuard,
-  VereinOverviewGuard,
-  VerwaltungGuard,
-  WettkampfklasseDetailGuard,
-  WettkampfklasseOverviewGuard
-} from './guards';
-import {
+  BenutzerDetailComponent,
+  BenutzerNeuComponent,
+  BenutzerOverviewComponent,
   DsbMannschaftDetailComponent,
   DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
-  BenutzerDetailComponent,
-  BenutzerNeuComponent,
-  BenutzerOverviewComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
   SportjahrLigaAuswahlComponent,
@@ -36,6 +18,24 @@ import {
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent
 } from './components';
+import {
+  BenutzerDetailGuard,
+  BenutzerNeuGuard,
+  BenutzerOverviewGuard,
+  DsbMannschaftDetailGuard,
+  DsbMannschaftOverviewGuard,
+  DsbMitgliedDetailGuard,
+  DsbMitgliedOverviewGuard,
+  LigaDetailGuard,
+  LigaOverviewGuard,
+  SportjahrLigaAuswahlGuard,
+  SportjahrOverviewGuard,
+  VereinDetailGuard,
+  VereinOverviewGuard,
+  VerwaltungGuard,
+  WettkampfklasseDetailGuard,
+  WettkampfklasseOverviewGuard
+} from './guards';
 
 export const VERWALTUNG_ROUTES: Routes = [
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},

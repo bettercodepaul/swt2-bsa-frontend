@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from '@shared/functions';
+import {CommonComponent} from '@shared/components';
 import {ButtonType} from '@shared/components';
-import {LigaDO} from '../../../types/liga-do.class';
-import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
-import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
-import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.class';
+import {BogenligaResponse} from '@shared/data-provider';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
   Notification,
   NotificationOrigin,
@@ -14,14 +12,16 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
+import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
+import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.class';
+import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
 import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
+import {LigaDO} from '../../../types/liga-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {LIGA_DETAIL_CONFIG} from './liga-detail.config';
-import {CommonComponent} from '@shared/components';
-import {BogenligaResponse} from '@shared/data-provider';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';

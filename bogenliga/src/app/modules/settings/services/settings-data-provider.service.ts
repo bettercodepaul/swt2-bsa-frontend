@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {HttpErrorResponse} from '@angular/common/http';
-import {DataProviderService, RequestResult, BogenligaResponse, RestClient, UriBuilder} from '../../shared/data-provider';
+import {BogenligaResponse, DataProviderService, RequestResult, RestClient, UriBuilder} from '../../shared/data-provider';
 import {Data} from '../types/data';
 
 @Injectable({

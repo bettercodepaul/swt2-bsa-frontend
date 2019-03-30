@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {BENUTZER_NEU_CONFIG} from './benutzer-neu.config';
-import {BogenligaResponse} from '@shared/data-provider';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined} from '@shared/functions';
-import {BenutzerDO} from '../../../types/benutzer-do.class';
 import {CredentialsDO} from '@user/types/credentials-do.class';
 import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
+import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
+import {BenutzerDO} from '../../../types/benutzer-do.class';
+import {BENUTZER_NEU_CONFIG} from './benutzer-neu.config';
 
 import {
   Notification,
@@ -49,7 +49,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
     this.notificationService.discardNotification();
 
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
         this.currentCredentials = new CredentialsDO();
         this.verifyCredentials = new CredentialsDO();
      });
@@ -81,7 +81,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/benutzer');

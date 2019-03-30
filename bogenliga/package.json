@@ -8,7 +8,7 @@
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "tslint \"src/**/*.ts\"",
     "lintfix": "tslint --fix \"src/**/*.ts\"",
     "e2e": "ng e2e",
     "clean": "rimraf dist && rimraf node_modules"

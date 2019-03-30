@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {BENUTZER_DETAIL_CONFIG} from './benutzer-detail.config';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BogenligaResponse} from '@shared/data-provider';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponent, toTableRows} from '../../../../shared/components';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {BenutzerDO} from "../../../types/benutzer-do.class";
-import {RoleDTO} from "../../../types/datatransfer/role-dto.class";
-import {RoleDO} from "../../../types/role-do.class";
-import {BenutzerRolleDTO} from "../../../types/datatransfer/benutzer-rolle-dto.class";
-import {BenutzerRolleDO} from "../../../types/benutzer-rolle-do.class";
+import {BenutzerDO} from '../../../types/benutzer-do.class';
+import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
+import {BenutzerRolleDTO} from '../../../types/datatransfer/benutzer-rolle-dto.class';
+import {RoleDTO} from '../../../types/datatransfer/role-dto.class';
+import {RoleDO} from '../../../types/role-do.class';
+import {BENUTZER_DETAIL_CONFIG} from './benutzer-detail.config';
 
 import {
   Notification,
@@ -19,8 +19,8 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {RoleVersionedDataObject} from "../../../services/models/roles-versioned-data-object.class";
-import {RoleDataProviderService} from "../../../services/role-data-provider.service";
+import {RoleVersionedDataObject} from '../../../services/models/roles-versioned-data-object.class';
+import {RoleDataProviderService} from '../../../services/role-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_BENUTZER = 'benutzer_detail_save';
@@ -57,15 +57,15 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
     this.notificationService.discardNotification();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         this.currentBenutzerRolleDO = new BenutzerRolleDO();
 
-        if (id != 'add') {
+        if (id !== 'add') {
           this.benutzerDataProvider.findUserRoleById(id)
-            .then((response: BogenligaResponse<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO= response.payload)
-            .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO= null);
+            .then((response: BogenligaResponse<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO = response.payload)
+            .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
 
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
           this.roleDataProvider.findAll()
@@ -84,7 +84,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.currentBenutzerRolleDTO = new BenutzerRolleDTO();
     this.currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
     this.currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
-    this.tobeRole = <RoleDO> this.selectedDTOs[0];
+    this.tobeRole = this.selectedDTOs[0] as RoleDO;
     this.currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
     this.currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
     this.benutzerDataProvider.update(this.currentBenutzerRolleDTO)
@@ -105,7 +105,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
           };
 
           this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
-            .subscribe(myNotification => {
+            .subscribe((myNotification) => {
               if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                 this.saveLoading = false;
                 this.router.navigateByUrl('/verwaltung/benutzer');
@@ -152,7 +152,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.roles = []; // reset array to ensure change detection
     this.loading = false;
 
-    response.payload.forEach(responseItem =>  this.roles.push(new RoleVersionedDataObject(responseItem.id, responseItem.roleName)));
+    response.payload.forEach((responseItem) =>  this.roles.push(new RoleVersionedDataObject(responseItem.id, responseItem.roleName)));
 
 
     return;
@@ -176,7 +176,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
       console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
       const names: string[] = [];
 
-      this.selectedDTOs.forEach(item => {names.push(item.roleName);});
+      this.selectedDTOs.forEach((item) => {names.push(item.roleName); });
 
       return names.join(', ');
     }

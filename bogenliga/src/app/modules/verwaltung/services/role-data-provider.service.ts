@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 
+import {HttpErrorResponse} from '@angular/common/http';
 import {
+  BogenligaResponse,
   DataProviderService,
   RequestResult,
-  BogenligaResponse,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {HttpErrorResponse} from '@angular/common/http';
 import {fromPayload, fromPayloadArray} from '../mapper/role-mapper';
-import {RoleDO} from "../types/role-do.class";
+import {RoleDO} from '../types/role-do.class';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
+import {TableActionType} from '../../../shared/components/tables/types/table-action-type.enum';
 import {DataTransferObject} from '../../../shared/data-provider';
-import {VersionedDataObject} from "../../../shared/data-provider/models/versioned-data-object.interface";
-import {TableActionType} from "../../../shared/components/tables/types/table-action-type.enum";
+import {VersionedDataObject} from '../../../shared/data-provider/models/versioned-data-object.interface';
 
 export class RoleDTO implements DataTransferObject {
   id: number;

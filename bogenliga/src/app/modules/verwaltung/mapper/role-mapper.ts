@@ -1,6 +1,6 @@
-import {BenutzerDTO} from '../types/datatransfer/benutzer-dto.class';
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {RoleDTO} from "../types/datatransfer/role-dto.class";
+import {BenutzerDTO} from '../types/datatransfer/benutzer-dto.class';
+import {RoleDTO} from '../types/datatransfer/role-dto.class';
 
 
 // export function toDO(roleDTO: RoleDTO): RoleDO {
@@ -22,7 +22,7 @@ export function fromPayload(payload: VersionedDataTransferObject): RoleDTO {
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): RoleDTO[] {
   const list: RoleDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }
 

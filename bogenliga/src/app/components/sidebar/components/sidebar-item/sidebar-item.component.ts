@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 import {select, Store} from '@ngrx/store';
-import {AppState, SidebarState} from '../../../../modules/shared/redux-store';
 import {CurrentUserService} from '@shared/services';
+import {AppState, SidebarState} from '../../../../modules/shared/redux-store';
 import {SideBarNavigationSubitem} from '../../types/sidebar-navigation-subitem.interface';
 
 @Component({
