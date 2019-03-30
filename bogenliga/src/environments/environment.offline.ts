@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  showLabel: true,
   label: 'OFFLINE',
   backendBaseUrl: 'http://localhost'
 };
