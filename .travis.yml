@@ -10,39 +10,37 @@ branches:
     - master
 
 before_script:
-  - export CHROME_BIN=/usr/bin/google-chrome
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sudo apt-get update
-  - sudo apt-get install -y libappindicator1 fonts-liberation
-  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - sudo dpkg -i google-chrome*.deb
+
 
 jobs:
   include:
-    - stage: Run syntax check (tslint)
+    - stage: Run syntax check (tslint) and tests
       script:
         - cd bogenliga
         - npm ci
         - npm install
         - ng lint
-    - stage: Test application
-      script:
+        # PREPARE TESTS
         #- cd bogenliga
+        #- export CHROME_BIN=/usr/bin/google-chrome
+        #- export DISPLAY=:99.0
+        #- sh -e /etc/init.d/xvfb start
+        #- sudo apt-get update
+        #- sudo apt-get install -y libappindicator1 fonts-liberation
+        #- wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        #- sudo dpkg -i google-chrome*.deb
+        # TESTS
         #- npm ci
         #- npm install
         #- ng test --watch false
         #- npm run e2e
         - echo "Skip tests"
-    - stage: Build application
+    - stage: Build and deploy application
       script:
         - cd bogenliga
         - npm ci
         - npm install
         - ng build --configuration=offline --base-href "https://exxcellent.github.io/swt2-bsa-frontend"
-    - stage: Deploy to github
-      script:
-        - cd bogenliga
       # DEPLOY GITHUB PAGES
       deploy:
         provider: pages
@@ -53,10 +51,3 @@ jobs:
         keep-history: true
         on:
           branch: master
-
-stages:
-  - prepare
-  - tslint
-  - test
-  - build
-  - deploy
