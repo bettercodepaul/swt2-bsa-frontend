@@ -1,6 +1,12 @@
 # swt2-bsa-frontend
 SWT2 - Bogenliga Application - Angular Oberfläche
 
+## Quickstart
+
+Run `npm ci` to install all dependencies.
+
+Run `ng serve -o`  to open the application. 
+
 ## Resources
 
 - Angular Tutorial: https://angular.io/tutorial 
@@ -14,9 +20,6 @@ SWT2 - Bogenliga Application - Angular Oberfläche
   - https://jasmine.github.io/2.0/introduction.html
   - https://entwickler.de/online/javascript/angular-testing-579793020.html
 
-
-
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
 ## Development server
 
@@ -41,3 +44,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Known problems
+
+### @ngrx/store is missing after npm install
+
+This is a known bug of the npm dependency: [Bug](https://github.com/ngrx/platform/issues/55)
+
+Run `npm install` a second time to fix the problem. 

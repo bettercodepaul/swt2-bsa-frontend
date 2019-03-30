@@ -1,4 +1,4 @@
-import {VersionedDataObject} from '../../shared/data-provider/models/versioned-data-object.interface';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 export class MannschaftsmitgliedDO implements VersionedDataObject {
   id: number;
@@ -6,6 +6,6 @@ export class MannschaftsmitgliedDO implements VersionedDataObject {
   mannschaftsId: number;
   dsbMitgliedId: number;
   dsbMitgliedEingesetzt: boolean;
-  dsbMitgliedVorname: String;
-  dsbMitgliedNachname: String;
+  dsbMitgliedVorname: string;
+  dsbMitgliedNachname: string;
 }

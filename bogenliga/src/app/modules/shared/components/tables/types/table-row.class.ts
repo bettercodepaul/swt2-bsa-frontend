@@ -1,7 +1,7 @@
-import {TableActionType} from './table-action-type.enum';
-import {isNullOrUndefined} from 'util';
-import {TableColumnConfig} from './table-column-config.interface';
+import {isNullOrUndefined} from '@shared/functions';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
+import {TableActionType} from './table-action-type.enum';
+import {TableColumnConfig} from './table-column-config.interface';
 
 export class TableRow {
   payload: VersionedDataObject;
@@ -65,7 +65,7 @@ export class TableRow {
       const separator = '.';
 
       return path.replace('[', separator).replace(']', '').split(separator).reduce(
-        function (obj, property) {
+        function getNestedProperty(obj, property) {
           return obj[property];
         }, this.payload
       );

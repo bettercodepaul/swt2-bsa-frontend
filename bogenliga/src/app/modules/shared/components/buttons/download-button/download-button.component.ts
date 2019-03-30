@@ -1,7 +1,6 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {ButtonComponent} from '../button/button.component';
-import {DownloadButtonResourceProviderService} from './services/download-button-resource-provider.service';
 import {Response} from '../../../data-provider';
+import {NotificationService} from '../../../services/notification';
 import {
   Notification,
   NotificationOrigin,
@@ -9,7 +8,8 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../services/notification/types';
-import {NotificationService} from '../../../services/notification';
+import {ButtonComponent} from '../button/button.component';
+import {DownloadButtonResourceProviderService} from './services/download-button-resource-provider.service';
 
 const NOTIFICATION_DOWNLOAD_SUCCESS = 'download_success';
 const NOTIFICATION_DOWNLOAD_FAILURE = 'download_failure';
@@ -30,7 +30,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
   private aElementRef: ElementRef;
 
   constructor(private downloadButtonResourceProvider: DownloadButtonResourceProviderService,
-    private notificationService: NotificationService) {
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -41,8 +41,8 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.loading = true;
 
     this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-        .then(response => this.handleSuccess(response))
-        .catch(response => this.handleFailure(response));
+        .then((response) => this.handleSuccess(response))
+        .catch((response) => this.handleFailure(response));
   }
 
   private handleSuccess(response: Response<string>): void {
@@ -58,7 +58,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DOWNLOAD_SUCCESS)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             console.log('Download ' + this.fileName + ' from ' + response.payload + ' completed');
             this.loading = false;
@@ -81,7 +81,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DOWNLOAD_FAILURE)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             console.log('Download ' + this.fileName + ' failed');
             this.loading = false;

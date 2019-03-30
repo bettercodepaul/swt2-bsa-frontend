@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 import {select, Store} from '@ngrx/store';
 import {AppState, SidebarState} from '../../../../modules/shared/redux-store';
-import {IconDefinition} from '@fortawesome/fontawesome-common-types';
+import {CurrentUserService} from '@shared/services';
 import {SideBarNavigationSubitem} from '../../types/sidebar-navigation-subitem.interface';
-import {CurrentUserService} from '../../../../modules/shared/services/current-user';
 
 @Component({
   selector:    'bla-sidebar-item',
@@ -22,7 +22,7 @@ export class SidebarItemComponent implements OnInit {
 
 
   constructor(private store: Store<AppState>,  private currentUserService: CurrentUserService) {
-    store.pipe(select(state => state.sidebarState))
+    store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 

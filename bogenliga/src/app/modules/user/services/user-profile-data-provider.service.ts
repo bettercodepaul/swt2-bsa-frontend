@@ -1,10 +1,17 @@
 import {Injectable} from '@angular/core';
 
-import {DataProviderService, RequestResult, Response, RestClient, UriBuilder, VersionedDataTransferObject} from '../../shared/data-provider';
-import {CurrentUserService} from '../../shared/services/current-user';
 import {HttpErrorResponse} from '@angular/common/http';
-import {UserProfileDO} from '../types/user-profile-do.class';
+import {
+  DataProviderService,
+  RequestResult,
+  Response,
+  RestClient,
+  UriBuilder,
+  VersionedDataTransferObject
+} from '../../shared/data-provider';
+import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/user-profile-mapper';
+import {UserProfileDO} from '../types/user-profile-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +72,7 @@ export class UserProfileDataProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    let id = this.currentUserService.getUserId();
+    const id = this.currentUserService.getUserId();
     return new Promise((resolve, reject) => {
       this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
         .then((data: VersionedDataTransferObject) => {

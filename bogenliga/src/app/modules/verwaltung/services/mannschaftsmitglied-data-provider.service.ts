@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 
+import {HttpErrorResponse} from '@angular/common/http';
 import {
   DataProviderService,
   RequestResult,
@@ -9,10 +10,8 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {HttpErrorResponse} from '@angular/common/http';
-import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
-import {MannschaftsMitgliedDO} from '../types/mannschaftsmitglied-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/mannschaftsmitglied-mapper';
+import {MannschaftsMitgliedDO} from '../types/mannschaftsmitglied-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +50,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-        .then(noData => {
+        .then((noData) => {
           resolve({result: RequestResult.SUCCESS});
 
         }, (error: HttpErrorResponse) => {

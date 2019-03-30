@@ -1,8 +1,7 @@
-import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
-import {DataObject} from '../../../data-provider';
-import {FormActionType} from './form-action-type.enum';
-import {isNullOrUndefined} from 'util';
-import {FormPropertyConfig} from './form-property-config.interface';
+import {FormActionType, FormPropertyConfig} from '@shared/components';
+import {DataObject} from '@shared/data-provider';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {isNullOrUndefined} from '@shared/functions';
 
 export class FormContent implements DataObject {
   payload: VersionedDataObject;
@@ -35,7 +34,7 @@ export class FormContent implements DataObject {
 
   /**
    * gets text from this property
-   **
+   *
    * @param {FormPropertyConfig} property
    * @returns {string}
    */
@@ -55,7 +54,7 @@ export class FormContent implements DataObject {
       const separator = '.';
 
       return path.replace('[', separator).replace(']', '').split(separator).reduce(
-        function (obj, property) {
+        function getNestedProperty(obj, property) {
           return obj[property];
         }, this.payload
       );

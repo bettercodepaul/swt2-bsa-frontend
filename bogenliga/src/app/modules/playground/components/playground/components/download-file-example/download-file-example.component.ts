@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {HelloResourceProviderService} from '../../../../services/hello-resource-provider.service';
+import {environment} from '../../../../../../../environments/environment';
 import {Response, UriBuilder} from '../../../../../shared/data-provider';
+import {NotificationService} from '../../../../../shared/services/notification';
 import {
   Notification,
   NotificationOrigin,
@@ -8,9 +9,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../../shared/services/notification/types';
-import {isNullOrUndefined, isUndefined} from 'util';
-import {NotificationService} from '../../../../../shared/services/notification';
-import {environment} from '../../../../../../../environments/environment';
+import {HelloResourceProviderService} from '../../../../services/hello-resource-provider.service';
 
 const NOTIFICATION_DOWNLOAD_SUCCESS = 'download_example_success';
 const NOTIFICATION_DOWNLOAD_FAILURE = 'download_example_failure';
@@ -29,7 +28,7 @@ export class DownloadFileExampleComponent implements OnInit {
 
 
   constructor(private helloResourceService: HelloResourceProviderService,
-    private notificationService: NotificationService) {
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -52,8 +51,8 @@ export class DownloadFileExampleComponent implements OnInit {
     console.log('Invoke ' + fileType + ' download');
 
     this.helloResourceService.downloadExamplePdf(fileEnding, fileName, this.aElementRef)
-        .then(response => this.handleSuccess(response, fileType))
-        .catch(response => this.handleFailure(response, fileType));
+        .then((response) => this.handleSuccess(response, fileType))
+        .catch((response) => this.handleFailure(response, fileType));
 
   }
 
@@ -70,7 +69,7 @@ export class DownloadFileExampleComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DOWNLOAD_SUCCESS)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             console.log('Download ' + fileType + ' from ' + response.payload + ' completed');
             this.downloadingFile = false;
@@ -93,7 +92,7 @@ export class DownloadFileExampleComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DOWNLOAD_FAILURE)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             console.log('Download ' + fileType + ' failed');
             this.downloadingFile = false;

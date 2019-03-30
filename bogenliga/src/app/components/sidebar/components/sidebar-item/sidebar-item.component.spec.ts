@@ -1,17 +1,17 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SidebarItemComponent} from './sidebar-item.component';
-import {RouterTestingModule} from '@angular/router/testing';
-import {ROUTES} from '../../../../app.routing';
-import {HomeModule} from '../../../../modules/home/home.module';
-import {SettingsModule} from '../../../../modules/settings/settings.module';
-import {WettkampfModule} from '../../../../modules/wettkampf/wettkampf.module';
-import {TranslateModule} from '@ngx-translate/core';
-import {StoreModule} from '@ngrx/store';
-import {APP_REDUCERS} from '../../../../modules/shared/redux-store';
 import {HttpClientModule} from '@angular/common/http';
-import {SharedModule} from '../../../../modules/shared/shared.module';
 import {FormsModule} from '@angular/forms';
+import {RouterTestingModule} from '@angular/router/testing';
+import {StoreModule} from '@ngrx/store';
+import {TranslateModule} from '@ngx-translate/core';
+import {ROUTES} from '../../../../app.routing';
+import {HomeModule} from '../../../../modules/home';
+import {SettingsModule} from '../../../../modules/settings';
+import {APP_REDUCERS} from '@shared/redux-store';
+import {SharedModule} from '@shared/shared.module';
+import {WettkampfModule} from '../../../../modules/wettkampf';
+import {SidebarItemComponent} from './sidebar-item.component';
 
 describe('SidebarItemComponent', () => {
   let component: SidebarItemComponent;

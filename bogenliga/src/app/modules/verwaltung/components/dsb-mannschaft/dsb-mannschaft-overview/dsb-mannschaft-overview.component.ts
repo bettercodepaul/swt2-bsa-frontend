@@ -1,12 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {DSB_MANNSCHAFT_OVERVIEW_CONFIG} from './dsb-mannschaft-overview.config';
-import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {CommonComponent} from '../../../../shared/components/common';
-import {Response} from '../../../../shared/data-provider';
-import {DsbMannschaftDTO} from '../../../types/datatransfer/dsb-mannschaft-dto.class';
-import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {Router} from '@angular/router';
+import {CommonComponent} from '../../../../shared/components/common';
+import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
+import {Response} from '../../../../shared/data-provider';
+import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
   NotificationOrigin,
@@ -15,6 +12,9 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
+import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
+import {DsbMannschaftDTO} from '../../../types/datatransfer/dsb-mannschaft-dto.class';
+import {DSB_MANNSCHAFT_OVERVIEW_CONFIG} from './dsb-mannschaft-overview.config';
 
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 
@@ -65,11 +65,11 @@ export class DsbMannschaftOverviewComponent extends CommonComponent implements O
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MANNSCHAFT + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.DsbMannschaftDataProvider.deleteById(id)
-                .then(response => this.loadTableRows())
-                .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
+                .then((response) => this.loadTableRows())
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           }
         });
 

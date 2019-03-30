@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ButtonType} from '../types/button-type.enum';
 import {ButtonSize} from '../types/button-size.enum';
+import {ButtonType} from '../types/button-type.enum';
 
 @Component({
   selector:    'bla-button',

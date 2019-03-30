@@ -3,10 +3,10 @@ import {DataTransferObject} from '../../../shared/data-provider';
 export class SportjahrDTO implements DataTransferObject {
   id: number;
   version: number;
-  wettkampfTypId : number;
-  wettkampfTypName : string;
+  wettkampfTypId: number;
+  wettkampfTypName: string;
   name: string;
-  sportjahr : number;
+  sportjahr: number;
   deadline: number;
   ligaleiterID: number;
   ligaleiterEmail: string;
@@ -19,8 +19,8 @@ export class SportjahrDTO implements DataTransferObject {
     name?: string;
     sportjahr?: number;
     deadline?: number;
-    ligaleiterID? : number;
-    ligaleiterEmail? : string;
+    ligaleiterID?: number;
+    ligaleiterEmail?: string;
 
   } = {}): SportjahrDTO {
     const copy = new SportjahrDTO();

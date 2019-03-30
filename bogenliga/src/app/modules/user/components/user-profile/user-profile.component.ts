@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {USER_PROFILE_CONFIG} from './user-profile.config';
-import {Response} from '../../../shared/data-provider';
-import {ButtonType, CommonComponent} from '../../../shared/components';
-import {UserProfileDataProviderService} from '../../services/user-profile-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserProfileDO} from '../../types/user-profile-do.class';
+import {ButtonType, CommonComponent} from '../../../shared/components';
+import {Response} from '../../../shared/data-provider';
 import {NotificationService} from '../../../shared/services/notification';
+import {UserProfileDataProviderService} from '../../services/user-profile-data-provider.service';
+import {UserProfileDO} from '../../types/user-profile-do.class';
+import {USER_PROFILE_CONFIG} from './user-profile.config';
 
 @Component({
   selector:    'bla-user-profile',

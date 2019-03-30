@@ -7,6 +7,6 @@ export function fromPayload(payload: VersionedDataTransferObject): VereineDTO {
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): VereineDTO[] {
   const list: VereineDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }

@@ -3,6 +3,7 @@ import {TableColumnSortOrder} from './table-column-sort-order.enum';
 import {TableColumnType} from './table-column-type.enum';
 
 export interface TableColumnConfig {
+  /* tslint:disable */
   translationKey: string; // key of the column
   propertyName?: string; // to access the payload parameter field
   propertyMapper?: Function; // if defined maps extracted property
@@ -18,4 +19,5 @@ export interface TableColumnConfig {
   stylesMapper?: Function; // optional: you can change the style of the column
 
   mappingFunction?: Function; // optional: you can change the value of a cell (enum -> string, boolean -> string)
+  /* tslint:enable */
 }

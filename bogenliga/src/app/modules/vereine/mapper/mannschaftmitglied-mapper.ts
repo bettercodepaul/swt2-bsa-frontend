@@ -7,6 +7,6 @@ export function fromPayload(payload: VersionedDataTransferObject): MannschaftsMi
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): MannschaftsMitgliedDTO[] {
   const list: MannschaftsMitgliedDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }

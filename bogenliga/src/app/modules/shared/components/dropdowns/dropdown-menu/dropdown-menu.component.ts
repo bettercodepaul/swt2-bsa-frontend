@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 import {TranslatePipe} from '@ngx-translate/core';
-import {isNullOrUndefined} from 'util';
+import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 
 @Component({
   selector: 'bla-dropdown-menu',
@@ -129,7 +128,7 @@ export class DropdownMenuComponent implements OnInit, OnChanges {
   }
 
   private findItemById(selectedItemId: number): any {
-    for (let item of this.items) {
+    for (const item of this.items) {
       if (item.id === selectedItemId) {
         return item;
       }

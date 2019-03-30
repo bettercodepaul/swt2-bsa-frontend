@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import {fromPayload, fromPayloadArray} from '../mapper/sportjahr-mapper';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {
   DataProviderService,
   RequestResult,
   Response,
-  RestClient, UriBuilder,
+  RestClient,
+  UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {HttpErrorResponse} from '@angular/common/http';
-import {SportjahrDO} from '../types/sportjahr-do.class';
+import {fromPayload, fromPayloadArray} from '../mapper/sportjahr-mapper';
 import {LigaDO} from '../types/liga-do.class';
+import {SportjahrDO} from '../types/sportjahr-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class SportjahrDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("liga/" + id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('liga/' + id).build())
           .then((data: VersionedDataTransferObject[]) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
@@ -49,7 +50,7 @@ export class SportjahrDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then(noData => {
+          .then((noData) => {
             resolve({result: RequestResult.SUCCESS});
 
           }, (error: HttpErrorResponse) => {

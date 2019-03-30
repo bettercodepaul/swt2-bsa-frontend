@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {isNullOrUndefined} from '@shared/functions';
+import {CommonComponent} from '../../common';
 import {FormConfig} from '../types/form-config.interface';
 import {FormContent} from '../types/form-content.class';
-import {CommonComponent} from '../../common';
 import {FormPropertyConfig} from '../types/form-property-config.interface';
 import {FormPropertyType} from '../types/form-protperty-type.enum';
-import {isNullOrUndefined} from 'util';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector:    'bla-horizontal-form',
@@ -25,7 +25,7 @@ export class HorizontalFormComponent extends CommonComponent implements OnInit {
   public dummy = {name: ''};
 
   get propertyForms() {
-    return this.form.get('properties') as FormArray
+    return this.form.get('properties') as FormArray;
   }
 
   constructor(private formBuilder: FormBuilder) {
@@ -39,7 +39,7 @@ export class HorizontalFormComponent extends CommonComponent implements OnInit {
       properties: this.formBuilder.array([])
     });
 
-    //this.config.properties.forEach(this.addProperty);
+    // this.config.properties.forEach(this.addProperty);
 
   }
 

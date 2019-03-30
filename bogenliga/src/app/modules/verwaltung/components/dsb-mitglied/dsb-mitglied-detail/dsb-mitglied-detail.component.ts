@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
-import {Response} from '../../../../shared/data-provider';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from 'util';
-import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
+import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {Response} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -14,6 +11,9 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
+import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
+import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
+import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
@@ -38,9 +38,9 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   public saveLoading = false;
 
   constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -49,7 +49,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
     this.notificationService.discardNotification();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
@@ -86,7 +86,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_DSB_MITGLIED)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + response.payload.id);
@@ -127,7 +127,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSB_MITGLIED + id)
-                .subscribe(myNotification => {
+                .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
                     this.router.navigateByUrl('/verwaltung/dsbmitglieder');
@@ -161,12 +161,12 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.dsbMitgliedDataProvider.deleteById(id)
-                .then(response => this.handleDeleteSuccess(response))
-                .catch(response => this.handleDeleteFailure(response));
+                .then((response) => this.handleDeleteSuccess(response))
+                .catch((response) => this.handleDeleteFailure(response));
           }
         });
 
@@ -206,7 +206,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.router.navigateByUrl('/verwaltung/dsbmitglieder');
             this.deleteLoading = false;
@@ -229,7 +229,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
           }

@@ -1,4 +1,4 @@
-import {DataTransferObject} from '../../../shared/data-provider';
+import {DataTransferObject} from '@shared/data-provider';
 
 export class DsbMannschaftDTO implements DataTransferObject {
   id: number;

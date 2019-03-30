@@ -1,6 +1,6 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {ResourceProviderService} from '../../../../data-provider/services/resource-provider.service';
 import {Response, RestClient} from '../../../../data-provider';
+import {ResourceProviderService} from '../../../../data-provider/services/resource-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class DownloadButtonResourceProviderService extends ResourceProviderServi
   }
 
   public download(url: string, fileName: string, aElement: ElementRef): Promise<Response<string>> {
-    return this.downloadFile(url, fileName, aElement)
+    return this.downloadFile(url, fileName, aElement);
   }
 
   getRestClient(): RestClient {

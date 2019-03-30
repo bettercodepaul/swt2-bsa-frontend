@@ -1,13 +1,14 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {fas} from '@fortawesome/free-solid-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
+import {fas} from '@fortawesome/free-solid-svg-icons';
 import {TranslateModule} from '@ngx-translate/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {StorageServiceModule} from 'angular-webstorage-service';
 import {
   AlertComponent,
   BreadcrumbsComponent,
@@ -36,14 +37,13 @@ import {
   VereineDropdownComponent
 } from './components';
 import {RestClient} from './data-provider';
-import * as SharedService from './services';
 import * as LocalDataProvider from './local-data-provider/services';
-import {StorageServiceModule} from 'angular-webstorage-service';
+import * as SharedService from './services';
 
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {RouterModule} from '@angular/router';
-import {TruncationPipe} from './pipes';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NavigationCardsComponent} from './components/navigation-cards';
+import {TruncationPipe} from './pipes';
 
 /*
  * define font awesome icon libraries

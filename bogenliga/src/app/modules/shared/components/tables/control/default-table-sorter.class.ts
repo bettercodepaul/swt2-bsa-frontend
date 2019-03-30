@@ -1,7 +1,7 @@
-import {BaseTableSorter} from './base-table-sorter.class';
 import {TableColumnConfig} from '../types/table-column-config.interface';
-import {TableConfig} from '../types/table-config.interface';
 import {TableColumnType} from '../types/table-column-type.enum';
+import {TableConfig} from '../types/table-config.interface';
+import {BaseTableSorter} from './base-table-sorter.class';
 
 export class DefaultTableSorter extends BaseTableSorter {
 

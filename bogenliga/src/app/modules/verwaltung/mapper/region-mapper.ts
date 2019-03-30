@@ -7,6 +7,6 @@ export function fromPayload(payload: VersionedDataTransferObject): RegionDTO {
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): RegionDTO[] {
   const list: RegionDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }

@@ -170,3 +170,26 @@ a:hover, a:focus {
     opacity: 0;
   }
 }
+
+
+
+.environment-corner-ribbon {
+  width: 200px;
+  text-align: center;
+  line-height: 50px;
+  letter-spacing: 1px;
+  color: #f0f0f0;
+  background: #cc2232;
+  border: 2px solid #f0f0f0;
+  box-shadow: 0 0 3px rgba(0,0,0,.3);
+  position: fixed;
+}
+
+.environment-corner-ribbon.bottom-right {
+  top: auto;
+  right: -70px;
+  bottom: 5px;
+  left: auto;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}

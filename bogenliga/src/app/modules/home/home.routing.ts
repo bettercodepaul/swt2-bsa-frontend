@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
-import {HomeGuard} from './guards/home.guard';
 import {ImpressumComponent} from './components/impressum/impressum.component';
+import {HomeGuard} from './guards/home.guard';
 
 
 export const HOME_ROUTES: Routes = [

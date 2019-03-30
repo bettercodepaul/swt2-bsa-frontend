@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {VEREINE_CONFIG} from './vereine.config';
 import {CommonComponent} from '../../../shared/components/common';
+import {toTableRows} from '../../../shared/components/tables';
 import {TableRow} from '../../../shared/components/tables/types/table-row.class';
 import {Response} from '../../../shared/data-provider';
 import {NotificationService} from '../../../shared/services/notification';
 import {VereineDataProviderService} from '../../services/vereine-data-provider.service';
-import {toTableRows} from '../../../shared/components/tables';
-import {VereineDO} from '../../types/vereine-do.class';
 import {VereineDTO} from '../../types/datatransfer/vereine-dto.class';
-import {VersionedDataObject} from '../../../shared/data-provider/models/versioned-data-object.interface';
+import {VereineDO} from '../../types/vereine-do.class';
+import {VEREINE_CONFIG} from './vereine.config';
 
 @Component({
   selector: 'bla-vereine',

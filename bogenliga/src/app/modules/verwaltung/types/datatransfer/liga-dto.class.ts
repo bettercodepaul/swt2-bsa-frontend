@@ -1,7 +1,7 @@
-import {DataTransferObject} from '../../../shared/data-provider';
+import {DataTransferObject} from '@shared/data-provider';
 
 export class LigaDTO implements DataTransferObject {
-  //TODO:  if else for every number
+  // TODO:  if else for every number
   id: number;
   name: string;
   regionId: number;
@@ -33,19 +33,19 @@ export class LigaDTO implements DataTransferObject {
     }
 
     if (optional.regionId >= 0) {
-      copy.regionId = optional.regionId
+      copy.regionId = optional.regionId;
     } else {
       copy.regionId = null;
     }
 
     if (optional.ligaUebergeordnetId >= 0) {
-      copy.ligaUebergeordnetId = optional.ligaUebergeordnetId
+      copy.ligaUebergeordnetId = optional.ligaUebergeordnetId;
     } else {
       copy.ligaUebergeordnetId = null;
     }
 
     if (optional.ligaVerantwortlichId >= 0) {
-      copy.ligaVerantwortlichId = optional.ligaVerantwortlichId
+      copy.ligaVerantwortlichId = optional.ligaVerantwortlichId;
     } else {
       copy.ligaVerantwortlichId = null;
     }

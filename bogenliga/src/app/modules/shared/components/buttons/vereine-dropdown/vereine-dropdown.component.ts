@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {DsbMannschaftDO} from '../../../../verwaltung/types/dsb-mannschaft-do.class';
 import {VereineDO} from '../../../../vereine/types/vereine-do.class';
-import {Router} from '@angular/router';
+import {DsbMannschaftDO} from '../../../../verwaltung/types/dsb-mannschaft-do.class';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 
 @Component({

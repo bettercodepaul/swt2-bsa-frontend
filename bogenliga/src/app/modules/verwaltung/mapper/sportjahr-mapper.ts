@@ -7,6 +7,6 @@ export function fromPayload(payload: VersionedDataTransferObject): SportjahrDTO 
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): SportjahrDTO[] {
   const list: SportjahrDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }

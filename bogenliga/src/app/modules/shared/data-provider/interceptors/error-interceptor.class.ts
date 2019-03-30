@@ -1,7 +1,7 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
-import {Injectable} from '@angular/core';
 import {ErrorHandlingService} from '../../services/error-handling';
 
 const MAX_RETRIES = 2;

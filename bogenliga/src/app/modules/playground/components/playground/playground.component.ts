@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {PLAYGROUND_CONFIG} from './playground.config';
 import {environment} from '../../../../../environments/environment';
+import {PLAYGROUND_CONFIG} from './playground.config';
 
 @Component({
   selector: 'bla-playground',

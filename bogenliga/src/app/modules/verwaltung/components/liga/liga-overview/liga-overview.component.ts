@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {LIGA_OVERVIEW_CONFIG} from './liga-overview.config';
-import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {CommonComponent} from '../../../../shared/components/common';
+import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
+import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {Response} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
-import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
-import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
-import {CommonComponent} from '../../../../shared/components/common';
-import {NotificationService, NotificationSeverity,
+import {
   Notification,
   NotificationOrigin,
+  NotificationService,
+  NotificationSeverity,
   NotificationType,
-  NotificationUserAction} from '../../../../shared/services/notification';
+  NotificationUserAction
+} from '../../../../shared/services/notification';
+import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
+import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
+import {LIGA_OVERVIEW_CONFIG} from './liga-overview.config';
 
 export const NOTIFICATION_DELETE_LIGA = 'liga_overview_delete';
 
@@ -61,11 +64,11 @@ export class LigaOverviewComponent extends CommonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_LIGA + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.ligaDataProvider.deleteById(id)
-                .then(response => this.loadTableRows())
-                .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
+                .then((response) => this.loadTableRows())
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           }
         });
 
@@ -77,7 +80,7 @@ export class LigaOverviewComponent extends CommonComponent implements OnInit {
 
     this.ligaDataProvider.findAll()
         .then((response: Response<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<LigaDTO[]>) => this.handleLoadTableRowsFailure(response))
+        .catch((response: Response<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private handleLoadTableRowsFailure(response: Response<LigaDTO[]>): void {

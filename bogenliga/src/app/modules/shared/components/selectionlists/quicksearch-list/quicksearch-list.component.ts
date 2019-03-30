@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {isNullOrUndefined} from 'util';
-import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
-import {TranslatePipe} from '@ngx-translate/core';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {TranslatePipe} from '@ngx-translate/core';
+import {isNullOrUndefined} from '@shared/functions';
+import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 
 @Component({
   selector: 'bla-quicksearch-list',
@@ -98,8 +98,8 @@ export class QuicksearchListComponent implements OnInit, OnChanges {
     this.selectedItemIds = [];
 
     // this-context not known in filter method thus the need for an auxiliary variable
-    let searchAttribute = this.optionFieldSelector;
-    return this.items.filter(el => {
+    const searchAttribute = this.optionFieldSelector;
+    return this.items.filter((el) => {
       if (isNullOrUndefined(searchAttribute)) {
         const elToString = String(el);
         return elToString.toLowerCase().indexOf(searchValue.toLowerCase()) > -1;

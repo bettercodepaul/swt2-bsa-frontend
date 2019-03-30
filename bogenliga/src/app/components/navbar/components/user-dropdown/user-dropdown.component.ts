@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {CurrentUserService} from '../../../../modules/shared/services/current-user';
 import {Router} from '@angular/router';
+import {CurrentUserService} from '@shared/services';
 
 @Component({
   selector:    'bla-user-dropdown',

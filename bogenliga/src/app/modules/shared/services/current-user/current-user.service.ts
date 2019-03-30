@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {UserPermission} from './types/user-permission.enum';
-import {LocalDataProviderService} from '../../local-data-provider/services';
-import {UserSignInDTO} from './types/user-sign-in-dto.class';
+import {Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
+import {isNullOrUndefined} from '@shared/functions';
+import {filter, map} from 'rxjs/operators';
+import {LocalDataProviderService} from '../../local-data-provider/services';
 import {AppState, Login, Logout} from '../../redux-store';
 import {UserState} from '../../redux-store/feature/user';
-import {isNullOrUndefined} from 'util';
-import {filter, map} from 'rxjs/operators';
 import {Notification, NotificationUserAction} from '../notification/types';
-import {Router} from '@angular/router';
+import {UserPermission} from './types/user-permission.enum';
+import {UserSignInDTO} from './types/user-sign-in-dto.class';
 
 const CURRENT_USER_KEY = 'current_user';
 const LOGIN_EMAIL_KEY = 'login_email';
@@ -78,7 +78,7 @@ export class CurrentUserService {
       return false;
     }
 
-    return requiredPermissions.every(function (value) {
+    return requiredPermissions.every(function hasPermissions(value) {
       return (userPermissions.indexOf(value) >= 0);
     });
   }
@@ -130,7 +130,7 @@ export class CurrentUserService {
 
 
   private observeUserState() {
-    this.store.pipe(select(state => state.userState))
+    this.store.pipe(select((state) => state.userState))
         .subscribe((state: UserState) => {
           this.isUserLoggedIn = state.isLoggedIn;
           this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
@@ -139,11 +139,11 @@ export class CurrentUserService {
 
   private observeSessionExpiredNotifications() {
     this.store.pipe(
-      select(state => state.notificationState),
-      filter(notificationState => !isNullOrUndefined(notificationState.notification)),
-      map(notificationState => notificationState.notification),
-      filter(notification => notification.id === 'NO_SESSION_ERROR'),
-      filter(notification => notification.userAction === NotificationUserAction.ACCEPTED)
+      select((state) => state.notificationState),
+      filter((notificationState) => !isNullOrUndefined(notificationState.notification)),
+      map((notificationState) => notificationState.notification),
+      filter((notification) => notification.id === 'NO_SESSION_ERROR'),
+      filter((notification) => notification.userAction === NotificationUserAction.ACCEPTED)
     ).subscribe((notification: Notification) => {
       this.logout();
       this.router.navigateByUrl('user/login');

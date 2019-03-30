@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {CommonComponent} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
+import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
+import {Response} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
   NotificationOrigin,
-  NotificationService, NotificationSeverity, NotificationType,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {Response} from '../../../../shared/data-provider';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {Router} from '@angular/router';
-import {CommonComponent} from '../../../../shared/components/common';
-import {VEREIN_OVERVIEW_CONFIG} from './verein-overview.config';
 import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
 import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
+import {VEREIN_OVERVIEW_CONFIG} from './verein-overview.config';
 
 export const NOTIFICATION_DELETE_VEREINE = 'vereine_overview_delete';
 
@@ -62,11 +64,11 @@ export class VereinOverviewComponent extends CommonComponent implements OnInit {
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREINE + id)
-        .subscribe(myNotification => {
+        .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.vereinDataProvider.deleteById(id)
-                .then(response => this.loadTableRows())
-                .catch(response => this.rows = hideLoadingIndicator(this.rows, id));
+                .then((response) => this.loadTableRows())
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           }
         });
 

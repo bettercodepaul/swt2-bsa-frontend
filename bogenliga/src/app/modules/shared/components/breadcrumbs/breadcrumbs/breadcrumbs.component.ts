@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {TranslatePipe} from '@ngx-translate/core';
+import {isNullOrUndefined, isNumber} from '@shared/functions';
 import {BreadcrumbDO} from '../types/breadcrumb-dto.class';
-import {isNullOrUndefined, isNumber} from 'util';
 
 @Component({
   selector:    'bla-breadcrumbs',

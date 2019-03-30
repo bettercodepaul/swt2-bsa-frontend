@@ -1,5 +1,5 @@
-import {LigaDTO} from '../types/datatransfer/liga-dto.class';
 import {VersionedDataTransferObject} from '../../shared/data-provider';
+import {LigaDTO} from '../types/datatransfer/liga-dto.class';
 
 
 export function fromPayload(payload: VersionedDataTransferObject): LigaDTO {
@@ -8,6 +8,6 @@ export function fromPayload(payload: VersionedDataTransferObject): LigaDTO {
 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): LigaDTO[] {
   const list: LigaDTO[] = [];
-  payload.forEach(single => list.push(fromPayload(single)));
+  payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }

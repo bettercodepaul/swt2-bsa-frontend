@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {CredentialsDO} from '../../types/credentials-do.class';
-import {LoginDataProviderService} from '../../services/login-data-provider.service';
-import {ButtonSize} from '../../../shared/components/buttons';
-import {AlertType} from '../../../shared/components/alerts';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from 'util';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
+import {environment} from '../../../../../environments/environment';
+import {AlertType} from '../../../shared/components/alerts';
+import {ButtonSize} from '../../../shared/components/buttons';
+import {LoginDataProviderService} from '../../services/login-data-provider.service';
+import {CredentialsDO} from '../../types/credentials-do.class';
 import {LoginResult} from '../../types/login-result.enum';
 import {USER_LOGIN_CONFIG} from './login.config';
-import {environment} from '../../../../../environments/environment';
 
 const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       if (!isUndefined(params[LOGIN_REDIRECT_QUERY_PARAM])) {
         this.destinationRouteAfterLogin = params[LOGIN_REDIRECT_QUERY_PARAM];
       }

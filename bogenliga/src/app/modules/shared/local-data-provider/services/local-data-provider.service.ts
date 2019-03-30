@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
+import {isNullOrUndefined} from '@shared/functions';
 import {isStorageAvailable} from 'angular-webstorage-service';
 import {LocalStorageDataProvider} from './data-sources/local-storage-data-provider.class';
 import {SessionStorageDataProvider} from './data-sources/session-storage-data-provider.class';
-import {isNullOrUndefined} from 'util';
 
 /**
  * I provider data from the local user client and abstract the data source.

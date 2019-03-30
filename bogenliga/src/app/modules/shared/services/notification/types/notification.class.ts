@@ -1,6 +1,6 @@
 import {NotificationOrigin} from './notification-origin.enum';
-import {NotificationType} from './notification-type.enum';
 import {NotificationSeverity} from './notification-severity.enum';
+import {NotificationType} from './notification-type.enum';
 import {NotificationUserAction} from './notification-user-action.enum';
 
 export class Notification {

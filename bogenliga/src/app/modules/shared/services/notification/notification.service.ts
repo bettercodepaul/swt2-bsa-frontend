@@ -1,5 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Notification, NotificationUserAction} from './types';
+import {select, Store} from '@ngrx/store';
+import {isNullOrUndefined} from '@shared/functions';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
+import {AppState, NOTIFICATION_STATE} from '../../redux-store';
 import {
   ACCEPT_NOTIFICATION,
   DECLINE_NOTIFICATION,
@@ -7,11 +11,7 @@ import {
   NotificationState,
   ShowNotification
 } from '../../redux-store/feature/notification';
-import {select, Store} from '@ngrx/store';
-import {AppState, NOTIFICATION_STATE} from '../../redux-store';
-import {Observable} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
-import {isNullOrUndefined} from 'util';
+import {Notification, NotificationUserAction} from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -36,10 +36,10 @@ export class NotificationService {
   public observeNotification(notificationId: string): Observable<Notification> {
     return this.store.pipe(
       select(NOTIFICATION_STATE),
-      filter(state => !isNullOrUndefined(state)),
-      filter(state => !isNullOrUndefined(state.notification)),
-      filter(state => state.notification.id === notificationId),
-      map(state => state.notification));
+      filter((state) => !isNullOrUndefined(state)),
+      filter((state) => !isNullOrUndefined(state.notification)),
+      filter((state) => state.notification.id === notificationId),
+      map((state) => state.notification));
   }
 
   public updateNotification(userAction: NotificationUserAction) {

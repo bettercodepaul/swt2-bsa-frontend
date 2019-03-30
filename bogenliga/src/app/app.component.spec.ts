@@ -1,26 +1,23 @@
-import {async, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {AppComponent} from './app.component';
+import {Location} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
+import {async, TestBed} from '@angular/core/testing';
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
+import {StoreModule} from '@ngrx/store';
+import {TranslateModule} from '@ngx-translate/core';
+import {AppComponent} from './app.component';
 import {ROUTES} from './app.routing';
-import {SidebarComponent} from './components/sidebar/sidebar.component';
+import {UserDropdownComponent} from './components/navbar/components/user-dropdown/user-dropdown.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {NotificationComponent} from './components/notification';
-import {HomeModule} from './modules/home/home.module';
-import {TranslateModule} from '@ngx-translate/core';
-import {StoreModule} from '@ngrx/store';
-import {APP_REDUCERS} from './modules/shared/redux-store';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {SettingsModule} from './modules/settings/settings.module';
-import {NgModuleFactoryLoader} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
-import {SharedModule} from './modules/shared/shared.module';
-import {FormsModule} from '@angular/forms';
 import {SidebarItemComponent} from './components/sidebar/components/sidebar-item/sidebar-item.component';
-import {UserDropdownComponent} from './components/navbar/components/user-dropdown/user-dropdown.component';
-import {VerwaltungModule} from './modules/verwaltung';
-import {SportjahresplanModule} from './modules/sportjahresplan';
+import {SidebarComponent} from './components/sidebar/sidebar.component';
+import {HomeModule} from './modules/home/home.module';
+import {SettingsModule} from './modules/settings/settings.module';
+import {APP_REDUCERS} from './modules/shared/redux-store';
+import {SharedModule} from './modules/shared/shared.module';
+import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
 
 
 describe('AppComponent', () => {

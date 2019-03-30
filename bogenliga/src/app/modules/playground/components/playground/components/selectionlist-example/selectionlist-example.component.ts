@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {PlaygroundVersionedDataObject} from '../../types/playground-versioned-data-object.class';
+import {isNullOrUndefined} from '@shared/functions';
 import {of} from 'rxjs';
 import {delay} from 'rxjs/operators';
-import {isNullOrUndefined} from 'util';
+import {PlaygroundVersionedDataObject} from '../../types/playground-versioned-data-object.class';
 
 @Component({
   selector: 'bla-selectionlist-example',
@@ -19,7 +19,7 @@ export class SelectionlistExampleComponent implements OnInit {
   }
 
   ngOnInit() {
-    of(true).pipe(delay(5000)).subscribe(ignore => this.loading = false);
+    of(true).pipe(delay(5000)).subscribe((ignore) => this.loading = false);
   }
 
 
@@ -35,7 +35,7 @@ export class SelectionlistExampleComponent implements OnInit {
       console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
       const names: string[] = [];
 
-      this.selectedDTOs.forEach(item => {
+      this.selectedDTOs.forEach((item) => {
         names.push(item.name);
       });
 

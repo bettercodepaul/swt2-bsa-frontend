@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {throwError} from 'rxjs';
-import {TransferObject} from '../models/transfer-object.interface';
 import {catchError} from 'rxjs/operators';
+import {TransferObject} from '../models/transfer-object.interface';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -80,7 +80,7 @@ export class RestClient {
 
   public DOWNLOAD(url: string): Promise<Blob> {
 
-    let objectUrl: string = null;
+    const objectUrl: string = null;
 
     console.log('Download: Send GET request to ' + url);
 
@@ -102,5 +102,5 @@ export class RestClient {
         `body was: ${JSON.stringify(error.error)}`);
     }
     return throwError(error);
-  };
+  }
 }

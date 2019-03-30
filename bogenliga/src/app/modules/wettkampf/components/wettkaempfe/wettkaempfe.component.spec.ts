@@ -1,14 +1,14 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {WettkaempfeComponent} from './wettkaempfe.component';
+import {HttpClientModule} from '@angular/common/http';
 import {RouterTestingModule} from '@angular/router/testing';
+import {StoreModule} from '@ngrx/store';
+import {TranslateModule} from '@ngx-translate/core';
 import {ROUTES} from '../../../../app.routing';
 import {HomeModule} from '../../../home/home.module';
-import {TranslateModule} from '@ngx-translate/core';
-import {StoreModule} from '@ngrx/store';
 import {APP_REDUCERS} from '../../../shared/redux-store';
-import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from '../../../shared/shared.module';
+import {WettkaempfeComponent} from './wettkaempfe.component';
 
 describe('WettkaempfeComponent', () => {
   let component: WettkaempfeComponent;

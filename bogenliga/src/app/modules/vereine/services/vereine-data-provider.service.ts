@@ -1,3 +1,4 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {
   DataProviderService,
@@ -7,10 +8,9 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {HttpErrorResponse} from '@angular/common/http';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {VereineDO} from '../types/vereine-do.class';
 import {fromPayload, fromPayloadArray} from '../mapper/vereine-mapper';
+import {VereineDO} from '../types/vereine-do.class';
 
 @Injectable({
   providedIn: 'root'

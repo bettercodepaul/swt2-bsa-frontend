@@ -13,7 +13,7 @@ export class SidebarSubitemComponent implements OnInit {
   public isActive: boolean;
 
   constructor(private store: Store<AppState>) {
-    store.pipe(select(state => state.sidebarState))
+    store.pipe(select((state) => state.sidebarState))
       .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 

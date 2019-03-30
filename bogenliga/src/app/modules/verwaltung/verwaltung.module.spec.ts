@@ -1,16 +1,16 @@
-import {VerwaltungModule} from './verwaltung.module';
+import {HttpClient} from '@angular/common/http';
 import {async, TestBed} from '@angular/core/testing';
-import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import {ROUTES} from '../../app.routing';
-import {HomeModule} from '../home';
+import {StoreModule} from '@ngrx/store';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {createTranslateLoader} from '../../app.module';
-import {HttpClient} from '@angular/common/http';
-import {StoreModule} from '@ngrx/store';
-import {APP_REDUCERS} from '../shared/redux-store';
-import {SharedModule} from '../shared';
+import {ROUTES} from '../../app.routing';
 import {UserDropdownComponent} from '../../components/navbar/components/user-dropdown/user-dropdown.component';
+import {NavbarComponent} from '../../components/navbar/navbar.component';
+import {HomeModule} from '../home';
+import {SharedModule} from '../shared';
+import {APP_REDUCERS} from '../shared/redux-store';
+import {VerwaltungModule} from './verwaltung.module';
 
 describe('VerwaltungModule', () => {
   let verwaltungModule: VerwaltungModule;

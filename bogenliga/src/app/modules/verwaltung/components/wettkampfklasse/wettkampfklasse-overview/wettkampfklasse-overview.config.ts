@@ -1,6 +1,6 @@
-import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
-import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
-import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
+import {OverviewDialogConfig} from '@shared/components';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
+import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
 
 export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey: 'MANAGEMENT',
@@ -8,13 +8,6 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
   tableConfig: {
     columns: [
-      /**{
-        translationKey:   'MANAGEMENT.KLASSEN.TABLE.HEADERS.ID',
-        propertyName:     'id',
-        width:            7,
-        type:             TableColumnType.NUMBER,
-        currentSortOrder: TableColumnSortOrder.ASCENDING
-      },**/
       {
         translationKey: 'MANAGEMENT.KLASSEN.TABLE.HEADERS.KLASSENR',
         propertyName: 'klasseNr',
@@ -38,7 +31,7 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
       }
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, /**TableActionType.DELETE**/],
+      actionTypes: [TableActionType.EDIT],
       width: 6
     },
   }

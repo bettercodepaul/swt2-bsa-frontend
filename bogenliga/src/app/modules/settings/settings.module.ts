@@ -1,13 +1,13 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {OverviewComponent} from './components/overview/overview.component';
-import {DetailsComponent} from './components/details/details.component';
-import {SharedModule} from '../shared/shared.module';
-import {RouterModule} from '@angular/router';
-import {SETTINGS_ROUTES} from './settings.routing';
+import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {SettingsGuard} from './guards/settings.guard';
+import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {SharedModule} from '@shared/shared.module';
+import {DetailsComponent} from './components/details/details.component';
+import {OverviewComponent} from './components/overview/overview.component';
+import {SettingsGuard} from './guards/settings.guard';
+import {SETTINGS_ROUTES} from './settings.routing';
 
 
 @NgModule({

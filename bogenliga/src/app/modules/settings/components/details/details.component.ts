@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 
-import {Data} from '../../types/data';
-import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isUndefined} from 'util';
+import {TranslateModule, TranslatePipe} from '@ngx-translate/core';
+import {isUndefined} from '@shared/functions';
+import {Data} from '../../types/data';
 
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import {SettingsDataProviderService} from '../../services/settings-data-provider.service';
 import {Response} from '../../../shared/data-provider';
+import {SettingsDataProviderService} from '../../services/settings-data-provider.service';
 
 @Component({
   selector:    'bla-details',
@@ -50,7 +50,7 @@ export class DetailsComponent implements OnInit {
    */
   public saveNewData(): void {
     this.dataService.addOne(new Data(this.data.key, this.data.value)).then(((response: Response<Data>) => console.log('Setting persisted')));
-    this.data = new Data()
+    this.data = new Data();
   }
 
   /**
@@ -73,11 +73,11 @@ export class DetailsComponent implements OnInit {
   }
 
   private initDialog(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       // if there is a key -> set dataKey to string, set data to selected object
       let settingsKey;
-      if (!isUndefined(params['key'])) {
-        settingsKey = params['key'];
+      if (!isUndefined(params.key)) {
+        settingsKey = params.key;
         this.dataKey = settingsKey;
         this.dataService.findById(settingsKey).then((response: Response<Data>) => this.data = response.payload);
         this.dataSelected = true;

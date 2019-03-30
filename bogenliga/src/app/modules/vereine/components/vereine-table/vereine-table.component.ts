@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CurrentUserService} from '../../../shared/services/current-user';
 import {CommonSecuredComponent, OverviewDialogConfig} from '../../../shared/components';
 import {TableRow} from '../../../shared/components/tables/types/table-row.class';
 import {VersionedDataObject} from '../../../shared/data-provider/models/versioned-data-object.interface';
+import {CurrentUserService} from '../../../shared/services/current-user';
 
 @Component({
   selector:    'bla-vereine-table',

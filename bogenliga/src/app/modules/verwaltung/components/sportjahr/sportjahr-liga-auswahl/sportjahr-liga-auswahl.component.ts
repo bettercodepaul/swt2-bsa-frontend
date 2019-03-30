@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {toTableRows} from '../../../../shared/components/tables';
-import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
-import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
-import {NotificationService} from '../../../../shared/services/notification';
-import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Response} from '../../../../shared/data-provider';
-import {SPORTJAHR_LIGA_AUSWAHL_CONFIG} from './sportjahr-liga-auswahl.config';
 import {CommonComponent} from '../../../../shared/components/common';
+import {toTableRows} from '../../../../shared/components/tables';
+import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
+import {Response} from '../../../../shared/data-provider';
+import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {NotificationService} from '../../../../shared/services/notification';
+import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
+import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
+import {SPORTJAHR_LIGA_AUSWAHL_CONFIG} from './sportjahr-liga-auswahl.config';
 
 @Component({
   selector: 'bla-sportjahr-liga-auswahl',
@@ -37,7 +37,7 @@ export class SportjahrLigaAuswahlComponent extends CommonComponent implements On
 
     this.ligaDataProvider.findAll()
         .then((response: Response<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: Response<LigaDTO[]>) => this.handleLoadTableRowsFailure(response))
+        .catch((response: Response<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private handleLoadTableRowsFailure(response: Response<LigaDTO[]>): void {
