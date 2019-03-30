@@ -28,7 +28,7 @@ jobs:
     - stage: Run syntax check (tslint)
       script:
         - cd bogenliga
-        - npm run lint
+        - ng lint
     - stage: Test application
       script:
         - cd bogenliga
