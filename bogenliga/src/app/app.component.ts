@@ -21,8 +21,8 @@ export class AppComponent implements OnInit {
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
-  public isProduction(): boolean {
-    return environment.production;
+  public showLabel(): boolean {
+    return environment.showLabel;
   }
   public getEnvironment(): string {
     return environment.label;
