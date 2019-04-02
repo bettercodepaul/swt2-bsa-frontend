@@ -1,4 +1,4 @@
-import {NavigationDialogConfig} from '../../../shared/components/dialogs';
+import {NavigationDialogConfig} from '@shared/components';
 
 export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -24,12 +24,6 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         route:          'klassen'
       },
       {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.LABEL',
-        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMANNSCHAFTEN.DESCRIPTION',
-        icon:           'campground',
-        route:          'dsbmannschaft'
-      },
-      {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.DESCRIPTION',
         icon:           'sitemap',
@@ -40,12 +34,6 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga'
-      },
-      {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.SPORTJAHR.LABEL',
-        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.SPORTJAHR.DESCRIPTION',
-        icon:           'cogs',
-        route:          'sportjahr'
       }]
   }
 };

@@ -6,12 +6,8 @@ export * from './benutzer-neu.guard';
 export * from './benutzer-detail.guard';
 export * from './wettkampfklasse-detail.guard';
 export * from './wettkampfklasse-overview.guard';
-export * from './dsb-mannschaft-detail.guard';
-export * from './dsb-mannschaft-overview.guard';
 export * from './verein-detail.guard';
 export * from './verein-overview.guard';
 export * from './liga-detail.guard';
 export * from './liga-overview.guard';
-export * from './sportjahr-liga-auswahl.guard';
-export * from './sportjahr-overview.guard';
 

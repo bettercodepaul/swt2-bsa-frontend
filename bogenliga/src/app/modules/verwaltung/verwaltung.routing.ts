@@ -4,14 +4,10 @@ import {
   BenutzerDetailComponent,
   BenutzerNeuComponent,
   BenutzerOverviewComponent,
-  DsbMannschaftDetailComponent,
-  DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
-  SportjahrLigaAuswahlComponent,
-  SportjahrOverviewComponent,
   VereinDetailComponent,
   VereinOverviewComponent,
   VerwaltungComponent,
@@ -22,14 +18,10 @@ import {
   BenutzerDetailGuard,
   BenutzerNeuGuard,
   BenutzerOverviewGuard,
-  DsbMannschaftDetailGuard,
-  DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
-  SportjahrLigaAuswahlGuard,
-  SportjahrOverviewGuard,
   VereinDetailGuard,
   VereinOverviewGuard,
   VerwaltungGuard,
@@ -55,15 +47,7 @@ export const VERWALTUNG_ROUTES: Routes = [
   },
   {path: 'benutzer/add', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]}
   ,
-  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]}
-  ,
-  {
-    path: 'dsbmannschaft',
-    component: DsbMannschaftOverviewComponent,
-    pathMatch: 'full',
-    canActivate: [DsbMannschaftOverviewGuard]
-  },
-  {path: 'dsbmannschaft/:id', component: DsbMannschaftDetailComponent, canActivate: [DsbMannschaftDetailGuard]},
+  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
   {
     path: 'klassen',
     component: WettkampfklasseOverviewComponent,
@@ -84,23 +68,5 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [LigaOverviewGuard]
   },
-  {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]},
-  {
-    path: 'sportjahr',
-    pathMatch: 'full',
-    component: SportjahrLigaAuswahlComponent,
-    canActivate: [SportjahrLigaAuswahlGuard]
-  },
-  {
-    path: 'sportjahr/liga',
-    pathMatch: 'full',
-    component: LigaOverviewComponent,
-    canActivate: [LigaOverviewGuard]
-  },
-  {
-    path: 'sportjahr/liga/:id',
-    pathMatch: 'full',
-    component: SportjahrOverviewComponent,
-    canActivate: [SportjahrOverviewGuard]
-  }
+  {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]}
 ];

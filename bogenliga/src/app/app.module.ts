@@ -20,7 +20,8 @@ import {UserDropdownComponent} from './components/navbar/components/user-dropdow
 import {SidebarSubitemComponent} from './components/sidebar/components/sidebar-subitem/sidebar-subitem.component';
 import {HomeModule} from './modules/home';
 import {ErrorInterceptor, JwtInterceptor, SharedModule} from './modules/shared';
-import {APP_REDUCERS} from './modules/shared/redux-store';
+import {APP_REDUCERS} from '@shared/redux-store';
+import {VerwaltungModule} from '@verwaltung/verwaltung.module';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -55,6 +56,7 @@ export function createTranslateLoader(http: HttpClient) {
     /* BOGENLIGA */
     HomeModule,
     SharedModule.forRoot(),
+    VerwaltungModule.forRoot()
   ],
   exports:      [TranslateModule],
   /* HTTP INTERCEPTORS */
