@@ -9,11 +9,14 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '../../shared/services/current-user';
+import {CurrentUserService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/dsb-mannschaft-mapper';
 import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
 import {VereinDO} from '../types/verein-do.class';
 
+/**
+ * TODO check usage
+ */
 @Injectable({
   providedIn: 'root'
 })

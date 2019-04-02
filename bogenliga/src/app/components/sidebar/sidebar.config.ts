@@ -5,7 +5,6 @@ import {
   faArchive,
   faBullseye,
   faCalendarAlt,
-  faCog,
   faFootballBall,
   faHome,
   faSitemap
@@ -20,9 +19,9 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: []
   },
   {
-    label: 'SIDEBAR.VEREINE',
+    label: 'SIDEBAR.REGIONEN',
     icon: faSitemap,
-    route: '/vereine',
+    route: '/regionen',
     permissons: [],
     subitems: []
   },
@@ -35,6 +34,11 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label:      'DSB Mitglieder',
         route:      '/verwaltung/dsbmitglieder',
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+      },
+      {
+        label: 'Benutzer',
+        route: '/verwaltung/benutzer',
         permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
       {
@@ -66,13 +70,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     icon:       faCalendarAlt,
     route:      '/sportjahresplan',
     permissons: [UserPermission.CAN_READ_SPORTJAHR, UserPermission.CAN_MODIFY_SPORTJAHR],
-    subitems: []
-  },
-  {
-    label:      'SIDEBAR.SETTINGS',
-    icon:       faCog,
-    route:      '/settings',
-    permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
     subitems: []
   },
   {

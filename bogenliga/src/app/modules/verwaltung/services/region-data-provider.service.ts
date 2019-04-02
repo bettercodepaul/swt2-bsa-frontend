@@ -8,7 +8,7 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '../../shared/services/current-user';
+import {CurrentUserService} from '@shared/services';
 import {fromPayloadArray} from '../mapper/region-mapper';
 import {RegionDO} from '../types/region-do.class';
 

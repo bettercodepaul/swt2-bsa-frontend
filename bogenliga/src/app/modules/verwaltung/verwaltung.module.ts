@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
@@ -7,14 +7,10 @@ import {
   BenutzerDetailComponent,
   BenutzerNeuComponent,
   BenutzerOverviewComponent,
-  DsbMannschaftDetailComponent,
-  DsbMannschaftOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
-  SportjahrLigaAuswahlComponent,
-  SportjahrOverviewComponent,
   VereinDetailComponent,
   VereinOverviewComponent,
   VerwaltungComponent,
@@ -25,14 +21,10 @@ import {
   BenutzerDetailGuard,
   BenutzerNeuGuard,
   BenutzerOverviewGuard,
-  DsbMannschaftDetailGuard,
-  DsbMannschaftOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
-  SportjahrLigaAuswahlGuard,
-  SportjahrOverviewGuard,
   VereinDetailGuard,
   VereinOverviewGuard,
   VerwaltungGuard,
@@ -45,15 +37,13 @@ import {VERWALTUNG_ROUTES} from './verwaltung.routing';
   imports:      [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
-    SharedModule,
+    SharedModule.forChild(),
     FormsModule
   ],
   declarations: [
     VerwaltungComponent,
     DsbMitgliedOverviewComponent,
     DsbMitgliedDetailComponent,
-    DsbMannschaftDetailComponent,
-    DsbMannschaftOverviewComponent,
     BenutzerDetailComponent,
     BenutzerNeuComponent,
     BenutzerOverviewComponent,
@@ -62,28 +52,35 @@ import {VERWALTUNG_ROUTES} from './verwaltung.routing';
     VereinDetailComponent,
     VereinOverviewComponent,
     LigaDetailComponent,
-    LigaOverviewComponent,
-    SportjahrLigaAuswahlComponent,
-    SportjahrOverviewComponent
-  ],
-  providers: [
-    VerwaltungGuard,
-    DsbMitgliedOverviewGuard,
-    DsbMitgliedDetailGuard,
-    DsbMannschaftOverviewGuard,
-    DsbMannschaftDetailGuard,
-    BenutzerOverviewGuard,
-    BenutzerNeuGuard,
-    BenutzerDetailGuard,
-    WettkampfklasseOverviewGuard,
-    WettkampfklasseDetailGuard,
-    VereinOverviewGuard,
-    VereinDetailGuard,
-    LigaOverviewGuard,
-    LigaDetailGuard,
-    SportjahrLigaAuswahlGuard,
-    SportjahrOverviewGuard
+    LigaOverviewComponent
   ]
 })
 export class VerwaltungModule {
+
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: [
+        VerwaltungGuard,
+        DsbMitgliedOverviewGuard,
+        DsbMitgliedDetailGuard,
+        BenutzerOverviewGuard,
+        BenutzerNeuGuard,
+        BenutzerDetailGuard,
+        WettkampfklasseOverviewGuard,
+        WettkampfklasseDetailGuard,
+        VereinOverviewGuard,
+        VereinDetailGuard,
+        LigaOverviewGuard,
+        LigaDetailGuard
+      ]
+    };
+  }
+
+  static forChild(): ModuleWithProviders {
+    return {
+      ngModule: SharedModule,
+      providers: []
+    };
+  }
 }

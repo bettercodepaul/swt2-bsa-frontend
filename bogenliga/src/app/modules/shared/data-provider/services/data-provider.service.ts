@@ -1,15 +1,11 @@
-import {environment} from '../../../../../environments/environment';
-import {DataServiceConfig} from '../../../settings/types/data-service-config.interface';
+import {environment} from '@environment';
 import {UriBuilder} from './utils/uri-builder.class';
 
 export abstract class DataProviderService {
   abstract serviceSubUrl: string;
-  dataServiceConfig: DataServiceConfig;
+  baseUrl = environment.backendBaseUrl;
 
-  constructor() {
-    this.dataServiceConfig = {
-      baseUrl: environment.backendBaseUrl
-    };
+  protected constructor() {
   }
 
   /**
@@ -17,7 +13,7 @@ export abstract class DataProviderService {
    */
   getUrl(): string {
     return new UriBuilder()
-      .fromPath(this.dataServiceConfig.baseUrl)
+      .fromPath(this.baseUrl)
       .path(this.serviceSubUrl)
       .build();
   }

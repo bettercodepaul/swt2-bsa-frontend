@@ -4,6 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "@shared/*": ["src/app/modules/shared/*"],
+      "@environment": ["src/environments/environment"],
       "@home/*": ["src/app/modules/home/*"],
       "@settings/*": ["src/app/modules/settings/*"],
       "@sportjahresplan/*": ["src/app/modules/sportjahresplan/*"],

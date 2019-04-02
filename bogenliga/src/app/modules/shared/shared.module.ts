@@ -19,7 +19,6 @@ import {
   DataTableComponent,
   DetailDialogComponent,
   DownloadButtonComponent,
-  DropdownComponent,
   DropdownMenuComponent,
   GridLayoutComponent,
   HorizontalFormComponent,
@@ -33,9 +32,7 @@ import {
   SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  TooltipComponent,
-  VereineDropdownComponent
-} from './components';
+  TooltipComponent} from './components';
 import {RestClient} from './data-provider';
 import * as LocalDataProvider from './local-data-provider/services';
 import * as SharedService from './services';
@@ -87,8 +84,6 @@ library.add(fas, far, fab); // add all icon types
     RowLayoutComponent,
     NavigationCardsComponent,
     NavigationDialogComponent,
-    DropdownComponent,
-    VereineDropdownComponent,
     NavigationDialogComponent,
     TooltipComponent,
     DropdownMenuComponent,
@@ -99,8 +94,6 @@ library.add(fas, far, fab); // add all icon types
   ],
   declarations: [
     ButtonComponent,
-    DropdownComponent,
-    VereineDropdownComponent,
     AlertComponent,
     ModalDialogComponent,
     PageHeadingComponent,
