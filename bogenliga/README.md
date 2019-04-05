@@ -1,6 +1,8 @@
 # swt2-bsa-frontend
 SWT2 - Bogenliga Application - Angular Oberfläche
 
+SoSem 2019
+
 ## Quickstart
 
 Run `npm ci` to install all dependencies.
