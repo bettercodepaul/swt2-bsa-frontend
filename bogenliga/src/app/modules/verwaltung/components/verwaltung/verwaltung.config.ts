@@ -34,6 +34,16 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga'
-      }]
+      },
+      {
+        labelKey:       'VERANSTALTUNG',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
+        icon:           'users',
+        route:          'veranstaltung'
+      }
+
+
+      ]
+
   }
 };

@@ -68,5 +68,12 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [LigaOverviewGuard]
   },
+  {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]},
+  {
+    path: 'veranstaltung',
+    component: LigaOverviewComponent,
+    pathMatch: 'full',
+    canActivate: [LigaOverviewGuard]
+  },
   {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]}
 ];

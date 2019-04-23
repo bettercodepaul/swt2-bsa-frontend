@@ -15,7 +15,10 @@ import {
   VereinOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
-  WettkampfklasseOverviewComponent
+  WettkampfklasseOverviewComponent,
+  VeranstaltungOverviewComponent,
+  VeranstaltungDetailComponent,
+
 } from './components';
 import {
   BenutzerDetailGuard,
@@ -30,6 +33,7 @@ import {
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard
+
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 
@@ -52,7 +56,9 @@ import {VERWALTUNG_ROUTES} from './verwaltung.routing';
     VereinDetailComponent,
     VereinOverviewComponent,
     LigaDetailComponent,
-    LigaOverviewComponent
+    LigaOverviewComponent,
+    VeranstaltungOverviewComponent,
+    VeranstaltungDetailComponent
   ]
 })
 export class VerwaltungModule {
@@ -72,7 +78,7 @@ export class VerwaltungModule {
         VereinOverviewGuard,
         VereinDetailGuard,
         LigaOverviewGuard,
-        LigaDetailGuard
+        LigaDetailGuard,
       ]
     };
   }
