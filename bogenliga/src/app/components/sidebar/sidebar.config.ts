@@ -26,6 +26,13 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: []
   },
   {
+    label: 'SIDEBAR.VEREINE',
+    icon: faCalendarAlt,
+    route: '/vereine',
+    permissons: [],
+    subitems: []
+  },
+  {
     label:      'SIDEBAR.VERWALTUNG',
     icon:       faArchive,
     route:      '/verwaltung',

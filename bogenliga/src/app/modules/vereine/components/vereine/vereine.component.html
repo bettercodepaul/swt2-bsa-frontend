@@ -1,0 +1,21 @@
+<bla-navigation-dialog [config]="config">
+
+  <div class="playground-row">
+    <bla-col-layout>
+
+      <h2>Vereinsauswahl:</h2> {{ getSelectedDTO() }}
+
+      <bla-quicksearch-list [items]="getVersionedDataObjects()"
+                            [optionFieldSelector]="'name'"
+                            (onSelect)="onSelect($event)"
+                            [multipleSelections]="!multipleSelections"
+                            selectionListHeight="15em"
+                            style="width: 50%;">
+
+      </bla-quicksearch-list>
+
+    </bla-col-layout>
+  </div>
+
+
+</bla-navigation-dialog>

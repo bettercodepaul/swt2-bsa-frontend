@@ -15,6 +15,7 @@
     "VERWALTUNG": "VERWALTUNG",
     "WETTKAMPF": "WETTKAEMPFE",
     "REGIONEN": "REGIONEN",
+    "VEREINE": "VEREINE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
@@ -45,6 +46,11 @@
   "REGIONEN": {
     "REGIONEN": {
       "TITLE": "Regionen"
+    }
+  },
+  "VEREINE": {
+    "VEREINE": {
+      "TITLE": "Vereine"
     }
   },
   "WETTKAEMPFE": {

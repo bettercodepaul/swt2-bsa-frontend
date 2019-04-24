@@ -7,6 +7,7 @@
     "TITLE": "Archery League",
     "TITLESHORT": "AL",
     "HOME": "HOME",
+    "VEREINE": "CLUBS",
     "VERWALTUNG": "MANAGEMENT",
     "WETTKAMPF": "COMPETITIONS",
     "SPORTJAHRESPLAN": "YEARLY SPORT PLAN",
@@ -38,6 +39,11 @@
     "CONTENT": "to the website of Archery League GER. Here you can find all the important information about archery. Let it inspire you.",
     "BOX1HEADING": "STUDENT CUP 2018",
     "BOX1CONTENT": "Be there..."
+  },
+  "VEREINE": {
+    "VEREINE": {
+     "TITLE": "Clubs"
+    }
   },
 
   "NOTIFICATION": {
