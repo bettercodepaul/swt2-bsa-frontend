@@ -18,12 +18,15 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public config = VEREINE_CONFIG;
   public selectedDTOs: VereinDO[];
   public multipleSelections = true;
+  private vereine : VereinDO[];
+  public loading = true;
 
   constructor(private vereinDataProvider: VereinDataProviderService, private router: Router) {
     super();
   }
 
   ngOnInit() {
+    this.loadVereine();
   }
 
   public onSelect($event: VereinDO[]): void {
@@ -46,11 +49,20 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
   }
 
-  public getVersionedDataObjects(): PlaygroundVersionedDataObject[] {
-      //this.vereinDataProvider.findAll()
-        //  .then((response: BogenligaResponse<VereinDTO[]>) => {console.log(response.payload); })
-  //.catch((response: BogenligaResponse<VereinDTO[]>) => {console.log(response.payload); });
-      return [new PlaygroundVersionedDataObject(1, "Schütze1")];
+  public getVersionedDataObjects(): VereinDO[] {
+    return this.vereine;
+  }
+
+  public isLoading(): boolean {
+    return this.loading;
+  }
+
+  private loadVereine(): void {
+
+    this.vereinDataProvider.findAll()
+        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = []; this.vereine = response.payload; this.loading = false;})
+        .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 
 }
+
