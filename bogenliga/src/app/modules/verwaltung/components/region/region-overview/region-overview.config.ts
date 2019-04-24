@@ -1,7 +1,7 @@
 import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
 import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
 
-export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
+export const REGION_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
   pageTitleTranslationKey: 'MANAGEMENT.VEREINE.TITLE',
 

@@ -10,4 +10,5 @@ export * from './verein-detail.guard';
 export * from './verein-overview.guard';
 export * from './liga-detail.guard';
 export * from './liga-overview.guard';
-
+export * from './region-detail.guard';
+export * from './region-overview.guard';

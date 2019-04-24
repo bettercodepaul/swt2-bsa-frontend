@@ -13,23 +13,23 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
-import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
-import {VEREIN_OVERVIEW_CONFIG} from './verein-overview.config';
+import {RegionDataProviderService} from '../../../services/region-data-provider.service';
+import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
+import {REGION_OVERVIEW_CONFIG} from './region-overview.config';
 
-export const NOTIFICATION_DELETE_VEREINE = 'vereine_overview_delete';
+export const NOTIFICATION_DELETE_REGIONEN = 'region_overview_delete';
 
 @Component({
-  selector: 'bla-verein-overview',
-  templateUrl: './verein-overview.component.html',
-  styleUrls: ['./verein-overview.component.scss']
+  selector: 'bla-region-overview',
+  templateUrl: './region-overview.component.html',
+  styleUrls: ['./region-overview.component.scss']
 })
 export class RegionOverviewComponent extends CommonComponent implements OnInit {
 
-  public config = VEREIN_OVERVIEW_CONFIG;
+  public config = REGION_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
-  constructor(private vereinDataProvider: VereinDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private regionDataProvider: RegionDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 
@@ -53,9 +53,9 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_VEREINE + id,
-      title:            'MANAGEMENT.VEREINE.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.VEREINE.NOTIFICATION.DELETE.DESCRIPTION',
+      id:               NOTIFICATION_DELETE_REGIONEN + id,
+      title:            'MANAGEMENT.REGIONEN.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.REGIONEN.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
@@ -63,15 +63,16 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREINE + id)
+    // muss wieder einkommentiert werden, deleteById existiert noch nicht, muss also implementiert werden
+    /*this.notificationService.observeNotification(NOTIFICATION_DELETE_REGIONEN + id)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.vereinDataProvider.deleteById(id)
+            this.regionDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           }
         });
-
+    */
     this.notificationService.showNotification(notification);
 
   }
@@ -79,21 +80,21 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
   private loadTableRows() {
     this.loading = true;
 
-    this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
+    this.regionDataProvider.findAll()
+        .then((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/vereine/' + versionedDataObject.id);
   }
 
-  private handleLoadTableRowsFailure(response: BogenligaResponse<VereinDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<RegionDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<VereinDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<RegionDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

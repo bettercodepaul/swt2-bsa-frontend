@@ -8,6 +8,8 @@ import {
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
+  RegionDetailComponent,
+  RegionOverviewComponent,
   VereinDetailComponent,
   VereinOverviewComponent,
   VerwaltungComponent,
@@ -68,5 +70,12 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [LigaOverviewGuard]
   },
-  {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]}
+  {path: 'region/:id', component: RegionDetailComponent, canActivate: [RegionDetailGuard]},
+  {
+    path: 'region',
+    component: RegionOverviewComponent,
+    pathMatch: 'full',
+    canActivate: [RegionOverviewGuard]
+  },
+  {path: 'region/:id', component: RegionDetailComponent, canActivate: [RegionDetailGuard]}
 ];
