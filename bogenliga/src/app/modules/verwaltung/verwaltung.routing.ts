@@ -24,6 +24,8 @@ import {
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
+  RegionDetailGuard,
+  RegionOverviewGuard,
   VereinDetailGuard,
   VereinOverviewGuard,
   VerwaltungGuard,
