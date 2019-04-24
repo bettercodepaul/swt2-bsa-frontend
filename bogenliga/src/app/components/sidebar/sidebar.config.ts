@@ -55,6 +55,11 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
         label:      'Ligen',
         route:      '/verwaltung/liga',
         permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+      },
+      {
+        label:      'Regionen',
+        route:      '/verwaltung/region',
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
       }
     ]
   },
