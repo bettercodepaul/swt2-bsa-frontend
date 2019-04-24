@@ -216,6 +216,10 @@
           "LABEL": "Ligen",
           "DESCRIPTION": "Verwaltung der Ligen"
         },
+        "REGIONEN": {
+          "LABEL": "Regionen",
+          "DESCRIPTION": "Verwaltung der Regionen"
+        },
         "SPORTJAHR": {
           "LABEL": "Sportjahre",
           "DESCRIPTION": "Verwaltung der Sportjahre"

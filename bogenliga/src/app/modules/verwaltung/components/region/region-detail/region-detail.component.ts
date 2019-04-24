@@ -17,7 +17,7 @@ import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {VereinDO} from '../../../types/verein-do.class';
-import {VEREIN_DETAIL_CONFIG} from './region-detail.config';
+import {REGION_DETAIL_CONFIG} from './region-detail.config';
 
 
 const ID_PATH_PARAM = 'id';
@@ -28,13 +28,13 @@ const NOTIFICATION_SAVE_VEREIN = 'verein_detail_save';
 const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
 
 @Component({
-  selector:    'bla-verein-detail',
-  templateUrl: './verein-detail.component.html',
-  styleUrls:   ['./verein-detail.component.scss']
+  selector:    'bla-region-detail',
+  templateUrl: './region-detail.component.html',
+  styleUrls:   ['./region-detail.component.scss']
 })
 export class RegionDetailComponent extends CommonComponent implements OnInit {
   public regionType = 'KREIS';
-  public config = VEREIN_DETAIL_CONFIG;
+  public config = REGION_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentVerein: VereinDO = new VereinDO();
   public currentRegion: RegionDO = new RegionDO();
