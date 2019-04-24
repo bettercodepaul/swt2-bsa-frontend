@@ -3,10 +3,11 @@
   <div class="playground-row">
     <bla-col-layout>
 
-      <h2>Vereinsauswahl:</h2> {{ getSelectedDTO() }}
+      <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
 
-      <bla-quicksearch-list [items]="getVersionedDataObjects()"
+      <bla-quicksearch-list [items]="vereine"
                             [optionFieldSelector]="'name'"
+                            [loading]="isLoading()"
                             (onSelect)="onSelect($event)"
                             [multipleSelections]="!multipleSelections"
                             selectionListHeight="15em"
