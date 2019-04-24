@@ -17,7 +17,7 @@ import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {VereinDO} from '../../../types/verein-do.class';
-import {VEREIN_DETAIL_CONFIG} from './verein-detail.config';
+import {VEREIN_DETAIL_CONFIG} from './region-detail.config';
 
 
 const ID_PATH_PARAM = 'id';

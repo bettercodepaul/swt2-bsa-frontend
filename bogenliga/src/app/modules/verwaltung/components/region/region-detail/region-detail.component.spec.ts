@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RegionDetailComponent } from './verein-detail.component';
+import { RegionDetailComponent } from './region-detail.component';
 
 describe('VereinDetailComponent', () => {
   let component: RegionDetailComponent;

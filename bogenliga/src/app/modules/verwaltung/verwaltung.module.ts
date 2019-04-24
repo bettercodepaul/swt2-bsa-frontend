@@ -11,6 +11,8 @@ import {
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
+  RegionDetailComponent,
+  RegionOverviewComponent,
   VereinDetailComponent,
   VereinOverviewComponent,
   VerwaltungComponent,
@@ -25,6 +27,8 @@ import {
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
+  RegionDetailGuard,
+  RegionOverviewGuard,
   VereinDetailGuard,
   VereinOverviewGuard,
   VerwaltungGuard,
@@ -52,7 +56,9 @@ import {VERWALTUNG_ROUTES} from './verwaltung.routing';
     VereinDetailComponent,
     VereinOverviewComponent,
     LigaDetailComponent,
-    LigaOverviewComponent
+    LigaOverviewComponent,
+    RegionDetailComponent,
+    RegionOverviewComponent
   ]
 })
 export class VerwaltungModule {
@@ -72,7 +78,9 @@ export class VerwaltungModule {
         VereinOverviewGuard,
         VereinDetailGuard,
         LigaOverviewGuard,
-        LigaDetailGuard
+        LigaDetailGuard,
+        RegionDetailGuard,
+        RegionOverviewGuard
       ]
     };
   }
