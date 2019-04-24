@@ -13,6 +13,7 @@ export const ROUTES: Routes = [
   },
   {path: 'user', loadChildren: 'src/app/modules/user/user.module#UserModule'},
   {path: 'regionen', loadChildren: 'src/app/modules/regionen/regionen.module#RegionenModule'},
+  {path: 'vereine', loadChildren: 'src/app/modules/vereine/vereine.module#VereineModule'},
   {path: 'playground', loadChildren: 'src/app/modules/playground/playground.module#PlaygroundModule'},
 
   {path: 'schusszettel', loadChildren: 'src/app/modules/schusszettel/schusszettel.module#SchusszettelModule'},
