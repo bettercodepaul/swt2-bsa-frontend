@@ -50,7 +50,13 @@
   },
   "VEREINE": {
     "VEREINE": {
-      "TITLE": "Vereine"
+      "TITLE": "Vereine",
+      "TABLE": {
+        "HEADERS": {
+          "WETTKAMPF": "Wettkampf",
+          "MANNSCHAFT": "Mannschaftsnummer"
+        }
+      }
     }
   },
   "WETTKAEMPFE": {
