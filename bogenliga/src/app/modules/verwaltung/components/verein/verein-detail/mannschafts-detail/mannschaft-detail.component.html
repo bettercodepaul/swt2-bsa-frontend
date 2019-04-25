@@ -1,0 +1,87 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="mannschaftForm"
+        class="horizontal-form half-page"
+        #mannschaftForm="ngForm">
+
+    <!-- ID -->
+    <div class="form-group row">
+      <label for="mannschaftNummer"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="mannschaftNummer"
+               name="mannschaftNummer"
+               #mannschaftNummer="ngModel"
+               [(ngModel)]="currentMannschaft.nummer"
+               [class.is-invalid]="mannschaftNummer.invalid && !mannschaftNummer.untouched"
+               placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Identifier
+    <div class="form-group row">
+      <label for="vereinIdentifier"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.VEREIN_IDENTIFIER.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="vereinIdentifier"
+               name="vereinIdentifier"
+               #vereinIdentifier="ngModel"
+               [(ngModel)]="currentMannschaft.identifier"
+               [class.is-invalid]="vereinIdentifier.invalid && !vereinIdentifier.untouched"
+               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.VEREIN_IDENTIFIER.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+    -->
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'mannschaftSaveButton'"
+                    [disabled]="!mannschaftForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'mannschaftUpdateButton'"
+                    [disabled]="!mannschaftForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
+        </bla-button>
+
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.DELETE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>
