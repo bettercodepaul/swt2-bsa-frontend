@@ -28,6 +28,7 @@ import {
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard
 } from './guards';
+import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 
 export const VERWALTUNG_ROUTES: Routes = [
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
