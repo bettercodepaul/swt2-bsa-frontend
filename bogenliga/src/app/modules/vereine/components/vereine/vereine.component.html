@@ -1,6 +1,6 @@
 <bla-navigation-dialog [config]="config">
 
-  <div class="playground-row">
+  <div class="row">
     <bla-col-layout>
 
       <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
@@ -14,9 +14,22 @@
                             style="width: 50%;">
 
       </bla-quicksearch-list>
-
     </bla-col-layout>
   </div>
+<!--</bla-navigation-dialog>-->
 
+
+<!--<bla-overview-dialog [config]="config2">-->
+
+<div class="row">
+  <bla-data-table [config]="config_table"
+                  [rows]="rows"
+                  [loading]="loading"
+                  (onViewClicked)="onView($event)"
+                  (onEditClicked)="onEdit($event)"
+                  (onDeleteClicked)="onDelete($event)">
+  </bla-data-table>
+</div>
+<!--</bla-overview-dialog>-->
 
 </bla-navigation-dialog>
