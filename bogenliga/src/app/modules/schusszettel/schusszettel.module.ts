@@ -5,6 +5,8 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '@shared/shared.module';
 import {SCHUSSZETTEL_ROUTES} from './schusszettel.routing';
 import {SchusszettelComponent} from './components/schusszettel/schusszettel.component';
+import {NumberOnlyDirective} from './components/schusszettel/number.directive';
+
 
 @NgModule({
   imports: [
@@ -13,7 +15,7 @@ import {SchusszettelComponent} from './components/schusszettel/schusszettel.comp
     SharedModule,
     FormsModule
   ],
-  declarations: [SchusszettelComponent]
+  declarations: [SchusszettelComponent, NumberOnlyDirective]
 })
 export class SchusszettelModule {
 }
