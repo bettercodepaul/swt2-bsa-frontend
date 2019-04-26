@@ -14,7 +14,6 @@ import {SetzlisteProviderService} from '../../services/setzliste-provider.servic
 const NOTIFICATION_DOWNLOAD_SUCCESS = 'download_example_success';
 const NOTIFICATION_DOWNLOAD_FAILURE = 'download_example_failure';
 
-
 @Component({
   selector: 'bla-setzliste-download',
   templateUrl: './setzliste-download.component.html'
@@ -22,14 +21,17 @@ const NOTIFICATION_DOWNLOAD_FAILURE = 'download_example_failure';
 export class SetzlisteDownloadComponent implements OnInit {
 
   public downloadingFile = false;
-  @Input()
-  wettkampftag: number;
+
+  // Get the value of the attribute from the html tag
   @Input()
   wettkampfid: number;
 
+  // Get the value of the attribute from the html tag
+  @Input()
+  wettkampftag: number;
+
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
-
 
   constructor(private setzlisteService: SetzlisteProviderService,
               private notificationService: NotificationService) {
@@ -43,7 +45,7 @@ export class SetzlisteDownloadComponent implements OnInit {
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path(path)
-      .path('?wettkampfid='+this.wettkampfid + '&wettkampftag='+this.wettkampftag)
+      .path('?wettkampfid=' + this.wettkampfid + '&wettkampftag=' + this.wettkampftag)
       .build();
   }
 
