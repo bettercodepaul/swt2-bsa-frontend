@@ -466,6 +466,25 @@
         }
       }
     },
+    "REGIONEN": {
+      "TITLE": "Regionen - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Region Name",
+          "CONTRACTION": "Kürzel",
+          "REGION_ID": "Region ID",
+          "REGION_TYP": "Region Typ",
+          "REGION_SUPERORDINATE": "Übergeordnete Region"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Region löschen",
+          "DESCRIPTION": "Wollen Sie die Region mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
     "DSBMITGLIEDER_DETAIL": {
       "TITLE": "DSB Mitglied - Details",
       "FORM": {

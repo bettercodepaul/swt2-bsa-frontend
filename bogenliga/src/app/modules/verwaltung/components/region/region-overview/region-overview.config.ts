@@ -3,23 +3,28 @@ import {TableActionType} from '../../../../shared/components/tables/types/table-
 
 export const REGION_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.VEREINE.TITLE',
+  pageTitleTranslationKey: 'MANAGEMENT.REGIONEN.TITLE',
 
   tableConfig: {
     columns: [
       {
-        translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.NAME',
+        translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.NAME',
         propertyName:   'name',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.IDENTIFIER',
-        propertyName:   'identifier',
+        translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.CONTRACTION',
+        propertyName:   'kuerzel',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.REGION_NAME',
-        propertyName:   'regionName',
+        translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.REGION_TYP',
+        propertyName:   'regionTyp',
+        width:          20,
+      },
+      {
+        translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.REGION_SUPERORDINATE',
+        propertyName:   'regionSuper',
         width:          20,
       }
     ],

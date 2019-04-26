@@ -145,7 +145,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/vereine');
+                    this.router.navigateByUrl('/verwaltung/region');
                   }
                 });
 
