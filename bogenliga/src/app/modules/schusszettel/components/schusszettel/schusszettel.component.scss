@@ -1,0 +1,62 @@
+/* Farbkonzept Website */
+$primary: #02bdd5; // Links, Navbar
+$primary-light: #b4ffff; // Sidebar-Background
+$primary-dark: #007c91; // Sidebar-Font
+$secondary: #ffc107; // hover Tables
+$secondary-light: #fff350;
+$secondary-dark: #ff833a; // hover Links, Logo
+
+
+input, label {
+  display:block;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input {
+  height: 50px;
+  width: 50px;
+  -moz-appearance: textfield;
+  font-size: 30px;
+}
+
+
+
+tr, th, td {
+  alignment: center;
+  text-align: center;
+  margin: 10;
+  font-size: 10px;
+  padding: 5px;
+}
+
+td {
+  font-size: 20px;
+}
+label {
+  font-size: 10px;
+}
+.smallInput{
+  width: 40px;
+  height: 40px;
+  font-size: 25;
+}
+.small_Table{
+  float: right;
+  margin-right: 10%;
+}
+.match {
+  margin-left: 5%;
+  margin-right: 5%;
+  float: left;
+}
+.mannschaften {
+  margin-right: 5%;
+  float: left;
+}
