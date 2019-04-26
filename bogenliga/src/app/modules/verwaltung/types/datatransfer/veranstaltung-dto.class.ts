@@ -7,16 +7,16 @@ export class VeranstaltungDTO implements DataTransferObject {
 
   wettkampfTypId: number;
   name: string;
-  sportJahr: number;
-  meldeDeadline: number;
+  sportjahr: number;
+  meldedeadline: number;
   ligaLeiterId: number;
 
   static copyFrom(optional: {
     id?: number,
     name?: string,
     wettkampfTypId?: number,
-    sportJahr?: number,
-    meldeDeadline?: number,
+    sportjahr?: number,
+    meldedeadline?: number,
     ligaLeiterId?: number,
 
     version?: number

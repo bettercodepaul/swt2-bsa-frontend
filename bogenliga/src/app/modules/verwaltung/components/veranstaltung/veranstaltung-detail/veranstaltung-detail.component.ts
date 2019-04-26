@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponent} from '@shared/components';
 import {ButtonType} from '@shared/components';
-import {BogenveranstaltungResponse} from '@shared/data-provider';
+import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
   Notification,
@@ -43,8 +43,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public currentUbergeordneteVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public allUebergeordnete: Array<VeranstaltungDO> = [new VeranstaltungDO()];
 
-  public currentRegion: RegionDO = new RegionDO();
-  public regionen: Array<RegionDO> = [new RegionDO()];
 
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
@@ -74,7 +72,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
           this.currentVeranstaltung = new VeranstaltungDO();
 
           this.loadUebergeordnete(); // additional Request for all 'veranstaltung' to get all uebergeordnete
-          this.loadRegions(); // Request all regions from backend
+
           this.loadUsers();
 
           this.loading = false;
@@ -91,27 +89,23 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.saveLoading = true;
 
 
-    if (typeof this.currentVeranstaltung === 'undefined') {
-      this.currentVeranstaltung.id= null;
+    /*if (typeof this.currentVeranstaltung === 'undefined') {
+      this.currentVeranstaltung.id = null;
     } else {
       this.currentVeranstaltung.id = this.currentVeranstaltung.id;
-    }
+    }*/
 
-    if (typeof this.currentRegion === 'undefined') {
-      this.currentVeranstaltung.regionId = null;
-    } else {
-      this.currentVeranstaltung.regionId = this.currentRegion.id;
-    }
+
 
     if (typeof this.currentUser === 'undefined') {
-      this.currentVeranstaltung.veranstaltungVerantwortlichId = null;
+      this.currentVeranstaltung.ligaLeiterId = null;
     } else {
-      this.currentVeranstaltung.veranstaltungVerantwortlichId = this.currentUser.id;
+      this.currentVeranstaltung.ligaLeiterId = this.currentUser.id;
     }
 
     // persist
     this.veranstaltungDataProvider.create(this.currentVeranstaltung)
-        .then((response: BogenveranstaltungResponse<VeranstaltungDO>) => {
+        .then((response: BogenligaResponse<VeranstaltungDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -137,7 +131,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenveranstaltungResponse<VeranstaltungDO>) => {
+        }, (response: BogenligaResponse<VeranstaltungDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -148,12 +142,11 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
-    this.currentVeranstaltung.regionId = this.currentRegion.id;
-    this.currentVeranstaltung.veranstaltungUebergeordnetId = this.currentUbergeordneteVeranstaltung.id;
-    this.currentVeranstaltung.veranstaltungVerantwortlichId = this.currentUser.id;
+   // this.currentVeranstaltung.veranstaltungUebergeordnetId = this.currentUbergeordneteVeranstaltung.id;
+    this.currentVeranstaltung.ligaLeiterId = this.currentUser.id;
     // persist
     this.veranstaltungDataProvider.update(this.currentVeranstaltung)
-        .then((response: BogenveranstaltungResponse<VeranstaltungDO>) => {
+        .then((response: BogenligaResponse<VeranstaltungDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -180,7 +173,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenveranstaltungResponse<VeranstaltungDO>) => {
+        }, (response: BogenligaResponse<VeranstaltungDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -222,44 +215,40 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   private loadById(id: number) {
     this.veranstaltungDataProvider.findById(id)
-        .then((response: BogenveranstaltungResponse<VeranstaltungDO>) => this.handleSuccess(response))
-        .catch((response: BogenveranstaltungResponse<VeranstaltungDO>) => this.handleFailure(response));
+        .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleSuccess(response))
+        .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFailure(response));
   }
 
-  private loadRegions() {
-    this.regionProvider.findAll()
-        .then((response: BogenveranstaltungResponse<RegionDO[]>) => this.handleResponseArraySuccess(response))
-        .catch((response: BogenveranstaltungResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
-  }
+
 
   private loadUebergeordnete() {
     this.veranstaltungDataProvider.findAll()
-        .then((response: BogenveranstaltungResponse<VeranstaltungDO[]>) => this.handlUebergeordnetResponseArraySuccess(response))
-        .catch((response: BogenveranstaltungResponse<VeranstaltungDTO[]>) => this.handleUebergeordnetResponseArrayFailure(response));
+        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handlUebergeordnetResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleUebergeordnetResponseArrayFailure(response));
   }
 
   private loadUsers() {
     this.userProvider.findAll()
-        .then((response: BogenveranstaltungResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess(response))
-        .catch((response: BogenveranstaltungResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
+        .then((response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
 
   }
 
-  private handleSuccess(response: BogenveranstaltungResponse<VeranstaltungDO>) {
+  private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
     this.loading = false;
 
     this.loadUebergeordnete(); // additional Request for all 'veranstaltung' to get all uebergeordnete
-    this.loadRegions(); // Request all regions from backend
+
     this.loadUsers();
   }
 
-  private handleFailure(response: BogenveranstaltungResponse<VeranstaltungDO>) {
+  private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
     this.loading = false;
 
   }
 
-  private handleDeleteSuccess(response: BogenveranstaltungResponse<void>): void {
+  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS,
@@ -282,7 +271,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.notificationService.showNotification(notification);
   }
 
-  private handleDeleteFailure(response: BogenveranstaltungResponse<void>): void {
+  private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE,
@@ -304,7 +293,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.notificationService.showNotification(notification);
   }
 
-  private handleResponseArraySuccess(response: BogenveranstaltungResponse<RegionDO[]>): void {
+ /* private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
     this.regionen = [];
     this.regionen = response.payload;
     if (this.id === 'add') {
@@ -315,39 +304,39 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
-  private handleResponseArrayFailure(response: BogenveranstaltungResponse<RegionDTO[]>): void {
+  private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
     this.regionen = [];
     this.loading = false;
-  }
+  }*/
 
-  private handlUebergeordnetResponseArraySuccess(response: BogenveranstaltungResponse<VeranstaltungDO[]>): void {
+  private handlUebergeordnetResponseArraySuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
     this.allUebergeordnete = [];
     this.allUebergeordnete = response.payload;
     if (this.id === 'add') {
       this.currentUbergeordneteVeranstaltung = this.allUebergeordnete[0];
     } else {
-      this.currentUbergeordneteVeranstaltung = this.allUebergeordnete.filter((uebergeordnet) => uebergeordnet.id === this.currentVeranstaltung.veranstaltungUebergeordnetId)[0];
+     // this.currentUbergeordneteVeranstaltung = this.allUebergeordnete.filter((uebergeordnet) => uebergeordnet.id === this.currentVeranstaltung.veranstaltungUebergeordnetId)[0];
     }
     this.loading = false;
   }
 
-  private handleUebergeordnetResponseArrayFailure(response: BogenveranstaltungResponse<VeranstaltungDTO[]>): void {
+  private handleUebergeordnetResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     this.allUebergeordnete = [];
     this.loading = false;
   }
 
-  private handleUserResponseArraySuccess(response: BogenveranstaltungResponse<UserProfileDO[]>): void {
+  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
     this.allUsers = [];
     this.allUsers = response.payload;
     if (this.id === 'add') {
       this.currentUser = this.allUsers[0];
     } else {
-      this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.veranstaltungVerantwortlichId)[0];
+      this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaLeiterId)[0];
     }
     this.loading = false;
   }
 
-  private handleUserResponseArrayFailure(response: BogenveranstaltungResponse<UserProfileDTO[]>): void {
+  private handleUserResponseArrayFailure(response: BogenligaResponse<UserProfileDTO[]>): void {
     this.allUsers = [];
     this.loading = false;
   }
