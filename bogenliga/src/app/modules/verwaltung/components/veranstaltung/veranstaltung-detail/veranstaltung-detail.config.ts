@@ -1,6 +1,6 @@
 import {CommonDialogConfig} from '../../../../shared/components/dialogs';
 
-export const LIGA_DETAIL_CONFIG: CommonDialogConfig = {
+export const VERANSTALTUNG_DETAIL_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.LIGA_DETAIL.TITLE'
+  pageTitleTranslationKey: 'MANAGEMENT.VERANSTALTUNG_DETAIL.TITLE'
 };

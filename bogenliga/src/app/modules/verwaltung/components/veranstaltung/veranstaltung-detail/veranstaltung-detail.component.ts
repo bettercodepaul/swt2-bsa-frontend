@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponent} from '@shared/components';
 import {ButtonType} from '@shared/components';
-import {BogenligaResponse} from '@shared/data-provider';
+import {BogenveranstaltungResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
   Notification,
@@ -15,20 +15,20 @@ import {
 import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
 import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.class';
 import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
-import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
+import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
-import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
+import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
 import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
-import {LigaDO} from '../../../types/liga-do.class';
+import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {RegionDO} from '../../../types/region-do.class';
-import {LIGA_DETAIL_CONFIG} from './veranstaltung-detail.config';
+import {VERANSTALTUNG_DETAIL_CONFIG} from './veranstaltung-detail.config';
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';
-const NOTIFICATION_DELETE_LIGA_SUCCESS = 'liga_detail_delete_success';
-const NOTIFICATION_DELETE_LIGA_FAILURE = 'liga_detail_delete_failure';
-const NOTIFICATION_SAVE_LIGA = 'liga_detail_save';
-const NOTIFICATION_UPDATE_LIGA = 'liga_detail_update';
+const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
+const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_success';
+const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
+const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
+const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 
 @Component({
   selector:    'bla-veranstaltung-detail',
@@ -36,12 +36,12 @@ const NOTIFICATION_UPDATE_LIGA = 'liga_detail_update';
   styleUrls:   ['./veranstaltung-detail.component.scss']
 })
 export class VeranstaltungDetailComponent extends CommonComponent implements OnInit {
-  public config = LIGA_DETAIL_CONFIG;
+  public config = VERANSTALTUNG_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentLiga: LigaDO = new LigaDO();
+  public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
-  public currentUbergeordneteLiga: LigaDO = new LigaDO();
-  public allUebergeordnete: Array<LigaDO> = [new LigaDO()];
+  public currentUbergeordneteVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
+  public allUebergeordnete: Array<VeranstaltungDO> = [new VeranstaltungDO()];
 
   public currentRegion: RegionDO = new RegionDO();
   public regionen: Array<RegionDO> = [new RegionDO()];
@@ -54,7 +54,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public id;
 
-  constructor(private ligaDataProvider: LigaDataProviderService,
+  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private router: Router,
@@ -71,9 +71,9 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
-          this.currentLiga = new LigaDO();
+          this.currentVeranstaltung = new VeranstaltungDO();
 
-          this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
+          this.loadUebergeordnete(); // additional Request for all 'veranstaltung' to get all uebergeordnete
           this.loadRegions(); // Request all regions from backend
           this.loadUsers();
 
@@ -91,53 +91,53 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.saveLoading = true;
 
 
-    if (typeof this.currentUbergeordneteLiga === 'undefined') {
-      this.currentLiga.ligaUebergeordnetId = null;
+    if (typeof this.currentVeranstaltung === 'undefined') {
+      this.currentVeranstaltung.id= null;
     } else {
-      this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
+      this.currentVeranstaltung.id = this.currentVeranstaltung.id;
     }
 
     if (typeof this.currentRegion === 'undefined') {
-      this.currentLiga.regionId = null;
+      this.currentVeranstaltung.regionId = null;
     } else {
-      this.currentLiga.regionId = this.currentRegion.id;
+      this.currentVeranstaltung.regionId = this.currentRegion.id;
     }
 
     if (typeof this.currentUser === 'undefined') {
-      this.currentLiga.ligaVerantwortlichId = null;
+      this.currentVeranstaltung.veranstaltungVerantwortlichId = null;
     } else {
-      this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
+      this.currentVeranstaltung.veranstaltungVerantwortlichId = this.currentUser.id;
     }
 
     // persist
-    this.ligaDataProvider.create(this.currentLiga)
-        .then((response: BogenligaResponse<LigaDO>) => {
+    this.veranstaltungDataProvider.create(this.currentVeranstaltung)
+        .then((response: BogenveranstaltungResponse<VeranstaltungDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_LIGA,
-              title:       'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_LIGA)
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/liga/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + response.payload.id);
                   }
                 });
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<LigaDO>) => {
+        }, (response: BogenveranstaltungResponse<VeranstaltungDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
@@ -148,39 +148,39 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
-    this.currentLiga.regionId = this.currentRegion.id;
-    this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
-    this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
+    this.currentVeranstaltung.regionId = this.currentRegion.id;
+    this.currentVeranstaltung.veranstaltungUebergeordnetId = this.currentUbergeordneteVeranstaltung.id;
+    this.currentVeranstaltung.veranstaltungVerantwortlichId = this.currentUser.id;
     // persist
-    this.ligaDataProvider.update(this.currentLiga)
-        .then((response: BogenligaResponse<LigaDO>) => {
+    this.veranstaltungDataProvider.update(this.currentVeranstaltung)
+        .then((response: BogenveranstaltungResponse<VeranstaltungDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
 
-            const id = this.currentLiga.id;
+            const id = this.currentVeranstaltung.id;
 
             const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_LIGA + id,
-              title:       'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              id:          NOTIFICATION_UPDATE_VERANSTALTUNG + id,
+              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.notificationService.observeNotification(NOTIFICATION_UPDATE_LIGA + id)
+            this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG + id)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/liga');
+                    this.router.navigateByUrl('/verwaltung/veranstaltung');
                   }
                 });
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<LigaDO>) => {
+        }, (response: BogenveranstaltungResponse<VeranstaltungDO>) => {
           console.log('Failed');
           this.saveLoading = false;
         });
@@ -190,12 +190,12 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.deleteLoading = true;
     this.notificationService.discardNotification();
 
-    const id = this.currentLiga.id;
+    const id = this.currentVeranstaltung.id;
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_LIGA + id,
-      title:            'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
+      title:            'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
@@ -203,11 +203,11 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_LIGA + id)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG + id)
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.ligaDataProvider.deleteById(id)
+            this.veranstaltungDataProvider.deleteById(id)
                 .then((response) => this.handleDeleteSuccess(response))
                 .catch((response) => this.handleDeleteFailure(response));
           }
@@ -217,64 +217,64 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   }
 
   public entityExists(): boolean {
-    return this.currentLiga.id >= 0;
+    return this.currentVeranstaltung.id >= 0;
   }
 
   private loadById(id: number) {
-    this.ligaDataProvider.findById(id)
-        .then((response: BogenligaResponse<LigaDO>) => this.handleSuccess(response))
-        .catch((response: BogenligaResponse<LigaDO>) => this.handleFailure(response));
+    this.veranstaltungDataProvider.findById(id)
+        .then((response: BogenveranstaltungResponse<VeranstaltungDO>) => this.handleSuccess(response))
+        .catch((response: BogenveranstaltungResponse<VeranstaltungDO>) => this.handleFailure(response));
   }
 
   private loadRegions() {
     this.regionProvider.findAll()
-        .then((response: BogenligaResponse<RegionDO[]>) => this.handleResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
+        .then((response: BogenveranstaltungResponse<RegionDO[]>) => this.handleResponseArraySuccess(response))
+        .catch((response: BogenveranstaltungResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
 
   private loadUebergeordnete() {
-    this.ligaDataProvider.findAll()
-        .then((response: BogenligaResponse<LigaDO[]>) => this.handlUebergeordnetResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleUebergeordnetResponseArrayFailure(response));
+    this.veranstaltungDataProvider.findAll()
+        .then((response: BogenveranstaltungResponse<VeranstaltungDO[]>) => this.handlUebergeordnetResponseArraySuccess(response))
+        .catch((response: BogenveranstaltungResponse<VeranstaltungDTO[]>) => this.handleUebergeordnetResponseArrayFailure(response));
   }
 
   private loadUsers() {
     this.userProvider.findAll()
-        .then((response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
+        .then((response: BogenveranstaltungResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess(response))
+        .catch((response: BogenveranstaltungResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
 
   }
 
-  private handleSuccess(response: BogenligaResponse<LigaDO>) {
-    this.currentLiga = response.payload;
+  private handleSuccess(response: BogenveranstaltungResponse<VeranstaltungDO>) {
+    this.currentVeranstaltung = response.payload;
     this.loading = false;
 
-    this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
+    this.loadUebergeordnete(); // additional Request for all 'veranstaltung' to get all uebergeordnete
     this.loadRegions(); // Request all regions from backend
     this.loadUsers();
   }
 
-  private handleFailure(response: BogenligaResponse<LigaDO>) {
+  private handleFailure(response: BogenveranstaltungResponse<VeranstaltungDO>) {
     this.loading = false;
 
   }
 
-  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
+  private handleDeleteSuccess(response: BogenveranstaltungResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_LIGA_SUCCESS,
-      title:       'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
-      description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_LIGA_SUCCESS)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/liga');
+            this.router.navigateByUrl('/verwaltung/veranstaltung');
             this.deleteLoading = false;
           }
         });
@@ -282,19 +282,19 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.notificationService.showNotification(notification);
   }
 
-  private handleDeleteFailure(response: BogenligaResponse<void>): void {
+  private handleDeleteFailure(response: BogenveranstaltungResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_LIGA_FAILURE,
-      title:       'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_LIGA_FAILURE)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
@@ -304,50 +304,50 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.notificationService.showNotification(notification);
   }
 
-  private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
+  private handleResponseArraySuccess(response: BogenveranstaltungResponse<RegionDO[]>): void {
     this.regionen = [];
     this.regionen = response.payload;
     if (this.id === 'add') {
       this.currentRegion = this.regionen[0];
     } else {
-      this.currentRegion = this.regionen.filter((region) => region.id === this.currentLiga.regionId)[0];
+      this.currentRegion = this.regionen.filter((region) => region.id === this.currentVeranstaltung.regionId)[0];
     }
     this.loading = false;
   }
 
-  private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
+  private handleResponseArrayFailure(response: BogenveranstaltungResponse<RegionDTO[]>): void {
     this.regionen = [];
     this.loading = false;
   }
 
-  private handlUebergeordnetResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
+  private handlUebergeordnetResponseArraySuccess(response: BogenveranstaltungResponse<VeranstaltungDO[]>): void {
     this.allUebergeordnete = [];
     this.allUebergeordnete = response.payload;
     if (this.id === 'add') {
-      this.currentUbergeordneteLiga = this.allUebergeordnete[0];
+      this.currentUbergeordneteVeranstaltung = this.allUebergeordnete[0];
     } else {
-      this.currentUbergeordneteLiga = this.allUebergeordnete.filter((uebergeordnet) => uebergeordnet.id === this.currentLiga.ligaUebergeordnetId)[0];
+      this.currentUbergeordneteVeranstaltung = this.allUebergeordnete.filter((uebergeordnet) => uebergeordnet.id === this.currentVeranstaltung.veranstaltungUebergeordnetId)[0];
     }
     this.loading = false;
   }
 
-  private handleUebergeordnetResponseArrayFailure(response: BogenligaResponse<LigaDTO[]>): void {
+  private handleUebergeordnetResponseArrayFailure(response: BogenveranstaltungResponse<VeranstaltungDTO[]>): void {
     this.allUebergeordnete = [];
     this.loading = false;
   }
 
-  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
+  private handleUserResponseArraySuccess(response: BogenveranstaltungResponse<UserProfileDO[]>): void {
     this.allUsers = [];
     this.allUsers = response.payload;
     if (this.id === 'add') {
       this.currentUser = this.allUsers[0];
     } else {
-      this.currentUser = this.allUsers.filter((user) => user.id === this.currentLiga.ligaVerantwortlichId)[0];
+      this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.veranstaltungVerantwortlichId)[0];
     }
     this.loading = false;
   }
 
-  private handleUserResponseArrayFailure(response: BogenligaResponse<UserProfileDTO[]>): void {
+  private handleUserResponseArrayFailure(response: BogenveranstaltungResponse<UserProfileDTO[]>): void {
     this.allUsers = [];
     this.loading = false;
   }

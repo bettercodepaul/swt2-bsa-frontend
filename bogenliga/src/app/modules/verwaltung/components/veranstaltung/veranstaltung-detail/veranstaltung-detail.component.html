@@ -1,30 +1,30 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
-  <form id="ligaForm"
+  <form id="veranstaltungForm"
         class="horizontal-form half-page"
         #dsbMitgliedForm="ngForm">
 
     <!-- VORNAME -->
     <div class="form-group row">
-      <label for="ligaName"
+      <label for="veranstaltungName"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.LABEL' | translate }}</span>
+        <span>{{ 'VERANSTALTUNG_DETAIL.FORM.NAME.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <input type="text"
                class="form-control"
                required
-               id="ligaName"
-               name="ligaName"
-               #ligaName="ngModel"
-               [(ngModel)]="currentLiga.name"
-               [class.is-invalid]="ligaName.invalid && !ligaName.untouched"
-               placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+               id="veranstaltungName"
+               name="veranstaltungName"
+               #veranstaltungName="ngModel"
+               [(ngModel)]="currentVeranstaltung.name"
+               [class.is-invalid]="veranstaltungName.invalid && ! veranstaltungName.untouched"
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.ERROR' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
     <div class="form-group row">
       <label for="ligaRegion"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -49,7 +49,7 @@
         </select>
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.ERROR' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
     <div class="form-group row">
       <label for="ligaRegion"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UEBERGEORDNET.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -70,12 +70,12 @@
           <option [ngValue]="uebergeordnet"
                   *ngFor="let uebergeordnet of allUebergeordnete"> {{uebergeordnet.name}}</option>
 
-          placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
+          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
         </select>
 
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.ERROR' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UEBERGEORDNET.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@
     <div class="form-group row">
       <label for="ligaRegion"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANTWORTLICH_MAIL.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -97,12 +97,12 @@
           <option [ngValue]="user"
                   *ngFor="let user of allUsers"> {{user.email}}</option>
 
-          placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.PLACEHOLDER' | translate }}">
+          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANTWORTLICH_MAIL.PLACEHOLDER' | translate }}">
         </select>
 
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.ERROR' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANTWORTLICH_MAIL.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -119,21 +119,21 @@
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
-          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.SAVE' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'ligaUpdateButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
-          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UPDATE' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.DANGER"
                     [loading]="deleteLoading"
                     (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.LIGA_DETAIL.FORM.DELETE' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DELETE' | translate }}
         </bla-button>
       </div>
     </div>

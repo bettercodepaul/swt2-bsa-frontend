@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {VeranstaltungOverviewComponent} from './veranstaltung-overview.component';
 
-describe('LigaOverviewComponent', () => {
+describe('VeranstaltungOverviewComponent', () => {
   let component: VeranstaltungOverviewComponent;
   let fixture: ComponentFixture<VeranstaltungOverviewComponent>;
 

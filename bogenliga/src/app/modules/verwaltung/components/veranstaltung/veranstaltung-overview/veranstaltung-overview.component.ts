@@ -13,9 +13,9 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
-import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
-import {LIGA_OVERVIEW_CONFIG} from './veranstaltung-overview.config';
+import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
+import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
+import {VERANSTALTUNG_OVERVIEW_CONFIG} from './veranstaltung-overview.config';
 import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
@@ -27,11 +27,11 @@ export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete'
 })
 export class VeranstaltungOverviewComponent extends CommonComponent implements OnInit {
 
-  public config = LIGA_OVERVIEW_CONFIG;
+  public config = VERANSTALTUNG_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
 
-  constructor(private ligaDataProvider: LigaDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 
@@ -55,8 +55,8 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
 
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_LIGA + id,
-      title:            'MANAGEMENT.LIGA.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.LIGA.NOTIFICATION.DELETE.DESCRIPTION',
+      title:            'MANAGEMENT.VERANSTALTUNG.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.VERANSTALTUNG.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
@@ -67,7 +67,7 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
     this.notificationService.observeNotification(NOTIFICATION_DELETE_LIGA + id)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.ligaDataProvider.deleteById(id)
+            this.veranstaltungDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           }
@@ -79,24 +79,24 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
   private loadTableRows() {
     this.loading = true;
 
-    this.ligaDataProvider.findAll()
-        .then((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
+    this.veranstaltungDataProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private handleLoadTableRowsFailure(response: BogenligaResponse<LigaDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<LigaDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/liga/' + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/veranstaltung/' + versionedDataObject.id);
   }
 
 
