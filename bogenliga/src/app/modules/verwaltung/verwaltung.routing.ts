@@ -12,7 +12,9 @@ import {
   VereinOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
-  WettkampfklasseOverviewComponent
+  WettkampfklasseOverviewComponent,
+  VeranstaltungDetailComponent,
+  VeranstaltungOverviewComponent,
 } from './components';
 import {
   BenutzerDetailGuard,
@@ -26,7 +28,9 @@ import {
   VereinOverviewGuard,
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
-  WettkampfklasseOverviewGuard
+  WettkampfklasseOverviewGuard,
+  VeranstaltungDetailGuard,
+  VeranstaltungOverviewGuard,
 } from './guards';
 
 export const VERWALTUNG_ROUTES: Routes = [
@@ -71,9 +75,9 @@ export const VERWALTUNG_ROUTES: Routes = [
   {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]},
   {
     path: 'veranstaltung',
-    component: LigaOverviewComponent,
+    component: VeranstaltungOverviewComponent,
     pathMatch: 'full',
-    canActivate: [LigaOverviewGuard]
+    canActivate: [VeranstaltungOverviewGuard]
   },
-  {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]}
+  {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]}
 ];
