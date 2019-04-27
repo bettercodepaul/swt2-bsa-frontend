@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchusszettelComponent implements OnInit {
 
-  pfeile: string[] = [];
-
   constructor() {
     console.log("Schusszettel Component")
   }
@@ -17,16 +15,4 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
   }
 
-
-
-  onChange(value, i) {
-    console.log("onChange");
-    console.log(value);
-    if (value == "+") {
-      this.pfeile[i] = "10";
-
-    } else {
-      this.pfeile[i] = value;
-    }
-  }
 }
