@@ -1,6 +1,7 @@
 <div class="wettkaempfe"
      class="container">
-  <div class="match">   <h1>X. Match</h1></div>
+  <form>
+    <div class="match">   <h1>X. Match</h1></div>
   <div class="mannschaften">
     <h2>Mannschaft 1 </h2>
     <h2>gegen</h2>
@@ -15,37 +16,37 @@
       <tr>
         <td>
           <label for="1.SchützePktT1">1.S.Pkt</label>
-          <input myNumberOnly type="text" name="1.SchützePkt" id="1.SchützePktT1" class="smallInput" [(ngModel)]="pfeile[0]" (ngModelChange)="onChange($event, 0)">
+          <input myNumberOnly   type="number" name="1.SchützePkt" id="1.SchützePktT1" class="smallInput">
         </td>
         <td>
           <label for="2.SchützePktT1">2.S.Pkt</label>
-          <input myNumberOnly type="string" name="2.SchützePkt" id="2.SchützePktT1" class="smallInput" [(ngModel)]="pfeile[1]" (ngModelChange)="onChange($event, 1)">
+          <input myNumberOnly type="number" name="2.SchützePkt" id="2.SchützePktT1" class="smallInput">
         </td>        <td>
         <label for="3.SchützePktT1">3.S.Pkt</label>
-        <input myNumberOnly type="string" name="3.SchützePkt" id="3.SchützePktT1" class="smallInput" [(ngModel)]="pfeile[2]" (ngModelChange)="onChange($event, 2)">
+        <input myNumberOnly type="number" name="3.SchützePkt" id="3.SchützePktT1" class="smallInput">
       </td>        <td>
         <label for="4.SchützePktT1">4.S.Pkt</label>
-        <input myNumberOnly type="string" name="4.SchützePkt" id="4.SchützePktT1" class="smallInput" [(ngModel)]="pfeile[3]" (ngModelChange)="onChange($event, 3)">
+        <input myNumberOnly type="number" name="4.SchützePkt" id="4.SchützePktT1" class="smallInput">
       </td>        <td>
         <label for="5.SchützePktT1">5.S.Pkt</label>
-        <input myNumberOnly type="string" name="5.SchützePkt" id="5.SchützePktT1" class="smallInput" [(ngModel)]="pfeile[4]" (ngModelChange)="onChange($event, 4)">
+        <input myNumberOnly type="number" name="5.SchützePkt" id="5.SchützePktT1" class="smallInput">
       </td>        <td>
         <label for="summeSchützeT1">Summe S.pkt</label>
-        <input type="string" name="summeSchütze" id="summeSchützeT1" class="smallInput">
+        <input type="number" name="summeSchütze" id="summeSchützeT1" class="smallInput">
       </td>
         <td>
           <label for="matchpunkteT1">Matchpkte</label>
-          <input type="string" name="matchpunkte" id="matchpunkteT1" class="smallInput">
+          <input type="number" name="matchpunkte" id="matchpunkteT1" class="smallInput">
         </td>
       </tr>
       <tr>
-        <td><input myNumberOnly type="string" name="1.SchützePkt" id="1.SchützePktT2" class="smallInput" [(ngModel)]="pfeile[5]" (ngModelChange)="onChange($event, 5)"></td>
-        <td><input myNumberOnly type="string" name="2.SchützePkt" id="2.SchützePktT2" class="smallInput" [(ngModel)]="pfeile[6]" (ngModelChange)="onChange($event, 6)"></td>
-        <td><input myNumberOnly type="string" name="3.SchützePkt" id="3.SchützePktT2" class="smallInput" [(ngModel)]="pfeile[7]" (ngModelChange)="onChange($event, 7)"></td>
-        <td><input myNumberOnly type="string" name="4.SchützePkt" id="4.SchützePktT2" class="smallInput" [(ngModel)]="pfeile[8]" (ngModelChange)="onChange($event, 8)"></td>
-        <td><input myNumberOnly type="string" name="5.SchützePkt" id="5.SchützePktT2" class="smallInput" [(ngModel)]="pfeile[9]" (ngModelChange)="onChange($event, 9)"></td>
-        <td><input type="string" name="summeSchütze" id="summeSchützeT2" class="smallInput"></td>
-        <td><input type="string" name="matchpunkte" id="matchpunkteT2" class="smallInput"></td>
+        <td><input myNumberOnly type="number" name="1.SchützePkt" id="1.SchützePktT2" class="smallInput"></td>
+        <td><input myNumberOnly type="number" name="2.SchützePkt" id="2.SchützePktT2" class="smallInput"></td>
+        <td><input myNumberOnly type="number" name="3.SchützePkt" id="3.SchützePktT2" class="smallInput"></td>
+        <td><input myNumberOnly type="number" name="4.SchützePkt" id="4.SchützePktT2" class="smallInput"></td>
+        <td><input myNumberOnly type="number" name="5.SchützePkt" id="5.SchützePktT2" class="smallInput"></td>
+        <td><input type="number" name="summeSchütze" id="summeSchützeT2" class="smallInput"></td>
+        <td><input type="number" name="matchpunkte" id="matchpunkteT2" class="smallInput"></td>
       </tr>
 
     </table>
@@ -54,85 +55,86 @@
 
   <div class="bigTable">
     <table id="schusstabelle"
-           class="table table-hover table-responsive thead-light table-striped"
-           style="width:100%">
+         class="table table-hover table-responsive thead-light table-striped"
+         style="width:100%">
       <thead>
-      <tr>
-        <th rowspan="2">Schuetze</th>
-        <th colspan="2">1. Satz / Pfeile</th>
-        <th colspan="2">2. Satz / Pfeile</th>
-        <th colspan="2">3. Satz / Pfeile</th>
-        <th colspan="2">4. Satz / Pfeile</th>
-        <th colspan="2">5. Satz / Pfeile</th>
-      </tr>
-      <tr>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-      </tr>
+        <tr>
+          <th rowspan="2">Schuetze</th>
+          <th colspan="2">1. Satz / Pfeile</th>
+          <th colspan="2">2. Satz / Pfeile</th>
+          <th colspan="2">3. Satz / Pfeile</th>
+          <th colspan="2">4. Satz / Pfeile</th>
+          <th colspan="2">5. Satz / Pfeile</th>
+        </tr>
+        <tr>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+        </tr>
       </thead>
       <tr>
-        <td><input type="string" value="1"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[10]" (ngModelChange)="onChange($event, 10)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[11]" (ngModelChange)="onChange($event, 11)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[12]" (ngModelChange)="onChange($event, 12)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[13]" (ngModelChange)="onChange($event, 13)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[14]" (ngModelChange)="onChange($event, 14)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[15]" (ngModelChange)="onChange($event, 15)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[16]" (ngModelChange)="onChange($event, 16)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[17]" (ngModelChange)="onChange($event, 17)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[18]" (ngModelChange)="onChange($event, 18)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[19]" (ngModelChange)="onChange($event, 19)"></td>
+        <td><input type="number" value="1"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
         <td>S</td>
       </tr>
       <tr>
-        <td><input type="string" value="2"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[20]" (ngModelChange)="onChange($event, 20)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[21]" (ngModelChange)="onChange($event, 21)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[22]" (ngModelChange)="onChange($event, 22)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[23]" (ngModelChange)="onChange($event, 23)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[24]" (ngModelChange)="onChange($event, 24)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[25]" (ngModelChange)="onChange($event, 25)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[26]" (ngModelChange)="onChange($event, 26)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[27]" (ngModelChange)="onChange($event, 27)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[28]" (ngModelChange)="onChange($event, 28)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[29]" (ngModelChange)="onChange($event, 29)"></td>
+        <td><input type="number" value="2"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
         <td>S</td>
       </tr>
       <tr>
-        <td><input type="string" value="3"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[30]" (ngModelChange)="onChange($event, 30)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[31]" (ngModelChange)="onChange($event, 31)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[32]" (ngModelChange)="onChange($event, 32)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[33]" (ngModelChange)="onChange($event, 33)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[34]" (ngModelChange)="onChange($event, 34)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[35]" (ngModelChange)="onChange($event, 35)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[36]" (ngModelChange)="onChange($event, 36)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[37]" (ngModelChange)="onChange($event, 37)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[38]" (ngModelChange)="onChange($event, 38)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="pfeile[39]" (ngModelChange)="onChange($event, 39)"></td>
+        <td><input type="number" value="3"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
+        <td><input myNumberOnly type="number"></td>
         <td>S</td>
       </tr>
       <tr>
         <td></td>
         <td>Summe</td>
-        <td><input type="string"></td>
+        <td><input type="number"></td>
         <td>Summe</td>
-        <td><input type="string"></td>
+        <td><input type="number"></td>
         <td>Summe</td>
-        <td><input type="string"></td>
+        <td><input type="number"></td>
         <td>Summe</td>
-        <td><input type="string"></td>
+        <td><input type="number"></td>
         <td>Summe</td>
-        <td><input type="string"></td>
+        <td><input type="number"></td>
       </tr>
     </table>
   </div>
+  </form>
 </div>
