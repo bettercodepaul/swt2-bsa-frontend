@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schusszettel.component.scss']
 })
 export class SchusszettelComponent implements OnInit {
+
+  pfeile: string[] = [];
+
   constructor() {
     console.log("Schusszettel Component")
   }
@@ -14,7 +17,7 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
   }
 
-  pfeile: string[] = [];
+
 
   onChange(value, i) {
     console.log("onChange");
