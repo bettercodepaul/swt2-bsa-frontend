@@ -7,23 +7,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schusszettel.component.scss']
 })
 export class SchusszettelComponent implements OnInit {
+
+  InputsArray: string[] = [];
+
   constructor() {
     console.log("Schusszettel Component")
   }
 
   ngOnInit() {
+    //initialwert schützen inputs
+    this.InputsArray[14] = "1";
+    this.InputsArray[25] = "2";
+    this.InputsArray[36] = "3";
   }
 
-  pfeile: string[] = [];
+
 
   onChange(value, i) {
     console.log("onChange");
     console.log(value);
     if (value == "+") {
-      this.pfeile[i] = "10";
+      this.InputsArray[i] = "10";
 
     } else {
-      this.pfeile[i] = value;
+      this.InputsArray[i] = value;
     }
   }
 }
