@@ -4,11 +4,12 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
   selector: '[myNumberOnly]'
 })
 export class NumberOnlyDirective {
-  // Allow decimal numbers and negative values
-  private regex: RegExp = new RegExp(/^-?[0-9\+]$/g);
+  // Allow decimal numbers and negative values and plus
+  // nice regex (/^-?[0-9\+]+(\.[0-9]*)?$/g)
+  private regex: RegExp = new RegExp(/^-?[0-9\+]+(\.[0-9]*)?$/g);
   // Allow key codes for special events. Reflect :
-  // Backspace, tab, end, home
-  private specialKeys: Array<string> = [ 'Backspace', 'Tab', 'End', 'Home', '-' ];
+  // Backspace, tab, end, home, 'Delete', 'ArrowLeft', 'ArrowRight'
+  private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home', '-', 'Delete', 'Del', 'ArrowLeft', 'ArrowRight', 'Left', 'Right' ];
 
   constructor(private el: ElementRef) {
   }
