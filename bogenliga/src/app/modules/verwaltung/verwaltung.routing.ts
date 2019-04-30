@@ -72,7 +72,7 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [LigaOverviewGuard]
   },
-  {path: 'region/:id', component: RegionDetailComponent, canActivate: [RegionDetailGuard]},
+  {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]},
   {
     path: 'region',
     component: RegionOverviewComponent,
