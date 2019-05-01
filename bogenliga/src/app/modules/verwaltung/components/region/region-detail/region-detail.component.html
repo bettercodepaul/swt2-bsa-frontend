@@ -19,7 +19,7 @@
                id="regionName"
                name="regionName"
                #regionName="ngModel"
-               [(ngModel)]="currentVerein.name"
+               [(ngModel)]="currentRegion.regionName"
                [class.is-invalid]="regionName.invalid && !regionName.untouched"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.PLACEHOLDER' | translate }}">
 
@@ -43,7 +43,7 @@
                id="vereinIdentifier"
                name="vereinIdentifier"
                #vereinIdentifier="ngModel"
-               [(ngModel)]="currentVerein.identifier"
+               [(ngModel)]="currentRegion.id"
                [class.is-invalid]="vereinIdentifier.invalid && !vereinIdentifier.untouched"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.PLACEHOLDER' | translate }}">
 
@@ -101,14 +101,14 @@
 
 
         <bla-button *ngIf="!entityExists()"
-                    [id]="'vereinSaveButton'"
+                    [id]="'regionSaveButton'"
                     [disabled]="!regionenForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
-                    [id]="'vereinUpdateButton'"
+                    [id]="'regionUpdateButton'"
                     [disabled]="!regionenForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
@@ -119,7 +119,7 @@
                     [buttonType]="ButtonType.DANGER"
                     [loading]="deleteLoading"
                     (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.DELETE' | translate }}
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.DELETE' | translate }}
         </bla-button>
       </div>
     </div>
