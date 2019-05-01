@@ -9,7 +9,7 @@
     <div class="form-group row">
       <label for="vereinName"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -21,10 +21,10 @@
                #vereinName="ngModel"
                [(ngModel)]="currentVerein.name"
                [class.is-invalid]="vereinName.invalid && !vereinName.untouched"
-               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.ERROR' | translate }}
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
     <div class="form-group row">
       <label for="vereinIdentifier"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -45,10 +45,10 @@
                #vereinIdentifier="ngModel"
                [(ngModel)]="currentVerein.identifier"
                [class.is-invalid]="vereinIdentifier.invalid && !vereinIdentifier.untouched"
-               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.ERROR' | translate }}
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
     <div class="form-group row">
       <label for="vereinRegion"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -69,7 +69,7 @@
           <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
         </select>
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.ERROR' | translate }}
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
         </div>
       </div>
     </div>
