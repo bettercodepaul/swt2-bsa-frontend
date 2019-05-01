@@ -21,11 +21,11 @@ import {REGION_DETAIL_CONFIG} from './region-detail.config';
 
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
-const NOTIFICATION_DELETE_VEREIN_SUCCESS = 'verein_detail_delete_success';
-const NOTIFICATION_DELETE_VEREIN_FAILURE = 'verein_detail_delete_failure';
-const NOTIFICATION_SAVE_VEREIN = 'verein_detail_save';
-const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
+const NOTIFICATION_DELETE_REGION = 'region_detail_delete';
+const NOTIFICATION_DELETE_REGION_SUCCESS = 'region_detail_delete_success';
+const NOTIFICATION_DELETE_REGION_FAILURE = 'region_detail_delete_failure';
+const NOTIFICATION_SAVE_REGION = 'region_detail_save';
+const NOTIFICATION_UPDATE_REGION = 'region_detail_update';
 
 @Component({
   selector:    'bla-region-detail',
@@ -36,15 +36,13 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public regionType = 'KREIS';
   public config = REGION_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentVerein: VereinDO = new VereinDO();
   public currentRegion: RegionDO = new RegionDO();
   public regionen: Array<RegionDO> = [new RegionDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
 
-  constructor(private vereinProvider: VereinDataProviderService,
-              private regionProvider: RegionDataProviderService,
+  constructor(private regionProvider: RegionDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -62,7 +60,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
-          this.currentVerein = new VereinDO();
+          this.currentRegion = new RegionDO();
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
@@ -76,33 +74,30 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
-    // persist
-    this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
+    console.log('Saving region: ', this.currentRegion);
 
-    console.log('Saving verein: ', this.currentVerein);
-
-    this.vereinProvider.create(this.currentVerein)
-        .then((response: BogenligaResponse<VereinDO>) => {
+    this.regionProvider.create(this.currentRegion)
+        .then((response: BogenligaResponse<RegionDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_VEREIN,
-              title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              id:          NOTIFICATION_SAVE_REGION,
+              title:       'MANAGEMENT.REGION_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.REGION_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_VEREIN)
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_REGION)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/region/' + response.payload.id);
                   }
                 });
 
@@ -121,27 +116,26 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
     // persist
-    this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
 
-    this.vereinProvider.update(this.currentVerein)
-        .then((response: BogenligaResponse<VereinDO>) => {
+    this.regionProvider.update(this.currentRegion)
+        .then((response: BogenligaResponse<RegionDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
 
-            const id = this.currentVerein.id;
+            const id = this.currentRegion.id;
 
             const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_VEREIN + id,
-              title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              id:          NOTIFICATION_UPDATE_REGION + id,
+              title:       'MANAGEMENT.REGION_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.REGION_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.notificationService.observeNotification(NOTIFICATION_UPDATE_VEREIN + id)
+            this.notificationService.observeNotification(NOTIFICATION_UPDATE_REGION + id)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
@@ -162,12 +156,12 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
 
-    const id = this.currentVerein.id;
+    const id = this.currentRegion.id;
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_VEREIN + id,
-      title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      id:               NOTIFICATION_DELETE_REGION + id,
+      title:            'MANAGEMENT.REGION_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.REGION_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
@@ -175,11 +169,11 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN + id)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_REGION + id)
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.vereinProvider.deleteById(id)
+            this.regionProvider.deleteById(id)
                 .then((response) => this.handleDeleteSuccess(response))
                 .catch((response) => this.handleDeleteFailure(response));
           }
@@ -189,13 +183,13 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   }
 
   public entityExists(): boolean {
-    return this.currentVerein.id >= 0;
+    return this.currentRegion.id >= 0;
   }
 
   private loadById(id: number) {
-    this.vereinProvider.findById(id)
-        .then((response: BogenligaResponse<VereinDO>) => this.handleSuccess(response))
-        .catch((response: BogenligaResponse<VereinDO>) => this.handleFailure(response));
+    this.regionProvider.findById(id)
+        .then((response: BogenligaResponse<RegionDO>) => this.handleSuccess(response))
+        .catch((response: BogenligaResponse<RegionDO>) => this.handleFailure(response));
   }
 
   private loadRegions(type: string) {
@@ -204,35 +198,33 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
 
-
-
-  private handleSuccess(response: BogenligaResponse<VereinDO>) {
-    this.currentVerein = response.payload;
+  private handleSuccess(response: BogenligaResponse<RegionDO>) {
+    this.currentRegion = response.payload;
     this.loading = false;
 
-    this.currentRegion = this.regionen.filter((region) => region.id === this.currentVerein.regionId)[0];
+    this.currentRegion = this.regionen.filter((region) => region.id === this.currentRegion.id)[0];
   }
 
-  private handleFailure(response: BogenligaResponse<VereinDO>) {
+  private handleFailure(response: BogenligaResponse<RegionDO>) {
     this.loading = false;
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VEREIN_SUCCESS,
-      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
-      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_REGION_SUCCESS,
+      title:       'MANAGEMENT.REGION_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      description: 'MANAGEMENT.REGION_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN_SUCCESS)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_REGION_SUCCESS)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/vereine');
+            this.router.navigateByUrl('/verwaltung/region');
             this.deleteLoading = false;
           }
         });
@@ -243,16 +235,16 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VEREIN_FAILURE,
-      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_REGION_FAILURE,
+      title:       'MANAGEMENT.REGION_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
+      description: 'MANAGEMENT.REGION_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN_FAILURE)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_REGION_FAILURE)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;

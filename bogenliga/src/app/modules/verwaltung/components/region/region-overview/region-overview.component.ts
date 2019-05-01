@@ -86,7 +86,7 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/regionen/' + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/region/' + versionedDataObject.id);
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<RegionDTO[]>): void {
