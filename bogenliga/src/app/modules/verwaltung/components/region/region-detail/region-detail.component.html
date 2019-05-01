@@ -1,13 +1,13 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
-  <form id="vereineForm"
+  <form id="regionenForm"
         class="horizontal-form half-page"
-        #vereineForm="ngForm">
+        #regionenForm="ngForm">
 
     <!-- ID -->
     <div class="form-group row">
-      <label for="vereinName"
+      <label for="regionName"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.LABEL' | translate }}</span>
         <span> *</span>
@@ -16,11 +16,11 @@
         <input type="text"
                class="form-control"
                required
-               id="vereinName"
-               name="vereinName"
-               #vereinName="ngModel"
+               id="regionName"
+               name="regionName"
+               #regionName="ngModel"
                [(ngModel)]="currentVerein.name"
-               [class.is-invalid]="vereinName.invalid && !vereinName.untouched"
+               [class.is-invalid]="regionName.invalid && !regionName.untouched"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -74,6 +74,26 @@
       </div>
     </div>
 
+    <!-- REGION SUPERORDINATE -->
+    <div class="form-group row">
+      <label for="vereinRegion"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                id="regionSuper"
+                name="vereinRegion"
+                #vereinRegion="ngModel"
+                [(ngModel)]="currentRegion">
+          <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
 
     <div class="form-group row">
       <div class="col-sm-3"></div>
@@ -82,17 +102,17 @@
 
         <bla-button *ngIf="!entityExists()"
                     [id]="'vereinSaveButton'"
-                    [disabled]="!vereineForm.valid"
+                    [disabled]="!regionenForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.SAVE' | translate }}
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'vereinUpdateButton'"
-                    [disabled]="!vereineForm.valid"
+                    [disabled]="!regionenForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.UPDATE' | translate }}
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
         <bla-button *ngIf="entityExists()"
