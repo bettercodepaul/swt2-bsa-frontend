@@ -485,6 +485,52 @@
         }
       }
     },
+    "REGION_DETAIL": {
+      "TITLE": "Region - Details",
+      "FORM": {
+        "REGION_NAME": {
+          "LABEL": "Region-Name",
+          "PLACEHOLDER": "Bitte einen Namen eingeben",
+          "ERROR": "Bitte einen gültigen Namen eingeben."
+        },
+        "REGION_CONTRACTION": {
+          "LABEL": "Region-Kürzel",
+          "PLACEHOLDER": "Bitte ein Kürzel eingeben",
+          "ERROR": "Bitte einen gültigen Identifier eingeben."
+        },
+        "REGION_TYP": {
+          "LABEL": "Region-Typ",
+          "PLACEHOLDER": "Bitte einen Region auswählen",
+          "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "REGION_SUPERORDINATE": {
+          "LABEL": "Übergeordnete Region",
+          "PLACEHOLDER": "Bitte eine übergeordnete Region auswählen",
+          "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Verein löschen",
+          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Verein wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Verein konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Verein wurde erfolgreich gespeichert."
+        }
+      }
+    },
     "DSBMITGLIEDER_DETAIL": {
       "TITLE": "DSB Mitglied - Details",
       "FORM": {
