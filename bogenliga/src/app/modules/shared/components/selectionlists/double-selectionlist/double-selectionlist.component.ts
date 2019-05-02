@@ -23,13 +23,13 @@ export class DoubleSelectionlistComponent implements OnInit {
 
   @Input()
   public fieldSelector: string = 'id';
-  private multipleSelections = false;
+  public multipleSelections = false;
+  public leftItemList: VersionedDataObject[] = [];
+  public rightSelected = false;
+  public rightItemList: VersionedDataObject[] = [];
   private selectedLeftItems: VersionedDataObject[] = [];
   private leftSelected = false;
-  private leftItemList: VersionedDataObject[] = [];
   private selectedRightItems: VersionedDataObject[] = [];
-  private rightSelected = false;
-  private rightItemList: VersionedDataObject[] = [];
 
   @Input()
   get rightItems() {
