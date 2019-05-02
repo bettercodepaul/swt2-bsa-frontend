@@ -9,12 +9,12 @@ export const REGION_OVERVIEW_CONFIG: OverviewDialogConfig = {
     columns: [
       {
         translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.NAME',
-        propertyName:   'name',
+        propertyName:   'regionName',
         width:          20,
       },
       {
         translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.CONTRACTION',
-        propertyName:   'kuerzel',
+        propertyName:   'regionKuerzel',
         width:          20,
       },
       {
@@ -24,7 +24,7 @@ export const REGION_OVERVIEW_CONFIG: OverviewDialogConfig = {
       },
       {
         translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.REGION_SUPERORDINATE',
-        propertyName:   'regionSuper',
+        propertyName:   'regionUebergeordnet',
         width:          20,
       }
     ],
