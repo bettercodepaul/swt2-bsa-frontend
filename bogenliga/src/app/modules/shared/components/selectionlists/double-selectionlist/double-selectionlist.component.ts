@@ -22,7 +22,7 @@ export class DoubleSelectionlistComponent implements OnInit {
   public rightItemsChange = new EventEmitter();
 
   @Input()
-  public fieldSelector: string = 'id';
+  public fieldSelector = 'id';
   public multipleSelections = false;
   public leftItemList: VersionedDataObject[] = [];
   public rightSelected = false;
@@ -45,12 +45,16 @@ export class DoubleSelectionlistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.leftItems.forEach(item => this.leftItemList.push(Object.assign(item)));
-    this.rightItems.forEach(item => this.rightItemList.push(Object.assign(item)));
+    this.leftItems.forEach((item) => {
+      this.leftItemList.push(Object.assign(item));
+    });
+    this.rightItems.forEach((item) => {
+      this.rightItemList.push(Object.assign(item));
+    });
   }
 
   public onLeftToRight(): void {
-    this.selectedLeftItems.forEach(item => {
+    this.selectedLeftItems.forEach((item) => {
       this.rightItemList.push(item);
 
       const index = this.leftItemList.indexOf(item, 0);
@@ -64,7 +68,7 @@ export class DoubleSelectionlistComponent implements OnInit {
   }
 
   public onRightToLeft(): void {
-    this.selectedRightItems.forEach(item => {
+    this.selectedRightItems.forEach((item) => {
       this.leftItemList.push(item);
 
       const index = this.rightItemList.indexOf(item, 0);
@@ -75,7 +79,7 @@ export class DoubleSelectionlistComponent implements OnInit {
 
     this.leftItemList.sort(this.compare);
 
-    this.leftItemList.forEach(item => this.leftItems.push(Object.assign(item)));
+    this.leftItemList.forEach((item) => this.leftItems.push(Object.assign(item)));
   }
 
   public onLeftItemSelect($event: VersionedDataObject[]): void {
@@ -113,10 +117,12 @@ export class DoubleSelectionlistComponent implements OnInit {
   }
 
   private compare = (a, b) => {
-    if (a[this.fieldSelector] < b[this.fieldSelector])
+    if (a[this.fieldSelector] < b[this.fieldSelector]) {
       return -1;
-    if (a[this.fieldSelector] > b[this.fieldSelector])
+    }
+    if (a[this.fieldSelector] > b[this.fieldSelector]) {
       return 1;
+    }
     return 0;
-  };
+  }
 }
