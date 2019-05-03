@@ -25,6 +25,9 @@ import {BenutzerDataProviderService} from '@verwaltung/services/benutzer-data-pr
 import {BenutzerDO} from '@verwaltung/types/benutzer-do.class';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
 import {UserProfileDTO} from '@user/types/model/user-profile-dto.class';
+import {MatchDataProviderService} from '@vereine/services/match-data-provider.service';
+import {MatchDTO} from '@vereine/types/datatransfer/match-dto.class';
+import {WettkampfklassenDataProviderService} from '@verwaltung/services/wettkampfklassen-data-provider.service';
 
 @Component({
   selector: 'bla-vereine',
@@ -42,13 +45,12 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public rows: TableRow[];
   private selectedVereinsId : number;
 
-  constructor(private vereinDataProvider: VereinDataProviderService, private userDataProvider: UserProfileDataProviderService, private mannschaftsDataProvider: DsbMannschaftDataProviderService, private router: Router) {
+  constructor(private wettkampfDataProvider: WettkampfklassenDataProviderService, private matchDataProvider: MatchDataProviderService, private vereinDataProvider: VereinDataProviderService, private userDataProvider: UserProfileDataProviderService, private mannschaftsDataProvider: DsbMannschaftDataProviderService, private router: Router) {
     super();
   }
 
   ngOnInit() {
     this.loadVereine();
-    this.loading = false;
   }
 
   public onSelect($event: VereinDO[]): void {
@@ -84,10 +86,20 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   private loadVereine(): void {
 
+    console.log("loadVereine");
+    this.vereine = [];
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = []; this.vereine = response.payload;})
+        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loading = false; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
+
+  // private loadVereineTest(): VereinDO[] {
+  //
+  //   this.vereinDataProvider.findAll()
+  //       .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = []; this.vereine = response.payload;  this.loading = false; return response.payload;})
+  //       .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; return response.payload});
+  //   return this.vereine;
+  // }
 
 
   private loadTableRows() {
@@ -96,6 +108,12 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
         .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsFailure(response));
+
+    this.matchDataProvider.findAllbyMannschaftsID(107)
+        .then((response: BogenligaResponse<MatchDTO[]>) => this.handleMatchSuccess(response))
+        .catch((response: BogenligaResponse<MatchDTO[]>) => this.handleMatchFailure(response));
+
+
     this.loading = false;
    }
 
@@ -108,6 +126,22 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;
+  }
+
+  private handleMatchFailure(response: BogenligaResponse<MatchDTO[]>): void {
+    // this.rows = [];
+    // this.loading = false;
+  }
+
+  private handleMatchSuccess(response: BogenligaResponse<MatchDTO[]>): void {
+    console.log(response.payload);
+    // this.wettkampfDataProvider.findById(107)
+    //     .then((response: BogenligaResponse<MatchDTO[]>) => this.handleMatchSuccess(response))
+    //     .catch((response: BogenligaResponse<MatchDTO[]>) => this.handleMatchFailure(response));
+
+    // this.rows = []; // reset array to ensure change detection
+    // this.rows = toTableRows(response.payload);
+    // this.loading = false;
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
