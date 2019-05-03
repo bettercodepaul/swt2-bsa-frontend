@@ -26,10 +26,6 @@ export class SetzlisteDownloadComponent implements OnInit {
   @Input()
   wettkampfid: number;
 
-  // Get the value of the attribute from the html tag
-  @Input()
-  wettkampftag: number;
-
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
 
@@ -45,7 +41,7 @@ export class SetzlisteDownloadComponent implements OnInit {
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path(path)
-      .path('?wettkampfid=' + this.wettkampfid + '&wettkampftag=' + this.wettkampftag)
+      .path('?wettkampfid=' + this.wettkampfid)
       .build();
   }
 
