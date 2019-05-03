@@ -105,15 +105,22 @@
       </div>
     </div>
   </form>
-  <h5 *ngIf="entityExists()"> Mannschaftsübersicht</h5>
-<bla-data-table [config]="config_table"
-                *ngIf="entityExists()"
+  <div *ngIf="entityExists()">
+    <h5> Mannschaftsübersicht</h5>
+    <div class="overview-dialog-add">
+      <button class="btn btn-success"
+            routerLink="add">
+            <fa-icon icon="plus"></fa-icon>
+            <span> Neu</span>
+      </button>
+    </div>
+    <bla-data-table [config]="config_table"
                [rows]="rows"
                [loading]="loading"
-               (onViewClicked)="onView($event)"
-               (onEditClicked)="onEdit($event)"
-               (onDeleteClicked)="onDelete($event)">
-  </bla-data-table>
-
+               (onViewEntry)="onView($event)"
+               (onEditEntry)="onEdit($event)"
+               (onDeleteEntry)="onDelete($event)">
+    </bla-data-table>
+  </div>
 
 </bla-common-dialog>
