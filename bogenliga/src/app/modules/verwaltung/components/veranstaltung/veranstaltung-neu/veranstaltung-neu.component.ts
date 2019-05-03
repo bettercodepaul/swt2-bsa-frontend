@@ -17,6 +17,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
+import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_neu_save';
@@ -34,6 +35,7 @@ export class VeranstaltungNeuComponent extends CommonComponent implements OnInit
   public currentCredentials: CredentialsDO = new CredentialsDO();
   public verifyCredentials: CredentialsDO = new CredentialsDO();
   public currentCredentialsDTO: CredentialsDTO;
+  public selectedDTO: PlaygroundVersionedDataObject;
 
   public saveLoading = false;
 
@@ -102,6 +104,18 @@ export class VeranstaltungNeuComponent extends CommonComponent implements OnInit
   private loadById(id: number) {
     this.loading = false;
   }
+  public onSelect($event: PlaygroundVersionedDataObject): void {
+    this.selectedDTO = $event;
+  }
 
+  public getVersionedDataObjects(): PlaygroundVersionedDataObject[] {
+    return [
+      new PlaygroundVersionedDataObject(1, 'Schütze 1'),
+      new PlaygroundVersionedDataObject(2, 'Schütze 2'),
+      new PlaygroundVersionedDataObject(3, 'Schütze 3'),
+      new PlaygroundVersionedDataObject(4, 'Schütze 4'),
+      new PlaygroundVersionedDataObject(5, 'Schütze 5'),
+    ];
+  }
 
 }
