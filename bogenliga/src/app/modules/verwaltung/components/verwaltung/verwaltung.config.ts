@@ -38,7 +38,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.DESCRIPTION',
-        icon:           'users',
+        icon:           'calendar-alt',
         route:          'veranstaltung'
       }
 
