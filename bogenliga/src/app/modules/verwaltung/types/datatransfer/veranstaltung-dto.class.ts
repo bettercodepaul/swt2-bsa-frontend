@@ -3,18 +3,17 @@ import {DataTransferObject} from '@shared/data-provider';
 export class VeranstaltungDTO implements DataTransferObject {
   // TODO:  if else for every number
   id: number;
-  version: number;
-
   wettkampfTypId: number;
   name: string;
   sportjahr: number;
   meldedeadline: number;
   ligaLeiterId: number;
+  version: number;
 
   static copyFrom(optional: {
     id?: number,
-    name?: string,
     wettkampfTypId?: number,
+    name?: string,
     sportjahr?: number,
     meldedeadline?: number,
     ligaLeiterId?: number,

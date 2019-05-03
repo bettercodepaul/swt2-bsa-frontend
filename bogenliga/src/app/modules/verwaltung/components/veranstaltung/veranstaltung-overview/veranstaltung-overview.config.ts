@@ -10,6 +10,11 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
   tableConfig: {
     columns: [
       {
+        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.WETTKAMPFTYPID',
+        propertyName:   'wettkampftypid',
+        width:          20,
+      },
+      {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.NAME',
         propertyName:   'name',
         width:          20,
@@ -17,11 +22,6 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
       {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.SPORTJAHR',
         propertyName:   'sportjahr',
-        width:          20,
-      },
-      {
-        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.WETTKAMPFTYPID',
-        propertyName:   'wettkampftypid',
         width:          20,
       },
       {
