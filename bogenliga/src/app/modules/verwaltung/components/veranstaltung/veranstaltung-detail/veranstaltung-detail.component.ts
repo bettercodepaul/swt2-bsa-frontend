@@ -98,9 +98,9 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
 
     if (typeof this.currentUser === 'undefined') {
-      this.currentVeranstaltung.ligaLeiterId = null;
+      this.currentVeranstaltung.ligaleiterID = null;
     } else {
-      this.currentVeranstaltung.ligaLeiterId = this.currentUser.id;
+      this.currentVeranstaltung.ligaleiterID = this.currentUser.id;
     }
 
     // persist
@@ -143,7 +143,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
    // this.currentVeranstaltung.veranstaltungUebergeordnetId = this.currentUbergeordneteVeranstaltung.id;
-    this.currentVeranstaltung.ligaLeiterId = this.currentUser.id;
+    this.currentVeranstaltung.ligaleiterID = this.currentUser.id;
     // persist
     this.veranstaltungDataProvider.update(this.currentVeranstaltung)
         .then((response: BogenligaResponse<VeranstaltungDO>) => {
@@ -331,7 +331,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     if (this.id === 'add') {
       this.currentUser = this.allUsers[0];
     } else {
-      this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaLeiterId)[0];
+      this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaleiterID)[0];
     }
     this.loading = false;
   }

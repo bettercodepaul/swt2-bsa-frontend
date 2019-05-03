@@ -10,13 +10,13 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
   tableConfig: {
     columns: [
       {
-        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.WETTKAMPFTYPID',
-        propertyName:   'wettkampftypid',
+        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.NAME',
+        propertyName:   'name',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.NAME',
-        propertyName:   'name',
+        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.WETTKAMPFTYPID',
+        propertyName:   'wettkampfTypId',
         width:          20,
       },
       {
@@ -26,12 +26,12 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
       },
       {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.MELDEDEADLINE',
-        propertyName:   'meldedeadline',
+        propertyName:   'meldeDeadline',
         width:          20,
       },
       {
         translationKey:   'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.LIGALEITERMAIL',
-        propertyName:     'ligaLeiterMail',
+        propertyName:     'ligaleiterID',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING
