@@ -23,6 +23,8 @@ import {NOTIFICATION_DELETE_VEREINE} from '@verwaltung/components';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {BenutzerDataProviderService} from '@verwaltung/services/benutzer-data-provider.service';
 import {BenutzerDO} from '@verwaltung/types/benutzer-do.class';
+import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
+import {UserProfileDTO} from '@user/types/model/user-profile-dto.class';
 
 @Component({
   selector: 'bla-vereine',
@@ -40,7 +42,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public rows: TableRow[];
   private selectedVereinsId : number;
 
-  constructor(private vereinDataProvider: VereinDataProviderService, private mannschaftsDataProvider: DsbMannschaftDataProviderService, private router: Router) {
+  constructor(private vereinDataProvider: VereinDataProviderService, private userDataProvider: UserProfileDataProviderService, private mannschaftsDataProvider: DsbMannschaftDataProviderService, private router: Router) {
     super();
   }
 
@@ -91,7 +93,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private loadTableRows() {
     this.loading = true;
 
-    this.mannschaftsDataProvider.findAllByVereinsId(107)
+    this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
         .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsFailure(response));
     this.loading = false;
