@@ -1,0 +1,37 @@
+<bla-col-layout>
+  <bla-selectionlist (onFocus)="onLeftFocus($event)"
+                     (onSelect)="onLeftItemSelect($event)"
+                     [id]="idLeftList"
+                     [items]="leftItemList"
+                     [multipleSelections]="multipleSelections"
+                     [optionFieldSelector]="fieldSelector"
+                     style="width: 40%; height: 100%">
+
+  </bla-selectionlist>
+
+  <div class="shift-buttons">
+    <div class="shift-button">
+      <bla-button (onClick)="onLeftToRight()"
+                  [disabled]="!isLeftSelected()"
+                  [id]="getButtonId(idLeftList)">
+        <fa-icon icon="angle-right"></fa-icon>
+      </bla-button>
+    </div>
+    <div class="shift-button">
+      <bla-button (onClick)="onRightToLeft()"
+                  [disabled]="!rightSelected"
+                  [id]="getButtonId(idRightList)">
+        <fa-icon icon="angle-left"></fa-icon>
+      </bla-button>
+    </div>
+  </div>
+
+  <bla-selectionlist (onFocus)="onRightFocus($event)"
+                     (onSelect)="onRightItemSelect($event)"
+                     [id]="idRightList"
+                     [items]="rightItemList"
+                     [multipleSelections]="multipleSelections"
+                     [optionFieldSelector]="fieldSelector"
+                     style="width: 40%; height: 100%">
+  </bla-selectionlist>
+</bla-col-layout>

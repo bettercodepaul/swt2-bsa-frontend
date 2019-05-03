@@ -2,5 +2,5 @@ export const environment = {
   production:     true,
   showLabel: false,
   label: 'PROD',
-  backendBaseUrl: 'http://localhost:8080'
+  backendBaseUrl: 'http://localhost:9000'
 };
