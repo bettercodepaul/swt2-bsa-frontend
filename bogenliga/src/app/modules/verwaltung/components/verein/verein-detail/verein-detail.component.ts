@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {ButtonType, CommonComponent, toTableRows} from '../../../../shared/components';
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {
   Notification,
@@ -17,8 +17,10 @@ import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {VereinDO} from '../../../types/verein-do.class';
-import {VEREIN_DETAIL_CONFIG} from './verein-detail.config';
+import {VEREIN_DETAIL_CONFIG, VEREIN_DETAIL_TABLE_CONFIG} from './verein-detail.config';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -36,6 +38,8 @@ const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
 export class VereinDetailComponent extends CommonComponent implements OnInit {
   public regionType = 'KREIS';
   public config = VEREIN_DETAIL_CONFIG;
+  public config_table = VEREIN_DETAIL_TABLE_CONFIG;
+  public rows: TableRow[];
   public ButtonType = ButtonType;
   public currentVerein: VereinDO = new VereinDO();
   public currentRegion: RegionDO = new RegionDO();
@@ -53,6 +57,8 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadTableRows();
+
     this.loading = true;
 
     this.notificationService.discardNotification();
@@ -72,16 +78,17 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         }
       }
     });
-  }
-
-  public onView(): void {
-    this.navigateToDetailDialog();
 
   }
 
-  private navigateToDetailDialog() {
-    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id + '/' + 'add');
-  }
+  //public onView(): void {
+  //this.navigateToDetailDialog();
+//
+ // }
+
+  //private navigateToDetailDialog() {
+   // this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id + '/' + 'add');
+ // }
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
@@ -197,6 +204,14 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
     this.notificationService.showNotification(notification);
   }
+  public onView(versionedDataObject: VersionedDataObject): void {
+    this.navigateToDetailDialog(versionedDataObject);
+
+  }
+
+  public onEdit(versionedDataObject: VersionedDataObject): void {
+    this.navigateToDetailDialog(versionedDataObject);
+  }
 
   public entityExists(): boolean {
     return this.currentVerein.id >= 0;
@@ -283,5 +298,26 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.currentRegion = this.regionen[0]; // Set first element of object as selected.
 
     this.loading = false;
+  }
+
+  private loadTableRows() {
+    this.loading = true;
+
+    this.vereinProvider.findAll()
+        .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
+  }
+  private handleLoadTableRowsFailure(response: BogenligaResponse<VereinDTO[]>): void {
+    this.rows = [];
+    this.loading = false;
+  }
+
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<VereinDTO[]>): void {
+    this.rows = []; // reset array to ensure change detection
+    this.rows = toTableRows(response.payload);
+    this.loading = false;
+  }
+  private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
+    this.router.navigateByUrl('/verwaltung/vereine/' + versionedDataObject.id);
   }
 }

@@ -79,13 +79,6 @@
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
 
-        <bla-button *ngIf="entityExists()"
-                    [id]="'vereinSaveButton'"
-                    [disabled]="!vereineForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onView()">
-          {{ 'MANAGEMENT.MANNSCHFT_DETAIL.FORM.ADD' | translate }}
-        </bla-button>
 
 
         <bla-button *ngIf="!entityExists()"
@@ -112,5 +105,15 @@
       </div>
     </div>
   </form>
+  <h5 *ngIf="entityExists()"> Mannschaftsübersicht</h5>
+<bla-data-table [config]="config_table"
+                *ngIf="entityExists()"
+               [rows]="rows"
+               [loading]="loading"
+               (onViewClicked)="onView($event)"
+               (onEditClicked)="onEdit($event)"
+               (onDeleteClicked)="onDelete($event)">
+  </bla-data-table>
+
 
 </bla-common-dialog>

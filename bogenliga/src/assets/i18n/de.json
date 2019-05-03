@@ -443,6 +443,13 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "MANNSCHAFTSNAME": "Name",
+          "DISZIPLIN": "Disziplin"
+        }
+      },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Verein löschen",
