@@ -580,6 +580,48 @@
         "DELETE": "Löschen"
       }
     },
+    "VERANSTALTUNG_NEU": {
+      "TITLE": "VERANSTALTUNG - Neuanlage",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Name",
+          "PLACEHOLDER": "Bitte einen Namen als Veranstaltungsnamen eingeben",
+          "ERROR": "Bitte einen gültigen Namen eingeben."
+        },
+        "WETTKAMPFTYP": {
+          "LABEL": "Wettkampftyp",
+          "PLACEHOLDER": "Bitte Wettkampftyp auswählen",
+          "ERROR": "Bitte einen gültigen Wettkampftyp auswählen"
+        },
+        "SPORTJAHR": {
+          "LABEL": "Sportjahr",
+          "PLACEHOLDER": "Bitte ein Sportjahr auswählen",
+          "ERROR": "Bitte ein gültiges Sportjahr auswählen"
+        },
+        "MELDEDEADLINE": {
+          "LABEL": "Meldedeadline",
+          "PLACEHOLDER": "Bitte ein Datum auswählen",
+          "ERROR": "Bitte ein gültiges Datum auswählen"
+        },
+        "LIGALEITER": {
+          "LABEL": "Ligaleiter",
+          "PLACEHOLDER": "Bitte einen Ligaleiter auswählen",
+          "ERROR": "Bitte einen gültigen Ligaleiter auswählen"
+        },
+        "UEBERGEORDNETE_LIGA": {
+          "LABEL": "Übergeordnete Liga",
+          "PLACEHOLDER": "Bitte übergeordnete Liga auswählen",
+          "ERROR": "Bitte eine gültige Liga auswählen"
+        },
+        "SAVE": "Speichern"
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich gespeichert."
+        }
+      }
+    },
     "BENUTZER": {
       "TITLE": "Benutzer - Übersicht",
       "TABLE": {
