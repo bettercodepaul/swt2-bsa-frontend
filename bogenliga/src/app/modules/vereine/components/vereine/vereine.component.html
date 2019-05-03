@@ -7,7 +7,7 @@
 
       <bla-quicksearch-list [items]="vereine"
                             [optionFieldSelector]="'name'"
-                            [loading]="isLoading()"
+                            [loading]="loading"
                             (onSelect)="onSelect($event)"
                             [multipleSelections]="!multipleSelections"
                             selectionListHeight="15em"
