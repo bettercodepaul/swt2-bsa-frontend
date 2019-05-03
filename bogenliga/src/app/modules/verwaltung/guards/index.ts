@@ -11,5 +11,6 @@ export * from './verein-overview.guard';
 export * from './liga-detail.guard';
 export * from './liga-overview.guard';
 export * from './veranstaltung-detail.guard';
+export * from './veranstaltung-neu.guard';
 export * from './veranstaltung-overview.guard';
 
