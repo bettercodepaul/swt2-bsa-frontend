@@ -481,6 +481,19 @@
         }
       }
     },
+    "MANNSCHAFT_DETAIL": {
+      "TITLE": "Mannschaft - Deatils",
+      "FORM": {
+        "MANNSCHAFT_NUMMER": {
+          "LABEL": "Mannschaft-Nummer",
+          "PLACEHOLDER": "Bitte eine Nummer eingeben",
+          "ERROR": "Bitte eine gültige Nummer eingeben"
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      }
+    },
     "DSBMITGLIEDER_DETAIL": {
       "TITLE": "DSB Mitglied - Details",
       "FORM": {

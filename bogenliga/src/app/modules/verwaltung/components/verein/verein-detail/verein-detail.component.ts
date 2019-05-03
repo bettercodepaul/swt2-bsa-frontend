@@ -21,6 +21,8 @@ import {VEREIN_DETAIL_CONFIG, VEREIN_DETAIL_TABLE_CONFIG} from './verein-detail.
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -50,6 +52,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
   constructor(private vereinProvider: VereinDataProviderService,
               private regionProvider: RegionDataProviderService,
+              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -57,7 +60,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadTableRows();
+
 
     this.loading = true;
 
@@ -75,6 +78,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
           this.saveLoading = false;
         } else {
           this.loadById(params[ID_PATH_PARAM]);
+          this.loadTableRows(params[ID_PATH_PARAM]);
         }
       }
     });
@@ -300,24 +304,24 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.loading = false;
   }
 
-  private loadTableRows() {
+  private loadTableRows(id : number) {
     this.loading = true;
 
-    this.vereinProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
+    this.mannschaftsDataProvider.findAllByVereinsId(id)
+        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
-  private handleLoadTableRowsFailure(response: BogenligaResponse<VereinDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<VereinDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;
   }
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/vereine/' + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id + '/' + versionedDataObject.id);
   }
 }

@@ -17,6 +17,7 @@ import {VereinDO} from '../../../../types/verein-do.class';
 import {MANNSCHAFT_DETAIL_CONFIG} from './mannschaft-detail.config';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {__values} from 'tslib';
 
 
 const ID_PATH_PARAM = 'id';
@@ -50,6 +51,8 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   ngOnInit() {
     this.loading = true;
+
+    this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path));
 
     this.notificationService.discardNotification();
 
@@ -193,17 +196,32 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleFailure(response));
   }
 
+  private loadVereinById(id: number) {
+    this.vereinProvider.findById(id)
+        .then((response: BogenligaResponse<VereinDO>) => this.handleVereinSuccess(response))
+        .catch((response: BogenligaResponse<VereinDO>) => this.handleVereinFailure(response));
+  }
+
 
   private handleSuccess(response: BogenligaResponse<DsbMannschaftDO>) {
     this.currentMannschaft = response.payload;
     this.loading = false;
-
-    //this.currentRegion = this.regionen.filter((region) => region.id === this.currentMannschaft.regionId)[0];
   }
 
   private handleFailure(response: BogenligaResponse<DsbMannschaftDO>) {
     this.loading = false;
   }
+
+  private handleVereinSuccess(response: BogenligaResponse<VereinDO>) {
+    this.currentVerein = response.payload;
+    this.loading = false;
+  }
+
+  private handleVereinFailure(response: BogenligaResponse<VereinDO>) {
+    this.loading = false;
+  }
+
+
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 

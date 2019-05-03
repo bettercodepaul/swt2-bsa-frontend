@@ -14,7 +14,7 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig ={
     columns: [
       {
         translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.MANNSCHAFTSNAME',
-        propertyName:   'mannschaftsname',
+        propertyName:   'nummer',
         width:          20,
       },
       {
