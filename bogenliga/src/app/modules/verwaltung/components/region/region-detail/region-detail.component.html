@@ -22,7 +22,6 @@
                [(ngModel)]="currentRegion.regionName"
                [class.is-invalid]="regionName.invalid && !regionName.untouched"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.PLACEHOLDER' | translate }}">
-
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.ERROR' | translate }}
         </div>
@@ -53,20 +52,22 @@
       </div>
     </div>
 
-    <!-- REGION ID -->
+    <!-- REGION TYP -->
     <div class="form-group row">
-      <label for="vereinRegion"
+      <label for="regionTyp"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <select class="form-control"
-                id="vereinRegion"
-                name="vereinRegion"
-                #vereinRegion="ngModel"
-                [(ngModel)]="currentRegion">
-          <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
+                id="regionTyp"
+                name="regionTyp"
+                [(ngModel)]="currentRegion.regionTyp">
+          <option>Bundesverband</option>
+          <option>Landesverband</option>
+          <option>Bezirk</option>
+          <option>Kreis</option>
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -74,19 +75,18 @@
       </div>
     </div>
 
-    <!-- REGION SUPERORDINATE -->
+    <!-- REGION UEBERGEORDNET -->
     <div class="form-group row">
-      <label for="vereinRegion"
+      <label for="regionUebergeordnet"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <select class="form-control"
-                id="regionSuper"
-                name="vereinRegion"
-                #vereinRegion="ngModel"
-                [(ngModel)]="currentRegion">
+                id="regionUebergeordnet"
+                name="regionUebergeordnet"
+                [(ngModel)]="currentRegion.regionUebergeordnet">
           <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
         </select>
         <div class="invalid-feedback">

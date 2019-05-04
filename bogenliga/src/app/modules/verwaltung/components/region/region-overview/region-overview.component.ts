@@ -63,8 +63,8 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
       userAction:       NotificationUserAction.PENDING
     };
 
-    // muss wieder einkommentiert werden, deleteById existiert noch nicht, muss also implementiert werden
-    /*this.notificationService.observeNotification(NOTIFICATION_DELETE_REGIONEN + id)
+
+   this.notificationService.observeNotification(NOTIFICATION_DELETE_REGIONEN + id)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.regionDataProvider.deleteById(id)
@@ -72,7 +72,7 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           }
         });
-    */
+
     this.notificationService.showNotification(notification);
 
   }
