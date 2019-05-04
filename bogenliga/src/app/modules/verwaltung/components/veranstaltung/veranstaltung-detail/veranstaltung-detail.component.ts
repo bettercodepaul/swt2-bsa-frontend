@@ -38,10 +38,14 @@ const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 export class VeranstaltungDetailComponent extends CommonComponent implements OnInit {
   public config = VERANSTALTUNG_DETAIL_CONFIG;
   public ButtonType = ButtonType;
+
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
   public currentUbergeordneteVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public allUebergeordnete: Array<VeranstaltungDO> = [new VeranstaltungDO()];
+
+  public currentWettkampftypName: VeranstaltungDO = new VeranstaltungDO();
+  public allWettkampftypName: Array<VeranstaltungDO> = [new VeranstaltungDO()];
 
 
   public currentUser: UserProfileDO = new UserProfileDO();
@@ -74,6 +78,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
           this.loadUebergeordnete(); // additional Request for all 'veranstaltung' to get all uebergeordnete
 
           this.loadUsers();
+
+          this.loadWettkampftypNames();
 
           this.loading = false;
           this.deleteLoading = false;
@@ -233,6 +239,12 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
 
   }
+  private loadWettkampftypNames() {
+    this.veranstaltungDataProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleWettkampftypNameResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleWettkampftypNameResponseArrayFailure(response));
+
+  }
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
@@ -322,6 +334,22 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   private handleUebergeordnetResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     this.allUebergeordnete = [];
+    this.loading = false;
+  }
+
+  private handleWettkampftypNameResponseArraySuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    this.allWettkampftypName= [];
+    this.allWettkampftypName = response.payload;
+    if (this.id === 'add') {
+      this.currentWettkampftypName = this.allWettkampftypName[0];
+    } else {
+      // this.currentUbergeordneteVeranstaltung = this.allUebergeordnete.filter((uebergeordnet) => uebergeordnet.id === this.currentVeranstaltung.veranstaltungUebergeordnetId)[0];
+    }
+    this.loading = false;
+  }
+
+  private handleWettkampftypNameResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
+    this.allWettkampftypName = [];
     this.loading = false;
   }
 
