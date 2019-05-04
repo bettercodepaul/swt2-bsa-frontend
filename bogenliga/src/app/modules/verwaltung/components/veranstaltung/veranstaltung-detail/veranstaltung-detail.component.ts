@@ -18,10 +18,12 @@ import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
-import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
-import {RegionDO} from '../../../types/region-do.class';
 import {VERANSTALTUNG_DETAIL_CONFIG} from './veranstaltung-detail.config';
+
+import {WettkampftypDataProviderService} from '../../../services/wettkampftyp-data-provider.service';
+import {WettkampftypDO} from '../../../../verwaltung/types/wettkampftyp-do.class';
+import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkampftyp-dto.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -44,8 +46,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public currentUbergeordneteVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public allUebergeordnete: Array<VeranstaltungDO> = [new VeranstaltungDO()];
 
-  public currentWettkampftypName: VeranstaltungDO = new VeranstaltungDO();
-  public allWettkampftypName: Array<VeranstaltungDO> = [new VeranstaltungDO()];
+  public currentWettkampftypName: WettkampftypDO = new WettkampftypDO();
+  public allWettkampftypName: Array<WettkampftypDO> = [new WettkampftypDO()];
 
 
   public currentUser: UserProfileDO = new UserProfileDO();
