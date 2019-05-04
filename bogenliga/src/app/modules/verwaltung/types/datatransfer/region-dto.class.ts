@@ -9,6 +9,8 @@ export class RegionDTO implements DataTransferObject {
   regionTyp: string;
   regionUebergeordnet: number;
 
+  regionUebergeordnetAsName: string;
+
   static copyFrom(optional: {
     id?: number,
     name?: string,
@@ -29,6 +31,8 @@ export class RegionDTO implements DataTransferObject {
     } else {
       copy.regionUebergeordnet = null;
     }
+
+    copy.regionUebergeordnetAsName = '';
 
     copy.regionName = optional.name || '';
     copy.regionKuerzel = optional.kuerzel || '';

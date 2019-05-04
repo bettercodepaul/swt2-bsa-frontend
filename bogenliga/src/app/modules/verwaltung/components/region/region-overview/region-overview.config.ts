@@ -24,7 +24,7 @@ export const REGION_OVERVIEW_CONFIG: OverviewDialogConfig = {
       },
       {
         translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.REGION_SUPERORDINATE',
-        propertyName:   'regionUebergeordnet',
+        propertyName:   'regionUebergeordnetAsName',
         width:          20,
       }
     ],
