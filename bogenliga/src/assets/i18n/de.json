@@ -532,6 +532,7 @@
           "ID": "ID",
           "NAME": "Veranstaltung Name",
           "WETTKAMPFTYPID": "Wetkampftyp Id",
+          "WETTKAMPFTYPNAME": "Wetkampftyp Name",
           "SPORTJAHR": "Sportjahr",
           "MELDEDEADLINE": "Meldedeadline",
           "LIGALEITERID": "Ligaleiter ID",
@@ -562,6 +563,11 @@
 
         "WETTKAMPFTYPID": {
           "LABEL": "Wettkampftyp",
+          "PLACEHOLDER": "Bitte geben Sie einen Wettkampftyp für die Veranstaltung ein",
+          "ERROR": "Bitte geben Sie einen gültigen Wettkampftyp an"
+        },
+        "WETTKAMPFTYPNAME": {
+          "LABEL": "Wettkampftyp Name",
           "PLACEHOLDER": "Bitte geben Sie einen Wettkampftyp für die Veranstaltung ein",
           "ERROR": "Bitte geben Sie einen gültigen Wettkampftyp an"
         },

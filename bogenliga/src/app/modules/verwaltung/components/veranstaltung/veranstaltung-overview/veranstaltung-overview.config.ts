@@ -15,8 +15,8 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.WETTKAMPFTYPID',
-        propertyName:   'wettkampfTypId',
+        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.WETTKAMPFTYPNAME',
+        propertyName:   'wettkampftypName',
         width:          20,
       },
       {
@@ -31,7 +31,7 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
       },
       {
         translationKey:   'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.LIGALEITERMAIL',
-        propertyName:     'ligaleiterID',
+        propertyName:     'ligaleiterEmail',
         width:            7,
         type:             TableColumnType.NUMBER,
         currentSortOrder: TableColumnSortOrder.ASCENDING

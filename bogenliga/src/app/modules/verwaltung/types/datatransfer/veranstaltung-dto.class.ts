@@ -9,6 +9,8 @@ export class VeranstaltungDTO implements DataTransferObject {
   meldeDeadline: string;
   ligaleiterID: number;
   version: number;
+  ligaleiterEmail: string;
+  wettkampftypName: string;
 
   static copyFrom(optional: {
     id?: number,
@@ -17,6 +19,8 @@ export class VeranstaltungDTO implements DataTransferObject {
     sportjahr?: number,
     meldeDeadline?: string,
     ligaleiterID?: number,
+    ligaleiterEmail?: string,
+    wettkampftypName?: string,
 
     version?: number
   } = {}): VeranstaltungDTO {
@@ -48,6 +52,8 @@ export class VeranstaltungDTO implements DataTransferObject {
 
     copy.name = optional.name || '';
     copy.meldeDeadline = optional.meldeDeadline || '';
+    copy.ligaleiterEmail = optional.ligaleiterEmail || '';
+    copy.wettkampftypName = optional.wettkampftypName || '';
 
 
     return copy;
