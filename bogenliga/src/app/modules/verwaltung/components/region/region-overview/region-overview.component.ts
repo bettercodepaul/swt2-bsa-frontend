@@ -16,6 +16,8 @@ import {
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {REGION_OVERVIEW_CONFIG} from './region-overview.config';
+import {RegionDO} from '@verwaltung/types/region-do.class';
+import {HttpErrorResponse} from '@angular/common/http';
 
 export const NOTIFICATION_DELETE_REGIONEN = 'region_overview_delete';
 
@@ -97,7 +99,19 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
   private handleLoadTableRowsSuccess(response: BogenligaResponse<RegionDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
+    this.translateRegionIdToRegionName();
     this.loading = false;
+  }
+
+  private translateRegionIdToRegionName(){
+    this.rows.forEach((row)=> {
+      let tempId:number = (row.payload as RegionDO).regionUebergeordnet;
+      if(tempId !=null){
+        this.regionDataProvider.findById(tempId)
+            .then((response: BogenligaResponse<RegionDO>) =>
+            {(row.payload as RegionDO).regionUebergeordnetAsName = response.payload.regionName;})
+            .catch((error: HttpErrorResponse) => {console.log(error);})
+      }});
   }
 
 }
