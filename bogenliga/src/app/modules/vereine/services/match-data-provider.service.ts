@@ -10,7 +10,6 @@ import {
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/match-mapper';
-import {MatchDTO} from '@vereine/types/datatransfer/match-dto.class';
 import {MatchDO} from '@vereine/types/match-do.class';
 
 @Injectable({

@@ -1,13 +1,6 @@
 import {DataTransferObject} from '@shared/data-provider';
 
 export class MatchDTO implements DataTransferObject {
-  // id: number;
-  // version: number;
-  // name: string;
-  //
-  // identifier: string;
-  // regionId: number;
-  // regionName: string;
 
   nr: number;
   id: number;
