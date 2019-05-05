@@ -535,6 +535,7 @@
           "WETTKAMPFTYPNAME": "Wetkampftyp Name",
           "SPORTJAHR": "Sportjahr",
           "MELDEDEADLINE": "Meldedeadline",
+          "LIGA": "Liga",
           "LIGALEITERID": "Ligaleiter ID",
           "LIGALEITERMAIL": "Ligaleiter Mail"
         }
@@ -576,6 +577,12 @@
           "PLACEHOLDER": "Bitte geben Sie ein Datum für die Meldedeadline ein",
           "ERROR": "Bitte geben Sie ein gültiges Datum ein"
         },
+
+        "LIGA": {
+          "LABEL": "Liga",
+          "PLACEHOLDER": "Wählen Sie eine Liga",
+          "ERROR": "Bitte wählen Sie eine gültige Liga"
+        },
         "LIGALEITER_MAIL": {
           "LABEL": "Email des Ligaleiters",
           "PLACEHOLDER": "Wählen Sie einen Ligaleiter",
@@ -614,9 +621,9 @@
           "PLACEHOLDER": "Bitte einen Ligaleiter auswählen",
           "ERROR": "Bitte einen gültigen Ligaleiter auswählen"
         },
-        "UEBERGEORDNETE_LIGA": {
-          "LABEL": "Übergeordnete Liga",
-          "PLACEHOLDER": "Bitte übergeordnete Liga auswählen",
+        "LIGA": {
+          "LABEL": "Liga",
+          "PLACEHOLDER": "Bitte eine Liga auswählen",
           "ERROR": "Bitte eine gültige Liga auswählen"
         },
         "SAVE": "Speichern"
