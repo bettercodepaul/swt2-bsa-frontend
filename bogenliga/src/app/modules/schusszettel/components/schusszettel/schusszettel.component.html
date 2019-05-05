@@ -1,227 +1,396 @@
-<div class="wettkaempfe"
-     class="container">
-  <div class="match"><h1>{{match1.matchNr}} Match</h1></div>
-  <div class="mannschaften">
-    <h2>Mannschaft 1</h2>
-    <h2>gegen</h2>
-    <h2>Mannschaft 2</h2>
+<div class="wettkaempfe container">
 
-  </div>
+<!-- match1 -->
+  <div class="match1">
 
-  <div class="small_Table">
-    <table id="punktetabelle"
-           class="table table-hover table-responsive thead-light table-striped"
-           style="width:100%">
-      <tr>
-        <td>
-          <label for="1.SchützePktT1">1.S.Pkt</label>
-          <input myNumberOnly
-                 type="text"
-                 name="1.SchützePkt"
-                 id="1.SchützePktT1"
-                 [value]="sum1"
-                 readonly>
-        </td>
-        <td>
-          <label for="2.SchützePktT1">2.S.Pkt</label>
-          <input myNumberOnly
-                 type="string"
-                 name="2.SchützePkt"
-                 id="2.SchützePktT1"
-                 [value]="sum2"
-                 readonly>
-        </td>
-        <td>
-          <label for="3.SchützePktT1">3.S.Pkt</label>
-          <input myNumberOnly
-                 type="string"
-                 name="3.SchützePkt"
-                 id="3.SchützePktT1"
-                 [value]="sum3"
-                 readonly>
-        </td>
-        <td>
-          <label for="4.SchützePktT1">4.S.Pkt</label>
-          <input myNumberOnly
-                 type="string"
-                 name="4.SchützePkt"
-                 id="4.SchützePktT1"
-                 [value]="sum4"
-                 readonly>
-        </td>
-        <td>
-          <label for="5.SchützePktT1">5.S.Pkt</label>
-          <input myNumberOnly
-                 type="string"
-                 name="5.SchützePkt"
-                 id="5.SchützePktT1"
-                 [value]="sum5"
-                 readonly>
-        </td>
-        <td>
-          <label for="summeSchützeT1">Summe S.pkt</label>
-          <input myNumberOnly
-                 type="string"
-                 name="summeSchütze"
-                 id="summeSchützeT1"
-                 [value]="match1.satzpunkte"
-                 readonly>
-        </td>
-        <td>
-          <label for="matchpunkteT1">Matchpkte</label>
-          <input myNumberOnly
-                 type="string"
-                 name="matchpunkte"
-                 id="matchpunkteT1"
-                 [value]="match1.matchpunkte"
-                 readonly>
-        </td>
-      </tr>
-      <!--      <tr>-->
-      <!--        <td><input myNumberOnly-->
-      <!--                   type="string"-->
-      <!--                   name="1.SchützePkt"-->
-      <!--                   id="1.SchützePktT2"-->
-      <!--                   [(ngModel)]="InputsArray[7]"-->
-      <!--                   readonly></td>-->
-      <!--        <td><input myNumberOnly-->
-      <!--                   type="string"-->
-      <!--                   name="2.SchützePkt"-->
-      <!--                   id="2.SchützePktT2"-->
-      <!--                   [(ngModel)]="InputsArray[8]"-->
-      <!--                   readonly></td>-->
-      <!--        <td><input myNumberOnly-->
-      <!--                   type="string"-->
-      <!--                   name="3.SchützePkt"-->
-      <!--                   id="3.SchützePktT2"-->
-      <!--                   [(ngModel)]="InputsArray[9]"-->
-      <!--                   readonly></td>-->
-      <!--        <td><input myNumberOnly-->
-      <!--                   type="string"-->
-      <!--                   name="4.SchützePkt"-->
-      <!--                   id="4.SchützePktT2"-->
-      <!--                   [(ngModel)]="InputsArray[10]"-->
-      <!--                   readonly></td>-->
-      <!--        <td><input myNumberOnly-->
-      <!--                   type="string"-->
-      <!--                   name="5.SchützePkt"-->
-      <!--                   id="5.SchützePktT2"-->
-      <!--                   [(ngModel)]="InputsArray[11]"-->
-      <!--                   readonly></td>-->
-      <!--        <td><input myNumberOnly-->
-      <!--                   type="string"-->
-      <!--                   name="summeSchütze"-->
-      <!--                   id="summeSchützeT2"-->
-      <!--                   [(ngModel)]="InputsArray[12]"-->
-      <!--                   readonly></td>-->
-      <!--        <td><input myNumberOnly-->
-      <!--                   type="string"-->
-      <!--                   name="matchpunkte"-->
-      <!--                   id="matchpunkteT2"-->
-      <!--                   [(ngModel)]="InputsArray[13]"-->
-      <!--                   readonly></td>-->
-      <!--      </tr>-->
+    <div class="match">
+      <h1>Mannschaft 1</h1>
+      <h2>{{match1.matchNr}}. Match</h2>
+    </div>
 
-    </table>
+    <div class="mannschaften">
+      <h3>Mannschaft 1</h3>
+      <h3>gegen</h3>
+      <h3>Mannschaft 2</h3>
+    </div>
 
-  </div>
-
-  <div class="bigTable">
-    <table id="schusstabelle"
-           class="table table-hover table-responsive thead-light table-striped"
-           style="width:100%">
-      <thead>
-      <tr>
-        <th rowspan="2">Schuetze</th>
-        <th colspan="2">1. Satz / Pfeile</th>
-        <th colspan="2">2. Satz / Pfeile</th>
-        <th colspan="2">3. Satz / Pfeile</th>
-        <th colspan="2">4. Satz / Pfeile</th>
-        <th colspan="2">5. Satz / Pfeile</th>
-      </tr>
-      <tr>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-        <th>pf. 1</th>
-        <th>pf. 2</th>
-      </tr>
-      </thead>
-      <ng-template ngFor
-                   let-schuetze
-                   [ngForOf]="match1.schuetzen"
-                   let-i="index">
+    <div class="small_Table">
+      <table id="punktetabelle"
+             class="table table-responsive thead-light table-striped"
+             style="width:100%">
         <tr>
           <td>
-            <input myNumberOnly
-                   type="string"
-                   [value]="i+1"
+            <label>1.S.Pkt</label>
+            <input type="text"
+                   [value]="match1.sumSatz1"
                    readonly>
           </td>
-          <ng-template ngFor
-                       let-passe
-                       [ngForOf]="schuetze"
-                       let-j="index">
-            <td>
-              <input myNumberOnly
-                     type="string"
-                     [ngModel]="passe.ringzahlPfeil1"
-                     (ngModelChange)="onChange($event, i, j, 1)">
-            </td>
-            <td>
-              <input myNumberOnly
-                     type="string"
-                     [ngModel]="passe.ringzahlPfeil2"
-                     (ngModelChange)="onChange($event, i, j, 2)">
-            </td>
-          </ng-template>
+          <td>
+            <label>2.S.Pkt</label>
+            <input type="string"
+                   [value]="match1.sumSatz2"
+                   readonly>
+          </td>
+          <td>
+            <label>3.S.Pkt</label>
+            <input type="string"
+                   [value]="match1.sumSatz3"
+                   readonly>
+          </td>
+          <td>
+            <label>4.S.Pkt</label>
+            <input type="string"
+                   [value]="match1.sumSatz4"
+                   readonly>
+          </td>
+          <td>
+            <label>5.S.Pkt</label>
+            <input type="string"
+                   id="5.SchützePktT1"
+                   [value]="match1.sumSatz5"
+                   readonly>
+          </td>
+          <td>
+            <label>Summe S.pkt</label>
+            <input type="string"
+                   [value]="match1.satzpunkte"
+                   readonly>
+          </td>
+          <td>
+            <label>Matchpkte</label>
+            <input type="string"
+                   [value]="match1.matchpunkte"
+                   readonly>
+          </td>
         </tr>
-        <tr *ngIf="i >= match1.schuetzen.length - 1">
-          <td></td>
-          <ng-template ngFor
-                       let-passe
-                       [ngForOf]="schuetze"
-                       let-j="index">
-            <td>Summe</td>
-            <td *ngIf="j == 0">
-              <input myNumberOnly
-                     type="number"
-                     [value]="sum1"
-                     readonly>
-            </td>
-            <td *ngIf="j == 1">
-              <input myNumberOnly
-                     type="number"
-                     [value]="sum2"
-                     readonly>
-            </td>
-            <td *ngIf="j == 2">
-              <input myNumberOnly
-                     type="number"
-                     [value]="sum3"
-                     readonly>
-            </td>
-            <td *ngIf="j == 3">
-              <input myNumberOnly
-                     type="number"
-                     [value]="sum4"
-                     readonly>
-            </td>
-            <td *ngIf="j == 4">
-              <input myNumberOnly
-                     type="number"
-                     [value]="sum5"
-                     readonly>
-            </td>
-          </ng-template>
+        <tr>
+          <td>
+            <input type="text"
+                   [value]="match2.sumSatz1"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.sumSatz2"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.sumSatz3"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.sumSatz4"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.sumSatz5"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.satzpunkte"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.matchpunkte"
+                   readonly>
+          </td>
         </tr>
-      </ng-template>
-    </table>
+      </table>
+    </div>
+
+    <div class="bigTable">
+      <table id="schusstabelle"
+             class="table table-hover table-responsive thead-light table-striped"
+             style="width:100%">
+        <thead>
+        <tr>
+          <th rowspan="2">Schuetze</th>
+          <th colspan="2">1. Satz / Pfeile</th>
+          <th colspan="2">2. Satz / Pfeile</th>
+          <th colspan="2">3. Satz / Pfeile</th>
+          <th colspan="2">4. Satz / Pfeile</th>
+          <th colspan="2">5. Satz / Pfeile</th>
+        </tr>
+        <tr>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+        </tr>
+        </thead>
+        <ng-template ngFor
+                     let-schuetze
+                     [ngForOf]="match1.schuetzen"
+                     let-i="index">
+          <tr>
+            <td>
+              <input type="string"
+                     [value]="i+1"
+                     readonly>
+            </td>
+            <ng-template ngFor
+                         let-passe
+                         [ngForOf]="schuetze"
+                         let-j="index">
+              <td>
+                <input myNumberOnly
+                       type="string"
+                       [ngModel]="passe.ringzahlPfeil1"
+                       (ngModelChange)="onChange($event, 1, i, j, 1)">
+              </td>
+              <td>
+                <input myNumberOnly
+                       type="string"
+                       [ngModel]="passe.ringzahlPfeil2"
+                       (ngModelChange)="onChange($event, 1, i, j, 2)">
+              </td>
+            </ng-template>
+          </tr>
+          <tr *ngIf="i >= match1.schuetzen.length - 1">
+            <td></td>
+            <ng-template ngFor
+                         let-passe
+                         [ngForOf]="schuetze"
+                         let-j="index">
+              <td>Summe</td>
+              <td *ngIf="j == 0">
+                <input type="number"
+                       [value]="match1.sumSatz1"
+                       readonly>
+              </td>
+              <td *ngIf="j == 1">
+                <input type="number"
+                       [value]="match1.sumSatz2"
+                       readonly>
+              </td>
+              <td *ngIf="j == 2">
+                <input type="number"
+                       [value]="match1.sumSatz3"
+                       readonly>
+              </td>
+              <td *ngIf="j == 3">
+                <input type="number"
+                       [value]="match1.sumSatz4"
+                       readonly>
+              </td>
+              <td *ngIf="j == 4">
+                <input type="number"
+                       [value]="match1.sumSatz5"
+                       readonly>
+              </td>
+            </ng-template>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
 
   </div>
+
+  <!-- match2 -->
+  <div class="match2">
+
+    <div class="match">
+      <h1>Mannschaft 2</h1>
+      <h2>{{match2.matchNr}}. Match</h2>
+    </div>
+
+    <div class="mannschaften">
+      <h3>Mannschaft 1</h3>
+      <h3>gegen</h3>
+      <h3>Mannschaft 2</h3>
+    </div>
+
+    <div class="small_Table">
+      <table
+        class="table table-responsive thead-light table-striped"
+        style="width:100%">
+        <tr>
+          <td>
+            <label>1.S.Pkt</label>
+            <input type="text"
+                   [value]="match1.sumSatz1"
+                   readonly>
+          </td>
+          <td>
+            <label>2.S.Pkt</label>
+            <input type="string"
+                   [value]="match1.sumSatz2"
+                   readonly>
+          </td>
+          <td>
+            <label>3.S.Pkt</label>
+            <input type="string"
+                   [value]="match1.sumSatz3"
+                   readonly>
+          </td>
+          <td>
+            <label>4.S.Pkt</label>
+            <input type="string"
+                   [value]="match1.sumSatz4"
+                   readonly>
+          </td>
+          <td>
+            <label>5.S.Pkt</label>
+            <input type="string"
+                   [value]="match1.sumSatz5"
+                   readonly>
+          </td>
+          <td>
+            <label>Summe S.pkt</label>
+            <input type="string"
+                   [value]="match1.satzpunkte"
+                   readonly>
+          </td>
+          <td>
+            <label>Matchpkte</label>
+            <input type="string"
+                   [value]="match1.matchpunkte"
+                   readonly>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text"
+                   [value]="match2.sumSatz1"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.sumSatz2"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.sumSatz3"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.sumSatz4"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.sumSatz5"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.satzpunkte"
+                   readonly>
+          </td>
+          <td>
+            <input type="string"
+                   [value]="match2.matchpunkte"
+                   readonly>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="bigTable">
+      <table
+        class="table table-hover table-responsive thead-light table-striped"
+        style="width:100%">
+        <thead>
+        <tr>
+          <th rowspan="2">Schuetze</th>
+          <th colspan="2">1. Satz / Pfeile</th>
+          <th colspan="2">2. Satz / Pfeile</th>
+          <th colspan="2">3. Satz / Pfeile</th>
+          <th colspan="2">4. Satz / Pfeile</th>
+          <th colspan="2">5. Satz / Pfeile</th>
+        </tr>
+        <tr>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+          <th>pf. 1</th>
+          <th>pf. 2</th>
+        </tr>
+        </thead>
+        <ng-template ngFor
+                     let-schuetze
+                     [ngForOf]="match2.schuetzen"
+                     let-i="index">
+          <tr>
+            <td>
+              <input type="string"
+                     [value]="i+4"
+                     readonly>
+            </td>
+            <ng-template ngFor
+                         let-passe
+                         [ngForOf]="schuetze"
+                         let-j="index">
+              <td>
+                <input myNumberOnly
+                       type="string"
+                       [ngModel]="passe.ringzahlPfeil1"
+                       (ngModelChange)="onChange($event, 2, i, j, 1)">
+              </td>
+              <td>
+                <input myNumberOnly
+                       type="string"
+                       [ngModel]="passe.ringzahlPfeil2"
+                       (ngModelChange)="onChange($event, 2, i, j, 2)">
+              </td>
+            </ng-template>
+          </tr>
+          <tr *ngIf="i >= match2.schuetzen.length - 1">
+            <td></td>
+            <ng-template ngFor
+                         let-passe
+                         [ngForOf]="schuetze"
+                         let-j="index">
+              <td>Summe</td>
+              <td *ngIf="j == 0">
+                <input type="number"
+                       [value]="match2.sumSatz1"
+                       readonly>
+              </td>
+              <td *ngIf="j == 1">
+                <input type="number"
+                       [value]="match2.sumSatz2"
+                       readonly>
+              </td>
+              <td *ngIf="j == 2">
+                <input type="number"
+                       [value]="match2.sumSatz3"
+                       readonly>
+              </td>
+              <td *ngIf="j == 3">
+                <input type="number"
+                       [value]="match2.sumSatz4"
+                       readonly>
+              </td>
+              <td *ngIf="j == 4">
+                <input type="number"
+                       [value]="match2.sumSatz5"
+                       readonly>
+              </td>
+            </ng-template>
+          </tr>
+        </ng-template>
+      </table>
+    </div>
+
+  </div>
+
 </div>
