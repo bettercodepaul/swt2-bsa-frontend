@@ -5,7 +5,7 @@
         class="horizontal-form half-page"
         #regionenForm="ngForm">
 
-    <!-- ID -->
+    <!-- REGION NAME -->
     <div class="form-group row">
       <label for="regionName"
              class="col-sm-3 col-form-label">
@@ -28,9 +28,9 @@
       </div>
     </div>
 
-    <!-- Identifier -->
+    <!-- REGION CONTRACTION -->
     <div class="form-group row">
-      <label for="vereinIdentifier"
+      <label for="regionContraction"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.LABEL' | translate }}</span>
         <span> *</span>
@@ -39,11 +39,11 @@
         <input type="text"
                class="form-control"
                required
-               id="vereinIdentifier"
-               name="vereinIdentifier"
-               #vereinIdentifier="ngModel"
-               [(ngModel)]="currentRegion.id"
-               [class.is-invalid]="vereinIdentifier.invalid && !vereinIdentifier.untouched"
+               id="regionContraction"
+               name="regionContraction"
+               #regionContraction="ngModel"
+               [(ngModel)]="currentRegion.regionKuerzel"
+               [class.is-invalid]="regionContraction.invalid && !regionContraction.untouched"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -68,6 +68,7 @@
           <option>Landesverband</option>
           <option>Bezirk</option>
           <option>Kreis</option>
+          <!--<option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionTyp}}</option> -->
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -87,7 +88,7 @@
                 id="regionUebergeordnet"
                 name="regionUebergeordnet"
                 [(ngModel)]="currentRegion.regionUebergeordnet">
-          <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
+          <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionUebergeordnet}}</option>
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.ERROR' | translate }}
