@@ -27,6 +27,8 @@ export class SchusszettelComponent implements OnInit {
     this.match1.sumSatz3 = 0;
     this.match1.sumSatz4 = 0;
     this.match1.sumSatz5 = 0;
+    this.match1.satzpunkte = 0;
+    this.match1.matchpunkte = 0;
 
     this.match2 = new MatchDO();
     this.match2.matchNr = 1;
@@ -35,6 +37,8 @@ export class SchusszettelComponent implements OnInit {
     this.match2.sumSatz3 = 0;
     this.match2.sumSatz4 = 0;
     this.match2.sumSatz5 = 0;
+    this.match2.satzpunkte = 0;
+    this.match2.matchpunkte = 0;
 
     for (let i = 0; i < 3; i++) {
       this.match1.schuetzen.push(new Array<PasseDO>());
@@ -78,30 +82,55 @@ export class SchusszettelComponent implements OnInit {
           break;
       }
     }
-    if (satzNr == 0) {
-      match.sumSatz1 = match.schuetzen[0][0].ringzahlPfeil1 + match.schuetzen[0][0].ringzahlPfeil2
-        + match.schuetzen[1][0].ringzahlPfeil1 + match.schuetzen[1][0].ringzahlPfeil2
-        + match.schuetzen[2][0].ringzahlPfeil1 + match.schuetzen[2][0].ringzahlPfeil2;
+    switch (satzNr) {
+      case 0:
+        match.sumSatz1 = this.getSumSatz(match, satzNr);
+        break;
+      case 1:
+        match.sumSatz2 = this.getSumSatz(match, satzNr);
+        break;
+      case 2:
+        match.sumSatz3 = this.getSumSatz(match, satzNr);
+        break;
+      case 3:
+        match.sumSatz4 = this.getSumSatz(match, satzNr);
+        break;
+      case 4:
+        match.sumSatz5 = this.getSumSatz(match, satzNr);
+        break;
     }
-    if (satzNr == 1) {
-      match.sumSatz2 = match.schuetzen[0][1].ringzahlPfeil1 + match.schuetzen[0][1].ringzahlPfeil2
-        + match.schuetzen[1][1].ringzahlPfeil1 + match.schuetzen[1][1].ringzahlPfeil2
-        + match.schuetzen[2][1].ringzahlPfeil1 + match.schuetzen[2][1].ringzahlPfeil2;
+    this.setPoints();
+
+  }
+
+  private getSumSatz(match: MatchDO, satzNr: number): number {
+    return match.schuetzen[0][satzNr].ringzahlPfeil1 + match.schuetzen[0][satzNr].ringzahlPfeil2
+      + match.schuetzen[1][satzNr].ringzahlPfeil1 + match.schuetzen[1][satzNr].ringzahlPfeil2
+      + match.schuetzen[2][satzNr].ringzahlPfeil1 + match.schuetzen[2][satzNr].ringzahlPfeil2;
+  }
+
+  private setPoints() {
+    let counterMatch1 = 0;
+    let counterMatch2 = 0;
+    for (let i = 0; i < 5; i++) {
+      if (this.match1['sumSatz' + (i+1)] > this.match2['sumSatz' + (i+1)]) {
+        counterMatch1++;
+      } else if (this.match1['sumSatz' + (i+1)] < this.match2['sumSatz' + (i+1)]) {
+        counterMatch2++;
+      }
     }
-    if (satzNr == 2) {
-      match.sumSatz3 = match.schuetzen[0][2].ringzahlPfeil1 + match.schuetzen[0][2].ringzahlPfeil2
-        + match.schuetzen[1][2].ringzahlPfeil1 + match.schuetzen[1][2].ringzahlPfeil2
-        + match.schuetzen[2][2].ringzahlPfeil1 + match.schuetzen[2][2].ringzahlPfeil2;
-    }
-    if (satzNr == 3) {
-      match.sumSatz4 = match.schuetzen[0][3].ringzahlPfeil1 + match.schuetzen[0][3].ringzahlPfeil2
-        + match.schuetzen[1][3].ringzahlPfeil1 + match.schuetzen[1][3].ringzahlPfeil2
-        + match.schuetzen[2][3].ringzahlPfeil1 + match.schuetzen[2][3].ringzahlPfeil2;
-    }
-    if (satzNr == 4) {
-      match.sumSatz5 = match.schuetzen[0][4].ringzahlPfeil1 + match.schuetzen[0][4].ringzahlPfeil2
-        + match.schuetzen[1][4].ringzahlPfeil1 + match.schuetzen[1][4].ringzahlPfeil2
-        + match.schuetzen[2][4].ringzahlPfeil1 + match.schuetzen[2][4].ringzahlPfeil2;
+    let draws = 5 - (counterMatch1 + counterMatch2);
+    this.match1.satzpunkte = (counterMatch1 * 2) + draws;
+    this.match2.satzpunkte = (counterMatch2 * 2) + draws;
+    if (this.match1.satzpunkte > this.match2.satzpunkte) {
+      this.match1.matchpunkte = 2;
+      this.match2.matchpunkte = 0;
+    } else if (this.match1.satzpunkte < this.match2.satzpunkte) {
+      this.match1.matchpunkte = 0;
+      this.match2.matchpunkte = 2;
+    } else {
+      this.match1.matchpunkte = 1;
+      this.match2.matchpunkte = 1;
     }
   }
 }
