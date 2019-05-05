@@ -98,32 +98,22 @@
         <span> *</span>
       </label>
       <div class="col-sm-9" id = "veranstaltungMeldedeadline">
-        <bla-col-layout>
-        <bla-dropdown-menu
-          name = "Tag"
-          [items] = "getVersionedDataObjects()"
-          [optionFieldSelector]="'name'"
-          [selectedItemId]="1"
-          (onSelect)="onSelect($event)"
-          style="width: 33%">
-        </bla-dropdown-menu>
-        <bla-dropdown-menu
-          name = "monat"
-          [items] = "getVersionedDataObjects()"
-          [optionFieldSelector]="'name'"
-          [selectedItemId]="1"
-          (onSelect)="onSelect($event)"
-          style="width: 33%">
-        </bla-dropdown-menu>
-        <bla-dropdown-menu
-          name = "Jahr"
-          [items] = "getVersionedDataObjects()"
-          [optionFieldSelector]="'name'"
-          [selectedItemId]="1"
-          (onSelect)="onSelect($event)"
-          style="width: 33%">
-        </bla-dropdown-menu>
-        </bla-col-layout>
+        <input type="name"
+               class="layout-datum"
+               id="Tag"
+               name="veranstaltungName"
+               pattern= "^[0-9]+$"
+               placeholder="Tag">
+        <input type="name"
+               class="layout-datum"
+               name="Monat"
+               pattern= "^[0-9+$"
+               placeholder="Monat">
+        <input type="name"
+               class="layout-datum"
+               name="Jahr"
+               pattern= "^[0-9]+$"
+               placeholder="Jahr">
       <!--  <input type="name"
                class="form-control"
                required
@@ -138,6 +128,37 @@
       </div>
     </div>
 
+    <!-- Liga -->
+    <div class="form-group row">
+      <label for="veranstaltungLiga"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_NEU.FORM.LIGA.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <bla-dropdown-menu
+          id = "veranstaltungLiga"
+          name = "veranstaltungLiga"
+          [items] = "allLiga"
+          [optionFieldSelector] = "'name'"
+          (onSelect) = "onSelect($event)">
+        </bla-dropdown-menu>
+
+        <!--<input type="password"
+               class="form-control"
+               required
+               id="veranstaltungLigaleiter"
+               name="veranstaltungLigaleiter"
+               #veranstaltungVerifyPassword="ngModel"
+               [(ngModel)]="verifyCredentials.password"
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_NEU.FORM.LIGALEITER.PLACEHOLDER' | translate }}">-->
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_NEU.FORM.LIGALEITER.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
     <!-- Ligaleiter -->
     <div class="form-group row">
       <label for="veranstaltungLigaleiter"
@@ -149,10 +170,9 @@
         <bla-dropdown-menu
           id = "veranstaltungLigaleiter"
           name = "veranstaltungLigaleiter"
-          [items] = "getVersionedDataObjects()"
-          [optionFieldSelector] = "'name'"
+          [items] = "allUser.reverse()"
+          [optionFieldSelector] = "'email'"
           (onSelect) = "onSelect($event)">
-
         </bla-dropdown-menu>
 
         <!--<input type="password"
