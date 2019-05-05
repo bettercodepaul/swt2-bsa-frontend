@@ -41,7 +41,7 @@
         <bla-dropdown-menu
           id = "veranstaltungWettkampftyp"
           name = "veranstaltungWettkampftyp"
-          [items] = "getVersionedDataObjects()"
+          [items] = "allWettkampftyp"
           [optionFieldSelector]="'name'"
           (onSelect)="onSelect($event)">
         </bla-dropdown-menu>
@@ -69,21 +69,12 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <bla-dropdown-menu
-          id = "veranstaltungSportjahr"
-          name = "veranstaltungSportjahr"
-          [items] = "getVersionedDataObjects()"
-          [optionFieldSelector]="'name'"
-          (onSelect)="onSelect($event)">
-        </bla-dropdown-menu>
-       <!-- <input type="password"
+
+       <input type="name"
                class="form-control"
-               required
                id="veranstaltungSportjahr"
                name="veranstaltungSportjahr"
-               #veranstaltungVerifyPassword="ngModel"
-               [(ngModel)]="verifyCredentials.password"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_NEU.FORM.SPORTJAHR.PLACEHOLDER' | translate }}">-->
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_NEU.FORM.SPORTJAHR.PLACEHOLDER' | translate }}">
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VERANSTALTUNG_NEU.FORM.SPORTJAHR.ERROR' | translate }}
         </div>

@@ -608,8 +608,8 @@
         },
         "SPORTJAHR": {
           "LABEL": "Sportjahr",
-          "PLACEHOLDER": "Bitte ein Sportjahr auswählen",
-          "ERROR": "Bitte ein gültiges Sportjahr auswählen"
+          "PLACEHOLDER": "Bitte ein Sportjahr eingeben",
+          "ERROR": "Bitte ein gültiges Sportjahr eingeben"
         },
         "MELDEDEADLINE": {
           "LABEL": "Meldedeadline",
