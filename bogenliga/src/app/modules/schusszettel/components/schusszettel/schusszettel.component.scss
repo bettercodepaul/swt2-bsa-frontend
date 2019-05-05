@@ -47,14 +47,27 @@ label {
 
 .small_Table{
   float: right;
-  margin-right: 10%;
 }
+
 .match {
   margin-left: 5%;
   margin-right: 5%;
   float: left;
 }
+
 .mannschaften {
-  margin-right: 5%;
   float: left;
+}
+
+.match1 {
+  margin-top: 20px;
+}
+
+.match2 {
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.match1, .match2 {
+  border: 2px solid rgba(0,0,0,.1);
 }

@@ -10,6 +10,12 @@ export class MatchDO implements DataObject {
   begegnung: number;
   scheibennummer: number;
 
+  sumSatz1: number;
+  sumSatz2: number;
+  sumSatz3: number;
+  sumSatz4: number;
+  sumSatz5: number;
+
   matchpunkte: number;
   satzpunkte: number;
 
