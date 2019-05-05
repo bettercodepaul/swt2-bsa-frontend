@@ -1,8 +1,8 @@
 <div class="wettkaempfe"
      class="container">
-  <div class="match">   <h1>X. Match</h1></div>
+  <div class="match"><h1>{{match1.matchNr}} Match</h1></div>
   <div class="mannschaften">
-    <h2>Mannschaft 1 </h2>
+    <h2>Mannschaft 1</h2>
     <h2>gegen</h2>
     <h2>Mannschaft 2</h2>
 
@@ -15,38 +15,112 @@
       <tr>
         <td>
           <label for="1.SchützePktT1">1.S.Pkt</label>
-          <input myNumberOnly type="text" name="1.SchützePkt" id="1.SchützePktT1" [(ngModel)]="InputsArray[0]" readonly>
+          <input myNumberOnly
+                 type="text"
+                 name="1.SchützePkt"
+                 id="1.SchützePktT1"
+                 [value]="sum1"
+                 readonly>
         </td>
         <td>
           <label for="2.SchützePktT1">2.S.Pkt</label>
-          <input myNumberOnly type="string" name="2.SchützePkt" id="2.SchützePktT1" [(ngModel)]="InputsArray[1]" readonly>
-        </td>        <td>
-        <label for="3.SchützePktT1">3.S.Pkt</label>
-        <input myNumberOnly type="string" name="3.SchützePkt" id="3.SchützePktT1" [(ngModel)]="InputsArray[2]" readonly>
-      </td>        <td>
-        <label for="4.SchützePktT1">4.S.Pkt</label>
-        <input myNumberOnly type="string" name="4.SchützePkt" id="4.SchützePktT1" [(ngModel)]="InputsArray[3]" readonly>
-      </td>        <td>
-        <label for="5.SchützePktT1">5.S.Pkt</label>
-        <input myNumberOnly type="string" name="5.SchützePkt" id="5.SchützePktT1" [(ngModel)]="InputsArray[4]" readonly>
-      </td>        <td>
-        <label for="summeSchützeT1">Summe S.pkt</label>
-        <input myNumberOnly type="string" name="summeSchütze" id="summeSchützeT1" [(ngModel)]="InputsArray[5]" readonly>
-      </td>
+          <input myNumberOnly
+                 type="string"
+                 name="2.SchützePkt"
+                 id="2.SchützePktT1"
+                 [value]="sum2"
+                 readonly>
+        </td>
+        <td>
+          <label for="3.SchützePktT1">3.S.Pkt</label>
+          <input myNumberOnly
+                 type="string"
+                 name="3.SchützePkt"
+                 id="3.SchützePktT1"
+                 [value]="sum3"
+                 readonly>
+        </td>
+        <td>
+          <label for="4.SchützePktT1">4.S.Pkt</label>
+          <input myNumberOnly
+                 type="string"
+                 name="4.SchützePkt"
+                 id="4.SchützePktT1"
+                 [value]="sum4"
+                 readonly>
+        </td>
+        <td>
+          <label for="5.SchützePktT1">5.S.Pkt</label>
+          <input myNumberOnly
+                 type="string"
+                 name="5.SchützePkt"
+                 id="5.SchützePktT1"
+                 [value]="sum5"
+                 readonly>
+        </td>
+        <td>
+          <label for="summeSchützeT1">Summe S.pkt</label>
+          <input myNumberOnly
+                 type="string"
+                 name="summeSchütze"
+                 id="summeSchützeT1"
+                 [value]="match1.satzpunkte"
+                 readonly>
+        </td>
         <td>
           <label for="matchpunkteT1">Matchpkte</label>
-          <input myNumberOnly type="string" name="matchpunkte" id="matchpunkteT1" [(ngModel)]="InputsArray[6]" readonly>
+          <input myNumberOnly
+                 type="string"
+                 name="matchpunkte"
+                 id="matchpunkteT1"
+                 [value]="match1.matchpunkte"
+                 readonly>
         </td>
       </tr>
-      <tr>
-        <td><input myNumberOnly type="string" name="1.SchützePkt" id="1.SchützePktT2" [(ngModel)]="InputsArray[7]" readonly></td>
-        <td><input myNumberOnly type="string" name="2.SchützePkt" id="2.SchützePktT2" [(ngModel)]="InputsArray[8]" readonly></td>
-        <td><input myNumberOnly type="string" name="3.SchützePkt" id="3.SchützePktT2" [(ngModel)]="InputsArray[9]" readonly></td>
-        <td><input myNumberOnly type="string" name="4.SchützePkt" id="4.SchützePktT2" [(ngModel)]="InputsArray[10]" readonly></td>
-        <td><input myNumberOnly type="string" name="5.SchützePkt" id="5.SchützePktT2" [(ngModel)]="InputsArray[11]" readonly></td>
-        <td><input myNumberOnly type="string" name="summeSchütze" id="summeSchützeT2" [(ngModel)]="InputsArray[12]" readonly></td>
-        <td><input myNumberOnly type="string" name="matchpunkte" id="matchpunkteT2" [(ngModel)]="InputsArray[13]" readonly></td>
-      </tr>
+      <!--      <tr>-->
+      <!--        <td><input myNumberOnly-->
+      <!--                   type="string"-->
+      <!--                   name="1.SchützePkt"-->
+      <!--                   id="1.SchützePktT2"-->
+      <!--                   [(ngModel)]="InputsArray[7]"-->
+      <!--                   readonly></td>-->
+      <!--        <td><input myNumberOnly-->
+      <!--                   type="string"-->
+      <!--                   name="2.SchützePkt"-->
+      <!--                   id="2.SchützePktT2"-->
+      <!--                   [(ngModel)]="InputsArray[8]"-->
+      <!--                   readonly></td>-->
+      <!--        <td><input myNumberOnly-->
+      <!--                   type="string"-->
+      <!--                   name="3.SchützePkt"-->
+      <!--                   id="3.SchützePktT2"-->
+      <!--                   [(ngModel)]="InputsArray[9]"-->
+      <!--                   readonly></td>-->
+      <!--        <td><input myNumberOnly-->
+      <!--                   type="string"-->
+      <!--                   name="4.SchützePkt"-->
+      <!--                   id="4.SchützePktT2"-->
+      <!--                   [(ngModel)]="InputsArray[10]"-->
+      <!--                   readonly></td>-->
+      <!--        <td><input myNumberOnly-->
+      <!--                   type="string"-->
+      <!--                   name="5.SchützePkt"-->
+      <!--                   id="5.SchützePktT2"-->
+      <!--                   [(ngModel)]="InputsArray[11]"-->
+      <!--                   readonly></td>-->
+      <!--        <td><input myNumberOnly-->
+      <!--                   type="string"-->
+      <!--                   name="summeSchütze"-->
+      <!--                   id="summeSchützeT2"-->
+      <!--                   [(ngModel)]="InputsArray[12]"-->
+      <!--                   readonly></td>-->
+      <!--        <td><input myNumberOnly-->
+      <!--                   type="string"-->
+      <!--                   name="matchpunkte"-->
+      <!--                   id="matchpunkteT2"-->
+      <!--                   [(ngModel)]="InputsArray[13]"-->
+      <!--                   readonly></td>-->
+      <!--      </tr>-->
 
     </table>
 
@@ -78,61 +152,76 @@
         <th>pf. 2</th>
       </tr>
       </thead>
-      <tr>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[14]"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[15]" (ngModelChange)="onChange($event, 15)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[16]" (ngModelChange)="onChange($event, 16)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[17]" (ngModelChange)="onChange($event, 17)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[18]" (ngModelChange)="onChange($event, 18)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[19]" (ngModelChange)="onChange($event, 19)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[20]" (ngModelChange)="onChange($event, 20)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[21]" (ngModelChange)="onChange($event, 21)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[22]" (ngModelChange)="onChange($event, 22)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[23]" (ngModelChange)="onChange($event, 23)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[24]" (ngModelChange)="onChange($event, 24)"></td>
-        <td>S</td>
-      </tr>
-      <tr>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[25]"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[26]" (ngModelChange)="onChange($event, 26)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[27]" (ngModelChange)="onChange($event, 27)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[28]" (ngModelChange)="onChange($event, 28)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[29]" (ngModelChange)="onChange($event, 29)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[30]" (ngModelChange)="onChange($event, 30)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[31]" (ngModelChange)="onChange($event, 31)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[32]" (ngModelChange)="onChange($event, 32)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[33]" (ngModelChange)="onChange($event, 33)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[34]" (ngModelChange)="onChange($event, 34)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[35]" (ngModelChange)="onChange($event, 35)"></td>
-        <td>S</td>
-      </tr>
-      <tr>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[36]"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[37]" (ngModelChange)="onChange($event, 37)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[38]" (ngModelChange)="onChange($event, 38)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[39]" (ngModelChange)="onChange($event, 39)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[40]" (ngModelChange)="onChange($event, 40)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[41]" (ngModelChange)="onChange($event, 41)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[42]" (ngModelChange)="onChange($event, 42)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[43]" (ngModelChange)="onChange($event, 43)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[44]" (ngModelChange)="onChange($event, 44)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[45]" (ngModelChange)="onChange($event, 45)"></td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[46]" (ngModelChange)="onChange($event, 46)"></td>
-        <td>S</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>Summe</td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[47]" readonly></td>
-        <td>Summe</td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[48]" readonly></td>
-        <td>Summe</td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[49]" readonly></td>
-        <td>Summe</td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[50]" readonly></td>
-        <td>Summe</td>
-        <td><input myNumberOnly type="string" [(ngModel)]="InputsArray[51]" readonly></td>
-      </tr>
+      <ng-template ngFor
+                   let-schuetze
+                   [ngForOf]="match1.schuetzen"
+                   let-i="index">
+        <tr>
+          <td>
+            <input myNumberOnly
+                   type="string"
+                   [value]="i+1"
+                   readonly>
+          </td>
+          <ng-template ngFor
+                       let-passe
+                       [ngForOf]="schuetze"
+                       let-j="index">
+            <td>
+              <input myNumberOnly
+                     type="string"
+                     [ngModel]="passe.ringzahlPfeil1"
+                     (ngModelChange)="onChange($event, i, j, 1)">
+            </td>
+            <td>
+              <input myNumberOnly
+                     type="string"
+                     [ngModel]="passe.ringzahlPfeil2"
+                     (ngModelChange)="onChange($event, i, j, 2)">
+            </td>
+          </ng-template>
+        </tr>
+        <tr *ngIf="i >= match1.schuetzen.length - 1">
+          <td></td>
+          <ng-template ngFor
+                       let-passe
+                       [ngForOf]="schuetze"
+                       let-j="index">
+            <td>Summe</td>
+            <td *ngIf="j == 0">
+              <input myNumberOnly
+                     type="number"
+                     [value]="sum1"
+                     readonly>
+            </td>
+            <td *ngIf="j == 1">
+              <input myNumberOnly
+                     type="number"
+                     [value]="sum2"
+                     readonly>
+            </td>
+            <td *ngIf="j == 2">
+              <input myNumberOnly
+                     type="number"
+                     [value]="sum3"
+                     readonly>
+            </td>
+            <td *ngIf="j == 3">
+              <input myNumberOnly
+                     type="number"
+                     [value]="sum4"
+                     readonly>
+            </td>
+            <td *ngIf="j == 4">
+              <input myNumberOnly
+                     type="number"
+                     [value]="sum5"
+                     readonly>
+            </td>
+          </ng-template>
+        </tr>
+      </ng-template>
     </table>
+
   </div>
 </div>

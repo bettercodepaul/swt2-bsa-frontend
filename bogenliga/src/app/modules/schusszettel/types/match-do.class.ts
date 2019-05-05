@@ -1,4 +1,5 @@
 import {DataObject} from '@shared/data-provider';
+import {PasseDO} from './passe-do.class';
 
 export class MatchDO implements DataObject {
   id: number;
@@ -12,6 +13,8 @@ export class MatchDO implements DataObject {
   matchpunkte: number;
   satzpunkte: number;
 
+  schuetzen: Array<Array<PasseDO>>;
+
   constructor(id?: number,
     mannschaftId?: number,
     wettkampfId?: number,
@@ -19,7 +22,8 @@ export class MatchDO implements DataObject {
     begegnung?: number,
     scheibennummer?: number,
     matchpunkte?: number,
-    satzpunkte?: number) {
+    satzpunkte?: number,
+    schuetzen?: Array<Array<PasseDO>>) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
@@ -28,7 +32,7 @@ export class MatchDO implements DataObject {
     this.scheibennummer = !!scheibennummer ? scheibennummer : null;
     this.matchpunkte = !!matchpunkte ? matchpunkte : null;
     this.satzpunkte = !!satzpunkte ? satzpunkte : null;
+    this.schuetzen = !!schuetzen ? schuetzen : [];
   }
 }
-
 
