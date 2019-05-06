@@ -59,6 +59,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public id;
 
   constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
+    private wettkampftypDataProvider: WettkampftypDataProviderService,
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private router: Router,
@@ -76,6 +77,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
           this.currentVeranstaltung = new VeranstaltungDO();
+          this.currentWettkampftypName = new WettkampftypDO();
 
           this.loadUebergeordnete(); // additional Request for all 'veranstaltung' to get all uebergeordnete
 
@@ -242,9 +244,9 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   }
   private loadWettkampftypNames() {
-    this.veranstaltungDataProvider.findAll()
-        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleWettkampftypNameResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleWettkampftypNameResponseArrayFailure(response));
+    this.wettkampftypDataProvider.findAll()
+        .then((response: BogenligaResponse<WettkampftypDO[]>) => this.handleWettkampftypNameResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<WettkampftypDTO[]>) => this.handleWettkampftypNameResponseArrayFailure(response));
 
   }
 
@@ -339,7 +341,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
-  private handleWettkampftypNameResponseArraySuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+  private handleWettkampftypNameResponseArraySuccess(response: BogenligaResponse<WettkampftypDO[]>): void {
     this.allWettkampftypName= [];
     this.allWettkampftypName = response.payload;
     if (this.id === 'add') {
@@ -350,7 +352,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
-  private handleWettkampftypNameResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
+  private handleWettkampftypNameResponseArrayFailure(response: BogenligaResponse<WettkampftypDTO[]>): void {
     this.allWettkampftypName = [];
     this.loading = false;
   }

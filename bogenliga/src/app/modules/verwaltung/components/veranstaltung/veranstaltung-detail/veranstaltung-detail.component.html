@@ -31,19 +31,19 @@
 
     <!-- WettkampftypName -->
     <div class="form-group row">
-      <label for="wettkampftypName"
+      <label for="wettkampftyp"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <select class="form-control"
-                id="wettkampftypName"
-                name="wettkampftypName"
-                #wettkampftypName="ngModel"
+                id="wettkampftyp"
+                name="wettkampftyp"
+                #wettkampftyp="ngModel"
                 [(ngModel)]="currentWettkampftypName">
-          <option [ngValue]="wettkampftypName"
-                  *ngFor="let wettkampftypName of allWettkampftypName"> {{wettkampftypName.name}}</option>
+          <option [ngValue]="wettkampftyp"
+                  *ngFor="let wettkampftyp of allWettkampftypName"> {{wettkampftyp.name}}</option>
 
           placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.PLACEHOLDER' | translate }}">
         </select>

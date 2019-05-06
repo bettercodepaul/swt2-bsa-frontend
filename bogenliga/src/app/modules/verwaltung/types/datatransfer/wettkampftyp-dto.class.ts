@@ -2,24 +2,24 @@ import {DataTransferObject} from '@shared/data-provider';
 
 export class WettkampftypDTO implements DataTransferObject {
   id: number;
-  wettkampftypName: string;
+  name: string;
   version: number;
 
   static copyFrom(optional: {
-    wettkampftypId?: number,
-    wettkampftypName?: string,
+    id?: number,
+    name?: string,
     version?: number
   } = {}): WettkampftypDTO {
     const copy = new WettkampftypDTO();
 
     // show '0' value
-    if (optional.wettkampftypId >= 0) {
-      copy.id = optional.wettkampftypId;
+    if (optional.id >= 0) {
+      copy.id = optional.id;
     } else {
       copy.id = null;
     }
 
-    copy.wettkampftypName = optional.wettkampftypName || '';
+    copy.name = optional.name || '';
 
     copy.version = optional.version || null;
 

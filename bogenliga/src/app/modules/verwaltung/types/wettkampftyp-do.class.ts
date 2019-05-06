@@ -5,5 +5,5 @@ export class WettkampftypDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  wettkampftypName: string;
+  name: string;
 }
