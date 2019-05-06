@@ -591,8 +591,14 @@
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
-      }
-    },
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Veranstaltung löschen",
+          "DESCRIPTION": "Wollen Sie die Veranstaltung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+    }
+  },
     "VERANSTALTUNG_NEU": {
       "TITLE": "VERANSTALTUNG - Neuanlage",
       "FORM": {
