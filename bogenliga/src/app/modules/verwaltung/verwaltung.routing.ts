@@ -74,10 +74,10 @@ export const VERWALTUNG_ROUTES: Routes = [
   },
   {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]},
   {
-    path: 'region',
+    path: 'regionen',
     component: RegionOverviewComponent,
     pathMatch: 'full',
     canActivate: [RegionOverviewGuard]
   },
-  {path: 'region/:id', component: RegionDetailComponent, canActivate: [RegionDetailGuard]}
+  {path: 'regionen/:id', component: RegionDetailComponent, canActivate: [RegionDetailGuard]}
 ];
