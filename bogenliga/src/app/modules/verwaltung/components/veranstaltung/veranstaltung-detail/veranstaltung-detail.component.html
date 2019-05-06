@@ -29,6 +29,8 @@
       </div>
     </div>
 
+
+
     <!-- WettkampftypName -->
     <div class="form-group row">
       <label for="wettkampftypName"
@@ -41,7 +43,9 @@
                 id="wettkampftypName"
                 name="wettkampftypName"
                 #wettkampftypName="ngModel"
-                [(ngModel)]="currentWettkampftypName">
+
+
+                [(ngModel)]="currentWettkampftypName">kampfrichter
           <option [ngValue]="wettkampftypName"
                   *ngFor="let wettkampftypName of allWettkampftypName"> {{wettkampftypName.name}}</option>
 
