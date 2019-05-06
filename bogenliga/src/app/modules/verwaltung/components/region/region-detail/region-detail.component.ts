@@ -37,6 +37,8 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public currentRegion: RegionDO = new RegionDO();
   public regionen: Array<RegionDO> = [new RegionDO()];
 
+  public possibleRegionTypes: Array<string> = ['Bundesverband','Landesverband','Bezirk','Kreis'];
+
   public deleteLoading = false;
   public saveLoading = false;
 
@@ -266,8 +268,9 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
     this.regionen = []; // reset array to ensure change detection
     this.regionen = response.payload;
-    //this.currentRegion = this.regionen[0]; // Set first element of object as selected.
-
+    //this.currentRegion = new RegionDO(); // Set first element of object as selected.
+    this.currentRegion.regionTyp = this.possibleRegionTypes[0];
+    console.log("Region is: "+this.currentRegion.regionTyp);
     this.loading = false;
   }
 }

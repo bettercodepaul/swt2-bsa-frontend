@@ -63,12 +63,10 @@
         <select class="form-control"
                 id="regionTyp"
                 name="regionTyp"
+                #regionTyp="ngModel"
                 [(ngModel)]="currentRegion.regionTyp">
-          <option>Bundesverband</option>
-          <option>Landesverband</option>
-          <option>Bezirk</option>
-          <option>Kreis</option>
-          <!--<option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionTyp}}</option> -->
+          <option *ngFor="let typ of possibleRegionTypes"> {{typ}}</option>
+          placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.SUPERORDINATE.PLACEHOLDER' | translate }}">
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
