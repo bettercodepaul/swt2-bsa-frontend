@@ -19,7 +19,7 @@ import {WettkampftypDO} from '../types/wettkampftyp-do.class';
 })
 export class WettkampftypDataProviderService extends DataProviderService {
 
-  serviceSubUrl = 'v1/competitionclass';
+  serviceSubUrl = 'v1/wettkampftyp';
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
