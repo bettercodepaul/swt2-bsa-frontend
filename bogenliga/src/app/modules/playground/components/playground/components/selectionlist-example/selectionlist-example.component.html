@@ -215,3 +215,29 @@
 
   </bla-col-layout>
 </div>
+
+
+<div class="playground-row">
+  <bla-col-layout>
+    <p class="playground-label">
+      Doppelte Auswahlliste:
+    </p>
+
+    <bla-double-selectionlist [leftItems]="getVersionedDataObjects()"
+                              [(rightItems)]="selectedRightItems"
+                              [fieldSelector]="'name'"
+                              [idLeftList]="'left'"
+                              [idRightList]="'right'"
+                              style="height: 12em">
+
+    </bla-double-selectionlist>
+
+  </bla-col-layout>
+</div>
+
+<div class="playground-row">
+  Ausgewählte Elemente auf der rechten Seite:
+  <pre><code>{{ selectedRightItems | json }}</code></pre>
+</div>
+
+
