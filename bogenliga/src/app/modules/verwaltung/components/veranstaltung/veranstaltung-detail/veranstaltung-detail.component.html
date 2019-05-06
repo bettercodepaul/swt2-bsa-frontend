@@ -41,9 +41,9 @@
                 id="wettkampftyp"
                 name="wettkampftyp"
                 #wettkampftyp="ngModel"
-                [(ngModel)]="currentWettkampftypName">
+                [(ngModel)]="currentWettkampftyp">
           <option [ngValue]="wettkampftyp"
-                  *ngFor="let wettkampftyp of allWettkampftypName"> {{wettkampftyp.name}}</option>
+                  *ngFor="let wettkampftyp of allWettkampftyp"> {{wettkampftyp.name}}</option>
 
           placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.PLACEHOLDER' | translate }}">
         </select>
