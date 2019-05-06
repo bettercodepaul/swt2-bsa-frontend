@@ -12,11 +12,9 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
-import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
 import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
-import {VereinDO} from '../../../types/verein-do.class';
 import {REGION_DETAIL_CONFIG} from './region-detail.config';
 
 
@@ -268,7 +266,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
     this.regionen = []; // reset array to ensure change detection
     this.regionen = response.payload;
-    this.currentRegion = this.regionen[0]; // Set first element of object as selected.
+    //this.currentRegion = this.regionen[0]; // Set first element of object as selected.
 
     this.loading = false;
   }

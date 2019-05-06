@@ -39,7 +39,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.DESCRIPTION',
         icon:           'sitemap',
-        route:          'region'
+        route:          'regionen'
       }]
   }
 };
