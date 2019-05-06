@@ -7,7 +7,7 @@ export class PasseDO implements DataObject {
   wettkampfId: number;
   matchNr: number;
   lfdnr: number;
-  dsbMitgliedId: number;
+  dsbMitgliedNr: number;
 
   ringzahlPfeil1: number;
   ringzahlPfeil2: number;
@@ -21,7 +21,7 @@ export class PasseDO implements DataObject {
     wettkampfId?: number,
     matchNr?: number,
     lfdnr?: number,
-    dsbMitgliedId?: number,
+    dsbMitgliedNr?: number,
     ringzahlPfeil1?: number,
     ringzahlPfeil2?: number,
     ringzahlPfeil3?: number,
@@ -33,7 +33,7 @@ export class PasseDO implements DataObject {
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
     this.matchNr = !!matchNr ? matchNr : null;
     this.lfdnr = !!lfdnr ? lfdnr : null;
-    this.dsbMitgliedId = !!dsbMitgliedId ? dsbMitgliedId : null;
+    this.dsbMitgliedNr = !!dsbMitgliedNr ? dsbMitgliedNr : null;
     this.ringzahlPfeil1 = !!ringzahlPfeil1 ? ringzahlPfeil1 : null;
     this.ringzahlPfeil2 = !!ringzahlPfeil2 ? ringzahlPfeil2 : null;
     this.ringzahlPfeil3 = !!ringzahlPfeil3 ? ringzahlPfeil3 : null;

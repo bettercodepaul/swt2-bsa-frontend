@@ -7,12 +7,23 @@ export class PasseDTO implements DataTransferObject {
   wettkampfId: number;
   matchNr: number;
   lfdnr: number;
-  dsbMitgliedId: number;
+  dsbMitgliedNr: number;
 
-  ringzahlPfeil1: number;
-  ringzahlPfeil2: number;
-  ringzahlPfeil3: number;
-  ringzahlPfeil4: number;
-  ringzahlPfeil5: number;
-  ringzahlPfeil6: number;
+  ringzahl: Array<number>;
+
+  constructor(id?: number,
+    mannschaftId?: number,
+    wettkampfId?: number,
+    matchNr?: number,
+    lfdnr?: number,
+    dsbMitgliedNr?: number,
+    ringzahl?: Array<number>) {
+    this.id = !!id ? id : null;
+    this.mannschaftId = !!mannschaftId ? mannschaftId : null;
+    this.wettkampfId = !!wettkampfId ? wettkampfId : null;
+    this.matchNr = !!matchNr ? matchNr : null;
+    this.lfdnr = !!lfdnr ? lfdnr : null;
+    this.dsbMitgliedNr = !!dsbMitgliedNr ? dsbMitgliedNr : null;
+    this.ringzahl = !!ringzahl ? ringzahl : [];
+  }
 }

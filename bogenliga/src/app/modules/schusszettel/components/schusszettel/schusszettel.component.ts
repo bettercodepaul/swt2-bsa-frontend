@@ -21,7 +21,7 @@ export class SchusszettelComponent implements OnInit {
     //initialwert schützen inputs
 
     this.match1 = new MatchDO();
-    this.match1.matchNr = 1;
+    this.match1.nr = 1;
     this.match1.sumSatz1 = 0;
     this.match1.sumSatz2 = 0;
     this.match1.sumSatz3 = 0;
@@ -31,7 +31,7 @@ export class SchusszettelComponent implements OnInit {
     this.match1.matchpunkte = 0;
 
     this.match2 = new MatchDO();
-    this.match2.matchNr = 1;
+    this.match2.nr = 1;
     this.match2.sumSatz1 = 0;
     this.match2.sumSatz2 = 0;
     this.match2.sumSatz3 = 0;
@@ -45,14 +45,14 @@ export class SchusszettelComponent implements OnInit {
       this.match2.schuetzen.push(new Array<PasseDO>());
       for (let j = 0; j < 5; j++) {
         if (i == 0) {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.matchNr, i + 1));
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.matchNr, i + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, i + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, i + 1));
         } else if (i == 1) {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.matchNr, i + 1));
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.matchNr, i + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, i + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, i + 1));
         } else {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.matchNr, i + 1));
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.matchNr, i + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, i + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, i + 1));
         }
       }
 
