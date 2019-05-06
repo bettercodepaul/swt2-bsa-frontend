@@ -6,9 +6,9 @@ export class MatchDO implements DataObject {
 
   mannschaftId: number;
   wettkampfId: number;
-  matchNr: number;
+  nr: number;
   begegnung: number;
-  scheibennummer: number;
+  scheibenNummer: number;
 
   sumSatz1: number;
   sumSatz2: number;
@@ -33,9 +33,9 @@ export class MatchDO implements DataObject {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
-    this.matchNr = !!matchNr ? matchNr : null;
+    this.nr = !!matchNr ? matchNr : null;
     this.begegnung = !!begegnung ? begegnung : null;
-    this.scheibennummer = !!scheibennummer ? scheibennummer : null;
+    this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
     this.matchpunkte = !!matchpunkte ? matchpunkte : null;
     this.satzpunkte = !!satzpunkte ? satzpunkte : null;
     this.schuetzen = !!schuetzen ? schuetzen : [];
