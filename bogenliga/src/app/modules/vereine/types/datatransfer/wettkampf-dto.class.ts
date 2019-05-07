@@ -73,7 +73,7 @@ export class WettkampfDTO implements DataTransferObject {
     }
 
     copy.datum = optional.datum || '';
-    copy.wettkampfOrt = optional.wettkampfOrt || 'test';
+    copy.wettkampfOrt = optional.wettkampfOrt || '';
     copy.wettkampfBeginn = optional.wettkampfBeginn || '';
     copy.createdAtUtc = optional.createdAtUtc || '';
 
