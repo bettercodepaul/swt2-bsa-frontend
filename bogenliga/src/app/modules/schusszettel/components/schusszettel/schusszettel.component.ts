@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MatchDO} from '../../types/match-do.class';
 import {PasseDO} from '../../types/passe-do.class';
+import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
+import {BogenligaResponse} from '@shared/data-provider';
 
 
 @Component({
@@ -13,7 +15,7 @@ export class SchusszettelComponent implements OnInit {
   match1: MatchDO;
   match2: MatchDO;
 
-  constructor() {
+  constructor(private schusszettelService: SchusszettelProviderService) {
     console.log('Schusszettel Component')
   }
 
@@ -27,8 +29,7 @@ export class SchusszettelComponent implements OnInit {
     this.match1.sumSatz3 = 0;
     this.match1.sumSatz4 = 0;
     this.match1.sumSatz5 = 0;
-    this.match1.satzpunkte = 0;
-    this.match1.matchpunkte = 0;
+    this.match1.schuetzen = [];
 
     this.match2 = new MatchDO();
     this.match2.nr = 1;
@@ -37,9 +38,22 @@ export class SchusszettelComponent implements OnInit {
     this.match2.sumSatz3 = 0;
     this.match2.sumSatz4 = 0;
     this.match2.sumSatz5 = 0;
-    this.match2.satzpunkte = 0;
-    this.match2.matchpunkte = 0;
+    this.match2.schuetzen = [];
 
+    this.initSchuetzen();
+
+    this.schusszettelService.findMatches('1021', '1022')
+        .then((data: BogenligaResponse<Array<MatchDO>>) => {
+          this.match1 = data.payload[0];
+          this.match2 = data.payload[1];
+          this.initSchuetzen();
+        }, (error) => {
+          console.log(error)
+        });
+
+  }
+
+  private initSchuetzen() {
     for (let i = 0; i < 3; i++) {
       this.match1.schuetzen.push(new Array<PasseDO>());
       this.match2.schuetzen.push(new Array<PasseDO>());
@@ -58,7 +72,6 @@ export class SchusszettelComponent implements OnInit {
 
     }
   }
-
 
   onChange(value: any, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
     let match = this['match' + matchNr];
