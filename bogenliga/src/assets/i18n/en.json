@@ -40,11 +40,7 @@
     "BOX1HEADING": "STUDENT CUP 2018",
     "BOX1CONTENT": "Be there..."
   },
-  "VEREINE": {
-    "VEREINE": {
-     "TITLE": "Clubs"
-    }
-  },
+
 
   "VEREINE": {
     "VEREINE": {
@@ -52,7 +48,8 @@
       "TABLE": {
         "HEADERS": {
           "WETTKAMPF": "Competition",
-          "MANNSCHAFT": "Team"
+          "MANNSCHAFT": "Team",
+          "VERANSTALTUNG": "Veranstaltung"
         }
       }
     }

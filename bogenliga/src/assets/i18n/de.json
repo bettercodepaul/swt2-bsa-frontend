@@ -54,7 +54,8 @@
       "TABLE": {
         "HEADERS": {
           "WETTKAMPF": "Wettkampf",
-          "MANNSCHAFT": "Mannschaft"
+          "MANNSCHAFT": "Mannschaft",
+          "VERANSTALTUNG": "Veranstaltung"
         }
       }
     }
