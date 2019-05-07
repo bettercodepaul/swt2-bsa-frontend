@@ -34,6 +34,9 @@ export class SelectionlistComponent implements OnInit, OnChanges {
    * @type {EventEmitter<VersionedDataObject>} void or the defined return value
    */
   @Output() onSelect = new EventEmitter<any>();
+
+  @Output() onFocus = new EventEmitter<boolean>();
+
   /**
    *
    * @type {number} id of the preselected item
@@ -74,14 +77,16 @@ export class SelectionlistComponent implements OnInit, OnChanges {
   }
 
   public getListSize(): number {
-
     if (this.showEmptyItemListPlaceholder()) {
-      return 1;
+      return 2;
     } else {
-      return this.items.length;
+      return this.items.length < 2 ? 2 : this.items.length;
     }
   }
 
+  public focusChanged($event): void {
+    this.onFocus.emit(true);
+  }
   public showEmptyItemListPlaceholder(): boolean {
     return isNullOrUndefined(this.items) || this.items.length === 0;
   }

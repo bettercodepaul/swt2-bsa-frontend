@@ -18,6 +18,7 @@ import {
   CommonDialogComponent,
   DataTableComponent,
   DetailDialogComponent,
+  DoubleSelectionlistComponent,
   DownloadButtonComponent,
   DropdownMenuComponent,
   GridLayoutComponent,
@@ -32,7 +33,8 @@ import {
   SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  TooltipComponent} from './components';
+  TooltipComponent
+} from './components';
 import {RestClient} from './data-provider';
 import * as LocalDataProvider from './local-data-provider/services';
 import * as SharedService from './services';
@@ -90,7 +92,8 @@ library.add(fas, far, fab); // add all icon types
     SelectionlistComponent,
     QuicksearchListComponent,
     DownloadButtonComponent,
-    SimpleOverviewDialogComponent
+    SimpleOverviewDialogComponent,
+    DoubleSelectionlistComponent
   ],
   declarations: [
     ButtonComponent,
@@ -117,7 +120,8 @@ library.add(fas, far, fab); // add all icon types
     DropdownMenuComponent,
     SelectionlistComponent,
     QuicksearchListComponent,
-    DownloadButtonComponent
+    DownloadButtonComponent,
+    DoubleSelectionlistComponent
   ]
 })
 export class SharedModule {
