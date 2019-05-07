@@ -1,0 +1,12 @@
+.shift-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.shift-button {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex: 0 0 50px;
+}
