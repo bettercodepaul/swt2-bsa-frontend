@@ -33,6 +33,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public rows: TableRow[];
   private selectedVereinsId : number;
   private remainingRequests : number = 0;
+  private remainingMannschaftsRequests: number = 0;
   private tableContent: Array<VereinTabelleDO> = [];
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
@@ -98,6 +99,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private handleFindMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     let i: number = 0;
+    this.remainingMannschaftsRequests = response.payload.length;
     if(response.payload.length <=0) {
       this.loadingTable = false;
     }
@@ -117,7 +119,9 @@ export class VereineComponent extends CommonComponent implements OnInit {
   }
 
   private handleFindWettkaempfeSuccess(response: BogenligaResponse<WettkampfDTO[]>, mannschaftsName: string): void {
+    console.log('success');
     this.remainingRequests = response.payload.length;
+    this.remainingMannschaftsRequests -= 1;
     if(response.payload.length <= 0) {
       this.loadingTable = false;
     }
@@ -126,6 +130,13 @@ export class VereineComponent extends CommonComponent implements OnInit {
       this.veranstaltungsDataProvider.findById(response.payload[i].veranstaltungsId)
           .then((response: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(response,mannschaftsName,wettkampfTag))
           .catch((response: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(response));
+    }
+    if(response.payload.length == 0){
+      let tableContentRow: VereinTabelleDO = new VereinTabelleDO("","",mannschaftsName);
+      this.tableContent.push(tableContentRow);
+    }
+    if(this.remainingMannschaftsRequests <= 0) {
+      this.rows = toTableRows(this.tableContent);
     }
 
   }
