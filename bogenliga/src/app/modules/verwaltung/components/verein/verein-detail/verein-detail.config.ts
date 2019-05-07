@@ -14,12 +14,12 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig ={
     columns: [
       {
         translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.MANNSCHAFTSNAME',
-        propertyName:   'nummer',
+        propertyName:   'name',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.DISZIPLIN',
-        propertyName:   'disziplin',
+        translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.LIGA',
+        propertyName:   'veranstaltungName',
         width:          20,
       },
     ],
