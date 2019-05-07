@@ -13,10 +13,10 @@ export class RegionDTO implements DataTransferObject {
 
   static copyFrom(optional: {
     id?: number,
-    name?: string,
-    kuerzel?: string,
-    typ?: string,
-    uebergeordnet?: number,
+    regionName?: string,
+    regionKuerzel?: string,
+    regionTyp?: string,
+    regionUebergeordnet?: number,
     version?: number
   } = {}): RegionDTO {
     const copy = new RegionDTO();
@@ -26,17 +26,17 @@ export class RegionDTO implements DataTransferObject {
       copy.id = null;
     }
 
-    if (optional.uebergeordnet >= 0) {
-      copy.regionUebergeordnet = optional.uebergeordnet;
+    if (optional.regionUebergeordnet >= 0) {
+      copy.regionUebergeordnet = optional.regionUebergeordnet;
     } else {
       copy.regionUebergeordnet = null;
     }
 
     copy.regionUebergeordnetAsName = '';
 
-    copy.regionName = optional.name || '';
-    copy.regionKuerzel = optional.kuerzel || '';
-    copy.regionTyp = optional.typ || '';
+    copy.regionName = optional.regionName || '';
+    copy.regionKuerzel = optional.regionKuerzel || '';
+    copy.regionTyp = optional.regionTyp || '';
 
     copy.version = optional.version || null;
 
