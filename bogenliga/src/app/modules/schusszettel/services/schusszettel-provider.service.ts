@@ -23,30 +23,6 @@ export class SchusszettelProviderService extends DataProviderService {
     super();
   }
 
-  //
-  // public findAll(): Promise<BogenligaResponse<PasseDO[]>> {
-  //   // return promise
-  //   // sign in success -> resolve promise
-  //   // sign in failure -> reject promise with result
-  //   return new Promise((resolve, reject) => {
-  //     this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
-  //         .then((data: VersionedDataTransferObject[]) => {
-  //
-  //           resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-  //
-  //         }, (error: HttpErrorResponse) => {
-  //
-  //           if (error.status === 0) {
-  //             reject({result: RequestResult.CONNECTION_PROBLEM});
-  //           } else {
-  //             reject({result: RequestResult.FAILURE});
-  //           }
-  //         });
-  //   });
-  // }
-  //
-  //
-
   public findMatches(match1Id: string, match2Id: string): Promise<BogenligaResponse<Array<MatchDO>>> {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<MatchDTO>>(new UriBuilder().fromPath(this.getUrl()).path(match1Id + '/' + match2Id).build())
@@ -62,7 +38,6 @@ export class SchusszettelProviderService extends DataProviderService {
           });
     });
   }
-
 
   public create(match1: MatchDO, match2: MatchDO): Promise<BogenligaResponse<Array<MatchDO>>> {
     let match1DTO = SchusszettelMapper.matchToDTO(match1);

@@ -8,21 +8,31 @@ import {PasseDO} from '../types/passe-do.class';
 export class SchusszettelMapper {
 
   static matchToDO(payload: MatchDTO): MatchDO {
+    let schuetzen = [];
+    //for (let passe of payload.passen) {
+      //todo: falls passen schon existieren -> schuetzen-array korrekt befüllen, summen für sätze bestimmen
+    //}
     return new MatchDO(payload.id,
       payload.mannschaftId,
       payload.wettkampfId,
       payload.nr,
       payload.begegnung,
       payload.scheibenNummer,
+      0,
+      0,
+      0,
+      0,
+      0,
       payload.matchpunkte,
-      payload.satzpunkte);
+      payload.satzpunkte,
+      schuetzen);
   }
 
   static matchToDTO(payload: MatchDO): MatchDTO {
     const passen = [];
     for (let i = 0; i < payload.schuetzen.length; i++) {
       for (let j = 0; j < payload.schuetzen[i].length; j++) {
-        passen.push(payload.schuetzen[i][j]);
+        passen.push(this.passeToDTO(payload.schuetzen[i][j]));
       }
     }
     return new MatchDTO(payload.id,
