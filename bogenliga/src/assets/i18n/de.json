@@ -456,6 +456,13 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "MANNSCHAFTSNAME": "Name",
+          "LIGA": "Liga"
+        }
+      },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Verein löschen",
@@ -472,6 +479,42 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Verein wurde erfolgreich gespeichert."
+        }
+      }
+    },
+    "MANNSCHAFT_DETAIL": {
+      "TITLE": "DSB Mannschaft - Details",
+      "FORM": {
+        "MANNSCHAFT_NUMMER": {
+          "LABEL": "Mannschaft-Nummer",
+          "PLACEHOLDER": "Bitte eine Nummer eingeben",
+          "ERROR": "Bitte eine gültige Nummer eingeben"
+        },
+        "MANNSCHAFT_VERANSTALTUNG": {
+          "LABEL": "Liga",
+          "PLACEHOLDER": "Bitte eine Liga auswählen",
+          "ERROR": "Bitte eine gültige Liga auswählen"
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Mannschaft löschen",
+          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Mannschaft wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Mannschaft konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Mannschaft wurde erfolgreich gespeichert."
         }
       }
     },

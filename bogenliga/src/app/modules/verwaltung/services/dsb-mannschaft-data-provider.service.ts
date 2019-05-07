@@ -45,6 +45,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
               reject({result: RequestResult.FAILURE});
             }
           });
+      /*
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload2)
         .then((data: VersionedDataTransferObject) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
@@ -57,6 +58,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
             reject({result: RequestResult.FAILURE});
           }
         });
+       */
     });
   }
 

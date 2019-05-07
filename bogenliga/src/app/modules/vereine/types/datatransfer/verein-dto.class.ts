@@ -1,7 +1,6 @@
 import {DataTransferObject} from '@shared/data-provider';
 
 export class VereinDTO implements DataTransferObject {
-
   id: number;
   version: number;
   name: string;
