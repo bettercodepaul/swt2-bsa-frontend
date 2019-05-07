@@ -46,6 +46,20 @@
     }
   },
 
+
+  "VEREINE": {
+    "VEREINE": {
+      "TITLE": "Clubs",
+      "TABLE": {
+        "HEADERS": {
+          "WETTKAMPF": "Competition",
+          "MANNSCHAFT": "Team",
+          "VERANSTALTUNG": "Veranstaltung"
+        }
+      }
+    }
+  },
+
   "NOTIFICATION": {
     "BUTTON": {
       "OK": "OK",
