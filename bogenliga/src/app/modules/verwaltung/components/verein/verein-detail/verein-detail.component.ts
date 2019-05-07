@@ -18,6 +18,7 @@ import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {VereinDO} from '../../../types/verein-do.class';
 import {VEREIN_DETAIL_CONFIG} from './verein-detail.config';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 
 const ID_PATH_PARAM = 'id';
@@ -71,6 +72,15 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         }
       }
     });
+  }
+
+  public onView(): void {
+    this.navigateToDetailDialog();
+
+  }
+
+  private navigateToDetailDialog() {
+    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id + '/' + 'add');
   }
 
   public onSave(ignore: any): void {

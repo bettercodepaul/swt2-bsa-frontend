@@ -1,30 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {VEREINE_CONFIG, VEREINE_TABLE_CONFIG} from './vereine.config';
-import {PlaygroundVersionedDataObject} from '../../../playground/components/playground/types/playground-versioned-data-object.class';
 import {isNullOrUndefined} from '@shared/functions';
 import {VereinDO} from '@vereine/types/verein-do.class';
 import {VereinDataProviderService} from '@vereine/services/verein-data-provider.service';
-import {Router} from '@angular/router';
-import {CommonComponent, showDeleteLoadingIndicatorIcon, toTableRows} from '@shared/components';
+import {CommonComponent, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-provider.service';
+import {WettkampfDTO} from '@vereine/types/datatransfer/wettkampf-dto.class';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
-import {
-  Notification,
-  NotificationOrigin,
-  NotificationSeverity,
-  NotificationType,
-  NotificationUserAction
-} from '@shared/services';
-import {NOTIFICATION_DELETE_VEREINE} from '@verwaltung/components';
-import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {BenutzerDataProviderService} from '@verwaltung/services/benutzer-data-provider.service';
-import {BenutzerDO} from '@verwaltung/types/benutzer-do.class';
-import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
-import {UserProfileDTO} from '@user/types/model/user-profile-dto.class';
+import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
+import {VeranstaltungDTO} from '@vereine/types/datatransfer/veranstaltung-dto.class';
+import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
 
 @Component({
   selector: 'bla-vereine',
@@ -38,27 +28,36 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public selectedDTOs: VereinDO[];
   public multipleSelections = true;
   private vereine : VereinDO[];
-  public loading = true;
+  public loadingVereine = true;
+  public loadingTable = false;
   public rows: TableRow[];
   private selectedVereinsId : number;
+  private remainingRequests : number = 0;
+  private tableContent: Array<VereinTabelleDO> = [];
 
-  constructor(private vereinDataProvider: VereinDataProviderService, private userDataProvider: UserProfileDataProviderService, private mannschaftsDataProvider: DsbMannschaftDataProviderService, private router: Router) {
+  constructor(private wettkampfDataProvider: WettkampfDataProviderService,
+              private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+              private vereinDataProvider: VereinDataProviderService,
+              private mannschaftsDataProvider: DsbMannschaftDataProviderService) {
     super();
   }
 
   ngOnInit() {
     this.loadVereine();
-    this.loading = false;
   }
 
+  //when a Verein gets selected from the list
   public onSelect($event: VereinDO[]): void {
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
     this.selectedVereinsId = this.selectedDTOs[0].id;
-    console.log("Selected Vereins ID= "+this.selectedVereinsId);
+    this.rows = [];
+    this.tableContent = [];
     this.loadTableRows();
   }
 
+
+  //gets used by vereine.componet.html to show the selected vereins-name
   public getSelectedDTO(): string {
     if (isNullOrUndefined(this.selectedDTOs)) {
       return '';
@@ -74,66 +73,91 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
   }
 
-  public getVersionedDataObjects(): VereinDO[] {
-    return this.vereine;
-  }
-
-  public isLoading(): boolean {
-    return this.loading;
-  }
-
+  //backend-call to get the list of vereine
   private loadVereine(): void {
-
+    this.vereine = [];
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = []; this.vereine = response.payload;})
+        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false;})
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 
 
+  //starts the backend-calls to search for the table content
   private loadTableRows() {
-    this.loading = true;
-
+    this.loadingTable = true;
     this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
-        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadTableRowsFailure(response));
-    this.loading = false;
+        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenSuccess(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenFailure(response));
    }
 
-  private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+  private handleFindMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = [];
-    this.loading = false;
+    this.loadingTable = false;
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+  private handleFindMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
-    this.rows = toTableRows(response.payload);
-    this.loading = false;
+    let i: number = 0;
+    if(response.payload.length <=0) {
+      this.loadingTable = false;
+    }
+    for(i;i< response.payload.length;i++) {
+      let mannschaftsName: string = this.selectedDTOs[0].name +" "+ response.payload[i].nummer +". Mannschaft";
+      this.wettkampfDataProvider.findAllWettkaempfeByMannschaftsId(response.payload[i].id)
+          .then((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkaempfeSuccess(response,mannschaftsName))
+          .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkaempfeFailure(response));
+
+    }
   }
+
+
+  private handleFindWettkaempfeFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
+    this.rows = [];
+    this.loadingTable = false;
+  }
+
+  private handleFindWettkaempfeSuccess(response: BogenligaResponse<WettkampfDTO[]>, mannschaftsName: string): void {
+    this.remainingRequests = response.payload.length;
+    if(response.payload.length <= 0) {
+      this.loadingTable = false;
+    }
+    for (let i: number = 0; i<response.payload.length; i++) {
+      let wettkampfTag: string = response.payload[i].wettkampfTag +". Wettkampftag";
+      this.veranstaltungsDataProvider.findById(response.payload[i].veranstaltungsId)
+          .then((response: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(response,mannschaftsName,wettkampfTag))
+          .catch((response: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(response));
+    }
+
+  }
+
+  private handleFindVeranstaltungFailure(response: BogenligaResponse<VeranstaltungDTO>): void {
+    this.rows = [];
+    this.loadingTable = false;
+  }
+
+  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>,mannschaftsName: string, wettkampfTag: string): void {
+    let tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name,wettkampfTag,mannschaftsName);
+    this.tableContent.push(tableRowContent);
+    this.remainingRequests -= 1;
+
+    //if this is the last request, put the collected content into the table
+    if(this.remainingRequests <= 0) {
+      this.rows = toTableRows(this.tableContent);
+      this.tableContent = [];
+      this.loadingTable = false;
+    }
+  }
+
 
   public onView(versionedDataObject: VersionedDataObject): void {
-    // this.navigateToDetailDialog(versionedDataObject);
+
   }
 
   public onEdit(versionedDataObject: VersionedDataObject): void {
-    // this.navigateToDetailDialog(versionedDataObject);
   }
 
-  public onDelete(versionedDataObject: VersionedDataObject): void {
-    // show loading icon
-    // const id = versionedDataObject.id;
-    //
-    // this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
-    //
-    // const notification: Notification = {
-    //   id:               NOTIFICATION_DELETE_VEREINE + id,
-    //   title:            'MANAGEMENT.VEREINE.NOTIFICATION.DELETE.TITLE',
-    //   description:      'MANAGEMENT.VEREINE.NOTIFICATION.DELETE.DESCRIPTION',
-    //   descriptionParam: '' + id,
-    //   severity:         NotificationSeverity.QUESTION,
-    //   origin:           NotificationOrigin.USER,
-    //   type:             NotificationType.YES_NO,
-    //   userAction:       NotificationUserAction.PENDING
-     };
 
+  public onDelete(versionedDataObject: VersionedDataObject): void {
+     };
 }
 
