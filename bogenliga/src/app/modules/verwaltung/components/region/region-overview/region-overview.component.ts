@@ -111,7 +111,7 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
             .then((response: BogenligaResponse<RegionDO>) => {
               (row.payload as RegionDO).regionUebergeordnetAsName = response.payload.regionName;
             })
-            .catch((error: HttpErrorResponse) => console.log(error))
+            .catch((error: HttpErrorResponse) => console.log(error));
       }
     });
   }
