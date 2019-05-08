@@ -59,7 +59,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   ngOnInit() {
     this.loading = true;
 
-    this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path));
+    this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path,10));
     this.loadVeranstaltungen();
 
     this.notificationService.discardNotification();

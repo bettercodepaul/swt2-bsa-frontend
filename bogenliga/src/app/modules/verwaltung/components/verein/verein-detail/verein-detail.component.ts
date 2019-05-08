@@ -355,7 +355,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
     this.mannschaften = response.payload;
-    this.mannschaften.forEach(mannschaft => this.addTableAttributes(mannschaft));
+    this.mannschaften.forEach((mannschaft) => this.addTableAttributes(mannschaft));
     this.rows = toTableRows(response.payload);
     this.loading = false;
   }

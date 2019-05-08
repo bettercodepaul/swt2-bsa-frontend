@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[myNumberOnly]'
+  selector: '[blamyNumberOnly]'
 })
 export class NumberOnlyDirective {
   // Allow decimal numbers and negative values and plus
@@ -20,8 +20,8 @@ export class NumberOnlyDirective {
     if (this.specialKeys.indexOf(event.key) !== -1) {
       return;
     }
-    let current: string = this.el.nativeElement.value;
-    let next: string = current.concat(event.key);
+    const current: string = this.el.nativeElement.value;
+    const next: string = current.concat(event.key);
     if (next && !String(next).match(this.regex)) {
       event.preventDefault();
     }

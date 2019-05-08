@@ -9,7 +9,7 @@ export const VEREIN_DETAIL_CONFIG: CommonDialogConfig = {
 
 
 };
-export const VEREIN_DETAIL_TABLE_CONFIG : TableConfig = {
+export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
 
     columns: [
       {
