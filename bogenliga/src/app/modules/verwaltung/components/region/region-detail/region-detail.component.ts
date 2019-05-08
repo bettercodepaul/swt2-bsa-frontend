@@ -31,7 +31,6 @@ const NOTIFICATION_UPDATE_REGION = 'region_detail_update';
   styleUrls:   ['./region-detail.component.scss']
 })
 export class RegionDetailComponent extends CommonComponent implements OnInit {
-  //public regionType = 'KREIS';
   public config = REGION_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentRegion: RegionDO = new RegionDO();
@@ -190,12 +189,6 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
         .then((response: BogenligaResponse<RegionDO>) => this.handleSuccess(response))
         .catch((response: BogenligaResponse<RegionDO>) => this.handleFailure(response));
   }
-
-  //private loadRegions(type: string) {
-  //  this.regionProvider.findAllByType(type)
-  //      .then((response: BogenligaResponse<RegionDO[]>) => this.handleResponseArraySuccess(response))
-  //      .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
-  //} -->
 
   private loadRegions() {
     this.regionProvider.findAll()
