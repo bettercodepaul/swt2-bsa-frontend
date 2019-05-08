@@ -106,11 +106,12 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
   private translateRegionIdToRegionName() {
     this.rows.forEach((row) => {
       const tempId: number = (row.payload as RegionDO).regionUebergeordnet;
-      if(tempId != null) {
+      if (tempId != null) {
         this.regionDataProvider.findById(tempId)
-            .then((response: BogenligaResponse<RegionDO>) =>
-            {(row.payload as RegionDO).regionUebergeordnetAsName = response.payload.regionName;})
-            .catch((error: HttpErrorResponse) => {console.log(error);})
+            .then((response: BogenligaResponse<RegionDO>) => {
+              (row.payload as RegionDO).regionUebergeordnetAsName = response.payload.regionName;
+            })
+            .catch((error: HttpErrorResponse) => console.log(error))
       }
     });
   }
