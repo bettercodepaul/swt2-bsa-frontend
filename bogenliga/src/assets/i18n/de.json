@@ -535,7 +535,7 @@
           "WETTKAMPFTYPNAME": "Wetkampftyp Name",
           "SPORTJAHR": "Sportjahr",
           "MELDEDEADLINE": "Meldedeadline",
-          "LIGA": "Liga",
+          "LIGANAME": "Liganame",
           "LIGALEITERID": "Ligaleiter ID",
           "LIGALEITERMAIL": "Ligaleiter Mail"
         }
@@ -578,8 +578,8 @@
           "ERROR": "Bitte geben Sie ein gültiges Datum ein"
         },
 
-        "LIGA": {
-          "LABEL": "Liga",
+        "LIGANAME": {
+          "LABEL": "Liganame",
           "PLACEHOLDER": "Wählen Sie eine Liga",
           "ERROR": "Bitte wählen Sie eine gültige Liga"
         },
@@ -627,10 +627,10 @@
           "PLACEHOLDER": "Bitte einen Ligaleiter auswählen",
           "ERROR": "Bitte einen gültigen Ligaleiter auswählen"
         },
-        "LIGA": {
-          "LABEL": "Liga",
-          "PLACEHOLDER": "Bitte eine Liga auswählen",
-          "ERROR": "Bitte eine gültige Liga auswählen"
+        "LIGANAME": {
+          "LABEL": "Liganame",
+          "PLACEHOLDER": "Bitte einen Liganamen auswählen",
+          "ERROR": "Bitte einen gültigen Liganamen auswählen"
         },
         "SAVE": "Speichern"
       },

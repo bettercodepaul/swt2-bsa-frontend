@@ -15,6 +15,11 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
         width:          20,
       },
       {
+        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.LIGANAME',
+        propertyName:   'ligaName',
+        width:          20,
+      },
+      {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.WETTKAMPFTYPNAME',
         propertyName:   'wettkampftypName',
         width:          20,
