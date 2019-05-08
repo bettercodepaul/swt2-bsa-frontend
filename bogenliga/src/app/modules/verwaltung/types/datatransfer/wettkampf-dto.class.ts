@@ -1,7 +1,7 @@
 import {DataTransferObject} from '@shared/data-provider';
 
 export class WettkampfDTO implements DataTransferObject {
-  //This maps the DTO from the Backend
+  // This maps the DTO from the Backend
   id: number;
   wettkampfDatum: string;
   wettkampfOrt: string;

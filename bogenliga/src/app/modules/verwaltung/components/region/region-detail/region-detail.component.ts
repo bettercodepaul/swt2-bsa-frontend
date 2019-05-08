@@ -35,7 +35,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public ButtonType = ButtonType;
   public currentRegion: RegionDO = new RegionDO();
   public regionen: Array<RegionDO> = [new RegionDO()];
-  public possibleRegionTypes: Array<string> = ['Bundesverband','Landesverband','Bezirk','Kreis'];
+  public possibleRegionTypes: Array<string> = ['Bundesverband', 'Landesverband', 'Bezirk', 'Kreis'];
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -198,8 +198,8 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   private handleSuccess(response: BogenligaResponse<RegionDO>) {
     this.currentRegion = response.payload;
-    //the current Region will be removed from the Array to avoid a self-reference as superordinate Region
-    this.regionen = this.regionen.filter((region)=> region.regionName!==this.currentRegion.regionName);
+    // the current Region will be removed from the Array to avoid a self-reference as superordinate Region
+    this.regionen = this.regionen.filter((region) => region.regionName !== this.currentRegion.regionName);
 
     this.loading = false;
   }
@@ -261,7 +261,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
     this.regionen = []; // reset array to ensure change detection
     this.regionen = response.payload;
-    //setting the Typ as a default Typ
+    // setting the Typ as a default Typ
     this.currentRegion.regionTyp = this.possibleRegionTypes[0];
 
     this.loading = false;
