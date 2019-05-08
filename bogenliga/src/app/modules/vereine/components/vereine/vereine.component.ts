@@ -125,14 +125,14 @@ export class VereineComponent extends CommonComponent implements OnInit {
     if (response.payload.length <= 0) {
       this.loadingTable = false;
     }
-    for (var wettkampf of response.payload) {
+    for (const wettkampf of response.payload) {
       const wettkampfTag: string = wettkampf.wettkampfTag + '. Wettkampftag';
       this.veranstaltungsDataProvider.findById(wettkampf.veranstaltungsId)
           .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag))
           .catch((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(responseb));
     }
     if (response.payload.length === 0) {
-      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' ,'' , mannschaftsName);
+      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '' , mannschaftsName);
       this.tableContent.push(tableContentRow);
     }
     if (this.remainingMannschaftsRequests <= 0) {
