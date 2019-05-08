@@ -10,7 +10,7 @@ export class MatchDO implements VersionedDataObject {
   scheibenNummer: number;
   matchpunkte: number;
   satzpunkte: number;
-  version: number
+  version: number;
 }
 
 

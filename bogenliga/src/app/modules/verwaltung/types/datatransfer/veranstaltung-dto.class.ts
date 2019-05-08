@@ -7,7 +7,7 @@ export class VeranstaltungDTO implements DataTransferObject {
   meldeDeadline: number;
   ligaleiterID: number;
   wettkampfTypId: number;
-  //wettkampfTypName: string;
+  // wettkampfTypName: string;
   version: number;
 
   static copyFrom(optional: {
@@ -17,7 +17,7 @@ export class VeranstaltungDTO implements DataTransferObject {
     meldeDeadline?: number,
     ligaleiterID?: number,
     wettkampfTypId?: number,
-    //wettkampfTypName?: string,
+    // wettkampfTypName?: string,
     version?: number
   } = {}): VeranstaltungDTO {
     const copy = new VeranstaltungDTO();
@@ -47,15 +47,15 @@ export class VeranstaltungDTO implements DataTransferObject {
       copy.ligaleiterID = null;
     }
 
-    if(optional.wettkampfTypId >= 0) {
+    if (optional.wettkampfTypId >= 0) {
       copy.wettkampfTypId = optional.wettkampfTypId;
-    }else {
+    } else {
       copy.wettkampfTypId = null;
     }
 
 
     copy.name = optional.name || '';
-    //copy.wettkampfTypName = optional.wettkampfTypName || '';
+    // copy.wettkampfTypName = optional.wettkampfTypName || '';
 
     return copy;
   }

@@ -27,12 +27,12 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public config_table = VEREINE_TABLE_CONFIG;
   public selectedDTOs: VereinDO[];
   public multipleSelections = true;
-  private vereine : VereinDO[];
+  private vereine: VereinDO[];
   public loadingVereine = true;
   public loadingTable = false;
   public rows: TableRow[];
-  private selectedVereinsId : number;
-  private remainingRequests : number = 0;
+  private selectedVereinsId: number;
+  private remainingRequests: number = 0;
   private remainingMannschaftsRequests: number = 0;
   private tableContent: Array<VereinTabelleDO> = [];
 
@@ -47,7 +47,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.loadVereine();
   }
 
-  //when a Verein gets selected from the list
+  // when a Verein gets selected from the list
   public onSelect($event: VereinDO[]): void {
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
@@ -58,7 +58,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   }
 
 
-  //gets used by vereine.componet.html to show the selected vereins-name
+  // gets used by vereine.componet.html to show the selected vereins-name
   public getSelectedDTO(): string {
     if (isNullOrUndefined(this.selectedDTOs)) {
       return '';
@@ -74,16 +74,16 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
   }
 
-  //backend-call to get the list of vereine
+  // backend-call to get the list of vereine
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false;})
+        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 
 
-  //starts the backend-calls to search for the table content
+  // starts the backend-calls to search for the table content
   private loadTableRows() {
     this.loadingTable = true;
     this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
@@ -100,13 +100,13 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.rows = []; // reset array to ensure change detection
     let i: number = 0;
     this.remainingMannschaftsRequests = response.payload.length;
-    if(response.payload.length <=0) {
+    if(response.payload.length <= 0) {
       this.loadingTable = false;
     }
-    for(i;i< response.payload.length;i++) {
-      let mannschaftsName: string = this.selectedDTOs[0].name +" "+ response.payload[i].nummer +". Mannschaft";
+    for (i; i < response.payload.length; i++) {
+      let mannschaftsName: string = this.selectedDTOs[0].name + ' ' + response.payload[i].nummer + '. Mannschaft';
       this.wettkampfDataProvider.findAllWettkaempfeByMannschaftsId(response.payload[i].id)
-          .then((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkaempfeSuccess(response,mannschaftsName))
+          .then((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkaempfeSuccess(response, mannschaftsName))
           .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkaempfeFailure(response));
 
     }
@@ -122,20 +122,20 @@ export class VereineComponent extends CommonComponent implements OnInit {
     console.log('success');
     this.remainingRequests = response.payload.length;
     this.remainingMannschaftsRequests -= 1;
-    if(response.payload.length <= 0) {
+    if (response.payload.length <= 0) {
       this.loadingTable = false;
     }
-    for (let i: number = 0; i<response.payload.length; i++) {
-      let wettkampfTag: string = response.payload[i].wettkampfTag +". Wettkampftag";
+    for (let i: number = 0; i < response.payload.length; i++) {
+      let wettkampfTag: string = response.payload[i].wettkampfTag + '. Wettkampftag';
       this.veranstaltungsDataProvider.findById(response.payload[i].veranstaltungsId)
-          .then((response: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(response,mannschaftsName,wettkampfTag))
+          .then((response: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(response, mannschaftsName, wettkampfTag))
           .catch((response: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(response));
     }
-    if(response.payload.length == 0){
-      let tableContentRow: VereinTabelleDO = new VereinTabelleDO("","",mannschaftsName);
+    if (response.payload.length === 0) {
+      let tableContentRow: VereinTabelleDO = new VereinTabelleDO('' ,'' ,mannschaftsName);
       this.tableContent.push(tableContentRow);
     }
-    if(this.remainingMannschaftsRequests <= 0) {
+    if (this.remainingMannschaftsRequests <= 0) {
       this.rows = toTableRows(this.tableContent);
     }
 
@@ -146,13 +146,13 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.loadingTable = false;
   }
 
-  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>,mannschaftsName: string, wettkampfTag: string): void {
-    let tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name,wettkampfTag,mannschaftsName);
+  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string): void {
+    let tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, mannschaftsName);
     this.tableContent.push(tableRowContent);
     this.remainingRequests -= 1;
 
-    //if this is the last request, put the collected content into the table
-    if(this.remainingRequests <= 0) {
+    // if this is the last request, put the collected content into the table
+    if (this.remainingRequests <= 0) {
       this.rows = toTableRows(this.tableContent);
       this.tableContent = [];
       this.loadingTable = false;
@@ -169,6 +169,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
-     };
+     }
 }
 

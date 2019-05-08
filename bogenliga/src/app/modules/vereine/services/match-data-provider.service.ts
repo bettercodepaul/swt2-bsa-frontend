@@ -29,7 +29,7 @@ export class MatchDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("byMannschaftsId/"+id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byMannschaftsId/' + id).build())
         .then((data: VersionedDataTransferObject[]) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
         }, (error: HttpErrorResponse) => {

@@ -2,7 +2,7 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 
 export class VeranstaltungDO implements VersionedDataObject {
 
-  id :number;
+  id: number;
   version: number;
   wettkampfTypId: number;
   sportjahr: number;
