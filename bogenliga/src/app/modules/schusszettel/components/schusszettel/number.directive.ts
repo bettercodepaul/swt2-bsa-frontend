@@ -18,7 +18,7 @@ export class NumberOnlyDirective {
 
     // Allow Backspace, tab, end, and home keys
     if (this.specialKeys.indexOf(event.key) !== -1) {
-      return
+      return;
     }
     let current: string = this.el.nativeElement.value;
     let next: string = current.concat(event.key);

@@ -2,7 +2,7 @@ import {DataTransferObject} from '@shared/data-provider';
 
 export class VeranstaltungDTO implements DataTransferObject {
 
-  id :number;
+  id: number;
   version: number;
   wettkampfTypId: number;
   sportjahr: number;
@@ -11,7 +11,7 @@ export class VeranstaltungDTO implements DataTransferObject {
   name: string;
 
   static copyFrom(optional: {
-    id? :number,
+    id?: number,
     version?: number,
     wettkampfTypId?: number,
     sportjahr?: number,

@@ -238,7 +238,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
             this.mannschaftsDataProvider.deleteById(id)
                 .then((response) => this.loadMannschaften())
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
-          }else if(myNotification.userAction === NotificationUserAction.DECLINED){
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, id);
           }
 
@@ -363,8 +363,8 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   private addTableAttributes(mannschaft: DsbMannschaftDO) {
     this.veranstaltungsProvider.findById(mannschaft.veranstaltungId)
         .then((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = response.payload.name)
-        .catch((resposne: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = "");
-    mannschaft.name = this.currentVerein.name + " " + mannschaft.nummer + ".Mannschaft";
+        .catch((resposne: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = '');
+    mannschaft.name = this.currentVerein.name + ' '  + mannschaft.nummer + '.Mannschaft';
   }
 
   private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {

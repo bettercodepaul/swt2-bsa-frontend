@@ -84,7 +84,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     // persist
     this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id
-    this.currentMannschaft.veranstaltungId = this.currentVeranstaltung.id; //set selected veranstaltung id
+    this.currentMannschaft.veranstaltungId = this.currentVeranstaltung.id; // set selected veranstaltung id
     this.currentMannschaft.benutzerId = 1;
 
 
@@ -118,7 +118,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
             this.notificationService.showNotification(notification);
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
-          console.log(response.payload)
+          console.log(response.payload);
           console.log('Failed');
           this.saveLoading = false;
 
