@@ -8,9 +8,11 @@ export class VeranstaltungDO implements VersionedDataObject {
   sportjahr: number;
   meldeDeadline: string;
   ligaleiterID: number;
+  ligaID: number;
   version: number;
   ligaleiterEmail: string;
   wettkampftypName: string;
+  ligaName: string;
 
 
 
