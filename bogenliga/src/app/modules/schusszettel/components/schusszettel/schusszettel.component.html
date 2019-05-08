@@ -27,38 +27,38 @@
           </td>
           <td>
             <label>2.S.Pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.sumSatz2"
                    readonly>
           </td>
           <td>
             <label>3.S.Pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.sumSatz3"
                    readonly>
           </td>
           <td>
             <label>4.S.Pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.sumSatz4"
                    readonly>
           </td>
           <td>
             <label>5.S.Pkt</label>
-            <input type="string"
+            <input type="text"
                    id="5.SchützePktT1"
                    [value]="match1.sumSatz5"
                    readonly>
           </td>
           <td>
             <label>Summe S.pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.satzpunkte"
                    readonly>
           </td>
           <td>
             <label>Matchpkte</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.matchpunkte"
                    readonly>
           </td>
@@ -70,27 +70,27 @@
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.sumSatz2"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.sumSatz3"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.sumSatz4"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.sumSatz5"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.satzpunkte"
                    readonly>
           </td>
@@ -134,24 +134,23 @@
                      [ngForOf]="match1.schuetzen"
                      let-i="index">
           <tr>
-            <td>
-              <input type="string"
-                     [value]="i+1"
-                     readonly>
-            </td>
             <ng-template ngFor
                          let-passe
                          [ngForOf]="schuetze"
                          let-j="index">
+              <td *ngIf="j == 0">
+                <input type="number"
+                       [(ngModel)]="passe.schuetzenNr">
+              </td>
               <td>
                 <input myNumberOnly
-                       type="string"
+                       type="text"
                        [ngModel]="passe.ringzahlPfeil1"
                        (ngModelChange)="onChange($event, 1, i, j, 1)">
               </td>
               <td>
                 <input myNumberOnly
-                       type="string"
+                       type="text"
                        [ngModel]="passe.ringzahlPfeil2"
                        (ngModelChange)="onChange($event, 1, i, j, 2)">
               </td>
@@ -224,37 +223,37 @@
           </td>
           <td>
             <label>2.S.Pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.sumSatz2"
                    readonly>
           </td>
           <td>
             <label>3.S.Pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.sumSatz3"
                    readonly>
           </td>
           <td>
             <label>4.S.Pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.sumSatz4"
                    readonly>
           </td>
           <td>
             <label>5.S.Pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.sumSatz5"
                    readonly>
           </td>
           <td>
             <label>Summe S.pkt</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.satzpunkte"
                    readonly>
           </td>
           <td>
             <label>Matchpkte</label>
-            <input type="string"
+            <input type="text"
                    [value]="match1.matchpunkte"
                    readonly>
           </td>
@@ -266,32 +265,32 @@
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.sumSatz2"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.sumSatz3"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.sumSatz4"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.sumSatz5"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.satzpunkte"
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.matchpunkte"
                    readonly>
           </td>
@@ -330,24 +329,23 @@
                      [ngForOf]="match2.schuetzen"
                      let-i="index">
           <tr>
-            <td>
-              <input type="string"
-                     [value]="i+4"
-                     readonly>
-            </td>
             <ng-template ngFor
                          let-passe
                          [ngForOf]="schuetze"
                          let-j="index">
+              <td *ngIf="j == 0">
+                <input type="number"
+                       [(ngModel)]="passe.schuetzenNr">
+              </td>
               <td>
                 <input myNumberOnly
-                       type="string"
+                       type="text"
                        [ngModel]="passe.ringzahlPfeil1"
                        (ngModelChange)="onChange($event, 2, i, j, 1)">
               </td>
               <td>
                 <input myNumberOnly
-                       type="string"
+                       type="text"
                        [ngModel]="passe.ringzahlPfeil2"
                        (ngModelChange)="onChange($event, 2, i, j, 2)">
               </td>
@@ -393,4 +391,5 @@
 
   </div>
 
+  <button class="btn btn-primary" (click)="save()">Speichern</button>
 </div>

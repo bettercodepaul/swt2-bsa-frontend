@@ -43,7 +43,7 @@ export class SchusszettelProviderService extends DataProviderService {
     let match1DTO = SchusszettelMapper.matchToDTO(match1);
     let match2DTO = SchusszettelMapper.matchToDTO(match2);
     return new Promise(((resolve, reject) => {
-      this.restClient.POST(this.getUrl(), {matches: [match1DTO, match2DTO]})
+      this.restClient.POST(this.getUrl(), [match1DTO, match2DTO])
           .then((data: Array<MatchDTO>) => {
             let matches = [SchusszettelMapper.matchToDO(data[0]), SchusszettelMapper.matchToDO(data[1])];
             resolve({result: RequestResult.SUCCESS, payload: matches})

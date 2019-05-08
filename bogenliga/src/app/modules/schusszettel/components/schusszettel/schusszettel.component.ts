@@ -3,6 +3,7 @@ import {MatchDO} from '../../types/match-do.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
+import {SchusszettelMapper} from '../../mapper/schusszettel-mapper';
 
 
 @Component({
@@ -145,5 +146,17 @@ export class SchusszettelComponent implements OnInit {
       this.match1.matchpunkte = 1;
       this.match2.matchpunkte = 1;
     }
+  }
+
+  save() {
+    this.schusszettelService.create(this.match1, this.match2)
+        .then((data: BogenligaResponse<Array<MatchDO>>) => {
+          console.log(data)
+        }, (error) => {
+          console.log(error)
+        })
+   console.log('m1',this.match1)
+   console.log('m2',this.match2)
+   console.log('m2 dto', SchusszettelMapper.matchToDTO(this.match2))
   }
 }
