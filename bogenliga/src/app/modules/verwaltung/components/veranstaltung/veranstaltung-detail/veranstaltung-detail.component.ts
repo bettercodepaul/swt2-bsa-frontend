@@ -20,7 +20,9 @@ import {RegionDataProviderService} from '../../../services/region-data-provider.
 import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_DETAIL_CONFIG} from './veranstaltung-detail.config';
-
+import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
+import {LigaDO} from '../../../../verwaltung/types/liga-do.class';
+import {LigaDTO} from '../../../../verwaltung/types/datatransfer/liga-dto.class';
 import {WettkampftypDataProviderService} from '../../../services/wettkampftyp-data-provider.service';
 import {WettkampftypDO} from '../../../../verwaltung/types/wettkampftyp-do.class';
 import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkampftyp-dto.class';
@@ -46,6 +48,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public currentUbergeordneteVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public allUebergeordnete: Array<VeranstaltungDO> = [new VeranstaltungDO()];
 
+  public currentLiga: LigaDO = new LigaDO();
+  public allLiga: Array<LigaDO> =  [new LigaDO()];
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
 
@@ -62,6 +66,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     private wettkampftypDataProvider: WettkampftypDataProviderService,
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
+    private ligaProvider: LigaDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
@@ -84,6 +89,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
           this.loadUsers();
 
           this.loadWettkampftyp();
+
+          this.loadLiga();
 
           this.loading = false;
           this.deleteLoading = false;
@@ -243,6 +250,12 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
 
   }
+  private loadLiga() {
+    this.ligaProvider.findAll()
+        .then((response: BogenligaResponse<LigaDO[]>) => this.handlLigaResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLigaResponseArrayFailure(response));
+
+  }
   private loadWettkampftyp() {
     this.wettkampftypDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampftypDO[]>) => this.handleWettkampftypResponseArraySuccess(response))
@@ -338,6 +351,20 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   private handleUebergeordnetResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     this.allUebergeordnete = [];
+    this.loading = false;
+  }
+
+  private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
+    this.allLiga = [];
+    this.allLiga = response.payload;
+    if (this.id !== 'add') {
+      this.currentLiga = this.allLiga.filter((uebergeordnet) => uebergeordnet.id === this.currentLiga.id)[0];
+    }
+    this.loading = false;
+  }
+
+  private handleLigaResponseArrayFailure(response: BogenligaResponse<LigaDTO[]>): void {
+    this.allLiga = [];
     this.loading = false;
   }
 
