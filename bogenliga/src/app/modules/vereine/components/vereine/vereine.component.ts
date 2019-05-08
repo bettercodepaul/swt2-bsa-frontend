@@ -27,7 +27,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public config_table = VEREINE_TABLE_CONFIG;
   public selectedDTOs: VereinDO[];
   public multipleSelections = true;
-  private vereine: VereinDO[];
+  public vereine: VereinDO[];
   public loadingVereine = true;
   public loadingTable = false;
   public rows: TableRow[];
