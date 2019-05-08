@@ -16,6 +16,8 @@ export class PasseDO implements DataObject {
   ringzahlPfeil5: number;
   ringzahlPfeil6: number;
 
+  schuetzenNr: number;
+
   constructor(id?: number,
     mannschaftId?: number,
     wettkampfId?: number,
@@ -27,7 +29,8 @@ export class PasseDO implements DataObject {
     ringzahlPfeil3?: number,
     ringzahlPfeil4?: number,
     ringzahlPfeil5?: number,
-    ringzahlPfeil6?: number) {
+    ringzahlPfeil6?: number,
+    schuetzenNr?: number) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
@@ -40,6 +43,7 @@ export class PasseDO implements DataObject {
     this.ringzahlPfeil4 = !!ringzahlPfeil4 ? ringzahlPfeil4 : null;
     this.ringzahlPfeil5 = !!ringzahlPfeil5 ? ringzahlPfeil5 : null;
     this.ringzahlPfeil6 = !!ringzahlPfeil6 ? ringzahlPfeil6 : null;
+    this.schuetzenNr = !!schuetzenNr ? schuetzenNr : null;
   }
 }
 
