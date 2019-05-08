@@ -50,6 +50,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public currentLiga: LigaDO = new LigaDO();
   public allLiga: Array<LigaDO> =  [new LigaDO()];
+
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
 
@@ -83,6 +84,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
         if (this.id === 'add') {
           this.currentVeranstaltung = new VeranstaltungDO();
           this.currentWettkampftyp = new WettkampftypDO();
+          this.currentLiga = new LigaDO();
 
           this.loadUebergeordnete(); // additional Request for all 'veranstaltung' to get all uebergeordnete
 
@@ -270,6 +272,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loadUebergeordnete(); // additional Request for all 'veranstaltung' to get all uebergeordnete
 
     this.loadUsers();
+    this.loadLiga();
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
@@ -354,14 +357,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
-  private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
-    this.allLiga = [];
-    this.allLiga = response.payload;
-    if (this.id !== 'add') {
-      this.currentLiga = this.allLiga.filter((uebergeordnet) => uebergeordnet.id === this.currentLiga.id)[0];
-    }
-    this.loading = false;
-  }
+
 
   private handleLigaResponseArrayFailure(response: BogenligaResponse<LigaDTO[]>): void {
     this.allLiga = [];
@@ -374,7 +370,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     if (this.id === 'add') {
       this.currentWettkampftyp = this.allWettkampftyp[0];
     } else {
-      // this.currentUbergeordneteVeranstaltung = this.allUebergeordnete.filter((uebergeordnet) => uebergeordnet.id === this.currentVeranstaltung.veranstaltungUebergeordnetId)[0];
+      this.currentWettkampftyp = this.allWettkampftyp.filter((wettkampftyp) => wettkampftyp.id === this.currentVeranstaltung.wettkampfTypId)[0];
     }
     this.loading = false;
   }
@@ -391,6 +387,16 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
       this.currentUser = this.allUsers[0];
     } else {
       this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaleiterID)[0];
+    }
+    this.loading = false;
+  }
+  private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
+    this.allLiga = [];
+    this.allLiga = response.payload;
+    if (this.id === 'add') {
+      this.currentLiga = this.allLiga[0];
+    } else {
+      this.currentLiga = this.allLiga.filter((liga) => liga.id === this.currentVeranstaltung.ligaID)[0];
     }
     this.loading = false;
   }
