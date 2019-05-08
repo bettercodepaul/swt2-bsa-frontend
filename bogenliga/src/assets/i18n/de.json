@@ -575,7 +575,7 @@
         "MELDEDEADLINE": {
           "LABEL": "Meldedeadline",
           "PLACEHOLDER": "Bitte geben Sie ein Datum für die Meldedeadline ein",
-          "ERROR": "Bitte geben Sie ein gültiges Datum ein"
+          "ERROR": "Bitte geben Sie ein gültiges Datum ein (Format: JJJJ-MM-TT)."
         },
 
         "LIGANAME": {

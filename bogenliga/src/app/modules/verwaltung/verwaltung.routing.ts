@@ -14,7 +14,6 @@ import {
   WettkampfklasseDetailComponent,
   WettkampfklasseOverviewComponent,
   VeranstaltungDetailComponent,
-  VeranstaltungNeuComponent,
   VeranstaltungOverviewComponent,
 } from './components';
 import {
@@ -31,7 +30,6 @@ import {
   WettkampfklasseDetailGuard,
   WettkampfklasseOverviewGuard,
   VeranstaltungDetailGuard,
-  VeranstaltungNeuGuard,
   VeranstaltungOverviewGuard,
 } from './guards';
 
@@ -81,7 +79,5 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [VeranstaltungOverviewGuard]
   },
-  {path: 'veranstaltung/add', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]}
-  ,
   {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]}
 ];

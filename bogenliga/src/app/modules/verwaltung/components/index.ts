@@ -11,5 +11,4 @@ export * from './verein/verein-overview/verein-overview.component';
 export * from './liga/liga-overview/liga-overview.component';
 export * from './liga/liga-detail/liga-detail.component';
 export * from './veranstaltung/veranstaltung-overview/veranstaltung-overview.component';
-export * from './veranstaltung/veranstaltung-neu/veranstaltung-neu.component';
 export * from './veranstaltung/veranstaltung-detail/veranstaltung-detail.component';
