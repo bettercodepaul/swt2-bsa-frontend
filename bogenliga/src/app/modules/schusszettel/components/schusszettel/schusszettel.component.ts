@@ -4,6 +4,9 @@ import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
 import {SchusszettelMapper} from '../../mapper/schusszettel-mapper';
+import {isUndefined} from '@shared/functions';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -16,7 +19,8 @@ export class SchusszettelComponent implements OnInit {
   match1: MatchDO;
   match2: MatchDO;
 
-  constructor(private schusszettelService: SchusszettelProviderService) {
+  constructor(private schusszettelService: SchusszettelProviderService,
+              private route: ActivatedRoute) {
     console.log('Schusszettel Component')
   }
 
@@ -43,14 +47,22 @@ export class SchusszettelComponent implements OnInit {
 
     this.initSchuetzen();
 
-    this.schusszettelService.findMatches('1021', '1022')
-        .then((data: BogenligaResponse<Array<MatchDO>>) => {
-          this.match1 = data.payload[0];
-          this.match2 = data.payload[1];
-          this.initSchuetzen();
-        }, (error) => {
-          console.log(error)
-        });
+    this.route.params.subscribe((params) => {
+      if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
+        const match1id = params['match1id'];
+        const match2id = params['match2id'];
+        this.schusszettelService.findMatches(match1id, match2id)
+            .then((data: BogenligaResponse<Array<MatchDO>>) => {
+              this.match1 = data.payload[0];
+              this.match2 = data.payload[1];
+              this.initSchuetzen();
+            }, (error) => {
+              console.log(error)
+            });
+      }
+    });
+
+
 
   }
 
@@ -60,14 +72,14 @@ export class SchusszettelComponent implements OnInit {
       this.match2.schuetzen.push(new Array<PasseDO>());
       for (let j = 0; j < 5; j++) {
         if (i == 0) {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, i + 1));
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, i + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
         } else if (i == 1) {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, i + 1));
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, i + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
         } else {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, i + 1));
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, i + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
         }
       }
 
@@ -158,5 +170,6 @@ export class SchusszettelComponent implements OnInit {
    console.log('m1',this.match1)
    console.log('m2',this.match2)
    console.log('m2 dto', SchusszettelMapper.matchToDTO(this.match2))
+   console.log(JSON.stringify([SchusszettelMapper.matchToDTO(this.match1),SchusszettelMapper.matchToDTO(this.match1)]));
   }
 }

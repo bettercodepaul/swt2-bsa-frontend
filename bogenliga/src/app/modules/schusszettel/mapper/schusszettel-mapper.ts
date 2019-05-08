@@ -31,7 +31,7 @@ export class SchusszettelMapper {
     const passen = [];
     for (let i = 0; i < payload.schuetzen.length; i++) {
       for (let j = 0; j < payload.schuetzen[i].length; j++) {
-        payload.schuetzen[i][j].schuetzenNr = payload.schuetzen[i][0].schuetzenNr;
+        payload.schuetzen[i][j].schuetzeNr = payload.schuetzen[i][0].schuetzeNr;
         passen.push(this.passeToDTO(payload.schuetzen[i][j]));
       }
     }
@@ -51,15 +51,15 @@ export class SchusszettelMapper {
       payload.mannschaftId,
       payload.wettkampfId,
       payload.matchNr,
-      payload.lfdnr,
-      payload.dsbMitgliedNr,
+      payload.lfdNr,
+      payload.dsbMitgliedId,
       payload.ringzahl[0],
       payload.ringzahl[1],
       payload.ringzahl[2],
       payload.ringzahl[3],
       payload.ringzahl[4],
       payload.ringzahl[5],
-      payload.schuetzenNr)
+      payload.schuetzeNr)
   }
 
   static passeToDTO(payload: PasseDO): PasseDTO {
@@ -76,10 +76,10 @@ export class SchusszettelMapper {
       payload.mannschaftId,
       payload.wettkampfId,
       payload.matchNr,
-      payload.lfdnr,
-      payload.dsbMitgliedNr,
+      payload.lfdNr,
+      payload.dsbMitgliedId,
       ringzahl,
-      payload.schuetzenNr)
+      payload.schuetzeNr)
   }
 }
 

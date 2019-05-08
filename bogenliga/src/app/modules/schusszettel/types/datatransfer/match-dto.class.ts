@@ -37,29 +37,3 @@ export class MatchDTO implements VersionedDataTransferObject {
     this.passen = !!passen ? passen : [];
   }
 }
-//
-//
-// {
-//   "begegnung": 0,
-//   "id": 0,
-//   "mannschaftId": 0,
-//   "matchpunkte": 0,
-//   "nr": 0,
-//   "passen": [
-//   {
-//     "dsbMitgliedNr": 0,
-//     "id": 0,
-//     "lfdNr": 0,
-//     "mannschaftId": 0,
-//     "matchNr": 0,
-//     "ringzahl": [
-//       0
-//     ],
-//     "wettkampfId": 0
-//   }
-// ],
-//   "satzpunkte": 0,
-//   "scheibenNummer": 0,
-//   "version": 0,
-//   "wettkampfId": 0
-// }

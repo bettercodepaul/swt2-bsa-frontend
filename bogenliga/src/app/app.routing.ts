@@ -15,5 +15,5 @@ export const ROUTES: Routes = [
   {path: 'regionen', loadChildren: 'src/app/modules/regionen/regionen.module#RegionenModule'},
   {path: 'playground', loadChildren: 'src/app/modules/playground/playground.module#PlaygroundModule'},
 
-  {path: 'schusszettel', loadChildren: 'src/app/modules/schusszettel/schusszettel.module#SchusszettelModule'},
+  {path: 'schusszettel/:match1id/:match2id', loadChildren: 'src/app/modules/schusszettel/schusszettel.module#SchusszettelModule'},
 ];
