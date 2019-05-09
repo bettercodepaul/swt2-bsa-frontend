@@ -2,12 +2,13 @@ import {UserPermission} from '@shared/services';
 import {SideBarNavigationItem} from './types/sidebar-navigation-item.interface';
 
 import {
+  faAirFreshener,
   faArchive,
   faBullseye,
   faCalendarAlt,
   faFootballBall,
   faHome,
-  faSitemap
+  faSitemap, faUsers, faUsersCog
 } from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
@@ -22,6 +23,13 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label: 'SIDEBAR.REGIONEN',
     icon: faSitemap,
     route: '/regionen',
+    permissons: [],
+    subitems: []
+  },
+  {
+    label: 'SIDEBAR.VEREINE',
+    icon: faUsers,
+    route: '/vereine',
     permissons: [],
     subitems: []
   },
