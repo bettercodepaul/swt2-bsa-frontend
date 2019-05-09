@@ -3,6 +3,7 @@ import {DataObject} from '@shared/data-provider';
 export class PasseDO implements DataObject {
   id: number;
 
+  matchId: number;
   mannschaftId: number;
   wettkampfId: number;
   matchNr: number;
@@ -19,6 +20,7 @@ export class PasseDO implements DataObject {
   schuetzeNr: number;
 
   constructor(id?: number,
+    matchId?: number,
     mannschaftId?: number,
     wettkampfId?: number,
     matchNr?: number,
@@ -32,6 +34,7 @@ export class PasseDO implements DataObject {
     ringzahlPfeil6?: number,
     schuetzeNr?: number) {
     this.id = !!id ? id : null;
+    this.matchId = !!matchId ? matchId : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
     this.matchNr = !!matchNr ? matchNr : null;
