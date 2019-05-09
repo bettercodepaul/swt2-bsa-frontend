@@ -8,9 +8,25 @@ export class SchusszettelMapper {
 
   static matchToDO(payload: MatchDTO): MatchDO {
     let schuetzen = [];
-    //for (let passe of payload.passen) {
-      //todo: falls passen schon existieren -> schuetzen-array korrekt befüllen, summen für sätze bestimmen
-    //}
+    if (payload.passen.length > 0) {
+      schuetzen[0] = [];
+      schuetzen[1] = [];
+      schuetzen[2] = [];
+      for (let passe of payload.passen) {
+        switch (passe.schuetzeNr) {
+          case 1:
+            schuetzen[0].push(this.passeToDO(passe));
+            break;
+          case 2:
+            schuetzen[1].push(this.passeToDO(passe));
+            break;
+          case 3:
+            schuetzen[2].push(this.passeToDO(passe));
+            break;
+        }
+
+      }
+    }
     return new MatchDO(payload.id,
       payload.mannschaftId,
       payload.wettkampfId,
@@ -48,6 +64,7 @@ export class SchusszettelMapper {
 
   static passeToDO(payload: PasseDTO): PasseDO {
     return new PasseDO(payload.id,
+      payload.matchId,
       payload.mannschaftId,
       payload.wettkampfId,
       payload.matchNr,
@@ -70,9 +87,9 @@ export class SchusszettelMapper {
         payload.ringzahlPfeil4,
         payload.ringzahlPfeil5,
         payload.ringzahlPfeil6
-      ]
-    ;
+      ];
     return new PasseDTO(payload.id,
+      payload.matchId,
       payload.mannschaftId,
       payload.wettkampfId,
       payload.matchNr,

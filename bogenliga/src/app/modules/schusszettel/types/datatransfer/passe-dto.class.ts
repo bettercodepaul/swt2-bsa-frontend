@@ -3,6 +3,7 @@ import {DataTransferObject} from '@shared/data-provider';
 export class PasseDTO implements DataTransferObject {
   id: number;
 
+  matchId: number;
   mannschaftId: number;
   wettkampfId: number;
   matchNr: number;
@@ -13,6 +14,7 @@ export class PasseDTO implements DataTransferObject {
   schuetzeNr: number;
 
   constructor(id?: number,
+    matchId?: number,
     mannschaftId?: number,
     wettkampfId?: number,
     matchNr?: number,
@@ -21,6 +23,7 @@ export class PasseDTO implements DataTransferObject {
     ringzahl?: Array<number>,
     schuetzeNr?: number) {
     this.id = !!id ? id : null;
+    this.matchId = !!matchId ? matchId : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
     this.matchNr = !!matchNr ? matchNr : null;
