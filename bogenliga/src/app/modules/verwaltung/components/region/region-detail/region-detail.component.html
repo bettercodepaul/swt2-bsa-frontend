@@ -1,0 +1,127 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="regionenForm"
+        class="horizontal-form half-page"
+        #regionenForm="ngForm">
+
+    <!-- REGION NAME -->
+    <div class="form-group row">
+      <label for="regionName"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="regionName"
+               name="regionName"
+               #regionName="ngModel"
+               [(ngModel)]="currentRegion.regionName"
+               [class.is-invalid]="regionName.invalid && !regionName.untouched"
+               placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.PLACEHOLDER' | translate }}">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- REGION CONTRACTION -->
+    <div class="form-group row">
+      <label for="regionContraction"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="regionContraction"
+               name="regionContraction"
+               #regionContraction="ngModel"
+               [(ngModel)]="currentRegion.regionKuerzel"
+               [class.is-invalid]="regionContraction.invalid && !regionContraction.untouched"
+               placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- REGION TYP -->
+    <div class="form-group row">
+      <label for="regionTyp"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                id="regionTyp"
+                name="regionTyp"
+                #regionTyp="ngModel"
+                [(ngModel)]="currentRegion.regionTyp">
+          <option *ngFor="let typ of possibleRegionTypes"> {{typ}}</option>
+          placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.SUPERORDINATE.PLACEHOLDER' | translate }}">
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- REGION UEBERGEORDNET -->
+    <div class="form-group row">
+      <label for="regionUebergeordnet"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                id="regionUebergeordnet"
+                name="regionUebergeordnet"
+                [(ngModel)]="currentRegion.regionUebergeordnet">
+          <option *ngFor="let region of regionen"> {{region.regionName}}</option>
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'regionSaveButton'"
+                    [disabled]="!regionenForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'regionUpdateButton'"
+                    [disabled]="!regionenForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.UPDATE' | translate }}
+        </bla-button>
+
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.DELETE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>

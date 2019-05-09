@@ -10,3 +10,5 @@ export * from './verein/verein-detail/verein-detail.component';
 export * from './verein/verein-overview/verein-overview.component';
 export * from './liga/liga-overview/liga-overview.component';
 export * from './liga/liga-detail/liga-detail.component';
+export * from './region/region-overview/region-overview.component';
+export * from './region/region-detail/region-detail.component';

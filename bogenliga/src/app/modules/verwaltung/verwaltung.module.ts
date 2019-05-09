@@ -11,6 +11,8 @@ import {
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
+  RegionDetailComponent,
+  RegionOverviewComponent,
   VereinDetailComponent,
   VereinOverviewComponent,
   VerwaltungComponent,
@@ -25,6 +27,8 @@ import {
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
+  RegionDetailGuard,
+  RegionOverviewGuard,
   VereinDetailGuard,
   VereinOverviewGuard,
   VerwaltungGuard,
@@ -55,6 +59,8 @@ import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail
     VereinOverviewComponent,
     LigaDetailComponent,
     LigaOverviewComponent,
+    RegionDetailComponent,
+    RegionOverviewComponent,
     MannschaftDetailComponent
   ]
 })
@@ -76,7 +82,9 @@ export class VerwaltungModule {
         VereinOverviewGuard,
         VereinDetailGuard,
         LigaOverviewGuard,
-        LigaDetailGuard
+        LigaDetailGuard,
+        RegionDetailGuard,
+        RegionOverviewGuard
       ]
     };
   }
