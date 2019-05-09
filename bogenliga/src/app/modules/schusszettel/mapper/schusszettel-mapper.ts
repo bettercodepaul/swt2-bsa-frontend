@@ -29,8 +29,8 @@ export class SchusszettelMapper {
 
       }
       for (let i = 0; i < schuetzen[0].length; i++) {
-        for (let schuetzenNr = 0; schuetzenNr < schuetzen.length; schuetzenNr++) {
-          sumSatz[i] += schuetzen[schuetzenNr][i].ringzahlPfeil1 + schuetzen[schuetzenNr][i].ringzahlPfeil2;
+        for (const schuetze of schuetzen) {
+          sumSatz[i] += schuetze[i].ringzahlPfeil1 + schuetze[i].ringzahlPfeil2;
         }
       }
     }
@@ -49,10 +49,10 @@ export class SchusszettelMapper {
 
   static matchToDTO(payload: MatchDO): MatchDTO {
     const passen = [];
-    for (let i = 0; i < payload.schuetzen.length; i++) {
-      for (let j = 0; j < payload.schuetzen[i].length; j++) {
-        payload.schuetzen[i][j].schuetzeNr = payload.schuetzen[i][0].schuetzeNr;
-        passen.push(this.passeToDTO(payload.schuetzen[i][j]));
+    for (const schuetze of payload.schuetzen) {
+      for (const passe of schuetze) {
+        passe.schuetzeNr = schuetze[0].schuetzeNr;
+        passen.push(this.passeToDTO(passe));
       }
     }
     return new MatchDTO(payload.id,
