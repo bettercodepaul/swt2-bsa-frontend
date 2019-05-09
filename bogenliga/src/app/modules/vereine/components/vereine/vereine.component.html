@@ -1,0 +1,32 @@
+<bla-navigation-dialog [config]="config">
+
+  <div class="row">
+    <bla-col-layout>
+
+      <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
+
+      <bla-quicksearch-list [items]="vereine"
+                            [optionFieldSelector]="'name'"
+                            [loading]="loadingVereine"
+                            (onSelect)="onSelect($event)"
+                            [multipleSelections]="!multipleSelections"
+                            selectionListHeight="15em"
+                            style="width: 50%; flex-grow: 0;">
+
+      </bla-quicksearch-list>
+    </bla-col-layout>
+  </div>
+
+
+
+  <div class="row">
+    <bla-data-table [config]="config_table"
+                    [rows]="rows"
+                    [loading]="loadingTable"
+                    (onViewClicked)="onView($event)"
+                    (onEditClicked)="onEdit($event)"
+                    (onDeleteClicked)="onDelete($event)">
+    </bla-data-table>
+  </div>
+
+</bla-navigation-dialog>

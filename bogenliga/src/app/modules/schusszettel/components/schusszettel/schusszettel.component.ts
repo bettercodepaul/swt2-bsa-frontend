@@ -27,7 +27,7 @@ export class SchusszettelComponent implements OnInit {
   constructor(private schusszettelService: SchusszettelProviderService,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
-    console.log('Schusszettel Component')
+    console.log('Schusszettel Component');
   }
 
   /**
@@ -68,7 +68,6 @@ export class SchusszettelComponent implements OnInit {
             });
       }
     });
-
   }
 
   /**
@@ -131,7 +130,6 @@ export class SchusszettelComponent implements OnInit {
     }
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
-
   }
 
   /**
@@ -191,7 +189,7 @@ export class SchusszettelComponent implements OnInit {
           this.setPoints();
           this.notificationService.discardNotification();
         }, (error) => {
-          console.log(error)
+          console.log(error);
           this.notificationService.discardNotification();
         })
   }
