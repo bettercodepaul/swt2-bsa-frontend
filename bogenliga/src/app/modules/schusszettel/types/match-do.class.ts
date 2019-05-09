@@ -19,16 +19,16 @@ export class MatchDO implements DataObject {
   schuetzen: Array<Array<PasseDO>>;
 
   constructor(id?: number,
-    mannschaftId?: number,
-    mannschaftName?: string,
-    wettkampfId?: number,
-    matchNr?: number,
-    begegnung?: number,
-    scheibennummer?: number,
-    sumSatz?: Array<number>,
-    matchpunkte?: number,
-    satzpunkte?: number,
-    schuetzen?: Array<Array<PasseDO>>) {
+              mannschaftId?: number,
+              mannschaftName?: string,
+              wettkampfId?: number,
+              matchNr?: number,
+              begegnung?: number,
+              scheibennummer?: number,
+              sumSatz?: Array<number>,
+              matchpunkte?: number,
+              satzpunkte?: number,
+              schuetzen?: Array<Array<PasseDO>>) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';

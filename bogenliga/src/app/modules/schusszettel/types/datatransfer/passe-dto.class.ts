@@ -14,14 +14,14 @@ export class PasseDTO implements DataTransferObject {
   schuetzeNr: number;
 
   constructor(id?: number,
-    matchId?: number,
-    mannschaftId?: number,
-    wettkampfId?: number,
-    matchNr?: number,
-    lfdNr?: number,
-    dsbMitgliedId?: number,
-    ringzahl?: Array<number>,
-    schuetzeNr?: number) {
+              matchId?: number,
+              mannschaftId?: number,
+              wettkampfId?: number,
+              matchNr?: number,
+              lfdNr?: number,
+              dsbMitgliedId?: number,
+              ringzahl?: Array<number>,
+              schuetzeNr?: number) {
     this.id = !!id ? id : null;
     this.matchId = !!matchId ? matchId : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;

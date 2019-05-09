@@ -25,8 +25,8 @@ export class SchusszettelComponent implements OnInit {
   match2: MatchDO;
 
   constructor(private schusszettelService: SchusszettelProviderService,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     console.log('Schusszettel Component');
   }
 
@@ -37,7 +37,7 @@ export class SchusszettelComponent implements OnInit {
    * then reads the matchIds from url and gets them via schusszettel-service.
    */
   ngOnInit() {
-    //initialwert schützen inputs
+    // initialwert schützen inputs
 
     this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, []);
     this.match1.nr = 1;
@@ -64,7 +64,7 @@ export class SchusszettelComponent implements OnInit {
                 this.setPoints();
               }
             }, (error) => {
-              console.log(error)
+              console.log(error);
             });
       }
     });
@@ -79,10 +79,10 @@ export class SchusszettelComponent implements OnInit {
       this.match1.schuetzen.push(new Array<PasseDO>());
       this.match2.schuetzen.push(new Array<PasseDO>());
       for (let j = 0; j < 5; j++) {
-        if (i == 0) {
+        if (i === 0) {
           this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
           this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
-        } else if (i == 1) {
+        } else if (i === 1) {
           this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
           this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
         } else {
@@ -107,7 +107,7 @@ export class SchusszettelComponent implements OnInit {
    * @param pfeilNr
    */
   onChange(value: any, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
-    let match = this['match' + matchNr];
+    const match = this['match' + matchNr];
     if (value.indexOf('+') !== -1) {
       switch (pfeilNr) {
         case 1:
@@ -118,7 +118,7 @@ export class SchusszettelComponent implements OnInit {
           break;
       }
     } else {
-      value = +value; //value ist string, ringzahlen sollen number sein -> value in number umwandeln
+      value = +value; // value ist string, ringzahlen sollen number sein -> value in number umwandeln
       switch (pfeilNr) {
         case 1:
           match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil1 = value > 0 ? value : null;
@@ -156,7 +156,7 @@ export class SchusszettelComponent implements OnInit {
         counterMatch2++;
       }
     }
-    let draws = 5 - (counterMatch1 + counterMatch2);
+    const draws = 5 - (counterMatch1 + counterMatch2);
     this.match1.satzpunkte = (counterMatch1 * 2) + draws;
     this.match2.satzpunkte = (counterMatch2 * 2) + draws;
     if (this.match1.satzpunkte > this.match2.satzpunkte) {
@@ -191,7 +191,7 @@ export class SchusszettelComponent implements OnInit {
         }, (error) => {
           console.log(error);
           this.notificationService.discardNotification();
-        })
+        });
   }
 
   private initSumSatz() {

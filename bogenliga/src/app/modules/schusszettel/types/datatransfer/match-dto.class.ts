@@ -18,15 +18,15 @@ export class MatchDTO implements VersionedDataTransferObject {
   passen: Array<PasseDTO>;
 
   constructor(id?: number,
-    mannschaftId?: number,
-    mannschaftName?: string,
-    wettkampfId?: number,
-    matchNr?: number,
-    begegnung?: number,
-    scheibennummer?: number,
-    matchpunkte?: number,
-    satzpunkte?: number,
-    passen?: Array<PasseDTO>) {
+              mannschaftId?: number,
+              mannschaftName?: string,
+              wettkampfId?: number,
+              matchNr?: number,
+              begegnung?: number,
+              scheibennummer?: number,
+              matchpunkte?: number,
+              satzpunkte?: number,
+              passen?: Array<PasseDTO>) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';

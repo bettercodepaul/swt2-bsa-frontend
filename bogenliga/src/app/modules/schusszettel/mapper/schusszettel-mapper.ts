@@ -7,14 +7,14 @@ import {PasseDO} from '../types/passe-do.class';
 export class SchusszettelMapper {
 
   static matchToDO(payload: MatchDTO): MatchDO {
-    let schuetzen = [];
+    const schuetzen = [];
     let sumSatz = [];
     if (payload.passen.length > 0) {
       schuetzen[0] = [];
       schuetzen[1] = [];
       schuetzen[2] = [];
-      let sumSatz = [0, 0, 0, 0, 0];
-      for (let passe of payload.passen) {
+      sumSatz = [0, 0, 0, 0, 0];
+      for (const passe of payload.passen) {
         switch (passe.schuetzeNr) {
           case 1:
             schuetzen[0].push(this.passeToDO(passe));
@@ -81,7 +81,7 @@ export class SchusszettelMapper {
       payload.ringzahl[3],
       payload.ringzahl[4],
       payload.ringzahl[5],
-      payload.schuetzeNr)
+      payload.schuetzeNr);
   }
 
   static passeToDTO(payload: PasseDO): PasseDTO {
@@ -101,7 +101,7 @@ export class SchusszettelMapper {
       payload.lfdNr,
       payload.dsbMitgliedId,
       ringzahl,
-      payload.schuetzeNr)
+      payload.schuetzeNr);
   }
 }
 
