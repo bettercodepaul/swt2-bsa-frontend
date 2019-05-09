@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, Input} from '@angular/core';
 import {environment} from '../../../../../environments/environment';
 import {BogenligaResponse, UriBuilder} from '../../../shared/data-provider';
 import {NotificationService} from '../../../shared/services/notification';
@@ -14,7 +14,6 @@ import {SetzlisteProviderService} from '../../services/setzliste-provider.servic
 const NOTIFICATION_DOWNLOAD_SUCCESS = 'download_example_success';
 const NOTIFICATION_DOWNLOAD_FAILURE = 'download_example_failure';
 
-
 @Component({
   selector: 'bla-setzliste-download',
   templateUrl: './setzliste-download.component.html'
@@ -23,9 +22,12 @@ export class SetzlisteDownloadComponent implements OnInit {
 
   public downloadingFile = false;
 
+  // Get the value of the attribute from the html tag
+  @Input()
+  wettkampfid: number;
+
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
-
 
   constructor(private setzlisteService: SetzlisteProviderService,
               private notificationService: NotificationService) {
@@ -39,6 +41,7 @@ export class SetzlisteDownloadComponent implements OnInit {
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path(path)
+      .path('?wettkampfid=' + this.wettkampfid)
       .build();
   }
 

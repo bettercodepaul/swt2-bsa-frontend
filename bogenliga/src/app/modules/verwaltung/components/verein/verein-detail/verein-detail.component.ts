@@ -1,7 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {
+  ButtonType,
+  CommonComponent,
+  hideLoadingIndicator,
+  showDeleteLoadingIndicatorIcon,
+  toTableRows
+} from '../../../../shared/components';
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {
   Notification,
@@ -17,7 +23,15 @@ import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {VereinDO} from '../../../types/verein-do.class';
-import {VEREIN_DETAIL_CONFIG} from './verein-detail.config';
+import {VEREIN_DETAIL_CONFIG, VEREIN_DETAIL_TABLE_CONFIG} from './verein-detail.config';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
+import {forEach} from '@angular/router/src/utils/collection';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -26,6 +40,9 @@ const NOTIFICATION_DELETE_VEREIN_SUCCESS = 'verein_detail_delete_success';
 const NOTIFICATION_DELETE_VEREIN_FAILURE = 'verein_detail_delete_failure';
 const NOTIFICATION_SAVE_VEREIN = 'verein_detail_save';
 const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
+const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
+const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
+const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 
 @Component({
   selector:    'bla-verein-detail',
@@ -35,16 +52,21 @@ const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
 export class VereinDetailComponent extends CommonComponent implements OnInit {
   public regionType = 'KREIS';
   public config = VEREIN_DETAIL_CONFIG;
+  public config_table = VEREIN_DETAIL_TABLE_CONFIG;
+  public rows: TableRow[];
   public ButtonType = ButtonType;
   public currentVerein: VereinDO = new VereinDO();
   public currentRegion: RegionDO = new RegionDO();
   public regionen: Array<RegionDO> = [new RegionDO()];
+  public mannschaften: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
 
   constructor(private vereinProvider: VereinDataProviderService,
               private regionProvider: RegionDataProviderService,
+              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
+              private veranstaltungsProvider: VeranstaltungDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -52,6 +74,8 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
     this.loading = true;
 
     this.notificationService.discardNotification();
@@ -71,6 +95,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         }
       }
     });
+
   }
 
   public onSave(ignore: any): void {
@@ -188,6 +213,50 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
+  public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
+
+    this.notificationService.discardNotification();
+
+    const id = versionedDataObject.id;
+    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+
+    const notification: Notification = {
+      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
+      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      descriptionParam: '' + id,
+      severity:         NotificationSeverity.QUESTION,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.YES_NO,
+      userAction:       NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+        .subscribe((myNotification) => {
+
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.mannschaftsDataProvider.deleteById(id)
+                .then((response) => this.loadMannschaften())
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.rows = hideLoadingIndicator(this.rows, id);
+          }
+
+        });
+
+    this.notificationService.showNotification(notification);
+  }
+
+
+  public onView(versionedDataObject: VersionedDataObject): void {
+    this.navigateToDetailDialog(versionedDataObject);
+
+  }
+
+  public onEdit(versionedDataObject: VersionedDataObject): void {
+    this.navigateToDetailDialog(versionedDataObject);
+  }
+
   public entityExists(): boolean {
     return this.currentVerein.id >= 0;
   }
@@ -208,6 +277,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
   private handleSuccess(response: BogenligaResponse<VereinDO>) {
     this.currentVerein = response.payload;
+    this.loadMannschaften();
     this.loading = false;
 
     this.currentRegion = this.regionen.filter((region) => region.id === this.currentVerein.regionId)[0];
@@ -273,5 +343,36 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.currentRegion = this.regionen[0]; // Set first element of object as selected.
 
     this.loading = false;
+  }
+
+  private loadMannschaften() {
+    this.loading = true;
+    this.mannschaftsDataProvider.findAllByVereinsId(this.currentVerein.id)
+        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
+  }
+
+  private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+    this.mannschaften = [];
+    this.mannschaften = response.payload;
+    this.mannschaften.forEach((mannschaft) => this.addTableAttributes(mannschaft));
+    this.rows = toTableRows(response.payload);
+    this.loading = false;
+  }
+
+  private addTableAttributes(mannschaft: DsbMannschaftDO) {
+    this.veranstaltungsProvider.findById(mannschaft.veranstaltungId)
+        .then((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = response.payload.name)
+        .catch((resposne: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = '');
+    mannschaft.name = this.currentVerein.name + ' '  + mannschaft.nummer + '.Mannschaft';
+  }
+
+  private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+    this.mannschaften = [];
+    this.loading = false;
+  }
+
+  private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
+    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id + '/' + versionedDataObject.id);
   }
 }

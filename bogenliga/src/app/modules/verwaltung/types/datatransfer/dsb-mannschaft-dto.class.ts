@@ -6,7 +6,9 @@ export class DsbMannschaftDTO implements DataTransferObject {
   vereinId: number;
   benutzerId: number;
   version: number;
-  veranstaltungID: number;
+  veranstaltungId: number;
+  veranstaltungName: string;
+  name: string;
 
   static copyFrom(optional: {
     id?: number,
@@ -14,7 +16,7 @@ export class DsbMannschaftDTO implements DataTransferObject {
     vereinId?: number,
     benutzerId?: number,
     version?: number,
-    veranstaltungID?: number;
+    veranstaltungId?: number;
   } = {}): DsbMannschaftDTO {
     const copy = new DsbMannschaftDTO();
     // show '0' value
@@ -35,10 +37,10 @@ export class DsbMannschaftDTO implements DataTransferObject {
     } else {
       copy.vereinId = null;
     }
-    if (optional.veranstaltungID >= 0) {
-      copy.veranstaltungID = optional.veranstaltungID;
+    if (optional.veranstaltungId >= 0) {
+      copy.veranstaltungId = optional.veranstaltungId;
     } else {
-      copy.veranstaltungID = null;
+      copy.veranstaltungId = null;
     }
     copy.version = optional.version || null;
     copy.nummer = optional.nummer || '';

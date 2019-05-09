@@ -15,6 +15,7 @@
     "VERWALTUNG": "VERWALTUNG",
     "WETTKAMPF": "WETTKAEMPFE",
     "REGIONEN": "REGIONEN",
+    "VEREINE": "VEREINE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
@@ -45,6 +46,18 @@
   "REGIONEN": {
     "REGIONEN": {
       "TITLE": "Regionen"
+    }
+  },
+  "VEREINE": {
+    "VEREINE": {
+      "TITLE": "Vereine",
+      "TABLE": {
+        "HEADERS": {
+          "WETTKAMPF": "Wettkampf",
+          "MANNSCHAFT": "Mannschaft",
+          "VERANSTALTUNG": "Veranstaltung"
+        }
+      }
     }
   },
   "WETTKAEMPFE": {
@@ -447,6 +460,13 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "MANNSCHAFTSNAME": "Name",
+          "LIGA": "Liga"
+        }
+      },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Verein löschen",
@@ -508,26 +528,39 @@
           "PLACEHOLDER": "Bitte eine übergeordnete Region auswählen",
           "ERROR": "Bitte eine gültige Region eingeben."
         },
+    "MANNSCHAFT_DETAIL": {
+      "TITLE": "DSB Mannschaft - Details",
+      "FORM": {
+        "MANNSCHAFT_NUMMER": {
+          "LABEL": "Mannschaft-Nummer",
+          "PLACEHOLDER": "Bitte eine Nummer eingeben",
+          "ERROR": "Bitte eine gültige Nummer eingeben"
+        },
+        "MANNSCHAFT_VERANSTALTUNG": {
+          "LABEL": "Liga",
+          "PLACEHOLDER": "Bitte eine Liga auswählen",
+          "ERROR": "Bitte eine gültige Liga auswählen"
+        },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Verein löschen",
+          "TITLE": "Mannschaft löschen",
           "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Verein wurde erfolgreich gelöscht."
+          "DESCRIPTION": "Mannschaft wurde erfolgreich gelöscht."
         },
         "DELETE_FAILURE": {
           "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Verein konnte nicht gelöscht werden."
+          "DESCRIPTION": "Mannschaft konnte nicht gelöscht werden."
         },
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Verein wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Mannschaft wurde erfolgreich gespeichert."
         }
       }
     },
