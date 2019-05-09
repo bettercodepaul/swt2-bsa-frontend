@@ -3,9 +3,15 @@ import {MatchDO} from '../../types/match-do.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
-import {SchusszettelMapper} from '../../mapper/schusszettel-mapper';
 import {isUndefined} from '@shared/functions';
 import {ActivatedRoute} from '@angular/router';
+import {
+  Notification,
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType, NotificationUserAction
+} from '@shared/services';
 
 
 @Component({
@@ -19,7 +25,8 @@ export class SchusszettelComponent implements OnInit {
   match2: MatchDO;
 
   constructor(private schusszettelService: SchusszettelProviderService,
-              private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private notificationService: NotificationService) {
     console.log('Schusszettel Component')
   }
 
@@ -32,22 +39,12 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     //initialwert schützen inputs
 
-    this.match1 = new MatchDO();
+    this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, []);
     this.match1.nr = 1;
-    this.match1.sumSatz1 = 0;
-    this.match1.sumSatz2 = 0;
-    this.match1.sumSatz3 = 0;
-    this.match1.sumSatz4 = 0;
-    this.match1.sumSatz5 = 0;
     this.match1.schuetzen = [];
 
-    this.match2 = new MatchDO();
+    this.match2 = new MatchDO(null, null, null, 1, 1, 1, 1, []);
     this.match2.nr = 1;
-    this.match2.sumSatz1 = 0;
-    this.match2.sumSatz2 = 0;
-    this.match2.sumSatz3 = 0;
-    this.match2.sumSatz4 = 0;
-    this.match2.sumSatz5 = 0;
     this.match2.schuetzen = [];
 
     this.initSchuetzen();
@@ -60,20 +57,10 @@ export class SchusszettelComponent implements OnInit {
             .then((data: BogenligaResponse<Array<MatchDO>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
-              console.log(this.match1.schuetzen.length)
               if (this.match1.schuetzen.length <= 0 || this.match2.schuetzen.length <= 0) {
                 this.initSchuetzen();
               } else {
-                this.match1.sumSatz1 = this.getSumSatz(this.match1, 0);
-                this.match2.sumSatz1 = this.getSumSatz(this.match2, 0);
-                this.match1.sumSatz2 = this.getSumSatz(this.match1, 1);
-                this.match2.sumSatz2 = this.getSumSatz(this.match2, 1);
-                this.match1.sumSatz3 = this.getSumSatz(this.match1, 2);
-                this.match2.sumSatz3 = this.getSumSatz(this.match2, 2);
-                this.match1.sumSatz4 = this.getSumSatz(this.match1, 3);
-                this.match2.sumSatz4 = this.getSumSatz(this.match2, 3);
-                this.match1.sumSatz5 = this.getSumSatz(this.match1, 4);
-                this.match2.sumSatz5 = this.getSumSatz(this.match2, 4);
+                this.initSumSatz();
                 this.setPoints();
               }
             }, (error) => {
@@ -142,23 +129,7 @@ export class SchusszettelComponent implements OnInit {
           break;
       }
     }
-    switch (satzNr) {
-      case 0:
-        match.sumSatz1 = this.getSumSatz(match, satzNr);
-        break;
-      case 1:
-        match.sumSatz2 = this.getSumSatz(match, satzNr);
-        break;
-      case 2:
-        match.sumSatz3 = this.getSumSatz(match, satzNr);
-        break;
-      case 3:
-        match.sumSatz4 = this.getSumSatz(match, satzNr);
-        break;
-      case 4:
-        match.sumSatz5 = this.getSumSatz(match, satzNr);
-        break;
-    }
+    match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
 
   }
@@ -181,9 +152,9 @@ export class SchusszettelComponent implements OnInit {
     let counterMatch1 = 0;
     let counterMatch2 = 0;
     for (let i = 0; i < 5; i++) {
-      if (this.match1['sumSatz' + (i+1)] > this.match2['sumSatz' + (i+1)]) {
+      if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
         counterMatch1++;
-      } else if (this.match1['sumSatz' + (i+1)] < this.match2['sumSatz' + (i+1)]) {
+      } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
         counterMatch2++;
       }
     }
@@ -203,15 +174,32 @@ export class SchusszettelComponent implements OnInit {
   }
 
   save() {
+    this.notificationService.showNotification({
+      id:          'schusszettelSave',
+      title:       'Lädt...',
+      description: 'Schusszettel wird gespeichert...',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    });
     this.schusszettelService.create(this.match1, this.match2)
         .then((data: BogenligaResponse<Array<MatchDO>>) => {
-          console.log(data)
+          this.match1 = data.payload[0];
+          this.match2 = data.payload[1];
+          this.initSumSatz();
+          this.setPoints();
+          this.notificationService.discardNotification();
         }, (error) => {
           console.log(error)
+          this.notificationService.discardNotification();
         })
-   console.log('m1',this.match1)
-   console.log('m2',this.match2)
-   console.log('m2 dto', SchusszettelMapper.matchToDTO(this.match2))
-   console.log(JSON.stringify([SchusszettelMapper.matchToDTO(this.match1),SchusszettelMapper.matchToDTO(this.match1)]));
+  }
+
+  private initSumSatz() {
+    for (let i = 0; i < 5; i++) {
+      this.match1.sumSatz[i] = this.getSumSatz(this.match1, i);
+      this.match2.sumSatz[i] = this.getSumSatz(this.match2, i);
+    }
   }
 }

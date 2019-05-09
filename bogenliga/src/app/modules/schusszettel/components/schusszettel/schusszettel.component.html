@@ -4,14 +4,14 @@
   <div class="match1">
 
     <div class="match">
-      <h1>Mannschaft 1</h1>
+      <h1>{{match1.mannschaftName}}</h1>
       <h2>{{match1.nr}}. Match</h2>
     </div>
 
     <div class="mannschaften">
-      <h3>Mannschaft 1</h3>
+      <h3>{{match1.mannschaftName}}</h3>
       <h3>gegen</h3>
-      <h3>Mannschaft 2</h3>
+      <h3>{{match2.mannschaftName}}</h3>
     </div>
 
     <div class="small_Table">
@@ -19,35 +19,10 @@
              class="table table-responsive thead-light table-striped"
              style="width:100%">
         <tr>
-          <td>
-            <label>1.S.Pkt</label>
+          <td *ngFor="let sum of match1.sumSatz; let i = index">
+            <label>{{i + 1}}.S.Pkt</label>
             <input type="text"
-                   [value]="match1.sumSatz1"
-                   readonly>
-          </td>
-          <td>
-            <label>2.S.Pkt</label>
-            <input type="text"
-                   [value]="match1.sumSatz2"
-                   readonly>
-          </td>
-          <td>
-            <label>3.S.Pkt</label>
-            <input type="text"
-                   [value]="match1.sumSatz3"
-                   readonly>
-          </td>
-          <td>
-            <label>4.S.Pkt</label>
-            <input type="text"
-                   [value]="match1.sumSatz4"
-                   readonly>
-          </td>
-          <td>
-            <label>5.S.Pkt</label>
-            <input type="text"
-                   id="5.SchützePktT1"
-                   [value]="match1.sumSatz5"
+                   [value]="sum"
                    readonly>
           </td>
           <td>
@@ -64,29 +39,9 @@
           </td>
         </tr>
         <tr>
-          <td>
+          <td *ngFor="let sum of match2.sumSatz">
             <input type="text"
-                   [value]="match2.sumSatz1"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.sumSatz2"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.sumSatz3"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.sumSatz4"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.sumSatz5"
+                   [value]="sum"
                    readonly>
           </td>
           <td>
@@ -95,7 +50,7 @@
                    readonly>
           </td>
           <td>
-            <input type="string"
+            <input type="text"
                    [value]="match2.matchpunkte"
                    readonly>
           </td>
@@ -159,33 +114,13 @@
           <tr *ngIf="i >= match1.schuetzen.length - 1">
             <td></td>
             <ng-template ngFor
-                         let-passe
-                         [ngForOf]="schuetze"
+                         let-sum
+                         [ngForOf]="match1.sumSatz"
                          let-j="index">
               <td>Summe</td>
-              <td *ngIf="j == 0">
+              <td>
                 <input type="number"
-                       [value]="match1.sumSatz1"
-                       readonly>
-              </td>
-              <td *ngIf="j == 1">
-                <input type="number"
-                       [value]="match1.sumSatz2"
-                       readonly>
-              </td>
-              <td *ngIf="j == 2">
-                <input type="number"
-                       [value]="match1.sumSatz3"
-                       readonly>
-              </td>
-              <td *ngIf="j == 3">
-                <input type="number"
-                       [value]="match1.sumSatz4"
-                       readonly>
-              </td>
-              <td *ngIf="j == 4">
-                <input type="number"
-                       [value]="match1.sumSatz5"
+                       [value]="sum"
                        readonly>
               </td>
             </ng-template>
@@ -194,20 +129,20 @@
       </table>
     </div>
 
-  </div>
+  </div> <!-- ende match1 -->
 
   <!-- match2 -->
   <div class="match2">
 
     <div class="match">
-      <h1>Mannschaft 2</h1>
+      <h1>{{match2.mannschaftName}}</h1>
       <h2>{{match2.nr}}. Match</h2>
     </div>
 
     <div class="mannschaften">
-      <h3>Mannschaft 1</h3>
+      <h3>{{match1.mannschaftName}}</h3>
       <h3>gegen</h3>
-      <h3>Mannschaft 2</h3>
+      <h3>{{match2.mannschaftName}}</h3>
     </div>
 
     <div class="small_Table">
@@ -215,34 +150,10 @@
         class="table table-responsive thead-light table-striped"
         style="width:100%">
         <tr>
-          <td>
-            <label>1.S.Pkt</label>
+          <td *ngFor="let sum of match1.sumSatz; let i = index">
+            <label>{{i + 1}}.S.Pkt</label>
             <input type="text"
-                   [value]="match1.sumSatz1"
-                   readonly>
-          </td>
-          <td>
-            <label>2.S.Pkt</label>
-            <input type="text"
-                   [value]="match1.sumSatz2"
-                   readonly>
-          </td>
-          <td>
-            <label>3.S.Pkt</label>
-            <input type="text"
-                   [value]="match1.sumSatz3"
-                   readonly>
-          </td>
-          <td>
-            <label>4.S.Pkt</label>
-            <input type="text"
-                   [value]="match1.sumSatz4"
-                   readonly>
-          </td>
-          <td>
-            <label>5.S.Pkt</label>
-            <input type="text"
-                   [value]="match1.sumSatz5"
+                   [value]="sum"
                    readonly>
           </td>
           <td>
@@ -259,29 +170,9 @@
           </td>
         </tr>
         <tr>
-          <td>
+          <td *ngFor="let sum of match2.sumSatz">
             <input type="text"
-                   [value]="match2.sumSatz1"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.sumSatz2"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.sumSatz3"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.sumSatz4"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.sumSatz5"
+                   [value]="sum"
                    readonly>
           </td>
           <td>
@@ -354,33 +245,13 @@
           <tr *ngIf="i >= match2.schuetzen.length - 1">
             <td></td>
             <ng-template ngFor
-                         let-passe
-                         [ngForOf]="schuetze"
+                         let-sum
+                         [ngForOf]="match2.sumSatz"
                          let-j="index">
               <td>Summe</td>
-              <td *ngIf="j == 0">
+              <td>
                 <input type="number"
-                       [value]="match2.sumSatz1"
-                       readonly>
-              </td>
-              <td *ngIf="j == 1">
-                <input type="number"
-                       [value]="match2.sumSatz2"
-                       readonly>
-              </td>
-              <td *ngIf="j == 2">
-                <input type="number"
-                       [value]="match2.sumSatz3"
-                       readonly>
-              </td>
-              <td *ngIf="j == 3">
-                <input type="number"
-                       [value]="match2.sumSatz4"
-                       readonly>
-              </td>
-              <td *ngIf="j == 4">
-                <input type="number"
-                       [value]="match2.sumSatz5"
+                       [value]="sum"
                        readonly>
               </td>
             </ng-template>
@@ -391,5 +262,7 @@
 
   </div>
 
-  <button class="btn btn-primary" (click)="save()">Speichern</button>
+  <button class="btn btn-primary saveButton"
+          (click)="save()">Speichern
+  </button>
 </div>

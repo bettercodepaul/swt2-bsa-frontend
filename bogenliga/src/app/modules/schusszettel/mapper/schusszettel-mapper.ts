@@ -8,10 +8,12 @@ export class SchusszettelMapper {
 
   static matchToDO(payload: MatchDTO): MatchDO {
     let schuetzen = [];
+    let sumSatz = [];
     if (payload.passen.length > 0) {
       schuetzen[0] = [];
       schuetzen[1] = [];
       schuetzen[2] = [];
+      let sumSatz = [0, 0, 0, 0, 0];
       for (let passe of payload.passen) {
         switch (passe.schuetzeNr) {
           case 1:
@@ -26,18 +28,20 @@ export class SchusszettelMapper {
         }
 
       }
+      for (let i = 0; i < schuetzen[0].length; i++) {
+        for (let schuetzenNr = 0; schuetzenNr < schuetzen.length; schuetzenNr++) {
+          sumSatz[i] += schuetzen[schuetzenNr][i].ringzahlPfeil1 + schuetzen[schuetzenNr][i].ringzahlPfeil2;
+        }
+      }
     }
     return new MatchDO(payload.id,
       payload.mannschaftId,
+      payload.mannschaftName,
       payload.wettkampfId,
       payload.nr,
       payload.begegnung,
       payload.scheibenNummer,
-      0,
-      0,
-      0,
-      0,
-      0,
+      sumSatz,
       payload.matchpunkte,
       payload.satzpunkte,
       schuetzen);
@@ -53,6 +57,7 @@ export class SchusszettelMapper {
     }
     return new MatchDTO(payload.id,
       payload.mannschaftId,
+      payload.mannschaftName,
       payload.wettkampfId,
       payload.nr,
       payload.begegnung,
@@ -81,13 +86,13 @@ export class SchusszettelMapper {
 
   static passeToDTO(payload: PasseDO): PasseDTO {
     const ringzahl = [
-        payload.ringzahlPfeil1,
-        payload.ringzahlPfeil2,
-        payload.ringzahlPfeil3,
-        payload.ringzahlPfeil4,
-        payload.ringzahlPfeil5,
-        payload.ringzahlPfeil6
-      ];
+      payload.ringzahlPfeil1,
+      payload.ringzahlPfeil2,
+      payload.ringzahlPfeil3,
+      payload.ringzahlPfeil4,
+      payload.ringzahlPfeil5,
+      payload.ringzahlPfeil6
+    ];
     return new PasseDTO(payload.id,
       payload.matchId,
       payload.mannschaftId,
