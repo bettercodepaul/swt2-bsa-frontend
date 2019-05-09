@@ -14,7 +14,6 @@ import {NotificationComponent} from './components/notification';
 import {SidebarItemComponent} from './components/sidebar/components/sidebar-item/sidebar-item.component';
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {HomeModule} from './modules/home/home.module';
-import {SettingsModule} from './modules/settings/settings.module';
 import {APP_REDUCERS} from './modules/shared/redux-store';
 import {SharedModule} from './modules/shared/shared.module';
 import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
@@ -38,7 +37,6 @@ describe('AppComponent', () => {
       imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
-        SettingsModule,
         WettkampfModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),

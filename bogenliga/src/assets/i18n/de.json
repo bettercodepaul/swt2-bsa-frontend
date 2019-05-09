@@ -229,6 +229,10 @@
           "LABEL": "Ligen",
           "DESCRIPTION": "Verwaltung der Ligen"
         },
+        "REGIONEN": {
+          "LABEL": "Regionen",
+          "DESCRIPTION": "Verwaltung der Regionen"
+        },
         "SPORTJAHR": {
           "LABEL": "Sportjahre",
           "DESCRIPTION": "Verwaltung der Sportjahre"
@@ -482,6 +486,48 @@
         }
       }
     },
+    "REGIONEN": {
+      "TITLE": "Regionen - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Region Name",
+          "CONTRACTION": "Kürzel",
+          "REGION_ID": "Region ID",
+          "REGION_TYP": "Region Typ",
+          "REGION_SUPERORDINATE": "Übergeordnete Region"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Region löschen",
+          "DESCRIPTION": "Wollen Sie die Region mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+    "REGION_DETAIL": {
+      "TITLE": "Region - Details",
+      "FORM": {
+        "REGION_NAME": {
+          "LABEL": "Region-Name",
+          "PLACEHOLDER": "Bitte einen Namen eingeben",
+          "ERROR": "Bitte einen gültigen Namen eingeben."
+        },
+        "REGION_CONTRACTION": {
+          "LABEL": "Region-Kürzel",
+          "PLACEHOLDER": "Bitte ein Kürzel eingeben",
+          "ERROR": "Bitte einen gültigen Identifier eingeben."
+        },
+        "REGION_TYP": {
+          "LABEL": "Region-Typ",
+          "PLACEHOLDER": "Bitte einen Region auswählen",
+          "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "REGION_SUPERORDINATE": {
+          "LABEL": "Übergeordnete Region",
+          "PLACEHOLDER": "Bitte eine übergeordnete Region auswählen",
+          "ERROR": "Bitte eine gültige Region eingeben."
+        },
     "MANNSCHAFT_DETAIL": {
       "TITLE": "DSB Mannschaft - Details",
       "FORM": {
@@ -502,7 +548,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Mannschaft löschen",
-          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",

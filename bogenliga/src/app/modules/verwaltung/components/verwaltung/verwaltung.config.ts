@@ -34,6 +34,12 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga'
+      },
+      {
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.DESCRIPTION',
+        icon:           'sitemap',
+        route:          'regionen'
       }]
   }
 };
