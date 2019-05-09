@@ -5,8 +5,7 @@ import {
   DataProviderService,
   RequestResult,
   RestClient,
-  UriBuilder,
-  VersionedDataTransferObject
+  UriBuilder
 } from '../../shared/data-provider';
 import {MatchDO} from '../types/match-do.class';
 import {MatchDTO} from '../types/datatransfer/match-dto.class';
