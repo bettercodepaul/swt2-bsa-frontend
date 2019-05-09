@@ -20,19 +20,19 @@ export class PasseDO implements DataObject {
   schuetzeNr: number;
 
   constructor(id?: number,
-    matchId?: number,
-    mannschaftId?: number,
-    wettkampfId?: number,
-    matchNr?: number,
-    lfdNr?: number,
-    dsbMitgliedId?: number,
-    ringzahlPfeil1?: number,
-    ringzahlPfeil2?: number,
-    ringzahlPfeil3?: number,
-    ringzahlPfeil4?: number,
-    ringzahlPfeil5?: number,
-    ringzahlPfeil6?: number,
-    schuetzeNr?: number) {
+              matchId?: number,
+              mannschaftId?: number,
+              wettkampfId?: number,
+              matchNr?: number,
+              lfdNr?: number,
+              dsbMitgliedId?: number,
+              ringzahlPfeil1?: number,
+              ringzahlPfeil2?: number,
+              ringzahlPfeil3?: number,
+              ringzahlPfeil4?: number,
+              ringzahlPfeil5?: number,
+              ringzahlPfeil6?: number,
+              schuetzeNr?: number) {
     this.id = !!id ? id : null;
     this.matchId = !!matchId ? matchId : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;

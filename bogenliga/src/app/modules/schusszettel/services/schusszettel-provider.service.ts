@@ -26,7 +26,7 @@ export class SchusszettelProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<MatchDTO>>(new UriBuilder().fromPath(this.getUrl()).path(match1Id + '/' + match2Id).build())
           .then((data: Array<MatchDTO>) => {
-            let matches = [SchusszettelMapper.matchToDO(data[0]), SchusszettelMapper.matchToDO(data[1])];
+            const matches = [SchusszettelMapper.matchToDO(data[0]), SchusszettelMapper.matchToDO(data[1])];
             resolve({result: RequestResult.SUCCESS, payload: matches});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
@@ -39,13 +39,13 @@ export class SchusszettelProviderService extends DataProviderService {
   }
 
   public create(match1: MatchDO, match2: MatchDO): Promise<BogenligaResponse<Array<MatchDO>>> {
-    let match1DTO = SchusszettelMapper.matchToDTO(match1);
-    let match2DTO = SchusszettelMapper.matchToDTO(match2);
+    const match1DTO = SchusszettelMapper.matchToDTO(match1);
+    const match2DTO = SchusszettelMapper.matchToDTO(match2);
     return new Promise(((resolve, reject) => {
       this.restClient.POST(this.getUrl(), [match1DTO, match2DTO])
           .then((data: Array<MatchDTO>) => {
-            let matches = [SchusszettelMapper.matchToDO(data[0]), SchusszettelMapper.matchToDO(data[1])];
-            resolve({result: RequestResult.SUCCESS, payload: matches})
+            const matches = [SchusszettelMapper.matchToDO(data[0]), SchusszettelMapper.matchToDO(data[1])];
+            resolve({result: RequestResult.SUCCESS, payload: matches});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
