@@ -32,6 +32,8 @@ import {
   WettkampfklasseOverviewGuard
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
+import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
+import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
 
 @NgModule({
   imports:      [
@@ -52,7 +54,8 @@ import {VERWALTUNG_ROUTES} from './verwaltung.routing';
     VereinDetailComponent,
     VereinOverviewComponent,
     LigaDetailComponent,
-    LigaOverviewComponent
+    LigaOverviewComponent,
+    MannschaftDetailComponent
   ]
 })
 export class VerwaltungModule {
@@ -64,6 +67,7 @@ export class VerwaltungModule {
         VerwaltungGuard,
         DsbMitgliedOverviewGuard,
         DsbMitgliedDetailGuard,
+        DsbMannschaftDetailGuard,
         BenutzerOverviewGuard,
         BenutzerNeuGuard,
         BenutzerDetailGuard,
