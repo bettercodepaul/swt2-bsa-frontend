@@ -104,7 +104,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     if (typeof this.currentLiga === 'undefined') {
       this.currentVeranstaltung.ligaID = null;
     } else {
-      this.currentVeranstaltung.ligaID = this.currentVeranstaltung.ligaID;
+      this.currentVeranstaltung.ligaID = this.currentLiga.id;
     }
     if (typeof this.currentUser === 'undefined') {
       this.currentVeranstaltung.ligaleiterID = null;
