@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[myNumberOnly]'
+  selector: '[blaMyNumberOnly]'
 })
 export class NumberOnlyDirective {
   // Allow decimal numbers and negative values and plus
@@ -18,10 +18,10 @@ export class NumberOnlyDirective {
 
     // Allow Backspace, tab, end, and home keys
     if (this.specialKeys.indexOf(event.key) !== -1) {
-      return
+      return;
     }
-    let current: string = this.el.nativeElement.value;
-    let next: string = current.concat(event.key);
+    const current: string = this.el.nativeElement.value;
+    const next: string = current.concat(event.key);
     if (next && !String(next).match(this.regex)) {
       event.preventDefault();
     }

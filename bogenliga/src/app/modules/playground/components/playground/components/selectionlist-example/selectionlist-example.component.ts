@@ -15,6 +15,7 @@ export class SelectionlistExampleComponent implements OnInit {
   public selectedDTOs: PlaygroundVersionedDataObject[];
   public multipleSelections = true;
 
+  public selectedRightItems: PlaygroundVersionedDataObject[] = [];
   constructor() {
   }
 
