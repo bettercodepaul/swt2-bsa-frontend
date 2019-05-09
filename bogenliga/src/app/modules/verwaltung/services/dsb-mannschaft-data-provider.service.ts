@@ -45,6 +45,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
               reject({result: RequestResult.FAILURE});
             }
           });
+      /*
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload2)
         .then((data: VersionedDataTransferObject) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
@@ -57,6 +58,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
             reject({result: RequestResult.FAILURE});
           }
         });
+       */
     });
   }
 
@@ -87,6 +89,27 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
+          .then((data: VersionedDataTransferObject[]) => {
+
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  public findAllByVereinsId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVereinsID/' + id).build())
           .then((data: VersionedDataTransferObject[]) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
