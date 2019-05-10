@@ -527,7 +527,9 @@
           "LABEL": "Übergeordnete Region",
           "PLACEHOLDER": "Bitte eine übergeordnete Region auswählen",
           "ERROR": "Bitte eine gültige Region eingeben."
-        },
+        }
+      }
+    },
     "MANNSCHAFT_DETAIL": {
       "TITLE": "DSB Mannschaft - Details",
       "FORM": {
