@@ -7,7 +7,7 @@
 
     <!-- VERANSTALTUNG -->
     <div class="form-group row">
-      <label for="veranstaltungName"
+      <label for="veranstaltung_name"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.LABEL' | translate }}</span>
         <span> *</span>
@@ -16,11 +16,11 @@
         <input type="text"
                class="form-control"
                required
-               id="veranstaltungName"
-               name="veranstaltungName"
-               #veranstaltungName="ngModel"
+               id="veranstaltung_name"
+               name="veranstaltung_name"
+               #veranstaltung_name="ngModel"
                [(ngModel)]="currentVeranstaltung.name"
-               [class.is-invalid]="veranstaltungName.invalid && ! veranstaltungName.untouched"
+               [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
