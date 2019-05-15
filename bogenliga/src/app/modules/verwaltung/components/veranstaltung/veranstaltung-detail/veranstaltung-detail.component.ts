@@ -170,8 +170,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
             const notification: Notification = {
               id:          NOTIFICATION_UPDATE_VERANSTALTUNG + id,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE.TITLE',
+              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
