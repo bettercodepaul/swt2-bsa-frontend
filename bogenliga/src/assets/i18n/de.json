@@ -597,9 +597,21 @@
           "TITLE": "Veranstaltung löschen",
           "DESCRIPTION": "Wollen Sie die Veranstaltung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
+        "DELETE_SUCCESS": {
+          "TITLE": "Veranstaltung gelöscht",
+          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich gelöscht"
+        },
         "DELETE_FAILURE": {
           "TITLE": "Löschen fehlgeschlagen",
-          "DESCRIPTION": "Vernastaltung konnte nicht gelöscht werden"
+          "DESCRIPTION": "Veranstaltung konnte nicht gelöscht werden"
+        },
+        "SAVE": {
+          "TITLE": "Veranstaltung angelegt",
+          "DESCRIPTION": "Veranstaltung wurde erfolgreich angelegt"
+        },
+        "UPDATE": {
+          "TITLE": "Aktualisieren erfolgreich",
+          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
         }
     }
   },
