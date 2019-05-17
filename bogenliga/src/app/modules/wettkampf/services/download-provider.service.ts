@@ -5,7 +5,7 @@ import {ResourceProviderService} from '../../shared/data-provider/services/resou
 @Injectable({
   providedIn: 'root'
 })
-export class SetzlisteProviderService extends ResourceProviderService {
+export class DownloadProviderService extends ResourceProviderService {
 
   serviceSubUrl = 'v1/download';
 
