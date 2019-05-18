@@ -547,10 +547,18 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+      "TABLE": {
+        "HEADERS": {
+          "MITGLIED_VORNAME": "Vorname",
+          "MITGLIED_NACHNAME": "Nachname",
+          "MITGLIED_NATIONALITAET": "Nationalität",
+          "MITGLIED_NUMMER": "Mitgliedsnummer"
+        }
+      },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Mannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
