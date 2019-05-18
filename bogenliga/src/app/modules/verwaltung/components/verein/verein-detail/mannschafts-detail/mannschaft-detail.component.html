@@ -80,5 +80,22 @@
       </div>
     </div>
   </form>
+  <div *ngIf="entityExists()">
+    <h5> Mitglieder-Übersicht</h5>
+    <div class="overview-dialog-add">
+      <button class="btn btn-success"
+              routerLink="add">
+        <fa-icon icon="plus"></fa-icon>
+        <span> Neu</span>
+      </button>
+    </div>
+    <bla-data-table [config]="config_table"
+                    [rows]="rows"
+                    [loading]="loading"
+                    (onViewEntry)="onView($event)"
+                    (onEditEntry)="onEdit($event)">
+                    <!--(onDeleteEntry)="onDeleteMitglied($event)"-->
+    </bla-data-table>
+  </div>
 
 </bla-common-dialog>

@@ -5,6 +5,6 @@ export class MannschaftsMitgliedDO implements VersionedDataObject {
   version: number;
 
   mannschaftsId: number;
-  dsbMitgliedsId: number;
+  dsbMitgliedId: number;
   istEingesetzt: boolean;
 }
