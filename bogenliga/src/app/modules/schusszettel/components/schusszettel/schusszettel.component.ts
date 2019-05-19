@@ -12,6 +12,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '@shared/services';
+import {NumberOnlyDirective} from './number.directive';
 
 /**
  * Index generator for tabindex number generation,
@@ -157,15 +158,15 @@ export class SchusszettelComponent implements OnInit {
    * @param satzNr
    * @param pfeilNr
    */
-  onChange(value: any, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
+  onChange(value: string, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
     const match = this['match' + matchNr];
     const satz = match.schuetzen[schuetzenNr][satzNr];
-    if (value.indexOf('+') !== -1) {
-      pfeilNr == 1 ? satz.ringzahlPfeil1 = 10 : satz.ringzahlPfeil2 = 10;
+    if (value.indexOf(NumberOnlyDirective.ALIAS_10) !== -1) {
+      pfeilNr == 1 ? satz.ringzahlPfeil1 = NumberOnlyDirective.MAX_VAL : satz.ringzahlPfeil2 = NumberOnlyDirective.MAX_VAL;
     } else {
-      value = parseInt(value); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
-      value = value > 0 ? value : null;
-      pfeilNr == 1 ? satz.ringzahlPfeil1 = value : satz.ringzahlPfeil2 = value;
+      let realValue = parseInt(value); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
+      realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
+      pfeilNr == 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
     }
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
