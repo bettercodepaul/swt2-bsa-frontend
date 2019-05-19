@@ -101,20 +101,20 @@
                          let-j="index">
               <td *ngIf="j == 0">
                 <input type="number"
-                       [attr.tabindex]="schuetzenNrIdxGen.getNext()"
+                       blaSchuetzenTabIndexDirective
                        [(ngModel)]="passe.schuetzeNr">
               </td>
               <td>
-                <input myNumberOnly
+                <input blaMyNumberOnly
                        type="text"
-                       [attr.tabindex]="ringzahlIdxGen.getNext()"
+                       blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil1"
                        (ngModelChange)="onChange($event, 1, i, j, 1)">
               </td>
               <td>
-                <input myNumberOnly
+                <input blaMyNumberOnly
                        type="text"
-                       [attr.tabindex]="ringzahlIdxGen.getNext()"
+                       blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil2"
                        (ngModelChange)="onChange($event, 1, i, j, 2)">
               </td>
@@ -242,20 +242,20 @@
                          let-j="index">
               <td *ngIf="j == 0">
                 <input type="number"
-                       [attr.tabindex]="schuetzenNrIdxGen.getNext()"
+                       blaSchuetzenTabIndexDirective
                        [(ngModel)]="passe.schuetzeNr">
               </td>
               <td>
-                <input myNumberOnly
+                <input blaMyNumberOnly
                        type="text"
-                       [attr.tabindex]="ringzahlIdxGen.getNext()"
+                       blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil1"
                        (ngModelChange)="onChange($event, 2, i, j, 1)">
               </td>
               <td>
-                <input myNumberOnly
+                <input blaMyNumberOnly
                        type="text"
-                       [attr.tabindex]="ringzahlIdxGen.getNext()"
+                       blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil2"
                        (ngModelChange)="onChange($event, 2, i, j, 2)">
               </td>
