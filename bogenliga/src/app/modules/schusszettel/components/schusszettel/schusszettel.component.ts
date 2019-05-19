@@ -22,7 +22,6 @@ class IndexGenerator {
   currIdx: number;
 
   public getNext() {
-    console.log('Called next, idx: ', this.currIdx)
     if (this.currIdx < this.indices.length) {
       let item = this.indices[this.currIdx];
       this.currIdx += 1;
@@ -66,6 +65,9 @@ class RingzahlIndexGenerator extends IndexGenerator {
   }
 }
 
+export const schuetzenNrIdxGen = new SchuetzenNrIndexGenerator();
+export const ringzahlIdxGen = new RingzahlIndexGenerator();
+
 @Component({
   selector:    'bla-schusszettel',
   templateUrl: './schusszettel.component.html',
@@ -75,8 +77,6 @@ export class SchusszettelComponent implements OnInit {
 
   match1: MatchDO;
   match2: MatchDO;
-  schuetzenNrIdxGen: SchuetzenNrIndexGenerator;
-  ringzahlIdxGen: RingzahlIndexGenerator;
 
   constructor(private schusszettelService: SchusszettelProviderService,
     private route: ActivatedRoute,
@@ -92,9 +92,6 @@ export class SchusszettelComponent implements OnInit {
    */
   ngOnInit() {
     // initialwert schützen inputs
-    this.schuetzenNrIdxGen = new SchuetzenNrIndexGenerator();
-    this.ringzahlIdxGen = new RingzahlIndexGenerator();
-
     this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, []);
     this.match1.nr = 1;
     this.match1.schuetzen = [];

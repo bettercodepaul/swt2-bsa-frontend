@@ -6,6 +6,10 @@ import {SharedModule} from '@shared/shared.module';
 import {SCHUSSZETTEL_ROUTES} from './schusszettel.routing';
 import {SchusszettelComponent} from './components/schusszettel/schusszettel.component';
 import {NumberOnlyDirective} from './components/schusszettel/number.directive';
+import {
+  RingzahlTabIndexDirective,
+  SchuetzenTabIndexDirective
+} from './components/schusszettel/tabindex.directive';
 
 
 @NgModule({
@@ -15,7 +19,7 @@ import {NumberOnlyDirective} from './components/schusszettel/number.directive';
     SharedModule,
     FormsModule
   ],
-  declarations: [SchusszettelComponent, NumberOnlyDirective]
+  declarations: [SchusszettelComponent, NumberOnlyDirective, RingzahlTabIndexDirective, SchuetzenTabIndexDirective]
 })
 export class SchusszettelModule {
 }
