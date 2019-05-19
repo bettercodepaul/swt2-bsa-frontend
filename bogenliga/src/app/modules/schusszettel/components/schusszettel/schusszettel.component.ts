@@ -39,7 +39,6 @@ class SchuetzenNrIndexGenerator extends IndexGenerator {
     this.indices = [1, 2, 3, 34, 35, 36];
     this.currIdx = 0;
   }
-
 }
 
 class RingzahlIndexGenerator extends IndexGenerator {
@@ -81,7 +80,6 @@ export class SchusszettelComponent implements OnInit {
   constructor(private schusszettelService: SchusszettelProviderService,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
-    console.log('Schusszettel Component');
   }
 
   /**
@@ -161,25 +159,13 @@ export class SchusszettelComponent implements OnInit {
    */
   onChange(value: any, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
     const match = this['match' + matchNr];
+    const satz = match.schuetzen[schuetzenNr][satzNr];
     if (value.indexOf('+') !== -1) {
-      switch (pfeilNr) {
-        case 1:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil1 = 10;
-          break;
-        case 2:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil2 = 10;
-          break;
-      }
+      pfeilNr == 1 ? satz.ringzahlPfeil1 = 10 : satz.ringzahlPfeil2 = 10;
     } else {
-      value = +value; // value ist string, ringzahlen sollen number sein -> value in number umwandeln
-      switch (pfeilNr) {
-        case 1:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil1 = value > 0 ? value : null;
-          break;
-        case 2:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil2 = value > 0 ? value : null;
-          break;
-      }
+      value = parseInt(value); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
+      value = value > 0 ? value : null;
+      pfeilNr == 1 ? satz.ringzahlPfeil1 = value : satz.ringzahlPfeil2 = value;
     }
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
@@ -191,9 +177,12 @@ export class SchusszettelComponent implements OnInit {
    * @param satzNr
    */
   private getSumSatz(match: MatchDO, satzNr: number): number {
-    return match.schuetzen[0][satzNr].ringzahlPfeil1 + match.schuetzen[0][satzNr].ringzahlPfeil2
-      + match.schuetzen[1][satzNr].ringzahlPfeil1 + match.schuetzen[1][satzNr].ringzahlPfeil2
-      + match.schuetzen[2][satzNr].ringzahlPfeil1 + match.schuetzen[2][satzNr].ringzahlPfeil2;
+    let sum = 0;
+    for (let i in match.schuetzen) {
+      sum += match.schuetzen[i][satzNr].ringzahlPfeil1;
+      sum += match.schuetzen[i][satzNr].ringzahlPfeil2;
+    }
+    return sum;
   }
 
   /**

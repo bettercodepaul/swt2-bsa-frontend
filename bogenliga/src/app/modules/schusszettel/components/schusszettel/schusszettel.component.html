@@ -100,19 +100,22 @@
                          [ngForOf]="schuetze"
                          let-j="index">
               <td *ngIf="j == 0">
-                <input type="number"
+                <input blaAutoswitch
+                       type="number"
                        blaSchuetzenTabIndexDirective
                        [(ngModel)]="passe.schuetzeNr">
               </td>
               <td>
-                <input blaMyNumberOnly
+                <input blaAutoswitch 
+                       blaMyNumberOnly
                        type="text"
                        blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil1"
                        (ngModelChange)="onChange($event, 1, i, j, 1)">
               </td>
               <td>
-                <input blaMyNumberOnly
+                <input blaAutoswitch
+                       blaMyNumberOnly
                        type="text"
                        blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil2"
@@ -241,19 +244,22 @@
                          [ngForOf]="schuetze"
                          let-j="index">
               <td *ngIf="j == 0">
-                <input type="number"
+                <input blaAutoswitch 
+                       type="number"
                        blaSchuetzenTabIndexDirective
                        [(ngModel)]="passe.schuetzeNr">
               </td>
               <td>
-                <input blaMyNumberOnly
+                <input blaAutoswitch
+                       blaMyNumberOnly
                        type="text"
                        blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil1"
                        (ngModelChange)="onChange($event, 2, i, j, 1)">
               </td>
               <td>
-                <input blaMyNumberOnly
+                <input blaAutoswitch
+                       blaMyNumberOnly
                        type="text"
                        blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil2"
