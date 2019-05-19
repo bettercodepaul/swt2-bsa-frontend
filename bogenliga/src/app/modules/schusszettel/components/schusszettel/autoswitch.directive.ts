@@ -18,7 +18,8 @@ export class AutoswitchDirective {
       const nextVal: number = parseInt((event.key === NumberOnlyDirective.ALIAS_10) ? NumberOnlyDirective.MAX_VAL.toString() : event.key);
       if (NumberOnlyDirective.inRange(nextVal)) {
         let currentTabIndex = parseInt(this.el.nativeElement.getAttribute('tabindex'));
-        document.querySelector('[tabindex="' + (currentTabIndex + 1) + '"]').focus(); // FIXME: dear TypeScript, focus() DOES exist
+        // @ts-ignore FIXME: dear TypeScript, .focus() DOES exist on Element -.-
+        document.querySelector('[tabindex="' + (currentTabIndex + 1) + '"]').focus();
       }
     }
   }
