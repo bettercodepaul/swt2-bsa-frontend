@@ -10,6 +10,7 @@ import {
   RingzahlTabIndexDirective,
   SchuetzenTabIndexDirective
 } from './components/schusszettel/tabindex.directive';
+import {AutoswitchDirective} from './components/schusszettel/autoswitch.directive';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import {
     SharedModule,
     FormsModule
   ],
-  declarations: [SchusszettelComponent, NumberOnlyDirective, RingzahlTabIndexDirective, SchuetzenTabIndexDirective]
+  declarations: [SchusszettelComponent, NumberOnlyDirective, RingzahlTabIndexDirective, SchuetzenTabIndexDirective, AutoswitchDirective]
 })
 export class SchusszettelModule {
 }
