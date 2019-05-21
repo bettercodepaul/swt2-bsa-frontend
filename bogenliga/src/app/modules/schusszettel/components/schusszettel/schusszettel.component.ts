@@ -25,8 +25,8 @@ export class SchusszettelComponent implements OnInit {
   match2: MatchDO;
 
   constructor(private schusszettelService: SchusszettelProviderService,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+    private route: ActivatedRoute,
+    private notificationService: NotificationService) {
     console.log('Schusszettel Component');
   }
 
@@ -39,11 +39,11 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     // initialwert schützen inputs
 
-    this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, []);
+    this.match1 = new MatchDO(null, null, null, 1,  1, 1, 1, []);
     this.match1.nr = 1;
     this.match1.schuetzen = [];
 
-    this.match2 = new MatchDO(null, null, null, 1, 1, 1, 1, []);
+    this.match2 = new MatchDO(null, null, null, 1,  1, 1, 1, []);
     this.match2.nr = 1;
     this.match2.schuetzen = [];
 
@@ -147,27 +147,73 @@ export class SchusszettelComponent implements OnInit {
    * Sets satzpunkte and matchpunkte of both matches according to the sumSatzx and satzpunkte.
    */
   private setPoints() {
-    let counterMatch1 = 0;
-    let counterMatch2 = 0;
-    for (let i = 0; i < 5; i++) {
-      if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
-        counterMatch1++;
-      } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
-        counterMatch2++;
-      }
+
+    //kumulativ
+    if (this.match1.wettkampfTypId == 0) {
+      this.setKummulativePoints();
+    } else {
+      this.setSatzPoints();
     }
-    const draws = 5 - (counterMatch1 + counterMatch2);
-    this.match1.satzpunkte = (counterMatch1 * 2) + draws;
-    this.match2.satzpunkte = (counterMatch2 * 2) + draws;
-    if (this.match1.satzpunkte > this.match2.satzpunkte) {
+    if (this.match1.satzpunkte >= 6) {
       this.match1.matchpunkte = 2;
       this.match2.matchpunkte = 0;
-    } else if (this.match1.satzpunkte < this.match2.satzpunkte) {
+    } else if (this.match2.satzpunkte >= 6) {
       this.match1.matchpunkte = 0;
       this.match2.matchpunkte = 2;
+    }
+  }
+
+  private setSatzPoints() {
+    if (this.match1.matchpunkte == 2 || this.match2.matchpunkte == 2) {
+      this.notificationService.showNotification({
+        id:          'schusszettelEntschieden',
+        title:       'Unnötige Angaben',
+        description: 'Match ist schon entschieden, keine weiteren Punkte benötigt',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.ACCEPTED
+      });
     } else {
-      this.match1.matchpunkte = 1;
-      this.match2.matchpunkte = 1;
+      let counterMatch1 = 0;
+      let counterMatch2 = 0;
+      for (let i = 0; i < 5; i++) {
+        if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
+          counterMatch1++;
+        } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
+          counterMatch2++;
+        }
+      }
+      const draws = 5 - (counterMatch1 + counterMatch2);
+      this.match1.satzpunkte = (counterMatch1 * 2) + draws;
+      this.match2.satzpunkte = (counterMatch2 * 2) + draws;
+      if (this.match1.satzpunkte = this.match2.satzpunkte) {
+        this.match1.matchpunkte = 0;
+        this.match2.matchpunkte = 0;
+      } else if (this.match1.satzpunkte < this.match2.satzpunkte) {
+        this.match1.matchpunkte = 0;
+        this.match2.matchpunkte = 0;
+      } else {
+        this.match1.matchpunkte = 1;
+        this.match2.matchpunkte = 1;
+      }
+    }
+  }
+
+  private setKummulativePoints() {
+    let kumuluativ1 = 0;
+    let kumuluativ2 = 0;
+
+    for (let i = 0; i < 3; i++) {
+      kumuluativ1 += this.match1.sumSatz[i];
+      kumuluativ2 += this.match2.sumSatz[i];
+    }
+    if (kumuluativ1 > kumuluativ2) {
+      this.match1.satzpunkte = 6;
+      this.match2.satzpunkte = 0;
+    } else {
+      this.match1.satzpunkte = 0;
+      this.match2.satzpunkte = 6;
     }
   }
 
