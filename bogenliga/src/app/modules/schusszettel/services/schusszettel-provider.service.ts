@@ -23,10 +23,13 @@ export class SchusszettelProviderService extends DataProviderService {
   }
 
   public findMatches(match1Id: string, match2Id: string): Promise<BogenligaResponse<Array<MatchDO>>> {
+    console.log("Test #############");
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<MatchDTO>>(new UriBuilder().fromPath(this.getUrl()).path(match1Id + '/' + match2Id).build())
           .then((data: Array<MatchDTO>) => {
+            console.log('Service before map: ', data)
             const matches = [SchusszettelMapper.matchToDO(data[0]), SchusszettelMapper.matchToDO(data[1])];
+            console.log('Service: ', matches);
             resolve({result: RequestResult.SUCCESS, payload: matches});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {

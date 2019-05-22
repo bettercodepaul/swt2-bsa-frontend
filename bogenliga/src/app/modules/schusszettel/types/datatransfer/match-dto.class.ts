@@ -8,6 +8,7 @@ export class MatchDTO implements VersionedDataTransferObject {
   mannschaftId: number;
   mannschaftName: string;
   wettkampfId: number;
+  wettkampfTyp: string;
   nr: number;
   begegnung: number;
   scheibenNummer: number;
@@ -18,15 +19,16 @@ export class MatchDTO implements VersionedDataTransferObject {
   passen: Array<PasseDTO>;
 
   constructor(id?: number,
-              mannschaftId?: number,
-              mannschaftName?: string,
-              wettkampfId?: number,
-              matchNr?: number,
-              begegnung?: number,
-              scheibennummer?: number,
-              matchpunkte?: number,
-              satzpunkte?: number,
-              passen?: Array<PasseDTO>) {
+        mannschaftId?: number,
+        mannschaftName?: string,
+        wettkampfId?: number,
+        matchNr?: number,
+        begegnung?: number,
+        scheibennummer?: number,
+        matchpunkte?: number,
+        satzpunkte?: number,
+        passen?: Array<PasseDTO>,
+        wettkampfTyp?: string) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';
@@ -34,8 +36,9 @@ export class MatchDTO implements VersionedDataTransferObject {
     this.nr = !!matchNr ? matchNr : null;
     this.begegnung = !!begegnung ? begegnung : null;
     this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
-    this.matchpunkte = !!matchpunkte ? matchpunkte : null;
-    this.satzpunkte = !!satzpunkte ? satzpunkte : null;
+    this.matchpunkte = matchpunkte;
+    this.satzpunkte = satzpunkte;
     this.passen = !!passen ? passen : [];
+    this.wettkampfTyp = wettkampfTyp;
   }
 }

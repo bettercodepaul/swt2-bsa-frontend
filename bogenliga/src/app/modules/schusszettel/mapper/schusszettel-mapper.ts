@@ -44,7 +44,8 @@ export class SchusszettelMapper {
       sumSatz,
       payload.matchpunkte,
       payload.satzpunkte,
-      schuetzen);
+      schuetzen,
+      payload.wettkampfTyp);
   }
 
   static matchToDTO(payload: MatchDO): MatchDTO {
@@ -64,7 +65,8 @@ export class SchusszettelMapper {
       payload.scheibenNummer,
       payload.matchpunkte,
       payload.satzpunkte,
-      passen);
+      passen,
+      payload.wettkampfTyp);
   }
 
   static passeToDO(payload: PasseDTO): PasseDO {

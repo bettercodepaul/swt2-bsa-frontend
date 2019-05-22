@@ -39,16 +39,15 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     // initialwert schützen inputs
 
-    this.match1 = new MatchDO(null, null, null, 1,  1, 1, 1, []);
+    this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, [],1,1,null,null);
     this.match1.nr = 1;
     this.match1.schuetzen = [];
 
-    this.match2 = new MatchDO(null, null, null, 1,  1, 1, 1, []);
+    this.match2 = new MatchDO(null, null, null, 1, 1, 1, 1, [],1,1,null,null);
     this.match2.nr = 1;
     this.match2.schuetzen = [];
 
     this.initSchuetzen();
-
     this.route.params.subscribe((params) => {
       if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
         const match1id = params['match1id'];
@@ -56,6 +55,7 @@ export class SchusszettelComponent implements OnInit {
         this.schusszettelService.findMatches(match1id, match2id)
             .then((data: BogenligaResponse<Array<MatchDO>>) => {
               this.match1 = data.payload[0];
+              console.log(data.payload[0]);
               this.match2 = data.payload[1];
               if (this.match1.schuetzen.length <= 0 || this.match2.schuetzen.length <= 0) {
                 this.initSchuetzen();
@@ -66,8 +66,11 @@ export class SchusszettelComponent implements OnInit {
             }, (error) => {
               console.log(error);
             });
+
       }
     });
+
+
   }
 
   /**
@@ -75,6 +78,7 @@ export class SchusszettelComponent implements OnInit {
    * Pushes three arrays into schuetzen, then pushes five PasseDO in each of the three arrays.
    */
   private initSchuetzen() {
+    console.log("Init Schützen");
     for (let i = 0; i < 3; i++) {
       this.match1.schuetzen.push(new Array<PasseDO>());
       this.match2.schuetzen.push(new Array<PasseDO>());
@@ -130,6 +134,7 @@ export class SchusszettelComponent implements OnInit {
     }
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
+
   }
 
   /**
@@ -147,13 +152,14 @@ export class SchusszettelComponent implements OnInit {
    * Sets satzpunkte and matchpunkte of both matches according to the sumSatzx and satzpunkte.
    */
   private setPoints() {
-
     //kumulativ
-    if (this.match1.wettkampfTypId == 0) {
+    console.log(this.match1.wettkampfTyp);
+    if (this.match1.wettkampfTyp === "Liga kummutativ") {
       this.setKummulativePoints();
-    } else {
+    } else if (this.match1.wettkampfTyp === "Liga Satzsystem") {
       this.setSatzPoints();
     }
+
     if (this.match1.satzpunkte >= 6) {
       this.match1.matchpunkte = 2;
       this.match2.matchpunkte = 0;
@@ -187,13 +193,9 @@ export class SchusszettelComponent implements OnInit {
       const draws = 5 - (counterMatch1 + counterMatch2);
       this.match1.satzpunkte = (counterMatch1 * 2) + draws;
       this.match2.satzpunkte = (counterMatch2 * 2) + draws;
-      if (this.match1.satzpunkte = this.match2.satzpunkte) {
-        this.match1.matchpunkte = 0;
-        this.match2.matchpunkte = 0;
-      } else if (this.match1.satzpunkte < this.match2.satzpunkte) {
-        this.match1.matchpunkte = 0;
-        this.match2.matchpunkte = 0;
-      } else {
+      this.match1.matchpunkte = 0;
+      this.match2.matchpunkte = 0;
+      if (this.match1.satzpunkte === this.match2.satzpunkte) {
         this.match1.matchpunkte = 1;
         this.match2.matchpunkte = 1;
       }
@@ -208,10 +210,11 @@ export class SchusszettelComponent implements OnInit {
       kumuluativ1 += this.match1.sumSatz[i];
       kumuluativ2 += this.match2.sumSatz[i];
     }
+    console.log("Kumulativ");
     if (kumuluativ1 > kumuluativ2) {
       this.match1.satzpunkte = 6;
       this.match2.satzpunkte = 0;
-    } else {
+    } else if (kumuluativ1 < kumuluativ2) {
       this.match1.satzpunkte = 0;
       this.match2.satzpunkte = 6;
     }
