@@ -85,8 +85,9 @@
         <select class="form-control"
                 id="regionUebergeordnet"
                 name="regionUebergeordnet"
-                [(ngModel)]="currentRegion.regionUebergeordnet">
-          <option *ngFor="let region of regionen"> {{region.regionName}}</option>
+                #regionUebergeordnet="ngModel"
+                [(ngModel)]="currentUebergeordneteRegion">
+          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of allUebergeordneteRegionen"> {{uebergeordnet.regionName}}</option>
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.ERROR' | translate }}
