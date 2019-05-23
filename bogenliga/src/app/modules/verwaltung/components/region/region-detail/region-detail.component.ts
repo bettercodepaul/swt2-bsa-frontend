@@ -85,9 +85,9 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
     if(typeof this.currentUebergeordneteRegion === 'undefined'){
-      this.currentRegion.regionUebergeordnetId = null;
+      this.currentRegion.regionUebergeordnet = null;
     }else{
-      this.currentRegion.regionUebergeordnetId = this.currentUebergeordneteRegion.id;
+      this.currentRegion.regionUebergeordnet = this.currentUebergeordneteRegion.id;
     }
 
     console.log('Saving region: ', this.currentRegion);
@@ -130,7 +130,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
-    this.currentRegion.regionUebergeordnetId = this.currentUebergeordneteRegion.id;
+    this.currentRegion.regionUebergeordnet = this.currentUebergeordneteRegion.id;
     // persist
 
     this.regionProvider.update(this.currentRegion)
@@ -288,7 +288,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     if (this.id === 'add') {
       this.currentUebergeordneteRegion = this.allUebergeordneteRegionen[0];
     } else {
-      this.currentUebergeordneteRegion = this.allUebergeordneteRegionen.filter((uebergeordnet) => uebergeordnet.id === this.currentRegion.regionUebergeordnetId)[0];
+      this.currentUebergeordneteRegion = this.allUebergeordneteRegionen.filter((uebergeordnet) => uebergeordnet.id === this.currentRegion.regionUebergeordnet)[0];
     }
     this.loading = false;
   }
