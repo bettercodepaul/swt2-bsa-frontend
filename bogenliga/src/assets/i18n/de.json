@@ -530,24 +530,24 @@
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen",
-        "NOTIFICATION": {
-          "DELETE": {
-            "TITLE": "Region löschen",
-            "DESCRIPTION": "Wollen Sie die Region mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-          },
-          "DELETE_SUCCESS": {
-            "TITLE": "Erfolg",
-            "DESCRIPTION": "Region wurde erfolgreich gelöscht."
-          },
-          "DELETE_FAILURE": {
-            "TITLE": "Fehler beim Löschen",
-            "DESCRIPTION": "Region konnte nicht gelöscht werden."
-          },
-          "SAVE": {
-            "TITLE": "Erfolg",
-            "DESCRIPTION": "Region wurde erfolgreich gespeichert."
-          }
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Region löschen",
+          "DESCRIPTION": "Wollen Sie die Region mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Region wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Region konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Region wurde erfolgreich gespeichert."
         }
       }
     },
