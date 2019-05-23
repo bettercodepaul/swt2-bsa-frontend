@@ -16,6 +16,10 @@ import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {REGION_DETAIL_CONFIG} from './region-detail.config';
+import {UserProfileDO} from '@user/types/user-profile-do.class';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
+import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
+import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -34,13 +38,19 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public config = REGION_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentRegion: RegionDO = new RegionDO();
-  public regionen: Array<RegionDO> = [new RegionDO()];
+
   public possibleRegionTypes: Array<string> = ['Bundesverband', 'Landesverband', 'Bezirk', 'Kreis'];
+
+  public currentUebergeordneteRegion: RegionDO = new RegionDO();
+  public allUebergeordneteRegionen: Array<RegionDO> = [new RegionDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
 
+  public id;
+
   constructor(private regionProvider: RegionDataProviderService,
+              private userProvider: UserProfileDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -59,6 +69,9 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
           this.currentRegion = new RegionDO();
+
+          this.loadUebergeordnete();
+
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
@@ -71,6 +84,12 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
+
+    if(typeof this.currentUebergeordneteRegion === 'undefined'){
+      this.currentRegion.regionUebergeordnetId = null;
+    }else{
+      this.currentRegion.regionUebergeordnetId = this.currentUebergeordneteRegion.id;
+    }
 
     console.log('Saving region: ', this.currentRegion);
 
@@ -112,7 +131,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
-
+    this.currentRegion.regionUebergeordnetId = this.currentUebergeordneteRegion.id;
     // persist
 
     this.regionProvider.update(this.currentRegion)
@@ -196,10 +215,16 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
 
+  private loadUebergeordnete() {
+    this.regionProvider.findAll()
+        .then((response: BogenligaResponse<RegionDO[]>) => this.handlUebergeordnetResponseArraySuccess (response))
+        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleUebergeordnetResponseArrayFailure (response));
+  }
+
   private handleSuccess(response: BogenligaResponse<RegionDO>) {
     this.currentRegion = response.payload;
     // the current Region will be removed from the Array to avoid a self-reference as superordinate Region
-    this.regionen = this.regionen.filter((region) => region.regionName !== this.currentRegion.regionName);
+    this.allUebergeordneteRegionen = this.allUebergeordneteRegionen.filter((region) => region.regionName !== this.currentRegion.regionName);
 
     this.loading = false;
   }
@@ -254,13 +279,29 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   }
 
   private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
-    this.regionen = [];
+    this.allUebergeordneteRegionen = [];
+    this.loading = false;
+  }
+
+  private handlUebergeordnetResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
+    this.allUebergeordneteRegionen = [];
+    this.allUebergeordneteRegionen = response.payload;
+    if (this.id === 'add') {
+      this.currentUebergeordneteRegion = this.allUebergeordneteRegionen[0];
+    } else {
+      this.currentUebergeordneteRegion = this.allUebergeordneteRegionen.filter((uebergeordnet) => uebergeordnet.id === this.currentRegion.regionUebergeordnetId)[0];
+    }
+    this.loading = false;
+  }
+
+  private handleUebergeordnetResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
+    this.allUebergeordneteRegionen = [];
     this.loading = false;
   }
 
   private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
-    this.regionen = []; // reset array to ensure change detection
-    this.regionen = response.payload;
+    this.allUebergeordneteRegionen = []; // reset array to ensure change detection
+    this.allUebergeordneteRegionen = response.payload;
     // setting the Typ as a default Typ
     this.currentRegion.regionTyp = this.possibleRegionTypes[0];
 
