@@ -39,7 +39,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public ButtonType = ButtonType;
   public currentRegion: RegionDO = new RegionDO();
 
-  public possibleRegionTypes: Array<string> = ['Bundesverband', 'Landesverband', 'Bezirk', 'Kreis'];
+  public possibleRegionTypes: Array<string> = ['BUNDESVERBAND', 'LANDESVERBAND', 'BEZIRK', 'KREIS'];
 
   public currentUebergeordneteRegion: RegionDO = new RegionDO();
   public allUebergeordneteRegionen: Array<RegionDO> = [new RegionDO()];
@@ -62,14 +62,13 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
     this.notificationService.discardNotification();
 
-    this.loadRegions(); // Request all regions from the backend
-
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
           this.currentRegion = new RegionDO();
 
+          this.loadRegions();
           this.loadUebergeordnete();
 
           this.loading = false;

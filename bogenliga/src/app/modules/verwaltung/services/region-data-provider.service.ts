@@ -8,10 +8,9 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '@shared/services';
-import {fromPayloadArray} from '../mapper/region-mapper';
+import {CurrentUserService} from '../../shared/services/current-user';
+import {fromPayload, fromPayloadArray} from '../mapper/region-mapper';
 import {RegionDO} from '../types/region-do.class';
-import {fromPayload} from '@verwaltung/mapper/region-mapper';
 
 @Injectable({
   providedIn: 'root'
