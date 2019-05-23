@@ -23,18 +23,21 @@
             <label>{{i + 1}}.S.Pkt</label>
             <input type="text"
                    [value]="sum"
+                   tabindex="-1"
                    readonly>
           </td>
           <td>
             <label>Summe S.pkt</label>
             <input type="text"
                    [value]="match1.satzpunkte"
+                   tabindex="-1"
                    readonly>
           </td>
           <td>
             <label>Matchpkte</label>
             <input type="text"
                    [value]="match1.matchpunkte"
+                   tabindex="-1"
                    readonly>
           </td>
         </tr>
@@ -42,16 +45,19 @@
           <td *ngFor="let sum of match2.sumSatz">
             <input type="text"
                    [value]="sum"
+                   tabindex="-1"
                    readonly>
           </td>
           <td>
             <input type="text"
                    [value]="match2.satzpunkte"
+                   tabindex="-1"
                    readonly>
           </td>
           <td>
             <input type="text"
                    [value]="match2.matchpunkte"
+                   tabindex="-1"
                    readonly>
           </td>
         </tr>
@@ -94,18 +100,24 @@
                          [ngForOf]="schuetze"
                          let-j="index">
               <td *ngIf="j == 0">
-                <input type="number"
+                <input blaAutoswitch
+                       type="number"
+                       blaSchuetzenTabIndexDirective
                        [(ngModel)]="passe.schuetzeNr">
               </td>
               <td>
-                <input myNumberOnly
+                <input blaAutoswitch 
+                       blaMyNumberOnly
                        type="text"
+                       blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil1"
                        (ngModelChange)="onChange($event, 1, i, j, 1)">
               </td>
               <td>
-                <input myNumberOnly
+                <input blaAutoswitch
+                       blaMyNumberOnly
                        type="text"
+                       blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil2"
                        (ngModelChange)="onChange($event, 1, i, j, 2)">
               </td>
@@ -121,6 +133,7 @@
               <td>
                 <input type="number"
                        [value]="sum"
+                       tabindex="-1"
                        readonly>
               </td>
             </ng-template>
@@ -154,18 +167,21 @@
             <label>{{i + 1}}.S.Pkt</label>
             <input type="text"
                    [value]="sum"
+                   tabindex="-1"
                    readonly>
           </td>
           <td>
             <label>Summe S.pkt</label>
             <input type="text"
                    [value]="match1.satzpunkte"
+                   tabindex="-1"
                    readonly>
           </td>
           <td>
             <label>Matchpkte</label>
             <input type="text"
                    [value]="match1.matchpunkte"
+                   tabindex="-1"
                    readonly>
           </td>
         </tr>
@@ -173,15 +189,18 @@
           <td *ngFor="let sum of match2.sumSatz">
             <input type="text"
                    [value]="sum"
+                   tabindex="-1"
                    readonly>
           </td>
           <td>
             <input type="text"
+                   tabindex="-1"
                    [value]="match2.satzpunkte"
                    readonly>
           </td>
           <td>
             <input type="text"
+                   tabindex="-1"
                    [value]="match2.matchpunkte"
                    readonly>
           </td>
@@ -225,18 +244,24 @@
                          [ngForOf]="schuetze"
                          let-j="index">
               <td *ngIf="j == 0">
-                <input type="number"
+                <input blaAutoswitch 
+                       type="number"
+                       blaSchuetzenTabIndexDirective
                        [(ngModel)]="passe.schuetzeNr">
               </td>
               <td>
-                <input myNumberOnly
+                <input blaAutoswitch
+                       blaMyNumberOnly
                        type="text"
+                       blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil1"
                        (ngModelChange)="onChange($event, 2, i, j, 1)">
               </td>
               <td>
-                <input myNumberOnly
+                <input blaAutoswitch
+                       blaMyNumberOnly
                        type="text"
+                       blaRingzahlTabIndexDirective
                        [ngModel]="passe.ringzahlPfeil2"
                        (ngModelChange)="onChange($event, 2, i, j, 2)">
               </td>
@@ -252,6 +277,7 @@
               <td>
                 <input type="number"
                        [value]="sum"
+                       tabindex="-1"
                        readonly>
               </td>
             </ng-template>

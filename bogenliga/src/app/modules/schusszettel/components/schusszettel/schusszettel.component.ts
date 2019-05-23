@@ -6,13 +6,67 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {isUndefined} from '@shared/functions';
 import {ActivatedRoute} from '@angular/router';
 import {
-  Notification,
   NotificationOrigin,
   NotificationService,
   NotificationSeverity,
-  NotificationType, NotificationUserAction
+  NotificationType,
+  NotificationUserAction
 } from '@shared/services';
+import {NumberOnlyDirective} from './number.directive';
 
+/**
+ * Index generator for tabindex number generation,
+ * required for tab order in schusszettel form
+ */
+class IndexGenerator {
+  indices: Array<number>;
+  currIdx: number;
+
+  public getNext() {
+    if (this.currIdx < this.indices.length) {
+      let item = this.indices[this.currIdx];
+      this.currIdx += 1;
+      return item;
+    } else {
+      this.currIdx = 0;
+      return this.getNext();
+    }
+  }
+}
+
+class SchuetzenNrIndexGenerator extends IndexGenerator {
+  constructor() {
+    super();
+    this.indices = [1, 2, 3, 34, 35, 36];
+    this.currIdx = 0;
+  }
+}
+
+class RingzahlIndexGenerator extends IndexGenerator {
+  constructor() {
+    super();
+    let rows = [
+      [4, 29], // top left first table, top right first table
+      [6, 31], // mid left first table, mid right first table
+      [8, 33], // bottom left first table, bottom right first table
+      [37, 61], // top left second table, top right second table
+      [39, 63], // mid left second table, mid right second table
+      [41, 65], // bottom left second table, bottom right second table
+    ];
+    this.indices = [];
+    for (let i = 0; i < rows.length; i++) {
+      let rowItem = rows[i];
+      for (let i = rowItem[0]; i <= rowItem[1]; i += 6) {
+        this.indices.push(i);
+        this.indices.push(i + 1);
+      }
+    }
+    this.currIdx = 0;
+  }
+}
+
+export const schuetzenNrIdxGen = new SchuetzenNrIndexGenerator();
+export const ringzahlIdxGen = new RingzahlIndexGenerator();
 
 @Component({
   selector:    'bla-schusszettel',
@@ -27,7 +81,6 @@ export class SchusszettelComponent implements OnInit {
   constructor(private schusszettelService: SchusszettelProviderService,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
-    console.log('Schusszettel Component');
   }
 
   /**
@@ -110,31 +163,18 @@ export class SchusszettelComponent implements OnInit {
    * @param satzNr
    * @param pfeilNr
    */
-  onChange(value: any, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
+  onChange(value: string, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
     const match = this['match' + matchNr];
-    if (value.indexOf('+') !== -1) {
-      switch (pfeilNr) {
-        case 1:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil1 = 10;
-          break;
-        case 2:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil2 = 10;
-          break;
-      }
+    const satz = match.schuetzen[schuetzenNr][satzNr];
+    if (value.indexOf(NumberOnlyDirective.ALIAS_10) !== -1) {
+      pfeilNr == 1 ? satz.ringzahlPfeil1 = NumberOnlyDirective.MAX_VAL : satz.ringzahlPfeil2 = NumberOnlyDirective.MAX_VAL;
     } else {
-      value = +value; // value ist string, ringzahlen sollen number sein -> value in number umwandeln
-      switch (pfeilNr) {
-        case 1:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil1 = value > 0 ? value : null;
-          break;
-        case 2:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil2 = value > 0 ? value : null;
-          break;
-      }
+      let realValue = parseInt(value); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
+      realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
+      pfeilNr == 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
     }
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
-
   }
 
   /**
@@ -143,9 +183,12 @@ export class SchusszettelComponent implements OnInit {
    * @param satzNr
    */
   private getSumSatz(match: MatchDO, satzNr: number): number {
-    return match.schuetzen[0][satzNr].ringzahlPfeil1 + match.schuetzen[0][satzNr].ringzahlPfeil2
-      + match.schuetzen[1][satzNr].ringzahlPfeil1 + match.schuetzen[1][satzNr].ringzahlPfeil2
-      + match.schuetzen[2][satzNr].ringzahlPfeil1 + match.schuetzen[2][satzNr].ringzahlPfeil2;
+    let sum = 0;
+    for (let i in match.schuetzen) {
+      sum += match.schuetzen[i][satzNr].ringzahlPfeil1;
+      sum += match.schuetzen[i][satzNr].ringzahlPfeil2;
+    }
+    return sum;
   }
 
   /**
