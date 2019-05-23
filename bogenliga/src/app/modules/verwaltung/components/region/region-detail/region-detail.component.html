@@ -39,6 +39,8 @@
         <input type="text"
                class="form-control"
                required
+               minlength="7"
+               maxlength="7"
                id="regionContraction"
                name="regionContraction"
                #regionContraction="ngModel"
@@ -65,6 +67,7 @@
                 name="regionTyp"
                 #regionTyp="ngModel"
                 [(ngModel)]="currentRegion.regionTyp">
+          <option selected="selected">{{currentRegion.regionTyp}}</option>
           <option *ngFor="let typ of possibleRegionTypes"> {{typ}}</option>
           placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.SUPERORDINATE.PLACEHOLDER' | translate }}">
         </select>
@@ -87,6 +90,7 @@
                 name="regionUebergeordnet"
                 #regionUebergeordnet="ngModel"
                 [(ngModel)]="currentUebergeordneteRegion">
+          <option selected="selected">{{currentUebergeordneteRegion.regionName}}</option>
           <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of allUebergeordneteRegionen"> {{uebergeordnet.regionName}}</option>
         </select>
         <div class="invalid-feedback">
