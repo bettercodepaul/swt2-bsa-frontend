@@ -82,8 +82,8 @@ label {
 }
 
 @media print {
-  td{
-    border: solid;
+  input {
+    border: 2px solid #dee2e6;
   }
   h1{
     font-size: 30px;
