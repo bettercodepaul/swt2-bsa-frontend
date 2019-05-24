@@ -78,12 +78,18 @@ label {
 }
 
 .btn {
-  margin: 20px 15px 20px 20px;
+  margin: 0px 15px 20px 20px;
+}
+.signature, hr {
+  visibility: hidden;
 }
 
 @media print {
   input {
     border: 2px solid #dee2e6;
+    height: 45px;
+    width: 45px;
+    font-size: 25px;
   }
   h1{
     font-size: 30px;
@@ -91,7 +97,38 @@ label {
   h3 {
     font-size: 20px;
   }
+
+  .match1{
+    margin-bottom: 1cm;
+  }
+
+  .match2 {
+    margin-top: 1cm;
+  }
+
+  .signature span {
+    visibility: visible;
+    float: right;
+    margin-top: 0.5cm;
+    margin-bottom: 1cm;
+    border-top: 1px solid black;
+    display: inline-block;
+    width: 30%;
+  }
+
+  hr {
+    visibility: visible;
+    width: 100%;
+    height: 5px;
+    border-style: dashed;
+    size: 1px;
+    background: #dee2e6;
+    margin-top: 2.5cm;
+    margin-bottom: 0.5cm;
+  }
+
 }
+
 
 
 
