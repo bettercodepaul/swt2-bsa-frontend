@@ -1,7 +1,7 @@
 <div class="wettkaempfe container">
 
   <!-- match1 -->
-  <div class="match1">
+  <div class="match1 print">
 
     <div class="match">
       <h1>{{match1.mannschaftName}}</h1>
@@ -145,7 +145,7 @@
   </div> <!-- ende match1 -->
 
   <!-- match2 -->
-  <div class="match2">
+  <div class="match2 print">
 
     <div class="match">
       <h1>{{match2.mannschaftName}}</h1>
@@ -291,4 +291,10 @@
   <button class="btn btn-primary saveButton"
           (click)="save()">Speichern
   </button>
+
+  <button class="btn btn-primary printButton"
+          onclick="window.print();return false;">Drucken
+  </button>
+
+
 </div>

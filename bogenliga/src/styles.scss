@@ -171,6 +171,16 @@ a:hover, a:focus {
   }
 }
 
+@media print {
+  body { visibility: hidden; }
+  .print{ visibility: visible; }
+  body { height: auto; }
+  @page{margin: 2cm;}
+  table, figure { page-break-inside: avoid;  }
+
+}
+
+
 
 
 .environment-corner-ribbon {
