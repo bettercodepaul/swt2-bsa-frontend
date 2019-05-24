@@ -77,10 +77,25 @@ label {
   border: 2px solid rgba(0,0,0,.1);
 }
 
-.saveButton {
-  margin-bottom: 20px;
+.btn {
+  margin: 20px 15px 20px 20px;
 }
 
 .schuetzensumme {
   font-size: 30px;
 }
+
+@media print {
+  td{
+    border: solid;
+  }
+  h1{
+    font-size: 30px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+}
+
+
+
