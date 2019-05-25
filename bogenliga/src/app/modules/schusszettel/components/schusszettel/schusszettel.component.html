@@ -70,12 +70,13 @@
              style="width:100%">
         <thead>
         <tr>
-          <th rowspan="2">Schuetze</th>
+          <th rowspan="2">Schütze</th>
           <th colspan="2">1. Satz / Pfeile</th>
           <th colspan="2">2. Satz / Pfeile</th>
           <th colspan="2">3. Satz / Pfeile</th>
           <th colspan="2">4. Satz / Pfeile</th>
           <th colspan="2">5. Satz / Pfeile</th>
+          <th></th>
         </tr>
         <tr>
           <th>pf. 1</th>
@@ -88,6 +89,7 @@
           <th>pf. 2</th>
           <th>pf. 1</th>
           <th>pf. 2</th>
+          <th>Summe</th>
         </tr>
         </thead>
         <ng-template ngFor
@@ -106,7 +108,7 @@
                        [(ngModel)]="passe.schuetzeNr">
               </td>
               <td>
-                <input blaAutoswitch 
+                <input blaAutoswitch
                        blaMyNumberOnly
                        type="text"
                        blaRingzahlTabIndexDirective
@@ -122,6 +124,9 @@
                        (ngModelChange)="onChange($event, 1, i, j, 2)">
               </td>
             </ng-template>
+            <td class="schuetzensumme">
+              {{getSummeSchuetze(i, 1)}}
+            </td>
           </tr>
           <tr *ngIf="i >= match1.schuetzen.length - 1">
             <td></td>
@@ -214,12 +219,13 @@
         style="width:100%">
         <thead>
         <tr>
-          <th rowspan="2">Schuetze</th>
+          <th rowspan="2">Schütze</th>
           <th colspan="2">1. Satz / Pfeile</th>
           <th colspan="2">2. Satz / Pfeile</th>
           <th colspan="2">3. Satz / Pfeile</th>
           <th colspan="2">4. Satz / Pfeile</th>
           <th colspan="2">5. Satz / Pfeile</th>
+          <th></th>
         </tr>
         <tr>
           <th>pf. 1</th>
@@ -232,6 +238,7 @@
           <th>pf. 2</th>
           <th>pf. 1</th>
           <th>pf. 2</th>
+          <th>Summe</th>
         </tr>
         </thead>
         <ng-template ngFor
@@ -266,6 +273,9 @@
                        (ngModelChange)="onChange($event, 2, i, j, 2)">
               </td>
             </ng-template>
+            <td class="schuetzensumme">
+              {{getSummeSchuetze(i, 2)}}
+            </td>
           </tr>
           <tr *ngIf="i >= match2.schuetzen.length - 1">
             <td></td>
