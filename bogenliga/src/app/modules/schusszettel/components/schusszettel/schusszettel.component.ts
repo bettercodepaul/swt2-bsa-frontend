@@ -292,4 +292,13 @@ export class SchusszettelComponent implements OnInit {
       this.match2.sumSatz[i] = this.getSumSatz(this.match2, i);
     }
   }
+
+  private getSummeSchuetze(schuetzeNr: number, matchNr: number): number {
+    let sum = 0;
+    let match = this['match' + matchNr];
+    for (let passe of match.schuetzen[schuetzeNr]) {
+      sum += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
+    }
+    return sum;
+  }
 }
