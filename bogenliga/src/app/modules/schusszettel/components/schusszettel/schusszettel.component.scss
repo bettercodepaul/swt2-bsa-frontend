@@ -77,6 +77,10 @@ label {
   border: 2px solid rgba(0,0,0,.1);
 }
 
+.schuetzensumme {
+  font-size: 30px;
+}
+
 .btn {
   margin: 0px 15px 20px 20px;
 }
@@ -84,6 +88,7 @@ label {
 .signature, hr {
   visibility: hidden;
 }
+
 
 @media print {
   input {
