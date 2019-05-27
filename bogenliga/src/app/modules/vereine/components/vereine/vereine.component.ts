@@ -45,13 +45,17 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     this.loadVereine();
+
+
   }
 
   // when a Verein gets selected from the list
   public onSelect($event: VereinDO[]): void {
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
-    this.selectedVereinsId = this.selectedDTOs[0].id;
+    if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
+      this.selectedVereinsId = this.selectedDTOs[0].id;
+    }
     this.rows = [];
     this.tableContent = [];
     this.loadTableRows();
@@ -74,6 +78,16 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
   }
 
+  public onView(versionedDataObject: VersionedDataObject): void {
+
+  }
+
+  public onEdit(versionedDataObject: VersionedDataObject): void {
+  }
+
+  public onDelete(versionedDataObject: VersionedDataObject): void {
+  }
+
   // backend-call to get the list of vereine
   private loadVereine(): void {
     this.vereine = [];
@@ -81,7 +95,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
         .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
-
 
   // starts the backend-calls to search for the table content
   private loadTableRows() {
@@ -111,7 +124,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
     }
   }
-
 
   private handleFindWettkaempfeFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
     this.rows = [];
@@ -158,17 +170,5 @@ export class VereineComponent extends CommonComponent implements OnInit {
       this.loadingTable = false;
     }
   }
-
-
-  public onView(versionedDataObject: VersionedDataObject): void {
-
-  }
-
-  public onEdit(versionedDataObject: VersionedDataObject): void {
-  }
-
-
-  public onDelete(versionedDataObject: VersionedDataObject): void {
-     }
 }
 
