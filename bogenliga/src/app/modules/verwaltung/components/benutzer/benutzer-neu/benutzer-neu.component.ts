@@ -62,7 +62,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
 
     // persist
 
-    this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password, this.currentCredentials.isUsing2FA);
+    this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password, this.currentCredentials.using2FA);
     this.benutzerDataProvider.create(this.currentCredentialsDTO)
         .then((response: BogenligaResponse<BenutzerDO>) => {
           if (!isNullOrUndefined(response)
