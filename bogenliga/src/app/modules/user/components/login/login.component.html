@@ -75,6 +75,25 @@
                 </div>
               </div>
 
+              <div class="form-group">
+                <label for="loginCode">{{ 'USER.LOGIN.CODE.LABEL' | translate }}</label>
+                <input type="text"
+                       class="form-control"
+                       id="loginCode"
+                       name="loginCode"
+                       #loginCode="ngModel"
+                       [(ngModel)]="credentials.code"
+                       required
+                       minlength="3"
+                       (keyup.enter)="onLogin($event)"
+                       [class.is-invalid]="(loginCode.invalid && !loginCode.untouched) || (loginResult === LoginResult.FAILURE)"
+                       placeholder="{{ 'USER.LOGIN.CODE.PLACEHOLDER' | translate }}">
+
+                <div class="invalid-feedback">
+                  {{ 'USER.LOGIN.CODE.ERROR' | translate }}
+                </div>
+              </div>
+
               <div class="form-group form-check">
                 <input type="checkbox"
                        class="form-check-input"
