@@ -28,8 +28,8 @@ export class LoginDataProviderService extends DataProviderService {
    * @param store to access the application state managed by the redux store
    */
   constructor(private restClient: RestClient,
-              private currentUserService: CurrentUserService,
-              private store: Store<AppState>) {
+    private currentUserService: CurrentUserService,
+    private store: Store<AppState>) {
     super();
   }
 
@@ -57,7 +57,7 @@ export class LoginDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      const credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password);
+      const credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password, credentialsDO.isUsing2FA, credentialsDO.code);
       this.sendSignInRequest(credentialsDTO, resolve, reject);
     });
   }
