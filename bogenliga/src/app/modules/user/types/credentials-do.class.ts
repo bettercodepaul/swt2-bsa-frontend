@@ -5,12 +5,12 @@ export class CredentialsDO implements DataObject {
   password: string;
   rememberMe = false;
   code: string;
-  isUsing2FA = false;
+  using2FA = false;
 
-  constructor(username?: string, password?: string, code?: string, isUsing2FA?: boolean) {
+  constructor(username?: string, password?: string, code?: string, using2FA?: boolean) {
     this.username = !!username ? username : '';
     this.password = !!password ? password : '';
     this.code = !!code ? code : '';
-    this.isUsing2FA = isUsing2FA;
+    this.using2FA = using2FA;
   }
 }

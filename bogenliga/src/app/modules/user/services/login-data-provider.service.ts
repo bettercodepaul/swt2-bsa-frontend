@@ -57,7 +57,7 @@ export class LoginDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      const credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password, credentialsDO.isUsing2FA, credentialsDO.code);
+      const credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password, credentialsDO.using2FA, credentialsDO.code);
       this.sendSignInRequest(credentialsDTO, resolve, reject);
     });
   }
