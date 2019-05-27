@@ -688,6 +688,9 @@
           "PLACEHOLDER": "Bitte Passwort wiederholen",
           "ERROR": "Passwort nicht identisch zum neuen Password"
         },
+        "2FA": {
+          "LABEL": "Zwei-Faktor-Authentifizierung aktivieren?"
+        },
         "SAVE": "Speichern"
       },
       "NOTIFICATION": {
