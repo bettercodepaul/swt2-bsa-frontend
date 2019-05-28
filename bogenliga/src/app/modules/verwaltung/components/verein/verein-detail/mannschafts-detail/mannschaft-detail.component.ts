@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent} from '../../../../../shared/components';
+import {ButtonType, CommonComponent, toTableRows} from '../../../../../shared/components';
 import {BogenligaResponse} from '../../../../../shared/data-provider';
 import {
   Notification,
@@ -17,11 +17,9 @@ import {VereinDO} from '../../../../types/verein-do.class';
 import {MANNSCHAFT_DETAIL_CONFIG} from './mannschaft-detail.config';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
-import {__values} from 'tslib';
-import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {getResponseURL} from '@angular/http/src/http_utils';
+import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -30,6 +28,7 @@ const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_SAVE_MANNSCHAFT = 'mannschaft_detail_save';
 const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
+const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft'
 
 @Component({
   selector:    'bla-mannschaft-detail',
@@ -43,13 +42,20 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   public currentVerein: VereinDO = new VereinDO();
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public ligen: Array<VeranstaltungDO> = [new VeranstaltungDO()];
+  public mannschaften: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
+  private duplicateMannschaftsNrNotification: Notification;
+  private deleteNotification: Notification;
+  private duplicateSubscription;
+  private deleteSubscription;
 
   public deleteLoading = false;
   public saveLoading = false;
+  private acceptedWarning = true;
 
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
               private vereinProvider: VereinDataProviderService,
               private veranstaltungProvider: VeranstaltungDataProviderService,
+              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -77,7 +83,40 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         }
       }
     });
+
+    // This Notification shows up, if a duplicate mannschaftsnummer is detected.
+    // It gets subscribed once in ngOnInit and gets unsubscribed in ngOnDestroy
+      this.duplicateMannschaftsNrNotification = {
+        id:          NOTIFICATION_WARING_MANNSCHAFT,
+        title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+        description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+        severity:    NotificationSeverity.QUESTION,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.YES_NO,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      console.log('subscribe notification');
+      this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.saveMannschaft();
+            }
+            if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.saveLoading = false;
+            }
+          });
   }
+
+
+
+  ngOnDestroy() {
+    this.duplicateSubscription.unsubscribe();
+    if(this.deleteSubscription != null) {
+      this.deleteSubscription.unsubscribe();
+    }
+  }
+
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
@@ -87,45 +126,12 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.currentMannschaft.veranstaltungId = this.currentVeranstaltung.id; // set selected veranstaltung id
     this.currentMannschaft.benutzerId = 1;
 
-
-    console.log('Saving mannschaft: ', this.currentMannschaft);
-
-    this.mannschaftProvider.create(this.currentMannschaft, this.currentVerein)
-        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
-
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_MANNSCHAFT,
-              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
-
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_MANNSCHAFT)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.vereinId);
-                  }
-                });
-
-            this.notificationService.showNotification(notification);
-          }
-        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
-          console.log(response.payload);
-          console.log('Failed');
-          this.saveLoading = false;
-
-
-        });
-    // show response message
+    // within this method it will be checked if the mannschaftsnummer
+    // is already used and start the saving process
+    this.loadMannschaften(this.currentMannschaft.vereinId);
   }
+
+
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
@@ -173,29 +179,9 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.notificationService.discardNotification();
 
     const id = this.currentMannschaft.id;
+    console.log(id);
 
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
-      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
-        .subscribe((myNotification) => {
-
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.mannschaftProvider.deleteById(id)
-                .then((response) => this.handleDeleteSuccess(response))
-                .catch((response) => this.handleDeleteFailure(response));
-          }
-        });
-
-    this.notificationService.showNotification(notification);
+    this.notificationService.showNotification(this.deleteNotification);
   }
 
   public entityExists(): boolean {
@@ -223,6 +209,32 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   private handleSuccess(response: BogenligaResponse<DsbMannschaftDO>) {
     this.currentMannschaft = response.payload;
+    console.log(this.currentMannschaft.id);
+    const id = this.currentMannschaft.id;
+
+    this.deleteNotification = {
+      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
+      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      descriptionParam: '' + id,
+      severity:         NotificationSeverity.QUESTION,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.YES_NO,
+      userAction:       NotificationUserAction.PENDING
+    };
+
+    this.deleteSubscription = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+                                  .subscribe((myNotification) => {
+                            console.log('inside delete ');
+                                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                                      this.mannschaftProvider.deleteById(id)
+                                          .then((response) => this.handleDeleteSuccess(response))
+                                          .catch((response) => this.handleDeleteFailure(response));
+                                    }
+                                    else if(myNotification.userAction === NotificationUserAction.DECLINED) {
+                                      this.deleteLoading = false;
+                                    }
+                                  });
     this.loading = false;
   }
 
@@ -297,4 +309,80 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     this.notificationService.showNotification(notification);
   }
+
+
+
+
+
+
+  // private checkIfDuplicateMannschaftsNr(mannschaftsNr: Number): Boolean {
+  private loadMannschaften(vereinsId: number) {
+      this.mannschaftsDataProvider.findAllByVereinsId(vereinsId)
+          .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
+          .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
+    }
+
+
+
+
+  private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+    this.mannschaften = [];
+    this.mannschaften = response.payload;
+    var mannschaftsNrs: Array<number> = new Array<number>();
+    this.mannschaften.forEach((mannschaft) => mannschaftsNrs.push(parseInt(mannschaft.nummer)));
+    var duplicateFound: boolean;
+    mannschaftsNrs.forEach(nr => { if(nr==parseInt(this.currentMannschaft.nummer)){duplicateFound=true;}})
+    if(duplicateFound) {
+      this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
+    }
+    else {
+      this.saveMannschaft();
+    }
+  }
+
+
+  private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+    this.mannschaften = [];
+    this.loading = false;
+  }
+
+
+   private saveMannschaft(): void {
+    console.log('Saving mannschaft: ', this.currentMannschaft);
+
+    this.mannschaftProvider.create(this.currentMannschaft, this.currentVerein)
+        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+            console.log('Saved with id: ' + response.payload.id);
+
+            const notification: Notification = {
+              id:          NOTIFICATION_SAVE_MANNSCHAFT,
+              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_MANNSCHAFT)
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                    this.router.navigateByUrl('/verwaltung/vereine/' + response.payload.vereinId);
+                  }
+                });
+
+            this.notificationService.showNotification(notification);
+          }
+        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+          console.log(response.payload);
+          console.log('Failed');
+          this.saveLoading = false;
+        });
+  }
+
+
 }

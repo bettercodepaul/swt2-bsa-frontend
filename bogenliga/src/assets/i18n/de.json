@@ -438,7 +438,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Verein löschen",
-          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? Der Verein ist danach nicht mehr verfügbar."
         }
       }
     },
@@ -451,7 +451,7 @@
           "ERROR": "Bitte einen gültigen Namen eingeben."
         },
         "VEREIN_IDENTIFIER": {
-          "LABEL": "Verein-Identifier",
+          "LABEL": "Vereins Nr.",
           "PLACEHOLDER": "Bitte einen Identifier eingeben",
           "ERROR": "Bitte einen gültigen Identifier eingeben."
         },
@@ -474,7 +474,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Verein löschen",
-          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? Der Verein ist danach nicht mehr verfügbar!"
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
@@ -487,6 +487,10 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Verein wurde erfolgreich gespeichert."
+        },
+        "DUPLICATE": {
+          "TITLE": "Mannschaftsnummer in dem Verein bereits vergeben!",
+          "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
         }
       }
     },
@@ -554,7 +558,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Mannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Verein mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie die Mannschaft wirklich löschen? Die Mannschaft ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
