@@ -14,7 +14,9 @@ import {
   VereinOverviewComponent,
   VerwaltungComponent,
   WettkampfklasseDetailComponent,
-  WettkampfklasseOverviewComponent
+  WettkampfklasseOverviewComponent,
+  VeranstaltungDetailComponent,
+  VeranstaltungOverviewComponent,
 } from './components';
 import {
   BenutzerDetailGuard,
@@ -30,7 +32,9 @@ import {
   VereinOverviewGuard,
   VerwaltungGuard,
   WettkampfklasseDetailGuard,
-  WettkampfklasseOverviewGuard
+  WettkampfklasseOverviewGuard,
+  VeranstaltungDetailGuard,
+  VeranstaltungOverviewGuard,
 } from './guards';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
@@ -82,5 +86,12 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [RegionOverviewGuard]
   },
-  {path: 'regionen/:id', component: RegionDetailComponent, canActivate: [RegionDetailGuard]}
+  {path: 'regionen/:id', component: RegionDetailComponent, canActivate: [RegionDetailGuard]},
+  {
+    path: 'veranstaltung',
+    component: VeranstaltungOverviewComponent,
+    pathMatch: 'full',
+    canActivate: [VeranstaltungOverviewGuard]
+  },
+  {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]}
 ];

@@ -1,0 +1,200 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="veranstaltungForm"
+        class="horizontal-form half-page"
+        #dsbMitgliedForm="ngForm">
+
+    <!-- VERANSTALTUNG -->
+    <div class="form-group row">
+      <label for="veranstaltung_name"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="veranstaltung_name"
+               name="veranstaltung_name"
+               #veranstaltung_name="ngModel"
+               [(ngModel)]="currentVeranstaltung.name"
+               [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Liganame -->
+    <div class="form-group row">
+      <label for="ligaName"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select type="text"
+               class="form-control"
+                required
+               id="ligaName"
+               name="ligaName"
+               #ligaName="ngModel"
+               [(ngModel)]="currentLiga">
+          <option [ngValue]="ligaName"
+                  *ngFor="let ligaName of allLiga"> {{ligaName.name}}</option>
+
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- WettkampftypName -->
+    <div class="form-group row">
+      <label for="wettkampftyp"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                required
+                id="wettkampftyp"
+                name="wettkampftyp"
+                #wettkampftyp="ngModel"
+                [(ngModel)]="currentWettkampftyp">
+          <option [ngValue]="wettkampftyp"
+                  *ngFor="let wettkampftyp of allWettkampftyp"> {{wettkampftyp.name}}</option>
+
+          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.PLACEHOLDER' | translate }}">
+        </select>
+
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Sportjahr -->
+    <div class="form-group row">
+      <label for="sportjahr"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="sportjahr"
+               name="sportjahr"
+               #sportjahr="ngModel"
+               [(ngModel)]="currentVeranstaltung.sportjahr"
+               [class.is-invalid]="sportjahr.invalid && ! sportjahr.untouched"
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Deadline -->
+    <div class="form-group row">
+      <label for="deadline"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+               id="deadline"
+               name="deadline"
+               #deadline="ngModel"
+               [(ngModel)]="currentVeranstaltung.meldeDeadline"
+               [class.is-invalid]="deadline.invalid && ! deadline.untouched"
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- LigaleiterEmail -->
+    <div class="form-group row">
+      <label for="ligaleiterEmail"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                required
+                id="ligaleiterEmail"
+                name="ligaleiterEmail"
+                #ligaleiterEmail="ngModel"
+                [(ngModel)]="currentUser">
+          <option [ngValue]="user"
+                  *ngFor="let user of allUsers"> {{user.email}}</option>
+
+          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.PLACEHOLDER' | translate }}">
+        </select>
+
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- SAVE/UPDATE/DELETE BUTTON -->
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'ligaSaveButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'ligaUpdateButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
+        </bla-button>
+
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DELETE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>
