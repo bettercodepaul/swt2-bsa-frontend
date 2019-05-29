@@ -1,5 +1,5 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {VeranstaltungDTO} from '../types/datatransfer/veranstaltung-dto.class';
 
 
 export function fromPayload(payload: VersionedDataTransferObject): VeranstaltungDTO {
