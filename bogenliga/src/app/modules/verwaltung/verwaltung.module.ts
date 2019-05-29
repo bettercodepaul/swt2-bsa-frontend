@@ -91,8 +91,7 @@ export class VerwaltungModule {
         LigaOverviewGuard,
         LigaDetailGuard,
         RegionDetailGuard,
-        RegionOverviewGuard
-        LigaDetailGuard,
+        RegionOverviewGuard,
         VeranstaltungOverviewGuard,
         VeranstaltungDetailGuard,
       ]
