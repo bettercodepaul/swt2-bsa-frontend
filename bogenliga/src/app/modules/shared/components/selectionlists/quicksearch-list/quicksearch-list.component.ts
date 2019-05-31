@@ -54,11 +54,13 @@ export class QuicksearchListComponent implements OnInit, OnChanges {
   constructor(private translate: TranslatePipe) {
   }
 
+
   ngOnInit() {
     this.filteredItems = this.items;
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.filteredItems = this.items;
   }
 
   public onItemSelect($event: VersionedDataObject[]) {
