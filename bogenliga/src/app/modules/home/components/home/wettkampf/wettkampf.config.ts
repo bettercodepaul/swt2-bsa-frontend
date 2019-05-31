@@ -5,12 +5,12 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
   columns: [
     {
       translationKey: 'TABLE.DATE',
-      propertyName:   'wettkampfTag',
+      propertyName:   'wettkampfDatum',
       width:          20,
     },
     {
       translationKey: 'TABLE.TIME',
-      propertyName:   'wettkampfUhrzeit',
+      propertyName:   'wettkampfBeginn',
       width:          20,
     },
     {
