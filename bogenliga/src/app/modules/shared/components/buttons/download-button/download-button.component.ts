@@ -44,7 +44,6 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.loading = true;
 
     if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel') {
-
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
         .then((() => this.handleWithoutNotification()))
         .catch((() => this.handleWithoutNotification()));
