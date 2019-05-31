@@ -34,6 +34,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
   public currentCredentials: CredentialsDO = new CredentialsDO();
   public verifyCredentials: CredentialsDO = new CredentialsDO();
   public currentCredentialsDTO: CredentialsDTO;
+  public qrCode: string;
 
   public saveLoading = false;
 
@@ -79,6 +80,8 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
+
+            this.qrCode = response.payload.qrCode;
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
                 .subscribe((myNotification) => {

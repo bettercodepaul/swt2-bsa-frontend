@@ -52,7 +52,7 @@
                        placeholder="{{ 'USER.LOGIN.USERNAME.LABEL' | translate }}">
 
                 <div class="invalid-feedback">
-                  {{ 'USER.OGIN.USERNAME.ERROR' | translate }}
+                  {{ 'USER.LOGIN.USERNAME.ERROR' | translate }}
                 </div>
               </div>
 
@@ -83,7 +83,6 @@
                        name="loginCode"
                        #loginCode="ngModel"
                        [(ngModel)]="credentials.code"
-                       required
                        minlength="3"
                        (keyup.enter)="onLogin($event)"
                        [class.is-invalid]="(loginCode.invalid && !loginCode.untouched) || (loginResult === LoginResult.FAILURE)"
