@@ -7,6 +7,7 @@ export class BenutzerDO implements VersionedDataObject {
   version: number;
 
   email: string;
+  qrCode: string;
 }
 
 

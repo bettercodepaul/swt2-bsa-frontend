@@ -8,105 +8,115 @@
         #benutzerNeuForm="ngForm">
 
 
-      <!-- username / email -->
-           <div class="form-group row">
-            <label for="benutzerUsername"
-                   class="col-sm-3 col-form-label">
-              <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.LABEL' | translate }}</span>
-              <span> *</span>
-            </label>
-            <div class="col-sm-9">
-              <input type="email"
-                     class="form-control"
-                     id="benutzerUsername"
-                     name="benutzerUsername"
-                     #benutzerUsername="ngModel"
-                     [(ngModel)]="currentCredentials.username"
-                     [class.is-invalid]="benutzerUsername.invalid && !benutzerUsername.untouched"
-                     pattern= "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
-                     placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}">
-              <div class="invalid-feedback">
-                {{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.ERROR' | translate }}
-              </div>
-            </div>
-          </div>
-
-          <!-- Passwort -->
-       <div class="form-group row">
-         <label for="benutzerPassword"
-                class="col-sm-3 col-form-label">
-           <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.LABEL' | translate }}</span>
-           <span> *</span>
-         </label>
-         <div class="col-sm-9">
-           <input type="password"
-                  class="form-control"
-                  required
-                  minlength="8"
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"
-                  id="benutzerPassword"
-                  name="benutzerPassword"
-                  #benutzerPassword="ngModel"
-                  [(ngModel)]="currentCredentials.password"
-                  [class.is-invalid]="benutzerPassword.invalid  && !benutzerPassword.untouched"
-                  placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.PLACEHOLDER' | translate }}">
-           <div class="invalid-feedback">
-             {{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.ERROR' | translate }}
-           </div>
-         </div>
-       </div>
-
-       <!-- Passwort -->
-         <div class="form-group row">
-         <label for="benutzerVerifyPassword"
-                class="col-sm-3 col-form-label">
-           <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
-           <span> *</span>
-         </label>
-         <div class="col-sm-9">
-           <input type="password"
-                  class="form-control"
-                  required
-                  id="benutzerVerifyPassword"
-                  name="benutzerVerifyPassword"
-                  #benutzerVerifyPassword="ngModel"
-                  [(ngModel)]="verifyCredentials.password"
-                  [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
-                  placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
-           <div class="invalid-feedback">
-             {{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.ERROR' | translate }}
-           </div>
-         </div>
-       </div>
-
-      <div class="form-group row">
-        <label for="benutzer2FA"
-               class="col-sm-6 col-form-label">
-          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.2FA.LABEL' | translate }}
-        </label>
-        <div class="col-sm-1">
-          <input type="checkbox"
-                 class="form-control"
-                 id="benutzer2FA"
-                 name="benutzer2FA"
-                 #benutzer2FA="ngModel"
-                 [(ngModel)]="currentCredentials.using2FA"
-                 [class.is-invalid]="benutzer2FA.invalid">
+    <!-- username / email -->
+    <div class="form-group row">
+      <label for="benutzerUsername"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="email"
+               class="form-control"
+               id="benutzerUsername"
+               name="benutzerUsername"
+               #benutzerUsername="ngModel"
+               [(ngModel)]="currentCredentials.username"
+               [class.is-invalid]="benutzerUsername.invalid && !benutzerUsername.untouched"
+               pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.ERROR' | translate }}
         </div>
       </div>
+    </div>
 
-       <div class="form-group row">
-         <div class="col-sm-3"></div>
-         <div class="col-sm-9 button-box">
-           <bla-button
-                       [id]="'benutzerSaveButton'"
-                       [disabled]="!benutzerNeuForm.valid"
-                       [loading]="saveLoading"
-                       (onClick)="onSave($event)">
-             {{ 'MANAGEMENT.BENUTZER_NEU.FORM.SAVE' | translate }}
-           </bla-button>
-         </div>
-       </div>
-   </form>
+    <!-- Passwort -->
+    <div class="form-group row">
+      <label for="benutzerPassword"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="password"
+               class="form-control"
+               required
+               minlength="8"
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"
+               id="benutzerPassword"
+               name="benutzerPassword"
+               #benutzerPassword="ngModel"
+               [(ngModel)]="currentCredentials.password"
+               [class.is-invalid]="benutzerPassword.invalid  && !benutzerPassword.untouched"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
 
- </bla-common-dialog>
+    <!-- Passwort -->
+    <div class="form-group row">
+      <label for="benutzerVerifyPassword"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="password"
+               class="form-control"
+               required
+               id="benutzerVerifyPassword"
+               name="benutzerVerifyPassword"
+               #benutzerVerifyPassword="ngModel"
+               [(ngModel)]="verifyCredentials.password"
+               [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="benutzer2FA"
+             class="col-sm-6 col-form-label">
+        {{ 'MANAGEMENT.BENUTZER_NEU.FORM.2FA.LABEL' | translate }}
+      </label>
+      <div class="col-sm-1">
+        <input type="checkbox"
+               class="form-control"
+               id="benutzer2FA"
+               name="benutzer2FA"
+               #benutzer2FA="ngModel"
+               [(ngModel)]="currentCredentials.using2FA"
+               [class.is-invalid]="benutzer2FA.invalid">
+      </div>
+    </div>
+    <div id="qr">
+      <p>
+        Scan this Barcode using Google Authenticator app on your phone
+        to use it later in login
+      </p>
+      <img
+        [(ngModel)]="qrCode"
+        src="qrCode"
+      />
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+        <bla-button
+          [id]="'benutzerSaveButton'"
+          [disabled]="!benutzerNeuForm.valid"
+          [loading]="saveLoading"
+          (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.SAVE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+</bla-common-dialog>
