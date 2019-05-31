@@ -10,8 +10,9 @@ import {Wettkaempfe} from '../../../../../../e2e/src/wettkaempfe/wettkaempfe.po'
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {VereinDO} from '@vereine/types/verein-do.class';
-import {VereinDataProviderService} from '@vereine/services/verein-data-provider.service';
+import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
 import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
+import {VeranstaltungDTO} from '@vereine/types/datatransfer/veranstaltung-dto.class';
 
 
 @Component({
@@ -27,22 +28,42 @@ export class HomeComponent extends CommonComponent implements OnInit {
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[];
-  private tableContent: Array<WettkampfTableDo> = [];
 
-  constructor(private wettkampfDataProvider: WettkampfDataProviderService, vereinDataProvider: VereinDataProviderService) {
+
+  constructor(private wettkampfDataProvider: WettkampfDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService) {
     super();
   }
 
   ngOnInit() {
     this.loadWettkaempfe();
 
-  };
+  }
     //backend call to get list
   private loadWettkaempfe(): void {
       this.wettkaempfe = [];
     this.wettkampfDataProvider.findAll()
-        .then((response: BogenligaResponse<WettkampfDTO[]>) => {this.wettkaempfe = response.payload;  this.loadingWettkampf = false; })
+        .then((response: BogenligaResponse<WettkampfDTO[]>) => { this.handleSuccessLoadWettkaempfe(response.payload) })
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => {this.wettkaempfe = response.payload; });
+  }
+
+  private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void{
+    this.wettkaempfe = payload;
+    this.wettkaempfe.forEach((wettkampf) => {this.findLigaNameByVeranstaltungsId(wettkampf); });
+    this.fillTableRows();
+    this.loadingWettkampf = false;
+  }
+
+  private findLigaNameByVeranstaltungsId(wettkampf: WettkampfDTO):void{
+    this.veranstaltungDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
+        .then((response: BogenligaResponse<VeranstaltungDTO>)=> { wettkampf.wettkampfLiga = response.payload.name;})
+      .catch((response: BogenligaResponse<VeranstaltungDTO>)=> {console.log("LigaName not found")})
+
+  }
+
+  private fillTableRows(): void{
+    this.rows =[];
+    this.rows=toTableRows(this.wettkaempfe);
+
   }
 
 

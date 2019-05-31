@@ -8,15 +8,20 @@ export class WettkampfDTO implements DataTransferObject {
   wettkampfBeginn: string;
   wettkampfTag: number;
   version: number;
+  wettkampfVeranstaltungsId: number;
+
+  //not set, find Liga by Wettkampfid
+  wettkampfLiga: string;
 
 
   static copyFrom(optional: {
     id?: number,
-    wettkampfDatum?: string,
+    datum?: string,
     wettkampfOrt?: string,
     wettkampfBeginn?: string,
     wettkampfTag?: number,
-    version?: number
+    version?: number,
+    veranstaltungsId?:number,
   } = {}): WettkampfDTO {
     const copy = new WettkampfDTO();
 
@@ -27,12 +32,13 @@ export class WettkampfDTO implements DataTransferObject {
       copy.id = null;
     }
 
-    copy.wettkampfDatum = optional.wettkampfDatum || '';
+    copy.wettkampfDatum = optional.datum || '';
     copy.wettkampfOrt = optional.wettkampfOrt || null;
     copy.wettkampfBeginn = optional.wettkampfBeginn || null;
     copy.wettkampfTag = optional.wettkampfTag || null;
 
     copy.version = optional.version || null;
+    copy.wettkampfVeranstaltungsId = optional.veranstaltungsId || 0;
 
     return copy;
   }
