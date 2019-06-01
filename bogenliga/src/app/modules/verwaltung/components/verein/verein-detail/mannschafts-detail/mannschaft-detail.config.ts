@@ -32,7 +32,7 @@ export const MANNSCHAFT_DETAIL_TABLE_CONFIG: TableConfig = {
     },
   ],
   actions: {
-    actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
+    actionTypes: [TableActionType.DELETE],
     width:       6
   },
 

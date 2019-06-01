@@ -574,6 +574,38 @@
         }
       }
     },
+    "SCHUETZE_HINZUFUEGEN": {
+      "TITLE": "Schütze der Mannschaft hinzufügen",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "Vorname",
+          "PLACEHOLDER": "Bitte einen Vornamen zum Suchen eingeben."
+        },
+        "NACHNAME": {
+          "LABEL": "Nachname",
+          "PLACEHOLDER": "Bitte einen Nachnamen zum Suchen eingeben."
+        },
+        "VEREINE": {
+          "LABEL": "Verein",
+          "PLACEHOLDER": "Bitte einen Verein zum Suchen auswählen."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Mitgliedsnummer",
+          "PLACEHOLDER": "Bitte eine Mitgliedsnummer zum Suchen eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "TABLE": {
+        "HEADERS": {
+          "MITGLIED_VORNAME": "Vorname",
+          "MITGLIED_NACHNAME": "Nachname",
+          "MITGLIED_VEREIN": "Verein",
+          "MITGLIED_NUMMER": "Mitgliedsnummer"
+        }
+      }
+    },
     "DSBMITGLIEDER_DETAIL": {
       "TITLE": "DSB Mitglied - Details",
       "FORM": {
