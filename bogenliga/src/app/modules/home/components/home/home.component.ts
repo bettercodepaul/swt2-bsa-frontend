@@ -59,8 +59,8 @@ export class HomeComponent extends CommonComponent implements OnInit {
           wettkampf.wettkampfLiga = response.payload.name;
         })
         .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
-          console.log('LigaName not found')
-        })
+          console.log('LigaName not found');
+        });
 
   }
 
