@@ -5,8 +5,7 @@
 
       <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
 
-      <bla-quicksearch-list *ngIf="vereineLoaded"
-                            [items]="vereine"
+      <bla-quicksearch-list [items]="vereine"
                             [optionFieldSelector]="'name'"
                             [loading]="loadingVereine"
                             (onSelect)="onSelect($event)"
