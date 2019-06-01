@@ -91,7 +91,8 @@
                 #regionUebergeordnet="ngModel"
                 [(ngModel)]="currentUebergeordneteRegion">
           <option selected="selected">{{currentUebergeordneteRegion.regionName}}</option>
-          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of allUebergeordneteRegionen"> {{uebergeordnet.regionName}}</option>
+          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of uebergeordneteRegionenGefiltert"> {{uebergeordnet.regionName}}</option>
+          <option>Diese Region hat keine übergeordnete Region</option>
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.ERROR' | translate }}
