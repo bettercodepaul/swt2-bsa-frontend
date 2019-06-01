@@ -38,6 +38,8 @@ import {
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
+import {SchuetzenComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
+import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
 
 @NgModule({
   imports:      [
@@ -61,7 +63,8 @@ import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail
     LigaOverviewComponent,
     RegionDetailComponent,
     RegionOverviewComponent,
-    MannschaftDetailComponent
+    MannschaftDetailComponent,
+    SchuetzenComponent
   ]
 })
 export class VerwaltungModule {
@@ -84,7 +87,8 @@ export class VerwaltungModule {
         LigaOverviewGuard,
         LigaDetailGuard,
         RegionDetailGuard,
-        RegionOverviewGuard
+        RegionOverviewGuard,
+        SchuetzenNeuGuard
       ]
     };
   }

@@ -1,0 +1,33 @@
+.half-page {
+  width: 50%;
+}
+
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+}
+
+// for small devices
+@media (max-width: 1400px) {
+
+  .half-page {
+    width: 80%;
+  }
+
+}
+
+// for small devices
+@media (max-width: 950px) {
+
+  .half-page {
+    width: 100%;
+  }
+
+}
+.overview-dialog-add {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1em;
+}
