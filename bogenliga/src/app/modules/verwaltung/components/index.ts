@@ -12,3 +12,5 @@ export * from './liga/liga-overview/liga-overview.component';
 export * from './liga/liga-detail/liga-detail.component';
 export * from './region/region-overview/region-overview.component';
 export * from './region/region-detail/region-detail.component';
+export * from './veranstaltung/veranstaltung-overview/veranstaltung-overview.component';
+export * from './veranstaltung/veranstaltung-detail/veranstaltung-detail.component';
