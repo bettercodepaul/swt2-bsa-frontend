@@ -87,9 +87,9 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
-    if(typeof this.currentUebergeordneteRegion === 'undefined'){
+    if (typeof this.currentUebergeordneteRegion === 'undefined') {
       this.currentRegion.regionUebergeordnet = null;
-    }else{
+    } else {
       this.currentRegion.regionUebergeordnet = this.currentUebergeordneteRegion.id;
     }
 
