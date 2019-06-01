@@ -3,12 +3,17 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 
 export class VeranstaltungDO implements VersionedDataObject {
   id: number;
-  version: number;
-  name: string;
-  meldeDeadline: number;
-  ligaleiterID: number;
-  sportjahr: number;
   wettkampfTypId: number;
-  // wettkampfTypName: string;
+  name: string;
+  sportjahr: number;
+  meldeDeadline: string;
+  ligaleiterID: number;
+  ligaID: number;
+  version: number;
+  ligaleiterEmail: string;
+  wettkampftypName: string;
+  ligaName: string;
+
+
 
 }

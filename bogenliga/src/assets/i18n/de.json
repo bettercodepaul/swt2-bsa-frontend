@@ -236,6 +236,10 @@
         "SPORTJAHR": {
           "LABEL": "Sportjahre",
           "DESCRIPTION": "Verwaltung der Sportjahre"
+        },
+        "VERANSTALTUNG": {
+          "LABEL": "Veranstaltungen",
+          "DESCRIPTION": "Verwaltung der Veranstaltungen"
         }
       }
     },
@@ -630,6 +634,211 @@
         "DUPLICATE": {
           "TITLE": "Hinzufügen fehlgeschlagen",
           "DESCRIPTION": "Die Mitgliedsnummer ist bereits vergeben. Bitte wählen sie eine andere Mitgliedsnummer."
+        }
+      }
+    },
+    "VERANSTALTUNG": {
+      "TITLE": "Veranstaltung - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Veranstaltung Name",
+          "WETTKAMPFTYPID": "Wetkampftyp Id",
+          "WETTKAMPFTYPNAME": "Wetkampftyp Name",
+          "SPORTJAHR": "Sportjahr",
+          "MELDEDEADLINE": "Meldedeadline",
+          "LIGANAME": "Liganame",
+          "LIGALEITERID": "Ligaleiter ID",
+          "LIGALEITERMAIL": "Ligaleiter Mail"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Veranstaltung löschen",
+          "DESCRIPTION": "Wollen Sie die Veranstaltung mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diese Liga löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+        }
+      }
+    },
+    "VERANSTALTUNG_DETAIL": {
+      "TITLE": "Veranstaltung - Details",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Veranstaltung Name",
+          "PLACEHOLDER": "Bitte geben Sie einen Namen für die Veranstaltung ein",
+          "ERROR": "Bitte geben Sie einen gültigen Namen ein"
+        },
+
+        "SPORTJAHR": {
+          "LABEL": "Sportjahr",
+          "PLACEHOLDER": "Bitte geben Sie ein Jahr für das Sportjahr ein",
+          "ERROR": "Bitte geben Sie ein gültiges Jahr ein"
+        },
+
+        "WETTKAMPFTYPID": {
+          "LABEL": "Wettkampftyp",
+          "PLACEHOLDER": "Bitte geben Sie einen Wettkampftyp für die Veranstaltung ein",
+          "ERROR": "Bitte geben Sie einen gültigen Wettkampftyp an"
+        },
+        "WETTKAMPFTYPNAME": {
+          "LABEL": "Wettkampftyp Name",
+          "PLACEHOLDER": "Bitte geben Sie einen Wettkampftyp für die Veranstaltung ein",
+          "ERROR": "Bitte geben Sie einen gültigen Wettkampftyp an"
+        },
+        "MELDEDEADLINE": {
+          "LABEL": "Meldedeadline",
+          "PLACEHOLDER": "Bitte geben Sie ein Datum für die Meldedeadline ein",
+          "ERROR": "Bitte geben Sie ein gültiges Datum ein (Format: JJJJ-MM-TT)."
+        },
+
+        "LIGANAME": {
+          "LABEL": "Liganame",
+          "PLACEHOLDER": "Wählen Sie eine Liga",
+          "ERROR": "Bitte wählen Sie eine gültige Liga"
+        },
+        "LIGALEITER_MAIL": {
+          "LABEL": "Email des Ligaleiters",
+          "PLACEHOLDER": "Wählen Sie einen Ligaleiter",
+          "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
+        },
+        "WETTKAMPFTAG1": {
+          "LABEL": "1. Wettkampftag",
+          "DATUM": {
+            "LABEL": "Datum: ",
+            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
+          },
+          "ORT": {
+            "LABEL": "Ort: ",
+            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Beginn: ",
+            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
+          }
+        },
+        "WETTKAMPFTAG2": {
+          "LABEL": "2. Wettkampftag",
+          "DATUM": {
+            "LABEL": "Datum: ",
+            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
+          },
+          "ORT": {
+            "LABEL": "Ort: ",
+            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Beginn: ",
+            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
+          }
+        },
+        "WETTKAMPFTAG3": {
+          "LABEL": "3. Wettkampftag",
+          "DATUM": {
+            "LABEL": "Datum: ",
+            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
+          },
+          "ORT": {
+            "LABEL": "Ort: ",
+            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Beginn: ",
+            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
+          }
+        },
+        "WETTKAMPFTAG4": {
+          "LABEL": "4. Wettkampftag",
+          "DATUM": {
+            "LABEL": "Datum: ",
+            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
+          },
+          "ORT": {
+            "LABEL": "Ort: ",
+            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Beginn: ",
+            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
+          }
+        },
+
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Veranstaltung löschen",
+          "DESCRIPTION": "Wollen Sie die Veranstaltung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Veranstaltung gelöscht",
+          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich gelöscht"
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Löschen fehlgeschlagen",
+          "DESCRIPTION": "Veranstaltung konnte nicht gelöscht werden"
+        },
+        "SAVE": {
+          "TITLE": "Veranstaltung angelegt",
+          "DESCRIPTION": "Veranstaltung wurde erfolgreich angelegt"
+        },
+        "UPDATE": {
+          "TITLE": "Aktualisieren erfolgreich",
+          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
+        }
+    }
+  },
+    "VERANSTALTUNG_NEU": {
+      "TITLE": "VERANSTALTUNG - Neuanlage",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Name",
+          "PLACEHOLDER": "Bitte einen Namen als Veranstaltungsnamen eingeben",
+          "ERROR": "Bitte einen gültigen Namen eingeben."
+        },
+        "WETTKAMPFTYP": {
+          "LABEL": "Wettkampftyp",
+          "PLACEHOLDER": "Bitte Wettkampftyp auswählen",
+          "ERROR": "Bitte einen gültigen Wettkampftyp auswählen"
+        },
+        "SPORTJAHR": {
+          "LABEL": "Sportjahr",
+          "PLACEHOLDER": "Bitte ein Sportjahr eingeben",
+          "ERROR": "Bitte ein gültiges Sportjahr eingeben"
+        },
+        "MELDEDEADLINE": {
+          "LABEL": "Meldedeadline",
+          "PLACEHOLDER": "Bitte ein Datum auswählen",
+          "ERROR": "Bitte ein gültiges Datum auswählen"
+        },
+        "LIGALEITER": {
+          "LABEL": "Ligaleiter",
+          "PLACEHOLDER": "Bitte einen Ligaleiter auswählen",
+          "ERROR": "Bitte einen gültigen Ligaleiter auswählen"
+        },
+        "LIGANAME": {
+          "LABEL": "Liganame",
+          "PLACEHOLDER": "Bitte einen Liganamen auswählen",
+          "ERROR": "Bitte einen gültigen Liganamen auswählen"
+        },
+        "SAVE": "Speichern"
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich gespeichert."
         }
       }
     },
