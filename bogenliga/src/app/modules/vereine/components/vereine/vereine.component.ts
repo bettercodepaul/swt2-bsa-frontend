@@ -29,7 +29,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public selectedDTOs: VereinDO[];
   public multipleSelections = true;
   public vereine: VereinDO[];
-  public vereineLoaded;
   public loadingVereine = true;
   public loadingTable = false;
   public rows: TableRow[];
@@ -94,7 +93,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; this.vereineLoaded = true; })
+        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false;})
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 
