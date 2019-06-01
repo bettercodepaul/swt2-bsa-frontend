@@ -3,10 +3,15 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 
 export class WettkampfDO implements VersionedDataObject {
   id: number;
-  version: number;
-
-  wettkampfDatum: string;
+  veranstaltungsId: number;
+  datum: string;
   wettkampfOrt: string;
   wettkampfBeginn: string;
   wettkampfTag: number;
+  wettkampfDisziplinId: number;
+  wettkampfTypId: number;
+
+  version: number;
+
+
 }
