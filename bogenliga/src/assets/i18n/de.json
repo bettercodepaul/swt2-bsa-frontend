@@ -695,72 +695,72 @@
         "WETTKAMPFTAG1": {
           "LABEL": "1. Wettkampftag",
           "DATUM": {
-            "LABEL": "Datum: ",
-            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "LABEL": "Datum",
+            "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
           "ORT": {
-            "LABEL": "Ort: ",
-            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "LABEL": "Ort",
+            "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
           "BEGINN": {
-            "LABEL": "Beginn: ",
-            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "LABEL": "Beginn",
+            "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
         "WETTKAMPFTAG2": {
           "LABEL": "2. Wettkampftag",
           "DATUM": {
-            "LABEL": "Datum: ",
-            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "LABEL": "Datum",
+            "PLACEHOLDER": "Datum ",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
           "ORT": {
-            "LABEL": "Ort: ",
-            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "LABEL": "Ort",
+            "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
           "BEGINN": {
-            "LABEL": "Beginn: ",
-            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "LABEL": "Beginn",
+            "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
         "WETTKAMPFTAG3": {
           "LABEL": "3. Wettkampftag",
           "DATUM": {
-            "LABEL": "Datum: ",
-            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "LABEL": "Datum",
+            "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
           "ORT": {
-            "LABEL": "Ort: ",
-            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "LABEL": "Ort",
+            "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
           "BEGINN": {
-            "LABEL": "Beginn: ",
-            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "LABEL": "Beginn",
+            "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
         "WETTKAMPFTAG4": {
           "LABEL": "4. Wettkampftag",
           "DATUM": {
-            "LABEL": "Datum: ",
-            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "LABEL": "Datum",
+            "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
           "ORT": {
-            "LABEL": "Ort: ",
-            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "LABEL": "Ort",
+            "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
           "BEGINN": {
-            "LABEL": "Beginn: ",
-            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "LABEL": "Beginn",
+            "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
