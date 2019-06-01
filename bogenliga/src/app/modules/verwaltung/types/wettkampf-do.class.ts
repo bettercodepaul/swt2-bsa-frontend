@@ -11,6 +11,6 @@ export class WettkampfDO implements VersionedDataObject {
   wettkampfTag: number;
   wettkampfVeranstaltungsId: number;
 
-  //not set, find Liga by Wettkampfid
+  // not set, find Liga by Wettkampfid
   wettkampfLiga: string;
 }

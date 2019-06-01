@@ -24,7 +24,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
 
   public config = HOME_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
-  public wettkaempfe:WettkampfDO[];
+  public wettkaempfe: WettkampfDO[];
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[];
@@ -38,31 +38,35 @@ export class HomeComponent extends CommonComponent implements OnInit {
     this.loadWettkaempfe();
 
   }
-    //backend call to get list
+    // backend call to get list
   private loadWettkaempfe(): void {
       this.wettkaempfe = [];
-    this.wettkampfDataProvider.findAll()
-        .then((response: BogenligaResponse<WettkampfDTO[]>) => { this.handleSuccessLoadWettkaempfe(response.payload) })
+      this.wettkampfDataProvider.findAll()
+        .then((response: BogenligaResponse<WettkampfDTO[]>) => { this.handleSuccessLoadWettkaempfe(response.payload); })
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => {this.wettkaempfe = response.payload; });
   }
 
-  private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void{
+  private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
     this.wettkaempfe = payload;
     this.wettkaempfe.forEach((wettkampf) => {this.findLigaNameByVeranstaltungsId(wettkampf); });
     this.fillTableRows();
     this.loadingWettkampf = false;
   }
 
-  private findLigaNameByVeranstaltungsId(wettkampf: WettkampfDTO):void{
+  private findLigaNameByVeranstaltungsId(wettkampf: WettkampfDTO): void {
     this.veranstaltungDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
-        .then((response: BogenligaResponse<VeranstaltungDTO>)=> { wettkampf.wettkampfLiga = response.payload.name;})
-      .catch((response: BogenligaResponse<VeranstaltungDTO>)=> {console.log("LigaName not found")})
+        .then((response: BogenligaResponse<VeranstaltungDTO>) => {
+          wettkampf.wettkampfLiga = response.payload.name;
+        })
+        .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
+          console.log('LigaName not found')
+        })
 
   }
 
-  private fillTableRows(): void{
-    this.rows =[];
-    this.rows=toTableRows(this.wettkaempfe);
+  private fillTableRows(): void {
+    this.rows = [];
+    this.rows = toTableRows(this.wettkaempfe);
 
   }
 

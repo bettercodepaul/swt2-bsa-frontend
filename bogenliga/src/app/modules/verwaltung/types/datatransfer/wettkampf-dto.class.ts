@@ -10,7 +10,7 @@ export class WettkampfDTO implements DataTransferObject {
   version: number;
   wettkampfVeranstaltungsId: number;
 
-  //not set, find Liga by Wettkampfid
+  // not set, find Liga by Wettkampfid
   wettkampfLiga: string;
 
 
@@ -21,7 +21,7 @@ export class WettkampfDTO implements DataTransferObject {
     wettkampfBeginn?: string,
     wettkampfTag?: number,
     version?: number,
-    veranstaltungsId?:number,
+    veranstaltungsId?: number,
   } = {}): WettkampfDTO {
     const copy = new WettkampfDTO();
 
