@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponent} from '../../../../shared/components';
-import {BogenligaResponse} from '../../../../shared/data-provider';
+import {BogenligaResponse, RequestResult} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -21,7 +21,7 @@ const NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS = 'dsb_mitglied_detail_delete_suc
 const NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE = 'dsb_mitglied_detail_delete_failure';
 const NOTIFICATION_SAVE_DSB_MITGLIED = 'dsb_mitglied_detail_save';
 const NOTIFICATION_UPDATE_DSB_MITGLIED = 'dsb_mitglied_detail_update';
-
+const NOTIFICATION_DUPLICATE_DSB_MITGLIED = 'dsb_mitglied_detail_duplicate';
 
 @Component({
   selector: 'bla-dsb-mitglied-detail',
@@ -66,7 +66,6 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
-
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
         .then((response: BogenligaResponse<DsbMitgliedDO>) => {
@@ -89,7 +88,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/dsbmitglieder');
                   }
                 });
 
@@ -97,6 +96,23 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
+          if(response.result === RequestResult.DUPLICATE_DETECTED) {
+            const notification: Notification = {
+              id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
+              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_DSB_MITGLIED)
+                .subscribe((myNotification) => {
+                });
+
+            this.notificationService.showNotification(notification);
+          }
           this.saveLoading = false;
 
 

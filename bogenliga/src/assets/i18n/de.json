@@ -612,7 +612,7 @@
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
+        "DELETE": "Mitglied Löschen"
       },
       "NOTIFICATION": {
         "DELETE": {
@@ -630,6 +630,10 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
+        },
+        "DUPLICATE": {
+          "TITLE": "Hinzufügen fehlgeschlagen",
+          "DESCRIPTION": "Die Mitgliedsnummer ist bereits vergeben. Bitte wählen sie eine andere Mitgliedsnummer."
         }
       }
     },
