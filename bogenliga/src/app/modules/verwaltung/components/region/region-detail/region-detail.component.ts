@@ -43,6 +43,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   public currentUebergeordneteRegion: RegionDO = new RegionDO();
   public allUebergeordneteRegionen: Array<RegionDO> = [new RegionDO()];
+  public uebergeordneteRegionenGefiltert: Array<RegionDO> = [new RegionDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -75,6 +76,8 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
           this.deleteLoading = false;
           this.saveLoading = false;
         } else {
+          this.loadRegions();
+          this.loadUebergeordnete();
           this.loadById(params[ID_PATH_PARAM]);
         }
       }
@@ -225,6 +228,17 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     // the current Region will be removed from the Array to avoid a self-reference as superordinate Region
     this.allUebergeordneteRegionen = this.allUebergeordneteRegionen.filter((region) => region.regionName !== this.currentRegion.regionName);
 
+    if (this.currentRegion.regionTyp == "LANDESVERBAND") {
+      this.uebergeordneteRegionenGefiltert = this.allUebergeordneteRegionen.filter((region) => region.regionTyp === "BUNDESVERBAND");
+    } else if (this.currentRegion.regionTyp == "BEZIRK") {
+      this.uebergeordneteRegionenGefiltert = this.allUebergeordneteRegionen.filter((region) => region.regionTyp === "LANDESVERBAND");
+    } else if (this.currentRegion.regionTyp == "KREIS") {
+      this.uebergeordneteRegionenGefiltert = this.allUebergeordneteRegionen.filter((region) => region.regionTyp === "BEZIRK");
+    }
+
+    this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
+    this.possibleRegionTypes = this.possibleRegionTypes.filter((s) => s !== this.currentRegion.regionTyp);
+
     this.loading = false;
   }
 
@@ -303,6 +317,11 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     this.allUebergeordneteRegionen = response.payload;
     // setting the Typ as a default Typ
     this.currentRegion.regionTyp = this.possibleRegionTypes[0];
+    this.possibleRegionTypes = this.possibleRegionTypes.filter((s) => s !== this.currentRegion.regionTyp);
+
+    // static attribute
+    this.currentUebergeordneteRegion.regionName = this.allUebergeordneteRegionen[1].regionUebergeordnetAsName;
+    this.uebergeordneteRegionenGefiltert = this.allUebergeordneteRegionen.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
 
     this.loading = false;
   }
