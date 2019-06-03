@@ -108,7 +108,7 @@
       <div class="col-sm-9 button-box">
         <bla-button
           [id]="'benutzerSaveButton'"
-          [disabled]="!benutzerNeuForm.valid"
+          [disabled]="!benutzerNeuForm.valid || qrCode"
           [loading]="saveLoading"
           (onClick)="onSave($event)">
           {{ 'MANAGEMENT.BENUTZER_NEU.FORM.SAVE' | translate }}
