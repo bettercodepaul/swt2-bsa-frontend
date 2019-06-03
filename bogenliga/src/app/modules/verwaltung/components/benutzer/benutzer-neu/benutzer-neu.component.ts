@@ -39,9 +39,9 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
   public saveLoading = false;
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService) {
     super();
   }
 
@@ -51,9 +51,9 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
 
 
     this.route.params.subscribe((params) => {
-        this.currentCredentials = new CredentialsDO();
-        this.verifyCredentials = new CredentialsDO();
-     });
+      this.currentCredentials = new CredentialsDO();
+      this.verifyCredentials = new CredentialsDO();
+    });
     this.loading = false;
 
   }
@@ -81,13 +81,18 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.qrCode = response.payload.qrCode;
-
             this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/benutzer');
+                    if (this.currentCredentialsDTO.using2FA) {
+
+                      this.qrCode = response.payload.qrCode;
+                      console.log('QR:');
+                      console.log(this.qrCode);
+                    } else {
+                      this.router.navigateByUrl('/verwaltung/benutzer');
+                    }
                   }
                 });
 
