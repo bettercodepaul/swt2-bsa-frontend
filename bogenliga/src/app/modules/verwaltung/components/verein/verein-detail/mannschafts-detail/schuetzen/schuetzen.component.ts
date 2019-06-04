@@ -96,66 +96,70 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     });
   }
 
-  public onSave(ignore: any): void {
+  public onSave(member: VersionedDataObject): void {
     this.saveLoading = true;
 
-    console.log('Saving Schütze: ' + this.selectedMember + ' zu Mannschaft: ', this.currentMannschaft);
+    console.log('Saving Schütze: ' + member + ' zu Mannschaft: ', this.currentMannschaft);
 
-    this.memberToAdd.dsbMitgliedId = this.selectedMember.id;
+    this.memberToAdd.dsbMitgliedId = member.id;
     this.memberToAdd.mannschaftsId = this.currentMannschaft.id;
+    //this.memberToAdd.dsbMitgliedEingesetzt = 0;
 
-    this.mannschaftMitgliedProvider.create(this.memberToAdd)
-        .then((response: BogenligaResponse<MannschaftsMitgliedDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
+    this.mannschaftMitgliedProvider.findByMemberId(member.id)
+        .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+          if(response.payload.length <= 1) {
+            this.memberToAdd.dsbMitgliedEingesetzt = response.payload.length;
 
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_SCHUETZE,
-              title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+            console.log('saving ' + this.memberToAdd + ' in Mannschaft');
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_SCHUETZE)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
-                      + "/" + this.currentMannschaft.id + "/add");
+            this.mannschaftMitgliedProvider.create(this.memberToAdd)
+                .then((response: BogenligaResponse<MannschaftsMitgliedDO>) => {
+                  if (!isNullOrUndefined(response)
+                    && !isNullOrUndefined(response.payload)
+                    && !isNullOrUndefined(response.payload.id)) {
+                    console.log('Saved with id: ' + response.payload.id);
+
+                    const notification: Notification = {
+                      id:          NOTIFICATION_SAVE_SCHUETZE,
+                      title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE.TITLE',
+                      description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE.DESCRIPTION',
+                      severity:    NotificationSeverity.INFO,
+                      origin:      NotificationOrigin.USER,
+                      type:        NotificationType.OK,
+                      userAction:  NotificationUserAction.PENDING
+                    };
+
+                    this.notificationService.observeNotification(NOTIFICATION_SAVE_SCHUETZE)
+                        .subscribe((myNotification) => {
+                          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                            this.saveLoading = false;
+                            this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
+                              + "/" + this.currentMannschaft.id + "/add");
+                          }
+                        });
+
+                    this.notificationService.showNotification(notification);
                   }
+                }, (response: BogenligaResponse<MannschaftsMitgliedDO>) => {
+                  console.log(response.payload);
+                  console.log('Failed');
+                  this.saveLoading = false;
                 });
-
-            this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<MannschaftsMitgliedDO>) => {
-          console.log(response.payload);
-          console.log('Failed');
-          this.saveLoading = false;
+    }).catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+      console.log('Failure');
+    })
 
 
-        });
     // show response message
   }
 
   public onSearch() {
-    console.log("Trying to filter the members...");
-    //let filteredMembers = [new DsbMitgliedDO];
-     let filteredMembers = this.members.filter((member) => {
+     const filteredMembers = this.members.filter((member) => {
         return (member.vorname.startsWith(this.vorname) || this.vorname.length == 0)
         && (member.nachname.startsWith(this.nachname) || this.nachname.length == 0)
         && (member.mitgliedsnummer.startsWith(this.mitgliedsnummer) || this.mitgliedsnummer.length == 0);
     });
-     console.log(filteredMembers);
-      console.log("Suchparameter Vorname: " + this.vorname);
-    console.log("Suchparameter Nachname: " + this.nachname);
-    console.log("Suchparameter Mitgliedsnummer: " + this.mitgliedsnummer);
-
-    console.log("Finished filtering.");
     this.rows = toTableRows(filteredMembers);
   }
 

@@ -575,6 +575,18 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Mannschaft wurde erfolgreich gespeichert."
+        },
+        "DELETE_MITGLIED": {
+          "TITLE": "Schütze aus Mannschaft löschen",
+          "DESCRIPTION": "Wollen Sie den Schützen mit der ID=%s wirklich aus der Mannschaft entfernen?"
+        },
+        "DELETE_MITGLIED_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
+        },
+        "DELETE_MITGLIED_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Schütze konnte nicht entfernt werden."
         }
       }
     },
@@ -607,6 +619,12 @@
           "MITGLIED_NACHNAME": "Nachname",
           "MITGLIED_VEREIN": "Verein",
           "MITGLIED_NUMMER": "Mitgliedsnummer"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt."
         }
       }
     },
@@ -855,7 +873,8 @@
     "ACTIONS": {
       "VIEW": "Ansehen",
       "EDIT": "Editieren",
-      "DELETE": "Löschen"
+      "DELETE": "Löschen",
+      "ADD": "Hinzufügen"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",

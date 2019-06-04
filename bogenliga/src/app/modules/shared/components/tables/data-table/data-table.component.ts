@@ -28,6 +28,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   @Output() public onEditEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onViewEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDeleteEntry = new EventEmitter<VersionedDataObject>();
+  @Output() public onAddEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onRowEntry = new EventEmitter<VersionedDataObject>();
 
 
@@ -235,6 +236,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
         case TableActionType.VIEW:
           this.onView(row.payload);
           break;
+        case TableActionType.ADD:
+          this.onAdd(row.payload);
+          break;
         default:
           console.warn('Could not handle click on action icon. Unknown action type: ', action);
       }
@@ -312,6 +316,10 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
 
   private onDelete(affectedRowPayload: VersionedDataObject) {
     this.onDeleteEntry.emit(affectedRowPayload);
+  }
+
+  private onAdd(affectedRowPayload: VersionedDataObject) {
+    this.onAddEntry.emit(affectedRowPayload);
   }
 
   private onRowClicked(affectedRowPayload: VersionedDataObject) {
