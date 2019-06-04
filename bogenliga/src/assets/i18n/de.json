@@ -586,7 +586,7 @@
         "GEBURTSDATUM": {
           "LABEL": "Geburtsdatum",
           "PLACEHOLDER": "Bitte ein Geburtsdatum eingeben",
-          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: JJJJ-MM-TT)."
+          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: TT-MM-JJJJ)."
         },
         "MITGLIEDSNUMMER": {
           "LABEL": "Mitgliedsnummer",
