@@ -47,7 +47,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
   public selectedMember: DsbMitgliedDO = new DsbMitgliedDO();
   public memberToAdd: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
-  public members: DsbMitgliedDO[] = [new DsbMitgliedDO()];
+  public members: DsbMitgliedDTO[] = [new DsbMitgliedDTO()];
 
   // attributes for the filter of the members
   public vorname: string ="";

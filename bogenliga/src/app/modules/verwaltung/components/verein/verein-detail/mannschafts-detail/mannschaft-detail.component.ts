@@ -231,8 +231,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleSuccess(response: BogenligaResponse<DsbMannschaftDO>) {
     this.currentMannschaft = response.payload;
     console.log(this.currentMannschaft.id);
-    const id = this.currentMannschaft.id;
-
+    this.loadTableRows();
+  }
+    /*
+     const id = this.currentMannschaft.id;
     this.deleteNotification = {
       id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
       title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
@@ -258,6 +260,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
                                   });
     this.loading = false;
   }
+     */
 
   private handleFailure(response: BogenligaResponse<DsbMannschaftDO>) {
     this.loading = false;
