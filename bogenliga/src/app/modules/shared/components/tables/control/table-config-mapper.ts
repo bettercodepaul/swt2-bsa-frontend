@@ -24,13 +24,18 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     loading: {
       active:   'sync',
       inactive: 'sync'
+    },
+    add: {
+      active:   'plus',
+      inactive: 'plus'
     }
   },
   localizationKeys: {
     actionColum: 'TABLE.HEADERS.ACTION',
     edit:        'TABLE.ACTIONS.EDIT',
     delete:      'TABLE.ACTIONS.DELETE',
-    view:        'TABLE.ACTIONS.VIEW'
+    view:        'TABLE.ACTIONS.VIEW',
+    add:         'TABLE.ACTIONS.ADD'
   }
 };
 
@@ -120,7 +125,7 @@ function tableActionConfigWithDefaults(optional: {
   actionTypes?: TableActionType[],
   width?: number,
   iconUrls?: any,
-  localizationKeys?: { columnKey: string, edit: string, delete: string, view: string }
+  localizationKeys?: { columnKey: string, edit: string, delete: string, view: string, add: string }
 } = {}) {
   // clone defaults
   const actionsWithDefaults = Object.assign({}, DEFAULT_TABLE_ACTION_CONFIG);

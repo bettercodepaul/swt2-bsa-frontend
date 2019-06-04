@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent, toTableRows} from '../../../../../shared/components';
+import {
+  ButtonType,
+  CommonComponent, hideLoadingIndicator,
+  showDeleteLoadingIndicatorIcon,
+  toTableRows
+} from '../../../../../shared/components';
 import {BogenligaResponse} from '../../../../../shared/data-provider';
 import {
   Notification,
@@ -35,6 +40,9 @@ const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_SAVE_MANNSCHAFT = 'mannschaft_detail_save';
 const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
+const NOTIFICATION_DELETE_MITGLIED = 'mannschaft_mitglied_delete';
+const NOTIFICATION_DELETE_MITGLIED_SUCCESS = 'mannschaft_mitglied_delete_success';
+const NOTIFICATION_DELETE_MITGLIED_FAILURE = 'mannschaft_mitglied_delete_failure';
 const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft'
 
 @Component({
@@ -45,6 +53,8 @@ const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft'
 export class MannschaftDetailComponent extends CommonComponent implements OnInit {
   public config = MANNSCHAFT_DETAIL_CONFIG;
   public config_table = MANNSCHAFT_DETAIL_TABLE_CONFIG;
+
+  // ONLY DSB-Mitgleder NOT Mannschaftsmitglieder are saved in table
   public rows: TableRow[];
   public ButtonType = ButtonType;
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
@@ -311,32 +321,30 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     this.notificationService.discardNotification();
 
-    const id = versionedDataObject.id;
-    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+    const memberId = versionedDataObject.id;
+    const teamId = this.currentMannschaft.id;
+    this.rows = showDeleteLoadingIndicatorIcon(this.rows, memberId);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
-      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
+      id:               NOTIFICATION_DELETE_MITGLIED + memberId,
+      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.TITLE',
+      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.DESCRIPTION',
+      descriptionParam: '' + memberId,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
       type:             NotificationType.YES_NO,
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            // TODO ***********************************************+
-            // TODO: Mannschaftsmitglied aus Mannschaft entfernen
-            // TODO ***********************************************+
-            this.mannschaftMitgliedProvider.deleteById(versionedDataObject.id)
+            this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(teamId, memberId)
                 .then((response) => this.loadTableRows())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, memberId));
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.rows = hideLoadingIndicator(this.rows, id);
+            this.rows = hideLoadingIndicator(this.rows, memberId);
           }
 
         });

@@ -24,10 +24,17 @@ export const SCHUETZE_TABLE_CONFIG: TableConfig = {
         translationKey: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.TABLE.HEADERS.MITGLIED_NUMMER',
         propertyName:   'mitgliedsnummer',
         width:          20,
-      },
+      }
+      /*
+      ,
+      {
+        translationKey: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.TABLE.HEADERS.MITGLIED_VEREIN',
+        propertyName:   'vereinsId',
+        width:          20,
+      }*/
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.VIEW],
+      actionTypes: [TableActionType.ADD],
       width:       6
     },
   };

@@ -78,7 +78,8 @@
   <h3> Gefundene Schützen: </h3>
   <bla-data-table [config]="table_config"
                   [rows]="rows"
-                  [loading]="loading">
+                  [loading]="loading"
+                  (onAddEntry)="onSave($event)">
   </bla-data-table>
 
 </bla-common-dialog>

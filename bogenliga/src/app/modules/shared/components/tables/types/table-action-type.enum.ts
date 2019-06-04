@@ -1,5 +1,6 @@
 export enum TableActionType {
   EDIT,
   VIEW,
-  DELETE
+  DELETE,
+  ADD
 }
