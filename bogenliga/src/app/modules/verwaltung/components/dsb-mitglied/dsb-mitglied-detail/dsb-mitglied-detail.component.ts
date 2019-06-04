@@ -66,6 +66,8 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
+    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[" "]/g, "");
+
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
         .then((response: BogenligaResponse<DsbMitgliedDO>) => {
@@ -122,6 +124,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
+    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[" "]/g, "");
 
     // persist
     this.dsbMitgliedDataProvider.update(this.currentMitglied)
@@ -154,6 +157,24 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
+          this.saveLoading = false;
+          if(response.result === RequestResult.DUPLICATE_DETECTED) {
+            const notification: Notification = {
+              id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
+              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_DSB_MITGLIED)
+                .subscribe((myNotification) => {
+                });
+
+            this.notificationService.showNotification(notification);
+          }
           this.saveLoading = false;
         });
     // show response message

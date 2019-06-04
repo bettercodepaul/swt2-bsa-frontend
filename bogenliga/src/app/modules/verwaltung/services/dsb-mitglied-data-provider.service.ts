@@ -12,6 +12,7 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/dsb-mitglied-mapper';
 import {DsbMitgliedDO} from '../types/dsb-mitglied-do.class';
+import {promise} from 'selenium-webdriver';
 
 @Injectable({
   providedIn: 'root'
@@ -127,7 +128,13 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
 
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
+            }
+            else if(error.status === 500) {
+              console.log(error.status);
+              reject({result: RequestResult.DUPLICATE_DETECTED});
+            }
+
+            else {
               reject({result: RequestResult.FAILURE});
             }
           });
