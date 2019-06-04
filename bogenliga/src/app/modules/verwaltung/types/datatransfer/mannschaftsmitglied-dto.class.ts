@@ -5,14 +5,14 @@ export class MannschaftsmitgliedDTO implements DataTransferObject {
   version: number;
   mannschaftsId: number;
   dsbMitgliedId: number;
-  istEingesetzt: boolean;
+  dsbMitgliedEingesetzt: number;
 
   static copyFrom(optional: {
     id?: number;
     version?: number;
     mannschaftsId?: number;
     dsbMitgliedId?: number;
-    istEingesetzt?: boolean;
+    dsbMitgliedEingesetzt?: number;
   } = {}): MannschaftsmitgliedDTO {
     const copy = new MannschaftsmitgliedDTO();
     // show '0' value
@@ -25,7 +25,7 @@ export class MannschaftsmitgliedDTO implements DataTransferObject {
     copy.version = optional.version || null;
     copy.mannschaftsId = optional.mannschaftsId || null;
     copy.dsbMitgliedId = optional.dsbMitgliedId || null;
-    copy.istEingesetzt = optional.istEingesetzt || null;
+    copy.dsbMitgliedEingesetzt = optional.dsbMitgliedEingesetzt || null;
 
     return copy;
   }
