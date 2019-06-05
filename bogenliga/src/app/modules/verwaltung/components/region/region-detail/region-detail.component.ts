@@ -53,10 +53,10 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public id;
 
   constructor(private regionProvider: RegionDataProviderService,
-    private userProvider: UserProfileDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private userProvider: UserProfileDataProviderService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -305,7 +305,6 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     this.uebergeordneteRegionenGefiltertStrings = [];
 
     if (this.currentRegion.regionTyp === 'LANDESVERBAND') {
-      ''
       this.uebergeordneteRegionenGefiltert = this.regionen.filter((region) => region.regionTyp === 'BUNDESVERBAND');
     } else if (this.currentRegion.regionTyp === 'BEZIRK') {
       this.uebergeordneteRegionenGefiltert = this.regionen.filter((region) => region.regionTyp === 'LANDESVERBAND');
@@ -317,7 +316,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
     this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
 
-    this.uebergeordneteRegionenGefiltert.forEach(region => {this.uebergeordneteRegionenGefiltertStrings.push(region.regionName);});
+    this.uebergeordneteRegionenGefiltert.forEach((region) => {this.uebergeordneteRegionenGefiltertStrings.push(region.regionName); });
   }
 
   public filterRegionTypes(): void {
@@ -331,8 +330,8 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   public isContractionUnique(): boolean {
     this.contractionUnique = true;
-    this.regionen.forEach(region => {
-      if (region.regionKuerzel == this.currentRegion.regionKuerzel) {
+    this.regionen.forEach((region) => {
+      if (region.regionKuerzel === this.currentRegion.regionKuerzel) {
         this.contractionUnique = false;
       }
     });
