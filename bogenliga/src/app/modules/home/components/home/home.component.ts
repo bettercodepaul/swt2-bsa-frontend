@@ -4,16 +4,14 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {WETTKAMPF_TABLE_CONFIG} from '@home/components/home/wettkampf/wettkampf.config';
-import {WettkampfTableDo} from '@home/components/home/wettkampf/wettkampfTable-do.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {Wettkaempfe} from '../../../../../../e2e/src/wettkaempfe/wettkaempfe.po';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
-import {VereinDO} from '@vereine/types/verein-do.class';
 import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
-import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
 import {VeranstaltungDTO} from '@vereine/types/datatransfer/veranstaltung-dto.class';
-
+import {formatDate} from '@angular/common';
+import {registerLocaleData} from '@angular/common';
+import localeDE from '@angular/common/locales/de';
 
 @Component({
   selector:    'bla-home',
@@ -28,7 +26,8 @@ export class HomeComponent extends CommonComponent implements OnInit {
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[];
-
+  public currentDate : number =  Date.now();
+  public dateHelper: string ;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService) {
     super();
@@ -36,9 +35,11 @@ export class HomeComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     this.loadWettkaempfe();
-
   }
-    // backend call to get list
+
+  /**
+   * backend call to get list
+   */
   private loadWettkaempfe(): void {
       this.wettkaempfe = [];
       this.wettkampfDataProvider.findAll()
@@ -49,6 +50,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
   private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
     this.wettkaempfe = payload;
     this.wettkaempfe.forEach((wettkampf) => {this.findLigaNameByVeranstaltungsId(wettkampf); });
+    this.checkDate();
     this.fillTableRows();
     this.loadingWettkampf = false;
   }
@@ -64,12 +66,49 @@ export class HomeComponent extends CommonComponent implements OnInit {
 
   }
 
+  /**
+   * Restriction that only a maximum of six events are portrayed
+   * BSAPP- 367
+   */
   private fillTableRows(): void {
     this.rows = [];
-    this.rows = toTableRows(this.wettkaempfe);
 
+    if(this.wettkaempfe.length < 6){
+      this.rows = toTableRows(this.wettkaempfe);
+    }
+    else{
+      this.rows = toTableRows(this.wettkaempfe.slice(0, 5));
+    }
   }
 
+  /**
+   * Checks that only dates that are in the future will be portrayed
+   * BSAPP-366
+   */
+  private checkDate(){
+    /**
+     * Gives the german date - otherwise always the american
+     */
 
+    registerLocaleData(localeDE);
+    this.dateHelper = formatDate(this.currentDate, 'yyyy-MM-dd', 'de');
+
+    for (let i =0; i< this.wettkaempfe.length;i++){
+      /**
+       * Turns the strings into date objects which can be easily compared
+       */
+      var wettkampfDate = new Date(this.wettkaempfe[i].wettkampfDatum);
+      var heuteDate = new Date(this.currentDate);
+
+      if(wettkampfDate < heuteDate){
+        /**
+         * Splice takes out the number of values/objects defined in 'deleteCount'
+         * it then moves the rest objects up - that's why we need the i--
+         */
+        this.wettkaempfe.splice(i, 1);
+        i--;
+      }
+    }
+  }
 }
 
