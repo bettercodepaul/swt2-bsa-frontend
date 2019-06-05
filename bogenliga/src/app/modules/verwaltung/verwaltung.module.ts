@@ -20,7 +20,7 @@ import {
   WettkampfklasseOverviewComponent,
   VeranstaltungOverviewComponent,
   VeranstaltungDetailComponent,
-
+  SportjahrOverviewComponent,
 } from './components';
 import {
   BenutzerDetailGuard,
@@ -39,6 +39,7 @@ import {
   WettkampfklasseOverviewGuard,
   VeranstaltungDetailGuard,
   VeranstaltungOverviewGuard,
+  SportjahrOverviewGuard,
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
@@ -69,6 +70,7 @@ import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail
     MannschaftDetailComponent,
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
+    SportjahrOverviewComponent,
 
   ]
 })
@@ -94,6 +96,7 @@ export class VerwaltungModule {
         RegionOverviewGuard,
         VeranstaltungOverviewGuard,
         VeranstaltungDetailGuard,
+        SportjahrOverviewGuard,
       ]
     };
   }
