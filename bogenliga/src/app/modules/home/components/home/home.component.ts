@@ -26,7 +26,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[];
-  public currentDate : number =  Date.now();
+  public currentDate: number =  Date.now();
   public dateHelper: string;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService) {
@@ -96,8 +96,8 @@ export class HomeComponent extends CommonComponent implements OnInit {
       /**
        * Turns the strings into date objects which can be easily compared
        */
-      let wettkampfDate = new Date(this.wettkaempfe[i].wettkampfDatum);
-      let heuteDate = new Date(this.currentDate);
+      const wettkampfDate = new Date(this.wettkaempfe[i].wettkampfDatum);
+      const heuteDate = new Date(this.currentDate);
 
       if (wettkampfDate < heuteDate) {
         /**
