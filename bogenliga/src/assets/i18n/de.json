@@ -767,7 +767,9 @@
 
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
+        "DELETE": "Löschen",
+        "WETTKAMPFTAGE": "Wettkampftage",
+        "BACK": "Zurück"
       },
       "NOTIFICATION": {
         "DELETE": {
