@@ -41,11 +41,12 @@
                required
                minlength="1"
                maxlength="7"
+               pattern="[A-Za-z0-9_-]*"
                id="regionContraction"
                name="regionContraction"
                #regionContraction="ngModel"
                [(ngModel)]="currentRegion.regionKuerzel"
-               [class.is-invalid]="regionContraction.invalid && !regionContraction.untouched"
+               [class.is-invalid]="(regionContraction.invalid || !isContractionUnique()) && !regionContraction.untouched"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -66,6 +67,7 @@
                 id="regionTyp"
                 name="regionTyp"
                 #regionTyp="ngModel"
+                (change)="filterRegions(); filterRegionTypes();"
                 [(ngModel)]="currentRegion.regionTyp">
           <option selected="selected">{{currentRegion.regionTyp}}</option>
           <option *ngFor="let typ of possibleRegionTypes"> {{typ}}</option>
@@ -89,9 +91,9 @@
                 id="regionUebergeordnet"
                 name="regionUebergeordnet"
                 #regionUebergeordnet="ngModel"
-                [(ngModel)]="currentUebergeordneteRegion">
-          <option selected="selected">{{currentUebergeordneteRegion.regionName}}</option>
-          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of uebergeordneteRegionenGefiltert"> {{uebergeordnet.regionName}}</option>
+                [(ngModel)]="currentRegion.regionUebergeordnetAsName">
+          <option selected="selected">{{currentRegion.regionUebergeordnetAsName}}</option>
+          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of uebergeordneteRegionenGefiltertStrings"> {{uebergeordnet}}</option>
           <option>Diese Region hat keine übergeordnete Region</option>
         </select>
         <div class="invalid-feedback">
@@ -107,7 +109,7 @@
 
         <bla-button *ngIf="!entityExists()"
                     [id]="'regionSaveButton'"
-                    [disabled]="!regionenForm.valid"
+                    [disabled]="!regionenForm.valid || !contractionUnique"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.SAVE' | translate }}

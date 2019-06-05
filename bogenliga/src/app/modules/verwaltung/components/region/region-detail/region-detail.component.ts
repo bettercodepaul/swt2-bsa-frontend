@@ -40,13 +40,15 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public currentRegion: RegionDO = new RegionDO();
 
   public possibleRegionTypes: Array<string> = ['BUNDESVERBAND', 'LANDESVERBAND', 'BEZIRK', 'KREIS'];
-
-  public currentUebergeordneteRegion: RegionDO = new RegionDO();
-  public allUebergeordneteRegionen: Array<RegionDO> = [new RegionDO()];
+  public possibleRegionTypes2: Array<string> = ['BUNDESVERBAND', 'LANDESVERBAND', 'BEZIRK', 'KREIS'];
+  public regionen: Array<RegionDO> = [new RegionDO()];
   public uebergeordneteRegionenGefiltert: Array<RegionDO> = [new RegionDO()];
+  public uebergeordneteRegionenGefiltertStrings: Array<string> = [];
 
   public deleteLoading = false;
   public saveLoading = false;
+
+  public contractionUnique = true;
 
   public id;
 
@@ -70,14 +72,12 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
           this.currentRegion = new RegionDO();
 
           this.loadRegions();
-          this.loadUebergeordnete();
 
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
         } else {
           this.loadRegions();
-          this.loadUebergeordnete();
           this.loadById(params[ID_PATH_PARAM]);
         }
       }
@@ -87,10 +87,9 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
-    if (typeof this.currentUebergeordneteRegion === 'undefined') {
+    if (this.currentRegion.regionUebergeordnetAsName == "Diese Region hat keine übergeordnete Region") {
+      this.currentRegion.regionUebergeordnetAsName = null;
       this.currentRegion.regionUebergeordnet = null;
-    } else {
-      this.currentRegion.regionUebergeordnet = this.currentUebergeordneteRegion.id;
     }
 
     console.log('Saving region: ', this.currentRegion);
@@ -116,7 +115,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/region/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/regionen');
                   }
                 });
 
@@ -133,9 +132,13 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
-    this.currentRegion.regionUebergeordnet = this.currentUebergeordneteRegion.id;
+
     // persist
 
+    if (this.currentRegion.regionUebergeordnetAsName == "Diese Region hat keine übergeordnete Region") {
+      this.currentRegion.regionUebergeordnetAsName = null;
+      this.currentRegion.regionUebergeordnet = null;
+    }
     this.regionProvider.update(this.currentRegion)
         .then((response: BogenligaResponse<RegionDO>) => {
           if (!isNullOrUndefined(response)
@@ -158,7 +161,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/region');
+                    this.router.navigateByUrl('/verwaltung/regionen');
                   }
                 });
 
@@ -217,27 +220,14 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
 
-  private loadUebergeordnete() {
-    this.regionProvider.findAll()
-        .then((response: BogenligaResponse<RegionDO[]>) => this.handlUebergeordnetResponseArraySuccess (response))
-        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleUebergeordnetResponseArrayFailure (response));
-  }
-
   private handleSuccess(response: BogenligaResponse<RegionDO>) {
     this.currentRegion = response.payload;
-    // the current Region will be removed from the Array to avoid a self-reference as superordinate Region
-    this.allUebergeordneteRegionen = this.allUebergeordneteRegionen.filter((region) => region.regionName !== this.currentRegion.regionName);
 
-    if (this.currentRegion.regionTyp == "LANDESVERBAND") {
-      this.uebergeordneteRegionenGefiltert = this.allUebergeordneteRegionen.filter((region) => region.regionTyp === "BUNDESVERBAND");
-    } else if (this.currentRegion.regionTyp == "BEZIRK") {
-      this.uebergeordneteRegionenGefiltert = this.allUebergeordneteRegionen.filter((region) => region.regionTyp === "LANDESVERBAND");
-    } else if (this.currentRegion.regionTyp == "KREIS") {
-      this.uebergeordneteRegionenGefiltert = this.allUebergeordneteRegionen.filter((region) => region.regionTyp === "BEZIRK");
-    }
+    this.possibleRegionTypes = this.possibleRegionTypes2;
 
-    this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
-    this.possibleRegionTypes = this.possibleRegionTypes.filter((s) => s !== this.currentRegion.regionTyp);
+    this.filterRegions();
+
+    this.filterRegionTypes();
 
     this.loading = false;
   }
@@ -261,7 +251,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.observeNotification(NOTIFICATION_DELETE_REGION_SUCCESS)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/region');
+            this.router.navigateByUrl('/verwaltung/regionen');
             this.deleteLoading = false;
           }
         });
@@ -292,37 +282,58 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   }
 
   private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
-    this.allUebergeordneteRegionen = [];
-    this.loading = false;
-  }
-
-  private handlUebergeordnetResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
-    this.allUebergeordneteRegionen = [];
-    this.allUebergeordneteRegionen = response.payload;
-    if (this.id === 'add') {
-      this.currentUebergeordneteRegion = this.allUebergeordneteRegionen[0];
-    } else {
-      this.currentUebergeordneteRegion = this.allUebergeordneteRegionen.filter((uebergeordnet) => uebergeordnet.id === this.currentRegion.regionUebergeordnet)[0];
-    }
-    this.loading = false;
-  }
-
-  private handleUebergeordnetResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
-    this.allUebergeordneteRegionen = [];
+    this.regionen = [];
     this.loading = false;
   }
 
   private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
-    this.allUebergeordneteRegionen = []; // reset array to ensure change detection
-    this.allUebergeordneteRegionen = response.payload;
+    this.regionen = []; // reset array to ensure change detection
+    this.regionen = response.payload;
     // setting the Typ as a default Typ
-    this.currentRegion.regionTyp = this.possibleRegionTypes[0];
-    this.possibleRegionTypes = this.possibleRegionTypes.filter((s) => s !== this.currentRegion.regionTyp);
+    if (this.currentRegion.regionUebergeordnetAsName == null) {
+      this.currentRegion.regionUebergeordnetAsName = this.regionen[1].regionName;
+    }
+    this.filterRegionTypes();
 
-    // static attribute
-    this.currentUebergeordneteRegion.regionName = this.allUebergeordneteRegionen[1].regionUebergeordnetAsName;
-    this.uebergeordneteRegionenGefiltert = this.allUebergeordneteRegionen.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
+    this.filterRegions();
 
     this.loading = false;
+  }
+
+  private filterRegions(): void {
+    this.uebergeordneteRegionenGefiltert = [];
+
+    if (this.currentRegion.regionTyp == "LANDESVERBAND") {
+      this.uebergeordneteRegionenGefiltert = this.regionen.filter((region) => region.regionTyp === "BUNDESVERBAND");
+    } else if (this.currentRegion.regionTyp == "BEZIRK") {
+      this.uebergeordneteRegionenGefiltert = this.regionen.filter((region) => region.regionTyp === "LANDESVERBAND");
+    } else if (this.currentRegion.regionTyp == "KREIS") {
+      this.uebergeordneteRegionenGefiltert = this.regionen.filter((region) => region.regionTyp === "BEZIRK");
+    } else if (this.currentRegion.regionTyp == "BUNDESVERBAND") {
+      this.uebergeordneteRegionenGefiltert = [];
+    }
+
+    this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
+
+    this.uebergeordneteRegionenGefiltert.forEach( r => this.uebergeordneteRegionenGefiltertStrings.push(r.regionName))
+  }
+
+  public filterRegionTypes():void {
+    if (this.currentRegion.regionTyp == null) {
+      this.currentRegion.regionTyp = this.possibleRegionTypes[2];
+      this.possibleRegionTypes = this.possibleRegionTypes2.filter((s) => s !== this.currentRegion.regionTyp);
+    } else {
+      this.possibleRegionTypes = this.possibleRegionTypes2.filter((s) => s !== this.currentRegion.regionTyp);
+    }
+  }
+
+  public isContractionUnique(): boolean {
+    this.contractionUnique = true;
+    this.regionen.forEach(region => {
+      if (region.regionKuerzel == this.currentRegion.regionKuerzel) {
+        this.contractionUnique = false;
+      }
+    });
+    return this.contractionUnique;
   }
 }
