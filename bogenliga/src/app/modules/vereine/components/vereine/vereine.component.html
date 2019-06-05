@@ -5,12 +5,12 @@
 
       <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
 
-      <bla-quicksearch-list [items]="vereine"
-                            [optionFieldSelector]="'name'"
+      <bla-quicksearch-list (onSelect)="onSelect($event)"
+                            [items]="vereine"
                             [loading]="loadingVereine"
-                            (onSelect)="onSelect($event)"
                             [multipleSelections]="!multipleSelections"
                             [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                            [optionFieldSelector]="'name'"
                             selectionListHeight="15em"
                             style="width: 50%; flex-grow: 0;">
 
@@ -19,12 +19,12 @@
   </div>
 
   <div class="row">
-    <bla-data-table [config]="config_table"
-                    [rows]="rows"
-                    [loading]="loadingTable"
-                    (onViewClicked)="onView($event)"
+    <bla-data-table (onDeleteClicked)="onDelete($event)"
                     (onEditClicked)="onEdit($event)"
-                    (onDeleteClicked)="onDelete($event)">
+                    (onViewClicked)="onView($event)"
+                    [config]="config_table"
+                    [loading]="loadingTable"
+                    [rows]="rows">
     </bla-data-table>
   </div>
 
