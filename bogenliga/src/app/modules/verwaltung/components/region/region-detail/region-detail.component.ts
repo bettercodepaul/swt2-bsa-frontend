@@ -300,7 +300,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     this.loading = false;
   }
 
-  private filterRegions(): void {
+  public filterRegions(): void {
     this.uebergeordneteRegionenGefiltert = [];
     this.uebergeordneteRegionenGefiltertStrings = [];
 
