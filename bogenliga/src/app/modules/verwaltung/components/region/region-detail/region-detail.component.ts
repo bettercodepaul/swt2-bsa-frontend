@@ -302,6 +302,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   private filterRegions(): void {
     this.uebergeordneteRegionenGefiltert = [];
+    this.uebergeordneteRegionenGefiltertStrings = [];
 
     if (this.currentRegion.regionTyp == "LANDESVERBAND") {
       this.uebergeordneteRegionenGefiltert = this.regionen.filter((region) => region.regionTyp === "BUNDESVERBAND");
@@ -315,10 +316,11 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
     this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
 
-    this.uebergeordneteRegionenGefiltert.forEach( r => this.uebergeordneteRegionenGefiltertStrings.push(r.regionName))
+    this.uebergeordneteRegionenGefiltert.forEach( r => this.uebergeordneteRegionenGefiltertStrings.push(r.regionName));
   }
 
   public filterRegionTypes():void {
+    console.log("-- filterRegiontypes");
     if (this.currentRegion.regionTyp == null) {
       this.currentRegion.regionTyp = this.possibleRegionTypes[2];
       this.possibleRegionTypes = this.possibleRegionTypes2.filter((s) => s !== this.currentRegion.regionTyp);
