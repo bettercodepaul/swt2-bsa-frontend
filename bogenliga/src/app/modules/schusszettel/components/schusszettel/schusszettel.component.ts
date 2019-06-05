@@ -108,7 +108,6 @@ export class SchusszettelComponent implements OnInit {
         this.schusszettelService.findMatches(match1id, match2id)
             .then((data: BogenligaResponse<Array<MatchDO>>) => {
               this.match1 = data.payload[0];
-              console.log(data.payload[0]);
               this.match2 = data.payload[1];
               if (this.match1.schuetzen.length <= 0 || this.match2.schuetzen.length <= 0) {
                 this.initSchuetzen();
@@ -117,7 +116,7 @@ export class SchusszettelComponent implements OnInit {
                 this.setPoints();
               }
             }, (error) => {
-              console.log(error);
+              console.error(error);
             });
 
       }
@@ -131,7 +130,6 @@ export class SchusszettelComponent implements OnInit {
    * Pushes three arrays into schuetzen, then pushes five PasseDO in each of the three arrays.
    */
   private initSchuetzen() {
-    console.log("Init Schützen");
     for (let i = 0; i < 3; i++) {
       this.match1.schuetzen.push(new Array<PasseDO>());
       this.match2.schuetzen.push(new Array<PasseDO>());
@@ -196,7 +194,6 @@ export class SchusszettelComponent implements OnInit {
    */
   private setPoints() {
     //kumulativ
-    console.log(this.match1.wettkampfTyp);
     if (this.match1.wettkampfTyp === "Liga kummutativ") {
       this.setKummulativePoints();
     } else if (this.match1.wettkampfTyp === "Liga Satzsystem") {
@@ -253,7 +250,7 @@ export class SchusszettelComponent implements OnInit {
       kumuluativ1 += this.match1.sumSatz[i];
       kumuluativ2 += this.match2.sumSatz[i];
     }
-    console.log("Kumulativ");
+
     if (kumuluativ1 > kumuluativ2) {
       this.match1.satzpunkte = 6;
       this.match2.satzpunkte = 0;
@@ -281,7 +278,7 @@ export class SchusszettelComponent implements OnInit {
           this.setPoints();
           this.notificationService.discardNotification();
         }, (error) => {
-          console.log(error);
+          console.error(error);
           this.notificationService.discardNotification();
         });
   }
