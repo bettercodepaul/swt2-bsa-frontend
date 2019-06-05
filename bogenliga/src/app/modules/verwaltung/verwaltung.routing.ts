@@ -17,6 +17,7 @@ import {
   WettkampfklasseOverviewComponent,
   VeranstaltungDetailComponent,
   VeranstaltungOverviewComponent,
+  SportjahrOverviewComponent
   WettkampftageComponent,
 } from './components';
 import {
@@ -36,6 +37,7 @@ import {
   WettkampfklasseOverviewGuard,
   VeranstaltungDetailGuard,
   VeranstaltungOverviewGuard,
+  SportjahrOverviewGuard,
   WettkampftageGuard,
 } from './guards';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
@@ -95,6 +97,14 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [VeranstaltungOverviewGuard]
   },
+  {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
+  {
+    path:        'sportjahr',
+    component:   SportjahrOverviewComponent,
+    pathMatch:   'full',
+    canActivate: [SportjahrOverviewGuard]
+  },
+  {path: 'sportjahr/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]}
   {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
   {path: 'veranstaltung/:id/:id', component: WettkampftageComponent, canActivate: [WettkampftageGuard]}
 ];
