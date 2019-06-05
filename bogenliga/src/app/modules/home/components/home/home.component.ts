@@ -27,7 +27,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
   public loadingTable = false;
   public rows: TableRow[];
   public currentDate : number =  Date.now();
-  public dateHelper: string ;
+  public dateHelper: string;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService) {
     super();
@@ -73,10 +73,9 @@ export class HomeComponent extends CommonComponent implements OnInit {
   private fillTableRows(): void {
     this.rows = [];
 
-    if(this.wettkaempfe.length < 6){
+    if (this.wettkaempfe.length < 6) {
       this.rows = toTableRows(this.wettkaempfe);
-    }
-    else{
+    } else {
       this.rows = toTableRows(this.wettkaempfe.slice(0, 5));
     }
   }
@@ -85,7 +84,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
    * Checks that only dates that are in the future will be portrayed
    * BSAPP-366
    */
-  private checkDate(){
+  private checkDate() {
     /**
      * Gives the german date - otherwise always the american
      */
@@ -93,14 +92,14 @@ export class HomeComponent extends CommonComponent implements OnInit {
     registerLocaleData(localeDE);
     this.dateHelper = formatDate(this.currentDate, 'yyyy-MM-dd', 'de');
 
-    for (let i =0; i< this.wettkaempfe.length;i++){
+    for (let i = 0; i < this.wettkaempfe.length; i++) {
       /**
        * Turns the strings into date objects which can be easily compared
        */
-      var wettkampfDate = new Date(this.wettkaempfe[i].wettkampfDatum);
-      var heuteDate = new Date(this.currentDate);
+      let wettkampfDate = new Date(this.wettkaempfe[i].wettkampfDatum);
+      let heuteDate = new Date(this.currentDate);
 
-      if(wettkampfDate < heuteDate){
+      if (wettkampfDate < heuteDate) {
         /**
          * Splice takes out the number of values/objects defined in 'deleteCount'
          * it then moves the rest objects up - that's why we need the i--
