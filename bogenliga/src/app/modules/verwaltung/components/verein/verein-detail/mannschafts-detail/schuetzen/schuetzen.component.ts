@@ -33,6 +33,8 @@ import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_SCHUETZE = 'schütze_hinzufügen_save';
+const NOTIFICATION_DUPLICATE_SCHUETZE = 'schütze_hinzufügen_doppelt';
+const NOTIFICATION_OVERUSED_SCHUETZE = 'schütze_hinzufügen_in_zu_vielen_mannschaften';
 
 @Component({
   selector:    'bla-schuetzen',
@@ -55,7 +57,6 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   public mitgliedsnummer = '';
   public currentVerein: VereinDO = new VereinDO();
 
-
   public deleteLoading = false;
   public saveLoading = false;
 
@@ -72,12 +73,8 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
 
-    console.log(Number.parseInt(this.route.snapshot.url[2].path, 10));
-    console.log(Number.parseInt(this.route.snapshot.url[1].path, 10));
-
     this.loadMannschaftById(Number.parseInt(this.route.snapshot.url[2].path, 10));
     this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path, 10));
-
 
     this.notificationService.discardNotification();
 
@@ -99,13 +96,34 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   public onSave(member: VersionedDataObject): void {
     this.saveLoading = true;
 
-    console.log('Saving Schütze: ' + member + ' zu Mannschaft: ', this.currentMannschaft);
-
     this.memberToAdd.dsbMitgliedId = member.id;
     this.memberToAdd.mannschaftsId = this.currentMannschaft.id;
-    // this.memberToAdd.dsbMitgliedEingesetzt = 0;
 
-    this.mannschaftMitgliedProvider.findByMemberId(member.id)
+    this.mannschaftMitgliedProvider.findAllByTeamId(this.currentMannschaft.id)
+        .then((teamMembers: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+          if (this.duplicateMember(teamMembers.payload, this.memberToAdd)) {
+            this.showDuplicateMember();
+          } else {
+            this.saveMemberInTeam(member.id);
+          }
+        })
+        .catch((duplicate: BogenligaResponse<MannschaftsMitgliedDO>) => {
+          this.saveMemberInTeam(member.id);
+        });
+    // show response message
+  }
+
+  private duplicateMember(teamMembers: MannschaftsMitgliedDO[], member: MannschaftsMitgliedDO): boolean {
+    teamMembers.forEach((teamMember) => {
+      if (teamMember.id === member.id) {
+        return true;
+      }
+    });
+    return false;
+  }
+
+  private saveMemberInTeam(memberId: number) {
+    this.mannschaftMitgliedProvider.findByMemberId(memberId)
         .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
           if (response.payload.length <= 1) {
             this.memberToAdd.dsbMitgliedEingesetzt = response.payload.length;
@@ -113,11 +131,11 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
             console.log('saving ' + this.memberToAdd + ' in Mannschaft');
 
             this.mannschaftMitgliedProvider.create(this.memberToAdd)
-                .then((response: BogenligaResponse<MannschaftsMitgliedDO>) => {
-                  if (!isNullOrUndefined(response)
-                    && !isNullOrUndefined(response.payload)
-                    && !isNullOrUndefined(response.payload.id)) {
-                    console.log('Saved with id: ' + response.payload.id);
+                .then((savedResponse: BogenligaResponse<MannschaftsMitgliedDO>) => {
+                  if (!isNullOrUndefined(savedResponse)
+                    && !isNullOrUndefined(savedResponse.payload)
+                    && !isNullOrUndefined(savedResponse.payload.id)) {
+                    console.log('Saved with id: ' + savedResponse.payload.id);
 
                     const notification: Notification = {
                       id:          NOTIFICATION_SAVE_SCHUETZE,
@@ -140,19 +158,67 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
                     this.notificationService.showNotification(notification);
                   }
-                }, (response: BogenligaResponse<MannschaftsMitgliedDO>) => {
-                  console.log(response.payload);
+                }, (savedResponse: BogenligaResponse<MannschaftsMitgliedDO>) => {
+                  console.log(savedResponse.payload);
                   console.log('Failed');
                   this.saveLoading = false;
                 });
+          } else {
+            this.showMemberInTooManyTeams();
           }
-    }).catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+        }).catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
       console.log('Failure');
+      this.saveLoading = false;
     });
-
-
-    // show response message
   }
+
+  // shows a notification for the user, if the member, he wants to add, is used in to many teams
+  private showMemberInTooManyTeams() {
+    const MemberInTooManyTeamsNotification: Notification = {
+      id:          NOTIFICATION_OVERUSED_SCHUETZE,
+      title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.OVERUSED.TITLE',
+      description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.OVERUSED.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(NOTIFICATION_OVERUSED_SCHUETZE)
+        .subscribe((myDuplicateNotification) => {
+          if (myDuplicateNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+            this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
+              + '/' + this.currentMannschaft.id + '/add');
+          }
+        });
+    this.notificationService.showNotification(MemberInTooManyTeamsNotification);
+  }
+
+  // shows a notification for the user, if the member, he wants to add, already exists in the team
+  private showDuplicateMember() {
+
+      const duplicateMemberNotification: Notification = {
+        id:          NOTIFICATION_DUPLICATE_SCHUETZE,
+        title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.TITLE',
+        description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.DESCRIPTION',
+        severity:    NotificationSeverity.INFO,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_SCHUETZE)
+          .subscribe((myDuplicateNotification) => {
+            if (myDuplicateNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.saveLoading = false;
+              this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
+                + '/' + this.currentMannschaft.id + '/add');
+            }
+          });
+
+      this.notificationService.showNotification(duplicateMemberNotification);
+    }
 
   public onSearch() {
      const filteredMembers = this.members.filter((member) => {
