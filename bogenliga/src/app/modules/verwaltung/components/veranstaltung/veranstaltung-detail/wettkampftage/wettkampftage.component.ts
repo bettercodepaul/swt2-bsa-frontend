@@ -53,14 +53,13 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public allWettkampf: Array<WettkampfDO> = [new WettkampfDO()];
 
 
-
-
   public deleteLoading = false;
   public saveLoading = false;
 
   public id;
 
-  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
+  constructor(
+    private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampfDataProvider: WettkampfDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private router: Router,
@@ -100,13 +99,13 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public onVeranstaltungDetail(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
   }
+
   private navigateToWettkampftage(ignore: any) {
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id);
   }
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
-
 
 
     if (typeof this.currentVeranstaltung === 'undefined') {
@@ -342,8 +341,8 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           this.saveLoading = false;
         });
 
-    if(this.currentWettkampftag_1.id != null){
-      this.wettkampfDataProvider.update(this.currentWettkampftag_1)
+    if (this.currentWettkampftag_1 != null) {
+       this.wettkampfDataProvider.update(this.currentWettkampftag_1)
           .then((response: BogenligaResponse<WettkampfDO>) => {
             if (!isNullOrUndefined(response)
               && !isNullOrUndefined(response.payload)
@@ -376,7 +375,8 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
             this.saveLoading = false;
           });
 
-    }else{
+    } else {
+      this.currentWettkampftag_1 = new WettkampfDO();
       this.currentWettkampftag_1.veranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_1.wettkampfTag = 1;
 
@@ -414,7 +414,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     }
 
-    if(this.currentWettkampftag_2.id != null){
+    if (this.currentWettkampftag_2 != null) {
       this.wettkampfDataProvider.update(this.currentWettkampftag_2)
           .then((response: BogenligaResponse<WettkampfDO>) => {
             if (!isNullOrUndefined(response)
@@ -448,7 +448,8 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
             this.saveLoading = false;
           });
 
-    }else{
+    } else {
+      this.currentWettkampftag_2 = new WettkampfDO();
       this.currentWettkampftag_2.veranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_2.wettkampfTag = 2;
 
@@ -486,7 +487,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     }
 
-    if(this.currentWettkampftag_3.id != null){
+    if (this.currentWettkampftag_3 != null) {
       this.wettkampfDataProvider.update(this.currentWettkampftag_3)
           .then((response: BogenligaResponse<WettkampfDO>) => {
             if (!isNullOrUndefined(response)
@@ -520,7 +521,8 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
             this.saveLoading = false;
           });
 
-    }else{
+    } else {
+      this.currentWettkampftag_3 = new WettkampfDO();
       this.currentWettkampftag_3.veranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_3.wettkampfTag = 3;
 
@@ -558,7 +560,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     }
 
-    if(this.currentWettkampftag_4.id != null){
+    if (this.currentWettkampftag_4 != null) {
       this.wettkampfDataProvider.update(this.currentWettkampftag_4)
           .then((response: BogenligaResponse<WettkampfDO>) => {
             if (!isNullOrUndefined(response)
@@ -592,7 +594,8 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
             this.saveLoading = false;
           });
 
-    }else{
+    } else {
+      this.currentWettkampftag_4 = new WettkampfDO();
       this.currentWettkampftag_4.veranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_4.wettkampfTag = 4;
 
@@ -629,10 +632,6 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           });
 
     }
-
-
-
-
 
 
   }
@@ -683,7 +682,6 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
 
   }
-
 
 
   private loadWettkampf() {
@@ -768,10 +766,10 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
     this.loading = false;
   }
 
-  private handleWettkampfResponseArraySuccess(response:BogenligaResponse<WettkampfDO[]>): void {
+  private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
-    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId=== this.currentVeranstaltung.id);
+    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId === this.currentVeranstaltung.id);
 
 
     if (this.id === 'add') {
