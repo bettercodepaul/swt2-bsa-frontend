@@ -54,8 +54,15 @@ class RingzahlIndexGenerator extends IndexGenerator {
       [41, 65], // bottom left second table, bottom right second table
     ];
     this.indices = [];
-    for (let row of rows) {
+    /*for (const row of rows) {
       for (let i = row[0]; i < row[1]; i += 6) {
+        this.indices.push(i);
+        this.indices.push(i + 1);
+      }
+    }*/
+    for (let i = 0; i < rows.length; i++) {
+      let rowItem = rows[i];
+      for (let i = rowItem[0]; i <= rowItem[1]; i += 6) {
         this.indices.push(i);
         this.indices.push(i + 1);
       }
