@@ -73,7 +73,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public id;
 
-  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
+  constructor(
+    private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampftypDataProvider: WettkampftypDataProviderService,
     private wettkampfDataProvider: WettkampfDataProviderService,
     private regionProvider: RegionDataProviderService,
@@ -233,7 +234,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   /**
    * Deletes all Wettkampftag entries of the provided VeranstaltungID
    */
-  private deleteWettkampftage(id: number){
+  private deleteWettkampftage(id : number){
     this.wettkampfDataProvider.deleteById(this.currentWettkampftag_1.id);
     this.wettkampfDataProvider.deleteById(this.currentWettkampftag_2.id);
     this.wettkampfDataProvider.deleteById(this.currentWettkampftag_3.id);
