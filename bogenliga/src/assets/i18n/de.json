@@ -182,6 +182,11 @@
         "PLACEHOLDER": "Bitte Passwort eingeben",
         "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
       },
+      "CODE": {
+        "LABEL": "Google Autheticator Verification Code",
+        "PLACEHOLDER": "Bitte Authentifizierungscode eingeben",
+        "ERROR": "Bitte einen gültigen Code mit mehr als 3 Zeichen eingeben."
+      },
       "REMEMBER_ME": {
         "LABEL": "E-Mail-Adresse merken?"
       },
@@ -971,6 +976,9 @@
           "LABEL": "Verifikation neues Passwort",
           "PLACEHOLDER": "Bitte Passwort wiederholen",
           "ERROR": "Passwort nicht identisch zum neuen Password"
+        },
+        "2FA": {
+          "LABEL": "Zwei-Faktor-Authentifizierung aktivieren?"
         },
         "SAVE": "Speichern"
       },

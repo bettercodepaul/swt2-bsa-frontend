@@ -8,12 +8,19 @@ export class MatchDTO implements VersionedDataTransferObject {
   mannschaftId: number;
   mannschaftName: string;
   wettkampfId: number;
+  wettkampfTyp: string;
   nr: number;
   begegnung: number;
   scheibenNummer: number;
 
   matchpunkte: number;
   satzpunkte: number;
+
+  strafPunkteSatz1: number;
+  strafPunkteSatz2: number;
+  strafPunkteSatz3: number;
+  strafPunkteSatz4: number;
+  strafPunkteSatz5: number;
 
   passen: Array<PasseDTO>;
 
@@ -26,7 +33,13 @@ export class MatchDTO implements VersionedDataTransferObject {
               scheibennummer?: number,
               matchpunkte?: number,
               satzpunkte?: number,
-              passen?: Array<PasseDTO>) {
+              strafPunkteSatz1?: number,
+              strafPunkteSatz2?: number,
+              strafPunkteSatz3?: number,
+              strafPunkteSatz4?: number,
+              strafPunkteSatz5?: number,
+              passen?: Array<PasseDTO>,
+              wettkampfTyp?: string) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';
@@ -34,8 +47,14 @@ export class MatchDTO implements VersionedDataTransferObject {
     this.nr = !!matchNr ? matchNr : null;
     this.begegnung = !!begegnung ? begegnung : null;
     this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
-    this.matchpunkte = !!matchpunkte ? matchpunkte : null;
-    this.satzpunkte = !!satzpunkte ? satzpunkte : null;
+    this.matchpunkte = matchpunkte;
+    this.satzpunkte = satzpunkte;
+    this.strafPunkteSatz1 = !!strafPunkteSatz1 ? strafPunkteSatz1 : 0;
+    this.strafPunkteSatz2 = !!strafPunkteSatz2 ? strafPunkteSatz2 : 0;
+    this.strafPunkteSatz3 = !!strafPunkteSatz3 ? strafPunkteSatz3 : 0;
+    this.strafPunkteSatz4 = !!strafPunkteSatz4 ? strafPunkteSatz4 : 0;
+    this.strafPunkteSatz5 = !!strafPunkteSatz5 ? strafPunkteSatz5 : 0;
     this.passen = !!passen ? passen : [];
+    this.wettkampfTyp = wettkampfTyp;
   }
 }
