@@ -7,6 +7,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../shared/components';
+import {ButtonType, CommonComponent, toTableRows} from '../../../../../shared/components';
 import {BogenligaResponse} from '../../../../../shared/data-provider';
 import {
   Notification,
@@ -50,7 +51,9 @@ const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
   templateUrl: './mannschaft-detail.component.html',
   styleUrls:   ['./mannschaft-detail.component.scss']
 })
+
 export class MannschaftDetailComponent extends CommonComponent implements OnInit, OnDestroy {
+export class MannschaftDetailComponent extends CommonComponent implements OnInit, OnDestroy  {
   public config = MANNSCHAFT_DETAIL_CONFIG;
   public config_table = MANNSCHAFT_DETAIL_TABLE_CONFIG;
 
@@ -127,6 +130,30 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
                                          this.saveLoading = false;
                                        }
                                      });
+  }
+
+
+
+  ngOnDestroy() {
+    this.duplicateSubscription.unsubscribe();
+    if (this.deleteSubscription != null) {
+      this.deleteSubscription.unsubscribe();
+    }
+  }
+
+
+    };
+
+    console.log('subscribe notification');
+    this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.saveMannschaft();
+            }
+            if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.saveLoading = false;
+            }
+          });
   }
 
 
@@ -235,6 +262,11 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   }
     /*
      const id = this.currentMannschaft.id;
+  private handleSuccess(bogenligaResponse: BogenligaResponse<DsbMannschaftDO>) {
+    this.currentMannschaft = bogenligaResponse.payload;
+    console.log(this.currentMannschaft.id);
+    const id = this.currentMannschaft.id;
+    
     this.deleteNotification = {
       id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
       title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
@@ -257,6 +289,13 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
                                     else if(myNotification.userAction === NotificationUserAction.DECLINED) {
                                       this.deleteLoading = false;
                                     }
+                            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                                      this.mannschaftProvider.deleteById(id)
+                                          .then((response) => this.handleDeleteSuccess(response))
+                                          .catch((innerResponse) => this.handleDeleteFailure(innerResponse));
+                            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+                                this.deleteLoading = false;
+                            }
                                   });
     this.loading = false;
   }
@@ -435,6 +474,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.mannschaften.forEach((mannschaft) => mannschaftsNrs.push(parseInt(mannschaft.nummer, 10)));
     let duplicateFound: boolean;
     mannschaftsNrs.forEach((nr) => { if (nr === parseInt(this.currentMannschaft.nummer, 10)) { duplicateFound = true; }});
+    mannschaftsNrs.forEach((nr) => { if (nr === parseInt(this.currentMannschaft.nummer, 10)) {duplicateFound = true; }});
     if (duplicateFound) {
       this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
     } else {

@@ -8,7 +8,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.DESCRIPTION',
-        icon:           'users-cog',
+        icon:           'users',
         route:          'dsbmitglieder'
       },
       {
@@ -40,6 +40,20 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.DESCRIPTION',
         icon:           'sitemap',
         route:          'regionen'
-      }]
+      },
+      {
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.DESCRIPTION',
+        icon:           'calendar-alt',
+        route:          'veranstaltung'
+      },
+      {
+        labelKey:       'Sportjahre',
+        descriptionKey: 'Verwaltung der Sportjahre',
+        icon:           'campground',
+        route:          'sportjahr'
+      }
+      ]
+
   }
 };
