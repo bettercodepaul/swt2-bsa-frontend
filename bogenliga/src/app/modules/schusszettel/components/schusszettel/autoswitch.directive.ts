@@ -15,9 +15,9 @@ export class AutoswitchDirective {
       return;
     }
     if (NumberOnlyDirective.allowedKeys.indexOf(event.key) >= 0) {
-      const nextVal: number = parseInt((event.key === NumberOnlyDirective.ALIAS_10) ? NumberOnlyDirective.MAX_VAL.toString() : event.key);
+      const nextVal: number = parseInt((event.key === NumberOnlyDirective.ALIAS_10) ? NumberOnlyDirective.MAX_VAL.toString() : event.key, 10);
       if (NumberOnlyDirective.inRange(nextVal)) {
-        let currentTabIndex = parseInt(this.el.nativeElement.getAttribute('tabindex'));
+        const currentTabIndex = parseInt(this.el.nativeElement.getAttribute('tabindex'), 10);
         // @ts-ignore FIXME: dear TypeScript, .focus() DOES exist on Element -.-
         document.querySelector('[tabindex="' + (currentTabIndex + 1) + '"]').focus();
       }

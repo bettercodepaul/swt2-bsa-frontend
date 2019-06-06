@@ -1,6 +1,5 @@
 import {VersionedDataTransferObject} from '@shared/data-provider';
 import {PasseDTO} from './passe-dto.class';
-import {assertNumber} from '@angular/core/src/render3/assert';
 
 export class MatchDTO implements VersionedDataTransferObject {
   id: number;
@@ -26,21 +25,21 @@ export class MatchDTO implements VersionedDataTransferObject {
   passen: Array<PasseDTO>;
 
   constructor(id?: number,
-        mannschaftId?: number,
-        mannschaftName?: string,
-        wettkampfId?: number,
-        matchNr?: number,
-        begegnung?: number,
-        scheibennummer?: number,
-        matchpunkte?: number,
-        satzpunkte?: number,
-        strafPunkteSatz1?:number,
-        strafPunkteSatz2?:number,
-        strafPunkteSatz3?:number,
-        strafPunkteSatz4?:number,
-        strafPunkteSatz5?:number,
-        passen?: Array<PasseDTO>,
-        wettkampfTyp?: string) {
+              mannschaftId?: number,
+              mannschaftName?: string,
+              wettkampfId?: number,
+              matchNr?: number,
+              begegnung?: number,
+              scheibennummer?: number,
+              matchpunkte?: number,
+              satzpunkte?: number,
+              strafPunkteSatz1?: number,
+              strafPunkteSatz2?: number,
+              strafPunkteSatz3?: number,
+              strafPunkteSatz4?: number,
+              strafPunkteSatz5?: number,
+              passen?: Array<PasseDTO>,
+              wettkampfTyp?: string) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';

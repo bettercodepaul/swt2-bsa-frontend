@@ -12,19 +12,19 @@ export class TabIndexDirective {
 @Directive({
   selector: '[blaSchuetzenTabIndexDirective]'
 })
-export class SchuetzenTabIndexDirective extends TabIndexDirective{
+export class SchuetzenTabIndexDirective extends TabIndexDirective {
   constructor(el: ElementRef) {
     super(el);
-    this.el.nativeElement.setAttribute('tabindex', schuetzenNrIdxGen.getNext())
+    this.el.nativeElement.setAttribute('tabindex', schuetzenNrIdxGen.getNext());
   }
 }
 
 @Directive({
   selector: '[blaRingzahlTabIndexDirective]'
 })
-export class RingzahlTabIndexDirective extends TabIndexDirective{
+export class RingzahlTabIndexDirective extends TabIndexDirective {
   constructor(el: ElementRef) {
     super(el);
-    this.el.nativeElement.setAttribute('tabindex', ringzahlIdxGen.getNext())
+    this.el.nativeElement.setAttribute('tabindex', ringzahlIdxGen.getNext());
   }
 }

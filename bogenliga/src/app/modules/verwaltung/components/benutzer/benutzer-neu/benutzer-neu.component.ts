@@ -39,9 +39,9 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
   public saveLoading = false;
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 

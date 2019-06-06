@@ -16,7 +16,7 @@ export class BenutzerDTO implements DataTransferObject {
     copy.id = optional.id || null;
     copy.email = optional.email || '';
     copy.version = optional.version || null;
-    copy.qrCode = optional.qrCode || "";
+    copy.qrCode = optional.qrCode || '';
 
     return copy;
   }
