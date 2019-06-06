@@ -1,5 +1,6 @@
-import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+
+import {HttpErrorResponse} from '@angular/common/http';
 import {
   BogenligaResponse,
   DataProviderService,
@@ -9,20 +10,23 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {fromPayload, fromPayloadArray} from '../mapper/veranstaltung-mapper';
-import {VeranstaltungDO} from '../types/veranstaltung-do.class';
+import {fromPayload, fromPayloadArray} from '../mapper/wettkampftyp-mapper';
+import {WettkampftypDO} from '../types/wettkampftyp-do.class';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class VeranstaltungDataProviderService  extends DataProviderService {
-  serviceSubUrl = 'v1/veranstaltung';
+export class WettkampftypDataProviderService extends DataProviderService {
+
+  serviceSubUrl = 'v1/wettkampftyp';
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
     super();
   }
-  public findAll(): Promise<BogenligaResponse<VeranstaltungDO[]>> {
+
+  public findAll(): Promise<BogenligaResponse<WettkampftypDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -41,29 +45,7 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<BogenligaResponse<void>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then((noData) => {
-            resolve({result: RequestResult.SUCCESS});
-
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
-  }
-
-
-
-  public findById(id: string | number): Promise<BogenligaResponse<VeranstaltungDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<WettkampftypDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -84,7 +66,7 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<VeranstaltungDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<WettkampftypDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -103,7 +85,8 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
           });
     });
   }
-  public create(payload: VeranstaltungDO): Promise<BogenligaResponse<VeranstaltungDO>> {
+
+  public create(payload: WettkampftypDO): Promise<BogenligaResponse<WettkampftypDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -122,9 +105,4 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
           });
     });
   }
-
-
-
-
-
 }
