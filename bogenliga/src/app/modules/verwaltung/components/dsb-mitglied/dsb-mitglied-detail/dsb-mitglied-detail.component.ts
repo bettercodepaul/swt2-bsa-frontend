@@ -14,7 +14,11 @@ import {
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
-
+import {VereinDO} from '@vereine/types/verein-do.class';
+import {RegionDO} from '@verwaltung/types/region-do.class';
+import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
+import {VereinDataProviderService} from '@vereine/services/verein-data-provider.service';
+import {HttpClient} from '@angular/common/http';
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
 const NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS = 'dsb_mitglied_detail_delete_success';
@@ -33,21 +37,54 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   public config = DSB_MITGLIED_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
+  public currentVerein: VereinDO = new VereinDO();
+ // public vereine: Array<VereinDO> = [new VereinDO()];
+  public vereine: VereinDO[];
+  // public currentVerein: VereinDO;
 
+  public dsbMitgliedNationalitaet: string[];
+  public loadingVereine = true;
+
+  public vereineLoaded;
+
+  public  nationen: Array<string> = [];
+  public  nationenKuerzel: Array<string> = [];
+  public currentMitgliedNat: string;
   public deleteLoading = false;
   public saveLoading = false;
 
   constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
+              private vereinDataProvider: VereinDataProviderService,
+              private httpService: HttpClient,
               private notificationService: NotificationService) {
     super();
   }
 
   ngOnInit() {
     this.loading = true;
-
+    this.loadVereine();
     this.notificationService.discardNotification();
+
+    this.httpService.get('./assets/i18n/Nationalitaeten.json').subscribe(
+      (data) => {
+       // let test =JSON.parse(data.toString());
+       // console.log(data.toString());this.dsbMitgliedNationalitaet = data as String [];
+      console.log(data);
+      const json = JSON.parse(JSON.stringify(data));
+      json['NATIONEN'].forEach( (t) => {
+        this.nationen.push(t['name']);
+      });
+
+      json['NATIONEN'].forEach( (t) => {
+        this.nationenKuerzel.push(t['code']);
+       });
+
+      // data.
+        // console.log(test);
+      }
+    ),
 
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -62,10 +99,12 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
         }
       }
     });
+
   }
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
+    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, '');
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
         .then((response: BogenligaResponse<DsbMitgliedDO>) => {
@@ -122,6 +161,15 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
+    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, '');
+
+    this.currentMitglied.vereinsId = this.currentVerein.id;
+
+    for (let i = 0; i < this.nationen.length; i++) {
+      if (this.nationen[i] === this.currentMitgliedNat) {
+        this.currentMitglied.nationalitaet = this.nationenKuerzel[i];
+      }
+    }
 
     // persist
     this.dsbMitgliedDataProvider.update(this.currentMitglied)
@@ -154,6 +202,24 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
+          this.saveLoading = false;
+          if (response.result === RequestResult.DUPLICATE_DETECTED) {
+            const notification: Notification = {
+              id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
+              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+              severity: NotificationSeverity.INFO,
+              origin: NotificationOrigin.USER,
+              type: NotificationType.OK,
+              userAction: NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_DSB_MITGLIED)
+                .subscribe((myNotification) => {
+                });
+
+            this.notificationService.showNotification(notification);
+          }
           this.saveLoading = false;
         });
     // show response message
@@ -202,6 +268,17 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   private handleSuccess(response: BogenligaResponse<DsbMitgliedDO>) {
     this.currentMitglied = response.payload;
     this.loading = false;
+    const kuer = this.currentMitglied.nationalitaet;
+    for (let i = 0; i < this.nationenKuerzel.length; i++) {
+      if (this.nationenKuerzel[i] === kuer) {
+        this.currentMitgliedNat = this.nationen[i].toString();
+      }
+    }
+    this.vereine.forEach((verein) => {
+      if (verein.id === this.currentMitglied.vereinsId) {
+        this.currentVerein = verein;
+      }
+    });
   }
 
   private handleFailure(response: BogenligaResponse<DsbMitgliedDO>) {
@@ -252,5 +329,11 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
         });
 
     this.notificationService.showNotification(notification);
+  }
+  private loadVereine(): void {
+    this.vereine = [];
+    this.vereinDataProvider.findAll()
+        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; this.vereineLoaded = true; })
+        .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 }

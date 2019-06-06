@@ -555,6 +555,14 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+      "TABLE": {
+        "HEADERS": {
+          "MITGLIED_VORNAME": "Vorname",
+          "MITGLIED_NACHNAME": "Nachname",
+          "MITGLIED_NATIONALITAET": "Nationalität",
+          "MITGLIED_NUMMER": "Mitgliedsnummer"
+        }
+      },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Mannschaft löschen",
@@ -571,6 +579,64 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Mannschaft wurde erfolgreich gespeichert."
+        },
+        "DELETE_MITGLIED": {
+          "TITLE": "Schütze aus Mannschaft löschen",
+          "DESCRIPTION": "Wollen Sie den Schützen mit der ID=%s wirklich aus der Mannschaft entfernen?"
+        },
+        "DELETE_MITGLIED_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
+        },
+        "DELETE_MITGLIED_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Schütze konnte nicht entfernt werden."
+        }
+      }
+    },
+    "SCHUETZE_HINZUFUEGEN": {
+      "TITLE": "Schütze der Mannschaft hinzufügen",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "Vorname",
+          "PLACEHOLDER": "Bitte einen Vornamen zum Suchen eingeben."
+        },
+        "NACHNAME": {
+          "LABEL": "Nachname",
+          "PLACEHOLDER": "Bitte einen Nachnamen zum Suchen eingeben."
+        },
+        "VEREINE": {
+          "LABEL": "Verein",
+          "PLACEHOLDER": "Bitte einen Verein zum Suchen auswählen."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Mitgliedsnummer",
+          "PLACEHOLDER": "Bitte eine Mitgliedsnummer zum Suchen eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "TABLE": {
+        "HEADERS": {
+          "MITGLIED_VORNAME": "Vorname",
+          "MITGLIED_NACHNAME": "Nachname",
+          "MITGLIED_VEREIN": "Verein",
+          "MITGLIED_NUMMER": "Mitgliedsnummer"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt."
+        },
+        "DUPLICATE": {
+          "TITLE": "Fehler",
+          "DESCRIPTION": "Schütze ist schon in der Mannschaft vorhanden. Bitte fügen Sie einen anderen Schützen hinzu."
+        },
+        "OVERUSED": {
+          "TITLE": "Fehler",
+          "DESCRIPTION": "Schütze kann dieser Mannschaft nicht hinzugefügt werden, da er schon in zuvielen Mannschaften eingesetzt wurde, bzw. in einer höheren Liga schon eingesetzt wurde."
         }
       }
     },
@@ -590,7 +656,7 @@
         "GEBURTSDATUM": {
           "LABEL": "Geburtsdatum",
           "PLACEHOLDER": "Bitte ein Geburtsdatum eingeben",
-          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: JJJJ-MM-TT)."
+          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: TT-MM-JJJJ)."
         },
         "MITGLIEDSNUMMER": {
           "LABEL": "Mitgliedsnummer",
@@ -1030,7 +1096,8 @@
     "ACTIONS": {
       "VIEW": "Ansehen",
       "EDIT": "Editieren",
-      "DELETE": "Löschen"
+      "DELETE": "Löschen",
+      "ADD": "Hinzufügen"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
