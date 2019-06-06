@@ -15,6 +15,7 @@ import {
 } from '../../../../shared/services/notification';
 import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
+import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_OVERVIEW_CONFIG} from './veranstaltung-overview.config';
 import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components';
 
@@ -80,7 +81,7 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
     this.loading = true;
 
     this.veranstaltungDataProvider.findAll()
-        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
@@ -89,7 +90,7 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;
