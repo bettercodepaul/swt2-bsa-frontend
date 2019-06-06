@@ -207,8 +207,8 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   }
 
 
-  private handleSuccess(response: BogenligaResponse<DsbMannschaftDO>) {
-    this.currentMannschaft = response.payload;
+  private handleSuccess(bogenligaResponse: BogenligaResponse<DsbMannschaftDO>) {
+    this.currentMannschaft = bogenligaResponse.payload;
     console.log(this.currentMannschaft.id);
     const id = this.currentMannschaft.id;
 
