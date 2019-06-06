@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponent, toTableRows} from '../../../../../shared/components';
@@ -35,7 +35,7 @@ const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
   templateUrl: './mannschaft-detail.component.html',
   styleUrls:   ['./mannschaft-detail.component.scss']
 })
-export class MannschaftDetailComponent extends CommonComponent implements OnInit {
+export class MannschaftDetailComponent extends CommonComponent implements OnInit, OnDestroy  {
   public config = MANNSCHAFT_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
@@ -229,7 +229,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
                             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                                       this.mannschaftProvider.deleteById(id)
                                           .then((response) => this.handleDeleteSuccess(response))
-                                          .catch((response) => this.handleDeleteFailure(response));
+                                          .catch((innerResponse) => this.handleDeleteFailure(innerResponse));
                             } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
                                 this.deleteLoading = false;
                             }
@@ -327,10 +327,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
     this.mannschaften = response.payload;
-    var mannschaftsNrs: Array<number> = new Array<number>();
-    this.mannschaften.forEach((mannschaft) => mannschaftsNrs.push(parseInt(mannschaft.nummer)));
-    var duplicateFound: boolean;
-    mannschaftsNrs.forEach(nr => { if (nr === parseInt(this.currentMannschaft.nummer)) {duplicateFound = true; }});
+    const mannschaftsNrs: Array<number> = new Array<number>();
+    this.mannschaften.forEach((mannschaft) => mannschaftsNrs.push(parseInt(mannschaft.nummer, 10)));
+    let duplicateFound: boolean;
+    mannschaftsNrs.forEach((nr) => { if (nr === parseInt(this.currentMannschaft.nummer, 10)) {duplicateFound = true; }});
     if (duplicateFound) {
       this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
     } else {
