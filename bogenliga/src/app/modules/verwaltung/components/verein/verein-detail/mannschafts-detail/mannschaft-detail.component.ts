@@ -230,7 +230,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
                                       this.mannschaftProvider.deleteById(id)
                                           .then((response) => this.handleDeleteSuccess(response))
                                           .catch((response) => this.handleDeleteFailure(response));
-                            } else if(myNotification.userAction === NotificationUserAction.DECLINED) {
+                            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
                                 this.deleteLoading = false;
                             }
                                   });
@@ -330,11 +330,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     var mannschaftsNrs: Array<number> = new Array<number>();
     this.mannschaften.forEach((mannschaft) => mannschaftsNrs.push(parseInt(mannschaft.nummer)));
     var duplicateFound: boolean;
-    mannschaftsNrs.forEach(nr => { if(nr==parseInt(this.currentMannschaft.nummer)){duplicateFound=true;}})
-    if(duplicateFound) {
+    mannschaftsNrs.forEach(nr => { if (nr === parseInt(this.currentMannschaft.nummer)) {duplicateFound = true; }});
+    if (duplicateFound) {
       this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
-    }
-    else {
+    } else {
       this.saveMannschaft();
     }
   }
