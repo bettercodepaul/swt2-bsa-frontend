@@ -19,51 +19,25 @@
         <table id="example"
                class="table table-hover table-sm table-responsive-sm thead-light table-striped"
                style="width:100%">
-          <!--
-          <mat-table [dataSource]="wettkampfSource" class="mat-elevation-z8">
-            <!-- Position Column ->
-           <ng-container matColumnDef="datum">
-              <mat-header-cell *matHeaderCellDef> Datum </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.datum}} </mat-cell>
-            </ng-container>
-
-            <!-- Name Column ->
-            <ng-container matColumnDef="uhrzeit">
-              <mat-header-cell *matHeaderCellDef> Uhrzeit </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.uhrzeit}} </mat-cell>
-            </ng-container>
-
-            <!-- Weight Column ->
-            <ng-container matColumnDef="liga">
-              <mat-header-cell *matHeaderCellDef> Liga </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.liga}} </mat-cell>
-            </ng-container>
-
-            <!-- Symbol Column ->
-            <ng-container matColumnDef="ort">
-              <mat-header-cell *matHeaderCellDef> Ort </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.ort}} </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          </mat-table>
-
-
-
-
           <!-- headlines -->
-         <!--
-          <thead>
-          <tr> -->
-            <!-- These are taken out of the JSON File -->
-         <!---   <th>{{ 'TABLE.DATE' | translate }}</th>
+
+         <!-- <thead>
+          <tr>
+            -- These are taken out of the JSON File ->
+            <th>{{ 'TABLE.DATE' | translate }}</th>
             <th>{{ 'TABLE.TIME' | translate }}</th>
             <th>{{ 'TABLE.LIGA' | translate }}</th>
             <th>{{ 'TABLE.PLACE' | translate }}</th>
           </tr>
-          </thead>
--->
+          </thead>-->
+          <div class="row">
+            <bla-data-table [config]="config_table"
+                            [rows]="rows"
+                            [loading]="loadingTable"
+                            >
+            </bla-data-table>
+          </div>
+        </table>
           <!-- Rows -->
 <!--
           <tbody>
@@ -102,7 +76,6 @@
           </tr>
           </tbody>
           -->
-        </table>
       </div>
       <!-- Row 2 -->
       <div class="flexChild">

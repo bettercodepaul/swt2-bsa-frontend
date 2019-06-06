@@ -17,6 +17,7 @@ export class RegionDTO implements DataTransferObject {
     regionKuerzel?: string,
     regionTyp?: string,
     regionUebergeordnet?: number,
+    regionUebergeordnetAsName?: string,
     version?: number
   } = {}): RegionDTO {
     const copy = new RegionDTO();
@@ -32,7 +33,7 @@ export class RegionDTO implements DataTransferObject {
       copy.regionUebergeordnet = null;
     }
 
-    copy.regionUebergeordnetAsName = '';
+    copy.regionUebergeordnetAsName = optional.regionUebergeordnetAsName || '';
 
     copy.regionName = optional.regionName || '';
     copy.regionKuerzel = optional.regionKuerzel || '';
