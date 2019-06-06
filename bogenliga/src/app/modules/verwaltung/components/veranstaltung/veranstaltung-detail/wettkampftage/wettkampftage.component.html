@@ -2,7 +2,7 @@
                    [loading]="loading">
 
   <form id="veranstaltungForm"
-        class="horizontal-form half-page"
+        class="horizontal-form "
         #dsbMitgliedForm="ngForm">
 
     <!-- VERANSTALTUNG -->
@@ -12,7 +12,7 @@
         <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.LABEL' | translate }}</span>
         <span> *</span>
       </label>
-      <div class="col-sm-9">
+      <div class="col-sm-7">
         <input type="text"
                class="form-control"
                required
@@ -30,21 +30,39 @@
     </div>
 
     <!-- Wettkampftag1 -->
-    <div class="form-group row">
-      <label
-        class="col-sm-3 col-form-label test_label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
+    <bla-col-layout>
+      <div class="layout-element-1">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+      </div>
 
+      <div class="layout-element-2">
 
-      <bla-centered-layout>
-        <bla-col-layout>
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+      </div>
+      </div>
+    </bla-col-layout>
+
+    <!-- Wettkampftag1 table -->
+    <bla-col-layout>
+      <div class="layout-element-1">
+
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.DATUM.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag1_datum"
@@ -58,12 +76,14 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.DATUM.ERROR' | translate }}
             </div>
           </div>
+        </div>
 
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORT.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag1_wettkampfOrt"
@@ -77,12 +97,14 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORT.ERROR' | translate }}
             </div>
           </div>
+        </div>
 
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.BEGINN.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test" >
+          <div class="col-sm-7 test" >
             <input type="text"
                    class="form-control"
                    id="wettkampftag1_wettkampfBeginn"
@@ -96,28 +118,56 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.BEGINN.ERROR' | translate }}
             </div>
           </div>
+        </div>
 
-        </bla-col-layout>
-      </bla-centered-layout>
+      </div>
+      <div class="layout-element-2">
 
-    </div>
+        <bla-double-selectionlist [leftItems]="allUsers"
+                                  [(rightItems)]="allUsersTest"
+                                  [fieldSelector]="'name'"
+                                  [idLeftList]="'left'"
+                                  [idRightList]="'right'"
+                                  style="height: 12em">
+
+        </bla-double-selectionlist>
+      </div>
+    </bla-col-layout>
+
+
 
     <!-- Wettkampftag2 -->
-    <div class="form-group row">
-      <label
-        class="col-sm-3 col-form-label test_label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
+    <bla-col-layout>
+      <div class="layout-element-1">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+      </div>
+      <div class="layout-element-2">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+      </div>
+    </bla-col-layout>
 
 
-      <bla-centered-layout>
-        <bla-col-layout>
+    <!--Wettkampftag2 Felder-->
+    <bla-col-layout>
+      <div class="layout-element-1">
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.DATUM.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag2_datum"
@@ -131,12 +181,14 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.DATUM.ERROR' | translate }}
             </div>
           </div>
+        </div>
 
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label ">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.ORT.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag2_wettkampfOrt"
@@ -150,12 +202,14 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.ORT.ERROR' | translate }}
             </div>
           </div>
+        </div>
 
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.BEGINN.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag2_wettkampfBeginn"
@@ -170,26 +224,53 @@
             </div>
           </div>
 
-        </bla-col-layout>
-      </bla-centered-layout>
 
-    </div>
+        </div>
+      </div>
+      <div class="layout-element-2">
+        <bla-double-selectionlist [leftItems]="allUsers"
+                                  [(rightItems)]="allUsersTest"
+                                  [fieldSelector]="'name'"
+                                  [idLeftList]="'left'"
+                                  [idRightList]="'right'"
+                                  style="height: 12em">
+
+        </bla-double-selectionlist>
+      </div>
+    </bla-col-layout>
+
     <!-- Wettkampftag3 -->
-    <div class="form-group row">
-      <label
-        class="col-sm-3 col-form-label test_label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
+    <bla-col-layout>
+      <div class="layout-element-1">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+      </div>
+      <div class="layout-element-2">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+      </div>
+    </bla-col-layout>
 
 
-      <bla-centered-layout>
-        <bla-col-layout>
+    <!--Wettkampftag3 Felder-->
+    <bla-col-layout>
+      <div class="layout-element-1">
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.DATUM.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag3_datum"
@@ -203,12 +284,13 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.DATUM.ERROR' | translate }}
             </div>
           </div>
-
+        </div>
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.ORT.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag3_wettkampfOrt"
@@ -222,12 +304,13 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.ORT.ERROR' | translate }}
             </div>
           </div>
-
+        </div>
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.BEGINN.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag3_wettkampfBeginn"
@@ -241,27 +324,58 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.BEGINN.ERROR' | translate }}
             </div>
           </div>
+        </div>
+      </div>
 
-        </bla-col-layout>
-      </bla-centered-layout>
+      <div class="layout-element-2">
+        <bla-double-selectionlist [leftItems]="allUsers"
+                                  [(rightItems)]="allUsersTest"
+                                  [fieldSelector]="'name'"
+                                  [idLeftList]="'left'"
+                                  [idRightList]="'right'"
+                                  style="height: 12em">
 
-    </div>
+        </bla-double-selectionlist>
+      </div>
+    </bla-col-layout>
+
+
+
+
+
+
+
     <!-- Wettkampftag4 -->
-    <div class="form-group row">
-      <label
-        class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
+    <bla-col-layout>
+      <div class="layout-element-1">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+      </div>
+      <div class="layout-element-2">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+      </div>
+    </bla-col-layout>
 
-
-      <bla-centered-layout>
-        <bla-col-layout>
+    <!--Wettkampftag4 Felder-->
+    <bla-col-layout>
+      <div class="layout-element-1">
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.DATUM.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test" >
+          <div class="col-sm-7 test" >
             <input type="text"
                    class="form-control"
                    id="wettkampftag4_datum"
@@ -275,12 +389,14 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.DATUM.ERROR' | translate }}
             </div>
           </div>
+        </div>
 
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.ORT.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag4_wettkampfOrt"
@@ -294,12 +410,14 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.ORT.ERROR' | translate }}
             </div>
           </div>
+        </div>
 
+        <div class="form-group row">
           <label
             class="col-sm-2 col-form-label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.BEGINN.LABEL' | translate }}</span><span> *</span>
           </label>
-          <div class="col-sm-9 test">
+          <div class="col-sm-7 test">
             <input type="text"
                    class="form-control"
                    id="wettkampftag4_wettkampfBeginn"
@@ -313,18 +431,28 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.BEGINN..ERROR' | translate }}
             </div>
           </div>
+        </div>
+      </div>
+      <div class="layout-element-2">
+        <bla-double-selectionlist [leftItems]="allUsers"
+                                  [(rightItems)]="allUsersTest"
+                                  [fieldSelector]="'name'"
+                                  [idLeftList]="'left'"
+                                  [idRightList]="'right'"
+                                  style="height: 12em">
 
-        </bla-col-layout>
-      </bla-centered-layout>
+        </bla-double-selectionlist>
+      </div>
+    </bla-col-layout>
 
-    </div>
+
 
 
 
     <!-- UPDATE/BACK BUTTON -->
     <div class="form-group row">
       <div class="col-sm-3"></div>
-      <div class="col-sm-9 button-box">
+      <div class="col-sm-7 button-box">
 
 
         <bla-button *ngIf="entityExists()"

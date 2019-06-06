@@ -710,6 +710,10 @@
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Kampfrichter"
+
+          },
         "WETTKAMPFTAG2": {
           "LABEL": "2. Wettkampftag",
           "DATUM": {
