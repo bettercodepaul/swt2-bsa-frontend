@@ -91,7 +91,7 @@
                 id="regionUebergeordnet"
                 name="regionUebergeordnet"
                 #regionUebergeordnet="ngModel"
-                (change) = "filterRegions()"
+                (ngModelChange) = "filterRegions()"
                 [(ngModel)]="currentRegion.regionUebergeordnetAsName">
           <option selected="selected">{{currentRegion.regionUebergeordnetAsName}}</option>
           <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of uebergeordneteRegionenGefiltertStrings"> {{uebergeordnet}}</option>
