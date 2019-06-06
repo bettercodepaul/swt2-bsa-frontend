@@ -3,147 +3,164 @@
   <!-- match1 -->
   <div class="match1 print">
 
-    <div class="match">
-      <h1>{{match1.mannschaftName}}</h1>
-      <h2>{{match1.nr}}. Match</h2>
-    </div>
-
-    <div class="mannschaften">
-      <h3>{{match1.mannschaftName}}</h3>
-      <h3>gegen</h3>
-      <h3>{{match2.mannschaftName}}</h3>
-    </div>
-
-    <div class="small_Table">
-      <table id="punktetabelle"
-             class="table table-responsive thead-light table-striped"
-             style="width:100%">
-        <tr>
-          <td *ngFor="let sum of match1.sumSatz; let i = index">
-            <label>{{i + 1}}.S.Pkt</label>
-            <input type="text"
-                   [value]="sum"
-                   tabindex="-1"
-                   readonly>
-          </td>
-          <td>
-            <label>Summe S.pkt</label>
-            <input type="text"
-                   [value]="match1.satzpunkte"
-                   tabindex="-1"
-                   readonly>
-          </td>
-          <td>
-            <label>Matchpkte</label>
-            <input type="text"
-                   [value]="match1.matchpunkte"
-                   tabindex="-1"
-                   readonly>
-          </td>
-        </tr>
-        <tr>
-          <td *ngFor="let sum of match2.sumSatz">
-            <input type="text"
-                   [value]="sum"
-                   tabindex="-1"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.satzpunkte"
-                   tabindex="-1"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   [value]="match2.matchpunkte"
-                   tabindex="-1"
-                   readonly>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="bigTable">
-      <table id="schusstabelle"
-             class="table table-hover table-responsive thead-light table-striped"
-             style="width:100%">
-        <thead>
-        <tr>
-          <th rowspan="2">Schuetze</th>
-          <th colspan="2">1. Satz / Pfeile</th>
-          <th colspan="2">2. Satz / Pfeile</th>
-          <th colspan="2">3. Satz / Pfeile</th>
-          <th colspan="2">4. Satz / Pfeile</th>
-          <th colspan="2">5. Satz / Pfeile</th>
-        </tr>
-        <tr>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-        </tr>
-        </thead>
-        <ng-template ngFor
-                     let-schuetze
-                     [ngForOf]="match1.schuetzen"
-                     let-i="index">
+    <div class="row">
+      <div class="match col-3">
+        <h1>{{match1.mannschaftName}}</h1>
+        <h2>{{match1.nr}}. Match</h2>
+      </div>
+      <div class="mannschaften col-3">
+        <h3>{{match1.mannschaftName}}</h3>
+        <h3>gegen</h3>
+        <h3>{{match2.mannschaftName}}</h3>
+      </div>
+      <div class="small_Table col-6">
+        <table id="punktetabelle"
+               class="table table-responsive thead-light table-striped"
+               style="width:100%">
           <tr>
-            <ng-template ngFor
-                         let-passe
-                         [ngForOf]="schuetze"
-                         let-j="index">
-              <td *ngIf="j == 0">
-                <input blaAutoswitch
-                       type="number"
-                       blaSchuetzenTabIndexDirective
-                       [(ngModel)]="passe.schuetzeNr">
-              </td>
-              <td>
-                <input blaAutoswitch 
-                       blaMyNumberOnly
-                       type="text"
-                       blaRingzahlTabIndexDirective
-                       [ngModel]="passe.ringzahlPfeil1"
-                       (ngModelChange)="onChange($event, 1, i, j, 1)">
-              </td>
-              <td>
-                <input blaAutoswitch
-                       blaMyNumberOnly
-                       type="text"
-                       blaRingzahlTabIndexDirective
-                       [ngModel]="passe.ringzahlPfeil2"
-                       (ngModelChange)="onChange($event, 1, i, j, 2)">
-              </td>
-            </ng-template>
-            <td class="schuetzensumme">
-              {{getSummeSchuetze(i, 1)}}
+            <td *ngFor="let sum of match1.sumSatz; let i = index">
+              <label>{{i + 1}}.S.Pkt</label>
+              <input type="text"
+                     [value]="sum"
+                     tabindex="-1"
+                     readonly>
+            </td>
+            <td>
+              <label>Summe S.pkt</label>
+              <input type="text"
+                     [value]="match1.satzpunkte"
+                     tabindex="-1"
+                     readonly>
+            </td>
+            <td>
+              <label>Matchpkte</label>
+              <input type="text"
+                     [value]="match1.matchpunkte"
+                     tabindex="-1"
+                     readonly>
             </td>
           </tr>
-          <tr *ngIf="i >= match1.schuetzen.length - 1">
-            <td></td>
-            <ng-template ngFor
-                         let-sum
-                         [ngForOf]="match1.sumSatz"
-                         let-j="index">
-              <td>Summe</td>
-              <td>
-                <input type="number"
-                       [value]="sum"
-                       tabindex="-1"
-                       readonly>
-              </td>
-            </ng-template>
+          <tr>
+            <td *ngFor="let sum of match2.sumSatz">
+              <input type="text"
+                     [value]="sum"
+                     tabindex="-1"
+                     readonly>
+            </td>
+            <td>
+              <input type="text"
+                     [value]="match2.satzpunkte"
+                     tabindex="-1"
+                     readonly>
+            </td>
+            <td>
+              <input type="text"
+                     [value]="match2.matchpunkte"
+                     tabindex="-1"
+                     readonly>
+            </td>
           </tr>
-        </ng-template>
-      </table>
+        </table>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-4 offset-9">Fehlerpunkte</div>
+    </div>
+    <div class="row">
+      <div class="bigTable col-9">
+        <table id="schusstabelle"
+               class="table table-hover table-responsive thead-light table-striped"
+               style="width:100%">
+          <thead>
+            <tr>
+              <th rowspan="2">Schuetze</th>
+              <th colspan="2">1. Satz / Pfeile</th>
+              <th colspan="2">2. Satz / Pfeile</th>
+              <th colspan="2">3. Satz / Pfeile</th>
+              <th colspan="2">4. Satz / Pfeile</th>
+              <th colspan="2">5. Satz / Pfeile</th>
+            </tr>
+            <tr>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+            </tr>
+          </thead>
+          <ng-template ngFor
+                       let-schuetze
+                       [ngForOf]="match1.schuetzen"
+                       let-i="index">
+            <tr>
+              <ng-template ngFor
+                           let-passe
+                           [ngForOf]="schuetze"
+                           let-j="index">
+                <td *ngIf="j == 0">
+                  <input blaAutoswitch
+                         type="number"
+                         blaSchuetzenTabIndexDirective
+                         [(ngModel)]="passe.schuetzeNr">
+                </td>
+                <td>
+                  <input blaAutoswitch
+                         blaMyNumberOnly
+                         type="text"
+                         blaRingzahlTabIndexDirective
+                         [ngModel]="passe.ringzahlPfeil1"
+                         (ngModelChange)="onChange($event, 1, i, j, 1)">
+                </td>
+                <td>
+                  <input blaAutoswitch
+                         blaMyNumberOnly
+                         type="text"
+                         blaRingzahlTabIndexDirective
+                         [ngModel]="passe.ringzahlPfeil2"
+                         (ngModelChange)="onChange($event, 1, i, j, 2)">
+                </td>
+              </ng-template>
+              <td class="schuetzensumme">
+                {{getSummeSchuetze(i, 1)}}
+              </td>
+            </tr>
+            <tr *ngIf="i >= match1.schuetzen.length - 1">
+              <td></td>
+              <ng-template ngFor
+                           let-sum
+                           [ngForOf]="match1.sumSatz"
+                           let-j="index">
+                <td>Summe</td>
+                <td>
+                  <input type="number"
+                         [value]="sum"
+                         tabindex="-1"
+                         readonly>
+                </td>
+              </ng-template>
+
+            </tr>
+          </ng-template>
+        </table>
+      </div>
+      <div class="col-2">
+        <div *ngFor="let fehlerpunkt of match1.fehlerpunkte; let i = index; trackBy:trackByIndex;" class="row" style="margin-bottom:10px">
+          <label class="col-4" [for]="'fehlerpunktFeldMatch1' + i+1">Satz {{i + 1}}</label>
+          <div class="col-4">
+            <input [id]="'fehlerpunktFeldMatch1' + i+1"
+                   class="fehlerfeld"
+                   [(ngModel)]="match1.fehlerpunkte[i]">
+          </div>
+        </div>
+      </div>
+    </div>
+
 
   </div> <!-- ende match1 -->
 
@@ -156,149 +173,160 @@
 
   <!-- match2 -->
   <div class="match2 print">
-
-    <div class="match">
-      <h1>{{match2.mannschaftName}}</h1>
-      <h2>{{match2.nr}}. Match</h2>
-    </div>
-
-    <div class="mannschaften">
-      <h3>{{match1.mannschaftName}}</h3>
-      <h3>gegen</h3>
-      <h3>{{match2.mannschaftName}}</h3>
-    </div>
-
-    <div class="small_Table">
-      <table
-        class="table table-responsive thead-light table-striped"
-        style="width:100%">
-        <tr>
-          <td *ngFor="let sum of match1.sumSatz; let i = index">
-            <label>{{i + 1}}.S.Pkt</label>
-            <input type="text"
-                   [value]="sum"
-                   tabindex="-1"
-                   readonly>
-          </td>
-          <td>
-            <label>Summe S.pkt</label>
-            <input type="text"
-                   [value]="match1.satzpunkte"
-                   tabindex="-1"
-                   readonly>
-          </td>
-          <td>
-            <label>Matchpkte</label>
-            <input type="text"
-                   [value]="match1.matchpunkte"
-                   tabindex="-1"
-                   readonly>
-          </td>
-        </tr>
-        <tr>
-          <td *ngFor="let sum of match2.sumSatz">
-            <input type="text"
-                   [value]="sum"
-                   tabindex="-1"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   tabindex="-1"
-                   [value]="match2.satzpunkte"
-                   readonly>
-          </td>
-          <td>
-            <input type="text"
-                   tabindex="-1"
-                   [value]="match2.matchpunkte"
-                   readonly>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <div class="bigTable">
-      <table
-        class="table table-hover table-responsive thead-light table-striped"
-        style="width:100%">
-        <thead>
-        <tr>
-          <th rowspan="2">Schuetze</th>
-          <th colspan="2">1. Satz / Pfeile</th>
-          <th colspan="2">2. Satz / Pfeile</th>
-          <th colspan="2">3. Satz / Pfeile</th>
-          <th colspan="2">4. Satz / Pfeile</th>
-          <th colspan="2">5. Satz / Pfeile</th>
-        </tr>
-        <tr>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-          <th>pf. 1</th>
-          <th>pf. 2</th>
-        </tr>
-        </thead>
-        <ng-template ngFor
-                     let-schuetze
-                     [ngForOf]="match2.schuetzen"
-                     let-i="index">
+    <div class="row">
+      <div class="match col-3">
+        <h1>{{match2.mannschaftName}}</h1>
+        <h2>{{match2.nr}}. Match</h2>
+      </div>
+      <div class="mannschaften col-3">
+        <h3>{{match1.mannschaftName}}</h3>
+        <h3>gegen</h3>
+        <h3>{{match2.mannschaftName}}</h3>
+      </div>
+      <div class="small_Table col-6">
+        <table class="table table-responsive thead-light table-striped"
+          style="width:100%">
           <tr>
-            <ng-template ngFor
-                         let-passe
-                         [ngForOf]="schuetze"
-                         let-j="index">
-              <td *ngIf="j == 0">
-                <input blaAutoswitch 
-                       type="number"
-                       blaSchuetzenTabIndexDirective
-                       [(ngModel)]="passe.schuetzeNr">
-              </td>
-              <td>
-                <input blaAutoswitch
-                       blaMyNumberOnly
-                       type="text"
-                       blaRingzahlTabIndexDirective
-                       [ngModel]="passe.ringzahlPfeil1"
-                       (ngModelChange)="onChange($event, 2, i, j, 1)">
-              </td>
-              <td>
-                <input blaAutoswitch
-                       blaMyNumberOnly
-                       type="text"
-                       blaRingzahlTabIndexDirective
-                       [ngModel]="passe.ringzahlPfeil2"
-                       (ngModelChange)="onChange($event, 2, i, j, 2)">
-              </td>
-            </ng-template>
-            <td class="schuetzensumme">
-              {{getSummeSchuetze(i, 2)}}
+            <td *ngFor="let sum of match1.sumSatz; let i = index">
+              <label>{{i + 1}}.S.Pkt</label>
+              <input type="text"
+                     [value]="sum"
+                     tabindex="-1"
+                     readonly>
+            </td>
+            <td>
+              <label>Summe S.pkt</label>
+              <input type="text"
+                     [value]="match1.satzpunkte"
+                     tabindex="-1"
+                     readonly>
+            </td>
+            <td>
+              <label>Matchpkte</label>
+              <input type="text"
+                     [value]="match1.matchpunkte"
+                     tabindex="-1"
+                     readonly>
             </td>
           </tr>
-          <tr *ngIf="i >= match2.schuetzen.length - 1">
-            <td></td>
-            <ng-template ngFor
-                         let-sum
-                         [ngForOf]="match2.sumSatz"
-                         let-j="index">
-              <td>Summe</td>
-              <td>
-                <input type="number"
-                       [value]="sum"
-                       tabindex="-1"
-                       readonly>
-              </td>
-            </ng-template>
+          <tr>
+            <td *ngFor="let sum of match2.sumSatz">
+              <input type="text"
+                     [value]="sum"
+                     tabindex="-1"
+                     readonly>
+            </td>
+            <td>
+              <input type="text"
+                     tabindex="-1"
+                     [value]="match2.satzpunkte"
+                     readonly>
+            </td>
+            <td>
+              <input type="text"
+                     tabindex="-1"
+                     [value]="match2.matchpunkte"
+                     readonly>
+            </td>
           </tr>
-        </ng-template>
-      </table>
+        </table>
+      </div>
     </div>
-
+    <div class="row">
+      <div class="col-4 offset-9">Fehlerpunkte</div>
+    </div>
+    <div class="row">
+      <div class="bigTable col-9">
+        <table
+          class="table table-hover table-responsive thead-light table-striped"
+          style="width:100%">
+          <thead>
+            <tr>
+              <th rowspan="2">Schuetze</th>
+              <th colspan="2">1. Satz / Pfeile</th>
+              <th colspan="2">2. Satz / Pfeile</th>
+              <th colspan="2">3. Satz / Pfeile</th>
+              <th colspan="2">4. Satz / Pfeile</th>
+              <th colspan="2">5. Satz / Pfeile</th>
+            </tr>
+            <tr>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+              <th>pf. 1</th>
+              <th>pf. 2</th>
+            </tr>
+          </thead>
+          <ng-template ngFor
+                       let-schuetze
+                       [ngForOf]="match2.schuetzen"
+                       let-i="index">
+            <tr>
+              <ng-template ngFor
+                           let-passe
+                           [ngForOf]="schuetze"
+                           let-j="index">
+                <td *ngIf="j == 0">
+                  <input blaAutoswitch
+                         type="number"
+                         blaSchuetzenTabIndexDirective
+                         [(ngModel)]="passe.schuetzeNr">
+                </td>
+                <td>
+                  <input blaAutoswitch
+                         blaMyNumberOnly
+                         type="text"
+                         blaRingzahlTabIndexDirective
+                         [ngModel]="passe.ringzahlPfeil1"
+                         (ngModelChange)="onChange($event, 2, i, j, 1)">
+                </td>
+                <td>
+                  <input blaAutoswitch
+                         blaMyNumberOnly
+                         type="text"
+                         blaRingzahlTabIndexDirective
+                         [ngModel]="passe.ringzahlPfeil2"
+                         (ngModelChange)="onChange($event, 2, i, j, 2)">
+                </td>
+              </ng-template>
+              <td class="schuetzensumme">
+                {{getSummeSchuetze(i, 2)}}
+              </td>
+            </tr>
+            <tr *ngIf="i >= match2.schuetzen.length - 1">
+              <td></td>
+              <ng-template ngFor
+                           let-sum
+                           [ngForOf]="match2.sumSatz"
+                           let-j="index">
+                <td>Summe</td>
+                <td>
+                  <input type="number"
+                         [value]="sum"
+                         tabindex="-1"
+                         readonly>
+                </td>
+              </ng-template>
+            </tr>
+          </ng-template>
+        </table>
+      </div>
+      <div class="col-2">
+        <div *ngFor="let fehlerpunkt of match2.fehlerpunkte; let i = index; trackBy:trackByIndex;" class="row" style="margin-bottom:9px">
+          <label class="col-4" [for]="'fehlerpunktFeldMatch2' + i+1">Satz {{i + 1}}</label>
+          <div class="col-4">
+            <input [id]="'fehlerpunktFeldMatch2' + i+1"
+                   class="fehlerfeld"
+                   [(ngModel)]="match2.fehlerpunkte[i]">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <p class="print signature">
