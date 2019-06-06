@@ -1,5 +1,6 @@
 import {VersionedDataTransferObject} from '@shared/data-provider';
 import {PasseDTO} from './passe-dto.class';
+import {assertNumber} from '@angular/core/src/render3/assert';
 
 export class MatchDTO implements VersionedDataTransferObject {
   id: number;
@@ -15,6 +16,7 @@ export class MatchDTO implements VersionedDataTransferObject {
 
   matchpunkte: number;
   satzpunkte: number;
+  fehlerpunkte: Array<number>;
 
   passen: Array<PasseDTO>;
 
@@ -27,6 +29,7 @@ export class MatchDTO implements VersionedDataTransferObject {
         scheibennummer?: number,
         matchpunkte?: number,
         satzpunkte?: number,
+        fehlerpunkte?: Array<number>,
         passen?: Array<PasseDTO>,
         wettkampfTyp?: string) {
     this.id = !!id ? id : null;
@@ -38,6 +41,7 @@ export class MatchDTO implements VersionedDataTransferObject {
     this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
     this.matchpunkte = matchpunkte;
     this.satzpunkte = satzpunkte;
+    this.fehlerpunkte = !!fehlerpunkte ? fehlerpunkte : [];
     this.passen = !!passen ? passen : [];
     this.wettkampfTyp = wettkampfTyp;
   }
