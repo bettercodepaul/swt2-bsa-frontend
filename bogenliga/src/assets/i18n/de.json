@@ -703,79 +703,85 @@
         "WETTKAMPFTAG1": {
           "LABEL": "1. Wettkampftag",
           "DATUM": {
-            "LABEL": "Datum: ",
-            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "LABEL": "Datum",
+            "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
           "ORT": {
-            "LABEL": "Ort: ",
-            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "LABEL": "Ort",
+            "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
           "BEGINN": {
-            "LABEL": "Beginn: ",
-            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "LABEL": "Beginn",
+            "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Kampfrichter"
+
+          },
         "WETTKAMPFTAG2": {
           "LABEL": "2. Wettkampftag",
           "DATUM": {
-            "LABEL": "Datum: ",
-            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "LABEL": "Datum",
+            "PLACEHOLDER": "Datum ",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
           "ORT": {
-            "LABEL": "Ort: ",
-            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "LABEL": "Ort",
+            "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
           "BEGINN": {
-            "LABEL": "Beginn: ",
-            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "LABEL": "Beginn",
+            "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
         "WETTKAMPFTAG3": {
           "LABEL": "3. Wettkampftag",
           "DATUM": {
-            "LABEL": "Datum: ",
-            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "LABEL": "Datum",
+            "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
           "ORT": {
-            "LABEL": "Ort: ",
-            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "LABEL": "Ort",
+            "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
           "BEGINN": {
-            "LABEL": "Beginn: ",
-            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "LABEL": "Beginn",
+            "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
         "WETTKAMPFTAG4": {
           "LABEL": "4. Wettkampftag",
           "DATUM": {
-            "LABEL": "Datum: ",
-            "PLACEHOLDER": "Bitte geben Sie ein Datum ein",
+            "LABEL": "Datum",
+            "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
           "ORT": {
-            "LABEL": "Ort: ",
-            "PLACEHOLDER": "Bitte geben Sie eine Adresse ein",
+            "LABEL": "Ort",
+            "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
           "BEGINN": {
-            "LABEL": "Beginn: ",
-            "PLACEHOLDER": "Bitte geben Sie einen Uhrzeit ein",
+            "LABEL": "Beginn",
+            "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
           }
         },
 
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
+        "DELETE": "Löschen",
+        "WETTKAMPFTAGE": "Wettkampftage",
+        "BACK": "Zurück"
       },
       "NOTIFICATION": {
         "DELETE": {
@@ -819,7 +825,7 @@
           "ERROR": "Bitte ein gültiges Sportjahr eingeben"
         },
         "MELDEDEADLINE": {
-          "LABEL": "Meldedeadline",
+          "LABEL": "Meldeschluss",
           "PLACEHOLDER": "Bitte ein Datum auswählen",
           "ERROR": "Bitte ein gültiges Datum auswählen"
         },
