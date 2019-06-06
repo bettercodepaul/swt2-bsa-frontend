@@ -127,8 +127,7 @@
                 id="dsbMitgliedNationalitaet"
                 name="dsbMitgliedNationalitaet"
                 #dsbMitgliedNationalitaet="ngModel"
-                [(ngModel)]="currentMitgliedNat"
-                (change)="onEditClick2()">
+                [(ngModel)]="currentMitgliedNat">
         <option [ngValue]="nationalitaet" *ngFor="let nationalitaet of nationen"> {{nationalitaet}}</option>
         </select>
         <div class="invalid-feedback">
@@ -137,7 +136,7 @@
       </div>
     </div>
 
-    <!-- TODO: VEREIN ID, use dropdown list -->
+    <!-- Vereine -->
     <div class="form-group row">
       <label for="dsbMitgliedVerein"
              class="col-sm-3 col-form-label">
@@ -149,8 +148,7 @@
                 id="dsbMitgliedVerein"
                 name="dsbMitgliedVerein"
                 #dsbMitgliedVerein="ngModel"
-                [(ngModel)]="currentVerein"
-                (change)="onEditClick()">
+                [(ngModel)]="currentVerein">
           <option [ngValue]="verein" *ngFor="let verein of vereine"> {{verein.name}}</option>
         </select>
 
