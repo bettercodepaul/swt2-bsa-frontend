@@ -12,6 +12,8 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {Observable} from 'rxjs';
+import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
 
 @Injectable({

@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent} from '@shared/components';
-import {ButtonType} from '@shared/components';
+import {ButtonType, CommonComponent} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -17,7 +16,6 @@ import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.clas
 import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
-import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_DETAIL_CONFIG} from './veranstaltung-detail.config';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
@@ -29,7 +27,6 @@ import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkam
 import {WettkampfDO} from '../../../../verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '../../../../verwaltung/types/datatransfer/wettkampf-dto.class';
 import {WettkampfDataProviderService} from '../../../services/wettkampf-data-provider.service';
-import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -120,9 +117,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public onWettkampftag(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
-  }
-  private navigateToWettkampftage(ignore: any) {
-    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
   }
 
   public onSave(ignore: any): void {
@@ -231,17 +225,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   }
 
-  /**
-   * Deletes all Wettkampftag entries of the provided VeranstaltungID
-   */
-  private deleteWettkampftage(id: number) {
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_1.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_2.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_3.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_4.id);
-  }
-
-
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
@@ -276,6 +259,20 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public entityExists(): boolean {
     return this.currentVeranstaltung.id >= 0;
+  }
+
+  private navigateToWettkampftage(ignore: any) {
+    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
+  }
+
+  /**
+   * Deletes all Wettkampftag entries of the provided VeranstaltungID
+   */
+  private deleteWettkampftage(id: number) {
+    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_1.id);
+    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_2.id);
+    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_3.id);
+    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_4.id);
   }
 
   private loadById(id: number) {
@@ -423,7 +420,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
-    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId === this.currentVeranstaltung.id);
+    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
 
 
     if (this.id === 'add') {

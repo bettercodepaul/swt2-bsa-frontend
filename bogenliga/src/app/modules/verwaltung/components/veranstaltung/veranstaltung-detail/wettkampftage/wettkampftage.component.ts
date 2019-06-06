@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent} from '@shared/components';
-import {ButtonType} from '@shared/components';
+import {ButtonType, CommonComponent} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -16,7 +15,6 @@ import {UserProfileDataProviderService} from '../../../../../user/services/user-
 import {UserProfileDTO} from '../../../../../user/types/model/user-profile-dto.class';
 import {UserProfileDO} from '../../../../../user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../../services/veranstaltung-data-provider.service';
-import {VeranstaltungDTO} from '../../../../types/datatransfer/veranstaltung-dto.class';
 import {VeranstaltungDO} from '../../../../types/veranstaltung-do.class';
 import {WETTKMAPFTAGE_CONFIG} from './wettkampftage.config';
 import {WettkampfDO} from '../../../../../verwaltung/types/wettkampf-do.class';
@@ -101,9 +99,6 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public onVeranstaltungDetail(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
   }
-  private navigateToWettkampftage(ignore: any) {
-    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id);
-  }
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
@@ -111,27 +106,27 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
     if (typeof this.currentVeranstaltung === 'undefined') {
-      this.currentWettkampftag_1.veranstaltungsId = null;
+      this.currentWettkampftag_1.wettkampfVeranstaltungsId = null;
     } else {
-      this.currentWettkampftag_1.veranstaltungsId = this.currentVeranstaltung.id;
+      this.currentWettkampftag_1.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_1.wettkampfTag = 1;
     }
     if (typeof this.currentVeranstaltung === 'undefined') {
-      this.currentWettkampftag_2.veranstaltungsId = null;
+      this.currentWettkampftag_2.wettkampfVeranstaltungsId = null;
     } else {
-      this.currentWettkampftag_2.veranstaltungsId = this.currentVeranstaltung.id;
+      this.currentWettkampftag_2.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_2.wettkampfTag = 2;
     }
     if (typeof this.currentVeranstaltung === 'undefined') {
-      this.currentWettkampftag_3.veranstaltungsId = null;
+      this.currentWettkampftag_3.wettkampfVeranstaltungsId = null;
     } else {
-      this.currentWettkampftag_3.veranstaltungsId = this.currentVeranstaltung.id;
+      this.currentWettkampftag_3.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_3.wettkampfTag = 3;
     }
     if (typeof this.currentVeranstaltung === 'undefined') {
-      this.currentWettkampftag_4.veranstaltungsId = null;
+      this.currentWettkampftag_4.wettkampfVeranstaltungsId = null;
     } else {
-      this.currentWettkampftag_4.veranstaltungsId = this.currentVeranstaltung.id;
+      this.currentWettkampftag_4.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_4.wettkampfTag = 4;
     }
 
@@ -378,7 +373,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           });
 
     } else {
-      this.currentWettkampftag_1.veranstaltungsId = this.currentVeranstaltung.id;
+      this.currentWettkampftag_1.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_1.wettkampfTag = 1;
 
       this.wettkampfDataProvider.create(this.currentWettkampftag_1)
@@ -450,7 +445,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           });
 
     } else {
-      this.currentWettkampftag_2.veranstaltungsId = this.currentVeranstaltung.id;
+      this.currentWettkampftag_2.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_2.wettkampfTag = 2;
 
       this.wettkampfDataProvider.create(this.currentWettkampftag_2)
@@ -522,7 +517,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           });
 
     } else {
-      this.currentWettkampftag_3.veranstaltungsId = this.currentVeranstaltung.id;
+      this.currentWettkampftag_3.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_3.wettkampfTag = 3;
 
       this.wettkampfDataProvider.create(this.currentWettkampftag_3)
@@ -594,7 +589,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           });
 
     } else {
-      this.currentWettkampftag_4.veranstaltungsId = this.currentVeranstaltung.id;
+      this.currentWettkampftag_4.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
       this.currentWettkampftag_4.wettkampfTag = 4;
 
       this.wettkampfDataProvider.create(this.currentWettkampftag_4)
@@ -670,6 +665,10 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
   public entityExists(): boolean {
     return this.currentVeranstaltung.id >= 0;
+  }
+
+  private navigateToWettkampftage(ignore: any) {
+    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id);
   }
 
   private loadById(id: number) {
@@ -772,7 +771,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
-    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId === this.currentVeranstaltung.id);
+    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
 
 
     if (this.id === 'add') {

@@ -522,24 +522,45 @@
       "TITLE": "Region - Details",
       "FORM": {
         "REGION_NAME": {
-          "LABEL": "Region-Name",
-          "PLACEHOLDER": "Bitte einen Namen eingeben",
+          "LABEL": "Name der Region",
+          "PLACEHOLDER": "Bitte einen Namen für die Region eingeben",
           "ERROR": "Bitte einen gültigen Namen eingeben."
         },
         "REGION_CONTRACTION": {
-          "LABEL": "Region-Kürzel",
-          "PLACEHOLDER": "Bitte ein Kürzel eingeben",
-          "ERROR": "Bitte einen gültigen Identifier eingeben."
+          "LABEL": "Kürzel der Region",
+          "PLACEHOLDER": "Bitte ein Kürzel für die Region eingeben",
+          "ERROR": "Bitte einen gültiges Kürzel (min. 1 Zeichen, max. 7 Zeichen) eingeben."
         },
         "REGION_TYP": {
-          "LABEL": "Region-Typ",
-          "PLACEHOLDER": "Bitte einen Region auswählen",
-          "ERROR": "Bitte eine gültige Region eingeben."
+          "LABEL": "Typ der Region",
+          "PLACEHOLDER": "Bitte einen Typ für die Region auswählen",
+          "ERROR": "Bitte einen Typ für die Region auswählen"
         },
         "REGION_SUPERORDINATE": {
           "LABEL": "Übergeordnete Region",
           "PLACEHOLDER": "Bitte eine übergeordnete Region auswählen",
-          "ERROR": "Bitte eine gültige Region eingeben."
+          "ERROR": "Bitte eine Region auswählen."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Region löschen",
+          "DESCRIPTION": "Wollen Sie die Region mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Region wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Region konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Region wurde erfolgreich gespeichert."
         }
       }
     },
