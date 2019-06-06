@@ -12,3 +12,7 @@ export * from './liga-detail.guard';
 export * from './liga-overview.guard';
 export * from './region-detail.guard';
 export * from './region-overview.guard';
+export * from './veranstaltung-detail.guard';
+export * from './veranstaltung-overview.guard';
+export * from './wettkampftage.guard';
+export * from './sportjahr-overview.guard';

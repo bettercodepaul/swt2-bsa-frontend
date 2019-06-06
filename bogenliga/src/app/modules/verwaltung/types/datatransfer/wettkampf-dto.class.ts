@@ -7,6 +7,9 @@ export class WettkampfDTO implements DataTransferObject {
   wettkampfOrt: string;
   wettkampfBeginn: string;
   wettkampfTag: number;
+  wettkampfDisziplinId: number;
+  wettkampfTypId: number;
+
   version: number;
   wettkampfVeranstaltungsId: number;
 
@@ -15,13 +18,16 @@ export class WettkampfDTO implements DataTransferObject {
 
 
   static copyFrom(optional: {
-    id?: number,
-    datum?: string,
-    wettkampfOrt?: string,
-    wettkampfBeginn?: string,
-    wettkampfTag?: number,
-    version?: number,
-    veranstaltungsId?: number,
+    id?: number;
+    veranstaltungsId?: number;
+    datum?: string;
+    wettkampfOrt?: string;
+    wettkampfBeginn?: string;
+    wettkampfTag?: number;
+    wettkampfDisziplinId?: number;
+    wettkampfTypId?: number;
+
+    version?: number;
   } = {}): WettkampfDTO {
     const copy = new WettkampfDTO();
 
@@ -31,14 +37,33 @@ export class WettkampfDTO implements DataTransferObject {
     } else {
       copy.id = null;
     }
+    if (optional.veranstaltungsId >= 0) {
+      copy.wettkampfVeranstaltungsId = optional.veranstaltungsId;
+    } else {
+      copy.wettkampfVeranstaltungsId = null;
+    }
+    if (optional.wettkampfTag >= 0) {
+      copy.wettkampfTag = optional.wettkampfTag;
+    } else {
+      copy.wettkampfTag = null;
+    }
+    if (optional.wettkampfDisziplinId >= 0) {
+      copy.wettkampfDisziplinId = optional.wettkampfDisziplinId;
+    } else {
+      copy.wettkampfDisziplinId = null;
+    }
+    if (optional.wettkampfTypId >= 0) {
+      copy.wettkampfTypId = optional.wettkampfTypId;
+    } else {
+      copy.wettkampfTypId = null;
+    }
 
     copy.wettkampfDatum = optional.datum || '';
     copy.wettkampfOrt = optional.wettkampfOrt || null;
     copy.wettkampfBeginn = optional.wettkampfBeginn || null;
-    copy.wettkampfTag = optional.wettkampfTag || null;
+
 
     copy.version = optional.version || null;
-    copy.wettkampfVeranstaltungsId = optional.veranstaltungsId || 0;
 
     return copy;
   }
