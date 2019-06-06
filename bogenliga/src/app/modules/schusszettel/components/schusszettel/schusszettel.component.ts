@@ -14,66 +14,6 @@ import {
 } from '@shared/services';
 import {NumberOnlyDirective} from './number.directive';
 
-/**
- * Index generator for tabindex number generation,
- * required for tab order in schusszettel form
- */
-class IndexGenerator {
-  indices: Array<number>;
-  currIdx: number;
-
-  public getNext() {
-    if (this.currIdx < this.indices.length) {
-      const item = this.indices[this.currIdx];
-      this.currIdx += 1;
-      return item;
-    } else {
-      this.currIdx = 0;
-      return this.getNext();
-    }
-  }
-}
-
-class SchuetzenNrIndexGenerator extends IndexGenerator {
-  constructor() {
-    super();
-    this.indices = [1, 2, 3, 34, 35, 36];
-    this.currIdx = 0;
-  }
-}
-
-class RingzahlIndexGenerator extends IndexGenerator {
-  constructor() {
-    super();
-    const rows = [
-      [4, 29], // top left first table, top right first table
-      [6, 31], // mid left first table, mid right first table
-      [8, 33], // bottom left first table, bottom right first table
-      [37, 61], // top left second table, top right second table
-      [39, 63], // mid left second table, mid right second table
-      [41, 65], // bottom left second table, bottom right second table
-    ];
-    this.indices = [];
-    /*for (const row of rows) {
-      for (let i = row[0]; i < row[1]; i += 6) {
-        this.indices.push(i);
-        this.indices.push(i + 1);
-      }
-    }*/
-    for (let i = 0; i < rows.length; i++) {
-      let rowItem = rows[i];
-      for (let i = rowItem[0]; i <= rowItem[1]; i += 6) {
-        this.indices.push(i);
-        this.indices.push(i + 1);
-      }
-    }
-    this.currIdx = 0;
-  }
-}
-
-export const schuetzenNrIdxGen = new SchuetzenNrIndexGenerator();
-export const ringzahlIdxGen = new RingzahlIndexGenerator();
-
 @Component({
   selector:    'bla-schusszettel',
   templateUrl: './schusszettel.component.html',
