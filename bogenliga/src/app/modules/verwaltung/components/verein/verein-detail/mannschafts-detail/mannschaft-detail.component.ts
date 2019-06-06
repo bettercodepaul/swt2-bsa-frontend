@@ -7,7 +7,6 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../shared/components';
-import {ButtonType, CommonComponent, toTableRows} from '../../../../../shared/components';
 import {BogenligaResponse} from '../../../../../shared/data-provider';
 import {
   Notification,
@@ -53,7 +52,6 @@ const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
 })
 
 export class MannschaftDetailComponent extends CommonComponent implements OnInit, OnDestroy {
-export class MannschaftDetailComponent extends CommonComponent implements OnInit, OnDestroy  {
   public config = MANNSCHAFT_DETAIL_CONFIG;
   public config_table = MANNSCHAFT_DETAIL_TABLE_CONFIG;
 
@@ -133,28 +131,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   }
 
 
-
-  ngOnDestroy() {
-    this.duplicateSubscription.unsubscribe();
-    if (this.deleteSubscription != null) {
-      this.deleteSubscription.unsubscribe();
-    }
-  }
-
-
-    };
-
-    console.log('subscribe notification');
-    this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
-          .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.saveMannschaft();
-            }
-            if (myNotification.userAction === NotificationUserAction.DECLINED) {
-              this.saveLoading = false;
-            }
-          });
-  }
 
 
 
