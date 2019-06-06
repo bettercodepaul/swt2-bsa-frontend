@@ -28,8 +28,8 @@ export class LoginDataProviderService extends DataProviderService {
    * @param store to access the application state managed by the redux store
    */
   constructor(private restClient: RestClient,
-    private currentUserService: CurrentUserService,
-    private store: Store<AppState>) {
+              private currentUserService: CurrentUserService,
+              private store: Store<AppState>) {
     super();
   }
 
