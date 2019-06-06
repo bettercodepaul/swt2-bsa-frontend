@@ -105,7 +105,6 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   public onSave(ignore: any): void {
     this.saveLoading = true;
     this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, '');
-
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
         .then((response: BogenligaResponse<DsbMitgliedDO>) => {
