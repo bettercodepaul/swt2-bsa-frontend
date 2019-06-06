@@ -99,8 +99,8 @@ export class VerwaltungModule {
         RegionOverviewGuard,
         VeranstaltungOverviewGuard,
         VeranstaltungDetailGuard,
-        WettkampftageGuard
-        SportjahrOverviewGuard,
+        WettkampftageGuard,
+        SportjahrOverviewGuard
       ]
     };
   }
