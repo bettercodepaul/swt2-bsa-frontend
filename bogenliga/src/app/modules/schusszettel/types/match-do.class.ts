@@ -15,6 +15,7 @@ export class MatchDO implements DataObject {
 
   matchpunkte: number;
   satzpunkte: number;
+  fehlerpunkte: Array<number>;
 
   schuetzen: Array<Array<PasseDO>>;
 
@@ -28,6 +29,7 @@ export class MatchDO implements DataObject {
         sumSatz?: Array<number>,
         matchpunkte?: number,
         satzpunkte?: number,
+        fehlerpunkte?: Array<number>,
         schuetzen?: Array<Array<PasseDO>>,
         wettkampfTyp?: string) {
     this.id = !!id ? id : null;
@@ -40,6 +42,7 @@ export class MatchDO implements DataObject {
     this.sumSatz = sumSatz.length > 0 && sumSatz.length <= 5 ? sumSatz : [0, 0, 0, 0, 0];
     this.matchpunkte = matchpunkte;
     this.satzpunkte = satzpunkte;
+    this.fehlerpunkte = !!fehlerpunkte ? fehlerpunkte : [0, 0, 0, 0, 0];
     this.schuetzen = !!schuetzen ? schuetzen : [];
     this.wettkampfTyp = wettkampfTyp;
   }

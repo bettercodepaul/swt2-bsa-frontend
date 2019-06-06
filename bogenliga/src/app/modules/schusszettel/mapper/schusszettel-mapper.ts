@@ -44,6 +44,7 @@ export class SchusszettelMapper {
       sumSatz,
       payload.matchpunkte,
       payload.satzpunkte,
+      payload.fehlerpunkte,
       schuetzen,
       payload.wettkampfTyp);
   }
@@ -65,6 +66,7 @@ export class SchusszettelMapper {
       payload.scheibenNummer,
       payload.matchpunkte,
       payload.satzpunkte,
+      payload.fehlerpunkte,
       passen,
       payload.wettkampfTyp);
   }
