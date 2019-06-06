@@ -59,13 +59,13 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public id;
 
   constructor(
-    private veranstaltungDataProvider: VeranstaltungDataProviderService,
-    private wettkampfDataProvider: WettkampfDataProviderService,
-    private userProvider: UserProfileDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
-    super();
+     private veranstaltungDataProvider: VeranstaltungDataProviderService,
+     private wettkampfDataProvider: WettkampfDataProviderService,
+     private userProvider: UserProfileDataProviderService,
+     private router: Router,
+     private route: ActivatedRoute,
+     private notificationService: NotificationService) {
+     super();
   }
 
   ngOnInit() {
