@@ -101,7 +101,8 @@ export class VerwaltungModule {
         VeranstaltungOverviewGuard,
         VeranstaltungDetailGuard,
         SportjahrOverviewGuard,
-        WettkampftageGuard
+        WettkampftageGuard,
+        SportjahrOverviewGuard
       ]
     };
   }
