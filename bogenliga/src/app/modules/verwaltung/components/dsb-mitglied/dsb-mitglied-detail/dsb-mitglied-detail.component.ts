@@ -37,10 +37,10 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   public config = DSB_MITGLIED_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
-  // public currentVerein: VereinDO = new VereinDO();
+  public currentVerein: VereinDO = new VereinDO();
  // public vereine: Array<VereinDO> = [new VereinDO()];
   public vereine: VereinDO[];
-  public currentVerein: string;
+  // public currentVerein: VereinDO;
 
   public dsbMitgliedNationalitaet: string[];
   public loadingVereine = true;
@@ -267,11 +267,9 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
         this.currentMitgliedNat = this.nationen[i].toString();
       }
     }
-
-    const vereinsID = this.currentMitglied.vereinsId;
     this.vereine.forEach((verein) => {
-      if (verein.id === Number(vereinsID)) {
-        this.currentVerein = verein.name.toString();
+      if (verein.id === this.currentMitglied.vereinsId) {
+        this.currentVerein = verein;
       }
     });
   }
@@ -333,7 +331,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   }
   private onEditClick() {
     console.log(this.currentVerein);
-    this.currentMitglied.vereinsId = this.currentVerein['id'];
+    this.currentMitglied.vereinsId = this.currentVerein.id;
   }
 
   private onEditClick2() {
