@@ -6,6 +6,7 @@ export class MatchDTO implements DataTransferObject {
   id: number;
   version: number;
   wettkampfId: number;
+  wettkampfTypId: number;
   mannschaftId: number;
   begegnung: number;
   scheibenNummer: number;
@@ -17,6 +18,7 @@ export class MatchDTO implements DataTransferObject {
     nr?: number,
     id?: number,
     wettkampfId?: number,
+    wettkampfTypId?: number,
     mannschaftId?: number,
     begegnung?: number,
     scheibenNummer?: number,
@@ -42,6 +44,12 @@ export class MatchDTO implements DataTransferObject {
       copy.wettkampfId = optional.wettkampfId;
     } else {
       copy.wettkampfId = null;
+    }
+
+    if (optional.wettkampfTypId >= 0) {
+      copy.wettkampfTypId = optional.wettkampfTypId;
+    } else {
+      copy.wettkampfTypId = null;
     }
 
     if (optional.mannschaftId >= 0) {

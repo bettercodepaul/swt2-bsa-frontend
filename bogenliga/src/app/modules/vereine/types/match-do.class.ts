@@ -5,6 +5,7 @@ export class MatchDO implements VersionedDataObject {
   nr: number;
   id: number;
   wettkampfId: number;
+  wettkampfTypId: number;
   mannschaftId: number;
   begegnung: number;
   scheibenNummer: number;

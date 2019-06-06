@@ -10,11 +10,12 @@ export class MatchDO implements DataObject {
   nr: number;
   begegnung: number;
   scheibenNummer: number;
-
+  wettkampfTyp: string;
   sumSatz: Array<number>;
 
   matchpunkte: number;
   satzpunkte: number;
+  fehlerpunkte: Array<number>;
 
   schuetzen: Array<Array<PasseDO>>;
 
@@ -28,18 +29,22 @@ export class MatchDO implements DataObject {
               sumSatz?: Array<number>,
               matchpunkte?: number,
               satzpunkte?: number,
-              schuetzen?: Array<Array<PasseDO>>) {
+              fehlerpunkte?: Array<number>,
+              schuetzen?: Array<Array<PasseDO>>,
+              wettkampfTyp?: string) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
-    this.nr = !!matchNr ? matchNr : null;
-    this.begegnung = !!begegnung ? begegnung : null;
+    this.nr = matchNr;
+    this.begegnung = begegnung;
     this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
     this.sumSatz = sumSatz.length > 0 && sumSatz.length <= 5 ? sumSatz : [0, 0, 0, 0, 0];
-    this.matchpunkte = !!matchpunkte ? matchpunkte : null;
-    this.satzpunkte = !!satzpunkte ? satzpunkte : null;
+    this.matchpunkte = matchpunkte;
+    this.satzpunkte = satzpunkte;
+    this.fehlerpunkte = !!fehlerpunkte ? fehlerpunkte : [0, 0, 0, 0, 0];
     this.schuetzen = !!schuetzen ? schuetzen : [];
+    this.wettkampfTyp = wettkampfTyp;
   }
 }
 
