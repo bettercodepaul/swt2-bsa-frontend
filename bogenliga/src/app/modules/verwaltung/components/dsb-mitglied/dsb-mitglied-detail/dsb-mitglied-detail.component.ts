@@ -96,7 +96,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
-          if(response.result === RequestResult.DUPLICATE_DETECTED) {
+          if (response.result === RequestResult.DUPLICATE_DETECTED) {
             const notification: Notification = {
               id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
               title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
