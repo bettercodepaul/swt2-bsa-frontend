@@ -118,15 +118,15 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       };
 
     console.log('subscribe notification');
-      this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.saveMannschaft();
-          }
-          if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.saveLoading = false;
-          }
-        });
+    this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
+                                     .subscribe((myNotification) => {
+                                       if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                                         this.saveMannschaft();
+                                       }
+                                       if (myNotification.userAction === NotificationUserAction.DECLINED) {
+                                         this.saveLoading = false;
+                                       }
+                                     });
   }
 
 

@@ -104,7 +104,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
-    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, "");
+    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, '');
 
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
@@ -162,7 +162,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
-    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, "");
+    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, '');
 
     // persist
     this.dsbMitgliedDataProvider.update(this.currentMitglied)
@@ -331,15 +331,15 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
         .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; this.vereineLoaded = true; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
-  private onEditClick(asd) {
+  private onEditClick() {
     console.log(this.currentVerein);
     this.currentMitglied.vereinsId = this.currentVerein['id'];
   }
 
-  private onEditClick2(asd) {
+  private onEditClick2() {
     const nat = this.currentMitgliedNat;
     console.log(nat);
-    for (let i = 0; i< this.nationen.length; i++) {
+    for (let i = 0; i < this.nationen.length; i++) {
       if (this.nationen[i] === nat) {
         this.currentMitglied.nationalitaet = this.nationenKuerzel[i].toString();
       }
