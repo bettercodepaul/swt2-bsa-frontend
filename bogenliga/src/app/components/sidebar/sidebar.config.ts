@@ -68,6 +68,11 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
         label:      'Regionen',
         route:      '/verwaltung/region',
         permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+      },
+      {
+        label:    'Veranstaltungen',
+        route:    '/verwaltung/veranstaltung',
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
       }
     ]
   },
