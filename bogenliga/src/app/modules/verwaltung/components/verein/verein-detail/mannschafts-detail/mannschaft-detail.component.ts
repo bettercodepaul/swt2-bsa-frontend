@@ -242,7 +242,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.currentMannschaft = bogenligaResponse.payload;
     console.log(this.currentMannschaft.id);
     const id = this.currentMannschaft.id;
-    
     this.deleteNotification = {
       id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
       title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
