@@ -21,7 +21,7 @@ import {
   VeranstaltungOverviewComponent,
   VeranstaltungDetailComponent,
   WettkampftageComponent,
-  SportjahrOverviewComponent,
+  SportjahrOverviewComponent
 } from './components';
 import {
   BenutzerDetailGuard,
@@ -41,11 +41,13 @@ import {
   VeranstaltungDetailGuard,
   VeranstaltungOverviewGuard,
   WettkampftageGuard,
-  SportjahrOverviewGuard,
+  SportjahrOverviewGuard
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
+import {SchuetzenComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
+import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
 
 @NgModule({
   imports:      [
@@ -70,11 +72,11 @@ import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail
     RegionDetailComponent,
     RegionOverviewComponent,
     MannschaftDetailComponent,
+    SchuetzenComponent,
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
     WettkampftageComponent,
     SportjahrOverviewComponent,
-
   ]
 })
 export class VerwaltungModule {
@@ -97,6 +99,7 @@ export class VerwaltungModule {
         LigaDetailGuard,
         RegionDetailGuard,
         RegionOverviewGuard,
+        SchuetzenNeuGuard,
         VeranstaltungOverviewGuard,
         VeranstaltungDetailGuard,
         WettkampftageGuard,
