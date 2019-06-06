@@ -37,13 +37,10 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
 
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
-            }
-            else if(error.status === 500) {
+            } else if (error.status === 500) {
               console.log(error.status);
               reject({result: RequestResult.DUPLICATE_DETECTED});
-            }
-
-            else {
+            } else {
               reject({result: RequestResult.FAILURE});
             }
           });
