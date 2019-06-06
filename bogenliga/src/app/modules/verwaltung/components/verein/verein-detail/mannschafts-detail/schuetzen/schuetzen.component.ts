@@ -47,7 +47,6 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   public rows: TableRow[];
   public ButtonType = ButtonType;
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
-  public selectedMember: DsbMitgliedDO = new DsbMitgliedDO();
   public memberToAdd: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
   public members: DsbMitgliedDTO[] = [new DsbMitgliedDTO()];
 
@@ -229,7 +228,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
         && (member.nachname.startsWith(this.nachname) || this.nachname.length === 0)
         && (member.mitgliedsnummer.startsWith(this.mitgliedsnummer) || this.mitgliedsnummer.length === 0);
     });
-      this.rows = toTableRows(filteredMembers);
+     this.rows = toTableRows(filteredMembers);
   }
 
   // sets the current Mannschaft, to which the User wants to add the member
