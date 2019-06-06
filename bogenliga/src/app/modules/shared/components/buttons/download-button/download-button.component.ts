@@ -51,7 +51,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
         .then((response) => this.handleSuccess(response))
         .catch((response) => this.handleFailure(response));
-    };
+    }
   }
 
   private handleWithoutNotification(): void {
