@@ -139,7 +139,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     // sign in success -> resolve promise
     // sign in failure -> resolve promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("byMemberId/" + id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byMemberId/' + id).build())
           .then((data: VersionedDataTransferObject[]) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});

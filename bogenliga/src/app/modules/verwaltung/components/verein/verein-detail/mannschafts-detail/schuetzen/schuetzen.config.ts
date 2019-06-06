@@ -5,7 +5,7 @@ import {TableConfig} from '@shared/components/tables/types/table-config.interfac
 export const SCHUETZEN_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
   pageTitleTranslationKey: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.TITLE'
-}
+};
 
 
 export const SCHUETZE_TABLE_CONFIG: TableConfig = {

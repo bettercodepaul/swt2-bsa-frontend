@@ -50,9 +50,9 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   public members: DsbMitgliedDTO[] = [new DsbMitgliedDTO()];
 
   // attributes for the filter of the members
-  public vorname: string ="";
-  public nachname: string = "";
-  public mitgliedsnummer: string = "";
+  public vorname = '';
+  public nachname = '';
+  public mitgliedsnummer = '';
   public currentVerein: VereinDO = new VereinDO();
 
 
@@ -90,7 +90,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
           this.deleteLoading = false;
           this.saveLoading = false;
         } else {
-          //this.loadById(params[ID_PATH_PARAM]);
+          // this.loadById(params[ID_PATH_PARAM]);
         }
       }
     });
@@ -103,11 +103,11 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
     this.memberToAdd.dsbMitgliedId = member.id;
     this.memberToAdd.mannschaftsId = this.currentMannschaft.id;
-    //this.memberToAdd.dsbMitgliedEingesetzt = 0;
+    // this.memberToAdd.dsbMitgliedEingesetzt = 0;
 
     this.mannschaftMitgliedProvider.findByMemberId(member.id)
         .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
-          if(response.payload.length <= 1) {
+          if (response.payload.length <= 1) {
             this.memberToAdd.dsbMitgliedEingesetzt = response.payload.length;
 
             console.log('saving ' + this.memberToAdd + ' in Mannschaft');
@@ -134,7 +134,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
                           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                             this.saveLoading = false;
                             this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
-                              + "/" + this.currentMannschaft.id + "/add");
+                              + '/' + this.currentMannschaft.id + '/add');
                           }
                         });
 
@@ -148,7 +148,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
           }
     }).catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
       console.log('Failure');
-    })
+    });
 
 
     // show response message
@@ -156,11 +156,11 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
   public onSearch() {
      const filteredMembers = this.members.filter((member) => {
-        return (member.vorname.startsWith(this.vorname) || this.vorname.length == 0)
-        && (member.nachname.startsWith(this.nachname) || this.nachname.length == 0)
-        && (member.mitgliedsnummer.startsWith(this.mitgliedsnummer) || this.mitgliedsnummer.length == 0);
+        return (member.vorname.startsWith(this.vorname) || this.vorname.length === 0)
+        && (member.nachname.startsWith(this.nachname) || this.nachname.length === 0)
+        && (member.mitgliedsnummer.startsWith(this.mitgliedsnummer) || this.mitgliedsnummer.length === 0);
     });
-    this.rows = toTableRows(filteredMembers);
+      this.rows = toTableRows(filteredMembers);
   }
 
   // sets the current Mannschaft, to which the User wants to add the member

@@ -23,7 +23,7 @@ import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
 })
 export class VereineComponent extends CommonComponent implements OnInit {
 
-  public PLACEHOLDER_VAR = "Bitte Verein eingeben..."
+  public PLACEHOLDER_VAR = 'Bitte Verein eingeben...';
   public config = VEREINE_CONFIG;
   public config_table = VEREINE_TABLE_CONFIG;
   public selectedDTOs: VereinDO[];
@@ -93,7 +93,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false;})
+        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 
@@ -160,7 +160,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   }
 
   private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string): void {
-    console.log('Content:' + response.payload.name+wettkampfTag+mannschaftsName);
+    console.log('Content:' + response.payload.name + wettkampfTag + mannschaftsName);
     const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, mannschaftsName);
     this.tableContent.push(tableRowContent);
     this.remainingRequests -= 1;
