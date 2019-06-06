@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -43,14 +43,14 @@ const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
 const NOTIFICATION_DELETE_MITGLIED = 'mannschaft_mitglied_delete';
 const NOTIFICATION_DELETE_MITGLIED_SUCCESS = 'mannschaft_mitglied_delete_success';
 const NOTIFICATION_DELETE_MITGLIED_FAILURE = 'mannschaft_mitglied_delete_failure';
-const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft'
+const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
 
 @Component({
   selector:    'bla-mannschaft-detail',
   templateUrl: './mannschaft-detail.component.html',
   styleUrls:   ['./mannschaft-detail.component.scss']
 })
-export class MannschaftDetailComponent extends CommonComponent implements OnInit {
+export class MannschaftDetailComponent extends CommonComponent implements OnInit, OnDestroy {
   public config = MANNSCHAFT_DETAIL_CONFIG;
   public config_table = MANNSCHAFT_DETAIL_TABLE_CONFIG;
 
@@ -107,33 +107,33 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     // This Notification shows up, if a duplicate mannschaftsnummer is detected.
     // It gets subscribed once in ngOnInit and gets unsubscribed in ngOnDestroy
-      this.duplicateMannschaftsNrNotification = {
-        id:          NOTIFICATION_WARING_MANNSCHAFT,
-        title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
-        description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
-        severity:    NotificationSeverity.QUESTION,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.YES_NO,
-        userAction:  NotificationUserAction.PENDING
+    this.duplicateMannschaftsNrNotification = {
+      id:          NOTIFICATION_WARING_MANNSCHAFT,
+      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+      severity:    NotificationSeverity.QUESTION,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.YES_NO,
+      userAction:  NotificationUserAction.PENDING
       };
 
-      console.log('subscribe notification');
+    console.log('subscribe notification');
       this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
-          .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.saveMannschaft();
-            }
-            if (myNotification.userAction === NotificationUserAction.DECLINED) {
-              this.saveLoading = false;
-            }
-          });
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveMannschaft();
+          }
+          if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.saveLoading = false;
+          }
+        });
   }
 
 
 
   ngOnDestroy() {
     this.duplicateSubscription.unsubscribe();
-    if(this.deleteSubscription != null) {
+    if (this.deleteSubscription != null) {
       this.deleteSubscription.unsubscribe();
     }
   }
@@ -365,7 +365,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id + '/' + this.currentMannschaft.id + "/" + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id + '/' + this.currentMannschaft.id + '/' + versionedDataObject.id);
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
@@ -431,14 +431,13 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
     this.mannschaften = response.payload;
-    var mannschaftsNrs: Array<number> = new Array<number>();
-    this.mannschaften.forEach((mannschaft) => mannschaftsNrs.push(parseInt(mannschaft.nummer)));
-    var duplicateFound: boolean;
-    mannschaftsNrs.forEach(nr => { if(nr==parseInt(this.currentMannschaft.nummer)){duplicateFound=true;}})
-    if(duplicateFound) {
+    const mannschaftsNrs: Array<number> = new Array<number>();
+    this.mannschaften.forEach((mannschaft) => mannschaftsNrs.push(parseInt(mannschaft.nummer, 10)));
+    let duplicateFound: boolean;
+    mannschaftsNrs.forEach((nr) => { if (nr === parseInt(this.currentMannschaft.nummer, 10)) { duplicateFound = true; }});
+    if (duplicateFound) {
       this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
-    }
-    else {
+    } else {
       this.saveMannschaft();
     }
   }

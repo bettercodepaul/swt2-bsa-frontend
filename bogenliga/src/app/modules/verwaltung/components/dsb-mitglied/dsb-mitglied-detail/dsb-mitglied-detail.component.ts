@@ -37,19 +37,19 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   public config = DSB_MITGLIED_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
-  //public currentVerein: VereinDO = new VereinDO();
+  // public currentVerein: VereinDO = new VereinDO();
  // public vereine: Array<VereinDO> = [new VereinDO()];
   public vereine: VereinDO[];
-  public currentVerein : String;
+  public currentVerein: string;
 
-  public dsbMitgliedNationalitaet: String[];
+  public dsbMitgliedNationalitaet: string[];
   public loadingVereine = true;
 
   public vereineLoaded;
 
-  public  nationen: Array<String> = [];
-  public  nationenKuerzel: Array<String> = [];
-  public currentMitgliedNat: String;
+  public  nationen: Array<string> = [];
+  public  nationenKuerzel: Array<string> = [];
+  public currentMitgliedNat: string;
   public deleteLoading = false;
   public saveLoading = false;
 
@@ -57,7 +57,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
               private router: Router,
               private route: ActivatedRoute,
               private vereinDataProvider: VereinDataProviderService,
-             private httpService: HttpClient,
+              private httpService: HttpClient,
               private notificationService: NotificationService) {
     super();
   }
@@ -68,21 +68,21 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     this.notificationService.discardNotification();
 
     this.httpService.get('./assets/i18n/Nationalitaeten.json').subscribe(
-     data => {
-       //let test =JSON.parse(data.toString());
-       //console.log(data.toString());this.dsbMitgliedNationalitaet = data as String [];
+      (data) => {
+       // let test =JSON.parse(data.toString());
+       // console.log(data.toString());this.dsbMitgliedNationalitaet = data as String [];
       console.log(data);
-      let json = JSON.parse(JSON.stringify(data));
-      json['NATIONEN'].forEach( t => {
+      const json = JSON.parse(JSON.stringify(data));
+      json['NATIONEN'].forEach( (t) => {
         this.nationen.push(t['name']);
       });
 
-       json['NATIONEN'].forEach( t => {
-         this.nationenKuerzel.push(t['code']);
+      json['NATIONEN'].forEach( (t) => {
+        this.nationenKuerzel.push(t['code']);
        });
 
-      //data.
-        //console.log(test);
+      // data.
+        // console.log(test);
       }
     ),
 
@@ -104,7 +104,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public onSave(ignore: any): void {
     this.saveLoading = true;
-    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[" "]/g, "");
+    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, "");
 
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
@@ -136,7 +136,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
-          if(response.result === RequestResult.DUPLICATE_DETECTED) {
+          if (response.result === RequestResult.DUPLICATE_DETECTED) {
             const notification: Notification = {
               id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
               title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
@@ -162,7 +162,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
-    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[" "]/g, "");
+    this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, "");
 
     // persist
     this.dsbMitgliedDataProvider.update(this.currentMitglied)
@@ -196,7 +196,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');
           this.saveLoading = false;
-          if(response.result === RequestResult.DUPLICATE_DETECTED) {
+          if (response.result === RequestResult.DUPLICATE_DETECTED) {
             const notification: Notification = {
               id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
               title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
@@ -261,19 +261,19 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   private handleSuccess(response: BogenligaResponse<DsbMitgliedDO>) {
     this.currentMitglied = response.payload;
     this.loading = false;
-    let kuer = this.currentMitglied.nationalitaet;
-    for(let i=0;i< this.nationenKuerzel.length;i++) {
-      if(this.nationenKuerzel[i] == kuer) {
+    const kuer = this.currentMitglied.nationalitaet;
+    for (let i = 0; i < this.nationenKuerzel.length; i++) {
+      if (this.nationenKuerzel[i] === kuer) {
         this.currentMitgliedNat = this.nationen[i].toString();
       }
     }
 
-    let vereinsID = this.currentMitglied.vereinsId;
-    for(let i=0;i< this.vereine.length;i++) {
-      if(this.vereine[i].id == Number(vereinsID)) {
-        this.currentVerein = this.vereine[i].name.toString();
+    const vereinsID = this.currentMitglied.vereinsId;
+    this.vereine.forEach((verein) => {
+      if (verein.id === Number(vereinsID)) {
+        this.currentVerein = verein.name.toString();
       }
-    }
+    });
   }
 
   private handleFailure(response: BogenligaResponse<DsbMitgliedDO>) {
@@ -337,10 +337,10 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   }
 
   private onEditClick2(asd) {
-    let nat = this.currentMitgliedNat;
+    const nat = this.currentMitgliedNat;
     console.log(nat);
-    for(let i=0;i< this.nationen.length;i++) {
-      if(this.nationen[i] == nat) {
+    for (let i = 0; i< this.nationen.length; i++) {
+      if (this.nationen[i] === nat) {
         this.currentMitglied.nationalitaet = this.nationenKuerzel[i].toString();
       }
     }
