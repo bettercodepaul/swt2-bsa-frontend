@@ -4,11 +4,9 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 export class SportjahrDO implements VersionedDataObject {
   id: number;
   version: number;
-  wettkampfTypId: number;
-  wettkampfTypName: string;
-  name: string;
-  sportjahr: number;
-  deadline: number;
-  ligaleiterID: number;
-  ligaleiterEmail: string;
+
+  ligaName: string;
+  regionName: string;
+  ligaUebergeordnetName: string;
+  verantworlichEmail: string;
 }
