@@ -101,25 +101,28 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
     this.mannschaftMitgliedProvider.findAllByTeamId(this.currentMannschaft.id)
         .then((teamMembers: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+          console.log(teamMembers.payload);
           if (this.duplicateMember(teamMembers.payload, this.memberToAdd)) {
             this.showDuplicateMember();
           } else {
             this.saveMemberInTeam(member.id);
           }
         })
-        .catch((duplicate: BogenligaResponse<MannschaftsMitgliedDO>) => {
-          this.saveMemberInTeam(member.id);
+        .catch((teamMembers: BogenligaResponse<MannschaftsMitgliedDO>) => {
+          console.log('Failure');
         });
-    // show response message
   }
 
   private duplicateMember(teamMembers: MannschaftsMitgliedDO[], member: MannschaftsMitgliedDO): boolean {
+    console.log('checking for duplicate member...');
+    let duplicateFound = false;
     teamMembers.forEach((teamMember) => {
-      if (teamMember.id === member.id) {
-        return true;
+      if (teamMember.dsbMitgliedId === member.dsbMitgliedId) {
+        console.log('duplicate member: ' + teamMember);
+        duplicateFound = true;
       }
     });
-    return false;
+    return duplicateFound;
   }
 
   private saveMemberInTeam(memberId: number) {

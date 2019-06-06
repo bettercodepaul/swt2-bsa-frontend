@@ -155,7 +155,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     });
   }
 
-  public findByMemberAndTeamId(memberId: string | number, teamId:string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
+  public findByMemberAndTeamId(memberId: string | number, teamId: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> resolve promise with result
