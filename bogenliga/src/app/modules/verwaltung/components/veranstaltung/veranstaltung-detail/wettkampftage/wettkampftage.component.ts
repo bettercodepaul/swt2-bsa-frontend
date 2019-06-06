@@ -343,7 +343,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           this.saveLoading = false;
         });
 
-      if (this.currentWettkampftag_1.id != null) {
+    if (this.currentWettkampftag_1.id != null) {
         this.wettkampfDataProvider.update(this.currentWettkampftag_1)
           .then((response: BogenligaResponse<WettkampfDO>) => {
             if (!isNullOrUndefined(response)
