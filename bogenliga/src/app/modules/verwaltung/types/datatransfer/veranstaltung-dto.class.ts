@@ -43,19 +43,19 @@ export class VeranstaltungDTO implements DataTransferObject {
       copy.wettkampfTypId = null;
     }
 
-    if (optional.ligaleiterID>= 0) {
-      copy.ligaleiterID= optional.ligaleiterID;
+    if (optional.ligaleiterID >= 0) {
+      copy.ligaleiterID = optional.ligaleiterID;
     } else {
       copy.ligaleiterID = null;
     }
-    if (optional.sportjahr >= 0){
+    if (optional.sportjahr >= 0) {
       copy.sportjahr = optional.sportjahr;
-    }else{
+    } else {
       copy.sportjahr = null;
     }
-    if(optional.ligaID >= 0){
+    if (optional.ligaID >= 0) {
       copy.ligaID = optional.ligaID;
-    }else{
+    } else {
       copy.ligaID = null;
     }
 
