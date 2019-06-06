@@ -1,5 +1,6 @@
 import {VersionedDataTransferObject} from '@shared/data-provider';
 import {PasseDTO} from './passe-dto.class';
+import {assertNumber} from '@angular/core/src/render3/assert';
 
 export class MatchDTO implements VersionedDataTransferObject {
   id: number;
@@ -16,6 +17,12 @@ export class MatchDTO implements VersionedDataTransferObject {
   matchpunkte: number;
   satzpunkte: number;
 
+  strafPunkteSatz1: number;
+  strafPunkteSatz2: number;
+  strafPunkteSatz3: number;
+  strafPunkteSatz4: number;
+  strafPunkteSatz5: number;
+
   passen: Array<PasseDTO>;
 
   constructor(id?: number,
@@ -27,6 +34,11 @@ export class MatchDTO implements VersionedDataTransferObject {
         scheibennummer?: number,
         matchpunkte?: number,
         satzpunkte?: number,
+        strafPunkteSatz1?:number,
+        strafPunkteSatz2?:number,
+        strafPunkteSatz3?:number,
+        strafPunkteSatz4?:number,
+        strafPunkteSatz5?:number,
         passen?: Array<PasseDTO>,
         wettkampfTyp?: string) {
     this.id = !!id ? id : null;
@@ -38,6 +50,11 @@ export class MatchDTO implements VersionedDataTransferObject {
     this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
     this.matchpunkte = matchpunkte;
     this.satzpunkte = satzpunkte;
+    this.strafPunkteSatz1 = !!strafPunkteSatz1 ? strafPunkteSatz1 : 0;
+    this.strafPunkteSatz2 = !!strafPunkteSatz2 ? strafPunkteSatz2 : 0;
+    this.strafPunkteSatz3 = !!strafPunkteSatz3 ? strafPunkteSatz3 : 0;
+    this.strafPunkteSatz4 = !!strafPunkteSatz4 ? strafPunkteSatz4 : 0;
+    this.strafPunkteSatz5 = !!strafPunkteSatz5 ? strafPunkteSatz5 : 0;
     this.passen = !!passen ? passen : [];
     this.wettkampfTyp = wettkampfTyp;
   }

@@ -298,4 +298,8 @@ export class SchusszettelComponent implements OnInit {
     }
     return sum;
   }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
 }
