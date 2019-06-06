@@ -230,11 +230,24 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   }
 
+  /**
+   * Deletes all Wettkampftag entries of the provided VeranstaltungID
+   */
+  private deleteWettkampftage(id: number){
+    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_1.id);
+    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_2.id);
+    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_3.id);
+    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_4.id);
+  }
+
+
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
 
     const id = this.currentVeranstaltung.id;
+
+    this.deleteWettkampftage(id);
 
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
