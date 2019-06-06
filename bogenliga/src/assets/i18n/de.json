@@ -825,7 +825,7 @@
           "ERROR": "Bitte ein gültiges Sportjahr eingeben"
         },
         "MELDEDEADLINE": {
-          "LABEL": "Meldedeadline",
+          "LABEL": "Meldeschluss",
           "PLACEHOLDER": "Bitte ein Datum auswählen",
           "ERROR": "Bitte ein gültiges Datum auswählen"
         },
