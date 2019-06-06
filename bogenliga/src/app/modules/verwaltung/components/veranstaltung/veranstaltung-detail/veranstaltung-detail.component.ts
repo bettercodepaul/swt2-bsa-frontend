@@ -234,7 +234,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   /**
    * Deletes all Wettkampftag entries of the provided VeranstaltungID
    */
-  private deleteWettkampftage(id : number){
+  private deleteWettkampftage(id: number) {
     this.wettkampfDataProvider.deleteById(this.currentWettkampftag_1.id);
     this.wettkampfDataProvider.deleteById(this.currentWettkampftag_2.id);
     this.wettkampfDataProvider.deleteById(this.currentWettkampftag_3.id);
@@ -420,10 +420,10 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
-  private handleWettkampfResponseArraySuccess(response:BogenligaResponse<WettkampfDO[]>): void {
+  private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
-    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId=== this.currentVeranstaltung.id);
+    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId === this.currentVeranstaltung.id);
 
 
     if (this.id === 'add') {
