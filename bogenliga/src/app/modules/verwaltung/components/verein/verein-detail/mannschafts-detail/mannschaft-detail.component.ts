@@ -28,7 +28,7 @@ const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_SAVE_MANNSCHAFT = 'mannschaft_detail_save';
 const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
-const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft'
+const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
 
 @Component({
   selector:    'bla-mannschaft-detail',
@@ -86,18 +86,18 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     // This Notification shows up, if a duplicate mannschaftsnummer is detected.
     // It gets subscribed once in ngOnInit and gets unsubscribed in ngOnDestroy
-      this.duplicateMannschaftsNrNotification = {
-        id:          NOTIFICATION_WARING_MANNSCHAFT,
-        title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
-        description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
-        severity:    NotificationSeverity.QUESTION,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.YES_NO,
-        userAction:  NotificationUserAction.PENDING
-      };
+    this.duplicateMannschaftsNrNotification = {
+      id:          NOTIFICATION_WARING_MANNSCHAFT,
+      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+      severity:    NotificationSeverity.QUESTION,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.YES_NO,
+      userAction:  NotificationUserAction.PENDING
+    };
 
-      console.log('subscribe notification');
-      this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
+    console.log('subscribe notification');
+    this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
           .subscribe((myNotification) => {
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.saveMannschaft();
@@ -112,7 +112,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   ngOnDestroy() {
     this.duplicateSubscription.unsubscribe();
-    if(this.deleteSubscription != null) {
+    if (this.deleteSubscription != null) {
       this.deleteSubscription.unsubscribe();
     }
   }
@@ -226,14 +226,13 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.deleteSubscription = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
                                   .subscribe((myNotification) => {
                             console.log('inside delete ');
-                                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                                       this.mannschaftProvider.deleteById(id)
                                           .then((response) => this.handleDeleteSuccess(response))
                                           .catch((response) => this.handleDeleteFailure(response));
-                                    }
-                                    else if(myNotification.userAction === NotificationUserAction.DECLINED) {
-                                      this.deleteLoading = false;
-                                    }
+                            } else if(myNotification.userAction === NotificationUserAction.DECLINED) {
+                                this.deleteLoading = false;
+                            }
                                   });
     this.loading = false;
   }
