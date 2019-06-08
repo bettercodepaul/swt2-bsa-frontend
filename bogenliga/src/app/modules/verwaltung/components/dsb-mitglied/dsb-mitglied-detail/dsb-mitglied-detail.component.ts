@@ -105,6 +105,17 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   public onSave(ignore: any): void {
     this.saveLoading = true;
     this.currentMitglied.mitgliedsnummer = this.currentMitglied.mitgliedsnummer.replace(/[' ']/g, '');
+
+    this.currentMitglied.vereinsId = this.currentVerein.id;
+
+    console.log('current nation: ' + this.currentMitgliedNat);
+
+    for (let i = 0; i < this.nationen.length; i++) {
+      if (this.nationen[i] === this.currentMitgliedNat) {
+        this.currentMitglied.nationalitaet = this.nationenKuerzel[i];
+      }
+    }
+
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
         .then((response: BogenligaResponse<DsbMitgliedDO>) => {
