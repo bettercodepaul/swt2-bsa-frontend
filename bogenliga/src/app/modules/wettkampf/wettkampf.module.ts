@@ -6,6 +6,7 @@ import {SharedModule} from '../shared';
 import {SetzlisteDownloadComponent, SchusszettelDownloadComponent, WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.component';
 import {WettkampfGuard} from './guards/wettkampf.guard';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
+import {MeldezettelDownloadComponent} from '@wettkampf/components/meldezettel-download/meldezettel-download.component';
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import {WETTKAMPF_ROUTES} from './wettkampf.routing';
     SharedModule,
     FormsModule,
   ],
-  declarations: [WettkaempfeComponent, SetzlisteDownloadComponent, SchusszettelDownloadComponent],
+  declarations: [WettkaempfeComponent, SetzlisteDownloadComponent, SchusszettelDownloadComponent, MeldezettelDownloadComponent, BogenkontrolllisteDonwloadComponent],
   providers:    [WettkampfGuard]
 })
 export class WettkampfModule {
