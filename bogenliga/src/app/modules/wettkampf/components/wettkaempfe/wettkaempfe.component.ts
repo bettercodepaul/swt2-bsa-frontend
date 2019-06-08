@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent} from '../../../shared/components/common';
-import {NotificationService} from '../../../shared/services/notification';
+import {CommonComponent} from '@shared/components';
+import {NotificationService} from '@shared/services';
 import {WETTKAEMPFE_CONFIG} from './wettkaempfe.config';
 
 export * from '../setzliste-download/setzliste-download.component';
 export * from '../schusszettel-download/schusszettel-download.component';
+export * from '../meldezettel-download/meldezettel-download.component';
+export * from '../bogenkontrollliste-download/bogenkontrollliste-download.component';
 
 @Component({
   selector:    'bla-wettkaempfe',
