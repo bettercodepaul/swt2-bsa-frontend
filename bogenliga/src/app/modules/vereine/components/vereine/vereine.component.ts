@@ -52,7 +52,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   // when a Verein gets selected from the list
   public onSelect($event: VereinDO[]): void {
-    console.log('in onSelect ');
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
