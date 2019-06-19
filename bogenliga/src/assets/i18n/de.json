@@ -654,7 +654,7 @@
       "NOTIFICATION": {
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt."
+          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt. Es wurde keine Lizenz erstellt, da der Schütze bereits eine in der selben Disziplin besitzt."
         },
         "DUPLICATE": {
           "TITLE": "Fehler",
@@ -663,6 +663,14 @@
         "OVERUSED": {
           "TITLE": "Fehler",
           "DESCRIPTION": "Schütze kann dieser Mannschaft nicht hinzugefügt werden, da er schon in zuvielen Mannschaften eingesetzt wurde, bzw. in einer höheren Liga schon eingesetzt wurde."
+        },
+        "NOWETTKAEMPFE": {
+          "TITLE": "Lizenz konnte nicht geprüft werden.",
+          "DESCRIPTION": "Die Liga die der Mannschaft zugeteilt wurde hat keine Wettkampftage. Stellen sie sicher, dass die Liga Wettkampftage hat."
+        },
+        "SAVE_AND_LIZENZ_ERSTELLT": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt und es wurde eine Lizenz für den Schützen erstellt."
         }
       }
     },
