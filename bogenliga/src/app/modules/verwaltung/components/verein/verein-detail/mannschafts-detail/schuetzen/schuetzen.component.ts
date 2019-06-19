@@ -35,7 +35,6 @@ import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-pro
 import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
 import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import {RegionDO} from '@verwaltung/types/region-do.class';
-import {log} from 'util';
 
 
 const ID_PATH_PARAM = 'id';
@@ -142,7 +141,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
           console.log('saving ' + this.memberToAdd + ' in Mannschaft');
         }, (savedResponse: BogenligaResponse<MannschaftsMitgliedDO>) => {
 
-          //delete lizenz if saving teammember fails and a new lizenz was created
+          // delete lizenz if saving teammember fails and a new lizenz was created
           if (savedLizenzResponse != null) {
             this.lizenzProvider.deleteById(savedLizenzResponse.payload.lizenzId)
                 .then(() => {
@@ -163,8 +162,8 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
           if (response.payload.length <= 1) {
             this.memberToAdd.dsbMitgliedEingesetzt = response.payload.length;
 
-                  //get Lizenzen of this member
-                  this.lizenzProvider.findByDsbMitgliedId(memberId)
+                  // get Lizenzen of this member
+            this.lizenzProvider.findByDsbMitgliedId(memberId)
                       .then((response: BogenligaResponse<LizenzDO[]>) => {
 
                         let lizenzen: LizenzDO[] = [new LizenzDO()];
@@ -175,29 +174,29 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
                         this.wettkampfProvider.findAll()
                             .then((response: BogenligaResponse<WettkampfDO[]>) => {
 
-                              let veranstaltungen: WettkampfDO[] = [];
+                              const veranstaltungen: WettkampfDO[] = [];
                               response.payload.forEach( (wettkampf) => {
-                                if (wettkampf.veranstaltungsId == this.currentMannschaft.veranstaltungId) {
+                                if (wettkampf.veranstaltungsId === this.currentMannschaft.veranstaltungId) {
                                   veranstaltungen.push(wettkampf);
                                 }
                               });
-                              console.log(veranstaltungen)
+                              console.log(veranstaltungen);
 
                               let wettkampfDisziplinID;
                               let lizenzFound = false;
 
                               console.log(response.payload);
 
-                              if(veranstaltungen.length != 0) { // check if there are wettkaempfe in the liga
+                              if (veranstaltungen.length !== 0) { // check if there are wettkaempfe in the liga
                                 wettkampfDisziplinID = veranstaltungen[0].wettkampfDisziplinId; // take the Disziplin of the first wettkampftag
                                 console.log(wettkampfDisziplinID);
-                                if(lizenzen.length > 0){
+                                if (lizenzen.length > 0) {
                                   console.log('lizenzen not empty');
                                   lizenzen.forEach((lizenz) => {
                                     console.log('for each lizenz');
-                                    console.log(lizenz.lizenztyp+ lizenz.lizenzDisziplinId + wettkampfDisziplinID);
+                                    console.log(lizenz.lizenztyp + lizenz.lizenzDisziplinId + wettkampfDisziplinID);
                                     // check if Mitglied has already has a Lizenz in this Disziplin
-                                    if( lizenz.lizenztyp == 'Liga' && lizenz.lizenzDisziplinId == wettkampfDisziplinID) {
+                                    if ( lizenz.lizenztyp === 'Liga' && lizenz.lizenzDisziplinId === wettkampfDisziplinID) {
                                       console.log('Lizenz Found!');
                                       lizenzFound = true;
                                     }
@@ -206,7 +205,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
 
                                 // create new Lizenz if Mitglied has no Lizenz in this Disziplin
-                                if (lizenzFound == false) {
+                                if (lizenzFound === false) {
 
                                   // create lizenznummer
                                   // first get Region Kuerzel
@@ -216,10 +215,10 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
                                         const regionKuerzel = response.payload.regionKuerzel;
 
                                         // Lizenznummer = Regionkürzel+LigaId+vereinsId+mannschaftsnummer+dsbmitgliedsId
-                                        const lizenznummer =regionKuerzel+
-                                                            this.currentMannschaft.veranstaltungId+
-                                                            this.currentVerein.id+
-                                                            this.currentMannschaft.nummer+
+                                        const lizenznummer = regionKuerzel +
+                                                            this.currentMannschaft.veranstaltungId +
+                                                            this.currentVerein.id +
+                                                            this.currentMannschaft.nummer +
                                                             memberId;
 
                                         const newLizenz = new LizenzDO();
@@ -246,12 +245,10 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
                                         console.log('Failed to load Region');
                                         this.saveLoading = false;
                                       });
+                                } else {
+                                  this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
                                 }
-                                else {
-                                  this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE',null);
-                                }
-                              }
-                              else {
+                              } else {
 
                                 this.showAddedMemberNotification( 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.NOWETTKAEMPFE');
                                 console.log('Keine Wettkaempfe gefunden. Bitte stelle sicher das die Liga der Mannschaft Wettkampfe beinhaltet.');
@@ -280,7 +277,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   }
 
   private showAddedMemberNotification(jsonPath: string) {
-    //savedResponse: BogenligaResponse<MannschaftsMitgliedDO>,
+    // savedResponse: BogenligaResponse<MannschaftsMitgliedDO>,
     // if (!isNullOrUndefined(savedResponse)
     //   && !isNullOrUndefined(savedResponse.payload)
     //   && !isNullOrUndefined(savedResponse.payload.id)) {
@@ -288,8 +285,8 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
       const notification: Notification = {
         id:          NOTIFICATION_SAVE_SCHUETZE,
-        title:       jsonPath+'.TITLE',
-        description: jsonPath+'.DESCRIPTION',
+        title:       jsonPath + '.TITLE',
+        description: jsonPath + '.DESCRIPTION',
         severity:    NotificationSeverity.INFO,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.OK,
