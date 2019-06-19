@@ -32,8 +32,7 @@ export class LizenzDTO implements DataTransferObject {
     copy.lizenztyp = optional.lizenztyp || '';
     if (optional.lizenzDisziplinId == null) { // Bei LizenzDisziplinId wird '0' als null gewertet. Deshalb hier anders.
       copy.lizenzDisziplinId = null;
-    }
-    else {
+    } else {
       copy.lizenzDisziplinId = optional.lizenzDisziplinId;
     }
 
