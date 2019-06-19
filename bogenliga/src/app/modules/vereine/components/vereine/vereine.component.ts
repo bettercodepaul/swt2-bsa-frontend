@@ -59,7 +59,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
     this.rows = [];
     this.tableContent = [];
-    if(this.selectedVereinsId != null) {
+    if (this.selectedVereinsId != null) {
       this.loadTableRows();
     }
 

@@ -4,7 +4,7 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 export class LizenzDO implements VersionedDataObject {
 
   id: number;
-  version:number;
+  version: number;
   lizenzId: number;
   lizenznummer: string;
   lizenzRegionId: number;
