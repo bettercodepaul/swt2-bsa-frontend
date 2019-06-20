@@ -41,16 +41,21 @@
                required
                minlength="1"
                maxlength="7"
-               pattern="[A-Za-z0-9_-]*"
+               pattern="[A-Za-z0-9\s_-]*"
                id="regionContraction"
                name="regionContraction"
                #regionContraction="ngModel"
                [(ngModel)]="currentRegion.regionKuerzel"
-               [class.is-invalid]="(regionContraction.invalid || !isContractionUnique()) && !regionContraction.untouched"
+               [class.is-invalid]="(!regionContraction.valid || !isContractionUnique()) && !regionContraction.untouched"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.ERROR' | translate }}
+          <div *ngIf="isContractionUnique()">
+            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.ERROR1' | translate }}
+          </div>
+          <div *ngIf="!isContractionUnique()">
+            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.ERROR2' | translate }}
+          </div>
         </div>
       </div>
     </div>
@@ -110,14 +115,14 @@
 
         <bla-button *ngIf="!entityExists()"
                     [id]="'regionSaveButton'"
-                    [disabled]="!regionenForm.valid || !contractionUnique"
+                    [disabled]="!regionenForm.valid || !isContractionUnique()"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'regionUpdateButton'"
-                    [disabled]="!regionenForm.valid"
+                    [disabled]="!regionenForm.valid || !isContractionUnique()"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.UPDATE' | translate }}
