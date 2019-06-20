@@ -529,7 +529,8 @@
         "REGION_CONTRACTION": {
           "LABEL": "Kürzel der Region",
           "PLACEHOLDER": "Bitte ein Kürzel für die Region eingeben",
-          "ERROR": "Bitte einen gültiges Kürzel (min. 1 Zeichen, max. 7 Zeichen) eingeben."
+          "ERROR1": "Bitte ein gültiges Kürzel eingeben (min. 1 Zeichen, max. 7 Zeichen).",
+          "ERROR2": "Eine andere Region besitzt dieses Kürzel bereits . Bitte ein anderes Kürzel wählen."
         },
         "REGION_TYP": {
           "LABEL": "Typ der Region",
