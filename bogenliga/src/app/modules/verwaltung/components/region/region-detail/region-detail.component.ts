@@ -16,10 +16,7 @@ import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {REGION_DETAIL_CONFIG} from './region-detail.config';
-import {UserProfileDO} from '@user/types/user-profile-do.class';
-import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
-import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -48,6 +45,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public deleteLoading = false;
   public saveLoading = false;
 
+  public inAddMode = false;
   public contractionUnique = true;
 
   public id;
@@ -76,9 +74,11 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
+          this.inAddMode = true;
         } else {
           this.loadRegions();
           this.loadById(params[ID_PATH_PARAM]);
+          this.inAddMode = false;
         }
       }
     });
@@ -330,11 +330,12 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
   public isContractionUnique(): boolean {
     this.contractionUnique = true;
-    this.regionen.forEach((region) => {
-      if (region.regionKuerzel === this.currentRegion.regionKuerzel) {
-        this.contractionUnique = false;
-      }
-    });
+    if (this.inAddMode) {
+      this.contractionUnique = !this.regionen.some((region) => region.regionKuerzel === this.currentRegion.regionKuerzel);
+    } else {
+      this.contractionUnique = !this.regionen.some((region) => region.regionKuerzel === this.currentRegion.regionKuerzel
+        && region.regionName !== this.currentRegion.regionName);
+    }
     return this.contractionUnique;
   }
 }
