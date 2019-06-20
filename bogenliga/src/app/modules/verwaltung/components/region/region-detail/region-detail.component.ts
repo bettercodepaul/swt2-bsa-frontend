@@ -139,6 +139,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       this.currentRegion.regionUebergeordnetAsName = null;
       this.currentRegion.regionUebergeordnet = null;
     }
+    console.log(this.currentRegion)
     this.regionProvider.update(this.currentRegion)
         .then((response: BogenligaResponse<RegionDO>) => {
           if (!isNullOrUndefined(response)
@@ -225,9 +226,9 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
     this.possibleRegionTypes = this.possibleRegionTypes2;
 
-    this.filterRegions();
+    this.filterRegions(null);
 
-    this.filterRegionTypes();
+    this.filterRegionTypes(null);
 
     this.loading = false;
   }
@@ -293,14 +294,18 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     if (this.currentRegion.regionUebergeordnetAsName == null) {
       this.currentRegion.regionUebergeordnetAsName = this.regionen[1].regionName;
     }
-    this.filterRegionTypes();
+    this.filterRegionTypes(null);
 
-    this.filterRegions();
+    this.filterRegions(null);
 
     this.loading = false;
   }
 
-  public filterRegions(): void {
+  public filterRegions(newSelectedValue): void {
+    if(newSelectedValue != null){
+      this.currentRegion.regionUebergeordnetAsName = newSelectedValue;
+    }
+
     this.uebergeordneteRegionenGefiltert = [];
     this.uebergeordneteRegionenGefiltertStrings = [];
 
@@ -314,12 +319,17 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       this.uebergeordneteRegionenGefiltert = [];
     }
 
-    this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
+    //this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
 
     this.uebergeordneteRegionenGefiltert.forEach((region) => {this.uebergeordneteRegionenGefiltertStrings.push(region.regionName); });
   }
 
-  public filterRegionTypes(): void {
+  public filterRegionTypes(event): void {
+    if(event != null){
+      this.currentRegion.regionTyp = event.target.value;
+      //this.currentRegion.regionTyp =
+    }
+    console.log("Filter Typs called.. Region = " + this.currentRegion.regionTyp);
     if (this.currentRegion.regionTyp == null) {
       this.currentRegion.regionTyp = this.possibleRegionTypes[2];
       this.possibleRegionTypes = this.possibleRegionTypes2.filter((s) => s !== this.currentRegion.regionTyp);
