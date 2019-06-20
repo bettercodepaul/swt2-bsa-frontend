@@ -17,6 +17,7 @@
     "REGIONEN": "REGIONEN",
     "VEREINE": "VEREINE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
+    "MANNSCHAFTEN": "MANNSCHAFTEN",
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
     "COLLAPSE": "Einklappen"
@@ -77,6 +78,19 @@
   "SPORTJAHRESPLAN": {
     "SPORTJAHRESPLAN": {
       "TITLE": "Sportjahresplan"
+    }
+  },
+  "MANNSCHAFTEN": {
+    "MANNSCHAFTEN": {
+      "TITLE": "Wettkampfergebnisse der Mannschaften",
+      "FORM": {
+        "VEREIN_NAME": {
+          "LABEL": "Mannschaften:"
+        },
+        "VERANSTALTUNG_NAME": {
+          "LABEL": "Veranstaltungen:"
+        }
+      }
     }
   },
   "USER": {
