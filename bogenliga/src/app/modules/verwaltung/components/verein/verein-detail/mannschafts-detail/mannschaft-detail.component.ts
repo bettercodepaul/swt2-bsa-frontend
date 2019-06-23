@@ -66,6 +66,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public ligen: Array<VeranstaltungDO> = [new VeranstaltungDO()];
   public mannschaften: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
+  private members: DsbMitgliedDO[] = [new DsbMitgliedDO()];
   private duplicateMannschaftsNrNotification: Notification;
   private deleteNotification: Notification;
   private duplicateSubscription;
@@ -345,6 +346,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     // do nothing
   }
 
+  // deletes the given member in the team
   public onDeleteMitglied(versionedDataObject: VersionedDataObject): void {
 
     this.notificationService.discardNotification();
