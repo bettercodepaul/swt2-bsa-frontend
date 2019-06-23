@@ -24,7 +24,7 @@ import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
-import {DsbMitgliedDTO} from '@user/types/model/dsb-mitglied-dto.class';
+import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
@@ -35,6 +35,7 @@ import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-pro
 import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
 import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import {RegionDO} from '@verwaltung/types/region-do.class';
+import {parseHttpResponse} from 'selenium-webdriver/http';
 
 
 const ID_PATH_PARAM = 'id';
@@ -53,15 +54,21 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   public table_config = SCHUETZE_TABLE_CONFIG;
   public rows: TableRow[];
   public ButtonType = ButtonType;
+  // team and club you want to add to
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public currentVerein: VereinDO = new VereinDO();
+
   public memberToAdd: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
-  public members: DsbMitgliedDTO[] = [new DsbMitgliedDTO()];
+  public members: DsbMitgliedDO[] = [new DsbMitgliedDO()];
+  public vereine: VereinDO[] = [new VereinDO()];
 
   // attributes for the filter of the members
-  public vorname = '';
-  public nachname = '';
-  public mitgliedsnummer = '';
-  public currentVerein: VereinDO = new VereinDO();
+  public filterVorname = '';
+  public filterNachname = '';
+  public filterMitgliedsnummer = '';
+  public filterVerein: VereinDO = new VereinDO();
+  public emptyVerein: VereinDO = new VereinDO();
+
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -84,22 +91,9 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
     this.loadMannschaftById(Number.parseInt(this.route.snapshot.url[2].path, 10));
     this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path, 10));
+    this.loadVereine();
 
     this.notificationService.discardNotification();
-
-    this.route.params.subscribe((params) => {
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        const id = params[ID_PATH_PARAM];
-        if (id === 'add') {
-          this.currentMannschaft = new DsbMannschaftDO();
-          this.loading = false;
-          this.deleteLoading = false;
-          this.saveLoading = false;
-        } else {
-          // this.loadById(params[ID_PATH_PARAM]);
-        }
-      }
-    });
   }
 
   public onSave(member: VersionedDataObject): void {
@@ -331,36 +325,43 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
   // shows a notification for the user, if the member, he wants to add, already exists in the team
   private showDuplicateMember() {
+    const duplicateMemberNotification: Notification = {
+      id:          NOTIFICATION_DUPLICATE_SCHUETZE,
+      title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.TITLE',
+      description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
 
-      const duplicateMemberNotification: Notification = {
-        id:          NOTIFICATION_DUPLICATE_SCHUETZE,
-        title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.TITLE',
-        description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.DESCRIPTION',
-        severity:    NotificationSeverity.INFO,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.PENDING
-      };
-
-      this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_SCHUETZE)
-          .subscribe((myDuplicateNotification) => {
-            if (myDuplicateNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.saveLoading = false;
-              this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
-                + '/' + this.currentMannschaft.id + '/add');
-            }
-          });
-
-      this.notificationService.showNotification(duplicateMemberNotification);
-    }
+    this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_SCHUETZE)
+        .subscribe((myDuplicateNotification) => {
+          if (myDuplicateNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+            this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
+              + '/' + this.currentMannschaft.id + '/add');
+          }
+        });
+    this.notificationService.showNotification(duplicateMemberNotification);
+  }
 
   public onSearch() {
      const filteredMembers = this.members.filter((member) => {
-        return (member.vorname.startsWith(this.vorname) || this.vorname.length === 0)
-        && (member.nachname.startsWith(this.nachname) || this.nachname.length === 0)
-        && (member.mitgliedsnummer.startsWith(this.mitgliedsnummer) || this.mitgliedsnummer.length === 0);
+        return (member.vorname.toLowerCase().startsWith(this.filterVorname.toLowerCase()) || this.filterVorname.length === 0)
+        && (member.nachname.toLowerCase().startsWith(this.filterNachname.toLowerCase()) || this.filterNachname.length === 0)
+        && (member.mitgliedsnummer.toLowerCase().startsWith(this.filterMitgliedsnummer.toLowerCase()) || this.filterMitgliedsnummer.length === 0)
+          && (member.vereinsId === this.filterVerein.id || this.filterVerein.id === undefined);
     });
      this.rows = toTableRows(filteredMembers);
+  }
+
+  public deleteFilter() {
+    this.filterVorname = '';
+    this.filterNachname = '';
+    this.filterMitgliedsnummer = '';
+    this.filterVerein = new VereinDO();
+    this.onSearch();
   }
 
   // sets the current Mannschaft, to which the User wants to add the member
@@ -374,7 +375,6 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.currentMannschaft = response.payload;
     this.loading = false;
     console.log(this.currentMannschaft);
-    this.loadTableRows();
   }
 
   private handleMannschaftFailure(response: BogenligaResponse<DsbMannschaftDO>) {
@@ -393,7 +393,17 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.rows = [];
     this.members = [];
     this.members = response.payload;
-    this.rows = toTableRows(response.payload);
+    this.members.forEach((member) => {
+      if(member.vereinsId === null) {
+        member.vereinsName = 'kein Verein';
+      } else {
+        const tmp = this.vereine.find((verein) => {
+          return verein.id === member.vereinsId;
+        });
+        member.vereinsName = tmp.name;
+      }
+    });
+    this.rows = toTableRows(this.members);
     this.loading = false;
   }
 
@@ -415,6 +425,22 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   }
 
   private handleVereinFailure(response: BogenligaResponse<VereinDTO>) {
+    this.loading = false;
+  }
+
+  private loadVereine() {
+    this.loading = true;
+    this.emptyVerein.name = "Kein Verein";
+    this.emptyVerein.id = null;
+    this.vereineProvider.findAll()
+      .then((response: BogenligaResponse<VereinDTO[]>) => {
+        this.vereine = [];
+        this.vereine = response.payload;
+        this.loadTableRows();
+      })
+      .catch((response: BogenligaResponse<VereinDTO[]>) => {
+        this.vereine = [];
+      });
     this.loading = false;
   }
 
