@@ -645,7 +645,8 @@
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
+        "DELETE": "Löschen",
+        "RESET_FILTER": "Filter zurücksetzen"
       },
       "TABLE": {
         "HEADERS": {

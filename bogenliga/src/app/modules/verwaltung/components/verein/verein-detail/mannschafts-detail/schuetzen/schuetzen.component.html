@@ -17,14 +17,9 @@
                id="memberVorname"
                name="memberVorname"
                #memberVorname="ngModel"
-               [(ngModel)]="vorname"
-               [class.is-invalid]="memberVorname.invalid && !memberVorname.untouched"
+               [(ngModel)]="filterVorname"
                (input) = "onSearch()"
                placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VORNAME.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
-        </div>
       </div>
     </div>
 
@@ -40,14 +35,9 @@
                id="memberNachname"
                name="memberNachname"
                #memberNachname="ngModel"
-               [(ngModel)]="nachname"
-               [class.is-invalid]="memberNachname.invalid && !memberNachname.untouched"
+               [(ngModel)]="filterNachname"
                (input) = "onSearch()"
                placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.NACHNAME.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
-        </div>
       </div>
     </div>
 
@@ -63,16 +53,40 @@
              id="memberNummer"
              name="memberNummer"
              #memberNummer="ngModel"
-             [(ngModel)]="mitgliedsnummer"
-             [class.is-invalid]="memberNummer.invalid && !memberNummer.untouched"
+             [(ngModel)]="filterMitgliedsnummer"
              (input) = "onSearch()"
              placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}">
-
-      <div class="invalid-feedback">
-        {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
-      </div>
     </div>
   </div>
+
+    <!-- Vereine -->
+    <div class="form-group row">
+      <label for="memberVerein"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VEREINE.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+               id="memberVerein"
+               name="memberVerein"
+               #memberVerein="ngModel"
+               [(ngModel)]="filterVerein"
+               (ngModelChange) = "onSearch()">
+          <option [ngValue]="emptyVerein">{{emptyVerein.name}}</option>
+          <option [ngValue]="verein" *ngFor="let verein of vereine"> {{verein.name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Filter zurücksetzen -->
+    <div class="form-group row">
+      <div class="col-sm-auto button-box">
+       <bla-button (onClick)="deleteFilter()"
+                   [buttonType]="ButtonType.DANGER">
+         {{'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.RESET_FILTER' | translate }}
+       </bla-button>
+      </div>
+    </div>
   </form>
 
   <h3> Gefundene Schützen: </h3>
