@@ -153,8 +153,8 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   private saveMemberInTeam(memberId: number) {
     this.mannschaftMitgliedProvider.findByMemberId(memberId)
         .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
-          if (response.payload.length <= 1) {
-            this.memberToAdd.dsbMitgliedEingesetzt = response.payload.length;
+          if (response.payload.length > 0 && response.payload[0].dsbMitgliedEingesetzt <= 1) {
+            this.memberToAdd.dsbMitgliedEingesetzt = response.payload[0].dsbMitgliedEingesetzt;
 
                   // get Lizenzen of this member
             this.lizenzProvider.findByDsbMitgliedId(memberId)
