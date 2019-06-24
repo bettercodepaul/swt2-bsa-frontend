@@ -328,7 +328,6 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
             this.deleteLoading = false;
           }
         });
-
     this.notificationService.showNotification(notification);
   }
 

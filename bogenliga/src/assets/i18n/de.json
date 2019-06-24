@@ -615,8 +615,16 @@
           "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
         },
         "DELETE_MITGLIED_FAILURE": {
-          "TITLE": "Fehler beim Löschen",
+          "TITLE": "Fehler beim Entfernen",
           "DESCRIPTION": "Schütze konnte nicht entfernt werden."
+        },
+        "DELETE_MITGLIED_DEADLINE_FAILURE": {
+          "TITLE": "Fehler beim Entfernen",
+          "DESCRIPTION": "Schütze konnte nicht entfernt werden, da die Melde-Deadline der Veranstaltung überschritten wurde."
+        },
+        "DELETE_MITGLIED_EXISTING_RESULTS_FAILURE": {
+          "TITLE": "Fehler beim Entfernen",
+          "DESCRIPTION": "Schütze konnte nicht entfernt werden, da schon Ergebnisse für den Schützen zum Wettkampf vorliegen."
         },
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
