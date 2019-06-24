@@ -32,6 +32,7 @@ import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/manns
 import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -43,6 +44,8 @@ const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
 const NOTIFICATION_DELETE_MITGLIED = 'mannschaft_mitglied_delete';
 const NOTIFICATION_DELETE_MITGLIED_SUCCESS = 'mannschaft_mitglied_delete_success';
 const NOTIFICATION_DELETE_MITGLIED_FAILURE = 'mannschaft_mitglied_delete_failure';
+const NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE = 'mannschaft_mitglied_delete_deadline_failure';
+const NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE = 'mannschaft_mitglied_delete_existing_results_failure';
 const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
 
 @Component({
@@ -63,7 +66,9 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public ligen: Array<VeranstaltungDO> = [new VeranstaltungDO()];
   public mannschaften: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
-  private members: DsbMitgliedDO[] = [new DsbMitgliedDO()];
+
+  // maps the MannschaftsMitgliedDO with the DSBMitgliedId
+  private members: Map<number, MannschaftsMitgliedDO> = new Map<number, MannschaftsMitgliedDO>();
   private duplicateMannschaftsNrNotification: Notification;
   private deleteNotification: Notification;
   private duplicateSubscription;
@@ -305,44 +310,60 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private loadTableRows() {
     this.loading = true;
 
-    this.mannschaftMitgliedProvider.findAllByTeamId(this.currentMannschaft.id)
-        .then((response: BogenligaResponse<MannschaftsmitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<MannschaftsmitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
+    this.dsbMitgliedProvider.findAllByTeamId(this.currentMannschaft.id)
+        .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private handleLoadTableRowsFailure(response: BogenligaResponse<MannschaftsmitgliedDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<MannschaftsmitgliedDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
+    this.rows = toTableRows(response.payload);
     response.payload.forEach( (member) => this.addMember(member));
     this.loading = false;
   }
 
-  private addMember(member: MannschaftsmitgliedDTO): void {
-    this.dsbMitgliedProvider.findById(member.dsbMitgliedId)
-      .then((response: BogenligaResponse<DsbMitgliedDTO>) => this.handleAddMemberSuccess(response))
-        .catch((response: BogenligaResponse<DsbMitgliedDTO>) => this.handleAddMemberFailure(response));
+  // adds the member to map members(dsbMitgliedId, Mannschaftsmitglied)
+  private addMember(member: DsbMitgliedDTO): void {
+    this.mannschaftMitgliedProvider.findByMemberAndTeamId(member.id, this.currentMannschaft.id)
+      .then((response: BogenligaResponse<MannschaftsmitgliedDTO>) => this.members.set(response.payload.dsbMitgliedId, response.payload))
+        .catch((response: BogenligaResponse<MannschaftsmitgliedDTO>) => console.log(response.payload));
   }
 
-  private handleAddMemberSuccess(response: BogenligaResponse<DsbMitgliedDTO>) {
-    this.rows.push(new TableRow( {payload: response.payload}));
-  }
-
-  private handleAddMemberFailure(response: BogenligaResponse<DsbMitgliedDTO>) {
-    // do nothing
-  }
-
-  // deletes the given member in the team
+  // deletes the selected member in the team
   public onDeleteMitglied(versionedDataObject: VersionedDataObject): void {
 
     this.notificationService.discardNotification();
 
-    const memberId = versionedDataObject.id;
-    const teamId = this.currentMannschaft.id;
-    this.rows = showDeleteLoadingIndicatorIcon(this.rows, memberId);
+    this.rows = showDeleteLoadingIndicatorIcon(this.rows, versionedDataObject.id);
+
+    // deadline: YYYY-MM-DD
+    const deadline = this.currentVeranstaltung.meldeDeadline.split('-');
+    const deadlineYear = Number(deadline[0]);
+    const deadlineMonth = Number(deadline[1]);
+    const deadlineDay = Number(deadline[2]);
+    const currentDate = new Date();
+
+    // checks if the current date is before the deadline
+    if (deadlineYear > currentDate.getFullYear() ||
+      (deadlineYear === currentDate.getFullYear() && deadlineMonth > currentDate.getMonth()) ||
+      (deadlineYear === currentDate.getFullYear() && deadlineMonth === currentDate.getMonth() && deadlineDay > currentDate.getDay())) {
+      if (this.checkExistingResults()) {
+        const teamMemberId = this.members.get(versionedDataObject.id).id;
+        this.deleteMitglied(teamMemberId, versionedDataObject.id);
+      } else {
+        this.showExistingResultsNotification(versionedDataObject.id);
+      }
+    } else {
+      this.showDeadlineReachedNoitification(versionedDataObject.id);
+    }
+  }
+
+   private deleteMitglied(memberId: number, dsbMitgliedId: number) {
 
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_MITGLIED + memberId,
@@ -359,16 +380,60 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(teamId, memberId)
+            this.mannschaftMitgliedProvider.deleteById(memberId)
                 .then((response) => this.loadTableRows())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, memberId));
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.rows = hideLoadingIndicator(this.rows, memberId);
+            this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
           }
 
         });
 
     this.notificationService.showNotification(notification);
+  }
+
+  private checkExistingResults(): boolean {
+    return false;
+  }
+
+  private showExistingResultsNotification(dsbMitgliedId: number) {
+    const existingresultsNotification: Notification = {
+      id:               NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE,
+      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_EXISTING_RESULTS_FAILURE.TITLE',
+      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_EXISTING_RESULTS_FAILURE.DESCRIPTION',
+      severity:         NotificationSeverity.ERROR,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.OK,
+      userAction:       NotificationUserAction.PENDING
+    }
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.deleteLoading = false;
+            this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
+          }
+        });
+    this.notificationService.showNotification(existingresultsNotification);
+  }
+
+  private showDeadlineReachedNoitification(dsbMitgliedId: number) {
+    const deadlineNotification: Notification = {
+      id:               NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE,
+      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_DEADLINE_FAILURE.TITLE',
+      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_DEADLINE_FAILURE.DESCRIPTION',
+      severity:         NotificationSeverity.ERROR,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.OK,
+      userAction:       NotificationUserAction.PENDING
+    }
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE)
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.deleteLoading = false;
+          this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
+        }
+      });
+    this.notificationService.showNotification(deadlineNotification);
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {

@@ -346,6 +346,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(duplicateMemberNotification);
   }
 
+  // --------------- Filter functions -------------------------- //
   public onSearch() {
      const filteredMembers = this.members.filter((member) => {
         return (member.vorname.toLowerCase().startsWith(this.filterVorname.toLowerCase()) || this.filterVorname.length === 0)
@@ -363,6 +364,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.filterVerein = new VereinDO();
     this.onSearch();
   }
+  // ----------------------------------------------------------- //
 
   // sets the current Mannschaft, to which the User wants to add the member
   private loadMannschaftById(id: number) {

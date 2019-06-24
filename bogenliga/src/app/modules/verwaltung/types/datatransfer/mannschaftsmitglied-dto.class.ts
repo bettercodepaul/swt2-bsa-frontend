@@ -25,7 +25,12 @@ export class MannschaftsmitgliedDTO implements DataTransferObject {
     copy.version = optional.version || null;
     copy.mannschaftsId = optional.mannschaftsId || null;
     copy.dsbMitgliedId = optional.dsbMitgliedId || null;
-    copy.dsbMitgliedEingesetzt = optional.dsbMitgliedEingesetzt || null;
+    if (optional.dsbMitgliedEingesetzt >= 0) {
+      copy.dsbMitgliedEingesetzt = optional.dsbMitgliedEingesetzt;
+    } else {
+      copy.dsbMitgliedEingesetzt = null;
+    }
+
 
     return copy;
   }
