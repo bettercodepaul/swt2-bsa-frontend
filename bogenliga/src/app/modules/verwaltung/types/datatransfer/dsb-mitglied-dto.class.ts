@@ -40,7 +40,12 @@ export class DsbMitgliedDTO implements DataTransferObject {
     copy.geburtsdatum = optional.geburtsdatum || '';
     copy.nationalitaet = optional.nationalitaet || '';
     copy.mitgliedsnummer = optional.mitgliedsnummer || '';
-    copy.vereinsId = optional.vereinsId || null;
+    if(optional.vereinsId >= 0) {
+      copy.vereinsId = optional.vereinsId;
+    } else {
+      copy.vereinsId = null;
+    }
+
     copy.vereinsName = optional.vereinsName || '';
     copy.userId = optional.userId || null;
     copy.version = optional.version || null;
