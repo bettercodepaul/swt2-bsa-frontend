@@ -28,6 +28,10 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     add: {
       active:   'plus',
       inactive: 'plus'
+    },
+    download: {
+      active: 'download',
+      inactive: 'download'
     }
   },
   localizationKeys: {
@@ -35,7 +39,8 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     edit:        'TABLE.ACTIONS.EDIT',
     delete:      'TABLE.ACTIONS.DELETE',
     view:        'TABLE.ACTIONS.VIEW',
-    add:         'TABLE.ACTIONS.ADD'
+    add:         'TABLE.ACTIONS.ADD',
+    download: 'TABLE.ACTIONS.DOWNLOAD'
   }
 };
 
@@ -125,7 +130,7 @@ function tableActionConfigWithDefaults(optional: {
   actionTypes?: TableActionType[],
   width?: number,
   iconUrls?: any,
-  localizationKeys?: { columnKey: string, edit: string, delete: string, view: string, add: string }
+  localizationKeys?: { columnKey: string, edit: string, delete: string, view: string, add: string, download: string }
 } = {}) {
   // clone defaults
   const actionsWithDefaults = Object.assign({}, DEFAULT_TABLE_ACTION_CONFIG);

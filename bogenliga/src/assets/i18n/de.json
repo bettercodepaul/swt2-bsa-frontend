@@ -1134,7 +1134,8 @@
       "VIEW": "Ansehen",
       "EDIT": "Editieren",
       "DELETE": "Löschen",
-      "ADD": "Hinzufügen"
+      "ADD": "Hinzufügen",
+      "DOWNLOAD": "Lizenz herunterladen"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
