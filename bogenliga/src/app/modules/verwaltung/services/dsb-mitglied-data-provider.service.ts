@@ -92,7 +92,7 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
 
   public findAllByTeamId(id: string | number): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("team/" + id).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
