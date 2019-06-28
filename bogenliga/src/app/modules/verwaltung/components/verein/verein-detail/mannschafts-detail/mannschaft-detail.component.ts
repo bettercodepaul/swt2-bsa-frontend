@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -7,7 +7,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../shared/components';
-import {BogenligaResponse} from '../../../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '../../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -32,6 +32,8 @@ import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/manns
 import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {environment} from '@environment';
+import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
 
 
 const ID_PATH_PARAM = 'id';
@@ -71,6 +73,13 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   public deleteLoading = false;
   public saveLoading = false;
   private acceptedWarning = true;
+  @Input()
+  dsbMitgliedID: number;
+  @Input()
+  lizenzID: number;
+
+  @ViewChild('downloadLink')
+  private aElementRef: ElementRef;
 
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
               private vereinProvider: VereinDataProviderService,
@@ -78,6 +87,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
               private mannschaftsDataProvider: DsbMannschaftDataProviderService,
               private dsbMitgliedProvider: DsbMitgliedDataProviderService,
               private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
+              private downloadService: DownloadButtonResourceProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -500,6 +510,14 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
           this.saveLoading = false;
         });
   }
-
+  public onDownload(versionedDataObject: VersionedDataObject): void {
+    const downloadUrl = new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path('pdf/schuetzenlizenz')
+      .path('?dsbMitgliedID=' + versionedDataObject.id)
+      .build();
+    this.downloadService.download(downloadUrl, "lizenz.pdf", this.aElementRef);
+  }
 
 }
