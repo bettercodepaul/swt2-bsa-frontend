@@ -59,14 +59,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
 
-  public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
-  public currentWettkampftag_2: WettkampfDO = new WettkampfDO();
-  public currentWettkampftag_3: WettkampfDO = new WettkampfDO();
-  public currentWettkampftag_4: WettkampfDO = new WettkampfDO();
-  public allWettkampf: Array<WettkampfDO> = [new WettkampfDO()];
-
-
-
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -76,7 +68,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampftypDataProvider: WettkampftypDataProviderService,
-    private wettkampfDataProvider: WettkampfDataProviderService,
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private ligaProvider: LigaDataProviderService,
@@ -98,15 +89,11 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
           this.currentWettkampftyp = new WettkampftypDO();
           this.currentLiga = new LigaDO();
 
-          this.currentWettkampftag_1 = new WettkampfDO();
-          this.currentWettkampftag_2 = new WettkampfDO();
-          this.currentWettkampftag_3 = new WettkampfDO();
-          this.currentWettkampftag_4 = new WettkampfDO();
 
           this.loadUsers();
           this.loadWettkampftyp();
           this.loadLiga();
-          this.loadWettkampf();
+
 
           this.loading = false;
           this.deleteLoading = false;
@@ -121,6 +108,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public onWettkampftag(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
   }
+
   private navigateToWettkampftage(ignore: any) {
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
   }
@@ -225,21 +213,11 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
         });
 
 
-
-
-
-
   }
 
   /**
    * Deletes all Wettkampftag entries of the provided VeranstaltungID
    */
-  private deleteWettkampftage(id: number) {
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_1.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_2.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_3.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_4.id);
-  }
 
 
   public onDelete(ignore: any): void {
@@ -248,7 +226,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
     const id = this.currentVeranstaltung.id;
 
-    this.deleteWettkampftage(id);
 
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
@@ -305,12 +282,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   }
 
-  private loadWettkampf() {
-    this.wettkampfDataProvider.findAll()
-        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response));
-
-  }
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
@@ -318,7 +289,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loadWettkampftyp();
     this.loadUsers();
     this.loadLiga();
-    this.loadWettkampf();
 
   }
 
@@ -417,33 +387,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   private handleUserResponseArrayFailure(response: BogenligaResponse<UserProfileDTO[]>): void {
     this.allUsers = [];
-    this.loading = false;
-  }
-
-  private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
-    this.allWettkampf = [];
-    this.allWettkampf = response.payload;
-    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId === this.currentVeranstaltung.id);
-
-
-    if (this.id === 'add') {
-      this.currentWettkampftag_1 = null;
-      this.currentWettkampftag_2 = null;
-      this.currentWettkampftag_3 = null;
-      this.currentWettkampftag_4 = null;
-    } else {
-
-      this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
-      this.currentWettkampftag_2 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2)[0];
-      this.currentWettkampftag_3 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3)[0];
-      this.currentWettkampftag_4 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 4)[0];
-
-    }
-    this.loading = false;
-  }
-
-  private handleWettkampfResponseArrayFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
-    this.allWettkampf = [];
     this.loading = false;
   }
 }
