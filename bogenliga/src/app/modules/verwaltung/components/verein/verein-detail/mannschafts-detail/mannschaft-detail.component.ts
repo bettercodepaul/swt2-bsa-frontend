@@ -80,13 +80,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   public deleteLoading = false;
   public saveLoading = false;
   private acceptedWarning = true;
-  @Input()
-  dsbMitgliedID: number;
-  @Input()
-  lizenzID: number;
-
-  @ViewChild('downloadLink')
-  private aElementRef: ElementRef;
 
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
               private vereinProvider: VereinDataProviderService,
