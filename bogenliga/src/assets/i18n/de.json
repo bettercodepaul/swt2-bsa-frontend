@@ -85,7 +85,7 @@
       "TITLE": "Wettkampfergebnisse der Mannschaften",
       "FORM": {
         "VEREIN_NAME": {
-          "LABEL": "Mannschaften:"
+          "LABEL": "Vereine:"
         },
         "VERANSTALTUNG_NAME": {
           "LABEL": "Veranstaltungen:"
