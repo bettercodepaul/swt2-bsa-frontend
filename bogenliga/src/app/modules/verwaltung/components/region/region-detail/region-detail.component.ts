@@ -302,10 +302,11 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   }
 
   public filterRegions(newSelectedValue): void {
-    if(newSelectedValue != null){
+    if(newSelectedValue == 'fromTypes'){
+      this.currentRegion.regionUebergeordnetAsName = null;
+    }else if(newSelectedValue != null){
       this.currentRegion.regionUebergeordnetAsName = newSelectedValue;
     }
-
     this.uebergeordneteRegionenGefiltert = [];
     this.uebergeordneteRegionenGefiltertStrings = [];
 
@@ -329,12 +330,15 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       this.currentRegion.regionTyp = event.target.value;
       //this.currentRegion.regionTyp =
     }
-    console.log("Filter Typs called.. Region = " + this.currentRegion.regionTyp);
     if (this.currentRegion.regionTyp == null) {
       this.currentRegion.regionTyp = this.possibleRegionTypes[2];
       this.possibleRegionTypes = this.possibleRegionTypes2.filter((s) => s !== this.currentRegion.regionTyp);
     } else {
       this.possibleRegionTypes = this.possibleRegionTypes2.filter((s) => s !== this.currentRegion.regionTyp);
+    }
+
+    if (event != null) {
+      this.filterRegions('fromTypes')
     }
   }
 
