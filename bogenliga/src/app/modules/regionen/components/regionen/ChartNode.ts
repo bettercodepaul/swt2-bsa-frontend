@@ -1,6 +1,6 @@
 
 
-export class ChartNode{
+export class ChartNode {
 
   private color: string;
   private name: string;
@@ -22,23 +22,29 @@ export class ChartNode{
   }
 
   toJsonString() {
-
     let str =
-      '{' + 'name:\'' + this.name + '\',' +
-      'color:\'' + this.color + '\',';
+      '{' + '"name":"' + this.name + '",' +
+      '"color":"' + this.color + '"';
 
     if (this.children.length > 0) {
-      str += 'children:[';
+      str += ',';
+      str += '"children":[';
 
 
-      this.children.forEach((c) => str += c.toJsonString());
-
+      for (let i = 0; i < this.children.length; i++) {
+        str += this.children[i].toJsonString();
+        if (this.children.length > 0 && i < this.children.length - 1) {
+          str += ',';
+        }
+      }
       str += ']';
+    } else {
+      str += ',"size":1';
     }
     str += '}';
+
     return str;
   }
-
 
 
 }
