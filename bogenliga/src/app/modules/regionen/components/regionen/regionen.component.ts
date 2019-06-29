@@ -69,41 +69,6 @@ export class RegionenComponent implements OnInit {
   }
 
   loadSunburst() {
-    // let data = {
-    //   name:     'main',
-    //   color:    'magenta',
-    //   children: [
-    //     {
-    //       name:  'a',
-    //       color: 'yellow',
-    //       size:  1
-    //     }, {
-    //       name:     'b',
-    //       color:    'red',
-    //       children: [
-    //         {
-    //           name:  'ba',
-    //           color: 'orange',
-    //           size:  1
-    //         }, {
-    //           name:     'bb',
-    //           color:    'blue',
-    //           children: [
-    //             {
-    //               name:  'bba',
-    //               color: 'green',
-    //               size:  1
-    //             }, {
-    //               name:  'bbb',
-    //               color: 'pink',
-    //               size:  1
-    //             }
-    //           ]
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // };
 
     const data = this.convertDataToTree(this.regionen.filter((f) =>
       f.regionTyp === 'BUNDESVERBAND')[0], this.regionen).toJsonString();
@@ -111,7 +76,7 @@ export class RegionenComponent implements OnInit {
     console.log(data);
 
     Sunburst()
-      .data(data)
+      .data(JSON.parse(data))
       .size('size')
       .color('color')
       (this.myDiv.nativeElement);
