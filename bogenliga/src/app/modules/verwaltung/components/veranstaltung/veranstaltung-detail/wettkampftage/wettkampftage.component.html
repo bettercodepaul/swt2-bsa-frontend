@@ -96,6 +96,7 @@
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORT.ERROR' | translate }}
             </div>
+
           </div>
         </div>
 
@@ -116,6 +117,22 @@
 
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.BEGINN.ERROR' | translate }}
+            </div>
+            <div class="col-sm-9 button-box">
+              <bla-button [id]="'wettkampftagSaveButton'"
+                          [disabled]="!dsbMitgliedForm.valid"
+                          [loading]="saveLoading"
+                          (onClick)="onSave($event)">
+                {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+              </bla-button>
+
+              <bla-button *ngIf="entityExists()"
+                          [id]="'wettkampftagUpdateButton'"
+                          [disabled]="!dsbMitgliedForm.valid"
+                          [loading]="saveLoading"
+                          (onClick)="onUpdate($event)">
+                {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
+              </bla-button>
             </div>
           </div>
         </div>
@@ -222,10 +239,25 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.BEGINN.ERROR' | translate }}
             </div>
           </div>
+          <div class="col-sm-9 button-box">
+            <bla-button [id]="'wettkampftagSaveButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onSave($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+            </bla-button>
 
-
+            <bla-button *ngIf="entityExists()"
+                        [id]="'wettkampftagUpdateButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onUpdate($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
+            </bla-button>
+          </div>
         </div>
       </div>
+
       <div class="layout-element-2" id="layout_2">
         <bla-double-selectionlist [leftItems]="allUsers"
                                   [(rightItems)]="allUsersTest"
@@ -322,6 +354,22 @@
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.BEGINN.ERROR' | translate }}
             </div>
+          </div>
+          <div class="col-sm-9 button-box">
+            <bla-button [id]="'wettkampftagSaveButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onSave($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+            </bla-button>
+
+            <bla-button *ngIf="entityExists()"
+                        [id]="'wettkampftagUpdateButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onUpdate($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
+            </bla-button>
           </div>
         </div>
       </div>
@@ -430,6 +478,22 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.BEGINN..ERROR' | translate }}
             </div>
           </div>
+          <div class="col-sm-9 button-box">
+            <bla-button [id]="'wettkampftagSaveButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onSave($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+            </bla-button>
+
+            <bla-button *ngIf="entityExists()"
+                        [id]="'wettkampftagUpdateButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onUpdate($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
+            </bla-button>
+          </div>
         </div>
       </div>
       <div class="layout-element-2" id="layout_4">
@@ -461,18 +525,18 @@
                     (onClick)="onVeranstaltungDetail($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
         </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'ligaUpdateButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
-        </bla-button>
-      </div>
-    </div>
+        <!--      <bla-button *ngIf="entityExists()"
+                        [id]="'ligaUpdateButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onUpdate($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
+            </bla-button> -->
+          </div>
+        </div>
 
 
 
-  </form>
+      </form>
 
-</bla-common-dialog>
+    </bla-common-dialog>
