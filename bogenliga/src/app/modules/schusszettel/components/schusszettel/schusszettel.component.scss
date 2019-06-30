@@ -79,6 +79,7 @@ label {
 }
 
 
+
 @media print {
   input {
     border: 2px solid #dee2e6;
@@ -119,9 +120,10 @@ label {
       margin-top: 1cm;
       margin-bottom: 0.5cm;
     }
-    .s1 {
-      margin-top: 0.5cm;
-    }
+  }
+  .s1 {
+    margin-top: 0.5cm;
+    margin-bottom: -2cm;
   }
 
   hr {
