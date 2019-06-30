@@ -164,10 +164,16 @@
 
   </div> <!-- ende match1 -->
 
-  <p class="print signature">
-    <span>Ort, Datum</span>
-    <span>Unterschrift</span>
-  </p>
+  <div class="print signature s1">
+    <div class="m1">
+      <h1 >{{match2.mannschaftName}}</h1>
+      <p>Unterschrift</p>
+    </div>
+    <div class="m2">
+      <h1>{{match1.mannschaftName}}</h1>
+      <p>Unterschrift</p>
+    </div>
+  </div>
   <!-- Print Trennlinie -->
   <hr class="print">
 
@@ -329,10 +335,6 @@
     </div>
   </div>
 
-  <p class="print signature">
-    <span>Ort, Datum</span>
-    <span>Unterschrift</span>
-  </p>
 
   <button class="btn btn-primary saveButton"
           (click)="save()">Speichern
@@ -342,4 +344,14 @@
           onclick="window.print();return false;">Drucken
   </button>
 
+  <div class="print signature">
+    <div class="m1">
+      <h1 >{{match2.mannschaftName}}</h1>
+      <p>Unterschrift</p>
+    </div>
+    <div class="m2">
+      <h1>{{match1.mannschaftName}}</h1>
+      <p>Unterschrift</p>
+    </div>
+  </div>
 </div>
