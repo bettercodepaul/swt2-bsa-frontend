@@ -58,7 +58,7 @@ label {
 }
 
 .match2 {
-  margin-top: 60px;
+  margin-top: -150px;
   margin-bottom: 20px;
 }
 
@@ -100,22 +100,35 @@ label {
   .match2 {
     margin-top: 1cm;
   }
+  .m1 {
+    float: left;
+  }
+  .m2 {
+    float: left;
+    margin-left: 20%;
+  }
 
-  .signature span {
+  .signature {
     visibility: visible;
-    float: right;
-    margin-top: 0.5cm;
+    margin-top: -2cm;
     margin-bottom: 1cm;
-    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     display: inline-block;
-    width: 30%;
+    width: 90%;
+    p{
+      margin-top: 1cm;
+      margin-bottom: 0.5cm;
+    }
+    .s1 {
+      margin-top: 0.5cm;
+    }
   }
 
   hr {
     visibility: visible;
     width: 100%;
     height: 5px;
-    border-style: dashed;
+    border-style: dotted;
     size: 1px;
     background: #dee2e6;
     margin-top: 2.5cm;
