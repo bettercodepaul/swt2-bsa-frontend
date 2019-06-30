@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponent} from '@shared/components';
 import {ButtonType} from '@shared/components';
@@ -22,6 +22,7 @@ import {WETTKMAPFTAGE_CONFIG} from './wettkampftage.config';
 import {WettkampfDO} from '../../../../../verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '../../../../../verwaltung/types/datatransfer/wettkampf-dto.class';
 import {WettkampfDataProviderService} from '../../../../services/wettkampf-data-provider.service';
+import {SetzlisteDownloadComponent} from '../../../../../wettkampf/components/setzliste-download/setzliste-download.component';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -30,10 +31,15 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_f
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 
+
 @Component({
   selector:    'bla-wettkampftage',
   templateUrl: './wettkampftage.component.html',
   styleUrls:   ['./wettkampftage.component.scss']
+})
+@NgModule({
+  declarations : [SetzlisteDownloadComponent],
+  exports : [SetzlisteDownloadComponent]
 })
 export class WettkampftageComponent extends CommonComponent implements OnInit {
   public config = WETTKMAPFTAGE_CONFIG;
