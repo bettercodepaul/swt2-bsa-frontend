@@ -49,7 +49,7 @@ import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-de
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
     SharedModule.forChild(),
