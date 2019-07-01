@@ -19,7 +19,6 @@ import {
   VeranstaltungOverviewComponent,
   SportjahrOverviewComponent,
   WettkampftageComponent,
-  SetzlisteDownloadComponent
 } from './components';
 import {
   BenutzerDetailGuard,
