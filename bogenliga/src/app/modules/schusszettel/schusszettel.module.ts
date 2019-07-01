@@ -11,6 +11,7 @@ import {
   SchuetzenTabIndexDirective
 } from './components/schusszettel/tabindex.directive';
 import {AutoswitchDirective} from './components/schusszettel/autoswitch.directive';
+import {TabletEingabeComponent} from './components/tableteingabe/tableteingabe.component';
 
 
 @NgModule({
@@ -20,7 +21,14 @@ import {AutoswitchDirective} from './components/schusszettel/autoswitch.directiv
     SharedModule,
     FormsModule
   ],
-  declarations: [SchusszettelComponent, NumberOnlyDirective, RingzahlTabIndexDirective, SchuetzenTabIndexDirective, AutoswitchDirective]
+  declarations: [
+    SchusszettelComponent,
+    NumberOnlyDirective,
+    RingzahlTabIndexDirective,
+    SchuetzenTabIndexDirective,
+    AutoswitchDirective,
+    TabletEingabeComponent
+  ]
 })
 export class SchusszettelModule {
 }
