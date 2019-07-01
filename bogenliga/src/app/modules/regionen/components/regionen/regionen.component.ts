@@ -145,12 +145,12 @@ export class RegionenComponent implements OnInit {
           .then((response: BogenligaResponse<RegionDO>) => {
               this.currentRegionDO = response.payload;
               this.reloadVereineUndLigen();
-              const details: HTMLInputElement = <HTMLInputElement>document.querySelector('#detailsWrapper');
+              const details: HTMLInputElement = document.querySelector('#detailsWrapper') as HTMLInputElement;
               details.style.display = 'block';
             }
           );
     } else {
-      const details: HTMLInputElement = <HTMLInputElement>document.querySelector('#detailsWrapper');
+      const details: HTMLInputElement = document.querySelector('#detailsWrapper') as HTMLInputElement;
       details.style.display = 'none';
     }
   }
@@ -196,15 +196,14 @@ export class RegionenComponent implements OnInit {
     return;
   }
 
-  public onSelectVerein($event: VereinDO): void {
-    this.selectedVereinDO = $event;
-    console.log(this.selectedVereinDO);
+  public onSelectVerein(event: VereinDO): void {
+    this.selectedVereinDO = event[0];
     this.router.navigateByUrl('/verwaltung/vereine/' + this.selectedVereinDO.id);
   }
 
-  public onSelectLiga($event: LigaDO): void {
-    this.selectedLigaDO = $event;
-    console.log(this.selectedLigaDO.id);
+  public onSelectLiga(event: LigaDO): void {
+    this.selectedLigaDO = event[0];
+    console.log(this.selectedLigaDO);
     this.router.navigateByUrl('/verwaltung/liga/' + this.selectedLigaDO.id);
   }
 
