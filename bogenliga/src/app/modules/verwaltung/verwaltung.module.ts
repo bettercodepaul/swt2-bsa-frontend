@@ -22,7 +22,6 @@ import {
   VeranstaltungDetailComponent,
   SportjahrOverviewComponent,
   WettkampftageComponent,
-
 } from './components';
 import {
   BenutzerDetailGuard,
@@ -47,6 +46,7 @@ import {
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
+import {SetzlisteDownloadComponent} from '../wettkampf/components/setzliste-download/setzliste-download.component';
 
 @NgModule({
   imports: [
@@ -75,7 +75,7 @@ import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail
     VeranstaltungDetailComponent,
     SportjahrOverviewComponent,
     WettkampftageComponent,
-
+    SetzlisteDownloadComponent
   ]
 })
 export class VerwaltungModule {

@@ -22,7 +22,6 @@ import {WETTKMAPFTAGE_CONFIG} from './wettkampftage.config';
 import {WettkampfDO} from '../../../../../verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '../../../../../verwaltung/types/datatransfer/wettkampf-dto.class';
 import {WettkampfDataProviderService} from '../../../../services/wettkampf-data-provider.service';
-import {SetzlisteDownloadComponent} from '../../../../../wettkampf/components/setzliste-download/setzliste-download.component';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -37,10 +36,7 @@ const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
   templateUrl: './wettkampftage.component.html',
   styleUrls:   ['./wettkampftage.component.scss']
 })
-@NgModule({
-  declarations : [SetzlisteDownloadComponent],
-  exports : [SetzlisteDownloadComponent]
-})
+
 export class WettkampftageComponent extends CommonComponent implements OnInit {
   public config = WETTKMAPFTAGE_CONFIG;
   public ButtonType = ButtonType;
