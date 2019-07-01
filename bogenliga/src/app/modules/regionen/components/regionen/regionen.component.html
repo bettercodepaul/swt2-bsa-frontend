@@ -1,9 +1,122 @@
 <bla-navigation-dialog [config]="config">
 
+  <bla-col-layout>
 
-  <h2>Hallo</h2>
-  <div #chart></div>
+    <div #chart></div>
 
+    <div id="detailsWrapper" style="display: none;">
+      <div id="details">
+
+        <label>
+          <h2>{{ 'MANAGEMENT.REGION_DETAIL.TITLE' | translate }}</h2>
+        </label>
+
+        <bla-row-layout>
+          <!-- Region Name -->
+          <div class="form-group row">
+            <label for="regionName"
+                   class="col-sm-3 col-form-label">
+              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.LABEL' | translate }}</span>
+              <span>:</span>
+            </label>
+            <div class="col-sm-9">
+              <input type="name"
+                     class="form-control"
+                     [disabled]=true
+                     id="regionName"
+                     name="regionName"
+                     #regionName="ngModel"
+                     [(ngModel)]="currentRegionDO.regionName">
+            </div>
+          </div>
+        </bla-row-layout>
+
+
+        <bla-row-layout>
+          <!-- KÜRZEL -->
+          <div class="form-group row">
+            <label for="regionKuerzel"
+                   class="col-sm-3 col-form-label">
+              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.LABEL' | translate }}</span>
+              <span>:</span>
+            </label>
+            <div class="col-sm-9">
+              <input type="name"
+                     class="form-control"
+                     [disabled]=true
+                     id="regionKuerzel"
+                     name="regionKuerzel"
+                     #regionName="ngModel"
+                     [(ngModel)]="currentRegionDO.regionKuerzel">
+            </div>
+          </div>
+        </bla-row-layout>
+
+        <bla-row-layout>
+          <!-- TYP -->
+          <div class="form-group row">
+            <label for="regionTyp"
+                   class="col-sm-3 col-form-label">
+              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.LABEL' | translate }}</span>
+              <span>:</span>
+            </label>
+            <div class="col-sm-9">
+              <input type="name"
+                     class="form-control"
+                     [disabled]=true
+                     id="regionTyp"
+                     name="regionTyp"
+                     #regionName="ngModel"
+                     [(ngModel)]="currentRegionDO.regionTyp">
+            </div>
+          </div>
+        </bla-row-layout>
+
+        <bla-row-layout>
+          <!-- UEBERGEORDNETE REGION -->
+          <div class="form-group row">
+            <label for="regionUebergeordnet"
+                   class="col-sm-3 col-form-label">
+              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.LABEL' | translate }}</span>
+              <span>:</span>
+            </label>
+            <div class="col-sm-9">
+              <input type="name"
+                     class="form-control"
+                     [disabled]=true
+                     id="regionUebergeordnet"
+                     name="regionUebergeordnet"
+                     #regionName="ngModel"
+                     [(ngModel)]="currentRegionDO.regionUebergeordnetAsName">
+            </div>
+          </div>
+        </bla-row-layout>
+
+        <bla-col-layout>
+          <div id="vereine">
+            <span>Vereine</span>
+            <bla-selectionlist [items]="getVereine()"
+                               [optionFieldSelector]="'name'"
+                               (onSelect)="onSelectVerein($event)"
+                               [multipleSelections]="false"
+                               style="width: 50%; height: 10em;">
+            </bla-selectionlist>
+          </div>
+
+          <div id="ligen">
+            <span>Ligen</span>
+            <bla-selectionlist [items]="getLigen()"
+                               [optionFieldSelector]="'name'"
+                               (onSelect)="onSelectLiga($event)"
+                               [multipleSelections]="false"
+                               style="width: 50%; height: 10em;">
+            </bla-selectionlist>
+
+          </div>
+        </bla-col-layout>
+      </div>
+    </div>
+  </bla-col-layout>
 
 
 </bla-navigation-dialog>

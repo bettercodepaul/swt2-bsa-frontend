@@ -4,12 +4,14 @@ export class ChartNode {
 
   private color: string;
   private name: string;
+  protected id: number;
   private children: ChartNode[];
 
 
-  constructor(name: string, color: string, untergeordneteNodes?: ChartNode[]) {
+  constructor(name: string, color: string, id: number, untergeordneteNodes?: ChartNode[]) {
     this.name = name;
     this.color = color;
+    this.id = id;
     if (untergeordneteNodes == null) {
       this.children = [];
     } else {
@@ -23,7 +25,8 @@ export class ChartNode {
 
   toJsonString() {
     let str =
-      '{' + '"name":"' + this.name + '",' +
+      '{' + '"id":"' + this.id + '",' +
+      '"name":"' + this.name + '",' +
       '"color":"' + this.color + '"';
 
     if (this.children.length > 0) {
