@@ -1,32 +1,61 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {REGIONEN_CONFIG} from './regionen.config';
 import Sunburst from 'sunburst-chart';
-import {RegionDataProviderService} from '../../../verwaltung/services/region-data-provider.service';
 import {RegionDO} from '@verwaltung/types/region-do.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {ChartNode} from './ChartNode';
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
+import {RegionDataProviderService} from '../../../verwaltung/services/region-data-provider.service';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
+import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
+import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
+import {RoleVersionedDataObject} from '@verwaltung/services/models/roles-versioned-data-object.class';
+import {Router} from '@angular/router';
+
+
+const chartMaxSizeMultiplikator = 0.8;
+const chartDetailsSizeMultiplikator = 0.5;
 
 @Component({
   selector:    'bla-regionen',
-  templateUrl: './regionen.component.html'
+  templateUrl: './regionen.component.html',
+  styleUrls: ['./regionen.component.scss']
 })
+
 export class RegionenComponent implements OnInit {
 
   public config = REGIONEN_CONFIG;
   private regionen: RegionDO[];
 
+  private currentRegionDO: RegionDO;
+
+  private selectedVereinDO: VereinDO;
+  private selectedLigaDO: LigaDO;
+
+  private ligen: LigaDTO[];
+  private vereine: VereinDTO[];
+
+
   @ViewChild('chart') myDiv: ElementRef;
 
-  constructor(private regionDataProviderService: RegionDataProviderService) {
+  constructor(private regionDataProviderService: RegionDataProviderService,
+              private vereinDataProviderService: VereinDataProviderService,
+              private ligaDataProviderService: LigaDataProviderService,
+              private router: Router) {
+  }
 
+  ngOnInit() {
+    this.getDataAndShowSunburst();
+    this.currentRegionDO = new RegionDO();
   }
 
   convertDataToTree(currentRegion: RegionDO, allRegions: RegionDO[]): ChartNode {
 
-    const root = new ChartNode(currentRegion.regionName, this.createColor(currentRegion));
+    const root = new ChartNode(currentRegion.regionName, this.createColor(currentRegion), currentRegion.id);
 
     // console.log(currentRegion.regionName);
-
     if (currentRegion.regionTyp === 'KREIS') {
       return root;
     }
@@ -54,33 +83,133 @@ export class RegionenComponent implements OnInit {
     return color;
   }
 
-  getData() {
+  getDataAndShowSunburst() {
     this.regionDataProviderService.findAll()
         .then((response: BogenligaResponse<RegionDO[]>) => {
             this.regionen = response.payload;
-            console.log(this.regionen);
             this.loadSunburst();
           }
         );
   }
 
-  ngOnInit() {
-    this.getData();
-  }
 
   loadSunburst() {
 
     const data = this.convertDataToTree(this.regionen.filter((f) =>
       f.regionTyp === 'BUNDESVERBAND')[0], this.regionen).toJsonString();
 
-    console.log(data);
+    const myChart = Sunburst();
 
-    Sunburst()
+    myChart
       .data(JSON.parse(data))
+      .width(window.innerWidth * 0.8)
+      .height(window.innerHeight * 0.8)
       .size('size')
       .color('color')
+      .onNodeClick((node) => {
+        // what should happen after clicking the node
+        myChart.focusOnNode(node);
+
+        if (node == null) {
+          myChart.width(window.innerWidth * chartMaxSizeMultiplikator);
+          myChart.height(window.innerHeight * chartMaxSizeMultiplikator);
+        } else {
+          myChart.width(window.innerWidth * chartDetailsSizeMultiplikator);
+          myChart.height(window.innerHeight * chartDetailsSizeMultiplikator);
+        }
+        this.showDetails(node);
+
+        })
       (this.myDiv.nativeElement);
 
 
+    // for automatic resizing
+    window.addEventListener('resize', (func) => {
+      const node = myChart.focusOnNode();
+      if (node != null) {
+        myChart
+          .width(window.innerWidth * chartDetailsSizeMultiplikator)
+          .height(window.innerHeight * chartDetailsSizeMultiplikator);
+      } else {
+        myChart
+          .width(window.innerWidth * chartMaxSizeMultiplikator)
+          .height(window.innerHeight * chartMaxSizeMultiplikator);
+      }
+    });
   }
+
+  showDetails(node) {
+    if (node != null) {
+
+      this.regionDataProviderService.findById(node.id)
+          .then((response: BogenligaResponse<RegionDO>) => {
+              this.currentRegionDO = response.payload;
+              this.reloadVereineUndLigen();
+              const details: HTMLInputElement = <HTMLInputElement>document.querySelector('#detailsWrapper');
+              details.style.display = 'block';
+            }
+          );
+    } else {
+      const details: HTMLInputElement = <HTMLInputElement>document.querySelector('#detailsWrapper');
+      details.style.display = 'none';
+    }
+  }
+
+  reloadVereineUndLigen() {
+    this.vereinDataProviderService.findAll()
+        .then((response: BogenligaResponse<VereinDO[]>) => this.setVereinDataObjects(response))
+        .catch((response: BogenligaResponse<VereinDO[]>) => this.getEmptyList());
+
+    this.ligaDataProviderService.findAll()
+        .then((response: BogenligaResponse<LigaDO[]>) => this.setLigaDataObjects(response))
+        .catch((response: BogenligaResponse<LigaDO[]>) => this.getEmptyList());
+  }
+
+  public getVereine() {
+    return this.vereine;
+  }
+
+  public getLigen() {
+    return this.ligen;
+  }
+
+  public setVereinDataObjects(response: BogenligaResponse<VereinDO[]>): void {
+
+    this.vereine = [];
+    response.payload.forEach((responseItem) => {
+      if (responseItem.regionId === this.currentRegionDO.id) {
+        this.vereine.push(responseItem);
+      }
+    });
+    return;
+  }
+
+  public setLigaDataObjects(response: BogenligaResponse<LigaDO[]>): void {
+
+    this.ligen = [];
+    response.payload.forEach((responseItem) =>  {
+       if (responseItem.regionId === this.currentRegionDO.id) {
+        this.ligen.push(responseItem);
+      }
+    });
+
+    return;
+  }
+
+  public onSelectVerein($event: VereinDO): void {
+    this.selectedVereinDO = $event;
+    console.log(this.selectedVereinDO);
+    this.router.navigateByUrl('/verwaltung/vereine/' + this.selectedVereinDO.id);
+  }
+
+  public onSelectLiga($event: LigaDO): void {
+    this.selectedLigaDO = $event;
+    console.log(this.selectedLigaDO.id);
+    this.router.navigateByUrl('/verwaltung/liga/' + this.selectedLigaDO.id);
+  }
+
+  public getEmptyList(): RoleVersionedDataObject[] {
+    return [];
+  }
+
 }
