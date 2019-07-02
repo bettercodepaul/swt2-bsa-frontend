@@ -48,7 +48,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: BenutzerRolleDTO): Promise<BogenligaResponse<BenutzerDO>> {
+  public update(payload: Array<BenutzerRolleDTO>): Promise<BogenligaResponse<BenutzerDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
