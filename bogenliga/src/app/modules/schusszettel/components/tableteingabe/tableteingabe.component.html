@@ -1,41 +1,55 @@
 <div class="tablet-eingabe">
   <div class="row">
     <div class="col-sm-12">
-      <h1 class="wettkampftag-headline my-3">Scheibe {{scheibenNummer}}</h1>
+      <h1 class="w-100 text-center my-3">Scheibe {{scheibenNummer}}</h1>
     </div>
 
     <div class="col-sm-12 tablet-eingabe-info-section">
-      <h3 class="tablet-eingabe-info">Wettkampftag {{match1.wettkampfTag}}</h3>
+      <h3 class="text-center d-inline-block">Wettkampftag {{match1.wettkampfTag}}</h3>
       <span class="mx-3 separator">•</span>
-      <h3 class="tablet-eingabe-info">Match {{match1.nr}}</h3>
+      <h3 class="text-center d-inline-block">Match {{match1.nr}}</h3>
       <span class="mx-3 separator">•</span>
-      <h3 class="tablet-eingabe-info">{{match1.mannschaftName}} vs. {{match2.mannschaftName}}</h3>
+      <h3 class="text-center d-inline-block">{{match1.mannschaftName}} vs. {{match2.mannschaftName}}</h3>
     </div>
 
-    <template *ngIf="!hasSchuetzenNummern()">
+    <div class="col-sm-12">
+      <hr/>
+    </div>
+
+    <ng-template [ngIf]="!hasSchuetzenNummern()">
       <div class="col-sm-12">
-        <h2>Bitte geben Sie die Schützen-Nummern für dieses Match ein:</h2>
+        <h2 class="w-100 text-center d-inline-block">Bitte geben Sie die Schützen-Nummern für dieses Match ein:</h2>
       </div>
-      <div class="offset-4 col-sm-4">
+      <div class="offset-lg-3 col-lg-6 offset-xl-4 col-xl-4  justify-content-around flex-container pb-5 pt-3">
         <ng-template ngFor
                      let-schuetze
                      [ngForOf]="schuetzen"
                      let-i="index">
-          <label [for]="'schuetze' + i+1 + 'Nummer'">{{i+1}}. Schütze</label>
-          <input blaMyNumberOnly
-                 type="number"
-                 [tabindex]="i+1"
-                 [id]="'schuetze' + i+1 + 'Nummer'"
-                 [(ngModel)]="schuetzen[i].schuetzeNr"/>
+          <div class="d-inline-flex align-items-center flex-column">
+            <label [for]="'schuetze' + i+1 + 'Nummer'"
+                   class="h4">{{i + 1}}. Schütze</label>
+            <input blaMyNumberOnly
+                   type="number"
+                   [tabindex]="i+1"
+                   [id]="'schuetze' + i+1 + 'Nummer'"
+                   [(ngModel)]="schuetzen[i].schuetzeNr"/>
+          </div>
         </ng-template>
       </div>
-    </template>
 
-    <template *ngIf="hasSchuetzenNummern()">
-      <div class="col-sm-12">
-        <hr/>
+      <div class="offset-4 col-sm-4 justify-content-end flex-container pb-5">
+        <button
+          class="btn btn-primary"
+          (click)="submitSchuetzenNr()"
+          [disabled]="!hasValidSchuetzenNr()"
+        >
+          Speichern
+        </button>
       </div>
-      <div class="col-sm-12 tablet-eingabe-current">
+    </ng-template>
+
+    <ng-template [ngIf]="hasSchuetzenNummern()">
+      <div class="col-sm-12 tablet-eingabe-current mb-3">
         <h2>{{currentMatch.mannschaftName}}</h2>
         <span class="mx-3 separator">•</span>
         <h2>Satz {{satzNr}}</h2>
@@ -45,13 +59,33 @@
                    let-schuetze
                    [ngForOf]="schuetzen"
                    let-i="index">
-        <div class="col-sm-3">
+        <div class="col-lg-3 col-xl-2"
+             [ngClass]="{'offset-lg-2 offset-xl-3': i === 0, 'mb-4': i === 2}">
           <div class="schuetze">
             <h4>Schütze {{schuetze.schuetzeNr}}</h4>
+            <div class="flex-container">
+              <input blaMyNumberOnly
+                     type="text"
+                     class="m-2"
+                     [(ngModel)]="schuetze.passen[satzNr-1].ringzahlPfeil1">
+              <input blaMyNumberOnly
+                     type="text"
+                     class="m-2"
+                     [(ngModel)]="schuetze.passen[satzNr-1].ringzahlPfeil2">
+            </div>
           </div>
         </div>
       </ng-template>
 
-    </template>
+      <div class="offset-2 col-sm-8 justify-content-end flex-container py-5">
+        <button
+          class="btn btn-primary mr-3"
+          (click)="nextSatz()"
+          [disabled]="!allPasseFilled()"
+        >
+          Nächster Satz <i class="fa fa-fw fa-chevron-right"></i>
+        </button>
+      </div>
+    </ng-template>
   </div>
 </div>
