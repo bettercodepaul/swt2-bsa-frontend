@@ -41,6 +41,7 @@ export class SchusszettelMapper {
       payload.strafPunkteSatz4,
       payload.strafPunkteSatz5
     ];
+
     return new MatchDO(payload.id,
       payload.mannschaftId,
       payload.mannschaftName,
@@ -53,6 +54,7 @@ export class SchusszettelMapper {
       payload.satzpunkte,
       fehlerpunkte,
       schuetzen,
+      payload.wettkampfTag,
       payload.wettkampfTyp);
   }
 
@@ -86,6 +88,7 @@ export class SchusszettelMapper {
       strafPunkteSatz4,
       strafPunkteSatz5,
       passen,
+      payload.wettkampfTag,
       payload.wettkampfTyp);
   }
 

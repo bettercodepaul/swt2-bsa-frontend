@@ -1,0 +1,57 @@
+<div class="tablet-eingabe">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1 class="wettkampftag-headline my-3">Scheibe {{scheibenNummer}}</h1>
+    </div>
+
+    <div class="col-sm-12 tablet-eingabe-info-section">
+      <h3 class="tablet-eingabe-info">Wettkampftag {{match1.wettkampfTag}}</h3>
+      <span class="mx-3 separator">•</span>
+      <h3 class="tablet-eingabe-info">Match {{match1.nr}}</h3>
+      <span class="mx-3 separator">•</span>
+      <h3 class="tablet-eingabe-info">{{match1.mannschaftName}} vs. {{match2.mannschaftName}}</h3>
+    </div>
+
+    <template *ngIf="!hasSchuetzenNummern()">
+      <div class="col-sm-12">
+        <h2>Bitte geben Sie die Schützen-Nummern für dieses Match ein:</h2>
+      </div>
+      <div class="offset-4 col-sm-4">
+        <ng-template ngFor
+                     let-schuetze
+                     [ngForOf]="schuetzen"
+                     let-i="index">
+          <label [for]="'schuetze' + i+1 + 'Nummer'">{{i+1}}. Schütze</label>
+          <input blaMyNumberOnly
+                 type="number"
+                 [tabindex]="i+1"
+                 [id]="'schuetze' + i+1 + 'Nummer'"
+                 [(ngModel)]="schuetzen[i].schuetzeNr"/>
+        </ng-template>
+      </div>
+    </template>
+
+    <template *ngIf="hasSchuetzenNummern()">
+      <div class="col-sm-12">
+        <hr/>
+      </div>
+      <div class="col-sm-12 tablet-eingabe-current">
+        <h2>{{currentMatch.mannschaftName}}</h2>
+        <span class="mx-3 separator">•</span>
+        <h2>Satz {{satzNr}}</h2>
+      </div>
+
+      <ng-template ngFor
+                   let-schuetze
+                   [ngForOf]="schuetzen"
+                   let-i="index">
+        <div class="col-sm-3">
+          <div class="schuetze">
+            <h4>Schütze {{schuetze.schuetzeNr}}</h4>
+          </div>
+        </div>
+      </ng-template>
+
+    </template>
+  </div>
+</div>
