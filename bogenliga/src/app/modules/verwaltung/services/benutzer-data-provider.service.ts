@@ -48,14 +48,14 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: Array<BenutzerRolleDTO>): Promise<BogenligaResponse<BenutzerDO>> {
+  public update(payload: Array<BenutzerRolleDTO>): Promise<BogenligaResponse<Array<BenutzerDO>>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('uptRoles').build(), payload)
-        .then((data: VersionedDataTransferObject) => {
-          resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+      this.restClient.PUT<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('uptRoles').build(), payload)
+        .then((data: Array<VersionedDataTransferObject>) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
 
         }, (error: HttpErrorResponse) => {
 

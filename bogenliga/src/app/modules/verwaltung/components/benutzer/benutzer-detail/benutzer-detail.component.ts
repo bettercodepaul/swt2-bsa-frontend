@@ -92,11 +92,14 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     });
 
     this.benutzerDataProvider.update(this.currentRoles)
-        .then((response: BogenligaResponse<BenutzerDO>) => {
+        .then((response: BogenligaResponse<Array<BenutzerDO>>) => {
+          console.log('pre if***********')
+          console.log(response)
+
           if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Update with id: ' + response.payload.id);
+            && !isNullOrUndefined(response.payload[0])
+            && !isNullOrUndefined(response.payload[0].id)) {
+            console.log('Update with id: ' + response.payload[0].id);
 
             const notification: Notification = {
               id:          NOTIFICATION_SAVE_BENUTZER,
@@ -118,6 +121,8 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
             this.notificationService.showNotification(notification);
           }
+          console.log('after if***********')
+
         }, (response: BogenligaResponse<BenutzerDO>) => {
           console.log('Failed');
           this.saveLoading = false;
