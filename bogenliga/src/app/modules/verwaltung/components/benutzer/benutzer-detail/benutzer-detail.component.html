@@ -69,7 +69,7 @@
                              [items]="getVersionedDataObjects()"
                              [optionFieldSelector]="'roleName'"
                              (onSelect)="onSelect($event)"
-                             [multipleSelections]="false"
+                             [multipleSelections]="true"
                              style="width: 50%; height: 10em;">
 
 
@@ -82,7 +82,7 @@
         <div class="col-sm-9 button-box">
           <bla-button
                       [id]="'benutzerUpdateButton'"
-                      [disabled]="!benutzerForm.valid"
+                      [disabled]="benutzerForm.valid"
                       [loading]="saveLoading"
                       (onClick)="onUpdate($event)">
             {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
