@@ -46,6 +46,7 @@ const NOTIFICATION_DELETE_MITGLIED = 'mannschaft_mitglied_delete';
 const NOTIFICATION_DELETE_MITGLIED_SUCCESS = 'mannschaft_mitglied_delete_success';
 const NOTIFICATION_DELETE_MITGLIED_FAILURE = 'mannschaft_mitglied_delete_failure';
 const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
+const NOTIFICATION_NO_LICENSE = 'no_license_found';
 
 @Component({
   selector:    'bla-mannschaft-detail',
@@ -510,14 +511,37 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
           this.saveLoading = false;
         });
   }
+
   public onDownload(versionedDataObject: VersionedDataObject): void {
     const downloadUrl = new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path('pdf/schuetzenlizenz')
-      .path('?dsbMitgliedID=' + versionedDataObject.id)
+      .path( versionedDataObject.id)
+      .path(this.currentMannschaft.id)
       .build();
-    this.downloadService.download(downloadUrl, "lizenz.pdf", this.aElementRef);
+    this.downloadService.download(downloadUrl, "lizenz.pdf", this.aElementRef)
+      .then((response: BogenligaResponse<string>) => console.log(response))
+      .catch((response: BogenligaResponse<string>) => this.showNoLicense());
+  }
+
+  private showNoLicense(): void {
+    const noLicenseNotification: Notification = {
+      id:          NOTIFICATION_NO_LICENSE,
+      title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.NO_LICENSE.TITLE',
+      description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.NO_LICENSE.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_NO_LICENSE)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+          }
+        });
+    this.notificationService.showNotification(noLicenseNotification);
   }
 
 }
