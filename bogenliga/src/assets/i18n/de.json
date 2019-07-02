@@ -617,6 +617,10 @@
         "DELETE_MITGLIED_FAILURE": {
           "TITLE": "Fehler beim Löschen",
           "DESCRIPTION": "Schütze konnte nicht entfernt werden."
+        },
+        "NO_LICENSE": {
+          "TITLE": "Fehler beim Download",
+          "DESCRIPTION": "Es konnte keine Lizenz heruntergeladen werden, da keine Lizenz von diesem Schützen vorhanden ist."
         }
       }
     },

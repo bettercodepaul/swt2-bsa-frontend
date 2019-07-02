@@ -69,9 +69,6 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
 
     this.httpService.get('./assets/i18n/Nationalitaeten.json').subscribe(
       (data) => {
-       // let test =JSON.parse(data.toString());
-       // console.log(data.toString());this.dsbMitgliedNationalitaet = data as String [];
-      console.log(data);
       const json = JSON.parse(JSON.stringify(data));
       json['NATIONEN'].forEach( (t) => {
         this.nationen.push(t['name']);
@@ -80,9 +77,6 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
       json['NATIONEN'].forEach( (t) => {
         this.nationenKuerzel.push(t['code']);
        });
-
-      // data.
-        // console.log(test);
       }
     ),
 
@@ -344,7 +338,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; this.vereineLoaded = true; })
+        .then((response: BogenligaResponse<VereinDTO[]>) =>{this.vereine = response.payload;  this.loadingVereine = false; this.vereineLoaded = true; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 }
