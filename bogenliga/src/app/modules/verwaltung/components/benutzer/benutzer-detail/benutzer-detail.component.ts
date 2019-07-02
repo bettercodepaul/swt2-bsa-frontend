@@ -39,15 +39,16 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public currentBenutzerRolleDO: BenutzerRolleDO;
   public roles: RoleDTO[] = [];
   public tobeRole: RoleDO;
+  public currentRoles: BenutzerRolleDTO[] = [];
 
   public saveLoading = false;
   public selectedDTOs: RoleVersionedDataObject[];
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
-              private roleDataProvider: RoleDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+    private roleDataProvider: RoleDataProviderService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService) {
     super();
   }
 
@@ -64,13 +65,13 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
         if (id !== 'add') {
           this.benutzerDataProvider.findUserRoleById(id)
-            .then((response: BogenligaResponse<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO = response.payload)
-            .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
+              .then((response: BogenligaResponse<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO = response.payload)
+              .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
 
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
           this.roleDataProvider.findAll()
-            .then((response: BogenligaResponse<RoleDO[]>) => this.setVersionedDataObjects(response))
-            .catch((response: BogenligaResponse<RoleDO[]>) => this.getEmptyList());
+              .then((response: BogenligaResponse<RoleDO[]>) => this.setVersionedDataObjects(response))
+              .catch((response: BogenligaResponse<RoleDO[]>) => this.getEmptyList());
         }
       }
     });
@@ -80,46 +81,49 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
     // persist
+    this.selectedDTOs.forEach((item, index) => {
+      this.currentBenutzerRolleDTO = new BenutzerRolleDTO();
+      this.currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
+      this.currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
+      this.tobeRole = this.selectedDTOs[0] as RoleDO;
+      this.currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
+      this.currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
+      this.currentRoles.push(this.currentBenutzerRolleDTO);
+    });
 
-    this.currentBenutzerRolleDTO = new BenutzerRolleDTO();
-    this.currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
-    this.currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
-    this.tobeRole = this.selectedDTOs[0] as RoleDO;
-    this.currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
-    this.currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
     this.benutzerDataProvider.update(this.currentBenutzerRolleDTO)
-      .then((response: BogenligaResponse<BenutzerDO>) => {
-        if (!isNullOrUndefined(response)
-          && !isNullOrUndefined(response.payload)
-          && !isNullOrUndefined(response.payload.id)) {
-          console.log('Update with id: ' + response.payload.id);
+        .then((response: BogenligaResponse<BenutzerDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+            console.log('Update with id: ' + response.payload.id);
 
-          const notification: Notification = {
-            id:          NOTIFICATION_SAVE_BENUTZER,
-            title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
-            description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
-            severity:    NotificationSeverity.INFO,
-            origin:      NotificationOrigin.USER,
-            type:        NotificationType.OK,
-            userAction:  NotificationUserAction.PENDING
-          };
+            const notification: Notification = {
+              id:          NOTIFICATION_SAVE_BENUTZER,
+              title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
+              description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.PENDING
+            };
 
-          this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
-            .subscribe((myNotification) => {
-              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                this.saveLoading = false;
-                this.router.navigateByUrl('/verwaltung/benutzer');
-              }
-            });
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                    this.router.navigateByUrl('/verwaltung/benutzer');
+                  }
+                });
 
-          this.notificationService.showNotification(notification);
-        }
-      }, (response: BogenligaResponse<BenutzerDO>) => {
-        console.log('Failed');
-        this.saveLoading = false;
+            this.notificationService.showNotification(notification);
+          }
+        }, (response: BogenligaResponse<BenutzerDO>) => {
+          console.log('Failed');
+          this.saveLoading = false;
 
 
-      });
+        });
     // show response message
   }
 
@@ -167,7 +171,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public onSelect($event: RoleVersionedDataObject[]): void {
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
-   }
+  }
 
   public getSelectedDTO(): string {
     if (isNullOrUndefined(this.selectedDTOs)) {
