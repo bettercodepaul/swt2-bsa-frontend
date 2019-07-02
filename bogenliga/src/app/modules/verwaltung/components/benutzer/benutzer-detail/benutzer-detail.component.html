@@ -23,7 +23,7 @@
                  id="benutzerEmail"
                  name="benutzerEmail"
                  #benutzerEmail="ngModel"
-                 [(ngModel)]="currentBenutzerRolleDO.email"
+                 [(ngModel)]="currentBenutzerRolleDO[0].email"
                  placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
 
           <div class="invalid-feedback">
@@ -46,7 +46,7 @@
                id="benutzerRolleAlt"
                name="benutzerRolleAlt"
                #benutzerRolleAlt="ngModel"
-               [(ngModel)]="currentBenutzerRolleDO.roleName"
+               [(ngModel)]="currentBenutzerRolleDO.forEach();"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLEOLD.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
