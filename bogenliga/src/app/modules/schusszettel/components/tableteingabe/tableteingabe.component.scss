@@ -1,15 +1,6 @@
 .tablet-eingabe {
-  .wettkampftag-headline {
-    width: 100%;
-    text-align: center;
-  }
-
   .tablet-eingabe-info-section {
     text-align: center;
-    .tablet-eingabe-info {
-      text-align: center;
-      display: inline-block;
-    }
 
     .separator {
       font-size: 1.75rem;
@@ -18,10 +9,6 @@
 
   .tablet-eingabe-current {
     text-align: center;
-    h2 {
-      text-align: center;
-      display: inline-block;
-    }
 
     .separator {
       font-size: 2rem;
@@ -32,7 +19,6 @@
 input, label {
   display:block;
 }
-
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -50,4 +36,8 @@ input {
   &:focus {
     box-shadow: 0 0 8px 0 rgba(5,122,255,1);
   }
+}
+
+.flex-container {
+  display: flex;
 }
