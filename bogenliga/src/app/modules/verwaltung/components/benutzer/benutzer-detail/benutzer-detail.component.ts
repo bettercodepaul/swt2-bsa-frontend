@@ -35,7 +35,6 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   public config = BENUTZER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentBenutzerRolleDTO: BenutzerRolleDTO;
   public currentBenutzerRolleDO: BenutzerRolleDO;
   public roles: RoleDTO[] = [];
   public tobeRole: RoleDO;
@@ -82,16 +81,17 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
     // persist
     this.selectedDTOs.forEach((item, index) => {
-      this.currentBenutzerRolleDTO = new BenutzerRolleDTO();
-      this.currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
-      this.currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
-      this.tobeRole = this.selectedDTOs[0] as RoleDO;
-      this.currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
-      this.currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
-      this.currentRoles.push(this.currentBenutzerRolleDTO);
+
+      const currentBenutzerRolleDTO = new BenutzerRolleDTO();
+      currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
+      currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
+      this.tobeRole = this.selectedDTOs[index] as RoleDO;
+      currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
+      currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
+      this.currentRoles.push(currentBenutzerRolleDTO);
     });
 
-    this.benutzerDataProvider.update(this.currentBenutzerRolleDTO)
+    this.benutzerDataProvider.update(this.currentRoles)
         .then((response: BogenligaResponse<BenutzerDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
