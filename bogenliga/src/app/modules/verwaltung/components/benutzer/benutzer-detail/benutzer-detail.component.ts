@@ -35,7 +35,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   public config = BENUTZER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentBenutzerRolleDO: BenutzerRolleDO[];
+  public currentBenutzerRolleDO: BenutzerRolleDO;
   public roles: RoleDTO[] = [];
   public tobeRole: RoleDO;
   public currentRoles: BenutzerRolleDTO[] = [];
@@ -60,11 +60,11 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
-        this.currentBenutzerRolleDO = new Array<BenutzerRolleDO>();
+        this.currentBenutzerRolleDO = new BenutzerRolleDO();
 
         if (id !== 'add') {
-          this.benutzerDataProvider.findAll()
-              .then((response: BogenligaResponse<BenutzerRolleDO[]>) =>  this.currentBenutzerRolleDO = response.payload)
+          this.benutzerDataProvider.findUserRoleById(id)
+              .then((response: BogenligaResponse<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO = response.payload)
               .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
 
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
@@ -83,8 +83,8 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.selectedDTOs.forEach((item, index) => {
 
       const currentBenutzerRolleDTO = new BenutzerRolleDTO();
-      currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO[0].id;
-      currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO[0].email;
+      currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
+      currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
       this.tobeRole = this.selectedDTOs[index] as RoleDO;
       currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
       currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
@@ -134,7 +134,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
 
   public entityExists(): boolean {
-    return this.currentBenutzerRolleDO[0].id > 0;
+    return this.currentBenutzerRolleDO.id > 0;
   }
 
   private loadById(id: number) {
@@ -144,7 +144,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   }
 
   private handleSuccess(response: BogenligaResponse<BenutzerRolleDO>) {
-    this.currentBenutzerRolleDO = response.payload[0];
+    this.currentBenutzerRolleDO = response.payload;
     this.loading = false;
   }
 
