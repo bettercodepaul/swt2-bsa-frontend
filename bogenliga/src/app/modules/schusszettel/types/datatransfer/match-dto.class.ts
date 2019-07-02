@@ -8,6 +8,7 @@ export class MatchDTO implements VersionedDataTransferObject {
   mannschaftId: number;
   mannschaftName: string;
   wettkampfId: number;
+  wettkampfTag: number;
   wettkampfTyp: string;
   nr: number;
   begegnung: number;
@@ -39,6 +40,7 @@ export class MatchDTO implements VersionedDataTransferObject {
               strafPunkteSatz4?: number,
               strafPunkteSatz5?: number,
               passen?: Array<PasseDTO>,
+              wettkampfTag?: number,
               wettkampfTyp?: string) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
@@ -56,5 +58,6 @@ export class MatchDTO implements VersionedDataTransferObject {
     this.strafPunkteSatz5 = !!strafPunkteSatz5 ? strafPunkteSatz5 : 0;
     this.passen = !!passen ? passen : [];
     this.wettkampfTyp = wettkampfTyp;
+    this.wettkampfTag = wettkampfTag;
   }
 }
