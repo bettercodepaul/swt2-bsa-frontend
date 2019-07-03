@@ -13,9 +13,10 @@ import {
   NotificationUserAction
 } from '@shared/services';
 import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
+import {PasseProviderService} from '../../services/passe-provider.service';
 
 class SchuetzeErgebnisse {
-  schuetzeNr: Number;
+  schuetzeNr: number;
   passen: Array<PasseDO>;
 
   constructor(schuetzeNr: number) {
@@ -27,7 +28,7 @@ class SchuetzeErgebnisse {
   addPasse() {
     let p = new PasseDO();
     p.lfdNr = this.passen.length + 1;
-    p.schuetzeNr = Number(this.schuetzeNr);
+    p.schuetzeNr = this.schuetzeNr;
     this.passen.push(p);
   }
 }
@@ -72,6 +73,7 @@ export class TabletEingabeComponent implements OnInit {
 
 
   constructor(private schusszettelService: SchusszettelProviderService,
+    private passeService: PasseProviderService,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
   }
@@ -200,13 +202,45 @@ export class TabletEingabeComponent implements OnInit {
     return (this.hasValidSchuetzenNr() && this.submittedSchuetzenNr);
   }
 
+  onChange(value: number, ringzahlNr: number, schuetze: SchuetzeErgebnisse) {
+    let passe = schuetze.passen[this.satzNr - 1];
+    passe['ringzahlPfeil' + ringzahlNr] = value;
+    if (this.passeIsValid(passe)) {
+      this.enrichPasseDO(passe, schuetze);
+      this.createOrUpdatePasse(passe, schuetze);
+    }
+  }
+
+  createOrUpdatePasse(passe: PasseDO, schuetze: SchuetzeErgebnisse) {
+    // passe was already created, only update it
+    if (passe.id !== null) {
+      this.passeService.update(passe)
+          .then((data: BogenligaResponse<PasseDO>) => {
+            schuetze.passen[this.satzNr - 1] = data.payload;
+            this.dumpStorageData();
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+    } else {
+      // no id set -> passe is newly created
+      this.passeService.create(passe)
+          .then((data: BogenligaResponse<PasseDO>) => {
+            schuetze.passen[this.satzNr - 1] = data.payload;
+            this.dumpStorageData();
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+    }
+  }
+
   nextSatz() {
     if (this.allPasseFilled()) {
       for (let schuetze of this.schuetzen) {
         schuetze.addPasse()
       }
       this.satzNr++;
-      this.save();
       this.dumpStorageData();
     }
   }
@@ -214,14 +248,18 @@ export class TabletEingabeComponent implements OnInit {
   allPasseFilled() {
     let valid = true;
     for (let schuetze of this.schuetzen) {
-      valid = valid && (
-        schuetze.passen[this.satzNr - 1].ringzahlPfeil1 &&
-        schuetze.passen[this.satzNr - 1].ringzahlPfeil1 >= 0 &&
-        schuetze.passen[this.satzNr - 1].ringzahlPfeil2 &&
-        schuetze.passen[this.satzNr - 1].ringzahlPfeil2 >= 0
-      );
+      valid = valid && this.passeIsValid(schuetze.passen[this.satzNr - 1]);
     }
     return valid;
+  }
+
+  private passeIsValid(passe: PasseDO) {
+    return (
+      passe.ringzahlPfeil1 &&
+      passe.ringzahlPfeil1 >= 0 &&
+      passe.ringzahlPfeil2 &&
+      passe.ringzahlPfeil2 >= 0
+    );
   }
 
   showMissingScheibenNummerNotification() {
@@ -236,7 +274,7 @@ export class TabletEingabeComponent implements OnInit {
     });
   }
 
-  showNextMatchNotification () {
+  showNextMatchNotification() {
     this.notificationService.showNotification({
       id:          'tabletEingabeNextMatch',
       title:       'Lädt ...',
@@ -248,28 +286,11 @@ export class TabletEingabeComponent implements OnInit {
     });
   }
 
-  prepareErgebnisse() {
-    for (let schuetze of this.schuetzen) {
-      for (let passe of schuetze.passen) {
-        passe.mannschaftId = this.currentMatch.mannschaftId;
-        passe.matchNr = this.currentMatch.nr;
-        passe.matchId = this.currentMatch.id;
-        passe.wettkampfId = this.currentMatch.wettkampfId;
-      }
-    }
-  }
-
-  save() {  // TODO: nach jedem Eintrag für einen Schützen speichern -> onChange beim jeweils 2. Ringzahl-Feld -> neue Passe speichern
-    this.prepareErgebnisse();
-
-    this.schusszettelService.create(this.currentMatch, this.match2) // TODO: add service for submitting single match
-        .then((data: BogenligaResponse<Array<MatchDO>>) => {
-          this.currentMatch = data.payload[0];
-          this.notificationService.discardNotification();
-          this.dumpStorageData();
-        }, (error) => {
-          console.error(error);
-          this.notificationService.discardNotification();
-        });
+  private enrichPasseDO(passe: PasseDO, schuetze: SchuetzeErgebnisse) {
+    passe.mannschaftId = this.currentMatch.mannschaftId;
+    passe.matchNr = this.currentMatch.nr;
+    passe.matchId = this.currentMatch.id;
+    passe.wettkampfId = this.currentMatch.wettkampfId;
+    passe.schuetzeNr = schuetze.schuetzeNr;
   }
 }
