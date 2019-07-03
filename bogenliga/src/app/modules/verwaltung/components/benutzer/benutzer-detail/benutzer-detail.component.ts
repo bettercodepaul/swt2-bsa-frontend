@@ -35,10 +35,11 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   public config = BENUTZER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentBenutzerRolleDO: BenutzerRolleDO;
+  public currentBenutzerRolleDO: BenutzerRolleDO[];
   public roles: RoleDTO[] = [];
   public tobeRole: RoleDO;
   public currentRoles: BenutzerRolleDTO[] = [];
+  public roleNames;
 
   public saveLoading = false;
   public selectedDTOs: RoleVersionedDataObject[];
@@ -55,16 +56,17 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.loading = true;
     this.tobeRole = new RoleDO();
 
+
     this.notificationService.discardNotification();
 
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
-        this.currentBenutzerRolleDO = new BenutzerRolleDO();
+        this.currentBenutzerRolleDO = new Array<BenutzerRolleDO>();
 
         if (id !== 'add') {
           this.benutzerDataProvider.findUserRoleById(id)
-              .then((response: BogenligaResponse<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO = response.payload)
+              .then((response: BogenligaResponse<BenutzerRolleDO[]>) =>  this.currentBenutzerRolleDO = response.payload)
               .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
 
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
@@ -72,6 +74,14 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
               .then((response: BogenligaResponse<RoleDO[]>) => this.setVersionedDataObjects(response))
               .catch((response: BogenligaResponse<RoleDO[]>) => this.getEmptyList());
         }
+      }
+    });
+    console.log('post rolenames***********')
+    this.roleNames  = this.currentBenutzerRolleDO[0].roleName;
+    console.log(this.currentBenutzerRolleDO[1].roleName)
+    this.currentBenutzerRolleDO.forEach((role,index) => {
+      if(index <= this.currentBenutzerRolleDO.length) {
+        this.roleNames = this.roleNames + ", " + this.currentBenutzerRolleDO[index+1].roleName;
       }
     });
   }
@@ -83,8 +93,8 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.selectedDTOs.forEach((item, index) => {
 
       const currentBenutzerRolleDTO = new BenutzerRolleDTO();
-      currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
-      currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
+      currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO[0].id;
+      currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO[0].email;
       this.tobeRole = this.selectedDTOs[index] as RoleDO;
       currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
       currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
@@ -134,16 +144,15 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
 
   public entityExists(): boolean {
-    return this.currentBenutzerRolleDO.id > 0;
+    return this.currentBenutzerRolleDO[0].id > 0;
   }
 
   private loadById(id: number) {
     this.benutzerDataProvider.findUserRoleById(id)
-        .then((response: BogenligaResponse<BenutzerRolleDO>) => this.handleSuccess(response))
+        .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleSuccess(response))
         .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.handleFailure(response));
   }
-
-  private handleSuccess(response: BogenligaResponse<BenutzerRolleDO>) {
+  private handleSuccess(response: BogenligaResponse<BenutzerRolleDO[]>) {
     this.currentBenutzerRolleDO = response.payload;
     this.loading = false;
   }

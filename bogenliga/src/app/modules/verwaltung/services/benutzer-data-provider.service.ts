@@ -111,15 +111,15 @@ export class BenutzerDataProviderService extends DataProviderService {
   }
 
 
-  public findUserRoleById(id: string | number): Promise<BogenligaResponse<BenutzerRolleDO>> {
+  public findUserRoleById(id: string | number): Promise<BogenligaResponse<BenutzerRolleDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('userrole').path(id).build())
-        .then((data: VersionedDataTransferObject) => {
+      this.restClient.GET<VersionedDataTransferObject[]>(new UriBuilder().fromPath(this.getUrl()).path('userrole').path(id).build())
+        .then((data: VersionedDataTransferObject[]) => {
 
-          resolve({result: RequestResult.SUCCESS, payload: fromPayloadBenutzerRolle(data)});
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayBenutzerRolle(data)});
 
         }, (error: HttpErrorResponse) => {
 
