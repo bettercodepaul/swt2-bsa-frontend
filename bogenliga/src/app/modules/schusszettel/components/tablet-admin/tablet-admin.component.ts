@@ -62,6 +62,11 @@ export class TabletAdminComponent implements OnInit {
               }
             }, (error) => {
               console.error(error);
+              // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
+              this.sessions = [];
+              for (let i = 0; i < 8; i++) {
+                this.sessions.push(new TabletSessionDO(i+1, parseInt(wettkampfId), false));
+              }
             });
       }
     });
