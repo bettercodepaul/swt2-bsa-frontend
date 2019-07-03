@@ -5,7 +5,8 @@ import {TabletAdminComponent} from './components/tablet-admin/tablet-admin.compo
 
 
 export const SCHUSSZETTEL_ROUTES: Routes = [
+  {path: '', pathMatch: 'full', component: TabletAdminComponent},
+  {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent},
   {path: ':match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent},
   {path: ':match1id/:match2id/tablet', pathMatch: 'full', component: TabletEingabeComponent},
-  {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent},
 ];
