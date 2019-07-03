@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
-import {isUndefined} from '@shared/functions';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {BogenligaResponse} from '@shared/data-provider';
 import {MatchDO} from '../../types/match-do.class';
 import {ActivatedRoute} from '@angular/router';
@@ -30,13 +30,37 @@ export class TabletAdminComponent implements OnInit {
         const wettkampfId = params['wettkampfId'];
         this.tabletSessionService.findAllTabletSessions(wettkampfId)
             .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
-              this.sessions = data.payload;
+              const activeSessions = data.payload;
+              let allSessions = [];
+
+              for (let activeSession of activeSessions) {
+                activeSession.isActive = true;
+                allSessions[activeSession.scheibenNr - 1] = activeSession;
+              }
+
+             /* for (let i = 0; i < 8; i++) {
+                if (activeSessions[i]) {
+                  allSessions[activeSessions[i].scheibenNr - 1] = activeSessions[i];
+                  allSessions[activeSessions[i].scheibenNr - 1].isActive = true;
+                } else {
+                  //allSessions[i] = new TabletSessionDO(i+1, parseInt(wettkampfId));
+                  //allSessions[i].isActive = false;
+                }
+              }*/
+              for (let i = 0; i < 8; i++) {
+                if (isNullOrUndefined(allSessions[i])) {
+                  allSessions[i] = new TabletSessionDO(i+1, parseInt(wettkampfId));
+                  allSessions[i].isActive = false;
+                }
+              }
+              this.sessions = allSessions;
             }, (error) => {
               console.error(error);
             });
       }
     });
 
+    // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
     this.sessions = [];
     for (let i = 0; i < 8; i++) {
       this.sessions.push(new TabletSessionDO(i+1, 1000, 1, 1030));
