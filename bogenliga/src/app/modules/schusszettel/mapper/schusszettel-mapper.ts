@@ -29,8 +29,10 @@ export class SchusszettelMapper {
 
       }
       for (let i = 0; i < schuetzen[0].length; i++) {
-        for (const schuetze of schuetzen) {
-          sumSatz[i] += schuetze[i].ringzahlPfeil1 + schuetze[i].ringzahlPfeil2;
+        for (const passen of schuetzen) {
+          if (i < passen.length) {
+            sumSatz[i] += passen[i].ringzahlPfeil1 + passen[i].ringzahlPfeil2;
+          }
         }
       }
     }
