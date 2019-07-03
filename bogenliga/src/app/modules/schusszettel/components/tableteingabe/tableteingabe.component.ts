@@ -4,7 +4,7 @@ import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isUndefined} from '@shared/functions';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   NotificationOrigin,
   NotificationService,
@@ -14,6 +14,7 @@ import {
 } from '@shared/services';
 import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
 import {PasseProviderService} from '../../services/passe-provider.service';
+import {MatchProviderService} from '../../services/match-provider.service';
 
 class SchuetzeErgebnisse {
   schuetzeNr: number;
@@ -74,7 +75,9 @@ export class TabletEingabeComponent implements OnInit {
 
   constructor(private schusszettelService: SchusszettelProviderService,
     private passeService: PasseProviderService,
+    private matchService: MatchProviderService,
     private route: ActivatedRoute,
+    private router: Router,
     private notificationService: NotificationService) {
   }
 
@@ -260,6 +263,17 @@ export class TabletEingabeComponent implements OnInit {
       passe.ringzahlPfeil2 &&
       passe.ringzahlPfeil2 >= 0
     );
+  }
+
+  nextMatch() {
+    this.matchService.next(this.currentMatch.id)
+        .then((data) => {
+          if (data.payload.length === 2) {
+            this.router.navigate(['/schusszettel/' + data.payload[0] + '/' + data.payload[1] + '/tablet']);
+          } else {
+            // Ende des Wettkampftages, do something
+          }
+        });
   }
 
   showMissingScheibenNummerNotification() {

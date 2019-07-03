@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {BogenligaResponse} from '@shared/data-provider';
-import {MatchDO} from '../../types/match-do.class';
 import {ActivatedRoute} from '@angular/router';
 import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
 
@@ -17,7 +16,7 @@ export class TabletAdminComponent implements OnInit {
   sessions: Array<TabletSessionDO>;
 
   constructor(private route: ActivatedRoute,
-              private tabletSessionService: TabletSessionProviderService) {
+    private tabletSessionService: TabletSessionProviderService) {
   }
 
   /**
@@ -30,7 +29,7 @@ export class TabletAdminComponent implements OnInit {
         const wettkampfId = params['wettkampfId'];
         this.tabletSessionService.findAllTabletSessions(wettkampfId)
             .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
-              const activeSessions = data.payload;
+              const activeSessions: Array<TabletSessionDO> = data.payload;
               let allSessions = [];
 
               for (let activeSession of activeSessions) {
@@ -38,18 +37,18 @@ export class TabletAdminComponent implements OnInit {
                 allSessions[activeSession.scheibenNr - 1] = activeSession;
               }
 
-             /* for (let i = 0; i < 8; i++) {
-                if (activeSessions[i]) {
-                  allSessions[activeSessions[i].scheibenNr - 1] = activeSessions[i];
-                  allSessions[activeSessions[i].scheibenNr - 1].isActive = true;
-                } else {
-                  //allSessions[i] = new TabletSessionDO(i+1, parseInt(wettkampfId));
-                  //allSessions[i].isActive = false;
-                }
-              }*/
+              /* for (let i = 0; i < 8; i++) {
+               if (activeSessions[i]) {
+               allSessions[activeSessions[i].scheibenNr - 1] = activeSessions[i];
+               allSessions[activeSessions[i].scheibenNr - 1].isActive = true;
+               } else {
+               //allSessions[i] = new TabletSessionDO(i+1, parseInt(wettkampfId));
+               //allSessions[i].isActive = false;
+               }
+               }*/
               for (let i = 0; i < 8; i++) {
                 if (isNullOrUndefined(allSessions[i])) {
-                  allSessions[i] = new TabletSessionDO(i+1, parseInt(wettkampfId));
+                  allSessions[i] = new TabletSessionDO(i + 1, parseInt(wettkampfId));
                   allSessions[i].isActive = false;
                 }
               }
@@ -70,8 +69,6 @@ export class TabletAdminComponent implements OnInit {
             });
       }
     });
-
-
   }
 
   public updateSession(scheibenNr: number) {
@@ -84,5 +81,4 @@ export class TabletAdminComponent implements OnInit {
         console.log(error);
       })
   }
-
 }
