@@ -62,11 +62,22 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
-        this.currentBenutzerRolleDO = new Array<BenutzerRolleDO>();
+        this.currentBenutzerRolleDO = [];
+        this.currentBenutzerRolleDO.push(new BenutzerRolleDO());
 
         if (id !== 'add') {
           this.benutzerDataProvider.findUserRoleById(id)
-              .then((response: BogenligaResponse<BenutzerRolleDO[]>) =>  this.currentBenutzerRolleDO = response.payload)
+              .then((response: BogenligaResponse<BenutzerRolleDO[]>) => {
+                this.currentBenutzerRolleDO = response.payload
+                console.log('post rolenames***********')
+                this.roleNames  = this.currentBenutzerRolleDO[0].roleName;
+                console.log(this.roleNames)
+                this.currentBenutzerRolleDO.forEach((role,index) => {
+                  if(index <= this.currentBenutzerRolleDO.length) {
+                    this.roleNames = this.roleNames + ", " + this.currentBenutzerRolleDO[index+1].roleName;
+                  }
+                });
+              })
               .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
 
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
@@ -74,14 +85,6 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
               .then((response: BogenligaResponse<RoleDO[]>) => this.setVersionedDataObjects(response))
               .catch((response: BogenligaResponse<RoleDO[]>) => this.getEmptyList());
         }
-      }
-    });
-    console.log('post rolenames***********')
-    this.roleNames  = this.currentBenutzerRolleDO[0].roleName;
-    console.log(this.currentBenutzerRolleDO[1].roleName)
-    this.currentBenutzerRolleDO.forEach((role,index) => {
-      if(index <= this.currentBenutzerRolleDO.length) {
-        this.roleNames = this.roleNames + ", " + this.currentBenutzerRolleDO[index+1].roleName;
       }
     });
   }
