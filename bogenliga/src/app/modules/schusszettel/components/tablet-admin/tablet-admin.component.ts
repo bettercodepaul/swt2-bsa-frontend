@@ -54,18 +54,19 @@ export class TabletAdminComponent implements OnInit {
                 }
               }
               this.sessions = allSessions;
+
+              // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
+              this.sessions = [];
+              for (let i = 0; i < 8; i++) {
+                this.sessions.push(new TabletSessionDO(i+1, parseInt(wettkampfId), false));
+              }
             }, (error) => {
               console.error(error);
             });
       }
     });
 
-    // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
-    this.sessions = [];
-    for (let i = 0; i < 8; i++) {
-      this.sessions.push(new TabletSessionDO(i+1, 1000, 1, 1030));
-      this.sessions[i].isActive = false;
-    }
+
   }
 
   public updateSession(scheibenNr: number) {
