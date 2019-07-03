@@ -10,10 +10,10 @@
         <td>{{session.scheibenNr}}</td>
         <td [class.bg-success]="session.isActive" [class.bg-danger]="!session.isActive">{{session.isActive ? 'Aktiv' : 'Nicht aktiv'}}</td>
         <td>
-          <a *ngIf="session.isActive" (click)="session.isActive = !session.isActive">
+          <a *ngIf="session.isActive" (click)="updateSession(session.scheibenNr)">
             <fa-icon [icon]="'trash'"></fa-icon>
           </a>
-          <a *ngIf="!session.isActive" (click)="session.isActive = !session.isActive">
+          <a *ngIf="!session.isActive" (click)="updateSession(session.scheibenNr)">
             <fa-icon [icon]="'plus-circle'"></fa-icon>
           </a>
         </td>
