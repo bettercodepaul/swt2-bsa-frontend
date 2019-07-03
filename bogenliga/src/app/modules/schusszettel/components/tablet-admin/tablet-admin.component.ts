@@ -5,6 +5,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {ActivatedRoute} from '@angular/router';
 import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
 
+const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
 
 @Component({
   selector:    'bla-tablet-admin',
@@ -14,6 +15,7 @@ import {TabletSessionProviderService} from '../../services/tablet-session-provid
 export class TabletAdminComponent implements OnInit {
 
   sessions: Array<TabletSessionDO>;
+  currentDeviceIsActive: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private tabletSessionService: TabletSessionProviderService) {
@@ -29,13 +31,18 @@ export class TabletAdminComponent implements OnInit {
         const wettkampfId = params['wettkampfId'];
         this.tabletSessionService.findAllTabletSessions(wettkampfId)
             .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
+<<<<<<< Updated upstream
               const activeSessions: Array<TabletSessionDO> = data.payload;
+=======
+              /*const activeSessions = data.payload;
+>>>>>>> Stashed changes
               let allSessions = [];
 
               for (let activeSession of activeSessions) {
                 activeSession.isActive = true;
                 allSessions[activeSession.scheibenNr - 1] = activeSession;
               }
+<<<<<<< Updated upstream
 
               /* for (let i = 0; i < 8; i++) {
                if (activeSessions[i]) {
@@ -46,6 +53,8 @@ export class TabletAdminComponent implements OnInit {
                //allSessions[i].isActive = false;
                }
                }*/
+=======
+>>>>>>> Stashed changes
               for (let i = 0; i < 8; i++) {
                 if (isNullOrUndefined(allSessions[i])) {
                   allSessions[i] = new TabletSessionDO(i + 1, parseInt(wettkampfId));
@@ -53,7 +62,10 @@ export class TabletAdminComponent implements OnInit {
                 }
               }
               this.sessions = allSessions;
-
+              */
+              this.currentDeviceIsActive = !!localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
+              console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
+              this.sessions = data.payload;
               // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
               this.sessions = [];
               for (let i = 0; i < 8; i++) {
@@ -66,6 +78,12 @@ export class TabletAdminComponent implements OnInit {
               for (let i = 0; i < 8; i++) {
                 this.sessions.push(new TabletSessionDO(i+1, parseInt(wettkampfId), false));
               }
+              this.currentDeviceIsActive = !!localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
+              console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
+              if (this.currentDeviceIsActive) {
+                const ses = JSON.parse(localStorage.getItem(STORAGE_KEY_TABLET_SESSION));
+                this.sessions[ses.scheibenNr - 1] = ses;
+              }
             });
       }
     });
@@ -74,9 +92,23 @@ export class TabletAdminComponent implements OnInit {
   public updateSession(scheibenNr: number) {
     let sessionToUpdate = this.sessions[scheibenNr-1];
     sessionToUpdate.isActive = !sessionToUpdate.isActive;
+    if (sessionToUpdate.isActive) {
+      localStorage.setItem(STORAGE_KEY_TABLET_SESSION, JSON.stringify(sessionToUpdate));
+      this.currentDeviceIsActive = true;
+    } else {
+      localStorage.removeItem(STORAGE_KEY_TABLET_SESSION);
+      this.currentDeviceIsActive = false;
+    }
     this.tabletSessionService.update(sessionToUpdate)
       .then((success) => {
         this.sessions[scheibenNr-1] = success.payload;
+        if (success.payload.isActive) {
+          localStorage.setItem(STORAGE_KEY_TABLET_SESSION, JSON.stringify(success.payload));
+          this.currentDeviceIsActive = true;
+        } else {
+          localStorage.removeItem(STORAGE_KEY_TABLET_SESSION);
+          this.currentDeviceIsActive = false;
+        }
       }, (error) => {
         console.log(error);
       })

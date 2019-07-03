@@ -13,7 +13,7 @@
           <a *ngIf="session.isActive" (click)="updateSession(session.scheibenNr)">
             <fa-icon [icon]="'trash'"></fa-icon>
           </a>
-          <a *ngIf="!session.isActive" (click)="updateSession(session.scheibenNr)">
+          <a *ngIf="!currentDeviceIsActive" (click)="updateSession(session.scheibenNr)">
             <fa-icon [icon]="'plus-circle'"></fa-icon>
           </a>
         </td>
