@@ -103,6 +103,9 @@ export class TabletEingabeComponent implements OnInit {
     });
   }
 
+  /**
+   * Simple method returning an array containing numbers from 1 ... NUM_SCHUETZEN
+   */
   static getSchuetzeIdxValues() {
     return Array.apply(null, {length: NUM_SCHUETZEN}).map(Number.call, Number)
   }
@@ -135,17 +138,17 @@ export class TabletEingabeComponent implements OnInit {
         this.schuetzen.push(new SchuetzeErgebnisse(schuetzeNr));
       }
     } else {
-      for (let i of schuetzen) {
-        let s = new SchuetzeErgebnisse(Number(i.schuetzeNr));
-        s.passen = [];
-        for (let passe of i.passen) {
-          let p = new PasseDO();
-          for (let k of passe) {
-            p[k] = passe[k]
+      for (let schuetze of schuetzen) {
+        let schuetzeErgebnisse = new SchuetzeErgebnisse(Number(schuetze.schuetzeNr));
+        schuetzeErgebnisse.passen = [];
+        for (let passe of schuetze.passen) {
+          let passeDO = new PasseDO();
+          for (let attr of Object.keys(passe)) {
+            passeDO[attr] = passe[attr]
           }
-          s.passen.push(p)
+          schuetzeErgebnisse.passen.push(passeDO)
         }
-        this.schuetzen.push(s)
+        this.schuetzen.push(schuetzeErgebnisse)
       }
     }
   }
@@ -203,6 +206,7 @@ export class TabletEingabeComponent implements OnInit {
         schuetze.addPasse()
       }
       this.satzNr++;
+      this.save();
       this.dumpStorageData();
     }
   }
@@ -232,16 +236,32 @@ export class TabletEingabeComponent implements OnInit {
     });
   }
 
-  save() {
+  showNextMatchNotification () {
     this.notificationService.showNotification({
-      id:          'schusszettelSave',
-      title:       'Lädt...',
-      description: 'Schusszettel wird gespeichert...',
+      id:          'tabletEingabeNextMatch',
+      title:       'Lädt ...',
+      description: 'Das nächste anstehende Match auf dieser Scheibe wird geladen...',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     });
+  }
+
+  prepareErgebnisse() {
+    for (let schuetze of this.schuetzen) {
+      for (let passe of schuetze.passen) {
+        passe.mannschaftId = this.currentMatch.mannschaftId;
+        passe.matchNr = this.currentMatch.nr;
+        passe.matchId = this.currentMatch.id;
+        passe.wettkampfId = this.currentMatch.wettkampfId;
+      }
+    }
+  }
+
+  save() {  // TODO: nach jedem Eintrag für einen Schützen speichern -> onChange beim jeweils 2. Ringzahl-Feld -> neue Passe speichern
+    this.prepareErgebnisse();
+
     this.schusszettelService.create(this.currentMatch, this.match2) // TODO: add service for submitting single match
         .then((data: BogenligaResponse<Array<MatchDO>>) => {
           this.currentMatch = data.payload[0];
