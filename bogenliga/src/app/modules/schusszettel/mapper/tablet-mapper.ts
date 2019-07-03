@@ -7,11 +7,11 @@ import {TabletSessionDO} from '../types/tablet-session-do.class';
 export class TabletMapper {
 
   static sessionToDO(payload: TabletSessionDTO): TabletSessionDO {
-    return new TabletSessionDO(payload.scheibenNr,
-      payload.wettkampfID,
-      payload.isActive,
-      payload.satzNr,
-      payload.matchID)
+    return new TabletSessionDO(payload.scheibennummer,
+      payload.wettkampfId,
+      payload.active,
+      payload.satznummer,
+      payload.matchId)
   }
 
   static sessionToDTO(payload: TabletSessionDO): TabletSessionDTO {
