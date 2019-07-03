@@ -1,5 +1,9 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
+/**
+ * A element-directive to ensure only-number inputs.
+ * Also controls the number-aliasing using '+' instead of 10 (1 keystroke instead of 2).
+ */
 @Directive({
   selector: '[blaMyNumberOnly]'
 })
