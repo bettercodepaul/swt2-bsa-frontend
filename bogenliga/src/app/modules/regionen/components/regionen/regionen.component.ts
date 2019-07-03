@@ -102,8 +102,8 @@ export class RegionenComponent implements OnInit {
 
     myChart
       .data(JSON.parse(data))
-      .width(window.innerWidth * 0.8)
-      .height(window.innerHeight * 0.8)
+      .width(window.innerWidth * chartMaxSizeMultiplikator)
+      .height(window.innerHeight * chartMaxSizeMultiplikator)
       .size('size')
       .color('color')
       .onNodeClick((node) => {
