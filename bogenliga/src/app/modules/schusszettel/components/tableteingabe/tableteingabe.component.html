@@ -80,6 +80,15 @@
       </ng-template>
 
       <div class="offset-2 col-sm-8 justify-content-end flex-container py-5">
+        <ng-template [ngIf]="satzNr === 5">
+          <button
+            class="btn btn-primary mr-3"
+            (click)="nextMatch()"
+            [disabled]="!allPasseFilled()"
+          >
+            Nächstes Match <i class="fa fa-fw fa-chevron-right"></i>
+          </button>
+        </ng-template>
         <button
           class="btn btn-primary mr-3"
           (click)="nextSatz()"

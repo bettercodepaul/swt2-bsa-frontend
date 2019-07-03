@@ -100,6 +100,7 @@ export class TabletEingabeComponent implements OnInit {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
               this.currentMatch = this.match2.scheibenNummer === this.scheibenNummer ? this.match2 : this.match1;
+              // TODO: update tabletsession
               this.dumpStorageData();
             }, (error) => {
               console.error(error);
@@ -182,6 +183,9 @@ export class TabletEingabeComponent implements OnInit {
     for (let i of TabletEingabeComponent.getSchuetzeIdxValues()) {
       localStorage.setItem(STORAGE_KEY_SCHUETZE_PREFIX + (i + 1), '');
     }
+    this.satzNr = 1;
+    this.schuetzen = [];
+    this.submittedSchuetzenNr = false;
   }
 
   submitSchuetzenNr() {
@@ -244,6 +248,7 @@ export class TabletEingabeComponent implements OnInit {
         schuetze.addPasse()
       }
       this.satzNr++;
+      // TODO: update tabletsession
       this.dumpStorageData();
     }
   }
@@ -265,11 +270,20 @@ export class TabletEingabeComponent implements OnInit {
     );
   }
 
+  /**
+   * Trigger switch to the next match on this wettkampftag
+   * TODO: Button "Nächstes Match" anzeigen, wenn Match vorbei ist, bedeutet:
+   * 5 Sätze voll oder nach 3 Sätzen schon gewonnen -> irgendwie herausfinden
+   */
   nextMatch() {
+    this.showNextMatchNotification();
     this.matchService.next(this.currentMatch.id)
         .then((data) => {
           if (data.payload.length === 2) {
+            this.resetStorageData();
+            this.initStorageData();
             this.router.navigate(['/schusszettel/' + data.payload[0] + '/' + data.payload[1] + '/tablet']);
+            this.notificationService.discardNotification();
           } else {
             // Ende des Wettkampftages, do something
           }
