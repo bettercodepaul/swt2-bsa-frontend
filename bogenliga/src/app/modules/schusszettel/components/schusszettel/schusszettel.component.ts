@@ -67,8 +67,6 @@ export class SchusszettelComponent implements OnInit {
 
       }
     });
-
-
   }
 
   /**
@@ -91,7 +89,6 @@ export class SchusszettelComponent implements OnInit {
           this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
         }
       }
-
     }
   }
 
