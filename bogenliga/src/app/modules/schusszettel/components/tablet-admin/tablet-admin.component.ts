@@ -55,13 +55,12 @@ export class TabletAdminComponent implements OnInit {
               }
               this.sessions = allSessions;
               */
+              this.sessions = data.payload;
               this.currentDeviceIsActive = !!localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
               console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
-              this.sessions = data.payload;
-              // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
-              this.sessions = [];
-              for (let i = 0; i < 8; i++) {
-                this.sessions.push(new TabletSessionDO(i+1, parseInt(wettkampfId), false));
+              if (this.currentDeviceIsActive) {
+                const ses = JSON.parse(localStorage.getItem(STORAGE_KEY_TABLET_SESSION));
+                this.sessions[ses.scheibenNr - 1] = ses;
               }
             }, (error) => {
               console.error(error);
