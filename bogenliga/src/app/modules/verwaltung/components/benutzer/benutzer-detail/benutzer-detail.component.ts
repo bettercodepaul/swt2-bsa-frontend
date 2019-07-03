@@ -69,21 +69,10 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
           this.benutzerDataProvider.findUserRoleById(id)
               .then((response: BogenligaResponse<BenutzerRolleDO[]>) => {
                 this.currentBenutzerRolleDO = response.payload;
-                console.log('pre rolenames***********');
-                this.roleNames  = this.currentBenutzerRolleDO[0].roleName;
-                console.log(this.roleNames);
-                for (const {item, index} of this.currentBenutzerRolleDO.map((item, index) => ({ item, index }))) {
-                  if(index+1 <= this.currentBenutzerRolleDO.length) {
-                    this.roleNames = this.roleNames + ", " + this.currentBenutzerRolleDO[index+1].roleName;
-                  }
+                this.roleNames = "";
+                for (const role of this.currentBenutzerRolleDO) {
+                  this.roleNames += role.roleName + " ";
                 }
-                /*this.currentBenutzerRolleDO.forEach((role,index) => {
-                  if(index <= this.currentBenutzerRolleDO.length) {
-                    this.roleNames = this.roleNames + ", " + this.currentBenutzerRolleDO[index+1].roleName;
-                  }
-                });*/
-                console.log('post rolenames***********');
-                console.log(this.roleNames);
               })
               .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
 
