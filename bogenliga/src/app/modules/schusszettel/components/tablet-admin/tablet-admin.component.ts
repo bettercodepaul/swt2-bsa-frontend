@@ -31,20 +31,14 @@ export class TabletAdminComponent implements OnInit {
         const wettkampfId = params['wettkampfId'];
         this.tabletSessionService.findAllTabletSessions(wettkampfId)
             .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
-<<<<<<< Updated upstream
-              const activeSessions: Array<TabletSessionDO> = data.payload;
-=======
-              /*const activeSessions = data.payload;
->>>>>>> Stashed changes
+              /*const activeSessions: Array<TabletSessionDO> = data.payload;
               let allSessions = [];
 
               for (let activeSession of activeSessions) {
                 activeSession.isActive = true;
                 allSessions[activeSession.scheibenNr - 1] = activeSession;
               }
-<<<<<<< Updated upstream
-
-              /* for (let i = 0; i < 8; i++) {
+               for (let i = 0; i < 8; i++) {
                if (activeSessions[i]) {
                allSessions[activeSessions[i].scheibenNr - 1] = activeSessions[i];
                allSessions[activeSessions[i].scheibenNr - 1].isActive = true;
@@ -52,9 +46,7 @@ export class TabletAdminComponent implements OnInit {
                //allSessions[i] = new TabletSessionDO(i+1, parseInt(wettkampfId));
                //allSessions[i].isActive = false;
                }
-               }*/
-=======
->>>>>>> Stashed changes
+               }
               for (let i = 0; i < 8; i++) {
                 if (isNullOrUndefined(allSessions[i])) {
                   allSessions[i] = new TabletSessionDO(i + 1, parseInt(wettkampfId));
