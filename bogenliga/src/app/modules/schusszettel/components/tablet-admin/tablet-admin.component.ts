@@ -68,4 +68,15 @@ export class TabletAdminComponent implements OnInit {
     }
   }
 
+  public updateSession(scheibenNr: number) {
+    let sessionToUpdate = this.sessions[scheibenNr-1];
+    sessionToUpdate.isActive = !sessionToUpdate.isActive;
+    this.tabletSessionService.update(sessionToUpdate)
+      .then((success) => {
+        this.sessions[scheibenNr-1] = success.payload;
+      }, (error) => {
+        console.log(error);
+      })
+  }
+
 }
