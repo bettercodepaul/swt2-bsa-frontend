@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+        <th>Scheibe</th>
+        <th>Status</th>
+        <th>Aktionen</th>
+      </tr>
+      <tr *ngFor="let session of sessions">
+        <td>{{session.scheibenNr}}</td>
+        <td [class.bg-success]="session.isActive" [class.bg-danger]="!session.isActive">{{session.isActive ? 'Aktiv' : 'Nicht aktiv'}}</td>
+        <td>
+          <a *ngIf="session.isActive" (click)="session.isActive = !session.isActive">
+            <fa-icon [icon]="'trash'"></fa-icon>
+          </a>
+          <a *ngIf="!session.isActive" (click)="session.isActive = !session.isActive">
+            <fa-icon [icon]="'plus-circle'"></fa-icon>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
