@@ -9,6 +9,7 @@ export class TabletMapper {
   static sessionToDO(payload: TabletSessionDTO): TabletSessionDO {
     return new TabletSessionDO(payload.scheibenNr,
       payload.wettkampfID,
+      payload.isActive,
       payload.satzNr,
       payload.matchID)
   }
@@ -16,6 +17,7 @@ export class TabletMapper {
   static sessionToDTO(payload: TabletSessionDO): TabletSessionDTO {
     return new TabletSessionDTO(payload.scheibenNr,
       payload.wettkampfID,
+      payload.isActive,
       payload.satzNr,
       payload.matchID)
   }
