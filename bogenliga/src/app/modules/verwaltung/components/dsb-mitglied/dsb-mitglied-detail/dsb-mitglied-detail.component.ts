@@ -338,7 +338,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) =>{this.vereine = response.payload;  this.loadingVereine = false; this.vereineLoaded = true; })
+        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; this.vereineLoaded = true; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 }
