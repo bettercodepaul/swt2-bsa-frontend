@@ -29,7 +29,7 @@ export class RegionenComponent implements OnInit {
   public config = REGIONEN_CONFIG;
   private regionen: RegionDO[];
 
-  private currentRegionDO: RegionDO;
+  public currentRegionDO: RegionDO;
 
   private selectedVereinDO: VereinDO;
   private selectedLigaDO: LigaDO;
