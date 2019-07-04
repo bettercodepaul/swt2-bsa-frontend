@@ -142,15 +142,22 @@
 
       </div>
       <div class="layout-element-2" id="layout_1">
+        <pre><code>{{ allUsers | json }}</code></pre>
         <bla-double-selectionlist [leftItems]="allUsers"
-                                  [(rightItems)]="allUsersTest"
-                                  [fieldSelector]="'name'"
+                                  [(rightItems)]="selectedKampfrichterTag1"
+                                  [fieldSelector]="'email'"
                                   [idLeftList]="'left'"
                                   [idRightList]="'right'"
-                                  style="height: 12em">
+
+                                  style="height: 12em;">
 
         </bla-double-selectionlist>
+
+
       </div>
+
+
+
     </bla-col-layout>
 
 
@@ -266,7 +273,7 @@
 
       <div class="layout-element-2" id="layout_2">
         <bla-double-selectionlist [leftItems]="allUsers"
-                                  [(rightItems)]="allUsersTest"
+                                  [(rightItems)]="selectedKampfrichterTag2"
                                   [fieldSelector]="'name'"
                                   [idLeftList]="'left'"
                                   [idRightList]="'right'"
@@ -385,11 +392,11 @@
 
       <div class="layout-element-2" id="layout_3">
         <bla-double-selectionlist [leftItems]="allUsers"
-                                  [(rightItems)]="allUsersTest"
+                                  [(rightItems)]="selectedKampfrichterTag3"
                                   [fieldSelector]="'name'"
                                   [idLeftList]="'left'"
                                   [idRightList]="'right'"
-                                  style="height: 12em">
+                                  style="height: 12em;">
 
         </bla-double-selectionlist>
       </div>
@@ -510,7 +517,7 @@
       </div>
       <div class="layout-element-2" id="layout_4">
         <bla-double-selectionlist [leftItems]="allUsers"
-                                  [(rightItems)]="allUsersTest"
+                                  [(rightItems)]="selectedKampfrichterTag4"
                                   [fieldSelector]="'name'"
                                   [idLeftList]="'left'"
                                   [idRightList]="'right'"
