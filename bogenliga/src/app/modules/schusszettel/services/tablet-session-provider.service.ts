@@ -42,7 +42,7 @@ export class TabletSessionProviderService extends DataProviderService {
   }
 
   public findTabletSession(wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<TabletSessionDO>> {
-    let api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
+    const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {
       this.restClient.GET<TabletSessionDTO>(api_url)
           .then((data: TabletSessionDTO) => {
@@ -58,7 +58,7 @@ export class TabletSessionProviderService extends DataProviderService {
   }
 
   public create(session: TabletSessionDO, wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<TabletSessionDO>> {
-    let api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
+    const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise(((resolve, reject) => {
       this.restClient.POST(api_url, TabletSessionMapper.tabletSessionToDTO(session))
           .then((data: TabletSessionDTO) => {
@@ -89,7 +89,7 @@ export class TabletSessionProviderService extends DataProviderService {
   }
 
   public delete(wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<any>> {
-    let api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
+    const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {
       this.restClient.DELETE<any>(api_url)
           .then((data: any) => {
