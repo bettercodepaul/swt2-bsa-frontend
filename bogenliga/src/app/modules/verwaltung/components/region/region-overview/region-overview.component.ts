@@ -99,7 +99,7 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
   private handleLoadTableRowsSuccess(response: BogenligaResponse<RegionDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
-    this.translateRegionIdToRegionName();
+    // this.translateRegionIdToRegionName();
     this.loading = false;
   }
 

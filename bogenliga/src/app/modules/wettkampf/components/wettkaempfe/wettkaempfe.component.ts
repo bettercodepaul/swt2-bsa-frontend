@@ -5,6 +5,7 @@ import {NotificationService} from '../../../shared/services/notification';
 import {WETTKAEMPFE_CONFIG} from './wettkaempfe.config';
 
 export * from '../setzliste-download/setzliste-download.component';
+export * from '../schusszettel-download/schusszettel-download.component';
 
 @Component({
   selector:    'bla-wettkaempfe',

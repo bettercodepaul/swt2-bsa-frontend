@@ -34,6 +34,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
   public currentCredentials: CredentialsDO = new CredentialsDO();
   public verifyCredentials: CredentialsDO = new CredentialsDO();
   public currentCredentialsDTO: CredentialsDTO;
+  public qrCode: string;
 
   public saveLoading = false;
 
@@ -50,9 +51,9 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
 
 
     this.route.params.subscribe((params) => {
-        this.currentCredentials = new CredentialsDO();
-        this.verifyCredentials = new CredentialsDO();
-     });
+      this.currentCredentials = new CredentialsDO();
+      this.verifyCredentials = new CredentialsDO();
+    });
     this.loading = false;
 
   }
@@ -62,7 +63,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
 
     // persist
 
-    this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password);
+    this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password, this.currentCredentials.using2FA);
     this.benutzerDataProvider.create(this.currentCredentialsDTO)
         .then((response: BogenligaResponse<BenutzerDO>) => {
           if (!isNullOrUndefined(response)
@@ -84,7 +85,14 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/benutzer');
+                    if (this.currentCredentialsDTO.using2FA) {
+
+                      this.qrCode = response.payload.qrCode;
+                      console.log('QR:');
+                      console.log(this.qrCode);
+                    } else {
+                      this.router.navigateByUrl('/verwaltung/benutzer');
+                    }
                   }
                 });
 

@@ -21,6 +21,9 @@ const NOTIFICATION_DOWNLOAD_FAILURE = 'download_failure';
 export class DownloadButtonComponent extends ButtonComponent implements OnInit {
 
   @Input()
+  public id: string;
+
+  @Input()
   public downloadUrl: string;
 
   @Input()
@@ -40,9 +43,19 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
   public onFileDownload(): void {
     this.loading = true;
 
-    this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+    if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+        .then((() => this.handleWithoutNotification()))
+        .catch((() => this.handleWithoutNotification()));
+    } else {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
         .then((response) => this.handleSuccess(response))
         .catch((response) => this.handleFailure(response));
+    }
+  }
+
+  private handleWithoutNotification(): void {
+    this.loading = false;
   }
 
   private handleSuccess(response: BogenligaResponse<string>): void {

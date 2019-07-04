@@ -34,6 +34,13 @@ export class SchusszettelMapper {
         }
       }
     }
+    const fehlerpunkte = [
+      payload.strafPunkteSatz1,
+      payload.strafPunkteSatz2,
+      payload.strafPunkteSatz3,
+      payload.strafPunkteSatz4,
+      payload.strafPunkteSatz5
+    ];
     return new MatchDO(payload.id,
       payload.mannschaftId,
       payload.mannschaftName,
@@ -44,7 +51,9 @@ export class SchusszettelMapper {
       sumSatz,
       payload.matchpunkte,
       payload.satzpunkte,
-      schuetzen);
+      fehlerpunkte,
+      schuetzen,
+      payload.wettkampfTyp);
   }
 
   static matchToDTO(payload: MatchDO): MatchDTO {
@@ -55,6 +64,13 @@ export class SchusszettelMapper {
         passen.push(this.passeToDTO(passe));
       }
     }
+
+    const strafPunkteSatz1 = payload.fehlerpunkte[0];
+    const strafPunkteSatz2 = payload.fehlerpunkte[1];
+    const strafPunkteSatz3 = payload.fehlerpunkte[2];
+    const strafPunkteSatz4 = payload.fehlerpunkte[3];
+    const strafPunkteSatz5 = payload.fehlerpunkte[4];
+
     return new MatchDTO(payload.id,
       payload.mannschaftId,
       payload.mannschaftName,
@@ -64,7 +80,13 @@ export class SchusszettelMapper {
       payload.scheibenNummer,
       payload.matchpunkte,
       payload.satzpunkte,
-      passen);
+      strafPunkteSatz1,
+      strafPunkteSatz2,
+      strafPunkteSatz3,
+      strafPunkteSatz4,
+      strafPunkteSatz5,
+      passen,
+      payload.wettkampfTyp);
   }
 
   static passeToDO(payload: PasseDTO): PasseDO {
