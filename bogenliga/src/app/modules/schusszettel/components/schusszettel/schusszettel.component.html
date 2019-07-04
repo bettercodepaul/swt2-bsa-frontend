@@ -14,50 +14,50 @@
         <h3>{{match2.mannschaftName}}</h3>
       </div>
       <div class="small_Table col-6">
-        <table id="punktetabelle"
-               class="table table-responsive thead-light table-striped"
+        <table class="table table-responsive thead-light table-striped"
+               id="punktetabelle"
                style="width:100%">
           <tr>
             <td *ngFor="let sum of match1.sumSatz; let i = index">
               <label>{{i + 1}}.S.Pkt</label>
-              <input type="text"
-                     [value]="sum"
+              <input [value]="sum"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
             <td>
               <label>Summe S.pkt</label>
-              <input type="text"
-                     [value]="match1.satzpunkte"
+              <input [value]="match1.satzpunkte"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
             <td>
               <label>Matchpkte</label>
-              <input type="text"
-                     [value]="match1.matchpunkte"
+              <input [value]="match1.matchpunkte"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
           </tr>
           <tr>
             <td *ngFor="let sum of match2.sumSatz">
-              <input type="text"
-                     [value]="sum"
+              <input [value]="sum"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
             <td>
-              <input type="text"
-                     [value]="match2.satzpunkte"
+              <input [value]="match2.satzpunkte"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
             <td>
-              <input type="text"
-                     [value]="match2.matchpunkte"
+              <input [value]="match2.matchpunkte"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
           </tr>
         </table>
@@ -69,61 +69,61 @@
     </div>
     <div class="row">
       <div class="bigTable col-9">
-        <table id="schusstabelle"
-               class="table table-hover table-responsive thead-light table-striped"
+        <table class="table table-hover table-responsive thead-light table-striped"
+               id="schusstabelle"
                style="width:100%">
           <thead>
-            <tr>
-              <th rowspan="2">Schuetze</th>
-              <th colspan="2">1. Satz / Pfeile</th>
-              <th colspan="2">2. Satz / Pfeile</th>
-              <th colspan="2">3. Satz / Pfeile</th>
-              <th colspan="2">4. Satz / Pfeile</th>
-              <th colspan="2">5. Satz / Pfeile</th>
-            </tr>
-            <tr>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-            </tr>
+          <tr>
+            <th rowspan="2">Schuetze</th>
+            <th colspan="2">1. Satz / Pfeile</th>
+            <th colspan="2">2. Satz / Pfeile</th>
+            <th colspan="2">3. Satz / Pfeile</th>
+            <th colspan="2">4. Satz / Pfeile</th>
+            <th colspan="2">5. Satz / Pfeile</th>
+          </tr>
+          <tr>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+          </tr>
           </thead>
-          <ng-template ngFor
+          <ng-template [ngForOf]="match1.schuetzen"
+                       let-i="index"
                        let-schuetze
-                       [ngForOf]="match1.schuetzen"
-                       let-i="index">
+                       ngFor>
             <tr>
-              <ng-template ngFor
+              <ng-template [ngForOf]="schuetze"
+                           let-j="index"
                            let-passe
-                           [ngForOf]="schuetze"
-                           let-j="index">
+                           ngFor>
                 <td *ngIf="j == 0">
-                  <input blaAutoswitch
-                         type="number"
+                  <input [(ngModel)]="passe.schuetzeNr"
+                         blaAutoswitch
                          blaSchuetzenTabIndexDirective
-                         [(ngModel)]="passe.schuetzeNr">
+                         type="number">
                 </td>
                 <td>
-                  <input blaAutoswitch
-                         blaMyNumberOnly
-                         type="text"
-                         blaRingzahlTabIndexDirective
+                  <input (ngModelChange)="onChange($event, 1, i, j, 1)"
                          [ngModel]="passe.ringzahlPfeil1"
-                         (ngModelChange)="onChange($event, 1, i, j, 1)">
+                         blaAutoswitch
+                         blaMyNumberOnly
+                         blaRingzahlTabIndexDirective
+                         type="text">
                 </td>
                 <td>
-                  <input blaAutoswitch
-                         blaMyNumberOnly
-                         type="text"
-                         blaRingzahlTabIndexDirective
+                  <input (ngModelChange)="onChange($event, 1, i, j, 2)"
                          [ngModel]="passe.ringzahlPfeil2"
-                         (ngModelChange)="onChange($event, 1, i, j, 2)">
+                         blaAutoswitch
+                         blaMyNumberOnly
+                         blaRingzahlTabIndexDirective
+                         type="text">
                 </td>
               </ng-template>
               <td class="schuetzensumme">
@@ -132,16 +132,16 @@
             </tr>
             <tr *ngIf="i >= match1.schuetzen.length - 1">
               <td></td>
-              <ng-template ngFor
+              <ng-template [ngForOf]="match1.sumSatz"
+                           let-j="index"
                            let-sum
-                           [ngForOf]="match1.sumSatz"
-                           let-j="index">
+                           ngFor>
                 <td>Summe</td>
                 <td>
-                  <input type="number"
-                         [value]="sum"
+                  <input [value]="sum"
+                         readonly
                          tabindex="-1"
-                         readonly>
+                         type="number">
                 </td>
               </ng-template>
 
@@ -150,12 +150,15 @@
         </table>
       </div>
       <div class="col-2">
-        <div *ngFor="let fehlerpunkt of match1.fehlerpunkte; let i = index; trackBy:trackByIndex;" class="row" style="margin-bottom:10px">
-          <label class="col-4" [for]="'fehlerpunktFeldMatch1' + i+1">Satz {{i + 1}}</label>
+        <div *ngFor="let fehlerpunkt of match1.fehlerpunkte; let i = index; trackBy:trackByIndex;"
+             class="row"
+             style="margin-bottom:10px">
+          <label [for]="'fehlerpunktFeldMatch1' + i+1"
+                 class="col-4">Satz {{i + 1}}</label>
           <div class="col-4">
-            <input [id]="'fehlerpunktFeldMatch1' + i+1"
-                   class="fehlerfeld"
-                   [(ngModel)]="match1.fehlerpunkte[i]">
+            <input [(ngModel)]="match1.fehlerpunkte[i]"
+                   [id]="'fehlerpunktFeldMatch1' + i+1"
+                   class="fehlerfeld">
           </div>
         </div>
       </div>
@@ -166,7 +169,7 @@
 
   <div class="print signature s1">
     <div class="m1">
-      <h1 >{{match2.mannschaftName}}</h1>
+      <h1>{{match2.mannschaftName}}</h1>
       <p>Unterschrift</p>
     </div>
     <div class="m2">
@@ -191,48 +194,48 @@
       </div>
       <div class="small_Table col-6">
         <table class="table table-responsive thead-light table-striped"
-          style="width:100%">
+               style="width:100%">
           <tr>
             <td *ngFor="let sum of match1.sumSatz; let i = index">
               <label>{{i + 1}}.S.Pkt</label>
-              <input type="text"
-                     [value]="sum"
+              <input [value]="sum"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
             <td>
               <label>Summe S.pkt</label>
-              <input type="text"
-                     [value]="match1.satzpunkte"
+              <input [value]="match1.satzpunkte"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
             <td>
               <label>Matchpkte</label>
-              <input type="text"
-                     [value]="match1.matchpunkte"
+              <input [value]="match1.matchpunkte"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
           </tr>
           <tr>
             <td *ngFor="let sum of match2.sumSatz">
-              <input type="text"
-                     [value]="sum"
+              <input [value]="sum"
+                     readonly
                      tabindex="-1"
-                     readonly>
+                     type="text">
             </td>
             <td>
-              <input type="text"
+              <input [value]="match2.satzpunkte"
+                     readonly
                      tabindex="-1"
-                     [value]="match2.satzpunkte"
-                     readonly>
+                     type="text">
             </td>
             <td>
-              <input type="text"
+              <input [value]="match2.matchpunkte"
+                     readonly
                      tabindex="-1"
-                     [value]="match2.matchpunkte"
-                     readonly>
+                     type="text">
             </td>
           </tr>
         </table>
@@ -247,57 +250,57 @@
           class="table table-hover table-responsive thead-light table-striped"
           style="width:100%">
           <thead>
-            <tr>
-              <th rowspan="2">Schuetze</th>
-              <th colspan="2">1. Satz / Pfeile</th>
-              <th colspan="2">2. Satz / Pfeile</th>
-              <th colspan="2">3. Satz / Pfeile</th>
-              <th colspan="2">4. Satz / Pfeile</th>
-              <th colspan="2">5. Satz / Pfeile</th>
-            </tr>
-            <tr>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-              <th>pf. 1</th>
-              <th>pf. 2</th>
-            </tr>
+          <tr>
+            <th rowspan="2">Schuetze</th>
+            <th colspan="2">1. Satz / Pfeile</th>
+            <th colspan="2">2. Satz / Pfeile</th>
+            <th colspan="2">3. Satz / Pfeile</th>
+            <th colspan="2">4. Satz / Pfeile</th>
+            <th colspan="2">5. Satz / Pfeile</th>
+          </tr>
+          <tr>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+            <th>pf. 1</th>
+            <th>pf. 2</th>
+          </tr>
           </thead>
-          <ng-template ngFor
+          <ng-template [ngForOf]="match2.schuetzen"
+                       let-i="index"
                        let-schuetze
-                       [ngForOf]="match2.schuetzen"
-                       let-i="index">
+                       ngFor>
             <tr>
-              <ng-template ngFor
+              <ng-template [ngForOf]="schuetze"
+                           let-j="index"
                            let-passe
-                           [ngForOf]="schuetze"
-                           let-j="index">
+                           ngFor>
                 <td *ngIf="j == 0">
-                  <input blaAutoswitch
-                         type="number"
+                  <input [(ngModel)]="passe.schuetzeNr"
+                         blaAutoswitch
                          blaSchuetzenTabIndexDirective
-                         [(ngModel)]="passe.schuetzeNr">
+                         type="number">
                 </td>
                 <td>
-                  <input blaAutoswitch
-                         blaMyNumberOnly
-                         type="text"
-                         blaRingzahlTabIndexDirective
+                  <input (ngModelChange)="onChange($event, 2, i, j, 1)"
                          [ngModel]="passe.ringzahlPfeil1"
-                         (ngModelChange)="onChange($event, 2, i, j, 1)">
+                         blaAutoswitch
+                         blaMyNumberOnly
+                         blaRingzahlTabIndexDirective
+                         type="text">
                 </td>
                 <td>
-                  <input blaAutoswitch
-                         blaMyNumberOnly
-                         type="text"
-                         blaRingzahlTabIndexDirective
+                  <input (ngModelChange)="onChange($event, 2, i, j, 2)"
                          [ngModel]="passe.ringzahlPfeil2"
-                         (ngModelChange)="onChange($event, 2, i, j, 2)">
+                         blaAutoswitch
+                         blaMyNumberOnly
+                         blaRingzahlTabIndexDirective
+                         type="text">
                 </td>
               </ng-template>
               <td class="schuetzensumme">
@@ -306,16 +309,16 @@
             </tr>
             <tr *ngIf="i >= match2.schuetzen.length - 1">
               <td></td>
-              <ng-template ngFor
+              <ng-template [ngForOf]="match2.sumSatz"
+                           let-j="index"
                            let-sum
-                           [ngForOf]="match2.sumSatz"
-                           let-j="index">
+                           ngFor>
                 <td>Summe</td>
                 <td>
-                  <input type="number"
-                         [value]="sum"
+                  <input [value]="sum"
+                         readonly
                          tabindex="-1"
-                         readonly>
+                         type="number">
                 </td>
               </ng-template>
             </tr>
@@ -323,12 +326,15 @@
         </table>
       </div>
       <div class="col-2">
-        <div *ngFor="let fehlerpunkt of match2.fehlerpunkte; let i = index; trackBy:trackByIndex;" class="row" style="margin-bottom:9px">
-          <label class="col-4" [for]="'fehlerpunktFeldMatch2' + i+1">Satz {{i + 1}}</label>
+        <div *ngFor="let fehlerpunkt of match2.fehlerpunkte; let i = index; trackBy:trackByIndex;"
+             class="row"
+             style="margin-bottom:9px">
+          <label [for]="'fehlerpunktFeldMatch2' + i+1"
+                 class="col-4">Satz {{i + 1}}</label>
           <div class="col-4">
-            <input [id]="'fehlerpunktFeldMatch2' + i+1"
-                   class="fehlerfeld"
-                   [(ngModel)]="match2.fehlerpunkte[i]">
+            <input [(ngModel)]="match2.fehlerpunkte[i]"
+                   [id]="'fehlerpunktFeldMatch2' + i+1"
+                   class="fehlerfeld">
           </div>
         </div>
       </div>
@@ -336,8 +342,8 @@
   </div>
 
 
-  <button class="btn btn-primary saveButton"
-          (click)="save()">Speichern
+  <button (click)="save()"
+          class="btn btn-primary saveButton">Speichern
   </button>
 
   <button class="btn btn-primary printButton"
@@ -346,7 +352,7 @@
 
   <div class="print signature">
     <div class="m1">
-      <h1 >{{match2.mannschaftName}}</h1>
+      <h1>{{match2.mannschaftName}}</h1>
       <p>Unterschrift</p>
     </div>
     <div class="m2">

@@ -24,18 +24,18 @@
         </div>
         <div class="offset-lg-3 col-lg-6 offset-xl-4 col-xl-4">
           <div class="pb-5 pt-3 w-100 flex-container justify-content-around">
-            <ng-template ngFor
+            <ng-template [ngForOf]="schuetzen"
+                         let-i="index"
                          let-schuetze
-                         [ngForOf]="schuetzen"
-                         let-i="index">
+                         ngFor>
               <div class="d-inline-flex align-items-center flex-column">
                 <label [for]="'schuetze' + i+1 + 'Nummer'"
                        class="h4">{{i + 1}}. Schütze</label>
-                <input blaMyNumberOnly
-                       type="number"
-                       [tabindex]="i+1"
+                <input [(ngModel)]="schuetzen[i].schuetzeNr"
                        [id]="'schuetze' + i+1 + 'Nummer'"
-                       [(ngModel)]="schuetzen[i].schuetzeNr"/>
+                       [tabindex]="i+1"
+                       blaMyNumberOnly
+                       type="number"/>
               </div>
             </ng-template>
           </div>
@@ -43,9 +43,9 @@
 
         <div class="offset-4 col-sm-4 justify-content-end flex-container">
           <button
-            class="btn btn-primary mb-5"
             (click)="submitSchuetzenNr()"
             [disabled]="!hasValidSchuetzenNr()"
+            class="btn btn-primary mb-5"
           >
             Speichern
           </button>
@@ -59,25 +59,25 @@
           <h2 class="mb-3">Satz {{tabletSession.satzNr}}</h2>
         </div>
 
-        <ng-template ngFor
+        <ng-template [ngForOf]="schuetzen"
+                     let-i="index"
                      let-schuetze
-                     [ngForOf]="schuetzen"
-                     let-i="index">
-          <div class="col-lg-3 col-xl-2"
-               [ngClass]="{'offset-lg-2 offset-xl-3': i === 0, 'mb-4': i === 2}">
+                     ngFor>
+          <div [ngClass]="{'offset-lg-2 offset-xl-3': i === 0, 'mb-4': i === 2}"
+               class="col-lg-3 col-xl-2">
             <div class="schuetze">
               <h4>Schütze {{schuetze.schuetzeNr}}</h4>
               <div class="flex-container">
-                <input blaMyNumberOnly
-                       type="text"
-                       class="m-2"
+                <input (ngModelChange)="onChange($event, 1, schuetze)"
                        [(ngModel)]="schuetze.passen[tabletSession.satzNr-1].ringzahlPfeil1"
-                       (ngModelChange)="onChange($event, 1, schuetze)">
-                <input blaMyNumberOnly
-                       type="text"
+                       blaMyNumberOnly
                        class="m-2"
+                       type="text">
+                <input (ngModelChange)="onChange($event, 2, schuetze)"
                        [(ngModel)]="schuetze.passen[tabletSession.satzNr-1].ringzahlPfeil2"
-                       (ngModelChange)="onChange($event, 2, schuetze)">
+                       blaMyNumberOnly
+                       class="m-2"
+                       type="text">
               </div>
             </div>
           </div>
@@ -85,16 +85,16 @@
 
         <div class="offset-2 col-sm-8 justify-content-between flex-container">
           <button
-            class="btn btn-primary mr-3 my-5"
             (click)="nextMatch()"
+            class="btn btn-primary mr-3 my-5"
           >
             Nächstes Match <i class="fa fa-fw fa-chevron-right"></i>
           </button>
 
           <button
-            class="btn btn-primary mr-3 my-5"
             (click)="nextSatz()"
             [disabled]="!allPasseFilled()"
+            class="btn btn-primary mr-3 my-5"
           >
             Nächster Satz <i class="fa fa-fw fa-chevron-right"></i>
           </button>
