@@ -75,14 +75,20 @@ export class TabletEingabeComponent implements OnInit {
   schuetzen: Array<SchuetzeErgebnisse>;
   submittedSchuetzenNr: boolean;
 
+  /**
+   * Simple method returning an array containing numbers from 1 ... NUM_SCHUETZEN
+   */
+  static getSchuetzeIdxValues() {
+    return Array.apply(null, {length: NUM_SCHUETZEN}).map(Number.call, Number)
+  }
 
   constructor(private schusszettelService: SchusszettelProviderService,
-    private passeService: PasseProviderService,
-    private matchService: MatchProviderService,
-    private tabletSessionService: TabletSessionProviderService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private notificationService: NotificationService) {
+              private passeService: PasseProviderService,
+              private matchService: MatchProviderService,
+              private tabletSessionService: TabletSessionProviderService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private notificationService: NotificationService) {
   }
 
   /**
@@ -115,13 +121,6 @@ export class TabletEingabeComponent implements OnInit {
             });
       }
     });
-  }
-
-  /**
-   * Simple method returning an array containing numbers from 1 ... NUM_SCHUETZEN
-   */
-  static getSchuetzeIdxValues() {
-    return Array.apply(null, {length: NUM_SCHUETZEN}).map(Number.call, Number)
   }
 
   /**
@@ -268,15 +267,6 @@ export class TabletEingabeComponent implements OnInit {
     return valid;
   }
 
-  private passeIsValid(passe: PasseDO) {
-    return (
-      passe.ringzahlPfeil1 &&
-      passe.ringzahlPfeil1 >= 0 &&
-      passe.ringzahlPfeil2 &&
-      passe.ringzahlPfeil2 >= 0
-    );
-  }
-
   /**
    * Trigger switch to the next match on this wettkampftag
    * TODO: Button "Nächstes Match" anzeigen, wenn Match vorbei ist, bedeutet:
@@ -347,6 +337,15 @@ export class TabletEingabeComponent implements OnInit {
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     });
+  }
+
+  private passeIsValid(passe: PasseDO) {
+    return (
+      passe.ringzahlPfeil1 &&
+      passe.ringzahlPfeil1 >= 0 &&
+      passe.ringzahlPfeil2 &&
+      passe.ringzahlPfeil2 >= 0
+    );
   }
 
   private enrichPasseDO(passe: PasseDO, schuetze: SchuetzeErgebnisse) {

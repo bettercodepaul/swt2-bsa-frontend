@@ -22,8 +22,8 @@ export class TabletAdminComponent implements OnInit {
   tabletEingabeRoute: string;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private tabletSessionService: TabletSessionProviderService) {
+              private router: Router,
+              private tabletSessionService: TabletSessionProviderService) {
   }
 
   /**
@@ -52,17 +52,6 @@ export class TabletAdminComponent implements OnInit {
     });
   }
 
-  private setActiveSession() {
-    let currentTabletSession = localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
-    this.currentDeviceIsActive = Boolean(currentTabletSession) &&
-      SESSION_INVALID_STORAGE_VALUES.indexOf(currentTabletSession) < 0;
-    console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
-    if (this.currentDeviceIsActive) {
-      this.currentSession = JSON.parse(currentTabletSession);
-      this.sessions[this.currentSession.scheibenNr - 1] = this.currentSession;
-    }
-  }
-
   public updateSession(scheibenNr: number) {
     let sessionToUpdate = this.sessions[scheibenNr - 1];
     sessionToUpdate.isActive = !sessionToUpdate.isActive;
@@ -78,6 +67,17 @@ export class TabletAdminComponent implements OnInit {
         }, (error) => {
           console.log(error);
         })
+  }
+
+  private setActiveSession() {
+    let currentTabletSession = localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
+    this.currentDeviceIsActive = Boolean(currentTabletSession) &&
+      SESSION_INVALID_STORAGE_VALUES.indexOf(currentTabletSession) < 0;
+    console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
+    if (this.currentDeviceIsActive) {
+      this.currentSession = JSON.parse(currentTabletSession);
+      this.sessions[this.currentSession.scheibenNr - 1] = this.currentSession;
+    }
   }
 
   private storeCurrentSession(session: TabletSessionDO) {

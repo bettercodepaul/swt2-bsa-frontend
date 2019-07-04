@@ -8,7 +8,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 
 input, label {
-  display:block;
+  display: block;
 }
 
 
@@ -25,13 +25,13 @@ input {
   -moz-appearance: textfield;
   font-size: 30px;
   text-align: center;
+
   &:focus {
-    -webkit-box-shadow: 0px 0px 8px 0px rgba(5,122,255,1);
-    -moz-box-shadow: 0px 0px 8px 0px rgba(5,122,255,1);
-    box-shadow: 0px 0px 8px 0px rgba(5,122,255,1);
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
+    -moz-box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
+    box-shadow: 0px 0px 8px 0px rgba(5, 122, 255, 1);
   }
 }
-
 
 
 tr, th, td {
@@ -51,8 +51,6 @@ label {
 }
 
 
-
-
 .match1 {
   margin-top: 20px;
 }
@@ -63,7 +61,7 @@ label {
 }
 
 .match1, .match2 {
-  border: 2px solid rgba(0,0,0,.1);
+  border: 2px solid rgba(0, 0, 0, .1);
 }
 
 .schuetzensumme {
@@ -79,7 +77,6 @@ label {
 }
 
 
-
 @media print {
   input {
     border: 2px solid #dee2e6;
@@ -87,14 +84,14 @@ label {
     width: 45px;
     font-size: 25px;
   }
-  h1{
+  h1 {
     font-size: 30px;
   }
   h3 {
     font-size: 20px;
   }
 
-  .match1{
+  .match1 {
     margin-bottom: 1cm;
   }
 
@@ -116,7 +113,8 @@ label {
     border-bottom: 1px solid black;
     display: inline-block;
     width: 90%;
-    p{
+
+    p {
       margin-top: 1cm;
       margin-bottom: 0.5cm;
     }

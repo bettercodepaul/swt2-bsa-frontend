@@ -70,6 +70,60 @@ export class SchusszettelComponent implements OnInit {
   }
 
   /**
+   * Called when ngModel for passe.ringzahlPfeilx changes.
+   * If the new, inputed value contains a '+', the ringzahl is set to 10.
+   * With the params, the correct PasseDO and its ringzahlPfeilx is selected and set.
+   * The value is a string, so before setting the ringzahl it needs to be parsed to number.
+   * After that, sets the match's sumSatzx depending on which Satz was edited.
+   * @param value
+   * @param matchNr
+   * @param schuetzenNr
+   * @param satzNr
+   * @param pfeilNr
+   */
+  onChange(value: string, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
+    const match = this['match' + matchNr];
+    const satz = match.schuetzen[schuetzenNr][satzNr];
+    if (value.indexOf(NumberOnlyDirective.ALIAS_10) !== -1) {
+      pfeilNr === 1 ? satz.ringzahlPfeil1 = NumberOnlyDirective.MAX_VAL : satz.ringzahlPfeil2 = NumberOnlyDirective.MAX_VAL;
+    } else {
+      let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number
+                                           // umwandeln
+      realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
+      pfeilNr === 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
+    }
+    match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
+    this.setPoints();
+  }
+
+  save() {
+    this.notificationService.showNotification({
+      id:          'schusszettelSave',
+      title:       'Lädt...',
+      description: 'Schusszettel wird gespeichert...',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    });
+    this.schusszettelService.create(this.match1, this.match2)
+        .then((data: BogenligaResponse<Array<MatchDO>>) => {
+          this.match1 = data.payload[0];
+          this.match2 = data.payload[1];
+          this.initSumSatz();
+          this.setPoints();
+          this.notificationService.discardNotification();
+        }, (error) => {
+          console.error(error);
+          this.notificationService.discardNotification();
+        });
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
+
+  /**
    * Initializes schuetzen-array of matches.
    * Pushes three arrays into schuetzen, then pushes five PasseDO in each of the three arrays.
    */
@@ -90,32 +144,6 @@ export class SchusszettelComponent implements OnInit {
         }
       }
     }
-  }
-
-  /**
-   * Called when ngModel for passe.ringzahlPfeilx changes.
-   * If the new, inputed value contains a '+', the ringzahl is set to 10.
-   * With the params, the correct PasseDO and its ringzahlPfeilx is selected and set.
-   * The value is a string, so before setting the ringzahl it needs to be parsed to number.
-   * After that, sets the match's sumSatzx depending on which Satz was edited.
-   * @param value
-   * @param matchNr
-   * @param schuetzenNr
-   * @param satzNr
-   * @param pfeilNr
-   */
-  onChange(value: string, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
-    const match = this['match' + matchNr];
-    const satz = match.schuetzen[schuetzenNr][satzNr];
-    if (value.indexOf(NumberOnlyDirective.ALIAS_10) !== -1) {
-      pfeilNr === 1 ? satz.ringzahlPfeil1 = NumberOnlyDirective.MAX_VAL : satz.ringzahlPfeil2 = NumberOnlyDirective.MAX_VAL;
-    } else {
-      let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
-      realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
-      pfeilNr === 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
-    }
-    match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
-    this.setPoints();
   }
 
   /**
@@ -203,29 +231,6 @@ export class SchusszettelComponent implements OnInit {
     }
   }
 
-  save() {
-    this.notificationService.showNotification({
-      id:          'schusszettelSave',
-      title:       'Lädt...',
-      description: 'Schusszettel wird gespeichert...',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
-    });
-    this.schusszettelService.create(this.match1, this.match2)
-        .then((data: BogenligaResponse<Array<MatchDO>>) => {
-          this.match1 = data.payload[0];
-          this.match2 = data.payload[1];
-          this.initSumSatz();
-          this.setPoints();
-          this.notificationService.discardNotification();
-        }, (error) => {
-          console.error(error);
-          this.notificationService.discardNotification();
-        });
-  }
-
   private initSumSatz() {
     for (let i = 0; i < 5; i++) {
       this.match1.sumSatz[i] = this.getSumSatz(this.match1, i);
@@ -240,9 +245,5 @@ export class SchusszettelComponent implements OnInit {
       sum += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
     }
     return sum;
-  }
-
-  trackByIndex(index: number, obj: any): any {
-    return index;
   }
 }

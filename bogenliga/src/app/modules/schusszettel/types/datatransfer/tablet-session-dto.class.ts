@@ -10,11 +10,11 @@ export class TabletSessionDTO implements DataTransferObject {
   otherMatchId: number;
 
   constructor(scheibennummer?: number,
-    wettkampfId?: number,
-    active?: boolean,
-    satznummer?: number,
-    matchId?: number,
-    otherMatchID?: number) {
+              wettkampfId?: number,
+              active?: boolean,
+              satznummer?: number,
+              matchId?: number,
+              otherMatchID?: number) {
     this.scheibennummer = !!scheibennummer ? scheibennummer : null;
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
     this.active = !!active;

@@ -7,7 +7,6 @@ import {
   RestClient,
   UriBuilder
 } from '../../shared/data-provider';
-import {MatchMapper} from '../mapper/match-mapper';
 import {PasseDO} from '../types/passe-do.class';
 import {PasseDTO} from '../types/datatransfer/passe-dto.class';
 import {PasseMapper} from '../mapper/passe-mapper';

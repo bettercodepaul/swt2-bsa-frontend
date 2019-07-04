@@ -6,17 +6,14 @@ import {SharedModule} from '@shared/shared.module';
 import {SCHUSSZETTEL_ROUTES} from './schusszettel.routing';
 import {SchusszettelComponent} from './components/schusszettel/schusszettel.component';
 import {NumberOnlyDirective} from './components/schusszettel/number.directive';
-import {
-  RingzahlTabIndexDirective,
-  SchuetzenTabIndexDirective
-} from './components/schusszettel/tabindex.directive';
+import {RingzahlTabIndexDirective, SchuetzenTabIndexDirective} from './components/schusszettel/tabindex.directive';
 import {AutoswitchDirective} from './components/schusszettel/autoswitch.directive';
 import {TabletEingabeComponent} from './components/tableteingabe/tableteingabe.component';
 import {TabletAdminComponent} from './components/tablet-admin/tablet-admin.component';
 
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(SCHUSSZETTEL_ROUTES),
     SharedModule,
