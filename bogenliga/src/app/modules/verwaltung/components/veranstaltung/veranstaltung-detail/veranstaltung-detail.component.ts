@@ -82,7 +82,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private ligaProvider: LigaDataProviderService,
-    private mannschaftDataProvider:DsbMannschaftDataProviderService,
+    private mannschaftDataProvider: DsbMannschaftDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
@@ -235,7 +235,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
       }
     } else {
-      console.log('Veranstaltung ist nicht vorhanden')
+      console.log('Veranstaltung ist nicht vorhanden');
     }
     // show response message
   }
