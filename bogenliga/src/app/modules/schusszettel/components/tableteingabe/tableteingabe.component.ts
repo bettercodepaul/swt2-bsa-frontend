@@ -57,6 +57,8 @@ const STORAGE_KEY_SCHUETZE_PREFIX: string = 'schuetze';
 const STORAGE_KEY_SUBMITTED: string = 'submittedSchuetzenNr';
 const STORAGE_KEY_SCHUETZEN: string = 'schuetzen';
 
+const NOTIFICATION_CONFIRM_NEXT_MATCH: string = 'tabletEingabeConfirmNextMatch';
+
 @Component({
   selector:    'bla-tableteingabe',
   templateUrl: './tableteingabe.component.html',
@@ -281,16 +283,22 @@ export class TabletEingabeComponent implements OnInit {
    * 5 Sätze voll oder nach 3 Sätzen schon gewonnen -> irgendwie herausfinden
    */
   nextMatch() {
-    this.showNextMatchNotification();
-    this.matchService.next(this.currentMatch.id)
-        .then((data) => {
-          if (data.payload.length === 2) {
-            this.resetStorageData();
-            this.initStorageData();
-            this.router.navigate(['/schusszettel/' + data.payload[0] + '/' + data.payload[1] + '/tablet']);
-            this.notificationService.discardNotification();
-          } else {
-            // Ende des Wettkampftages, do something
+    this.showConfirmNextMatchNotification();
+    this.notificationService.observeNotification(NOTIFICATION_CONFIRM_NEXT_MATCH)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.showNextMatchNotification();
+            this.matchService.next(this.currentMatch.id)
+                .then((data) => {
+                  if (data.payload.length === 2) {
+                    this.resetStorageData();
+                    this.initStorageData();
+                    this.router.navigate(['/schusszettel/' + data.payload[0] + '/' + data.payload[1] + '/tablet']);
+                    this.notificationService.discardNotification();
+                  } else {
+                    // Ende des Wettkampftages, do something
+                  }
+                });
           }
         });
   }
@@ -313,6 +321,18 @@ export class TabletEingabeComponent implements OnInit {
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.SYSTEM,
       type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    });
+  }
+
+  showConfirmNextMatchNotification() {
+    this.notificationService.showNotification({
+      id:          NOTIFICATION_CONFIRM_NEXT_MATCH,
+      title:       'Nächstes Match starten',
+      description: 'Wollen Sie wirklich das nächste Match starten?',
+      severity:    NotificationSeverity.QUESTION,
+      origin:      NotificationOrigin.SYSTEM,
+      type:        NotificationType.YES_NO,
       userAction:  NotificationUserAction.PENDING
     });
   }
