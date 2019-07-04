@@ -379,7 +379,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loadUsers();
     this.loadLiga();
     this.loadAllVeranstaltung();
-    console.log('Anfordern der Veranstaltungen fertig');
+
 
 
 
@@ -508,11 +508,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   private handleAllVeranstaltungResponseArraySuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
     this.allVeranstaltung = [];
     this.allVeranstaltung = response.payload;
-
-
-    for (let i = 0; i < this.allVeranstaltung.length; i++) {
-      console.log(this.allVeranstaltung[i].name + ' ')
-    }
 
     this.loading = false;
     this.loadDsbMannschaft();

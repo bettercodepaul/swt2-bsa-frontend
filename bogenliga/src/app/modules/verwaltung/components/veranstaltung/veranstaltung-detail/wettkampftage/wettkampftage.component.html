@@ -68,7 +68,7 @@
                    id="wettkampftag1_datum"
                    name="wettkampftag1_datum"
                    #wettkampftag1_datum="ngModel"
-                   [(ngModel)]="currentWettkampftag_1.datum"
+                   [(ngModel)]="currentWettkampftag_1.wettkampfDatum"
                    [class.is-invalid]="wettkampftag1_datum.invalid && ! wettkampftag1_datum.untouched"
                    placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.DATUM.PLACEHOLDER' | translate }}">
 
@@ -198,7 +198,7 @@
                    id="wettkampftag2_datum"
                    name="wettkampftag2_datum"
                    #wettkampftag2_datum="ngModel"
-                   [(ngModel)]="currentWettkampftag_2.datum"
+                   [(ngModel)]="currentWettkampftag_2.wettkampfDatum"
                    [class.is-invalid]="wettkampftag2_datum.invalid && ! wettkampftag2_datum.untouched"
                    placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.DATUM.PLACEHOLDER' | translate }}">
 
@@ -320,7 +320,7 @@
                    id="wettkampftag3_datum"
                    name="wettkampftag3_datum"
                    #wettkampftag3_datum="ngModel"
-                   [(ngModel)]="currentWettkampftag_3.datum"
+                   [(ngModel)]="currentWettkampftag_3.wettkampfDatum"
                    [class.is-invalid]="wettkampftag3_datum.invalid && ! wettkampftag3_datum.untouched"
                    placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.DATUM.PLACEHOLDER' | translate }}">
 
@@ -444,7 +444,7 @@
                    id="wettkampftag4_datum"
                    name="wettkampftag4_datum"
                    #wettkampftag4_datum="ngModel"
-                   [(ngModel)]="currentWettkampftag_4.datum"
+                   [(ngModel)]="currentWettkampftag_4.wettkampfDatum"
                    [class.is-invalid]="wettkampftag4_datum.invalid && ! wettkampftag4_datum.untouched"
                    placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.DATUM.PLACEHOLDER' | translate }}">
 
@@ -538,7 +538,7 @@
 
 
         <bla-button *ngIf="entityExists()"
-                    [id]="'ligaSaveButton'"
+                    [id]="'wettkampfSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onVeranstaltungDetail($event)">
