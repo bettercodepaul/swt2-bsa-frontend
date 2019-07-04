@@ -20,5 +20,3 @@ export class TabletSessionDO implements DataObject {
     this.matchID = !!matchID ? matchID : null;
   }
 }
-
-

@@ -1,4 +1,5 @@
 <div class="container">
+  <h2 class="mb-4 mt-3">Tabletverwaltung</h2>
   <div class="table-responsive">
     <table class="table">
       <tr>
@@ -7,8 +8,17 @@
         <th style="width: 33%">Aktionen</th>
       </tr>
       <tr *ngFor="let session of sessions">
-        <td>{{session.scheibenNr}}</td>
-        <td [class.bg-success]="session.isActive" [class.bg-danger]="!session.isActive">{{session.isActive ? 'Aktiv' : 'Nicht aktiv'}}</td>
+        <td>
+          <span class="h4 text-secondary text-center m-0 p-0">{{session.scheibenNr}}</span>
+        </td>
+        <td>
+          <span
+            class="badge"
+            [class.badge-success]="session.isActive"
+            [class.badge-danger]="!session.isActive">
+            {{session.isActive ? 'Aktiv' : 'Nicht aktiv'}}
+          </span>
+        </td>
         <td>
           <a *ngIf="session.isActive" (click)="updateSession(session.scheibenNr)">
             <fa-icon [icon]="'trash'"></fa-icon>
