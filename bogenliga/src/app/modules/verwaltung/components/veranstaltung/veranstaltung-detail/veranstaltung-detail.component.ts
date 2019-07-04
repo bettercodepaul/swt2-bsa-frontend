@@ -318,7 +318,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   }
 
   public mannschaftExists(): boolean {
-    return this.allDsbMannschaft.filter((veranstaltung) => veranstaltung.id === this.currentVeranstaltung.id).length >= 0;
+    return this.allDsbMannschaft.filter((veranstaltung) => veranstaltung.id === this.currentVeranstaltung.id).length > 0;
   }
 
 
