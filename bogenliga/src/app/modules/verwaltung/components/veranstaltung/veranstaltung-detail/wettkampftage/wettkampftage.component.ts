@@ -560,7 +560,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1).length === 0) {
       this.currentWettkampftag_1 = new WettkampfDO();
-      ;
+
 
     } else {
       this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
@@ -569,7 +569,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2).length === 0) {
       this.currentWettkampftag_2 = new WettkampfDO();
-      ;
+
 
     } else {
       this.currentWettkampftag_2 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2)[0];
@@ -578,14 +578,14 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3).length === 0) {
       this.currentWettkampftag_3 = new WettkampfDO();
-      ;
+
     } else {
       this.currentWettkampftag_3 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3)[0];
     }
 
     if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 4).length === 0) {
       this.currentWettkampftag_4 = new WettkampfDO();
-      ;
+
     } else {
       this.currentWettkampftag_4 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 4)[0];
     }
@@ -616,8 +616,8 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
     this.allKampfrichter = [];
     this.allKampfrichter = response.payload;
 
-    this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_1.id);
-    for(let iter in this.KampfrichterTag1) {
+    this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_1.id);
+    for (const iter in this.KampfrichterTag1) {
       this.selectedKampfrichterTag1.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
     }
     this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_2.id);
