@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
 import {isUndefined} from '@shared/functions';
 import {BogenligaResponse} from '@shared/data-provider';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
 
 export const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
@@ -19,8 +19,10 @@ export class TabletAdminComponent implements OnInit {
   sessions: Array<TabletSessionDO>;
   currentDeviceIsActive: boolean = false;
   currentSession: TabletSessionDO;
+  tabletEingabeRoute: string;
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     private tabletSessionService: TabletSessionProviderService) {
   }
 
@@ -34,32 +36,9 @@ export class TabletAdminComponent implements OnInit {
         const wettkampfId = params['wettkampfId'];
         this.tabletSessionService.findAllTabletSessions(wettkampfId)
             .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
-              /*const activeSessions: Array<TabletSessionDO> = data.payload;
-               let allSessions = [];
-
-               for (let activeSession of activeSessions) {
-               activeSession.isActive = true;
-               allSessions[activeSession.scheibenNr - 1] = activeSession;
-               }
-               for (let i = 0; i < 8; i++) {
-               if (activeSessions[i]) {
-               allSessions[activeSessions[i].scheibenNr - 1] = activeSessions[i];
-               allSessions[activeSessions[i].scheibenNr - 1].isActive = true;
-               } else {
-               //allSessions[i] = new TabletSessionDO(i+1, parseInt(wettkampfId));
-               //allSessions[i].isActive = false;
-               }
-               }
-               for (let i = 0; i < 8; i++) {
-               if (isNullOrUndefined(allSessions[i])) {
-               allSessions[i] = new TabletSessionDO(i + 1, parseInt(wettkampfId));
-               allSessions[i].isActive = false;
-               }
-               }
-               this.sessions = allSessions;
-               */
               this.sessions = data.payload;
               this.setActiveSession();
+              this.setTabletEingabeRoute();
             }, (error) => {
               console.error(error);
               // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
@@ -92,8 +71,9 @@ export class TabletAdminComponent implements OnInit {
         .then((success) => {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
           this.storeCurrentSession(this.currentSession);
-          if (this.currentDeviceIsActive) {
-            // TODO link zur Eingabe erstellen und da hin navigieren... Andere MatchID wird noch benötigt...
+          this.setTabletEingabeRoute();
+          if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
+            this.router.navigate([this.tabletEingabeRoute]);
           }
         }, (error) => {
           console.log(error);
@@ -108,5 +88,18 @@ export class TabletAdminComponent implements OnInit {
       localStorage.removeItem(STORAGE_KEY_TABLET_SESSION);
       this.currentDeviceIsActive = false;
     }
+  }
+
+  private setTabletEingabeRoute() {
+    if (this.currentSession) {
+      this.tabletEingabeRoute = '/schusszettel/' + this.currentSession.matchID + '/' + this.currentSession.otherMatchId + '/tablet';
+    }
+  }
+
+  private canNavigateToEingabe(session) {
+    return this.currentDeviceIsActive &&
+      this.currentSession &&
+      this.currentSession.otherMatchId &&
+      this.currentSession.scheibenNr === session.scheibenNr
   }
 }
