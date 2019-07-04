@@ -182,6 +182,11 @@
         "PLACEHOLDER": "Bitte Passwort eingeben",
         "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
       },
+      "CODE": {
+        "LABEL": "Google Autheticator Verification Code",
+        "PLACEHOLDER": "Bitte Authentifizierungscode eingeben",
+        "ERROR": "Bitte einen gültigen Code mit mehr als 3 Zeichen eingeben."
+      },
       "REMEMBER_ME": {
         "LABEL": "E-Mail-Adresse merken?"
       },
@@ -517,24 +522,45 @@
       "TITLE": "Region - Details",
       "FORM": {
         "REGION_NAME": {
-          "LABEL": "Region-Name",
-          "PLACEHOLDER": "Bitte einen Namen eingeben",
+          "LABEL": "Name der Region",
+          "PLACEHOLDER": "Bitte einen Namen für die Region eingeben",
           "ERROR": "Bitte einen gültigen Namen eingeben."
         },
         "REGION_CONTRACTION": {
-          "LABEL": "Region-Kürzel",
-          "PLACEHOLDER": "Bitte ein Kürzel eingeben",
-          "ERROR": "Bitte einen gültigen Identifier eingeben."
+          "LABEL": "Kürzel der Region",
+          "PLACEHOLDER": "Bitte ein Kürzel für die Region eingeben",
+          "ERROR": "Bitte einen gültiges Kürzel (min. 1 Zeichen, max. 7 Zeichen) eingeben."
         },
         "REGION_TYP": {
-          "LABEL": "Region-Typ",
-          "PLACEHOLDER": "Bitte einen Region auswählen",
-          "ERROR": "Bitte eine gültige Region eingeben."
+          "LABEL": "Typ der Region",
+          "PLACEHOLDER": "Bitte einen Typ für die Region auswählen",
+          "ERROR": "Bitte einen Typ für die Region auswählen"
         },
         "REGION_SUPERORDINATE": {
           "LABEL": "Übergeordnete Region",
           "PLACEHOLDER": "Bitte eine übergeordnete Region auswählen",
-          "ERROR": "Bitte eine gültige Region eingeben."
+          "ERROR": "Bitte eine Region auswählen."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Region löschen",
+          "DESCRIPTION": "Wollen Sie die Region mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Region wurde erfolgreich gelöscht."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Region konnte nicht gelöscht werden."
+        },
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Region wurde erfolgreich gespeichert."
         }
       }
     },
@@ -555,6 +581,14 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+      "TABLE": {
+        "HEADERS": {
+          "MITGLIED_VORNAME": "Vorname",
+          "MITGLIED_NACHNAME": "Nachname",
+          "MITGLIED_NATIONALITAET": "Nationalität",
+          "MITGLIED_NUMMER": "Mitgliedsnummer"
+        }
+      },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Mannschaft löschen",
@@ -571,6 +605,64 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Mannschaft wurde erfolgreich gespeichert."
+        },
+        "DELETE_MITGLIED": {
+          "TITLE": "Schütze aus Mannschaft löschen",
+          "DESCRIPTION": "Wollen Sie den Schützen mit der ID=%s wirklich aus der Mannschaft entfernen?"
+        },
+        "DELETE_MITGLIED_SUCCESS": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
+        },
+        "DELETE_MITGLIED_FAILURE": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Schütze konnte nicht entfernt werden."
+        }
+      }
+    },
+    "SCHUETZE_HINZUFUEGEN": {
+      "TITLE": "Schütze der Mannschaft hinzufügen",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "Vorname",
+          "PLACEHOLDER": "Bitte einen Vornamen zum Suchen eingeben."
+        },
+        "NACHNAME": {
+          "LABEL": "Nachname",
+          "PLACEHOLDER": "Bitte einen Nachnamen zum Suchen eingeben."
+        },
+        "VEREINE": {
+          "LABEL": "Verein",
+          "PLACEHOLDER": "Bitte einen Verein zum Suchen auswählen."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Mitgliedsnummer",
+          "PLACEHOLDER": "Bitte eine Mitgliedsnummer zum Suchen eingeben."
+        },
+        "SAVE": "Speichern",
+        "UPDATE": "Aktualisieren",
+        "DELETE": "Löschen"
+      },
+      "TABLE": {
+        "HEADERS": {
+          "MITGLIED_VORNAME": "Vorname",
+          "MITGLIED_NACHNAME": "Nachname",
+          "MITGLIED_VEREIN": "Verein",
+          "MITGLIED_NUMMER": "Mitgliedsnummer"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt."
+        },
+        "DUPLICATE": {
+          "TITLE": "Fehler",
+          "DESCRIPTION": "Schütze ist schon in der Mannschaft vorhanden. Bitte fügen Sie einen anderen Schützen hinzu."
+        },
+        "OVERUSED": {
+          "TITLE": "Fehler",
+          "DESCRIPTION": "Schütze kann dieser Mannschaft nicht hinzugefügt werden, da er schon in zuvielen Mannschaften eingesetzt wurde, bzw. in einer höheren Liga schon eingesetzt wurde."
         }
       }
     },
@@ -590,7 +682,7 @@
         "GEBURTSDATUM": {
           "LABEL": "Geburtsdatum",
           "PLACEHOLDER": "Bitte ein Geburtsdatum eingeben",
-          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: JJJJ-MM-TT)."
+          "ERROR": "Bitte ein gültiges Geburtsdatum eingeben (Format: TT-MM-JJJJ)."
         },
         "MITGLIEDSNUMMER": {
           "LABEL": "Mitgliedsnummer",
@@ -906,6 +998,9 @@
           "PLACEHOLDER": "Bitte Passwort wiederholen",
           "ERROR": "Passwort nicht identisch zum neuen Password"
         },
+        "2FA": {
+          "LABEL": "Zwei-Faktor-Authentifizierung aktivieren?"
+        },
         "SAVE": "Speichern"
       },
       "NOTIFICATION": {
@@ -1030,7 +1125,8 @@
     "ACTIONS": {
       "VIEW": "Ansehen",
       "EDIT": "Editieren",
-      "DELETE": "Löschen"
+      "DELETE": "Löschen",
+      "ADD": "Hinzufügen"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",

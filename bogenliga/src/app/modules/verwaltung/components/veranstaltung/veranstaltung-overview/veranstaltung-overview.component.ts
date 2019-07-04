@@ -17,7 +17,7 @@ import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-
 import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_OVERVIEW_CONFIG} from './veranstaltung-overview.config';
-import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components';
+import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components/liga/liga-overview/liga-overview.component';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
 

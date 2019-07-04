@@ -58,10 +58,17 @@ export abstract class ResourceProviderService extends DataProviderService {
                 let blobUrl: string;
                 blobUrl = this.getWindow().URL.createObjectURL(resource);
 
-                link.href = blobUrl;
-                link.download = fileName;
-                link.click();
-                this.getWindow().URL.revokeObjectURL(blobUrl);
+                if (fileName.toLowerCase().includes('pdf')) {
+                  link.href = blobUrl;
+                  link.download = fileName;
+                  link.onClick = window.open(blobUrl, '_blank');
+                } else {
+                  link.href = blobUrl;
+                  link.download = fileName;
+                  link.click();
+                  this.getWindow().URL.revokeObjectURL(blobUrl);
+                }
+
               }
 
             } else {

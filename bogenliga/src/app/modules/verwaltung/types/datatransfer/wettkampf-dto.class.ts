@@ -3,8 +3,7 @@ import {DataTransferObject} from '@shared/data-provider';
 export class WettkampfDTO implements DataTransferObject {
   // This maps the DTO from the Backend
   id: number;
-  veranstaltungsId: number;
-  datum: string;
+  wettkampfDatum: string;
   wettkampfOrt: string;
   wettkampfBeginn: string;
   wettkampfTag: number;
@@ -12,6 +11,10 @@ export class WettkampfDTO implements DataTransferObject {
   wettkampfTypId: number;
 
   version: number;
+  wettkampfVeranstaltungsId: number;
+
+  // not set, find Liga by Wettkampfid
+  wettkampfLiga: string;
 
 
   static copyFrom(optional: {
@@ -35,9 +38,9 @@ export class WettkampfDTO implements DataTransferObject {
       copy.id = null;
     }
     if (optional.veranstaltungsId >= 0) {
-      copy.veranstaltungsId = optional.veranstaltungsId;
+      copy.wettkampfVeranstaltungsId = optional.veranstaltungsId;
     } else {
-      copy.veranstaltungsId = null;
+      copy.wettkampfVeranstaltungsId = null;
     }
     if (optional.wettkampfTag >= 0) {
       copy.wettkampfTag = optional.wettkampfTag;
@@ -55,7 +58,7 @@ export class WettkampfDTO implements DataTransferObject {
       copy.wettkampfTypId = null;
     }
 
-    copy.datum = optional.datum || '';
+    copy.wettkampfDatum = optional.datum || '';
     copy.wettkampfOrt = optional.wettkampfOrt || null;
     copy.wettkampfBeginn = optional.wettkampfBeginn || null;
 

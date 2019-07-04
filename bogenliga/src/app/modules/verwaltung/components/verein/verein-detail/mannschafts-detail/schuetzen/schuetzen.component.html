@@ -1,0 +1,85 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <form id="schützeForm"
+        class="horizontal-form half-page"
+        #schützeForm="ngForm">
+
+    <!-- Vorname -->
+    <div class="form-group row">
+      <label for="memberVorname"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VORNAME.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               id="memberVorname"
+               name="memberVorname"
+               #memberVorname="ngModel"
+               [(ngModel)]="vorname"
+               [class.is-invalid]="memberVorname.invalid && !memberVorname.untouched"
+               (input) = "onSearch()"
+               placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VORNAME.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Nachname -->
+    <div class="form-group row">
+      <label for="memberNachname"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.NACHNAME.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               id="memberNachname"
+               name="memberNachname"
+               #memberNachname="ngModel"
+               [(ngModel)]="nachname"
+               [class.is-invalid]="memberNachname.invalid && !memberNachname.untouched"
+               (input) = "onSearch()"
+               placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.NACHNAME.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+      <!-- Mitgliedsnummer -->
+    <div class="form-group row">
+    <label for="memberVorname"
+           class="col-sm-3 col-form-label">
+      <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.MITGLIEDSNUMMER.LABEL' | translate }}</span>
+    </label>
+    <div class="col-sm-9">
+      <input type="text"
+             class="form-control"
+             id="memberNummer"
+             name="memberNummer"
+             #memberNummer="ngModel"
+             [(ngModel)]="mitgliedsnummer"
+             [class.is-invalid]="memberNummer.invalid && !memberNummer.untouched"
+             (input) = "onSearch()"
+             placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}">
+
+      <div class="invalid-feedback">
+        {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
+      </div>
+    </div>
+  </div>
+  </form>
+
+  <h3> Gefundene Schützen: </h3>
+  <bla-data-table [config]="table_config"
+                  [rows]="rows"
+                  [loading]="loading"
+                  (onAddEntry)="onSave($event)">
+  </bla-data-table>
+
+</bla-common-dialog>

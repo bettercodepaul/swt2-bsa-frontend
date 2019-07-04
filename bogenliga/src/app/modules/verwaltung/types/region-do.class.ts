@@ -8,6 +8,5 @@ export class RegionDO implements VersionedDataObject {
   regionKuerzel: string;
   regionTyp: string;
   regionUebergeordnet: number;
-
   regionUebergeordnetAsName: string;
 }

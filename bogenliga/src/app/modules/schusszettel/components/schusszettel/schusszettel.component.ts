@@ -6,13 +6,13 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {isUndefined} from '@shared/functions';
 import {ActivatedRoute} from '@angular/router';
 import {
-  Notification,
   NotificationOrigin,
   NotificationService,
   NotificationSeverity,
-  NotificationType, NotificationUserAction
+  NotificationType,
+  NotificationUserAction
 } from '@shared/services';
-
+import {NumberOnlyDirective} from './number.directive';
 
 @Component({
   selector:    'bla-schusszettel',
@@ -27,7 +27,6 @@ export class SchusszettelComponent implements OnInit {
   constructor(private schusszettelService: SchusszettelProviderService,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
-    console.log('Schusszettel Component');
   }
 
   /**
@@ -39,16 +38,15 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     // initialwert schützen inputs
 
-    this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, []);
+    this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
     this.match1.nr = 1;
     this.match1.schuetzen = [];
 
-    this.match2 = new MatchDO(null, null, null, 1, 1, 1, 1, []);
+    this.match2 = new MatchDO(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
     this.match2.nr = 1;
     this.match2.schuetzen = [];
 
     this.initSchuetzen();
-
     this.route.params.subscribe((params) => {
       if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
         const match1id = params['match1id'];
@@ -64,10 +62,13 @@ export class SchusszettelComponent implements OnInit {
                 this.setPoints();
               }
             }, (error) => {
-              console.log(error);
+              console.error(error);
             });
+
       }
     });
+
+
   }
 
   /**
@@ -106,27 +107,15 @@ export class SchusszettelComponent implements OnInit {
    * @param satzNr
    * @param pfeilNr
    */
-  onChange(value: any, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
+  onChange(value: string, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
     const match = this['match' + matchNr];
-    if (value.indexOf('+') !== -1) {
-      switch (pfeilNr) {
-        case 1:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil1 = 10;
-          break;
-        case 2:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil2 = 10;
-          break;
-      }
+    const satz = match.schuetzen[schuetzenNr][satzNr];
+    if (value.indexOf(NumberOnlyDirective.ALIAS_10) !== -1) {
+      pfeilNr === 1 ? satz.ringzahlPfeil1 = NumberOnlyDirective.MAX_VAL : satz.ringzahlPfeil2 = NumberOnlyDirective.MAX_VAL;
     } else {
-      value = +value; // value ist string, ringzahlen sollen number sein -> value in number umwandeln
-      switch (pfeilNr) {
-        case 1:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil1 = value > 0 ? value : null;
-          break;
-        case 2:
-          match.schuetzen[schuetzenNr][satzNr].ringzahlPfeil2 = value > 0 ? value : null;
-          break;
-      }
+      let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
+      realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
+      pfeilNr === 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
     }
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
@@ -138,36 +127,82 @@ export class SchusszettelComponent implements OnInit {
    * @param satzNr
    */
   private getSumSatz(match: MatchDO, satzNr: number): number {
-    return match.schuetzen[0][satzNr].ringzahlPfeil1 + match.schuetzen[0][satzNr].ringzahlPfeil2
-      + match.schuetzen[1][satzNr].ringzahlPfeil1 + match.schuetzen[1][satzNr].ringzahlPfeil2
-      + match.schuetzen[2][satzNr].ringzahlPfeil1 + match.schuetzen[2][satzNr].ringzahlPfeil2;
+    let sum = 0;
+    for (const i of Object.keys(match.schuetzen)) {
+      sum += match.schuetzen[i][satzNr].ringzahlPfeil1;
+      sum += match.schuetzen[i][satzNr].ringzahlPfeil2;
+    }
+    return sum;
   }
 
   /**
    * Sets satzpunkte and matchpunkte of both matches according to the sumSatzx and satzpunkte.
    */
   private setPoints() {
-    let counterMatch1 = 0;
-    let counterMatch2 = 0;
-    for (let i = 0; i < 5; i++) {
-      if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
-        counterMatch1++;
-      } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
-        counterMatch2++;
-      }
+    // kumulativ
+    if (this.match1.wettkampfTyp === 'Liga kummutativ') {
+      this.setKummulativePoints();
+    } else if (this.match1.wettkampfTyp === 'Liga Satzsystem') {
+      this.setSatzPoints();
     }
-    const draws = 5 - (counterMatch1 + counterMatch2);
-    this.match1.satzpunkte = (counterMatch1 * 2) + draws;
-    this.match2.satzpunkte = (counterMatch2 * 2) + draws;
-    if (this.match1.satzpunkte > this.match2.satzpunkte) {
+
+    if (this.match1.satzpunkte >= 6) {
       this.match1.matchpunkte = 2;
       this.match2.matchpunkte = 0;
-    } else if (this.match1.satzpunkte < this.match2.satzpunkte) {
+    } else if (this.match2.satzpunkte >= 6) {
       this.match1.matchpunkte = 0;
       this.match2.matchpunkte = 2;
+    }
+  }
+
+  private setSatzPoints() {
+    if (this.match1.matchpunkte === 2 || this.match2.matchpunkte === 2) {
+      this.notificationService.showNotification({
+        id:          'schusszettelEntschieden',
+        title:       'Unnötige Angaben',
+        description: 'Match ist schon entschieden, keine weiteren Punkte benötigt',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.ACCEPTED
+      });
     } else {
-      this.match1.matchpunkte = 1;
-      this.match2.matchpunkte = 1;
+      let counterMatch1 = 0;
+      let counterMatch2 = 0;
+      for (let i = 0; i < 5; i++) {
+        if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
+          counterMatch1++;
+        } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
+          counterMatch2++;
+        }
+      }
+      const draws = 5 - (counterMatch1 + counterMatch2);
+      this.match1.satzpunkte = (counterMatch1 * 2) + draws;
+      this.match2.satzpunkte = (counterMatch2 * 2) + draws;
+      this.match1.matchpunkte = 0;
+      this.match2.matchpunkte = 0;
+      if (this.match1.satzpunkte === this.match2.satzpunkte) {
+        this.match1.matchpunkte = 1;
+        this.match2.matchpunkte = 1;
+      }
+    }
+  }
+
+  private setKummulativePoints() {
+    let kumuluativ1 = 0;
+    let kumuluativ2 = 0;
+
+    for (let i = 0; i < 3; i++) {
+      kumuluativ1 += this.match1.sumSatz[i];
+      kumuluativ2 += this.match2.sumSatz[i];
+    }
+
+    if (kumuluativ1 > kumuluativ2) {
+      this.match1.satzpunkte = 6;
+      this.match2.satzpunkte = 0;
+    } else if (kumuluativ1 < kumuluativ2) {
+      this.match1.satzpunkte = 0;
+      this.match2.satzpunkte = 6;
     }
   }
 
@@ -189,7 +224,7 @@ export class SchusszettelComponent implements OnInit {
           this.setPoints();
           this.notificationService.discardNotification();
         }, (error) => {
-          console.log(error);
+          console.error(error);
           this.notificationService.discardNotification();
         });
   }
@@ -199,5 +234,18 @@ export class SchusszettelComponent implements OnInit {
       this.match1.sumSatz[i] = this.getSumSatz(this.match1, i);
       this.match2.sumSatz[i] = this.getSumSatz(this.match2, i);
     }
+  }
+
+  private getSummeSchuetze(schuetzeNr: number, matchNr: number): number {
+    let sum = 0;
+    const match = this['match' + matchNr];
+    for (const passe of match.schuetzen[schuetzeNr]) {
+      sum += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
+    }
+    return sum;
+  }
+
+  trackByIndex(index: number, obj: any): any {
+    return index;
   }
 }
