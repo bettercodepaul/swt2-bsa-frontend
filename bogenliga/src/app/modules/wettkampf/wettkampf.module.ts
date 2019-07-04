@@ -13,9 +13,9 @@ import {WETTKAMPF_ROUTES} from './wettkampf.routing';
     CommonModule,
     RouterModule.forChild(WETTKAMPF_ROUTES),
     SharedModule,
-    FormsModule,
+    FormsModule
   ],
-  declarations: [WettkaempfeComponent, SetzlisteDownloadComponent, SchusszettelDownloadComponent],
+  declarations: [WettkaempfeComponent, SchusszettelDownloadComponent],
   providers:    [WettkampfGuard]
 })
 export class WettkampfModule {
