@@ -23,12 +23,29 @@
         </td>
 
         <td>
-          <button *ngIf="session.isActive" class="btn btn-danger" (click)="updateSession(session.scheibenNr)">
+          <button
+            *ngIf="session.isActive"
+            class="btn btn-danger"
+            (click)="updateSession(session.scheibenNr)"
+          >
             <fa-icon [icon]="'trash'"></fa-icon>
           </button>
-          <button *ngIf="!currentDeviceIsActive" class="btn btn-success" (click)="updateSession(session.scheibenNr)">
+
+          <button
+            *ngIf="!currentDeviceIsActive"
+            class="btn btn-success"
+            (click)="updateSession(session.scheibenNr)"
+          >
             <fa-icon [icon]="'plus-circle'"></fa-icon>
           </button>
+
+          <a
+            *ngIf="canNavigateToEingabe(session)"
+            class="btn btn-light ml-3"
+            [routerLink]="tabletEingabeRoute"
+          >
+            <fa-icon [icon]="'external-link-alt'"></fa-icon>
+          </a>
         </td>
       </tr>
     </table>
