@@ -36,30 +36,6 @@ export class TabletAdminComponent implements OnInit {
         const wettkampfId = params['wettkampfId'];
         this.tabletSessionService.findAllTabletSessions(wettkampfId)
             .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
-              /*const activeSessions: Array<TabletSessionDO> = data.payload;
-               let allSessions = [];
-
-               for (let activeSession of activeSessions) {
-               activeSession.isActive = true;
-               allSessions[activeSession.scheibenNr - 1] = activeSession;
-               }
-               for (let i = 0; i < 8; i++) {
-               if (activeSessions[i]) {
-               allSessions[activeSessions[i].scheibenNr - 1] = activeSessions[i];
-               allSessions[activeSessions[i].scheibenNr - 1].isActive = true;
-               } else {
-               //allSessions[i] = new TabletSessionDO(i+1, parseInt(wettkampfId));
-               //allSessions[i].isActive = false;
-               }
-               }
-               for (let i = 0; i < 8; i++) {
-               if (isNullOrUndefined(allSessions[i])) {
-               allSessions[i] = new TabletSessionDO(i + 1, parseInt(wettkampfId));
-               allSessions[i].isActive = false;
-               }
-               }
-               this.sessions = allSessions;
-               */
               this.sessions = data.payload;
               this.setActiveSession();
               this.setTabletEingabeRoute();
