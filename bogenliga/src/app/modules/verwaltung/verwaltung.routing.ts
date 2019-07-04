@@ -101,12 +101,13 @@ export const VERWALTUNG_ROUTES: Routes = [
     canActivate: [VeranstaltungOverviewGuard]
   },
   {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
-  {path: 'veranstaltung/:id/:id', component: WettkampftageComponent, canActivate: [WettkampftageGuard]},
   {
     path:        'sportjahr',
     component:   SportjahrOverviewComponent,
     pathMatch:   'full',
     canActivate: [SportjahrOverviewGuard]
   },
-  {path: 'sportjahr/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]}
+  {path: 'sportjahr/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
+  {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
+  {path: 'veranstaltung/:id/:id', component: WettkampftageComponent, canActivate: [WettkampftageGuard]}
 ];
