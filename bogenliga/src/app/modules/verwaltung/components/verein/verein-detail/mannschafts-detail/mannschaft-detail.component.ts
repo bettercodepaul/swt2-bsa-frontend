@@ -606,7 +606,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       .path(versionedDataObject.id)
       .path(this.currentMannschaft.id)
       .build();
-    this.downloadService.download(downloadUrl, "lizenz.pdf", this.aElementRef)
+    this.downloadService.download(downloadUrl, 'lizenz.pdf', this.aElementRef)
       .then((response: BogenligaResponse<string>) => console.log(response))
       .catch((response: BogenligaResponse<string>) => this.showNoLicense());
   }

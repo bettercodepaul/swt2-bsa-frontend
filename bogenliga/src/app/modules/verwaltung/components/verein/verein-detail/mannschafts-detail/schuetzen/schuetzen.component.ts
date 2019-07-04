@@ -156,7 +156,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
           if (mannschaftsMitgliedResponse.payload.length > 0 && mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt <= 1) {
             this.memberToAdd.dsbMitgliedEingesetzt = mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt;
             this.createLizentForMember(memberId);
-          } else if(mannschaftsMitgliedResponse.payload.length === 0) {
+          } else if (mannschaftsMitgliedResponse.payload.length === 0) {
             this.memberToAdd.dsbMitgliedEingesetzt = 0;
             this.createLizentForMember(memberId);
           } else {
@@ -165,7 +165,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
         })
         .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
           console.log('Failure: ' + response.payload);
-      this.saveLoading = false;
+          this.saveLoading = false;
     });
   }
 
@@ -403,7 +403,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.members = [];
     this.members = response.payload;
     this.members.forEach((member) => {
-      if(member.vereinsId === null) {
+      if (member.vereinsId === null) {
         member.vereinsName = 'kein Verein';
       } else {
         const tmp = this.vereine.find((verein) => {
@@ -439,7 +439,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
   private loadVereine() {
     this.loading = true;
-    this.emptyVerein.name = "Kein Verein";
+    this.emptyVerein.name = 'Kein Verein';
     this.emptyVerein.id = null;
     this.vereineProvider.findAll()
       .then((response: BogenligaResponse<VereinDTO[]>) => {
