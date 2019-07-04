@@ -9,7 +9,8 @@ export class TabletSessionMapper {
       payload.wettkampfId,
       payload.active,
       payload.satznummer,
-      payload.matchId
+      payload.matchId,
+      payload.otherMatchId
     )
   }
 
@@ -19,7 +20,8 @@ export class TabletSessionMapper {
       payload.wettkampfID,
       payload.isActive,
       payload.satzNr,
-      payload.matchID
+      payload.matchID,
+      payload.otherMatchId
     )
   }
 }

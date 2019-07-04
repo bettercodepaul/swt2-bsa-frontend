@@ -7,7 +7,7 @@ export class TabletSessionDTO implements DataTransferObject {
   active: boolean;
   satznummer: number;
   matchId: number;
-  otherMatchID: number;
+  otherMatchId: number;
 
   constructor(scheibennummer?: number,
     wettkampfId?: number,
@@ -20,7 +20,7 @@ export class TabletSessionDTO implements DataTransferObject {
     this.active = !!active;
     this.satznummer = !!satznummer ? satznummer : null;
     this.matchId = !!matchId ? matchId : null;
-    this.otherMatchID = !!otherMatchID ? otherMatchID : null;
+    this.otherMatchId = !!otherMatchID ? otherMatchID : null;
   }
 }
 

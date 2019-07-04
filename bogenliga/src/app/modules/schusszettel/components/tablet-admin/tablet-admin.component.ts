@@ -19,6 +19,7 @@ export class TabletAdminComponent implements OnInit {
   sessions: Array<TabletSessionDO>;
   currentDeviceIsActive: boolean = false;
   currentSession: TabletSessionDO;
+  tabletEingabeRoute: string;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -61,6 +62,7 @@ export class TabletAdminComponent implements OnInit {
                */
               this.sessions = data.payload;
               this.setActiveSession();
+              this.setTabletEingabeRoute();
             }, (error) => {
               console.error(error);
               // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
@@ -93,8 +95,9 @@ export class TabletAdminComponent implements OnInit {
         .then((success) => {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
           this.storeCurrentSession(this.currentSession);
-          if (this.currentDeviceIsActive) {
-            this.router.navigate(['/schusszettel/' + this.currentSession.matchID + '/' + this.currentSession.otherMatchID + '/tablet']);
+          this.setTabletEingabeRoute();
+          if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
+            this.router.navigate([this.tabletEingabeRoute]);
           }
         }, (error) => {
           console.log(error);
@@ -109,5 +112,18 @@ export class TabletAdminComponent implements OnInit {
       localStorage.removeItem(STORAGE_KEY_TABLET_SESSION);
       this.currentDeviceIsActive = false;
     }
+  }
+
+  private setTabletEingabeRoute() {
+    if (this.currentSession) {
+      this.tabletEingabeRoute = '/schusszettel/' + this.currentSession.matchID + '/' + this.currentSession.otherMatchId + '/tablet';
+    }
+  }
+
+  private canNavigateToEingabe(session) {
+    return this.currentDeviceIsActive &&
+      this.currentSession &&
+      this.currentSession.otherMatchId &&
+      this.currentSession.scheibenNr === session.scheibenNr
   }
 }
