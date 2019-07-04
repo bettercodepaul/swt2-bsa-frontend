@@ -5,7 +5,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
 
-export const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
+export const STORAGE_KEY_TABLET_SESSION = 'tabletSession';
 
 const SESSION_INVALID_STORAGE_VALUES = ['[]', 'null', 'undefined'];
 const MAX_NUM_SCHEIBEN = 8;

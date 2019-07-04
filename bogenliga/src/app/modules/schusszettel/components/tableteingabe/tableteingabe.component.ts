@@ -148,7 +148,7 @@ export class TabletEingabeComponent implements OnInit {
     this.schuetzen = [];
     if (schuetzen.length === 0) {
       for (const i of TabletEingabeComponent.getSchuetzeIdxValues()) {
-        let schuetzeNr = Number.parseInt((localStorage.getItem(STORAGE_KEY_SCHUETZE_PREFIX + (i + 1))), 10);
+        const schuetzeNr = Number.parseInt((localStorage.getItem(STORAGE_KEY_SCHUETZE_PREFIX + (i + 1))), 10);
         this.schuetzen.push(new SchuetzeErgebnisse(schuetzeNr));
       }
     } else {
