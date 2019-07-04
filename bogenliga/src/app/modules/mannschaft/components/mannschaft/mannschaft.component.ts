@@ -25,7 +25,7 @@ export class MannschaftComponent extends CommonComponent implements OnInit {
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentVerein: VereinDO = new VereinDO();
 
-  //Because we have several match tables, we need an array of arrays for the several Rows in each Table
+  // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public wettkampErgebnisse: Array<WettkampfErgebnis[]> = new Array<WettkampfErgebnis[]>();
 
@@ -44,7 +44,7 @@ export class MannschaftComponent extends CommonComponent implements OnInit {
   loadVereine() {
     this.vereinDataProvider.findAll()
         .then((response: BogenligaResponse<VereinDO[]>) => this.handleSuccessLoadVereine(response))
-        .catch((response: BogenligaResponse<VereinDO[]>) => this.vereine == []);
+        .catch((response: BogenligaResponse<VereinDO[]>) => this.vereine === []);
   }
 
   handleSuccessLoadVereine(response: BogenligaResponse<VereinDO[]>) {
@@ -67,20 +67,21 @@ export class MannschaftComponent extends CommonComponent implements OnInit {
 
   private fillTableRows(): void {
     this.rows = [];
-    console.log("Ergebnisse an 0:");
+    console.log('Ergebnisse an 0:');
     console.log(this.wettkampErgebnisse[0]);
 
     this.rows.push(toTableRows(this.wettkampErgebnisse[0]));
-    console.log("tableRows:");
+    console.log('tableRows:');
     console.log(this.rows);
 
   }
 
-  private loadErgebnisse(){
-    console.log("loadErgebnisse");
+  private loadErgebnisse() {
+    console.log('loadErgebnisse');
 
-    this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,this.vereine, this.currentVeranstaltung,0));
-    //waiting is neccessary to load the values correct.
+    this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
+      this.vereine, this.currentVeranstaltung, 0));
+    // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
     this.fillTableRows();
 
   }
