@@ -801,6 +801,10 @@
           "TITLE": "Veranstaltung angelegt",
           "DESCRIPTION": "Veranstaltung wurde erfolgreich angelegt"
         },
+        "SAVEMANNSCHAFT": {
+          "TITLE": "Kopieren erfolgreich",
+          "DESCRIPTION": "Mannschaften wurden kopiert von der letzten Saison"
+        },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
           "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
