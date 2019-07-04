@@ -152,123 +152,130 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
   private saveMemberInTeam(memberId: number) {
     this.mannschaftMitgliedProvider.findByMemberId(memberId)
-        .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
-          if (response.payload.length > 0 && response.payload[0].dsbMitgliedEingesetzt <= 1) {
-            this.memberToAdd.dsbMitgliedEingesetzt = response.payload[0].dsbMitgliedEingesetzt;
-
-                  // get Lizenzen of this member
-            this.lizenzProvider.findByDsbMitgliedId(memberId)
-                      .then((response: BogenligaResponse<LizenzDO[]>) => {
-
-                        let lizenzen: LizenzDO[] = [new LizenzDO()];
-                        lizenzen = response.payload;
-                        console.log(response.payload);
-
-                        // get Diszipin of the wettkaempfe of the Veranstaltung
-                        this.wettkampfProvider.findAll()
-                            .then((response: BogenligaResponse<WettkampfDO[]>) => {
-
-                              const veranstaltungen: WettkampfDO[] = [];
-                              response.payload.forEach( (wettkampf) => {
-                                if (wettkampf.veranstaltungsId === this.currentMannschaft.veranstaltungId) {
-                                  veranstaltungen.push(wettkampf);
-                                }
-                              });
-                              console.log(veranstaltungen);
-
-                              let wettkampfDisziplinID;
-                              let lizenzFound = false;
-
-                              console.log(response.payload);
-
-                              if (veranstaltungen.length !== 0) { // check if there are wettkaempfe in the liga
-                                wettkampfDisziplinID = veranstaltungen[0].wettkampfDisziplinId; // take the Disziplin of the first wettkampftag
-                                console.log(wettkampfDisziplinID);
-                                if (lizenzen.length > 0) {
-                                  console.log('lizenzen not empty');
-                                  lizenzen.forEach((lizenz) => {
-                                    console.log('for each lizenz');
-                                    console.log(lizenz.lizenztyp + lizenz.lizenzDisziplinId + wettkampfDisziplinID);
-                                    // check if Mitglied has already has a Lizenz in this Disziplin
-                                    if ( lizenz.lizenztyp === 'Liga' && lizenz.lizenzDisziplinId === wettkampfDisziplinID) {
-                                      console.log('Lizenz Found!');
-                                      lizenzFound = true;
-                                    }
-                                  });
-                                }
-
-
-                                // create new Lizenz if Mitglied has no Lizenz in this Disziplin
-                                if (lizenzFound === false) {
-
-                                  // create lizenznummer
-                                  // first get Region Kuerzel
-                                  this.regionProvider.findById(this.currentVerein.regionId)
-                                      .then((response: BogenligaResponse<RegionDO>) => {
-
-                                        const regionKuerzel = response.payload.regionKuerzel;
-
-                                        // Lizenznummer = Regionkürzel+LigaId+vereinsId+mannschaftsnummer+dsbmitgliedsId
-                                        const lizenznummer = regionKuerzel +
-                                                            this.currentMannschaft.veranstaltungId +
-                                                            this.currentVerein.id +
-                                                            this.currentMannschaft.nummer +
-                                                            memberId;
-
-                                        const newLizenz = new LizenzDO();
-                                        newLizenz.lizenztyp = 'Liga';
-                                        newLizenz.lizenzDisziplinId = wettkampfDisziplinID;
-                                        newLizenz.lizenzDsbMitgliedId = memberId;
-                                        newLizenz.lizenzRegionId = this.currentVerein.regionId;
-                                        newLizenz.lizenznummer = lizenznummer;
-
-                                        this.lizenzProvider.create(newLizenz)
-                                            .then((response: BogenligaResponse<LizenzDO>) => {
-
-                                              console.log(response.payload);
-                                              this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE_AND_LIZENZ_ERSTELLT', response);
-
-                                            }, (savedResponse: BogenligaResponse<LizenzDO[]>) => {
-                                              console.log(savedResponse.payload);
-                                              console.log('Failed to save Lizenz');
-                                              this.saveLoading = false;
-                                            });
-
-                                      }, (savedResponse: BogenligaResponse<RegionDO[]>) => {
-                                        console.log(savedResponse.payload);
-                                        console.log('Failed to load Region');
-                                        this.saveLoading = false;
-                                      });
-                                } else {
-                                  this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
-                                }
-                              } else {
-
-                                this.showAddedMemberNotification( 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.NOWETTKAEMPFE');
-                                console.log('Keine Wettkaempfe gefunden. Bitte stelle sicher das die Liga der Mannschaft Wettkampfe beinhaltet.');
-                              }
-
-
-                            }, (savedResponse: BogenligaResponse<WettkampfDO[]>) => {
-                              console.log(savedResponse.payload);
-                              console.log('Failed');
-                              this.saveLoading = false;
-                            });
-
-                      }, (savedResponse: BogenligaResponse<LizenzDO>) => {
-
-                        console.log('Keine Lizenz fuer den Schuetzen gefunden');
-                        this.saveLoading = false;
-                      });
-
+        .then((mannschaftsMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+          if (mannschaftsMitgliedResponse.payload.length > 0 && mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt <= 1) {
+            this.memberToAdd.dsbMitgliedEingesetzt = mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt;
+            this.createLizentForMember(memberId);
+          } else if(mannschaftsMitgliedResponse.payload.length === 0) {
+            this.memberToAdd.dsbMitgliedEingesetzt = 0;
+            this.createLizentForMember(memberId);
           } else {
             this.showMemberInTooManyTeams();
           }
-        }).catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
-      console.log('Failure');
+        })
+        .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+          console.log('Failure: ' + response.payload);
       this.saveLoading = false;
     });
   }
+
+  private createLizentForMember(memberId: number): void {
+
+    // get Lizenzen of this member
+    this.lizenzProvider.findByDsbMitgliedId(memberId)
+        .then((lizenzResponse: BogenligaResponse<LizenzDO[]>) => {
+
+          let lizenzen: LizenzDO[] = [new LizenzDO()];
+          lizenzen = lizenzResponse.payload;
+          console.log(lizenzResponse.payload);
+
+          // get Diszipin of the wettkaempfe of the Veranstaltung
+          this.wettkampfProvider.findAll()
+              .then((wettkampfResponse: BogenligaResponse<WettkampfDO[]>) => {
+
+                const veranstaltungen: WettkampfDO[] = [];
+                wettkampfResponse.payload.forEach( (wettkampf) => {
+                  if (wettkampf.veranstaltungsId === this.currentMannschaft.veranstaltungId) {
+                    veranstaltungen.push(wettkampf);
+                  }
+                });
+                console.log(veranstaltungen);
+
+                let wettkampfDisziplinID;
+                let lizenzFound = false;
+
+                console.log(wettkampfResponse.payload);
+
+                if (veranstaltungen.length !== 0) { // check if there are wettkaempfe in the liga
+                  wettkampfDisziplinID = veranstaltungen[0].wettkampfDisziplinId; // take the Disziplin of the first wettkampftag
+                  console.log(wettkampfDisziplinID);
+                  if (lizenzen.length > 0) {
+                    console.log('lizenzen not empty');
+                    lizenzen.forEach((lizenz) => {
+                      console.log('for each lizenz');
+                      console.log(lizenz.lizenztyp + lizenz.lizenzDisziplinId + wettkampfDisziplinID);
+                      // check if Mitglied has already has a Lizenz in this Disziplin
+                      if ( lizenz.lizenztyp === 'Liga' && lizenz.lizenzDisziplinId === wettkampfDisziplinID) {
+                        console.log('Lizenz Found!');
+                        lizenzFound = true;
+                      }
+                    });
+                  }
+
+
+                  // create new Lizenz if Mitglied has no Lizenz in this Disziplin
+                  if (lizenzFound === false) {
+
+                    // create lizenznummer
+                    // first get Region Kuerzel
+                    this.regionProvider.findById(this.currentVerein.regionId)
+                        .then((regionResponse: BogenligaResponse<RegionDO>) => {
+
+                          const regionKuerzel = regionResponse.payload.regionKuerzel;
+
+                          // Lizenznummer = Regionkürzel+LigaId+vereinsId+mannschaftsnummer+dsbmitgliedsId
+                          const lizenznummer = regionKuerzel +
+                            this.currentMannschaft.veranstaltungId +
+                            this.currentVerein.id +
+                            this.currentMannschaft.nummer +
+                            memberId;
+
+                          const newLizenz = new LizenzDO();
+                          newLizenz.lizenztyp = 'Liga';
+                          newLizenz.lizenzDisziplinId = wettkampfDisziplinID;
+                          newLizenz.lizenzDsbMitgliedId = memberId;
+                          newLizenz.lizenzRegionId = this.currentVerein.regionId;
+                          newLizenz.lizenznummer = lizenznummer;
+
+                          this.lizenzProvider.create(newLizenz)
+                              .then((response: BogenligaResponse<LizenzDO>) => {
+
+                                console.log(response.payload);
+                                this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE_AND_LIZENZ_ERSTELLT', response);
+
+                              }, (savedResponse: BogenligaResponse<LizenzDO[]>) => {
+                                console.log(savedResponse.payload);
+                                console.log('Failed to save Lizenz');
+                                this.saveLoading = false;
+                              });
+
+                        }, (savedResponse: BogenligaResponse<RegionDO[]>) => {
+                          console.log(savedResponse.payload);
+                          console.log('Failed to load Region');
+                          this.saveLoading = false;
+                        });
+                  } else {
+                    this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
+                  }
+                } else {
+
+                  this.showAddedMemberNotification( 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.NOWETTKAEMPFE');
+                  console.log('Keine Wettkaempfe gefunden. Bitte stelle sicher das die Liga der Mannschaft Wettkampfe beinhaltet.');
+                }
+
+
+              }, (savedResponse: BogenligaResponse<WettkampfDO[]>) => {
+                console.log(savedResponse.payload);
+                console.log('Failed');
+                this.saveLoading = false;
+              });
+
+        }, (savedResponse: BogenligaResponse<LizenzDO>) => {
+
+          console.log('Keine Lizenz fuer den Schuetzen gefunden');
+          this.saveLoading = false;
+        });
+}
 
   private showAddedMemberNotification(jsonPath: string) {
     // savedResponse: BogenligaResponse<MannschaftsMitgliedDO>,
