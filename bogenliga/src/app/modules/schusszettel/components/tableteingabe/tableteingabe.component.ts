@@ -79,7 +79,7 @@ export class TabletEingabeComponent implements OnInit {
    * Simple method returning an array containing numbers from 1 ... NUM_SCHUETZEN
    */
   static getSchuetzeIdxValues() {
-    return Array.apply(null, {length: NUM_SCHUETZEN}).map(Number.call, Number)
+    return Array.apply(null, {length: NUM_SCHUETZEN}).map(Number.call, Number);
   }
 
   constructor(private schusszettelService: SchusszettelProviderService,
@@ -127,7 +127,7 @@ export class TabletEingabeComponent implements OnInit {
    * Initializes component data using previously stored data in the local storage of the tablet.
    */
   initStorageData() {
-    let subSNr = Number.parseInt(localStorage.getItem(STORAGE_KEY_SUBMITTED));
+    let subSNr = Number.parseInt(localStorage.getItem(STORAGE_KEY_SUBMITTED), 10);
     try {
       // tabletSession has to be set in the tablet administration of wettkampf
       this.tabletSession = JSON.parse(localStorage.getItem(STORAGE_KEY_TABLET_SESSION));
@@ -147,22 +147,22 @@ export class TabletEingabeComponent implements OnInit {
     let schuetzen: Array<SchuetzeErgebnisse> = Boolean(schuetzenString) ? JSON.parse(schuetzenString) : [];
     this.schuetzen = [];
     if (schuetzen.length === 0) {
-      for (let i of TabletEingabeComponent.getSchuetzeIdxValues()) {
-        let schuetzeNr = Number.parseInt((localStorage.getItem(STORAGE_KEY_SCHUETZE_PREFIX + (i + 1))));
+      for (const i of TabletEingabeComponent.getSchuetzeIdxValues()) {
+        let schuetzeNr = Number.parseInt((localStorage.getItem(STORAGE_KEY_SCHUETZE_PREFIX + (i + 1))), 10);
         this.schuetzen.push(new SchuetzeErgebnisse(schuetzeNr));
       }
     } else {
-      for (let schuetze of schuetzen) {
+      for (const schuetze of schuetzen) {
         let schuetzeErgebnisse = new SchuetzeErgebnisse(Number(schuetze.schuetzeNr));
         schuetzeErgebnisse.passen = [];
-        for (let passe of schuetze.passen) {
+        for (const passe of schuetze.passen) {
           let passeDO = new PasseDO();
-          for (let attr of Object.keys(passe)) {
-            passeDO[attr] = passe[attr]
+          for (const attr of Object.keys(passe)) {
+            passeDO[attr] = passe[attr];
           }
-          schuetzeErgebnisse.passen.push(passeDO)
+          schuetzeErgebnisse.passen.push(passeDO);
         }
-        this.schuetzen.push(schuetzeErgebnisse)
+        this.schuetzen.push(schuetzeErgebnisse);
       }
     }
   }
@@ -175,7 +175,7 @@ export class TabletEingabeComponent implements OnInit {
     localStorage.setItem(STORAGE_KEY_SUBMITTED, this.submittedSchuetzenNr ? Number(1).toString() : Number(0).toString());
     localStorage.setItem(STORAGE_KEY_SCHUETZEN, Boolean(this.schuetzen) ? JSON.stringify(this.schuetzen) : '');
     if (this.hasSchuetzenNummern()) {
-      for (let i of TabletEingabeComponent.getSchuetzeIdxValues()) {
+      for (const i of TabletEingabeComponent.getSchuetzeIdxValues()) {
         localStorage.setItem(STORAGE_KEY_SCHUETZE_PREFIX + (i + 1), this.schuetzen[i].schuetzeNr.toString());
       }
     }
@@ -187,7 +187,7 @@ export class TabletEingabeComponent implements OnInit {
   resetStorageData() {
     localStorage.setItem(STORAGE_KEY_SUBMITTED, '0');
     localStorage.setItem(STORAGE_KEY_SCHUETZEN, '');
-    for (let i of TabletEingabeComponent.getSchuetzeIdxValues()) {
+    for (const i of TabletEingabeComponent.getSchuetzeIdxValues()) {
       localStorage.setItem(STORAGE_KEY_SCHUETZE_PREFIX + (i + 1), '');
     }
     this.schuetzen = [];
@@ -250,8 +250,8 @@ export class TabletEingabeComponent implements OnInit {
 
   nextSatz() {
     if (this.allPasseFilled()) {
-      for (let schuetze of this.schuetzen) {
-        schuetze.addPasse()
+      for (const schuetze of this.schuetzen) {
+        schuetze.addPasse();
       }
       this.tabletSession.satzNr++;
       this.updateTabletSession();
@@ -261,7 +261,7 @@ export class TabletEingabeComponent implements OnInit {
 
   allPasseFilled() {
     let valid = true;
-    for (let schuetze of this.schuetzen) {
+    for (const schuetze of this.schuetzen) {
       valid = valid && this.passeIsValid(schuetze.passen[this.tabletSession.satzNr - 1]);
     }
     return valid;

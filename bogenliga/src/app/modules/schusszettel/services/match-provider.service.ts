@@ -43,8 +43,8 @@ export class MatchProviderService extends DataProviderService {
     return new Promise(((resolve, reject) => {
       this.restClient.POST(this.getUrl(), matchDTO)
           .then((data: MatchDTO) => {
-            const matchDO = MatchMapper.matchToDO(data);
-            resolve({result: RequestResult.SUCCESS, payload: matchDO});
+            const newMatchDO = MatchMapper.matchToDO(data);
+            resolve({result: RequestResult.SUCCESS, payload: newMatchDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
@@ -60,8 +60,8 @@ export class MatchProviderService extends DataProviderService {
     return new Promise(((resolve, reject) => {
       this.restClient.PUT(this.getUrl(), matchDTO)
           .then((data: MatchDTO) => {
-            const matchDO = MatchMapper.matchToDO(data);
-            resolve({result: RequestResult.SUCCESS, payload: matchDO});
+            const updatedMatchDO = MatchMapper.matchToDO(data);
+            resolve({result: RequestResult.SUCCESS, payload: updatedMatchDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});

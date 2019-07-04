@@ -8,6 +8,7 @@ import {TabletSessionProviderService} from '../../services/tablet-session-provid
 export const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
 
 const SESSION_INVALID_STORAGE_VALUES = ['[]', 'null', 'undefined'];
+const MAX_NUM_SCHEIBEN: number = 8;
 
 @Component({
   selector:    'bla-tablet-admin',
@@ -43,8 +44,8 @@ export class TabletAdminComponent implements OnInit {
               console.error(error);
               // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
               this.sessions = [];
-              for (let i = 0; i < 8; i++) {
-                this.sessions.push(new TabletSessionDO(i + 1, parseInt(wettkampfId), false));
+              for (let i = 0; i < MAX_NUM_SCHEIBEN; i++) {
+                this.sessions.push(new TabletSessionDO(i + 1, parseInt(wettkampfId, 10), false));
               }
               this.setActiveSession();
             });
@@ -66,14 +67,13 @@ export class TabletAdminComponent implements OnInit {
           }
         }, (error) => {
           console.log(error);
-        })
+        });
   }
 
   private setActiveSession() {
     let currentTabletSession = localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
     this.currentDeviceIsActive = Boolean(currentTabletSession) &&
       SESSION_INVALID_STORAGE_VALUES.indexOf(currentTabletSession) < 0;
-    console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
     if (this.currentDeviceIsActive) {
       this.currentSession = JSON.parse(currentTabletSession);
       this.sessions[this.currentSession.scheibenNr - 1] = this.currentSession;
@@ -97,9 +97,9 @@ export class TabletAdminComponent implements OnInit {
   }
 
   private canNavigateToEingabe(session) {
-    return this.currentDeviceIsActive &&
+    return (this.currentDeviceIsActive &&
       this.currentSession &&
       this.currentSession.otherMatchId &&
-      this.currentSession.scheibenNr === session.scheibenNr
+      this.currentSession.scheibenNr === session.scheibenNr);
   }
 }

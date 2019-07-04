@@ -43,8 +43,8 @@ export class PasseProviderService extends DataProviderService {
     return new Promise(((resolve, reject) => {
       this.restClient.POST(this.getUrl(), passeDTO)
           .then((data: PasseDTO) => {
-            const passeDO = PasseMapper.passeToDO(data);
-            resolve({result: RequestResult.SUCCESS, payload: passeDO});
+            const newPasseDO = PasseMapper.passeToDO(data);
+            resolve({result: RequestResult.SUCCESS, payload: newPasseDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
@@ -60,8 +60,8 @@ export class PasseProviderService extends DataProviderService {
     return new Promise(((resolve, reject) => {
       this.restClient.PUT(this.getUrl(), passeDTO)
           .then((data: PasseDTO) => {
-            const passeDO = PasseMapper.passeToDO(data);
-            resolve({result: RequestResult.SUCCESS, payload: passeDO});
+            const updatedPasseDO = PasseMapper.passeToDO(data);
+            resolve({result: RequestResult.SUCCESS, payload: updatedPasseDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});

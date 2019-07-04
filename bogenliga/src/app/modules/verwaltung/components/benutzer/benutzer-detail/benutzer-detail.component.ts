@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent, toTableRows} from '../../../../shared/components';
+import {ButtonType, CommonComponent} from '../../../../shared/components';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {BenutzerDO} from '../../../types/benutzer-do.class';
 import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
@@ -45,10 +45,10 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public selectedDTOs: RoleVersionedDataObject[];
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
-    private roleDataProvider: RoleDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+              private roleDataProvider: RoleDataProviderService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -69,9 +69,9 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
           this.benutzerDataProvider.findUserRoleById(id)
               .then((response: BogenligaResponse<BenutzerRolleDO[]>) => {
                 this.currentBenutzerRolleDO = response.payload;
-                this.roleNames = "";
+                this.roleNames = '';
                 for (const role of this.currentBenutzerRolleDO) {
-                  this.roleNames += role.roleName + " ";
+                  this.roleNames += role.roleName + ' ';
                 }
               })
               .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
@@ -95,8 +95,8 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
       currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO[0].id;
       currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO[0].email;
       this.tobeRole = this.selectedDTOs[index] as RoleDO;
-      currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
-      currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
+      currentBenutzerRolleDTO.roleId = this.tobeRole.id;
+      currentBenutzerRolleDTO.roleName = this.tobeRole.roleName;
       this.currentRoles.push(currentBenutzerRolleDTO);
     });
 
@@ -143,6 +143,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
         .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleSuccess(response))
         .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.handleFailure(response));
   }
+
   private handleSuccess(response: BogenligaResponse<BenutzerRolleDO[]>) {
     this.currentBenutzerRolleDO = response.payload;
     this.loading = false;
@@ -161,7 +162,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.roles = []; // reset array to ensure change detection
     this.loading = false;
 
-    response.payload.forEach((responseItem) =>  this.roles.push(new RoleVersionedDataObject(responseItem.id, responseItem.roleName)));
+    response.payload.forEach((responseItem) => this.roles.push(new RoleVersionedDataObject(responseItem.id, responseItem.roleName)));
     return;
   }
 
@@ -181,7 +182,9 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
       console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
       const names: string[] = [];
 
-      this.selectedDTOs.forEach((item) => {names.push(item.roleName); });
+      this.selectedDTOs.forEach((item) => {
+        names.push(item.roleName);
+      });
 
       return names.join(', ');
     }
