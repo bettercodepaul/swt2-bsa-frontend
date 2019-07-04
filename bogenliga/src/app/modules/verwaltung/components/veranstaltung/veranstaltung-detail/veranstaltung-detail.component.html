@@ -175,10 +175,20 @@
 
 
 
+
+
     <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE BUTTON -->
     <div class="form-group row">
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
+
+        <bla-button *ngIf="mannschaftExists()"
+                    [id]="'veranstaltungMannschaftSaveButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onCopyMannschaft($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
 
 
         <bla-button *ngIf="!entityExists()"
