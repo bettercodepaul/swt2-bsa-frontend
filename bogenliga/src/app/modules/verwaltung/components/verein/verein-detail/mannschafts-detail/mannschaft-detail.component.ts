@@ -539,9 +539,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
           .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
     }
 
-
-
-
   private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
     this.mannschaften = response.payload;
