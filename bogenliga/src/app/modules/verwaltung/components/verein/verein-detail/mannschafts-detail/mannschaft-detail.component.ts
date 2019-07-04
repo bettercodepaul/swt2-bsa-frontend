@@ -443,7 +443,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       origin:           NotificationOrigin.USER,
       type:             NotificationType.OK,
       userAction:       NotificationUserAction.PENDING
-    }
+    };
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
@@ -463,7 +463,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       origin:           NotificationOrigin.USER,
       type:             NotificationType.OK,
       userAction:       NotificationUserAction.PENDING
-    }
+    };
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE)
       .subscribe((myNotification) => {
         if (myNotification.userAction === NotificationUserAction.ACCEPTED) {

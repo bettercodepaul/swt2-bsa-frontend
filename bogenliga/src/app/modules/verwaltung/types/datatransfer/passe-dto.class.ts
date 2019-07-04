@@ -29,50 +29,50 @@ export class PasseDTOClass implements DataTransferObject {
   } = {}): PasseDTOClass {
     const copy = new PasseDTOClass();
 
-    if(optional.id >= 0) {
+    if (optional.id >= 0) {
       copy.id = optional.id;
     } else {
       copy.id = null;
     }
 
-    if(optional.dsbMitgliedId >= 0) {
+    if (optional.dsbMitgliedId >= 0) {
       copy.dsbMitgliedId = optional.dsbMitgliedId;
     } else {
       copy.dsbMitgliedId = null;
     }
 
-    if(optional.wettkampfId >= 0) {
+    if (optional.wettkampfId >= 0) {
       copy.wettkampfId = optional.wettkampfId;
     } else {
       copy.wettkampfId = null;
     }
-    if(optional.mannschaftId >= 0) {
+    if (optional.mannschaftId >= 0) {
       copy.mannschaftId = optional.mannschaftId;
     } else {
       copy.mannschaftId = null;
     }
-    if(optional.lfdNr >= 0) {
+    if (optional.lfdNr >= 0) {
       copy.lfdNr = optional.lfdNr;
     } else {
       copy.lfdNr = null;
     }
-    if(optional.matchId >= 0) {
+    if (optional.matchId >= 0) {
       copy.matchId = optional.matchId;
     } else {
       copy.matchId = null;
     }
-    if(optional.schuetzeNr >= 0) {
+    if (optional.schuetzeNr >= 0) {
       copy.schuetzeNr = optional.schuetzeNr;
     } else {
       copy.schuetzeNr = null;
     }
-    if(optional.version >= 0) {
+    if (optional.version >= 0) {
       copy.version = optional.version;
     } else {
       copy.version = null;
     }
 
-    if(optional.matchNr >= 0) {
+    if (optional.matchNr >= 0) {
       copy.matchNr = optional.matchNr;
     } else {
       copy.matchNr = null;

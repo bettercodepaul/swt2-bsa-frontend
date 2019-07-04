@@ -77,8 +77,8 @@ export class WettkampfDataProviderService  extends DataProviderService {
           } else {
             reject({result: RequestResult.FAILURE});
           }
-        })
-    })
+        });
+    });
   }
 
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<WettkampfDO>> {

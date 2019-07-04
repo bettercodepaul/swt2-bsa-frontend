@@ -8,7 +8,7 @@ export class DsbMitgliedDTO implements DataTransferObject {
   nationalitaet: string;
   mitgliedsnummer: string;
   vereinsId: number;
-  vereinsName: string
+  vereinsName: string;
   userId: number;
   version: number;
   kampfrichter: boolean;
@@ -40,7 +40,7 @@ export class DsbMitgliedDTO implements DataTransferObject {
     copy.geburtsdatum = optional.geburtsdatum || '';
     copy.nationalitaet = optional.nationalitaet || '';
     copy.mitgliedsnummer = optional.mitgliedsnummer || '';
-    if(optional.vereinsId >= 0) {
+    if (optional.vereinsId >= 0) {
       copy.vereinsId = optional.vereinsId;
     } else {
       copy.vereinsId = null;
