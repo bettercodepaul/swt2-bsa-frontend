@@ -22,8 +22,8 @@
         <div class="col-sm-12">
           <h2 class="w-100 text-center d-inline-block">Bitte geben Sie die Schützen-Nummern für dieses Match ein:</h2>
         </div>
-        <div class="offset-lg-3 col-lg-6 offset-xl-4 col-xl-4  justify-content-around flex-container">
-          <div class="pb-5 pt-3 w-100">
+        <div class="offset-lg-3 col-lg-6 offset-xl-4 col-xl-4">
+          <div class="pb-5 pt-3 w-100 flex-container justify-content-around">
             <ng-template ngFor
                          let-schuetze
                          [ngForOf]="schuetzen"
@@ -83,18 +83,16 @@
           </div>
         </ng-template>
 
-        <div class="offset-2 col-sm-8 justify-content-end flex-container">
-          <ng-template [ngIf]="tabletSession.satzNr === 5">
-            <button
-              class="btn btn-primary mr-3 py-5"
-              (click)="nextMatch()"
-              [disabled]="!allPasseFilled()"
-            >
-              Nächstes Match <i class="fa fa-fw fa-chevron-right"></i>
-            </button>
-          </ng-template>
+        <div class="offset-2 col-sm-8 justify-content-between flex-container">
           <button
-            class="btn btn-primary mr-3"
+            class="btn btn-primary mr-3 my-5"
+            (click)="nextMatch()"
+          >
+            Nächstes Match <i class="fa fa-fw fa-chevron-right"></i>
+          </button>
+
+          <button
+            class="btn btn-primary mr-3 my-5"
             (click)="nextSatz()"
             [disabled]="!allPasseFilled()"
           >
