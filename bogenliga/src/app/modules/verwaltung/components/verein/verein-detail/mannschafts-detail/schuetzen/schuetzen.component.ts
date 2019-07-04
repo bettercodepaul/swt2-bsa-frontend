@@ -42,7 +42,7 @@ const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_SCHUETZE = 'schütze_hinzufügen_save';
 const NOTIFICATION_DUPLICATE_SCHUETZE = 'schütze_hinzufügen_doppelt';
 const NOTIFICATION_OVERUSED_SCHUETZE = 'schütze_hinzufügen_in_zu_vielen_mannschaften';
-const NOTIFICATION_NO_WETTKAMPFE = 'keine_wettkaepfe_fehler';
+const NOTIFICATION_NO_WETTKAMPFE = 'keine_wettkaempfe_fehler';
 
 @Component({
   selector:    'bla-schuetzen',
