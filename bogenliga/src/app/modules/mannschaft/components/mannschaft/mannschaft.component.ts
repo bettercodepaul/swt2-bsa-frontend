@@ -76,7 +76,7 @@ export class MannschaftComponent extends CommonComponent implements OnInit {
 
   }
 
-  private loadErgebnisse() {
+  public loadErgebnisse() {
     console.log('loadErgebnisse');
 
     this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
