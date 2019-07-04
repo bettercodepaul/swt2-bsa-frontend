@@ -14,16 +14,16 @@ import {Injectable} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class WettkampfErgebnisService{
-  //Input
+export class WettkampfErgebnisService {
+  // Input
   public verein: VereinDO;
   public allVereine: VereinDO[];
   public veranstaltung: VeranstaltungDO;
 
-  //Output
+  // Output
   public wettkampErgebnisse: WettkampfErgebnis[] = [];
 
-  //toLoad
+  // toLoad
   public matches: Array<MatchDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
@@ -31,13 +31,13 @@ export class WettkampfErgebnisService{
   private loading = false;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
-    private mannschaftsDataProvider: DsbMannschaftDataProviderService,
-    private matchDataProvider: MatchDataProviderService) {
+              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
+              private matchDataProvider: MatchDataProviderService) {
 
   }
 
   public createErgebnisse(verein: VereinDO, allVereine: VereinDO[], veranstaltung: VeranstaltungDO, match: number): WettkampfErgebnis[] {
-       this.setupService(verein,allVereine,veranstaltung);
+       this.setupService(verein, allVereine, veranstaltung);
        return this.wettkampErgebnisse;
   }
 
@@ -51,18 +51,18 @@ export class WettkampfErgebnisService{
   private createWettkampfergebnisse(match: number): WettkampfErgebnis[] {
     this.wettkampErgebnisse = [];
     console.log(this.matches);
-    this.matches.filter((match) => match.mannschaftId === this.currentManschaft.id)
+    this.matches.filter((ma) => ma.mannschaftId === this.currentManschaft.id)
         .forEach((match) => {
           const wettkampfErgebnis = new WettkampfErgebnis(this.verein.name, 0, 1,
-            2, 3, 4, "Hallo", 1, 2,
+            2, 3, 4, 'Hallo', 1, 2,
             3, 4, 5, '' + match.satzpunkte, '' + match.matchpunkte);
-          //console.log(wettkampfErgebnis);
+          // console.log(wettkampfErgebnis);
           this.wettkampErgebnisse.push(wettkampfErgebnis);
         });
     return this.wettkampErgebnisse;
   }
 
-  public loadAll(){
+  public loadAll() {
     this.loading = true;
     this.loadWettkaempfe();
   }
