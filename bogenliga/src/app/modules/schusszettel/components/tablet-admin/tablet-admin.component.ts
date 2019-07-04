@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
 import {isUndefined} from '@shared/functions';
 import {BogenligaResponse} from '@shared/data-provider';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
 
 export const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
@@ -21,6 +21,7 @@ export class TabletAdminComponent implements OnInit {
   currentSession: TabletSessionDO;
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     private tabletSessionService: TabletSessionProviderService) {
   }
 
@@ -93,7 +94,7 @@ export class TabletAdminComponent implements OnInit {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
           this.storeCurrentSession(this.currentSession);
           if (this.currentDeviceIsActive) {
-            // TODO link zur Eingabe erstellen und da hin navigieren... Andere MatchID wird noch benötigt...
+            this.router.navigate(['/schusszettel/' + this.currentSession.matchID + '/' + this.currentSession.otherMatchID + '/tablet']);
           }
         }, (error) => {
           console.log(error);

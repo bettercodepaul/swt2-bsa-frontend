@@ -4,7 +4,7 @@ import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isUndefined} from '@shared/functions';
-import {ActivatedRoute, Route, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   NotificationOrigin,
   NotificationService,
@@ -17,6 +17,7 @@ import {PasseProviderService} from '../../services/passe-provider.service';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
 import {STORAGE_KEY_TABLET_SESSION} from '../tablet-admin/tablet-admin.component';
+import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
 
 class SchuetzeErgebnisse {
   schuetzeNr: number;
@@ -76,6 +77,7 @@ export class TabletEingabeComponent implements OnInit {
   constructor(private schusszettelService: SchusszettelProviderService,
     private passeService: PasseProviderService,
     private matchService: MatchProviderService,
+    private tabletSessionService: TabletSessionProviderService,
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService) {
@@ -103,7 +105,8 @@ export class TabletEingabeComponent implements OnInit {
                 this.currentMatch = this.match2.scheibenNummer === this.tabletSession.scheibenNr ? this.match2 : this.match1;
               }
               this.tabletAdminRoute = '/schusszettel/tabletadmin/' + this.match1.wettkampfId;
-              // TODO: update tabletsession
+              this.tabletSession.matchID = this.currentMatch.id;
+              this.updateTabletSession();
               this.dumpStorageData();
             }, (error) => {
               console.error(error);
@@ -129,10 +132,9 @@ export class TabletEingabeComponent implements OnInit {
       this.tabletSession = JSON.parse(localStorage.getItem(STORAGE_KEY_TABLET_SESSION));
       if (!this.tabletSession.satzNr) {
         this.tabletSession.satzNr = 1;
-        // TODO: update tabletsession
+        this.updateTabletSession();
       }
-    }
-    catch (e) {
+    } catch (e) {
       this.showMissingScheibenNummerNotification();
     }
     this.submittedSchuetzenNr = (Boolean(subSNr) && !isNaN(subSNr)) ? subSNr === 1 : false;
@@ -251,7 +253,7 @@ export class TabletEingabeComponent implements OnInit {
         schuetze.addPasse()
       }
       this.tabletSession.satzNr++;
-      // TODO: update tabletsession
+      this.updateTabletSession();
       this.dumpStorageData();
     }
   }
@@ -291,6 +293,16 @@ export class TabletEingabeComponent implements OnInit {
             // Ende des Wettkampftages, do something
           }
         });
+  }
+
+  updateTabletSession() {
+    if (this.tabletSession) {
+      this.tabletSessionService.update(this.tabletSession)
+          .then((data) => {
+            this.tabletSession = data.payload;
+            this.dumpStorageData();
+          })
+    }
   }
 
   showMissingScheibenNummerNotification() {
