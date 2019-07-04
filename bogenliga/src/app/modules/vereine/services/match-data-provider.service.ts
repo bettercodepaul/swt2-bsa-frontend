@@ -44,7 +44,7 @@ export class MatchDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<BogenligaResponse<MatchDO[]>>{
+  public findAll(): Promise<BogenligaResponse<MatchDO[]>> {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl() + '/')
           .then((data: VersionedDataTransferObject[]) => {
