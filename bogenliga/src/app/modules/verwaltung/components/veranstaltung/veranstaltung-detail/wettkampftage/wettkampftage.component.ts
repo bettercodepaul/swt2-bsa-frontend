@@ -617,19 +617,19 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
     this.allKampfrichter = response.payload;
 
     this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_1.id);
-    for (const iter in this.KampfrichterTag1) {
+    for (const iter of Object.keys(this.KampfrichterTag1)) {
       this.selectedKampfrichterTag1.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
     }
-    this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_2.id);
-    for(let iter in this.KampfrichterTag2) {
+    this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_2.id);
+    for (const iter of Object.keys(this.KampfrichterTag2)) {
       this.selectedKampfrichterTag2.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag2[iter].userid)[0]);
     }
-    this.KampfrichterTag3 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_3.id);
-    for(let iter in this.KampfrichterTag3) {
+    this.KampfrichterTag3 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_3.id);
+    for (const iter of Object.keys(this.KampfrichterTag3)) {
       this.selectedKampfrichterTag3.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag3[iter].userid)[0]);
     }
-    this.KampfrichterTag4 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_4.id);
-    for(let iter in this.KampfrichterTag4) {
+    this.KampfrichterTag4 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_4.id);
+    for (const iter of Object.keys(this.KampfrichterTag4)) {
       this.selectedKampfrichterTag4.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag4[iter].userid)[0]);
     }
     this.loading = false;
