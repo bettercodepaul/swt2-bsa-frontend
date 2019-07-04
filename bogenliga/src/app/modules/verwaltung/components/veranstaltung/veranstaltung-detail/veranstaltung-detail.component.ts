@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ButtonType, CommonComponent} from '@shared/components';
+import {CommonComponent} from '@shared/components';
+import {ButtonType} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -16,6 +17,7 @@ import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.clas
 import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
+import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_DETAIL_CONFIG} from './veranstaltung-detail.config';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
@@ -27,6 +29,10 @@ import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkam
 import {WettkampfDO} from '../../../../verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '../../../../verwaltung/types/datatransfer/wettkampf-dto.class';
 import {WettkampfDataProviderService} from '../../../services/wettkampf-data-provider.service';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
+import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -45,6 +51,9 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public ButtonType = ButtonType;
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
+  public allVeranstaltung: Array<VeranstaltungDO> = [new VeranstaltungDO()];
+  public lastVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
+
 
   public currentLiga: LigaDO = new LigaDO();
   public allLiga: Array<LigaDO> = [new LigaDO()];
@@ -52,17 +61,14 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
 
+  public currentAllDsbMannschaft: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
+  public allDsbMannschaft: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
+  public testManschaft: DsbMannschaftDO = new DsbMannschaftDO();
+
+
 
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
-
-  public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
-  public currentWettkampftag_2: WettkampfDO = new WettkampfDO();
-  public currentWettkampftag_3: WettkampfDO = new WettkampfDO();
-  public currentWettkampftag_4: WettkampfDO = new WettkampfDO();
-  public allWettkampf: Array<WettkampfDO> = [new WettkampfDO()];
-
-
 
 
   public deleteLoading = false;
@@ -73,10 +79,10 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampftypDataProvider: WettkampftypDataProviderService,
-    private wettkampfDataProvider: WettkampfDataProviderService,
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private ligaProvider: LigaDataProviderService,
+    private mannschaftDataProvider:DsbMannschaftDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService) {
@@ -95,15 +101,11 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
           this.currentWettkampftyp = new WettkampftypDO();
           this.currentLiga = new LigaDO();
 
-          this.currentWettkampftag_1 = new WettkampfDO();
-          this.currentWettkampftag_2 = new WettkampfDO();
-          this.currentWettkampftag_3 = new WettkampfDO();
-          this.currentWettkampftag_4 = new WettkampfDO();
 
           this.loadUsers();
           this.loadWettkampftyp();
           this.loadLiga();
-          this.loadWettkampf();
+
 
           this.loading = false;
           this.deleteLoading = false;
@@ -117,6 +119,10 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public onWettkampftag(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
+  }
+
+  private navigateToWettkampftage(ignore: any) {
+    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
   }
 
   public onSave(ignore: any): void {
@@ -177,6 +183,64 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
     // show response message
   }
+  public onCopyMannschaft(ignore: any): void {
+
+    if (typeof this.lastVeranstaltung != null) {
+
+      this.saveLoading = true;
+
+      for (let i = 0; i <= this.allDsbMannschaft.length; i++) {
+
+        this.testManschaft.veranstaltungId = this.currentVeranstaltung.id;
+        this.testManschaft.veranstaltungName = this.currentVeranstaltung.name;
+        this.testManschaft.benutzerId = this.allDsbMannschaft[i].benutzerId;
+        this.testManschaft.vereinId = this.allDsbMannschaft[i].vereinId;
+        this.testManschaft.nummer = this.allDsbMannschaft[i].nummer;
+        this.testManschaft.name = this.allDsbMannschaft[i].name;
+        // persist
+
+        this.mannschaftDataProvider.create(this.testManschaft, null)
+            .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+              if (!isNullOrUndefined(response)
+                && !isNullOrUndefined(response.payload)
+                && !isNullOrUndefined(response.payload.id)) {
+                console.log('Saved with id: ' + response.payload.id);
+
+                const notification: Notification = {
+                  id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+                  title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVEMANNSCHAFT.TITLE',
+                  description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVEMANNSCHAFT.DESCRIPTION',
+                  severity:    NotificationSeverity.INFO,
+                  origin:      NotificationOrigin.USER,
+                  type:        NotificationType.OK,
+                  userAction:  NotificationUserAction.PENDING
+                };
+
+                this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+                    .subscribe((myNotification) => {
+                      if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                        this.saveLoading = false;
+                        this.router.navigateByUrl('/verwaltung/');
+                      }
+                    });
+
+                this.notificationService.showNotification(notification);
+              }
+            }, (response: BogenligaResponse<VeranstaltungDO>) => {
+              console.log('Failed');
+              this.saveLoading = false;
+
+
+            });
+
+      }
+    } else {
+      console.log('Veranstaltung ist nicht vorhanden')
+    }
+    // show response message
+  }
+
+
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
@@ -219,11 +283,12 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
         });
 
 
-
-
-
-
   }
+
+  /**
+   * Deletes all Wettkampftag entries of the provided VeranstaltungID
+   */
+
 
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
@@ -231,7 +296,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
     const id = this.currentVeranstaltung.id;
 
-    this.deleteWettkampftage(id);
 
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
@@ -261,19 +325,10 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     return this.currentVeranstaltung.id >= 0;
   }
 
-  private navigateToWettkampftage(ignore: any) {
-    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
+  public mannschaftExists(): boolean {
+    return this.allDsbMannschaft.filter((veranstaltung) => veranstaltung.id === this.currentVeranstaltung.id).length > 0;
   }
 
-  /**
-   * Deletes all Wettkampftag entries of the provided VeranstaltungID
-   */
-  private deleteWettkampftage(id: number) {
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_1.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_2.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_3.id);
-    this.wettkampfDataProvider.deleteById(this.currentWettkampftag_4.id);
-  }
 
   private loadById(id: number) {
     this.veranstaltungDataProvider.findById(id)
@@ -302,12 +357,20 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   }
 
-  private loadWettkampf() {
-    this.wettkampfDataProvider.findAll()
-        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response));
+  private loadDsbMannschaft() {
+    this.mannschaftDataProvider.findAll()
+        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleDsbMannschaftResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleDsbMannschaftResponseArrayFailure(response));
 
   }
+
+  private loadAllVeranstaltung() {
+    this.veranstaltungDataProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleAllVeranstaltungResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleAllVeranstaltungResponseArrayFailure(response));
+
+  }
+
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
@@ -315,7 +378,10 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loadWettkampftyp();
     this.loadUsers();
     this.loadLiga();
-    this.loadWettkampf();
+    this.loadAllVeranstaltung();
+    console.log('Anfordern der Veranstaltungen fertig');
+
+
 
   }
 
@@ -417,30 +483,43 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
-  private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
-    this.allWettkampf = [];
-    this.allWettkampf = response.payload;
-    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
+  private handleDsbMannschaftResponseArraySuccess(response: BogenligaResponse<DsbMannschaftDO[]>): void {
+    this.allDsbMannschaft = [];
+    this.allDsbMannschaft = response.payload;
 
 
-    if (this.id === 'add') {
-      this.currentWettkampftag_1 = null;
-      this.currentWettkampftag_2 = null;
-      this.currentWettkampftag_3 = null;
-      this.currentWettkampftag_4 = null;
-    } else {
+    this.allVeranstaltung = this.allVeranstaltung.filter((liga) => liga.ligaID === this.currentVeranstaltung.ligaID);
+    this.allVeranstaltung = this.allVeranstaltung.filter((sportjahr) => sportjahr.sportjahr === this.currentVeranstaltung.sportjahr - 1);
+    this.allVeranstaltung = this.allVeranstaltung.filter((wettkamptyp) => wettkamptyp.wettkampfTypId === this.currentVeranstaltung.wettkampfTypId);
+    this.allVeranstaltung = this.allVeranstaltung.filter((name) => name.name === this.currentVeranstaltung.name);
+    this.lastVeranstaltung = this.allVeranstaltung[0];
 
-      this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
-      this.currentWettkampftag_2 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2)[0];
-      this.currentWettkampftag_3 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3)[0];
-      this.currentWettkampftag_4 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 4)[0];
 
-    }
+    this.allDsbMannschaft = this.allDsbMannschaft.filter((veranstaltung) => veranstaltung.veranstaltungId === this.lastVeranstaltung.id);
+
     this.loading = false;
   }
 
-  private handleWettkampfResponseArrayFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
-    this.allWettkampf = [];
+  private handleDsbMannschaftResponseArrayFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+    this.allDsbMannschaft = [];
+    this.loading = false;
+  }
+
+  private handleAllVeranstaltungResponseArraySuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    this.allVeranstaltung = [];
+    this.allVeranstaltung = response.payload;
+
+
+    for (let i = 0; i < this.allVeranstaltung.length; i++) {
+      console.log(this.allVeranstaltung[i].name + ' ')
+    }
+
+    this.loading = false;
+    this.loadDsbMannschaft();
+  }
+
+  private handleAllVeranstaltungResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
+    this.allVeranstaltung = [];
     this.loading = false;
   }
 }

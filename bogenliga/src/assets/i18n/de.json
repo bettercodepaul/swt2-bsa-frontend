@@ -873,6 +873,7 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen",
         "WETTKAMPFTAGE": "Wettkampftage",
+        "MANNSCHAFT": "Manschaften kopieren",
         "BACK": "Zurück"
       },
       "NOTIFICATION": {
@@ -891,6 +892,10 @@
         "SAVE": {
           "TITLE": "Veranstaltung angelegt",
           "DESCRIPTION": "Veranstaltung wurde erfolgreich angelegt"
+        },
+        "SAVEMANNSCHAFT": {
+          "TITLE": "Kopieren erfolgreich",
+          "DESCRIPTION": "Mannschaften wurden kopiert von der letzten Saison"
         },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
