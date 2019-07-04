@@ -44,15 +44,20 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
 
-  public currentUser: UserProfileDO = new UserProfileDO();
-  public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
-  public allUsersTest: Array<UserProfileDO> = [new UserProfileDO()];
+  public currentUser: UserProfileDO;
+  public allUsers: Array<UserProfileDO> = [];
+
+  public selectedKampfrichterTag1: Array<UserProfileDO> = [];
+  public selectedKampfrichterTag2: Array<UserProfileDO> = [];
+  public selectedKampfrichterTag3: Array<UserProfileDO> = [];
+  public selectedKampfrichterTag4: Array<UserProfileDO> = [];
+
 
   public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_2: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_3: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_4: WettkampfDO = new WettkampfDO();
-  public allWettkampf: Array<WettkampfDO> = [new WettkampfDO()];
+  public allWettkampf: Array<WettkampfDO> = [];
 
 
 
