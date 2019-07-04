@@ -12,7 +12,6 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
-import {Observable} from 'rxjs';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
 
@@ -65,6 +64,21 @@ export class WettkampfDataProviderService  extends DataProviderService {
             }
           });
     });
+  }
+
+  public findByVeranstaltungId(veranstaltungId: number): Promise<BogenligaResponse<WettkampfDTO[]>> {
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVeranstaltungId/' + veranstaltungId).build())
+        .then((data: VersionedDataTransferObject[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        })
+    })
   }
 
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<WettkampfDO>> {

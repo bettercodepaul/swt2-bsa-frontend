@@ -35,6 +35,10 @@ import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dt
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {environment} from '@environment';
 import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-sercie';
+import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
+import {PasseDTOClass} from '@verwaltung/types/datatransfer/passe-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -77,6 +81,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private duplicateSubscription;
   private deleteSubscription;
 
+  @ViewChild('downloadLink')
+  private aElementRef: ElementRef;
+
+
   public deleteLoading = false;
   public saveLoading = false;
   private acceptedWarning = true;
@@ -88,6 +96,8 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
               private dsbMitgliedProvider: DsbMitgliedDataProviderService,
               private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
               private downloadService: DownloadButtonResourceProviderService,
+              private wettkampfService: WettkampfDataProviderService,
+              private passeService: PasseDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -356,7 +366,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     if (deadlineYear > currentDate.getFullYear() ||
       (deadlineYear === currentDate.getFullYear() && deadlineMonth > currentDate.getMonth()) ||
       (deadlineYear === currentDate.getFullYear() && deadlineMonth === currentDate.getMonth() && deadlineDay > currentDate.getDay())) {
-      if (this.checkExistingResults()) {
+      if (this.checkExistingResults(versionedDataObject.id)) {
         const teamMemberId = this.members.get(versionedDataObject.id).id;
         this.deleteMitglied(teamMemberId, versionedDataObject.id);
       } else {
@@ -396,8 +406,32 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.notificationService.showNotification(notification);
   }
 
-  private checkExistingResults(): boolean {
-    return false;
+  // checks if the dsbmitglied has existing match results
+  private checkExistingResults(dsbMitgliedId: number): boolean {
+
+    let resultsExist = false;
+
+    // first gets all wettkaempfe for the current Veranstaltung
+    this.wettkampfService.findByVeranstaltungId(this.currentVeranstaltung.id)
+      .then((wettkaempfeResponse: BogenligaResponse<WettkampfDTO[]>) => {
+        // then gets for each wettkampf the passe of the dsbMitglied the user wants to delete
+        // if passe exist for the dsbmitglied, then this method returns true
+        wettkaempfeResponse.payload.forEach((wettkampf) => this.passeService.findByWettkampfIdAndDsbMitgliedId(wettkampf.id, dsbMitgliedId)
+                                                       .then((passeResponse: BogenligaResponse<PasseDTOClass[]>) => {
+                                                         const passe = passeResponse.payload;
+
+                                                         passe.forEach((pass) => {
+                                                           resultsExist = !isNullOrUndefined(pass.ringzahl);
+                                                         });
+                                                       }).catch((passeResponse: BogenligaResponse<PasseDTOClass[]>) => {
+                                                         console.log(passeResponse);
+                                                         resultsExist = false;
+          }));
+      }).catch((wettkampfResponse: BogenligaResponse<WettkampfDTO[]>) => {
+        console.log(wettkampfResponse);
+        resultsExist = false;
+    });
+    return resultsExist;
   }
 
   private showExistingResultsNotification(dsbMitgliedId: number) {
@@ -498,11 +532,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.notificationService.showNotification(notification);
   }
 
-
-
-
-
-
   // private checkIfDuplicateMannschaftsNr(mannschaftsNr: Number): Boolean {
   private loadMannschaften(vereinsId: number) {
       this.mannschaftsDataProvider.findAllByVereinsId(vereinsId)
@@ -577,7 +606,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path('pdf/schuetzenlizenz')
-      .path( versionedDataObject.id)
+      .path(versionedDataObject.id)
       .path(this.currentMannschaft.id)
       .build();
     this.downloadService.download(downloadUrl, "lizenz.pdf", this.aElementRef)
