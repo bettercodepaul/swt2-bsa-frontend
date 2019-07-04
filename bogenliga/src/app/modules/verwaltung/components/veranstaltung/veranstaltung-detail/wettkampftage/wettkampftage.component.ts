@@ -105,12 +105,6 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           this.deleteLoading = false;
           this.saveLoading = false;
         } else {
-          console.log('onINIt');
-          console.log('onINIt');
-          console.log('onINIt');
-          console.log('onINIt');
-          console.log('onINIt');
-          console.log('onINIt');
           this.loadById(params[ID_PATH_PARAM]);
         }
       }
@@ -127,7 +121,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
   public onSaveWettkampTag1(ignore: any): void {
-    this.currentWettkampftag_1.veranstaltungsId = this.currentVeranstaltung.id;
+    this.currentWettkampftag_1.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
     this.currentWettkampftag_1.wettkampfTag = 1;
     this.currentWettkampftag_1.wettkampfDisziplinId = 0;
     this.currentWettkampftag_1.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
@@ -204,7 +198,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
   public onSaveWettkampTag2(ignore: any): void {
-    this.currentWettkampftag_2.veranstaltungsId = this.currentVeranstaltung.id;
+    this.currentWettkampftag_2.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
     this.currentWettkampftag_2.wettkampfTag = 2;
     this.currentWettkampftag_2.wettkampfDisziplinId = 0;
     this.currentWettkampftag_2.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
@@ -281,7 +275,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   }
 
   public onSaveWettkampTag3(ignore: any): void {
-    this.currentWettkampftag_3.veranstaltungsId = this.currentVeranstaltung.id;
+    this.currentWettkampftag_3.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
     this.currentWettkampftag_3.wettkampfTag = 1;
     this.currentWettkampftag_3.wettkampfDisziplinId = 0;
     this.currentWettkampftag_3.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
@@ -358,7 +352,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   }
 
   public onSaveWettkampTag4(ignore: any): void {
-    this.currentWettkampftag_4.veranstaltungsId = this.currentVeranstaltung.id;
+    this.currentWettkampftag_4.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
     this.currentWettkampftag_4.wettkampfTag = 4;
     this.currentWettkampftag_4.wettkampfDisziplinId = 0;
     this.currentWettkampftag_4.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
@@ -490,11 +484,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
   private loadWettkampf() {
-    console.log('load wettkamptag');
-    console.log('load wettkamptag');
-    console.log('load wettkamptag');
-    console.log('load wettkamptag');
-    console.log('load wettkamptag');
+
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySuccess(response))
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response));
@@ -566,41 +556,24 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
-    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId === this.currentVeranstaltung.id);
-    console.log(this.currentVeranstaltung.id + ' blablabla id ' + this.allWettkampf.toString());
-    console.log(this.currentVeranstaltung.id + ' blablabla id ' + this.allWettkampf.toString());
-    console.log(this.currentVeranstaltung.id + ' blablabla id ' + this.allWettkampf.toString());
-    console.log(this.currentVeranstaltung.id + ' blablabla id ' + this.allWettkampf.toString());
-    console.log(this.allWettkampf.length);
-    console.log(this.allWettkampf.length);
-    console.log(this.allWettkampf.length);
-    console.log(this.allWettkampf.length);
-    console.log(this.allWettkampf.length);
+    this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
 
     if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1).length === 0) {
       this.currentWettkampftag_1 = new WettkampfDO();
       ;
-      console.log('wettkamptag 1 null');
-      console.log('wettkamptag 1 null');
-      console.log('wettkamptag 1 null');
-      console.log('wettkamptag 1 null');
-      console.log('wettkamptag 1 null');
-      console.log('wettkamptag 1 null');
+
     } else {
       this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
-      console.log('wettkamptag 1  not null');
-      console.log('wettkamptag 1  not null');
-      console.log('wettkamptag 1  not null');
-      console.log('wettkamptag 1  not null');
+
     }
 
     if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2).length === 0) {
       this.currentWettkampftag_2 = new WettkampfDO();
       ;
-      console.log('wettkamptag 2 null');
+
     } else {
       this.currentWettkampftag_2 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2)[0];
-      console.log('wettkamptag 2  not null');
+
     }
 
     if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3).length === 0) {
