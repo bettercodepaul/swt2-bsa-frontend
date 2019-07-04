@@ -15,4 +15,3 @@ export * from './region/region-detail/region-detail.component';
 export * from './veranstaltung/veranstaltung-overview/veranstaltung-overview.component';
 export * from './veranstaltung/veranstaltung-detail/veranstaltung-detail.component';
 export * from './veranstaltung/veranstaltung-detail/wettkampftage/wettkampftage.component';
-export * from './sportjahr/sportjahr-overview/sportjahr-overview.component';

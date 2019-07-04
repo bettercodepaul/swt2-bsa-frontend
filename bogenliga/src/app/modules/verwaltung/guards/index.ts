@@ -15,4 +15,3 @@ export * from './region-overview.guard';
 export * from './veranstaltung-detail.guard';
 export * from './veranstaltung-overview.guard';
 export * from './wettkampftage.guard';
-export * from './sportjahr-overview.guard';
