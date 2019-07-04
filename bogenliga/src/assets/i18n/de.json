@@ -781,6 +781,7 @@
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen",
         "WETTKAMPFTAGE": "Wettkampftage",
+        "MANNSCHAFT": "Manschaften kopieren",
         "BACK": "Zurück"
       },
       "NOTIFICATION": {
