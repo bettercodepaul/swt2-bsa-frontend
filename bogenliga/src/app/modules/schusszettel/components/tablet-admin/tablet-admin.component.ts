@@ -8,7 +8,7 @@ import {TabletSessionProviderService} from '../../services/tablet-session-provid
 export const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
 
 const SESSION_INVALID_STORAGE_VALUES = ['[]', 'null', 'undefined'];
-const MAX_NUM_SCHEIBEN: number = 8;
+const MAX_NUM_SCHEIBEN = 8;
 
 @Component({
   selector:    'bla-tablet-admin',
@@ -18,7 +18,7 @@ const MAX_NUM_SCHEIBEN: number = 8;
 export class TabletAdminComponent implements OnInit {
 
   sessions: Array<TabletSessionDO>;
-  currentDeviceIsActive: boolean = false;
+  currentDeviceIsActive = false;
   currentSession: TabletSessionDO;
   tabletEingabeRoute: string;
 
@@ -54,7 +54,7 @@ export class TabletAdminComponent implements OnInit {
   }
 
   public updateSession(scheibenNr: number) {
-    let sessionToUpdate = this.sessions[scheibenNr - 1];
+    const sessionToUpdate = this.sessions[scheibenNr - 1];
     sessionToUpdate.isActive = !sessionToUpdate.isActive;
     this.storeCurrentSession(sessionToUpdate);
     this.tabletSessionService.update(sessionToUpdate)
@@ -71,7 +71,7 @@ export class TabletAdminComponent implements OnInit {
   }
 
   private setActiveSession() {
-    let currentTabletSession = localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
+    const currentTabletSession = localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
     this.currentDeviceIsActive = Boolean(currentTabletSession) &&
       SESSION_INVALID_STORAGE_VALUES.indexOf(currentTabletSession) < 0;
     if (this.currentDeviceIsActive) {

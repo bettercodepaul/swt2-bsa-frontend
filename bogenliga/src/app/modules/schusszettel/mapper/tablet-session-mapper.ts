@@ -11,7 +11,7 @@ export class TabletSessionMapper {
       payload.satznummer,
       payload.matchId,
       payload.otherMatchId
-    )
+    );
   }
 
   static tabletSessionToDTO(payload: TabletSessionDO): TabletSessionDTO {
@@ -22,6 +22,6 @@ export class TabletSessionMapper {
       payload.satzNr,
       payload.matchID,
       payload.otherMatchId
-    )
+    );
   }
 }

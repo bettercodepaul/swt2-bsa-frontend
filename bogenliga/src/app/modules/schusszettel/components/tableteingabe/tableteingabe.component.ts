@@ -30,7 +30,7 @@ class SchuetzeErgebnisse {
   }
 
   addPasse() {
-    let p = new PasseDO();
+    const p = new PasseDO();
     p.lfdNr = this.passen.length + 1;
     p.schuetzeNr = this.schuetzeNr;
     this.passen.push(p);
@@ -52,12 +52,12 @@ const dummyMatch = new MatchDO(
   null
 );
 
-const NUM_SCHUETZEN: number = 3;
-const STORAGE_KEY_SCHUETZE_PREFIX: string = 'schuetze';
-const STORAGE_KEY_SUBMITTED: string = 'submittedSchuetzenNr';
-const STORAGE_KEY_SCHUETZEN: string = 'schuetzen';
+const NUM_SCHUETZEN = 3;
+const STORAGE_KEY_SCHUETZE_PREFIX = 'schuetze';
+const STORAGE_KEY_SUBMITTED = 'submittedSchuetzenNr';
+const STORAGE_KEY_SCHUETZEN = 'schuetzen';
 
-const NOTIFICATION_CONFIRM_NEXT_MATCH: string = 'tabletEingabeConfirmNextMatch';
+const NOTIFICATION_CONFIRM_NEXT_MATCH = 'tabletEingabeConfirmNextMatch';
 
 @Component({
   selector:    'bla-tableteingabe',
@@ -127,7 +127,7 @@ export class TabletEingabeComponent implements OnInit {
    * Initializes component data using previously stored data in the local storage of the tablet.
    */
   initStorageData() {
-    let subSNr = Number.parseInt(localStorage.getItem(STORAGE_KEY_SUBMITTED), 10);
+    const subSNr = Number.parseInt(localStorage.getItem(STORAGE_KEY_SUBMITTED), 10);
     try {
       // tabletSession has to be set in the tablet administration of wettkampf
       this.tabletSession = JSON.parse(localStorage.getItem(STORAGE_KEY_TABLET_SESSION));
@@ -143,8 +143,8 @@ export class TabletEingabeComponent implements OnInit {
   }
 
   initSchuetzen() {
-    let schuetzenString = localStorage.getItem(STORAGE_KEY_SCHUETZEN);
-    let schuetzen: Array<SchuetzeErgebnisse> = Boolean(schuetzenString) ? JSON.parse(schuetzenString) : [];
+    const schuetzenString = localStorage.getItem(STORAGE_KEY_SCHUETZEN);
+    const schuetzen: Array<SchuetzeErgebnisse> = Boolean(schuetzenString) ? JSON.parse(schuetzenString) : [];
     this.schuetzen = [];
     if (schuetzen.length === 0) {
       for (const i of TabletEingabeComponent.getSchuetzeIdxValues()) {
@@ -153,10 +153,10 @@ export class TabletEingabeComponent implements OnInit {
       }
     } else {
       for (const schuetze of schuetzen) {
-        let schuetzeErgebnisse = new SchuetzeErgebnisse(Number(schuetze.schuetzeNr));
+        const schuetzeErgebnisse = new SchuetzeErgebnisse(Number(schuetze.schuetzeNr));
         schuetzeErgebnisse.passen = [];
         for (const passe of schuetze.passen) {
-          let passeDO = new PasseDO();
+          const passeDO = new PasseDO();
           for (const attr of Object.keys(passe)) {
             passeDO[attr] = passe[attr];
           }
@@ -216,7 +216,7 @@ export class TabletEingabeComponent implements OnInit {
   }
 
   onChange(value: number, ringzahlNr: number, schuetze: SchuetzeErgebnisse) {
-    let passe = schuetze.passen[this.tabletSession.satzNr - 1];
+    const passe = schuetze.passen[this.tabletSession.satzNr - 1];
     passe['ringzahlPfeil' + ringzahlNr] = value;
     if (this.passeIsValid(passe)) {
       this.enrichPasseDO(passe, schuetze);
@@ -299,7 +299,7 @@ export class TabletEingabeComponent implements OnInit {
           .then((data) => {
             this.tabletSession = data.payload;
             this.dumpStorageData();
-          })
+          });
     }
   }
 

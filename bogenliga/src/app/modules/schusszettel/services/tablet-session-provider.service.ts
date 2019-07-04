@@ -28,7 +28,7 @@ export class TabletSessionProviderService extends DataProviderService {
           .then((data: Array<TabletSessionDTO>) => {
             const sessions = [];
             for (const session of data) {
-              sessions.push(TabletSessionMapper.tabletSessionToDO(session))
+              sessions.push(TabletSessionMapper.tabletSessionToDO(session));
             }
             resolve({result: RequestResult.SUCCESS, payload: sessions});
           }, (error: HttpErrorResponse) => {
