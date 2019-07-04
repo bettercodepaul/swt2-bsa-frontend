@@ -139,7 +139,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       this.currentRegion.regionUebergeordnetAsName = null;
       this.currentRegion.regionUebergeordnet = null;
     }
-    console.log(this.currentRegion)
+    console.log(this.currentRegion);
     this.regionProvider.update(this.currentRegion)
         .then((response: BogenligaResponse<RegionDO>) => {
           if (!isNullOrUndefined(response)
@@ -302,9 +302,9 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   }
 
   public filterRegions(newSelectedValue): void {
-    if(newSelectedValue == 'fromTypes'){
+    if (newSelectedValue === 'fromTypes') {
       this.currentRegion.regionUebergeordnetAsName = null;
-    }else if(newSelectedValue != null){
+    } else if (newSelectedValue != null) {
       this.currentRegion.regionUebergeordnetAsName = newSelectedValue;
     }
     this.uebergeordneteRegionenGefiltert = [];
@@ -320,15 +320,14 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       this.uebergeordneteRegionenGefiltert = [];
     }
 
-    //this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
+    // this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
 
     this.uebergeordneteRegionenGefiltert.forEach((region) => {this.uebergeordneteRegionenGefiltertStrings.push(region.regionName); });
   }
 
   public filterRegionTypes(event): void {
-    if(event != null){
+    if (event != null) {
       this.currentRegion.regionTyp = event.target.value;
-      //this.currentRegion.regionTyp =
     }
     if (this.currentRegion.regionTyp == null) {
       this.currentRegion.regionTyp = this.possibleRegionTypes[2];
@@ -338,7 +337,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     }
 
     if (event != null) {
-      this.filterRegions('fromTypes')
+      this.filterRegions('fromTypes');
     }
   }
 
