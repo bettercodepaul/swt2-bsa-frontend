@@ -22,6 +22,12 @@ import {WETTKMAPFTAGE_CONFIG} from './wettkampftage.config';
 import {WettkampfDO} from '../../../../../verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '../../../../../verwaltung/types/datatransfer/wettkampf-dto.class';
 import {WettkampfDataProviderService} from '../../../../services/wettkampf-data-provider.service';
+import {BenutzerRolleDO} from '../../../../../verwaltung/types/benutzer-rolle-do.class';
+import {BenutzerRolleDTO} from '../../../../../verwaltung/types/datatransfer/benutzer-rolle-dto.class';
+import {BenutzerDataProviderService} from '../../../../services/benutzer-data-provider.service';
+import {KampfrichterDO} from '../../../../../verwaltung/types/kampfrichter-do.class';
+import {KampfrichterDTO} from '../../../../../verwaltung/types/datatransfer/kampfrichter-dto.class';
+import {KampfrichterProviderService} from '../../../../services/kampfrichter-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -45,13 +51,18 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
   public currentUser: UserProfileDO;
-  public allUsers: Array<UserProfileDO> = [];
+  public allUsers: Array<BenutzerRolleDO> = [];
 
-  public selectedKampfrichterTag1: Array<UserProfileDO> = [];
-  public selectedKampfrichterTag2: Array<UserProfileDO> = [];
-  public selectedKampfrichterTag3: Array<UserProfileDO> = [];
-  public selectedKampfrichterTag4: Array<UserProfileDO> = [];
+  public selectedKampfrichterTag1: Array<BenutzerRolleDO> = [];
+  public selectedKampfrichterTag2: Array<BenutzerRolleDO> = [];
+  public selectedKampfrichterTag3: Array<BenutzerRolleDO> = [];
+  public selectedKampfrichterTag4: Array<BenutzerRolleDO> = [];
 
+  public allKampfrichter: Array<KampfrichterDO> = [];
+  public KampfrichterTag1: Array<KampfrichterDO> = [];
+  public KampfrichterTag2: Array<KampfrichterDO> = [];
+  public KampfrichterTag3: Array<KampfrichterDO> = [];
+  public KampfrichterTag4: Array<KampfrichterDO> = [];
 
   public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_2: WettkampfDO = new WettkampfDO();
@@ -60,21 +71,21 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public allWettkampf: Array<WettkampfDO> = [];
 
 
-
-
   public deleteLoading = false;
   public saveLoading = false;
 
   public id;
 
   constructor(
-      private veranstaltungDataProvider: VeranstaltungDataProviderService,
-      private wettkampfDataProvider: WettkampfDataProviderService,
-      private userProvider: UserProfileDataProviderService,
-      private router: Router,
-      private route: ActivatedRoute,
-      private notificationService: NotificationService) {
-      super();
+    private veranstaltungDataProvider: VeranstaltungDataProviderService,
+    private wettkampfDataProvider: WettkampfDataProviderService,
+    private userProvider: UserProfileDataProviderService,
+    private benutzerrolleProvider: BenutzerDataProviderService,
+    private kampfrichterProvider: KampfrichterProviderService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService) {
+    super();
   }
 
   ngOnInit() {
@@ -89,14 +100,17 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
 
-          this.loadUsers();
-
 
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
         } else {
-          console.log("onINIt" );   console.log("onINIt" );   console.log("onINIt" );   console.log("onINIt" );   console.log("onINIt" );   console.log("onINIt" );
+          console.log('onINIt');
+          console.log('onINIt');
+          console.log('onINIt');
+          console.log('onINIt');
+          console.log('onINIt');
+          console.log('onINIt');
           this.loadById(params[ID_PATH_PARAM]);
         }
       }
@@ -106,6 +120,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public onVeranstaltungDetail(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
   }
+
   private navigateToWettkampftage(ignore: any) {
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id);
   }
@@ -138,7 +153,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/'+ this.currentVeranstaltung.id +'/'+ this.currentVeranstaltung.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
                   }
                 });
 
@@ -149,8 +164,8 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           this.saveLoading = false;
         });
 
-
   }
+
   public onUpdateWettkampTag1(ignore: any): void {
 
     this.wettkampfDataProvider.update(this.currentWettkampftag_1)
@@ -174,7 +189,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/'+ this.currentVeranstaltung.id +'/'+ this.currentVeranstaltung.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
                   }
                 });
 
@@ -215,7 +230,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/'+ this.currentVeranstaltung.id +'/'+ this.currentVeranstaltung.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
                   }
                 });
 
@@ -228,6 +243,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
   }
+
   public onUpdateWettkampTag2(ignore: any): void {
 
     this.wettkampfDataProvider.update(this.currentWettkampftag_2)
@@ -251,7 +267,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/'+ this.currentVeranstaltung.id +'/'+ this.currentVeranstaltung.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
                   }
                 });
 
@@ -291,7 +307,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/'+ this.currentVeranstaltung.id +'/'+ this.currentVeranstaltung.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
                   }
                 });
 
@@ -304,6 +320,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
   }
+
   public onUpdateWettkampTag3(ignore: any): void {
 
     this.wettkampfDataProvider.update(this.currentWettkampftag_3)
@@ -327,7 +344,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/'+ this.currentVeranstaltung.id +'/'+ this.currentVeranstaltung.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
                   }
                 });
 
@@ -367,7 +384,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/'+ this.currentVeranstaltung.id +'/'+ this.currentVeranstaltung.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
                   }
                 });
 
@@ -380,6 +397,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
 
   }
+
   public onUpdateWettkampTag4(ignore: any): void {
 
     this.wettkampfDataProvider.update(this.currentWettkampftag_4)
@@ -403,7 +421,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/'+ this.currentVeranstaltung.id +'/'+ this.currentVeranstaltung.id);
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
                   }
                 });
 
@@ -415,8 +433,6 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
         });
 
   }
-
-
 
 
   public onDelete(ignore: any): void {
@@ -459,17 +475,26 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFailure(response));
   }
 
-  private loadUsers() {
-    this.userProvider.findAll()
-        .then((response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
+
+  private loadBenutzer() {
+    this.benutzerrolleProvider.findAll()
+        .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleBenutzerrolleResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<BenutzerRolleDTO[]>) => this.handleBenutzerrolleResponseArrayFailure(response));
+  }
+  private loadKampfrichter() {
+    this.kampfrichterProvider.findAll()
+        .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<KampfrichterDTO[]>) => this.handleKampfrichterResponseArrayFailure(response));
 
   }
 
 
-
   private loadWettkampf() {
-    console.log("load wettkamptag" ); console.log("load wettkamptag" ); console.log("load wettkamptag" ); console.log("load wettkamptag" ); console.log("load wettkamptag" );
+    console.log('load wettkamptag');
+    console.log('load wettkamptag');
+    console.log('load wettkamptag');
+    console.log('load wettkamptag');
+    console.log('load wettkamptag');
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySuccess(response))
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response));
@@ -479,8 +504,9 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
     this.loading = false;
-    this.loadUsers();
     this.loadWettkampf();
+    this.loadBenutzer();
+    this.loadKampfrichter();
 
   }
 
@@ -535,64 +561,109 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   }
 
 
-  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
-    this.allUsers = [];
-    this.allUsers = response.payload;
-    if (this.id === 'add') {
-      this.currentUser = this.allUsers[0];
-    } else {
-      this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaleiterID)[0];
-    }
-    this.loading = false;
-  }
 
-  private handleUserResponseArrayFailure(response: BogenligaResponse<UserProfileDTO[]>): void {
-    this.allUsers = [];
-    this.loading = false;
-  }
 
   private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
     this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.veranstaltungsId === this.currentVeranstaltung.id);
-    console.log(this.currentVeranstaltung.id + " blablabla id " + this.allWettkampf.toString()); console.log(this.currentVeranstaltung.id + " blablabla id " + this.allWettkampf.toString()); console.log(this.currentVeranstaltung.id + " blablabla id " + this.allWettkampf.toString()); console.log(this.currentVeranstaltung.id + " blablabla id " + this.allWettkampf.toString());
-    console.log(this.allWettkampf.length);  console.log(this.allWettkampf.length); console.log(this.allWettkampf.length); console.log(this.allWettkampf.length); console.log(this.allWettkampf.length);
+    console.log(this.currentVeranstaltung.id + ' blablabla id ' + this.allWettkampf.toString());
+    console.log(this.currentVeranstaltung.id + ' blablabla id ' + this.allWettkampf.toString());
+    console.log(this.currentVeranstaltung.id + ' blablabla id ' + this.allWettkampf.toString());
+    console.log(this.currentVeranstaltung.id + ' blablabla id ' + this.allWettkampf.toString());
+    console.log(this.allWettkampf.length);
+    console.log(this.allWettkampf.length);
+    console.log(this.allWettkampf.length);
+    console.log(this.allWettkampf.length);
+    console.log(this.allWettkampf.length);
 
-  if( this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1).length === 0){
-    this.currentWettkampftag_1 = new WettkampfDO();;
-    console.log("wettkamptag 1 null"); console.log("wettkamptag 1 null"); console.log("wettkamptag 1 null"); console.log("wettkamptag 1 null"); console.log("wettkamptag 1 null"); console.log("wettkamptag 1 null");
-  }else{
-    this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
-    console.log("wettkamptag 1  not null"); console.log("wettkamptag 1  not null");console.log("wettkamptag 1  not null");console.log("wettkamptag 1  not null");
-  }
+    if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1).length === 0) {
+      this.currentWettkampftag_1 = new WettkampfDO();
+      ;
+      console.log('wettkamptag 1 null');
+      console.log('wettkamptag 1 null');
+      console.log('wettkamptag 1 null');
+      console.log('wettkamptag 1 null');
+      console.log('wettkamptag 1 null');
+      console.log('wettkamptag 1 null');
+    } else {
+      this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
+      console.log('wettkamptag 1  not null');
+      console.log('wettkamptag 1  not null');
+      console.log('wettkamptag 1  not null');
+      console.log('wettkamptag 1  not null');
+    }
 
-  if(this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2).length === 0){
-    this.currentWettkampftag_2 = new WettkampfDO();;
-    console.log("wettkamptag 2 null");
-  }else{
-    this.currentWettkampftag_2 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2)[0];
-    console.log("wettkamptag 2  not null");
-  }
+    if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2).length === 0) {
+      this.currentWettkampftag_2 = new WettkampfDO();
+      ;
+      console.log('wettkamptag 2 null');
+    } else {
+      this.currentWettkampftag_2 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 2)[0];
+      console.log('wettkamptag 2  not null');
+    }
 
-  if(this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3).length === 0){
-    this.currentWettkampftag_3 = new WettkampfDO();;
-  }else{
-    this.currentWettkampftag_3 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3)[0];
-  }
+    if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3).length === 0) {
+      this.currentWettkampftag_3 = new WettkampfDO();
+      ;
+    } else {
+      this.currentWettkampftag_3 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 3)[0];
+    }
 
-  if(this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 4).length === 0){
-    this.currentWettkampftag_4 = new WettkampfDO();;
-  }else{
-    this.currentWettkampftag_4 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 4)[0];
-  }
-
+    if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 4).length === 0) {
+      this.currentWettkampftag_4 = new WettkampfDO();
+      ;
+    } else {
+      this.currentWettkampftag_4 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 4)[0];
+    }
 
 
     this.loading = false;
   }
 
   private handleWettkampfResponseArrayFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
-    this.allWettkampf = [];
+    this.allUsers = [];
+    this.loading = false;
+  }
+
+  private handleBenutzerrolleResponseArraySuccess(response: BogenligaResponse<BenutzerRolleDO[]>): void {
+    this.allUsers = [];
+    this.allUsers = response.payload;
+    this.allUsers = this.allUsers.filter((user) => user.roleId === 5);
+    this.loading = false;
+  }
+
+  private handleBenutzerrolleResponseArrayFailure(response: BogenligaResponse<BenutzerRolleDTO[]>): void {
+    this.allUsers = [];
+    this.loading = false;
+  }
+
+  private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterDO[]>): void {
+
+    this.allKampfrichter = [];
+    this.allKampfrichter = response.payload;
+
+    this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_1.id);
+    for(let iter in this.KampfrichterTag1) {
+      this.selectedKampfrichterTag1.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
+    }
+    this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_2.id);
+    for(let iter in this.KampfrichterTag2) {
+      this.selectedKampfrichterTag2.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag2[iter].userid)[0]);
+    }
+    this.KampfrichterTag3 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_3.id);
+    for(let iter in this.KampfrichterTag3) {
+      this.selectedKampfrichterTag3.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag3[iter].userid)[0]);
+    }
+    this.KampfrichterTag4 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id===this.currentWettkampftag_4.id);
+    for(let iter in this.KampfrichterTag4) {
+      this.selectedKampfrichterTag4.push(this.allUsers.filter((user) => user.id === this.KampfrichterTag4[iter].userid)[0]);
+    }
+    this.loading = false;
+  }
+
+  private handleKampfrichterResponseArrayFailure(response: BogenligaResponse<KampfrichterDTO[]>): void {
+    this.allKampfrichter = [];
     this.loading = false;
   }
 }
