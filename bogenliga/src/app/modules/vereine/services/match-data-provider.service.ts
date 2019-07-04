@@ -42,6 +42,24 @@ export class MatchDataProviderService extends DataProviderService {
         });
     });
   }
+
+
+  public findAll(): Promise<BogenligaResponse<MatchDO[]>>{
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl() + '/')
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+
+  }
   //
   // public deleteById(id: number): Promise<BogenligaResponse<void>> {
   //   // return promise
