@@ -12,13 +12,13 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
-import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
 import {VereinDO} from '@vereine/types/verein-do.class';
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
 import {VereinDataProviderService} from '@vereine/services/verein-data-provider.service';
 import {HttpClient} from '@angular/common/http';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
 const NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS = 'dsb_mitglied_detail_delete_success';
@@ -93,7 +93,6 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
         }
       }
     });
-
   }
 
   public onSave(ignore: any): void {
@@ -103,6 +102,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     this.currentMitglied.vereinsId = this.currentVerein.id;
 
     console.log('current nation: ' + this.currentMitgliedNat);
+    console.log('current kampfrichter: ' + this.currentMitglied.kampfrichter);
 
     for (let i = 0; i < this.nationen.length; i++) {
       if (this.nationen[i] === this.currentMitgliedNat) {
