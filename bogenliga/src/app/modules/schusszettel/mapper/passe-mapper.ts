@@ -1,27 +1,8 @@
 import {PasseDTO} from '../types/datatransfer/passe-dto.class';
 import {PasseDO} from '../types/passe-do.class';
-import {TabletSessionDTO} from '../types/datatransfer/tablet-session-dto.class';
-import {TabletSessionDO} from '../types/tablet-session-do.class';
 
 
-export class TabletMapper {
-
-  static sessionToDO(payload: TabletSessionDTO): TabletSessionDO {
-    return new TabletSessionDO(payload.scheibennummer,
-      payload.wettkampfId,
-      payload.active,
-      payload.satznummer,
-      payload.matchId)
-  }
-
-  static sessionToDTO(payload: TabletSessionDO): TabletSessionDTO {
-    return new TabletSessionDTO(payload.scheibenNr,
-      payload.wettkampfID,
-      payload.isActive,
-      payload.satzNr,
-      payload.matchID)
-  }
-
+export class PasseMapper {
   static passeToDO(payload: PasseDTO): PasseDO {
     return new PasseDO(payload.id,
       payload.matchId,
@@ -59,4 +40,3 @@ export class TabletMapper {
       payload.schuetzeNr);
   }
 }
-

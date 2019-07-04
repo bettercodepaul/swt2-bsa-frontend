@@ -7,7 +7,7 @@ import {
   RestClient,
   UriBuilder
 } from '../../shared/data-provider';
-import {SchusszettelMapper} from '../mapper/schusszettel-mapper';
+import {MatchMapper} from '../mapper/match-mapper';
 import {MatchDO} from '../types/match-do.class';
 import {MatchDTO} from '../types/datatransfer/match-dto.class';
 
@@ -26,7 +26,7 @@ export class MatchProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<MatchDTO>(new UriBuilder().fromPath(this.getUrl()).path(matchId).build())
           .then((data: MatchDTO) => {
-            const matchDO = SchusszettelMapper.matchToDO(data);
+            const matchDO = MatchMapper.matchToDO(data);
             resolve({result: RequestResult.SUCCESS, payload: matchDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
@@ -39,11 +39,11 @@ export class MatchProviderService extends DataProviderService {
   }
 
   public create(matchDO: MatchDO): Promise<BogenligaResponse<MatchDO>> {
-    const matchDTO = SchusszettelMapper.matchToDTO(matchDO);
+    const matchDTO = MatchMapper.matchToDTO(matchDO);
     return new Promise(((resolve, reject) => {
       this.restClient.POST(this.getUrl(), matchDTO)
           .then((data: MatchDTO) => {
-            const matchDO = SchusszettelMapper.matchToDO(data);
+            const matchDO = MatchMapper.matchToDO(data);
             resolve({result: RequestResult.SUCCESS, payload: matchDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
@@ -56,11 +56,11 @@ export class MatchProviderService extends DataProviderService {
   }
 
   public update(matchDO: MatchDO): Promise<BogenligaResponse<MatchDO>> {
-    const matchDTO = SchusszettelMapper.matchToDTO(matchDO);
+    const matchDTO = MatchMapper.matchToDTO(matchDO);
     return new Promise(((resolve, reject) => {
       this.restClient.PUT(this.getUrl(), matchDTO)
           .then((data: MatchDTO) => {
-            const matchDO = SchusszettelMapper.matchToDO(data);
+            const matchDO = MatchMapper.matchToDO(data);
             resolve({result: RequestResult.SUCCESS, payload: matchDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {

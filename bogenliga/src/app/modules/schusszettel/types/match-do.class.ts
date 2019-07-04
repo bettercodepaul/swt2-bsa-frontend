@@ -50,4 +50,3 @@ export class MatchDO implements DataObject {
     this.wettkampfTag = wettkampfTag;
   }
 }
-

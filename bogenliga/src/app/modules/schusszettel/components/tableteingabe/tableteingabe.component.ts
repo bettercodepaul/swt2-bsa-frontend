@@ -4,7 +4,7 @@ import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isUndefined} from '@shared/functions';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 import {
   NotificationOrigin,
   NotificationService,
@@ -15,6 +15,7 @@ import {
 import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
 import {PasseProviderService} from '../../services/passe-provider.service';
 import {MatchProviderService} from '../../services/match-provider.service';
+import {TabletSessionDO} from '../../types/tablet-session-do.class';
 
 class SchuetzeErgebnisse {
   schuetzeNr: number;
@@ -50,8 +51,7 @@ const dummyMatch = new MatchDO(
 );
 
 const NUM_SCHUETZEN: number = 3;
-const STORAGE_KEY_SATZ_NR: string = 'satzNr';
-const STORAGE_KEY_SCHEIBE_NR: string = 'scheibenNummer';
+const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
 const STORAGE_KEY_SCHUETZE_PREFIX: string = 'schuetze';
 const STORAGE_KEY_SUBMITTED: string = 'submittedSchuetzenNr';
 const STORAGE_KEY_SCHUETZEN: string = 'schuetzen';
@@ -67,8 +67,8 @@ export class TabletEingabeComponent implements OnInit {
   match2: MatchDO;
   currentMatch: MatchDO;
   wettkampf: WettkampfDO;
-  scheibenNummer: number;
-  satzNr: number;
+  tabletSession: TabletSessionDO;
+  tabletAdminRoute: string;
   schuetzen: Array<SchuetzeErgebnisse>;
   submittedSchuetzenNr: boolean;
 
@@ -99,7 +99,10 @@ export class TabletEingabeComponent implements OnInit {
             .then((data: BogenligaResponse<Array<MatchDO>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
-              this.currentMatch = this.match2.scheibenNummer === this.scheibenNummer ? this.match2 : this.match1;
+              if (this.tabletSession) {
+                this.currentMatch = this.match2.scheibenNummer === this.tabletSession.scheibenNr ? this.match2 : this.match1;
+              }
+              this.tabletAdminRoute = '/schusszettel/tabletadmin/' + this.match1.wettkampfId;
               // TODO: update tabletsession
               this.dumpStorageData();
             }, (error) => {
@@ -120,16 +123,18 @@ export class TabletEingabeComponent implements OnInit {
    * Initializes component data using previously stored data in the local storage of the tablet.
    */
   initStorageData() {
-    // scheibenNummer has to be set in the tablet administration of wettkampf
-    let schNr = Number.parseInt(localStorage.getItem(STORAGE_KEY_SCHEIBE_NR));
-    let satzNr = Number.parseInt(localStorage.getItem(STORAGE_KEY_SATZ_NR));
     let subSNr = Number.parseInt(localStorage.getItem(STORAGE_KEY_SUBMITTED));
-    if (!isNaN(schNr)) {
-      this.scheibenNummer = schNr;
-    } else {
+    try {
+      // tabletSession has to be set in the tablet administration of wettkampf
+      this.tabletSession = JSON.parse(localStorage.getItem(STORAGE_KEY_TABLET_SESSION));
+      if (!this.tabletSession.satzNr) {
+        this.tabletSession.satzNr = 1;
+        // TODO: update tabletsession
+      }
+    }
+    catch (e) {
       this.showMissingScheibenNummerNotification();
     }
-    this.satzNr = (Boolean(satzNr) && !isNaN(satzNr) && satzNr > 0) ? satzNr : 1;
     this.submittedSchuetzenNr = (Boolean(subSNr) && !isNaN(subSNr)) ? subSNr === 1 : false;
     this.initSchuetzen();
   }
@@ -163,7 +168,7 @@ export class TabletEingabeComponent implements OnInit {
    * Writes all relevant data of this component to the local storage
    */
   dumpStorageData() {
-    localStorage.setItem(STORAGE_KEY_SATZ_NR, this.satzNr.toString());
+    localStorage.setItem(STORAGE_KEY_TABLET_SESSION, JSON.stringify(this.tabletSession));
     localStorage.setItem(STORAGE_KEY_SUBMITTED, this.submittedSchuetzenNr ? Number(1).toString() : Number(0).toString());
     localStorage.setItem(STORAGE_KEY_SCHUETZEN, Boolean(this.schuetzen) ? JSON.stringify(this.schuetzen) : '');
     if (this.hasSchuetzenNummern()) {
@@ -177,13 +182,11 @@ export class TabletEingabeComponent implements OnInit {
    * Resets parts of the storage data for e.g. starting a new match
    */
   resetStorageData() {
-    localStorage.setItem(STORAGE_KEY_SATZ_NR, '');
     localStorage.setItem(STORAGE_KEY_SUBMITTED, '0');
     localStorage.setItem(STORAGE_KEY_SCHUETZEN, '');
     for (let i of TabletEingabeComponent.getSchuetzeIdxValues()) {
       localStorage.setItem(STORAGE_KEY_SCHUETZE_PREFIX + (i + 1), '');
     }
-    this.satzNr = 1;
     this.schuetzen = [];
     this.submittedSchuetzenNr = false;
   }
@@ -210,7 +213,7 @@ export class TabletEingabeComponent implements OnInit {
   }
 
   onChange(value: number, ringzahlNr: number, schuetze: SchuetzeErgebnisse) {
-    let passe = schuetze.passen[this.satzNr - 1];
+    let passe = schuetze.passen[this.tabletSession.satzNr - 1];
     passe['ringzahlPfeil' + ringzahlNr] = value;
     if (this.passeIsValid(passe)) {
       this.enrichPasseDO(passe, schuetze);
@@ -223,7 +226,7 @@ export class TabletEingabeComponent implements OnInit {
     if (passe.id !== null) {
       this.passeService.update(passe)
           .then((data: BogenligaResponse<PasseDO>) => {
-            schuetze.passen[this.satzNr - 1] = data.payload;
+            schuetze.passen[this.tabletSession.satzNr - 1] = data.payload;
             this.dumpStorageData();
           })
           .catch((err) => {
@@ -233,7 +236,7 @@ export class TabletEingabeComponent implements OnInit {
       // no id set -> passe is newly created
       this.passeService.create(passe)
           .then((data: BogenligaResponse<PasseDO>) => {
-            schuetze.passen[this.satzNr - 1] = data.payload;
+            schuetze.passen[this.tabletSession.satzNr - 1] = data.payload;
             this.dumpStorageData();
           })
           .catch((err) => {
@@ -247,7 +250,7 @@ export class TabletEingabeComponent implements OnInit {
       for (let schuetze of this.schuetzen) {
         schuetze.addPasse()
       }
-      this.satzNr++;
+      this.tabletSession.satzNr++;
       // TODO: update tabletsession
       this.dumpStorageData();
     }
@@ -256,7 +259,7 @@ export class TabletEingabeComponent implements OnInit {
   allPasseFilled() {
     let valid = true;
     for (let schuetze of this.schuetzen) {
-      valid = valid && this.passeIsValid(schuetze.passen[this.satzNr - 1]);
+      valid = valid && this.passeIsValid(schuetze.passen[this.tabletSession.satzNr - 1]);
     }
     return valid;
   }

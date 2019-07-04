@@ -8,7 +8,7 @@ import {
   UriBuilder
 } from '../../shared/data-provider';
 import {TabletSessionDO} from '../types/tablet-session-do.class';
-import {TabletMapper} from '../mapper/tablet-mapper';
+import {TabletSessionMapper} from '../mapper/tablet-session-mapper';
 import {TabletSessionDTO} from '../types/datatransfer/tablet-session-dto.class';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class TabletSessionProviderService extends DataProviderService {
           .then((data: Array<TabletSessionDTO>) => {
             const sessions = [];
             for (const session of data) {
-              sessions.push(TabletMapper.sessionToDO(session))
+              sessions.push(TabletSessionMapper.tabletSessionToDO(session))
             }
             resolve({result: RequestResult.SUCCESS, payload: sessions});
           }, (error: HttpErrorResponse) => {
@@ -42,10 +42,11 @@ export class TabletSessionProviderService extends DataProviderService {
   }
 
   public findTabletSession(wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<TabletSessionDO>> {
+    let api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {
-      this.restClient.GET<TabletSessionDTO>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfId + '/' + scheibenNr).build())
+      this.restClient.GET<TabletSessionDTO>(api_url)
           .then((data: TabletSessionDTO) => {
-            resolve({result: RequestResult.SUCCESS, payload: TabletMapper.sessionToDO(data)});
+            resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
@@ -57,10 +58,11 @@ export class TabletSessionProviderService extends DataProviderService {
   }
 
   public create(session: TabletSessionDO, wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<TabletSessionDO>> {
+    let api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise(((resolve, reject) => {
-      this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).path(wettkampfId + '/' + scheibenNr).build(), TabletMapper.sessionToDTO(session))
+      this.restClient.POST(api_url, TabletSessionMapper.tabletSessionToDTO(session))
           .then((data: TabletSessionDTO) => {
-            resolve({result: RequestResult.SUCCESS, payload: TabletMapper.sessionToDO(data)});
+            resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
@@ -73,9 +75,9 @@ export class TabletSessionProviderService extends DataProviderService {
 
   public update(session: TabletSessionDO): Promise<BogenligaResponse<TabletSessionDO>> {
     return new Promise(((resolve, reject) => {
-      this.restClient.PUT(this.getUrl(), TabletMapper.sessionToDTO(session))
+      this.restClient.PUT(this.getUrl(), TabletSessionMapper.tabletSessionToDTO(session))
           .then((data: TabletSessionDTO) => {
-            resolve({result: RequestResult.SUCCESS, payload: TabletMapper.sessionToDO(data)});
+            resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
@@ -87,8 +89,9 @@ export class TabletSessionProviderService extends DataProviderService {
   }
 
   public delete(wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<any>> {
+    let api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {
-      this.restClient.DELETE<any>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfId + '/' + scheibenNr).build())
+      this.restClient.DELETE<any>(api_url)
           .then((data: any) => {
             resolve({result: RequestResult.SUCCESS, payload: data});
           }, (error: HttpErrorResponse) => {
