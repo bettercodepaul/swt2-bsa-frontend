@@ -16,6 +16,7 @@ import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
 import {PasseProviderService} from '../../services/passe-provider.service';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
+import {STORAGE_KEY_TABLET_SESSION} from '../tablet-admin/tablet-admin.component';
 
 class SchuetzeErgebnisse {
   schuetzeNr: number;
@@ -51,7 +52,6 @@ const dummyMatch = new MatchDO(
 );
 
 const NUM_SCHUETZEN: number = 3;
-const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
 const STORAGE_KEY_SCHUETZE_PREFIX: string = 'schuetze';
 const STORAGE_KEY_SUBMITTED: string = 'submittedSchuetzenNr';
 const STORAGE_KEY_SCHUETZEN: string = 'schuetzen';

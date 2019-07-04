@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
-import {isNullOrUndefined, isUndefined} from '@shared/functions';
+import {isUndefined} from '@shared/functions';
 import {BogenligaResponse} from '@shared/data-provider';
 import {ActivatedRoute} from '@angular/router';
 import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
 
-const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
+export const STORAGE_KEY_TABLET_SESSION: string = 'tabletSession';
+
+const SESSION_INVALID_STORAGE_VALUES = ['[]', 'null', 'undefined'];
 
 @Component({
   selector:    'bla-tablet-admin',
@@ -56,12 +58,7 @@ export class TabletAdminComponent implements OnInit {
               this.sessions = allSessions;
               */
               this.sessions = data.payload;
-              this.currentDeviceIsActive = !!localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
-              console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
-              if (this.currentDeviceIsActive) {
-                const ses = JSON.parse(localStorage.getItem(STORAGE_KEY_TABLET_SESSION));
-                this.sessions[ses.scheibenNr - 1] = ses;
-              }
+              this.setActiveSession();
             }, (error) => {
               console.error(error);
               // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
@@ -69,15 +66,21 @@ export class TabletAdminComponent implements OnInit {
               for (let i = 0; i < 8; i++) {
                 this.sessions.push(new TabletSessionDO(i+1, parseInt(wettkampfId), false));
               }
-              this.currentDeviceIsActive = !!localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
-              console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
-              if (this.currentDeviceIsActive) {
-                const ses = JSON.parse(localStorage.getItem(STORAGE_KEY_TABLET_SESSION));
-                this.sessions[ses.scheibenNr - 1] = ses;
-              }
+              this.setActiveSession();
             });
       }
     });
+  }
+
+  private setActiveSession () {
+    let currentTabletSession = localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
+    this.currentDeviceIsActive = Boolean(currentTabletSession) &&
+      SESSION_INVALID_STORAGE_VALUES.indexOf(currentTabletSession) < 0;
+    console.log('LOCALSTORAGE CURRENTDEVICE', this.currentDeviceIsActive);
+    if (this.currentDeviceIsActive) {
+      const ses = JSON.parse(currentTabletSession);
+      this.sessions[ses.scheibenNr - 1] = ses;
+    }
   }
 
   public updateSession(scheibenNr: number) {

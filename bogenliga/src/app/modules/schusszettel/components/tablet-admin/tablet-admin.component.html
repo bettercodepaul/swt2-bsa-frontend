@@ -7,10 +7,12 @@
         <th style="width: 33%">Status</th>
         <th style="width: 33%">Aktionen</th>
       </tr>
+
       <tr *ngFor="let session of sessions">
         <td>
           <span class="h4 text-secondary text-center m-0 p-0">{{session.scheibenNr}}</span>
         </td>
+
         <td>
           <span
             class="badge"
@@ -19,13 +21,14 @@
             {{session.isActive ? 'Aktiv' : 'Nicht aktiv'}}
           </span>
         </td>
+
         <td>
-          <a *ngIf="session.isActive" (click)="updateSession(session.scheibenNr)">
+          <button *ngIf="session.isActive" class="btn btn-danger" (click)="updateSession(session.scheibenNr)">
             <fa-icon [icon]="'trash'"></fa-icon>
-          </a>
-          <a *ngIf="!currentDeviceIsActive" (click)="updateSession(session.scheibenNr)">
+          </button>
+          <button *ngIf="!currentDeviceIsActive" class="btn btn-success" (click)="updateSession(session.scheibenNr)">
             <fa-icon [icon]="'plus-circle'"></fa-icon>
-          </a>
+          </button>
         </td>
       </tr>
     </table>
