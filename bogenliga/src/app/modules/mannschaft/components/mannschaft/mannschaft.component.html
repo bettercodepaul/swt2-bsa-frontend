@@ -13,7 +13,7 @@
                 id="vereine"
                 name="vereineName"
                 [(ngModel)]="currentVerein.name"
-                (change)="loadErgebnisse();">
+                (ngModelChange)="loadErgebnisse();">
           <option *ngFor="let verein of vereine"> {{verein.name}}</option>
         </select>
         <div class="invalid-feedback">
@@ -33,7 +33,7 @@
                 id="regionTyp"
                 name="regionTyp"
                 [(ngModel)]="currentVeranstaltung.name"
-                (change)="loadErgebnisse();">
+                (ngModelChange)="loadErgebnisse();">
 
           <option *ngFor="let veranstaltung of veranstaltungen"> {{veranstaltung.name}}</option>
         </select>
@@ -54,7 +54,7 @@
              style="width:100%">
         <div class="row">
           <bla-data-table [config]="config_table"
-                          [rows]="rows">
+                          [rows]="rows[0]">
           </bla-data-table>
         </div>
       </table>

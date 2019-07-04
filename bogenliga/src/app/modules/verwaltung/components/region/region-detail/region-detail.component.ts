@@ -16,10 +16,7 @@ import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {DsbMitgliedDO} from '../../../types/dsb-mitglied-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {REGION_DETAIL_CONFIG} from './region-detail.config';
-import {UserProfileDO} from '@user/types/user-profile-do.class';
-import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
-import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -48,6 +45,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
   public deleteLoading = false;
   public saveLoading = false;
 
+  public inAddMode = false;
   public contractionUnique = true;
 
   public id;
@@ -76,9 +74,11 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
+          this.inAddMode = true;
         } else {
           this.loadRegions();
           this.loadById(params[ID_PATH_PARAM]);
+          this.inAddMode = false;
         }
       }
     });
@@ -139,6 +139,7 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       this.currentRegion.regionUebergeordnetAsName = null;
       this.currentRegion.regionUebergeordnet = null;
     }
+    console.log(this.currentRegion);
     this.regionProvider.update(this.currentRegion)
         .then((response: BogenligaResponse<RegionDO>) => {
           if (!isNullOrUndefined(response)
@@ -225,9 +226,9 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
 
     this.possibleRegionTypes = this.possibleRegionTypes2;
 
-    this.filterRegions();
+    this.filterRegions(null);
 
-    this.filterRegionTypes();
+    this.filterRegionTypes(null);
 
     this.loading = false;
   }
@@ -293,14 +294,19 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
     if (this.currentRegion.regionUebergeordnetAsName == null) {
       this.currentRegion.regionUebergeordnetAsName = this.regionen[1].regionName;
     }
-    this.filterRegionTypes();
+    this.filterRegionTypes(null);
 
-    this.filterRegions();
+    this.filterRegions(null);
 
     this.loading = false;
   }
 
-  public filterRegions(): void {
+  public filterRegions(newSelectedValue): void {
+    if (newSelectedValue === 'fromTypes') {
+      this.currentRegion.regionUebergeordnetAsName = null;
+    } else if (newSelectedValue != null) {
+      this.currentRegion.regionUebergeordnetAsName = newSelectedValue;
+    }
     this.uebergeordneteRegionenGefiltert = [];
     this.uebergeordneteRegionenGefiltertStrings = [];
 
@@ -314,27 +320,35 @@ export class RegionDetailComponent extends CommonComponent implements OnInit {
       this.uebergeordneteRegionenGefiltert = [];
     }
 
-    this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
+    // this.uebergeordneteRegionenGefiltert = this.uebergeordneteRegionenGefiltert.filter((region) => region.regionName !== this.currentRegion.regionUebergeordnetAsName);
 
     this.uebergeordneteRegionenGefiltert.forEach((region) => {this.uebergeordneteRegionenGefiltertStrings.push(region.regionName); });
   }
 
-  public filterRegionTypes(): void {
+  public filterRegionTypes(event): void {
+    if (event != null) {
+      this.currentRegion.regionTyp = event.target.value;
+    }
     if (this.currentRegion.regionTyp == null) {
       this.currentRegion.regionTyp = this.possibleRegionTypes[2];
       this.possibleRegionTypes = this.possibleRegionTypes2.filter((s) => s !== this.currentRegion.regionTyp);
     } else {
       this.possibleRegionTypes = this.possibleRegionTypes2.filter((s) => s !== this.currentRegion.regionTyp);
     }
+
+    if (event != null) {
+      this.filterRegions('fromTypes');
+    }
   }
 
   public isContractionUnique(): boolean {
     this.contractionUnique = true;
-    this.regionen.forEach((region) => {
-      if (region.regionKuerzel === this.currentRegion.regionKuerzel) {
-        this.contractionUnique = false;
-      }
-    });
+    if (this.inAddMode) {
+      this.contractionUnique = !this.regionen.some((region) => region.regionKuerzel === this.currentRegion.regionKuerzel);
+    } else {
+      this.contractionUnique = !this.regionen.some((region) => region.regionKuerzel === this.currentRegion.regionKuerzel
+        && region.regionName !== this.currentRegion.regionName);
+    }
     return this.contractionUnique;
   }
 }
