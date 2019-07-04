@@ -182,7 +182,7 @@
 
 
         <bla-button *ngIf="!entityExists()"
-                    [id]="'ligaSaveButton'"
+                    [id]="'veranstaltungSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
@@ -190,14 +190,14 @@
         </bla-button>
 
         <bla-button *ngIf="entityExists()"
-                    [id]="'ligaSaveButton'"
+                    [id]="'veranstaltungSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onWettkampftag($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAGE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
-                    [id]="'ligaUpdateButton'"
+                    [id]="'veranstaltungUpdateButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
