@@ -142,9 +142,8 @@
 
       </div>
       <div class="layout-element-2" id="layout_1">
-        <pre><code>{{ allUsers | json }}</code></pre>
-        <bla-double-selectionlist [leftItems]="allUsers"
-                                  [(rightItems)]="selectedKampfrichterTag1"
+        <bla-double-selectionlist [leftItems]="selectedKampfrichterTag1"
+                                  [(rightItems)]="allUsers"
                                   [fieldSelector]="'email'"
                                   [idLeftList]="'left'"
                                   [idRightList]="'right'"
@@ -272,6 +271,7 @@
       </div>
 
       <div class="layout-element-2" id="layout_2">
+
         <bla-double-selectionlist [leftItems]="allUsers"
                                   [(rightItems)]="selectedKampfrichterTag2"
                                   [fieldSelector]="'name'"
