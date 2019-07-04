@@ -52,10 +52,10 @@ export class WettkampfErgebnisService {
     this.wettkampErgebnisse = [];
     console.log(this.matches);
     this.matches.filter((ma) => ma.mannschaftId === this.currentManschaft.id)
-        .forEach((match) => {
+        .forEach((currentMatch) => {
           const wettkampfErgebnis = new WettkampfErgebnis(this.verein.name, 0, 1,
             2, 3, 4, 'Hallo', 1, 2,
-            3, 4, 5, '' + match.satzpunkte, '' + match.matchpunkte);
+            3, 4, 5, '' + currentMatch.satzpunkte, '' + currentMatch.matchpunkte);
           // console.log(wettkampfErgebnis);
           this.wettkampErgebnisse.push(wettkampfErgebnis);
         });
