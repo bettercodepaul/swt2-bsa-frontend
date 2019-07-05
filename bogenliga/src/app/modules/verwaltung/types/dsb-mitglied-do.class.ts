@@ -10,6 +10,7 @@ export class DsbMitgliedDO implements VersionedDataObject {
   nationalitaet: string;
   mitgliedsnummer: string;
   vereinsId: number;
+  vereinsName: string;
   userId: number;
   kampfrichter = false;
 }

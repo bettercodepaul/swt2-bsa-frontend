@@ -32,8 +32,9 @@ export const MANNSCHAFT_DETAIL_TABLE_CONFIG: TableConfig = {
     },
   ],
   actions: {
-    actionTypes: [TableActionType.DELETE],
+    actionTypes: [TableActionType.DELETE, TableActionType.DOWNLOAD],
     width:       6
   },
+
 
 };
