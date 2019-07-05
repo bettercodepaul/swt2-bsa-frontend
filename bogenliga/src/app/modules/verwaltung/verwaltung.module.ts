@@ -90,6 +90,7 @@ export class VerwaltungModule {
         VerwaltungGuard,
         DsbMitgliedOverviewGuard,
         DsbMitgliedDetailGuard,
+        DsbMannschaftDetailGuard,
         BenutzerOverviewGuard,
         BenutzerNeuGuard,
         BenutzerDetailGuard,

@@ -1,0 +1,24 @@
+/* Farbkonzept Website */
+$primary: #02bdd5; // Links, Navbar
+$primary-light: #b4ffff; // Sidebar-Background
+$primary-dark: #007c91; // Sidebar-Font
+$secondary: #ffc107; // hover Tables
+$secondary-light: #fff350;
+$secondary-dark: #ff833a; // hover Links, Logo
+
+
+input, label {
+  display: block;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+tr, th, td {
+  alignment: center;
+  text-align: center;
+}
