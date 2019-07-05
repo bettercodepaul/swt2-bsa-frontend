@@ -8,12 +8,12 @@ export class DsbMitgliedDTO implements DataTransferObject {
   nationalitaet: string;
   mitgliedsnummer: string;
   vereinsId: number;
+  vereinsName: string;
   userId: number;
   version: number;
   kampfrichter: boolean;
 
   static copyFrom(optional: {
-    kampfrichter?: boolean,
     id?: number,
     vorname?: string,
     nachname?: string,
@@ -21,8 +21,10 @@ export class DsbMitgliedDTO implements DataTransferObject {
     nationalitaet?: string,
     mitgliedsnummer?: string,
     vereinsId?: number,
+    vereinsName?: string,
     userId?: number,
-    version?: number
+    version?: number,
+    kampfrichter?: boolean
   } = {}): DsbMitgliedDTO {
     const copy = new DsbMitgliedDTO();
 
@@ -38,7 +40,13 @@ export class DsbMitgliedDTO implements DataTransferObject {
     copy.geburtsdatum = optional.geburtsdatum || '';
     copy.nationalitaet = optional.nationalitaet || '';
     copy.mitgliedsnummer = optional.mitgliedsnummer || '';
-    copy.vereinsId = optional.vereinsId || null;
+    if (optional.vereinsId >= 0) {
+      copy.vereinsId = optional.vereinsId;
+    } else {
+      copy.vereinsId = null;
+    }
+
+    copy.vereinsName = optional.vereinsName || '';
     copy.userId = optional.userId || null;
     copy.version = optional.version || null;
     copy.kampfrichter = optional.kampfrichter || false;
