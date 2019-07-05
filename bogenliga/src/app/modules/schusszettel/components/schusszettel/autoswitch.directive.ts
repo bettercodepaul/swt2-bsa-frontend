@@ -8,6 +8,11 @@ export class AutoswitchDirective {
   constructor(private el: ElementRef) {
   }
 
+  /**
+   * On key up, check if the value entered was valid and not special.
+   * Then try to switch to the next input by incrementing the current elements tabindex value by 1.
+   * @param event
+   */
   @HostListener('keyup', ['$event'])
   onKeyUp(event: KeyboardEvent) {
     // Allow Backspace, tab, end, and home keys

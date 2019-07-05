@@ -2,7 +2,7 @@ import {Directive, ElementRef} from '@angular/core';
 
 /**
  * Index generator for tabindex number generation,
- * required for tab order in schusszettel form
+ * required for tab order in schusszettel form.
  */
 class IndexGenerator {
   indices: Array<number>;
@@ -20,6 +20,9 @@ class IndexGenerator {
   }
 }
 
+/**
+ * Incremented each time when used on a schuetzenNr field in the schusszettel-Formular
+ */
 class SchuetzenNrIndexGenerator extends IndexGenerator {
   constructor() {
     super();
@@ -28,6 +31,9 @@ class SchuetzenNrIndexGenerator extends IndexGenerator {
   }
 }
 
+/**
+ * Incremented each time when used on a ringzahl field in the schusszettel-Formular
+ */
 class RingzahlIndexGenerator extends IndexGenerator {
   constructor() {
     super();
@@ -61,6 +67,10 @@ export class TabIndexDirective {
   }
 }
 
+/**
+ * Element-directive for schuetzenNr inputs.
+ * Sets the next available schuetzenNr tabindex value as HTML-Attribute.
+ */
 @Directive({
   selector: '[blaSchuetzenTabIndexDirective]'
 })
@@ -71,6 +81,10 @@ export class SchuetzenTabIndexDirective extends TabIndexDirective {
   }
 }
 
+/**
+ * Element-directive for ringzahl inputs.
+ * Sets the next available rinzahl tabindex value as HTML-Attribute.
+ */
 @Directive({
   selector: '[blaRingzahlTabIndexDirective]'
 })

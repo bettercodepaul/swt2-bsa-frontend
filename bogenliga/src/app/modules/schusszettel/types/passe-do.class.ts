@@ -49,5 +49,3 @@ export class PasseDO implements DataObject {
     this.schuetzeNr = !!schuetzeNr ? schuetzeNr : null;
   }
 }
-
-

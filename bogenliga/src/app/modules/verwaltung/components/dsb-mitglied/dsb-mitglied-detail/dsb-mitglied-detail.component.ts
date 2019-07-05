@@ -14,7 +14,6 @@ import {
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
 import {VereinDO} from '@vereine/types/verein-do.class';
-import {RegionDO} from '@verwaltung/types/region-do.class';
 import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
 import {VereinDataProviderService} from '@vereine/services/verein-data-provider.service';
 import {HttpClient} from '@angular/common/http';
@@ -78,7 +77,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
         this.nationenKuerzel.push(t['code']);
        });
       }
-    ),
+    );
 
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {

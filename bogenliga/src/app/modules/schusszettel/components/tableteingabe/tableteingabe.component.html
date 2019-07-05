@@ -1,0 +1,114 @@
+<div class="tablet-eingabe">
+  <div class="row">
+    <ng-template [ngIf]="tabletSession !== null">
+
+      <div class="col-sm-12">
+        <h1 class="w-100 text-center my-3">Scheibe {{tabletSession.scheibenNr}}</h1>
+      </div>
+
+      <div class="col-sm-12 tablet-eingabe-info-section">
+        <h3 class="text-center d-inline-block">Wettkampftag {{match1.wettkampfTag}}</h3>
+        <span class="mx-3 separator">•</span>
+        <h3 class="text-center d-inline-block">Match {{match1.nr}}</h3>
+        <span class="mx-3 separator">•</span>
+        <h3 class="text-center d-inline-block">{{match1.mannschaftName}} vs. {{match2.mannschaftName}}</h3>
+      </div>
+
+      <div class="col-sm-12">
+        <hr/>
+      </div>
+
+      <ng-template [ngIf]="!hasSchuetzenNummern()">
+        <div class="col-sm-12">
+          <h2 class="w-100 text-center d-inline-block">Bitte geben Sie die Schützen-Nummern für dieses Match ein:</h2>
+        </div>
+        <div class="offset-lg-3 col-lg-6 offset-xl-4 col-xl-4">
+          <div class="pb-5 pt-3 w-100 flex-container justify-content-around">
+            <ng-template [ngForOf]="schuetzen"
+                         let-i="index"
+                         let-schuetze
+                         ngFor>
+              <div class="d-inline-flex align-items-center flex-column">
+                <label [for]="'schuetze' + i+1 + 'Nummer'"
+                       class="h4">{{i + 1}}. Schütze</label>
+                <input [(ngModel)]="schuetzen[i].schuetzeNr"
+                       [id]="'schuetze' + i+1 + 'Nummer'"
+                       [tabindex]="i+1"
+                       blaMyNumberOnly
+                       type="number"/>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="offset-4 col-sm-4 justify-content-end flex-container">
+          <button
+            (click)="submitSchuetzenNr()"
+            [disabled]="!hasValidSchuetzenNr()"
+            class="btn btn-primary mb-5"
+          >
+            Speichern
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template [ngIf]="hasSchuetzenNummern()">
+        <div class="col-sm-12 tablet-eingabe-current">
+          <h2>{{currentMatch.mannschaftName}}</h2>
+          <span class="mx-3 separator">•</span>
+          <h2 class="mb-3">Satz {{tabletSession.satzNr}}</h2>
+        </div>
+
+        <ng-template [ngForOf]="schuetzen"
+                     let-i="index"
+                     let-schuetze
+                     ngFor>
+          <div [ngClass]="{'offset-lg-2 offset-xl-3': i === 0, 'mb-4': i === 2}"
+               class="col-lg-3 col-xl-2">
+            <div class="schuetze">
+              <h4>Schütze {{schuetze.schuetzeNr}}</h4>
+              <div class="flex-container">
+                <input (ngModelChange)="onChange($event, 1, schuetze)"
+                       [(ngModel)]="schuetze.passen[tabletSession.satzNr-1].ringzahlPfeil1"
+                       blaMyNumberOnly
+                       class="m-2"
+                       type="text">
+                <input (ngModelChange)="onChange($event, 2, schuetze)"
+                       [(ngModel)]="schuetze.passen[tabletSession.satzNr-1].ringzahlPfeil2"
+                       blaMyNumberOnly
+                       class="m-2"
+                       type="text">
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <div class="offset-2 col-sm-8 justify-content-between flex-container">
+          <button
+            (click)="nextMatch()"
+            class="btn btn-primary mr-3 my-5"
+          >
+            Nächstes Match <i class="fa fa-fw fa-chevron-right"></i>
+          </button>
+
+          <button
+            (click)="nextSatz()"
+            [disabled]="!allPasseFilled()"
+            class="btn btn-primary mr-3 my-5"
+          >
+            Nächster Satz <i class="fa fa-fw fa-chevron-right"></i>
+          </button>
+        </div>
+      </ng-template>
+
+    </ng-template>
+    <ng-template [ngIf]="!tabletSession">
+      <div class="col-sm-12 justify-content-around">
+        <div class="alert alert-warning m-3">
+          Bitte Konfigurieren Sie zunächst Ihr Gerät mit Hilfe der
+          <a routerLink="{{tabletAdminRoute}}">Tablet-Administration in der Wettkampf-Verwaltung</a>.
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>
