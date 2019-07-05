@@ -17,6 +17,7 @@
     "REGIONEN": "REGIONEN",
     "VEREINE": "VEREINE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
+    "MANNSCHAFTEN": "MANNSCHAFTEN",
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
     "COLLAPSE": "Einklappen"
@@ -77,6 +78,32 @@
   "SPORTJAHRESPLAN": {
     "SPORTJAHRESPLAN": {
       "TITLE": "Sportjahresplan"
+    }
+  },
+  "MANNSCHAFTEN": {
+    "MANNSCHAFTEN": {
+      "TITLE": "Wettkampfergebnisse der Mannschaften",
+      "FORM": {
+        "VEREIN_NAME": {
+          "LABEL": "Vereine:"
+        },
+        "VERANSTALTUNG_NAME": {
+          "LABEL": "Veranstaltungen:"
+        }
+      },
+      "TABLE": {
+        "COLUMNS": {
+          "MANNSCHAFT": "Mannschaft",
+          "OPPONENT": "Gegner",
+          "SATZ1": "S1",
+          "SATZ2": "S2",
+          "SATZ3": "S3",
+          "SATZ4": "S4",
+          "SATZ5": "S5",
+          "SATZPUNKTE": "Satzpunkte",
+          "MATCHPUNKTE": "Matchpunkte"
+        }
+      }
     }
   },
   "USER": {
@@ -529,7 +556,8 @@
         "REGION_CONTRACTION": {
           "LABEL": "Kürzel der Region",
           "PLACEHOLDER": "Bitte ein Kürzel für die Region eingeben",
-          "ERROR": "Bitte einen gültiges Kürzel (min. 1 Zeichen, max. 7 Zeichen) eingeben."
+          "ERROR1": "Bitte ein gültiges Kürzel eingeben (min. 1 Zeichen, max. 7 Zeichen).",
+          "ERROR2": "Eine andere Region besitzt dieses Kürzel bereits . Bitte ein anderes Kürzel wählen."
         },
         "REGION_TYP": {
           "LABEL": "Typ der Region",
@@ -615,8 +643,20 @@
           "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
         },
         "DELETE_MITGLIED_FAILURE": {
-          "TITLE": "Fehler beim Löschen",
+          "TITLE": "Fehler beim Entfernen",
           "DESCRIPTION": "Schütze konnte nicht entfernt werden."
+        },
+        "DELETE_MITGLIED_DEADLINE_FAILURE": {
+          "TITLE": "Fehler beim Entfernen",
+          "DESCRIPTION": "Schütze konnte nicht entfernt werden, da die Melde-Deadline der Veranstaltung überschritten wurde."
+        },
+        "DELETE_MITGLIED_EXISTING_RESULTS_FAILURE": {
+          "TITLE": "Fehler beim Entfernen",
+          "DESCRIPTION": "Schütze konnte nicht entfernt werden, da schon Ergebnisse für den Schützen zum Wettkampf vorliegen."
+        },
+        "NO_LICENSE": {
+          "TITLE": "Fehler beim Download",
+          "DESCRIPTION": "Es konnte keine Lizenz heruntergeladen werden, da keine Lizenz von diesem Schützen vorhanden ist."
         }
       }
     },
@@ -641,7 +681,8 @@
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
+        "DELETE": "Löschen",
+        "RESET_FILTER": "Filter zurücksetzen"
       },
       "TABLE": {
         "HEADERS": {
@@ -654,7 +695,7 @@
       "NOTIFICATION": {
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt."
+          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt. Es wurde keine Lizenz erstellt, da der Schütze bereits eine in der selben Disziplin besitzt."
         },
         "DUPLICATE": {
           "TITLE": "Fehler",
@@ -663,6 +704,14 @@
         "OVERUSED": {
           "TITLE": "Fehler",
           "DESCRIPTION": "Schütze kann dieser Mannschaft nicht hinzugefügt werden, da er schon in zuvielen Mannschaften eingesetzt wurde, bzw. in einer höheren Liga schon eingesetzt wurde."
+        },
+        "NOWETTKAEMPFE": {
+          "TITLE": "Lizenz konnte nicht geprüft werden.",
+          "DESCRIPTION": "Die Liga die der Mannschaft zugeteilt wurde hat keine Wettkampftage. Stellen sie sicher, dass die Liga Wettkampftage hat."
+        },
+        "SAVE_AND_LIZENZ_ERSTELLT": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Schütze wurde erfolgreich der Mannschaft hinzugefügt und es wurde eine Lizenz für den Schützen erstellt."
         }
       }
     },
@@ -1126,7 +1175,8 @@
       "VIEW": "Ansehen",
       "EDIT": "Editieren",
       "DELETE": "Löschen",
-      "ADD": "Hinzufügen"
+      "ADD": "Hinzufügen",
+      "DOWNLOAD": "Lizenz herunterladen"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
