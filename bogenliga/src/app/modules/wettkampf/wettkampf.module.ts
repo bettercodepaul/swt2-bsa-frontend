@@ -19,7 +19,7 @@ import {WETTKAMPF_ROUTES} from './wettkampf.routing';
     CommonModule,
     RouterModule.forChild(WETTKAMPF_ROUTES),
     SharedModule,
-    FormsModule,
+    FormsModule
   ],
   declarations: [WettkaempfeComponent, SetzlisteDownloadComponent, SchusszettelDownloadComponent, MeldezettelDownloadComponent, BogenkontrolllisteDownloadComponent],
   providers:    [WettkampfGuard]

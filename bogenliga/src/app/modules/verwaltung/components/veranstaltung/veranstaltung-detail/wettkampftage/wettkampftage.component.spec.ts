@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {WettkampftageComponent} from './veranstaltung-detail.component';
+import {WettkampftageComponent} from './wettkampftage.component';
 
 describe('LigaDetailComponent', () => {
   let component: WettkampftageComponent;

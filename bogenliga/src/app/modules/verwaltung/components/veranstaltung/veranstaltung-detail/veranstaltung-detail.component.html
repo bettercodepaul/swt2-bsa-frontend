@@ -120,7 +120,7 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="text"
+        <input type="date"
                class="form-control"
                required
                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
@@ -130,6 +130,7 @@
                [(ngModel)]="currentVeranstaltung.meldeDeadline"
                [class.is-invalid]="deadline.invalid && ! deadline.untouched"
                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.PLACEHOLDER' | translate }}">
+
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.ERROR' | translate }}
@@ -174,14 +175,24 @@
 
 
 
+
+
     <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE BUTTON -->
     <div class="form-group row">
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
 
+        <bla-button *ngIf="!mannschaftExists()"
+                    [id]="'veranstaltungMannschaftSaveButton'"
+                    [disabled]="!dsbMitgliedForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onCopyMannschaft($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
+        </bla-button>
+
 
         <bla-button *ngIf="!entityExists()"
-                    [id]="'ligaSaveButton'"
+                    [id]="'veranstaltungSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
@@ -189,14 +200,14 @@
         </bla-button>
 
         <bla-button *ngIf="entityExists()"
-                    [id]="'ligaSaveButton'"
+                    [id]="'veranstaltungSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onWettkampftag($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAGE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
-                    [id]="'ligaUpdateButton'"
+                    [id]="'veranstaltungUpdateButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">

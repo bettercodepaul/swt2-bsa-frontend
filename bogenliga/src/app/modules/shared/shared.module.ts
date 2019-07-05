@@ -43,6 +43,7 @@ import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NavigationCardsComponent} from './components/navigation-cards';
 import {TruncationPipe} from './pipes';
+import {SetzlisteDownloadComponent} from '@wettkampf/components/setzliste-download/setzliste-download.component';
 
 /*
  * define font awesome icon libraries
@@ -93,7 +94,8 @@ library.add(fas, far, fab); // add all icon types
     QuicksearchListComponent,
     DownloadButtonComponent,
     SimpleOverviewDialogComponent,
-    DoubleSelectionlistComponent
+    DoubleSelectionlistComponent,
+    SetzlisteDownloadComponent
   ],
   declarations: [
     ButtonComponent,
@@ -121,7 +123,8 @@ library.add(fas, far, fab); // add all icon types
     SelectionlistComponent,
     QuicksearchListComponent,
     DownloadButtonComponent,
-    DoubleSelectionlistComponent
+    DoubleSelectionlistComponent,
+    SetzlisteDownloadComponent
   ]
 })
 export class SharedModule {
