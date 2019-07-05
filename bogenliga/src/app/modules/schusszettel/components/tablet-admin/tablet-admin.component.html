@@ -1,0 +1,54 @@
+<div class="container">
+  <h2 class="mb-4 mt-3">Tabletverwaltung</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <tr>
+        <th style="width: 33%">Scheibe</th>
+        <th style="width: 33%">Status</th>
+        <th style="width: 33%">Aktionen</th>
+      </tr>
+
+      <tr *ngFor="let session of sessions">
+        <td>
+          <span class="h4 text-secondary text-center m-0 p-0">{{session.scheibenNr}}</span>
+        </td>
+
+        <td>
+          <span
+            [class.badge-danger]="!session.isActive"
+            [class.badge-success]="session.isActive"
+            class="badge">
+            {{session.isActive ? 'Aktiv' : 'Nicht aktiv'}}
+          </span>
+        </td>
+
+        <td>
+          <button
+            (click)="updateSession(session.scheibenNr)"
+            *ngIf="session.isActive"
+            class="btn btn-danger"
+          >
+            <fa-icon [icon]="'trash'"></fa-icon>
+          </button>
+
+          <button
+            (click)="updateSession(session.scheibenNr)"
+            *ngIf="!currentDeviceIsActive"
+            class="btn btn-success"
+          >
+            <fa-icon [icon]="'plus-circle'"></fa-icon>
+          </button>
+
+          <a
+            *ngIf="canNavigateToEingabe(session)"
+            [routerLink]="tabletEingabeRoute"
+            class="btn btn-light ml-3"
+          >
+            <fa-icon [icon]="'external-link-alt'"></fa-icon>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+</div>

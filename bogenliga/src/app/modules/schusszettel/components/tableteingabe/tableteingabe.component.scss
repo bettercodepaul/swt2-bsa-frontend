@@ -1,0 +1,44 @@
+.tablet-eingabe {
+  .tablet-eingabe-info-section {
+    text-align: center;
+
+    .separator {
+      font-size: 1.75rem;
+    }
+  }
+
+  .tablet-eingabe-current {
+    text-align: center;
+
+    .separator {
+      font-size: 2rem;
+    }
+  }
+}
+
+input, label {
+  display: block;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input {
+  height: 55px;
+  width: 55px;
+  -moz-appearance: textfield;
+  font-size: 30px;
+  text-align: center;
+
+  &:focus {
+    box-shadow: 0 0 8px 0 rgba(5, 122, 255, 1);
+  }
+}
+
+.flex-container {
+  display: flex;
+}
