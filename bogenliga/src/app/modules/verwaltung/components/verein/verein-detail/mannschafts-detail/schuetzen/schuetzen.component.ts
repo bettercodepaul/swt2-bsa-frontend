@@ -24,17 +24,25 @@ import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
-import {DsbMitgliedDTO} from '@user/types/model/dsb-mitglied-dto.class';
+import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
+import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provider.service';
+import {LizenzDO} from '@verwaltung/types/lizenz-do.class';
+import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-provider.service';
+import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
+import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
+import {RegionDO} from '@verwaltung/types/region-do.class';
+import {parseHttpResponse} from 'selenium-webdriver/http';
 
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_SCHUETZE = 'schütze_hinzufügen_save';
 const NOTIFICATION_DUPLICATE_SCHUETZE = 'schütze_hinzufügen_doppelt';
 const NOTIFICATION_OVERUSED_SCHUETZE = 'schütze_hinzufügen_in_zu_vielen_mannschaften';
+const NOTIFICATION_NO_WETTKAMPFE = 'keine_wettkaempfe_fehler';
 
 @Component({
   selector:    'bla-schuetzen',
@@ -46,15 +54,21 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   public table_config = SCHUETZE_TABLE_CONFIG;
   public rows: TableRow[];
   public ButtonType = ButtonType;
+  // team and club you want to add to
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public currentVerein: VereinDO = new VereinDO();
+
   public memberToAdd: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
-  public members: DsbMitgliedDTO[] = [new DsbMitgliedDTO()];
+  public members: DsbMitgliedDO[] = [new DsbMitgliedDO()];
+  public vereine: VereinDO[] = [new VereinDO()];
 
   // attributes for the filter of the members
-  public vorname = '';
-  public nachname = '';
-  public mitgliedsnummer = '';
-  public currentVerein: VereinDO = new VereinDO();
+  public filterVorname = '';
+  public filterNachname = '';
+  public filterMitgliedsnummer = '';
+  public filterVerein: VereinDO = new VereinDO();
+  public emptyVerein: VereinDO = new VereinDO();
+
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -63,6 +77,9 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
               private dsbMitgliedProvider: DsbMitgliedDataProviderService,
               private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
               private vereineProvider: VereinDataProviderService,
+              private lizenzProvider: LizenzDataProviderService,
+              private regionProvider: RegionDataProviderService,
+              private wettkampfProvider: WettkampfDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -74,22 +91,9 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
     this.loadMannschaftById(Number.parseInt(this.route.snapshot.url[2].path, 10));
     this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path, 10));
+    this.loadVereine();
 
     this.notificationService.discardNotification();
-
-    this.route.params.subscribe((params) => {
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        const id = params[ID_PATH_PARAM];
-        if (id === 'add') {
-          this.currentMannschaft = new DsbMannschaftDO();
-          this.loading = false;
-          this.deleteLoading = false;
-          this.saveLoading = false;
-        } else {
-          // this.loadById(params[ID_PATH_PARAM]);
-        }
-      }
-    });
   }
 
   public onSave(member: VersionedDataObject): void {
@@ -124,54 +128,183 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     return duplicateFound;
   }
 
+  private sendSaveRequest(jsonPath: string, savedLizenzResponse: BogenligaResponse<LizenzDO>) {
+    this.mannschaftMitgliedProvider.create(this.memberToAdd)
+        .then((savedResponse: BogenligaResponse<MannschaftsMitgliedDO>) => {
+          this.showAddedMemberNotification(jsonPath);
+          console.log('saving ' + this.memberToAdd + ' in Mannschaft');
+        }, (savedResponse: BogenligaResponse<MannschaftsMitgliedDO>) => {
+
+          // delete lizenz if saving teammember fails and a new lizenz was created
+          if (savedLizenzResponse != null) {
+            this.lizenzProvider.deleteById(savedLizenzResponse.payload.lizenzId)
+                .then(() => {
+                  console.log('Successfully deleted Lizenz');
+                }, () => {
+                  console.log('Failed to delete Lizenz');
+                });
+          }
+          console.log(savedResponse.payload);
+          console.log('Failed to Save new Teammember');
+          this.saveLoading = false;
+        });
+  }
+
   private saveMemberInTeam(memberId: number) {
     this.mannschaftMitgliedProvider.findByMemberId(memberId)
-        .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
-          if (response.payload.length <= 1) {
-            this.memberToAdd.dsbMitgliedEingesetzt = response.payload.length;
-
-            console.log('saving ' + this.memberToAdd + ' in Mannschaft');
-
-            this.mannschaftMitgliedProvider.create(this.memberToAdd)
-                .then((savedResponse: BogenligaResponse<MannschaftsMitgliedDO>) => {
-                  if (!isNullOrUndefined(savedResponse)
-                    && !isNullOrUndefined(savedResponse.payload)
-                    && !isNullOrUndefined(savedResponse.payload.id)) {
-                    console.log('Saved with id: ' + savedResponse.payload.id);
-
-                    const notification: Notification = {
-                      id:          NOTIFICATION_SAVE_SCHUETZE,
-                      title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE.TITLE',
-                      description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE.DESCRIPTION',
-                      severity:    NotificationSeverity.INFO,
-                      origin:      NotificationOrigin.USER,
-                      type:        NotificationType.OK,
-                      userAction:  NotificationUserAction.PENDING
-                    };
-
-                    this.notificationService.observeNotification(NOTIFICATION_SAVE_SCHUETZE)
-                        .subscribe((myNotification) => {
-                          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                            this.saveLoading = false;
-                            this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
-                              + '/' + this.currentMannschaft.id + '/add');
-                          }
-                        });
-
-                    this.notificationService.showNotification(notification);
-                  }
-                }, (savedResponse: BogenligaResponse<MannschaftsMitgliedDO>) => {
-                  console.log(savedResponse.payload);
-                  console.log('Failed');
-                  this.saveLoading = false;
-                });
+        .then((mannschaftsMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+          if (mannschaftsMitgliedResponse.payload.length > 0 && mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt <= 1) {
+            this.memberToAdd.dsbMitgliedEingesetzt = mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt;
+            this.createLizentForMember(memberId);
+          } else if (mannschaftsMitgliedResponse.payload.length === 0) {
+            this.memberToAdd.dsbMitgliedEingesetzt = 0;
+            this.createLizentForMember(memberId);
           } else {
             this.showMemberInTooManyTeams();
           }
-        }).catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
-      console.log('Failure');
-      this.saveLoading = false;
+        })
+        .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+          console.log('Failure: ' + response.payload);
+          this.saveLoading = false;
     });
+  }
+
+  private createLizentForMember(memberId: number): void {
+
+    // get Lizenzen of this member
+    this.lizenzProvider.findByDsbMitgliedId(memberId)
+        .then((lizenzResponse: BogenligaResponse<LizenzDO[]>) => {
+
+          let lizenzen: LizenzDO[] = [new LizenzDO()];
+          lizenzen = lizenzResponse.payload;
+          console.log(lizenzResponse.payload);
+
+          // get Diszipin of the wettkaempfe of the Veranstaltung
+          this.wettkampfProvider.findAll()
+              .then((wettkampfResponse: BogenligaResponse<WettkampfDO[]>) => {
+
+                const veranstaltungen: WettkampfDO[] = [];
+                wettkampfResponse.payload.forEach( (wettkampf) => {
+                  if (wettkampf.veranstaltungsId === this.currentMannschaft.veranstaltungId) {
+                    veranstaltungen.push(wettkampf);
+                  }
+                });
+                console.log(veranstaltungen);
+
+                let wettkampfDisziplinID;
+                let lizenzFound = false;
+
+                console.log(wettkampfResponse.payload);
+
+                if (veranstaltungen.length !== 0) { // check if there are wettkaempfe in the liga
+                  wettkampfDisziplinID = veranstaltungen[0].wettkampfDisziplinId; // take the Disziplin of the first wettkampftag
+                  console.log(wettkampfDisziplinID);
+                  if (lizenzen.length > 0) {
+                    console.log('lizenzen not empty');
+                    lizenzen.forEach((lizenz) => {
+                      console.log('for each lizenz');
+                      console.log(lizenz.lizenztyp + lizenz.lizenzDisziplinId + wettkampfDisziplinID);
+                      // check if Mitglied has already has a Lizenz in this Disziplin
+                      if ( lizenz.lizenztyp === 'Liga' && lizenz.lizenzDisziplinId === wettkampfDisziplinID) {
+                        console.log('Lizenz Found!');
+                        lizenzFound = true;
+                      }
+                    });
+                  }
+
+
+                  // create new Lizenz if Mitglied has no Lizenz in this Disziplin
+                  if (lizenzFound === false) {
+
+                    // create lizenznummer
+                    // first get Region Kuerzel
+                    this.regionProvider.findById(this.currentVerein.regionId)
+                        .then((regionResponse: BogenligaResponse<RegionDO>) => {
+
+                          const regionKuerzel = regionResponse.payload.regionKuerzel;
+
+                          // Lizenznummer = Regionkürzel+LigaId+vereinsId+mannschaftsnummer+dsbmitgliedsId
+                          const lizenznummer = regionKuerzel +
+                            this.currentMannschaft.veranstaltungId +
+                            this.currentVerein.id +
+                            this.currentMannschaft.nummer +
+                            memberId;
+
+                          const newLizenz = new LizenzDO();
+                          newLizenz.lizenztyp = 'Liga';
+                          newLizenz.lizenzDisziplinId = wettkampfDisziplinID;
+                          newLizenz.lizenzDsbMitgliedId = memberId;
+                          newLizenz.lizenzRegionId = this.currentVerein.regionId;
+                          newLizenz.lizenznummer = lizenznummer;
+
+                          this.lizenzProvider.create(newLizenz)
+                              .then((response: BogenligaResponse<LizenzDO>) => {
+
+                                console.log(response.payload);
+                                this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE_AND_LIZENZ_ERSTELLT', response);
+
+                              }, (savedResponse: BogenligaResponse<LizenzDO[]>) => {
+                                console.log(savedResponse.payload);
+                                console.log('Failed to save Lizenz');
+                                this.saveLoading = false;
+                              });
+
+                        }, (savedResponse: BogenligaResponse<RegionDO[]>) => {
+                          console.log(savedResponse.payload);
+                          console.log('Failed to load Region');
+                          this.saveLoading = false;
+                        });
+                  } else {
+                    this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
+                  }
+                } else {
+
+                  this.showAddedMemberNotification( 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.NOWETTKAEMPFE');
+                  console.log('Keine Wettkaempfe gefunden. Bitte stelle sicher das die Liga der Mannschaft Wettkampfe beinhaltet.');
+                }
+
+
+              }, (savedResponse: BogenligaResponse<WettkampfDO[]>) => {
+                console.log(savedResponse.payload);
+                console.log('Failed');
+                this.saveLoading = false;
+              });
+
+        }, (savedResponse: BogenligaResponse<LizenzDO>) => {
+
+          console.log('Keine Lizenz fuer den Schuetzen gefunden');
+          this.saveLoading = false;
+        });
+}
+
+  private showAddedMemberNotification(jsonPath: string) {
+    // savedResponse: BogenligaResponse<MannschaftsMitgliedDO>,
+    // if (!isNullOrUndefined(savedResponse)
+    //   && !isNullOrUndefined(savedResponse.payload)
+    //   && !isNullOrUndefined(savedResponse.payload.id)) {
+      console.log('Saved Teammember: ');
+
+      const notification: Notification = {
+        id:          NOTIFICATION_SAVE_SCHUETZE,
+        title:       jsonPath + '.TITLE',
+        description: jsonPath + '.DESCRIPTION',
+        severity:    NotificationSeverity.INFO,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_SAVE_SCHUETZE)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.saveLoading = false;
+              this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
+                + '/' + this.currentMannschaft.id + '/add');
+            }
+          });
+
+      this.notificationService.showNotification(notification);
+    // }
   }
 
   // shows a notification for the user, if the member, he wants to add, is used in to many teams
@@ -199,37 +332,46 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
   // shows a notification for the user, if the member, he wants to add, already exists in the team
   private showDuplicateMember() {
+    const duplicateMemberNotification: Notification = {
+      id:          NOTIFICATION_DUPLICATE_SCHUETZE,
+      title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.TITLE',
+      description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
 
-      const duplicateMemberNotification: Notification = {
-        id:          NOTIFICATION_DUPLICATE_SCHUETZE,
-        title:       'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.TITLE',
-        description: 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.DUPLICATE.DESCRIPTION',
-        severity:    NotificationSeverity.INFO,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.PENDING
-      };
+    this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_SCHUETZE)
+        .subscribe((myDuplicateNotification) => {
+          if (myDuplicateNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+            this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
+              + '/' + this.currentMannschaft.id + '/add');
+          }
+        });
+    this.notificationService.showNotification(duplicateMemberNotification);
+  }
 
-      this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_SCHUETZE)
-          .subscribe((myDuplicateNotification) => {
-            if (myDuplicateNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.saveLoading = false;
-              this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
-                + '/' + this.currentMannschaft.id + '/add');
-            }
-          });
-
-      this.notificationService.showNotification(duplicateMemberNotification);
-    }
-
+  // --------------- Filter functions -------------------------- //
   public onSearch() {
      const filteredMembers = this.members.filter((member) => {
-        return (member.vorname.startsWith(this.vorname) || this.vorname.length === 0)
-        && (member.nachname.startsWith(this.nachname) || this.nachname.length === 0)
-        && (member.mitgliedsnummer.startsWith(this.mitgliedsnummer) || this.mitgliedsnummer.length === 0);
+        return (member.vorname.toLowerCase().startsWith(this.filterVorname.toLowerCase()) || this.filterVorname.length === 0)
+        && (member.nachname.toLowerCase().startsWith(this.filterNachname.toLowerCase()) || this.filterNachname.length === 0)
+        && (member.mitgliedsnummer.toLowerCase().startsWith(this.filterMitgliedsnummer.toLowerCase()) || this.filterMitgliedsnummer.length === 0)
+          && (member.vereinsId === this.filterVerein.id || this.filterVerein.id === undefined);
     });
      this.rows = toTableRows(filteredMembers);
   }
+
+  public deleteFilter() {
+    this.filterVorname = '';
+    this.filterNachname = '';
+    this.filterMitgliedsnummer = '';
+    this.filterVerein = new VereinDO();
+    this.onSearch();
+  }
+  // ----------------------------------------------------------- //
 
   // sets the current Mannschaft, to which the User wants to add the member
   private loadMannschaftById(id: number) {
@@ -242,7 +384,6 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.currentMannschaft = response.payload;
     this.loading = false;
     console.log(this.currentMannschaft);
-    this.loadTableRows();
   }
 
   private handleMannschaftFailure(response: BogenligaResponse<DsbMannschaftDO>) {
@@ -261,7 +402,17 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.rows = [];
     this.members = [];
     this.members = response.payload;
-    this.rows = toTableRows(response.payload);
+    this.members.forEach((member) => {
+      if (member.vereinsId === null) {
+        member.vereinsName = 'kein Verein';
+      } else {
+        const tmp = this.vereine.find((verein) => {
+          return verein.id === member.vereinsId;
+        });
+        member.vereinsName = tmp.name;
+      }
+    });
+    this.rows = toTableRows(this.members);
     this.loading = false;
   }
 
@@ -283,6 +434,22 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
   }
 
   private handleVereinFailure(response: BogenligaResponse<VereinDTO>) {
+    this.loading = false;
+  }
+
+  private loadVereine() {
+    this.loading = true;
+    this.emptyVerein.name = 'Kein Verein';
+    this.emptyVerein.id = null;
+    this.vereineProvider.findAll()
+      .then((response: BogenligaResponse<VereinDTO[]>) => {
+        this.vereine = [];
+        this.vereine = response.payload;
+        this.loadTableRows();
+      })
+      .catch((response: BogenligaResponse<VereinDTO[]>) => {
+        this.vereine = [];
+      });
     this.loading = false;
   }
 

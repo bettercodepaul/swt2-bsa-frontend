@@ -94,8 +94,12 @@
                     [loading]="loading"
                     (onViewEntry)="onView($event)"
                     (onEditEntry)="onEdit($event)"
-                    (onDeleteEntry)="onDeleteMitglied($event)">
+                    (onDeleteEntry)="onDeleteMitglied($event)"
+                    (onDownloadEntry) = "onDownload($event)">
     </bla-data-table>
+    <a #downloadLink></a>
   </div>
+
+
 
 </bla-common-dialog>
