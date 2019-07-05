@@ -10,6 +10,7 @@ export class MatchDO implements DataObject {
   nr: number;
   begegnung: number;
   scheibenNummer: number;
+  wettkampfTag: number;
   wettkampfTyp: string;
   sumSatz: Array<number>;
 
@@ -31,6 +32,7 @@ export class MatchDO implements DataObject {
               satzpunkte?: number,
               fehlerpunkte?: Array<number>,
               schuetzen?: Array<Array<PasseDO>>,
+              wettkampfTag?: number,
               wettkampfTyp?: string) {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
@@ -45,6 +47,6 @@ export class MatchDO implements DataObject {
     this.fehlerpunkte = !!fehlerpunkte ? fehlerpunkte : [0, 0, 0, 0, 0];
     this.schuetzen = !!schuetzen ? schuetzen : [];
     this.wettkampfTyp = wettkampfTyp;
+    this.wettkampfTag = wettkampfTag;
   }
 }
-

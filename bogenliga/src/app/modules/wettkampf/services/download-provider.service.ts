@@ -18,6 +18,8 @@ export class DownloadProviderService extends ResourceProviderService {
     return this.downloadFile(new UriBuilder().fromPath(this.getUrl()).path(url).build(), fileName, aElement);
   }
 
+
+
   getRestClient(): RestClient {
     return this.restClient;
   }

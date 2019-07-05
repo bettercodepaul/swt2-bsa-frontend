@@ -8,7 +8,7 @@ import {
   faCalendarAlt,
   faFootballBall,
   faHome,
-  faSitemap, faUsers, faUsersCog
+  faSitemap, faUsers, faUsersCog, faListOl
 } from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
@@ -88,6 +88,13 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     icon:       faCalendarAlt,
     route:      '/sportjahresplan',
     permissons: [UserPermission.CAN_READ_SPORTJAHR, UserPermission.CAN_MODIFY_SPORTJAHR],
+    subitems: []
+  },
+  {
+    label:      'SIDEBAR.MANNSCHAFTEN',
+    icon:       faListOl,
+    route:      '/mannschaften',
+    permissons: [],
     subitems: []
   },
   {

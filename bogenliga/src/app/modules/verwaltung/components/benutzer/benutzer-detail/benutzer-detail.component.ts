@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent, toTableRows} from '../../../../shared/components';
+import {ButtonType, CommonComponent} from '../../../../shared/components';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {BenutzerDO} from '../../../types/benutzer-do.class';
 import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
@@ -35,10 +35,11 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   public config = BENUTZER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentBenutzerRolleDTO: BenutzerRolleDTO;
-  public currentBenutzerRolleDO: BenutzerRolleDO;
+  public currentBenutzerRolleDO: BenutzerRolleDO[];
   public roles: RoleDTO[] = [];
   public tobeRole: RoleDO;
+  public currentRoles: BenutzerRolleDTO[] = [];
+  public roleNames;
 
   public saveLoading = false;
   public selectedDTOs: RoleVersionedDataObject[];
@@ -55,22 +56,30 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.loading = true;
     this.tobeRole = new RoleDO();
 
+
     this.notificationService.discardNotification();
 
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
-        this.currentBenutzerRolleDO = new BenutzerRolleDO();
+        this.currentBenutzerRolleDO = [];
+        this.currentBenutzerRolleDO.push(new BenutzerRolleDO());
 
         if (id !== 'add') {
           this.benutzerDataProvider.findUserRoleById(id)
-            .then((response: BogenligaResponse<BenutzerRolleDO>) =>  this.currentBenutzerRolleDO = response.payload)
-            .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
+              .then((response: BogenligaResponse<BenutzerRolleDO[]>) => {
+                this.currentBenutzerRolleDO = response.payload;
+                this.roleNames = '';
+                for (const role of this.currentBenutzerRolleDO) {
+                  this.roleNames += role.roleName + ' ';
+                }
+              })
+              .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.currentBenutzerRolleDO = null);
 
           // wir laden hiermit alle möglichen User-Rollen aus dem Backend um die Klappliste für die Auswahl zu befüllen.
           this.roleDataProvider.findAll()
-            .then((response: BogenligaResponse<RoleDO[]>) => this.setVersionedDataObjects(response))
-            .catch((response: BogenligaResponse<RoleDO[]>) => this.getEmptyList());
+              .then((response: BogenligaResponse<RoleDO[]>) => this.setVersionedDataObjects(response))
+              .catch((response: BogenligaResponse<RoleDO[]>) => this.getEmptyList());
         }
       }
     });
@@ -80,61 +89,62 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.saveLoading = true;
 
     // persist
+    this.selectedDTOs.forEach((item, index) => {
 
-    this.currentBenutzerRolleDTO = new BenutzerRolleDTO();
-    this.currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO.id;
-    this.currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO.email;
-    this.tobeRole = this.selectedDTOs[0] as RoleDO;
-    this.currentBenutzerRolleDTO.roleId =  this.tobeRole.id;
-    this.currentBenutzerRolleDTO.roleName =  this.tobeRole.roleName;
-    this.benutzerDataProvider.update(this.currentBenutzerRolleDTO)
-      .then((response: BogenligaResponse<BenutzerDO>) => {
-        if (!isNullOrUndefined(response)
-          && !isNullOrUndefined(response.payload)
-          && !isNullOrUndefined(response.payload.id)) {
-          console.log('Update with id: ' + response.payload.id);
+      const currentBenutzerRolleDTO = new BenutzerRolleDTO();
+      currentBenutzerRolleDTO.id = this.currentBenutzerRolleDO[0].id;
+      currentBenutzerRolleDTO.email = this.currentBenutzerRolleDO[0].email;
+      this.tobeRole = this.selectedDTOs[index] as RoleDO;
+      currentBenutzerRolleDTO.roleId = this.tobeRole.id;
+      currentBenutzerRolleDTO.roleName = this.tobeRole.roleName;
+      this.currentRoles.push(currentBenutzerRolleDTO);
+    });
 
-          const notification: Notification = {
-            id:          NOTIFICATION_SAVE_BENUTZER,
-            title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
-            description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
-            severity:    NotificationSeverity.INFO,
-            origin:      NotificationOrigin.USER,
-            type:        NotificationType.OK,
-            userAction:  NotificationUserAction.PENDING
-          };
+    this.benutzerDataProvider.update(this.currentRoles)
+        .then((response: BogenligaResponse<Array<BenutzerDO>>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload[0])
+            && !isNullOrUndefined(response.payload[0].id)) {
+            const notification: Notification = {
+              id:          NOTIFICATION_SAVE_BENUTZER,
+              title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
+              description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.PENDING
+            };
 
-          this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
-            .subscribe((myNotification) => {
-              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                this.saveLoading = false;
-                this.router.navigateByUrl('/verwaltung/benutzer');
-              }
-            });
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                    this.router.navigateByUrl('/verwaltung/benutzer');
+                  }
+                });
 
-          this.notificationService.showNotification(notification);
-        }
-      }, (response: BogenligaResponse<BenutzerDO>) => {
-        console.log('Failed');
-        this.saveLoading = false;
+            this.notificationService.showNotification(notification);
+          }
 
-
-      });
+        }, (response: BogenligaResponse<BenutzerDO>) => {
+          console.log('Failed');
+          this.saveLoading = false;
+        });
     // show response message
   }
 
 
   public entityExists(): boolean {
-    return this.currentBenutzerRolleDO.id > 0;
+    return this.currentBenutzerRolleDO[0].id > 0;
   }
 
   private loadById(id: number) {
     this.benutzerDataProvider.findUserRoleById(id)
-        .then((response: BogenligaResponse<BenutzerRolleDO>) => this.handleSuccess(response))
+        .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleSuccess(response))
         .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.handleFailure(response));
   }
 
-  private handleSuccess(response: BogenligaResponse<BenutzerRolleDO>) {
+  private handleSuccess(response: BogenligaResponse<BenutzerRolleDO[]>) {
     this.currentBenutzerRolleDO = response.payload;
     this.loading = false;
   }
@@ -143,31 +153,27 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     this.loading = false;
 
   }
+
   public getEmptyList(): RoleVersionedDataObject[] {
     return [];
   }
 
   public setVersionedDataObjects(response: BogenligaResponse<RoleDTO[]>): void {
-
     this.roles = []; // reset array to ensure change detection
     this.loading = false;
 
-    response.payload.forEach((responseItem) =>  this.roles.push(new RoleVersionedDataObject(responseItem.id, responseItem.roleName)));
-
-
+    response.payload.forEach((responseItem) => this.roles.push(new RoleVersionedDataObject(responseItem.id, responseItem.roleName)));
     return;
   }
 
   public getVersionedDataObjects() {
-
-
     return this.roles;
   }
 
   public onSelect($event: RoleVersionedDataObject[]): void {
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
-   }
+  }
 
   public getSelectedDTO(): string {
     if (isNullOrUndefined(this.selectedDTOs)) {
@@ -176,11 +182,11 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
       console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
       const names: string[] = [];
 
-      this.selectedDTOs.forEach((item) => {names.push(item.roleName); });
+      this.selectedDTOs.forEach((item) => {
+        names.push(item.roleName);
+      });
 
       return names.join(', ');
     }
   }
-
-
 }
