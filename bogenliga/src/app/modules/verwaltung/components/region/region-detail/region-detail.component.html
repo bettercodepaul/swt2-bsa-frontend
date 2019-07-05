@@ -41,16 +41,21 @@
                required
                minlength="1"
                maxlength="7"
-               pattern="[A-Za-z0-9_-]*"
+               pattern="[A-Za-z0-9\s_-]*"
                id="regionContraction"
                name="regionContraction"
                #regionContraction="ngModel"
                [(ngModel)]="currentRegion.regionKuerzel"
-               [class.is-invalid]="(regionContraction.invalid || !isContractionUnique()) && !regionContraction.untouched"
+               [class.is-invalid]="(!regionContraction.valid || !isContractionUnique()) && !regionContraction.untouched"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.ERROR' | translate }}
+          <div *ngIf="isContractionUnique()">
+            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.ERROR1' | translate }}
+          </div>
+          <div *ngIf="!isContractionUnique()">
+            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.ERROR2' | translate }}
+          </div>
         </div>
       </div>
     </div>
@@ -67,11 +72,11 @@
                 id="regionTyp"
                 name="regionTyp"
                 #regionTyp="ngModel"
-                (change)="filterRegions(); filterRegionTypes();"
+                (change)="filterRegions(null)"
                 [(ngModel)]="currentRegion.regionTyp">
-          <option selected="selected">{{currentRegion.regionTyp}}</option>
+          <option selected="selected" [ngValue]="currentRegion.regionTyp">{{currentRegion.regionTyp}}</option>
           <option *ngFor="let typ of possibleRegionTypes"> {{typ}}</option>
-          placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.SUPERORDINATE.PLACEHOLDER' | translate }}">
+          <!--placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.SUPERORDINATE.PLACEHOLDER' | translate }}"-->
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -91,10 +96,10 @@
                 id="regionUebergeordnet"
                 name="regionUebergeordnet"
                 #regionUebergeordnet="ngModel"
-                (ngModelChange) = "filterRegions()"
+                (ngModelChange) = "filterRegions($event)"
                 [(ngModel)]="currentRegion.regionUebergeordnetAsName">
-          <option selected="selected">{{currentRegion.regionUebergeordnetAsName}}</option>
-          <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of uebergeordneteRegionenGefiltertStrings"> {{uebergeordnet}}</option>
+          <!--<option selected="selected">{{currentRegion.regionUebergeordnetAsName}}</option>-->
+          <option *ngFor="let uebergeordnet of uebergeordneteRegionenGefiltertStrings" [value]="uebergeordnet"> {{uebergeordnet}}</option>
           <option>Diese Region hat keine übergeordnete Region</option>
         </select>
         <div class="invalid-feedback">
@@ -110,14 +115,14 @@
 
         <bla-button *ngIf="!entityExists()"
                     [id]="'regionSaveButton'"
-                    [disabled]="!regionenForm.valid || !contractionUnique"
+                    [disabled]="!regionenForm.valid || !isContractionUnique()"
                     [loading]="saveLoading"
                     (onClick)="onSave($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'regionUpdateButton'"
-                    [disabled]="!regionenForm.valid"
+                    [disabled]="!regionenForm.valid || !isContractionUnique()"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.UPDATE' | translate }}
