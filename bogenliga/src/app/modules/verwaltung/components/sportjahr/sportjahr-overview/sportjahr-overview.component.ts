@@ -16,7 +16,7 @@ import {
 import {SportjahrDataProviderService} from '../../../services/sportjahr-data-provider.service';
 import {SportjahrDTO} from '../../../types/datatransfer/sportjahr-dto.class';
 import {SPORTJAHR_OVERVIEW_CONFIG} from './sportjahr-overview.config';
-import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components';
+import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components/liga/liga-overview/liga-overview.component';
 
 export const NOTIFICATION_DELETE_SPORTJAHR = 'sportjahr_overview_delete';
 
