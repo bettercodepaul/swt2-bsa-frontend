@@ -55,7 +55,7 @@ export class MannschaftComponent extends CommonComponent implements OnInit {
   loadVeranstaltungen() {
     this.veranstaltungsDataProvider.findAll()
         .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
-        .catch((response: BogenligaResponse<VereinDO[]>) => this.veranstaltungen = []);
+        .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.veranstaltungen = []);
 
   }
 

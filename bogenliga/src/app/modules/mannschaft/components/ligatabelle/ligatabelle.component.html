@@ -1,0 +1,35 @@
+<bla-common-dialog [config]="config"
+                   [rows]="rows"
+                   [loading]="loading"
+                   (onAddClicked)="onAdd($event)"
+                   (onDeleteClicked)="onDelete($event)"
+                   (onDownloadClicked)="onDownload($event)"
+                   (onViewClicked)="onView($event)">
+
+  <form id="regionenForm"
+        class="horizontal-form half-page">
+
+    <!-- Veranstaltungen -->
+    <div class="form-group row">
+      <label for="regionTyp"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANNSCHAFTEN.LIGATABELLE.FORM.VERANSTALTUNG_NAME.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-9">
+        <select class="form-control"
+                id="regionTyp"
+                name="regionTyp"
+                [(ngModel)]="currentVeranstaltung.name"
+                (ngModelChange)="loadErgebnisse();">
+
+          <option *ngFor="let veranstaltung of veranstaltungen"> {{veranstaltung.name}}</option>
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG.FORM.VERANSTALTUNG_TYP.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+
+  </form>
+</bla-common-dialog>
