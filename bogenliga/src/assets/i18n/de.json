@@ -17,7 +17,7 @@
     "REGIONEN": "REGIONEN",
     "VEREINE": "VEREINE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
-    "MANNSCHAFTEN": "MANNSCHAFTEN",
+    "MANNSCHAFTEN": "LIGATABELLE",
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
     "COLLAPSE": "Einklappen"
@@ -81,6 +81,9 @@
     }
   },
   "MANNSCHAFTEN": {
+    "LIGATABELLE": {
+      "TITLE": "Aktuelle Ligatabelle"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse der Mannschaften",
       "FORM": {
