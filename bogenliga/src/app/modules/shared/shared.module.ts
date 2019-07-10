@@ -96,7 +96,7 @@ library.add(fas, far, fab); // add all icon types
     DownloadButtonComponent,
     SimpleOverviewDialogComponent,
     DoubleSelectionlistComponent,
-    WettkaempfeComponent
+    SetzlisteDownloadComponent
   ],
   declarations: [
     ButtonComponent,
@@ -125,7 +125,7 @@ library.add(fas, far, fab); // add all icon types
     QuicksearchListComponent,
     DownloadButtonComponent,
     DoubleSelectionlistComponent,
-    WettkaempfeComponent
+    SetzlisteDownloadComponent
   ]
 })
 export class SharedModule {
