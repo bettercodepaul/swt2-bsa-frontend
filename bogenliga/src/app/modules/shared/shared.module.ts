@@ -44,7 +44,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NavigationCardsComponent} from './components/navigation-cards';
 import {TruncationPipe} from './pipes';
 import {SetzlisteDownloadComponent} from '@wettkampf/components/setzliste-download/setzliste-download.component';
-import {WettkaempfeComponent} from "@wettkampf/components/wettkaempfe/wettkaempfe.component";
+import {WettkaempfeComponent} from '@wettkampf/components/wettkaempfe/wettkaempfe.component';
 
 /*
  * define font awesome icon libraries
