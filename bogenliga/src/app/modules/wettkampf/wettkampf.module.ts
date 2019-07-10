@@ -4,7 +4,6 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
-  SetzlisteDownloadComponent,
   SchusszettelDownloadComponent,
   MeldezettelDownloadComponent,
   BogenkontrolllisteDownloadComponent,
@@ -21,7 +20,7 @@ import {WETTKAMPF_ROUTES} from './wettkampf.routing';
     SharedModule,
     FormsModule
   ],
-  declarations: [WettkaempfeComponent, SetzlisteDownloadComponent, SchusszettelDownloadComponent, MeldezettelDownloadComponent, BogenkontrolllisteDownloadComponent],
+  declarations: [WettkaempfeComponent, SchusszettelDownloadComponent, MeldezettelDownloadComponent, BogenkontrolllisteDownloadComponent],
   providers:    [WettkampfGuard]
 })
 export class WettkampfModule {
