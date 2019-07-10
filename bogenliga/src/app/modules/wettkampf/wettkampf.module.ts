@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
+  SetzlisteDownloadComponent,
   SchusszettelDownloadComponent,
   MeldezettelDownloadComponent,
   BogenkontrolllisteDownloadComponent,
