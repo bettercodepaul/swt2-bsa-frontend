@@ -162,14 +162,7 @@ export class TabletEingabeComponent implements OnInit {
     } else {
       for (const schuetze of schuetzen) {
         const schuetzeErgebnisse = new SchuetzeErgebnisse(Number(schuetze.schuetzeNr));
-        schuetzeErgebnisse.passen = [];
-        for (const passe of schuetze.passen) {
-          const passeDO = new PasseDO();
-          for (const attr of Object.keys(passe)) {
-            passeDO[attr] = passe[attr];
-          }
-          schuetzeErgebnisse.passen.push(passeDO);
-        }
+        schuetzeErgebnisse.passen = schuetze.passen;
         this.schuetzen.push(schuetzeErgebnisse);
       }
     }
@@ -211,9 +204,13 @@ export class TabletEingabeComponent implements OnInit {
     for (const schuetzePassen of this.currentMatch.schuetzen) {
       if (schuetzePassen.length > 0) {
         this.schuetzen[i].passen = schuetzePassen;
+        while (this.schuetzen[i].passen.length < this.tabletSession.satzNr) {
+          this.schuetzen[i].addPasse();
+        }
       }
       i++;
     }
+    this.dumpStorageData();
   }
 
   /**
@@ -297,12 +294,16 @@ export class TabletEingabeComponent implements OnInit {
    */
   nextSatz() {
     if (this.allPasseFilled()) {
-      for (const schuetze of this.schuetzen) {
-        schuetze.addPasse();
-      }
+      this.addEmptyPassen();
       this.tabletSession.satzNr++;
       this.updateTabletSession();
       this.dumpStorageData();
+    }
+  }
+
+  addEmptyPassen() {
+    for (const schuetze of this.schuetzen) {
+      schuetze.addPasse();
     }
   }
 
