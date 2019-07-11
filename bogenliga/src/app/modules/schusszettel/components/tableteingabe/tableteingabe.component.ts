@@ -209,7 +209,9 @@ export class TabletEingabeComponent implements OnInit {
   initExistingPassen() {
     let i = 0;
     for (const schuetzePassen of this.currentMatch.schuetzen) {
-      this.schuetzen[i].passen = schuetzePassen;
+      if (schuetzePassen.length > 0) {
+        this.schuetzen[i].passen = schuetzePassen;
+      }
       i++;
     }
   }
