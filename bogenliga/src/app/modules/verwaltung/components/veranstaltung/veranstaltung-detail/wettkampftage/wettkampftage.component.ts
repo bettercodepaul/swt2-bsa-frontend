@@ -459,6 +459,9 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
+  public entityExists(): boolean {
+    return this.currentVeranstaltung.id >= 0;
+  }
 
   public wettkampftag1Exists(): boolean {
     return this.currentWettkampftag_1.id >= 0;
