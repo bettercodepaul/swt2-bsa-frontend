@@ -93,14 +93,15 @@
 
           </div>
           <div class="col-sm-9 button-box" style="padding-top: 1em;">
-            <bla-button [id]="'wettkampftagSaveButton'"
+            <bla-button *ngIf="!wettkampftag1Exists()"
+                        [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampTag1($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
 
-            <bla-button *ngIf="entityExists()"
+            <bla-button *ngIf="wettkampftag1Exists()"
                         [id]="'wettkampftagUpdateButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -212,14 +213,15 @@
             </div>
           </div>
           <div class="col-sm-9 button-box" style="padding-top: 1em;">
-            <bla-button [id]="'wettkampftagSaveButton'"
+            <bla-button *ngIf="!wettkampftag2Exists()"
+                        [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampTag2($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
 
-            <bla-button *ngIf="entityExists()"
+            <bla-button *ngIf="wettkampftag2Exists()"
                         [id]="'wettkampftagUpdateButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -325,14 +327,15 @@
             </div>
           </div>
           <div class="col-sm-9 button-box" style="padding-top: 1em;">
-            <bla-button [id]="'wettkampftagSaveButton'"
+            <bla-button *ngIf="!wettkampftag3Exists()"
+                        [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampTag3($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
 
-            <bla-button *ngIf="entityExists()"
+            <bla-button *ngIf="wettkampftag3Exists()"
                         [id]="'wettkampftagUpdateButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -442,14 +445,15 @@
             </div>
           </div>
           <div class="col-sm-9 button-box" style="padding-top: 1em;">
-            <bla-button [id]="'wettkampftagSaveButton'"
+            <bla-button *ngIf="!wettkampftag4Exists()"
+                        [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampTag4($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
 
-            <bla-button *ngIf="entityExists()"
+            <bla-button *ngIf="wettkampftag4Exists()"
                         [id]="'wettkampftagUpdateButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
