@@ -13,16 +13,8 @@
         <span> *</span>
       </label>
       <div class="col-sm-7">
-        <input type="text"
-               class="form-control"
-               required
-               id="veranstaltung_name"
-               name="veranstaltung_name"
-               #veranstaltung_name="ngModel"
-               [(ngModel)]="currentVeranstaltung.name"
-               [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
-
+        <label id="veranstaltung_name"
+               [ngModel]="currentVeranstaltung.name">{{ currentVeranstaltung.name }}</label>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
         </div>
@@ -106,14 +98,15 @@
 
           </div>
           <div class="col-sm-9 button-box" style="padding-top: 1em;">
-            <bla-button [id]="'wettkampftagSaveButton'"
+            <bla-button *ngIf="!wettkampftag1Exists()"
+                          [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampTag1($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
 
-            <bla-button *ngIf="entityExists()"
+            <bla-button *ngIf="wettkampftag1Exists()"
                         [id]="'wettkampftagUpdateButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -225,14 +218,15 @@
             </div>
           </div>
           <div class="col-sm-9 button-box" style="padding-top: 1em;">
-            <bla-button [id]="'wettkampftagSaveButton'"
+            <bla-button *ngIf="!wettkampftag2Exists()"
+                        [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampTag2($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
 
-            <bla-button *ngIf="entityExists()"
+            <bla-button *ngIf="wettkampftag2Exists()"
                         [id]="'wettkampftagUpdateButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -338,14 +332,15 @@
             </div>
           </div>
           <div class="col-sm-9 button-box" style="padding-top: 1em;">
-            <bla-button [id]="'wettkampftagSaveButton'"
+            <bla-button *ngIf="!wettkampftag3Exists()"
+                        [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampTag3($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
 
-            <bla-button *ngIf="entityExists()"
+            <bla-button *ngIf="wettkampftag3Exists()"
                         [id]="'wettkampftagUpdateButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -455,14 +450,15 @@
             </div>
           </div>
           <div class="col-sm-9 button-box" style="padding-top: 1em;">
-            <bla-button [id]="'wettkampftagSaveButton'"
+            <bla-button *ngIf="!wettkampftag4Exists()"
+                        [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampTag4($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
 
-            <bla-button *ngIf="entityExists()"
+            <bla-button *ngIf="wettkampftag4Exists()"
                         [id]="'wettkampftagUpdateButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
