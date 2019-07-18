@@ -31,7 +31,9 @@
 
     <!-- Wettkampftag1 -->
     <bla-col-layout>
+      <!--Linke Seite, Eingabefelder-->
       <div class="layout-element-1">
+
         <div class="form-group row">
           <label
             class="col-sm-3 col-form-label test_label">
@@ -39,23 +41,6 @@
             <span> *</span>
           </label>
         </div>
-      </div>
-
-      <div class="layout-element-2">
-
-        <div class="form-group row">
-          <label
-            class="col-sm-3 col-form-label test_label">
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
-            <span> *</span>
-          </label>
-      </div>
-      </div>
-    </bla-col-layout>
-
-    <!-- Wettkampftag1 table -->
-    <bla-col-layout>
-      <div class="layout-element-1">
 
         <div class="form-group row">
           <label
@@ -99,7 +84,7 @@
 
           </div>
         </div>
-
+        <!--Buttons Setzliste, Aktualisieren, Speichern-->
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
@@ -118,30 +103,40 @@
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.BEGINN.ERROR' | translate }}
             </div>
-            <div class="col-sm-9 button-box">
-              <bla-button [id]="'wettkampftagSaveButton'"
-                          [disabled]="!dsbMitgliedForm.valid"
-                          [loading]="saveLoading"
-                          (onClick)="onSaveWettkampTag1($event)">
-                {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
-              </bla-button>
 
-              <bla-button *ngIf="entityExists()"
-                          [id]="'wettkampftagUpdateButton'"
-                          [disabled]="!dsbMitgliedForm.valid"
-                          [loading]="saveLoading"
-                          (onClick)="onUpdateWettkampTag1($event)">
-                {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
-              </bla-button>
-              <bla-setzliste-download
-                [wettkampfid]="currentWettkampftag_1.id">
-              </bla-setzliste-download>
-            </div>
+          </div>
+          <div class="col-sm-9 button-box" style="padding-top: 1em;">
+            <bla-button [id]="'wettkampftagSaveButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onSaveWettkampTag1($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+            </bla-button>
+
+            <bla-button *ngIf="entityExists()"
+                        [id]="'wettkampftagUpdateButton'"
+                        [disabled]="!dsbMitgliedForm.valid"
+                        [loading]="saveLoading"
+                        (onClick)="onUpdateWettkampTag1($event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
+            </bla-button>
+            <bla-setzliste-download
+              [wettkampfid]="currentWettkampftag_1.id">
+            </bla-setzliste-download>
           </div>
         </div>
 
       </div>
+      <!--Rechte Seite, Kampfrichter-->
       <div class="layout-element-2" id="layout_1">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+        <div class="form-group row">
         <bla-double-selectionlist [leftItems]="selectedKampfrichterTag1"
                                   [(rightItems)]="allUsers"
                                   [fieldSelector]="'email'"
@@ -149,20 +144,16 @@
                                   [idRightList]="'right'"
 
                                   style="height: 12em;">
-
         </bla-double-selectionlist>
-
-
+        </div>
       </div>
-
-
-
     </bla-col-layout>
 
 
 
     <!-- Wettkampftag2 -->
     <bla-col-layout>
+      <!--Linke Seite, Eingabefelder-->
       <div class="layout-element-1">
         <div class="form-group row">
           <label
@@ -171,22 +162,7 @@
             <span> *</span>
           </label>
         </div>
-      </div>
-      <div class="layout-element-2">
-        <div class="form-group row">
-          <label
-            class="col-sm-3 col-form-label test_label">
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
-            <span> *</span>
-          </label>
-        </div>
-      </div>
-    </bla-col-layout>
 
-
-    <!--Wettkampftag2 Felder-->
-    <bla-col-layout>
-      <div class="layout-element-1">
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
@@ -248,7 +224,7 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.BEGINN.ERROR' | translate }}
             </div>
           </div>
-          <div class="col-sm-9 button-box">
+          <div class="col-sm-9 button-box" style="padding-top: 1em;">
             <bla-button [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -270,21 +246,30 @@
         </div>
       </div>
 
+      <!--Rechte Seite, Kampfrichter-->
       <div class="layout-element-2" id="layout_2">
-
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+        <div class="form-group row">
         <bla-double-selectionlist [leftItems]="allUsers"
                                   [(rightItems)]="selectedKampfrichterTag2"
                                   [fieldSelector]="'name'"
                                   [idLeftList]="'left'"
                                   [idRightList]="'right'"
                                   style="height: 12em">
-
         </bla-double-selectionlist>
+        </div>
       </div>
     </bla-col-layout>
 
     <!-- Wettkampftag3 -->
     <bla-col-layout>
+      <!--Linke Seite, Eingabefelder-->
       <div class="layout-element-1">
         <div class="form-group row">
           <label
@@ -293,22 +278,6 @@
             <span> *</span>
           </label>
         </div>
-      </div>
-      <div class="layout-element-2">
-        <div class="form-group row">
-          <label
-            class="col-sm-3 col-form-label test_label">
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
-            <span> *</span>
-          </label>
-        </div>
-      </div>
-    </bla-col-layout>
-
-
-    <!--Wettkampftag3 Felder-->
-    <bla-col-layout>
-      <div class="layout-element-1">
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
@@ -368,7 +337,7 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.BEGINN.ERROR' | translate }}
             </div>
           </div>
-          <div class="col-sm-9 button-box">
+          <div class="col-sm-9 button-box" style="padding-top: 1em;">
             <bla-button [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -390,7 +359,16 @@
         </div>
       </div>
 
+      <!--Rechte Seite, Kampfrichter-->
       <div class="layout-element-2" id="layout_3">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+        <div class="form-group row">
         <bla-double-selectionlist [leftItems]="allUsers"
                                   [(rightItems)]="selectedKampfrichterTag3"
                                   [fieldSelector]="'name'"
@@ -399,18 +377,15 @@
                                   style="height: 12em;">
 
         </bla-double-selectionlist>
+        </div>
       </div>
     </bla-col-layout>
-
-
-
-
-
 
 
     <!-- Wettkampftag4 -->
     <bla-col-layout>
       <div class="layout-element-1">
+        <!--Linke Seite, Eingabefelder-->
         <div class="form-group row">
           <label
             class="col-sm-3 col-form-label">
@@ -418,21 +393,6 @@
             <span> *</span>
           </label>
         </div>
-      </div>
-      <div class="layout-element-2">
-        <div class="form-group row">
-          <label
-            class="col-sm-3 col-form-label test_label">
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
-            <span> *</span>
-          </label>
-        </div>
-      </div>
-    </bla-col-layout>
-
-    <!--Wettkampftag4 Felder-->
-    <bla-col-layout>
-      <div class="layout-element-1">
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label">
@@ -494,7 +454,7 @@
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.BEGINN..ERROR' | translate }}
             </div>
           </div>
-          <div class="col-sm-9 button-box">
+          <div class="col-sm-9 button-box" style="padding-top: 1em;">
             <bla-button [id]="'wettkampftagSaveButton'"
                         [disabled]="!dsbMitgliedForm.valid"
                         [loading]="saveLoading"
@@ -515,7 +475,17 @@
           </div>
         </div>
       </div>
+
+      <!--Rechte Seite, Kampfrichter-->
       <div class="layout-element-2" id="layout_4">
+        <div class="form-group row">
+          <label
+            class="col-sm-3 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+        </div>
+        <div class="form-group row">
         <bla-double-selectionlist [leftItems]="allUsers"
                                   [(rightItems)]="selectedKampfrichterTag4"
                                   [fieldSelector]="'name'"
@@ -524,6 +494,7 @@
                                   style="height: 12em">
 
         </bla-double-selectionlist>
+        </div>
       </div>
     </bla-col-layout>
 
@@ -531,30 +502,16 @@
 
 
 
-    <!-- UPDATE/BACK BUTTON -->
-    <div class="form-group row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-7 button-box">
-
+    <!-- BACK BUTTON -->
 
         <bla-button *ngIf="entityExists()"
+                    style="float: right;padding-top : 1em;padding-bottom: 1em"
                     [id]="'wettkampfSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onVeranstaltungDetail($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
         </bla-button>
-        <!--      <bla-button *ngIf="entityExists()"
-                        [id]="'ligaUpdateButton'"
-                        [disabled]="!dsbMitgliedForm.valid"
-                        [loading]="saveLoading"
-                        (onClick)="onUpdate($event)">
-              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
-            </bla-button> -->
-          </div>
-        </div>
-
-
 
       </form>
 
