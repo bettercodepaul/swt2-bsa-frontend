@@ -769,7 +769,7 @@
       "TITLE": "Veranstaltung - Details",
       "FORM": {
         "NAME": {
-          "LABEL": "Veranstaltung Name",
+          "LABEL": "Veranstaltung Name: ",
           "PLACEHOLDER": "Bitte geben Sie einen Namen für die Veranstaltung ein",
           "ERROR": "Bitte geben Sie einen gültigen Namen ein"
         },
