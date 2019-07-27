@@ -1,6 +1,15 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
+import {HttpClientModule} from '@angular/common/http';
+import {RouterTestingModule} from '@angular/router/testing';
+import {StoreModule} from '@ngrx/store';
+import {TranslateModule} from '@ngx-translate/core';
+import {ROUTES} from '../../../../app.routing';
+import {HomeModule} from '../../../home/home.module';
+import {APP_REDUCERS} from '../../../shared/redux-store';
+import {SharedModule} from '../../../shared/shared.module';
 import {SportjahresplanComponent} from './sportjahresplan.component';
+import {WettkaempfeComponent} from "@wettkampf/components/wettkaempfe/wettkaempfe.component";
 
 describe('SportjahresplanComponent', () => {
   let component: SportjahresplanComponent;
@@ -8,9 +17,17 @@ describe('SportjahresplanComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SportjahresplanComponent]
+      declarations: [WettkaempfeComponent],
+      imports:      [
+        RouterTestingModule.withRoutes(ROUTES),
+        HomeModule,
+        TranslateModule.forRoot(),
+        StoreModule.forRoot(APP_REDUCERS),
+        HttpClientModule,
+        SharedModule
+      ]
     })
-           .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

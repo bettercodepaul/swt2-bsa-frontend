@@ -43,8 +43,11 @@ import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NavigationCardsComponent} from './components/navigation-cards';
 import {TruncationPipe} from './pipes';
-import {SetzlisteDownloadComponent} from '@wettkampf/components/setzliste-download/setzliste-download.component';
 import {WettkaempfeComponent} from '@wettkampf/components/wettkaempfe/wettkaempfe.component';
+import {SetzlisteDownloadComponent} from "@shared/components/documents/setzliste-download/setzliste-download.component";
+import {BogenkontrolllisteDownloadComponent} from "@shared/components/documents/bogenkontrollliste-download/bogenkontrollliste-download.component";
+import {SchusszettelDownloadComponent} from "@shared/components/documents/schusszettel-download/schusszettel-download.component";
+import {MeldezettelDownloadComponent} from "@shared/components/documents/meldezettel-download/meldezettel-download.component";
 
 /*
  * define font awesome icon libraries
@@ -96,7 +99,10 @@ library.add(fas, far, fab); // add all icon types
     DownloadButtonComponent,
     SimpleOverviewDialogComponent,
     DoubleSelectionlistComponent,
-    SetzlisteDownloadComponent
+    BogenkontrolllisteDownloadComponent,
+    SetzlisteDownloadComponent,
+    SchusszettelDownloadComponent,
+    MeldezettelDownloadComponent
   ],
   declarations: [
     ButtonComponent,
@@ -125,7 +131,10 @@ library.add(fas, far, fab); // add all icon types
     QuicksearchListComponent,
     DownloadButtonComponent,
     DoubleSelectionlistComponent,
-    SetzlisteDownloadComponent
+    BogenkontrolllisteDownloadComponent,
+    SchusszettelDownloadComponent,
+    SetzlisteDownloadComponent,
+    MeldezettelDownloadComponent
   ]
 })
 export class SharedModule {

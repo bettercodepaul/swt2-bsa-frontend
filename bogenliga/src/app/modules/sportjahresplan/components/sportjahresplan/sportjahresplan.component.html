@@ -1,1 +1,73 @@
-<bla-navigation-dialog [config]="config"></bla-navigation-dialog>
+<bla-navigation-dialog [config]="config">
+
+<div class="layout-elements">
+
+  <bla-col-layout>
+  <div class="flexChild">
+      <h3><a class="blackLink"
+             routerLink="/Sportjahresplan">{{ 'SPORTJAHRESPLAN.TITEL.VERANSTALTUNG' | translate }}</a></h3>
+
+      <table id="example"
+             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+             style="width:80%">
+        <!-- headlines -->
+
+        <bla-quicksearch-list (onSelect)="onSelect($event)"
+                              [items]="veranstaltungen"
+                              [loading]="loadingVeranstaltungen"
+                              [multipleSelections]="!multipleSelections"
+                              [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                              [optionFieldSelector]="'name'"
+                              selectionListHeight="15em"
+                              style="width: 40%; flex-grow: 0;">
+
+        </bla-quicksearch-list>
+      </table>
+    </div>
+    <div>
+    <h3><a class="blackLink"
+           routerLink="/Sportjahresplan">{{ 'SPORTJAHRESPLAN.TITEL.WETTKAEMPFE' | translate }}</a></h3>
+
+    <div class="row">
+
+
+    <!-- Dies ist die Liste der Wettkampftage zur Veranstaltung  -->
+
+      <bla-data-table (onViewClicked)="onWettkampfSelect($event)"
+                      [config]="config_table"
+                      [rows]="rowsWettkampf"
+                      [loading]="loadingWettkampfe"
+                       >
+      </bla-data-table>
+    </div>
+    </div>
+  </bla-col-layout>
+
+<bla-col-layout>
+  <div>
+    <bla-setzliste-download [wettkampfid]="selectedWettkampfId"></bla-setzliste-download>
+
+  </div>
+
+  <div>
+    <bla-schusszettel-download [wettkampfid]="selectedWettkampfId"></bla-schusszettel-download>
+
+  </div>
+  <div>
+    <bla-meldezettel-download [wettkampfid]="selectedWettkampfId"></bla-meldezettel-download>
+
+  </div>
+  <div>
+    <bla-bogenkontrollliste-download [wettkampfid]="selectedWettkampfId"></bla-bogenkontrollliste-download>
+
+  </div>
+
+
+</bla-col-layout>
+
+
+  <router-outlet></router-outlet>
+
+</div>
+
+</bla-navigation-dialog>

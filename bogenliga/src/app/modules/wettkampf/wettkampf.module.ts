@@ -3,12 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
-import {
-  SchusszettelDownloadComponent,
-  MeldezettelDownloadComponent,
-  BogenkontrolllisteDownloadComponent,
-  WettkaempfeComponent
-} from './components/wettkaempfe/wettkaempfe.component';
+import {WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.component';
 import {WettkampfGuard} from './guards/wettkampf.guard';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
 
@@ -20,7 +15,7 @@ import {WETTKAMPF_ROUTES} from './wettkampf.routing';
     SharedModule,
     FormsModule
   ],
-  declarations: [WettkaempfeComponent, SchusszettelDownloadComponent, MeldezettelDownloadComponent, BogenkontrolllisteDownloadComponent],
+  declarations: [WettkaempfeComponent],
   providers:    [WettkampfGuard]
 })
 export class WettkampfModule {

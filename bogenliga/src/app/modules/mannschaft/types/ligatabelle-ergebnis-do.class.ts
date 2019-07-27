@@ -10,19 +10,15 @@ export class LigatabelleErgebnisDO implements VersionedDataObject {
   version: number;
 
   veranstaltung_id: number;
+  veranstaltung_name: string;
+  wettkampf_id: number;
   wettkampf_tag: number;
   mannschaft_id: number;
-  mannschaft_nummer: number;
-  tabellenplatz: number;
-  matchpkt: number;
-  matchpkt_gegen: number;
-  satzpkt: number;
-  satzpkt_gegen: number;
+  mannschaft_name: string;
   verein_id: number;
-  verein_name: string;
-
-
-  ligatabelleSatzpunkte: string;
-  ligatabelleMatchpunkte: string;
+  matchpunkte: string;
+  satzpunkte: string;
+  satzpkt_differenz: number;
+  tabellenplatz: number;
 
 }

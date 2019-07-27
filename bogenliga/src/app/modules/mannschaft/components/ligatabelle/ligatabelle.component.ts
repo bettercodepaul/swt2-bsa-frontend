@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {LIGATABELLE_CONFIG} from './ligatabelle.config';
-import {LIGATABELLE_TABLE_CONFIG} from './ligatabelle.config';
+import {LIGA_TABELLE_CONFIG} from './ligatabelle.config';
 import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VeranstaltungDO} from '@vereine/types/veranstaltung-do.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {LigatabelleErgebnisDO} from '../../types/ligatabelle-ergebnis-do.class';
-import {LigatabelleErgebnisService} from '../../service/ligatabelle-ergebnis.service';
+import {LigatabelleErgebnisService} from '../../services/ligatabelle-ergebnis.service';
 
 @Component({
   selector: 'bla-ligatabelle',
@@ -16,7 +16,7 @@ import {LigatabelleErgebnisService} from '../../service/ligatabelle-ergebnis.ser
 export class LigatabelleComponent extends CommonComponent implements OnInit {
 
   public config = LIGATABELLE_CONFIG;
-  public config_table = LIGATABELLE_TABLE_CONFIG;
+  public config_table = LIGA_TABELLE_CONFIG;
 
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
@@ -45,7 +45,6 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   handleSuccessLoadVeranstaltungen(respone: BogenligaResponse<VeranstaltungDO[]>) {
     this.veranstaltungen = respone.payload;
     this.currentVeranstaltung.id = this.veranstaltungen[0].id;
-    this.loadErgebnisse();
   }
 
 
@@ -60,13 +59,5 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
 
   }
 
-  public loadErgebnisse() {
-    console.log('loadErgebnisse');
-
-    this.ligatabelleErgebnisse.push(this.ligatabelleErgebnisService.createErgebnisse(this.currentVeranstaltung));
-    // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
-    this.fillTableRows();
-
-  }
 
  }
