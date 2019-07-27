@@ -31,7 +31,7 @@ export class WettkampfDataProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byMannschaftsId/' + id).build())
           .then((data: VersionedDataTransferObject[]) => {
-            console.log('wettaempfe kraw data');
+            console.log('wettkaempfe raw data');
             console.log(data);
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -44,6 +44,28 @@ export class WettkampfDataProviderService extends DataProviderService {
           });
     });
   }
+
+  public findAllByVeranstaltungId(id: string | number): Promise<BogenligaResponse<WettkampfDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVeranstaltungId/' + id).build())
+        .then((data: VersionedDataTransferObject[]) => {
+          console.log('Veranstaltung raw data');
+          console.log(data);
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
 
   public findAll(): Promise<BogenligaResponse<WettkampfDO[]>> {
     // return promise

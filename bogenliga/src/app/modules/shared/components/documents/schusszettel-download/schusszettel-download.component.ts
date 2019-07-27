@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild, Input} from '@angular/core';
-import {environment} from '../../../../../environments/environment';
-import {UriBuilder} from '../../../shared/data-provider';
+import {environment} from '../../../../../../environments/environment';
+import {UriBuilder} from '../../../data-provider';
 
 @Component({
   selector: 'bla-schusszettel-download',

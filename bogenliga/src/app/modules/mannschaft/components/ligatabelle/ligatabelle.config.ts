@@ -11,7 +11,7 @@ export const LIGATABELLE_CONFIG: NavigationDialogConfig = {
 };
 
 
-export const LIGATABELLE_TABLE_CONFIG: OverviewDialogConfig = {
+export const LIGA_TABELLE_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'LIGATABELLE',
   pageTitleTranslationKey: 'MANNSCHAFTEN.LIGATABELLE.TITLE',
 

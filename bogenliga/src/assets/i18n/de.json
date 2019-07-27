@@ -63,8 +63,25 @@
   },
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
-      "TITLE": "Wettkämpfe"
+      "TITLE": "Wettkampfergebnisse"
+    },
+    "TITEL": {
+      "VERANSTALTUNG": "Ligen-Auswahl"
+    },
+    "LIGATABELLE": {
+      "TITEL": "Liga-Tavelle",
+      "TABELLENPLATZ": "Tabellenplatz",
+      "MANNSCHAFTNAME": "Mannschaft",
+      "MATCHPUNKTE": "Matchpunkte",
+      "SATZPUNKTE": "Satzpunkte",
+      "SATZPUNKTDIFFERENZ": "Satzpunktdifferenz",
+      "HEADER": {
+        "VERANSTALTUNG": "Liga",
+        "WETTKAMPFTAG_AKT": "Wettkampftag",
+        "WETTKAMPFTAG": "0"
+      }
     }
+
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -77,7 +94,21 @@
   },
   "SPORTJAHRESPLAN": {
     "SPORTJAHRESPLAN": {
-      "TITLE": "Sportjahresplan"
+      "TITLE": "Terminübersicht"
+    },
+    "TITEL": {
+      "VERANSTALTUNG": "Veranstaltungen",
+      "WETTKAEMPFE": "Wettkampftage"
+      },
+    "WETTKAMPF": {
+      "TABLE": {
+        "CDAY": "Wettkampftag",
+        "DAY":"Wochentag",
+        "DATE": "Datum",
+        "TIME": "Uhrzeit",
+        "LIGA": "Disziplin",
+        "PLACE": "Veranstaltungsort"
+      }
     }
   },
   "MANNSCHAFTEN": {

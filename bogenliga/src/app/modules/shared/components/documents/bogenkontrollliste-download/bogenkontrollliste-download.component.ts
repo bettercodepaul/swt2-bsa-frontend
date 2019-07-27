@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild, Input} from '@angular/core';
 import {environment} from '@environment';
-import {UriBuilder} from '@shared/data-provider';
+import {UriBuilder} from '../../../data-provider';
 
 @Component({
   selector: 'bla-bogenkontrollliste-download',

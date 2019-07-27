@@ -4,34 +4,40 @@ export class LigatabelleErgebnisDTO implements DataTransferObject {
   id: number;
   version: number;
 
-  veranstaltung_id: number;
-  wettkampf_tag: number;
-  mannschaft_id: number;
-  mannschaft_nummer: number;
-  tabellenplatz: number;
+  veranstaltungId: number;
+  veranstaltungName: string;
+  wettkampfId: number;
+  wettkampfTag: number;
+  mannschaftId: number;
+  mannschaftNummer: number;
+  vereinId: number;
+  vereinName: string;
   matchpkt: number;
   matchpkt_gegen: number;
   satzpkt: number;
   satzpkt_gegen: number;
-  verein_id: number;
-  verein_name: string;
+  satzpkt_differenz: number;
+  sortierung: number;
+  tabellenplatz: number;
 
   static copyFrom(optional: {
     id?: number,
     version?: number,
-    veranstaltung_id?: number,
-    wettkampf_tag?: number,
-    mannschaft_id?: number,
-    mannschaft_nummer?: number,
-    tabellenplatz?: number,
+    veranstaltungId?: number,
+    veranstaltungName?: string,
+    wettkampfId?: number,
+    wettkampfTag?: number,
+    mannschaftId?: number,
+    mannschaftNummer?: number,
+    vereinId?: number,
+    vereinName?: string
     matchpkt?: number,
     matchpkt_gegen?: number,
     satzpkt?: number,
     satzpkt_gegen?: number,
-    verein_id?: number,
-    verein_name?: string
-
-
+    satzpkt_differenz?: number,
+    sortierung?: number,
+    tabellenplatz?: number
   } = {}): LigatabelleErgebnisDTO {
     const copy = new LigatabelleErgebnisDTO();
     if (optional.id >= 0) {
@@ -39,19 +45,23 @@ export class LigatabelleErgebnisDTO implements DataTransferObject {
     } else {
       copy.id = null;
     }
-    //TODO
-    copy.version = optional.version || null;
+    copy.version = optional.version || 1;
 
-    copy.veranstaltung_id = optional.veranstaltung_id || null;
-    copy.wettkampf_tag = optional.wettkampf_tag || null;
-    copy.mannschaft_nummer = optional.mannschaft_nummer || null;
-    copy.tabellenplatz = optional.tabellenplatz || null;
-    copy.matchpkt = optional.matchpkt || null;
-    copy.matchpkt_gegen = optional.matchpkt_gegen || null;
-    copy.satzpkt = optional.satzpkt || null;
-    copy.satzpkt_gegen = optional.satzpkt_gegen || null;
-    copy.verein_id = optional.verein_id || null;
-    copy.verein_name = optional.verein_name || '';
+    copy.veranstaltungId = optional.veranstaltungId;
+    copy.veranstaltungName = optional.veranstaltungName || '';
+    copy.wettkampfId = optional.wettkampfId;
+    copy.wettkampfTag = optional.wettkampfTag;
+    copy.mannschaftId = optional.mannschaftId;
+    copy.mannschaftNummer = optional.mannschaftNummer;
+    copy.vereinId = optional.vereinId;
+    copy.vereinName = optional.vereinName || '';
+    copy.matchpkt = optional.matchpkt;
+    copy.matchpkt_gegen = optional.matchpkt_gegen;
+    copy.satzpkt = optional.satzpkt;
+    copy.satzpkt_gegen = optional.satzpkt_gegen;
+    copy.satzpkt_differenz = optional.satzpkt_differenz;
+    copy.sortierung = optional.sortierung;
+    copy.tabellenplatz = optional.tabellenplatz;
 
     return copy;
   }
