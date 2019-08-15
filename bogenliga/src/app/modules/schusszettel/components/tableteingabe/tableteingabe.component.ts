@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatchDO} from '../../types/match-do.class';
+import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -37,7 +37,7 @@ class SchuetzeErgebnisse {
   }
 }
 
-const dummyMatch = new MatchDO(
+const dummyMatch = new MatchDOExt(
   null,
   null,
   null,
@@ -66,9 +66,9 @@ const NOTIFICATION_CONFIRM_NEXT_MATCH = 'tabletEingabeConfirmNextMatch';
 })
 export class TabletEingabeComponent implements OnInit {
 
-  match1: MatchDO;
-  match2: MatchDO;
-  currentMatch: MatchDO;
+  match1: MatchDOExt;
+  match2: MatchDOExt;
+  currentMatch: MatchDOExt;
   wettkampf: WettkampfDO;
   tabletSession: TabletSessionDO;
   tabletAdminRoute: string;
@@ -106,7 +106,7 @@ export class TabletEingabeComponent implements OnInit {
         const match1id = params['match1id'];
         const match2id = params['match2id'];
         this.schusszettelService.findMatches(match1id, match2id)
-            .then((data: BogenligaResponse<Array<MatchDO>>) => {
+            .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
               if (this.tabletSession) {

@@ -44,10 +44,10 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NavigationCardsComponent} from './components/navigation-cards';
 import {TruncationPipe} from './pipes';
 import {WettkaempfeComponent} from '@wettkampf/components/wettkaempfe/wettkaempfe.component';
-import {SetzlisteDownloadComponent} from "@shared/components/documents/setzliste-download/setzliste-download.component";
-import {BogenkontrolllisteDownloadComponent} from "@shared/components/documents/bogenkontrollliste-download/bogenkontrollliste-download.component";
-import {SchusszettelDownloadComponent} from "@shared/components/documents/schusszettel-download/schusszettel-download.component";
-import {MeldezettelDownloadComponent} from "@shared/components/documents/meldezettel-download/meldezettel-download.component";
+import {SetzlisteDownloadComponent} from "@shared/components/buttons/setzliste-download/setzliste-download.component";
+import {BogenkontrolllisteDownloadComponent} from "@shared/components/buttons/bogenkontrollliste-download/bogenkontrollliste-download.component";
+import {SchusszettelDownloadComponent} from "@shared/components/buttons/schusszettel-download/schusszettel-download.component";
+import {MeldezettelDownloadComponent} from "@shared/components/buttons/meldezettel-download/meldezettel-download.component";
 
 /*
  * define font awesome icon libraries

@@ -8,6 +8,7 @@ import {BogenligaResponse} from "@shared/data-provider";
 import {VeranstaltungDataProviderService} from "@verwaltung/services/veranstaltung-data-provider.service";
 import {LigatabelleDataProviderService} from "../../../mannschaft/services/ligatabelle-data-provider.service";
 import {TableRow} from "@shared/components/tables/types/table-row.class";
+import {} from "@shared/components/forms/";
 import {LigatabelleErgebnisDO} from "../../../mannschaft/types/ligatabelle-ergebnis-do.class";
 import {LigatabelleErgebnisDTO} from "../../../mannschaft/types/datatransfer/ligatabelle-ergebnis-dto.class";
 import {NotificationService} from '@shared/services';
@@ -24,6 +25,7 @@ export class WettkaempfeComponent extends CommonComponent implements OnInit {
 
 
 
+  public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
   private selectedVeranstaltungId: number;
   public selectedDTOs: VeranstaltungDO[];
   public multipleSelections = true;
@@ -47,6 +49,8 @@ export class WettkaempfeComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     this.loadVeranstaltungen();
+
+
   }
 
 
@@ -97,29 +101,32 @@ export class WettkaempfeComponent extends CommonComponent implements OnInit {
     if (response.payload.length <= 0) {
       this.loadingLigatabelle = false;
     }
-    for (const ligatabelle of response.payload) {
-      const tableContentRow: LigatabelleErgebnisDO = new LigatabelleErgebnisDO();
+    else{
+      for (const ligatabelle of response.payload) {
+        const tableContentRow: LigatabelleErgebnisDO = new LigatabelleErgebnisDO();
 
-      tableContentRow.veranstaltung_id = ligatabelle.veranstaltung_id;
-      tableContentRow.veranstaltung_name = ligatabelle.veranstaltung_name;
-      tableContentRow.wettkampf_id = ligatabelle.wettkampf_id;
-      tableContentRow.wettkampf_tag = ligatabelle.wettkampf_tag;
-      tableContentRow.mannschaft_id = ligatabelle.mannschaft_id;
-      tableContentRow.mannschaft_name = ligatabelle.mannschaft_name;
-      tableContentRow.verein_id = ligatabelle.verein_id;
-      tableContentRow.matchpunkte = ligatabelle.matchpunkte;
-      tableContentRow.satzpunkte = ligatabelle.satzpunkte;
-      tableContentRow.satzpkt_differenz = ligatabelle.satzpkt_differenz;
-      tableContentRow.tabellenplatz = ligatabelle.tabellenplatz;
+        tableContentRow.veranstaltung_id = ligatabelle.veranstaltung_id;
+        tableContentRow.veranstaltung_name = ligatabelle.veranstaltung_name;
+        tableContentRow.wettkampf_id = ligatabelle.wettkampf_id;
+        tableContentRow.wettkampf_tag = ligatabelle.wettkampf_tag;
+        tableContentRow.mannschaft_id = ligatabelle.mannschaft_id;
+        tableContentRow.mannschaft_name = ligatabelle.mannschaft_name;
+        tableContentRow.verein_id = ligatabelle.verein_id;
+        tableContentRow.matchpunkte = ligatabelle.matchpunkte;
+        tableContentRow.satzpunkte = ligatabelle.satzpunkte;
+        tableContentRow.satzpkt_differenz = ligatabelle.satzpkt_differenz;
+        tableContentRow.tabellenplatz = ligatabelle.tabellenplatz;
 
 
-      tableContentRow.id = ligatabelle.id;
-      tableContentRow.version = ligatabelle.version;
+        tableContentRow.id = ligatabelle.id;
+        tableContentRow.version = ligatabelle.version;
 
-      this.tableContent.push(tableContentRow);
+        this.tableContent.push(tableContentRow);
+      }
+      this.rowsLigatabelle = toTableRows(this.tableContent);
+      this.loadingLigatabelle = false;
     }
-    this.rowsLigatabelle = toTableRows(this.tableContent);
-    this.loadingLigatabelle = false;
+
 
   }
 

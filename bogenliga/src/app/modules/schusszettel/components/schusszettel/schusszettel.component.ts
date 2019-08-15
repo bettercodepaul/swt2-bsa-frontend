@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatchDO} from '../../types/match-do.class';
+import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -21,8 +21,8 @@ import {NumberOnlyDirective} from './number.directive';
 })
 export class SchusszettelComponent implements OnInit {
 
-  match1: MatchDO;
-  match2: MatchDO;
+  match1: MatchDOExt;
+  match2: MatchDOExt;
 
   constructor(private schusszettelService: SchusszettelProviderService,
               private route: ActivatedRoute,
@@ -38,11 +38,11 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     // initialwert schützen inputs
 
-    this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
+    this.match1 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
     this.match1.nr = 1;
     this.match1.schuetzen = [];
 
-    this.match2 = new MatchDO(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
+    this.match2 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
     this.match2.nr = 1;
     this.match2.schuetzen = [];
 
@@ -52,7 +52,7 @@ export class SchusszettelComponent implements OnInit {
         const match1id = params['match1id'];
         const match2id = params['match2id'];
         this.schusszettelService.findMatches(match1id, match2id)
-            .then((data: BogenligaResponse<Array<MatchDO>>) => {
+            .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
               if (this.match1.schuetzen.length <= 0 || this.match2.schuetzen.length <= 0) {
@@ -107,7 +107,7 @@ export class SchusszettelComponent implements OnInit {
       userAction:  NotificationUserAction.PENDING
     });
     this.schusszettelService.create(this.match1, this.match2)
-        .then((data: BogenligaResponse<Array<MatchDO>>) => {
+        .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
           this.initSumSatz();
@@ -151,7 +151,7 @@ export class SchusszettelComponent implements OnInit {
    * @param match
    * @param satzNr
    */
-  private getSumSatz(match: MatchDO, satzNr: number): number {
+  private getSumSatz(match: MatchDOExt, satzNr: number): number {
     let sum = 0;
     for (const i of Object.keys(match.schuetzen)) {
       sum += match.schuetzen[i][satzNr].ringzahlPfeil1;

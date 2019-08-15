@@ -63,13 +63,13 @@
   },
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
-      "TITLE": "Wettkampfergebnisse"
+      "TITLE": "Liga-Tabelle"
     },
     "TITEL": {
       "VERANSTALTUNG": "Ligen-Auswahl"
     },
     "LIGATABELLE": {
-      "TITEL": "Liga-Tavelle",
+      "TITEL": "Liga-Tabelle",
       "TABELLENPLATZ": "Tabellenplatz",
       "MANNSCHAFTNAME": "Mannschaft",
       "MATCHPUNKTE": "Matchpunkte",
@@ -108,6 +108,15 @@
         "TIME": "Uhrzeit",
         "LIGA": "Disziplin",
         "PLACE": "Veranstaltungsort"
+      }
+    },
+    "MATCH": {
+      "TABLE": {
+        "NUMMER": "Match",
+        "SCHEIBE":"Scheibe",
+        "BEGEGNUNG": "Begegnung",
+        "MATCHPUNKTE": "Matchpunkte",
+        "SATZPUNKTE": "Satzpunkte"
       }
     }
   },
