@@ -1,7 +1,7 @@
 import {DataObject} from '@shared/data-provider';
 import {PasseDO} from './passe-do.class';
 
-export class MatchDO implements DataObject {
+export class MatchDOExt implements DataObject {
   id: number;
 
   mannschaftId: number;

@@ -1,11 +1,11 @@
-import {MatchDTO} from '../types/datatransfer/match-dto.class';
-import {MatchDO} from '../types/match-do.class';
+import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
+import {MatchDOExt} from '../types/match-do-ext.class';
 import {PasseMapper} from './passe-mapper';
 
 
 export class MatchMapper {
 
-  static matchToDO(payload: MatchDTO): MatchDO {
+  static matchToDO(payload: MatchDTOExt): MatchDOExt {
     const schuetzen = [];
     let sumSatz = [];
     if (payload.passen.length > 0) {
@@ -43,7 +43,7 @@ export class MatchMapper {
       payload.strafPunkteSatz5
     ];
 
-    return new MatchDO(payload.id,
+    return new MatchDOExt(payload.id,
       payload.mannschaftId,
       payload.mannschaftName,
       payload.wettkampfId,
@@ -59,7 +59,7 @@ export class MatchMapper {
       payload.wettkampfTyp);
   }
 
-  static matchToDTO(payload: MatchDO): MatchDTO {
+  static matchToDTO(payload: MatchDOExt): MatchDTOExt {
     const passen = [];
     for (const schuetze of payload.schuetzen) {
       for (const passe of schuetze) {
@@ -74,7 +74,7 @@ export class MatchMapper {
     const strafPunkteSatz4 = payload.fehlerpunkte[3];
     const strafPunkteSatz5 = payload.fehlerpunkte[4];
 
-    return new MatchDTO(payload.id,
+    return new MatchDTOExt(payload.id,
       payload.mannschaftId,
       payload.mannschaftName,
       payload.wettkampfId,

@@ -13,7 +13,7 @@ export const WETTKAEMPFE_CONFIG: NavigationDialogConfig = {
 export const LIGATABELLE_TABLE_CONFIG: TableConfig = {
 
   columns: [
-    {
+     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.TABELLENPLATZ',
       propertyName:   'tabellenplatz',
       width:          15,
@@ -21,7 +21,7 @@ export const LIGATABELLE_TABLE_CONFIG: TableConfig = {
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.MANNSCHAFTNAME',
       propertyName:   'mannschaft_name',
-      width:          50,
+      width:          70,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.MATCHPUNKTE',

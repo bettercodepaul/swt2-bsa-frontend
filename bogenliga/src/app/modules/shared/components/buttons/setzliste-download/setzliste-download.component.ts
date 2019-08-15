@@ -17,7 +17,12 @@ export class SetzlisteDownloadComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  public isdisabled(): boolean{
+    return false;
+  }
 
   public getDownloadUrl(path: string): string {
     return new UriBuilder()

@@ -21,7 +21,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   },
   {
     label: 'SIDEBAR.REGIONEN',
-    icon: faSitemap,
+    icon:       faBullseye,
     route: '/regionen',
     permissons: [],
     subitems: []
@@ -78,7 +78,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   },
   {
     label:      'SIDEBAR.WETTKAMPF',
-    icon:       faBullseye,
+    icon:       faSitemap,
     route:      '/wettkaempfe',
     permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: []

@@ -25,53 +25,23 @@
         </table>
       </div>
 
-     <!-- Veranstaltung und Wettkampftag als Anzeige
-      <div class="form-group row">
-        <div class="col-sm-9">
-          <input type="text"
-                 class="form-control"
-                 [disabled]=true
-                 id="veranstaltung_akt"
-                 name="veranstaltung_akt"
-                 #veranstaltung_akt="ngModel"
-                 [(ngModel)]="ligatabelle[0].veranstaltung_name"
-                 placeholder="{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.VERANSTALTUNG' | translate }}">
-            <span> *</span>
-        </div>
-        <label for="wettkampftag_akt"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.WETTKAMPFTAG_AKT' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <input type="text"
-                 class="form-control"
-                 [disabled]=true
-                 id="wettkampftag_akt"
-                 name="wettkampftag_akt"
-                 #wettkampftag_akt="ngModel"
-                 [(ngModel)]="ligatabelle[0].wettkampf_tag"
-                 placeholder="{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.WETTKAMPFTAG' | translate }}">
-          <span> *</span>
-        </div>
-      </div>
- -->
-      <!-- Ligatabelle -->
+       <!-- Ligatabelle -->
       <div>
-        <h3><a class="blackLink"
-               routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h3>
+        <h5><a class="blackLink"
+               routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
 
         <div class="row">
 
 
           <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
-
+          <h5>
           <bla-data-table
                           [config]="config_table"
                           [rows]="rowsLigatabelle"
                           [loading]="loadingLigatabelle"
           >
           </bla-data-table>
+          </h5>
         </div>
       </div>
     </bla-row-layout>
