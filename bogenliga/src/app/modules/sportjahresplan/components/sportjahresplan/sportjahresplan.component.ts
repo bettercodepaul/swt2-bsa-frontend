@@ -53,6 +53,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   private tableContentMatch: Array<MatchDO> = [];
   private remainingWettkampfRequests: number;
   private remainingMatchRequests: number;
+  private urlString: string;
 
 
   constructor(private router: Router,
@@ -140,14 +141,15 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       this.matchProvider.next(this.selectedMatchId)
         .then((data) => {
           if (data.payload.length === 2) {
-/*            return new UriBuilder()
+/* das wäre schöner - funktioniert leider aber noch nicht...
+// öffne die Datenerfassung in einem neuen Tab
+            this.urlString = new UriBuilder()
               .fromPath(environment.backendBaseUrl)
-              .path('/schusszettel')
-              .path('/' + data.payload[0])
+              .path('/#/schusszettel/'+ data.payload[0])
               .path('/' + data.payload[1])
               .build();
+            window.open(this.urlString, '_blank')
 */
-
             this.router.navigate(['/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
            }
         })
