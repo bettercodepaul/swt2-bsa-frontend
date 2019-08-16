@@ -9,7 +9,7 @@ import {HomeModule} from '../../../home/home.module';
 import {APP_REDUCERS} from '../../../shared/redux-store';
 import {SharedModule} from '../../../shared/shared.module';
 import {SportjahresplanComponent} from './sportjahresplan.component';
-import {WettkaempfeComponent} from "@wettkampf/components/wettkaempfe/wettkaempfe.component";
+import {WettkaempfeComponent} from '@wettkampf/components/wettkaempfe/wettkaempfe.component';
 
 describe('SportjahresplanComponent', () => {
   let component: SportjahresplanComponent;

@@ -14,10 +14,10 @@ export function toDO(ligatabelleErgebnisDTO: LigatabelleErgebnisDTO): Ligatabell
   ligatabelleErgebnisDO.wettkampf_id = ligatabelleErgebnisDTO.wettkampfId;
   ligatabelleErgebnisDO.wettkampf_tag = ligatabelleErgebnisDTO.wettkampfTag;
   ligatabelleErgebnisDO.mannschaft_id = ligatabelleErgebnisDTO.mannschaftId;
-  ligatabelleErgebnisDO.mannschaft_name = ligatabelleErgebnisDTO.vereinName.toString()+"-"+ligatabelleErgebnisDTO.mannschaftNummer.toString();
+  ligatabelleErgebnisDO.mannschaft_name = ligatabelleErgebnisDTO.vereinName.toString() + '-' + ligatabelleErgebnisDTO.mannschaftNummer.toString();
   ligatabelleErgebnisDO.verein_id = ligatabelleErgebnisDTO.vereinId;
-  ligatabelleErgebnisDO.matchpunkte = ligatabelleErgebnisDTO.matchpkt.toString()+" : "+ligatabelleErgebnisDTO.matchpkt_gegen.toString();
-  ligatabelleErgebnisDO.satzpunkte = ligatabelleErgebnisDTO.satzpkt.toString()+" : "+ligatabelleErgebnisDTO.satzpkt_gegen.toString();
+  ligatabelleErgebnisDO.matchpunkte = ligatabelleErgebnisDTO.matchpkt.toString() + ' : ' + ligatabelleErgebnisDTO.matchpkt_gegen.toString();
+  ligatabelleErgebnisDO.satzpunkte = ligatabelleErgebnisDTO.satzpkt.toString() + ' : ' + ligatabelleErgebnisDTO.satzpkt_gegen.toString();
   ligatabelleErgebnisDO.satzpkt_differenz = ligatabelleErgebnisDTO.satzpkt_differenz;
   ligatabelleErgebnisDO.tabellenplatz = ligatabelleErgebnisDTO.tabellenplatz;
 

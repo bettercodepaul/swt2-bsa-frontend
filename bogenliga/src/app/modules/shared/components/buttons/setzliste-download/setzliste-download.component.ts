@@ -20,7 +20,7 @@ export class SetzlisteDownloadComponent implements OnInit {
   ngOnInit() {
   }
 
-  public isdisabled(): boolean{
+  public isdisabled(): boolean {
     return false;
   }
 

@@ -3,7 +3,7 @@ import {VeranstaltungDO} from '@vereine/types/veranstaltung-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {LigatabelleDataProviderService} from './ligatabelle-data-provider.service';
 import {Injectable} from '@angular/core';
-import {TableRow} from "@shared/components/tables/types/table-row.class";
+import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '@shared/components/tables';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 

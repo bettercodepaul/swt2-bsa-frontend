@@ -1,5 +1,5 @@
 import {NavigationDialogConfig} from '../../../shared/components/dialogs';
-import {TableConfig} from "@shared/components/tables/types/table-config.interface";
+import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
 export const WETTKAEMPFE_CONFIG: NavigationDialogConfig = {
   moduleTranslationKey:    'WETTKAEMPFE',

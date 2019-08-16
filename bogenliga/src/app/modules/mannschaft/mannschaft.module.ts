@@ -5,7 +5,7 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '@shared/shared.module';
 import {MANNSCHAFT_ROUTES} from './mannschaft.routing';
 import {MannschaftComponent} from './components/mannschaft/mannschaft.component';
-import {LigatabelleComponent} from "./components/ligatabelle/ligatabelle.component";
+import {LigatabelleComponent} from './components/ligatabelle/ligatabelle.component';
 
 @NgModule({
   imports: [

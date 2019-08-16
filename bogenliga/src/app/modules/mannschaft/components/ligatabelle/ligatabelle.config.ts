@@ -1,5 +1,5 @@
 import {NavigationDialogConfig} from '@shared/components';
-import {TableActionType} from "@shared/components/tables/types/table-action-type.enum";
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {OverviewDialogConfig} from '@shared/components/dialogs';
 
 export const LIGATABELLE_CONFIG: NavigationDialogConfig = {
