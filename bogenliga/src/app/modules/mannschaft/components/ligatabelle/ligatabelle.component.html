@@ -1,10 +1,6 @@
-<bla-common-dialog [config]="config"
+<bla-overview-dialog [config]="config"
                    [rows]="rows"
-                   [loading]="loading"
-                   (onAddClicked)="onAdd($event)"
-                   (onDeleteClicked)="onDelete($event)"
-                   (onDownloadClicked)="onDownload($event)"
-                   (onViewClicked)="onView($event)">
+                   [loading]="loading">
 
   <form id="regionenForm"
         class="horizontal-form half-page">
@@ -20,7 +16,7 @@
                 id="regionTyp"
                 name="regionTyp"
                 [(ngModel)]="currentVeranstaltung.name"
-                (ngModelChange)="loadErgebnisse();">
+                (ngModelChange)="loadVeranstaltungen();">
 
           <option *ngFor="let veranstaltung of veranstaltungen"> {{veranstaltung.name}}</option>
         </select>
@@ -32,4 +28,4 @@
 
 
   </form>
-</bla-common-dialog>
+</bla-overview-dialog>

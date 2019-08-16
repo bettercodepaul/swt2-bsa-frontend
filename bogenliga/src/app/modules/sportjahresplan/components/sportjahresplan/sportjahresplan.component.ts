@@ -140,10 +140,10 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       this.matchProvider.next(this.selectedMatchId)
         .then((data) => {
           if (data.payload.length === 2) {
-/* das wäre schöner - funktioniert leider aber noch nicht...
+// das wäre schöner - funktioniert leider aber noch nicht...
 // öffne die Datenerfassung in einem neuen Tab
-            this.urlString = new UriBuilder()
-              .fromPath(environment.backendBaseUrl)
+/*            this.urlString = new UriBuilder()
+              .fromPath(environment.)
               .path('/#/schusszettel/'+ data.payload[0])
               .path('/' + data.payload[1])
               .build();
