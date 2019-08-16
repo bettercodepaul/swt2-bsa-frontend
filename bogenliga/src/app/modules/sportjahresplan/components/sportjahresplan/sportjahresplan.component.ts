@@ -30,6 +30,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   public config = SPORTJAHRESPLAN_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_table_match = MATCH_TABLE_CONFIG;
+  public PLACEHOLDER_VAR = 'Veranstaltung auswählen...';
 
 
   public pdf = new Blob();
