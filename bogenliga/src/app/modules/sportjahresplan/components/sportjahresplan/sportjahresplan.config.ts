@@ -1,6 +1,6 @@
 import {NavigationDialogConfig} from '../../../shared/components/dialogs';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
-import {TableActionType} from "@shared/components/tables/types/table-action-type.enum";
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
 
 

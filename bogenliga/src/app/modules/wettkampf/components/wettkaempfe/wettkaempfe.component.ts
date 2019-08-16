@@ -2,15 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './wettkaempfe.config';
-import {VeranstaltungDO} from "@verwaltung/types/veranstaltung-do.class";
-import {VeranstaltungDTO} from "@verwaltung/types/datatransfer/veranstaltung-dto.class";
-import {BogenligaResponse} from "@shared/data-provider";
-import {VeranstaltungDataProviderService} from "@verwaltung/services/veranstaltung-data-provider.service";
-import {LigatabelleDataProviderService} from "../../../mannschaft/services/ligatabelle-data-provider.service";
-import {TableRow} from "@shared/components/tables/types/table-row.class";
-import {} from "@shared/components/forms/";
-import {LigatabelleErgebnisDO} from "../../../mannschaft/types/ligatabelle-ergebnis-do.class";
-import {LigatabelleErgebnisDTO} from "../../../mannschaft/types/datatransfer/ligatabelle-ergebnis-dto.class";
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {BogenligaResponse} from '@shared/data-provider';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {LigatabelleDataProviderService} from '../../../mannschaft/services/ligatabelle-data-provider.service';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {} from '@shared/components/forms/';
+import {LigatabelleErgebnisDO} from '../../../mannschaft/types/ligatabelle-ergebnis-do.class';
+import {LigatabelleErgebnisDTO} from '../../../mannschaft/types/datatransfer/ligatabelle-ergebnis-dto.class';
 import {NotificationService} from '@shared/services';
 
 @Component({
@@ -96,12 +96,10 @@ export class WettkaempfeComponent extends CommonComponent implements OnInit {
 
   private handleLigatabelleSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>): void {
     this.rowsLigatabelle = []; // reset array to ensure change detection
-    let i: number;
     this.remainingLigatabelleRequests = response.payload.length;
     if (response.payload.length <= 0) {
       this.loadingLigatabelle = false;
-    }
-    else{
+    } else {
       for (const ligatabelle of response.payload) {
         const tableContentRow: LigatabelleErgebnisDO = new LigatabelleErgebnisDO();
 

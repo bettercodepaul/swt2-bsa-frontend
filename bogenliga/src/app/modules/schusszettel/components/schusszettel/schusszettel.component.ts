@@ -157,6 +157,8 @@ export class SchusszettelComponent implements OnInit {
       sum += match.schuetzen[i][satzNr].ringzahlPfeil1;
       sum += match.schuetzen[i][satzNr].ringzahlPfeil2;
     }
+    sum += match.fehlerpunkte[satzNr];
+
     return sum;
   }
 
@@ -165,7 +167,7 @@ export class SchusszettelComponent implements OnInit {
    */
   private setPoints() {
     // kumulativ
-    if (this.match1.wettkampfTyp === 'Liga kummutativ') {
+    if (this.match1.wettkampfTyp === 'Liga kummulativ') {
       this.setKummulativePoints();
     } else if (this.match1.wettkampfTyp === 'Liga Satzsystem') {
       this.setSatzPoints();
@@ -177,6 +179,9 @@ export class SchusszettelComponent implements OnInit {
     } else if (this.match2.satzpunkte >= 6) {
       this.match1.matchpunkte = 0;
       this.match2.matchpunkte = 2;
+    } else if (this.match2.satzpunkte === 5 && this.match1.satzpunkte === 5) {
+      this.match1.matchpunkte = 1;
+      this.match2.matchpunkte = 1;
     }
   }
 
@@ -196,20 +201,18 @@ export class SchusszettelComponent implements OnInit {
       let counterMatch2 = 0;
       for (let i = 0; i < 5; i++) {
         if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
-          counterMatch1++;
+          counterMatch1 += 2;
         } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
+          counterMatch2 += 2;
+        } else if (this.match1.sumSatz[i] === this.match2.sumSatz[i]) {
+          counterMatch1++;
           counterMatch2++;
         }
       }
-      const draws = 5 - (counterMatch1 + counterMatch2);
-      this.match1.satzpunkte = (counterMatch1 * 2) + draws;
-      this.match2.satzpunkte = (counterMatch2 * 2) + draws;
+      this.match1.satzpunkte = counterMatch1;
+      this.match2.satzpunkte = counterMatch2;
       this.match1.matchpunkte = 0;
       this.match2.matchpunkte = 0;
-      if (this.match1.satzpunkte === this.match2.satzpunkte) {
-        this.match1.matchpunkte = 1;
-        this.match2.matchpunkte = 1;
-      }
     }
   }
 

@@ -1,22 +1,22 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {MATCH_TABLE_CONFIG, SPORTJAHRESPLAN_CONFIG, WETTKAMPF_TABLE_CONFIG} from './sportjahresplan.config';
-import {VeranstaltungDO} from "@verwaltung/types/veranstaltung-do.class";
-import {VeranstaltungDTO} from "@verwaltung/types/datatransfer/veranstaltung-dto.class";
-import {BogenligaResponse, UriBuilder} from "@shared/data-provider";
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {WettkampfDataProviderService} from "@vereine/services/wettkampf-data-provider.service";
+import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-provider.service';
 import {MatchDataProviderService} from '@vereine/services/match-data-provider.service';
 import {MatchProviderService} from '../../../schusszettel/services/match-provider.service';
 
-import {TableRow} from "@shared/components/tables/types/table-row.class";
-import {WettkampfDO} from "@vereine/types/wettkampf-do.class";
-import {WettkampfDTO} from "@vereine/types/datatransfer/wettkampf-dto.class";
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
+import {WettkampfDTO} from '@vereine/types/datatransfer/wettkampf-dto.class';
 import {NotificationService} from '@shared/services/notification';
-import {environment} from "@environment";
-import {MatchDO} from "@vereine/types/match-do.class";
-import {MatchDTO} from "@vereine/types/datatransfer/match-dto.class";
+import {environment} from '@environment';
+import {MatchDO} from '@vereine/types/match-do.class';
+import {MatchDTO} from '@vereine/types/datatransfer/match-dto.class';
 
 
 
@@ -91,8 +91,8 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   // when a Wettkampf gets selected from the list --> ID for Buttons
 
   public onView($event: WettkampfDO): void {
-    if ($event.id >=0) {
-      this.selectedWettkampfId = $event.id
+    if ($event.id >= 0) {
+      this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
       this.visible = true;
 
@@ -101,7 +101,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
         .catch((response: BogenligaResponse<MatchDO[]>) => this.handleFindMatchFailure(response));
 
     }
-//TODO URL-Sprung bei TabletButtonClick
+// TODO URL-Sprung bei TabletButtonClick
   }
   // when a Wewttkampf gets selected from the list --> ID for Buttons
 
@@ -120,14 +120,13 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   }
 
 
-  //wenn ein Wettkampftag ausgewählt wurde - dann werden die Button enabled,
-  //da die Wettkampf-ID als Parameter weiter gegeben wird.
+  // wenn ein Wettkampftag ausgewählt wurde - dann werden die Button enabled,
+  // da die Wettkampf-ID als Parameter weiter gegeben wird.
 
-  public isDisabled():boolean{
-    if (this.selectedWettkampf ==""){
+  public isDisabled(): boolean {
+    if (this.selectedWettkampf === '') {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }
@@ -136,7 +135,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   // öffnen wir in einem neuen Tab die Datenerfassung /Schusszettel für die Begegnung
 
   public onEdit($event: MatchDO): void {
-    if ($event.id >=0) {
+    if ($event.id >= 0) {
       this.selectedMatchId = $event.id;
       this.matchProvider.next(this.selectedMatchId)
         .then((data) => {
@@ -152,7 +151,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
 */
             this.router.navigate(['/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
            }
-        })
+        });
     }
   }
 
@@ -162,7 +161,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
 // backend-call to get the list of veranstaltungen
   private loadVeranstaltungen(): void {
     this.veranstaltungen = [];
-    this.selectedWettkampf = "";
+    this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
     this.veranstaltungsDataProvider.findAll()
       .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload;  this.loadingVeranstaltungen = false; })
@@ -172,7 +171,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
 
   private loadTableRows() {
     this.loadingWettkampfe = true;
-    this.selectedWettkampf = "";
+    this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
     this.wettkampfDataProvider.findAllByVeranstaltungId(this.selectedVeranstaltungId)
       .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleFindWettkampfSuccess(response))
@@ -188,7 +187,6 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
 
   private handleFindWettkampfSuccess(response: BogenligaResponse<WettkampfDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
-    let i: number;
     this.remainingWettkampfRequests = response.payload.length;
     if (response.payload.length <= 0) {
       this.loadingWettkampfe = false;
@@ -218,7 +216,6 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
 
   private handleFindMatchSuccess(response: BogenligaResponse<MatchDTO[]>): void {
     this.matchRows = []; // reset array to ensure change detection
-    let i: number;
     this.remainingMatchRequests = response.payload.length;
     if (response.payload.length <= 0) {
       this.loadingMatch = false;
