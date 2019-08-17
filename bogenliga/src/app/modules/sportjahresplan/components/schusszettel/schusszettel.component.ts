@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
-import {BogenligaResponse} from '@shared/data-provider';
-import {isUndefined} from '@shared/functions';
+import {BogenligaResponse} from '../../../shared/data-provider';
+import {isUndefined} from '../../../shared/functions';
 import {ActivatedRoute} from '@angular/router';
 import {
   NotificationOrigin,
@@ -11,7 +11,7 @@ import {
   NotificationSeverity,
   NotificationType,
   NotificationUserAction
-} from '@shared/services';
+} from '../../../shared/services';
 import {NumberOnlyDirective} from './number.directive';
 
 @Component({

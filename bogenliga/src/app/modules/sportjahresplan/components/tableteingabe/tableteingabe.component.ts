@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
-import {BogenligaResponse} from '@shared/data-provider';
-import {isUndefined} from '@shared/functions';
+import {BogenligaResponse} from '../../../shared/data-provider';
+import {isUndefined} from '../../../shared/functions';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   NotificationOrigin,
@@ -11,8 +11,8 @@ import {
   NotificationSeverity,
   NotificationType,
   NotificationUserAction
-} from '@shared/services';
-import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
+} from '../../../shared/services';
+import {WettkampfDO} from '../../../vereine/types/wettkampf-do.class';
 import {PasseProviderService} from '../../services/passe-provider.service';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
@@ -112,7 +112,7 @@ export class TabletEingabeComponent implements OnInit {
               if (this.tabletSession) {
                 this.currentMatch = this.match2.scheibenNummer === this.tabletSession.scheibenNr ? this.match2 : this.match1;
               }
-              this.tabletAdminRoute = '/schusszettel/tabletadmin/' + this.match1.wettkampfId;
+              this.tabletAdminRoute = '/tabletadmin/' + this.match1.wettkampfId;
               this.tabletSession.matchID = this.currentMatch.id;
               this.updateTabletSession();
               this.dumpStorageData();
