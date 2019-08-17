@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
-import {isUndefined} from '@shared/functions';
-import {BogenligaResponse} from '@shared/data-provider';
+import {isUndefined} from '../../../shared/functions';
+import {BogenligaResponse} from '../../../shared/data-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
 
@@ -92,7 +92,7 @@ export class TabletAdminComponent implements OnInit {
 
   private setTabletEingabeRoute() {
     if (this.currentSession) {
-      this.tabletEingabeRoute = '/schusszettel/' + this.currentSession.matchID + '/' + this.currentSession.otherMatchId + '/tablet';
+      this.tabletEingabeRoute = '/' + this.currentSession.matchID + '/' + this.currentSession.otherMatchId + '/tablet';
     }
   }
 
