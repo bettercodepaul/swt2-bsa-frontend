@@ -150,7 +150,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
               .build();
             window.open(this.urlString, '_blank')
 */
-            this.router.navigate(['/' + data.payload[0] + '/' + data.payload[1]]);
+            this.router.navigate(['/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
            }
         });
     }
