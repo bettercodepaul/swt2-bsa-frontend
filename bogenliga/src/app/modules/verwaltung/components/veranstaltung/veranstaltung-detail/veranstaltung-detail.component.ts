@@ -130,19 +130,23 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
 
     if (typeof this.currentLiga === 'undefined') {
-      this.currentVeranstaltung.ligaID = null;
+      this.currentVeranstaltung.ligaId = null;
     } else {
-      this.currentVeranstaltung.ligaID = this.currentLiga.id;
+      this.currentVeranstaltung.ligaId = this.currentLiga.id;
+      this.currentVeranstaltung.ligaName = this.currentLiga.name;
     }
     if (typeof this.currentUser === 'undefined') {
-      this.currentVeranstaltung.ligaleiterID = null;
+      this.currentVeranstaltung.ligaleiterId = null;
     } else {
-      this.currentVeranstaltung.ligaleiterID = this.currentUser.id;
+      this.currentVeranstaltung.ligaleiterId = this.currentUser.id;
+      this.currentVeranstaltung.ligaleiterEmail = this.currentUser.email;
     }
     if (typeof this.currentWettkampftyp === 'undefined') {
       this.currentVeranstaltung.wettkampfTypId = null;
     } else {
       this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
+      this.currentVeranstaltung.wettkampftypName = this.currentWettkampftyp.name;
+
     }
 
     // persist
@@ -244,8 +248,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
-    this.currentVeranstaltung.ligaID = this.currentLiga.id;
-    this.currentVeranstaltung.ligaleiterID = this.currentUser.id;
+    this.currentVeranstaltung.ligaId = this.currentLiga.id;
+    this.currentVeranstaltung.ligaleiterId = this.currentUser.id;
     this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
 
     // persist
@@ -441,7 +445,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     if (this.id === 'add') {
       this.currentLiga = this.allLiga[0];
     } else {
-      this.currentLiga = this.allLiga.filter((liga) => liga.id === this.currentVeranstaltung.ligaID)[0];
+      this.currentLiga = this.allLiga.filter((liga) => liga.id === this.currentVeranstaltung.ligaId)[0];
     }
     this.loading = false;
   }
@@ -473,7 +477,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     if (this.id === 'add') {
       this.currentUser = this.allUsers[0];
     } else {
-      this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaleiterID)[0];
+      this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaleiterId)[0];
     }
     this.loading = false;
   }
@@ -488,7 +492,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.allDsbMannschaft = response.payload;
 
 
-    this.allVeranstaltung = this.allVeranstaltung.filter((liga) => liga.ligaID === this.currentVeranstaltung.ligaID);
+    this.allVeranstaltung = this.allVeranstaltung.filter((liga) => liga.ligaId === this.currentVeranstaltung.ligaId);
     this.allVeranstaltung = this.allVeranstaltung.filter((sportjahr) => sportjahr.sportjahr === this.currentVeranstaltung.sportjahr - 1);
     this.allVeranstaltung = this.allVeranstaltung.filter((wettkamptyp) => wettkamptyp.wettkampfTypId === this.currentVeranstaltung.wettkampfTypId);
     this.allVeranstaltung = this.allVeranstaltung.filter((name) => name.name === this.currentVeranstaltung.name);
