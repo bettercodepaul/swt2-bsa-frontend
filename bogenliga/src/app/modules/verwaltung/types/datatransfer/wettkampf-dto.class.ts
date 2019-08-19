@@ -2,19 +2,36 @@ import {DataTransferObject} from '@shared/data-provider';
 
 export class WettkampfDTO implements DataTransferObject {
   // This maps the DTO from the Backend
+
   id: number;
+  wettkampfVeranstaltungsId: number;
   wettkampfDatum: string;
   wettkampfOrt: string;
   wettkampfBeginn: string;
   wettkampfTag: number;
   wettkampfDisziplinId: number;
   wettkampfTypId: number;
-
   version: number;
-  wettkampfVeranstaltungsId: number;
 
-  // not set, find Liga by Wettkampfid
-  wettkampfLiga: string;
+  constructor(id?: number,
+              wettkampfVeranstaltungsId?: number,
+              wettkampfDatum?: string,
+              wettkampfOrt?: string,
+              wettkampfBeginn?: string,
+              wettkampfTag?: number,
+              wettkampfDisziplinId?: number,
+              wettkampfTypId?: number,
+              version?: number) {
+    this.id = !!id ? id : null;
+    this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
+    this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';
+    this.wettkampfOrt = !!wettkampfOrt ? wettkampfOrt : '';
+    this.wettkampfBeginn = !!wettkampfBeginn ? wettkampfBeginn : '';
+    this.wettkampfTag = !!wettkampfTag ? wettkampfTag : null;
+    this.wettkampfDisziplinId = !!wettkampfDisziplinId ? wettkampfDisziplinId : null;
+    this.wettkampfTypId = !!wettkampfTypId ? wettkampfTypId : null;
+    this.version = !!version ? version : null;
+  }
 
 
   static copyFrom(optional: {
@@ -26,7 +43,6 @@ export class WettkampfDTO implements DataTransferObject {
     wettkampfTag?: number;
     wettkampfDisziplinId?: number;
     wettkampfTypId?: number;
-
     version?: number;
   } = {}): WettkampfDTO {
     const copy = new WettkampfDTO();
@@ -39,9 +55,13 @@ export class WettkampfDTO implements DataTransferObject {
     }
     if (optional.veranstaltungsId >= 0) {
       copy.wettkampfVeranstaltungsId = optional.veranstaltungsId;
-    } else {
+    }else{
       copy.wettkampfVeranstaltungsId = null;
     }
+    copy.wettkampfDatum = optional.datum || '';
+    copy.wettkampfOrt = optional.wettkampfOrt || null;
+    copy.wettkampfBeginn = optional.wettkampfBeginn || null;
+
     if (optional.wettkampfTag >= 0) {
       copy.wettkampfTag = optional.wettkampfTag;
     } else {
@@ -49,22 +69,18 @@ export class WettkampfDTO implements DataTransferObject {
     }
     if (optional.wettkampfDisziplinId >= 0) {
       copy.wettkampfDisziplinId = optional.wettkampfDisziplinId;
-    } else {
+    }else{
       copy.wettkampfDisziplinId = null;
     }
     if (optional.wettkampfTypId >= 0) {
       copy.wettkampfTypId = optional.wettkampfTypId;
-    } else {
+    }else{
       copy.wettkampfTypId = null;
     }
-
-    copy.wettkampfDatum = optional.datum || '';
-    copy.wettkampfOrt = optional.wettkampfOrt || null;
-    copy.wettkampfBeginn = optional.wettkampfBeginn || null;
-
-
     copy.version = optional.version || null;
 
     return copy;
   }
+
+
 }

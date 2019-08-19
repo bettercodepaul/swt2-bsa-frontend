@@ -19,6 +19,7 @@
                id="veranstaltung_name"
                name="veranstaltung_name"
                #veranstaltung_name="ngModel"
+               [disabled]=true
                [(ngModel)]="currentVeranstaltung.name"
                [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">

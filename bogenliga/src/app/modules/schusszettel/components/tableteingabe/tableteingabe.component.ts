@@ -12,7 +12,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '@shared/services';
-import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {PasseProviderService} from '../../services/passe-provider.service';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';

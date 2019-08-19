@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {MANNSCHAFT_CONFIG} from './mannschaft.config';
-import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
-import {VereinDO} from '@vereine/types/verein-do.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
-import {VeranstaltungDO} from '@vereine/types/veranstaltung-do.class';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WettkampfErgebnis} from './wettkampergebnis/WettkampfErgebnis';
@@ -22,7 +23,8 @@ export class MannschaftComponent extends CommonComponent implements OnInit {
 
   public vereine: Array<VereinDO> = [];
   public veranstaltungen: Array<VeranstaltungDO> = [];
-  public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
+  public currentVeranstaltung: VeranstaltungDTO = new VeranstaltungDTO();
+  public currentVeranstaltungDO: VeranstaltungDO = new VeranstaltungDO();
   public currentVerein: VereinDO = new VereinDO();
 
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
@@ -78,6 +80,20 @@ export class MannschaftComponent extends CommonComponent implements OnInit {
 
   public loadErgebnisse() {
     console.log('loadErgebnisse');
+
+    this.currentVeranstaltungDO = new VeranstaltungDO();
+
+    this.currentVeranstaltungDO.id = this.currentVeranstaltung.id;
+    this.currentVeranstaltungDO.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
+    this.currentVeranstaltungDO.name = this.currentVeranstaltung.name;
+    this.currentVeranstaltungDO.sportjahr = this.currentVeranstaltung.sportjahr;
+    this.currentVeranstaltungDO.meldeDeadline = this.currentVeranstaltung.meldeDeadline;
+    this.currentVeranstaltungDO.ligaleiterId = this.currentVeranstaltung.ligaleiterId;
+    this.currentVeranstaltungDO.ligaId = this.currentVeranstaltung.ligaId;
+    this.currentVeranstaltungDO.version = this.currentVeranstaltung.version;
+    this.currentVeranstaltungDO.ligaleiterEmail = this.currentVeranstaltung.ligaleiterEmail;
+    this.currentVeranstaltungDO.wettkampftypName = this.currentVeranstaltung.wettkampftypName;
+    this.currentVeranstaltungDO.ligaName = this.currentVeranstaltung.ligaName;
 
     this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
       this.vereine, this.currentVeranstaltung, 0));

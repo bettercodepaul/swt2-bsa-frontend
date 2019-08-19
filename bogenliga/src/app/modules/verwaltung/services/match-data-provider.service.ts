@@ -10,7 +10,7 @@ import {
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/match-mapper';
-import {MatchDO} from '@vereine/types/match-do.class';
+import {MatchDO} from '../types/match-do.class';
 
 @Injectable({
   providedIn: 'root'

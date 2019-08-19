@@ -900,6 +900,16 @@
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
+          },
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Wettkampftag 1",
+              "DESCRIPTION": "Daten gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Wettkampftag 1",
+              "DESCRIPTION": "Daten aktualisert"
+            }
           }
         },
         "KAMPFRICHTERLISTE": {
@@ -922,6 +932,16 @@
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
+          },
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Wettkampftag 2",
+              "DESCRIPTION": "Daten gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Wettkampftag 2",
+              "DESCRIPTION": "Daten aktualisert"
+            }
           }
         },
         "WETTKAMPFTAG3": {
@@ -940,6 +960,16 @@
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
+          },
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Wettkampftag 3",
+              "DESCRIPTION": "Daten gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Wettkampftag 3",
+              "DESCRIPTION": "Daten aktualisert"
+            }
           }
         },
         "WETTKAMPFTAG4": {
@@ -958,6 +988,16 @@
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
+          },
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Wettkampftag 4",
+              "DESCRIPTION": "Daten gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Wettkampftag 4",
+              "DESCRIPTION": "Daten aktualisert"
+            }
           }
         },
 
