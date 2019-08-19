@@ -7,8 +7,8 @@ import {WETTKAMPF_TABLE_CONFIG} from '@home/components/home/wettkampf/wettkampf.
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
-import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
-import {VeranstaltungDTO} from '@vereine/types/datatransfer/veranstaltung-dto.class';
+import {VeranstaltungDataProviderService} from '../../../verwaltung/services/veranstaltung-data-provider.service';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {formatDate} from '@angular/common';
 import {registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
@@ -22,7 +22,8 @@ export class HomeComponent extends CommonComponent implements OnInit {
 
   public config = HOME_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
-  public wettkaempfe: WettkampfDO[];
+  public wettkaempfeDTO: WettkampfDTO[];
+  public wettkaempfeDO: WettkampfDO[];
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[];
@@ -41,21 +42,34 @@ export class HomeComponent extends CommonComponent implements OnInit {
    * backend call to get list
    */
   private loadWettkaempfe(): void {
-      this.wettkaempfe = [];
+      this.wettkaempfeDTO = [];
+      this.wettkaempfeDO = [];
       this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDTO[]>) => { this.handleSuccessLoadWettkaempfe(response.payload); })
-        .catch((response: BogenligaResponse<WettkampfDTO[]>) => {this.wettkaempfe = response.payload; });
+        .catch((response: BogenligaResponse<WettkampfDTO[]>) => {this.wettkaempfeDTO = response.payload; });
   }
 
   private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
-    this.wettkaempfe = payload;
-    this.wettkaempfe.forEach((wettkampf) => {this.findLigaNameByVeranstaltungsId(wettkampf); });
+    this.wettkaempfeDTO = payload;
+    this.wettkaempfeDTO.forEach((wettkampf) => {this.wettkaempfeDO.push( new WettkampfDO(
+      wettkampf.id,
+      wettkampf.wettkampfVeranstaltungsId,
+      wettkampf.wettkampfDatum,
+      wettkampf.wettkampfOrt,
+      wettkampf.wettkampfBeginn,
+      wettkampf.wettkampfTag,
+      wettkampf.wettkampfDisziplinId,
+      wettkampf.wettkampfTypId,
+      wettkampf.version)
+    )  });
+
+    this.wettkaempfeDO.forEach((wettkampf) => {this.findLigaNameByVeranstaltungsId(wettkampf); });
     this.checkDate();
     this.fillTableRows();
     this.loadingWettkampf = false;
   }
 
-  private findLigaNameByVeranstaltungsId(wettkampf: WettkampfDTO): void {
+  private findLigaNameByVeranstaltungsId(wettkampf: WettkampfDO): void {
     this.veranstaltungDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
         .then((response: BogenligaResponse<VeranstaltungDTO>) => {
           wettkampf.wettkampfLiga = response.payload.name;
@@ -73,10 +87,10 @@ export class HomeComponent extends CommonComponent implements OnInit {
   private fillTableRows(): void {
     this.rows = [];
 
-    if (this.wettkaempfe.length < 6) {
-      this.rows = toTableRows(this.wettkaempfe);
+    if (this.wettkaempfeDO.length < 6) {
+      this.rows = toTableRows(this.wettkaempfeDO);
     } else {
-      this.rows = toTableRows(this.wettkaempfe.slice(0, 5));
+      this.rows = toTableRows(this.wettkaempfeDO.slice(0, 5));
     }
   }
 
@@ -92,11 +106,11 @@ export class HomeComponent extends CommonComponent implements OnInit {
     registerLocaleData(localeDE);
     this.dateHelper = formatDate(this.currentDate, 'yyyy-MM-dd', 'de');
 
-    for (let i = 0; i < this.wettkaempfe.length; i++) {
+    for (let i = 0; i < this.wettkaempfeDO.length; i++) {
       /**
        * Turns the strings into date objects which can be easily compared
        */
-      const wettkampfDate = new Date(this.wettkaempfe[i].wettkampfDatum);
+      const wettkampfDate = new Date(this.wettkaempfeDO[i].wettkampfDatum);
       const heuteDate = new Date(this.currentDate);
 
       if (wettkampfDate < heuteDate) {
@@ -104,7 +118,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
          * Splice takes out the number of values/objects defined in 'deleteCount'
          * it then moves the rest objects up - that's why we need the i--
          */
-        this.wettkaempfe.splice(i, 1);
+        this.wettkaempfeDO.splice(i, 1);
         i--;
       }
     }

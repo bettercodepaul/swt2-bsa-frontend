@@ -26,10 +26,6 @@ import {LigaDTO} from '../../../../verwaltung/types/datatransfer/liga-dto.class'
 import {WettkampftypDataProviderService} from '../../../services/wettkampftyp-data-provider.service';
 import {WettkampftypDO} from '../../../../verwaltung/types/wettkampftyp-do.class';
 import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkampftyp-dto.class';
-import {WettkampfDO} from '../../../../verwaltung/types/wettkampf-do.class';
-import {WettkampfDTO} from '../../../../verwaltung/types/datatransfer/wettkampf-dto.class';
-import {WettkampfDataProviderService} from '../../../services/wettkampf-data-provider.service';
-import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';

@@ -10,7 +10,6 @@ import {
 import {MatchMapper} from '../mapper/match-mapper';
 import {MatchDOExt} from '../types/match-do-ext.class';
 import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
-import {fromPayloadArray} from '@vereine/mapper/match-mapper';
 
 @Injectable({
   providedIn: 'root'

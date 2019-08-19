@@ -13,8 +13,8 @@ import {
 } from '../../../../shared/services/notification';
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
-import {VereinDO} from '@vereine/types/verein-do.class';
-import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';

@@ -10,7 +10,7 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
+import {fromPayload, fromPayloadArray, ToDO, ToDTO} from '../mapper/wettkampf-mapper';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
@@ -27,7 +27,7 @@ export class WettkampfDataProviderService  extends DataProviderService {
     super();
   }
 
-  public findAll(): Promise<BogenligaResponse<WettkampfDO[]>> {
+  public findAll(): Promise<BogenligaResponse<WettkampfDTO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -45,7 +45,7 @@ export class WettkampfDataProviderService  extends DataProviderService {
           });
     });
   }
-  public findById(id: string | number): Promise<BogenligaResponse<WettkampfDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<WettkampfDTO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -80,8 +80,50 @@ export class WettkampfDataProviderService  extends DataProviderService {
         });
     });
   }
+  public findAllWettkaempfeByMannschaftsId(id: string | number): Promise<BogenligaResponse<WettkampfDTO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byMannschaftsId/' + id).build())
+        .then((data: VersionedDataTransferObject[]) => {
+          console.log('wettkaempfe raw data');
+          console.log(data);
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+        }, (error: HttpErrorResponse) => {
 
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<WettkampfDO>> {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
+
+  public findAllByVeranstaltungId(id: string | number): Promise<BogenligaResponse<WettkampfDTO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVeranstaltungId/' + id).build())
+        .then((data: VersionedDataTransferObject[]) => {
+          console.log('Veranstaltung raw data');
+          console.log(data);
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<WettkampfDTO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -100,7 +142,7 @@ export class WettkampfDataProviderService  extends DataProviderService {
           });
     });
   }
-  public create(payload: WettkampfDO): Promise<BogenligaResponse<WettkampfDO>> {
+  public create(payload: VersionedDataTransferObject): Promise<BogenligaResponse<WettkampfDTO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
