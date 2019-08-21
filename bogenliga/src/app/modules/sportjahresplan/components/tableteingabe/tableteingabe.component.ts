@@ -12,7 +12,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '@shared/services';
-import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {PasseProviderService} from '../../services/passe-provider.service';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
@@ -96,6 +96,7 @@ export class TabletEingabeComponent implements OnInit {
    * Called when component is initialized.
    */
   ngOnInit() {
+
     this.match1 = dummyMatch;
     this.match2 = dummyMatch;
     this.currentMatch = dummyMatch;
@@ -162,7 +163,14 @@ export class TabletEingabeComponent implements OnInit {
     } else {
       for (const schuetze of schuetzen) {
         const schuetzeErgebnisse = new SchuetzeErgebnisse(Number(schuetze.schuetzeNr));
-        schuetzeErgebnisse.passen = schuetze.passen;
+        schuetzeErgebnisse.passen = [];
+        for (const passe of schuetze.passen) {
+          const passeDO = new PasseDO();
+          for (const attr of Object.keys(passe)) {
+            passeDO[attr] = passe[attr];
+          }
+          schuetzeErgebnisse.passen.push(passeDO);
+        }
         this.schuetzen.push(schuetzeErgebnisse);
       }
     }
@@ -356,7 +364,7 @@ export class TabletEingabeComponent implements OnInit {
     this.notificationService.showNotification({
       id:          NOTIFICATION_TABLET_SESSION_MISSING,
       title:       'Konfigurationsfehler',
-      description: 'Dieses Gerät wurd noch für keine Scheibe registriert. Bitte holen Sie dies in der Wettkampf-Administration nach.',
+      description: 'Dieses Gerät wurde noch für keine Scheibe registriert. Bitte holen Sie dies in der Wettkampf-Administration nach.',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.SYSTEM,
       type:        NotificationType.OK,

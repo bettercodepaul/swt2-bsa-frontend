@@ -1,4 +1,4 @@
-import {DataObject} from '@shared/data-provider';
+import {DataObject} from '../../shared/data-provider';
 
 export class PasseDO implements DataObject {
   id: number;

@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
-import {BogenligaResponse} from '@shared/data-provider';
-import {isUndefined} from '@shared/functions';
+import {BogenligaResponse} from '../../../shared/data-provider';
+import {isUndefined} from '../../../shared/functions';
 import {ActivatedRoute} from '@angular/router';
 import {
   NotificationOrigin,
@@ -11,7 +11,7 @@ import {
   NotificationSeverity,
   NotificationType,
   NotificationUserAction
-} from '@shared/services';
+} from '../../../shared/services';
 import {NumberOnlyDirective} from './number.directive';
 
 @Component({
@@ -186,33 +186,35 @@ export class SchusszettelComponent implements OnInit {
   }
 
   private setSatzPoints() {
-    if (this.match1.matchpunkte === 2 || this.match2.matchpunkte === 2) {
-      this.notificationService.showNotification({
-        id:          'schusszettelEntschieden',
-        title:       'Unnötige Angaben',
-        description: 'Match ist schon entschieden, keine weiteren Punkte benötigt',
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.SYSTEM,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.ACCEPTED
-      });
-    } else {
-      let counterMatch1 = 0;
-      let counterMatch2 = 0;
-      for (let i = 0; i < 5; i++) {
-        if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
-          counterMatch1 += 2;
-        } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
-          counterMatch2 += 2;
-        } else if (this.match1.sumSatz[i] === this.match2.sumSatz[i]) {
-          counterMatch1++;
-          counterMatch2++;
-        }
+
+    let counterMatch1 = 0;
+    let counterMatch2 = 0;
+    for (let i = 0; i < 5; i++) {
+      if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
+        counterMatch1 += 2;
+      } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
+        counterMatch2 += 2;
+      } else if (this.match1.sumSatz[i] === this.match2.sumSatz[i] &&
+        this.match1.sumSatz[i] > 0 && this.match2.sumSatz[i] > 0) {
+        counterMatch1++;
+        counterMatch2++;
       }
-      this.match1.satzpunkte = counterMatch1;
-      this.match2.satzpunkte = counterMatch2;
-      this.match1.matchpunkte = 0;
-      this.match2.matchpunkte = 0;
+    }
+    this.match1.satzpunkte = counterMatch1;
+    this.match2.satzpunkte = counterMatch2;
+    this.match1.matchpunkte = 0;
+    this.match2.matchpunkte = 0;
+
+    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+      this.notificationService.showNotification({
+        id: 'schusszettelEntschieden',
+        title: 'Eingabefehler?',
+        description: 'Satzpunkte >7',
+        severity: NotificationSeverity.ERROR,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
+      });
     }
   }
 

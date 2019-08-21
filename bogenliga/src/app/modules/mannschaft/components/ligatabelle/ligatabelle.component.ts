@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {LIGATABELLE_CONFIG} from './ligatabelle.config';
 import {LIGA_TABELLE_CONFIG} from './ligatabelle.config';
-import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
-import {VeranstaltungDO} from '@vereine/types/veranstaltung-do.class';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {LigatabelleErgebnisDO} from '../../types/ligatabelle-ergebnis-do.class';
 import {LigatabelleErgebnisService} from '../../services/ligatabelle-ergebnis.service';

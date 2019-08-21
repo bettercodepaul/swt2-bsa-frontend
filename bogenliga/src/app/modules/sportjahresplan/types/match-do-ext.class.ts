@@ -1,4 +1,4 @@
-import {DataObject} from '@shared/data-provider';
+import {DataObject} from '../../shared/data-provider';
 import {PasseDO} from './passe-do.class';
 
 export class MatchDOExt implements DataObject {
