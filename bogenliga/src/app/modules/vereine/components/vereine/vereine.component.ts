@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {VEREINE_CONFIG, VEREINE_TABLE_CONFIG} from './vereine.config';
 import {isNullOrUndefined} from '@shared/functions';
 import {VereinDO} from '@vereine/types/verein-do.class';
-import {VereinDataProviderService} from '@vereine/services/verein-data-provider.service';
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';

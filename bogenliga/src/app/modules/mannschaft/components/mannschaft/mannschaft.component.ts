@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MANNSCHAFT_CONFIG} from './mannschaft.config';
 import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
-import {VereinDataProviderService} from '@vereine/services/verein-data-provider.service';
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {VereinDO} from '@vereine/types/verein-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -55,7 +55,7 @@ export class MannschaftComponent extends CommonComponent implements OnInit {
   loadVeranstaltungen() {
     this.veranstaltungsDataProvider.findAll()
         .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
-        .catch((response: BogenligaResponse<VereinDO[]>) => this.veranstaltungen = []);
+        .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.veranstaltungen = []);
 
   }
 

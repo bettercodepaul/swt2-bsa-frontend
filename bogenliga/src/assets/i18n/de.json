@@ -17,7 +17,7 @@
     "REGIONEN": "REGIONEN",
     "VEREINE": "VEREINE",
     "SPORTJAHRESPLAN": "SPORTJAHRESPLAN",
-    "MANNSCHAFTEN": "MANNSCHAFTEN",
+    "MANNSCHAFTEN": "LIGATABELLE",
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
     "COLLAPSE": "Einklappen"
@@ -63,8 +63,25 @@
   },
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
-      "TITLE": "Wettkämpfe"
+      "TITLE": "Liga-Tabelle"
+    },
+    "TITEL": {
+      "VERANSTALTUNG": "Ligen-Auswahl"
+    },
+    "LIGATABELLE": {
+      "TITEL": "Liga-Tabelle",
+      "TABELLENPLATZ": "Tabellenplatz",
+      "MANNSCHAFTNAME": "Mannschaft",
+      "MATCHPUNKTE": "Matchpunkte",
+      "SATZPUNKTE": "Satzpunkte",
+      "SATZPUNKTDIFFERENZ": "Satzpunktdifferenz",
+      "HEADER": {
+        "VERANSTALTUNG": "Liga",
+        "WETTKAMPFTAG_AKT": "Wettkampftag",
+        "WETTKAMPFTAG": "0"
+      }
     }
+
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -77,10 +94,36 @@
   },
   "SPORTJAHRESPLAN": {
     "SPORTJAHRESPLAN": {
-      "TITLE": "Sportjahresplan"
+      "TITLE": "Terminübersicht"
+    },
+    "TITEL": {
+      "VERANSTALTUNG": "Veranstaltungen",
+      "WETTKAEMPFE": "Wettkampftage"
+      },
+    "WETTKAMPF": {
+      "TABLE": {
+        "CDAY": "Wettkampftag",
+        "DAY":"Wochentag",
+        "DATE": "Datum",
+        "TIME": "Uhrzeit",
+        "LIGA": "Disziplin",
+        "PLACE": "Veranstaltungsort"
+      }
+    },
+    "MATCH": {
+      "TABLE": {
+        "NUMMER": "Match",
+        "SCHEIBE":"Scheibe",
+        "BEGEGNUNG": "Begegnung",
+        "MATCHPUNKTE": "Matchpunkte",
+        "SATZPUNKTE": "Satzpunkte"
+      }
     }
   },
   "MANNSCHAFTEN": {
+    "LIGATABELLE": {
+      "TITLE": "Aktuelle Ligatabelle"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse der Mannschaften",
       "FORM": {

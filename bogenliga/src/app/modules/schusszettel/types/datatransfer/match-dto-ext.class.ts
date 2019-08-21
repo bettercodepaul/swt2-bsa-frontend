@@ -1,7 +1,7 @@
 import {VersionedDataTransferObject} from '@shared/data-provider';
 import {PasseDTO} from './passe-dto.class';
 
-export class MatchDTO implements VersionedDataTransferObject {
+export class MatchDTOExt implements VersionedDataTransferObject {
   id: number;
   version: number;
 

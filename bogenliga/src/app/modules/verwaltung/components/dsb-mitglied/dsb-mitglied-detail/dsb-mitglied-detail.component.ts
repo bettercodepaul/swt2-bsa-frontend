@@ -15,7 +15,7 @@ import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-dat
 import {DSB_MITGLIED_DETAIL_CONFIG} from './dsb-mitglied-detail.config';
 import {VereinDO} from '@vereine/types/verein-do.class';
 import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
-import {VereinDataProviderService} from '@vereine/services/verein-data-provider.service';
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 const ID_PATH_PARAM = 'id';

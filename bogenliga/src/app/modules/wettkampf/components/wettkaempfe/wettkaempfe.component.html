@@ -1,131 +1,49 @@
-<bla-navigation-dialog [config]="config">
+<bla-common-dialog [config]="config">
 
-  <div id="wettkaempfe"
-       class="container">
-    <h1>Termine Liga-Hallenrunde 2018/2019</h1>
-    <table id="wettkaempfeTabelle"
-           class="table table-hover table-responsive thead-light table-striped"
-           style="width:100%">
-      <thead>
-      <tr>
-        <th>{{ 'TABLE.DAY' | translate }}</th>
-        <th>{{ 'TABLE.DATE' | translate }}</th>
-        <th>{{ 'TABLE.TIME' | translate }}</th>
-        <th>{{ 'TABLE.LIGA' | translate }}</th>
-        <th>{{ 'TABLE.PLACE' | translate }}</th>
-        <th>{{ 'TABLE.CDAY' | translate }}</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>Samstag</td>
-        <td>03.11.2018</td>
-        <td>14:00</td>
-        <td>2. Bundesliga</td>
-        <td>Welzheim</td>
-        <td>1. Wettkampf</td>
-        <!-- Attributes wetkampfid for the PDF needed -->
-        <bla-setzliste-download [wettkampfid]="30"></bla-setzliste-download>
-        <bla-schusszettel-download [wettkampfid]="30"></bla-schusszettel-download>
-        <bla-meldezettel-download [wettkampfid]="30"></bla-meldezettel-download>
-        <bla-bogenkontrollliste-download [wettkampfid]="30"></bla-bogenkontrollliste-download>
-      </tr>
+  <div class="layout-elements">
 
-      <tr class="table-warning">
-        <td>Samstag</td>
-        <td>17.11.2018</td>
-        <td>14:00</td>
-        <td>Landesliga Nord Recurve</td>
-        <td>Welzheim</td>
-        <td>1. Wettkampf</td>
-      </tr>
+    <bla-row-layout>
+      <div class="flexChild">
+        <h3><a class="blackLink"
+               routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.TITEL.VERANSTALTUNG' | translate }}</a></h3>
 
-      <tr class="table-danger">
-        <td>Samstag</td>
-        <td>17.11.2018</td>
-        <td>10:00</td>
-        <td>Landesliga A Compound</td>
-        <td>Hochdorf o. Essendorf</td>
-        <td>1. Wettkampf</td>
+        <table id="example"
+               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+               style="width:80%">
+          <!-- headlines -->
 
-      <tr class="table-success">
-        <td>Samstag</td>
-        <td>17.11.2018</td>
-        <td>14:00</td>
-        <td>Württembergliga Compound</td>
-        <td>Hochdorf o. Essendorf</td>
-        <td>1. Wettkampf</td>
-      </tr>
+          <bla-quicksearch-list (onSelect)="onSelect($event)"
+                                [items]="veranstaltungen"
+                                [loading]="loadingVeranstaltungen"
+                                [multipleSelections]="!multipleSelections"
+                                [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                                [optionFieldSelector]="'name'"
+                                selectionListHeight="15em"
+                                style="width: 60%; flex-grow: 0;">
 
-      <tr class="table-info">
-        <td>Sonntag</td>
-        <td>18.11.2018</td>
-        <td>10:00</td>
-        <td>Landesliga Süd Recurve</td>
-        <td>Hochdorf o. Essendorf</td>
-        <td>1. Wettkampf</td>
-      </tr>
+          </bla-quicksearch-list>
+        </table>
+      </div>
 
-      <tr class="table-primary">
-        <td>Sonntag</td>
-        <td>18.11.2018</td>
-        <td>10:00</td>
-        <td>Landesliga Süd Recurve</td>
-        <td>Hochdorf o. Essendorf</td>
-        <td>1. Wettkampf</td>
-      </tr>
+       <!-- Ligatabelle -->
+      <div>
+        <h5><a class="blackLink"
+               routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
 
-      <tr>
-        <td>Samstag</td>
-        <td>03.11.2018</td>
-        <td>14:00</td>
-        <td>2. Bundesliga</td>
-        <td>Welzheim</td>
-        <td>1. Wettkampf</td>
-      </tr>
-      </tbody>
-    </table>
+        <div class="row">
 
-    <h3>Legende</h3>
-    <table id="legendeTabelle"
-           class="table table-sm table-responsive">
-      <tr>
-        <td class="table-primary">Recurve</td>
-        <td>Württembergliga</td>
-      </tr>
 
-      <tr>
-        <td class="table-warning">Recurve</td>
-        <td>Landesliga Nord</td>
-      </tr>
-
-      <tr>
-        <td class="table-info">Recurve</td>
-        <td>Landesliga Süd</td>
-      </tr>
-
-      <td>
-        <tr></tr>
-        <tr></tr>
-      </td>
-
-      <tr>
-        <td class="table-success">Compound</td>
-        <td>Württembergliga</td>
-      </tr>
-
-      <tr>
-        <td class="table-danger">Compound</td>
-        <td>Landesliga A</td>
-      </tr>
-
-      <tr>
-        <td class="table-dark">Compound</td>
-        <td>Landesliga B</td>
-      </tr>
-    </table>
-</div>
-
-  <router-outlet></router-outlet>
-
-</bla-navigation-dialog>
+          <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
+          <h5>
+          <bla-data-table
+                          [config]="config_table"
+                          [rows]="rowsLigatabelle"
+                          [loading]="loadingLigatabelle"
+          >
+          </bla-data-table>
+          </h5>
+        </div>
+      </div>
+    </bla-row-layout>
+  </div>
+</bla-common-dialog>
