@@ -31,8 +31,8 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provider.service';
 import {LizenzDO} from '@verwaltung/types/lizenz-do.class';
-import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-provider.service';
-import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {parseHttpResponse} from 'selenium-webdriver/http';
@@ -185,7 +185,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
                 const veranstaltungen: WettkampfDO[] = [];
                 wettkampfResponse.payload.forEach( (wettkampf) => {
-                  if (wettkampf.veranstaltungsId === this.currentMannschaft.veranstaltungId) {
+                  if (wettkampf.wettkampfVeranstaltungsId === this.currentMannschaft.veranstaltungId) {
                     veranstaltungen.push(wettkampf);
                   }
                 });

@@ -6,17 +6,17 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-provider.service';
-import {MatchDataProviderService} from '@vereine/services/match-data-provider.service';
-import {MatchProviderService} from '../../services/match-provider.service';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
+import {MatchProviderService} from '../../../schusszettel/services/match-provider.service';
 
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
-import {WettkampfDTO} from '@vereine/types/datatransfer/wettkampf-dto.class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {NotificationService} from '@shared/services/notification';
 import {environment} from '@environment';
-import {MatchDO} from '@vereine/types/match-do.class';
-import {MatchDTO} from '@vereine/types/datatransfer/match-dto.class';
+import {MatchDO} from '@verwaltung/types/match-do.class';
+import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 
 
 
@@ -107,7 +107,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   // when a Wewttkampf gets selected from the list --> ID for Buttons
 
   public onButtonTabletClick(): void {
-    this.router.navigateByUrl('/tabletadmin/' + this.selectedWettkampf);
+    this.router.navigateByUrl('/schusszettel/tabletadmin/' + this.selectedWettkampf);
 
   }
 
@@ -175,8 +175,8 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
     this.wettkampfDataProvider.findAllByVeranstaltungId(this.selectedVeranstaltungId)
-      .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleFindWettkampfSuccess(response))
-      .catch((response: BogenligaResponse<WettkampfDO[]>) => this.handleFindWettkampfFailure(response));
+      .then((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfSuccess(response))
+      .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfFailure(response));
   }
 
 
@@ -197,9 +197,9 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       tableContentRow.wettkampfOrt = wettkampf.wettkampfOrt;
       tableContentRow.wettkampfBeginn = wettkampf.wettkampfBeginn;
       tableContentRow.wettkampfTag = wettkampf.wettkampfTag;
-      tableContentRow.datum = wettkampf.datum;
+      tableContentRow.wettkampfDatum = wettkampf.wettkampfDatum;
       tableContentRow.id = wettkampf.id;
-      tableContentRow.veranstaltungsId = wettkampf.veranstaltungsId;
+      tableContentRow.wettkampfVeranstaltungsId = wettkampf.wettkampfVeranstaltungsId;
       tableContentRow.version = wettkampf.version;
 
       this.tableContent.push(tableContentRow);

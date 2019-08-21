@@ -1,13 +1,13 @@
 import {WettkampfErgebnis} from './WettkampfErgebnis';
-import {VereinDO} from '@vereine/types/verein-do.class';
-import {VeranstaltungDO} from '@vereine/types/veranstaltung-do.class';
-import {MatchDO} from '@vereine/types/match-do.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {MatchDO} from '@verwaltung/types/match-do.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {WettkampfDO} from '@vereine/types/wettkampf-do.class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
-import {MatchDataProviderService} from '@vereine/services/match-data-provider.service';
-import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-provider.service';
+import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {Injectable} from '@angular/core';
 
 
