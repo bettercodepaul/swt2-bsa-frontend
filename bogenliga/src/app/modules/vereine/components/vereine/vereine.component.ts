@@ -1,19 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {VEREINE_CONFIG, VEREINE_TABLE_CONFIG} from './vereine.config';
 import {isNullOrUndefined} from '@shared/functions';
-import {VereinDO} from '@vereine/types/verein-do.class';
+import {VereinDO} from '../../../verwaltung/types/verein-do.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
-import {VereinDTO} from '@vereine/types/datatransfer/verein-dto.class';
+import {VereinDTO} from '../../../verwaltung/types/datatransfer/verein-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
-import {WettkampfDataProviderService} from '@vereine/services/wettkampf-data-provider.service';
-import {WettkampfDTO} from '@vereine/types/datatransfer/wettkampf-dto.class';
+import {WettkampfDataProviderService} from '../../../verwaltung/services/wettkampf-data-provider.service';
+import {WettkampfDTO} from '../../../verwaltung/types/datatransfer/wettkampf-dto.class';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
-import {VeranstaltungDataProviderService} from '@vereine/services/veranstaltung-data-provider.service';
-import {VeranstaltungDTO} from '@vereine/types/datatransfer/veranstaltung-dto.class';
+import {VeranstaltungDataProviderService} from '../../../verwaltung/services/veranstaltung-data-provider.service';
+import {VeranstaltungDTO} from '../../../verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
 
 @Component({
@@ -143,7 +143,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
     for (const wettkampf of response.payload) {
       const wettkampfTag: string = wettkampf.wettkampfTag + '. Wettkampftag';
-      this.veranstaltungsDataProvider.findById(wettkampf.veranstaltungsId)
+      this.veranstaltungsDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
           .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag))
           .catch((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(responseb));
     }
