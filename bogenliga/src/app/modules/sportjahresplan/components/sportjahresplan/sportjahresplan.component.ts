@@ -8,7 +8,7 @@ import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
-import {MatchProviderService} from '../../../schusszettel/services/match-provider.service';
+import {MatchProviderService} from '../../services/match-provider.service';
 
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
@@ -107,7 +107,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   // when a Wewttkampf gets selected from the list --> ID for Buttons
 
   public onButtonTabletClick(): void {
-    this.router.navigateByUrl('/schusszettel/tabletadmin/' + this.selectedWettkampf);
+    this.router.navigateByUrl('/sportjahresplan/tabletadmin/' + this.selectedWettkampf);
 
   }
 
@@ -150,7 +150,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
               .build();
             window.open(this.urlString, '_blank')
 */
-            this.router.navigate(['/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+            this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
            }
         });
     }

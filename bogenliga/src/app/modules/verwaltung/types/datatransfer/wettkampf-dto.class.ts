@@ -36,7 +36,7 @@ export class WettkampfDTO implements DataTransferObject {
 
   static copyFrom(optional: {
     id?: number;
-    veranstaltungsId?: number;
+    wettkampfVeranstaltungsId?: number;
     datum?: string;
     wettkampfOrt?: string;
     wettkampfBeginn?: string;
@@ -53,9 +53,9 @@ export class WettkampfDTO implements DataTransferObject {
     } else {
       copy.id = null;
     }
-    if (optional.veranstaltungsId >= 0) {
-      copy.wettkampfVeranstaltungsId = optional.veranstaltungsId;
-    }else{
+    if (optional.wettkampfVeranstaltungsId >= 0) {
+      copy.wettkampfVeranstaltungsId = optional.wettkampfVeranstaltungsId;
+    } else {
       copy.wettkampfVeranstaltungsId = null;
     }
     copy.wettkampfDatum = optional.datum || '';
@@ -69,12 +69,12 @@ export class WettkampfDTO implements DataTransferObject {
     }
     if (optional.wettkampfDisziplinId >= 0) {
       copy.wettkampfDisziplinId = optional.wettkampfDisziplinId;
-    }else{
+    } else {
       copy.wettkampfDisziplinId = null;
     }
     if (optional.wettkampfTypId >= 0) {
       copy.wettkampfTypId = optional.wettkampfTypId;
-    }else{
+    } else {
       copy.wettkampfTypId = null;
     }
     copy.version = optional.version || null;
