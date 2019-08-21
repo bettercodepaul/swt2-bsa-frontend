@@ -24,7 +24,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
     },
     {
       translationKey: 'SPORTJAHRESPLAN.WETTKAMPF.TABLE.DATE',
-      propertyName:   'datum',
+      propertyName:   'wettkampfDatum',
       width:          15,
     },
     {

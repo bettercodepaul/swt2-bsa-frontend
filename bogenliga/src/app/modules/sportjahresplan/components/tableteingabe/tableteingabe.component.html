@@ -1,6 +1,6 @@
 <div class="tablet-eingabe">
   <div class="row">
-    <ng-template [ngIf]="tabletSession !== null">
+    <ng-template [ngIf]="tabletSession">
 
       <div class="col-sm-12">
         <h1 class="w-100 text-center my-3">Scheibe {{tabletSession.scheibenNr}}</h1>
@@ -68,16 +68,18 @@
             <div class="schuetze">
               <h4>Schütze {{schuetze.schuetzeNr}}</h4>
               <div class="flex-container">
-                <input (ngModelChange)="onChange($event, 1, schuetze)"
-                       [(ngModel)]="schuetze.passen[tabletSession.satzNr-1].ringzahlPfeil1"
-                       blaMyNumberOnly
-                       class="m-2"
-                       type="text">
-                <input (ngModelChange)="onChange($event, 2, schuetze)"
-                       [(ngModel)]="schuetze.passen[tabletSession.satzNr-1].ringzahlPfeil2"
-                       blaMyNumberOnly
-                       class="m-2"
-                       type="text">
+                <ng-template [ngIf]="schuetze.passen.length >= tabletSession.satzNr">
+                  <input (ngModelChange)="onChange($event, 1, schuetze)"
+                         [(ngModel)]="schuetze.passen[tabletSession.satzNr-1].ringzahlPfeil1"
+                         blaMyNumberOnly
+                         class="m-2"
+                         type="text">
+                  <input (ngModelChange)="onChange($event, 2, schuetze)"
+                         [(ngModel)]="schuetze.passen[tabletSession.satzNr-1].ringzahlPfeil2"
+                         blaMyNumberOnly
+                         class="m-2"
+                         type="text">
+                </ng-template>
               </div>
             </div>
           </div>

@@ -141,7 +141,7 @@
 
     <!-- LigaleiterEmail -->
     <div class="form-group row">
-      <label for="ligaleiterEmail"
+      <label for="ligaleiter"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.LABEL' | translate }}</span>
         <span> *</span>
@@ -150,8 +150,8 @@
       <div class="col-sm-9">
         <select class="form-control"
                 required
-                id="ligaleiterEmail"
-                name="ligaleiterEmail"
+                id="ligaleiter"
+                name="ligaleiter"
                 #ligaleiter="ngModel"
                 [(ngModel)]="currentUser">
           <option [ngValue]="ligaleiter"
