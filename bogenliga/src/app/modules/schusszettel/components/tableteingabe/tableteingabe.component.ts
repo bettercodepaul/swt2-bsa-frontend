@@ -58,6 +58,7 @@ const STORAGE_KEY_SUBMITTED = 'submittedSchuetzenNr';
 const STORAGE_KEY_SCHUETZEN = 'schuetzen';
 
 const NOTIFICATION_CONFIRM_NEXT_MATCH = 'tabletEingabeConfirmNextMatch';
+const NOTIFICATION_TABLET_SESSION_MISSING = 'tabletSessionMissing';
 
 @Component({
   selector:    'bla-tableteingabe',
@@ -95,8 +96,6 @@ export class TabletEingabeComponent implements OnInit {
    * Called when component is initialized.
    */
   ngOnInit() {
-    this.initStorageData();
-
     this.match1 = dummyMatch;
     this.match2 = dummyMatch;
     this.currentMatch = dummyMatch;
@@ -109,11 +108,13 @@ export class TabletEingabeComponent implements OnInit {
             .then((data: BogenligaResponse<Array<MatchDO>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
+              this.tabletAdminRoute = '/schusszettel/tabletadmin/' + this.match1.wettkampfId;
+              this.initStorageData();
               if (this.tabletSession) {
                 this.currentMatch = this.match2.scheibenNummer === this.tabletSession.scheibenNr ? this.match2 : this.match1;
+                this.initExistingPassen();
               }
-              this.tabletAdminRoute = '/schusszettel/tabletadmin/' + this.match1.wettkampfId;
-              this.tabletSession.matchID = this.currentMatch.id;
+              this.tabletSession.matchID = (this.currentMatch && this.currentMatch.id) ? this.currentMatch.id : this.tabletSession.matchID;
               this.updateTabletSession();
               this.dumpStorageData();
             }, (error) => {
@@ -136,7 +137,14 @@ export class TabletEingabeComponent implements OnInit {
         this.updateTabletSession();
       }
     } catch (e) {
-      this.showMissingScheibenNummerNotification();
+      this.notificationService.observeNotification(NOTIFICATION_TABLET_SESSION_MISSING)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.router.navigate([this.tabletAdminRoute]);
+            }
+          });
+      this.resetStorageData();
+      this.showMissingTabletSessionNotification();
     }
     this.submittedSchuetzenNr = (Boolean(subSNr) && !isNaN(subSNr)) ? subSNr === 1 : false;
     this.initSchuetzen();
@@ -154,14 +162,7 @@ export class TabletEingabeComponent implements OnInit {
     } else {
       for (const schuetze of schuetzen) {
         const schuetzeErgebnisse = new SchuetzeErgebnisse(Number(schuetze.schuetzeNr));
-        schuetzeErgebnisse.passen = [];
-        for (const passe of schuetze.passen) {
-          const passeDO = new PasseDO();
-          for (const attr of Object.keys(passe)) {
-            passeDO[attr] = passe[attr];
-          }
-          schuetzeErgebnisse.passen.push(passeDO);
-        }
+        schuetzeErgebnisse.passen = schuetze.passen;
         this.schuetzen.push(schuetzeErgebnisse);
       }
     }
@@ -194,6 +195,28 @@ export class TabletEingabeComponent implements OnInit {
     this.submittedSchuetzenNr = false;
   }
 
+  /**
+   * When getting the current match, it may already contain some passe objects,
+   * therefore update the SchuetzeErgebnisse
+   */
+  initExistingPassen() {
+    let i = 0;
+    for (const schuetzePassen of this.currentMatch.schuetzen) {
+      if (schuetzePassen.length > 0) {
+        this.schuetzen[i].passen = schuetzePassen;
+        while (this.schuetzen[i].passen.length < this.tabletSession.satzNr) {
+          this.schuetzen[i].addPasse();
+        }
+      }
+      i++;
+    }
+    this.dumpStorageData();
+  }
+
+  /**
+   * Before a match can start, enter the schuetzennummern to proceed.
+   * Those are saved to the localstorage for reuse purpose.
+   */
   submitSchuetzenNr() {
     if (this.hasValidSchuetzenNr()) {
       this.submittedSchuetzenNr = true;
@@ -201,6 +224,9 @@ export class TabletEingabeComponent implements OnInit {
     }
   }
 
+  /**
+   * only allow submitting the schuetzennummern in case they are valid.
+   */
   hasValidSchuetzenNr() {
     return (Boolean(this.schuetzen) &&
       this.schuetzen[0].schuetzeNr !== null &&
@@ -215,6 +241,13 @@ export class TabletEingabeComponent implements OnInit {
     return (this.hasValidSchuetzenNr() && this.submittedSchuetzenNr);
   }
 
+  /**
+   * On change handler for the ringzahl inputs. In case both fields have values, check for their validity.
+   * Then, add remaining necessary data and create/update the passe.
+   * @param value
+   * @param ringzahlNr
+   * @param schuetze
+   */
   onChange(value: number, ringzahlNr: number, schuetze: SchuetzeErgebnisse) {
     const passe = schuetze.passen[this.tabletSession.satzNr - 1];
     passe['ringzahlPfeil' + ringzahlNr] = value;
@@ -224,6 +257,12 @@ export class TabletEingabeComponent implements OnInit {
     }
   }
 
+  /**
+   * Simple check whether to update or to create the given passe object.
+   * In case the passe already has the auto-generated database-id, update it. If not, create it.
+   * @param passe
+   * @param schuetze
+   */
   createOrUpdatePasse(passe: PasseDO, schuetze: SchuetzeErgebnisse) {
     // passe was already created, only update it
     if (passe.id !== null) {
@@ -248,17 +287,29 @@ export class TabletEingabeComponent implements OnInit {
     }
   }
 
+  /**
+   * Switch to the next satz, therefore, add empty passe objects to the schuetzenergebnisse.
+   * Also, update the tabletsession object as the satznr changed.
+   * Save everything to localstorage again.
+   */
   nextSatz() {
     if (this.allPasseFilled()) {
-      for (const schuetze of this.schuetzen) {
-        schuetze.addPasse();
-      }
+      this.addEmptyPassen();
       this.tabletSession.satzNr++;
       this.updateTabletSession();
       this.dumpStorageData();
     }
   }
 
+  addEmptyPassen() {
+    for (const schuetze of this.schuetzen) {
+      schuetze.addPasse();
+    }
+  }
+
+  /**
+   * This decides whether the user can proceed to the next satz or not.
+   */
   allPasseFilled() {
     let valid = true;
     for (const schuetze of this.schuetzen) {
@@ -269,8 +320,6 @@ export class TabletEingabeComponent implements OnInit {
 
   /**
    * Trigger switch to the next match on this wettkampftag
-   * TODO: Button "Nächstes Match" anzeigen, wenn Match vorbei ist, bedeutet:
-   * 5 Sätze voll oder nach 3 Sätzen schon gewonnen -> irgendwie herausfinden
    */
   nextMatch() {
     this.showConfirmNextMatchNotification();
@@ -303,11 +352,11 @@ export class TabletEingabeComponent implements OnInit {
     }
   }
 
-  showMissingScheibenNummerNotification() {
+  showMissingTabletSessionNotification() {
     this.notificationService.showNotification({
-      id:          'tabletScheibenNummerMissing',
+      id:          NOTIFICATION_TABLET_SESSION_MISSING,
       title:       'Konfigurationsfehler',
-      description: 'Für dieses Gerät wurde noch keine Scheibennummer zugewiesen. Bitte holen Sie dies in der Wettkampf-Administration nach.',
+      description: 'Dieses Gerät wurd noch für keine Scheibe registriert. Bitte holen Sie dies in der Wettkampf-Administration nach.',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.SYSTEM,
       type:        NotificationType.OK,
@@ -340,14 +389,22 @@ export class TabletEingabeComponent implements OnInit {
   }
 
   private passeIsValid(passe: PasseDO) {
-    return (
-      passe.ringzahlPfeil1 &&
-      passe.ringzahlPfeil1 >= 0 &&
-      passe.ringzahlPfeil2 &&
-      passe.ringzahlPfeil2 >= 0
-    );
+    if (passe) {
+      return (
+        passe.ringzahlPfeil1 &&
+        passe.ringzahlPfeil1 >= 0 &&
+        passe.ringzahlPfeil2 &&
+        passe.ringzahlPfeil2 >= 0
+      );
+    }
+    return false;
   }
 
+  /**
+   * Set missing passe attributes derived from the current match object.
+   * @param passe
+   * @param schuetze
+   */
   private enrichPasseDO(passe: PasseDO, schuetze: SchuetzeErgebnisse) {
     passe.mannschaftId = this.currentMatch.mannschaftId;
     passe.matchNr = this.currentMatch.nr;
