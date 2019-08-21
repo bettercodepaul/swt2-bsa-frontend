@@ -61,10 +61,10 @@ export class HomeComponent extends CommonComponent implements OnInit {
       wettkampf.wettkampfDisziplinId,
       wettkampf.wettkampfTypId,
       wettkampf.version)
-    )  });
+    );  });
 
-    this.wettkaempfeDO.forEach((wettkampf) => {this.findLigaNameByVeranstaltungsId(wettkampf); });
     this.checkDate();
+    this.wettkaempfeDO.forEach((wettkampf) => {this.findLigaNameByVeranstaltungsId(wettkampf); });
     this.fillTableRows();
     this.loadingWettkampf = false;
   }

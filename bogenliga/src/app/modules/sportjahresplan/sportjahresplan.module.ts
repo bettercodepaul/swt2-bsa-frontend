@@ -14,14 +14,14 @@ import {
   AutoswitchDirective,
   TabletEingabeComponent,
   TabletAdminComponent,
-} from "../sportjahresplan/components";
+} from '../sportjahresplan/components';
 
 import {
   SportjahresplanGuard,
   SchusszettelGuard,
   TableteingabeGuard,
   TabletadminGuard
-} from "../sportjahresplan/guards";
+} from '../sportjahresplan/guards';
 
 @NgModule({
   imports:      [
