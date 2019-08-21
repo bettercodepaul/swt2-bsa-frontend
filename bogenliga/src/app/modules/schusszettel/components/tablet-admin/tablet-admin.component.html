@@ -33,7 +33,7 @@
 
           <button
             (click)="updateSession(session.scheibenNr)"
-            *ngIf="!currentDeviceIsActive"
+            *ngIf="!currentDeviceIsActive && !session.isActive"
             class="btn btn-success"
           >
             <fa-icon [icon]="'plus-circle'"></fa-icon>
