@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MatchDO} from '../../types/match-do.class';
+import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -21,8 +21,8 @@ import {NumberOnlyDirective} from './number.directive';
 })
 export class SchusszettelComponent implements OnInit {
 
-  match1: MatchDO;
-  match2: MatchDO;
+  match1: MatchDOExt;
+  match2: MatchDOExt;
 
   constructor(private schusszettelService: SchusszettelProviderService,
               private route: ActivatedRoute,
@@ -38,11 +38,11 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     // initialwert schützen inputs
 
-    this.match1 = new MatchDO(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
+    this.match1 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
     this.match1.nr = 1;
     this.match1.schuetzen = [];
 
-    this.match2 = new MatchDO(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
+    this.match2 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
     this.match2.nr = 1;
     this.match2.schuetzen = [];
 
@@ -52,7 +52,7 @@ export class SchusszettelComponent implements OnInit {
         const match1id = params['match1id'];
         const match2id = params['match2id'];
         this.schusszettelService.findMatches(match1id, match2id)
-            .then((data: BogenligaResponse<Array<MatchDO>>) => {
+            .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
               if (this.match1.schuetzen.length <= 0 || this.match2.schuetzen.length <= 0) {
@@ -107,7 +107,7 @@ export class SchusszettelComponent implements OnInit {
       userAction:  NotificationUserAction.PENDING
     });
     this.schusszettelService.create(this.match1, this.match2)
-        .then((data: BogenligaResponse<Array<MatchDO>>) => {
+        .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
           this.initSumSatz();
@@ -151,12 +151,14 @@ export class SchusszettelComponent implements OnInit {
    * @param match
    * @param satzNr
    */
-  private getSumSatz(match: MatchDO, satzNr: number): number {
+  private getSumSatz(match: MatchDOExt, satzNr: number): number {
     let sum = 0;
     for (const i of Object.keys(match.schuetzen)) {
       sum += match.schuetzen[i][satzNr].ringzahlPfeil1;
       sum += match.schuetzen[i][satzNr].ringzahlPfeil2;
     }
+    sum += match.fehlerpunkte[satzNr];
+
     return sum;
   }
 
@@ -165,7 +167,7 @@ export class SchusszettelComponent implements OnInit {
    */
   private setPoints() {
     // kumulativ
-    if (this.match1.wettkampfTyp === 'Liga kummutativ') {
+    if (this.match1.wettkampfTyp === 'Liga kummulativ') {
       this.setKummulativePoints();
     } else if (this.match1.wettkampfTyp === 'Liga Satzsystem') {
       this.setSatzPoints();
@@ -177,6 +179,9 @@ export class SchusszettelComponent implements OnInit {
     } else if (this.match2.satzpunkte >= 6) {
       this.match1.matchpunkte = 0;
       this.match2.matchpunkte = 2;
+    } else if (this.match2.satzpunkte === 5 && this.match1.satzpunkte === 5) {
+      this.match1.matchpunkte = 1;
+      this.match2.matchpunkte = 1;
     }
   }
 
@@ -196,20 +201,18 @@ export class SchusszettelComponent implements OnInit {
       let counterMatch2 = 0;
       for (let i = 0; i < 5; i++) {
         if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
-          counterMatch1++;
+          counterMatch1 += 2;
         } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
+          counterMatch2 += 2;
+        } else if (this.match1.sumSatz[i] === this.match2.sumSatz[i]) {
+          counterMatch1++;
           counterMatch2++;
         }
       }
-      const draws = 5 - (counterMatch1 + counterMatch2);
-      this.match1.satzpunkte = (counterMatch1 * 2) + draws;
-      this.match2.satzpunkte = (counterMatch2 * 2) + draws;
+      this.match1.satzpunkte = counterMatch1;
+      this.match2.satzpunkte = counterMatch2;
       this.match1.matchpunkte = 0;
       this.match2.matchpunkte = 0;
-      if (this.match1.satzpunkte === this.match2.satzpunkte) {
-        this.match1.matchpunkte = 1;
-        this.match2.matchpunkte = 1;
-      }
     }
   }
 

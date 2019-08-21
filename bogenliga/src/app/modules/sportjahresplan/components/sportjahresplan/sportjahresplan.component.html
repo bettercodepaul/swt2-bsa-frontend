@@ -1,1 +1,139 @@
-<bla-navigation-dialog [config]="config"></bla-navigation-dialog>
+<bla-common-dialog [config]="config">
+
+<div class="layout-elements">
+
+  <bla-col-layout>
+  <div class="flexChild">
+      <h3><a class="blackLink"
+             routerLink="/Sportjahresplan">{{ 'SPORTJAHRESPLAN.TITEL.VERANSTALTUNG' | translate }}</a></h3>
+
+      <table id="example"
+             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+             style="width:80%">
+        <!-- headlines -->
+
+        <bla-quicksearch-list (onSelect)="onSelect($event)"
+                              [items]="veranstaltungen"
+                              [loading]="loadingVeranstaltungen"
+                              [multipleSelections]="!multipleSelections"
+                              [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                              [optionFieldSelector]="'name'"
+                              selectionListHeight="15em"
+                              style="width: 40%; flex-grow: 0;">
+
+        </bla-quicksearch-list>
+      </table>
+    </div>
+    <div>
+    <h3>
+      Wettkampftage der Veranstaltung
+
+    </h3>
+
+    <div class="row">
+      <section class="overview-dialog-content">
+
+        <bla-data-table [config]="config_table"
+                        [rows]="rows"
+                        [loading]="loadingWettkampfe"
+                        (onViewEntry)="onView($event)">
+
+        </bla-data-table>
+      </section>
+
+
+    <!-- Dies ist die Liste der Wettkampftage zur Veranstaltung  -->
+
+     </div>
+    </div>
+  </bla-col-layout>
+
+  <bla-col-layout>
+      <h3><BR>Wettkampf Vorbereitung <BR>&nbsp;</h3>
+  </bla-col-layout>
+
+
+  <bla-col-layout>
+    <div>
+          <bla-download-button
+            [id]="'downloadSetzliste'"
+            [downloadUrl]="onButtonDownload('pdf/setzliste')"
+            [fileName]="'setzliste.pdf'"
+            [disabled]="isDisabled()">Setzliste
+
+          </bla-download-button>
+        </div>
+
+        <div>
+         <bla-download-button
+          [id]="'downloadSchusszettel'"
+          [downloadUrl]="onButtonDownload('pdf/schusszettel')"
+          [fileName]="'schusszettel.pdf'"
+          [disabled]="isDisabled()">Schusszettel
+
+        </bla-download-button>
+        </div>
+
+        <div>
+          <bla-download-button
+            [id]="'downloadBogenkontrollliste'"
+            [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
+            [fileName]="'bogenkontrollliste.pdf'"
+            [disabled]="isDisabled()">Bogenkontrollliste
+
+          </bla-download-button>
+        </div>
+
+        <div>
+          <bla-download-button
+            [id]="'downloadMeldezettel'"
+            [downloadUrl]="onButtonDownload('pdf/meldezettel')"
+            [fileName]="'meldezettel.pdf'"
+            [disabled]="isDisabled()">Meldezettel
+
+          </bla-download-button>
+        </div>
+
+        <div>
+          <bla-button   (click)="onButtonTabletClick()"
+                        [disabled]="isDisabled()">Setup Tablets
+            ></bla-button>
+
+        </div>
+  </bla-col-layout>
+
+
+  <bla-col-layout>
+    <BR>
+    <h3><BR>Wettkampf Durchführung <BR>&nbsp;</h3>
+    <BR>
+
+  </bla-col-layout>
+
+  <bla-col-layout>
+
+
+      <div class="row">
+        <section class="overview-dialog-content">
+
+          <bla-data-table [config]="config_table_match"
+                          [rows]="matchRows"
+                          [loading]="loadingMatch"
+                          (onEditEntry)="onEdit($event)">
+
+          </bla-data-table>
+        </section>
+
+      </div>
+
+  </bla-col-layout>
+
+
+
+
+
+  <router-outlet></router-outlet>
+
+</div>
+
+</bla-common-dialog>

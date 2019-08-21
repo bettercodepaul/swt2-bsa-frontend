@@ -1,12 +1,12 @@
 import {Component, ElementRef, OnInit, ViewChild, Input} from '@angular/core';
-import {environment} from '../../../../../environments/environment';
-import {UriBuilder} from '../../../shared/data-provider';
+import {environment} from '../../../../../../environments/environment';
+import {UriBuilder} from '../../../data-provider';
 
 @Component({
-  selector: 'bla-setzliste-download',
-  templateUrl: './setzliste-download.component.html'
+  selector: 'bla-schusszettel-download',
+  templateUrl: './schusszettel-download.component.html'
 })
-export class SetzlisteDownloadComponent implements OnInit {
+export class SchusszettelDownloadComponent implements OnInit {
 
   // Get the value of the attribute from the html tag
   @Input()

@@ -13,6 +13,7 @@ import {SPORTJAHRESPLAN_ROUTES} from './sportjahresplan.routing';
     RouterModule.forChild(SPORTJAHRESPLAN_ROUTES),
     SharedModule,
     FormsModule
+
   ],
   declarations: [SportjahresplanComponent],
   providers:    [SportjahresplanGuard]

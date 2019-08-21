@@ -1,12 +1,12 @@
 import {Component, ElementRef, OnInit, ViewChild, Input} from '@angular/core';
-import {environment} from '../../../../../environments/environment';
-import {UriBuilder} from '../../../shared/data-provider';
+import {environment} from '../../../../../../environments/environment';
+import {UriBuilder} from '../../../data-provider';
 
 @Component({
-  selector: 'bla-schusszettel-download',
-  templateUrl: './schusszettel-download.component.html'
+  selector: 'bla-setzliste-download',
+  templateUrl: './setzliste-download.component.html'
 })
-export class SchusszettelDownloadComponent implements OnInit {
+export class SetzlisteDownloadComponent implements OnInit {
 
   // Get the value of the attribute from the html tag
   @Input()
@@ -17,7 +17,12 @@ export class SchusszettelDownloadComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  public isdisabled(): boolean {
+    return false;
+  }
 
   public getDownloadUrl(path: string): string {
     return new UriBuilder()
