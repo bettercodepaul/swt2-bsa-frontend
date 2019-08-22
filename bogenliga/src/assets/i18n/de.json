@@ -903,12 +903,12 @@
           },
           "NOTIFICATION": {
             "SAVE": {
-              "TITLE": "Wettkampftag 1",
-              "DESCRIPTION": "Daten gespeichert"
+              "TITLE": "Speichern erfolgreich",
+              "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
             },
             "UPDATE": {
-              "TITLE": "Wettkampftag 1",
-              "DESCRIPTION": "Daten aktualisert"
+              "TITLE": "Update erfolgreich",
+              "DESCRIPTION": "Daten vom Wettkampftag aktualisert"
             }
           }
         },
@@ -932,18 +932,8 @@
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
-          },
-          "NOTIFICATION": {
-            "SAVE": {
-              "TITLE": "Wettkampftag 2",
-              "DESCRIPTION": "Daten gespeichert"
-            },
-            "UPDATE": {
-              "TITLE": "Wettkampftag 2",
-              "DESCRIPTION": "Daten aktualisert"
-            }
           }
-        },
+         },
         "WETTKAMPFTAG3": {
           "LABEL": "3. Wettkampftag",
           "DATUM": {
@@ -960,18 +950,8 @@
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
-          },
-          "NOTIFICATION": {
-            "SAVE": {
-              "TITLE": "Wettkampftag 3",
-              "DESCRIPTION": "Daten gespeichert"
-            },
-            "UPDATE": {
-              "TITLE": "Wettkampftag 3",
-              "DESCRIPTION": "Daten aktualisert"
-            }
           }
-        },
+         },
         "WETTKAMPFTAG4": {
           "LABEL": "4. Wettkampftag",
           "DATUM": {
@@ -988,18 +968,8 @@
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
             "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
-          },
-          "NOTIFICATION": {
-            "SAVE": {
-              "TITLE": "Wettkampftag 4",
-              "DESCRIPTION": "Daten gespeichert"
-            },
-            "UPDATE": {
-              "TITLE": "Wettkampftag 4",
-              "DESCRIPTION": "Daten aktualisert"
-            }
           }
-        },
+         },
 
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
