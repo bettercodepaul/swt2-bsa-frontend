@@ -29,7 +29,7 @@ import {BenutzerDataProviderService} from '../../../../services/benutzer-data-pr
 import {KampfrichterDO} from '../../../../../verwaltung/types/kampfrichter-do.class';
 import {KampfrichterDTO} from '../../../../../verwaltung/types/datatransfer/kampfrichter-dto.class';
 import {KampfrichterProviderService} from '../../../../services/kampfrichter-data-provider.service';
-import {fromPayload} from "@verwaltung/mapper/wettkampf-mapper";
+import {fromPayload} from '@verwaltung/mapper/wettkampf-mapper';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -37,7 +37,7 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_s
 const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
-//TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne funktion und unterscheidet nicht den Status der Eingabefelder
+// TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne funktion und unterscheidet nicht den Status der Eingabefelder
 
 @Component({
   selector:    'bla-wettkampftage',
@@ -133,7 +133,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     if (this.currentWettkampftag_1.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
-      this.currentWettkampftag_1.id= this.saveWettkampftag(this.currentWettkampftag_1);
+      this.currentWettkampftag_1.id = this.saveWettkampftag(this.currentWettkampftag_1);
     } else {
       this.updateWettkampftag(this.currentWettkampftag_1);
     }
@@ -148,7 +148,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     if (this.currentWettkampftag_2.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
-      this.currentWettkampftag_2.id= this.saveWettkampftag(this.currentWettkampftag_2);
+      this.currentWettkampftag_2.id = this.saveWettkampftag(this.currentWettkampftag_2);
     } else {
       this.updateWettkampftag(this.currentWettkampftag_2);
     }
@@ -163,7 +163,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     if (this.currentWettkampftag_3.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
-      this.currentWettkampftag_3.id= this.saveWettkampftag(this.currentWettkampftag_3);
+      this.currentWettkampftag_3.id = this.saveWettkampftag(this.currentWettkampftag_3);
     } else {
       this.updateWettkampftag(this.currentWettkampftag_3);
     }
@@ -177,13 +177,13 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
     if (this.currentWettkampftag_4.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
-      this.currentWettkampftag_4.id= this.saveWettkampftag(this.currentWettkampftag_4);
+      this.currentWettkampftag_4.id = this.saveWettkampftag(this.currentWettkampftag_4);
     } else {
       this.updateWettkampftag(this.currentWettkampftag_4);
     }
   }
 
-  private  saveWettkampftag(wettkampfDO: WettkampfDO): number{
+  private  saveWettkampftag(wettkampfDO: WettkampfDO): number {
 
       this.wettkampfDataProvider.create(wettkampfDO)
         .then((response: BogenligaResponse<WettkampfDO>) => {
@@ -224,7 +224,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
     } // end save wettkampftag
 
 
-  private updateWettkampftag(wettkampfDO: WettkampfDO): void{
+  private updateWettkampftag(wettkampfDO: WettkampfDO): void {
 
     this.wettkampfDataProvider.update(wettkampfDO)
         .then((response: BogenligaResponse<WettkampfDO>) => {
