@@ -106,6 +106,9 @@ export class SchusszettelComponent implements OnInit {
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     });
+//    for (let j = 0; j < 5; j++) {
+      //TODO
+//    }
     this.schusszettelService.create(this.match1, this.match2)
         .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
           this.match1 = data.payload[0];
@@ -157,7 +160,7 @@ export class SchusszettelComponent implements OnInit {
       sum += match.schuetzen[i][satzNr].ringzahlPfeil1;
       sum += match.schuetzen[i][satzNr].ringzahlPfeil2;
     }
-    sum += match.fehlerpunkte[satzNr];
+    sum -= match.fehlerpunkte[satzNr];
 
     return sum;
   }

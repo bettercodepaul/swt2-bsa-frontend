@@ -114,6 +114,7 @@
       "TABLE": {
         "NUMMER": "Match",
         "SCHEIBE":"Scheibe",
+        "MANNSCHAFT": "Mannschaft",
         "BEGEGNUNG": "Begegnung",
         "MATCHPUNKTE": "Matchpunkte",
         "SATZPUNKTE": "Satzpunkte"
@@ -1126,24 +1127,24 @@
           "ERROR": "Bitte eine gültige ID eingeben."
         },
         "WETTKAMPFNAME": {
-          "LABEL": "Wettkampfname",
-          "PLACEHOLDER": "Bitte einen Wettkampfnamen eingeben",
-          "ERROR": "Bitte einen gültigen Wettkampfnamen eingeben."
+          "LABEL": "Name der Wettkampfklasse",
+          "PLACEHOLDER": "Bitte einen Namen vergeben",
+          "ERROR": "Bitte einen gültigen Text eingeben."
         },
         "WETTKAMPF_JAHRGANG_MIN": {
-          "LABEL": "Wettkampf Jahrgang min.",
+          "LABEL": "Wettkampf Jahrgang von",
           "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
           "ERROR": "Bitte einen gültigen Jahrgang eingeben."
         },
         "WETTKAMPF_JAHRGANG_MAX": {
-          "LABEL": "Wettkampf Jahrgang max.",
-          "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
+          "LABEL": "Wettkampf Jahrgang bis",
+          "PLACEHOLDER": "Bitte einen Jahrgang eingeben",
           "ERROR": "Bitte einen gültigen Jahrgang eingeben."
         },
         "WETTKAMPF_NR": {
-          "LABEL": "Wettkampfnummer",
-          "PLACEHOLDER": "Bitte eine Wettkampfnummer eingeben",
-          "ERROR": "Bitte eine gültige Wettkampfnummer eingeben (max. 2 Zeichen lang)."
+          "LABEL": "Nummer der Wettkampfklasse",
+          "PLACEHOLDER": "Bitte eine eindeutige Nummer vergeben",
+          "ERROR": "Bitte eine gültige und eindeutige Nummer eingeben (max. 2 Zeichen lang)."
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
