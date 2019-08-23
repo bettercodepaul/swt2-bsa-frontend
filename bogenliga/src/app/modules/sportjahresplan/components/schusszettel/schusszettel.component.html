@@ -156,7 +156,8 @@
           <label [for]="'fehlerpunktFeldMatch1' + i+1"
                  class="col-4">Satz {{i + 1}}</label>
           <div class="col-4">
-            <input [(ngModel)]="match1.fehlerpunkte[i]"
+            <input (ngModelChange)="onChange($event, 1, 0, 0, 0)"
+                   [(ngModel)]="match1.fehlerpunkte[i]"
                    [id]="'fehlerpunktFeldMatch1' + i+1"
                    class="fehlerfeld">
           </div>
