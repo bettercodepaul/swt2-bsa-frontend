@@ -3,9 +3,11 @@ import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
 import {BogenligaResponse} from '../../../shared/data-provider';
+import {MatchProviderService} from '../../services/match-provider.service';
 import {isUndefined} from '../../../shared/functions';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
+  Notification,
   NotificationOrigin,
   NotificationService,
   NotificationSeverity,
@@ -13,6 +15,13 @@ import {
   NotificationUserAction
 } from '../../../shared/services';
 import {NumberOnlyDirective} from './number.directive';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+
+const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
+const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
+const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
+const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
+
 
 @Component({
   selector:    'bla-schusszettel',
@@ -23,8 +32,11 @@ export class SchusszettelComponent implements OnInit {
 
   match1: MatchDOExt;
   match2: MatchDOExt;
+  dirtyFlag: boolean;
 
-  constructor(private schusszettelService: SchusszettelProviderService,
+  constructor(private router: Router,
+              private schusszettelService: SchusszettelProviderService,
+              private matchProvider: MatchProviderService,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
   }
@@ -38,13 +50,16 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     // initialwert schützen inputs
 
-    this.match1 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
+    this.match1 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
     this.match1.nr = 1;
     this.match1.schuetzen = [];
 
-    this.match2 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 1, 1, null, null);
+    this.match2 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
     this.match2.nr = 1;
     this.match2.schuetzen = [];
+
+    // am Anfang sind keine Änderungen
+    this.dirtyFlag = false;
 
     this.initSchuetzen();
     this.route.params.subscribe((params) => {
@@ -89,24 +104,69 @@ export class SchusszettelComponent implements OnInit {
     } else {
       let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number
                                            // umwandeln
-      realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
-      pfeilNr === 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
+      if (realValue > 10) {
+        this.notificationService.showNotification({
+          id: 'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
+          title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.TITLE',
+          description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.DESCRIPTION',
+          severity: NotificationSeverity.INFO,
+          origin: NotificationOrigin.USER,
+          type: NotificationType.OK,
+          userAction: NotificationUserAction.PENDING
+        });
+
+      } else {
+        realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
+        pfeilNr === 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
+      }
     }
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
+    this.dirtyFlag = true; // Daten geändert
+  }
+
+  onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
+    const match = this['match' + matchNr];
+    let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number
+                                         // umwandeln
+    realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
+    match.fehlerpunkte[satzNr] = realValue;
+    match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
+    this.setPoints();
+    this.dirtyFlag = true; // Daten geändert
   }
 
   save() {
-    this.notificationService.showNotification({
-      id:          'schusszettelSave',
-      title:       'Lädt...',
-      description: 'Schusszettel wird gespeichert...',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
-    });
-    this.schusszettelService.create(this.match1, this.match2)
+    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+      this.notificationService.showNotification({
+        id: 'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.DESCRIPTION',
+        severity: NotificationSeverity.ERROR,
+        origin: NotificationOrigin.SYSTEM,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.ACCEPTED
+      });
+    } else {
+      this.notificationService.showNotification({
+        id: 'NOTIFICATION_SCHUSSZETTEL_SPEICHERN',
+        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
+        severity: NotificationSeverity.INFO,
+        origin: NotificationOrigin.USER,
+        type: NotificationType.OK,
+        userAction: NotificationUserAction.PENDING
+      });
+
+      // im Ausgabefeld ist die Schutzennummer aktuell nur in der 0-ten Passe gesetzt
+      // kopieren in jede Passe, damit Datenanlage möglich --> Schüsselwert für DB
+      for (let i = 0; i < 3; i++) {
+        for (let j = 1; j < 5; j++) {
+          this.match1.schuetzen[i][j].schuetzeNr = this.match1.schuetzen[i][0].schuetzeNr;
+          this.match2.schuetzen[i][j].schuetzeNr = this.match2.schuetzen[i][0].schuetzeNr;
+        }
+      }
+      this.schusszettelService.create(this.match1, this.match2)
         .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
@@ -117,6 +177,50 @@ export class SchusszettelComponent implements OnInit {
           console.error(error);
           this.notificationService.discardNotification();
         });
+      this.dirtyFlag = false; // Daten gespeichert
+    }
+  }
+
+  next() {
+
+    // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
+    if (this.dirtyFlag === true) {
+      // TODO TExte in json.de anlegen
+      const notification: Notification = {
+        id:               NOTIFICATION_WEITER_SCHALTEN,
+        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.dirtyFlag = false;
+            this.matchProvider.pairToFollow(this.match2.id)
+              .then((data) => {
+                if (data.payload.length === 2) {
+                  this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                }
+              });
+          }
+         });
+      this.notificationService.showNotification(notification);
+
+    } else {
+      // nächste Matches bestimmen --> schusszettel-service --> Backend-Call --> zwei IDs
+      this.matchProvider.pairToFollow(this.match2.id)
+        .then((data) => {
+          if (data.payload.length === 2) {
+            this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+          }
+        });
+    }
+
+
   }
 
   trackByIndex(index: number, obj: any): any {
@@ -157,7 +261,7 @@ export class SchusszettelComponent implements OnInit {
       sum += match.schuetzen[i][satzNr].ringzahlPfeil1;
       sum += match.schuetzen[i][satzNr].ringzahlPfeil2;
     }
-    sum += match.fehlerpunkte[satzNr];
+    sum -= match.fehlerpunkte[satzNr];
 
     return sum;
   }
@@ -169,7 +273,7 @@ export class SchusszettelComponent implements OnInit {
     // kumulativ
     if (this.match1.wettkampfTyp === 'Liga kummulativ') {
       this.setKummulativePoints();
-    } else if (this.match1.wettkampfTyp === 'Liga Satzsystem') {
+    } else  {
       this.setSatzPoints();
     }
 
@@ -205,17 +309,6 @@ export class SchusszettelComponent implements OnInit {
     this.match1.matchpunkte = 0;
     this.match2.matchpunkte = 0;
 
-    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
-      this.notificationService.showNotification({
-        id: 'schusszettelEntschieden',
-        title: 'Eingabefehler?',
-        description: 'Satzpunkte >7',
-        severity: NotificationSeverity.ERROR,
-        origin: NotificationOrigin.SYSTEM,
-        type: NotificationType.OK,
-        userAction: NotificationUserAction.ACCEPTED
-      });
-    }
   }
 
   private setKummulativePoints() {

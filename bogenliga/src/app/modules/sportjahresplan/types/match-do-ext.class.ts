@@ -3,7 +3,7 @@ import {PasseDO} from './passe-do.class';
 
 export class MatchDOExt implements DataObject {
   id: number;
-
+  version: number;
   mannschaftId: number;
   mannschaftName: string;
   wettkampfId: number;
@@ -41,10 +41,10 @@ export class MatchDOExt implements DataObject {
     this.nr = matchNr;
     this.begegnung = begegnung;
     this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
-    this.sumSatz = sumSatz.length > 0 && sumSatz.length <= 5 ? sumSatz : [0, 0, 0, 0, 0];
+    this.sumSatz = !!sumSatz ? sumSatz : [];
     this.matchpunkte = matchpunkte;
     this.satzpunkte = satzpunkte;
-    this.fehlerpunkte = !!fehlerpunkte ? fehlerpunkte : [0, 0, 0, 0, 0];
+    this.fehlerpunkte = !!fehlerpunkte ? fehlerpunkte : [];
     this.schuetzen = !!schuetzen ? schuetzen : [];
     this.wettkampfTyp = wettkampfTyp;
     this.wettkampfTag = wettkampfTag;
