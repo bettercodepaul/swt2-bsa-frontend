@@ -53,32 +53,32 @@ export const MATCH_TABLE_CONFIG: TableConfig = {
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.NUMMER',
       propertyName:   'nr',
-      width:          15,
+      width:          5,
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.SCHEIBE',
       propertyName:   'scheibenNummer',
-      width:          15,
+      width:          5,
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.MANNSCHAFT',
-      propertyName:   'mannschaftId',
-      width:          15,
+      propertyName:   'mannschaftName',
+      width:          20,
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.BEGEGNUNG',
       propertyName:   'begegnung',
-      width:          15,
+      width:          5,
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.MATCHPUNKTE',
       propertyName:   'matchpunkte',
-      width:          15,
+      width:          5,
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.SATZPUNKTE',
       propertyName:   'satzpunkte',
-      width:          15,
+      width:          5,
     }
   ],
   actions: {

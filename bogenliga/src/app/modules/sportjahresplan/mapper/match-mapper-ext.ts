@@ -1,9 +1,21 @@
 import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '../types/match-do-ext.class';
 import {PasseMapper} from './passe-mapper';
+import {VersionedDataTransferObject} from '@shared/data-provider';
 
 
-export class MatchMapper {
+export function fromPayload(payload: VersionedDataTransferObject): MatchDTOExt {
+  return MatchDTOExt.copyFrom(payload);
+}
+
+export function fromPayloadArray(payload: VersionedDataTransferObject[]): MatchDTOExt[] {
+  const list: MatchDTOExt[] = [];
+  payload.forEach((single) => list.push(fromPayload(single)));
+  return list;
+}
+
+
+export class MatchMapperExt {
 
   static matchToDO(payload: MatchDTOExt): MatchDOExt {
     const schuetzen = [];
