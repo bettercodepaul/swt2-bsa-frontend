@@ -9,7 +9,7 @@ import {
 } from '../../shared/data-provider';
 import {MatchDOExt} from '../types/match-do-ext.class';
 import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
-import {MatchMapper} from '../mapper/match-mapper';
+import {MatchMapperExt} from '../mapper/match-mapper-ext';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class SchusszettelProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<MatchDTOExt>>(new UriBuilder().fromPath(this.getUrl()).path(match1Id).path(match2Id).build())
           .then((data: Array<MatchDTOExt>) => {
-            const matches = [MatchMapper.matchToDO(data[0]), MatchMapper.matchToDO(data[1])];
+            const matches = [MatchMapperExt.matchToDO(data[0]), MatchMapperExt.matchToDO(data[1])];
             resolve({result: RequestResult.SUCCESS, payload: matches});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
@@ -39,12 +39,12 @@ export class SchusszettelProviderService extends DataProviderService {
   }
 
   public create(match1: MatchDOExt, match2: MatchDOExt): Promise<BogenligaResponse<Array<MatchDOExt>>> {
-    const match1DTO = MatchMapper.matchToDTO(match1);
-    const match2DTO = MatchMapper.matchToDTO(match2);
+    const match1DTO = MatchMapperExt.matchToDTO(match1);
+    const match2DTO = MatchMapperExt.matchToDTO(match2);
     return new Promise(((resolve, reject) => {
       this.restClient.POST(this.getUrl(), [match1DTO, match2DTO])
           .then((data: Array<MatchDTOExt>) => {
-            const matches = [MatchMapper.matchToDO(data[0]), MatchMapper.matchToDO(data[1])];
+            const matches = [MatchMapperExt.matchToDO(data[0]), MatchMapperExt.matchToDO(data[1])];
             resolve({result: RequestResult.SUCCESS, payload: matches});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {

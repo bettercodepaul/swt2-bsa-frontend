@@ -15,8 +15,8 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {NotificationService} from '@shared/services/notification';
 import {environment} from '@environment';
-import {MatchDO} from '@verwaltung/types/match-do.class';
-import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
+import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
+import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
 
 
 
@@ -51,7 +51,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   public rows: TableRow[];
   public matchRows: TableRow[];
   private tableContent: Array<WettkampfDO> = [];
-  private tableContentMatch: Array<MatchDO> = [];
+  private tableContentMatch: Array<MatchDOExt> = [];
   private remainingWettkampfRequests: number;
   private remainingMatchRequests: number;
   private urlString: string;
@@ -97,9 +97,9 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       this.selectedWettkampf = $event.id.toString();
       this.visible = true;
 
-      this.matchDataProvider.findAllWettkampfMatchesById(this.selectedWettkampfId)
-        .then((response: BogenligaResponse<MatchDO[]>) => this.handleFindMatchSuccess(response))
-        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleFindMatchFailure(response));
+      this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
+        .then((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchSuccess(response))
+        .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
 
     }
 // TODO URL-Sprung bei TabletButtonClick
@@ -135,10 +135,10 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   // wenn "Edit" an einem Match geklickt wird
   // öffnen wir in einem neuen Tab die Datenerfassung /Schusszettel für die Begegnung
 
-  public onEdit($event: MatchDO): void {
+  public onEdit($event: MatchDOExt): void {
     if ($event.id >= 0) {
       this.selectedMatchId = $event.id;
-      this.matchProvider.next(this.selectedMatchId)
+      this.matchProvider.pair(this.selectedMatchId)
         .then((data) => {
           if (data.payload.length === 2) {
 // das wäre schöner - funktioniert leider aber noch nicht...
@@ -210,26 +210,27 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   }
 
 
-  private handleFindMatchFailure(response: BogenligaResponse<MatchDTO[]>): void {
+  private handleFindMatchFailure(response: BogenligaResponse<MatchDTOExt[]>): void {
     this.matchRows = [];
     this.loadingMatch = false;
   }
 
-  private handleFindMatchSuccess(response: BogenligaResponse<MatchDTO[]>): void {
+  private handleFindMatchSuccess(response: BogenligaResponse<MatchDTOExt[]>): void {
     this.matchRows = []; // reset array to ensure change detection
     this.remainingMatchRequests = response.payload.length;
     if (response.payload.length <= 0) {
       this.loadingMatch = false;
     }
     for (const match of response.payload) {
-      const tableContentRow: MatchDO = new MatchDO();
+      const tableContentRow: MatchDOExt = new MatchDOExt();
       tableContentRow.id = match.id;
       tableContentRow.nr = match.nr;
       tableContentRow.begegnung = match.begegnung;
       tableContentRow.scheibenNummer = match.scheibenNummer;
-      tableContentRow.mannschaftId = match.mannschaftId;
+      tableContentRow.mannschaftName = match.mannschaftName;
       tableContentRow.matchpunkte = match.matchpunkte;
       tableContentRow.satzpunkte = match.satzpunkte;
+      tableContentRow.version = match.version;
 
       this.tableContentMatch.push(tableContentRow);
     }
