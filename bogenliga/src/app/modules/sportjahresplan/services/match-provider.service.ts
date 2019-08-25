@@ -7,9 +7,10 @@ import {
   RestClient,
   UriBuilder, VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {MatchMapper} from '../mapper/match-mapper';
+import {MatchMapperExt} from '../mapper/match-mapper-ext';
 import {MatchDOExt} from '../types/match-do-ext.class';
 import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
+import {fromPayloadArray} from '../mapper/match-mapper-ext';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class MatchProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<MatchDTOExt>(new UriBuilder().fromPath(this.getUrl()).path(matchId).build())
           .then((data: MatchDTOExt) => {
-            const matchDO = MatchMapper.matchToDO(data);
+            const matchDO = MatchMapperExt.matchToDO(data);
             resolve({result: RequestResult.SUCCESS, payload: matchDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
@@ -39,11 +40,11 @@ export class MatchProviderService extends DataProviderService {
   }
 
   public create(matchDO: MatchDOExt): Promise<BogenligaResponse<MatchDOExt>> {
-    const matchDTO = MatchMapper.matchToDTO(matchDO);
+    const matchDTO = MatchMapperExt.matchToDTO(matchDO);
     return new Promise(((resolve, reject) => {
       this.restClient.POST(this.getUrl(), matchDTO)
           .then((data: MatchDTOExt) => {
-            const newMatchDO = MatchMapper.matchToDO(data);
+            const newMatchDO = MatchMapperExt.matchToDO(data);
             resolve({result: RequestResult.SUCCESS, payload: newMatchDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
@@ -56,11 +57,11 @@ export class MatchProviderService extends DataProviderService {
   }
 
   public update(matchDO: MatchDOExt): Promise<BogenligaResponse<MatchDOExt>> {
-    const matchDTO = MatchMapper.matchToDTO(matchDO);
+    const matchDTO = MatchMapperExt.matchToDTO(matchDO);
     return new Promise(((resolve, reject) => {
       this.restClient.PUT(this.getUrl(), matchDTO)
           .then((data: MatchDTOExt) => {
-            const updatedMatchDO = MatchMapper.matchToDO(data);
+            const updatedMatchDO = MatchMapperExt.matchToDO(data);
             resolve({result: RequestResult.SUCCESS, payload: updatedMatchDO});
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
@@ -71,6 +72,27 @@ export class MatchProviderService extends DataProviderService {
           });
     }));
   }
+
+
+  public findAllWettkampfMatchesAndNamesById(id: number): Promise<BogenligaResponse<MatchDTOExt[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findAllWettkampfMatchesAndName/wettkampfid=' + id).build())
+        .then((data: VersionedDataTransferObject[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
 
   public next(matchId: number): Promise<BogenligaResponse<Array<number>>> {
     return new Promise(((resolve, reject) => {
@@ -86,4 +108,35 @@ export class MatchProviderService extends DataProviderService {
           });
     }));
   }
+
+  public pair(matchId: number): Promise<BogenligaResponse<Array<number>>> {
+    return new Promise(((resolve, reject) => {
+      this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('pair').build())
+        .then((data: Array<number>) => {
+          resolve({result: RequestResult.SUCCESS, payload: data});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    }));
+  }
+
+  public pairToFollow(matchId: number): Promise<BogenligaResponse<Array<number>>> {
+    return new Promise(((resolve, reject) => {
+      this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('pairToFollow').build())
+        .then((data: Array<number>) => {
+          resolve({result: RequestResult.SUCCESS, payload: data});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    }));
+  }
+
 }
