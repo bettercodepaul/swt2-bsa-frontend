@@ -232,7 +232,14 @@ export class SchusszettelComponent implements OnInit {
    * Pushes three arrays into schuetzen, then pushes five PasseDO in each of the three arrays.
    */
   private initSchuetzen() {
-    for (let i = 0; i < 3; i++) {
+
+    for (let i = 0; i < 5; i++) {
+      this.match1.sumSatz.push(0);
+      this.match2.sumSatz.push(0);
+    }
+
+
+      for (let i = 0; i < 3; i++) {
       this.match1.schuetzen.push(new Array<PasseDO>());
       this.match2.schuetzen.push(new Array<PasseDO>());
       for (let j = 0; j < 5; j++) {
@@ -330,10 +337,12 @@ export class SchusszettelComponent implements OnInit {
   }
 
   private initSumSatz() {
+
     for (let i = 0; i < 5; i++) {
       this.match1.sumSatz[i] = this.getSumSatz(this.match1, i);
       this.match2.sumSatz[i] = this.getSumSatz(this.match2, i);
     }
+
   }
 
   private getSummeSchuetze(schuetzeNr: number, matchNr: number): number {
