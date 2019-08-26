@@ -41,7 +41,7 @@ export class MatchDOExt implements DataObject {
     this.nr = matchNr;
     this.begegnung = begegnung;
     this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
-    this.sumSatz = !!sumSatz ? sumSatz : [];
+    this.sumSatz = !!sumSatz ? sumSatz : [5];
     this.matchpunkte = matchpunkte;
     this.satzpunkte = satzpunkte;
     this.fehlerpunkte = !!fehlerpunkte ? fehlerpunkte : [];
