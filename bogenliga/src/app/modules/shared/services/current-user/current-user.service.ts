@@ -9,9 +9,11 @@ import {UserState} from '../../redux-store/feature/user';
 import {Notification, NotificationUserAction} from '../notification/types';
 import {UserPermission} from './types/user-permission.enum';
 import {UserSignInDTO} from './types/user-sign-in-dto.class';
+import {CredentialsDO} from "@user/types/credentials-do.class";
 
 const CURRENT_USER_KEY = 'current_user';
 const LOGIN_EMAIL_KEY = 'login_email';
+const DEFAULTUSERRNAME = 'ligadefault'
 
 
 @Injectable({
@@ -21,14 +23,20 @@ export class CurrentUserService {
 
 
   private isUserLoggedIn: boolean;
+  private isDefaultUserLoggedIn: boolean;
   private currentUser: UserSignInDTO = new UserSignInDTO();
 
-  constructor(private localDataProviderService: LocalDataProviderService, private store: Store<AppState>, private router: Router) {
+
+
+  constructor(private localDataProviderService: LocalDataProviderService,
+              private store: Store<AppState>,
+              private router: Router
+  ) {
     this.observeUserState();
     this.observeSessionExpiredNotifications();
 
     this.loadCurrentUser();
-  }
+    }
 
   public persistCurrentUser(currentUser: UserSignInDTO): void {
     this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
@@ -91,8 +99,6 @@ export class CurrentUserService {
       return false;
     } else if (requiredPermissions.length === 0) { // no permissions needed
       return true;
-    } else if (requiredPermissions.length > 0 && this.isUserLoggedIn === false) { // no user and data needs permission --> access denied
-      return false;
     } else if (isNullOrUndefined(userPermissions) || userPermissions.length === 0) {
       // permissions needed but user has none
       return false;
@@ -107,7 +113,12 @@ export class CurrentUserService {
   }
 
   public isLoggedIn(): boolean {
-    return this.getUserId() === null;
+    return this.isUserLoggedIn;
+  }
+
+  // wir behandeln den default User wie einen nicht angemeldeten User
+  public isDefaultUser(): boolean {
+    return this.isDefaultUserLoggedIn;
   }
 
   public logout() {
@@ -134,6 +145,13 @@ export class CurrentUserService {
         .subscribe((state: UserState) => {
           this.isUserLoggedIn = state.isLoggedIn;
           this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
+          if (this.currentUser.email === DEFAULTUSERRNAME){
+            this.isDefaultUserLoggedIn = true;
+            state.isDefaultUserLoggedIn = true;
+          }else{
+            this.isDefaultUserLoggedIn = false;
+            state.isDefaultUserLoggedIn = false;
+          }
         });
   }
 

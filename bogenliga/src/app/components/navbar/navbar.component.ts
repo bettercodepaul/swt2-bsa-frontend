@@ -19,13 +19,16 @@ export class NavbarComponent implements OnInit {
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public ButtonType = ButtonType;
   public isLoggedIn: boolean;
+  public isDefaultUserLoggedIn: boolean;
   public isUserDropdownVisible = false;
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
     store.pipe(select((state) => state.userState))
-         .subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn);
+      .subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn);
+    store.pipe(select((state) => state.userState))
+      .subscribe((state: UserState) => this.isDefaultUserLoggedIn = state.isDefaultUserLoggedIn);
   }
 
   ngOnInit() {

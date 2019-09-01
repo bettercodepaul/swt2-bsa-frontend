@@ -29,7 +29,7 @@
 
     <!-- Login Button -->
 
-      <a *ngIf="!isLoggedIn"
+      <a *ngIf="(!isLoggedIn || isDefaultUserLoggedIn)"
          class="nav-link"
          routerLink="/user/login">
         <button class="btn btn-light">Login</button>
@@ -37,7 +37,7 @@
 
       <!-- Profil Dropdown -->
 
-    <a *ngIf="isLoggedIn"
+    <a *ngIf="(isLoggedIn && !isDefaultUserLoggedIn)"
        class="dropdown nav-link dropdown-toggle"
        (click)="toggleUserDropdown()">
       <fa-icon icon="user-circle"

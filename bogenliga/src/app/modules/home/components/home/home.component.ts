@@ -12,6 +12,9 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate} from '@angular/common';
 import {registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
+import {LoginDataProviderService} from '@user/services/login-data-provider.service';
+import {CredentialsDO} from "@user/types/credentials-do.class";
+import {CurrentUserService} from "@shared/services";
 
 @Component({
   selector:    'bla-home',
@@ -29,18 +32,27 @@ export class HomeComponent extends CommonComponent implements OnInit {
   public rows: TableRow[];
   public currentDate: number =  Date.now();
   public dateHelper: string;
+  public defaultUser: CredentialsDO = new CredentialsDO('ligadefault', 'user');
 
-  constructor(private wettkampfDataProvider: WettkampfDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService) {
+  constructor(private wettkampfDataProvider: WettkampfDataProviderService,
+              private veranstaltungDataProvider: VeranstaltungDataProviderService,
+              private logindataprovider: LoginDataProviderService,
+              private currentUserService: CurrentUserService) {
     super();
   }
 
   ngOnInit() {
-    this.loadWettkaempfe();
+    if(this.currentUserService.isLoggedIn() === false){
+          this.logindataprovider.signIn(this.defaultUser)
+            .then(() => this.handleSuccessfulLogin());
+    }else if(this.currentUserService.isLoggedIn() === true){
+      this.loadWettkaempfe();
+    }
   }
 
-  /**
-   * backend call to get list
-   */
+      /**
+       * backend call to get list
+       */
   private loadWettkaempfe(): void {
       this.wettkaempfeDTO = [];
       this.wettkaempfeDO = [];
@@ -123,5 +135,9 @@ export class HomeComponent extends CommonComponent implements OnInit {
       }
     }
   }
+  private handleSuccessfulLogin() {
+    this.loadWettkaempfe();
+  }
+
 }
 
