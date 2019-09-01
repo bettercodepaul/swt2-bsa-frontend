@@ -23,14 +23,14 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label: 'SIDEBAR.REGIONEN',
     icon:       faBullseye,
     route: '/regionen',
-    permissons: [],
+    permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: []
   },
   {
     label: 'SIDEBAR.VEREINE',
     icon: faUsers,
     route: '/vereine',
-    permissons: [],
+    permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: []
   },
   {
