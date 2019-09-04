@@ -9,11 +9,11 @@ import {UserState} from '../../redux-store/feature/user';
 import {Notification, NotificationUserAction} from '../notification/types';
 import {UserPermission} from './types/user-permission.enum';
 import {UserSignInDTO} from './types/user-sign-in-dto.class';
-import {CredentialsDO} from "@user/types/credentials-do.class";
+import {CredentialsDO} from '@user/types/credentials-do.class';
 
 const CURRENT_USER_KEY = 'current_user';
 const LOGIN_EMAIL_KEY = 'login_email';
-const DEFAULTUSERRNAME = 'ligadefault'
+const DEFAULTUSERRNAME = 'ligadefault';
 
 
 @Injectable({
@@ -145,10 +145,10 @@ export class CurrentUserService {
         .subscribe((state: UserState) => {
           this.isUserLoggedIn = state.isLoggedIn;
           this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
-          if (this.currentUser.email === DEFAULTUSERRNAME){
+          if (this.currentUser.email === DEFAULTUSERRNAME) {
             this.isDefaultUserLoggedIn = true;
             state.isDefaultUserLoggedIn = true;
-          }else{
+          } else {
             this.isDefaultUserLoggedIn = false;
             state.isDefaultUserLoggedIn = false;
           }
