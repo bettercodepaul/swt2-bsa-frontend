@@ -32,6 +32,9 @@ export class LoginComponent implements OnInit {
   public testUserUser: CredentialsDO = new CredentialsDO('user@bogenliga.de', 'user');
   public testDummyModeratorUser: CredentialsDO = new CredentialsDO('Nicholas.Corle@bogenliga.de', 'swt2');
   public testDummyUserUser: CredentialsDO = new CredentialsDO('Malorie.Artman@bogenliga.de', 'swt2');
+  public testTeamLigaleiter: CredentialsDO = new CredentialsDO('TeamLigaleiter@bogenliga.de', 'swt2');
+  public testTeamSportleiter: CredentialsDO = new CredentialsDO('TeamSportleiter@bogenliga.de', 'swt2');
+  public testTeamModerator: CredentialsDO = new CredentialsDO('TeamModerator@bogenliga.de', 'swt2');
   // TODO: remove after development
 
   public config = USER_LOGIN_CONFIG;
