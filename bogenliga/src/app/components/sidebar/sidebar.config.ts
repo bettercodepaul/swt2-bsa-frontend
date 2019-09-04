@@ -87,7 +87,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label:      'SIDEBAR.SPORTJAHRESPLAN',
     icon:       faCalendarAlt,
     route:      '/sportjahresplan',
-    permissons: [UserPermission.CAN_READ_SPORTJAHR, UserPermission.CAN_MODIFY_SPORTJAHR],
+    permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: []
   },
   {

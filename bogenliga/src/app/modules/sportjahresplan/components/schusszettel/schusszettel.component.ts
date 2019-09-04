@@ -239,7 +239,7 @@ export class SchusszettelComponent implements OnInit {
     }
 
 
-      for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       this.match1.schuetzen.push(new Array<PasseDO>());
       this.match2.schuetzen.push(new Array<PasseDO>());
       for (let j = 0; j < 5; j++) {
