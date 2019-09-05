@@ -17,3 +17,4 @@ export * from './veranstaltung/veranstaltung-detail/veranstaltung-detail.compone
 export * from './sportjahr/sportjahr-overview/sportjahr-overview.component';
 export * from './veranstaltung/veranstaltung-detail/wettkampftage/wettkampftage.component';
 export * from './sportjahr/sportjahr-overview/sportjahr-overview.component';
+export * from './veranstaltung/veranstaltung-detail/mannschaftTabelle/mannschaftTabelle.component';
