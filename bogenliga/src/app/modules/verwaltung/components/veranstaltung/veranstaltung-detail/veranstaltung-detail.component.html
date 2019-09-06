@@ -223,8 +223,19 @@
       </div>
     </div>
 
-
-
   </form>
+
+  <div *ngIf="showTable">
+    <h4>{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.TITLE' | translate}}</h4>
+    <bla-data-table [config]="tableConfig"
+                    [rows]="rows"
+                    [loading]="loading">
+                    <!--(onViewClicked)="onView($event)"
+                    (onEditClicked)="onEdit($event)"-->
+
+    </bla-data-table>
+  </div>
+
+
 
 </bla-common-dialog>

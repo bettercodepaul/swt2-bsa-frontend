@@ -866,6 +866,10 @@
     },
     "VERANSTALTUNG_DETAIL": {
       "TITLE": "Veranstaltung - Details",
+      "TABLE": {
+        "TITLE": "Teilnehmende Mannschaften:",
+        "SORTIERUNG": "Sortierung"
+      },
       "FORM": {
         "NAME": {
           "LABEL": "Veranstaltung Name",
