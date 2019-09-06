@@ -9,6 +9,6 @@ export class SportjahresplanGuard implements CanActivate {
 
   canActivate() {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_SPORTJAHR, UserPermission.CAN_MODIFY_SPORTJAHR]);
+      [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF]);
   }
 }
