@@ -21,7 +21,7 @@ export const VERANSTALTUNG_DETAIL_TABLE_Config: TableConfig = {
     },
     {
       translationKey: 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.SORTIERUNG',
-      propertyName:   '--missing--',
+      propertyName:   'sortierung',
       width:          20,
     }
   ],
@@ -29,4 +29,4 @@ export const VERANSTALTUNG_DETAIL_TABLE_Config: TableConfig = {
     actionTypes: [TableActionType.EDIT],
     width:       6
   }
-}
+};
