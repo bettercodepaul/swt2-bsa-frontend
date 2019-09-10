@@ -33,6 +33,9 @@ import {TableRow} from "@shared/components/tables/types/table-row.class";
 import {LigatabelleErgebnisService} from "../../../../mannschaft/services/ligatabelle-ergebnis.service";
 import {LigatabelleDataProviderService} from "../../../../mannschaft/services/ligatabelle-data-provider.service";
 import {LigatabelleErgebnisDO} from "../../../../mannschaft/types/ligatabelle-ergebnis-do.class";
+import {VersionedDataObject} from "@shared/data-provider/models/versioned-data-object.interface";
+import {MannschaftSortierungDataProviderService} from "@verwaltung/services/mannschaftSortierung-data-provider.service";
+import {MannschaftSortierungDO} from "@verwaltung/types/mannschaftSortierung-do.class";
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -91,7 +94,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private ligatabellenService: LigatabelleDataProviderService) {
+    private ligatabellenService: LigatabelleDataProviderService,
+    private maSortierungService: MannschaftSortierungDataProviderService) {
     super();
   }
 
@@ -539,7 +543,12 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   private loadTableRows(payload: LigatabelleErgebnisDO[]){
     this.rows = toTableRows(payload);
-    console.log("rows:");
-    console.log(this.rows);
+  }
+
+  public onEdit(ligatabelleEntry: LigatabelleErgebnisDO){
+    console.log("Edit pushed..");
+    console.log(ligatabelleEntry);
+    const maSortierung = new MannschaftSortierungDO(ligatabelleEntry.mannschaft_id, ligatabelleEntry.sortierung+1);
+    this.maSortierungService.update(maSortierung);
   }
 }
