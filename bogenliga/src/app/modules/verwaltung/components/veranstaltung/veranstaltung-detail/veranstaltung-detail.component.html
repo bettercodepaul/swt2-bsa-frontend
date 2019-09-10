@@ -229,9 +229,9 @@
     <h4>{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.TITLE' | translate}}</h4>
     <bla-data-table [config]="tableConfig"
                     [rows]="rows"
-                    [loading]="loading">
-                    <!--(onViewClicked)="onView($event)"
-                    (onEditClicked)="onEdit($event)"-->
+                    [loading]="loading"
+                    (onEditEntry)="onEdit($event)">
+                    <!--(onViewClicked)="onView($event)"-->
 
     </bla-data-table>
   </div>
