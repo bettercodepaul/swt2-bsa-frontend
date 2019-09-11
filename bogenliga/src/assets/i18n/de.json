@@ -868,7 +868,7 @@
       "TITLE": "Veranstaltung - Details",
       "TABLE": {
         "TITLE": "Teilnehmende Mannschaften:",
-        "SORTIERUNG": "Sortierung"
+        "SORTIERUNG": "Initialer Tabellenplatz"
       },
       "FORM": {
         "NAME": {
