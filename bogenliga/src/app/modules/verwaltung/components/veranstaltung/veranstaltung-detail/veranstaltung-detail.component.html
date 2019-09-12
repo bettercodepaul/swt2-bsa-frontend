@@ -39,25 +39,22 @@
       </label>
       <div class="col-sm-9">
         <select type="text"
-               class="form-control"
+                class="form-control"
                 required
-               id="ligaName"
-               name="ligaName"
-               #ligaName="ngModel"
-               [(ngModel)]="currentLiga">
+                id="ligaName"
+                name="ligaName"
+                #ligaName="ngModel"
+                [(ngModel)]="currentLiga">
           <option [ngValue]="ligaName"
                   *ngFor="let ligaName of allLiga"> {{ligaName.name}}</option>
 
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
         </div>
       </div>
     </div>
-
-
-
 
 
     <!-- WettkampftypName -->
@@ -169,14 +166,6 @@
     </div>
 
 
-
-
-
-
-
-
-
-
     <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE BUTTON -->
     <div class="form-group row">
       <div class="col-sm-3"></div>
@@ -225,17 +214,73 @@
 
   </form>
 
-  <div *ngIf="showTable">
-    <h4>{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.TITLE' | translate}}</h4>
-    <bla-data-table [config]="tableConfig"
-                    [rows]="rows"
-                    [loading]="loading"
-                    (onEditEntry)="onEdit($event)">
-                    <!--(onViewClicked)="onView($event)"-->
+  <!-- Tags for the Mannschaft-table and the editing of it-->
+  <div *ngIf="showTable" class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col-sm-12">
+          <h4>{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.TITLE' | translate}}</h4>
+        </div>
+      </div>
 
-    </bla-data-table>
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- Popup for the editing of the Sortierung-->
+          <bla-alert [visible]="(showPopup)"
+                     header="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.TITLE' | translate }}"
+                     [alertType]="AlertType.QUESTION">
+            <div class="row">
+              <div class="col-sm-9">
+                {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.DESCRIPTION1' | translate }}
+              </div>
+
+              <div class="col-sm-3">
+                <b style="font-size: 2.5vh">{{this.selectedLigatabelleEntry.mannschaft_name}}</b>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-7">
+                <p></p>
+                <select class="form-control"
+                        required
+                        id="sortierung"
+                        name="sortierung"
+                        #sortierung="ngModel"
+                        [(ngModel)]="this.selectedLigatabelleEntry.sortierung">
+                  <option *ngFor="let tbPlatz of possibleTabellenplatz"> {{tbPlatz}}</option>
+                </select>
+              </div>
+
+              <div class="col-sm-5">
+                <div class="row">
+                  <p></p>
+                </div>
+                <div class="row">
+                  <div class="col-sm-5"></div>
+                  <div class="col-sm-7 button-box">
+                    <bla-button
+                      (onClick)="onTableEditCancel($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.CANCEL' | translate}}</bla-button>
+                    <bla-button
+                      (onClick)="onTableEditSave($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.SAVE' | translate}}</bla-button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </bla-alert>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <bla-data-table [config]="tableConfig"
+                          [rows]="rows"
+                          [loading]="loading"
+                          (onEditEntry)="onEdit($event)">
+          </bla-data-table>
+        </div>
+      </div>
+    </div>
   </div>
-
-
 
 </bla-common-dialog>
