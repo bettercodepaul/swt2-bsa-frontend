@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent, toTableRows} from '@shared/components';
-import {ButtonType} from '@shared/components';
+import {AlertType, ButtonType, CommonComponent, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -30,11 +29,10 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from "@shared/components/tables/types/table-row.class";
-import {LigatabelleErgebnisService} from "../../../../mannschaft/services/ligatabelle-ergebnis.service";
 import {LigatabelleDataProviderService} from "../../../../mannschaft/services/ligatabelle-data-provider.service";
 import {LigatabelleErgebnisDO} from "../../../../mannschaft/types/ligatabelle-ergebnis-do.class";
-import {VersionedDataObject} from "@shared/data-provider/models/versioned-data-object.interface";
 import {MannschaftSortierungDataProviderService} from "@verwaltung/services/mannschaftSortierung-data-provider.service";
+import {VersionedDataObject} from "@shared/data-provider/models/versioned-data-object.interface";
 import {MannschaftSortierungDO} from "@verwaltung/types/mannschaftSortierung-do.class";
 
 const ID_PATH_PARAM = 'id';
@@ -43,6 +41,7 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_s
 const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
+const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
 
 @Component({
   selector:    'bla-veranstaltung-detail',
@@ -83,6 +82,11 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   //For the Mannschaft-Table
   public rows: TableRow[];
   public showTable = false;
+  public AlertType = AlertType;
+  public showPopup = false;
+  public selectedLigatabelleEntry: LigatabelleErgebnisDO = new LigatabelleErgebnisDO();
+  public possibleTabellenplatz: number[] = [0,1,2,3,4,5,6,7,8];
+  public oldSortierung: number;
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -545,10 +549,55 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.rows = toTableRows(payload);
   }
 
-  public onEdit(ligatabelleEntry: LigatabelleErgebnisDO){
+  public onEdit(versionedDataObject: VersionedDataObject){
+    this.selectedLigatabelleEntry = versionedDataObject as LigatabelleErgebnisDO;
     console.log("Edit pushed..");
-    console.log(ligatabelleEntry);
-    const maSortierung = new MannschaftSortierungDO(ligatabelleEntry.mannschaft_id, ligatabelleEntry.sortierung+1);
-    this.maSortierungService.update(maSortierung);
+    console.log(this.selectedLigatabelleEntry);
+    this.oldSortierung = this.selectedLigatabelleEntry.sortierung;
+    this.showPopup = true;
+  }
+
+  public onTableEditCancel( event: any){
+    this.selectedLigatabelleEntry.sortierung = this.oldSortierung;
+    this.showPopup = false;
+  }
+
+  public onTableEditSave(event: any){
+    const maSortierung = new MannschaftSortierungDO(
+      this.selectedLigatabelleEntry.mannschaft_id, this.selectedLigatabelleEntry.sortierung);
+    this.maSortierungService.update(maSortierung)
+      .then(() => this.handleTableSaveSuccess())
+      .catch(() => this.handleTableSaveFailure());
+    this.showPopup = false;
+    this.loading = false;
+  }
+
+  private handleTableSaveSuccess(){
+
+    const notification: Notification = {
+      id:          NOTIFICATION_SAVE_SORTIERUNG,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.SAVE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.SAVE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(NOTIFICATION_SAVE_SORTIERUNG)
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.saveLoading = false;
+          this.loadMannschaftsTable();
+        }
+      });
+
+    this.notificationService.showNotification(notification);
+  }
+
+
+  private handleTableSaveFailure(){
+    console.log("Editing of the Sortierung failed.{}",this.selectedLigatabelleEntry);
+    this.loadMannschaftsTable();
   }
 }
