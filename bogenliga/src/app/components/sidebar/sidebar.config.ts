@@ -2,13 +2,14 @@ import {UserPermission} from '@shared/services';
 import {SideBarNavigationItem} from './types/sidebar-navigation-item.interface';
 
 import {
-  faAirFreshener,
   faArchive,
   faBullseye,
   faCalendarAlt,
   faFootballBall,
   faHome,
-  faSitemap, faUsers, faUsersCog, faListOl
+  faListOl,
+  faSitemap,
+  faUsers
 } from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
@@ -37,42 +38,42 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label:      'SIDEBAR.VERWALTUNG',
     icon:       faArchive,
     route:      '/verwaltung',
-    permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+    permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
     subitems: [
       {
         label:      'DSB Mitglieder',
         route:      '/verwaltung/dsbmitglieder',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN]
       },
       {
         label: 'Benutzer',
         route: '/verwaltung/benutzer',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
       {
         label:      'Klassen',
         route:      '/verwaltung/klassen',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF]
       },
       {
         label:      'Vereine',
         route:      '/verwaltung/vereine',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN]
       },
       {
         label:      'Ligen',
         route:      '/verwaltung/liga',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN]
       },
       {
         label:      'Regionen',
         route:      '/verwaltung/region',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN]
       },
       {
         label:    'Veranstaltungen',
         route:    '/verwaltung/veranstaltung',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF]
       }
     ]
   },
@@ -80,7 +81,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label:      'SIDEBAR.WETTKAMPF',
     icon:       faSitemap,
     route:      '/wettkaempfe',
-    permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
+    permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: []
   },
   {
@@ -94,7 +95,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label:      'SIDEBAR.MANNSCHAFTEN',
     icon:       faListOl,
     route:      '/mannschaften',
-    permissons: [],
+    permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: []
   },
   {
