@@ -126,6 +126,28 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
   }
 
 
+  public findAllByVeranstaltungsId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVeranstaltungsID/' + id).build())
+        .then((data: VersionedDataTransferObject[]) => {
+
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
+
   public findById(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO>> {
     // return promise
     // sign in success -> resolve promise
