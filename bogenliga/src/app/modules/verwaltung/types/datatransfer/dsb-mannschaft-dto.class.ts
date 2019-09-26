@@ -9,6 +9,7 @@ export class DsbMannschaftDTO implements DataTransferObject {
   veranstaltungId: number;
   veranstaltungName: string;
   name: string;
+  sortierung: number;
 
   static copyFrom(optional: {
     id?: number,
@@ -16,7 +17,9 @@ export class DsbMannschaftDTO implements DataTransferObject {
     vereinId?: number,
     benutzerId?: number,
     version?: number,
-    veranstaltungId?: number;
+    veranstaltungId?: number,
+    name?: string,
+    sortierung?: number;
   } = {}): DsbMannschaftDTO {
     const copy = new DsbMannschaftDTO();
     // show '0' value
@@ -42,8 +45,14 @@ export class DsbMannschaftDTO implements DataTransferObject {
     } else {
       copy.veranstaltungId = null;
     }
+    if (optional.sortierung >= 0) {
+      copy.sortierung = optional.sortierung;
+    } else {
+      copy.sortierung = null;
+    }
     copy.version = optional.version || null;
     copy.nummer = optional.nummer || '';
+    copy.name = optional.name || '';
 
     return copy;
   }
