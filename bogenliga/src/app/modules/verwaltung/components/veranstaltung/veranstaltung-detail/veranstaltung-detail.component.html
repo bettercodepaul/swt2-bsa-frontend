@@ -235,7 +235,7 @@
               </div>
 
               <div class="col-sm-3">
-                <b style="font-size: 2.5vh">{{this.selectedLigatabelleEntry.mannschaft_name}}</b>
+                <b style="font-size: 2.5vh">{{this.selectedMannschaft.mannschaft_name}}</b>
               </div>
             </div>
 
@@ -247,7 +247,7 @@
                         id="sortierung"
                         name="sortierung"
                         #sortierung="ngModel"
-                        [(ngModel)]="this.selectedLigatabelleEntry.sortierung">
+                        [(ngModel)]="this.selectedMannschaft.sortierung">
                   <option *ngFor="let tbPlatz of possibleTabellenplatz"> {{tbPlatz}}</option>
                 </select>
               </div>

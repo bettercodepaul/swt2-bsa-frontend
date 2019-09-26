@@ -84,8 +84,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   public showTable = false;
   public AlertType = AlertType;
   public showPopup = false;
-  public selectedLigatabelleEntry: LigatabelleErgebnisDO = new LigatabelleErgebnisDO();
-  public possibleTabellenplatz: number[] = [0,1,2,3,4,5,6,7,8];
+  public selectedMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public possibleTabellenplatz: number[] = [1,2,3,4,5,6,7,8];
   public oldSortierung: number;
 
   constructor(
@@ -540,31 +540,35 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
 
   private loadMannschaftsTable(){
-      this.ligatabellenService.getLigatabelleVeranstaltung(this.id)
-        .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.loadTableRows(response.payload))
-        .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.rows = []);
+    this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
+      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.loadTableRows(response.payload))
+      .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
+      // this.ligatabellenService.getLigatabelleVeranstaltung(this.id)
+      //   .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.loadTableRows(response.payload))
+      //   .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.rows = []);
   }
 
-  private loadTableRows(payload: LigatabelleErgebnisDO[]){
+  private loadTableRows(payload: DsbMannschaftDO[]){
+    console.log("Mannschaften: ");
+    console.log(payload);
     this.rows = toTableRows(payload);
   }
 
   public onEdit(versionedDataObject: VersionedDataObject){
-    this.selectedLigatabelleEntry = versionedDataObject as LigatabelleErgebnisDO;
-    console.log("Edit pushed..");
-    console.log(this.selectedLigatabelleEntry);
-    this.oldSortierung = this.selectedLigatabelleEntry.sortierung;
+    this.selectedMannschaft = versionedDataObject as DsbMannschaftDO;
+
+    this.oldSortierung = this.selectedMannschaft.sortierung;
     this.showPopup = true;
   }
 
   public onTableEditCancel( event: any){
-    this.selectedLigatabelleEntry.sortierung = this.oldSortierung;
+    this.selectedMannschaft.sortierung = this.oldSortierung;
     this.showPopup = false;
   }
 
   public onTableEditSave(event: any){
     const maSortierung = new MannschaftSortierungDO(
-      this.selectedLigatabelleEntry.mannschaft_id, this.selectedLigatabelleEntry.sortierung);
+      this.selectedMannschaft.id, this.selectedMannschaft.sortierung);
     this.maSortierungService.update(maSortierung)
       .then(() => this.handleTableSaveSuccess())
       .catch(() => this.handleTableSaveFailure());
@@ -597,7 +601,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
 
   private handleTableSaveFailure(){
-    console.log("Editing of the Sortierung failed.{}",this.selectedLigatabelleEntry);
+    console.log("Editing of the Sortierung failed.{}",this.selectedMannschaft);
     this.loadMannschaftsTable();
   }
 }
