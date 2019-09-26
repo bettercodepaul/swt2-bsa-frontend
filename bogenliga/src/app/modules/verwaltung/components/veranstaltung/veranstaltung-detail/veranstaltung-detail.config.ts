@@ -10,13 +10,8 @@ export const VERANSTALTUNG_DETAIL_CONFIG: CommonDialogConfig = {
 export const VERANSTALTUNG_DETAIL_TABLE_Config: TableConfig = {
   columns: [
     {
-      translationKey: 'WETTKAEMPFE.LIGATABELLE.TABELLENPLATZ',
-      propertyName:   'tabellenplatz',
-      width:          20,
-    },
-    {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.MANNSCHAFTNAME',
-      propertyName:   'mannschaft_name',
+      propertyName:   'name',
       width:          20,
     },
     {
