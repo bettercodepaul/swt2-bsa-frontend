@@ -8,9 +8,8 @@ export class BenutzerOverviewGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return true;
-    // return this.currentUserService.hasPermission(
-    //   UserPermission.CAN_READ_SYSTEMDATEN);
+    return this.currentUserService.hasAnyPermisson(
+      [UserPermission.CAN_READ_SYSTEMDATEN]);
 
   }
 }
