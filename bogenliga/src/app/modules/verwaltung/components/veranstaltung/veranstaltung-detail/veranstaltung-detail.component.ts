@@ -28,12 +28,12 @@ import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkam
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
-import {TableRow} from "@shared/components/tables/types/table-row.class";
-import {LigatabelleDataProviderService} from "../../../../mannschaft/services/ligatabelle-data-provider.service";
-import {LigatabelleErgebnisDO} from "../../../../mannschaft/types/ligatabelle-ergebnis-do.class";
-import {MannschaftSortierungDataProviderService} from "@verwaltung/services/mannschaftSortierung-data-provider.service";
-import {VersionedDataObject} from "@shared/data-provider/models/versioned-data-object.interface";
-import {MannschaftSortierungDO} from "@verwaltung/types/mannschaftSortierung-do.class";
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {LigatabelleDataProviderService} from '../../../../mannschaft/services/ligatabelle-data-provider.service';
+import {LigatabelleErgebnisDO} from '../../../../mannschaft/types/ligatabelle-ergebnis-do.class';
+import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mannschaftSortierung-data-provider.service';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -79,13 +79,13 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public id;
 
-  //For the Mannschaft-Table
+  // For the Mannschaft-Table
   public rows: TableRow[];
   public showTable = false;
   public AlertType = AlertType;
   public showPopup = false;
   public selectedMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
-  public possibleTabellenplatz: number[] = [1,2,3,4,5,6,7,8];
+  public possibleTabellenplatz: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
   public oldSortierung: number;
 
   constructor(
@@ -539,7 +539,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   }
 
 
-  private loadMannschaftsTable(){
+  private loadMannschaftsTable() {
     this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
       .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.loadTableRows(response.payload))
       .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
@@ -548,25 +548,25 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
       //   .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.rows = []);
   }
 
-  private loadTableRows(payload: DsbMannschaftDO[]){
-    console.log("Mannschaften: ");
+  private loadTableRows(payload: DsbMannschaftDO[]) {
+    console.log('Mannschaften: ');
     console.log(payload);
     this.rows = toTableRows(payload);
   }
 
-  public onEdit(versionedDataObject: VersionedDataObject){
+  public onEdit(versionedDataObject: VersionedDataObject) {
     this.selectedMannschaft = versionedDataObject as DsbMannschaftDO;
 
     this.oldSortierung = this.selectedMannschaft.sortierung;
     this.showPopup = true;
   }
 
-  public onTableEditCancel( event: any){
+  public onTableEditCancel( event: any) {
     this.selectedMannschaft.sortierung = this.oldSortierung;
     this.showPopup = false;
   }
 
-  public onTableEditSave(event: any){
+  public onTableEditSave(event: any) {
     const maSortierung = new MannschaftSortierungDO(
       this.selectedMannschaft.id, this.selectedMannschaft.sortierung);
     this.maSortierungService.update(maSortierung)
@@ -576,7 +576,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loading = false;
   }
 
-  private handleTableSaveSuccess(){
+  private handleTableSaveSuccess() {
 
     const notification: Notification = {
       id:          NOTIFICATION_SAVE_SORTIERUNG,
@@ -600,8 +600,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   }
 
 
-  private handleTableSaveFailure(){
-    console.log("Editing of the Sortierung failed.{}",this.selectedMannschaft);
+  private handleTableSaveFailure() {
+    console.log('Editing of the Sortierung failed.{}', this.selectedMannschaft);
     this.loadMannschaftsTable();
   }
 }

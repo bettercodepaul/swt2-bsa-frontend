@@ -1,6 +1,6 @@
 import {CommonDialogConfig} from '../../../../shared/components/dialogs';
-import {TableConfig} from "@shared/components/tables/types/table-config.interface";
-import {TableActionType} from "@shared/components/tables/types/table-action-type.enum";
+import {TableConfig} from '@shared/components/tables/types/table-config.interface';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 
 export const VERANSTALTUNG_DETAIL_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',

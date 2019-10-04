@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
-import {CurrentUserService, UserPermission} from "@shared/services";
+import {CurrentUserService, UserPermission} from '@shared/services';
 
 @Injectable()
 export class BenutzerOverviewGuard implements CanActivate {
