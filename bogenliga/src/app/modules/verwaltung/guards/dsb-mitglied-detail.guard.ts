@@ -9,6 +9,6 @@ export class DsbMitgliedDetailGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_READ_MY_VEREIN]);
+      [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_READ_MY_VEREIN, UserPermission.CAN_MODIFY_MY_VEREIN]);
   }
 }
