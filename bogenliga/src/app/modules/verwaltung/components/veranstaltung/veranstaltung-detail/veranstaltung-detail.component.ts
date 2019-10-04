@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent} from '@shared/components';
-import {ButtonType} from '@shared/components';
+import {AlertType, ButtonType, CommonComponent, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -19,7 +18,7 @@ import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
-import {VERANSTALTUNG_DETAIL_CONFIG} from './veranstaltung-detail.config';
+import {VERANSTALTUNG_DETAIL_CONFIG, VERANSTALTUNG_DETAIL_TABLE_Config} from './veranstaltung-detail.config';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
 import {LigaDO} from '../../../../verwaltung/types/liga-do.class';
 import {LigaDTO} from '../../../../verwaltung/types/datatransfer/liga-dto.class';
@@ -29,6 +28,12 @@ import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkam
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {LigatabelleDataProviderService} from '../../../../mannschaft/services/ligatabelle-data-provider.service';
+import {LigatabelleErgebnisDO} from '../../../../mannschaft/types/ligatabelle-ergebnis-do.class';
+import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mannschaftSortierung-data-provider.service';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -36,6 +41,7 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_s
 const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
+const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
 
 @Component({
   selector:    'bla-veranstaltung-detail',
@@ -44,6 +50,7 @@ const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 })
 export class VeranstaltungDetailComponent extends CommonComponent implements OnInit {
   public config = VERANSTALTUNG_DETAIL_CONFIG;
+  public tableConfig = VERANSTALTUNG_DETAIL_TABLE_Config;
   public ButtonType = ButtonType;
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
@@ -72,6 +79,15 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
   public id;
 
+  // For the Mannschaft-Table
+  public rows: TableRow[];
+  public showTable = false;
+  public AlertType = AlertType;
+  public showPopup = false;
+  public selectedMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public possibleTabellenplatz: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
+  public oldSortierung: number;
+
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampftypDataProvider: WettkampftypDataProviderService,
@@ -81,7 +97,9 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     private mannschaftDataProvider: DsbMannschaftDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private ligatabellenService: LigatabelleDataProviderService,
+    private maSortierungService: MannschaftSortierungDataProviderService) {
     super();
   }
 
@@ -108,6 +126,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
           this.saveLoading = false;
         } else {
           this.loadById(params[ID_PATH_PARAM]);
+          this.showTable = true;
+          this.loadMannschaftsTable();
         }
       }
     });
@@ -516,5 +536,72 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   private handleAllVeranstaltungResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     this.allVeranstaltung = [];
     this.loading = false;
+  }
+
+
+  private loadMannschaftsTable() {
+    this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
+      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.loadTableRows(response.payload))
+      .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
+      // this.ligatabellenService.getLigatabelleVeranstaltung(this.id)
+      //   .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.loadTableRows(response.payload))
+      //   .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.rows = []);
+  }
+
+  private loadTableRows(payload: DsbMannschaftDO[]) {
+    console.log('Mannschaften: ');
+    console.log(payload);
+    this.rows = toTableRows(payload);
+  }
+
+  public onEdit(versionedDataObject: VersionedDataObject) {
+    this.selectedMannschaft = versionedDataObject as DsbMannschaftDO;
+
+    this.oldSortierung = this.selectedMannschaft.sortierung;
+    this.showPopup = true;
+  }
+
+  public onTableEditCancel( event: any) {
+    this.selectedMannschaft.sortierung = this.oldSortierung;
+    this.showPopup = false;
+  }
+
+  public onTableEditSave(event: any) {
+    const maSortierung = new MannschaftSortierungDO(
+      this.selectedMannschaft.id, this.selectedMannschaft.sortierung);
+    this.maSortierungService.update(maSortierung)
+      .then(() => this.handleTableSaveSuccess())
+      .catch(() => this.handleTableSaveFailure());
+    this.showPopup = false;
+    this.loading = false;
+  }
+
+  private handleTableSaveSuccess() {
+
+    const notification: Notification = {
+      id:          NOTIFICATION_SAVE_SORTIERUNG,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.SAVE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.SAVE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(NOTIFICATION_SAVE_SORTIERUNG)
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.saveLoading = false;
+          this.loadMannschaftsTable();
+        }
+      });
+
+    this.notificationService.showNotification(notification);
+  }
+
+
+  private handleTableSaveFailure() {
+    console.log('Editing of the Sortierung failed.{}', this.selectedMannschaft);
+    this.loadMannschaftsTable();
   }
 }
