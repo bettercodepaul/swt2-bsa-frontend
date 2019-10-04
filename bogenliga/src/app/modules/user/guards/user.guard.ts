@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {CanActivate} from '@angular/router';
-import {CurrentUserService} from '../../shared/services/current-user';
+import {CurrentUserService, UserPermission} from '../../shared/services/current-user';
 
 @Injectable()
 export class UserGuard implements CanActivate {
@@ -8,6 +8,7 @@ export class UserGuard implements CanActivate {
   }
 
   canActivate() {
-    return true;
+    return this.currentUserService.hasAnyPermisson(
+      []);
   }
 }
