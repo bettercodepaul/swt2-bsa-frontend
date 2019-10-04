@@ -20,5 +20,6 @@ export class LigatabelleErgebnisDO implements VersionedDataObject {
   satzpunkte: string;
   satzpkt_differenz: number;
   tabellenplatz: number;
+  sortierung: number;
 
 }

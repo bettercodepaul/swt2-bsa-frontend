@@ -10,4 +10,5 @@ export class DsbMannschaftDO implements VersionedDataObject {
   veranstaltungId: number;
   veranstaltungName: string;
   name: string;
+  sortierung: number;
 }

@@ -866,6 +866,25 @@
     },
     "VERANSTALTUNG_DETAIL": {
       "TITLE": "Veranstaltung - Details",
+      "TABLE": {
+        "TITLE": "Teilnehmende Mannschaften:",
+        "SORTIERUNG": "Initialer Tabellenplatz",
+        "EDIT": {
+          "TITLE": "Neuer Initialer Tabellenplatz",
+          "DESCRIPTION1": "Bitte lege den neuen Initialen Tabellenplatz fest:",
+          "DESCRIPTION2": "Ausgewählte Mannschaft: ",
+          "BUTTONS": {
+            "SAVE": "Speichern",
+            "CANCEL": "Abbrechen"
+          }
+        },
+        "NOTIFICATION": {
+          "SAVE": {
+            "TITLE": "Speichern erfolgreich",
+            "DESCRIPTION": "Die Änderung an der Mannschaft wurde erfolgreich gespeichert"
+          }
+        }
+      },
       "FORM": {
         "NAME": {
           "LABEL": "Veranstaltung Name",
