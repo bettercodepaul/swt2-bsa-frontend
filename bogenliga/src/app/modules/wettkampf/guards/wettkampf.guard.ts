@@ -9,6 +9,6 @@ export class WettkampfGuard implements CanActivate {
 
   canActivate() {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF]);
+      [UserPermission.CAN_READ_DEFAULT]);
   }
 }
