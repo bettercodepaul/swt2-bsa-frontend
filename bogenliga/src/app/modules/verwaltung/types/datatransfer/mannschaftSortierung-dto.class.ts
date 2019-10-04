@@ -1,6 +1,6 @@
-import {DataTransferObject} from "@shared/data-provider";
+import {DataTransferObject} from '@shared/data-provider';
 
-export class MannschaftSortierungDTO implements DataTransferObject{
+export class MannschaftSortierungDTO implements DataTransferObject {
   id: number;
   version: number;
 
