@@ -868,6 +868,7 @@
       "TITLE": "Veranstaltung - Details",
       "TABLE": {
         "TITLE": "Teilnehmende Mannschaften:",
+        "BUTTON": "Initiale Ligatabelle erstellen",
         "SORTIERUNG": "Initialer Tabellenplatz",
         "EDIT": {
           "TITLE": "Neuer Initialer Tabellenplatz",
@@ -882,6 +883,16 @@
           "SAVE": {
             "TITLE": "Speichern erfolgreich",
             "DESCRIPTION": "Die Änderung an der Mannschaft wurde erfolgreich gespeichert"
+          },
+          "MATCHES": {
+            "SUC": {
+              "TITLE": "Initialisierung erfolgreich",
+              "DESCRIPTION": "Die Ligatabelle wurde erfogreich initialisiert"
+            },
+            "FAILURE": {
+              "TITLE": "Initialisierung fehlgeschlagen",
+              "DESCRIPTION": "Bei der Initialiserung der Ligatabelle ist ein Fehler aufgetreten"
+            }
           }
         }
       },
