@@ -9,8 +9,10 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {fromPayload, fromPayloadArray} from '../mapper/match-mapper';
+import {fromPayload, fromPayloadArray, fromVeranstaltungsPayload} from '../mapper/match-mapper';
 import {MatchDO} from '../types/match-do.class';
+import {VeranstaltungDO} from "@verwaltung/types/veranstaltung-do.class";
+import {VeranstaltungDTO} from "@verwaltung/types/datatransfer/veranstaltung-dto.class";
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +82,27 @@ export class MatchDataProviderService extends DataProviderService {
     });
 
   }
+
+  public createInitialMatchesWT0(payload:VeranstaltungDO): Promise<BogenligaResponse<VeranstaltungDO>> {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+          this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('WT0').build(), payload)
+            .then((data: VersionedDataTransferObject) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromVeranstaltungsPayload(data)});
+
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+        });
+    }
+
   //
   // public deleteById(id: number): Promise<BogenligaResponse<void>> {
   //   // return promise

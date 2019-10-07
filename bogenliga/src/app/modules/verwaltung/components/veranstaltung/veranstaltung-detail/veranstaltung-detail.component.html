@@ -218,8 +218,18 @@
   <div *ngIf="showTable" class="row">
     <div class="col-sm-12">
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-9">
           <h4>{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.TITLE' | translate}}</h4>
+        </div>
+        <div class="col-sm-3">
+          <bla-button *ngIf="entityExists()"
+                      [id]="'veranstaltungInitialeLigatabelle'"
+                      [disabled]="this.checkCountMannschaften()"
+                      [loading]="saveLoading"
+                      (onClick)="this.createMatchesWT0($event)">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.BUTTON' | translate }}
+          </bla-button>
+
         </div>
       </div>
 
