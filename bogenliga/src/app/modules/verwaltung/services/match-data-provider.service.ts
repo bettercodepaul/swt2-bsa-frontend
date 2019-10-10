@@ -11,8 +11,8 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray, fromVeranstaltungsPayload} from '../mapper/match-mapper';
 import {MatchDO} from '../types/match-do.class';
-import {VeranstaltungDO} from "@verwaltung/types/veranstaltung-do.class";
-import {VeranstaltungDTO} from "@verwaltung/types/datatransfer/veranstaltung-dto.class";
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -83,7 +83,7 @@ export class MatchDataProviderService extends DataProviderService {
 
   }
 
-  public createInitialMatchesWT0(payload:VeranstaltungDO): Promise<BogenligaResponse<VeranstaltungDO>> {
+  public createInitialMatchesWT0(payload: VeranstaltungDO): Promise<BogenligaResponse<VeranstaltungDO>> {
       // return promise
       // sign in success -> resolve promise
       // sign in failure -> reject promise with result
