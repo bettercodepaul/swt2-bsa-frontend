@@ -34,7 +34,7 @@ import {LigatabelleErgebnisDO} from '../../../../mannschaft/types/ligatabelle-er
 import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mannschaftSortierung-data-provider.service';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
-import {MatchDataProviderService} from "@verwaltung/services/match-data-provider.service";
+import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -608,17 +608,17 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.loadMannschaftsTable();
   }
 
-  public checkCountMannschaften():boolean{
-    return !(this.rows != undefined && this.rows.length == 8);
+  public checkCountMannschaften(): boolean {
+    return !(this.rows !== undefined && this.rows.length === 8);
   }
 
-  public createMatchesWT0(event: any){
+  public createMatchesWT0(event: any) {
     this.matchDataProvider.createInitialMatchesWT0(this.currentVeranstaltung)
       .then(() => this.handleCreateMatchesWT0Success())
-      .catch(()=> this.handleCreateMatchesWT0Failure());
+      .catch(() => this.handleCreateMatchesWT0Failure());
   }
 
-  private handleCreateMatchesWT0Success(){
+  private handleCreateMatchesWT0Success() {
     const notification: Notification = {
       id:          NOTIFICATION_INIT_LIGATABELLE_SUC,
       title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.MATCHES.SUC.TITLE',
@@ -639,7 +639,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.notificationService.showNotification(notification);
   }
 
-  private handleCreateMatchesWT0Failure(){
+  private handleCreateMatchesWT0Failure() {
     const notification: Notification = {
       id:          NOTIFICATION_INIT_LIGATABELLE_FAIL,
       title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.MATCHES.FAILURE.TITLE',

@@ -1,6 +1,6 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
-import {VeranstaltungDTO} from "@verwaltung/types/datatransfer/veranstaltung-dto.class";
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 
 export function fromPayload(payload: VersionedDataTransferObject): MatchDTO {
   return MatchDTO.copyFrom(payload);
