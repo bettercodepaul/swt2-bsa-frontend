@@ -34,6 +34,7 @@ import {LigatabelleErgebnisDO} from '../../../../mannschaft/types/ligatabelle-er
 import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mannschaftSortierung-data-provider.service';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
+import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -42,6 +43,9 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_f
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
+const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
+const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
+
 
 @Component({
   selector:    'bla-veranstaltung-detail',
@@ -99,7 +103,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private ligatabellenService: LigatabelleDataProviderService,
-    private maSortierungService: MannschaftSortierungDataProviderService) {
+    private maSortierungService: MannschaftSortierungDataProviderService,
+    private matchDataProvider: MatchDataProviderService) {
     super();
   }
 
@@ -549,8 +554,6 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   }
 
   private loadTableRows(payload: DsbMannschaftDO[]) {
-    console.log('Mannschaften: ');
-    console.log(payload);
     this.rows = toTableRows(payload);
   }
 
@@ -603,5 +606,57 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
   private handleTableSaveFailure() {
     console.log('Editing of the Sortierung failed.{}', this.selectedMannschaft);
     this.loadMannschaftsTable();
+  }
+
+  public checkCountMannschaften(): boolean {
+    return !(this.rows !== undefined && this.rows.length === 8);
+  }
+
+  public createMatchesWT0(event: any) {
+    this.matchDataProvider.createInitialMatchesWT0(this.currentVeranstaltung)
+      .then(() => this.handleCreateMatchesWT0Success())
+      .catch(() => this.handleCreateMatchesWT0Failure());
+  }
+
+  private handleCreateMatchesWT0Success() {
+    const notification: Notification = {
+      id:          NOTIFICATION_INIT_LIGATABELLE_SUC,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.MATCHES.SUC.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.MATCHES.SUC.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(NOTIFICATION_INIT_LIGATABELLE_SUC)
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.saveLoading = false;
+        }
+      });
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleCreateMatchesWT0Failure() {
+    const notification: Notification = {
+      id:          NOTIFICATION_INIT_LIGATABELLE_FAIL,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.MATCHES.FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.MATCHES.FAILURE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(NOTIFICATION_INIT_LIGATABELLE_FAIL)
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.saveLoading = false;
+        }
+      });
+
+    this.notificationService.showNotification(notification);
   }
 }
