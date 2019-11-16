@@ -1,5 +1,3 @@
-//Achtung Fehler in der Bennenung, Inhalt von mannschaft und wettkampf vertauscht!
-
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 export class WettkampfErgebnis implements VersionedDataObject {
