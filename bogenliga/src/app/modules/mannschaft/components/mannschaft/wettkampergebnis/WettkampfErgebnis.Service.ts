@@ -1,5 +1,3 @@
-//Achtung Fehler in der Bennenung, Inhalt von mannschaft und wettkampf vertauscht!
-
 import {WettkampfErgebnis} from './WettkampfErgebnis';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';

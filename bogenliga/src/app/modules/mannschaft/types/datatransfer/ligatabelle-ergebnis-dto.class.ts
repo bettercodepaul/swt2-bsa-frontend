@@ -1,4 +1,3 @@
-//Achtung Fehler in der Bennenung, Inhalt von mannschaft und wettkampf vertauscht!
 
 import {DataTransferObject} from '@shared/data-provider';
 
