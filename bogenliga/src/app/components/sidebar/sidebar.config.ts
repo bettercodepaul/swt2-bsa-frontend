@@ -94,7 +94,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   {
     label:      'SIDEBAR.MANNSCHAFTEN',
     icon:       faListOl,
-    route:      '/mannschaften',
+    route:      '/ligatabelle',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: []
   },

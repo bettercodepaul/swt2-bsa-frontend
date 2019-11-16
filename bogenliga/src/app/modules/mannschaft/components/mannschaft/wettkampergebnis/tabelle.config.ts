@@ -1,3 +1,5 @@
+//Achtung Fehler in der Bennenung, Inhalt von mannschaft und wettkampf vertauscht!
+
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
 export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
