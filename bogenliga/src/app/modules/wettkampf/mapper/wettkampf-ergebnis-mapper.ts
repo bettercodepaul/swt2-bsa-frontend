@@ -1,6 +1,6 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {LigatabelleErgebnisDTO} from '../types/datatransfer/ligatabelle-ergebnis-dto.class';
-import {LigatabelleErgebnisDO} from '../types/ligatabelle-ergebnis-do.class';
+import {LigatabelleErgebnisDTO} from '../types/datatransfer/wettkampf-ergebnis-dto.class';
+import {LigatabelleErgebnisDO} from '../types/wettkampf-ergebnis-do.class';
 
 export function toDO(ligatabelleErgebnisDTO: LigatabelleErgebnisDTO): LigatabelleErgebnisDO {
 

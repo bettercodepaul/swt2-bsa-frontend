@@ -29,8 +29,8 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {LigatabelleDataProviderService} from '../../../../mannschaft/services/ligatabelle-data-provider.service';
-import {LigatabelleErgebnisDO} from '../../../../mannschaft/types/ligatabelle-ergebnis-do.class';
+import {WettkampfDataProviderService} from '../../../../wettkampf/services/wettkampf-data-provider.service';
+import {LigatabelleErgebnisDO} from '../../../../wettkampf/types/wettkampf-ergebnis-do.class';
 import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mannschaftSortierung-data-provider.service';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
@@ -102,7 +102,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private ligatabellenService: LigatabelleDataProviderService,
+    private ligatabellenService: WettkampfDataProviderService,
     private maSortierungService: MannschaftSortierungDataProviderService,
     private matchDataProvider: MatchDataProviderService) {
     super();

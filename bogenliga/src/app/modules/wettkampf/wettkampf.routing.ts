@@ -1,8 +1,6 @@
 import {Routes} from '@angular/router';
-import {WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.component';
-import {WettkampfGuard} from './guards/wettkampf.guard';
+import {WettkampfComponent} from './/components/wettkampf/wettkampf.component';
 
-
-export const WETTKAMPF_ROUTES: Routes = [
-  {path: '', component: WettkaempfeComponent, canActivate: [WettkampfGuard]}
+export const MANNSCHAFT_ROUTES: Routes = [
+  {path: '', pathMatch: 'full', component: WettkampfComponent},
 ];
