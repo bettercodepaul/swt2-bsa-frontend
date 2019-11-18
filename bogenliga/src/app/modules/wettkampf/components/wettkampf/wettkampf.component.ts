@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MANNSCHAFT_CONFIG} from './mannschaft.config';
+import {MANNSCHAFT_CONFIG} from './wettkampf.config';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
@@ -13,10 +13,10 @@ import {WettkampfErgebnis} from './wettkampergebnis/WettkampfErgebnis';
 import {WettkampfErgebnisService} from './wettkampergebnis/WettkampfErgebnis.Service';
 
 @Component({
-  selector: 'bla-mannschaft',
-  templateUrl: './mannschaft.component.html'
+  selector:    'bla-mannschaft',
+  templateUrl: './wettkampf.component.html'
 })
-export class MannschaftComponent extends CommonComponent implements OnInit {
+export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public config = MANNSCHAFT_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;

@@ -364,7 +364,7 @@ export class TabletEingabeComponent implements OnInit {
     this.notificationService.showNotification({
       id:          NOTIFICATION_TABLET_SESSION_MISSING,
       title:       'Konfigurationsfehler',
-      description: 'Dieses Gerät wurde noch für keine Scheibe registriert. Bitte holen Sie dies in der Wettkampf-Administration nach.',
+      description: 'Dieses Gerät wurde noch für keine Scheibe registriert. Bitte holen Sie dies in der Ligatabelle-Administration nach.',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.SYSTEM,
       type:        NotificationType.OK,

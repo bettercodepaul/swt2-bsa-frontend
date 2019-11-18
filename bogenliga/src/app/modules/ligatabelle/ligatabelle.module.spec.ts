@@ -13,11 +13,11 @@ import {SidebarComponent} from '../../components/sidebar/sidebar.component';
 import {HomeModule} from '../home/home.module';
 import {APP_REDUCERS} from '../shared/redux-store';
 import {SharedModule} from '../shared/shared.module';
-import {WettkampfModule} from './wettkampf.module';
-import {WETTKAMPF_ROUTES} from './wettkampf.routing';
+import {LigatabelleModule} from './ligatabelle.module';
+import {WETTKAMPF_ROUTES} from './ligatabelle.routing';
 
 describe('WettkampfModule', () => {
-  let wettkampfModule: WettkampfModule;
+  let wettkampfModule: LigatabelleModule;
   let location: Location;
   let router: Router;
   let fixture;
@@ -37,14 +37,14 @@ describe('WettkampfModule', () => {
         HomeModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
-        WettkampfModule,
+        LigatabelleModule,
         SharedModule
       ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    wettkampfModule = new WettkampfModule();
+    wettkampfModule = new LigatabelleModule();
     router = TestBed.get(Router);
     location = TestBed.get(Location);
     fixture = TestBed.createComponent(AppComponent);

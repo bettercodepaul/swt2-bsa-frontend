@@ -3,7 +3,7 @@ import {CanActivate} from '@angular/router';
 import {CurrentUserService, UserPermission} from '../../shared/services/current-user';
 
 @Injectable()
-export class WettkampfGuard implements CanActivate {
+export class LigatabelleGuard implements CanActivate {
   constructor(private currentUserService: CurrentUserService) {
   }
 

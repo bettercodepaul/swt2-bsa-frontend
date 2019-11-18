@@ -2,21 +2,18 @@ import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
-import {SharedModule} from '../shared';
-import {WettkaempfeComponent} from './components/wettkaempfe/wettkaempfe.component';
-import {WettkampfGuard} from './guards/wettkampf.guard';
-import {WETTKAMPF_ROUTES} from './wettkampf.routing';
-
+import {SharedModule} from '@shared/shared.module';
+import {MANNSCHAFT_ROUTES} from './wettkampf.routing';
+import {WettkampfComponent} from './components/wettkampf/wettkampf.component';
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
-    RouterModule.forChild(WETTKAMPF_ROUTES),
+    RouterModule.forChild(MANNSCHAFT_ROUTES),
     SharedModule,
     FormsModule
   ],
-  declarations: [WettkaempfeComponent],
-  providers:    [WettkampfGuard]
+  declarations: [WettkampfComponent]
 })
 export class WettkampfModule {
 }
