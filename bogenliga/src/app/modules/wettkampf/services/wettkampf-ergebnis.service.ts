@@ -1,6 +1,6 @@
-import {LigatabelleErgebnisDO} from '../types/ligatabelle-ergebnis-do.class';
+import {LigatabelleErgebnisDO} from '../types/wettkampf-ergebnis-do.class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
-import {LigatabelleDataProviderService} from './ligatabelle-data-provider.service';
+import {WettkampfDataProviderService} from './wettkampf-data-provider.service';
 import {Injectable} from '@angular/core';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 
@@ -8,7 +8,7 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 @Injectable({
   providedIn: 'root'
 })
-export class LigatabelleErgebnisService {
+export class WettkampfErgebnisService {
   // Input
   public veranstaltung: VeranstaltungDO;
 
@@ -18,7 +18,7 @@ export class LigatabelleErgebnisService {
 
   private loading = false;
 
-  constructor(private ligatabelleDataProvider: LigatabelleDataProviderService) {
+  constructor(private ligatabelleDataProvider: WettkampfDataProviderService) {
 
   }
 

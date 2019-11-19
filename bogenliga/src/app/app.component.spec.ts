@@ -16,7 +16,7 @@ import {SidebarComponent} from './components/sidebar/sidebar.component';
 import {HomeModule} from './modules/home/home.module';
 import {APP_REDUCERS} from './modules/shared/redux-store';
 import {SharedModule} from './modules/shared/shared.module';
-import {WettkampfModule} from './modules/wettkampf/wettkampf.module';
+import {LigatabelleModule} from './modules/ligatabelle/ligatabelle.module';
 
 
 describe('AppComponent', () => {
@@ -37,13 +37,12 @@ describe('AppComponent', () => {
       imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
-        WettkampfModule,
         TranslateModule.forRoot(),
         StoreModule.forRoot(APP_REDUCERS),
         HttpClientModule,
         SharedModule,
         HomeModule,
-        WettkampfModule,
+        LigatabelleModule,
         FormsModule
       ]
     }).compileComponents();

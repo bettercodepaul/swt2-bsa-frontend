@@ -8,15 +8,15 @@ import {ROUTES} from '../../../../app.routing';
 import {HomeModule} from '../../../home/home.module';
 import {APP_REDUCERS} from '../../../shared/redux-store';
 import {SharedModule} from '../../../shared/shared.module';
-import {WettkaempfeComponent} from './wettkaempfe.component';
+import {LigatabelleComponent} from './ligatabelle.component';
 
 describe('WettkaempfeComponent', () => {
-  let component: WettkaempfeComponent;
-  let fixture: ComponentFixture<WettkaempfeComponent>;
+  let component: LigatabelleComponent;
+  let fixture: ComponentFixture<LigatabelleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WettkaempfeComponent],
+      declarations: [LigatabelleComponent],
       imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,
@@ -30,7 +30,7 @@ describe('WettkaempfeComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WettkaempfeComponent);
+    fixture = TestBed.createComponent(LigatabelleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -9,14 +9,14 @@ import {
   VersionedDataTransferObject
 } from '@shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {fromPayloadLigatabelleErgebnisArray} from '../mapper/ligatabelle-ergebnis-mapper';
-import {LigatabelleErgebnisDO} from '../types/ligatabelle-ergebnis-do.class';
-import {LigatabelleErgebnisDTO} from '../types/datatransfer/ligatabelle-ergebnis-dto.class';
+import {fromPayloadLigatabelleErgebnisArray} from '../mapper/wettkampf-ergebnis-mapper';
+import {LigatabelleErgebnisDO} from '../types/wettkampf-ergebnis-do.class';
+import {LigatabelleErgebnisDTO} from '../types/datatransfer/wettkampf-ergebnis-dto.class';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LigatabelleDataProviderService extends DataProviderService {
+export class WettkampfDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/mannschaft';
 
