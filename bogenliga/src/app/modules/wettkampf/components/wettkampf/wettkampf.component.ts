@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MANNSCHAFT_CONFIG} from './wettkampf.config';
+import {WETTKAMPF_CONFIG} from './wettkampf.config';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
@@ -18,7 +18,7 @@ import {WettkampfErgebnisService} from './wettkampergebnis/WettkampfErgebnis.Ser
 })
 export class WettkampfComponent extends CommonComponent implements OnInit {
 
-  public config = MANNSCHAFT_CONFIG;
+  public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
 
   public vereine: Array<VereinDO> = [];
