@@ -3,6 +3,6 @@ import {LigatabelleComponent} from './components/ligatabelle/ligatabelle.compone
 import {LigatabelleGuard} from './guards/ligatabelle.guard';
 
 
-export const WETTKAMPF_ROUTES: Routes = [
+export const LIGATABELLE_ROUTES: Routes = [
   {path: '', component: LigatabelleComponent, canActivate: [LigatabelleGuard]}
 ];

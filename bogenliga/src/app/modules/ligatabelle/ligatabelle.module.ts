@@ -5,13 +5,13 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {LigatabelleComponent} from './components/ligatabelle/ligatabelle.component';
 import {LigatabelleGuard} from './guards/ligatabelle.guard';
-import {WETTKAMPF_ROUTES} from './ligatabelle.routing';
+import {LIGATABELLE_ROUTES} from './ligatabelle.routing';
 
 
 @NgModule({
   imports:      [
     CommonModule,
-    RouterModule.forChild(WETTKAMPF_ROUTES),
+    RouterModule.forChild(LIGATABELLE_ROUTES),
     SharedModule,
     FormsModule
   ],
