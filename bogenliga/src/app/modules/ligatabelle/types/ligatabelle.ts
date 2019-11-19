@@ -1,7 +1,7 @@
 import {Time} from '@angular/common';
 import {TransferObject} from '../../shared/data-provider/models/transfer-object.interface';
 
-export class Wettkampf implements TransferObject {
+export class Ligatabelle implements TransferObject {
   id: number;
   veranstaltung_id: number;
   datum: Date;

@@ -1,24 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponent, toTableRows} from '@shared/components';
-import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './wettkaempfe.config';
+import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './ligatabelle.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {LigatabelleDataProviderService} from '../../../mannschaft/services/ligatabelle-data-provider.service';
+import {WettkampfDataProviderService} from '../../../wettkampf/services/wettkampf-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {} from '@shared/components/forms/';
-import {LigatabelleErgebnisDO} from '../../../mannschaft/types/ligatabelle-ergebnis-do.class';
-import {LigatabelleErgebnisDTO} from '../../../mannschaft/types/datatransfer/ligatabelle-ergebnis-dto.class';
+import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis-do.class';
+import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wettkampf-ergebnis-dto.class';
 import {NotificationService} from '@shared/services';
 
 @Component({
   selector:    'bla-wettkaempfe',
-  templateUrl: './wettkaempfe.component.html',
-  styleUrls:   ['./wettkaempfe.component.scss']
+  templateUrl: './ligatabelle.component.html',
+  styleUrls:   ['./ligatabelle.component.scss']
 })
-export class WettkaempfeComponent extends CommonComponent implements OnInit {
+export class LigatabelleComponent extends CommonComponent implements OnInit {
 
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
@@ -41,7 +41,7 @@ export class WettkaempfeComponent extends CommonComponent implements OnInit {
               private route: ActivatedRoute,
               private notificationService: NotificationService,
               private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-              private ligatabelleDataProvider: LigatabelleDataProviderService) {
+              private ligatabelleDataProvider: WettkampfDataProviderService) {
     super();
   }
 

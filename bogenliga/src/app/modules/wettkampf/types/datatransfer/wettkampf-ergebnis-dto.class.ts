@@ -1,3 +1,4 @@
+
 import {DataTransferObject} from '@shared/data-provider';
 
 export class LigatabelleErgebnisDTO implements DataTransferObject {
