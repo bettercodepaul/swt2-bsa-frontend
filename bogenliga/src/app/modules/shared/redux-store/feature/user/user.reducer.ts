@@ -1,5 +1,7 @@
 import * as Actions from './user.actions';
 import {UserState} from './user.state';
+import {UserSignInDTO} from '@shared/services';
+import {TOGGLE_SIDEBAR} from '@shared/redux-store';
 
 export const initialUserState: UserState = {
   isLoggedIn: false,
@@ -22,7 +24,9 @@ export function userReducer(state = initialUserState, action: Actions.UserAction
     case Actions.LOGOUT: {
       newState = {
         ...state,
-        user:       null,
+        //user is null, issues!!! Must be default user
+        user: null,
+        isDefaultUserLoggedIn : true,
         isLoggedIn: false
       };
       break;
