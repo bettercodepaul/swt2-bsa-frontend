@@ -36,6 +36,7 @@ export class UserDropdownComponent implements OnInit, OnChanges {
   public logout() {
     this.onAction.emit();
     this.userService.logout();
+    //signing in user as defaultUser, then redirecting it to URL /home 
     this.loginDataProvider.signInDefaultUser().then(r => this.router.navigateByUrl('/home'))
   }
 }
