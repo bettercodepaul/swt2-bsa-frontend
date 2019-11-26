@@ -101,14 +101,8 @@ export class LoginDataProviderService extends DataProviderService {
 
   //signs in the Default user and returns the Promise
   public signInDefaultUser(): Promise<LoginResult> {
+    const defaultUserCredentials: CredentialsDO = new CredentialsDO('ligadefault', 'user');
 
-
-   return new Promise((resolve, reject) => {
-      const credentialsDTO = new CredentialsDTO(this.getDefaultUser().username, this.getDefaultUser().password, false, this.getDefaultUser().code);
-      this.sendSignInRequest(credentialsDTO, resolve, reject);
-    });
-
-
-
+   return this.signIn(defaultUserCredentials);
   }
 }

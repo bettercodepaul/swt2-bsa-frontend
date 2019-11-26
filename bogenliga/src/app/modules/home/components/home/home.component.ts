@@ -45,7 +45,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
-      this.logindataprovider.signIn(this.logindataprovider.getDefaultUser())
+      this.logindataprovider.signInDefaultUser()
             .then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
