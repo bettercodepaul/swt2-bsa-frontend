@@ -4,7 +4,7 @@ import {select, Store} from '@ngrx/store';
 import {isNullOrUndefined} from '@shared/functions';
 import {filter, map} from 'rxjs/operators';
 import {LocalDataProviderService} from '../../local-data-provider/services';
-import {AppState, Login, Logout} from '../../redux-store';
+import {AppState, Login, LOGOUT, Logout} from '../../redux-store';
 import {UserState} from '../../redux-store/feature/user';
 import {Notification, NotificationUserAction} from '../notification/types';
 import {UserPermission} from './types/user-permission.enum';
@@ -123,7 +123,9 @@ export class CurrentUserService {
 
   public logout() {
     this.localDataProviderService.remove(CURRENT_USER_KEY);
-    this.store.dispatch(new Logout());
+    this.router.navigateByUrl("/home");
+    //here the bug for logout not showing properly
+    //this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(defaultUser.toJson))));
 
   }
 

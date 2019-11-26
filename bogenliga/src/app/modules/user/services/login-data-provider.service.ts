@@ -3,8 +3,8 @@ import {Injectable} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Store} from '@ngrx/store';
 import {DataProviderService, RestClient, UriBuilder} from '../../shared/data-provider';
-import {AppState} from '../../shared/redux-store';
-import {LOGOUT} from '../../shared/redux-store/feature/user';
+import {AppState} from '@shared/redux-store';
+import {LOGOUT} from '@shared/redux-store';
 import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
 import {CredentialsDO} from '../types/credentials-do.class';
 import {LoginResult} from '../types/login-result.enum';
@@ -46,6 +46,9 @@ export class LoginDataProviderService extends DataProviderService {
    */
   public signIn(credentialsDO: CredentialsDO): Promise<LoginResult> {
 
+    if(credentialsDO == this.getDefaultUser()) {
+      this.signInDefaultUser();
+    }
     // check remember me flag
     if (credentialsDO.rememberMe) {
       this.currentUserService.rememberUsername(credentialsDO.username);
@@ -88,5 +91,24 @@ export class LoginDataProviderService extends DataProviderService {
             reject(LoginResult.FAILURE);
           }
         });
+  }
+
+  public getDefaultUser() : CredentialsDO {
+    let defaultUser : CredentialsDO;
+    defaultUser = new CredentialsDO('ligadefault', 'user');
+    return defaultUser;
+  }
+
+  //signs in the Default user and returns the Promise
+  public signInDefaultUser(): Promise<LoginResult> {
+
+
+   return new Promise((resolve, reject) => {
+      const credentialsDTO = new CredentialsDTO(this.getDefaultUser().username, this.getDefaultUser().password, false, this.getDefaultUser().code);
+      this.sendSignInRequest(credentialsDTO, resolve, reject);
+    });
+
+
+
   }
 }

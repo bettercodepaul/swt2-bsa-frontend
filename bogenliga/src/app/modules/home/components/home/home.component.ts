@@ -32,18 +32,20 @@ export class HomeComponent extends CommonComponent implements OnInit {
   public rows: TableRow[];
   public currentDate: number =  Date.now();
   public dateHelper: string;
-  public defaultUser: CredentialsDO = new CredentialsDO('ligadefault', 'user');
+
+
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungDataProvider: VeranstaltungDataProviderService,
               private logindataprovider: LoginDataProviderService,
               private currentUserService: CurrentUserService) {
     super();
+
   }
 
   ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
-          this.logindataprovider.signIn(this.defaultUser)
+      this.logindataprovider.signIn(this.logindataprovider.getDefaultUser())
             .then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
@@ -136,6 +138,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
     }
   }
   private handleSuccessfulLogin() {
+    this.ngOnInit();
     this.loadWettkaempfe();
   }
 
