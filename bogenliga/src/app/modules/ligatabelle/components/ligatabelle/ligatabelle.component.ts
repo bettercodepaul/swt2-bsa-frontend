@@ -12,6 +12,8 @@ import {} from '@shared/components/forms/';
 import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis-do.class';
 import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wettkampf-ergebnis-dto.class';
 import {NotificationService} from '@shared/services';
+import {falseIfMissing} from 'protractor/built/util';
+import {BaseTableSorter} from '@shared/components/tables/control/base-table-sorter.class';
 
 @Component({
   selector:    'bla-wettkaempfe',
@@ -20,8 +22,10 @@ import {NotificationService} from '@shared/services';
 })
 export class LigatabelleComponent extends CommonComponent implements OnInit {
 
+
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
+
 
 
 
@@ -35,6 +39,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   public rowsLigatabelle: TableRow[];
   private tableContent: Array<LigatabelleErgebnisDO> = [];
   private remainingLigatabelleRequests: number;
+
 
 
   constructor(private router: Router,

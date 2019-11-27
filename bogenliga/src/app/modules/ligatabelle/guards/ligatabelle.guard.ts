@@ -7,8 +7,8 @@ export class LigatabelleGuard implements CanActivate {
   constructor(private currentUserService: CurrentUserService) {
   }
 
-  canActivate() {
+ canActivate() {
     return this.currentUserService.hasAnyPermisson(
       [UserPermission.CAN_READ_DEFAULT]);
-  }
+ }
 }

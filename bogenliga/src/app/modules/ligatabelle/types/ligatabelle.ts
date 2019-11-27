@@ -10,6 +10,7 @@ export class Ligatabelle implements TransferObject {
   wettkampf_tag: number;
   disziplin_id: number;
 
+
   constructor(id: number, veranstaltung_id: number, datum: Date, ort: string, beginn: Time, wettkampf_tag: number, disziplin_id: number) {
     this.id = id;
     this.veranstaltung_id = veranstaltung_id;

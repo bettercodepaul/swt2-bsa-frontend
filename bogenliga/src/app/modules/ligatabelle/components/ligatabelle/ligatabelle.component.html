@@ -1,18 +1,18 @@
 <bla-common-dialog [config]="config">
 
-  <div class="layout-elements">
+ <div class="layout-elements">
 
-    <bla-row-layout>
-      <div class="flexChild">
-        <h3><a class="blackLink"
-               routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.TITEL.VERANSTALTUNG' | translate }}</a></h3>
+   <bla-row-layout>
+     <div class="flexChild">
+       <h3><a class="blackLink"
+              routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.TITEL.VERANSTALTUNG' | translate }}</a></h3>
 
-        <table id="example"
-               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-               style="width:80%">
-          <!-- headlines -->
+       <table id="example"
+        class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+        style="width:80%">
+  <!-- headlines -->
 
-          <bla-quicksearch-list (onSelect)="onSelect($event)"
+           <bla-quicksearch-list (onSelect)="onSelect($event)"
                                 [items]="veranstaltungen"
                                 [loading]="loadingVeranstaltungen"
                                 [multipleSelections]="!multipleSelections"
@@ -28,22 +28,22 @@
        <!-- Ligatabelle -->
       <div>
         <h5><a class="blackLink"
-               routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
+          routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
 
-        <div class="row">
+   <div class="row">
 
 
-          <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
+     <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
           <h5>
-          <bla-data-table
-                          [config]="config_table"
-                          [rows]="rowsLigatabelle"
-                          [loading]="loadingLigatabelle"
-          >
-          </bla-data-table>
-          </h5>
-        </div>
-      </div>
-    </bla-row-layout>
+            <bla-unsorted-data-table
+                  [config]="config_table"
+                  [rows]="rowsLigatabelle"
+                  [loading]="loadingLigatabelle"
+  >
+  </bla-unsorted-data-table>
+  </h5>
   </div>
-</bla-common-dialog>
+  </div>
+  </bla-row-layout>
+  </div>
+  </bla-common-dialog>

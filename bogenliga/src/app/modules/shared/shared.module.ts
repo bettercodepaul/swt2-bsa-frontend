@@ -33,7 +33,7 @@ import {
   SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  TooltipComponent
+  TooltipComponent, UnsortedDataTableComponent
 } from './components';
 import {RestClient} from './data-provider';
 import * as LocalDataProvider from './local-data-provider/services';
@@ -101,7 +101,8 @@ library.add(fas, far, fab); // add all icon types
     BogenkontrolllisteDownloadComponent,
     SetzlisteDownloadComponent,
     SchusszettelDownloadComponent,
-    MeldezettelDownloadComponent
+    MeldezettelDownloadComponent,
+    UnsortedDataTableComponent
   ],
   declarations: [
     ButtonComponent,
@@ -133,7 +134,8 @@ library.add(fas, far, fab); // add all icon types
     BogenkontrolllisteDownloadComponent,
     SchusszettelDownloadComponent,
     SetzlisteDownloadComponent,
-    MeldezettelDownloadComponent
+    MeldezettelDownloadComponent,
+    UnsortedDataTableComponent
   ]
 })
 export class SharedModule {
