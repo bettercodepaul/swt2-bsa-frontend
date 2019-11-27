@@ -37,8 +37,7 @@ export class UnsortedDataTableComponent extends CommonComponent implements OnIni
 
   initialized = false;
 
-  constructor(private truncationPipe: TruncationPipe,
-    private translatePipe: TranslatePipe) {
+  constructor(private truncationPipe: TruncationPipe, private translatePipe: TranslatePipe) {
     super();
   }
 
