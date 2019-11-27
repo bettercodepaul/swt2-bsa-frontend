@@ -12,7 +12,7 @@ export class UserDropdownComponent implements OnInit, OnChanges {
 
   @Output() public onAction = new EventEmitter<void>();
 
-  constructor(private userService: CurrentUserService, private router: Router, private loginDataProvider:LoginDataProviderService) {
+  constructor(private userService: CurrentUserService, private router: Router, private loginDataProvider: LoginDataProviderService) {
   }
 
   ngOnInit() {
