@@ -7,13 +7,12 @@ import {WETTKAMPF_TABLE_CONFIG} from '@home/components/home/wettkampf/wettkampf.
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
-import {VeranstaltungDataProviderService} from '../../../verwaltung/services/veranstaltung-data-provider.service';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {formatDate} from '@angular/common';
 import {registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-import {CredentialsDO} from '@user/types/credentials-do.class';
 import {CurrentUserService} from '@shared/services';
 
 @Component({
@@ -138,7 +137,6 @@ export class HomeComponent extends CommonComponent implements OnInit {
     }
   }
   private handleSuccessfulLogin() {
-    this.ngOnInit();
     this.loadWettkaempfe();
   }
 
