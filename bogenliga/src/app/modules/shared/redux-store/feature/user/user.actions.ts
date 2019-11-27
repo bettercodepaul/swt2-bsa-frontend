@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {UserPermission, UserSignInDTO} from '../../../services/current-user';
+import {UserPermission, UserSignInDTO} from '../../../services/current-user'; //kept import due to constructor in Login, has to be verified
 
 
 export const LOGIN = '[User] Login';
@@ -14,9 +14,6 @@ export class Login implements Action {
 
 export class Logout implements Action {
   readonly type = LOGOUT;
-
-
-
 }
 
 export type UserActions = Login | Logout;

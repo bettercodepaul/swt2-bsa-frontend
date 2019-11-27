@@ -45,10 +45,6 @@ export class LoginDataProviderService extends DataProviderService {
    * reject(), if an error occurred
    */
   public signIn(credentialsDO: CredentialsDO): Promise<LoginResult> {
-
-    if(credentialsDO == this.getDefaultUser()) {
-      this.signInDefaultUser();
-    }
     // check remember me flag
     if (credentialsDO.rememberMe) {
       this.currentUserService.rememberUsername(credentialsDO.username);
@@ -93,14 +89,14 @@ export class LoginDataProviderService extends DataProviderService {
         });
   }
 
-  public getDefaultUser() : CredentialsDO {
+  private getDefaultUser() : CredentialsDO {
     let defaultUser : CredentialsDO;
     defaultUser = new CredentialsDO('ligadefault', 'user');
     return defaultUser;
   }
 
   //signs in the Default user and returns the Promise
-  public signInDefaultUser(): Promise<LoginResult> {
+  signInDefaultUser(): Promise<LoginResult> {
     const defaultUserCredentials: CredentialsDO = new CredentialsDO('ligadefault', 'user');
 
    return this.signIn(defaultUserCredentials);
