@@ -121,7 +121,7 @@ export class CurrentUserService {
 
   public logout() {
     this.localDataProviderService.remove(CURRENT_USER_KEY);
-    this.router.navigateByUrl("/home");
+    this.router.navigateByUrl('/home');
   }
 
   public rememberUsername(email: string) {
