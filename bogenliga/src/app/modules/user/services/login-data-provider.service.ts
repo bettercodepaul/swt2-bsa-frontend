@@ -89,16 +89,15 @@ export class LoginDataProviderService extends DataProviderService {
         });
   }
 
-  private getDefaultUser() : CredentialsDO {
-    let defaultUser : CredentialsDO;
+  private getDefaultUser(): CredentialsDO {
+    let defaultUser: CredentialsDO;
     defaultUser = new CredentialsDO('ligadefault', 'user');
     return defaultUser;
   }
 
-  //signs in the Default user and returns the Promise
+  // signs in the Default user and returns the Promise
   signInDefaultUser(): Promise<LoginResult> {
     const defaultUserCredentials: CredentialsDO = new CredentialsDO('ligadefault', 'user');
-
-   return this.signIn(defaultUserCredentials);
+    return this.signIn(defaultUserCredentials);
   }
 }
