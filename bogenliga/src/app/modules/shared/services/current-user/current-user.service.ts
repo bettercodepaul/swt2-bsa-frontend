@@ -39,7 +39,7 @@ export class CurrentUserService {
 
   public persistCurrentUser(currentUser: UserSignInDTO): void {
     this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
-    this.store.dispatch(new Logout());
+    this.store.dispatch(new Login(currentUser));
   }
 
   public loadCurrentUser(): void {
