@@ -5,14 +5,14 @@ import {isNullOrUndefined} from '@shared/functions';
 import {filter, map} from 'rxjs/operators';
 import {LocalDataProviderService} from '@shared/local-data-provider';
 import {AppState, Login, Logout} from '../../redux-store';
-import {UserState} from '../../redux-store/feature/user';
+import {UserState} from '@shared/redux-store';
 import {Notification, NotificationUserAction} from '../notification/types';
-import {UserPermission} from './types/user-permission.enum';
-import {UserSignInDTO} from './types/user-sign-in-dto.class';
+import {UserPermission} from '@shared/services';
+import {UserSignInDTO} from '@shared/services';
 
 const CURRENT_USER_KEY = 'current_user';
 const LOGIN_EMAIL_KEY = 'login_email';
-const DEFAULTUSERNAME = 'ligadefault';
+const DEFAULT_USERNAME = 'ligadefault';
 
 
 @Injectable({
@@ -39,7 +39,7 @@ export class CurrentUserService {
 
   public persistCurrentUser(currentUser: UserSignInDTO): void {
     this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
-    this.store.dispatch(new Login(currentUser));
+    this.store.dispatch(new Logout());
   }
 
   public loadCurrentUser(): void {
@@ -121,7 +121,7 @@ export class CurrentUserService {
 
   public logout() {
     this.localDataProviderService.remove(CURRENT_USER_KEY);
-    this.router.navigateByUrl('/home');
+    this.store.dispatch(new Logout());
   }
 
   public rememberUsername(email: string) {
@@ -142,7 +142,7 @@ export class CurrentUserService {
         .subscribe((state: UserState) => {
           this.isUserLoggedIn = state.isLoggedIn;
           this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
-          if (this.currentUser.email === DEFAULTUSERNAME) {
+          if (this.currentUser.email === DEFAULT_USERNAME) {
             this.isDefaultUserLoggedIn = true;
             state.isDefaultUserLoggedIn = true;
           } else {
