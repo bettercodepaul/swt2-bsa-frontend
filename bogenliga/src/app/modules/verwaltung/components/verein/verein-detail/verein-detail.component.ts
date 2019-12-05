@@ -81,7 +81,9 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.discardNotification();
 
     this.loadRegions(this.regionType); // Request all regions from the backend
+  }
 
+  private loadVerein(): void {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
@@ -95,7 +97,6 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         }
       }
     });
-
   }
 
   public onSave(ignore: any): void {
@@ -269,7 +270,10 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
 
   private loadRegions(type: string) {
     this.regionProvider.findAllByType(type)
-        .then((response: BogenligaResponse<RegionDO[]>) => this.handleResponseArraySuccess(response))
+        .then((response: BogenligaResponse<RegionDO[]>) => {
+          this.handleResponseArraySuccess(response);
+          this.loadVerein();
+        })
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
 
