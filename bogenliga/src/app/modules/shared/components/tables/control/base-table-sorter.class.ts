@@ -60,10 +60,12 @@ export abstract class BaseTableSorter {
       console.warn('No table configuration found. Abort sorting column: ', sortColumn.propertyName);
       return rows;
     }
+
     // the columns are not sortable --> return rows without sorting
-    if(!this.config.columns[this.config.columns.length - 1].sortable && !this.config.columns[0].sortable){
+    if (this.config.columns.filter((c) => c.sortable).length === 0) {
       return rows;
     }
+
     this.toggleSortOrder(sortColumn);
 
     // the custom sorter overrides the sorterImplementation method
