@@ -1332,5 +1332,11 @@
       "SUCCESS": "Download erfolgreich gestartet für:",
       "FAILURE": "Download fehlgeschlagen für:"
     }
+  },
+  "SPOTTER": {
+    "WETTKAEMPFE": {
+      "TITLE": "Wettkämpfe",
+      "TABLE": "Heute stattfindende Wettkämpfe"
+    }
   }
 }
