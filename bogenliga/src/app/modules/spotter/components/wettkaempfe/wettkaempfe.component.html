@@ -1,3 +1,30 @@
-<p>
-  wettkaempfe works!
-</p>
+<bla-common-dialog [config]="config">
+
+  <div id="homePage">
+   
+
+    <div class="homeContent">
+
+      <div class="flexChild">
+        <h3><a class="blackLink"
+               routerLink="/wettkaempfe">{{ 'SPOTTER.WETTKAEMPFE.TABLE' | translate }}</a></h3>
+
+        <table id="example"
+               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+               style="width:100%">
+       
+          <div class="row">
+            <bla-data-table [config]="config_table"
+                            [rows]="rows"
+                            [loading]="loadingTable"
+                            >
+            </bla-data-table>
+          </div>
+        </table>
+
+      </div>
+     
+    </div>
+</div>
+
+</bla-common-dialog>

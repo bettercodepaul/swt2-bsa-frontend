@@ -1,3 +1,4 @@
+import { SharedModule } from './../../../shared/shared.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WettkaempfeComponent } from './wettkaempfe.component';
@@ -8,7 +9,8 @@ describe('WettkaempfeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WettkaempfeComponent ]
+      declarations: [ WettkaempfeComponent ],
+      imports: [ SharedModule ]
     })
     .compileComponents();
   }));
