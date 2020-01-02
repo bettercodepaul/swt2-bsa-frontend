@@ -46,6 +46,9 @@ export class LoginDataProviderService extends DataProviderService {
    */
   public signIn(credentialsDO: CredentialsDO): Promise<LoginResult> {
     // check remember me flag
+    if(credentialsDO.username == 'ligadefault') {
+      // do nothing, fixes jwt token issue for default user
+    }
     if (credentialsDO.rememberMe) {
       this.currentUserService.rememberUsername(credentialsDO.username);
     } else {
