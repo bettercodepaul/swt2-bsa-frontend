@@ -77,6 +77,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     console.log(this.rows);
 
   }
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+  }
 
   public loadErgebnisse() {
     console.log('loadErgebnisse');
@@ -97,7 +100,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
     this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
       this.vereine, this.currentVeranstaltung, 0));
-    // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
+    this.delay(3000);
     this.fillTableRows();
 
   }
