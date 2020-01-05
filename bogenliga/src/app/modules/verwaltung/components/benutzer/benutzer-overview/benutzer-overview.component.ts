@@ -15,9 +15,11 @@ import {
 } from '../../../../shared/services/notification';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
-import {BENUTZER_OVERVIEW_CONFIG} from './benutzer-overview.config';
+import {BENUTZER_OVERVIEW_CONFIG_ACTIVE} from '@verwaltung/components/benutzer/benutzer-overview/benutzer-overview-active.config';
+import {BENUTZER_OVERVIEW_CONFIG_INACTIVE} from '@verwaltung/components/benutzer/benutzer-overview/benutzer-overview-inactive.config';
 
-export const NOTIFICATION_DELETE_BENUTZER = 'benutzer_overview_delete';
+export const NOTIFICATION_DEACTIVATE_BENUTZER = 'benutzer_overview_deactivate';
+export const NOTIFICATION_ACTIVATE_BENUTZER = 'benutzer_overview_activate';
 
 @Component({
   selector:    'bla-benutzer-overview',
@@ -26,8 +28,10 @@ export const NOTIFICATION_DELETE_BENUTZER = 'benutzer_overview_delete';
 })
 export class BenutzerOverviewComponent extends CommonComponent implements OnInit {
 
-  public config = BENUTZER_OVERVIEW_CONFIG;
-  public rows: TableRow[];
+  public configActive = BENUTZER_OVERVIEW_CONFIG_ACTIVE;
+  public configInactive = BENUTZER_OVERVIEW_CONFIG_INACTIVE;
+  public rowsActive: TableRow[];
+  public rowsInactive: TableRow[];
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
@@ -51,12 +55,13 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
     // show loading icon
     const id = versionedDataObject.id;
 
-    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+    this.rowsActive = showDeleteLoadingIndicatorIcon(this.rowsActive, id);
+    this.rowsInactive = showDeleteLoadingIndicatorIcon(this.rowsInactive, id);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_BENUTZER + id,
-      title:            'MANAGEMENT.BENUTZER.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.BENUTZER.NOTIFICATION.DELETE.DESCRIPTION',
+      id:               NOTIFICATION_DEACTIVATE_BENUTZER + id,
+      title:            'MANAGEMENT.BENUTZER.NOTIFICATION.DEACTIVATE.TITLE',
+      description:      'MANAGEMENT.BENUTZER.NOTIFICATION.DEACTIVATE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
@@ -64,12 +69,12 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_BENUTZER + id)
+    this.notificationService.observeNotification(NOTIFICATION_DEACTIVATE_BENUTZER + id)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.benutzerDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+                .catch((response) => this.rowsActive = hideLoadingIndicator(this.rowsActive, id));
           }
         });
 
@@ -90,13 +95,47 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<BenutzerRolleDO[]>): void {
-    this.rows = [];
+    this.rowsActive = [];
     this.loading = false;
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<BenutzerRolleDO[]>): void {
-    this.rows = []; // reset array to ensure change detection
-    this.rows = toTableRows(response.payload);
+    this.rowsActive = []; // reset array to ensure change detection
+    this.rowsInactive = [];
+    this.rowsActive = toTableRows(response.payload.filter((benutzer) => benutzer.active));
+    this.rowsInactive = toTableRows(response.payload.filter((benutzer) => !benutzer.active));
+
     this.loading = false;
+  }
+
+  public onAdd(versionedDataObject: VersionedDataObject): void {
+      // show loading icon
+      const id = versionedDataObject.id;
+
+      this.rowsActive = showDeleteLoadingIndicatorIcon(this.rowsActive, id);
+      this.rowsInactive = showDeleteLoadingIndicatorIcon(this.rowsInactive, id);
+
+      const notification: Notification = {
+        id:               NOTIFICATION_ACTIVATE_BENUTZER + id,
+        title:            'MANAGEMENT.BENUTZER.NOTIFICATION.ACTIVATE.TITLE',
+        description:      'MANAGEMENT.BENUTZER.NOTIFICATION.ACTIVATE.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_ACTIVATE_BENUTZER + id)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.benutzerDataProvider.deleteById(id)
+              .then((response) => this.loadTableRows())
+              .catch((response) => this.rowsActive = hideLoadingIndicator(this.rowsActive, id));
+          }
+        });
+
+      this.notificationService.showNotification(notification);
+
   }
 }
