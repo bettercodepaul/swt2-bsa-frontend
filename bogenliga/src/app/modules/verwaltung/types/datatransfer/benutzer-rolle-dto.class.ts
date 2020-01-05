@@ -6,6 +6,7 @@ export class BenutzerRolleDTO implements DataTransferObject {
   roleId: number;
   roleName: string;
   version: number;
+  active: boolean;
 
   static copyFrom(optional: {
     id?: number,
@@ -13,6 +14,7 @@ export class BenutzerRolleDTO implements DataTransferObject {
     roleId?: number,
     roleName?: string,
     version?: number;
+    active?: boolean;
   } = {}): BenutzerRolleDTO {
     const copy = new BenutzerRolleDTO();
     copy.id = optional.id || null;
@@ -20,7 +22,7 @@ export class BenutzerRolleDTO implements DataTransferObject {
     copy.roleId = optional.roleId || null;
     copy.roleName = optional.roleName || '';
     copy.version = optional.version || null;
-
+    copy.active = optional.active || false;
     return copy;
   }
 }
