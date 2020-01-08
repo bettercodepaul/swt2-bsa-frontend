@@ -54,7 +54,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   handleSuccessLoadVereine(response: BogenligaResponse<VereinDO[]>) {
     this.vereine = response.payload;
     if (this.directVerein != null) {
-      for (let i of this.vereine) {
+      for (const i of this.vereine) {
         if (this.directVerein === i.name) {
           this.currentVerein = i;
         }
@@ -74,7 +74,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.veranstaltungen = response.payload;
     if (this.directWettkampf != null) {
-      for (let i of this.veranstaltungen) {
+      for (const i of this.veranstaltungen) {
         if (this.directWettkampf === i.name) {
           this.currentVeranstaltung = i;
         }
