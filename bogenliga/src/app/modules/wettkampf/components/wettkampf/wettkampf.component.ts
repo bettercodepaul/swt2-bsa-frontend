@@ -35,8 +35,8 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-              private vereinDataProvider: VereinDataProviderService,
-              private wettkampfErgebnisService: WettkampfErgebnisService) {
+    private vereinDataProvider: VereinDataProviderService,
+    private wettkampfErgebnisService: WettkampfErgebnisService) {
     super();
   }
 
@@ -53,12 +53,13 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   handleSuccessLoadVereine(response: BogenligaResponse<VereinDO[]>) {
     this.vereine = response.payload;
-    if (this.directVerein != null){
-      for(let i = 0; i < this.vereine.length; i++){
-        if (this.directVerein == this.vereine[i].name){
+    if (this.directVerein != null) {
+      for (let i = 0; i < this.vereine.length; i++) {
+        if (this.directVerein == this.vereine[i].name) {
           this.currentVerein = this.vereine[i];
-        }}
-    }else {
+        }
+      }
+    } else {
       this.currentVerein = this.vereine[0];
     }
   }
@@ -72,12 +73,13 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.veranstaltungen = response.payload;
-    if (this.directWettkampf != null){
-      for(let i = 0; i < this.veranstaltungen.length; i++){
-        if (this.directWettkampf == this.veranstaltungen[i].name){
+    if (this.directWettkampf != null) {
+      for (let i = 0; i < this.veranstaltungen.length; i++) {
+        if (this.directWettkampf == this.veranstaltungen[i].name) {
           this.currentVeranstaltung = this.veranstaltungen[i];
-        }}
-    }else {
+        }
+      }
+    } else {
       this.currentVeranstaltung = this.veranstaltungen[0];
     }
   }
@@ -108,11 +110,12 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     });
 
   }
+
   public onSelect($event: VeranstaltungDO[]): void {
     this.wettkampErgebnisse = [];
     this.loadingwettkampf = true;
     console.log('loadErgebnisse');
-    this.currentVeranstaltung =$event.concat()[0] ;
+    this.currentVeranstaltung = $event.concat()[0];
 
     let result;
     result = this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
@@ -121,7 +124,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.rows = [];
     this.wettkampErgebnisse = [];
     this.rows.push((result));
-    if(this.wettkampErgebnisse.push(result)) {
+    if (this.wettkampErgebnisse.push(result)) {
 
       // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
       this.delay(10).then(any => {
@@ -129,8 +132,8 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
       });
     }
   }
+
   async delay(ms: number) {
-    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
   }
 }
-
