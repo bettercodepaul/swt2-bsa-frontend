@@ -18,15 +18,17 @@ import {WettkampfErgebnisService} from './wettkampergebnis/WettkampfErgebnis.Ser
 })
 export class WettkampfComponent extends CommonComponent implements OnInit {
 
+  public directVerein = null;
+  public directWettkampf = null;
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
-
+  public loadingwettkampf = false;
   public vereine: Array<VereinDO> = [];
   public veranstaltungen: Array<VeranstaltungDO> = [];
-  public currentVeranstaltung: VeranstaltungDTO = new VeranstaltungDTO();
-  public currentVeranstaltungDO: VeranstaltungDO = new VeranstaltungDO();
+  public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentVerein: VereinDO = new VereinDO();
-
+  public multipleSelections = true;
+  public PLACEHOLDER_VAR = "Bitte Veranstaltung wählen"
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public wettkampErgebnisse: Array<WettkampfErgebnis[]> = new Array<WettkampfErgebnis[]>();
@@ -51,7 +53,14 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   handleSuccessLoadVereine(response: BogenligaResponse<VereinDO[]>) {
     this.vereine = response.payload;
-    this.currentVerein = this.vereine[0];
+    if (this.directVerein != null){
+      for(let i = 0; i < this.vereine.length; i++){
+        if (this.directVerein == this.vereine[i].name){
+          this.currentVerein = this.vereine[i];
+        }}
+    }else {
+      this.currentVerein = this.vereine[0];
+    }
   }
 
   loadVeranstaltungen() {
@@ -61,9 +70,16 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   }
 
-  handleSuccessLoadVeranstaltungen(respone: BogenligaResponse<VeranstaltungDO[]>) {
-    this.veranstaltungen = respone.payload;
-    this.currentVeranstaltung = this.veranstaltungen[0];
+  handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
+    this.veranstaltungen = response.payload;
+    if (this.directWettkampf != null){
+      for(let i = 0; i < this.veranstaltungen.length; i++){
+        if (this.directWettkampf == this.veranstaltungen[i].name){
+          this.currentVeranstaltung = this.veranstaltungen[i];
+        }}
+    }else {
+      this.currentVeranstaltung = this.veranstaltungen[0];
+    }
   }
 
 
@@ -75,34 +91,46 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.rows.push(toTableRows(this.wettkampErgebnisse[0]));
     console.log('tableRows:');
     console.log(this.rows);
+    this.loadingwettkampf = false;
 
+  }
+
+  public loadErgebnisse() {
+    this.rows = [];
+    this.wettkampErgebnisse = [];
+    this.loadingwettkampf = true;
+    console.log('loadErgebnisse');
+    this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
+      this.vereine, this.currentVeranstaltung, 0));
+    // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
+    this.delay(10).then(any => {
+      this.fillTableRows();
+    });
+
+  }
+  public onSelect($event: VeranstaltungDO[]): void {
+    this.wettkampErgebnisse = [];
+    this.loadingwettkampf = true;
+    console.log('loadErgebnisse');
+    this.currentVeranstaltung =$event.concat()[0] ;
+
+    let result;
+    result = this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
+      this.vereine, $event.concat()[0], 0)
+    result = this.wettkampfErgebnisService.createWettkampfergebnisse(0);
+    this.rows = [];
+    this.wettkampErgebnisse = [];
+    this.rows.push((result));
+    if(this.wettkampErgebnisse.push(result)) {
+
+      // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
+      this.delay(10).then(any => {
+        this.fillTableRows();
+      });
+    }
   }
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
   }
+}
 
-  public loadErgebnisse() {
-    console.log('loadErgebnisse');
-
-    this.currentVeranstaltungDO = new VeranstaltungDO();
-
-    this.currentVeranstaltungDO.id = this.currentVeranstaltung.id;
-    this.currentVeranstaltungDO.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
-    this.currentVeranstaltungDO.name = this.currentVeranstaltung.name;
-    this.currentVeranstaltungDO.sportjahr = this.currentVeranstaltung.sportjahr;
-    this.currentVeranstaltungDO.meldeDeadline = this.currentVeranstaltung.meldeDeadline;
-    this.currentVeranstaltungDO.ligaleiterId = this.currentVeranstaltung.ligaleiterId;
-    this.currentVeranstaltungDO.ligaId = this.currentVeranstaltung.ligaId;
-    this.currentVeranstaltungDO.version = this.currentVeranstaltung.version;
-    this.currentVeranstaltungDO.ligaleiterEmail = this.currentVeranstaltung.ligaleiterEmail;
-    this.currentVeranstaltungDO.wettkampftypName = this.currentVeranstaltung.wettkampftypName;
-    this.currentVeranstaltungDO.ligaName = this.currentVeranstaltung.ligaName;
-
-    this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
-      this.vereine, this.currentVeranstaltung, 0));
-    this.delay(3000);
-    this.fillTableRows();
-
-  }
-
- }
