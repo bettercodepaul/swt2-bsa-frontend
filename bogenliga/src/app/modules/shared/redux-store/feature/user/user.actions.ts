@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {UserSignInDTO} from '../../../services/current-user';
+import {UserSignInDTO} from '@shared/services';
 
 export const LOGIN = '[User] Login';
 export const LOGOUT = '[User] Logout';
