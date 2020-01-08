@@ -35,9 +35,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private vereinDataProvider: VereinDataProviderService,
-    private wettkampfErgebnisService: WettkampfErgebnisService) {
-    super();
+              private vereinDataProvider: VereinDataProviderService,
+              private wettkampfErgebnisService: WettkampfErgebnisService) {
+              super();
   }
 
   ngOnInit() {
@@ -54,9 +54,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   handleSuccessLoadVereine(response: BogenligaResponse<VereinDO[]>) {
     this.vereine = response.payload;
     if (this.directVerein != null) {
-      for (let i = 0; i < this.vereine.length; i++) {
-        if (this.directVerein === this.vereine[i].name) {
-          this.currentVerein = this.vereine[i];
+      for (let i of this.vereine) {
+        if (this.directVerein === i.name) {
+          this.currentVerein = i;
         }
       }
     } else {
@@ -74,9 +74,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.veranstaltungen = response.payload;
     if (this.directWettkampf != null) {
-      for (let i = 0; i < this.veranstaltungen.length; i++) {
-        if (this.directWettkampf === this.veranstaltungen[i].name) {
-          this.currentVeranstaltung = this.veranstaltungen[i];
+      for (let i of this.veranstaltungen) {
+        if (this.directWettkampf === i.name) {
+          this.currentVeranstaltung = i;
         }
       }
     } else {
@@ -105,7 +105,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
       this.vereine, this.currentVeranstaltung, 0));
     // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
-    this.delay(10).then(any => {
+    this.delay(10).then((any) => {
       this.fillTableRows();
     });
 
@@ -127,13 +127,13 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     if (this.wettkampErgebnisse.push(result)) {
 
       // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
-      this.delay(10).then(any => {
+      this.delay(10).then((any) => {
         this.fillTableRows();
       });
     }
   }
 
   async delay(ms: number) {
-    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log('fired'));
+    await new Promise((resolve) => setTimeout(() => resolve(), ms)).then(() => console.log('fired'));
   }
 }
