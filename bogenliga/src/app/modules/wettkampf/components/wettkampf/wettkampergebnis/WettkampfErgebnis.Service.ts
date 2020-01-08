@@ -38,7 +38,7 @@ export class WettkampfErgebnisService {
 
   public createErgebnisse(verein: VereinDO, allVereine: VereinDO[], veranstaltung: VeranstaltungDO, match: number): WettkampfErgebnis[] {
        this.setupService(verein, allVereine, veranstaltung);
-        return this.wettkampErgebnisse;
+       return this.wettkampErgebnisse;
 
   }
 
@@ -100,7 +100,7 @@ export class WettkampfErgebnisService {
         .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([]));
   }
 
-  handleLoadMatches(matches: MatchDO[]): WettkampfErgebnis[]{
+  handleLoadMatches(matches: MatchDO[]): WettkampfErgebnis[] {
     this.matches = matches;
     this.filterMannschaften();
     return this.createWettkampfergebnisse(0);
