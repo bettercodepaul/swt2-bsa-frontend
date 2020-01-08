@@ -58,10 +58,10 @@ export class WettkampfErgebnisService {
             2, 3, 4, 'Hallo', 1, 2,
             3, 4, 5, '' + currentMatch.satzpunkte, '' + currentMatch.matchpunkte);
           // console.log(wettkampfErgebnis);
-          this.wettkampErgebnisse.push(wettkampfErgebnis)
+          this.wettkampErgebnisse.push(wettkampfErgebnis);
 
         });
-    return this.wettkampErgebnisse
+    return this.wettkampErgebnisse;
 
   }
 
@@ -103,7 +103,6 @@ export class WettkampfErgebnisService {
   handleLoadMatches(matches: MatchDO[]): WettkampfErgebnis[]{
     this.matches = matches;
     this.filterMannschaften();
-    let match;
     return this.createWettkampfergebnisse(0);
   }
 

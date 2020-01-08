@@ -28,7 +28,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentVerein: VereinDO = new VereinDO();
   public multipleSelections = true;
-  public PLACEHOLDER_VAR = "Bitte Veranstaltung wählen"
+  public PLACEHOLDER_VAR = 'Bitte Veranstaltung wählen';
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public wettkampErgebnisse: Array<WettkampfErgebnis[]> = new Array<WettkampfErgebnis[]>();
@@ -55,7 +55,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.vereine = response.payload;
     if (this.directVerein != null) {
       for (let i = 0; i < this.vereine.length; i++) {
-        if (this.directVerein == this.vereine[i].name) {
+        if (this.directVerein === this.vereine[i].name) {
           this.currentVerein = this.vereine[i];
         }
       }
@@ -75,7 +75,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.veranstaltungen = response.payload;
     if (this.directWettkampf != null) {
       for (let i = 0; i < this.veranstaltungen.length; i++) {
-        if (this.directWettkampf == this.veranstaltungen[i].name) {
+        if (this.directWettkampf === this.veranstaltungen[i].name) {
           this.currentVeranstaltung = this.veranstaltungen[i];
         }
       }
@@ -119,7 +119,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
     let result;
     result = this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
-      this.vereine, $event.concat()[0], 0)
+      this.vereine, $event.concat()[0], 0);
     result = this.wettkampfErgebnisService.createWettkampfergebnisse(0);
     this.rows = [];
     this.wettkampErgebnisse = [];
@@ -134,6 +134,6 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   async delay(ms: number) {
-    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("fired"));
+    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log('fired'));
   }
 }
