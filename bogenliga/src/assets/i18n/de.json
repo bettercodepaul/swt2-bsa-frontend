@@ -146,14 +146,18 @@
       "TITLE": "Aktuelle Ligatabelle"
     },
     "MANNSCHAFTEN": {
-      "TITLE": "Wettkampfergebnisse der Mannschaften",
+      "TITLE": "Wettkampfergebnisse",
       "FORM": {
         "VEREIN_NAME": {
           "LABEL": "Vereine:"
         },
         "VERANSTALTUNG_NAME": {
           "LABEL": "Veranstaltungen:"
+        },
+        "SPORTJAHR":{
+        "LABEL": "Sportjahr:"
         }
+
       },
       "TABLE": {
         "COLUMNS": {
