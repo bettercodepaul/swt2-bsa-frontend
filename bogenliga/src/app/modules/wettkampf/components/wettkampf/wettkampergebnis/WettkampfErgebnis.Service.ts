@@ -21,7 +21,7 @@ export class WettkampfErgebnisService {
   public veranstaltung: VeranstaltungDO;
 
   // Output
-  public wettkampErgebnisse: WettkampfErgebnis[] = [];
+  public wettkampErgebnisse: WettkampfErgebnis[];
 
   // toLoad
   public matches: Array<MatchDO> = [];
@@ -38,17 +38,18 @@ export class WettkampfErgebnisService {
 
   public createErgebnisse(verein: VereinDO, allVereine: VereinDO[], veranstaltung: VeranstaltungDO, match: number): WettkampfErgebnis[] {
        this.setupService(verein, allVereine, veranstaltung);
-       return this.wettkampErgebnisse;
+        return this.wettkampErgebnisse;
+
   }
 
   private setupService(verein: VereinDO, allVereine: VereinDO[], veranstaltung: VeranstaltungDO) {
     this.verein = verein;
     this.veranstaltung = veranstaltung;
     this.allVereine = allVereine;
-    this.loadAll();
+    this.loadWettkaempfe();
   }
 
-  private createWettkampfergebnisse(match: number): WettkampfErgebnis[] {
+  public createWettkampfergebnisse(match: number): WettkampfErgebnis[] {
     this.wettkampErgebnisse = [];
     console.log(this.matches);
     this.matches.filter((ma) => ma.mannschaftId === this.currentManschaft.id)
@@ -57,14 +58,11 @@ export class WettkampfErgebnisService {
             2, 3, 4, 'Hallo', 1, 2,
             3, 4, 5, '' + currentMatch.satzpunkte, '' + currentMatch.matchpunkte);
           // console.log(wettkampfErgebnis);
-          this.wettkampErgebnisse.push(wettkampfErgebnis);
-        });
-    return this.wettkampErgebnisse;
-  }
+          this.wettkampErgebnisse.push(wettkampfErgebnis)
 
-  public loadAll() {
-    this.loading = true;
-    this.loadWettkaempfe();
+        });
+    return this.wettkampErgebnisse
+
   }
 
   loadWettkaempfe() {
@@ -102,10 +100,11 @@ export class WettkampfErgebnisService {
         .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([]));
   }
 
-  handleLoadMatches(matches: MatchDO[]) {
+  handleLoadMatches(matches: MatchDO[]): WettkampfErgebnis[]{
     this.matches = matches;
     this.filterMannschaften();
-    this.createWettkampfergebnisse(0);
+    let match;
+    return this.createWettkampfergebnisse(0);
   }
 
 }
