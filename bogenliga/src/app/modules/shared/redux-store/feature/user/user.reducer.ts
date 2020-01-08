@@ -22,7 +22,8 @@ export function userReducer(state = initialUserState, action: Actions.UserAction
     case Actions.LOGOUT: {
       newState = {
         ...state,
-        user:       null,
+        user: null,
+        isDefaultUserLoggedIn : true,
         isLoggedIn: false
       };
       break;
