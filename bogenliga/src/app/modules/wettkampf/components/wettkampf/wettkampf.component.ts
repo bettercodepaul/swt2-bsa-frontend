@@ -6,11 +6,10 @@ import {CommonComponent, toTableRows} from '@shared/components';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
-import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WettkampfErgebnis} from './wettkampergebnis/WettkampfErgebnis';
-import {WettkampfErgebnisService} from './wettkampergebnis/WettkampfErgebnis.Service';
+import {wettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 
 @Component({
   selector:    'bla-mannschaft',
@@ -36,7 +35,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
-              private wettkampfErgebnisService: WettkampfErgebnisService) {
+              private wettkampfErgebnisService: wettkampfErgebnisService) {
               super();
   }
 
