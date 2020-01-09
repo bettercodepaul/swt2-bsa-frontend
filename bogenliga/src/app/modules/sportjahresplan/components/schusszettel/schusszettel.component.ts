@@ -33,8 +33,8 @@ export class SchusszettelComponent implements OnInit {
   match1: MatchDOExt;
   match2: MatchDOExt;
   dirtyFlag: boolean;
-  match1singlesatzpoints =[];
-  match2singlesatzpoints =[];
+  match1singlesatzpoints = [];
+  match2singlesatzpoints = [];
 
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
@@ -265,7 +265,7 @@ export class SchusszettelComponent implements OnInit {
    * Adds each ringzahlen of all three schuetzen of the match of the Satz and returns it.
    * @param match
    * @param satzNr
-  */
+   */
   private getSumSatz(match: MatchDOExt, satzNr: number): number {
     let sum = 0;
     for (const i of Object.keys(match.schuetzen)) {
@@ -308,18 +308,18 @@ export class SchusszettelComponent implements OnInit {
     for (let i = 0; i < 5; i++) {
       if (this.match1.sumSatz[i] > this.match2.sumSatz[i]) {
         counterMatch1 += 2;
-        this.match1singlesatzpoints[i]=2;
-        this.match2singlesatzpoints[i]=0;
+        this.match1singlesatzpoints[i] = 2;
+        this.match2singlesatzpoints[i] = 0;
       } else if (this.match1.sumSatz[i] < this.match2.sumSatz[i]) {
         counterMatch2 += 2;
-        this.match1singlesatzpoints[i]=0;
-        this.match2singlesatzpoints[i]=2;
+        this.match1singlesatzpoints[i] = 0;
+        this.match2singlesatzpoints[i] = 2;
       } else if (this.match1.sumSatz[i] === this.match2.sumSatz[i] &&
         this.match1.sumSatz[i] > 0 && this.match2.sumSatz[i] > 0) {
         counterMatch1++;
         counterMatch2++;
-        this.match1singlesatzpoints[i]=1;
-        this.match2singlesatzpoints[i]=1;
+        this.match1singlesatzpoints[i] = 1;
+        this.match2singlesatzpoints[i] = 1;
       }
     }
     this.match1.satzpunkte = counterMatch1;
