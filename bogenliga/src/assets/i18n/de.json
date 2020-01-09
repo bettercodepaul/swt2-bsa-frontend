@@ -1154,7 +1154,7 @@
         "PASSWORD": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl"
+          "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",
