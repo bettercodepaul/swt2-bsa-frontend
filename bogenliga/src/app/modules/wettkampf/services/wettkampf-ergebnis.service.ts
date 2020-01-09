@@ -14,7 +14,7 @@ import {Injectable} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class wettkampfErgebnisService {
+export class WettkampfErgebnisService {
   // Input
   public verein: VereinDO;
   public allVereine: VereinDO[];
