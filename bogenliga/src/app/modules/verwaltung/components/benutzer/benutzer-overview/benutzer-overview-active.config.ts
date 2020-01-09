@@ -3,7 +3,7 @@ import {TableActionType} from '../../../../shared/components/tables/types/table-
 
 export const BENUTZER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.BENUTZER.TABLE.ACTIVE',
+  pageTitleTranslationKey: 'MANAGEMENT.BENUTZER.TITLE',
 
   tableConfig: {
     columns: [
