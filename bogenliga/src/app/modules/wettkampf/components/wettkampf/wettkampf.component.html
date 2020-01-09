@@ -6,12 +6,11 @@
 
 
     <!-- Vereine -->
-    <div class="form-group row">
-      <label for="regionTyp"
-             class="col-sm-3 col-form-label">
+    <div class="row">
+      <label class="col-sm-1 col-form-label">
         <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.VEREIN_NAME.LABEL' | translate }}</span>
       </label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <select class="form-control"
                 id="vereine"
                 name="vereineName"
@@ -27,10 +26,9 @@
 
     <!-- Jahr -->
     <div class="layout-elements">
-      <label for="blackLink"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
-      </label>
+      <label class="col-sm-1 col-form-label">
+         <!-- <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>-->
+        </label>
       <table id="example"
              class="table table-hover table-sm table-responsive-sm thead-light table-striped"
              style="width:80%">
@@ -54,19 +52,11 @@
 
     <!-- Row 1 -->
 
-    <div class="flexChild">
-
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:100%">
-        <div class="row">
+    <div class="row">
           <bla-data-table [config]="config_table"
                           [rows]="rows[0]"
                           [loading]="loadingwettkampf">
           </bla-data-table>
-        </div>
-      </table>
-
     </div>
 
     <div class="form-group row">
