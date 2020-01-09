@@ -265,7 +265,7 @@ export class SchusszettelComponent implements OnInit {
    * Adds each ringzahlen of all three schuetzen of the match of the Satz and returns it.
    * @param match
    * @param satzNr
-*/
+  */
   private getSumSatz(match: MatchDOExt, satzNr: number): number {
     let sum = 0;
     for (const i of Object.keys(match.schuetzen)) {
