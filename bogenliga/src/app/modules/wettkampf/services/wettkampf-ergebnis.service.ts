@@ -31,8 +31,8 @@ export class WettkampfErgebnisService {
   private loading = false;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
-    private mannschaftsDataProvider: DsbMannschaftDataProviderService,
-    private matchDataProvider: MatchDataProviderService) {
+              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
+              private matchDataProvider: MatchDataProviderService) {
 
   }
 
