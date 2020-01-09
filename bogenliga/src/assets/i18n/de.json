@@ -1101,8 +1101,6 @@
     "BENUTZER": {
       "TITLE": "Benutzer - Übersicht",
       "TABLE": {
-        "ACTIVE": "Aktiviert",
-        "INACTIVE": "Deaktiviert",
         "HEADERS": {
           "EMAIL": "E-Mail",
           "ROLE": "Rolle",
@@ -1110,13 +1108,9 @@
         }
       },
       "NOTIFICATION": {
-        "DEACTIVATE": {
-          "TITLE": "Benutzer deaktivieren",
-          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich deaktivieren?"
-        },
-        "ACTIVATE": {
-          "TITLE": "Benutzer aktivieren",
-          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich wieder aktivieren?"
+        "DELETE": {
+          "TITLE": "Benutzer löschen",
+          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen?"
         }
       }
     },
