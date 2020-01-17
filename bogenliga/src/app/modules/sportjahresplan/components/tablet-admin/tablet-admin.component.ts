@@ -21,6 +21,7 @@ export class TabletAdminComponent implements OnInit {
   currentDeviceIsActive = false;
   currentSession: TabletSessionDO;
   tabletEingabeRoute: string;
+  AccessToken = 0;
 
   constructor(private route: ActivatedRoute,
               private router: Router,

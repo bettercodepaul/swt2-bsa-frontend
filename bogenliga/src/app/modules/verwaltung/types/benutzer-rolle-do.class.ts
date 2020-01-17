@@ -5,6 +5,7 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 export class BenutzerRolleDO implements VersionedDataObject {
   id: number;
   email: string;
+  active: boolean;
   roleId: number;
   roleName: string;
   version: number;
