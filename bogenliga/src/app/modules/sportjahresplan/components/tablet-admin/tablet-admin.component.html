@@ -3,9 +3,10 @@
   <div class="table-responsive">
     <table class="table">
       <tr>
-        <th style="width: 33%">Scheibe</th>
-        <th style="width: 33%">Status</th>
-        <th style="width: 33%">Aktionen</th>
+        <th style="width: 25%">Scheibe</th>
+        <th style="width: 25%">Status</th>
+        <th style="width: 25%">Aktionen</th>
+        <th style="width: 25%">Access Token</th>
       </tr>
 
       <tr *ngFor="let session of sessions">
@@ -47,6 +48,7 @@
             <fa-icon [icon]="'external-link-alt'"></fa-icon>
           </a>
         </td>
+        <td>{{AccessToken}}</td>
       </tr>
     </table>
   </div>
