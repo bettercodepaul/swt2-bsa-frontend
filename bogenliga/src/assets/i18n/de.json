@@ -1108,13 +1108,14 @@
       "TABLE": {
         "HEADERS": {
           "EMAIL": "E-Mail",
-          "ROLE": "Rolle"
+          "ROLE": "Rolle",
+          "ACTIVE": "Aktiviert"
         }
       },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Benutzer löschen",
-          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie den Benutzer mit der ID=%s wirklich löschen?"
         }
       }
     },
@@ -1336,6 +1337,12 @@
     "NOTIFICATION": {
       "SUCCESS": "Download erfolgreich gestartet für:",
       "FAILURE": "Download fehlgeschlagen für:"
+    }
+  },
+  "SPOTTER": {
+    "WETTKAEMPFE": {
+      "TITLE": "Wettkämpfe",
+      "TABLE": "Heute stattfindende Wettkämpfe"
     }
   }
 }
