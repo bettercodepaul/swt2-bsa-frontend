@@ -1,8 +1,8 @@
 <div>
-  <div class="container" style="height: 100%; background-color: #595959; width: 100%;">
+  <div class="container h-100" style="background-color: #595959; width: 100%;">
     <!--HEADER-->
-    <div class="row" style="height: 25%; background-color: #4a4a4a; padding: 20px 0px; color: whitesmoke;">
-        <div class="col-md-1 text-center">
+    <div class="row h-25" style="background-color: #4a4a4a; padding: 20px 0px; color: whitesmoke;">
+        <div class="col-3 col-lg-1 text-center">
           <div class="row align-items-center h-25">
             <div class="col">
               Bahn
@@ -14,8 +14,8 @@
             </div>
           </div>
         </div>
-        <div *ngIf="spotting" class="col-md-8 offset-md-1 text-center">
-          <div class="row align-items-center h-25">
+        <div *ngIf="spotting" class="col-12 col-lg-8 order-3 order-lg-2 offset-lg-1 text-center">
+          <div class="row align-items-center h-25 text-center">
             <div class="col">
               Pfeile
             </div>
@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="!spotting" class="col-md-8 offset-md-1 text-center">
+        <div *ngIf="!spotting" class="col-12 col-sm-8 offset-md-1 text-center">
           <div class="row align-items-center h-25">
             <div class="col">
               Satzpunkte
@@ -45,7 +45,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-2 text-center">
+        <div class="col-3 col-lg-2 offset-6 offset-lg-0 order-2 order-lg-3 text-center">
           <div class="row align-items-center h-25">
             <div class="col">
               Mannschaft
@@ -59,13 +59,13 @@
         </div>
     </div>
     <!--BODY-->
-    <div *ngIf="spotting" class="row" style="height: 50%; padding: 100px 0px;">
-        <div class="col-2 text-center align-self-center">
+    <div *ngIf="spotting" class="row h-50" style="padding: 100px 0px;">
+        <div class="col-4 text-center align-self-center">
           <button class="button-square" type="button">M</button>
         </div>
-        <div class="col-10 align-self-center">
-            <div class="row" style="height: 50%;">
-                <div class="col-md-12 d-md-flex align-self-center justify-content-md-center" style="width: 25%;">
+        <div class="col-6 align-self-center">
+            <div class="row">
+                <div class="col-md-12 d-md-flex align-self-center justify-content-md-center text-center">
                     <div class="btn-group" role="group">
                       <button class="button-square" type="button">1</button>
                       <button class="button-square" type="button">2</button>
@@ -74,21 +74,19 @@
                       <button class="button-square" type="button">5</button>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col text-center" style="width: 75%;">
-                    <div class="btn-group" role="group">
-                      <button class="button-square" type="button">6</button>
-                      <button class="button-square" type="button">7</button>
-                      <button class="button-square" type="button">8</button>
-                      <button class="button-square" type="button">9</button>
-                      <button class="button-square" type="button">10</button>
-                  </div>
+                <div class="col-md-12 d-md-flex align-self-center justify-content-md-center text-center">
+                  <div class="btn-group" role="group">
+                    <button class="button-square" type="button">6</button>
+                    <button class="button-square" type="button">7</button>
+                    <button class="button-square" type="button">8</button>
+                    <button class="button-square" type="button">9</button>
+                    <button class="button-square" type="button">10</button>
                 </div>
+              </div>
             </div>
         </div>
     </div>
-    <div *ngIf="!spotting" class="row" style="height: 50%; padding: 100px 0px;">
+    <div *ngIf="!spotting" class="row h-50" style="padding: 100px 0px;">
       <div class="col align-items-center" style="text-align: center;">
         <div class="btn-group" role="group">
           <button class="btn-circle">1</button>
@@ -101,7 +99,7 @@
       </div>
     </div>
     <!--FOOTER-->
-    <div *ngIf="spotting" class="row align-items-center" style="height: 25%; padding: 25px 50px;">
+    <div *ngIf="spotting" class="row h-25 align-items-center" style="padding: 25px 50px;">
         <div class="col text-left">
           <button type="button" class="btn btn-secondary" style="padding: 10px 20px; font-size: 25px;">Back</button>
         </div>
@@ -112,7 +110,7 @@
           <button type="button" class="btn btn-secondary" style="padding: 10px 20px; font-size: 25px;">Save</button>
         </div>
     </div>
-    <div *ngIf="!spotting" class="row align-items-center" style="height: 25%; padding: 25px 50px;">
+    <div *ngIf="!spotting" class="row h-25 align-items-center" style="padding: 25px 50px;">
         <div class="col text-left">
           <button type="button" class="btn btn-secondary" style="padding: 10px 20px; font-size: 25px;">Nächster Satz</button>
         </div>
