@@ -151,6 +151,8 @@ export class RegionenComponent implements OnInit {
               details.style.display = 'block';
               const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
               desc.style.display = 'none';
+              const desc: HTMLInputElement = document.querySelector('#descriptionWrapperClose') as HTMLInputElement;
+              desc.style.display = 'block';
             }
           );
     } else {
@@ -158,6 +160,8 @@ export class RegionenComponent implements OnInit {
       details.style.display = 'none';
       const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
       desc.style.display = 'block';
+      const desc: HTMLInputElement = document.querySelector('#descriptionWrapperClose') as HTMLInputElement;
+      desc.style.display = 'none';
     }
   }
 
