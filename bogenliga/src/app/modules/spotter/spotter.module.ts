@@ -1,41 +1,33 @@
 import { CommonModule } from '@angular/common';
-import {ModuleWithProviders, NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {RouterModule} from '@angular/router';
-import {SharedModule} from '../shared';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared';
 import { SPOTTER_ROUTES } from './spotter.routing';
 
-import {WettkaempfeGuard, MatchesGuard, BahnenGuard, SchuetzenGuard} from './guards';
+import {
+  LoginGuard,
+  InterfaceGuard,
+} from './guards';
 
-import {WettkaempfeComponent, MatchesComponent, BahnenComponent, SchuetzenComponent} from './components';
+import { LoginComponent } from './components/login/login.component';
+import { InterfaceComponent } from './components/interface/interface.component';
 
 @NgModule({
-  declarations: [WettkaempfeComponent, MatchesComponent, BahnenComponent, SchuetzenComponent],
+  declarations: [LoginComponent, InterfaceComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(SPOTTER_ROUTES),
     SharedModule.forChild(),
     FormsModule
   ],
-  providers: [
-    WettkaempfeGuard,
-    MatchesGuard,
-    BahnenGuard,
-    SchuetzenGuard
-  ]
-
+  providers: [LoginGuard, InterfaceGuard]
 })
 export class SpotterModule {
-
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [
-        WettkaempfeGuard,
-        MatchesGuard,
-        BahnenGuard,
-        SchuetzenGuard
-      ]
+      providers: [LoginGuard, InterfaceGuard]
     };
   }
 
@@ -45,5 +37,4 @@ export class SpotterModule {
       providers: []
     };
   }
-
 }
