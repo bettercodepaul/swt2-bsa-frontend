@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InterfaceComponent implements OnInit {
 
-  spotting = false;
+  spotting = true;
 
   constructor() { }
 
