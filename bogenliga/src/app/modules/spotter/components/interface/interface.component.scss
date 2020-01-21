@@ -2,8 +2,8 @@
     background: #C4C4C4;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-    width: 90px;
-    height: 90px;
+    width: 125px;
+    height: 125px;
     margin: 10px;
     color: #595959;
     font-size: 50px;
@@ -46,6 +46,11 @@
 }
 
 .btn-circle.header:focus {
+    border-color: #73e5ef;
+    border-width: 7.5px;
+}
+
+.btn-circle.header.selected {
     border-color: #73e5ef;
     border-width: 7.5px;
 }
