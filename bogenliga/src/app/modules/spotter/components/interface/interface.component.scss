@@ -6,10 +6,42 @@
     height: 125px;
     margin: 10px;
     color: #595959;
-    font-size: 50px;
+    font-size: 75px;
     outline-style: none;
     border: none;
   }
+
+  @media (max-width: 1200px) {
+    .button-square {
+        width: 110px;
+        height: 110px;
+        margin: 7.5px;
+        font-size: 65px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .button-square {
+        width: 80px;
+        height: 80px;
+        margin: 5px;
+        font-size: 45px;
+    }
+  }
+
+  @media (max-width: 768px) {
+      .button-square {
+        width: 80px;
+        height: 80px;
+        margin: 5px;
+        font-size: 45px;
+      }
+
+      #miss {
+          margin-bottom: 25px;
+      }
+  }
+  
 
 
   .button-square:focus {
