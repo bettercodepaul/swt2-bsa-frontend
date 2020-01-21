@@ -33,7 +33,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="!spotting" class="col-12 col-sm-8 offset-md-1 text-center">
+        <div *ngIf="!spotting" class="col-12 col-lg-8 offset-lg-1 order-3 order-lg-2 text-center">
           <div class="row align-items-center h-25">
             <div class="col">
               Satzpunkte
@@ -87,14 +87,18 @@
         </div>
     </div>
     <div *ngIf="!spotting" class="row h-50" style="padding: 100px 0px;">
-      <div class="col align-items-center" style="text-align: center;">
-        <div class="btn-group" role="group">
-          <button class="btn-circle">1</button>
-          <button class="btn-circle">2</button>
-          <button class="btn-circle">3</button>
-          <button class="btn-circle">4</button>
-          <button class="btn-circle">5</button>
-          <button class="btn-circle">6</button>
+      <div class="col-12 align-items-center" style="text-align: center;">
+        <div class="btn-group flex-wrap justify-content-center" role="group">
+          <div>
+            <button class="btn-circle" type="button">1</button>
+            <button class="btn-circle" type="button">2</button>
+            <button class="btn-circle" type="button">3</button>
+          </div>
+          <div>
+            <button class="btn-circle" type="button">4</button>
+            <button class="btn-circle" type="button">5</button>
+            <button class="btn-circle" type="button">6</button>
+          </div>
         </div>
       </div>
     </div>
