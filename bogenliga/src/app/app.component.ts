@@ -1,3 +1,4 @@
+import { FullscreenService } from './services/fullscreen.service';
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
@@ -13,12 +14,17 @@ import {AppState, SidebarState} from './modules/shared/redux-store';
 export class AppComponent implements OnInit {
 
   public isActive: boolean;
+  private fullscreen = false;
 
-  constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router) {
+  constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router, private fullscreenService: FullscreenService) {
     translate.setDefaultLang('de');
     translate.use('de');
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
+    fullscreenService.changeEmitted$.subscribe(
+    (fullscreen) => {
+        this.fullscreen = fullscreen;
+    });
   }
 
   public showLabel(): boolean {

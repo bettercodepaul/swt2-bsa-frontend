@@ -1,10 +1,13 @@
-<div class="wrapper">
+<router-outlet *ngIf="fullscreen"></router-outlet>
+
+<div *ngIf="!fullscreen" class="wrapper" style="overflow: auto;">
 
   <!-- NavBar  -->
   <bla-navbar></bla-navbar>
 
   <!-- Sidebar  -->
   <bla-sidebar></bla-sidebar>
+
 
   <!-- Page Content -->
   <div class="content {{isActive? 'inactive' : ''}}"
