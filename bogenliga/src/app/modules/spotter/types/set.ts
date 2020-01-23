@@ -39,11 +39,11 @@ export class Set {
     }
 
     canFinish(): boolean {
-        this.plays.forEach((play: Play) => {
+        for (const play of this.plays) {
             if (!play.final || play.result < 0) {
                 return false;
             }
-        });
+        }
         return true;
     }
 

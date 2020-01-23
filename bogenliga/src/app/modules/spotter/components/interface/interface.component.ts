@@ -77,7 +77,13 @@ export class InterfaceComponent implements OnInit, OnDestroy {
   }
 
   onNextSet() {
-    if (!this.match.addSet()) {
+    if (this.match.addSet()) {
+      this.spotting = true;
+      this.editing = false;
+      this.selectedPlayNumber = 1;
+      this.selectedValue = -1;
+      this.editedPlay = -1;
+      this.unsure = false;
       // Send set to Server to confirm
 
       // Create new Set
@@ -103,6 +109,9 @@ export class InterfaceComponent implements OnInit, OnDestroy {
 
   selectResult(selected: any) {
     this.selectedValue = selected;
+    if (this.selectedValue >= 0 && this.selectedValue <= 10) {
+      this.match.set().play(this.selectedPlayNumber).result = this.selectedValue;
+    }
   }
 
   changeFinal() {

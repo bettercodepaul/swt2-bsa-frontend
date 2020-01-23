@@ -40,7 +40,7 @@
               <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 5, 'final': match.set().play(5).final && match.set().currentPlayNumber > (5), 'unsure': !match.set().play(5).final}">
                 {{match.set().play(5).result}}
               </button>
-              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber > (6), 'unsure': !match.set().play(6).final}">
+              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber >= (6) && !spotting, 'unsure': !match.set().play(6).final}">
                 {{match.set().play(6).result}}
               </button>
               </div>
@@ -123,10 +123,10 @@
     </div>
     <div *ngIf="!spotting && !editing" class="row h-25 align-items-center" style="padding: 25px 0px;">
         <div class="col-6 p-0 text-center">
-          <button type="button" class="button-footer" [disabled]="!match.set().canFinish()">Nächster Satz</button>
+          <button type="button" class="button-footer" (click)="onNextSet()" [disabled]="!match.set().canFinish()">Nächster Satz</button>
         </div>
         <div class="col-6 p-0 text-center">
-          <button type="button" class="button-footer" [disabled]="!match.set().canFinish()">Match Beenden</button>
+          <button type="button" class="button-footer" (click)="onFinishMatch()" [disabled]="!match.set().canFinish()">Match Beenden</button>
         </div>
     </div>
   </div>
