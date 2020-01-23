@@ -93,10 +93,9 @@ export class InterfaceComponent implements OnInit, OnDestroy {
   onFinishMatch() {
     if (this.match.canFinish()) {
       // Send match to Server to confirm
-      // -> when successful:
+      // -> when successful: get new Match Information back from the Server
       localStorage.removeItem('match');
       this.match = new Match('Frickenhausen', 0);
-      // Send information to server that match is finished
     }
   }
 

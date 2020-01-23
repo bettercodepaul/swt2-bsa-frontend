@@ -75,8 +75,32 @@
   background-color: #dd8583;
 }
 
+.checkbox-xl .custom-control-label::before, 
+.checkbox-xl .custom-control-label::after {
+  width: 40px;
+  height: 40px;
+}
 
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+    background-color: #dd8583;
+  }
 
+.checkbox-xl .custom-control-label {
+  padding-top: 5px;
+  padding-left: 30px;
+  color: whitesmoke;
+  font-size: 25px;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.custom-control {
+    padding-left: 0px;
+}
 
 
 
