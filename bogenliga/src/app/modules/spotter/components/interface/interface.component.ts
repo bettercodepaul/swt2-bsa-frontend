@@ -17,6 +17,8 @@ export class InterfaceComponent implements OnInit, OnDestroy {
 
   selectedValue = -1;
 
+  unsure = false;
+
   constructor(private fullscreenService: FullscreenService) { }
 
   ngOnInit() {
@@ -35,11 +37,14 @@ export class InterfaceComponent implements OnInit, OnDestroy {
 
   onSave() {
     if (this.selectedValue >= 0 && this.selectedValue <= 10) {
-      this.match.currentSet.currentPlay.number = this.selectedValue;
+      this.match.currentSet.currentPlay.result = this.selectedValue;
+      this.match.currentSet.currentPlay.final = !this.unsure;
+      this.unsure = false;
 
       // send current play() then {
       if (!this.match.addPlay()) {
-        this.match.addSet();
+        this.spotting = false;
+        //this.match.addSet();
       }
 
       this.selectedValue = -1;

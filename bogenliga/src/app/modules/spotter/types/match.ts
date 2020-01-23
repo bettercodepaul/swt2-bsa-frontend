@@ -37,10 +37,7 @@ export class Match {
     }
 
     addPlay(): boolean {
-        if (!this.currentSet.addPlay()) {
-            this.currentSetNumber++;
-            this.currentSet = new Set(this.currentSetNumber);
-            this.sets.push(this.currentSet);
+        if (this.currentSet.addPlay()) {
             return true;
         }
         return false;
