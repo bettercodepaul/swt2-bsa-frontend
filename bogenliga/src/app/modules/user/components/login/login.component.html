@@ -117,6 +117,53 @@
 
       </div>
 
+
+<!--Spotter Login-->
+
+
+      <div class="card mb-4 shadow-sm">
+          <div class="card-body login-dialog">
+  
+            <form id="spotterForm" #spotterForm="ngForm">              
+  
+              <div style="text-align: center;">
+                <h5 class="h3 mb-3 font-weight-normal">{{ 'USER.LOGIN.SPOTTER.HEADER' | translate }}</h5>
+              </div>
+              <!-- Input -->
+              <div class="container">
+                <div class="form-group">
+                  <label for="accessCode">{{ 'USER.LOGIN.SPOTTER.LABEL' | translate }}</label>
+                  <input type="password"
+                         class="form-control"
+                         id="accessCode"
+                         name="accessCode"
+                         #loginAccessCode="ngModel"
+                         [(ngModel)]="accessCode"
+                         minlength="5"
+                         required
+                         (keyup.enter)="onSpotterLogin($event)"
+                         [class.is-invalid]="(loginAccessCode.invalid && !loginAccessCode.untouched) || (loginResult === LoginResult.FAILURE)"
+                         placeholder="{{ 'USER.LOGIN.SPOTTER.PLACEHOLDER' | translate }}">
+  
+                  <div class="invalid-feedback">
+                    {{ 'USER.LOGIN.SPOTTER.ERROR' | translate }}
+                  </div>
+                </div>
+  
+                <bla-button [id]="'spotterLoginButton'"
+                            [buttonSize]="ButtonSize.LARGE_BLOCK"
+                            [disabled]="!spotterForm.valid"
+                            [loading]="loading"
+                            (onClick)="onSpotterLogin($event)">{{ 'USER.LOGIN.BUTTON.LOGIN' | translate }}
+                </bla-button>
+  
+              </div>
+            </form>
+  
+          </div>
+  
+        </div>
+
       <!-- Shortcut Login only visible if not in prod mode -->
       <div *ngIf="!(inProd === true)">
         <bla-alert header="Testbenutzer:"
