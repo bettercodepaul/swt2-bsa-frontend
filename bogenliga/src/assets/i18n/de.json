@@ -1340,6 +1340,9 @@
     }
   },
   "SPOTTER": {
+    "LINK": {
+      "TEXT": "Zur Spotter-Authentifizierung"
+    },
     "WETTKAEMPFE": {
       "TITLE": "Wettkämpfe",
       "TABLE": "Heute stattfindende Wettkämpfe"

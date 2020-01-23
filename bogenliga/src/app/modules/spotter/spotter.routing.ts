@@ -12,10 +12,14 @@ import { BahnenGuard } from './guards/bahnen.guard';
 import { SchuetzenComponent } from './components/schuetzen/schuetzen.component';
 import { SchuetzenGuard } from './guards/schuetzen.guard';
 
+import {AuthenticationComponent} from './components';
+import {AuthenticationGuard} from './guards';
+
 export const SPOTTER_ROUTES: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'wettkaempfe'},
   {path: 'wettkaempfe', component: WettkaempfeComponent, canActivate: [WettkaempfeGuard]},
   {path: 'matches', component: MatchesComponent, canActivate: [MatchesGuard]},
   {path: 'bahnen', component: BahnenComponent, canActivate: [BahnenGuard]},
-  {path: 'schuetzen', component: SchuetzenComponent, canActivate: [SchuetzenGuard]}
+  {path: 'schuetzen', component: SchuetzenComponent, canActivate: [SchuetzenGuard]},
+  {path: 'authentication', component: AuthenticationComponent, canActivate: [AuthenticationGuard]}
 ];
