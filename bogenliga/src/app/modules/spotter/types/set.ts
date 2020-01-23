@@ -8,21 +8,26 @@ export class Set {
 
     constructor(number: number) {
         this.number = number;
-        this.currentPlayNumber = 1;
-        this.currentPlay = new Play(this.currentPlayNumber);
-        this.plays = new Array<Play>();
-        this.plays.push(this.currentPlay);
+        this.plays = this.createPlays();
+        this.currentPlay = this.plays[0];
+        this.currentPlayNumber = this.currentPlay.number;
     }
 
-    addPlay(): boolean {
-        if (this.currentPlayNumber < 6) {
-            this.currentPlayNumber++;
-            this.currentPlay = new Play(this.currentPlayNumber);
-            this.plays.push(this.currentPlay);
-            return true;
-        } else {
-            return false;
+    private createPlays() {
+        const plays = new Array<Play>();
+        for (let i = 1; i < 7; i++) {
+            plays.push(new Play(i));
         }
+        return plays;
+    }
+
+    nextPlay(): boolean {
+        if (this.currentPlayNumber < 6) {
+            this.currentPlay = this.plays[this.currentPlayNumber];
+            this.currentPlayNumber = this.currentPlay.number;
+            return true;
+        }
+        return false;
     }
 
     getSum(): number {
@@ -35,11 +40,22 @@ export class Set {
 
     canFinish(): boolean {
         this.plays.forEach((play: Play) => {
-            if (!play.final) {
+            if (!play.final || play.result < 0) {
                 return false;
             }
         });
         return true;
+    }
+
+    play(number?: number): Play {
+        if (number) {
+            if (number > 0 && number < 7) {
+                return this.plays[number - 1];
+            }
+            return null;
+        } else {
+            return this.currentPlay;
+        }
     }
 
 }

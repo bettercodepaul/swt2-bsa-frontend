@@ -2,7 +2,7 @@ export class Play {
 
     number: number;
     result: number;
-    public final = true;
+    final = true;
 
     constructor(number: number) {
         this.number = number;

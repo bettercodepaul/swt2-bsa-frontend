@@ -19,6 +19,9 @@ export class InterfaceComponent implements OnInit, OnDestroy {
 
   unsure = false;
 
+  editing = false;
+  editedPlay = -1;
+
   constructor(private fullscreenService: FullscreenService) { }
 
   ngOnInit() {
@@ -36,22 +39,41 @@ export class InterfaceComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    if (this.selectedValue >= 0 && this.selectedValue <= 10) {
-      this.match.currentSet.currentPlay.result = this.selectedValue;
-      this.match.currentSet.currentPlay.final = !this.unsure;
-      this.unsure = false;
+    if (!this.editing) {
+      if (this.selectedValue >= 0 && this.selectedValue <= 10) {
+        this.match.set().play().result = this.selectedValue;
+        this.match.set().play().final = !this.unsure;
+        this.unsure = false;
 
-      // send current play() then {
-      if (!this.match.addPlay()) {
-        this.spotting = false;
-        //this.match.addSet();
+        // send current play() then {
+        if (!this.match.nextPlay()) {
+          this.spotting = false;
+          //this.match.addSet();
+        } else {
+          this.selectedPlayNumber++;
+        }
+
+        this.selectedValue = -1;
+
+        // }
+
       }
+    } else {
+      if (this.selectedValue >= 0 && this.selectedValue <= 10) {
+        this.match.set().play(this.editedPlay).result = this.selectedValue;
+        this.match.set().play(this.editedPlay).final = true;
 
-      this.selectedValue = -1;
-
-      // }
-
+        this.spotting = false;
+        this.editing = false;
+      }
     }
+  }
+
+  onEdit(play: number) {
+    this.selectedPlayNumber = play;
+    this.editing = true;
+    this.selectedValue = this.match.set().play(play).result;
+    this.editedPlay = play;
   }
 
   onNextSet() {
@@ -73,7 +95,7 @@ export class InterfaceComponent implements OnInit, OnDestroy {
   }
 
   onBack() {
-    if (this.match.lastSet() && this.match.currentSet.currentPlayNumber === 1) {
+    if (this.match.lastSet() && this.match.set().currentPlayNumber === 1) {
       this.spotting = false;
     }
 
@@ -84,7 +106,7 @@ export class InterfaceComponent implements OnInit, OnDestroy {
   }
 
   changeFinal() {
-    this.match.currentSet.currentPlay.final = !this.match.currentSet.currentPlay.final;
+    this.match.set().play().final = !this.match.set().play().final;
   }
 
 

@@ -36,8 +36,8 @@ export class Match {
         return false;
     }
 
-    addPlay(): boolean {
-        if (this.currentSet.addPlay()) {
+    nextPlay(): boolean {
+        if (this.currentSet.nextPlay()) {
             return true;
         }
         return false;
@@ -57,6 +57,16 @@ export class Match {
             return this.sets[this.sets.length - 2];
         }
         return null;
+    }
+
+    set(number?: number) {
+        if (number) {
+            if (number > 0 && number <= this.sets.length) {
+                return this.sets[number - 1];
+            }
+            return null;
+        }
+        return this.currentSet;
     }
 
 }

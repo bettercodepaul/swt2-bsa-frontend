@@ -16,7 +16,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="spotting" class="col-12 col-lg-8 order-3 order-lg-2 offset-lg-1 text-center">
+        <div *ngIf="spotting || editing" class="col-12 col-lg-8 order-3 order-lg-2 offset-lg-1 text-center">
           <div class="row align-items-center h-25 text-center">
             <div class="col">
               Pfeile
@@ -25,17 +25,29 @@
           <div class="row align-items-center h-75">
             <div class="col" style="margin: 10px 0px;">
               <div class="btn-group" role="group">
-                <button class="btn-circle header">1</button>
-                <button class="btn-circle header">2</button>
-                <button class="btn-circle header">3</button>
-                <button class="btn-circle header">4</button>
-                <button class="btn-circle header">5</button>
-                <button class="btn-circle header">6</button>
+              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 1, 'final': match.set().play(1).final && match.set().currentPlayNumber > (1), 'unsure': !match.set().play(1).final}" >
+                {{match.set().play(1).result}}
+              </button>
+              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 2, 'final': match.set().play(2).final && match.set().currentPlayNumber > (2), 'unsure': !match.set().play(2).final}">
+                {{match.set().play(2).result}}
+              </button>
+              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 3, 'final': match.set().play(3).final && match.set().currentPlayNumber > (3), 'unsure': !match.set().play(3).final}">
+                {{match.set().play(3).result}}
+              </button>
+              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 4, 'final': match.set().play(4).final && match.set().currentPlayNumber > (4), 'unsure': !match.set().play(4).final}">
+                {{match.set().play(4).result}}
+              </button>
+              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 5, 'final': match.set().play(5).final && match.set().currentPlayNumber > (5), 'unsure': !match.set().play(5).final}">
+                {{match.set().play(5).result}}
+              </button>
+              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber > (6), 'unsure': !match.set().play(6).final}">
+                {{match.set().play(6).result}}
+              </button>
               </div>
             </div>
           </div>
         </div>
-        <div *ngIf="!spotting" class="col-12 col-lg-8 offset-lg-1 order-3 order-lg-2 text-center">
+        <div *ngIf="!spotting && !editing" class="col-12 col-lg-8 offset-lg-1 order-3 order-lg-2 text-center">
           <div class="row align-items-center h-25">
             <div class="col">
               Satzpunkte
@@ -43,7 +55,7 @@
           </div>
           <div class="row align-items-center h-75">
             <div class="col">
-              {{match.currentSet.getSum()}}
+              {{match.set().getSum()}}
             </div>
           </div>
         </div>
@@ -61,7 +73,7 @@
         </div>
     </div>
     <!--BODY-->
-    <div *ngIf="spotting" class="row h-50" style="padding: 100px 0px;">
+    <div *ngIf="spotting || editing" class="row h-50" style="padding: 100px 0px;">
         <div class="col-12 col-md-4 text-center align-self-center" id="miss">
           <button class="button-square" type="button" (click)="selectResult(0)" [ngClass]="{'selected': selectedValue === 0}">M</button>
         </div>
@@ -80,41 +92,41 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!spotting" class="row h-50" style="padding: 100px 0px;">
+    <div *ngIf="!spotting && !editing" class="row h-50" style="padding: 100px 0px;">
       <div class="col-12 align-items-center" style="text-align: center;">
         <div class="btn-group flex-wrap justify-content-center" role="group">
           <div>
-          <button class="btn-circle" type="button" [ngClass]="match.currentSet.plays[0].final ? 'final' : 'unsure'">{{match.currentSet.plays[0].result}}</button>
-            <button class="btn-circle" type="button" [ngClass]="match.currentSet.plays[1].final ? 'final' : 'unsure'">{{match.currentSet.plays[1].result}}</button>
-            <button class="btn-circle" type="button" [ngClass]="match.currentSet.plays[2].final ? 'final' : 'unsure'">{{match.currentSet.plays[2].result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(1)" [ngClass]="match.set().play(1).final ? 'final' : 'unsure'">{{match.set().play(1).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(2)" [ngClass]="match.set().play(2).final ? 'final' : 'unsure'">{{match.set().play(2).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(3)" [ngClass]="match.set().play(3).final ? 'final' : 'unsure'">{{match.set().play(3).result}}</button>
           </div>
           <div>
-            <button class="btn-circle" type="button" [ngClass]="match.currentSet.plays[3].final ? 'final' : 'unsure'">{{match.currentSet.plays[3].result}}</button>
-            <button class="btn-circle" type="button" [ngClass]="match.currentSet.plays[4].final ? 'final' : 'unsure'">{{match.currentSet.plays[4].result}}</button>
-            <button class="btn-circle" type="button" [ngClass]="match.currentSet.plays[5].final ? 'final' : 'unsure'">{{match.currentSet.plays[5].result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(4)" [ngClass]="match.set().play(4).final ? 'final' : 'unsure'">{{match.set().play(4).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(5)" [ngClass]="match.set().play(5).final ? 'final' : 'unsure'">{{match.set().play(5).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(6)" [ngClass]="match.set().play(6).final ? 'final' : 'unsure'">{{match.set().play(6).result}}</button>
           </div>
         </div>
       </div>
     </div>
     <!--FOOTER-->
-    <div *ngIf="spotting" class="row h-25 align-items-center" style="padding: 20px 0px;">
+    <div *ngIf="spotting || editing" class="row h-25 align-items-center" style="padding: 20px 0px;">
         <div class="col-4 text-center">
           <button type="button" class="btn btn-secondary" style="font-size: 25px;">Back</button>
         </div>
         <div class="col-4 text-center">
-          <input id="final" type="checkbox" [(ngModel)]="unsure">
-          <label for="final">Unsure?</label>
+          <input *ngIf="!editing" id="final" type="checkbox" [(ngModel)]="unsure">
+          <label *ngIf="!editing" for="final">Unsure?</label>
         </div>
         <div class="col-4 text-center">
           <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onSave()">Save</button>
         </div>
     </div>
-    <div *ngIf="!spotting" class="row h-25 align-items-center" style="padding: 25px 0px;">
+    <div *ngIf="!spotting && !editing" class="row h-25 align-items-center" style="padding: 25px 0px;">
         <div class="col-6 p-0 text-center">
-          <button type="button" class="button-footer">Nächster Satz</button>
+          <button type="button" class="button-footer" [disabled]="!match.set().canFinish()">Nächster Satz</button>
         </div>
         <div class="col-6 p-0 text-center">
-          <button type="button" class="button-footer">Match Beenden</button>
+          <button type="button" class="button-footer" [disabled]="!match.set().canFinish()">Match Beenden</button>
         </div>
     </div>
   </div>
