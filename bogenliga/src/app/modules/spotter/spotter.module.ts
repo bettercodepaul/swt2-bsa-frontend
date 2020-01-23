@@ -5,29 +5,25 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 import { SPOTTER_ROUTES } from './spotter.routing';
 
-import {
-  LoginGuard,
-  InterfaceGuard,
-} from './guards';
+import { InterfaceGuard} from './guards';
 
-import { LoginComponent } from './components/login/login.component';
 import { InterfaceComponent } from './components/interface/interface.component';
 
 @NgModule({
-  declarations: [LoginComponent, InterfaceComponent],
+  declarations: [InterfaceComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(SPOTTER_ROUTES),
     SharedModule.forChild(),
     FormsModule
   ],
-  providers: [LoginGuard, InterfaceGuard]
+  providers: [InterfaceGuard]
 })
 export class SpotterModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [LoginGuard, InterfaceGuard]
+      providers: [InterfaceGuard]
     };
   }
 
