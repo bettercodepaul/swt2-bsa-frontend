@@ -33,6 +33,9 @@ export class InterfaceComponent implements OnInit {
       const temp = JSON.parse(localStorage.getItem('match'));
       this.match = MatchJsonToClass.parseMatch(temp);
       this.selectedPlayNumber = this.match.set().currentPlayNumber;
+      if (this.match.set().play().result) {
+        this.spotting = false;
+      }
     } else {
       this.match = new Match('Nürtingen', 1);
     }
