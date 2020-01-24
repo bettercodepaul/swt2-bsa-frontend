@@ -115,7 +115,7 @@ export class InterfaceComponent implements OnInit {
   }
 
   onExit() {
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('/home');
   }
 
 
