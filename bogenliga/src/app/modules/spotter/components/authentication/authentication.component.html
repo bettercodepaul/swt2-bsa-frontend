@@ -1,1 +1,12 @@
 <h1>Authentication</h1>
+<div class="containter">
+  <label for="spotterAuth">{{ 'SPOTTER.AUTH.TEXT' | translate }}></label>
+  <input type="authCode"
+         class="form-control"
+         name="spotterAuth"
+         id="spotterAuth"
+         required
+         pattern ="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+         placeholder="{{ 'SPOTTER.AUTH.INFO' | translate }}">
+
+</div>

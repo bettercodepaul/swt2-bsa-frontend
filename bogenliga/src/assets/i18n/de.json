@@ -1343,6 +1343,11 @@
     "LINK": {
       "TEXT": "Zur Spotter-Authentifizierung"
     },
+    "AUTH": {
+      "TITLE": "Authentifizierung als Spotter",
+      "TEXT": "Geben Sie den Code ein.",
+      "INFO": "x x x x x x"
+    },
     "WETTKAEMPFE": {
       "TITLE": "Wettkämpfe",
       "TABLE": "Heute stattfindende Wettkämpfe"
