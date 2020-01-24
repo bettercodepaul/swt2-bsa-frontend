@@ -1,3 +1,4 @@
+import { MatchJsonToClass } from './../../mapper/match-json-to-class.mapper';
 import { Router } from '@angular/router';
 import { Match } from './../../types/match';
 import { Component, OnInit } from '@angular/core';
@@ -29,7 +30,9 @@ export class InterfaceComponent implements OnInit {
 
   ngOnInit() {
     if (localStorage.getItem('match')) {
-      this.match = JSON.parse(localStorage.getItem('match'));
+      const temp = JSON.parse(localStorage.getItem('match'));
+      this.match = MatchJsonToClass.parseMatch(temp);
+      this.selectedPlayNumber = this.match.set().currentPlayNumber;
     } else {
       this.match = new Match('Nürtingen', 1);
     }
@@ -64,6 +67,7 @@ export class InterfaceComponent implements OnInit {
         this.editing = false;
       }
     }
+    localStorage.setItem('match', JSON.stringify(this.match));
   }
 
   onEdit(play: number) {
@@ -84,6 +88,7 @@ export class InterfaceComponent implements OnInit {
       // Send set to Server to confirm
 
       // Create new Set
+      localStorage.setItem('match', JSON.stringify(this.match));
     }
   }
 
@@ -115,6 +120,7 @@ export class InterfaceComponent implements OnInit {
   }
 
   onExit() {
+    localStorage.setItem('match', JSON.stringify(this.match));
     this.router.navigateByUrl('/home');
   }
 
