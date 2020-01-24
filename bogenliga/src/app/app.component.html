@@ -1,5 +1,5 @@
 <!--Spotter Interface-->
-<router-outlet *ngIf="fullscreen"></router-outlet>
+<router-outlet (activate)="onActivate($event)" *ngIf="fullscreen"></router-outlet>
 
 <!--User Interface-->
 <div *ngIf="!fullscreen" class="wrapper" style="overflow: auto;">
@@ -16,7 +16,7 @@
        style="display: flex; flex-direction: column">
 
     <div id="content-without-footer">
-      <router-outlet></router-outlet>
+      <router-outlet (activate)="onActivate($event)"></router-outlet>
     </div>
 
     <!-- Footer -->
