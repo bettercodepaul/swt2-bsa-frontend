@@ -1,3 +1,5 @@
+import { AccessCodeDTO } from './../types/model/access-code-dto';
+import { CredentialsDTO } from '@user/types/model/credentials-dto.class';
 import {Injectable} from '@angular/core';
 
 import {HttpErrorResponse} from '@angular/common/http';
@@ -8,7 +10,6 @@ import {LOGOUT} from '@shared/redux-store';
 import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
 import {CredentialsDO} from '../types/credentials-do.class';
 import {LoginResult} from '../types/login-result.enum';
-import {CredentialsDTO} from '../types/model/credentials-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,24 @@ export class LoginDataProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       const credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password, credentialsDO.using2FA, credentialsDO.code);
       this.sendSignInRequest(credentialsDTO, resolve, reject);
+    });
+  }
+
+  public spotterSignIn(accessCode: string): Promise<LoginResult> {
+    return new Promise((resolve, reject) => {
+      this.restClient.POST<UserSignInDTO>(new UriBuilder().fromPath(this.getUrl()).build(), new AccessCodeDTO(accessCode))
+      .then((data: UserSignInDTO) => {
+        this.currentUserService.persistCurrentUser(data);
+        resolve(LoginResult.SUCCESS);
+      }, (error: HttpErrorResponse) => {
+        this.store.dispatch({type: LOGOUT, user: null});
+        this.currentUserService.logout();
+        if (error.status === 0) {
+          reject(LoginResult.CONNECTION_PROBLEM);
+        } else {
+          reject(LoginResult.FAILURE);
+        }
+      });
     });
   }
 
