@@ -47,6 +47,12 @@ export class AppComponent implements OnInit {
       this.fullscreen = true;
     }
   }
+
+  onDeactivate(event: any) {
+    if (event instanceof InterfaceComponent) {
+      this.fullscreen = false;
+    }
+  }
 }
 
 
