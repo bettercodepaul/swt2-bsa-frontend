@@ -1,12 +1,19 @@
-<h1>Authentication</h1>
-<div class="containter">
-  <label for="spotterAuth">{{ 'SPOTTER.AUTH.TEXT' | translate }}></label>
-  <input type="authCode"
-         class="form-control"
-         name="spotterAuth"
-         id="spotterAuth"
-         required
-         pattern ="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
-         placeholder="{{ 'SPOTTER.AUTH.INFO' | translate }}">
-
+<div class="container">
+  <h1>{{ 'SPOTTER.AUTH.TITLE' | translate }}</h1>
+  <div class="form-group">
+    <label for="spotterAuth">{{ 'SPOTTER.AUTH.TEXT' | translate }}</label>
+    <input type="authCode"
+           class="form-control"
+           name="spotterAuth"
+           id="spotterAuth"
+           required
+           pattern ="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+           placeholder="{{ 'SPOTTER.AUTH.INFO' | translate }}">
+    <br>
+    <bla-button [id] = "'spotterAuth'"
+                [buttonSize] = "ButtonSize.LARGE_BLOCK"
+                >{{ 'SPOTTER.AUTH.LABLE' }}
+    </bla-button>
+  </div>
 </div>
+
