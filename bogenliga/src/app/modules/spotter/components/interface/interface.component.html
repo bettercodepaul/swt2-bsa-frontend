@@ -23,22 +23,22 @@
           <div class="row align-items-center h-75">
             <div class="col" style="margin: 10px 0px;">
               <div class="btn-group" role="group">
-              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 1, 'final': match.set().play(1).final && match.set().currentPlayNumber > (1), 'unsure': !match.set().play(1).final}" >
+              <button class="btn-circle header" (click)="onEdit(1)" [ngClass]="{'selected': selectedPlayNumber === 1, 'final': match.set().play(1).final && match.set().currentPlayNumber > (1), 'unsure': !match.set().play(1).final}" >
                 {{match.set().play(1).result}}
               </button>
-              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 2, 'final': match.set().play(2).final && match.set().currentPlayNumber > (2), 'unsure': !match.set().play(2).final}">
+              <button class="btn-circle header" (click)="onEdit(2)" [ngClass]="{'selected': selectedPlayNumber === 2, 'final': match.set().play(2).final && match.set().currentPlayNumber > (2), 'unsure': !match.set().play(2).final}">
                 {{match.set().play(2).result}}
               </button>
-              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 3, 'final': match.set().play(3).final && match.set().currentPlayNumber > (3), 'unsure': !match.set().play(3).final}">
+              <button class="btn-circle header" (click)="onEdit(3)" [ngClass]="{'selected': selectedPlayNumber === 3, 'final': match.set().play(3).final && match.set().currentPlayNumber > (3), 'unsure': !match.set().play(3).final}">
                 {{match.set().play(3).result}}
               </button>
-              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 4, 'final': match.set().play(4).final && match.set().currentPlayNumber > (4), 'unsure': !match.set().play(4).final}">
+              <button class="btn-circle header" (click)="onEdit(4)" [ngClass]="{'selected': selectedPlayNumber === 4, 'final': match.set().play(4).final && match.set().currentPlayNumber > (4), 'unsure': !match.set().play(4).final}">
                 {{match.set().play(4).result}}
               </button>
-              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 5, 'final': match.set().play(5).final && match.set().currentPlayNumber > (5), 'unsure': !match.set().play(5).final}">
+              <button class="btn-circle header" (click)="onEdit(5)" [ngClass]="{'selected': selectedPlayNumber === 5, 'final': match.set().play(5).final && match.set().currentPlayNumber > (5), 'unsure': !match.set().play(5).final}">
                 {{match.set().play(5).result}}
               </button>
-              <button class="btn-circle header" [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber >= (6) && !spotting, 'unsure': !match.set().play(6).final}">
+              <button class="btn-circle header" (click)="onEdit(6)" [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber >= (6) && !spotting, 'unsure': !match.set().play(6).final}">
                 {{match.set().play(6).result}}
               </button>
               </div>
