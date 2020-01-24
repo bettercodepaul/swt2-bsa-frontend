@@ -1346,7 +1346,9 @@
     "AUTH": {
       "TITLE": "Authentifizierung als Spotter",
       "TEXT": "Geben Sie den Code ein.",
-      "INFO": "x x x x x x"
+      "LABLE" : "Zum Spotter-Interface",
+      "INFO": "x x x x x x",
+      "ERROR" : "Fehlerhafte Eingabe"
     },
     "WETTKAEMPFE": {
       "TITLE": "Wettkämpfe",
