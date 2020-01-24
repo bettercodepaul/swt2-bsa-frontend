@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'bla-authentication',
@@ -6,7 +6,7 @@ import {Component} from '@angular/core';
   //styleUrls: ['./authentication.component.scss']
 })
 
-export class AuthenticationComponent implements onInit {
+export class AuthenticationComponent implements OnInit {
 
   constructor() { }
 
