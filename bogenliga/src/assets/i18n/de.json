@@ -1347,6 +1347,16 @@
     }
   },
   "SPOTTER": {
+    "LINK": {
+      "TEXT": "Zur Spotter-Authentifizierung"
+    },
+    "AUTH": {
+      "TITLE": "Authentifizierung als Spotter",
+      "TEXT": "Geben Sie den Code ein.",
+      "LABLE" : "Zum Spotter-Interface",
+      "INFO": "x x x x x x",
+      "ERROR" : "Fehlerhafte Eingabe"
+    },
     "WETTKAEMPFE": {
       "TITLE": "Wettkämpfe",
       "TABLE": "Heute stattfindende Wettkämpfe"

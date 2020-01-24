@@ -6,12 +6,12 @@ import { SharedModule } from '../shared';
 import { SPOTTER_ROUTES } from './spotter.routing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { InterfaceGuard} from './guards';
+import { InterfaceGuard, AuthenticationGuard} from './guards';
 
-import { InterfaceComponent } from './components/interface/interface.component';
+import { InterfaceComponent, AuthenticationComponent } from './components';
 
 @NgModule({
-  declarations: [InterfaceComponent],
+  declarations: [InterfaceComponent, AuthenticationComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(SPOTTER_ROUTES),
@@ -19,13 +19,20 @@ import { InterfaceComponent } from './components/interface/interface.component';
     FormsModule,
     FontAwesomeModule
   ],
-  providers: [InterfaceGuard]
+  providers: [
+    InterfaceGuard,
+    AuthenticationGuard
+  ]
+
 })
 export class SpotterModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: SharedModule,
-      providers: [InterfaceGuard]
+      providers: [
+        AuthenticationGuard,
+        InterfaceGuard
+      ]
     };
   }
 
