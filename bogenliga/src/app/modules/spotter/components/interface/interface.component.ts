@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
 import { Match } from './../../types/match';
-import { FullscreenService } from './../../../../services/fullscreen.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,7 +8,7 @@ import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './interface.component.html',
   styleUrls: ['./interface.component.scss']
 })
-export class InterfaceComponent implements OnInit, OnDestroy {
+export class InterfaceComponent implements OnInit {
 
   faArrowCircleLeft = faArrowCircleLeft;
 
@@ -26,20 +25,14 @@ export class InterfaceComponent implements OnInit, OnDestroy {
   editing = false;
   editedPlay = -1;
 
-  constructor(private fullscreenService: FullscreenService, private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.fullscreenService.emitChange(true);
-
     if (localStorage.getItem('match')) {
       this.match = JSON.parse(localStorage.getItem('match'));
     } else {
       this.match = new Match('Nürtingen', 1);
     }
-  }
-
-  ngOnDestroy(): void {
-    this.fullscreenService.emitChange(false);
   }
 
   onSave() {

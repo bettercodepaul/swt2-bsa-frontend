@@ -1,4 +1,4 @@
-import { FullscreenService } from './services/fullscreen.service';
+import { InterfaceComponent } from './modules/spotter/components/interface/interface.component';
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
@@ -16,15 +16,11 @@ export class AppComponent implements OnInit {
   public isActive: boolean;
   private fullscreen = false;
 
-  constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router, private fullscreenService: FullscreenService) {
+  constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router) {
     translate.setDefaultLang('de');
     translate.use('de');
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
-    fullscreenService.changeEmitted$.subscribe(
-    (fullscreen) => {
-        this.fullscreen = fullscreen;
-    });
   }
 
   public showLabel(): boolean {
@@ -44,6 +40,12 @@ export class AppComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
+  }
+
+  onActivate(event: any) {
+    if (event instanceof InterfaceComponent) {
+      this.fullscreen = true;
+    }
   }
 }
 
