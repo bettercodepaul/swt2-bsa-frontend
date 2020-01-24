@@ -62,24 +62,6 @@ export class LoginDataProviderService extends DataProviderService {
     });
   }
 
-  public spotterSignIn(accessCode: string): Promise<LoginResult> {
-    return new Promise((resolve, reject) => {
-      this.restClient.POST<UserSignInDTO>(new UriBuilder().fromPath(this.getUrl()).build(), new AccessCodeDTO(accessCode))
-      .then((data: UserSignInDTO) => {
-        this.currentUserService.persistCurrentUser(data);
-        resolve(LoginResult.SUCCESS);
-      }, (error: HttpErrorResponse) => {
-        this.store.dispatch({type: LOGOUT, user: null});
-        this.currentUserService.logout();
-        if (error.status === 0) {
-          reject(LoginResult.CONNECTION_PROBLEM);
-        } else {
-          reject(LoginResult.FAILURE);
-        }
-      });
-    });
-  }
-
   public getEmailAddress(): string {
     return this.currentUserService.getRememberedUsername();
   }
