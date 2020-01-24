@@ -1,6 +1,8 @@
+import { Router } from '@angular/router';
 import { Match } from './../../types/match';
 import { FullscreenService } from './../../../../services/fullscreen.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'bla-interface',
@@ -8,6 +10,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./interface.component.scss']
 })
 export class InterfaceComponent implements OnInit, OnDestroy {
+
+  faArrowCircleLeft = faArrowCircleLeft;
 
   selectedPlayNumber = 1;
 
@@ -22,7 +26,7 @@ export class InterfaceComponent implements OnInit, OnDestroy {
   editing = false;
   editedPlay = -1;
 
-  constructor(private fullscreenService: FullscreenService) { }
+  constructor(private fullscreenService: FullscreenService, private router: Router) { }
 
   ngOnInit() {
     this.fullscreenService.emitChange(true);
@@ -115,6 +119,10 @@ export class InterfaceComponent implements OnInit, OnDestroy {
 
   changeFinal() {
     this.match.set().play().final = !this.match.set().play().final;
+  }
+
+  onExit() {
+    this.router.navigateByUrl('');
   }
 
 

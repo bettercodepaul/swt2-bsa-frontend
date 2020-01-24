@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared';
 import { SPOTTER_ROUTES } from './spotter.routing';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { InterfaceGuard} from './guards';
 
@@ -15,7 +16,8 @@ import { InterfaceComponent } from './components/interface/interface.component';
     CommonModule,
     RouterModule.forChild(SPOTTER_ROUTES),
     SharedModule.forChild(),
-    FormsModule
+    FormsModule,
+    FontAwesomeModule
   ],
   providers: [InterfaceGuard]
 })

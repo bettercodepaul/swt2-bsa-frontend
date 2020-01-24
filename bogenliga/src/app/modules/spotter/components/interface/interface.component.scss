@@ -102,7 +102,18 @@
     padding-left: 0px;
 }
 
-
+#back-button {
+    background-color: transparent;
+    color: whitesmoke;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    border: none;
+    outline: none;
+    opacity: 25%;
+    cursor: pointer;
+    font-size: 25px;
+}
 
 @media (max-width: 1200px) {
     .button-square {
