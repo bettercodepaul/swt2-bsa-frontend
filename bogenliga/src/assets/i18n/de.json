@@ -46,9 +46,11 @@
   },
   "REGIONEN": {
     "REGIONEN": {
-      "TITLE": "Regionen"
+      "TITLE": "Regionen",
+      "DESCRIPTION": "Um eine Liga auszuwählen klicken Sie bitte auf die entsprechende Region, beispielsweise für die Württembergliga auf den Württembergischer Schützenverband.",
+      "CLOSE" : "Um zurück zu navigieren, auf den innersten Kreis klicken."
     }
-  },
+  }, 
   "VEREINE": {
     "VEREINE": {
       "TITLE": "Vereine",
@@ -146,14 +148,18 @@
       "TITLE": "Aktuelle Ligatabelle"
     },
     "MANNSCHAFTEN": {
-      "TITLE": "Wettkampfergebnisse der Mannschaften",
+      "TITLE": "Wettkampfergebnisse",
       "FORM": {
         "VEREIN_NAME": {
           "LABEL": "Vereine:"
         },
         "VERANSTALTUNG_NAME": {
           "LABEL": "Veranstaltungen:"
+        },
+        "SPORTJAHR":{
+        "LABEL": "Sportjahr:"
         }
+
       },
       "TABLE": {
         "COLUMNS": {
@@ -1149,7 +1155,7 @@
         "PASSWORD": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl"
+          "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",
