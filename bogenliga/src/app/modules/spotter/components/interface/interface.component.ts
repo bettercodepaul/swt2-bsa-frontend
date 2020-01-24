@@ -41,6 +41,10 @@ export class InterfaceComponent implements OnInit {
     }
   }
 
+  /**
+   * Saves current selected value to result of current play of current set if not editing
+   * Changes result of selected play of current set if editing
+   */
   onSave() {
     if (!this.editing) {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
@@ -48,10 +52,9 @@ export class InterfaceComponent implements OnInit {
         this.match.set().play().final = !this.unsure;
         this.unsure = false;
 
-        // send current play() then {
+        // TODO: send current play() over Service then {
         if (!this.match.nextPlay()) {
           this.spotting = false;
-          //this.match.addSet();
         } else {
           this.selectedPlayNumber++;
         }
@@ -65,14 +68,21 @@ export class InterfaceComponent implements OnInit {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
         this.match.set().play(this.editedPlay).result = this.selectedValue;
         this.match.set().play(this.editedPlay).final = true;
-
-        this.spotting = false;
+        if (!this.spotting) {
+          this.spotting = false;
+        } else {
+          this.match.set().play(this.editedPlay).final = !this.unsure;
+          this.unsure = false;
+          this.onEdit(this.selectedPlayNumber + 1);
+        }
+        // TODO: send current play() over Service then {
         this.editing = false;
       }
     }
     localStorage.setItem('match', JSON.stringify(this.match));
   }
 
+  // sets the attributes to display the result of the play to change
   onEdit(play: number) {
     this.selectedPlayNumber = play;
     this.editing = true;
@@ -80,6 +90,7 @@ export class InterfaceComponent implements OnInit {
     this.editedPlay = play;
   }
 
+  // If everything is final, create new set and send confirmation to backend, that set is finished
   onNextSet() {
     if (this.match.addSet()) {
       this.spotting = true;
@@ -88,29 +99,40 @@ export class InterfaceComponent implements OnInit {
       this.selectedValue = -1;
       this.editedPlay = -1;
       this.unsure = false;
-      // Send set to Server to confirm
 
-      // Create new Set
+      // TODO: Send set to Server to confirm
+
       localStorage.setItem('match', JSON.stringify(this.match));
     }
   }
 
+  /**
+   * If the match can end (the current set is final) a confirmation will be sent to the Server
+   * The server will respond with the new information for the next match (Mannschaft)
+   */
   onFinishMatch() {
     if (this.match.canFinish()) {
       // Send match to Server to confirm
       // -> when successful: get new Match Information back from the Server
       localStorage.removeItem('match');
-      this.match = new Match('Frickenhausen', 0);
+      this.match = new Match('Frickenhausen', this.match.bahn);
     }
   }
 
+  /**
+   * Allows the spotter to directly go back to the previous play
+   */
   onBack() {
-    if (this.match.lastSet() && this.match.set().currentPlayNumber === 1) {
-      this.spotting = false;
+    if (this.match.set().currentPlayNumber > 1) {
+      this.onEdit(this.match.set().currentPlayNumber - 1);
     }
 
   }
 
+  /**
+   * sets the selected result from the user interface
+   * @param selected selected result
+   */
   selectResult(selected: any) {
     this.selectedValue = selected;
     if (this.selectedValue >= 0 && this.selectedValue <= 10) {
@@ -118,10 +140,9 @@ export class InterfaceComponent implements OnInit {
     }
   }
 
-  changeFinal() {
-    this.match.set().play().final = !this.match.set().play().final;
-  }
-
+  /**
+   * Redirects the spotter to the home page while maintaining the current match if not finished
+   */
   onExit() {
     localStorage.setItem('match', JSON.stringify(this.match));
     this.router.navigateByUrl('/home');

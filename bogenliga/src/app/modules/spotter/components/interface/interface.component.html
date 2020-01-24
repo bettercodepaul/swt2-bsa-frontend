@@ -109,12 +109,12 @@
     <!--FOOTER-->
     <div *ngIf="spotting || editing" class="row h-25 align-items-center" style="padding: 20px 0px;">
         <div class="col-4 text-center align-center">
-          <button type="button" class="btn btn-secondary" style="font-size: 25px;">Back</button>
+          <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onBack()">Back</button>
         </div>
         <div class="col-4 text-center align-center">
-          <div class="custom-control custom-checkbox checkbox-xl">
-            <input *ngIf="!editing" id="final" type="checkbox" class="custom-control-input" [(ngModel)]="unsure">
-            <label *ngIf="!editing" for="final" class="custom-control-label">Unsure?</label>
+          <div *ngIf="!editing || editing && spotting" class="custom-control custom-checkbox checkbox-xl">
+            <input id="final" type="checkbox" class="custom-control-input" [(ngModel)]="unsure">
+            <label for="final" class="custom-control-label">Unsure?</label>
           </div>
         </div>
         <div class="col-4 text-center align-center">
