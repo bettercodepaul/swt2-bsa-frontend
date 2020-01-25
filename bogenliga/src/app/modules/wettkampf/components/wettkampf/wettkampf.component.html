@@ -34,7 +34,6 @@
              style="width:80%">
       <bla-quicksearch-list (onSelect)="onSelect($event)"
                             [items]="veranstaltungen"
-                            [loading]="loadingwettkampf"
                             [multipleSelections]="!multipleSelections"
                             [optionFieldSelector]="'name'"
                             [placeholderTranslationKey]="PLACEHOLDER_VAR"
@@ -49,14 +48,30 @@
         </div>
       </div>
     </div>
+    <!-- Button -->
+    <div id="Button">
+      <bla-button
+        [id]="'regionSaveButton'"
+        (onClick)="loadErgebnisse(); refresh()">
+        {{ 'Anzeigen' | translate }}
+      </bla-button>
+    </div>
+    <div class="col-sm-9">
+      <div class="invalid-feedback">
+        {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+      </div>
+    </div>
+
 
     <!-- Row 1 -->
 
     <div class="row">
+      <div id="Table">
           <bla-data-table [config]="config_table"
                           [rows]="rows[0]"
                           [loading]="loadingwettkampf">
           </bla-data-table>
+    </div>
     </div>
 
     <div class="form-group row">
