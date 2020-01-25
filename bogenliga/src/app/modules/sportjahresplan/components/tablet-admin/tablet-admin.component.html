@@ -48,7 +48,10 @@
             <fa-icon [icon]="'external-link-alt'"></fa-icon>
           </a>
         </td>
-        <td>{{AccessToken}}</td>
+
+        <td>
+          <label *ngIf="session.isActive">{{AccessToken}}</label>
+        </td>
       </tr>
     </table>
   </div>
