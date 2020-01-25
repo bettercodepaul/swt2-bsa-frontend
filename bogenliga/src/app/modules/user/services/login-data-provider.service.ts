@@ -1,3 +1,5 @@
+import { AccessCodeDTO } from './../types/model/access-code-dto';
+import { CredentialsDTO } from '@user/types/model/credentials-dto.class';
 import {Injectable} from '@angular/core';
 
 import {HttpErrorResponse} from '@angular/common/http';
@@ -8,7 +10,6 @@ import {LOGOUT} from '@shared/redux-store';
 import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
 import {CredentialsDO} from '../types/credentials-do.class';
 import {LoginResult} from '../types/login-result.enum';
-import {CredentialsDTO} from '../types/model/credentials-dto.class';
 
 @Injectable({
   providedIn: 'root'

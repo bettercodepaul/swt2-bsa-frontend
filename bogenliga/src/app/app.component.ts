@@ -1,3 +1,4 @@
+import { InterfaceComponent } from './modules/spotter/components/interface/interface.component';
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
@@ -13,6 +14,7 @@ import {AppState, SidebarState} from './modules/shared/redux-store';
 export class AppComponent implements OnInit {
 
   public isActive: boolean;
+  private fullscreen = false;
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router) {
     translate.setDefaultLang('de');
@@ -38,6 +40,18 @@ export class AppComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
+  }
+
+  onActivate(event: any) {
+    if (event instanceof InterfaceComponent) {
+      this.fullscreen = true;
+    }
+  }
+
+  onDeactivate(event: any) {
+    if (event instanceof InterfaceComponent) {
+      this.fullscreen = false;
+    }
   }
 }
 
