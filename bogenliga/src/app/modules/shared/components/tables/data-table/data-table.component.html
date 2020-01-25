@@ -45,9 +45,11 @@
         [ngSwitch]="column.type"
         [class]="getStyleClass(row, column)">
 
+      <a class = "a_table_routerlink" routerLink="{{LigatabelleLinking()}}">
           <span *ngSwitchCase="TableColumnType.TEXT">
-            {{formatText(row, column)}}
+             {{formatText(row, column)}}
           </span>
+      </a>
 
 
       <span *ngSwitchCase="TableColumnType.NUMBER">

@@ -12,6 +12,10 @@ import {TableColumnConfig} from '../types/table-column-config.interface';
 import {TableColumnType} from '../types/table-column-type.enum';
 import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
+import {WettkampfComponent} from '@wettkampf/components';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+
+
 
 @Component({
   selector:    'bla-data-table',
@@ -23,6 +27,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   @Input() public config: TableConfig;
   @Input() public rows: TableRow[] = [];
   @Input() tableSorter: BaseTableSorter;
+  @Input() public withLinks: boolean;
+  @Input() VereinDO: VereinDO;
+
 
 
   @Output() public onEditEntry = new EventEmitter<VersionedDataObject>();
@@ -85,6 +92,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   public sortColumn(sortColumn: TableColumnConfig): void {
     this.rows = this.tableSorter.sortByColumn(this.rows, sortColumn);
   }
+
 
   /*
    * ~~~~ getter methods ~~~~
@@ -332,4 +340,18 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   private onDownload(affectedRowPayload: VersionedDataObject) {
     this.onDownloadEntry.emit(affectedRowPayload);
   }
+
+  /**
+   * link the ligatabelle to wettkaempfe
+   * if the columns have the attribute notLigatabelle with the value true, then this is the Ligatabelle
+   * @return: /wettkaempfe to be redirected to the page wettkaempfe
+   */
+  private LigatabelleLinking() : String{
+    if (this.config.columns.filter((c) => c.notLigatabelle).length === 0) {
+      return '/wettkaempfe';
+    }
+    return '.';
+  }
+
+
 }

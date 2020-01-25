@@ -13,6 +13,7 @@ import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis
 import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wettkampf-ergebnis-dto.class';
 import {NotificationService} from '@shared/services';
 
+
 @Component({
   selector:    'bla-wettkaempfe',
   templateUrl: './ligatabelle.component.html',
@@ -35,6 +36,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   public rowsLigatabelle: TableRow[];
   private tableContent: Array<LigatabelleErgebnisDO> = [];
   private remainingLigatabelleRequests: number;
+
 
 
   constructor(private router: Router,
