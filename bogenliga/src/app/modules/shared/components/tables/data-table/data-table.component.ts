@@ -351,7 +351,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
     if (this.config.columns.filter((c) => c.notLigatabelle).length === 0) {
       //this.router.navigateByUrl('/wettkaempfe');
 
-      return '/wettkaempfe';
+      return '/wettkaempfe/BSC Stuttgart';
     }
     return '.';
   }
