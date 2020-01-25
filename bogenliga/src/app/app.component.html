@@ -1,21 +1,19 @@
-<div class="wrapper">
+<!--User Interface-->
+<div style="height: 100%;" [ngClass]="{'wrapper': !fullscreen}">
 
   <!-- NavBar  -->
-  <bla-navbar></bla-navbar>
+  <bla-navbar *ngIf="!fullscreen"></bla-navbar>
 
   <!-- Sidebar  -->
-  <bla-sidebar></bla-sidebar>
+  <bla-sidebar *ngIf="!fullscreen"></bla-sidebar>
 
   <!-- Page Content -->
-  <div class="content {{isActive? 'inactive' : ''}}"
-       style="display: flex; flex-direction: column">
+  <div style="height: 100%;" [ngClass]="{'content': !fullscreen, 'inactive': isActive && !fullscreen}">
 
-    <div id="content-without-footer">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
 
     <!-- Footer -->
-    <footer id="support">
+    <footer *ngIf="!fullscreen" id="support">
       <div class="jumbotron jumbotron-fluid footer-copyright text-center py-3">
         <p>{{ 'APP.SUPPORT' | translate }}</p>
         <a href="https://www.exxcellent.de/"

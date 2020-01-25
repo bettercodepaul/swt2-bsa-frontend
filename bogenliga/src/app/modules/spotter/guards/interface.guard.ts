@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular/router';
-import {CurrentUserService, UserPermission} from '@shared/services';
+import {CanActivate} from '@angular/router';
+import {CurrentUserService} from '@shared/services';
 
 @Injectable()
-export class BahnenGuard implements CanActivate {
+export class InterfaceGuard implements CanActivate {
 
   constructor(private currentUserService: CurrentUserService) {
   }
