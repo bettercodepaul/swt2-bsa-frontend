@@ -25,7 +25,7 @@
 
         <td>
           <button
-            (click)="updateSession(session.scheibenNr)"
+            (click)="updateSessionWithoutTokenGeneration(session.scheibenNr)"
             *ngIf="session.isActive"
             class="btn btn-danger"
           >

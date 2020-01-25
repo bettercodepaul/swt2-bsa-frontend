@@ -89,6 +89,21 @@ export class TabletSessionProviderService extends DataProviderService {
     }));
   }
 
+  public updateWithoutTokenCreation(session: TabletSessionDO): Promise<BogenligaResponse<TabletSessionDO>> {
+    return new Promise(((resolve, reject) => {
+      this.restClient.PUT(this.getUrl(), TabletSessionMapper.tabletSessionToDTO(session))
+        .then((data: TabletSessionDTO) => {
+          resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    }));
+  }
+
   public delete(wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<any>> {
     const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {
