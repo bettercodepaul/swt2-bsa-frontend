@@ -41,6 +41,8 @@ export class TabletAdminComponent implements OnInit {
               this.sessions = data.payload;
               this.setActiveSession();
               this.setTabletEingabeRoute();
+              // new CM
+              this.AccessToken = this.currentSession.accessToken;
             }, (error) => {
               console.error(error);
               // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
@@ -62,6 +64,8 @@ export class TabletAdminComponent implements OnInit {
         .then((success) => {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
           this.storeCurrentSession(this.currentSession);
+          // new CM
+          this.AccessToken = this.currentSession.accessToken;
           this.setTabletEingabeRoute();
           if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
             this.router.navigate([this.tabletEingabeRoute]);
