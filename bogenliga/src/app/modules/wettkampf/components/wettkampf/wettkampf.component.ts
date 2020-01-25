@@ -10,7 +10,10 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WettkampfErgebnis} from './wettkampergebnis/WettkampfErgebnis';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
+import {ActivatedRoute, Route, Router} from '@angular/router';
+import {isUndefined} from '@shared/functions';
 
+const ID_PATH_PARAM = 'id';
 @Component({
   selector:    'bla-mannschaft',
   templateUrl: './wettkampf.component.html'
@@ -18,6 +21,8 @@ import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.s
 export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public directVerein = null;
+  public routes = null;
+  public id =  null;
   public directWettkampf = null;
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
@@ -35,13 +40,25 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
-              private wettkampfErgebnisService: WettkampfErgebnisService) {
+              private wettkampfErgebnisService: WettkampfErgebnisService,
+              private router: Router,
+              private route: ActivatedRoute) {
               super();
   }
 
   ngOnInit() {
+
+    this.route.params.subscribe((params)=>{
+      if(!isUndefined(params[ID_PATH_PARAM])){
+        const id = params[ID_PATH_PARAM];
+        this.id = id;
+        this.directVerein = id;
+      }
+    });
     this.loadVereine();
     this.loadVeranstaltungen();
+
+
   }
 
   loadVereine() {
