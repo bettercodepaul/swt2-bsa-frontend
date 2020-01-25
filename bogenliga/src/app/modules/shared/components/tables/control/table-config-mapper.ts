@@ -56,6 +56,7 @@ const DEFAULT_COLUMN_CONFIG: TableColumnConfig = {
   type:              TableColumnType.TEXT,
   width:             0,
   sortable:          true,
+  notLigatabelle:    true,
   currentSortOrder:  TableColumnSortOrder.UNSORTED,
   dateAndTimeFormat: {
     de: {
@@ -96,6 +97,9 @@ function columnConfigWithDefaults(optional: TableColumnConfig): TableColumnConfi
 
   if (optional.sortable != null) {
     columnConfig.sortable = optional.sortable;
+  }
+  if(optional.notLigatabelle!= null){
+    columnConfig.notLigatabelle = optional.notLigatabelle;
   }
 
   if (optional.currentSortOrder) {

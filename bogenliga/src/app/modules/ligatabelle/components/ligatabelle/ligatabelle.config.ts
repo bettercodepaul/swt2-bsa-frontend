@@ -18,30 +18,35 @@ export const LIGATABELLE_TABLE_CONFIG: TableConfig = {
       propertyName:   'tabellenplatz',
       width:          15,
       sortable:        false,
+      notLigatabelle:  false,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.MANNSCHAFTNAME',
       propertyName:   'mannschaft_name',
       width:          70,
       sortable:        false,
+      notLigatabelle:  false,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.MATCHPUNKTE',
       propertyName:   'matchpunkte',
       width:          15,
       sortable:        false,
+      notLigatabelle:  false,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTE',
       propertyName:   'satzpunkte',
       width:          15,
       sortable:        false,
+      notLigatabelle:  false,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTDIFFERENZ',
       propertyName:   'satzpkt_differenz',
       width:          15,
       sortable:        false,
+      notLigatabelle:  false,
     }
   ]
 
