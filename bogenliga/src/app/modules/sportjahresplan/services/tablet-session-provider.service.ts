@@ -74,6 +74,7 @@ export class TabletSessionProviderService extends DataProviderService {
   }
 
   public update(session: TabletSessionDO): Promise<BogenligaResponse<TabletSessionDO>> {
+    session.accessToken = this.createAccessToken();
     return new Promise(((resolve, reject) => {
       this.restClient.PUT(this.getUrl(), TabletSessionMapper.tabletSessionToDTO(session))
           .then((data: TabletSessionDTO) => {
@@ -103,4 +104,9 @@ export class TabletSessionProviderService extends DataProviderService {
           });
     });
   }
+
+  public createAccessToken() {
+    return Math.floor(100000 + Math.random() * 900000);
+  }
+
 }
