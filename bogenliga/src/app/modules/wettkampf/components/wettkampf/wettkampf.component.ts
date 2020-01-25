@@ -51,6 +51,8 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   handleSuccessLoadVereine(response: BogenligaResponse<VereinDO[]>) {
+    const tableVisibility: HTMLInputElement = document.querySelector('#Table') as HTMLInputElement;
+    tableVisibility.style.display = 'none';
     this.vereine = response.payload;
     if (this.directVerein != null) {
       for (const i of this.vereine) {
@@ -95,8 +97,18 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.loadingwettkampf = false;
 
   }
+  public refresh() {
+    const tableVisibility: HTMLInputElement = document.querySelector('#Table') as HTMLInputElement;
+    tableVisibility.style.display = 'block';
+    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+    buttonVisibility.style.display = 'none';
+  }
 
   public loadErgebnisse() {
+    const tableVisibility: HTMLInputElement = document.querySelector('#Table') as HTMLInputElement;
+    tableVisibility.style.display = 'none';
+    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+    buttonVisibility.style.display = 'block';
     this.rows = [];
     this.wettkampErgebnisse = [];
     this.loadingwettkampf = true;
@@ -111,6 +123,10 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   public onSelect($event: VeranstaltungDO[]): void {
+    const tableVisibility: HTMLInputElement = document.querySelector('#Table') as HTMLInputElement;
+    tableVisibility.style.display = 'none';
+    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+    buttonVisibility.style.display = 'block';
     this.wettkampErgebnisse = [];
     this.loadingwettkampf = true;
     console.log('loadErgebnisse');
