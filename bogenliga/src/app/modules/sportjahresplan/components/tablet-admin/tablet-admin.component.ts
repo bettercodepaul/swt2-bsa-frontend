@@ -21,7 +21,7 @@ export class TabletAdminComponent implements OnInit {
   currentDeviceIsActive = false;
   currentSession: TabletSessionDO;
   tabletEingabeRoute: string;
-  AccessToken = 0;
+  AccessToken = '';
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -42,7 +42,7 @@ export class TabletAdminComponent implements OnInit {
               this.setActiveSession();
               this.setTabletEingabeRoute();
               // new CM
-              this.AccessToken = this.currentSession.accessToken;
+              this.AccessToken = this.currentSession.accessToken.toString();
             }, (error) => {
               console.error(error);
               // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
@@ -65,7 +65,7 @@ export class TabletAdminComponent implements OnInit {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
           this.storeCurrentSession(this.currentSession);
           // new CM
-          this.AccessToken = this.currentSession.accessToken;
+          this.AccessToken = this.currentSession.accessToken.toString();
           this.setTabletEingabeRoute();
           if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
             this.router.navigate([this.tabletEingabeRoute]);
@@ -73,6 +73,25 @@ export class TabletAdminComponent implements OnInit {
         }, (error) => {
           console.log(error);
         });
+  }
+
+  public updateSessionWithoutTokenGeneration(scheibenNr: number) {
+    const sessionToUpdate = this.sessions[scheibenNr - 1];
+    sessionToUpdate.isActive = !sessionToUpdate.isActive;
+    this.storeCurrentSession(sessionToUpdate);
+    this.tabletSessionService.updateWithoutTokenCreation(sessionToUpdate)
+      .then((success) => {
+        this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
+        this.storeCurrentSession(this.currentSession);
+        // new CM
+        this.AccessToken = '';
+        this.setTabletEingabeRoute();
+        if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
+          this.router.navigate([this.tabletEingabeRoute]);
+        }
+      }, (error) => {
+        console.log(error);
+      });
   }
 
   private setActiveSession() {
