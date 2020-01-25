@@ -14,7 +14,7 @@ import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
 import {WettkampfComponent} from '@wettkampf/components';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
-
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -43,6 +43,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   public TableColumnType = TableColumnType;
 
   initialized = false;
+  private router: Router;
 
   constructor(private truncationPipe: TruncationPipe,
               private translatePipe: TranslatePipe) {
@@ -346,8 +347,10 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
    * if the columns have the attribute notLigatabelle with the value true, then this is the Ligatabelle
    * @return: /wettkaempfe to be redirected to the page wettkaempfe
    */
-  private LigatabelleLinking() : String{
+  private LigatabelleLinking(currentVer : string) : String{
     if (this.config.columns.filter((c) => c.notLigatabelle).length === 0) {
+      //this.router.navigateByUrl('/wettkaempfe');
+
       return '/wettkaempfe';
     }
     return '.';
