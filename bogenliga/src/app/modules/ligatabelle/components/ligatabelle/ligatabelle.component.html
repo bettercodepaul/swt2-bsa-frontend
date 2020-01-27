@@ -5,7 +5,7 @@
     <bla-row-layout>
       <div class="flexChild">
         <h3><a class="blackLink"
-               routerLink="/Wettkaempfe">{{ 'WETTKAEMPFE.TITEL.VERANSTALTUNG' | translate }}</a></h3>
+               routerLink="/wettkaempfe">{{ 'WETTKAEMPFE.TITEL.VERANSTALTUNG' | translate }}</a></h3>
 
         <table id="example"
                class="table table-hover table-sm table-responsive-sm thead-light table-striped"
@@ -44,6 +44,21 @@
           </h5>
         </div>
       </div>
+
+       <!-- Button -->
+      <div id="Button">
+        <bla-button
+          [id]="'regionSaveButton'"
+          (onClick)="LigatabelleLinking()">
+          {{ 'Zu den Wettkampfergebnissen der ' + selectedVeranstaltungName | translate }}
+        </bla-button>
+      </div>
+      <div class="col-sm-9">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+        </div>
+      </div>
+
     </bla-row-layout>
   </div>
 </bla-common-dialog>

@@ -12,7 +12,6 @@ import {TableColumnConfig} from '../types/table-column-config.interface';
 import {TableColumnType} from '../types/table-column-type.enum';
 import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
-import {WettkampfComponent} from '@wettkampf/components';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {Router} from '@angular/router';
 
@@ -350,8 +349,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   private LigatabelleLinking(currentVer : string) : String{
     if (this.config.columns.filter((c) => c.notLigatabelle).length === 0) {
       //this.router.navigateByUrl('/wettkaempfe');
-
-      return '/wettkaempfe/BSC Stuttgart';
+      return '/wettkaempfe/' + currentVer + '/';
     }
     return '.';
   }

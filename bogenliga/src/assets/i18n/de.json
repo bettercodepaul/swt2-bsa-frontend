@@ -163,6 +163,7 @@
       },
       "TABLE": {
         "COLUMNS": {
+          "WETTKAMPFTAG": "Wettkampftag",
           "MANNSCHAFT": "Mannschaft",
           "OPPONENT": "Gegner",
           "SATZ1": "S1",

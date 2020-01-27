@@ -45,7 +45,7 @@
         [ngSwitch]="column.type"
         [class]="getStyleClass(row, column)">
 
-      <a class = "a_table_routerlink" routerLink="{{LigatabelleLinking(column.propertyName)}}">
+      <a class = "a_table_routerlink" routerLink="{{LigatabelleLinking(row.getText(column))}}">
           <span *ngSwitchCase="TableColumnType.TEXT">
              {{formatText(row, column)}}
           </span>

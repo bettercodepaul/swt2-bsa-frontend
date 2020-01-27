@@ -1,22 +1,41 @@
 <bla-common-dialog [config]="config">
   <form id="regionenForm"
         class="horizontal-form half-page">
-    <h3>{{currentVerein.name}}</h3>
+    <h3>{{currentMannschaft.name}}</h3>
     <h3>{{currentVeranstaltung.name}}</h3>
+    <h3>{{currentVerein.name}}</h3>
 
 
     <!-- Vereine -->
     <div class="row">
       <label class="col-sm-1 col-form-label">
-        <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.VEREIN_NAME.LABEL' | translate }}</span>
+        <span>{{ 'Mannschaft:' | translate }}</span>
       </label>
       <div class="col-sm-8">
         <select class="form-control"
                 id="vereine"
-                name="vereineName"
-                [(ngModel)]="currentVerein.name"
+                name="VereinName"
+                [(ngModel)]="currentMannschaft.name"
                 (ngModelChange)="loadErgebnisse();">
-          <option *ngFor="let verein of vereine"> {{verein.name}}</option>
+          <option *ngFor="let mannschaft of mannschaften"> {{mannschaft.name}}</option>
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+    <!-- Jahr -->
+    <div class="row">
+      <label class="col-sm-1 col-form-label">
+        <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-8">
+        <select class="form-control"
+                id="jahr"
+                name="Jahre"
+                [(ngModel)]="currentJahr"
+                (ngModelChange)="loadErgebnisse();">
+          <option *ngFor="let Jahr of Jahre"> {{Jahr}}</option>
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -24,10 +43,9 @@
       </div>
     </div>
 
-    <!-- Jahr -->
+    <!-- Veranstaltung -->
     <div class="layout-elements">
       <label class="col-sm-1 col-form-label">
-         <!-- <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>-->
         </label>
       <table id="example"
              class="table table-hover table-sm table-responsive-sm thead-light table-striped"
@@ -51,7 +69,7 @@
     <!-- Button -->
     <div id="Button">
       <bla-button
-        [id]="'regionSaveButton'"
+        [id]="'showResultsButton'"
         (onClick)="loadErgebnisse(); refresh()">
         {{ 'Anzeigen' | translate }}
       </bla-button>
