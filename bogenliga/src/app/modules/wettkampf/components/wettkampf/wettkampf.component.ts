@@ -12,6 +12,8 @@ import {WettkampfErgebnis} from './wettkampergebnis/WettkampfErgebnis';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -21,16 +23,20 @@ const ID_PATH_PARAM = 'id';
 export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public directVerein = null;
-  public routes = null;
-  public id =  null;
+  public directMannschaft = null;
   public directWettkampf = null;
+  public routes = null;
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public loadingwettkampf = false;
+  public Jahre: Array<number> = [];
+  public currentJahr: number = 2018;
   public vereine: Array<VereinDO> = [];
+  public mannschaften: Array<DsbMannschaftDO> = [];
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentVerein: VereinDO = new VereinDO();
+  private currentMannschaft: DsbMannschaftDO;
   public multipleSelections = true;
   public PLACEHOLDER_VAR = 'Bitte Veranstaltung wählen';
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
@@ -41,25 +47,48 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
               private wettkampfErgebnisService: WettkampfErgebnisService,
+              private mannschaftDataProvider: DsbMannschaftDataProviderService,
               private router: Router,
               private route: ActivatedRoute) {
               super();
   }
 
   ngOnInit() {
-
     this.route.params.subscribe((params)=>{
       if(!isUndefined(params[ID_PATH_PARAM])){
         const id = params[ID_PATH_PARAM];
-        this.id = id;
-        this.directVerein = id;
+        this.directWettkampf = id;
+        this.directMannschaft = id;
+        this.directMannschaft = this.directMannschaft.replace(/-/g, ' ');
+        this.refresh();
       }
     });
-    this.loadVereine();
+    this.loadMannschaft();
     this.loadVeranstaltungen();
 
 
   }
+  loadMannschaft() {
+    this.mannschaftDataProvider.findAll()
+        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleSuccessLoadMannschaft(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.mannschaften === []);
+  }
+
+  handleSuccessLoadMannschaft(response: BogenligaResponse<DsbMannschaftDO[]>) {
+    this.mannschaften = response.payload;
+    if (this.directMannschaft != null) {
+      for (const i of this.mannschaften) {
+        if (this.directMannschaft === i.name) {
+          this.currentMannschaft = i;
+          break;
+        }
+        this.currentMannschaft = this.mannschaften[0];
+      }
+    } else {
+      this.currentMannschaft = this.mannschaften[0];
+    }
+  }
+
 
   loadVereine() {
     this.vereinDataProvider.findAll()
@@ -73,9 +102,11 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.vereine = response.payload;
     if (this.directVerein != null) {
       for (const i of this.vereine) {
-        if (this.directVerein === i.name) {
+       if (this.directVerein === i.name) {
           this.currentVerein = i;
+          break;
         }
+        this.currentVerein = this.vereine[0];
       }
     } else {
       this.currentVerein = this.vereine[0];
@@ -90,16 +121,26 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
-    this.veranstaltungen = response.payload;
-    if (this.directWettkampf != null) {
-      for (const i of this.veranstaltungen) {
+      this.veranstaltungen = response.payload;
+      if (this.directWettkampf != null) {
+       for (const i of this.veranstaltungen) {
         if (this.directWettkampf === i.name) {
           this.currentVeranstaltung = i;
+          break;
         }
+         this.currentVeranstaltung = this.veranstaltungen[0];
+       }
       }
-    } else {
+      else {
       this.currentVeranstaltung = this.veranstaltungen[0];
     }
+
+      this.currentJahr = this.currentVeranstaltung.sportjahr;
+      for (const i of this.veranstaltungen){
+        if (this.Jahre.includes(i.sportjahr) === false){
+          this.Jahre[this.Jahre.length] = i.sportjahr
+        }
+      }
   }
 
 
@@ -126,12 +167,11 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     tableVisibility.style.display = 'none';
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
     buttonVisibility.style.display = 'block';
-    this.rows = [];
     this.wettkampErgebnisse = [];
     this.loadingwettkampf = true;
     console.log('loadErgebnisse');
-    this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
-      this.vereine, this.currentVeranstaltung, 0));
+    this.wettkampErgebnisse.push(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
+      this.mannschaften, this.currentVeranstaltung, 0));
     // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
     this.delay(10).then((any) => {
       this.fillTableRows();
@@ -150,14 +190,12 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.currentVeranstaltung = $event.concat()[0];
 
     let result;
-    result = this.wettkampfErgebnisService.createErgebnisse(this.currentVerein,
-      this.vereine, $event.concat()[0], 0);
+    result = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
+      this.mannschaften, $event.concat()[0], 0);
     result = this.wettkampfErgebnisService.createWettkampfergebnisse(0);
     this.rows = [];
     this.wettkampErgebnisse = [];
-    this.rows.push((result));
     if (this.wettkampErgebnisse.push(result)) {
-
       // waiting needs to be implemented, because it is necessary to load the values correct before continuing.
       this.delay(10).then((any) => {
         this.fillTableRows();

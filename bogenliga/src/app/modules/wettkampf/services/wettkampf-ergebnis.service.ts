@@ -19,6 +19,7 @@ export class WettkampfErgebnisService {
   public verein: VereinDO;
   public allVereine: VereinDO[];
   public veranstaltung: VeranstaltungDO;
+  public sportjahr: Number
 
   // Output
   public wettkampErgebnisse: WettkampfErgebnis[];
@@ -36,16 +37,17 @@ export class WettkampfErgebnisService {
 
   }
 
-  public createErgebnisse(verein: VereinDO, allVereine: VereinDO[], veranstaltung: VeranstaltungDO, match: number): WettkampfErgebnis[] {
-    this.setupService(verein, allVereine, veranstaltung);
+  public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO, match: number): WettkampfErgebnis[] {
+    this.setupService(jahr, mannschaft, allMannschaften, veranstaltung);
     return this.wettkampErgebnisse;
 
   }
 
-  private setupService(verein: VereinDO, allVereine: VereinDO[], veranstaltung: VeranstaltungDO) {
-    this.verein = verein;
+  private setupService(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO) {
+    this.currentManschaft = mannschaft;
     this.veranstaltung = veranstaltung;
-    this.allVereine = allVereine;
+    this.mannschaften = allMannschaften;
+    this.sportjahr = jahr
     this.loadWettkaempfe();
   }
 
@@ -54,7 +56,7 @@ export class WettkampfErgebnisService {
     console.log(this.matches);
     this.matches.filter((ma) => ma.mannschaftId === this.currentManschaft.id)
         .forEach((currentMatch) => {
-          const wettkampfErgebnis = new WettkampfErgebnis(this.verein.name, 0, 1,
+          const wettkampfErgebnis = new WettkampfErgebnis(0,this.currentManschaft.name, currentMatch.begegnung, 1,
             2, 3, 4, 'Hallo', 1, 2,
             3, 4, 5, '' + currentMatch.satzpunkte, '' + currentMatch.matchpunkte);
           // console.log(wettkampfErgebnis);
@@ -73,25 +75,13 @@ export class WettkampfErgebnisService {
 
   handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = wettkaempfe;
-    this.loadMannschaften();
-  }
-
-  loadMannschaften() {
-    this.mannschaftsDataProvider.findAll()
-        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadMannschaften(response.payload))
-        .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadMannschaften([]));
-  }
-
-  handleLoadMannschaften(mannschaften: DsbMannschaftDO[]) {
-    this.mannschaften = mannschaften;
-    this.loading = false;
-
     this.loadMatches();
   }
 
+
   private filterMannschaften() {
     this.currentManschaft = this.mannschaften.filter((mannschaft) => mannschaft.veranstaltungId === this.veranstaltung.id
-      && mannschaft.vereinId === this.verein.id)[0];
+      && this.veranstaltung.sportjahr === this.sportjahr)[0];
   }
 
   public loadMatches() {
