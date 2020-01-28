@@ -214,7 +214,7 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
       this.saveLoading = true;
 
-      for (let i = 0; i <= this.allDsbMannschaft.length; i++) {
+      for (let i = 0; i < this.allDsbMannschaft.length; i++) {
 
         this.testManschaft.veranstaltungId = this.currentVeranstaltung.id;
         this.testManschaft.veranstaltungName = this.currentVeranstaltung.name;
