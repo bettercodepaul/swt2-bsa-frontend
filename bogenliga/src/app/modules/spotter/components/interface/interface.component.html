@@ -1,137 +1,158 @@
 <div style="overflow:hidden; min-height: 100%; height: 100%;">
   <div class="container-fluid h-100" style="background-color: #595959; width: 100%;">
     <!--HEADER-->
-    <div class="row h-25" style="background-color: #4a4a4a; padding: 20px 50px; color: whitesmoke;">
-        <div class="col-6 col-lg-1 text-center">
-          <div class="row align-items-center h-25">
-            <div class="col">
-              Bahn
-            </div>
-          </div>  
-          <div class="row align-items-center h-75">
-            <div class="col"> 
-              {{match.bahn}}
-            </div>
+    <div class="row h-25" style="background-color: #4a4a4a; padding: 20px 0px; color: whitesmoke;">
+      <div class="col-6 col-lg-1 text-center">
+        <div class="row align-items-center h-25">
+          <div class="col">
+            Bahn
           </div>
         </div>
-        <div *ngIf="spotting || editing" class="col-12 col-lg-8 order-3 order-lg-2 offset-lg-1 text-center">
-          <div class="row align-items-center h-25 text-center">
-            <div class="col">
-              Pfeile
-            </div>
+        <div class="row align-items-center h-75">
+          <div class="col">
+            {{match.bahn}}
           </div>
-          <div class="row align-items-center h-75">
-            <div class="col" style="margin: 10px 0px;">
-              <div class="btn-group" role="group">
-              <button class="btn-circle header" (click)="onEdit(1)" [ngClass]="{'selected': selectedPlayNumber === 1, 'final': match.set().play(1).final && match.set().currentPlayNumber > (1), 'unsure': !match.set().play(1).final}" >
+        </div>
+      </div>
+      <div *ngIf="spotting || editing" class="col-12 col-lg-8 order-3 order-lg-2 offset-lg-1 text-center">
+        <div class="row align-items-center h-25 text-center">
+          <div class="col">
+            Pfeile
+          </div>
+        </div>
+        <div class="row align-items-center h-75">
+          <div class="col" style="margin: 10px 0px;">
+            <div class="btn-group" role="group">
+              <button class="btn-circle header" (click)="onEdit(1)"
+                [ngClass]="{'selected': selectedPlayNumber === 1, 'final': match.set().play(1).final && match.set().currentPlayNumber > (1), 'unsure': !match.set().play(1).final}">
                 {{match.set().play(1).result}}
               </button>
-              <button class="btn-circle header" (click)="onEdit(2)" [ngClass]="{'selected': selectedPlayNumber === 2, 'final': match.set().play(2).final && match.set().currentPlayNumber > (2), 'unsure': !match.set().play(2).final}">
+              <button class="btn-circle header" (click)="onEdit(2)"
+                [ngClass]="{'selected': selectedPlayNumber === 2, 'final': match.set().play(2).final && match.set().currentPlayNumber > (2), 'unsure': !match.set().play(2).final}">
                 {{match.set().play(2).result}}
               </button>
-              <button class="btn-circle header" (click)="onEdit(3)" [ngClass]="{'selected': selectedPlayNumber === 3, 'final': match.set().play(3).final && match.set().currentPlayNumber > (3), 'unsure': !match.set().play(3).final}">
+              <button class="btn-circle header" (click)="onEdit(3)"
+                [ngClass]="{'selected': selectedPlayNumber === 3, 'final': match.set().play(3).final && match.set().currentPlayNumber > (3), 'unsure': !match.set().play(3).final}">
                 {{match.set().play(3).result}}
               </button>
-              <button class="btn-circle header" (click)="onEdit(4)" [ngClass]="{'selected': selectedPlayNumber === 4, 'final': match.set().play(4).final && match.set().currentPlayNumber > (4), 'unsure': !match.set().play(4).final}">
+              <button class="btn-circle header" (click)="onEdit(4)"
+                [ngClass]="{'selected': selectedPlayNumber === 4, 'final': match.set().play(4).final && match.set().currentPlayNumber > (4), 'unsure': !match.set().play(4).final}">
                 {{match.set().play(4).result}}
               </button>
-              <button class="btn-circle header" (click)="onEdit(5)" [ngClass]="{'selected': selectedPlayNumber === 5, 'final': match.set().play(5).final && match.set().currentPlayNumber > (5), 'unsure': !match.set().play(5).final}">
+              <button class="btn-circle header" (click)="onEdit(5)"
+                [ngClass]="{'selected': selectedPlayNumber === 5, 'final': match.set().play(5).final && match.set().currentPlayNumber > (5), 'unsure': !match.set().play(5).final}">
                 {{match.set().play(5).result}}
               </button>
-              <button class="btn-circle header" (click)="onEdit(6)" [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber >= (6) && !spotting, 'unsure': !match.set().play(6).final}">
+              <button class="btn-circle header" (click)="onEdit(6)"
+                [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber >= (6) && !spotting, 'unsure': !match.set().play(6).final}">
                 {{match.set().play(6).result}}
               </button>
-              </div>
             </div>
           </div>
         </div>
-        <div *ngIf="!spotting && !editing" class="col-12 col-lg-8 offset-lg-1 order-3 order-lg-2 text-center">
-          <div class="row align-items-center h-25">
-            <div class="col">
-              Satzpunkte
-            </div>
-          </div>
-          <div class="row align-items-center h-75">
-            <div class="col">
-              {{match.set().getSum()}}
-            </div>
+      </div>
+      <div *ngIf="!spotting && !editing" class="col-12 col-lg-8 offset-lg-1 order-3 order-lg-2 text-center">
+        <div class="row align-items-center h-25">
+          <div class="col">
+            Satzpunkte
           </div>
         </div>
-        <div class="col-6 col-lg-2 order-2 order-lg-3 text-center">
-          <div class="row align-items-center h-25">
-            <div class="col">
-              Mannschaft
-            </div>
-          </div>
-          <div class="row align-items-center h-75">
-            <div class="col">
-              {{match.mannschaft}}
-            </div>
+        <div class="row align-items-center h-75">
+          <div class="col">
+            {{match.set().getSum()}}
           </div>
         </div>
+      </div>
+      <div class="col-6 col-lg-2 order-2 order-lg-3 text-center">
+        <div class="row align-items-center h-25">
+          <div class="col">
+            Mannschaft
+          </div>
+        </div>
+        <div class="row align-items-center h-75">
+          <div class="col">
+            {{match.mannschaft}}
+          </div>
+        </div>
+      </div>
     </div>
     <!--BODY-->
     <div *ngIf="spotting || editing" class="row h-50" style="padding: 100px 0px;">
-        <div class="col-12 col-md-4 text-center align-self-center" id="miss">
-          <button class="button-square" type="button" (click)="selectResult(0)" [ngClass]="{'selected': selectedValue === 0}">M</button>
-        </div>
-        <div class="col-12 col-md-6 align-self-center">
-            <div class="row">
-                <div class="col-md-12 d-md-flex align-self-center justify-content-md-center text-center">
-                    <div class="btn-group" role="group">
-                      <button *ngFor="let buttonNumber of [1,2,3,4,5]" class="button-square" type="button" (click)="selectResult(buttonNumber)" [ngClass]="{'selected': selectedValue === buttonNumber}">{{buttonNumber}}</button>
-                    </div>
-                </div>
-                <div class="col-md-12 d-md-flex align-self-center justify-content-md-center text-center">
-                  <div class="btn-group" role="group">
-                      <button *ngFor="let buttonNumber of [6,7,8,9,10]" class="button-square" type="button" (click)="selectResult(buttonNumber)" [ngClass]="{'selected': selectedValue === buttonNumber}">{{buttonNumber}}</button>
-                </div>
-              </div>
+      <div class="col-12 col-md-4 text-center align-self-center" id="miss">
+        <button class="button-square" type="button" (click)="selectResult(0)"
+          [ngClass]="{'selected': selectedValue === 0}">M</button>
+      </div>
+      <div class="col-12 col-md-6 align-self-center">
+        <div class="row">
+          <div class="col-md-12 d-md-flex align-self-center justify-content-md-center text-center">
+            <div class="btn-group" role="group">
+              <button *ngFor="let buttonNumber of [1,2,3,4,5]" class="button-square" type="button"
+                (click)="selectResult(buttonNumber)"
+                [ngClass]="{'selected': selectedValue === buttonNumber}">{{buttonNumber}}</button>
             </div>
+          </div>
+          <div class="col-md-12 d-md-flex align-self-center justify-content-md-center text-center">
+            <div class="btn-group" role="group">
+              <button *ngFor="let buttonNumber of [6,7,8,9,10]" class="button-square" type="button"
+                (click)="selectResult(buttonNumber)"
+                [ngClass]="{'selected': selectedValue === buttonNumber}">{{buttonNumber}}</button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <div *ngIf="!spotting && !editing" class="row h-50" style="padding: 100px 0px;">
       <div class="col-12 align-items-center" style="text-align: center;">
         <div class="btn-group flex-wrap justify-content-center" role="group">
           <div>
-            <button class="btn-circle" type="button" (click)="onEdit(1)" [ngClass]="match.set().play(1).final ? 'final' : 'unsure'">{{match.set().play(1).result}}</button>
-            <button class="btn-circle" type="button" (click)="onEdit(2)" [ngClass]="match.set().play(2).final ? 'final' : 'unsure'">{{match.set().play(2).result}}</button>
-            <button class="btn-circle" type="button" (click)="onEdit(3)" [ngClass]="match.set().play(3).final ? 'final' : 'unsure'">{{match.set().play(3).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(1)"
+              [ngClass]="match.set().play(1).final ? 'final' : 'unsure'">{{match.set().play(1).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(2)"
+              [ngClass]="match.set().play(2).final ? 'final' : 'unsure'">{{match.set().play(2).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(3)"
+              [ngClass]="match.set().play(3).final ? 'final' : 'unsure'">{{match.set().play(3).result}}</button>
           </div>
           <div>
-            <button class="btn-circle" type="button" (click)="onEdit(4)" [ngClass]="match.set().play(4).final ? 'final' : 'unsure'">{{match.set().play(4).result}}</button>
-            <button class="btn-circle" type="button" (click)="onEdit(5)" [ngClass]="match.set().play(5).final ? 'final' : 'unsure'">{{match.set().play(5).result}}</button>
-            <button class="btn-circle" type="button" (click)="onEdit(6)" [ngClass]="match.set().play(6).final ? 'final' : 'unsure'">{{match.set().play(6).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(4)"
+              [ngClass]="match.set().play(4).final ? 'final' : 'unsure'">{{match.set().play(4).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(5)"
+              [ngClass]="match.set().play(5).final ? 'final' : 'unsure'">{{match.set().play(5).result}}</button>
+            <button class="btn-circle" type="button" (click)="onEdit(6)"
+              [ngClass]="match.set().play(6).final ? 'final' : 'unsure'">{{match.set().play(6).result}}</button>
           </div>
         </div>
       </div>
     </div>
     <!--FOOTER-->
     <div *ngIf="spotting || editing" class="row h-25 align-items-center" style="padding: 20px 0px;">
-        <div class="col-4 text-center align-center">
-          <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onBack()">Back</button>
+      <div class="col-4 text-center align-center">
+        <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onBack()">Back</button>
+      </div>
+      <div class="col-4 text-center align-center">
+        <div *ngIf="!editing || editing && spotting" class="custom-control custom-checkbox checkbox-xl">
+          <input id="final" type="checkbox" class="custom-control-input" [(ngModel)]="unsure">
+          <label for="final" class="custom-control-label">Unsure?</label>
         </div>
-        <div class="col-4 text-center align-center">
-          <div *ngIf="!editing || editing && spotting" class="custom-control custom-checkbox checkbox-xl">
-            <input id="final" type="checkbox" class="custom-control-input" [(ngModel)]="unsure">
-            <label for="final" class="custom-control-label">Unsure?</label>
-          </div>
-        </div>
-        <div class="col-4 text-center align-center">
-          <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onSave()">Save</button>
-        </div>
+      </div>
+      <div class="col-4 text-center align-center">
+        <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onSave()">Save</button>
+      </div>
     </div>
     <div *ngIf="!spotting && !editing" class="row h-25 align-items-center" style="padding: 25px 0px;">
-        <div class="col-6 p-0 text-center">
-          <button type="button" class="button-footer" (click)="onNextSet()" [disabled]="!match.set().canFinish()">Nächster Satz</button>
-        </div>
-        <div class="col-6 p-0 text-center">
-          <button type="button" class="button-footer" (click)="onFinishMatch()" [disabled]="!match.set().canFinish()">Match Beenden</button>
-        </div>
+      <div class="col-6 p-0 text-center">
+        <button type="button" class="button-footer" (click)="onNextSet()" [disabled]="!match.set().canFinish()">Nächster
+          Satz</button>
+      </div>
+      <div class="col-6 p-0 text-center">
+        <button type="button" class="button-footer" (click)="onFinishMatch()"
+          [disabled]="!match.set().canFinish()">Match Beenden</button>
+      </div>
     </div>
   </div>
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </div>
 
-<button id="back-button" (click)="onExit()"><fa-icon [icon]="faArrowCircleLeft"></fa-icon></button>
+<button id="back-button" (click)="onExit()">
+  <fa-icon [icon]="faArrowCircleLeft"></fa-icon>
+</button>
