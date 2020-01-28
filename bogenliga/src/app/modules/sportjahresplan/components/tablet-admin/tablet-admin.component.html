@@ -34,23 +34,15 @@
 
           <button
             (click)="updateSession(session.scheibenNr)"
-            *ngIf="!currentDeviceIsActive && !session.isActive"
+            *ngIf="!session.isActive"
             class="btn btn-success"
           >
             <fa-icon [icon]="'plus-circle'"></fa-icon>
           </button>
-
-          <a
-            *ngIf="canNavigateToEingabe(session)"
-            [routerLink]="tabletEingabeRoute"
-            class="btn btn-light ml-3"
-          >
-            <fa-icon [icon]="'external-link-alt'"></fa-icon>
-          </a>
         </td>
 
         <td>
-          <label *ngIf="session.isActive">{{AccessToken}}</label>
+          <label *ngIf="session.isActive">{{session.accessToken}}</label>
         </td>
       </tr>
     </table>
