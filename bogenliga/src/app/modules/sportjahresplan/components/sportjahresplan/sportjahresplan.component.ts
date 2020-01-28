@@ -97,10 +97,11 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       this.selectedWettkampf = $event.id.toString();
       this.visible = true;
 
+      this.tableContentMatch = [];
+
       this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
         .then((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchSuccess(response))
         .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
-
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
@@ -236,9 +237,5 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     }
     this.matchRows = toTableRows(this.tableContentMatch);
     this.loadingMatch = false;
-
   }
-
-
-
 }
