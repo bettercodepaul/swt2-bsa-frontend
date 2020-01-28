@@ -3,10 +3,30 @@
         class="horizontal-form half-page">
     <h3>{{currentMannschaft.name}}</h3>
     <h3>{{currentVeranstaltung.name}}</h3>
-    <h3>{{currentVerein.name}}</h3>
+    <h3>{{currentMannschaft.veranstaltungName}}</h3>
 
 
-    <!-- Vereine -->
+
+    <!-- Veranstaltung -->
+    <div id="selectVereink">
+      <div class="row">
+        <label class="col-sm-1 col-form-label">
+          <span>{{ 'Mannschaft:' | translate }}</span>
+        </label>
+        <div class="col-sm-8">
+        <bla-selectionlist [id]="'quickSearch'"
+                           [items]="veranstaltungen"
+                           [optionFieldSelector]="'name'"
+                           (onSelect)="onSelect($event); "
+                           [multipleSelections]="!multipleSelections"
+                           style="width: 50%; height: 10em;">
+
+        </bla-selectionlist>
+        </div>
+      </div>
+    </div>
+    <!-- Mannschaft -->
+    <div id="selectVerein">
     <div class="row">
       <label class="col-sm-1 col-form-label">
         <span>{{ 'Mannschaft:' | translate }}</span>
@@ -16,7 +36,7 @@
                 id="vereine"
                 name="VereinName"
                 [(ngModel)]="currentMannschaft.name"
-                (ngModelChange)="loadErgebnisse();">
+                (ngModelChange)="loadErgebnisse()">
           <option *ngFor="let mannschaft of mannschaften"> {{mannschaft.name}}</option>
         </select>
         <div class="invalid-feedback">
@@ -24,6 +44,8 @@
         </div>
       </div>
     </div>
+    </div>
+
     <!-- Jahr -->
     <div class="row">
       <label class="col-sm-1 col-form-label">
@@ -34,33 +56,9 @@
                 id="jahr"
                 name="Jahre"
                 [(ngModel)]="currentJahr"
-                (ngModelChange)="loadErgebnisse();">
+                (ngModelChange)="loadErgebnisse()">
           <option *ngFor="let Jahr of Jahre"> {{Jahr}}</option>
         </select>
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-    <!-- Veranstaltung -->
-    <div class="layout-elements">
-      <label class="col-sm-1 col-form-label">
-        </label>
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:80%">
-      <bla-quicksearch-list (onSelect)="onSelect($event)"
-                            [items]="veranstaltungen"
-                            [multipleSelections]="!multipleSelections"
-                            [optionFieldSelector]="'name'"
-                            [placeholderTranslationKey]="PLACEHOLDER_VAR"
-                            selectionListHeight="15em"
-                            style="width: 50%; flex-grow: 0;">
-
-      </bla-quicksearch-list>
-      </table>
-      <div class="col-sm-9">
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
         </div>
@@ -70,7 +68,7 @@
     <div id="Button">
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadErgebnisse(); refresh()">
+        (onClick)="loadErgebnisse(); refresh();">
         {{ 'Anzeigen' | translate }}
       </bla-button>
     </div>
@@ -81,15 +79,44 @@
     </div>
 
 
+
     <!-- Row 1 -->
 
     <div class="row">
-      <div id="Table">
-          <bla-data-table [config]="config_table"
+      <div id="Table" *ngIf="show">
+        <h3>{{"Wettkampftag 1"}}</h3>
+        <bla-data-table [config]="config_table"
                           [rows]="rows[0]"
                           [loading]="loadingwettkampf">
           </bla-data-table>
     </div>
+    </div>
+    <div class="row" >
+      <div id="Table" *ngIf="rows.length >= 2 && show">
+        <h3>{{"Wettkampftag 2"}}</h3>
+        <bla-data-table [config]="config_table"
+                        [rows]="rows[1]"
+                        [loading]="loadingwettkampf">
+        </bla-data-table>
+      </div>
+    </div>
+    <div class="row">
+      <div id="Table"*ngIf="rows.length >= 3 && show">
+        <h3>{{"Wettkampftag 3"}}</h3>
+        <bla-data-table [config]="config_table"
+                        [rows]="rows[2]"
+                        [loading]="loadingwettkampf">
+        </bla-data-table>
+      </div>
+    </div>
+    <div class="row">
+      <div id="Table" *ngIf="rows.length >= 4 &&show">
+        <h3>{{"Wettkampftag 4"}}</h3>
+        <bla-data-table [config]="config_table"
+                        [rows]="rows[3]"
+                        [loading]="loadingwettkampf">
+        </bla-data-table>
+      </div>
     </div>
 
     <div class="form-group row">

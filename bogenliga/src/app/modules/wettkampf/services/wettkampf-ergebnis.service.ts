@@ -17,7 +17,6 @@ import {Injectable} from '@angular/core';
 export class WettkampfErgebnisService {
   // Input
   public verein: VereinDO;
-  public allVereine: VereinDO[];
   public veranstaltung: VeranstaltungDO;
   public sportjahr: Number
 
@@ -28,8 +27,7 @@ export class WettkampfErgebnisService {
   public matches: Array<MatchDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
-  public currentManschaft: DsbMannschaftDO;
-  private loading = false;
+  public currentManschaft: DsbMannschaftDO = null;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
               private mannschaftsDataProvider: DsbMannschaftDataProviderService,
@@ -95,6 +93,7 @@ export class WettkampfErgebnisService {
     this.filterMannschaften();
     return this.createWettkampfergebnisse(0);
   }
+
 
 }
 
