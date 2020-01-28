@@ -23,6 +23,7 @@ export function fromPayloadBenutzerRolle(payload: VersionedDataTransferObject): 
   benutzerRolleDO.email = benutzerRolleDTO.email;
   benutzerRolleDO.roleId = benutzerRolleDTO.roleId;
   benutzerRolleDO.roleName = benutzerRolleDTO.roleName;
+  benutzerRolleDO.active = benutzerRolleDTO.active;
 
   return benutzerRolleDO;
 }

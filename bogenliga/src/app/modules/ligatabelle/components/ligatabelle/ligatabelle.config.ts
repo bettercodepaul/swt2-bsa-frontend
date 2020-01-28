@@ -9,7 +9,7 @@ export const WETTKAEMPFE_CONFIG: NavigationDialogConfig = {
   }
 };
 
-
+// the Ligatabelle is not sortable
 export const LIGATABELLE_TABLE_CONFIG: TableConfig = {
 
   columns: [
@@ -17,26 +17,31 @@ export const LIGATABELLE_TABLE_CONFIG: TableConfig = {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.TABELLENPLATZ',
       propertyName:   'tabellenplatz',
       width:          15,
+      sortable:        false,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.MANNSCHAFTNAME',
       propertyName:   'mannschaft_name',
       width:          70,
+      sortable:        false,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.MATCHPUNKTE',
       propertyName:   'matchpunkte',
       width:          15,
+      sortable:        false,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTE',
       propertyName:   'satzpunkte',
       width:          15,
+      sortable:        false,
     },
     {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTDIFFERENZ',
       propertyName:   'satzpkt_differenz',
       width:          15,
+      sortable:        false,
     }
   ]
 
