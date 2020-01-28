@@ -41,6 +41,26 @@ export class TabletSessionProviderService extends DataProviderService {
     });
   }
 
+  public findAllTabletSessionswithoutArgument(): Promise<BogenligaResponse<Array<TabletSessionDO>>> {
+    // @ts-ignore
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<TabletSessionDTO>>(new UriBuilder().fromPath(this.getUrl()).build())
+        .then((data: Array<TabletSessionDTO>) => {
+        const sessions = [];
+        for (const session of data) {
+          sessions.push(TabletSessionMapper.tabletSessionToDO(session));
+        }
+        resolve({result: RequestResult.SUCCESS, payload: sessions});
+      }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else{
+            reject({result: RequestResult.FAILURE})
+          }
+        });
+    });
+  }
+
   public findTabletSession(wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<TabletSessionDO>> {
     const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {

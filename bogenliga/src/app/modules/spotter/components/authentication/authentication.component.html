@@ -6,11 +6,13 @@
            class="form-control"
            name="spotterAuth"
            id="spotterAuth"
+           [(ngModel)]="AccessTokenInput"
            required
-           pattern ="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
+           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
            placeholder="{{ 'SPOTTER.AUTH.INFO' | translate }}">
     <br>
-    <bla-button [id] = "'spotterAuth'"
+    <bla-button (click)="validateAccessToken()"
+                [id] = "'spotterAuth'"
                 [buttonSize] = "ButtonSize.LARGE_BLOCK">
                 {{ 'SPOTTER.AUTH.LABLE' }}
     </bla-button>
