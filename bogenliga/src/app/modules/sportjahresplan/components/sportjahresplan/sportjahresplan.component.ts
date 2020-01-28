@@ -232,9 +232,11 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       tableContentRow.satzpunkte = match.satzpunkte;
       tableContentRow.version = match.version;
 
+
       this.tableContentMatch.push(tableContentRow);
     }
     this.matchRows = toTableRows(this.tableContentMatch);
+    this.tableContentMatch = [];
     this.loadingMatch = false;
 
   }
