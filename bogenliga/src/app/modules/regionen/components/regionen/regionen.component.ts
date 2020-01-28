@@ -94,6 +94,8 @@ export class RegionenComponent implements OnInit {
 
 
   loadSunburst() {
+    const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
+    desc.style.display = 'block';
 
     const data = this.convertDataToTree(this.regionen.filter((f) =>
       f.regionTyp === 'BUNDESVERBAND')[0], this.regionen).toJsonString();
@@ -147,11 +149,15 @@ export class RegionenComponent implements OnInit {
               this.reloadVereineUndLigen();
               const details: HTMLInputElement = document.querySelector('#detailsWrapper') as HTMLInputElement;
               details.style.display = 'block';
+              const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
+              desc.style.display = 'none';
             }
           );
     } else {
       const details: HTMLInputElement = document.querySelector('#detailsWrapper') as HTMLInputElement;
       details.style.display = 'none';
+      const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
+      desc.style.display = 'block';
     }
   }
 

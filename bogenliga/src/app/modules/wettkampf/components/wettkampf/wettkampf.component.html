@@ -1,14 +1,16 @@
 <bla-common-dialog [config]="config">
   <form id="regionenForm"
         class="horizontal-form half-page">
+    <h3>{{currentVerein.name}}</h3>
+    <h3>{{currentVeranstaltung.name}}</h3>
+
 
     <!-- Vereine -->
-    <div class="form-group row">
-      <label for="regionTyp"
-             class="col-sm-3 col-form-label">
+    <div class="row">
+      <label class="col-sm-1 col-form-label">
         <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.VEREIN_NAME.LABEL' | translate }}</span>
       </label>
-      <div class="col-sm-9">
+      <div class="col-sm-8">
         <select class="form-control"
                 id="vereine"
                 name="vereineName"
@@ -22,43 +24,39 @@
       </div>
     </div>
 
-    <!-- Veranstaltungen -->
-    <div class="form-group row">
-      <label for="regionTyp"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.VERANSTALTUNG_NAME.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-9">
-        <select class="form-control"
-                id="regionTyp"
-                name="regionTyp"
-                [(ngModel)]="currentVeranstaltung.name"
-                (ngModelChange)="loadErgebnisse();">
+    <!-- Jahr -->
+    <div class="layout-elements">
+      <label class="col-sm-1 col-form-label">
+         <!-- <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>-->
+        </label>
+      <table id="example"
+             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+             style="width:80%">
+      <bla-quicksearch-list (onSelect)="onSelect($event)"
+                            [items]="veranstaltungen"
+                            [loading]="loadingwettkampf"
+                            [multipleSelections]="!multipleSelections"
+                            [optionFieldSelector]="'name'"
+                            [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                            selectionListHeight="15em"
+                            style="width: 50%; flex-grow: 0;">
 
-          <option *ngFor="let veranstaltung of veranstaltungen"> {{veranstaltung.name}}</option>
-        </select>
+      </bla-quicksearch-list>
+      </table>
+      <div class="col-sm-9">
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
         </div>
       </div>
     </div>
 
-
-
     <!-- Row 1 -->
 
-    <div class="flexChild">
-
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:100%">
-        <div class="row">
+    <div class="row">
           <bla-data-table [config]="config_table"
-                          [rows]="rows[0]">
+                          [rows]="rows[0]"
+                          [loading]="loadingwettkampf">
           </bla-data-table>
-        </div>
-      </table>
-
     </div>
 
     <div class="form-group row">

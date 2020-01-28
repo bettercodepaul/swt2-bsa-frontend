@@ -4,6 +4,7 @@ export class WettkampfErgebnis implements VersionedDataObject {
   id: number;
   version: number;
 
+  Wettkampftag: number;
   mannschaftName: string;
   mannschaftSatz1: number;
   mannschaftSatz2: number;
