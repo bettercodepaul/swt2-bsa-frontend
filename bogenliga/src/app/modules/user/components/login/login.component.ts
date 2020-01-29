@@ -8,6 +8,7 @@ import {LoginDataProviderService} from '../../services/login-data-provider.servi
 import {CredentialsDO} from '../../types/credentials-do.class';
 import {LoginResult} from '../../types/login-result.enum';
 import {USER_LOGIN_CONFIG} from './login.config';
+import {CurrentUserService} from '@shared/services';
 
 const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 
@@ -40,7 +41,7 @@ export class LoginComponent implements OnInit {
   public config = USER_LOGIN_CONFIG;
   private destinationRouteAfterLogin = '/home';
 
-  constructor(private loginDataProviderService: LoginDataProviderService, private route: ActivatedRoute, private router: Router) {
+  constructor(private loginDataProviderService: LoginDataProviderService, private currentUserService: CurrentUserService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -94,6 +95,10 @@ export class LoginComponent implements OnInit {
   private handleSuccessfulLogin() {
     this.loading = false;
     this.loginResult = LoginResult.SUCCESS;
-    this.router.navigateByUrl(this.destinationRouteAfterLogin);
+    if (this.currentUserService.getEmail().match('spotter[1-8]@bogenliga.de')) {
+      this.router.navigateByUrl('/spotter');
+    } else {
+      this.router.navigateByUrl(this.destinationRouteAfterLogin);
+    }
   }
 }
