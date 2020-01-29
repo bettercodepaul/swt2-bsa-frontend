@@ -110,10 +110,10 @@
                           (onClick)="onLogin($event)">{{ 'USER.LOGIN.BUTTON.LOGIN' | translate }}
               </bla-button>
               <br>
-              <a routerLink="/spotter/authentication" (click)="onAutoLogin(testAdminUser)">
-                <p>{{ 'SPOTTER.LINK.TEXT' | translate }}</p>
-              </a>
-
+              <bla-button [buttonSize]="ButtonSize.SMALL"
+                          (onClick)="onSpotterLogin(testModeratorUser)">
+                          {{ 'SPOTTER.LINK.TEXT' | translate }}
+              </bla-button>
             </div>
           </form>
 
