@@ -17,7 +17,8 @@ import { InterfaceComponent, AuthenticationComponent } from './components';
     RouterModule.forChild(SPOTTER_ROUTES),
     SharedModule.forChild(),
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SharedModule
   ],
   providers: [
     InterfaceGuard,

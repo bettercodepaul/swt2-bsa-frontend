@@ -1,3 +1,5 @@
+import { SpotterResult } from './../../types/spotter-result.enum';
+import { SpotterService } from './../../services/spotter.service';
 import { MatchJsonToClass } from './../../mapper/match-json-to-class.mapper';
 import { Router } from '@angular/router';
 import { Match } from './../../types/match';
@@ -26,7 +28,7 @@ export class InterfaceComponent implements OnInit {
   editing = false;
   editedPlay = -1;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private spotterService: SpotterService) { }
 
   ngOnInit() {
     if (localStorage.getItem('match')) {
@@ -50,39 +52,58 @@ export class InterfaceComponent implements OnInit {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
         this.match.set().play().result = this.selectedValue;
         this.match.set().play().final = !this.unsure;
-        this.unsure = false;
 
-        // TODO: send current play() over Service then {
-        if (!this.match.nextPlay()) {
-          this.spotting = false;
-        } else {
-          this.selectedPlayNumber++;
-        }
-
-        this.selectedValue = -1;
-
-        // }
-
+        this.spotterService.sendPlay(this.match.set().play()).then(() => {
+          this.unsure = false;
+          if (!this.match.nextPlay()) {
+            this.spotting = false;
+          } else {
+            this.selectedPlayNumber++;
+          }
+          this.selectedValue = -1;
+        }, (error: SpotterResult) => {
+          if (error === SpotterResult.UNAUTHORIZED) {
+            // TODO: Better error handling
+            alert('You are not authorized to do that');
+          } else {
+            // TODO: Better error handling
+            alert('There was an error with this request');
+          }
+        });
       }
     } else {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
         this.match.set().play(this.editedPlay).result = this.selectedValue;
         this.match.set().play(this.editedPlay).final = true;
-        if (!this.spotting) {
-          this.spotting = false;
-        } else {
+        if (this.spotting) {
           this.match.set().play(this.editedPlay).final = !this.unsure;
-          this.unsure = false;
-          this.onEdit(this.selectedPlayNumber + 1);
         }
-        // TODO: send current play() over Service then {
-        this.editing = false;
+        this.spotterService.sendPlay(this.match.set().play(this.editedPlay)).then(() => {
+          if (!this.spotting) {
+            this.spotting = false;
+          } else {
+            this.onEdit(this.match.set().currentPlayNumber);
+          }
+          this.unsure = false;
+          this.editing = false;
+
+        }, (error: SpotterResult) => {
+          if (error === SpotterResult.UNAUTHORIZED) {
+            // TODO: Better error handling
+            alert('You are not authorized to do that');
+          } else {
+            // TODO: Better error handling
+            alert('There was an error with this request');
+          }
+        });
       }
     }
     localStorage.setItem('match', JSON.stringify(this.match));
   }
 
-  // sets the attributes to display the result of the play to change
+  /**
+   * sets the attributes to display the result of the play to change
+   */
   onEdit(play: number) {
     this.selectedPlayNumber = play;
     this.editing = true;
@@ -90,17 +111,27 @@ export class InterfaceComponent implements OnInit {
     this.editedPlay = play;
   }
 
-  // If everything is final, create new set and send confirmation to backend, that set is finished
+  /**
+   * If everything is final, create new set and send confirmation to backend, that set is finished
+   */
   onNextSet() {
     if (this.match.addSet()) {
-      this.spotting = true;
-      this.editing = false;
-      this.selectedPlayNumber = 1;
-      this.selectedValue = -1;
-      this.editedPlay = -1;
-      this.unsure = false;
-
-      // TODO: Send set to Server to confirm
+      this.spotterService.nextSet().then(() => {
+        this.spotting = true;
+        this.editing = false;
+        this.selectedPlayNumber = 1;
+        this.selectedValue = -1;
+        this.editedPlay = -1;
+        this.unsure = false;
+      }, (error: SpotterResult) => {
+        if (error === SpotterResult.UNAUTHORIZED) {
+          // TODO: Better error handling
+          alert('You are not authorized to do that');
+        } else {
+          // TODO: Better error handling
+          alert('There was an error with this request');
+        }
+      });
 
       localStorage.setItem('match', JSON.stringify(this.match));
     }
@@ -112,10 +143,25 @@ export class InterfaceComponent implements OnInit {
    */
   onFinishMatch() {
     if (this.match.canFinish()) {
-      // Send match to Server to confirm
-      // -> when successful: get new Match Information back from the Server
-      localStorage.removeItem('match');
-      this.match = new Match('Frickenhausen', this.match.bahn);
+
+      this.spotterService.nextMatch().then((mannschaft: string) => {
+        localStorage.removeItem('match');
+        this.match = new Match(mannschaft, this.match.bahn);
+        this.spotting = true;
+        this.editing = false;
+        this.selectedPlayNumber = 1;
+        this.selectedValue = -1;
+        this.editedPlay = -1;
+        this.unsure = false;
+      }, (error: SpotterResult) => {
+        if (error === SpotterResult.UNAUTHORIZED) {
+          // TODO: Better error handling
+          alert('You are not authorized to do that');
+        } else {
+          // TODO: Better error handling
+          alert('There was an error with this request');
+        }
+      });
     }
   }
 
@@ -147,6 +193,5 @@ export class InterfaceComponent implements OnInit {
     localStorage.setItem('match', JSON.stringify(this.match));
     this.router.navigateByUrl('/home');
   }
-
 
 }
