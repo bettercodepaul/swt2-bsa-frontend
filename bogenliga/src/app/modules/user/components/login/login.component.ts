@@ -76,8 +76,9 @@ export class LoginComponent implements OnInit {
   }
 
   public onSpotterLogin($event: any): void {
-    alert('Spotter Login');
-    this.router.navigateByUrl('/spotter');
+    this.destinationRouteAfterLogin = '/spotter/authentication'
+    this.credentials = $event;
+    this.onLogin(null);
   }
 
   // TODO: remove after development
