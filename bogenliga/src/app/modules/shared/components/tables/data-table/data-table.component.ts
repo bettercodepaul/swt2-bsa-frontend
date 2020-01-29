@@ -340,19 +340,4 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   private onDownload(affectedRowPayload: VersionedDataObject) {
     this.onDownloadEntry.emit(affectedRowPayload);
   }
-
-  /**
-   * link the ligatabelle to wettkaempfe
-   * if the columns have the attribute notLigatabelle with the value true, then this is the Ligatabelle
-   * @return: /wettkaempfe to be redirected to the page wettkaempfe
-   */
-  private LigatabelleLinking(currentVer: string): string {
-    if (this.config.columns.filter((c) => c.notLigatabelle).length === 0) {
-      // this.router.navigateByUrl('/wettkaempfe');
-      return '/wettkaempfe/' + currentVer + '/';
-    }
-    return '.';
-  }
-
-
 }

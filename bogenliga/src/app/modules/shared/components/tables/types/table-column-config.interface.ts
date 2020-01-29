@@ -15,7 +15,6 @@ export interface TableColumnConfig {
   currentSortOrder?: TableColumnSortOrder; // optional: Use a predefined sort order; default = UNSORTED
   dateAndTimeFormat?: TableColumnDateFormat; // optional: Define a custom date format, e.g. 'yyy-MM-dd'
   truncationLength?: number; // optional: Define a truncation length to cut the text after X chars
-  notLigatabelle?: boolean; // optional: only for the ligatabelle; default = true
 
   stylesMapper?: Function; // optional: you can change the style of the column
 

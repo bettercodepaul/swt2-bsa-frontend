@@ -7,6 +7,7 @@ export class CommonComponent {
   @Input() public loading = false;
   @Input() public disabled = false;
 
+
   public userPermissions: UserPermission[] = [];
 
   constructor() {
