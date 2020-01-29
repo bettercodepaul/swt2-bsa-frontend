@@ -100,8 +100,8 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     this.loadingLigatabelle = false;
   }
   public LigatabelleLinking() {
-      const link = '/wettkaempfe/' + this.selectedVeranstaltungName;
-      this.router.navigateByUrl(link);
+    const link = '/wettkaempfe/' + this.selectedVeranstaltungName;
+    this.router.navigateByUrl(link);
   }
 
   private handleLigatabelleSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>): void {
