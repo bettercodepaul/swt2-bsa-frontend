@@ -40,7 +40,7 @@ export class AuthenticationComponent implements OnInit {
 
   public validateAccessToken() {
     for (let i = 0; i <= (this.tokens.length - 1); i++) {
-      if (this.AccessTokenInput === this.tokens[i]) {
+      if (this.accessTokenInput === this.tokens[i]) {
         this.router.navigateByUrl('/spotter');
       }
     }
