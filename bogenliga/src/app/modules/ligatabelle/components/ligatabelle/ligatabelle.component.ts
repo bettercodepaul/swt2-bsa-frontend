@@ -28,7 +28,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
 
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
   private selectedVeranstaltungId: number;
-  private selectedVeranstaltungName: string;
+  public selectedVeranstaltungName: string;
   public selectedDTOs: VeranstaltungDO[];
   public multipleSelections = true;
   public veranstaltungen: VeranstaltungDO[];
@@ -99,7 +99,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     this.rowsLigatabelle = [];
     this.loadingLigatabelle = false;
   }
-  private LigatabelleLinking() {
+  public LigatabelleLinking() {
       const link = '/wettkaempfe/' + this.selectedVeranstaltungName;
       this.router.navigateByUrl(link);
   }

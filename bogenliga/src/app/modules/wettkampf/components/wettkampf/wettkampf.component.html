@@ -58,7 +58,7 @@
                 [(ngModel)]="currentJahr"
                 (ngModelChange)="loadErgebnisse()"
                 disabled="true">
-          <option *ngFor="let Jahr of Jahre"> {{Jahr}}</option>
+          <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -69,7 +69,7 @@
     <div id="Button">
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="all = false; loadErgebnisse(); refresh();">
+        (onClick)="loadAll = false; loadErgebnisse(); refresh();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
     </div>
@@ -121,7 +121,7 @@
     <div id="Button1 " *ngIf="show">
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="all = true; loadErgebnisse(); refresh();">
+        (onClick)="loadAll = true; loadErgebnisse(); refresh();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
       </bla-button>
     </div>

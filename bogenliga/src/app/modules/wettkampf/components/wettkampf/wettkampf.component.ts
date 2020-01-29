@@ -25,20 +25,20 @@ const ID_PATH_PARAM = 'id';
 export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public show = false;
-  public all: boolean;
+  public loadAll: boolean;
   public directMannschaft = null;
   public directWettkampf = null;
   public routes = null;
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public loadingwettkampf = false;
-  public Jahre: Array<number> = [];
+  public jahre: Array<number> = [];
   public currentJahr = 2017;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
-  private currentMannschaft: DsbMannschaftDO;
+  public currentMannschaft: DsbMannschaftDO;
   public multipleSelections = true;
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
@@ -117,8 +117,8 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
     loadJahre() {
     for (const i of this.veranstaltungen) {
-      if (this.Jahre.includes(i.sportjahr) === false) {
-        this.Jahre[this.Jahre.length] = i.sportjahr;
+      if (this.jahre.includes(i.sportjahr) === false) {
+        this.jahre[this.jahre.length] = i.sportjahr;
       }
     }
   }
@@ -139,9 +139,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.delay(10).then((any) => {
       this.rows = [];
       this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
-        this.mannschaften, this.currentVeranstaltung, this.all)));
+        this.mannschaften, this.currentVeranstaltung, this.loadAll)));
       this.loadingwettkampf = false;
-      this.all = false;
+      this.loadAll = false;
     });
 
   }
@@ -155,10 +155,10 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     console.log('loadErgebnisse');
     this.currentVeranstaltung = $event.concat()[0];
     this.currentJahr = this.currentVeranstaltung.sportjahr;
-    this.Jahre[0] = this.currentJahr;
+    this.jahre[0] = this.currentJahr;
     let result;
     result = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
-      this.mannschaften, $event.concat()[0], this.all);
+      this.mannschaften, $event.concat()[0], this.loadAll);
     this.wettkampErgebnisse = [];
     if (this.wettkampErgebnisse.push(result)) {
       this.delay(10).then((any) => {
