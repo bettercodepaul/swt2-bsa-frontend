@@ -131,7 +131,7 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/liga/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/liga');
                   }
                 });
 

@@ -87,11 +87,12 @@ export class WettkampfklasseDetailComponent extends CommonComponent implements O
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/klassen/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/klassen');
                   }
                 });
 
             this.notificationService.showNotification(notification);
+
           }
         }, (response: BogenligaResponse<WettkampfKlasseDO>) => {
           console.log('Failed');

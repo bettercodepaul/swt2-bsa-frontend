@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponent} from '../../../../shared/components/common';
+import {CommonComponent} from '@shared/components';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {BogenligaResponse} from '../../../../shared/data-provider';
-import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {BogenligaResponse} from '@shared/data-provider';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
   NotificationOrigin,
@@ -15,7 +15,7 @@ import {
 } from '../../../../shared/services/notification';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
-import {BENUTZER_OVERVIEW_CONFIG} from './benutzer-overview.config';
+import {BENUTZER_OVERVIEW_CONFIG_ACTIVE} from '@verwaltung/components/benutzer/benutzer-overview/benutzer-overview-active.config';
 
 export const NOTIFICATION_DELETE_BENUTZER = 'benutzer_overview_delete';
 
@@ -26,8 +26,8 @@ export const NOTIFICATION_DELETE_BENUTZER = 'benutzer_overview_delete';
 })
 export class BenutzerOverviewComponent extends CommonComponent implements OnInit {
 
-  public config = BENUTZER_OVERVIEW_CONFIG;
-  public rows: TableRow[];
+  public configActive = BENUTZER_OVERVIEW_CONFIG_ACTIVE;
+  public rowsActive: TableRow[];
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
@@ -51,7 +51,7 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
     // show loading icon
     const id = versionedDataObject.id;
 
-    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+    this.rowsActive = showDeleteLoadingIndicatorIcon(this.rowsActive, id);
 
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_BENUTZER + id,
@@ -69,7 +69,7 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.benutzerDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+                .catch((response) => this.rowsActive = hideLoadingIndicator(this.rowsActive, id));
           }
         });
 
@@ -90,13 +90,13 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<BenutzerRolleDO[]>): void {
-    this.rows = [];
+    this.rowsActive = [];
     this.loading = false;
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<BenutzerRolleDO[]>): void {
-    this.rows = []; // reset array to ensure change detection
-    this.rows = toTableRows(response.payload);
+    this.rowsActive = []; // reset array to ensure change detection
+    this.rowsActive = toTableRows(response.payload.filter((benutzer) => benutzer.active));
     this.loading = false;
   }
 }

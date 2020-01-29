@@ -89,7 +89,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       }
   }
 
-  // when a Wettkampf gets selected from the list --> ID for Buttons
+  // when a Ligatabelle gets selected from the list --> ID for Buttons
 
   public onView($event: WettkampfDO): void {
     if ($event.id >= 0) {
@@ -97,10 +97,11 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       this.selectedWettkampf = $event.id.toString();
       this.visible = true;
 
+      this.tableContentMatch = [];
+
       this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
         .then((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchSuccess(response))
         .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
-
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
@@ -122,7 +123,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
 
 
   // wenn ein Wettkampftag ausgewählt wurde - dann werden die Button enabled,
-  // da die Wettkampf-ID als Parameter weiter gegeben wird.
+  // da die Ligatabelle-ID als Parameter weiter gegeben wird.
 
   public isDisabled(): boolean {
     if (this.selectedWettkampf === '') {
@@ -236,9 +237,5 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     }
     this.matchRows = toTableRows(this.tableContentMatch);
     this.loadingMatch = false;
-
   }
-
-
-
 }
