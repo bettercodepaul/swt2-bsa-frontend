@@ -149,12 +149,12 @@ export class SchusszettelComponent implements OnInit {
         type:        NotificationType.OK,
         userAction:  NotificationUserAction.ACCEPTED
       });
-    } else if(this.match1.schuetzen[0][0].schuetzeNr == null || this.match1.schuetzen[1][0].schuetzeNr == null || this.match1.schuetzen[2][0].schuetzeNr == null
+    } else if (this.match1.schuetzen[0][0].schuetzeNr == null || this.match1.schuetzen[1][0].schuetzeNr == null || this.match1.schuetzen[2][0].schuetzeNr == null
     || this.match2.schuetzen[0][0].schuetzeNr == null || this.match2.schuetzen[1][0].schuetzeNr == null || this.match2.schuetzen[2][0].schuetzeNr == null) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
-        description: 'Bitte unter Schuetze in alle Felder eine Schuetzennummer eintragen!', //hier ist die Meldung direkt eingefügt
+        description: 'Bitte unter Schuetze in alle Felder eine Schuetzennummer eintragen!', // hier ist die Meldung direkt eingefügt
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
