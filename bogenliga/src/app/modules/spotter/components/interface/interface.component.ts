@@ -101,7 +101,9 @@ export class InterfaceComponent implements OnInit {
     localStorage.setItem('match', JSON.stringify(this.match));
   }
 
-  // sets the attributes to display the result of the play to change
+  /**
+   * sets the attributes to display the result of the play to change
+   */
   onEdit(play: number) {
     this.selectedPlayNumber = play;
     this.editing = true;
@@ -109,7 +111,9 @@ export class InterfaceComponent implements OnInit {
     this.editedPlay = play;
   }
 
-  // If everything is final, create new set and send confirmation to backend, that set is finished
+  /**
+   * If everything is final, create new set and send confirmation to backend, that set is finished
+   */
   onNextSet() {
     if (this.match.addSet()) {
       this.spotterService.nextSet().then(() => {
@@ -143,6 +147,12 @@ export class InterfaceComponent implements OnInit {
       this.spotterService.nextMatch().then((mannschaft: string) => {
         localStorage.removeItem('match');
         this.match = new Match(mannschaft, this.match.bahn);
+        this.spotting = true;
+        this.editing = false;
+        this.selectedPlayNumber = 1;
+        this.selectedValue = -1;
+        this.editedPlay = -1;
+        this.unsure = false;
       }, (error: SpotterResult) => {
         if (error === SpotterResult.UNAUTHORIZED) {
           // TODO: Better error handling
