@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ButtonSize} from '@shared/components';
+import {ButtonSize} from '../../../shared/components/buttons';
 
 // new CM
 // import {Component, OnInit} from '@angular/core';
-import {TabletSessionDO} from '@sportjahresplan/types/tablet-session-do.class';
-import {BogenligaResponse} from '@shared/data-provider';
+import {TabletSessionDO} from '../../../sportjahresplan/types/tablet-session-do.class';
+import {isUndefined} from '../../../shared/functions';
+import {BogenligaResponse} from '../../../shared/data-provider';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TabletSessionProviderService} from '@sportjahresplan/services/tablet-session-provider.service';
+import {TabletSessionProviderService} from '../../../sportjahresplan/services/tablet-session-provider.service';
 
 
 
@@ -22,8 +23,8 @@ export class AuthenticationComponent implements OnInit {
 
   sessions: Array<TabletSessionDO>;
   currentSession: TabletSessionDO;
-  tokens = [];
-  AccessTokenInput: string;
+  tokens = new Array();
+  AccessTokenInput;
   public ButtonSize = ButtonSize;
 
   ngOnInit() {
@@ -31,7 +32,8 @@ export class AuthenticationComponent implements OnInit {
       .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
         this.sessions = data.payload;
         for (let i = 0 ; i <= this.sessions.length; i++) {
-          this.tokens[i] = this.sessions[i].accessToken.toString();
+          this.tokens[i] = this.sessions[i].accessToken;
+          console.log(i , this.sessions[i].accessToken);
         }
       }, (error) => {
         console.error(error);
@@ -40,7 +42,8 @@ export class AuthenticationComponent implements OnInit {
 
   public validateAccessToken() {
     for (let i = 0; i <= (this.tokens.length - 1); i++) {
-      if (this.AccessTokenInput === this.tokens[i]) {
+      if (this.AccessTokenInput == this.tokens[i]) {
+        console.log('true!');
         this.router.navigateByUrl('/spotter');
       }
     }
