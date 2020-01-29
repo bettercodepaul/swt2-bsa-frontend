@@ -19,7 +19,7 @@
                id="punktetabelle"
                style="width:100%">
           <tr>
-            <td *ngFor="let sum of match1.sumSatz; let i = index">
+            <td *ngFor="let sum of match1singlesatzpoints; let i = index">
               <label>{{i + 1}}.S.Pkt</label>
               <input [value]="sum"
                      readonly
@@ -42,7 +42,7 @@
             </td>
           </tr>
           <tr>
-            <td *ngFor="let sum of match2.sumSatz">
+            <td *ngFor="let sum of match2singlesatzpoints">
               <input [value]="sum"
                      readonly
                      tabindex="-1"
@@ -190,10 +190,10 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 4</label>
+          <label class="col-4">Satz 5</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 4)"
-                   [(ngModel)]="match1.fehlerpunkte[3]"
+                   [(ngModel)]="match1.fehlerpunkte[4]"
                    class="fehlerfeld">
           </div>
         </div>
@@ -232,7 +232,7 @@
         <table class="table table-responsive thead-light table-striped"
                style="width:100%">
           <tr>
-            <td *ngFor="let sum of match1.sumSatz; let i = index">
+            <td *ngFor="let sum of match1singlesatzpoints; let i = index">
               <label>{{i + 1}}.S.Pkt</label>
               <input [value]="sum"
                      readonly
@@ -255,7 +255,7 @@
             </td>
           </tr>
           <tr>
-            <td *ngFor="let sum of match2.sumSatz">
+            <td *ngFor="let sum of match2singlesatzpoints">
               <input [value]="sum"
                      readonly
                      tabindex="-1"
@@ -401,10 +401,10 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 4</label>
+          <label class="col-4">Satz 5</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 4)"
-                   [(ngModel)]="match2.fehlerpunkte[3]"
+                   [(ngModel)]="match2.fehlerpunkte[4]"
                    class="fehlerfeld">
           </div>
         </div>

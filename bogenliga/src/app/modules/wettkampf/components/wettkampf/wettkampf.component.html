@@ -1,0 +1,69 @@
+<bla-common-dialog [config]="config">
+  <form id="regionenForm"
+        class="horizontal-form half-page">
+    <h3>{{currentVerein.name}}</h3>
+    <h3>{{currentVeranstaltung.name}}</h3>
+
+
+    <!-- Vereine -->
+    <div class="row">
+      <label class="col-sm-1 col-form-label">
+        <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.VEREIN_NAME.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-8">
+        <select class="form-control"
+                id="vereine"
+                name="vereineName"
+                [(ngModel)]="currentVerein.name"
+                (ngModelChange)="loadErgebnisse();">
+          <option *ngFor="let verein of vereine"> {{verein.name}}</option>
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Jahr -->
+    <div class="layout-elements">
+      <label class="col-sm-1 col-form-label">
+         <!-- <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>-->
+        </label>
+      <table id="example"
+             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+             style="width:80%">
+      <bla-quicksearch-list (onSelect)="onSelect($event)"
+                            [items]="veranstaltungen"
+                            [loading]="loadingwettkampf"
+                            [multipleSelections]="!multipleSelections"
+                            [optionFieldSelector]="'name'"
+                            [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                            selectionListHeight="15em"
+                            style="width: 50%; flex-grow: 0;">
+
+      </bla-quicksearch-list>
+      </table>
+      <div class="col-sm-9">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 1 -->
+
+    <div class="row">
+          <bla-data-table [config]="config_table"
+                          [rows]="rows[0]"
+                          [loading]="loadingwettkampf">
+          </bla-data-table>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+      </div>
+    </div>
+  </form>
+</bla-common-dialog>

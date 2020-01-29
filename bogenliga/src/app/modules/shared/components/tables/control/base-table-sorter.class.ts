@@ -61,6 +61,11 @@ export abstract class BaseTableSorter {
       return rows;
     }
 
+    // the columns are not sortable --> return rows without sorting
+    if (this.config.columns.filter((c) => c.sortable).length === 0) {
+      return rows;
+    }
+
     this.toggleSortOrder(sortColumn);
 
     // the custom sorter overrides the sorterImplementation method

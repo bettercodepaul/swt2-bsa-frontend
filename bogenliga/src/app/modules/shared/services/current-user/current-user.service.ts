@@ -3,17 +3,16 @@ import {Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
 import {isNullOrUndefined} from '@shared/functions';
 import {filter, map} from 'rxjs/operators';
-import {LocalDataProviderService} from '../../local-data-provider/services';
+import {LocalDataProviderService} from '@shared/local-data-provider';
 import {AppState, Login, Logout} from '../../redux-store';
-import {UserState} from '../../redux-store/feature/user';
+import {UserState} from '@shared/redux-store';
 import {Notification, NotificationUserAction} from '../notification/types';
-import {UserPermission} from './types/user-permission.enum';
-import {UserSignInDTO} from './types/user-sign-in-dto.class';
-import {CredentialsDO} from '@user/types/credentials-do.class';
+import {UserPermission} from '@shared/services';
+import {UserSignInDTO} from '@shared/services';
 
 const CURRENT_USER_KEY = 'current_user';
 const LOGIN_EMAIL_KEY = 'login_email';
-const DEFAULTUSERRNAME = 'ligadefault';
+const DEFAULT_USERNAME = 'ligadefault';
 
 
 @Injectable({
@@ -116,7 +115,6 @@ export class CurrentUserService {
     return this.isUserLoggedIn;
   }
 
-  // wir behandeln den default User wie einen nicht angemeldeten User
   public isDefaultUser(): boolean {
     return this.isDefaultUserLoggedIn;
   }
@@ -124,7 +122,6 @@ export class CurrentUserService {
   public logout() {
     this.localDataProviderService.remove(CURRENT_USER_KEY);
     this.store.dispatch(new Logout());
-
   }
 
   public rememberUsername(email: string) {
@@ -145,7 +142,7 @@ export class CurrentUserService {
         .subscribe((state: UserState) => {
           this.isUserLoggedIn = state.isLoggedIn;
           this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
-          if (this.currentUser.email === DEFAULTUSERRNAME) {
+          if (this.currentUser.email === DEFAULT_USERNAME) {
             this.isDefaultUserLoggedIn = true;
             state.isDefaultUserLoggedIn = true;
           } else {

@@ -19,6 +19,7 @@ export class OverviewDialogComponent extends CommonSecuredComponent implements O
   @Output() public onEditClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onViewClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onDeleteClicked = new EventEmitter<VersionedDataObject>();
+  @Output() public onAddClicked = new EventEmitter<VersionedDataObject>();
 
   constructor(private currentUserService: CurrentUserService) {
     super(currentUserService);
@@ -37,5 +38,9 @@ export class OverviewDialogComponent extends CommonSecuredComponent implements O
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
     this.onDeleteClicked.emit(versionedDataObject);
+  }
+
+  public onAdd(versionedDataObject: VersionedDataObject): void {
+    this.onAddClicked.emit(versionedDataObject);
   }
 }

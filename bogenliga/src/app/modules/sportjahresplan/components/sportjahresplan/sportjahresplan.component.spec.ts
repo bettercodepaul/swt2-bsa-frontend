@@ -9,7 +9,7 @@ import {HomeModule} from '../../../home/home.module';
 import {APP_REDUCERS} from '../../../shared/redux-store';
 import {SharedModule} from '../../../shared/shared.module';
 import {SportjahresplanComponent} from './sportjahresplan.component';
-import {WettkaempfeComponent} from '@wettkampf/components/wettkaempfe/wettkaempfe.component';
+import {LigatabelleComponent} from 'src/app/modules/ligatabelle/components/ligatabelle/ligatabelle.component';
 
 describe('SportjahresplanComponent', () => {
   let component: SportjahresplanComponent;
@@ -17,7 +17,7 @@ describe('SportjahresplanComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WettkaempfeComponent],
+      declarations: [LigatabelleComponent],
       imports:      [
         RouterTestingModule.withRoutes(ROUTES),
         HomeModule,

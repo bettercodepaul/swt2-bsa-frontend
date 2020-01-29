@@ -43,7 +43,6 @@ import {RouterModule} from '@angular/router';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NavigationCardsComponent} from './components/navigation-cards';
 import {TruncationPipe} from './pipes';
-import {WettkaempfeComponent} from '@wettkampf/components/wettkaempfe/wettkaempfe.component';
 import {SetzlisteDownloadComponent} from '@shared/components/buttons/setzliste-download/setzliste-download.component';
 import {BogenkontrolllisteDownloadComponent} from '@shared/components/buttons/bogenkontrollliste-download/bogenkontrollliste-download.component';
 import {SchusszettelDownloadComponent} from '@shared/components/buttons/schusszettel-download/schusszettel-download.component';
