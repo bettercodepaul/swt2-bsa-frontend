@@ -66,7 +66,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     this.selectedDTOs = $event;
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVeranstaltungId = this.selectedDTOs[0].id;
-      this.selectedVeranstaltungName = this.selectedDTOs[0].name
+      this.selectedVeranstaltungName = this.selectedDTOs[0].name;
     }
     this.rowsLigatabelle = [];
     this.tableContent = [];
@@ -81,7 +81,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     this.veranstaltungen = [];
     this.veranstaltungsDataProvider.findAll()
       .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-        buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload;  this.loadingVeranstaltungen = false; })
+                                                                  buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload;  this.loadingVeranstaltungen = false; })
       .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
   }
 
@@ -99,8 +99,8 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     this.rowsLigatabelle = [];
     this.loadingLigatabelle = false;
   }
-  private LigatabelleLinking(){
-      let link = '/wettkaempfe/' + this.selectedVeranstaltungName;
+  private LigatabelleLinking() {
+      const link = '/wettkaempfe/' + this.selectedVeranstaltungName;
       this.router.navigateByUrl(link);
   }
 
