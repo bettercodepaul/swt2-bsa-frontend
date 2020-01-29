@@ -23,7 +23,7 @@ export class AuthenticationComponent implements OnInit {
   sessions: Array<TabletSessionDO>;
   currentSession: TabletSessionDO;
   tokens = [];
-  AccessTokenInput: string;
+  accessTokenInput: string;
   public ButtonSize = ButtonSize;
 
   ngOnInit() {
