@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {environment} from '@environment';
-import {AlertType} from '@shared/components';
-import {ButtonSize} from '@shared/components';
+import {environment} from '../../../../../environments/environment';
+import {AlertType} from '../../../shared/components/alerts';
+import {ButtonSize} from '../../../shared/components/buttons';
 import {LoginDataProviderService} from '../../services/login-data-provider.service';
 import {CredentialsDO} from '../../types/credentials-do.class';
 import {LoginResult} from '../../types/login-result.enum';
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
   }
 
   public onSpotterLogin($event: any): void {
-    this.destinationRouteAfterLogin = '/spotter/authentication';
+    this.destinationRouteAfterLogin = '/spotter/authentication'
     this.credentials = $event;
     this.onLogin(null);
   }
