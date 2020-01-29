@@ -29,7 +29,7 @@ export enum UserPermission {
 
    /*
    * Permissions to work with:
-   * Wettkampf
+   * Ligatabelle
    * Match
    * Passe
    * Kampfrichter

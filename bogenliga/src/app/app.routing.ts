@@ -15,5 +15,6 @@ export const ROUTES: Routes = [
   {path: 'regionen', loadChildren: 'src/app/modules/regionen/regionen.module#RegionenModule'},
   {path: 'vereine', loadChildren: 'src/app/modules/vereine/vereine.module#VereineModule'},
   {path: 'playground', loadChildren: 'src/app/modules/playground/playground.module#PlaygroundModule'},
-  {path: 'mannschaften', loadChildren: 'src/app/modules/mannschaft/mannschaft.module#MannschaftModule'}
+  {path: 'ligatabelle', loadChildren: 'src/app/modules/ligatabelle/ligatabelle.module#LigatabelleModule'},
+  {path: 'spotter', loadChildren: 'src/app/modules/spotter/spotter.module#SpotterModule'},
 ];
