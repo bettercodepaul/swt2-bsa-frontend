@@ -98,7 +98,7 @@ function columnConfigWithDefaults(optional: TableColumnConfig): TableColumnConfi
   if (optional.sortable != null) {
     columnConfig.sortable = optional.sortable;
   }
-  if(optional.notLigatabelle!= null){
+  if (optional.notLigatabelle != null) {
     columnConfig.notLigatabelle = optional.notLigatabelle;
   }
 

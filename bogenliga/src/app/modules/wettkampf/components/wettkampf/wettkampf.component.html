@@ -3,7 +3,6 @@
         class="horizontal-form half-page">
     <h3>{{currentMannschaft.name}}</h3>
     <h3>{{currentVeranstaltung.name}}</h3>
-    <h3>{{currentMannschaft.veranstaltungName}}</h3>
 
 
 
@@ -11,7 +10,7 @@
     <div id="selectVereink">
       <div class="row">
         <label class="col-sm-1 col-form-label">
-          <span>{{ 'Mannschaft:' | translate }}</span>
+          <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.VERANSTALTUNG_NAME.LABEL' | translate }}</span>
         </label>
         <div class="col-sm-8">
         <bla-selectionlist [id]="'quickSearch'"
@@ -25,11 +24,12 @@
         </div>
       </div>
     </div>
+
     <!-- Mannschaft -->
     <div id="selectVerein">
     <div class="row">
       <label class="col-sm-1 col-form-label">
-        <span>{{ 'Mannschaft:' | translate }}</span>
+        <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
       </label>
       <div class="col-sm-8">
         <select class="form-control"
@@ -56,7 +56,8 @@
                 id="jahr"
                 name="Jahre"
                 [(ngModel)]="currentJahr"
-                (ngModelChange)="loadErgebnisse()">
+                (ngModelChange)="loadErgebnisse()"
+                disabled="true">
           <option *ngFor="let Jahr of Jahre"> {{Jahr}}</option>
         </select>
         <div class="invalid-feedback">
@@ -68,8 +69,8 @@
     <div id="Button">
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadErgebnisse(); refresh();">
-        {{ 'Anzeigen' | translate }}
+        (onClick)="all = false; loadErgebnisse(); refresh();">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
     </div>
     <div class="col-sm-9">
@@ -78,13 +79,11 @@
       </div>
     </div>
 
-
-
     <!-- Row 1 -->
 
     <div class="row">
       <div id="Table" *ngIf="show">
-        <h3>{{"Wettkampftag 1"}}</h3>
+        <h4>{{"Aktueller Wettkampftag"}}</h4>
         <bla-data-table [config]="config_table"
                           [rows]="rows[0]"
                           [loading]="loadingwettkampf">
@@ -111,13 +110,27 @@
     </div>
     <div class="row">
       <div id="Table" *ngIf="rows.length >= 4 &&show">
-        <h3>{{"Wettkampftag 4"}}</h3>
+        <h4>{{"Aktueller Wettkampftag"}}</h4>
         <bla-data-table [config]="config_table"
                         [rows]="rows[3]"
                         [loading]="loadingwettkampf">
         </bla-data-table>
       </div>
     </div>
+
+    <div id="Button1 " *ngIf="show">
+      <bla-button
+        [id]="'showResultsButton'"
+        (onClick)="all = true; loadErgebnisse(); refresh();">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
+      </bla-button>
+    </div>
+    <div class="col-sm-9">
+      <div class="invalid-feedback">
+        {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+      </div>
+    </div>
+
 
     <div class="form-group row">
       <div class="col-sm-3"></div>

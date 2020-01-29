@@ -346,9 +346,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
    * if the columns have the attribute notLigatabelle with the value true, then this is the Ligatabelle
    * @return: /wettkaempfe to be redirected to the page wettkaempfe
    */
-  private LigatabelleLinking(currentVer : string) : String{
+  private LigatabelleLinking(currentVer: string): string {
     if (this.config.columns.filter((c) => c.notLigatabelle).length === 0) {
-      //this.router.navigateByUrl('/wettkaempfe');
+      // this.router.navigateByUrl('/wettkaempfe');
       return '/wettkaempfe/' + currentVer + '/';
     }
     return '.';

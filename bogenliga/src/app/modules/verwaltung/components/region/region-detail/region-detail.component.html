@@ -46,7 +46,7 @@
                name="regionContraction"
                #regionContraction="ngModel"
                [(ngModel)]="currentRegion.regionKuerzel"
-               [class.is-invalid]="(!regionContraction.valid || !isContractionUnique()) && !regionContraction.untouched"
+               [class.is-invalid]="(!regionContraction.valid || !isContractionUnique()) && regionContraction.dirty"
                placeholder="{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -122,7 +122,7 @@
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'regionUpdateButton'"
-                    [disabled]="!regionenForm.valid || !isContractionUnique()"
+                    [disabled]="!regionenForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.UPDATE' | translate }}
