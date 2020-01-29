@@ -54,8 +54,8 @@ export class TabletSessionProviderService extends DataProviderService {
       }, (error: HttpErrorResponse) => {
           if (error.status === 0) {
             reject({result: RequestResult.CONNECTION_PROBLEM});
-          } else{
-            reject({result: RequestResult.FAILURE})
+          } else {
+            reject({result: RequestResult.FAILURE});
           }
         });
     });
