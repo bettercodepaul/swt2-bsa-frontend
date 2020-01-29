@@ -1,21 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {environment} from '../../../../../environments/environment';
-import {AlertType} from '../../../shared/components/alerts';
-import {ButtonSize} from '../../../shared/components/buttons';
-import {LoginDataProviderService} from '../../services/login-data-provider.service';
-import {CredentialsDO} from '../../types/credentials-do.class';
-import {LoginResult} from '../../types/login-result.enum';
-import {USER_LOGIN_CONFIG} from './login.config';
-import {CurrentUserService} from '@shared/services';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { isNullOrUndefined, isUndefined } from '@shared/functions';
+import { environment } from '../../../../../environments/environment';
+import { AlertType } from '../../../shared/components/alerts';
+import { ButtonSize } from '../../../shared/components/buttons';
+import { LoginDataProviderService } from '../../services/login-data-provider.service';
+import { CredentialsDO } from '../../types/credentials-do.class';
+import { LoginResult } from '../../types/login-result.enum';
+import { USER_LOGIN_CONFIG } from './login.config';
+import { CurrentUserService } from '@shared/services';
 
 const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 
 @Component({
-  selector:    'bla-login',
+  selector: 'bla-login',
   templateUrl: './login.component.html',
-  styleUrls:   ['./login.component.scss']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
@@ -69,14 +69,14 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     this.loginDataProviderService.signIn(this.credentials)
-        .then(
-          () => this.handleSuccessfulLogin(),
-          (loginResult: LoginResult) => this.showFailedLogin(loginResult)
-        );
+      .then(
+        () => this.handleSuccessfulLogin(),
+        (loginResult: LoginResult) => this.showFailedLogin(loginResult)
+      );
   }
 
   public onSpotterLogin($event: any): void {
-    this.destinationRouteAfterLogin = '/spotter/authentication'
+    this.destinationRouteAfterLogin = '/spotter/authentication';
     this.credentials = $event;
     this.onLogin(null);
   }
