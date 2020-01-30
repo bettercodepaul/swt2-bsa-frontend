@@ -49,6 +49,9 @@
              {{formatNumber(row, column)}}
            </span>
 
+      <span *ngSwitchCase="TableColumnType.TEXT">
+             {{formatText(row, column)}}
+          </span>
 
        <span *ngSwitchCase="TableColumnType.DATE">
              {{ row.getText(column) | date: 'dd.MM.yyyy' }}
