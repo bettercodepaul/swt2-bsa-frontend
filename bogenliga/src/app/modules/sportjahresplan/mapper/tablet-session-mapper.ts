@@ -10,7 +10,8 @@ export class TabletSessionMapper {
       payload.active,
       payload.satznummer,
       payload.matchId,
-      payload.otherMatchId
+      payload.otherMatchId,
+      payload.accessToken,
     );
   }
 
@@ -21,7 +22,8 @@ export class TabletSessionMapper {
       payload.isActive,
       payload.satzNr,
       payload.matchID,
-      payload.otherMatchId
+      payload.otherMatchId,
+      payload.accessToken
     );
   }
 }

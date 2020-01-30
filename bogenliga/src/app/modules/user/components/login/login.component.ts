@@ -20,6 +20,8 @@ const LOGIN_REDIRECT_QUERY_PARAM = 'destination';
 export class LoginComponent implements OnInit {
 
   public credentials = new CredentialsDO();
+  public accessCode: '';
+
   public loading = false;
   public loginResult: LoginResult = LoginResult.PENDING;
   public ButtonSize = ButtonSize;
@@ -73,6 +75,12 @@ export class LoginComponent implements OnInit {
         );
   }
 
+  public onSpotterLogin($event: any): void {
+    this.destinationRouteAfterLogin = '/spotter/authentication';
+    this.credentials = $event;
+    this.onLogin(null);
+  }
+
   // TODO: remove after development
   public onAutoLogin($event: CredentialsDO): void {
     this.credentials = $event;
@@ -95,10 +103,6 @@ export class LoginComponent implements OnInit {
   private handleSuccessfulLogin() {
     this.loading = false;
     this.loginResult = LoginResult.SUCCESS;
-    if (this.currentUserService.getEmail().match('spotter[1-8]@bogenliga.de')) {
-      this.router.navigateByUrl('/spotter');
-    } else {
-      this.router.navigateByUrl(this.destinationRouteAfterLogin);
-    }
+    this.router.navigateByUrl(this.destinationRouteAfterLogin);
   }
 }

@@ -20,6 +20,7 @@
     "MANNSCHAFTEN": "LIGATABELLE",
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
+    "SPOTTING": "SPOTTING",
     "COLLAPSE": "Einklappen"
   },
   "APP": {
@@ -317,6 +318,12 @@
           "HEADER": "Login nicht möglich",
           "TEXT": "Es konnte keine Verbindung zum Login-Server aufgebaut werden, um ihre Berechtigungen zu prüfen."
         }
+      },
+      "SPOTTER": {
+        "LABEL": "Access Code",
+        "PLACEHOLDER": "Bitte Access Code eingeben",
+        "HEADER": "Spotter Login",
+        "ERROR": "Bitte einen gültigen AccessCode eingeben."
       }
     }
   },
@@ -1358,9 +1365,15 @@
     }
   },
   "SPOTTER": {
-    "WETTKAEMPFE": {
-      "TITLE": "Wettkämpfe",
-      "TABLE": "Heute stattfindende Wettkämpfe"
+    "LINK": {
+      "TEXT": "Zur Spotter-Authentifizierung"
+    },
+    "AUTH": {
+      "TITLE": "Authentifizierung als Spotter",
+      "TEXT": "Geben Sie den Code ein.",
+      "BUTTON": "Zum Spotter-Interface",
+      "INFO": "x x x x x x",
+      "ERROR": "Fehlerhafte Eingabe"
     }
   }
 }

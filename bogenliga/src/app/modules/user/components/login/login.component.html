@@ -109,7 +109,11 @@
                           [loading]="loading"
                           (onClick)="onLogin($event)">{{ 'USER.LOGIN.BUTTON.LOGIN' | translate }}
               </bla-button>
-
+              <br>
+              <bla-button [buttonSize]="ButtonSize.SMALL"
+                          (onClick)="onSpotterLogin(testModeratorUser)">
+                          {{ 'SPOTTER.LINK.TEXT' | translate }}
+              </bla-button>
             </div>
           </form>
 
