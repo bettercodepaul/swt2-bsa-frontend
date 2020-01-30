@@ -1,4 +1,4 @@
-import {DataObject} from '../../shared/data-provider';
+import { DataObject } from '../../shared/data-provider';
 
 export class TabletSessionDO implements DataObject {
 
@@ -23,6 +23,6 @@ export class TabletSessionDO implements DataObject {
     this.satzNr = !!satzNr ? satzNr : null;
     this.matchID = !!matchID ? matchID : null;
     this.otherMatchId = !!otherMatchID ? otherMatchID : null;
-    this.accessToken = !!accessToken ? accessToken : accessToken;
+    this.accessToken = !!accessToken ? accessToken : null;
   }
 }
