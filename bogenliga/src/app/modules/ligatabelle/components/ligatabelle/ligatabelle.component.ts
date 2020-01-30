@@ -80,11 +80,10 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   private loadVeranstaltungen(): void {
     this.veranstaltungen = [];
     this.veranstaltungsDataProvider.findAll()
-      .then((response: BogenligaResponse<VeranstaltungDTO[]>) =>
-      {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-      buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload;
-      this.loadingVeranstaltungen = false; })
-      .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
+      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+                                                                  buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload;
+                                                                  this.loadingVeranstaltungen = false; })
+    .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
   }
 
 
