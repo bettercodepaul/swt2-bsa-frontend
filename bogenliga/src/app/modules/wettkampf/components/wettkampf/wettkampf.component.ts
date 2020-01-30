@@ -43,6 +43,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public wettkampErgebnisse: Array<WettkampfErgebnis[]> = new Array<WettkampfErgebnis[]>();
+  public areVeranstaltungenloading = true;
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -110,8 +111,10 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
       } else {
       this.currentVeranstaltung = this.veranstaltungen[0];
     }
+    this.areVeranstaltungenloading = false;
 
-      this.currentJahr = this.currentVeranstaltung.sportjahr;
+
+    this.currentJahr = this.currentVeranstaltung.sportjahr;
       this.loadJahre();
   }
 
@@ -121,7 +124,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         this.jahre[this.jahre.length] = i.sportjahr;
       }
     }
-    this.loadErgebnisse();
+      this.loadErgebnisse();
   }
 
   public refresh() {
