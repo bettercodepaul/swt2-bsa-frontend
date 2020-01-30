@@ -47,7 +47,8 @@
   "REGIONEN": {
     "REGIONEN": {
       "TITLE": "Regionen",
-      "DESCRIPTION": "Um eine Liga auszuwählen klicken Sie bitte auf die entsprechende Region, beispielsweise für die Württembergliga auf den Württembergischer Schützenverband."
+      "DESCRIPTION": "Um eine Liga auszuwählen klicken Sie bitte auf die entsprechende Region, beispielsweise für die Württembergliga auf den Württembergischer Schützenverband.",
+      "CLOSE" : "Um zurück zu navigieren, auf den innersten Kreis klicken."
     }
   },
   "VEREINE": {
@@ -71,6 +72,7 @@
     },
     "LIGATABELLE": {
       "TITEL": "Liga-Tabelle",
+      "LINKDESCRIPTION": "Zu den Wettkampfergebnissen der" ,
       "TABELLENPLATZ": "Tabellenplatz",
       "MANNSCHAFTNAME": "Mannschaft",
       "MATCHPUNKTE": "Matchpunkte",
@@ -152,7 +154,18 @@
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
+      "BUTTONS": {
+        "ANZEIGEN": {
+          "LABEL": "Anzeigen"
+        },
+        "ANZEIGENALL": {
+          "LABEL": "Alle anzeigen"
+        }
+      },
       "FORM": {
+        "MANNSCHAFT_NAME": {
+          "LABEL": "Mannschaft:"
+        },
         "VEREIN_NAME": {
           "LABEL": "Vereine:"
         },
@@ -166,6 +179,7 @@
       },
       "TABLE": {
         "COLUMNS": {
+          "MATCH": "Match",
           "MANNSCHAFT": "Mannschaft",
           "OPPONENT": "Gegner",
           "SATZ1": "S1",

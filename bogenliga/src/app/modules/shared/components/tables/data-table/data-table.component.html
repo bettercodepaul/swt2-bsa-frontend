@@ -45,20 +45,18 @@
         [ngSwitch]="column.type"
         [class]="getStyleClass(row, column)">
 
-          <span *ngSwitchCase="TableColumnType.TEXT">
-            {{formatText(row, column)}}
+       <span *ngSwitchCase="TableColumnType.NUMBER">
+             {{formatNumber(row, column)}}
+           </span>
+
+      <span *ngSwitchCase="TableColumnType.TEXT">
+             {{formatText(row, column)}}
           </span>
 
+       <span *ngSwitchCase="TableColumnType.DATE">
+             {{ row.getText(column) | date: 'dd.MM.yyyy' }}
 
-      <span *ngSwitchCase="TableColumnType.NUMBER">
-            {{formatNumber(row, column)}}
-          </span>
-
-
-      <span *ngSwitchCase="TableColumnType.DATE">
-            {{ row.getText(column) | date: 'dd.MM.yyyy' }}
-
-            <!--{{formatDate(row, column)}}-->
+             <!--{{formatDate(row, column)}}-->
 
           </span>
 
