@@ -9,6 +9,8 @@ import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannsch
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+import {UserPermission} from '@shared/services';
 
 
 @Injectable({
@@ -17,8 +19,9 @@ import {Injectable} from '@angular/core';
 export class WettkampfErgebnisService {
   // Input
   public verein: VereinDO;
-  public allVereine: VereinDO[];
   public veranstaltung: VeranstaltungDO;
+  public sportjahr: number;
+  public match: number;
 
   // Output
   public wettkampErgebnisse: WettkampfErgebnis[];
@@ -29,6 +32,7 @@ export class WettkampfErgebnisService {
   public wettkaempfe: Array<WettkampfDO> = [];
   public currentManschaft: DsbMannschaftDO;
   private loading = false;
+  private currentWettkampf: WettkampfDO;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
               private mannschaftsDataProvider: DsbMannschaftDataProviderService,
@@ -36,75 +40,76 @@ export class WettkampfErgebnisService {
 
   }
 
-  public createErgebnisse(verein: VereinDO, allVereine: VereinDO[], veranstaltung: VeranstaltungDO, match: number): WettkampfErgebnis[] {
-    this.setupService(verein, allVereine, veranstaltung);
+  public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO, all: boolean): WettkampfErgebnis[] {
+    this.setupService(jahr, mannschaft, allMannschaften, veranstaltung, all);
     return this.wettkampErgebnisse;
 
   }
 
-  private setupService(verein: VereinDO, allVereine: VereinDO[], veranstaltung: VeranstaltungDO) {
-    this.verein = verein;
+  private setupService(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO, all: boolean) {
+    this.currentManschaft = mannschaft;
     this.veranstaltung = veranstaltung;
-    this.allVereine = allVereine;
-    this.loadWettkaempfe();
+    this.mannschaften = allMannschaften;
+    this.sportjahr = jahr;
+    this.loadWettkaempfe(all);
   }
 
-  public createWettkampfergebnisse(match: number): WettkampfErgebnis[] {
+  public createWettkampfergebnisse(all: boolean): WettkampfErgebnis[] {
     this.wettkampErgebnisse = [];
     console.log(this.matches);
-    this.matches.filter((ma) => ma.mannschaftId === this.currentManschaft.id)
-        .forEach((currentMatch) => {
-          const wettkampfErgebnis = new WettkampfErgebnis(this.verein.name, 0, 1,
-            2, 3, 4, 'Hallo', 1, 2,
-            3, 4, 5, '' + currentMatch.satzpunkte, '' + currentMatch.matchpunkte);
-          // console.log(wettkampfErgebnis);
-          this.wettkampErgebnisse.push(wettkampfErgebnis);
-
-        });
+    for (let i = 0; i < this.matches.length ; i = i + 2) {
+      if (((this.currentManschaft.id === this.matches[i].mannschaftId || this.currentManschaft.id === this.matches[i + 1].mannschaftId) || all === true)) {
+      const wettkampfErgebnis = new WettkampfErgebnis(this.matches[i].nr, this.getMannschaftsname(this.matches[i].mannschaftId), 0, 1, 2,
+        3, 4, this.getMannschaftsname(this.matches[i + 1].mannschaftId), 1, 2,
+        3, 4, 4, this.matches[i].satzpunkte + ' : ' + this.matches[i + 1].satzpunkte, this.matches[i].matchpunkte + ' : ' + this.matches[i + 1].matchpunkte);
+      this.wettkampErgebnisse.push(wettkampfErgebnis);
+    }
+    }
     return this.wettkampErgebnisse;
 
   }
+  public getMannschaftsname(id: number): string {
+    for (const mannschaften of this.mannschaften) {
+      if (mannschaften.id === id) {
+        return mannschaften.name;
+      }
+    }
+  }
 
-  loadWettkaempfe() {
+  loadWettkaempfe(all: boolean) {
     this.wettkampfDataProvider.findAll()
-        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
-        .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([]));
+        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload, all))
+        .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([], all));
   }
 
-  handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
+  handleLoadWettkaempfe(wettkaempfe: WettkampfDO[], all: boolean) {
     this.wettkaempfe = wettkaempfe;
-    this.loadMannschaften();
+    this.loadMatches(all);
   }
 
-  loadMannschaften() {
-    this.mannschaftsDataProvider.findAll()
-        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadMannschaften(response.payload))
-        .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadMannschaften([]));
-  }
-
-  handleLoadMannschaften(mannschaften: DsbMannschaftDO[]) {
-    this.mannschaften = mannschaften;
-    this.loading = false;
-
-    this.loadMatches();
-  }
 
   private filterMannschaften() {
     this.currentManschaft = this.mannschaften.filter((mannschaft) => mannschaft.veranstaltungId === this.veranstaltung.id
-      && mannschaft.vereinId === this.verein.id)[0];
+      && this.veranstaltung.sportjahr === this.sportjahr)[0];
   }
 
-  public loadMatches() {
+  public loadMatches(all: boolean) {
     this.matchDataProvider.findAll()
-        .then((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches(response.payload))
-        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([]));
+        .then((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches(response.payload, all))
+        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([], all));
   }
 
-  handleLoadMatches(matches: MatchDO[]): WettkampfErgebnis[] {
+  handleLoadMatches(matches: MatchDO[], all: boolean): WettkampfErgebnis[] {
     this.matches = matches;
+    for (const i of this.wettkaempfe) {
+      if (i.wettkampfVeranstaltungsId === this.veranstaltung.id) {
+        this.currentWettkampf = i;
+      }
+    }
     this.filterMannschaften();
-    return this.createWettkampfergebnisse(0);
+    return this.createWettkampfergebnisse(all);
   }
+
 
 }
 
