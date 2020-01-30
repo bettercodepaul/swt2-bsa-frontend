@@ -121,6 +121,10 @@
           "TITLE":"Eingabefehler - Speichern abgebrochen",
           "DESCRIPTION": "Satzpunkte >7"
         },
+        "SCHUETZENNUMMER":{
+          "TITLE":"Eingabefehler - Speichern abgebrochen",
+          "DESCRIPTION": "Bitte geben sie unter Schuetze alle Schuetzennummern ein ..."
+        },
         "SPEICHERN":{
           "TITLE":"Schusszettel speichern",
           "DESCRIPTION": "Schusszettel wird gespeichert..."
