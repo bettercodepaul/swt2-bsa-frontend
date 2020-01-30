@@ -12,6 +12,9 @@ import {TableColumnConfig} from '../types/table-column-config.interface';
 import {TableColumnType} from '../types/table-column-type.enum';
 import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector:    'bla-data-table',
@@ -36,6 +39,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   public TableColumnType = TableColumnType;
 
   initialized = false;
+  private router: Router;
 
   constructor(private truncationPipe: TruncationPipe,
               private translatePipe: TranslatePipe) {
@@ -85,6 +89,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   public sortColumn(sortColumn: TableColumnConfig): void {
     this.rows = this.tableSorter.sortByColumn(this.rows, sortColumn);
   }
+
 
   /*
    * ~~~~ getter methods ~~~~

@@ -12,6 +12,7 @@ import {} from '@shared/components/forms/';
 import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis-do.class';
 import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wettkampf-ergebnis-dto.class';
 import {NotificationService} from '@shared/services';
+import { RouterModule, Routes } from '@angular/router';
 
 @Component({
   selector:    'bla-wettkaempfe',
@@ -27,6 +28,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
 
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
   private selectedVeranstaltungId: number;
+  public selectedVeranstaltungName: string;
   public selectedDTOs: VeranstaltungDO[];
   public multipleSelections = true;
   public veranstaltungen: VeranstaltungDO[];
@@ -35,6 +37,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   public rowsLigatabelle: TableRow[];
   private tableContent: Array<LigatabelleErgebnisDO> = [];
   private remainingLigatabelleRequests: number;
+
 
 
   constructor(private router: Router,
@@ -50,7 +53,6 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.loadVeranstaltungen();
 
-
   }
 
 
@@ -58,10 +60,13 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   // when a Veranstaltung gets selected from the list
   // load LigaTabelle
   public onSelect($event: VeranstaltungDO[]): void {
+    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+    buttonVisibility.style.display = 'block';
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVeranstaltungId = this.selectedDTOs[0].id;
+      this.selectedVeranstaltungName = this.selectedDTOs[0].name;
     }
     this.rowsLigatabelle = [];
     this.tableContent = [];
@@ -75,8 +80,10 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   private loadVeranstaltungen(): void {
     this.veranstaltungen = [];
     this.veranstaltungsDataProvider.findAll()
-      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload;  this.loadingVeranstaltungen = false; })
-      .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
+      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+                                                                  buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload;
+                                                                  this.loadingVeranstaltungen = false; })
+    .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
   }
 
 
@@ -92,6 +99,10 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   private handleLigatabelleFailure(response: BogenligaResponse<LigatabelleErgebnisDO[]>): void {
     this.rowsLigatabelle = [];
     this.loadingLigatabelle = false;
+  }
+  public ligatabelleLinking() {
+    const link = '/wettkaempfe/' + this.selectedVeranstaltungName;
+    this.router.navigateByUrl(link);
   }
 
   private handleLigatabelleSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>): void {

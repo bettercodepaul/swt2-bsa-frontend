@@ -5,6 +5,11 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
 // Tabellenspaltenbezeichner in die JSON auslagern
   columns: [
     {
+      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH',
+      propertyName:   'wettkampftag',
+      width:          5,
+    },
+    {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MANNSCHAFT',
       propertyName:   'mannschaftName',
       width:          20,
