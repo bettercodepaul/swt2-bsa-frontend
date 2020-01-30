@@ -25,8 +25,11 @@ export class AuthenticationComponent implements OnInit {
     this.tabletSessionService.findAllTabletSessionswithoutArgument()
       .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
         this.sessions = data.payload;
-        for (let i = 0; i <= this.sessions.length; i++) {
-          this.tokens[i] = this.sessions[i].accessToken.toString();
+        for (const session of this.sessions) {
+          if (session.accessToken) {
+            this.tokens.push(session.accessToken.toString());
+          }
+
         }
       }, (error) => {
         console.error(error);
@@ -34,8 +37,8 @@ export class AuthenticationComponent implements OnInit {
   }
 
   public validateAccessToken() {
-    for (let i = 0; i <= (this.tokens.length - 1); i++) {
-      if (this.accessTokenInput === this.tokens[i]) {
+    for (const token of this.tokens) {
+      if (token && this.accessTokenInput === token) {
         this.router.navigateByUrl('/spotter');
       }
     }
