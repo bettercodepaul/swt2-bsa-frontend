@@ -72,6 +72,7 @@
     },
     "LIGATABELLE": {
       "TITEL": "Liga-Tabelle",
+      "LINKDESCRIPTION": "Zu den Wettkampfergebnissen der" ,
       "TABELLENPLATZ": "Tabellenplatz",
       "MANNSCHAFTNAME": "Mannschaft",
       "MATCHPUNKTE": "Matchpunkte",

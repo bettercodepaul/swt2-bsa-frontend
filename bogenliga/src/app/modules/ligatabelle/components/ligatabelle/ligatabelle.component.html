@@ -39,7 +39,7 @@
                           [config]="config_table"
                           [rows]="rowsLigatabelle"
                           [loading]="loadingLigatabelle"
-                          (onRowEntry)="LigatabelleLinking();"
+                          (onRowEntry)="ligatabelleLinking();"
           >
           </bla-data-table>
           </h5>
@@ -50,8 +50,9 @@
       <div id="Button">
         <bla-button
           [id]="'regionSaveButton'"
-          (onClick)="LigatabelleLinking()">
-          {{ 'Zu den Wettkampfergebnissen der ' + selectedVeranstaltungName | translate }}
+          (onClick)="ligatabelleLinking()">
+          {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
+          {{ selectedVeranstaltungName}}
         </bla-button>
       </div>
       <div class="col-sm-9">

@@ -26,9 +26,6 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   @Input() public config: TableConfig;
   @Input() public rows: TableRow[] = [];
   @Input() tableSorter: BaseTableSorter;
-  @Input() public withLinks: boolean;
-  @Input() VereinDO: VereinDO;
-
 
 
   @Output() public onEditEntry = new EventEmitter<VersionedDataObject>();

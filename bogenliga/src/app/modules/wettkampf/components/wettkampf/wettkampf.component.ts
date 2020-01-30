@@ -33,7 +33,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public loadingwettkampf = false;
   public jahre: Array<number> = [];
-  public currentJahr = 2017;
+  public currentJahr: number;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
   public veranstaltungen: Array<VeranstaltungDO> = [];
@@ -121,6 +121,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         this.jahre[this.jahre.length] = i.sportjahr;
       }
     }
+    this.loadErgebnisse();
   }
 
   public refresh() {
