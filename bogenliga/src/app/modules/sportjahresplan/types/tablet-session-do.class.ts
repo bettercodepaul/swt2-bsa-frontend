@@ -11,12 +11,12 @@ export class TabletSessionDO implements DataObject {
   accessToken: string;
 
   constructor(scheibenNr?: number,
-    wettkampfID?: number,
-    isActive?: boolean,
-    satzNr?: number,
-    matchID?: number,
-    otherMatchID?: number,
-    accessToken?: string) {
+              wettkampfID?: number,
+              isActive?: boolean,
+              satzNr?: number,
+              matchID?: number,
+              otherMatchID?: number,
+              accessToken?: string) {
     this.scheibenNr = !!scheibenNr ? scheibenNr : null;
     this.wettkampfID = !!wettkampfID ? wettkampfID : null;
     this.isActive = !!isActive;
