@@ -9,7 +9,8 @@ import {
   faHome,
   faListOl,
   faSitemap,
-  faUsers
+  faUsers,
+  faBinoculars
 } from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
@@ -96,6 +97,13 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     icon:       faListOl,
     route:      '/ligatabelle',
     permissons: [UserPermission.CAN_READ_DEFAULT],
+    subitems: []
+  },
+  {
+    label:      'SIDEBAR.SPOTTING',
+    icon:       faBinoculars,
+    route:      '/spotter',
+    permissons: [UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: []
   },
   {

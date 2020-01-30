@@ -3,9 +3,10 @@
   <div class="table-responsive">
     <table class="table">
       <tr>
-        <th style="width: 33%">Scheibe</th>
-        <th style="width: 33%">Status</th>
-        <th style="width: 33%">Aktionen</th>
+        <th style="width: 25%">Scheibe</th>
+        <th style="width: 25%">Status</th>
+        <th style="width: 25%">Aktionen</th>
+        <th style="width: 25%">Access Token</th>
       </tr>
 
       <tr *ngFor="let session of sessions">
@@ -24,7 +25,7 @@
 
         <td>
           <button
-            (click)="updateSession(session.scheibenNr)"
+            (click)="updateSessionWithoutTokenGeneration(session.scheibenNr)"
             *ngIf="session.isActive"
             class="btn btn-danger"
           >
@@ -33,19 +34,15 @@
 
           <button
             (click)="updateSession(session.scheibenNr)"
-            *ngIf="!currentDeviceIsActive && !session.isActive"
+            *ngIf="!session.isActive"
             class="btn btn-success"
           >
             <fa-icon [icon]="'plus-circle'"></fa-icon>
           </button>
+        </td>
 
-          <a
-            *ngIf="canNavigateToEingabe(session)"
-            [routerLink]="tabletEingabeRoute"
-            class="btn btn-light ml-3"
-          >
-            <fa-icon [icon]="'external-link-alt'"></fa-icon>
-          </a>
+        <td>
+          <label *ngIf="session.isActive">{{session.accessToken}}</label>
         </td>
       </tr>
     </table>

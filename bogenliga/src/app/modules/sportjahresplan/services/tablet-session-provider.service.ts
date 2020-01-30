@@ -41,6 +41,26 @@ export class TabletSessionProviderService extends DataProviderService {
     });
   }
 
+  public findAllTabletSessionswithoutArgument(): Promise<BogenligaResponse<Array<TabletSessionDO>>> {
+    // @ts-ignore
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<TabletSessionDTO>>(new UriBuilder().fromPath(this.getUrl()).build())
+        .then((data: Array<TabletSessionDTO>) => {
+        const sessions = [];
+        for (const session of data) {
+          sessions.push(TabletSessionMapper.tabletSessionToDO(session));
+        }
+        resolve({result: RequestResult.SUCCESS, payload: sessions});
+      }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+
   public findTabletSession(wettkampfId: string, scheibenNr: string): Promise<BogenligaResponse<TabletSessionDO>> {
     const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {
@@ -74,6 +94,7 @@ export class TabletSessionProviderService extends DataProviderService {
   }
 
   public update(session: TabletSessionDO): Promise<BogenligaResponse<TabletSessionDO>> {
+    session.accessToken = this.createAccessToken();
     return new Promise(((resolve, reject) => {
       this.restClient.PUT(this.getUrl(), TabletSessionMapper.tabletSessionToDTO(session))
           .then((data: TabletSessionDTO) => {
@@ -85,6 +106,21 @@ export class TabletSessionProviderService extends DataProviderService {
               reject({result: RequestResult.FAILURE});
             }
           });
+    }));
+  }
+
+  public updateWithoutTokenCreation(session: TabletSessionDO): Promise<BogenligaResponse<TabletSessionDO>> {
+    return new Promise(((resolve, reject) => {
+      this.restClient.PUT(this.getUrl(), TabletSessionMapper.tabletSessionToDTO(session))
+        .then((data: TabletSessionDTO) => {
+          resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
     }));
   }
 
@@ -102,5 +138,11 @@ export class TabletSessionProviderService extends DataProviderService {
             }
           });
     });
+  }
+
+  // function to create a pseudo randome six figure number to function as AccessToken for Tablet Sessions
+  // the number will be between 100000 and 999999
+  public createAccessToken() {
+    return Math.floor(100000 + Math.random() * 900000);
   }
 }
