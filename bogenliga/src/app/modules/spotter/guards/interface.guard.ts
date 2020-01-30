@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {CanActivate} from '@angular/router';
-import {CurrentUserService} from '@shared/services';
+import { Injectable } from '@angular/core';
+import { CanActivate } from '@angular/router';
+import { CurrentUserService, UserPermission } from '@shared/services';
 
 @Injectable()
 export class InterfaceGuard implements CanActivate {
@@ -9,7 +9,6 @@ export class InterfaceGuard implements CanActivate {
   }
 
   canActivate() {
-    return this.currentUserService.hasAnyPermisson(
-      []);
+    return this.currentUserService.hasAnyPermisson([UserPermission.CAN_OPERATE_SPOTTING]);
   }
 }
