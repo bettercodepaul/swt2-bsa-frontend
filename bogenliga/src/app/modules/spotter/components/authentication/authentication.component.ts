@@ -1,14 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ButtonSize} from '@shared/components';
-
-// new CM
-// import {Component, OnInit} from '@angular/core';
-import {TabletSessionDO} from '@sportjahresplan/types/tablet-session-do.class';
-import {BogenligaResponse} from '@shared/data-provider';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TabletSessionProviderService} from '@sportjahresplan/services/tablet-session-provider.service';
-
-
+import { Component, OnInit } from '@angular/core';
+import { ButtonSize } from '@shared/components';
+import { TabletSessionDO } from '@sportjahresplan/types/tablet-session-do.class';
+import { BogenligaResponse } from '@shared/data-provider';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TabletSessionProviderService } from '@sportjahresplan/services/tablet-session-provider.service';
 
 @Component({
   selector: 'bla-authentication',
@@ -18,7 +13,7 @@ import {TabletSessionProviderService} from '@sportjahresplan/services/tablet-ses
 
 export class AuthenticationComponent implements OnInit {
 
-  constructor(private tabletSessionService: TabletSessionProviderService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private tabletSessionService: TabletSessionProviderService, private route: ActivatedRoute, private router: Router) { }
 
   sessions: Array<TabletSessionDO>;
   currentSession: TabletSessionDO;
@@ -30,7 +25,7 @@ export class AuthenticationComponent implements OnInit {
     this.tabletSessionService.findAllTabletSessionswithoutArgument()
       .then((data: BogenligaResponse<Array<TabletSessionDO>>) => {
         this.sessions = data.payload;
-        for (let i = 0 ; i <= this.sessions.length; i++) {
+        for (let i = 0; i <= this.sessions.length; i++) {
           this.tokens[i] = this.sessions[i].accessToken.toString();
         }
       }, (error) => {
