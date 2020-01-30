@@ -6,6 +6,7 @@ export const ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'wettkaempfe', loadChildren: 'src/app/modules/wettkampf/wettkampf.module#WettkampfModule'},
+  {path: 'wettkaempfe/:id', loadChildren: 'src/app/modules/wettkampf/wettkampf.module#WettkampfModule'},
   {path: 'verwaltung', loadChildren: 'src/app/modules/verwaltung/verwaltung.module#VerwaltungModule'},
   {
     path: 'sportjahresplan',
