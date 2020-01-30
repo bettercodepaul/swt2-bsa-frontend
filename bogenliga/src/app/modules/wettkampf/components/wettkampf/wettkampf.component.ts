@@ -38,7 +38,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   public mannschaften: Array<DsbMannschaftDO> = [];
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
-  public currentMannschaft: DsbMannschaftDO;
+  public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
   public multipleSelections = true;
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
