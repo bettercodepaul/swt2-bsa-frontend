@@ -24,7 +24,7 @@ export class WettkampfErgebnisService {
   public match: number;
 
   // Output
-  public wettkampErgebnisse: WettkampfErgebnis[];
+  public wettkampErgebnisse: WettkampfErgebnis[] = [];
 
   // toLoad
   public matches: Array<MatchDO> = [];
