@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   BogenligaResponse,
   DataProviderService,
@@ -7,9 +7,9 @@ import {
   RestClient,
   UriBuilder
 } from '../../shared/data-provider';
-import {TabletSessionDO} from '../types/tablet-session-do.class';
-import {TabletSessionMapper} from '../mapper/tablet-session-mapper';
-import {TabletSessionDTO} from '../types/datatransfer/tablet-session-dto.class';
+import { TabletSessionDO } from '../types/tablet-session-do.class';
+import { TabletSessionMapper } from '../mapper/tablet-session-mapper';
+import { TabletSessionDTO } from '../types/datatransfer/tablet-session-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -25,19 +25,19 @@ export class TabletSessionProviderService extends DataProviderService {
   public findAllTabletSessions(wettkampfId: string): Promise<BogenligaResponse<Array<TabletSessionDO>>> {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<TabletSessionDTO>>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).build())
-          .then((data: Array<TabletSessionDTO>) => {
-            const sessions = [];
-            for (const session of data) {
-              sessions.push(TabletSessionMapper.tabletSessionToDO(session));
-            }
-            resolve({result: RequestResult.SUCCESS, payload: sessions});
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+        .then((data: Array<TabletSessionDTO>) => {
+          const sessions = [];
+          for (const session of data) {
+            sessions.push(TabletSessionMapper.tabletSessionToDO(session));
+          }
+          resolve({ result: RequestResult.SUCCESS, payload: sessions });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({ result: RequestResult.CONNECTION_PROBLEM });
+          } else {
+            reject({ result: RequestResult.FAILURE });
+          }
+        });
     });
   }
 
@@ -46,16 +46,16 @@ export class TabletSessionProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<TabletSessionDTO>>(new UriBuilder().fromPath(this.getUrl()).build())
         .then((data: Array<TabletSessionDTO>) => {
-        const sessions = [];
-        for (const session of data) {
-          sessions.push(TabletSessionMapper.tabletSessionToDO(session));
-        }
-        resolve({result: RequestResult.SUCCESS, payload: sessions});
-      }, (error: HttpErrorResponse) => {
+          const sessions = [];
+          for (const session of data) {
+            sessions.push(TabletSessionMapper.tabletSessionToDO(session));
+          }
+          resolve({ result: RequestResult.SUCCESS, payload: sessions });
+        }, (error: HttpErrorResponse) => {
           if (error.status === 0) {
-            reject({result: RequestResult.CONNECTION_PROBLEM});
+            reject({ result: RequestResult.CONNECTION_PROBLEM });
           } else {
-            reject({result: RequestResult.FAILURE});
+            reject({ result: RequestResult.FAILURE });
           }
         });
     });
@@ -65,15 +65,15 @@ export class TabletSessionProviderService extends DataProviderService {
     const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {
       this.restClient.GET<TabletSessionDTO>(api_url)
-          .then((data: TabletSessionDTO) => {
-            resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+        .then((data: TabletSessionDTO) => {
+          resolve({ result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data) });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({ result: RequestResult.CONNECTION_PROBLEM });
+          } else {
+            reject({ result: RequestResult.FAILURE });
+          }
+        });
     });
   }
 
@@ -81,31 +81,31 @@ export class TabletSessionProviderService extends DataProviderService {
     const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise(((resolve, reject) => {
       this.restClient.POST(api_url, TabletSessionMapper.tabletSessionToDTO(session))
-          .then((data: TabletSessionDTO) => {
-            resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+        .then((data: TabletSessionDTO) => {
+          resolve({ result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data) });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({ result: RequestResult.CONNECTION_PROBLEM });
+          } else {
+            reject({ result: RequestResult.FAILURE });
+          }
+        });
     }));
   }
 
   public update(session: TabletSessionDO): Promise<BogenligaResponse<TabletSessionDO>> {
-    session.accessToken = this.createAccessToken();
+    session.accessToken = this.createAccessToken().toString();
     return new Promise(((resolve, reject) => {
       this.restClient.PUT(this.getUrl(), TabletSessionMapper.tabletSessionToDTO(session))
-          .then((data: TabletSessionDTO) => {
-            resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+        .then((data: TabletSessionDTO) => {
+          resolve({ result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data) });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({ result: RequestResult.CONNECTION_PROBLEM });
+          } else {
+            reject({ result: RequestResult.FAILURE });
+          }
+        });
     }));
   }
 
@@ -113,12 +113,12 @@ export class TabletSessionProviderService extends DataProviderService {
     return new Promise(((resolve, reject) => {
       this.restClient.PUT(this.getUrl(), TabletSessionMapper.tabletSessionToDTO(session))
         .then((data: TabletSessionDTO) => {
-          resolve({result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data)});
+          resolve({ result: RequestResult.SUCCESS, payload: TabletSessionMapper.tabletSessionToDO(data) });
         }, (error: HttpErrorResponse) => {
           if (error.status === 0) {
-            reject({result: RequestResult.CONNECTION_PROBLEM});
+            reject({ result: RequestResult.CONNECTION_PROBLEM });
           } else {
-            reject({result: RequestResult.FAILURE});
+            reject({ result: RequestResult.FAILURE });
           }
         });
     }));
@@ -128,15 +128,15 @@ export class TabletSessionProviderService extends DataProviderService {
     const api_url = new UriBuilder().fromPath(this.getUrl()).path(wettkampfId).path(scheibenNr).build();
     return new Promise((resolve, reject) => {
       this.restClient.DELETE<any>(api_url)
-          .then((data: any) => {
-            resolve({result: RequestResult.SUCCESS, payload: data});
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
+        .then((data: any) => {
+          resolve({ result: RequestResult.SUCCESS, payload: data });
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({ result: RequestResult.CONNECTION_PROBLEM });
+          } else {
+            reject({ result: RequestResult.FAILURE });
+          }
+        });
     });
   }
 
