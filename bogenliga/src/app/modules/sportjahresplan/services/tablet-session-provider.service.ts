@@ -140,8 +140,9 @@ export class TabletSessionProviderService extends DataProviderService {
     });
   }
 
+  // function to create a pseudo randome six figure number to function as AccessToken for Tablet Sessions
+  // the number will be between 100000 and 999999
   public createAccessToken() {
     return Math.floor(100000 + Math.random() * 900000);
   }
-
 }
