@@ -8,7 +8,7 @@ export class TabletSessionDO implements DataObject {
   satzNr: number;
   matchID: number;
   otherMatchId: number;
-  accessToken: number;
+  accessToken: string;
 
   constructor(scheibenNr?: number,
               wettkampfID?: number,
@@ -16,13 +16,13 @@ export class TabletSessionDO implements DataObject {
               satzNr?: number,
               matchID?: number,
               otherMatchID?: number,
-              accessToken?: number) {
+              accessToken?: string) {
     this.scheibenNr = !!scheibenNr ? scheibenNr : null;
     this.wettkampfID = !!wettkampfID ? wettkampfID : null;
     this.isActive = !!isActive;
     this.satzNr = !!satzNr ? satzNr : null;
     this.matchID = !!matchID ? matchID : null;
     this.otherMatchId = !!otherMatchID ? otherMatchID : null;
-    this.accessToken = !!accessToken ? accessToken : null;
+    this.accessToken = accessToken ? accessToken : null;
   }
 }
