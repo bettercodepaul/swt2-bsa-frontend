@@ -104,7 +104,7 @@ export class CurrentUserService {
     }
 
     for (const requiredPermission of requiredPermissions) {
-      if (userPermissions.indexOf(userPermissions[requiredPermission]) >= 0) {
+      if (userPermissions.indexOf(UserPermission[requiredPermission.toString()]) >= 0) {
         return true;
       }
     }
