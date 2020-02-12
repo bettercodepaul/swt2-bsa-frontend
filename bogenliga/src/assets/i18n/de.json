@@ -126,7 +126,11 @@
         },
         "SCHUETZENNUMMER":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
-          "DESCRIPTION": "Bitte geben sie unter Schuetze alle Schuetzennummern ein ..."
+          "DESCRIPTION": "Bitte geben sie unter Schuetze alle Schuetzennummern ein."
+        },
+        "SCHUETZENEINDEUTIG":{
+          "TITLE":"Eingabefehler - Speichern abgebrochen",
+          "DESCRIPTION": "Bitte geben sie drei unterschiedliche Schuetzenummern an."
         },
         "SPEICHERN":{
           "TITLE":"Schusszettel speichern",

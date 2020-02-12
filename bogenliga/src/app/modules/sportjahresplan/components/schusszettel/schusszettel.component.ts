@@ -56,10 +56,12 @@ export class SchusszettelComponent implements OnInit {
     this.match1 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
     this.match1.nr = 1;
     this.match1.schuetzen = [];
+    this.match1singlesatzpoints = [];
 
     this.match2 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
     this.match2.nr = 1;
     this.match2.schuetzen = [];
+    this.match2singlesatzpoints = [];
 
     // am Anfang sind keine Änderungen
     this.dirtyFlag = false;
@@ -150,12 +152,38 @@ export class SchusszettelComponent implements OnInit {
         type:        NotificationType.OK,
         userAction:  NotificationUserAction.ACCEPTED
       });
-    } else if (this.match1.schuetzen[0][0].schuetzeNr == null || this.match1.schuetzen[1][0].schuetzeNr == null || this.match1.schuetzen[2][0].schuetzeNr == null
-      || this.match2.schuetzen[0][0].schuetzeNr == null || this.match2.schuetzen[1][0].schuetzeNr == null || this.match2.schuetzen[2][0].schuetzeNr == null) {
+    } else if (
+      // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
+      // daher prüfen wir hier ersten auf "leer" d.h. gleich 0
+        this.match1.schuetzen[0][0].schuetzeNr == null ||
+        this.match1.schuetzen[1][0].schuetzeNr == null ||
+        this.match1.schuetzen[2][0].schuetzeNr == null ||
+        this.match2.schuetzen[0][0].schuetzeNr == null ||
+        this.match2.schuetzen[1][0].schuetzeNr == null ||
+        this.match2.schuetzen[2][0].schuetzeNr == null ) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
         description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.ACCEPTED
+      });
+    } else if (
+      // und jetzt prüfen wir noch ob in einer Mannschaft die gleiche
+      // Schützennummer zweimal angegeben wurde -> auch nicht möglich
+      this.match1.schuetzen[0][0].schuetzeNr == this.match1.schuetzen[1][0].schuetzeNr ||
+      this.match1.schuetzen[1][0].schuetzeNr == this.match1.schuetzen[2][0].schuetzeNr ||
+      this.match1.schuetzen[2][0].schuetzeNr == this.match1.schuetzen[0][0].schuetzeNr ||
+      this.match2.schuetzen[0][0].schuetzeNr == this.match2.schuetzen[1][0].schuetzeNr ||
+      this.match2.schuetzen[1][0].schuetzeNr == this.match2.schuetzen[2][0].schuetzeNr ||
+      this.match2.schuetzen[2][0].schuetzeNr == this.match2.schuetzen[0][0].schuetzeNr )
+    {
+      this.notificationService.showNotification({
+        id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.DESCRIPTION',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
@@ -246,6 +274,11 @@ export class SchusszettelComponent implements OnInit {
    * Pushes three arrays into schuetzen, then pushes five PasseDO in each of the three arrays.
    */
   private initSchuetzen() {
+
+    this.match1singlesatzpoints = [];
+    this.match2singlesatzpoints = [];
+    this.match1.sumSatz = [];
+    this.match2.sumSatz = [];
 
     for (let i = 0; i < 5; i++) {
       this.match1.sumSatz.push(0);
