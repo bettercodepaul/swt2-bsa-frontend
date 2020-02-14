@@ -173,13 +173,12 @@ export class SchusszettelComponent implements OnInit {
     } else if (
       // und jetzt prüfen wir noch ob in einer Mannschaft die gleiche
       // Schützennummer zweimal angegeben wurde -> auch nicht möglich
-      this.match1.schuetzen[0][0].schuetzeNr == this.match1.schuetzen[1][0].schuetzeNr ||
-      this.match1.schuetzen[1][0].schuetzeNr == this.match1.schuetzen[2][0].schuetzeNr ||
-      this.match1.schuetzen[2][0].schuetzeNr == this.match1.schuetzen[0][0].schuetzeNr ||
-      this.match2.schuetzen[0][0].schuetzeNr == this.match2.schuetzen[1][0].schuetzeNr ||
-      this.match2.schuetzen[1][0].schuetzeNr == this.match2.schuetzen[2][0].schuetzeNr ||
-      this.match2.schuetzen[2][0].schuetzeNr == this.match2.schuetzen[0][0].schuetzeNr )
-    {
+      this.match1.schuetzen[0][0].schuetzeNr === this.match1.schuetzen[1][0].schuetzeNr ||
+      this.match1.schuetzen[1][0].schuetzeNr === this.match1.schuetzen[2][0].schuetzeNr ||
+      this.match1.schuetzen[2][0].schuetzeNr === this.match1.schuetzen[0][0].schuetzeNr ||
+      this.match2.schuetzen[0][0].schuetzeNr === this.match2.schuetzen[1][0].schuetzeNr ||
+      this.match2.schuetzen[1][0].schuetzeNr === this.match2.schuetzen[2][0].schuetzeNr ||
+      this.match2.schuetzen[2][0].schuetzeNr === this.match2.schuetzen[0][0].schuetzeNr ) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
@@ -275,11 +274,13 @@ export class SchusszettelComponent implements OnInit {
    */
   private initSchuetzen() {
 
+    // 1.löschen der Felder
     this.match1singlesatzpoints = [];
     this.match2singlesatzpoints = [];
     this.match1.sumSatz = [];
     this.match2.sumSatz = [];
 
+    // 2. intialisieren der Felder mit 5 Einträgen des Werts 0
     for (let i = 0; i < 5; i++) {
       this.match1.sumSatz.push(0);
       this.match2.sumSatz.push(0);
@@ -287,7 +288,7 @@ export class SchusszettelComponent implements OnInit {
       this.match2singlesatzpoints.push(0);
     }
 
-
+    // Vorbelegen der Felder mit den Daten des Matches
     for (let i = 0; i < 3; i++) {
       this.match1.schuetzen.push(new Array<PasseDO>());
       this.match2.schuetzen.push(new Array<PasseDO>());
