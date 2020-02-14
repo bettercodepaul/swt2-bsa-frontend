@@ -258,7 +258,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.currentMannschaft = response.payload;
     console.log(this.currentMannschaft.id);
 
-    //Klappliste im Dialog mit dem korrekten Wert (aktuell Veranstalung, in der die Mannschaft gemeldet ist) vorbelegen
+    // Klappliste im Dialog mit dem korrekten Wert (aktuell Veranstalung, in der die Mannschaft gemeldet ist) vorbelegen
     this.currentVeranstaltung = this.ligen.filter((liga) => liga.id === this.currentMannschaft.veranstaltungId)[0];
 
     this.loadTableRows();
@@ -319,9 +319,9 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.ligen = [];
     this.ligen = response.payload;
-    if (this.currentMannschaft.veranstaltungId != null){
+    if (this.currentMannschaft.veranstaltungId != null) {
       this.currentVeranstaltung = this.ligen.filter((liga) => liga.id === this.currentMannschaft.veranstaltungId)[0];
-    }else{
+    } else {
       this.currentVeranstaltung = this.ligen[0];
     }
     this.loading = false;
