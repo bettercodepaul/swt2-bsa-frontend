@@ -26,7 +26,6 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
@@ -42,14 +41,11 @@ import {PasseDTOClass} from '@verwaltung/types/datatransfer/passe-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_SAVE_MANNSCHAFT = 'mannschaft_detail_save';
 const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
 const NOTIFICATION_DELETE_MITGLIED = 'mannschaft_mitglied_delete';
-const NOTIFICATION_DELETE_MITGLIED_SUCCESS = 'mannschaft_mitglied_delete_success';
-const NOTIFICATION_DELETE_MITGLIED_FAILURE = 'mannschaft_mitglied_delete_failure';
 const NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE = 'mannschaft_mitglied_delete_deadline_failure';
 const NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE = 'mannschaft_mitglied_delete_existing_results_failure';
 const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
@@ -87,7 +83,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   public deleteLoading = false;
   public saveLoading = false;
-  private acceptedWarning = true;
 
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
               private vereinProvider: VereinDataProviderService,
@@ -171,8 +166,11 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.currentMannschaft.benutzerId = 1;
 
     // within this method it will be checked if the mannschaftsnummer
-    // is already used and start the saving process
+    // is already used and an error will be displayed in case
     this.loadMannschaften(this.currentMannschaft.vereinId);
+    // then save the new Mannschaft
+    this.saveMannschaft();
+
   }
 
 
@@ -182,7 +180,12 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     // persist
     this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id
+    this.currentMannschaft.veranstaltungId = this.currentVeranstaltung.id; // set selected veranstaltung id
 
+    // within this method it will be checked if the mannschaftsnummer
+    // is already used and start the saving process
+    // within this method it will be checked if the mannschaftsnummer
+    // is already used and an error will be displayed in case
     this.mannschaftProvider.update(this.currentMannschaft)
         .then((response: BogenligaResponse<DsbMannschaftDO>) => {
           if (!isNullOrUndefined(response)
@@ -254,6 +257,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleSuccess(response: BogenligaResponse<DsbMannschaftDO>) {
     this.currentMannschaft = response.payload;
     console.log(this.currentMannschaft.id);
+
+    // Klappliste im Dialog mit dem korrekten Wert (aktuell Veranstalung, in der die Mannschaft gemeldet ist) vorbelegen
+    this.currentVeranstaltung = this.ligen.filter((liga) => liga.id === this.currentMannschaft.veranstaltungId)[0];
+
     this.loadTableRows();
   }
     /*
@@ -312,7 +319,11 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.ligen = [];
     this.ligen = response.payload;
-    this.currentVeranstaltung = this.ligen[0];
+    if (this.currentMannschaft.veranstaltungId != null) {
+      this.currentVeranstaltung = this.ligen.filter((liga) => liga.id === this.currentMannschaft.veranstaltungId)[0];
+    } else {
+      this.currentVeranstaltung = this.ligen[0];
+    }
     this.loading = false;
   }
 
@@ -549,8 +560,8 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     mannschaftsNrs.forEach((nr) => { if (nr === parseInt(this.currentMannschaft.nummer, 10)) {duplicateFound = true; }});
     if (duplicateFound) {
       this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
-    } else {
-      this.saveMannschaft();
+      this.mannschaften = [];
+      this.loading = false;
     }
   }
 
