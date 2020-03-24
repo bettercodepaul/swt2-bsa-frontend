@@ -9,6 +9,6 @@ export class TabletadminGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_MODIFY_MY_VERANSTALTUNG, UserPermission.CAN_OPERATE_SPOTTING]);
+      [UserPermission.CAN_MODIFY_WETTKAMPF,UserPermission.CAN_MODIFY_MY_VERANSTALTUNG, UserPermission.CAN_OPERATE_SPOTTING]);
   }
 }
