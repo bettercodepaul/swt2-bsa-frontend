@@ -214,7 +214,11 @@ export class RegionenComponent implements OnInit {
   public onSelectLiga(event: LigaDO): void {
     this.selectedLigaDO = event[0];
     console.log(this.selectedLigaDO);
-    this.router.navigateByUrl('/verwaltung/liga/' + this.selectedLigaDO.id);
+    if(true){  // Abfrage ob Nutzer eingelogt ist.
+      this.router.navigateByUrl('/verwaltung/liga/' + this.selectedLigaDO.id);
+    }else{
+      this.router.navigateByUrl('/ligatabelle');
+    }
   }
 
   public getEmptyList(): RoleVersionedDataObject[] {
