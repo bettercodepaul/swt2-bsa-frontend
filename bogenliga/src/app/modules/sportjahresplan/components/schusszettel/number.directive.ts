@@ -1,5 +1,5 @@
 import {Directive, ElementRef, HostListener} from '@angular/core';
-
+import {NotificationOrigin, NotificationService, NotificationSeverity, NotificationType, NotificationUserAction} from '@shared/services';
 /**
  * A element-directive to ensure only-number inputs.
  * Also controls the number-aliasing using '+' instead of 10 (1 keystroke instead of 2).
@@ -19,7 +19,8 @@ export class NumberOnlyDirective {
       parseInt(value, 10) <= NumberOnlyDirective.MAX_VAL);
   }
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef,
+    private notificationService: NotificationService) {
   }
 
   @HostListener('keydown', ['$event'])
@@ -31,17 +32,17 @@ export class NumberOnlyDirective {
     if (event.key === NumberOnlyDirective.ALIAS_10) {
       this.el.nativeElement.value = '10';
       return;
-    } else if (NumberOnlyDirective.allowedKeys.indexOf(event.key) >= 0) {
-      const next: string = event.key;
-      try {
-        const nextVal = parseInt(next, 10);
-        if (!NumberOnlyDirective.inRange(nextVal)) {
-          event.preventDefault();
-          return;
-        }
-      } catch (e) {
-        event.preventDefault();
-      }
+    } else if(!NumberOnlyDirective.allowedKeys.includes(event.key) || this.el.nativeElement.value + parseInt(event.key) > NumberOnlyDirective.MAX_VAL) {
+      this.notificationService.showNotification({
+        id:          'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.DESCRIPTION',
+        severity:    NotificationSeverity.INFO,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      });
+      event.preventDefault();
     }
   }
 }
