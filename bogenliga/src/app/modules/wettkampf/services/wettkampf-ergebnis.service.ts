@@ -84,7 +84,6 @@ export class WettkampfErgebnisService {
   public getSatzergebnis(nr: number, satznummer: number): number {
     let Satz = 0;
     for(const passen of this.passen){
-      console.log(this.currentManschaft.id);
       if(passen.matchNr == nr && passen.lfdNr == satznummer && this.currentManschaft.id == passen.mannschaftId) {
         for(let i = 0; i < passen.ringzahl.length ; i = i + 1) {
             Satz = Satz + passen.ringzahl[i];
@@ -136,7 +135,6 @@ export class WettkampfErgebnisService {
 
   handleLoadPassen(passen: PasseDoClass[]): void{
     this.passen = passen;
-    console.log(this.passen);
   }
 }
 
