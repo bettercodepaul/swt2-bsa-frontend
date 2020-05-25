@@ -99,7 +99,7 @@ export class WettkampfErgebnisService {
     let Satz = 0;
     for (const passen of this.passen) {
       if (passen.matchNr === nr && passen.lfdNr === satznummer && id === passen.mannschaftId) {
-        for (let i of passen.ringzahl) {
+        for (const i of passen.ringzahl) {
             Satz = Satz + i;
         }
       }
@@ -118,6 +118,22 @@ export class WettkampfErgebnisService {
     this.loadMatches(all);
   }
 
+  private filterMannschaften() {
+    let success = false;
+    for (const m of this.mannschaften) {
+      if (m.veranstaltungId === this.veranstaltung.id
+        && this.veranstaltung.sportjahr === this.sportjahr
+        && m.id === this.currentManschaft.id) {
+        this.currentManschaft = m;
+        success = true;
+        break;
+      }
+    }
+    if (!success) {
+      this.currentManschaft = null;
+    }
+  }
+
   public loadMatches(all: boolean) {
     this.matchDataProvider.findAll()
         .then((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches(response.payload, all))
@@ -131,6 +147,7 @@ export class WettkampfErgebnisService {
         this.currentWettkampf = i;
       }
     }
+    this.filterMannschaften();
     return this.createWettkampfergebnisse(all);
   }
 
