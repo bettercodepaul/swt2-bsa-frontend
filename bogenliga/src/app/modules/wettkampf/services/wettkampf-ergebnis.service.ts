@@ -67,17 +67,17 @@ export class WettkampfErgebnisService {
         const wettkampfErgebnis = new WettkampfErgebnis(
           this.matches[i].nr,
           this.getMannschaftsname(this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr,1, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr,2, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr,3, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr,4, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr,5, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 3, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 4, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 5, this.matches[i].mannschaftId),
           this.getMannschaftsname(this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr,1, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr,2, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr,3, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr,4, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr,5, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 4, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 5, this.matches[i + 1].mannschaftId),
           this.matches[i].satzpunkte + ' : ' + this.matches[i + 1].satzpunkte,
           this.matches[i].matchpunkte + ' : ' + this.matches[i + 1].matchpunkte
         );
@@ -97,10 +97,10 @@ export class WettkampfErgebnisService {
 
   public getSatzergebnis(nr: number, satznummer: number, id: number): number {
     let Satz = 0;
-    for(const passen of this.passen){
-      if(passen.matchNr == nr && passen.lfdNr == satznummer && id == passen.mannschaftId) {
-        for(let i = 0; i < passen.ringzahl.length ; i = i + 1) {
-            Satz = Satz + passen.ringzahl[i];
+    for (const passen of this.passen) {
+      if (passen.matchNr === nr && passen.lfdNr === satznummer && id === passen.mannschaftId) {
+        for (let i of passen.ringzahl) {
+            Satz = Satz + i;
         }
       }
     }
@@ -140,7 +140,7 @@ export class WettkampfErgebnisService {
         .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleLoadPassen([]));
   }
 
-  handleLoadPassen(passen: PasseDoClass[]): void{
+  handleLoadPassen(passen: PasseDoClass[]): void {
     this.passen = passen;
   }
 }
