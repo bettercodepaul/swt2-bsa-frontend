@@ -11,6 +11,7 @@ export class NumberOnlyDirective {
   protected allowedKeys : Array<string>;
   protected MIN_VAL : number;
   protected MAX_VAL : number;
+  protected ALIAS_10 = '+';
 
   constructor(el: ElementRef, allowedKeys : Array<string>, MIN_VAL : number, MAX_VAL : number, notificationService : NotificationService) {
     this.el = el;
@@ -44,7 +45,40 @@ export class NumberOnlyDirective {
   public inRange(value) {
     return parseInt(value) >= this.MIN_VAL && parseInt(value) <= this.MAX_VAL;
   }
+
+  /**
+   * Handles keydown events for FehlerNumberOnly and SchuetzeNumberOnly,
+   * fires notificationMethod if keydown was invalid.
+   * @param event
+   */
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    // Allow Backspace, tab, end and home keys
+    if (this.specialKeys.indexOf(event.key) !== -1) {
+      return;
+    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key))) {
+      this.notificationMethod(event);
+    }
+  }
+  /**
+   * Handles keyup events for PfeilNumberOnly, FehlerNumberOnly and SchuetzeNumberOnly, increases tabindex if keystroke was valid.
+   * @param event
+   */
+  @HostListener('keyup', ['$event'])
+  onKeyUp(event: KeyboardEvent) {
+    //Allow Backspace, tab, end and home keys
+    if (this.specialKeys.indexOf(event.key) !== -1) {
+      return;
+    }
+    if(this.allowedKeys.includes(event.key) || this.inRange(this.el.nativeElement.value + parseInt(event.key))) {
+      const currentTabIndex = parseInt(this.el.nativeElement.getAttribute('tabindex'), 10);
+      // @ts-ignore FIXME: dear TypeScript, .focus() DOES exist on Element -.-
+      document.querySelector('[tabindex="' + (currentTabIndex + 1) + '"]').focus();
+    }
+  }
 }
+
+
 /**
  * A element-directive to ensure only-number inputs in passe.ringzahlPfeil fields.
  * Controls the number-aliasing using '+' instead of 10 (1 keystroke instead of 2).
@@ -55,13 +89,15 @@ export class NumberOnlyDirective {
 })
 export class PfeilNumberOnly extends NumberOnlyDirective {
 
-  private ALIAS_10;
-
   constructor(el: ElementRef, notifcationService : NotificationService) {
     super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notifcationService);
     this.ALIAS_10 = '+';
   }
 
+  /**
+   * Override of onKeyDown Method from NumberOnlyDirective
+   * @param event
+   */
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     // Allow Backspace, tab, end, and home keys
@@ -76,6 +112,8 @@ export class PfeilNumberOnly extends NumberOnlyDirective {
     }
   }
 }
+
+
 /**
  * A element-directive to ensure only-number inputs in passe.schuetzeNr fields.
  * Contains rules for allowed keystrokes.
@@ -88,17 +126,9 @@ export class SchuetzeNumberOnly extends NumberOnlyDirective {
   constructor(el: ElementRef, notifcationService : NotificationService) {
     super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 1, 99, notifcationService);
   }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    // Allow Backspace, tab, end, and home keys
-    if (this.specialKeys.indexOf(event.key) !== -1) {
-      return;
-    } else if(!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key))) {
-      this.notificationMethod(event);
-    }
-  }
 }
+
+
 /**
  * A element-directive to ensure only-number inputs in match.fehlerpunkte fields.
  * Contains rules for allowed keystrokes.
@@ -110,15 +140,5 @@ export class FehlerpunkteNumberOnly extends NumberOnlyDirective {
 
   constructor(el: ElementRef, notifcationService : NotificationService) {
     super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notifcationService);
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    // Allow Backspace, tab, end, and home keys
-    if (this.specialKeys.indexOf(event.key) !== -1) {
-      return;
-    } else if(!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key))) {
-      this.notificationMethod(event);
-    }
   }
 }
