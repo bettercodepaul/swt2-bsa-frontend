@@ -13,7 +13,7 @@ import {
   SchuetzenTabIndexDirective,
   AutoswitchDirective,
   TabletEingabeComponent,
-  TabletAdminComponent,
+  TabletAdminComponent, PfeilNumberOnly, SchuetzeNumberOnly, FehlerpunkteNumberOnly,
 } from '../sportjahresplan/components';
 
 import {
@@ -33,7 +33,9 @@ import {
   declarations: [
     SportjahresplanComponent,
     SchusszettelComponent,
-    NumberOnlyDirective,
+    PfeilNumberOnly,
+    SchuetzeNumberOnly,
+    FehlerpunkteNumberOnly,
     RingzahlTabIndexDirective,
     SchuetzenTabIndexDirective,
     AutoswitchDirective,

@@ -104,13 +104,9 @@ export class SchusszettelComponent implements OnInit {
   onChange(value: string, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
     const match = this['match' + matchNr];
     const satz = match.schuetzen[schuetzenNr][satzNr];
-    if (value.indexOf(NumberOnlyDirective.ALIAS_10) !== -1) {
-      pfeilNr === 1 ? satz.ringzahlPfeil1 = NumberOnlyDirective.MAX_VAL : satz.ringzahlPfeil2 = NumberOnlyDirective.MAX_VAL;
-    } else {
-      let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
-      realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
-      pfeilNr === 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
-    }
+    let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
+    realValue = realValue >= 0 ? realValue : null;
+    pfeilNr === 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
     this.dirtyFlag = true; // Daten geändert
@@ -118,9 +114,8 @@ export class SchusszettelComponent implements OnInit {
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
     const match = this['match' + matchNr];
-    let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number
-                                         // umwandeln
-    realValue = realValue >= NumberOnlyDirective.MIN_VAL ? realValue : null;
+    let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number --> umwandeln
+    realValue = realValue >= 1 ? realValue : null;
     match.fehlerpunkte[satzNr] = realValue;
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
