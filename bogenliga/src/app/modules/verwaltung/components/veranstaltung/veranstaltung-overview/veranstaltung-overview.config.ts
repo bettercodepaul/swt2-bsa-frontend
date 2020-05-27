@@ -28,6 +28,7 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.SPORTJAHR',
         propertyName:   'sportjahr',
         width:          20,
+        currentSortOrder: TableColumnSortOrder.DESCENDING,
       },
       {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.MELDEDEADLINE',
