@@ -105,7 +105,22 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
-  // when a Wewttkampf gets selected from the list --> ID for Buttons
+
+  // when a Action gets selected from the list --> Link to Google Maps
+
+  public onDownload($event: WettkampfDO): void {
+
+      const str = $event.wettkampfOrt;
+      let splits: string[];
+      let plzlocation: string[];
+      splits = str.split(', ', 3);
+      plzlocation = splits[2].split(' ', 2);
+      const test = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + plzlocation[0] + '+' + plzlocation[1];
+      window.open(test);
+
+  }
+
+  // when a Wettkampf gets selected from the list --> ID for Buttons
 
   public onButtonTabletClick(): void {
     this.router.navigateByUrl('/sportjahresplan/tabletadmin/' + this.selectedWettkampf);
@@ -202,6 +217,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       tableContentRow.id = wettkampf.id;
       tableContentRow.wettkampfVeranstaltungsId = wettkampf.wettkampfVeranstaltungsId;
       tableContentRow.version = wettkampf.version;
+
 
       this.tableContent.push(tableContentRow);
     }
