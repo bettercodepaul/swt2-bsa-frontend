@@ -56,7 +56,7 @@ export class CurrentUserService {
       const currentUserJSONMap = JSON.parse(currentUserValue);
       if (currentUserJSONMap.permissions) {
         currentUserJSONMap.permissions.forEach((permission) => {
-          const userPermit = (<any>UserPermission) [permission];
+          const userPermit = (UserPermission as any) [permission];
           this.currentUserPermissions.push(userPermit);
         });
       }

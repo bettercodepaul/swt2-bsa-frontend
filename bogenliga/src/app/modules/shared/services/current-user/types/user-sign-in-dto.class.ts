@@ -9,7 +9,7 @@ export class UserSignInDTO implements DataTransferObject {
   qrCode: string;
   jwt: string;
   permissions: string[];
-  //permissionsID: UserPermission[];
+  // permissionsID: UserPermission[];
 
   static copyFromJson(json: {
     id: number,
@@ -26,7 +26,7 @@ export class UserSignInDTO implements DataTransferObject {
     userSign.qrCode = json.qrCode;
     userSign.jwt = json.jwt;
     userSign.permissions = [];
-    //userSign.permissionsID = [];
+    // userSign.permissionsID = [];
     // do not map permissions to enum-values here because the mapping is done in
     // the current-user-service from the String to the value (e.g. "CAN_READ_DEFAULT" -> 0).
     // Therefore the refresh by pressing "F5" will not set the permissions right away
@@ -47,7 +47,7 @@ export class UserSignInDTO implements DataTransferObject {
     this.qrCode = null;
     this.jwt = null;
     this.permissions = null;
-    //this.permissionsID = null;
+    // this.permissionsID = null;
   }
 
 }
