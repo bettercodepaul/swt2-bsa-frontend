@@ -38,18 +38,17 @@ class RingzahlIndexGenerator extends IndexGenerator {
   constructor() {
     super();
     const rows = [
-      [4, 29], // top left first table, top right first table
-      [6, 31], // mid left first table, mid right first table
-      [8, 33], // bottom left first table, bottom right first table
-      [37, 61], // top left second table, top right second table
-      [39, 63], // mid left second table, mid right second table
-      [41, 65], // bottom left second table, bottom right second table
+      [4, 31], // top left first table, top right first table
+      [5, 32], // mid left first table, mid right first table
+      [6, 33], // bottom left first table, bottom right first table
+      [37, 64], // top left second table, top right second table
+      [38, 65], // mid left second table, mid right second table
+      [39, 66], // bottom left second table, bottom right second table
     ];
     this.indices = [];
     for (const row of rows) {
-      for (let i = row[0]; i <= row[1]; i += 6) {
+      for (let i = row[0]; i <= row[1]; i += 3) {
         this.indices.push(i);
-        this.indices.push(i + 1);
       }
     }
     this.currIdx = 0;
