@@ -9,10 +9,12 @@ import {UserState} from '@shared/redux-store';
 import {Notification, NotificationUserAction} from '../notification/types';
 import {UserPermission} from '@shared/services';
 import {UserSignInDTO} from '@shared/services';
+import {forEach} from '@angular/router/src/utils/collection';
 
 const CURRENT_USER_KEY = 'current_user';
 const LOGIN_EMAIL_KEY = 'login_email';
 const DEFAULT_USERNAME = 'ligadefault';
+const CURRENT_USER_PERMISSION = 'current_permissions';
 
 
 @Injectable({
@@ -24,6 +26,7 @@ export class CurrentUserService {
   private isUserLoggedIn: boolean;
   private isDefaultUserLoggedIn: boolean;
   private currentUser: UserSignInDTO = new UserSignInDTO();
+  private currentUserPermissions: UserPermission[];
 
 
 
@@ -33,21 +36,34 @@ export class CurrentUserService {
   ) {
     this.observeUserState();
     this.observeSessionExpiredNotifications();
-
     this.loadCurrentUser();
     }
 
   public persistCurrentUser(currentUser: UserSignInDTO): void {
     this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
     this.store.dispatch(new Login(currentUser));
+    // load current User after persisting the token
+    this.loadCurrentUser();
   }
 
   public loadCurrentUser(): void {
+    this.currentUserPermissions = [];
     console.log('Load current user from storage');
     const currentUserValue = this.localDataProviderService.get(CURRENT_USER_KEY);
+
     if (currentUserValue != null) {
+      // Map the permissions from the redux to its values
+      const currentUserJSONMap = JSON.parse(currentUserValue);
+      if (currentUserJSONMap.permissions) {
+        currentUserJSONMap.permissions.forEach((permission) => {
+          const userPermit = (UserPermission as any) [permission];
+          this.currentUserPermissions.push(userPermit);
+        });
+      }
       this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue))));
     }
+    console.log(currentUserValue);
+    console.log(this.currentUserPermissions);
   }
 
   public getEmail(): string {
@@ -65,11 +81,11 @@ export class CurrentUserService {
   }
 
   public getPermissions(): UserPermission[] {
-    return this.getCurrentUser().permissions;
+    return this.currentUserPermissions;
   }
 
   public hasPermission(permission: UserPermission): boolean {
-    return this.getCurrentUser().permissions.indexOf(permission) >= 0;
+    return this.currentUserPermissions.indexOf(permission) >= 0;
   }
 
   public hasAllPermissions(requiredPermissions: UserPermission[]): boolean {
@@ -104,7 +120,7 @@ export class CurrentUserService {
     }
 
     for (const requiredPermission of requiredPermissions) {
-      if (userPermissions.indexOf(UserPermission[requiredPermission.toString()]) >= 0) {
+      if (userPermissions.indexOf(requiredPermission) >= 0) {
         return true;
       }
     }

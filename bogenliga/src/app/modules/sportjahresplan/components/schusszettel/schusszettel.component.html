@@ -106,23 +106,21 @@
                            ngFor>
                 <td *ngIf="j == 0">
                   <input [(ngModel)]="passe.schuetzeNr"
-                         blaAutoswitch
+                         blaSchuetzeNumberOnly
                          blaSchuetzenTabIndexDirective
                          type="number">
                 </td>
                 <td class="split">
                   <input (ngModelChange)="onChange($event, 1, i, j, 1)"
                          [ngModel]="passe.ringzahlPfeil1"
-                         blaAutoswitch
-                         blaMyNumberOnly
+                         blaPfeilNumberOnly
                          blaRingzahlTabIndexDirective
                          type="text">
                 </td>
                 <td>
                   <input (ngModelChange)="onChange($event, 1, i, j, 2)"
                          [ngModel]="passe.ringzahlPfeil2"
-                         blaAutoswitch
-                         blaMyNumberOnly
+                         blaPfeilNumberOnly
                          blaRingzahlTabIndexDirective
                          type="text">
                 </td>
@@ -158,7 +156,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 0)"
                    [(ngModel)]="match1.fehlerpunkte[0]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
         <div class="row"
@@ -167,7 +166,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 1)"
                    [(ngModel)]="match1.fehlerpunkte[1]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
         <div class="row"
@@ -176,7 +176,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 2)"
                    [(ngModel)]="match1.fehlerpunkte[2]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
         <div class="row"
@@ -185,7 +186,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 3)"
                    [(ngModel)]="match1.fehlerpunkte[3]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
         <div class="row"
@@ -194,7 +196,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 4)"
                    [(ngModel)]="match1.fehlerpunkte[4]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
       </div>
@@ -318,23 +321,21 @@
                            ngFor>
                 <td *ngIf="j == 0">
                   <input [(ngModel)]="passe.schuetzeNr"
-                         blaAutoswitch
+                         blaSchuetzeNumberOnly
                          blaSchuetzenTabIndexDirective
                          type="number">
                 </td>
                 <td>
                   <input (ngModelChange)="onChange($event, 2, i, j, 1)"
                          [ngModel]="passe.ringzahlPfeil1"
-                         blaAutoswitch
-                         blaMyNumberOnly
+                         blaPfeilNumberOnly
                          blaRingzahlTabIndexDirective
                          type="text">
                 </td>
                 <td>
                   <input (ngModelChange)="onChange($event, 2, i, j, 2)"
                          [ngModel]="passe.ringzahlPfeil2"
-                         blaAutoswitch
-                         blaMyNumberOnly
+                         blaPfeilNumberOnly
                          blaRingzahlTabIndexDirective
                          type="text">
                 </td>
@@ -369,7 +370,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 0)"
                    [(ngModel)]="match2.fehlerpunkte[0]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
         <div class="row"
@@ -378,7 +380,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 1)"
                    [(ngModel)]="match2.fehlerpunkte[1]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
         <div class="row"
@@ -387,7 +390,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 2)"
                    [(ngModel)]="match2.fehlerpunkte[2]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
         <div class="row"
@@ -396,7 +400,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 3)"
                    [(ngModel)]="match2.fehlerpunkte[3]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
         <div class="row"
@@ -405,7 +410,8 @@
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 4)"
                    [(ngModel)]="match2.fehlerpunkte[4]"
-                   class="fehlerfeld">
+                   class="fehlerfeld"
+                   blaFehlerNumberOnly>
           </div>
         </div>
       </div>

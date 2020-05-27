@@ -36,9 +36,9 @@
         <select class="form-control"
                 id="vereine"
                 name="VereinName"
-                [(ngModel)]="currentMannschaft.name"
+                [(ngModel)]="currentMannschaft"
                 (ngModelChange)="loadErgebnisse()">
-          <option *ngFor="let mannschaft of mannschaften"> {{mannschaft.name}}</option>
+          <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
