@@ -5,15 +5,15 @@ import {NotificationOrigin, NotificationService, NotificationSeverity, Notificat
  */
 export class NumberOnlyDirective {
 
-  protected el : ElementRef;
+  protected el: ElementRef;
   protected notificationService;
   protected specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home', 'Delete', 'Del', 'ArrowLeft', 'ArrowRight', 'Left', 'Right', 'Shift'];
-  protected allowedKeys : Array<string>;
-  protected MIN_VAL : number;
-  protected MAX_VAL : number;
+  protected allowedKeys: Array<string>;
+  protected MIN_VAL: number; // min allowed value in fields
+  protected MAX_VAL: number; // max allowed value in fields
   protected ALIAS_10 = '+';
 
-  constructor(el: ElementRef, allowedKeys : Array<string>, MIN_VAL : number, MAX_VAL : number, notificationService : NotificationService) {
+  constructor(el: ElementRef, allowedKeys: Array<string>, MIN_VAL: number, MAX_VAL: number, notificationService: NotificationService) {
     this.el = el;
     this.notificationService = notificationService;
     this.allowedKeys = allowedKeys;
@@ -43,7 +43,7 @@ export class NumberOnlyDirective {
    * @param value
    */
   public inRange(value) {
-    return parseInt(value) >= this.MIN_VAL && parseInt(value) <= this.MAX_VAL;
+    return parseInt(value, 10) >= this.MIN_VAL && parseInt(value, 10) <= this.MAX_VAL;
   }
 
   /**
@@ -56,7 +56,7 @@ export class NumberOnlyDirective {
     // Allow Backspace, tab, end and home keys
     if (this.specialKeys.indexOf(event.key) !== -1) {
       return;
-    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key))) {
+    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key, 10))) {
       this.notificationMethod(event);
     }
   }
@@ -66,11 +66,11 @@ export class NumberOnlyDirective {
    */
   @HostListener('keyup', ['$event'])
   onKeyUp(event: KeyboardEvent) {
-    //Allow Backspace, tab, end and home keys
+    // Allow Backspace, tab, end and home keys
     if (this.specialKeys.indexOf(event.key) !== -1) {
       return;
     }
-    if(this.allowedKeys.includes(event.key) || this.inRange(this.el.nativeElement.value + parseInt(event.key))) {
+    if (this.allowedKeys.includes(event.key) || this.inRange(this.el.nativeElement.value + parseInt(event.key, 10))) {
       const currentTabIndex = parseInt(this.el.nativeElement.getAttribute('tabindex'), 10);
       // @ts-ignore FIXME: dear TypeScript, .focus() DOES exist on Element -.-
       document.querySelector('[tabindex="' + (currentTabIndex + 1) + '"]').focus();
@@ -83,13 +83,14 @@ export class NumberOnlyDirective {
  * A element-directive to ensure only-number inputs in passe.ringzahlPfeil fields.
  * Controls the number-aliasing using '+' instead of 10 (1 keystroke instead of 2).
  * Contains rules for allowed keystrokes.
+ * Extends NumberOnlyDirective
  */
 @Directive({
   selector: '[blaPfeilNumberOnly]'
 })
-export class PfeilNumberOnly extends NumberOnlyDirective {
+export class PfeilNumberOnlyDirective extends NumberOnlyDirective {
 
-  constructor(el: ElementRef, notifcationService : NotificationService) {
+  constructor(el: ElementRef, notifcationService: NotificationService) {
     super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notifcationService);
     this.ALIAS_10 = '+';
   }
@@ -107,7 +108,7 @@ export class PfeilNumberOnly extends NumberOnlyDirective {
     if (event.key === this.ALIAS_10) {
       this.el.nativeElement.value = '10';
       return;
-    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key))) {
+    } else if (!this.allowedKeys.includes(event.key) || !this.inRange(this.el.nativeElement.value + parseInt(event.key, 10))) {
       this.notificationMethod(event);
     }
   }
@@ -116,14 +117,14 @@ export class PfeilNumberOnly extends NumberOnlyDirective {
 
 /**
  * A element-directive to ensure only-number inputs in passe.schuetzeNr fields.
- * Contains rules for allowed keystrokes.
+ * Extends NumberOnlyDirective
  */
 @Directive({
   selector: '[blaSchuetzeNumberOnly]'
 })
-export class SchuetzeNumberOnly extends NumberOnlyDirective {
+export class SchuetzeNumberOnlyDirective extends NumberOnlyDirective {
 
-  constructor(el: ElementRef, notifcationService : NotificationService) {
+  constructor(el: ElementRef, notifcationService: NotificationService) {
     super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 1, 99, notifcationService);
   }
 }
@@ -131,14 +132,14 @@ export class SchuetzeNumberOnly extends NumberOnlyDirective {
 
 /**
  * A element-directive to ensure only-number inputs in match.fehlerpunkte fields.
- * Contains rules for allowed keystrokes.
+ * Extends NumberOnlyDirective
  */
 @Directive({
   selector: '[blaFehlerNumberOnly]'
 })
-export class FehlerpunkteNumberOnly extends NumberOnlyDirective {
+export class FehlerpunkteNumberOnlyDirective extends NumberOnlyDirective {
 
-  constructor(el: ElementRef, notifcationService : NotificationService) {
+  constructor(el: ElementRef, notifcationService: NotificationService) {
     super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notifcationService);
   }
 }
