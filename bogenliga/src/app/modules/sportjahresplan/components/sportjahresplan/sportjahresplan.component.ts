@@ -112,11 +112,9 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
 
       const str = $event.wettkampfOrt;
       let splits: string[];
-      let plzlocation: string[];
-      splits = str.split(', ', 3);
-      plzlocation = splits[2].split(' ', 2);
-      const test = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + plzlocation[0] + '+' + plzlocation[1];
-      window.open(test);
+      splits = str.split(', ', 5);
+      const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
+      window.open(locationUrl);
 
   }
 
