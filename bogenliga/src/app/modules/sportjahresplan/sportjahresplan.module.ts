@@ -8,12 +8,14 @@ import {SPORTJAHRESPLAN_ROUTES} from './sportjahresplan.routing';
 import {
   SportjahresplanComponent,
   SchusszettelComponent,
-  NumberOnlyDirective,
   RingzahlTabIndexDirective,
   SchuetzenTabIndexDirective,
-  AutoswitchDirective,
   TabletEingabeComponent,
-  TabletAdminComponent, PfeilNumberOnly, SchuetzeNumberOnly, FehlerpunkteNumberOnly,
+  TabletAdminComponent,
+  NumberOnlyDirective,
+  PfeilNumberOnlyDirective,
+  SchuetzeNumberOnlyDirective,
+  FehlerpunkteNumberOnlyDirective,
 } from '../sportjahresplan/components';
 
 import {
@@ -33,12 +35,11 @@ import {
   declarations: [
     SportjahresplanComponent,
     SchusszettelComponent,
-    PfeilNumberOnly,
-    SchuetzeNumberOnly,
-    FehlerpunkteNumberOnly,
+    PfeilNumberOnlyDirective,
+    SchuetzeNumberOnlyDirective,
+    FehlerpunkteNumberOnlyDirective,
     RingzahlTabIndexDirective,
     SchuetzenTabIndexDirective,
-    AutoswitchDirective,
     TabletEingabeComponent,
     TabletAdminComponent
   ],
