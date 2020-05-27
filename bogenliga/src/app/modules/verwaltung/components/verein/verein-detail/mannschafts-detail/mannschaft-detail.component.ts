@@ -35,7 +35,7 @@ import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.cl
 import {environment} from '@environment';
 import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
-import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-sercie';
+import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {PasseDTOClass} from '@verwaltung/types/datatransfer/passe-dto.class';
 
