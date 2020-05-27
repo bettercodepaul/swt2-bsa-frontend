@@ -12,7 +12,6 @@ import {
   SchuetzenTabIndexDirective,
   TabletEingabeComponent,
   TabletAdminComponent,
-  NumberOnlyDirective,
   PfeilNumberOnlyDirective,
   SchuetzeNumberOnlyDirective,
   FehlerpunkteNumberOnlyDirective,

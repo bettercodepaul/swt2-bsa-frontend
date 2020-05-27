@@ -140,6 +140,6 @@ export class SchuetzeNumberOnlyDirective extends NumberOnlyDirective {
 export class FehlerpunkteNumberOnlyDirective extends NumberOnlyDirective {
 
   constructor(el: ElementRef, notifcationService: NotificationService) {
-    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 10, notifcationService);
+    super(el, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'], 0, 60, notifcationService);
   }
 }
