@@ -149,7 +149,11 @@ export class LigaDetailComponent extends CommonComponent implements OnInit {
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
     this.currentLiga.regionId = this.currentRegion.id;
-    this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
+    if (typeof this.currentUbergeordneteLiga === 'undefined') {
+      this.currentLiga.ligaUebergeordnetId = this.currentLiga.id;
+    } else {
+      this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
+    }
     this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
     // persist
     this.ligaDataProvider.update(this.currentLiga)
