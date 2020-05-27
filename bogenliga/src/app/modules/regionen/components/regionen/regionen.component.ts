@@ -216,8 +216,8 @@ export class RegionenComponent implements OnInit {
   public onSelectLiga(event: LigaDO): void {
     this.selectedLigaDO = event[0];
     console.log(this.selectedLigaDO);
-    //this.router.navigateByUrl('/ligatabelle/' + this.selectedLigaDO.id);
-    this.router.navigateByUrl('/ligatabelle');
+    this.router.navigateByUrl('/ligatabelle/' + this.selectedLigaDO.id);
+    //this.router.navigateByUrl('/ligatabelle');
   }
 
   public getEmptyList(): RoleVersionedDataObject[] {

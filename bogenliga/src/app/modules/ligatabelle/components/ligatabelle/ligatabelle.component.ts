@@ -73,17 +73,24 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
+        console.log(this.providedID);
         boolean : let found;
         found = false;
         int : let i;
         for(i = 0; i < this.veranstaltungen.length && !found ; i++){
-          if (this.veranstaltungen[i].id == this.providedID){
+          if (this.veranstaltungen[i].ligaId == this.providedID){
             found = true;
             this.zwVeranstaltung = [];
             this.zwVeranstaltung.push(this.veranstaltungen[i]);
+            //console.log(this.zwVeranstaltung[0]);
             this.onSelect(this.zwVeranstaltung);
+          }else{
+            console.log("nothing found!");
           }
         }
+      }
+      else {
+        console.log("no params");
       }
     });
     console.log(this.providedID);
