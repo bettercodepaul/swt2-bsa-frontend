@@ -36,7 +36,8 @@
         <bla-data-table [config]="config_table"
                         [rows]="rows"
                         [loading]="loadingWettkampfe"
-                        (onViewEntry)="onView($event)">
+                        (onViewEntry)="onView($event)"
+                        (onDownloadEntry)="onDownload($event)" >
 
         </bla-data-table>
       </section>
