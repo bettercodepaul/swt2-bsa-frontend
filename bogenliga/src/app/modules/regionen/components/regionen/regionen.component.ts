@@ -107,9 +107,9 @@ export class RegionenComponent implements OnInit {
       .height(window.innerHeight * chartMaxSizeMultiplikator)
       .size('size')
       .color('color')
-      .onNodeClick((node) =>{
-        if(document.querySelector(".sunburst-tooltip") != null) {
-          document.querySelector(".sunburst-tooltip").remove();}
+      .onNodeClick((node) => {
+        if (document.querySelector('.sunburst-tooltip') != null) {
+          document.querySelector('.sunburst-tooltip').remove(); }
         // what should happen after clicking the node
         myChart.focusOnNode(node);
 
