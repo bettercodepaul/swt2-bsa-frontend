@@ -64,7 +64,7 @@ export class WettkampfErgebnisService {
     console.log(this.matches);
     for (let i = 0; i < this.matches.length ; i = i + 2) {
       if (((this.currentManschaft.id === this.matches[i].mannschaftId || this.currentManschaft.id === this.matches[i + 1].mannschaftId) || all === true)) {
-          const wettkampfErgebnis = new WettkampfErgebnis(
+        const wettkampfErgebnis = new WettkampfErgebnis(
           this.matches[i].nr,
           this.getMannschaftsname(this.matches[i].mannschaftId),
           this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
@@ -81,7 +81,7 @@ export class WettkampfErgebnisService {
           this.getSatzpunkte(i),
           this.getMatchpunkte(i)
         );
-          this.wettkampErgebnisse.push(wettkampfErgebnis);
+        this.wettkampErgebnisse.push(wettkampfErgebnis);
       }
     }
     return this.wettkampErgebnisse;
