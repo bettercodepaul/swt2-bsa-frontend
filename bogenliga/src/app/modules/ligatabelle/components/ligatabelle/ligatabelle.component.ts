@@ -11,7 +11,7 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {} from '@shared/components/forms/';
 import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis-do.class';
 import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wettkampf-ergebnis-dto.class';
-//import {NotificationService} from '@shared/services';
+// import {NotificationService} from '@shared/services';
 import { RouterModule, Routes } from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {Subscription} from 'rxjs';
@@ -51,7 +51,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   public rowsLigatabelle: TableRow[];
   private tableContent: Array<LigatabelleErgebnisDO> = [];
   private remainingLigatabelleRequests: number;
-  public providedID : number;
+  public providedID: number;
 
 
   constructor(private router: Router,
@@ -74,23 +74,21 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log(this.providedID);
-        boolean : let found;
+        let found : boolean;
         found = false;
-        int : let i;
-        for(i = 0; i < this.veranstaltungen.length && !found ; i++){
-          if (this.veranstaltungen[i].ligaId == this.providedID){
+        for (let i = 0; i < this.veranstaltungen.length && !found; i++){
+          if (this.veranstaltungen[i].ligaId === this.providedID){
             found = true;
             this.zwVeranstaltung = [];
             this.zwVeranstaltung.push(this.veranstaltungen[i]);
-            //console.log(this.zwVeranstaltung[0]);
+            // console.log(this.zwVeranstaltung[0]);
             this.onSelect(this.zwVeranstaltung);
-          }else{
-            console.log("nothing found!");
+          }else {
+            console.log('nothing found!');
           }
         }
-      }
-      else {
-        console.log("no params");
+      } else {
+        console.log('no params');
       }
     });
     console.log(this.providedID);
