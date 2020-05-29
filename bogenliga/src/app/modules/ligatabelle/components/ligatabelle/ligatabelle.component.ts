@@ -74,16 +74,16 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log(this.providedID);
-        let found : boolean;
+        let found: boolean;
         found = false;
-        for (let i = 0; i < this.veranstaltungen.length && !found; i++){
-          if (this.veranstaltungen[i].ligaId === this.providedID){
+        for (let i = 0; i < this.veranstaltungen.length && !found; i++) {
+          if (this.veranstaltungen[i].ligaId === this.providedID) {
             found = true;
             this.zwVeranstaltung = [];
             this.zwVeranstaltung.push(this.veranstaltungen[i]);
             // console.log(this.zwVeranstaltung[0]);
             this.onSelect(this.zwVeranstaltung);
-          }else {
+          } else {
             console.log('nothing found!');
           }
         }
@@ -105,7 +105,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   }
 
   // Changes the displayed Veranstaltung with the current selected one from selectedDTOs.
-  private changeVeranstaltung() : void {
+  private changeVeranstaltung(): void {
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVeranstaltungId = this.selectedDTOs[0].id;
       this.selectedVeranstaltungName = this.selectedDTOs[0].name;
