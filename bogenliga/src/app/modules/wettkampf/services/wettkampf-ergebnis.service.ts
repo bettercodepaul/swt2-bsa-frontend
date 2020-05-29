@@ -64,7 +64,7 @@ export class WettkampfErgebnisService {
     console.log(this.matches);
     for (let i = 0; i < this.matches.length ; i = i + 2) {
       if (((this.currentManschaft.id === this.matches[i].mannschaftId || this.currentManschaft.id === this.matches[i + 1].mannschaftId) || all === true)) {
-        const wettkampfErgebnis = new WettkampfErgebnis(
+          const wettkampfErgebnis = new WettkampfErgebnis(
           this.matches[i].nr,
           this.getMannschaftsname(this.matches[i].mannschaftId),
           this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
@@ -78,8 +78,8 @@ export class WettkampfErgebnisService {
           this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
           this.getSatzergebnis(this.matches[i + 1].nr, 4, this.matches[i + 1].mannschaftId),
           this.getSatzergebnis(this.matches[i + 1].nr, 5, this.matches[i + 1].mannschaftId),
-          this.matches[i].satzpunkte + ' : ' + this.matches[i + 1].satzpunkte,
-          this.matches[i].matchpunkte + ' : ' + this.matches[i + 1].matchpunkte
+          this.getSatzpunkte(i),
+          this.getMatchpunkte(i)
         );
         this.wettkampErgebnisse.push(wettkampfErgebnis);
       }
@@ -105,6 +105,31 @@ export class WettkampfErgebnisService {
       }
     }
     return Satz;
+  }
+
+  public getSatzpunkte(nr: number): string {
+    var satzpunkte1 = this.matches[nr].satzpunkte;
+    var satzpunkte2 = this.matches[nr + 1].satzpunkte;
+    if(this.matches[nr].satzpunkte === null){
+      satzpunkte1 = 0;
+    }
+    if(this.matches[nr + 1].satzpunkte === null){
+      satzpunkte2 = 0;
+    }
+    return satzpunkte1 + " : " + satzpunkte2;
+  }
+
+  public getMatchpunkte(nr: number): string {
+    var matchpunkte1 = this.matches[nr].matchpunkte;
+    var matchpunkte2 = this.matches[nr + 1].matchpunkte;
+
+    if(this.matches[nr].matchpunkte === null){
+      matchpunkte1 = 0;
+    }
+    if(this.matches[nr + 1].matchpunkte === null){
+      matchpunkte2 = 0;
+    }
+    return matchpunkte1 + " : " + matchpunkte2;
   }
 
   loadWettkaempfe(all: boolean) {
