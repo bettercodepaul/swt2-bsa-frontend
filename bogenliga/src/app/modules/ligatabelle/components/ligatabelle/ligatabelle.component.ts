@@ -83,7 +83,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
             this.zwVeranstaltung.push(this.veranstaltungen[i]);
             //console.log(this.zwVeranstaltung[0]);
             this.onSelect(this.zwVeranstaltung);
-          }else{
+          } else {
             console.log("nothing found!");
           }
         }
@@ -106,7 +106,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   }
 
   // Changes the displayed Veranstaltung with the current selected one from selectedDTOs.
-  private changeVeranstaltung() : void {
+  private changeVeranstaltung(): void {
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVeranstaltungId = this.selectedDTOs[0].id;
       this.selectedVeranstaltungName = this.selectedDTOs[0].name;
