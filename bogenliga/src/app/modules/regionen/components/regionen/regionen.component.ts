@@ -16,7 +16,6 @@ import {Router} from '@angular/router';
 //import {LigatabelleComponent} from '../../../ligatabelle/components/ligatabelle/ligatabelle.component';
 //import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 
-
 const chartMaxSizeMultiplikator = 0.8;
 const chartDetailsSizeMultiplikator = 0.5;
 
@@ -111,6 +110,8 @@ export class RegionenComponent implements OnInit {
       .size('size')
       .color('color')
       .onNodeClick((node) => {
+        if (document.querySelector('.sunburst-tooltip') != null) {
+          document.querySelector('.sunburst-tooltip').remove(); }
         // what should happen after clicking the node
         myChart.focusOnNode(node);
 
@@ -126,6 +127,7 @@ export class RegionenComponent implements OnInit {
         })
       (this.myDiv.nativeElement);
 
+    console.log(myChart.showLabel);
 
     // for automatic resizing
     window.addEventListener('resize', (func) => {
