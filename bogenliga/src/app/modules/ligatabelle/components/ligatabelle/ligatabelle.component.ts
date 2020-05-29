@@ -74,10 +74,9 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log(this.providedID);
-        boolean : let found;
+        let found: boolean;
         found = false;
-        int : let i;
-        for(i = 0; i < this.veranstaltungen.length && !found ; i++){
+        for (let i = 0; i < this.veranstaltungen.length && !found ; i++) {
           if (this.veranstaltungen[i].ligaId == this.providedID){
             found = true;
             this.zwVeranstaltung = [];
@@ -92,7 +91,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
       else {
         console.log("no params");
       }
-    });
+    } );
     console.log(this.providedID);
   }
 
