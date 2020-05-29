@@ -209,10 +209,10 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     // show response message
   }
   public onCopyMannschaft(ignore: any): void {
-
+    this.loadDsbMannschaft();
     if (typeof this.lastVeranstaltung != null) {
-
       this.saveLoading = true;
+      if (this.allDsbMannschaft.length > 0) {
 
       for (let i = 0; i <= this.allDsbMannschaft.length; i++) {
 
@@ -258,6 +258,9 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
 
             });
 
+      }} else {
+        console.log('Keine Mannschaften verfügbar');
+        this.saveLoading = false;
       }
     } else {
       console.log('Veranstaltung ist nicht vorhanden');
@@ -516,18 +519,17 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
     this.allVeranstaltung = this.allVeranstaltung.filter((liga) => liga.ligaId === this.currentVeranstaltung.ligaId);
     this.allVeranstaltung = this.allVeranstaltung.filter((sportjahr) => sportjahr.sportjahr === this.currentVeranstaltung.sportjahr - 1);
     this.allVeranstaltung = this.allVeranstaltung.filter((wettkamptyp) => wettkamptyp.wettkampfTypId === this.currentVeranstaltung.wettkampfTypId);
-    this.allVeranstaltung = this.allVeranstaltung.filter((name) => name.name === this.currentVeranstaltung.name);
+    // this.allVeranstaltung = this.allVeranstaltung.filter((name) => name.name === this.currentVeranstaltung.name);
     this.lastVeranstaltung = this.allVeranstaltung[0];
 
-
     this.allDsbMannschaft = this.allDsbMannschaft.filter((veranstaltung) => veranstaltung.veranstaltungId === this.lastVeranstaltung.id);
-
     this.loading = false;
   }
 
   private handleDsbMannschaftResponseArrayFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.allDsbMannschaft = [];
     this.loading = false;
+    console.log('Fehler :DSB Mannschaft konnte nicht abgerufen werden.');
   }
 
   private handleAllVeranstaltungResponseArraySuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
