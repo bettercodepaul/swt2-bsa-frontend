@@ -108,26 +108,26 @@ export class WettkampfErgebnisService {
   }
 
   public getSatzpunkte(nr: number): string {
-    var satzpunkte1 = this.matches[nr].satzpunkte;
-    var satzpunkte2 = this.matches[nr + 1].satzpunkte;
-    if(this.matches[nr].satzpunkte === null){
-      satzpunkte1 = 0;
+    var satzpunkte1 = "-";
+    var satzpunkte2 = "-";
+    if(this.matches[nr].satzpunkte != null){
+      satzpunkte1 = String(this.matches[nr].satzpunkte);
     }
-    if(this.matches[nr + 1].satzpunkte === null){
-      satzpunkte2 = 0;
+    if(this.matches[nr + 1].satzpunkte != null){
+      satzpunkte2 = String(this.matches[nr + 1].satzpunkte);
     }
     return satzpunkte1 + " : " + satzpunkte2;
   }
 
   public getMatchpunkte(nr: number): string {
-    var matchpunkte1 = this.matches[nr].matchpunkte;
-    var matchpunkte2 = this.matches[nr + 1].matchpunkte;
+    var matchpunkte1 = "-";
+    var matchpunkte2 = "-";
 
-    if(this.matches[nr].matchpunkte === null){
-      matchpunkte1 = 0;
+    if(this.matches[nr].matchpunkte != null){
+      matchpunkte1 = String(this.matches[nr].matchpunkte);
     }
-    if(this.matches[nr + 1].matchpunkte === null){
-      matchpunkte2 = 0;
+    if(this.matches[nr + 1].matchpunkte != null){
+      matchpunkte2 = String(this.matches[nr + 1].matchpunkte);
     }
     return matchpunkte1 + " : " + matchpunkte2;
   }
