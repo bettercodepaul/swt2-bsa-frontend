@@ -81,7 +81,7 @@ export class WettkampfErgebnisService {
           this.getSatzpunkte(i),
           this.getMatchpunkte(i)
         );
-        this.wettkampErgebnisse.push(wettkampfErgebnis);
+          this.wettkampErgebnisse.push(wettkampfErgebnis);
       }
     }
     return this.wettkampErgebnisse;
@@ -108,28 +108,28 @@ export class WettkampfErgebnisService {
   }
 
   public getSatzpunkte(nr: number): string {
-    var satzpunkte1 = "-";
-    var satzpunkte2 = "-";
-    if(this.matches[nr].satzpunkte != null){
+    let satzpunkte1 = '-';
+    let satzpunkte2 = '-';
+    if (this.matches[nr].satzpunkte != null) {
       satzpunkte1 = String(this.matches[nr].satzpunkte);
     }
-    if(this.matches[nr + 1].satzpunkte != null){
+    if (this.matches[nr + 1].satzpunkte != null) {
       satzpunkte2 = String(this.matches[nr + 1].satzpunkte);
     }
-    return satzpunkte1 + " : " + satzpunkte2;
+    return satzpunkte1 + ' : ' + satzpunkte2;
   }
 
   public getMatchpunkte(nr: number): string {
-    var matchpunkte1 = "-";
-    var matchpunkte2 = "-";
+    let matchpunkte1 = '-';
+    let matchpunkte2 = '-';
 
-    if(this.matches[nr].matchpunkte != null){
+    if (this.matches[nr].matchpunkte != null) {
       matchpunkte1 = String(this.matches[nr].matchpunkte);
     }
-    if(this.matches[nr + 1].matchpunkte != null){
+    if (this.matches[nr + 1].matchpunkte != null) {
       matchpunkte2 = String(this.matches[nr + 1].matchpunkte);
     }
-    return matchpunkte1 + " : " + matchpunkte2;
+    return matchpunkte1 + ' : ' + matchpunkte2;
   }
 
   loadWettkaempfe(all: boolean) {
