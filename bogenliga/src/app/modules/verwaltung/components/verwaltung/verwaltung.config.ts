@@ -10,49 +10,49 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.DESCRIPTION',
         icon:           'users',
         route:          'dsbmitglieder',
-        permissons :[]
+        permissions :[]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.DESCRIPTION',
         icon:           'address-card',
         route:          'benutzer',
-        permissons : []
+        permissions : []
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
         icon:           'wrench',
         route:          'klassen',
-        permissons : []
+        permissions : []
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.DESCRIPTION',
         icon:           'sitemap',
         route:          'vereine',
-        permissons : []
+        permissions : []
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga',
-        permissons : []
+        permissions : []
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.DESCRIPTION',
         icon:           'sitemap',
         route:          'regionen',
-        permissons :[]
+        permissions :[]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.DESCRIPTION',
         icon:           'calendar-alt',
         route:          'veranstaltung',
-        permissons :[]
+        permissions :[]
       },
       // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
       // because the exactly function of the site "Sportjahre" is still unclear.
@@ -63,7 +63,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'Verwaltung der Sportjahre',
         icon:           'campground',
         route:          'sportjahr',
-       permissons :[]
+       permissions :[]
       }
       */
 
