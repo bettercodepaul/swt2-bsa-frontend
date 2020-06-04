@@ -47,12 +47,18 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'calendar-alt',
         route:          'veranstaltung'
       },
+      // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
+      // because the exactly function of the site "Sportjahre" is still unclear.
+      // If the button is needed again, just delete the uncommenting below.
+      /*
       {
         labelKey:       'Sportjahre',
         descriptionKey: 'Verwaltung der Sportjahre',
         icon:           'campground',
         route:          'sportjahr'
       }
+      */
+
       ]
 
   }
