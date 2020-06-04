@@ -1,6 +1,6 @@
 <bla-grid-layout>
   <ng-container *ngFor="let card of config.navigationCards">
-  <div *ngIf="hasUserPermissions(card.permissons)" class="card navigation-card"
+  <div *ngIf="hasUserPermissions(card.permissions)" class="card navigation-card"
        >
     <a class="card-header-link"
        [routerLink]="card.route">
