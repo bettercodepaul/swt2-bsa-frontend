@@ -86,7 +86,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: []
   },
   {
-    label: 'WETTKAMPFDURCHFÜHURUNG',
+    label: 'SIDEBAR.SPORTJAHRESPLAN',
     icon: faCalendarAlt,
     route: '/sportjahresplan',
     permissons: [UserPermission.CAN_READ_WETTKAMPF],
