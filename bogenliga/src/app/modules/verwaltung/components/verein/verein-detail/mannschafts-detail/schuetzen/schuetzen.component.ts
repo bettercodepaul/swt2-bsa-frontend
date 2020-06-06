@@ -359,7 +359,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
         return (member.vorname.toLowerCase().startsWith(this.filterVorname.toLowerCase()) || this.filterVorname.length === 0)
         && (member.nachname.toLowerCase().startsWith(this.filterNachname.toLowerCase()) || this.filterNachname.length === 0)
         && (member.mitgliedsnummer.toLowerCase().startsWith(this.filterMitgliedsnummer.toLowerCase()) || this.filterMitgliedsnummer.length === 0)
-          && (member.vereinsId === this.filterVerein.id || this.filterVerein.id === undefined);
+          && (member.vereinsId === this.currentVerein.id);
     });
      this.rows = toTableRows(filteredMembers);
   }
@@ -368,7 +368,6 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.filterVorname = '';
     this.filterNachname = '';
     this.filterMitgliedsnummer = '';
-    this.filterVerein = new VereinDO();
     this.onSearch();
   }
   // ----------------------------------------------------------- //
@@ -413,6 +412,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
       }
     });
     this.rows = toTableRows(this.members);
+    this.onSearch();
     this.loading = false;
   }
 
