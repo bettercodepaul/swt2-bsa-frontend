@@ -81,6 +81,21 @@ label {
   visibility: hidden;
 }
 
+.match h1{
+  font-size: 2vw;
+}
+
+.match h2{
+  font-size: 2vw;
+}
+
+.mannschaften.col-3 h1{
+  font-size: 2vw;
+}
+
+.mannschaften.col-3 h3{
+  font-size: 2vw;
+}
 
 @media print {
   input {
@@ -90,10 +105,10 @@ label {
     font-size: 25px;
   }
   h1 {
-    font-size: 30px;
+    font-size: 10px!important; //30px
   }
   h3 {
-    font-size: 20px;
+    font-size: 2vm;
   }
 
   .match1 {

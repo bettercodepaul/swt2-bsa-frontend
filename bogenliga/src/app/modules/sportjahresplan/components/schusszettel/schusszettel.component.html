@@ -20,21 +20,21 @@
                style="width:100%">
           <tr>
             <td *ngFor="let sum of match1singlesatzpoints; let i = index">
-              <label>{{i + 1}}.S.Pkt</label>
+              <label>{{i + 1}}. Satz</label>
               <input [value]="sum"
                      readonly
                      tabindex="-1"
                      type="text">
             </td>
             <td>
-              <label>Summe S.pkt</label>
+              <label>Summe</label>
               <input [value]="match1.satzpunkte"
                      readonly
                      tabindex="-1"
                      type="text">
             </td>
             <td>
-              <label>Matchpkte</label>
+              <label>Match</label>
               <input [value]="match1.matchpunkte"
                      readonly
                      tabindex="-1"
@@ -83,16 +83,16 @@
             <th colspan="2">5. Satz / Pfeile</th>
           </tr>
           <tr>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
           </tr>
           </thead>
           <ng-template [ngForOf]="match1.schuetzen"
@@ -222,7 +222,7 @@
   <!-- match2 -->
   <div class="match2 print">
     <div class="row">
-      <div class="match col-3">
+      <div id="henlo" class="match col-3">
         <h1>{{match2.mannschaftName}}</h1>
         <h2>{{match2.nr}}. Match</h2>
       </div>
@@ -236,21 +236,21 @@
                style="width:100%">
           <tr>
             <td *ngFor="let sum of match1singlesatzpoints; let i = index">
-              <label>{{i + 1}}.S.Pkt</label>
+              <label>{{i + 1}}. Satz</label>
               <input [value]="sum"
                      readonly
                      tabindex="-1"
                      type="text">
             </td>
             <td>
-              <label>Summe S.pkt</label>
+              <label>Summe</label>
               <input [value]="match1.satzpunkte"
                      readonly
                      tabindex="-1"
                      type="text">
             </td>
             <td>
-              <label>Matchpkte</label>
+              <label>Match</label>
               <input [value]="match1.matchpunkte"
                      readonly
                      tabindex="-1"
@@ -298,16 +298,16 @@
             <th colspan="2">5. Satz / Pfeile</th>
           </tr>
           <tr>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
-            <th>pf. 1</th>
-            <th>pf. 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
+            <th>Pfeil 1</th>
+            <th>Pfeil 2</th>
           </tr>
           </thead>
           <ng-template [ngForOf]="match2.schuetzen"

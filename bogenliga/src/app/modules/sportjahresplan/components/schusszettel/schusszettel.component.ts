@@ -66,7 +66,9 @@ export class SchusszettelComponent implements OnInit {
     // am Anfang sind keine Änderungen
     this.dirtyFlag = false;
 
-    this.initSchuetzen();
+    // this.initSchuetzen();
+    this.initSchuetzenMatch1();
+    this.initSchuetzenMatch2();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
         const match1id = params['match1id'];
@@ -75,8 +77,11 @@ export class SchusszettelComponent implements OnInit {
             .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
-              if (this.match1.schuetzen.length <= 0 || this.match2.schuetzen.length <= 0) {
-                this.initSchuetzen();
+
+              if (this.match1.schuetzen.length <= 0) {
+                this.initSchuetzenMatch1();
+              } else if (this.match2.schuetzen.length <= 0) {
+                this.initSchuetzenMatch2();
               } else {
                 this.initSumSatz();
                 this.setPoints();
@@ -251,42 +256,69 @@ export class SchusszettelComponent implements OnInit {
 
   /**
    * Initializes schuetzen-array of matches.
-   * Pushes three arrays into schuetzen, then pushes five PasseDO in each of the three arrays.
+   * Pushes three arrays into schuetzen for match 1, then pushes five PasseDO in each of the three arrays.
    */
-  private initSchuetzen() {
+  private initSchuetzenMatch1() {
 
     // 1.löschen der Felder
     this.match1singlesatzpoints = [];
-    this.match2singlesatzpoints = [];
     this.match1.sumSatz = [];
-    this.match2.sumSatz = [];
 
     // 2. intialisieren der Felder mit 5 Einträgen des Werts 0
     for (let i = 0; i < 5; i++) {
       this.match1.sumSatz.push(0);
-      this.match2.sumSatz.push(0);
       this.match1singlesatzpoints.push(0);
-      this.match2singlesatzpoints.push(0);
     }
+    this.match1.schuetzen = [];
 
     // Vorbelegen der Felder mit den Daten des Matches
     for (let i = 0; i < 3; i++) {
       this.match1.schuetzen.push(new Array<PasseDO>());
-      this.match2.schuetzen.push(new Array<PasseDO>());
       for (let j = 0; j < 5; j++) {
         if (i === 0) {
           this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
         } else if (i === 1) {
           this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
         } else {
           this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
+        }
+      }
+    }
+  }
+
+
+
+  /**
+   * Initializes schuetzen-array of matches.
+   * Pushes three arrays into schuetzen for match 2, then pushes five PasseDO in each of the three arrays.
+   */
+  private initSchuetzenMatch2() {
+
+    // 1.löschen der Felder
+    this.match2singlesatzpoints = [];
+    this.match2.sumSatz = [];
+
+    // 2. intialisieren der Felder mit 5 Einträgen des Werts 0
+    for (let i = 0; i < 5; i++) {
+      this.match2.sumSatz.push(0);
+      this.match2singlesatzpoints.push(0);
+    }
+    this.match2.schuetzen = [];
+    // Vorbelegen der Felder mit den Daten des Matches
+    for (let i = 0; i < 3; i++) {
+      this.match2.schuetzen.push(new Array<PasseDO>());
+      for (let j = 0; j < 5; j++) {
+        if (i === 0) {
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
+        } else if (i === 1) {
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
+        } else {
           this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
         }
       }
     }
   }
+
 
   /**
    * Adds each ringzahlen of all three schuetzen of the match of the Satz and returns it.
