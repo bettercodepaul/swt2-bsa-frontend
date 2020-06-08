@@ -2,6 +2,7 @@ import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '../types/match-do-ext.class';
 import {PasseMapper} from './passe-mapper';
 import {VersionedDataTransferObject} from '@shared/data-provider';
+import {PasseDO} from '@sportjahresplan/types/passe-do.class';
 
 
 export function fromPayload(payload: VersionedDataTransferObject): MatchDTOExt {
@@ -38,6 +39,11 @@ export class MatchMapperExt {
             break;
         }
 
+      }
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 5 - schuetzen[i].length; j++) {
+          schuetzen[i].push(new PasseDO(null, payload.id, payload.mannschaftId, payload.wettkampfId, payload.nr, j + 1));
+        }
       }
       for (let i = 0; i < schuetzen[0].length; i++) {
         for (const passen of schuetzen) {
