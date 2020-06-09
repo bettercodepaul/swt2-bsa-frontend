@@ -71,7 +71,7 @@ export class RegionenComponent implements OnInit {
     if (currentRegion == null) {
       color = 'grey';
     } else if (currentRegion.regionTyp === 'BUNDESVERBAND') {
-      color = 'yellow';
+      color = 'orange';
     } else if (currentRegion.regionTyp === 'LANDESVERBAND') {
       color = 'red';
     } else if (currentRegion.regionTyp === 'BEZIRK') {
@@ -103,23 +103,17 @@ export class RegionenComponent implements OnInit {
 
     myChart
       .data(JSON.parse(data))
-      .width(window.innerWidth * chartMaxSizeMultiplikator)
-      .height(window.innerHeight * chartMaxSizeMultiplikator)
+      .width(window.innerWidth * chartDetailsSizeMultiplikator)
+      .height(window.innerHeight * chartDetailsSizeMultiplikator)
       .size('size')
       .color('color')
       .onNodeClick((node) => {
-        if (document.querySelector('.sunburst-tooltip') != null) {
-          document.querySelector('.sunburst-tooltip').remove(); }
         // what should happen after clicking the node
         myChart.focusOnNode(node);
 
-        if (node == null) {
-          myChart.width(window.innerWidth * chartMaxSizeMultiplikator);
-          myChart.height(window.innerHeight * chartMaxSizeMultiplikator);
-        } else {
           myChart.width(window.innerWidth * chartDetailsSizeMultiplikator);
           myChart.height(window.innerHeight * chartDetailsSizeMultiplikator);
-        }
+        //}
         this.showDetails(node);
 
         })
@@ -136,8 +130,8 @@ export class RegionenComponent implements OnInit {
           .height(window.innerHeight * chartDetailsSizeMultiplikator);
       } else {
         myChart
-          .width(window.innerWidth * chartMaxSizeMultiplikator)
-          .height(window.innerHeight * chartMaxSizeMultiplikator);
+          .width(window.innerWidth * chartDetailsSizeMultiplikator)
+          .height(window.innerHeight * chartDetailsSizeMultiplikator);
       }
     });
   }
