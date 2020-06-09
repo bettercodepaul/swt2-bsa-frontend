@@ -185,13 +185,13 @@ export abstract class BaseTableSorter {
 
     return function nullSort(rowA, rowB) {
 
-      let payloadA = rowA.getText(currentlySortedColumn);
-      let payloadB = rowB.getText(currentlySortedColumn);
+      const payloadA = rowA.getText(currentlySortedColumn);
+      const payloadB = rowB.getText(currentlySortedColumn);
       // Swappes input of an array if the payload rowA or row is null and the other not.
       // attention: null or undefined is changed to '' in .getText(currentlySortedColumn)
       if (payloadA === '' && payloadB !== '') {
         return -1 * turnAroundSortOrder;
-      } else if(payloadB === '' && payloadA !== '') {
+      } else if (payloadB === '' && payloadA !== '') {
         return turnAroundSortOrder;
       }
 
