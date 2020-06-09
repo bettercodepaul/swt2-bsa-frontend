@@ -164,6 +164,40 @@ export abstract class BaseTableSorter {
       return 0;
     };
   }
+  /**
+   * Sort function if you want to sort a array by null values first.
+   *
+   * @see sortTwoFunctions
+   *
+   * @param currentlySortedColumn
+   * @param overrideSortOrder is used, if the sort order of a previous sort function should adopted.
+   * Override sort order, if this function is the second one of the sortTwoFunctions method
+   * @returns {(rowA:any, rowB:any)=>(number|number|number)} sort function.
+   */
+  sortByNull(currentlySortedColumn: TableColumnConfig, overrideSortOrder?: TableColumnSortOrder) {
+    // Get the SortOrder from table-column-type.enum.ts
+    // Is used to make sure you can toggle the collumn.
+    let turnAroundSortOrder = this.setUpSortOrder(currentlySortedColumn.currentSortOrder);
+
+    if (overrideSortOrder) {
+      turnAroundSortOrder = this.setUpSortOrder(overrideSortOrder);
+    }
+
+    return function nullSort(rowA, rowB) {
+
+      let payloadA = rowA.getText(currentlySortedColumn);
+      let payloadB = rowB.getText(currentlySortedColumn);
+      // Swappes input of an array if the payload rowA or row is null and the other not.
+      // attention: null or undefined is changed to '' in .getText(currentlySortedColumn)
+      if (payloadA === '' && payloadB !== '') {
+        return -1 * turnAroundSortOrder;
+      } else if(payloadB === '' && payloadA !== '') {
+        return turnAroundSortOrder;
+      }
+
+      return 0;
+    };
+  }
 
   /**
    * Sort date objects
