@@ -4,5 +4,5 @@ export enum TableColumnType {
   DATE,
   TRANSLATION_KEY, // i18n key
   CUSTOM_MAPPING, // use a function to manipulate the cell value
-  NULLorNUMBER=5 // used in sportjahresplan.config.ts to make sure null values are sorted before numbers
+  NULLorNUMBER= 5 // used in sportjahresplan.config.ts to make sure null values are sorted before numbers
 }
