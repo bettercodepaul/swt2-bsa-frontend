@@ -111,9 +111,9 @@ export class RegionenComponent implements OnInit {
         // what should happen after clicking the node
         myChart.focusOnNode(node);
 
-          myChart.width(window.innerWidth * chartDetailsSizeMultiplikator);
-          myChart.height(window.innerHeight * chartDetailsSizeMultiplikator);
-        //}
+        myChart.width(window.innerWidth * chartDetailsSizeMultiplikator);
+        myChart.height(window.innerHeight * chartDetailsSizeMultiplikator);
+        // }
         this.showDetails(node);
 
         })
