@@ -18,7 +18,7 @@ export class DefaultTableSorter extends BaseTableSorter {
           return this.sortOnDate(currentlySortedColumn);
         // If its possible that null values appear in a collumn, use this if you want to make sure that null is
         // smaller than numbers if you use a sort algorithm.
-        case TableColumnType.NULLorNUMBER:
+        case TableColumnType.NULLORNUMBER:
           return this.sortByNull(currentlySortedColumn);
         case TableColumnType.TRANSLATION_KEY:
           return this.sortTwoFunctions(

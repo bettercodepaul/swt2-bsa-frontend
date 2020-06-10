@@ -168,6 +168,7 @@ export abstract class BaseTableSorter {
    * Sort function if you want to sort a array by null values first.
    *
    * @see sortTwoFunctions
+   * @see sorterImplementation in default-table-sorter.class.ts
    *
    * @param currentlySortedColumn
    * @param overrideSortOrder is used, if the sort order of a previous sort function should adopted.
@@ -187,15 +188,15 @@ export abstract class BaseTableSorter {
 
       const payloadA = rowA.getText(currentlySortedColumn);
       const payloadB = rowB.getText(currentlySortedColumn);
-      // Swappes input of an array if the payload rowA or row is null and the other not.
+      // Swappes inputs of an array if the payload rowA or row is null and the other not.
       // attention: null or undefined is changed to '' in .getText(currentlySortedColumn)
-      if (payloadA === '' && payloadB !== '') {
-        return -1 * turnAroundSortOrder;
-      } else if (payloadB === '' && payloadA !== '') {
+      if (payloadA !== '' && payloadB !== '' || payloadA === '' && payloadB === '') {
+        return 0;
+      } else if (payloadA === '') {
+        return - 1 * turnAroundSortOrder;
+      } else {
         return turnAroundSortOrder;
       }
-
-      return 0;
     };
   }
 
