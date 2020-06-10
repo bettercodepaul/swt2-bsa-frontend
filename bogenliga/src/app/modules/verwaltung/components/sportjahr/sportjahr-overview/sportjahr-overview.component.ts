@@ -70,6 +70,8 @@ export class SportjahrOverviewComponent extends CommonComponent implements OnIni
             this.sportjahrDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.rows = hideLoadingIndicator(this.rows, id);
           }
         });
 

@@ -71,6 +71,8 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
             this.veranstaltungDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.rows = hideLoadingIndicator(this.rows, id);
           }
         });
 
