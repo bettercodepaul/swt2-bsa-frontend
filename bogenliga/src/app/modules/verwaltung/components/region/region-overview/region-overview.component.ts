@@ -70,6 +70,8 @@ export class RegionOverviewComponent extends CommonComponent implements OnInit {
             this.regionDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.rows = hideLoadingIndicator(this.rows, id);
           }
         });
 
