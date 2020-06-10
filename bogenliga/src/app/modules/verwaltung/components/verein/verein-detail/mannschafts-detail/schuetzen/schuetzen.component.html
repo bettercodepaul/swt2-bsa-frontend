@@ -60,24 +60,6 @@
   </div>
 
     <!-- Vereine -->
-    <div class="form-group row">
-      <label for="memberVerein"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VEREINE.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-9">
-        <select class="form-control"
-               id="memberVerein"
-               name="memberVerein"
-               #memberVerein="ngModel"
-               [(ngModel)]="filterVerein"
-               (ngModelChange) = "onSearch()">
-          <option [ngValue]="emptyVerein">{{emptyVerein.name}}</option>
-          <option [ngValue]="verein" *ngFor="let verein of vereine"> {{verein.name}}</option>
-        </select>
-      </div>
-    </div>
-
     <!-- Filter zurücksetzen -->
     <div class="form-group row">
       <div class="col-sm-auto button-box">
