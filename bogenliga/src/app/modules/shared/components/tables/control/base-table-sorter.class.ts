@@ -177,7 +177,7 @@ export abstract class BaseTableSorter {
    */
   sortByNull(currentlySortedColumn: TableColumnConfig, overrideSortOrder?: TableColumnSortOrder) {
     // Get the SortOrder from table-column-type.enum.ts
-    // Is used to make sure you can toggle the collumn.
+    // Is used to make sure you can toggle the column.
     let turnAroundSortOrder = this.setUpSortOrder(currentlySortedColumn.currentSortOrder);
 
     if (overrideSortOrder) {
@@ -188,12 +188,12 @@ export abstract class BaseTableSorter {
 
       const payloadA = rowA.getText(currentlySortedColumn);
       const payloadB = rowB.getText(currentlySortedColumn);
-      // Swappes inputs of an array if the payload rowA or row is null and the other not.
+      // Swap inputs of an array if the payload rowA or row is null and the other not.
       // attention: null or undefined is changed to '' in .getText(currentlySortedColumn)
       if (payloadA !== '' && payloadB !== '' || payloadA === '' && payloadB === '') {
         return 0;
       } else if (payloadA === '') {
-        return - 1 * turnAroundSortOrder;
+        return -1 * turnAroundSortOrder;
       } else {
         return turnAroundSortOrder;
       }
