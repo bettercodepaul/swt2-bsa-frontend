@@ -425,9 +425,14 @@
               class="btn btn-primary saveButton">Speichern
       </button>
 
-      <button class="btn btn-primary printButton"
-              onclick="window.print();return false;">Drucken
-      </button>
+      <bla-download-button
+        class="btn"
+        [id]="'downloadMatchSchusszettel'"
+        [downloadUrl]="onButtonDownload('pdf/schusszettel_matches')"
+        [fileName]="'match_schusszettel.pdf'"
+        [disabled]="false">Drucken
+
+      </bla-download-button>
     </div>
 
     <div class="col-sm-2"> <!-- Spalte nächstes Match rechts -->
