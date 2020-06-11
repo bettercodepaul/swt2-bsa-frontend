@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
-import {BogenligaResponse} from '../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '../../../shared/data-provider';
 import {MatchProviderService} from '../../services/match-provider.service';
-import {isUndefined} from '../../../shared/functions';
+import {isUndefined} from '@shared/functions';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   Notification,
@@ -14,8 +14,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../shared/services';
-import {NumberOnlyDirective} from './number.directive';
-import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {environment} from '@environment';
 
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
 const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
@@ -422,5 +421,14 @@ export class SchusszettelComponent implements OnInit {
       sum += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
     }
     return sum;
+  }
+
+  public onButtonDownload(path: string): string {
+    return new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path(path)
+      .path(this.match1.id + '/' + this.match2.id)
+      .build();
   }
 }
