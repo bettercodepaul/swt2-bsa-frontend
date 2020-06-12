@@ -15,7 +15,6 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 import {VeranstaltungDataProviderService} from '../../../verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '../../../verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
-import { RouterModule, Routes } from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {
   Notification,
@@ -25,6 +24,9 @@ import {
   NotificationType,
   NotificationUserAction
 } from '@shared/services/notification';
+import {ActivatedRoute, Router} from '@angular/router';
+
+const ID_PATH_PARAM = 'id';
 
 @Component({
   selector: 'bla-vereine',
@@ -48,7 +50,10 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private tableContent: Array<VereinTabelleDO> = [];
   private providedID: number;
 
-  constructor(private wettkampfDataProvider: WettkampfDataProviderService,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
               private mannschaftsDataProvider: DsbMannschaftDataProviderService) {
