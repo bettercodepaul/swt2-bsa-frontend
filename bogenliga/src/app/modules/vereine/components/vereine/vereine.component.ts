@@ -74,7 +74,21 @@ export class VereineComponent extends CommonComponent implements OnInit {
     });
   }
 
+  // when a Verein gets selected from the list
+  public onSelect($event: VereinDO[]): void {
+    this.selectedDTOs = [];
+    this.selectedDTOs = $event;
+    if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
+      this.selectedVereinsId = this.selectedDTOs[0].id;
+    }
+    this.rows = [];
+    this.tableContent = [];
+    if (this.selectedVereinsId != null) {
+      this.loadTableRows();
+    }
 
+  }
+  
   // gets used by vereine.componet.html to show the selected vereins-name
   public getSelectedDTO(): string {
     if (isNullOrUndefined(this.selectedDTOs)) {
