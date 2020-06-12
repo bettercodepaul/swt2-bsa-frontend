@@ -15,6 +15,16 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 import {VeranstaltungDataProviderService} from '../../../verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '../../../verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
+import { RouterModule, Routes } from '@angular/router';
+import {isUndefined} from '@shared/functions';
+import {
+  Notification,
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
+} from '@shared/services/notification';
 
 @Component({
   selector: 'bla-vereine',
@@ -36,6 +46,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private remainingRequests: number;
   private remainingMannschaftsRequests: number;
   private tableContent: Array<VereinTabelleDO> = [];
+  private providedID: number;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -45,24 +56,17 @@ export class VereineComponent extends CommonComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Bin in Vereine');
     this.loadVereine();
+    this.loading = true;
+    this.notificationService.discardNotification();
+    this.route.params.subscribe((params) => {
+      if (!isUndefined(params[ID_PATH_PARAM])) {
+        this.providedID = params[ID_PATH_PARAM];
+        console.log("This.providedID: " + this.providedID);
 
-
-  }
-
-  // when a Verein gets selected from the list
-  public onSelect($event: VereinDO[]): void {
-    this.selectedDTOs = [];
-    this.selectedDTOs = $event;
-    if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
-      this.selectedVereinsId = this.selectedDTOs[0].id;
-    }
-    this.rows = [];
-    this.tableContent = [];
-    if (this.selectedVereinsId != null) {
-      this.loadTableRows();
-    }
-
+      }
+    });
   }
 
 
