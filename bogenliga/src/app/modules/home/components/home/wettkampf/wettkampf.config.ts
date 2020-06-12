@@ -1,4 +1,5 @@
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 
 export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
 
@@ -24,5 +25,9 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       width:          20,
     }
   ],
+  actions: {
+    actionTypes: [TableActionType.DOWNLOAD],
+    width: 6
+  }
 
 };
