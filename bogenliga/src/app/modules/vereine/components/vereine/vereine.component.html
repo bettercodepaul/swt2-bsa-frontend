@@ -19,12 +19,17 @@
   </div>
 
   <div class="row">
-    <bla-data-table (onDeleteClicked)="onDelete($event)"
-                    (onEditClicked)="onEdit($event)"
-                    (onViewClicked)="onView($event)"
+    <bla-data-table
                     [config]="config_table"
                     [loading]="loadingTable"
-                    [rows]="rows">
+                    [rows]="rows"
+                    (onDownloadEntry)="onDownload($event)">
+      <!-- Is currently not in use/implemented
+                    (onDeleteClicked)="onDelete($event)"
+                    (onEditClicked)="onEdit($event)"
+                    (onViewClicked)="onView($event)"
+      -->
+
     </bla-data-table>
   </div>
 
