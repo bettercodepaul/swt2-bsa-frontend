@@ -5,19 +5,19 @@
   <div class="match1 print">
 
     <div class="row">
-      <div class="match col-3">
-        <h1>{{match1.mannschaftName}}</h1>
+      <div class="match_col-3">
+        <h2>{{match1.mannschaftName}}</h2>
         <h2>{{match1.nr}}. Match</h2>
       </div>
-      <div class="mannschaften col-3">
-        <h3>{{match1.mannschaftName}}</h3>
-        <h3>gegen</h3>
-        <h3>{{match2.mannschaftName}}</h3>
+      <div class="mannschaften_col-3">
+        <h2>{{match1.mannschaftName}}</h2>
+        <h2>gegen</h2>
+        <h2>{{match2.mannschaftName}}</h2>
       </div>
       <div class="small_Table col-6">
         <table class="table table-responsive thead-light table-striped"
                id="punktetabelle"
-               style="width:100%">
+               style="max-width:100%">
           <tr>
             <td *ngFor="let sum of match1singlesatzpoints; let i = index">
               <label>{{i + 1}}. Satz</label>
@@ -222,14 +222,14 @@
   <!-- match2 -->
   <div class="match2 print">
     <div class="row">
-      <div id="henlo" class="match col-3">
-        <h1>{{match2.mannschaftName}}</h1>
+      <div id="henlo" class="match_col-3">
+        <h2>{{match2.mannschaftName}}</h2>
         <h2>{{match2.nr}}. Match</h2>
       </div>
-      <div class="mannschaften col-3">
-        <h3>{{match1.mannschaftName}}</h3>
-        <h3>gegen</h3>
-        <h3>{{match2.mannschaftName}}</h3>
+      <div class="mannschaften_col-3">
+        <h2>{{match1.mannschaftName}}</h2>
+        <h2>gegen</h2>
+        <h2>{{match2.mannschaftName}}</h2>
       </div>
       <div class="small_Table col-6">
         <table class="table table-responsive thead-light table-striped"
