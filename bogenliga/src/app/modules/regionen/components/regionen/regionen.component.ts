@@ -204,7 +204,7 @@ export class RegionenComponent implements OnInit {
 
   public onSelectVerein(event: VereinDO): void {
     this.selectedVereinDO = event[0];
-    this.router.navigateByUrl('/verwaltung/vereine/' + this.selectedVereinDO.id);
+    this.router.navigateByUrl('/vereine/' + this.selectedVereinDO.id);
   }
 
   public onSelectLiga(event: LigaDO): void {
