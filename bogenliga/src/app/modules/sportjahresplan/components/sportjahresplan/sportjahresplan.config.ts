@@ -67,12 +67,14 @@ export const MATCH_TABLE_CONFIG: TableConfig = {
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.BEGEGNUNG',
       propertyName:   'begegnung',
-      width:          5,
+      width:          5
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.MATCHPUNKTE',
       propertyName:   'matchpunkte',
-      width:          5,
+      type:            5,
+      currentSortOrder: 1,
+      width:           5
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.SATZPUNKTE',
