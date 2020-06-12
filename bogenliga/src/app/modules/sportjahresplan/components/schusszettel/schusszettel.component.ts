@@ -77,11 +77,18 @@ export class SchusszettelComponent implements OnInit {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
 
+              let shouldInitSumSatz = true;
               if (this.match1.schuetzen.length <= 0) {
                 this.initSchuetzenMatch1();
-              } else if (this.match2.schuetzen.length <= 0) {
+                shouldInitSumSatz = false;
+              }
+
+              if (this.match2.schuetzen.length <= 0) {
                 this.initSchuetzenMatch2();
-              } else {
+                shouldInitSumSatz = false;
+              }
+
+              if (shouldInitSumSatz) {
                 this.initSumSatz();
                 this.setPoints();
               }
@@ -188,6 +195,16 @@ export class SchusszettelComponent implements OnInit {
       // kopieren in jede Passe, damit Datenanlage möglich --> Schüsselwert für DB
       for (let i = 0; i < 3; i++) {
         for (let j = 1; j < 5; j++) {
+          if (this.match1.schuetzen[i][j].lfdNr <= 1) {
+            this.match1.schuetzen[i][j].lfdNr = j + 1;
+          }
+          if (this.match2.schuetzen[i][j].lfdNr <= 1) {
+            this.match2.schuetzen[i][j].lfdNr = j + 1;
+          }
+
+          this.match1.schuetzen[i][j].dsbMitgliedId = this.match1.schuetzen[i][0].dsbMitgliedId;
+          this.match2.schuetzen[i][j].dsbMitgliedId = this.match2.schuetzen[i][0].dsbMitgliedId;
+
           this.match1.schuetzen[i][j].schuetzeNr = this.match1.schuetzen[i][0].schuetzeNr;
           this.match2.schuetzen[i][j].schuetzeNr = this.match2.schuetzen[i][0].schuetzeNr;
         }
