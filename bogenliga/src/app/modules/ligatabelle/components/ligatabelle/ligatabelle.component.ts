@@ -45,7 +45,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   public selectedDTOs: VeranstaltungDO[];
   public multipleSelections = true;
   public veranstaltungen: VeranstaltungDO[];
-  public zwVeranstaltung: VeranstaltungDO[];
+  public zwVeranstaltung: VeranstaltungDTO[];
   public loadingVeranstaltungen = true;
   public loadingLigatabelle = false;
   public rowsLigatabelle: TableRow[];
@@ -69,11 +69,13 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     console.log('Bin im Liga');
     this.loadVeranstaltungen();
     this.loading = true;
+    this.providedID = undefined;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log(this.providedID);
+        /*
         let found: boolean;
         found = false;
         for (let i = 0; i < this.veranstaltungen.length && !found ; i++) {
@@ -87,10 +89,20 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
             console.log("nothing found!");
           }
         }
+         */
+        /*
+        this.veranstaltungsDataProvider.findById(this.providedID)
+          .then((response: BogenligaResponse<VeranstaltungDO[]>) => {this.zwVeranstaltung.push(response.payload);})
+          .catch(console.log("faild search"))
+         */
+        this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.providedID)
+          .then((response: VeranstaltungDTO[]) => {this.zwVeranstaltung.push(response.payload);})
+          .catch(console.log("faild search"))
       }
       else {
         console.log("no params");
       }
+
     } );
     console.log(this.providedID);
   }
