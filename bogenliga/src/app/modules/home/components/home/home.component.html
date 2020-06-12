@@ -34,7 +34,7 @@
             <bla-data-table [config]="config_table"
                             [rows]="rows"
                             [loading]="loadingTable"
-                            >
+                            (onDownloadEntry)="onDownload($event)">
             </bla-data-table>
           </div>
         </table>
