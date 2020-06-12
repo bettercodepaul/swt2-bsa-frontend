@@ -27,7 +27,8 @@ import {
   NotificationUserAction
 } from '@shared/services/notification';
 
-  const ID_PATH_PARAM = 'id';
+
+const ID_PATH_PARAM = 'id';
 
 @Component({
   selector: 'bla-vereine',
@@ -51,8 +52,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private tableContent: Array<VereinTabelleDO> = [];
   private providedID: number;
 
-  constructor(
-              private router: Router,
+  constructor(private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService,
               private wettkampfDataProvider: WettkampfDataProviderService,
