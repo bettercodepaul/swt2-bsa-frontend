@@ -70,6 +70,8 @@ export class BenutzerOverviewComponent extends CommonComponent implements OnInit
             this.benutzerDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rowsActive = hideLoadingIndicator(this.rowsActive, id));
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.rowsActive = hideLoadingIndicator(this.rowsActive, id);
           }
         });
 
