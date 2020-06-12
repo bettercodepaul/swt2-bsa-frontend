@@ -343,6 +343,8 @@ export class VeranstaltungDetailComponent extends CommonComponent implements OnI
             this.veranstaltungDataProvider.deleteById(id)
                 .then((response) => this.handleDeleteSuccess(response))
                 .catch((response) => this.handleDeleteFailure(response));
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.deleteLoading = false;
           }
         });
 
