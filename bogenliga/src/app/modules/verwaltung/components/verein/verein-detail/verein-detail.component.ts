@@ -8,7 +8,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../shared/components';
-import {BogenligaResponse} from '../../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -32,6 +32,8 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {forEach} from '@angular/router/src/utils/collection';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {environment} from '@environment';
+import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -250,6 +252,10 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         });
 
     this.notificationService.showNotification(notification);
+  }
+
+  public onDownload(versionedDataObject: VersionedDataObject): void {
+    console.log(this.currentVerein.id);
   }
 
 
