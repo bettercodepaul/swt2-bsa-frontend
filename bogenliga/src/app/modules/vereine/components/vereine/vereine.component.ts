@@ -88,7 +88,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
 
   }
-  
+
   // gets used by vereine.componet.html to show the selected vereins-name
   public getSelectedDTO(): string {
     if (isNullOrUndefined(this.selectedDTOs)) {
