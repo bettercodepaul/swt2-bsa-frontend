@@ -78,7 +78,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
         console.log(this.providedID);
 
 
-
+      /*
         this.veranstaltungsDataProvider.findById(this.providedID)
           .then((response: BogenligaResponse<VeranstaltungDTO>) => {this.handleGivenVeranstaltung(response); console.log(response.payload);});
         console.log(this.zwVeranstaltung);
@@ -87,6 +87,8 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
         zVeranstaltung.push(this.zwVeranstaltung);
         this.onSelect(zVeranstaltung);
 
+
+       */
       }
 
       else {
