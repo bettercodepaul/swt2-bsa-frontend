@@ -69,7 +69,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log("This.providedID: " + this.providedID);
-
+        this.selectedVereinsId = this.providedID;
       }
     });
   }
@@ -81,12 +81,15 @@ export class VereineComponent extends CommonComponent implements OnInit {
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVereinsId = this.selectedDTOs[0].id;
     }
+    this.changeVerein();
+  }
+
+  private changeVerein(){
     this.rows = [];
     this.tableContent = [];
     if (this.selectedVereinsId != null) {
       this.loadTableRows();
     }
-
   }
 
   // gets used by vereine.componet.html to show the selected vereins-name
