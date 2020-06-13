@@ -47,6 +47,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public loadingTable = false;
   public rows: TableRow[];
   private selectedVereinsId: number;
+  private selectedVereine: VereinDTO[];
   private remainingRequests: number;
   private remainingMannschaftsRequests: number;
   private tableContent: Array<VereinTabelleDO> = [];
@@ -64,6 +65,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     console.log('Bin in Vereine');
+    this.providedID = null;
     this.loadVereine();
     this.loading = true;
     this.notificationService.discardNotification();
@@ -71,11 +73,28 @@ export class VereineComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log("This.providedID: " + this.providedID);
-
+        this.selectedVereinsId = this.providedID;
       }
     });
   }
 
+  // when a Verein gets selected from the list
+  public onSelect($event: VereinDO[]): void {
+    this.selectedDTOs = [];
+    this.selectedDTOs = $event;
+    if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
+      this.selectedVereinsId = this.selectedDTOs[0].id;
+    }
+    this.changeVerein();
+  }
+
+  private changeVerein(){
+    this.rows = [];
+    this.tableContent = [];
+    if (this.selectedVereinsId != null) {
+      this.loadTableRows();
+    }
+  }
 
   // gets used by vereine.componet.html to show the selected vereins-name
   public getSelectedDTO(): string {
@@ -178,6 +197,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
 
   }
+
   private handleFindVeranstaltungFailure(response: BogenligaResponse<VeranstaltungDTO>): void {
     this.rows = [];
     this.loadingTable = false;
