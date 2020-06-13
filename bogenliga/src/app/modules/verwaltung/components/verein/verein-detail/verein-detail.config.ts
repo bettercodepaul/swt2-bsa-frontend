@@ -1,4 +1,4 @@
-import {CommonDialogConfig, OverviewDialogConfig} from '../../../../shared/components/dialogs';
+import {CommonDialogConfig} from '../../../../shared/components/dialogs';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
@@ -24,7 +24,7 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
       },
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOAD],
       width:       6
     },
 
