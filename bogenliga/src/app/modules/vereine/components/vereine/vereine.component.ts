@@ -42,9 +42,10 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public multipleSelections = true;
   public vereine: VereinDO[];
   public loadingVereine = true;
-  public loadingTable = false;
+  public loadingTable = true;
   public rows: TableRow[];
   private selectedVereinsId: number;
+  private selectedVereine: VereinDTO[];
   private remainingRequests: number;
   private remainingMannschaftsRequests: number;
   private tableContent: Array<VereinTabelleDO> = [];
@@ -62,6 +63,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     console.log('Bin in Vereine');
+    this.providedID = null;
     this.loadVereine();
     this.loading = true;
     this.notificationService.discardNotification();
@@ -70,7 +72,16 @@ export class VereineComponent extends CommonComponent implements OnInit {
         this.providedID = params[ID_PATH_PARAM];
         console.log("This.providedID: " + this.providedID);
         this.selectedVereinsId = this.providedID;
+        console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
+
+        let zwVerein: VereinDTO;
+       this.vereinDataProvider.findById(this.selectedVereinsId)
+           .then((response: BogenligaResponse<VereinDTO>) => {zwVerein = response.payload; console.log('Provided Verein: ' + response.payload)});
+        this.selectedVereine = null;
+        this.selectedVereine.push(zwVerein);
+        console.log('Abgespeicherte Vereine: ' + this.selectedVereine);
       }
+      this.onSelect(this.selectedVereine);
     });
   }
 
@@ -89,7 +100,13 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.tableContent = [];
     if (this.selectedVereinsId != null) {
       this.loadTableRows();
+    }else{
+      console.log('Fehler bei VereinsID');
     }
+  }
+
+  private changeAnzeige(){
+
   }
 
   // gets used by vereine.componet.html to show the selected vereins-name
@@ -128,6 +145,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   // starts the backend-calls to search for the table content
   private loadTableRows() {
+    console.log('lade Tabelen Reihen');
     this.loadingTable = true;
     this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
         .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenSuccess(response))
@@ -146,6 +164,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     if (response.payload.length <= 0) {
       this.loadingTable = false;
     }
+    console.log(response.payload.length);
     for (i = 0; i < response.payload.length; i++) {
       const mannschaftsName: string = this.selectedDTOs[0].name + ' ' + response.payload[i].nummer + '. Mannschaft';
       this.wettkampfDataProvider.findAllWettkaempfeByMannschaftsId(response.payload[i].id)
@@ -157,6 +176,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   private handleFindWettkaempfeFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
     this.rows = [];
+    console.log('Tabelle laden gescheitert');
     this.loadingTable = false;
   }
 
