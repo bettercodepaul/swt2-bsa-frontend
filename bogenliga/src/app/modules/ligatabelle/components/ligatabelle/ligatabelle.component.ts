@@ -45,7 +45,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   public selectedDTOs: VeranstaltungDO[];
   public multipleSelections = true;
   public veranstaltungen: VeranstaltungDO[];
-  public zwVeranstaltung: VeranstaltungDTO[];
+  public zwVeranstaltung: VeranstaltungDTO;
   public loadingVeranstaltungen = true;
   public loadingLigatabelle = false;
   public rowsLigatabelle: TableRow[];
@@ -75,30 +75,18 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log(this.providedID);
-        /*
-        let found: boolean;
-        found = false;
-        for (let i = 0; i < this.veranstaltungen.length && !found ; i++) {
-          if (this.veranstaltungen[i].ligaId == this.providedID){
-            found = true;
-            this.zwVeranstaltung = [];
-            this.zwVeranstaltung.push(this.veranstaltungen[i]);
-            //console.log(this.zwVeranstaltung[0]);
-            this.onSelect(this.zwVeranstaltung);
-          } else {
-            console.log("nothing found!");
-          }
-        }
-         */
-        /*
+        this.changeVeranstaltung();
+
         this.veranstaltungsDataProvider.findById(this.providedID)
-          .then((response: BogenligaResponse<VeranstaltungDO[]>) => {this.zwVeranstaltung.push(response.payload);})
-          .catch(console.log("faild search"))
-         */
-        this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.providedID)
-          .then((response: VeranstaltungDTO[]) => {this.zwVeranstaltung.push(response.payload);})
-          .catch(console.log("faild search"))
+          .then((response: BogenligaResponse<VeranstaltungDTO>) => {this.handleGivenVeranstaltung(response); console.log(response.payload);});
+        console.log(this.zwVeranstaltung);
+        let zVeranstaltung:  VeranstaltungDTO[];
+        zVeranstaltung = [];
+        zVeranstaltung.push(this.zwVeranstaltung);
+        this.onSelect(zVeranstaltung);
+
       }
+
       else {
         console.log("no params");
       }
@@ -107,6 +95,18 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     console.log(this.providedID);
   }
 
+  private handleGivenVeranstaltung(response: BogenligaResponse<VeranstaltungDTO>){
+    this.zwVeranstaltung = null;
+    console.log(this.zwVeranstaltung);
+    this.zwVeranstaltung.ligaId = response.payload.ligaId;
+    console.log('Response: ' + response.payload.ligaId);
+    console.log('zwVeranstaltung: ' +this.zwVeranstaltung.ligaId);
+    this.zwVeranstaltung.id = response.payload.id;
+    this.zwVeranstaltung.ligaleiterEmail = response.payload.ligaleiterEmail;
+    this.zwVeranstaltung.ligaName = response.payload.ligaName;
+}
+
+
   // when a Veranstaltung gets selected from the list
   // load LigaTabelle
   public onSelect($event: VeranstaltungDO[]): void {
@@ -114,15 +114,15 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     buttonVisibility.style.display = 'block';
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
+    if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
+      this.selectedVeranstaltungId = this.selectedDTOs[0].id;
+      this.selectedVeranstaltungName = this.selectedDTOs[0].name;
+    }
     this.changeVeranstaltung();
   }
 
   // Changes the displayed Veranstaltung with the current selected one from selectedDTOs.
   private changeVeranstaltung(): void {
-    if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
-      this.selectedVeranstaltungId = this.selectedDTOs[0].id;
-      this.selectedVeranstaltungName = this.selectedDTOs[0].name;
-    }
     this.rowsLigatabelle = [];
     this.tableContent = [];
     if (this.selectedVeranstaltungId != null) {
