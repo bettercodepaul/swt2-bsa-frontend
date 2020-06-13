@@ -23,6 +23,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '@shared/services/notification';
+import {forEach} from '@angular/router/src/utils/collection';
 
 const ID_PATH_PARAM = 'id';
 
@@ -75,7 +76,8 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log(this.providedID);
-        this.changeVeranstaltung();
+
+
 
         this.veranstaltungsDataProvider.findById(this.providedID)
           .then((response: BogenligaResponse<VeranstaltungDTO>) => {this.handleGivenVeranstaltung(response); console.log(response.payload);});
@@ -94,17 +96,6 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     } );
     console.log(this.providedID);
   }
-
-  private handleGivenVeranstaltung(response: BogenligaResponse<VeranstaltungDTO>){
-    this.zwVeranstaltung = null;
-    console.log(this.zwVeranstaltung);
-    this.zwVeranstaltung.ligaId = response.payload.ligaId;
-    console.log('Response: ' + response.payload.ligaId);
-    console.log('zwVeranstaltung: ' +this.zwVeranstaltung.ligaId);
-    this.zwVeranstaltung.id = response.payload.id;
-    this.zwVeranstaltung.ligaleiterEmail = response.payload.ligaleiterEmail;
-    this.zwVeranstaltung.ligaName = response.payload.ligaName;
-}
 
 
   // when a Veranstaltung gets selected from the list
