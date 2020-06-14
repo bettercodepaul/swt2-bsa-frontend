@@ -203,6 +203,7 @@ export class RegionenComponent implements OnInit {
     this.ligen = [];
     response.payload.forEach((responseItem) =>  {
        if (responseItem.regionId === this.currentRegionDO.id) {
+         console.log(responseItem);
         this.ligen.push(responseItem);
       }
     });
