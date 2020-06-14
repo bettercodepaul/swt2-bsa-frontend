@@ -131,7 +131,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
     this.currentWettkampftag_1.wettkampfDisziplinId = 0;
     this.currentWettkampftag_1.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
     this.currentWettkampftag_1.kampfrichterID = this.selectedKampfrichterTag1[0].id;
-    console.log("Selected kampfrichter-ID: " + this.currentWettkampftag_1.kampfrichterID);
+    console.log('Selected kampfrichter-ID: ' + this.currentWettkampftag_1.kampfrichterID);
     if (this.currentWettkampftag_1.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
       this.currentWettkampftag_1.id = this.saveWettkampftag(this.currentWettkampftag_1);
