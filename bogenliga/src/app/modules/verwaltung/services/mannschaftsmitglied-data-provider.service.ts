@@ -195,7 +195,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
         });
     });
   }
-  public save (payload: MannschaftsMitgliedDO) : Promise<BogenligaResponse<MannschaftsMitgliedDO>>{
+  public save(payload: MannschaftsMitgliedDO): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
     return new Promise((resolve, reject) => {
       this.restClient.POST<MannschaftsMitgliedDO>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
           .then((data: MannschaftsMitgliedDO) => {
