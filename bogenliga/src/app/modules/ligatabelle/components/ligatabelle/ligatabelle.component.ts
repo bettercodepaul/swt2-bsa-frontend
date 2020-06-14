@@ -11,7 +11,7 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {} from '@shared/components/forms/';
 import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis-do.class';
 import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wettkampf-ergebnis-dto.class';
-//import {NotificationService} from '@shared/services';
+// import {NotificationService} from '@shared/services';
 import { RouterModule, Routes } from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {Subscription} from 'rxjs';
@@ -52,7 +52,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   public rowsLigatabelle: TableRow[];
   private tableContent: Array<LigatabelleErgebnisDO> = [];
   private remainingLigatabelleRequests: number;
-  public providedID : number;
+  public providedID: number;
 
 
   constructor(private router: Router,
@@ -89,10 +89,8 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
 
 
        */
-      }
-
-      else {
-        console.log("no params");
+      } else {
+        console.log('no params');
       }
 
     } );
