@@ -15,6 +15,8 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 import {VeranstaltungDataProviderService} from '../../../verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '../../../verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {ActivatedRoute, Router, RouterModule, Routes} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {
   Notification,
@@ -24,9 +26,8 @@ import {
   NotificationType,
   NotificationUserAction
 } from '@shared/services/notification';
-import {ActivatedRoute, Router} from '@angular/router';
 
-const ID_PATH_PARAM = 'id';
+  const ID_PATH_PARAM = 'id';
 
 @Component({
   selector: 'bla-vereine',
@@ -42,16 +43,16 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public multipleSelections = true;
   public vereine: VereinDO[];
   public loadingVereine = true;
-  public loadingTable = true;
+  public loadingTable = false;
   public rows: TableRow[];
   private selectedVereinsId: number;
-  private selectedVereine: VereinDTO[];
   private remainingRequests: number;
   private remainingMannschaftsRequests: number;
   private tableContent: Array<VereinTabelleDO> = [];
   private providedID: number;
 
-  constructor(private router: Router,
+  constructor(
+              private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService,
               private wettkampfDataProvider: WettkampfDataProviderService,
@@ -63,7 +64,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     console.log('Bin in Vereine');
-    this.providedID = null;
     this.loadVereine();
     this.loading = true;
     this.notificationService.discardNotification();
@@ -71,43 +71,11 @@ export class VereineComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log("This.providedID: " + this.providedID);
-        this.selectedVereinsId = this.providedID;
-        console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
 
-        let zwVerein: VereinDTO;
-       this.vereinDataProvider.findById(this.selectedVereinsId)
-           .then((response: BogenligaResponse<VereinDTO>) => {zwVerein = response.payload; console.log('Provided Verein: ' + response.payload)});
-        this.selectedVereine = null;
-        this.selectedVereine.push(zwVerein);
-        console.log('Abgespeicherte Vereine: ' + this.selectedVereine);
       }
-      this.onSelect(this.selectedVereine);
     });
   }
 
-  // when a Verein gets selected from the list
-  public onSelect($event: VereinDO[]): void {
-    this.selectedDTOs = [];
-    this.selectedDTOs = $event;
-    if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
-      this.selectedVereinsId = this.selectedDTOs[0].id;
-    }
-    this.changeVerein();
-  }
-
-  private changeVerein(){
-    this.rows = [];
-    this.tableContent = [];
-    if (this.selectedVereinsId != null) {
-      this.loadTableRows();
-    }else{
-      console.log('Fehler bei VereinsID');
-    }
-  }
-
-  private changeAnzeige(){
-
-  }
 
   // gets used by vereine.componet.html to show the selected vereins-name
   public getSelectedDTO(): string {
@@ -135,6 +103,15 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public onDelete(versionedDataObject: VersionedDataObject): void {
   }
 
+  public onDownload($event: WettkampfDO): void {
+
+    const str = $event.wettkampfOrt;
+    let splits: string[];
+    splits = str.split(', ', 5);
+    const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
+    window.open(locationUrl);
+
+  }
   // backend-call to get the list of vereine
   private loadVereine(): void {
     this.vereine = [];
@@ -144,8 +121,8 @@ export class VereineComponent extends CommonComponent implements OnInit {
   }
 
   // starts the backend-calls to search for the table content
+  // table date will be loaded backwards (from right to left)
   private loadTableRows() {
-    console.log('lade Tabelen Reihen');
     this.loadingTable = true;
     this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
         .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenSuccess(response))
@@ -164,7 +141,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
     if (response.payload.length <= 0) {
       this.loadingTable = false;
     }
-    console.log(response.payload.length);
     for (i = 0; i < response.payload.length; i++) {
       const mannschaftsName: string = this.selectedDTOs[0].name + ' ' + response.payload[i].nummer + '. Mannschaft';
       this.wettkampfDataProvider.findAllWettkaempfeByMannschaftsId(response.payload[i].id)
@@ -176,7 +152,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   private handleFindWettkaempfeFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
     this.rows = [];
-    console.log('Tabelle laden gescheitert');
     this.loadingTable = false;
   }
 
@@ -189,12 +164,13 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
     for (const wettkampf of response.payload) {
       const wettkampfTag: string = wettkampf.wettkampfTag + '. Wettkampftag';
+      const wettkampfOrt: string = wettkampf.wettkampfOrt;
       this.veranstaltungsDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
-          .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag))
+          .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag, wettkampfOrt ))
           .catch((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(responseb));
     }
     if (response.payload.length === 0) {
-      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '' , mannschaftsName);
+      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '', '' , mannschaftsName);
       this.tableContent.push(tableContentRow);
     }
     if (this.remainingMannschaftsRequests <= 0) {
@@ -202,15 +178,14 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
 
   }
-
   private handleFindVeranstaltungFailure(response: BogenligaResponse<VeranstaltungDTO>): void {
     this.rows = [];
     this.loadingTable = false;
   }
 
-  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string): void {
-    console.log('Content:' + response.payload.name + wettkampfTag + mannschaftsName);
-    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, mannschaftsName);
+  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string, wettkampfOrt: string): void {
+    console.log('Content:' + response.payload.name + wettkampfTag +  mannschaftsName);
+    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, wettkampfOrt, mannschaftsName);
     this.tableContent.push(tableRowContent);
     this.remainingRequests -= 1;
 
