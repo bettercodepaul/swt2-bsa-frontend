@@ -16,6 +16,7 @@ import {VeranstaltungDataProviderService} from '../../../verwaltung/services/ver
 import {VeranstaltungDTO} from '../../../verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+
 import {ActivatedRoute, Router, RouterModule, Routes} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {
@@ -29,6 +30,7 @@ import {
 
 
 const ID_PATH_PARAM = 'id';
+
 
 @Component({
   selector: 'bla-vereine',
@@ -197,7 +199,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
 
   }
-
   private handleFindVeranstaltungFailure(response: BogenligaResponse<VeranstaltungDTO>): void {
     this.rows = [];
     this.loadingTable = false;
