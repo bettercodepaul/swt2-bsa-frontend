@@ -358,7 +358,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.mannschaftMitgliedProvider.findByMemberAndTeamId(member.id, this.currentMannschaft.id)
       .then(
         (response: BogenligaResponse<MannschaftsmitgliedDTO>) => {
-          console.log("payload:");
+          console.log('payload:');
           console.log(response.payload);
           this.currentMannschaftsMitglied.dsbMitgliedId = response.payload.dsbMitgliedId;
           this.currentMannschaftsMitglied.dsbMitgliedEingesetzt = response.payload.dsbMitgliedEingesetzt;
@@ -368,7 +368,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
           this.currentMannschaftsMitglied.rueckennummer =  5;
           /*this.mannschaftMitgliedProvider.save(this.currentMannschaftsMitglied);
           this.members.set(response.payload.dsbMitgliedId, this.currentMannschaftsMitglied);*/
-          console.log("members:");
+          console.log('members:');
           console.log(this.members);
         })
         .catch((response: BogenligaResponse<MannschaftsmitgliedDTO>) => console.log(response.payload));
