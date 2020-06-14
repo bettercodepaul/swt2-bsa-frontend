@@ -74,7 +74,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
-        console.log("This.providedID: " + this.providedID);
+        console.log('This.providedID: ' + this.providedID);
         this.selectedVereinsId = this.providedID;
       }
     });
@@ -90,7 +90,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.changeVerein();
   }
 
-  private changeVerein(){
+  private changeVerein() {
     this.rows = [];
     this.tableContent = [];
     if (this.selectedVereinsId != null) {
