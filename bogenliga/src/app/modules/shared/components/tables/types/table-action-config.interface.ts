@@ -1,4 +1,5 @@
 import {TableActionType} from './table-action-type.enum';
+import {UserPermission} from '@shared/services';
 
 export interface TableActionConfig {
   actionTypes: TableActionType[]; // defines the icon, the label text and the action method calls
@@ -6,4 +7,5 @@ export interface TableActionConfig {
   actionColumnLocalizationKey?: string; // optional: Action column translation key
   icons?: any; // optional: Override default action icons
   localizationKeys?: any; // optional: Override default action icon title
+  permissions ?: [[UserPermission]]
 }
