@@ -624,10 +624,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
     let URL :string = new UriBuilder()
-      .fromPath('v1/download')
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
       .path('pdf/rueckennummer')
-      .path('?mannschaftid=' + this.currentMannschaft.id)
-      .path('?dsbmitgliedid=' + versionedDataObject.id)
+      .path('?mannschaftid=' + this.currentMannschaft.id + '&dsbmitgliedid=' + versionedDataObject.id)
       .build();
     this.downloadService.download(URL, 'rueckennummer.pdf', this.aElementRef)
         .then((response: BogenligaResponse<string>) => console.log(response))
