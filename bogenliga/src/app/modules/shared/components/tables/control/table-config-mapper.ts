@@ -32,7 +32,13 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     download: {
       active: 'download',
       inactive: 'download'
+    },
+    downloadrueckennummer: {
+      active: 'download',
+      inactive: 'download'
     }
+
+
   },
   localizationKeys: {
     actionColum: 'TABLE.HEADERS.ACTION',
@@ -40,7 +46,8 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     delete:      'TABLE.ACTIONS.DELETE',
     view:        'TABLE.ACTIONS.VIEW',
     add:         'TABLE.ACTIONS.ADD',
-    download: 'TABLE.ACTIONS.DOWNLOAD'
+    download: 'TABLE.ACTIONS.DOWNLOAD',
+    downloadrueckennummer: 'TABLE.ACTIONS.DOWNLOADRUECKENNUMMER'
   }
 };
 

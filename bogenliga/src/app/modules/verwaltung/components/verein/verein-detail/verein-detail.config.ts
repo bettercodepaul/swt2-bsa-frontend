@@ -24,7 +24,7 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
       },
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOAD],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOADRUECKENNUMMER],
       width:       6
     },
 
