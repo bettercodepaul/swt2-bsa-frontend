@@ -2,6 +2,7 @@ import {OverviewDialogConfig} from '@shared/components';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {TableColumnSortOrder} from '@shared/components/tables/types/table-column-sort-order.enum';
 import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
+import {UserPermission} from '@shared/services';
 
 export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -36,5 +37,10 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-  }
+    //Todo add can_modify_MY_LIGA same for delete
+    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
+    deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
+  },
+  //TODO exchange modify for create
+  createPermission :[UserPermission.CAN_MODIFY_STAMMDATEN]
 };
