@@ -257,7 +257,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  public onDownload(versionedDataObject: VersionedDataObject): void {
+  public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
     let URL :string = new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')

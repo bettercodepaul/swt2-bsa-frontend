@@ -34,7 +34,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   @Output() public onAddEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onRowEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadEntry = new EventEmitter<VersionedDataObject>();
-  @Output() public onDownloadRuekennummerEntry = new EventEmitter<VersionedDataObject>();
+  @Output() public onDownloadRueckennummerEntry = new EventEmitter<VersionedDataObject>();
 
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
@@ -186,6 +186,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
    */
   public determineIcon(row: TableRow, action: TableActionType): string {
     let iconSelector = TableActionType[action].toLowerCase();
+    if(action === TableActionType.DOWNLOADRUECKENNUMMER){
+      iconSelector = TableActionType[TableActionType.DOWNLOAD].toLowerCase();
+    }
     let iconStateSelector = 'active';
 
 
@@ -340,5 +343,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
 
   private onDownload(affectedRowPayload: VersionedDataObject) {
     this.onDownloadEntry.emit(affectedRowPayload);
+  }
+
+  private onDownloadRueckennummer(affectedRowPayload: VersionedDataObject) {
+    this.onDownloadRueckennummerEntry.emit(affectedRowPayload);
   }
 }
