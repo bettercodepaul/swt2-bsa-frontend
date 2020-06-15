@@ -130,7 +130,8 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
     this.currentWettkampftag_1.wettkampfTag = 1;
     this.currentWettkampftag_1.wettkampfDisziplinId = 0;
     this.currentWettkampftag_1.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
-
+    this.currentWettkampftag_1.kampfrichterID = this.selectedKampfrichterTag1[0].id;
+    console.log('Selected kampfrichter-ID: ' + this.currentWettkampftag_1.kampfrichterID);
     if (this.currentWettkampftag_1.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
       this.currentWettkampftag_1.id = this.saveWettkampftag(this.currentWettkampftag_1);
@@ -193,7 +194,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
             console.log('Saved with id: ' + response.payload.id);
 
             wettkampfDO.id = response.payload.id;
-
+            console.log(wettkampfDO);
             const notification: Notification = {
               id:          NOTIFICATION_SAVE_VERANSTALTUNG,
               title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',

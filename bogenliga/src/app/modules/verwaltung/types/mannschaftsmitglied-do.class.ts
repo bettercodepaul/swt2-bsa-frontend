@@ -7,4 +7,5 @@ export class MannschaftsMitgliedDO implements VersionedDataObject {
   mannschaftsId: number;
   dsbMitgliedId: number;
   dsbMitgliedEingesetzt: number;
+  rueckennummer: number;
 }

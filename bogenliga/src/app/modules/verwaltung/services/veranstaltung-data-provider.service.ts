@@ -84,6 +84,7 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     });
   }
 
+
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<VeranstaltungDO>> {
     // return promise
     // sign in success -> resolve promise
