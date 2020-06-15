@@ -31,7 +31,7 @@ describe('Sidebar', () => {
     expect(sidebar.getTextHome()).toEqual('HOME');
     expect(sidebar.getTextVerwaltung()).toEqual('VERWALTUNG');
     expect(sidebar.getTextWettkaempfe()).toEqual('WETTKAEMPFE');
-    expect(sidebar.getTextSportjahresplan()).toEqual('SPORTJAHRESPLAN');
+    expect(sidebar.getTextSportjahresplan()).toEqual('WETTKAMPFDURCHFÜHRUNG');
   });
 
   it('should have icons before and after click', () => {
