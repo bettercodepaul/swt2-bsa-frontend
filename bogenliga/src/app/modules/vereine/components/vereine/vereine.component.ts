@@ -17,6 +17,21 @@ import {VeranstaltungDTO} from '../../../verwaltung/types/datatransfer/veranstal
 import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 
+import {ActivatedRoute, Router, RouterModule, Routes} from '@angular/router';
+import {isUndefined} from '@shared/functions';
+import {
+  Notification,
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
+} from '@shared/services/notification';
+
+
+const ID_PATH_PARAM = 'id';
+
+
 @Component({
   selector: 'bla-vereine',
   templateUrl: './vereine.component.html',
@@ -34,11 +49,16 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public loadingTable = false;
   public rows: TableRow[];
   private selectedVereinsId: number;
+  private selectedVereine: VereinDTO[];
   private remainingRequests: number;
   private remainingMannschaftsRequests: number;
   private tableContent: Array<VereinTabelleDO> = [];
+  private providedID: number;
 
-  constructor(private wettkampfDataProvider: WettkampfDataProviderService,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
               private mannschaftsDataProvider: DsbMannschaftDataProviderService) {
@@ -46,9 +66,18 @@ export class VereineComponent extends CommonComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Bin in Vereine');
+    this.providedID = null;
     this.loadVereine();
-
-
+    this.loading = true;
+    this.notificationService.discardNotification();
+    this.route.params.subscribe((params) => {
+      if (!isUndefined(params[ID_PATH_PARAM])) {
+        this.providedID = params[ID_PATH_PARAM];
+        console.log('This.providedID: ' + this.providedID);
+        this.selectedVereinsId = this.providedID;
+      }
+    });
   }
 
   // when a Verein gets selected from the list
@@ -58,14 +87,16 @@ export class VereineComponent extends CommonComponent implements OnInit {
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVereinsId = this.selectedDTOs[0].id;
     }
+    this.changeVerein();
+  }
+
+  private changeVerein() {
     this.rows = [];
     this.tableContent = [];
     if (this.selectedVereinsId != null) {
       this.loadTableRows();
     }
-
   }
-
 
   // gets used by vereine.componet.html to show the selected vereins-name
   public getSelectedDTO(): string {
