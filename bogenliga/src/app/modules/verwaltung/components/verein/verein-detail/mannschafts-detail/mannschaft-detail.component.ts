@@ -71,6 +71,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   public mannschaften: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
 
   // maps the MannschaftsMitgliedDO with the DSBMitgliedId
+  private currentMannschaftsMitglied: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();
   private members: Map<number, MannschaftsMitgliedDO> = new Map<number, MannschaftsMitgliedDO>();
   private duplicateMannschaftsNrNotification: Notification;
   private deleteNotification: Notification;
@@ -355,8 +356,23 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   // adds the member to map members(dsbMitgliedId, Mannschaftsmitglied)
   private addMember(member: DsbMitgliedDTO): void {
     this.mannschaftMitgliedProvider.findByMemberAndTeamId(member.id, this.currentMannschaft.id)
-      .then((response: BogenligaResponse<MannschaftsmitgliedDTO>) => this.members.set(response.payload.dsbMitgliedId, response.payload))
+      .then(
+        (response: BogenligaResponse<MannschaftsmitgliedDTO>) => {
+          console.log('payload:');
+          console.log(response.payload);
+          this.currentMannschaftsMitglied.dsbMitgliedId = response.payload.dsbMitgliedId;
+          this.currentMannschaftsMitglied.dsbMitgliedEingesetzt = response.payload.dsbMitgliedEingesetzt;
+          this.currentMannschaftsMitglied.id = response.payload.id;
+          this.currentMannschaftsMitglied.mannschaftsId = response.payload.mannschaftsId;
+          this.currentMannschaftsMitglied.version = response.payload.version;
+          this.currentMannschaftsMitglied.rueckennummer =  5;
+          /*this.mannschaftMitgliedProvider.save(this.currentMannschaftsMitglied);
+          this.members.set(response.payload.dsbMitgliedId, this.currentMannschaftsMitglied);*/
+          console.log('members:');
+          console.log(this.members);
+        })
         .catch((response: BogenligaResponse<MannschaftsmitgliedDTO>) => console.log(response.payload));
+
   }
 
   // deletes the selected member in the team
@@ -581,7 +597,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
-
             const notification: Notification = {
               id:          NOTIFICATION_SAVE_MANNSCHAFT,
               title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
