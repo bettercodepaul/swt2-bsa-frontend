@@ -47,7 +47,7 @@ import {SetzlisteDownloadComponent} from '@shared/components/buttons/setzliste-d
 import {BogenkontrolllisteDownloadComponent} from '@shared/components/buttons/bogenkontrollliste-download/bogenkontrollliste-download.component';
 import {SchusszettelDownloadComponent} from '@shared/components/buttons/schusszettel-download/schusszettel-download.component';
 import {MeldezettelDownloadComponent} from '@shared/components/buttons/meldezettel-download/meldezettel-download.component';
-import {RueckennummernDownloadComponent} from '@shared/components/buttons/rueckennummern-download/rueckennummern-download.component';
+
 
 /*
  * define font awesome icon libraries
@@ -103,7 +103,7 @@ library.add(fas, far, fab); // add all icon types
     SetzlisteDownloadComponent,
     SchusszettelDownloadComponent,
     MeldezettelDownloadComponent,
-    RueckennummernDownloadComponent
+
   ],
   declarations: [
     ButtonComponent,
@@ -136,7 +136,6 @@ library.add(fas, far, fab); // add all icon types
     SchusszettelDownloadComponent,
     SetzlisteDownloadComponent,
     MeldezettelDownloadComponent,
-    RueckennummernDownloadComponent
   ]
 })
 export class SharedModule {
