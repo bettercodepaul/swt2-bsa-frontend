@@ -1325,7 +1325,8 @@
       "DELETE": "Löschen",
       "ADD": "Hinzufügen",
       "DOWNLOADRUECKENNUMMER": "Rueckennummern herunterladen",
-      "DOWNLOAD": "Lizenz herunterladen"
+      "DOWNLOAD": "Lizenz herunterladen",
+      "MAP": "Ort anzeigen"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",

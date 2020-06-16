@@ -93,7 +93,7 @@ export class HomeComponent extends CommonComponent implements OnInit {
 
   }
 
-  public onDownload($event: WettkampfDO): void {
+  public onMap($event: WettkampfDO): void {
 
     const str = $event.wettkampfOrt;
     let splits: string[];
