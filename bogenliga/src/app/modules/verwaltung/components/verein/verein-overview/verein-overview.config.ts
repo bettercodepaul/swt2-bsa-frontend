@@ -35,6 +35,6 @@ export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
 
   },
-  //Todo exchange modify for create
+  // Todo exchange modify for create
   createPermission : [UserPermission.CAN_MODIFY_STAMMDATEN]
 };

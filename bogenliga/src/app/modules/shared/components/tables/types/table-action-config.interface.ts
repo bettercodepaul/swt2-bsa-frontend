@@ -7,5 +7,5 @@ export interface TableActionConfig {
   actionColumnLocalizationKey?: string; // optional: Action column translation key
   icons?: any; // optional: Override default action icons
   localizationKeys?: any; // optional: Override default action icon title
-  permissions ?: [[UserPermission]]
+  permissions ?: [[UserPermission]];
 }

@@ -19,7 +19,7 @@ export class NavigationCardsComponent extends CommonComponent implements OnInit 
   ngOnInit() {
   }
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
-    if(userPermissions===undefined) {
+    if (userPermissions === undefined) {
       return true;
     } else {
       return this.currentUserService.hasAnyPermisson(userPermissions);

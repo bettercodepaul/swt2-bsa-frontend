@@ -39,6 +39,6 @@ export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
     editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
   },
-  //TODO exchange modify for create
-  createPermission :[UserPermission.CAN_MODIFY_STAMMDATEN]
+  // TODO exchange modify for create
+  createPermission : [UserPermission.CAN_MODIFY_STAMMDATEN]
 };
