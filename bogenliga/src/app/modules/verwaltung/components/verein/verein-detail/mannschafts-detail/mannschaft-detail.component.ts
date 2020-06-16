@@ -638,7 +638,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   }
 
   public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
-    let URL :string = new UriBuilder()
+    const URL: string = new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path('pdf/rueckennummer')
