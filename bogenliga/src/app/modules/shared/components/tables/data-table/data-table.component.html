@@ -78,7 +78,7 @@
         *ngIf="hasActions()">
         <span *ngFor="let action of config.actions.actionTypes" class="action_icon">
           <a (click)="onIconClicked(row, action)"
-             [title]="determineTitle(row, action) | translate">
+             [title]="determineTitle(row, action) | translate" *ngIf="hasActionPermission(action)">
              <fa-icon *ngIf="isActionVisible(row, action)"
                       [icon]="determineIcon(row, action)"
                       [spin]="determineIcon(row, action) === 'sync'"
