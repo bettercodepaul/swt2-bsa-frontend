@@ -381,6 +381,4 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
         console.warn('Could not handle click on action icon. Unknown action type: ', action);
     }
     return this.hasUserPermissions(neededPermissions);
-
-  
 }
