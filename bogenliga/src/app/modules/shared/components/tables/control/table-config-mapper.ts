@@ -53,7 +53,7 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     add:         'TABLE.ACTIONS.ADD',
 
     download: 'TABLE.ACTIONS.DOWNLOAD',
-    downloadrueckennummer: 'TABLE.ACTIONS.DOWNLOADRUECKENNUMMER'
+    downloadrueckennummer: 'TABLE.ACTIONS.DOWNLOADRUECKENNUMMER',
     map:         'TABLE.ACTIONS.MAP'
 
   }
