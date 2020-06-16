@@ -29,7 +29,7 @@ const chartDetailsSizeMultiplikator = 0.5;
 export class RegionenComponent implements OnInit {
 
   public config = REGIONEN_CONFIG;
-  private regionen: RegionDO[];
+  public regionen: RegionDO[];
   public selectedDTOs: RegionDO[];
   public currentRegionDO: RegionDO;
 
