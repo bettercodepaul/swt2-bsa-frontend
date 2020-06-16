@@ -345,7 +345,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   private onMap(affectedRowPayload: VersionedDataObject) {
     this.onMapEntry.emit(affectedRowPayload);
   }
-  
+
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     if (userPermissions === undefined) {
       return true;
@@ -353,7 +353,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
       return this.currentUserService.hasAnyPermisson(userPermissions);
     }
   }
-  
+
   public hasActionPermission(action: TableActionType): boolean {
     let neededPermissions: UserPermission[] = [];
     switch (action) {
