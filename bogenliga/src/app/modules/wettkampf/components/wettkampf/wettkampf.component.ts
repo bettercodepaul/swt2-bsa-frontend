@@ -175,10 +175,10 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     }
   }
 
-  private getTitle() : string{
-    let title = "Aktueller Wettkampf";
-    if(this.showAll) {
-      title = "Wettkampftag 1";
+  private getTitle(): string {
+    let title = 'Aktueller Wettkampf';
+    if (this.showAll) {
+      title = 'Wettkampftag 1';
     }
     return title;
   }
