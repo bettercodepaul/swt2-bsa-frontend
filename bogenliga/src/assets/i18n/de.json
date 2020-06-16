@@ -1324,7 +1324,8 @@
       "EDIT": "Editieren",
       "DELETE": "Löschen",
       "ADD": "Hinzufügen",
-      "DOWNLOAD": "Lizenz herunterladen"
+      "DOWNLOAD": "Lizenz herunterladen",
+      "MAP": "Ort anzeigen"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",

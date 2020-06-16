@@ -3,5 +3,6 @@ export enum TableActionType {
   VIEW,
   DELETE,
   ADD,
-  DOWNLOAD
+  DOWNLOAD,
+  MAP = 5
 }
