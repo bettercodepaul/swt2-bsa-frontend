@@ -6,6 +6,7 @@ export class MannschaftsmitgliedDTO implements DataTransferObject {
   mannschaftsId: number;
   dsbMitgliedId: number;
   dsbMitgliedEingesetzt: number;
+  rueckennummer: number;
 
   static copyFrom(optional: {
     id?: number;
@@ -13,6 +14,8 @@ export class MannschaftsmitgliedDTO implements DataTransferObject {
     mannschaftsId?: number;
     dsbMitgliedId?: number;
     dsbMitgliedEingesetzt?: number;
+    rueckennummer?: number;
+
   } = {}): MannschaftsmitgliedDTO {
     const copy = new MannschaftsmitgliedDTO();
     // show '0' value

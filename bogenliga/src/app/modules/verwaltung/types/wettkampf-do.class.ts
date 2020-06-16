@@ -11,6 +11,7 @@ export class WettkampfDO implements VersionedDataObject {
   wettkampfDisziplinId: number;
   wettkampfTypId: number;
   version: number;
+  kampfrichterID: number;
 
   // not set, find Liga by Wettkampfid
   wettkampfLiga: string;
@@ -24,7 +25,8 @@ export class WettkampfDO implements VersionedDataObject {
               wettkampfTag?: number,
               wettkampfDisziplinId?: number,
               wettkampfTypId?: number,
-              version?: number) {
+              version?: number,
+              kampfrichterID?: number) {
     this.id = !!id ? id : null;
     this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
     this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';
@@ -34,6 +36,7 @@ export class WettkampfDO implements VersionedDataObject {
     this.wettkampfDisziplinId = !!wettkampfDisziplinId ? wettkampfDisziplinId : null;
     this.wettkampfTypId = !!wettkampfTypId ? wettkampfTypId : null;
     this.version = !!version ? version : null;
+    this.kampfrichterID = !! kampfrichterID ? kampfrichterID : null;
   }
 
 }
