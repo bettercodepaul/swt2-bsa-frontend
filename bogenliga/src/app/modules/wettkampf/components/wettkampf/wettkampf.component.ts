@@ -26,6 +26,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public show = false;
   public loadAll: boolean;
+  public showAll: boolean;
   public directMannschaft = null;
   public directWettkampf = null;
   public routes = null;
@@ -99,26 +100,26 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
-      this.veranstaltungen = response.payload;
-      if (this.directWettkampf != null) {
-       for (const i of this.veranstaltungen) {
+    this.veranstaltungen = response.payload;
+    if (this.directWettkampf != null) {
+      for (const i of this.veranstaltungen) {
         if (this.directWettkampf === i.name) {
           this.currentVeranstaltung = i;
           break;
         }
         this.currentVeranstaltung = this.veranstaltungen[0];
-       }
-      } else {
+      }
+    } else {
       this.currentVeranstaltung = this.veranstaltungen[0];
     }
-      this.areVeranstaltungenloading = false;
+    this.areVeranstaltungenloading = false;
 
 
-      this.currentJahr = this.currentVeranstaltung.sportjahr;
-      this.loadJahre();
+    this.currentJahr = this.currentVeranstaltung.sportjahr;
+    this.loadJahre();
   }
 
-    loadJahre() {
+  loadJahre() {
     for (const i of this.veranstaltungen) {
       if (this.jahre.includes(i.sportjahr) === false) {
         this.jahre[this.jahre.length] = i.sportjahr;
@@ -152,6 +153,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public onSelect($event: VeranstaltungDO[]): void {
     this.show = false;
+    this.showAll = false;
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
     buttonVisibility.style.display = 'block';
     this.wettkampErgebnisse = [];
@@ -171,6 +173,14 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         this.loadingwettkampf = false;
       });
     }
+  }
+
+  private getTitle(): string {
+    let title = 'Aktueller Wettkampf';
+    if (this.showAll) {
+      title = 'Wettkampftag 1';
+    }
+    return title;
   }
 
   async delay(ms: number) {
