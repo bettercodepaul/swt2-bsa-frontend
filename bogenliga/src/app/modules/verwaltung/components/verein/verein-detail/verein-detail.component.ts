@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -8,7 +8,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../shared/components';
-import {BogenligaResponse} from '../../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -32,7 +32,9 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {forEach} from '@angular/router/src/utils/collection';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
-
+import {environment} from '@environment';
+import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
+import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
@@ -63,7 +65,10 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   public deleteLoading = false;
   public saveLoading = false;
 
+  @ViewChild('downloadLink')
+  private aElementRef: ElementRef;
   constructor(private vereinProvider: VereinDataProviderService,
+              private downloadService: DownloadButtonResourceProviderService,
               private regionProvider: RegionDataProviderService,
               private mannschaftsDataProvider: DsbMannschaftDataProviderService,
               private veranstaltungsProvider: VeranstaltungDataProviderService,
@@ -250,6 +255,18 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         });
 
     this.notificationService.showNotification(notification);
+  }
+
+  public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
+    const URL: string = new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path('pdf/rueckennummern')
+      .path('?mannschaftid=' + versionedDataObject.id)
+      .build();
+    this.downloadService.download(URL, 'rueckennummern.pdf', this.aElementRef)
+        .then((response: BogenligaResponse<string>) => console.log(response))
+        .catch((response: BogenligaResponse<string>) => console.log(response));
   }
 
 
