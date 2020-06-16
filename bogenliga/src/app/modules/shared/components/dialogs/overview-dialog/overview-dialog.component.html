@@ -6,7 +6,7 @@
   <section class="overview-dialog-header">
     <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
 
-    <div class="overview-dialog-add">
+    <div class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
       <button class="btn btn-success"
               routerLink="add">
         <fa-icon icon="plus"></fa-icon>
