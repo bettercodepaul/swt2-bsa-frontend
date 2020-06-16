@@ -17,6 +17,7 @@ import {NotificationService} from '@shared/services/notification';
 import {environment} from '@environment';
 import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 
 
@@ -55,6 +56,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
   private remainingWettkampfRequests: number;
   private remainingMatchRequests: number;
   private urlString: string;
+  private currentVeranstaltungName;
 
 
   constructor(private router: Router,
@@ -82,11 +84,16 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVeranstaltungId = this.selectedDTOs[0].id;
     }
+    // is used to get the name of the currentVeranstaltung is saved in @this.currentVeranstaltungName
+    this.veranstaltungsDataProvider.findById(this.selectedVeranstaltungId)
+        .then((response: BogenligaResponse<VeranstaltungDTO>) => {this.currentVeranstaltungName = response.payload.name
+          + ' ' + response.payload.sportjahr; })
+        .catch(() => {this.currentVeranstaltungName = ''; });
     this.rows = [];
     this.tableContent = [];
     if (this.selectedVeranstaltungId != null) {
       this.loadTableRows();
-      }
+    }
   }
 
   // when a Ligatabelle gets selected from the list --> ID for Buttons
@@ -95,17 +102,35 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
+
+      // is used to get the title for the currently selected Wettkampf @wettkampf.component.html
+      document.getElementById('WettkampfTitle').innerText = this.currentVeranstaltungName +
+        ' - ' + $event.wettkampfTag + '. Wettkampftag';
+
       this.visible = true;
 
       this.tableContentMatch = [];
 
       this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
-        .then((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchSuccess(response))
-        .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
+          .then((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchSuccess(response))
+          .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
-  // when a Wewttkampf gets selected from the list --> ID for Buttons
+
+  // when a Action gets selected from the list --> Link to Google Maps
+
+  public onDownload($event: WettkampfDO): void {
+
+    const str = $event.wettkampfOrt;
+    let splits: string[];
+    splits = str.split(', ', 5);
+    const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
+    window.open(locationUrl);
+
+  }
+
+  // when a Wettkampf gets selected from the list --> ID for Buttons
 
   public onButtonTabletClick(): void {
     this.router.navigateByUrl('/sportjahresplan/tabletadmin/' + this.selectedWettkampf);
@@ -140,20 +165,20 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     if ($event.id >= 0) {
       this.selectedMatchId = $event.id;
       this.matchProvider.pair(this.selectedMatchId)
-        .then((data) => {
-          if (data.payload.length === 2) {
+          .then((data) => {
+            if (data.payload.length === 2) {
 // das wäre schöner - funktioniert leider aber noch nicht...
 // öffne die Datenerfassung in einem neuen Tab
-/*            this.urlString = new UriBuilder()
-              .fromPath(environment.)
-              .path('/#/schusszettel/'+ data.payload[0])
-              .path('/' + data.payload[1])
-              .build();
-            window.open(this.urlString, '_blank')
-*/
-            this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
-           }
-        });
+              /*            this.urlString = new UriBuilder()
+               .fromPath(environment.)
+               .path('/#/schusszettel/'+ data.payload[0])
+               .path('/' + data.payload[1])
+               .build();
+               window.open(this.urlString, '_blank')
+               */
+              this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+            }
+          });
     }
   }
 
@@ -166,8 +191,8 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
     this.veranstaltungsDataProvider.findAll()
-      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload;  this.loadingVeranstaltungen = false; })
-      .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload;  this.loadingVeranstaltungen = false; })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
   }
 
 
@@ -176,8 +201,8 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
     this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
     this.wettkampfDataProvider.findAllByVeranstaltungId(this.selectedVeranstaltungId)
-      .then((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfSuccess(response))
-      .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfFailure(response));
+        .then((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfSuccess(response))
+        .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfFailure(response));
   }
 
 
@@ -202,6 +227,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
       tableContentRow.id = wettkampf.id;
       tableContentRow.wettkampfVeranstaltungsId = wettkampf.wettkampfVeranstaltungsId;
       tableContentRow.version = wettkampf.version;
+
 
       this.tableContent.push(tableContentRow);
     }

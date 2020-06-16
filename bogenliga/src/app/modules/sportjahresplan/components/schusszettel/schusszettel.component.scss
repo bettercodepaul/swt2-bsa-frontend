@@ -50,6 +50,11 @@ label {
   font-size: 10px;
 }
 
+.split {
+  border-left-width: 3px;
+  border-left-color: #4a4a4a;
+  border-left-style: solid;
+}
 
 .match1 {
   margin-top: 20px;
@@ -76,6 +81,33 @@ label {
   visibility: hidden;
 }
 
+.match h1{
+  font-size: 2vw;
+}
+
+.match h2{
+  font-size: 1vw;
+}
+
+.mannschaften_col-3 h1 {
+  font-size: 1vw;
+}
+
+.mannschaften_col-3 {
+  max-width: 16em;
+  min-width: 8em;
+  margin-left: 1em;
+}
+
+.henlo.match_col-3 h2 {
+  font-size: 1vw;
+}
+
+.match_col-3 {
+  max-width: 17em;
+  min-width: 8em;
+  margin-left: 1.5em;
+}
 
 @media print {
   input {
@@ -85,10 +117,10 @@ label {
     font-size: 25px;
   }
   h1 {
-    font-size: 30px;
+    font-size: 10px!important; //30px
   }
   h3 {
-    font-size: 20px;
+    font-size: 2vm;
   }
 
   .match1 {
