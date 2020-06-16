@@ -12,7 +12,6 @@ import {
 import {CurrentUserService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/mannschaftsmitglied-mapper';
 import {MannschaftsMitgliedDO} from '../types/mannschaftsmitglied-do.class';
-import {from} from 'rxjs';
 
 
 /**
@@ -196,7 +195,22 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
         });
     });
   }
+  public save(payload: MannschaftsMitgliedDO): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
+    return new Promise((resolve, reject) => {
+      this.restClient.POST<MannschaftsMitgliedDO>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+          .then((data: MannschaftsMitgliedDO) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise

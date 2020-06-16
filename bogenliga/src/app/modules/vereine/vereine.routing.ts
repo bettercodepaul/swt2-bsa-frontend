@@ -4,4 +4,5 @@ import {VereineComponent} from './components';
 
 export const VEREINE_ROUTES: Routes = [
   {path: '', pathMatch: 'full', component: VereineComponent},
+  {path: '/:id', pathMatch: 'full', component: VereineComponent}
 ];
