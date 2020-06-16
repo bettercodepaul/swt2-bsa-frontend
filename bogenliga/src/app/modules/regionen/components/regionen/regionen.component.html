@@ -1,14 +1,29 @@
 <bla-navigation-dialog [config]="config">
-  <div id="descriptionWrapper" style="display: none;">
-      <p>{{'REGIONEN.REGIONEN.DESCRIPTION' | translate}}</p>
-  </div>
-  <div id="descriptionWrapperClose" style="display: none;">
-    <p>{{'REGIONEN.REGIONEN.CLOSE' | translate}}</p>
-  </div>
 
   <bla-col-layout>
+    <div id="searchWrapper">
+      <div class="row">
+        <bla-quicksearch-list (onSelect)="onSelect($event)"
+                              [items]="regionen"
+                              [loading]="loadingRegionen"
+                              [multipleSelections]="!multipleSelections"
+                              [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                              [optionFieldSelector]="'regionName'"
+                              selectionListHeight="15em"
+                              style="width: 50%; flex-grow: 0;">
 
-    <div #chart style="max-width: 100%"></div>
+        </bla-quicksearch-list>
+      </div>
+
+      <div id="descriptionWrapper" style="display: none;">
+        <p>{{'REGIONEN.REGIONEN.DESCRIPTION' | translate}}</p>
+      </div>
+      <div id="descriptionWrapperClose" style="display: none;">
+        <p>{{'REGIONEN.REGIONEN.CLOSE' | translate}}</p>
+      </div>
+
+      <div #chart style="max-width: 100%"></div>
+    </div>
 
     <div id="detailsWrapper" style="display: none;">
       <div id="details">
