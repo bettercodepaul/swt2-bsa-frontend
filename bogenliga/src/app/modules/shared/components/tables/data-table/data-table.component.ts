@@ -186,7 +186,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
    */
   public determineIcon(row: TableRow, action: TableActionType): string {
     let iconSelector = TableActionType[action].toLowerCase();
-    if(action === TableActionType.DOWNLOADRUECKENNUMMER){
+    if (action === TableActionType.DOWNLOADRUECKENNUMMER) {
       iconSelector = TableActionType[TableActionType.DOWNLOAD].toLowerCase();
     }
     let iconStateSelector = 'active';
