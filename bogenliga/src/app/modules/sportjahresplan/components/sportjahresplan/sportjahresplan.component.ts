@@ -108,7 +108,7 @@ export class SportjahresplanComponent extends CommonComponent implements OnInit 
 
   // when a Action gets selected from the list --> Link to Google Maps
 
-  public onDownload($event: WettkampfDO): void {
+  public onMap($event: WettkampfDO): void {
 
       const str = $event.wettkampfOrt;
       let splits: string[];
