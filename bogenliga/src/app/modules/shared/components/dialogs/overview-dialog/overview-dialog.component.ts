@@ -43,8 +43,8 @@ export class OverviewDialogComponent extends CommonSecuredComponent implements O
   public onAdd(versionedDataObject: VersionedDataObject): void {
     this.onAddClicked.emit(versionedDataObject);
   }
-  public hasUserPermissions(userPermissions:UserPermission[]):boolean {
-    if(userPermissions===undefined) {
+  public hasUserPermissions(userPermissions: UserPermission[]): boolean {
+    if (userPermissions === undefined) {
       return true;
     } else {
       return this.currentUserService.hasAnyPermisson(userPermissions);

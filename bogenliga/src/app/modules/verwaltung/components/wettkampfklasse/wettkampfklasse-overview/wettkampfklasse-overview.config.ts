@@ -35,8 +35,8 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT],
       width: 6
     },
-    
+
   },
-  //TODO exchange modify for create
-  createPermission :[UserPermission.CAN_MODIFY_STAMMDATEN]
+  // TODO exchange modify for create
+  createPermission : [UserPermission.CAN_MODIFY_STAMMDATEN]
 };

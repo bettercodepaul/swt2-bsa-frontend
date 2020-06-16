@@ -37,10 +37,10 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    //Todo add can_modify_MY_LIGA same for delete
+    // Todo add can_modify_MY_LIGA same for delete
     editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
   },
-  //TODO exchange modify for create
-  createPermission :[UserPermission.CAN_MODIFY_STAMMDATEN]
+  // TODO exchange modify for create
+  createPermission : [UserPermission.CAN_MODIFY_STAMMDATEN]
 };

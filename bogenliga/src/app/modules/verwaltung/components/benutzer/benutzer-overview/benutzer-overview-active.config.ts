@@ -23,9 +23,9 @@ export const BENUTZER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission :[UserPermission.CAN_MODIFY_SYSTEMDATEN],
-    deletePermission :[UserPermission.CAN_DELETE_SYSTEMDATEN]
+    editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
+    deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
-  //TODO exchange Modify for Create
-  createPermission:[UserPermission.CAN_MODIFY_SYSTEMDATEN]
+  // TODO exchange Modify for Create
+  createPermission: [UserPermission.CAN_MODIFY_SYSTEMDATEN]
 };
