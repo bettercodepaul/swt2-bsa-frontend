@@ -26,7 +26,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
     }
   ],
   actions: {
-    actionTypes: [TableActionType.DOWNLOAD],
+    actionTypes: [TableActionType.MAP],
     width: 6
   }
 

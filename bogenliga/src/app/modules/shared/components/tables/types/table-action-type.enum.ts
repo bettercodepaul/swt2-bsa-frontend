@@ -4,5 +4,6 @@ export enum TableActionType {
   DELETE,
   ADD,
   DOWNLOAD,
-  DOWNLOADRUECKENNUMMER = 5
+  DOWNLOADRUECKENNUMMER, 
+  MAP
 }
