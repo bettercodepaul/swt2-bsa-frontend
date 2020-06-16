@@ -93,6 +93,15 @@ export class HomeComponent extends CommonComponent implements OnInit {
 
   }
 
+  public onDownload($event: WettkampfDO): void {
+
+    const str = $event.wettkampfOrt;
+    let splits: string[];
+    splits = str.split(', ', 5);
+    const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
+    window.open(locationUrl);
+
+  }
   /**
    * Restriction that only a maximum of six events are portrayed
    * BSAPP- 367

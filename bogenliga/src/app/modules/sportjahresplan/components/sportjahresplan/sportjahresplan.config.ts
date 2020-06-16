@@ -1,7 +1,6 @@
 import {NavigationDialogConfig} from '../../../shared/components/dialogs';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
-import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
 
 
 export const SPORTJAHRESPLAN_CONFIG: NavigationDialogConfig = {
@@ -36,13 +35,13 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'SPORTJAHRESPLAN.WETTKAMPF.TABLE.PLACE',
       propertyName:   'wettkampfOrt',
       width:          40,
-    }
+    },
    ],
-  actions: {
-    actionTypes: [TableActionType.VIEW],
-    width: 6
-  }
 
+  actions: {
+    actionTypes: [TableActionType.DOWNLOAD, TableActionType.VIEW],
+    width:       6
+  }
   };
 
 
@@ -68,12 +67,14 @@ export const MATCH_TABLE_CONFIG: TableConfig = {
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.BEGEGNUNG',
       propertyName:   'begegnung',
-      width:          5,
+      width:          5
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.MATCHPUNKTE',
       propertyName:   'matchpunkte',
-      width:          5,
+      type:            5,
+      currentSortOrder: 1,
+      width:           5
     },
     {
       translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.SATZPUNKTE',

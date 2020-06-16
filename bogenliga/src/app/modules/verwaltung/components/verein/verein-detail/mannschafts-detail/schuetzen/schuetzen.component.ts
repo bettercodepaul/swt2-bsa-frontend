@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
   ButtonType,
   CommonComponent, hideLoadingIndicator,
@@ -35,7 +34,6 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import {RegionDO} from '@verwaltung/types/region-do.class';
-import {parseHttpResponse} from 'selenium-webdriver/http';
 
 
 const ID_PATH_PARAM = 'id';
@@ -150,14 +148,18 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
         });
   }
 
+  // rueckennummer is hardcoded for testing. There will be a User-Story to implement a input for the rueckennummer
+  // Here you can see how the rueckennummer is added to the Mannschaftsmitglied. This should be an orientation for implementing
   private saveMemberInTeam(memberId: number) {
     this.mannschaftMitgliedProvider.findByMemberId(memberId)
         .then((mannschaftsMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
           if (mannschaftsMitgliedResponse.payload.length > 0 && mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt <= 1) {
             this.memberToAdd.dsbMitgliedEingesetzt = mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt;
+            this.memberToAdd.rueckennummer = 5;
             this.createLizentForMember(memberId);
           } else if (mannschaftsMitgliedResponse.payload.length === 0) {
             this.memberToAdd.dsbMitgliedEingesetzt = 0;
+            this.memberToAdd.rueckennummer = 6;
             this.createLizentForMember(memberId);
           } else {
             this.showMemberInTooManyTeams();
@@ -359,7 +361,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
         return (member.vorname.toLowerCase().startsWith(this.filterVorname.toLowerCase()) || this.filterVorname.length === 0)
         && (member.nachname.toLowerCase().startsWith(this.filterNachname.toLowerCase()) || this.filterNachname.length === 0)
         && (member.mitgliedsnummer.toLowerCase().startsWith(this.filterMitgliedsnummer.toLowerCase()) || this.filterMitgliedsnummer.length === 0)
-          && (member.vereinsId === this.filterVerein.id || this.filterVerein.id === undefined);
+          && (member.vereinsId === this.currentVerein.id);
     });
      this.rows = toTableRows(filteredMembers);
   }
@@ -368,7 +370,6 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
     this.filterVorname = '';
     this.filterNachname = '';
     this.filterMitgliedsnummer = '';
-    this.filterVerein = new VereinDO();
     this.onSearch();
   }
   // ----------------------------------------------------------- //
@@ -413,6 +414,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
       }
     });
     this.rows = toTableRows(this.members);
+    this.onSearch();
     this.loading = false;
   }
 

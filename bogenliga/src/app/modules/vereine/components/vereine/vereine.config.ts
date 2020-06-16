@@ -1,5 +1,6 @@
 import {NavigationDialogConfig} from '@shared/components';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 
 export const VEREINE_CONFIG: NavigationDialogConfig = {
   moduleTranslationKey: 'VEREINE',
@@ -23,11 +24,23 @@ export const VEREINE_TABLE_CONFIG: TableConfig = {
         width:          20,
       },
       {
+        translationKey: 'TABLE.PLACE',
+        propertyName:   'wettkampfOrt',
+        width:          20,
+      },
+      {
         translationKey: 'VEREINE.VEREINE.TABLE.HEADERS.MANNSCHAFT',
         propertyName:   'mannschaftsName',
         width:          20,
-      }
+      },
+
+
     ],
+  actions: {
+    actionTypes: [TableActionType.DOWNLOAD],
+    width: 6
+  }
+
 
 };
 
