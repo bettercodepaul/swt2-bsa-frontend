@@ -39,7 +39,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
    ],
 
   actions: {
-    actionTypes: [TableActionType.MAP, TableActionType.VIEW],
+    actionTypes: [TableActionType.VIEW, TableActionType.MAP ],
     width:       6
   }
   };
