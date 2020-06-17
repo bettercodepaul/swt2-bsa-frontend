@@ -47,9 +47,8 @@ export const VERANSTALTUNG_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
+    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
   },
-  // TODO exchange modify for create
-  createPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
 };
