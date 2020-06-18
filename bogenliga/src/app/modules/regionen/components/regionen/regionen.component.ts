@@ -36,7 +36,7 @@ export class RegionenComponent implements OnInit {
   private selectedVereinDO: VereinDO;
   private selectedLigaDO: LigaDO;
 
-  public PLACEHOLDER_VAR = 'Bitte Region eingeben...';
+  public NO_REGION_SELECTED = 'Bitte Region eingeben...';
   private selectedRegionsId: number;
   public loadingRegionen = true;
   public multipleSelections = true;
