@@ -14,5 +14,6 @@ export interface TableConfig {
   deletePermission?: UserPermission[];
   addPermission?: UserPermission[];
   downloadPermission?: UserPermission[];
+  mapPermission?: UserPermission[];
 }
 
