@@ -7,7 +7,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../shared/components';
-import {BogenligaResponse, UriBuilder} from '../../../../../shared/data-provider';
+import {BogenligaResponse, DataProviderService, UriBuilder} from '../../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -38,7 +38,9 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {PasseDTOClass} from '@verwaltung/types/datatransfer/passe-dto.class';
-
+import {ResourceProviderService} from '@shared/data-provider/services/resource-provider.service'
+import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provider.service'
+import {LizenzDO} from '@verwaltung/types/lizenz-do.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
@@ -83,6 +85,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   public deleteLoading = false;
   public saveLoading = false;
+  LizenzDataProviderService: LizenzDataProviderService;
 
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
               private vereinProvider: VereinDataProviderService,
@@ -93,6 +96,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
               private downloadService: DownloadButtonResourceProviderService,
               private wettkampfService: WettkampfDataProviderService,
               private passeService: PasseDataProviderService,
+              private lizenzProvider: LizenzDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -120,6 +124,8 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         }
       }
     });
+
+
 
     // This Notification shows up, if a duplicate mannschaftsnummer is detected.
     // It gets subscribed once in ngOnInit and gets unsubscribed in ngOnDestroy
@@ -544,6 +550,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   }
 
   // private checkIfDuplicateMannschaftsNr(mannschaftsNr: Number): Boolean {
+  htmlToAdd: any;
   private loadMannschaften(vereinsId: number) {
       this.mannschaftsDataProvider.findAllByVereinsId(vereinsId)
           .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
@@ -565,12 +572,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     }
   }
 
-
   private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.mannschaften = [];
     this.loading = false;
   }
-
 
    private saveMannschaft(): void {
     console.log('Saving mannschaft: ', this.currentMannschaft);
@@ -610,6 +615,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   }
 
   public onDownload(versionedDataObject: VersionedDataObject): void {
+    console.log(versionedDataObject.id);
     const downloadUrl = new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
@@ -641,4 +647,84 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.notificationService.showNotification(noLicenseNotification);
   }
 
+  downloadAllLicenses() {
+    //window.print();
+    // return false;
+    // this.members.forEach(key => this.onDownload(key));
+    //this.members.forEach(key => this.onDownload(this.members.get(key.dsbMitgliedId)));
+    let downloads: string[];
+    downloads = [];
+    let count = 0;
+    this.members.forEach(key => {
+      let downloadUrl = new UriBuilder()
+        .fromPath(environment.backendBaseUrl)
+        .path('v1/download')
+        .path('pdf/schuetzenlizenz')
+        .path(key.dsbMitgliedId)
+        .path(this.currentMannschaft.id)
+        .build();
+      downloads.push(downloadUrl);
+    });
+
+
+    // console.log("pre test");
+    //console.log(this.downloadService.download(downloads[0], 'lizenz.pdf', this.aElementRef));
+    // console.log("post test");
+    //console.log(this.downLoadMultipleSingleCall(downloads));
+    this.members.forEach(key => {
+      let lizenznummer = "fuckoff";
+      this.lizenzProvider.findByDsbMitgliedId(key.dsbMitgliedId).then((lizenzResponse: BogenligaResponse<LizenzDO[]>) => {
+        let lizenzen: LizenzDO[] = [new LizenzDO()];
+        lizenzen = lizenzResponse.payload;
+        lizenznummer = lizenzen[0].lizenznummer.toString();
+        console.log("RealReal" + lizenznummer);
+        console.log("Real " + lizenznummer);
+        let mitglied = this.dsbMitgliedProvider.findById(key.dsbMitgliedId);
+        mitglied.then((mitglieder: BogenligaResponse<DsbMitgliedDO>) => {
+          let mitglied: DsbMitgliedDO = mitglieder.payload;
+          console.log(mitglied.nachname)
+          this.vereinProvider.findById(mitglied.vereinsId).then((vereine: BogenligaResponse<VereinDO>) => {
+            let verein: VereinDO = vereine.payload;
+            this.htmlToAdd +=
+              '<table>' +
+              '<tr>' +
+              '<th colspan="1" rowspan="1">' +
+              '<h1 class="row print" style="margin: 25%;font-weight: bold; font-size: 33px;">Lizenz</h1>' +
+              '</th>' +
+              '</tr>' +
+              '</table>' +
+              '<table>' +
+              '<tr>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 20px;">Lizenznummer: ' + lizenznummer + '</h3>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 16px;">Name: ' + mitglied.nachname + '</h3>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 16px;">Vorname: ' + mitglied.vorname + '</h3>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 16px;">Verein: ' + verein.name + '</h3>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 16px;">Liga: ' + this.currentVeranstaltung.ligaName + '</h3>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 16px;">Sportjahr: ' + this.currentVeranstaltung.sportjahr.toString() + '</h3>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 16px;"></h3>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 16px;"></h3>' +
+              '</tr>' +
+              '</table>' +
+              '<table>' +
+              '<tr>' +
+              '<h3 class="row" style="font-weight: bold; font-size: 20px;">Wettkampftage teilgenommen:</h3>' +
+              '</tr>' +
+              '</table>';
+          })
+    });
+      });
+    });
+    this.downLoadMultipleSingleCall(downloads);
+  }
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+  }
+
+  downLoadMultipleSingleCall (licenseString: string[]){
+    this.downloadService.downloadMultiple(licenseString, 'lizenz.pdf', this.aElementRef)
+        .then((response: BogenligaResponse<string>) => console.log(response))
+        .catch((response: BogenligaResponse<string>) => this.showNoLicense());
+  }
 }
+
+

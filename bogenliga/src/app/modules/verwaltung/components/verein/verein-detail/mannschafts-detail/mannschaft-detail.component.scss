@@ -31,3 +31,88 @@
   justify-content: flex-end;
   padding-bottom: 1em;
 }
+
+.overview-dialog-download-all {
+   display: flex;
+   justify-content: flex-end;
+   padding-bottom: 1em;
+ }
+
+.button-margin {
+  margin: 3px;
+}
+
+.two {
+  border-style: solid;
+  border-width: 100px;
+  border-color: #fff350;
+}
+
+@media print {
+  input {
+    border: 2px solid #dee2e6;
+    height: 45px;
+    width: 45px;
+    font-size: 25px;
+  }
+  h1 {
+    font-size: 25px;
+    padding-bottom: 30%;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  table {
+    padding-bottom: 30px;
+  }
+
+  .lizenz_header {
+    font-size: 20rem;
+    font-weight: bold;
+  }
+
+  .match1 {
+    margin-bottom: 1cm;
+  }
+
+  .match2 {
+    margin-top: 1cm;
+  }
+  .m1 {
+    float: left;
+  }
+  .m2 {
+    float: left;
+    margin-left: 20%;
+  }
+
+  .signature {
+    visibility: visible;
+    margin-top: -2cm;
+    margin-bottom: 1cm;
+    border-bottom: 1px solid black;
+    display: inline-block;
+    width: 90%;
+
+    p {
+      margin-top: 1cm;
+      margin-bottom: 0.5cm;
+    }
+  }
+  .s1 {
+    margin-top: 0.5cm;
+    margin-bottom: -2cm;
+  }
+
+  hr {
+    visibility: visible;
+    width: 100%;
+    height: 5px;
+    border-style: dotted;
+    size: 1px;
+    background: #dee2e6;
+    margin-top: 2.5cm;
+    margin-bottom: 0.5cm;
+  }
+
+}

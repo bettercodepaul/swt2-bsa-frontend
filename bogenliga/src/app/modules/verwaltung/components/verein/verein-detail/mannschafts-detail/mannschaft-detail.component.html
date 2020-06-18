@@ -103,12 +103,18 @@
   <div *ngIf="entityExists()">
     <h5> Mitglieder-Übersicht</h5>
     <div class="overview-dialog-add">
-      <button class="btn btn-success"
+      <button class="btn btn-success button-margin"
               routerLink="add">
         <fa-icon icon="plus"></fa-icon>
         <span> Neu</span>
       </button>
+      <button class="btn btn-success button-margin" (click)="downloadAllLicenses()">
+        <fa-icon icon="file-download"></fa-icon>
+        <span> Alle herunterladen</span>
+        <router-outlet name="file_download"></router-outlet>
+      </button>
     </div>
+
     <bla-data-table [config]="config_table"
                     [rows]="rows"
                     [loading]="loading"
@@ -120,6 +126,7 @@
     <a #downloadLink></a>
   </div>
 
+  <div class="print" [innerHtml]="htmlToAdd"></div>
 
 
 </bla-common-dialog>

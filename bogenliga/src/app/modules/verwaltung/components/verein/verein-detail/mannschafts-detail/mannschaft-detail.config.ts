@@ -2,6 +2,7 @@ import {CommonDialogConfig} from '../../../../../shared/components/dialogs';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 
+
 export const MANNSCHAFT_DETAIL_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
   pageTitleTranslationKey: 'MANAGEMENT.MANNSCHAFT_DETAIL.TITLE'

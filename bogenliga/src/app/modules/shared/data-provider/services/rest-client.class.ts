@@ -90,6 +90,24 @@ export class RestClient {
                ).toPromise();
   }
 
+  public DOWNLOADMultiple(url: string[]): Promise<Blob>[] {
+
+    const objectUrl: string = null;
+
+    console.log('Download: Send GET request to ' + url);
+    let result: Promise<Blob>[];
+    result = [];
+    let i: number = 0;
+    for (let license of url){
+
+      result[i++] = this.http.get(license, {responseType: 'blob'})
+          .pipe(
+            catchError(this.handleError)
+          ).toPromise();
+    }
+    return result;
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.

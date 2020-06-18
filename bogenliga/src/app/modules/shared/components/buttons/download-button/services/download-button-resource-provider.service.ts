@@ -18,6 +18,11 @@ export class DownloadButtonResourceProviderService extends ResourceProviderServi
     return this.downloadFile(url, fileName, aElement);
   }
 
+  public downloadMultiple(url: string[], fileName: string, aElement: ElementRef): Promise<BogenligaResponse<string>> {
+    console.log("Inside download-button-resource-provider.service.ts")
+    return this.downloadMultipleFile(url, fileName, aElement);
+  }
+
   getRestClient(): RestClient {
     return this.restClient;
   }
