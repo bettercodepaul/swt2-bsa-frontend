@@ -29,12 +29,12 @@ export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
       width:       6
     },
     editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
-    deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN],
+    deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
 
 
 
 
   },
-  // Todo exchange modify for create
-  createPermission : [UserPermission.CAN_MODIFY_STAMMDATEN]
+
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
 };
