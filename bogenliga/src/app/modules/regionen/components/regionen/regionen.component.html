@@ -2,6 +2,15 @@
 
   <bla-col-layout>
     <div id="searchWrapper">
+      <div id="descriptionWrapper" style="display: none;">
+        <p>{{'REGIONEN.REGIONEN.DESCRIPTION' | translate}}</p>
+      </div>
+      <div id="descriptionWrapperClose" style="display: none;">
+        <p>{{'REGIONEN.REGIONEN.CLOSE' | translate}}</p>
+      </div>
+
+      <div #chart style="max-width: 100%"></div>
+      
       <div class="row">
         <bla-quicksearch-list (onSelect)="onSelect($event)"
                               [items]="regionen"
@@ -14,15 +23,6 @@
 
         </bla-quicksearch-list>
       </div>
-
-      <div id="descriptionWrapper" style="display: none;">
-        <p>{{'REGIONEN.REGIONEN.DESCRIPTION' | translate}}</p>
-      </div>
-      <div id="descriptionWrapperClose" style="display: none;">
-        <p>{{'REGIONEN.REGIONEN.CLOSE' | translate}}</p>
-      </div>
-
-      <div #chart style="max-width: 100%"></div>
     </div>
 
     <div id="detailsWrapper" style="display: none;">
