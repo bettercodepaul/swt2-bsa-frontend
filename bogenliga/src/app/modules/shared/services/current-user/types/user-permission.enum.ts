@@ -69,7 +69,9 @@ export enum UserPermission {
 
 
   // für die technische User der Tablets
-  CAN_OPERATE_SPOTTING
-
+  CAN_OPERATE_SPOTTING,
+  CAN_CREATE_STAMMDATEN,
+  CAN_CREATE_SYSTEMDATEN,
+  CAN_CREATE_WETTKAMPF
 
 }

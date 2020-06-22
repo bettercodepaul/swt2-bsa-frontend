@@ -637,6 +637,18 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       .catch((response: BogenligaResponse<string>) => this.showNoLicense());
   }
 
+  public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
+    const URL: string = new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path('pdf/rueckennummer')
+      .path('?mannschaftid=' + this.currentMannschaft.id + '&dsbmitgliedid=' + versionedDataObject.id)
+      .build();
+    this.downloadService.download(URL, 'rueckennummer.pdf', this.aElementRef)
+        .then((response: BogenligaResponse<string>) => console.log(response))
+        .catch((response: BogenligaResponse<string>) => console.log(response));
+  }
+
   private showNoLicense(): void {
     const noLicenseNotification: Notification = {
       id:          NOTIFICATION_NO_LICENSE,

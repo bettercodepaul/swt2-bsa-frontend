@@ -106,7 +106,7 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
           if (this.duplicateMember(teamMembers.payload, this.memberToAdd)) {
             this.showDuplicateMember();
           } else {
-            this.saveMemberInTeam(member.id);
+            this.saveMemberInTeam(member.id, teamMembers.payload);
           }
         })
         .catch((teamMembers: BogenligaResponse<MannschaftsMitgliedDO>) => {
@@ -150,16 +150,16 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
 
   // rueckennummer is hardcoded for testing. There will be a User-Story to implement a input for the rueckennummer
   // Here you can see how the rueckennummer is added to the Mannschaftsmitglied. This should be an orientation for implementing
-  private saveMemberInTeam(memberId: number) {
+  private saveMemberInTeam(memberId: number, teamMembers: MannschaftsMitgliedDO[]) {
     this.mannschaftMitgliedProvider.findByMemberId(memberId)
         .then((mannschaftsMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
           if (mannschaftsMitgliedResponse.payload.length > 0 && mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt <= 1) {
             this.memberToAdd.dsbMitgliedEingesetzt = mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt;
-            this.memberToAdd.rueckennummer = 5;
+            this.memberToAdd.rueckennummer = teamMembers.length+1;
             this.createLizentForMember(memberId);
           } else if (mannschaftsMitgliedResponse.payload.length === 0) {
             this.memberToAdd.dsbMitgliedEingesetzt = 0;
-            this.memberToAdd.rueckennummer = 6;
+            this.memberToAdd.rueckennummer = teamMembers.length+1;
             this.createLizentForMember(memberId);
           } else {
             this.showMemberInTooManyTeams();
