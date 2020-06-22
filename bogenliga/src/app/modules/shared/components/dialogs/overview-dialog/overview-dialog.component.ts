@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
-import {CurrentUserService} from '../../../services/current-user';
+import {CurrentUserService, UserPermission} from '../../../services/current-user';
 import {CommonSecuredComponent} from '../../common/common-secured-component.class';
 import {TableRow} from '../../tables/types/table-row.class';
 import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
@@ -42,5 +42,12 @@ export class OverviewDialogComponent extends CommonSecuredComponent implements O
 
   public onAdd(versionedDataObject: VersionedDataObject): void {
     this.onAddClicked.emit(versionedDataObject);
+  }
+  public hasUserPermissions(userPermissions: UserPermission[]): boolean {
+    if (userPermissions === undefined) {
+      return true;
+    } else {
+      return this.currentUserService.hasAnyPermisson(userPermissions);
+    }
   }
 }
