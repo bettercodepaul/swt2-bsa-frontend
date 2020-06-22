@@ -4,7 +4,8 @@ export class WettkampfErgebnis implements VersionedDataObject {
   id: number;
   version: number;
 
-  wettkampftag: number;
+  matchNr: number;
+  wettkampfId : number;
   mannschaftName: string;
   mannschaftSatz1: number;
   mannschaftSatz2: number;
@@ -20,22 +21,24 @@ export class WettkampfErgebnis implements VersionedDataObject {
   satzpunkte: string;
   matchpunkte: string;
 
-  constructor(wettkampftag?: number,
-              mannschaftName?: string,
-              mannschaftSatz1?: number,
-              mannschaftSatz2?: number,
-              mannschaftSatz3?: number,
-              mannschaftSatz4?: number,
-              mannschaftSatz5?: number,
-              opponentName?: string,
-              opponentSatz1?: number,
-              opponentSatz2?: number,
-              opponentSatz3?: number,
-              opponentSatz4?: number,
-              opponentSatz5?: number,
-              satzpunkte?: string,
-              matchpunkte?: string) {
-    this.wettkampftag = wettkampftag;
+  constructor(matchNr?: number,
+    wettkampfId?: number,
+    mannschaftName?: string,
+    mannschaftSatz1?: number,
+    mannschaftSatz2?: number,
+    mannschaftSatz3?: number,
+    mannschaftSatz4?: number,
+    mannschaftSatz5?: number,
+    opponentName?: string,
+    opponentSatz1?: number,
+    opponentSatz2?: number,
+    opponentSatz3?: number,
+    opponentSatz4?: number,
+    opponentSatz5?: number,
+    satzpunkte?: string,
+    matchpunkte?: string) {
+    this.matchNr = matchNr;
+    this.wettkampfId = wettkampfId;
     this.mannschaftName = mannschaftName;
     this.mannschaftSatz1 = mannschaftSatz1;
     this.mannschaftSatz2 = mannschaftSatz2;
