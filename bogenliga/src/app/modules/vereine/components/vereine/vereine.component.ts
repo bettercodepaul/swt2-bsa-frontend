@@ -54,6 +54,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private remainingMannschaftsRequests: number;
   private tableContent: Array<VereinTabelleDO> = [];
   private providedID: number;
+  private currentVerein: VereinDO;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -67,7 +68,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     console.log('Bin in Vereine');
-    this.providedID = null;
+    this.providedID = 0;
     this.loadVereine();
     this.loading = true;
     this.notificationService.discardNotification();
@@ -75,9 +76,22 @@ export class VereineComponent extends CommonComponent implements OnInit {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = params[ID_PATH_PARAM];
         console.log('This.providedID: ' + this.providedID);
-        this.selectedVereinsId = this.providedID;
       }
     });
+    this.selectedVereinsId = this.providedID;
+    console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
+    this.changeSelectedVerein();
+  }
+  // Changes the selectedVereine acording to the current selectedVereinsID.
+  private changeSelectedVerein(): void {
+    this.selectedVereine = [];
+    this.vereinDataProvider.findById(this.selectedVereinsId)
+        .then((response: BogenligaResponse<VereinDTO>) => {
+          if(response.payload != null){
+          this.currentVerein = response.payload; console.log('Geholter Verein: '+ response.payload)}
+        else{console.log('Lesefehler von verein findById!');}});
+    this.selectedVereine.push(this.currentVerein);
+    //this.onSelect(this.selectedVereine);
   }
 
   // when a Verein gets selected from the list

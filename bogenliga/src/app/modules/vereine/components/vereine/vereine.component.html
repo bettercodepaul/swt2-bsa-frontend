@@ -6,6 +6,7 @@
       <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
 
       <bla-quicksearch-list (onSelect)="onSelect($event)"
+                            [selectedItemIds]="[3]"
                             [items]="vereine"
                             [loading]="loadingVereine"
                             [multipleSelections]="!multipleSelections"
@@ -23,7 +24,7 @@
                     [config]="config_table"
                     [loading]="loadingTable"
                     [rows]="rows"
-                    
+
                     (onMapEntry)="onMap($event)">
       <!-- Is currently not in use/implemented
                     (onDeleteClicked)="onDelete($event)"
