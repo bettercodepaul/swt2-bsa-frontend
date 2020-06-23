@@ -47,12 +47,12 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private vereinDataProvider: VereinDataProviderService,
-    private wettkampfdataprovider: WettkampfDataProviderService,
-    private wettkampfErgebnisService: WettkampfErgebnisService,
-    private mannschaftDataProvider: DsbMannschaftDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute) {
+              private vereinDataProvider: VereinDataProviderService,
+              private wettkampfdataprovider: WettkampfDataProviderService,
+              private wettkampfErgebnisService: WettkampfErgebnisService,
+              private mannschaftDataProvider: DsbMannschaftDataProviderService,
+              private router: Router,
+              private route: ActivatedRoute) {
     super();
   }
 
@@ -130,7 +130,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.show = true;
   }
 
-  public loadErgebnisse(loadCase : boolean) {
+  public loadErgebnisse(loadCase: boolean) {
     loadCase ? this.showAll = true : this.showAll = false;
     this.show = false;
     this.loadingwettkampf = true;

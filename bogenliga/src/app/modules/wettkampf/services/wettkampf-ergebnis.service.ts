@@ -38,9 +38,9 @@ export class WettkampfErgebnisService {
   private passen: Array<PasseDoClass> = [];
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
-    private mannschaftsDataProvider: DsbMannschaftDataProviderService,
-    private matchDataProvider: MatchDataProviderService,
-    private passeDataProvider: PasseDataProviderService) {
+              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
+              private matchDataProvider: MatchDataProviderService,
+              private passeDataProvider: PasseDataProviderService) {
 
   }
 
@@ -100,8 +100,8 @@ export class WettkampfErgebnisService {
   }
   public createWettkampfergebnisse(): WettkampfErgebnis[] {
     this.wettkampErgebnisse = [];
-    console.log("Alle passen: " + this.passen);
-    console.log("Passenlaenge: " + this.passen.length);
+    console.log('Alle passen: ' + this.passen);
+    console.log('Passenlaenge: ' + this.passen.length);
     for (let i = 0; i < this.matches.length ; i = i + 2) {
       const wettkampfErgebnis = new WettkampfErgebnis (
         this.matches[i].nr,
@@ -136,9 +136,9 @@ export class WettkampfErgebnisService {
   }
 
   handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
-    //console.log("Wettkaempfe geladen: " + wettkaempfe);
+    // console.log("Wettkaempfe geladen: " + wettkaempfe);
     this.wettkaempfe = wettkaempfe;
-    this.wettkaempfe.forEach(wettkampfDO => {
+    this.wettkaempfe.forEach((wettkampfDO) => {
       this.loadMatches(wettkampfDO.id);
     });
   }
@@ -150,9 +150,9 @@ export class WettkampfErgebnisService {
   }
 
   handleLoadMatches(matches: MatchDO[]) {
-    //console.log("Matches geladen: " + matches);
+    // console.log("Matches geladen: " + matches);
     this.matches = this.matches.concat(matches);
-    matches.forEach(matchDO => {
+    matches.forEach((matchDO) => {
       this.loadPassen(matchDO.id);
     });
   }
@@ -164,7 +164,7 @@ export class WettkampfErgebnisService {
   }
 
   handleLoadPassen(passen: PasseDoClass[]): void {
-    //console.log("Passen geladen: " + passen);
+    // console.log("Passen geladen: " + passen);
     this.passen = this.passen.concat(passen);
   }
 }
