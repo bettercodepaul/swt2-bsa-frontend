@@ -95,12 +95,13 @@ export class WettkampfErgebnisService {
     this.mannschaften = allMannschaften;
     this.sportjahr = jahr;
     this.loadWettkaempfe(this.veranstaltung.id);
-    this.matches = [];
-    return this.wettkampErgebnisse;
+    return this.createWettkampfergebnisse();
 
   }
   public createWettkampfergebnisse(): WettkampfErgebnis[] {
     this.wettkampErgebnisse = [];
+    console.log("Alle passen: " + this.passen);
+    console.log("Passenlaenge: " + this.passen.length);
     for (let i = 0; i < this.matches.length ; i = i + 2) {
       const wettkampfErgebnis = new WettkampfErgebnis (
         this.matches[i].nr,
@@ -122,6 +123,8 @@ export class WettkampfErgebnisService {
       );
       this.wettkampErgebnisse.push(wettkampfErgebnis);
     }
+    this.matches = [];
+    this.passen = [];
     return this.wettkampErgebnisse;
 
   }
@@ -133,7 +136,7 @@ export class WettkampfErgebnisService {
   }
 
   handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
-    console.log("Wettkaempfe geladen: " + wettkaempfe);
+    //console.log("Wettkaempfe geladen: " + wettkaempfe);
     this.wettkaempfe = wettkaempfe;
     this.wettkaempfe.forEach(wettkampfDO => {
       this.loadMatches(wettkampfDO.id);
@@ -146,14 +149,12 @@ export class WettkampfErgebnisService {
         .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([]));
   }
 
-  handleLoadMatches(matches: MatchDO[]): WettkampfErgebnis[] {
-    console.log("Matches geladen: " + matches);
+  handleLoadMatches(matches: MatchDO[]) {
+    //console.log("Matches geladen: " + matches);
     this.matches = this.matches.concat(matches);
     matches.forEach(matchDO => {
       this.loadPassen(matchDO.id);
     });
-
-    return this.createWettkampfergebnisse();
   }
 
   public loadPassen(matchId) {
@@ -163,7 +164,7 @@ export class WettkampfErgebnisService {
   }
 
   handleLoadPassen(passen: PasseDoClass[]): void {
-    console.log("Passen geladen: " + passen);
+    //console.log("Passen geladen: " + passen);
     this.passen = this.passen.concat(passen);
   }
 }
