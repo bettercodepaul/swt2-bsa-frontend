@@ -55,6 +55,21 @@ export class PasseDataProviderService extends DataProviderService {
     });
   }
 
+  public findByWettkampfId(wettkampfId: number): Promise<BogenligaResponse<PasseDTOClass[]>> {
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + wettkampfId).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
   findAll(): Promise<BogenligaResponse<PasseDoClass[]>> {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl() + '/')

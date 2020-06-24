@@ -70,13 +70,13 @@
     <div id="Button">
       <bla-button
         [id]="'showResultButton'"
-        (onClick)="loadErgebnisse(false); refresh();">
+        (onClick)="loadErgebnisse(true); refresh();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadErgebnisse(true); refresh();">
+        (onClick)="loadErgebnisse(false); refresh();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
       </bla-button>
     </div>
@@ -91,7 +91,7 @@
 
     <div class="row">
       <div id="Table1" *ngIf="show">
-        <h3 [innerText]="getTitle()"></h3>
+        <h3>{{"Wettkampftag 1"}}</h3>
         <bla-data-table [config]="config_table"
                         [rows]="rows[0]"
                         [loading]="loadingwettkampf">
@@ -99,7 +99,7 @@
       </div>
     </div>
     <div class="row" >
-      <div id="Table2" *ngIf="showAll">
+      <div id="Table2" *ngIf="show">
         <h3>{{"Wettkampftag 2"}}</h3>
         <bla-data-table [config]="config_table"
                         [rows]="rows[1]"
@@ -108,7 +108,7 @@
       </div>
     </div>
     <div class="row">
-      <div id="Table3"*ngIf="showAll">
+      <div id="Table3"*ngIf="show">
         <h3>{{"Wettkampftag 3"}}</h3>
         <bla-data-table [config]="config_table"
                         [rows]="rows[2]"
@@ -117,7 +117,7 @@
       </div>
     </div>
     <div class="row">
-      <div id="Table4" *ngIf="showAll">
+      <div id="Table4" *ngIf="show">
         <h3>{{"Wettkampftag 4"}}</h3>
         <bla-data-table [config]="config_table"
                         [rows]="rows[3]"
