@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {VEREINE_CONFIG, VEREINE_TABLE_CONFIG} from './vereine.config';
-import {isNullOrUndefined} from '@shared/functions';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {VereinDO} from '../../../verwaltung/types/verein-do.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
-import {BogenligaResponse} from '@shared/data-provider';
+import {BogenligaResponse, RequestResult} from '@shared/data-provider';
 import {VereinDTO} from '../../../verwaltung/types/datatransfer/verein-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
@@ -17,16 +17,8 @@ import {VeranstaltungDTO} from '../../../verwaltung/types/datatransfer/veranstal
 import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 
-import {ActivatedRoute, Router, RouterModule, Routes} from '@angular/router';
-import {isUndefined} from '@shared/functions';
-import {
-  Notification,
-  NotificationOrigin,
-  NotificationService,
-  NotificationSeverity,
-  NotificationType,
-  NotificationUserAction
-} from '@shared/services/notification';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NotificationService} from '@shared/services/notification';
 
 
 const ID_PATH_PARAM = 'id';
@@ -81,18 +73,40 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.selectedVereinsId = this.providedID;
     console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
     this.changeSelectedVerein();
+    this.onSelect(this.selectedVereine);
   }
   // Changes the selectedVereine acording to the current selectedVereinsID.
   private changeSelectedVerein(): void {
     this.selectedVereine = [];
+
     this.vereinDataProvider.findById(this.selectedVereinsId)
-        .then((response: BogenligaResponse<VereinDTO>) => {
-          if(response.payload != null){
-          this.currentVerein = response.payload; console.log('Geholter Verein: '+ response.payload)}
-        else{console.log('Lesefehler von verein findById!');}});
-    this.selectedVereine.push(this.currentVerein);
+        .then((response: BogenligaResponse<VereinDTO>) =>
+          this.getVereinSuccsess(response.payload))
+        .catch((response: BogenligaResponse<VereinDTO>) =>
+          console.log('Fehler im Verein laden')
+        );
+
+
+
+
     //this.onSelect(this.selectedVereine);
   }
+
+  private getVereinSuccsess(response: VereinDTO){
+    console.log('response in getVerein: ' + response.name);
+    /*
+    let zwVerein: VereinDTO;
+    zwVerein.id = response.id; console.log('Geholter Verein ID: '+ response.id);
+    zwVerein.identifier = response.identifier; console.log('Geholter Verein identifier: '+ response.identifier);
+    zwVerein.name = response.name; console.log('Geholter Verein name: '+ response.name);
+    zwVerein.regionId = response.regionId; console.log('Geholter Verein regionenID: '+ response.regionName);
+    zwVerein.version = response.version; console.log('Geholter Verein version: '+ response.version);
+    this.currentVerein = zwVerein;
+    */
+    this.currentVerein = response;
+    this.selectedVereine.push(this.currentVerein);
+    console.log('CurrentVerein: ' + this.currentVerein);
+}
 
   // when a Verein gets selected from the list
   public onSelect($event: VereinDO[]): void {
