@@ -131,12 +131,13 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   public loadErgebnisse(loadCase: boolean) {
-    loadCase ? this.showAll = true : this.showAll = false;
     this.show = false;
     this.loadingwettkampf = true;
     console.log('loadErgebnisse');
+    let selectedMannschaft;
+    loadCase ? selectedMannschaft = this.currentMannschaft : selectedMannschaft = undefined;
     this.rows = [];
-    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
+    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
       this.mannschaften, this.currentVeranstaltung)));
     this.loadingwettkampf = false;
   }
@@ -160,13 +161,5 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
       this.rows.push(toTableRows(this.wettkampErgebnisse[0]));
       this.loadingwettkampf = false;
     }
-  }
-
-  private getTitle(): string {
-    let title = 'Aktueller Wettkampf';
-    if (this.showAll) {
-      title = 'Wettkampftag 1';
-    }
-    return title;
   }
 }
