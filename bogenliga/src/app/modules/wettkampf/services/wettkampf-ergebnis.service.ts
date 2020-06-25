@@ -56,8 +56,8 @@ export class WettkampfErgebnisService {
   public getSatzergebnis(nr: number, satznummer: number, id: number): number {
 
     let Satz = 0;
-    const passenFiltered = this.passen.filter(passenFiltered => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
-    for (let passe of passenFiltered) {
+    const passenFil = this.passen.filter((passenFiltered) => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
+    for (const passe of passenFil) {
         for (const i of passe.ringzahl) {
           Satz += i;
         }
@@ -99,16 +99,16 @@ export class WettkampfErgebnisService {
     this.mannschaften = allMannschaften;
     this.sportjahr = jahr;
     this.loadWettkaempfe(this.veranstaltung.id);
-    if(this.currentMannschaft !== undefined) {
+    if (this.currentMannschaft !== undefined) {
       this.matches = this.filterMannschaft();
     }
     return this.createWettkampfergebnisse();
   }
 
-  public filterMannschaft() : Array<MatchDO> {
+  public filterMannschaft(): Array<MatchDO> {
 
-    let mannschaftMatches : Array<MatchDO> = [];
-    for(let i = 0; i < this.matches.length; i += 2) {
+    const mannschaftMatches: Array<MatchDO> = [];
+    for (let i = 0; i < this.matches.length; i += 2) {
       if (this.currentMannschaft.id === this.matches[i].mannschaftId || this.currentMannschaft.id === this.matches[i + 1].mannschaftId) {
         mannschaftMatches.push(this.matches[i]);
         mannschaftMatches.push(this.matches[i + 1]);
@@ -148,8 +148,8 @@ export class WettkampfErgebnisService {
 
   }
 
-  //backend-calls to get data from DB
-  public loadWettkaempfe(veranstaltungsId : number) {
+  // backend-calls to get data from DB
+  public loadWettkaempfe(veranstaltungsId: number) {
 
     this.wettkampfDataProvider.findAllByVeranstaltungId(veranstaltungsId)
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
@@ -158,22 +158,22 @@ export class WettkampfErgebnisService {
 
   handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
 
-    console.log("Wettkaempfe geladen: " + wettkaempfe);
+    console.log('Wettkaempfe geladen: ' + wettkaempfe);
     this.wettkaempfe = wettkaempfe;
-      this.wettkaempfe.forEach((wettkampfDO) => {
+    this.wettkaempfe.forEach((wettkampfDO) => {
         this.loadMatches(wettkampfDO.id);
         this.loadPassen(wettkampfDO.id);
       });
   }
 
-  public loadMatches(wettkampfId : number) {
+  public loadMatches(wettkampfId: number) {
 
     this.matchDataProvider.findAllWettkampfMatchesById(wettkampfId)
         .then((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches(response.payload))
         .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([]));
   }
 
-  public loadPassen(wettkampfId : number) {
+  public loadPassen(wettkampfId: number) {
 
     this.passeDataProvider.findByWettkampfId(wettkampfId)
         .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleLoadPassen(response.payload))
@@ -182,13 +182,13 @@ export class WettkampfErgebnisService {
 
   handleLoadMatches(matches: MatchDO[]) {
 
-    console.log("Matches geladen: " + matches);
+    console.log('Matches geladen: ' + matches);
     this.matches = this.matches.concat(matches);
   }
 
   handleLoadPassen(passen: PasseDoClass[]): void {
 
-    console.log("Passen geladen: " + passen);
+    console.log('Passen geladen: ' + passen);
     this.passen = this.passen.concat(passen);
   }
 }
