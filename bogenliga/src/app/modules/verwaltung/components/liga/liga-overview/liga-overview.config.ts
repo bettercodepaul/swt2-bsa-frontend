@@ -38,8 +38,8 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
       width:       6
     },
 
-    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
-    deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
+    editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
+    deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
-  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN]
 };

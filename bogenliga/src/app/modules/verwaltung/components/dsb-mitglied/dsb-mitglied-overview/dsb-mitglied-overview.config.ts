@@ -36,7 +36,7 @@ export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_READ_MY_VEREIN, UserPermission.CAN_MODIFY_MY_VEREIN],
+    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
   },
   createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
