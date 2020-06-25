@@ -25,7 +25,6 @@ const ID_PATH_PARAM = 'id';
 export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public show = false;
-  public loadAll: boolean;
   public showAll: boolean;
   public directMannschaft = null;
   public directWettkampf = null;
@@ -54,7 +53,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
               private mannschaftDataProvider: DsbMannschaftDataProviderService,
               private router: Router,
               private route: ActivatedRoute) {
-              super();
+    super();
   }
 
   ngOnInit() {
@@ -125,38 +124,29 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         this.jahre[this.jahre.length] = i.sportjahr;
       }
     }
-    this.loadErgebnisse();
   }
 
   public refresh() {
     this.show = true;
-    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-    buttonVisibility.style.display = 'none';
-
   }
 
-  public loadErgebnisse() {
+  public loadErgebnisse(loadCase: boolean) {
     this.show = false;
-    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-    buttonVisibility.style.display = 'block';
     this.loadingwettkampf = true;
     console.log('loadErgebnisse');
-    this.delay(10).then((any) => {
-      this.rows = [];
-      this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
-        this.mannschaften, this.currentVeranstaltung, this.loadAll)));
-      this.loadingwettkampf = false;
-      this.loadAll = false;
-    });
-
+    let selectedMannschaft;
+    loadCase ? selectedMannschaft = this.currentMannschaft : selectedMannschaft = undefined;
+    this.rows = [];
+    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
+      this.mannschaften, this.currentVeranstaltung)));
+    this.loadingwettkampf = false;
   }
 
   public onSelect($event: VeranstaltungDO[]): void {
     this.show = false;
     this.showAll = false;
-    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-    buttonVisibility.style.display = 'block';
     this.wettkampErgebnisse = [];
+    this.rows = [];
     this.loadingwettkampf = true;
     console.log('loadErgebnisse');
     this.currentVeranstaltung = $event.concat()[0];
@@ -164,26 +154,12 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.jahre[0] = this.currentJahr;
     let result;
     result = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
-      this.mannschaften, $event.concat()[0], this.loadAll);
+      this.mannschaften, $event.concat()[0]);
     this.wettkampErgebnisse = [];
     if (this.wettkampErgebnisse.push(result)) {
-      this.delay(10).then((any) => {
-        this.rows = [];
-        this.rows.push(toTableRows(this.wettkampErgebnisse[0]));
-        this.loadingwettkampf = false;
-      });
+      this.rows = [];
+      this.rows.push(toTableRows(this.wettkampErgebnisse[0]));
+      this.loadingwettkampf = false;
     }
-  }
-
-  private getTitle(): string {
-    let title = 'Aktueller Wettkampf';
-    if (this.showAll) {
-      title = 'Wettkampftag 1';
-    }
-    return title;
-  }
-
-  async delay(ms: number) {
-    await new Promise((resolve) => setTimeout(() => resolve(), ms)).then(() => console.log('fired'));
   }
 }

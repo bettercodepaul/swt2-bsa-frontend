@@ -18,6 +18,7 @@
                              [items]="veranstaltungen"
                              [optionFieldSelector]="'name'"
                              (onSelect)="onSelect($event); "
+                             [selectedItemIds]="[0]"
                              [multipleSelections]="!multipleSelections"
                              style="width: 50%; height: 10em;">
 
@@ -37,7 +38,7 @@
                   id="vereine"
                   name="VereinName"
                   [(ngModel)]="currentMannschaft"
-                  (ngModelChange)="loadErgebnisse()">
+                  (ngModelChange)="loadErgebnisse(false)">
             <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
           </select>
           <div class="invalid-feedback">
@@ -57,7 +58,7 @@
                 id="jahr"
                 name="Jahre"
                 [(ngModel)]="currentJahr"
-                (ngModelChange)="loadErgebnisse()"
+                (ngModelChange)="loadErgebnisse(false)"
                 disabled="true">
           <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
         </select>
@@ -69,60 +70,14 @@
     <!-- Button -->
     <div id="Button">
       <bla-button
-        [id]="'showResultsButton'"
-        (onClick)="loadAll = true; loadErgebnisse(); refresh();">
+        [id]="'showResultButton'"
+        (onClick)="loadErgebnisse(true); refresh();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
-    </div>
-    <div class="col-sm-9">
-      <div class="invalid-feedback">
-        {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
-      </div>
-    </div>
-
-    <!-- Row 1 -->
-
-    <div class="row">
-      <div id="Table1" *ngIf="show">
-        <h3 [innerText]="getTitle()"></h3>
-        <bla-data-table [config]="config_table"
-                        [rows]="rows[0]"
-                        [loading]="loadingwettkampf">
-        </bla-data-table>
-      </div>
-    </div>
-    <div class="row" >
-      <div id="Table2" *ngIf="showAll">
-        <h3>{{"Wettkampftag 2"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [rows]="rows[1]"
-                        [loading]="loadingwettkampf">
-        </bla-data-table>
-      </div>
-    </div>
-    <div class="row">
-      <div id="Table3"*ngIf="showAll">
-        <h3>{{"Wettkampftag 3"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [rows]="rows[2]"
-                        [loading]="loadingwettkampf">
-        </bla-data-table>
-      </div>
-    </div>
-    <div class="row">
-      <div id="Table4" *ngIf="showAll">
-        <h3>{{"Wettkampftag 4"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [rows]="rows[3]"
-                        [loading]="loadingwettkampf">
-        </bla-data-table>
-      </div>
-    </div>
-
-    <div id="Button1" *ngIf="show">
+      &nbsp;
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="showAll = true; loadErgebnisse(); refresh();">
+        (onClick)="loadErgebnisse(false); refresh();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
       </bla-button>
     </div>
@@ -132,6 +87,45 @@
       </div>
     </div>
 
+
+    <!-- Row 1 -->
+
+    <div class="row">
+      <div id="Table1" *ngIf="show">
+        <h3>{{"Wettkampftag 1"}}</h3>
+        <bla-data-table [config]="config_table"
+                        [rows]="rows[0]"
+                        [loading]="loadingwettkampf">
+        </bla-data-table>
+      </div>
+    </div>
+    <div class="row" >
+      <div id="Table2" *ngIf="show">
+        <h3>{{"Wettkampftag 2"}}</h3>
+        <bla-data-table [config]="config_table"
+                        [rows]="rows[1]"
+                        [loading]="loadingwettkampf">
+        </bla-data-table>
+      </div>
+    </div>
+    <div class="row">
+      <div id="Table3"*ngIf="show">
+        <h3>{{"Wettkampftag 3"}}</h3>
+        <bla-data-table [config]="config_table"
+                        [rows]="rows[2]"
+                        [loading]="loadingwettkampf">
+        </bla-data-table>
+      </div>
+    </div>
+    <div class="row">
+      <div id="Table4" *ngIf="show">
+        <h3>{{"Wettkampftag 4"}}</h3>
+        <bla-data-table [config]="config_table"
+                        [rows]="rows[3]"
+                        [loading]="loadingwettkampf">
+        </bla-data-table>
+      </div>
+    </div>
 
     <div class="form-group row">
       <div class="col-sm-3"></div>

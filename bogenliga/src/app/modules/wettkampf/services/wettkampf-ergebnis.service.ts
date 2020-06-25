@@ -13,6 +13,7 @@ import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {UserPermission} from '@shared/services';
+import {unwrapFirst} from 'codelyzer/util/function';
 
 
 @Injectable({
@@ -32,9 +33,8 @@ export class WettkampfErgebnisService {
   public matches: Array<MatchDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
-  public currentManschaft: DsbMannschaftDO;
+  public currentMannschaft: DsbMannschaftDO;
   private loading = false;
-  private currentWettkampf: WettkampfDO;
   private passen: Array<PasseDoClass> = [];
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
@@ -44,50 +44,8 @@ export class WettkampfErgebnisService {
 
   }
 
-  public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO, all: boolean): WettkampfErgebnis[] {
-    this.setupService(jahr, mannschaft, allMannschaften, veranstaltung, all);
-    return this.wettkampErgebnisse;
-
-  }
-
-  private setupService(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO, all: boolean) {
-    this.currentManschaft = mannschaft;
-    this.veranstaltung = veranstaltung;
-    this.mannschaften = allMannschaften;
-    this.sportjahr = jahr;
-    this.loadWettkaempfe(all);
-    this.loadPassen();
-  }
-
-  public createWettkampfergebnisse(all: boolean): WettkampfErgebnis[] {
-    this.wettkampErgebnisse = [];
-    console.log(this.matches);
-    for (let i = 0; i < this.matches.length ; i = i + 2) {
-      if (((this.currentManschaft.id === this.matches[i].mannschaftId || this.currentManschaft.id === this.matches[i + 1].mannschaftId) || all === true)) {
-        const wettkampfErgebnis = new WettkampfErgebnis(
-          this.matches[i].nr,
-          this.getMannschaftsname(this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr, 3, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr, 4, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr, 5, this.matches[i].mannschaftId),
-          this.getMannschaftsname(this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr, 4, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr, 5, this.matches[i + 1].mannschaftId),
-          this.getSatzpunkte(i),
-          this.getMatchpunkte(i)
-        );
-        this.wettkampErgebnisse.push(wettkampfErgebnis);
-      }
-    }
-    return this.wettkampErgebnisse;
-
-  }
   public getMannschaftsname(id: number): string {
+
     for (const mannschaften of this.mannschaften) {
       if (mannschaften.id === id) {
         return mannschaften.name;
@@ -96,18 +54,19 @@ export class WettkampfErgebnisService {
   }
 
   public getSatzergebnis(nr: number, satznummer: number, id: number): number {
+
     let Satz = 0;
-    for (const passen of this.passen) {
-      if (passen.matchNr === nr && passen.lfdNr === satznummer && id === passen.mannschaftId) {
-        for (const i of passen.ringzahl) {
-            Satz = Satz + i;
+    const passenFil = this.passen.filter((passenFiltered) => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
+    for (const passe of passenFil) {
+        for (const i of passe.ringzahl) {
+          Satz += i;
         }
-      }
     }
     return Satz;
   }
 
   public getSatzpunkte(nr: number): string {
+
     let satzpunkte1 = '-';
     let satzpunkte2 = '-';
     if (this.matches[nr].satzpunkte != null) {
@@ -120,6 +79,7 @@ export class WettkampfErgebnisService {
   }
 
   public getMatchpunkte(nr: number): string {
+
     let matchpunkte1 = '-';
     let matchpunkte2 = '-';
 
@@ -132,62 +92,103 @@ export class WettkampfErgebnisService {
     return matchpunkte1 + ' : ' + matchpunkte2;
   }
 
-  loadWettkaempfe(all: boolean) {
-    this.wettkampfDataProvider.findAll()
-        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload, all))
-        .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([], all));
+  public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO): WettkampfErgebnis[] {
+
+    this.currentMannschaft = mannschaft;
+    this.veranstaltung = veranstaltung;
+    this.mannschaften = allMannschaften;
+    this.sportjahr = jahr;
+    this.loadWettkaempfe(this.veranstaltung.id);
+    if (this.currentMannschaft !== undefined) {
+      this.matches = this.filterMannschaft();
+    }
+    return this.createWettkampfergebnisse();
   }
 
-  handleLoadWettkaempfe(wettkaempfe: WettkampfDO[], all: boolean) {
+  public filterMannschaft(): Array<MatchDO> {
+
+    const mannschaftMatches: Array<MatchDO> = [];
+    for (let i = 0; i < this.matches.length; i += 2) {
+      if (this.currentMannschaft.id === this.matches[i].mannschaftId || this.currentMannschaft.id === this.matches[i + 1].mannschaftId) {
+        mannschaftMatches.push(this.matches[i]);
+        mannschaftMatches.push(this.matches[i + 1]);
+      }
+    }
+    return mannschaftMatches;
+  }
+
+  public createWettkampfergebnisse(): WettkampfErgebnis[] {
+
+    this.wettkampErgebnisse = [];
+    for (let i = 0; i < this.matches.length ; i = i + 2) {
+      const wettkampfErgebnis = new WettkampfErgebnis (
+        this.matches[i].nr,
+        this.matches[i].wettkampfId,
+        this.getMannschaftsname(this.matches[i].mannschaftId),
+        this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
+        this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
+        this.getSatzergebnis(this.matches[i].nr, 3, this.matches[i].mannschaftId),
+        this.getSatzergebnis(this.matches[i].nr, 4, this.matches[i].mannschaftId),
+        this.getSatzergebnis(this.matches[i].nr, 5, this.matches[i].mannschaftId),
+        this.getMannschaftsname(this.matches[i + 1].mannschaftId),
+        this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
+        this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
+        this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
+        this.getSatzergebnis(this.matches[i + 1].nr, 4, this.matches[i + 1].mannschaftId),
+        this.getSatzergebnis(this.matches[i + 1].nr, 5, this.matches[i + 1].mannschaftId),
+        this.getSatzpunkte(i),
+        this.getMatchpunkte(i)
+      );
+      this.wettkampErgebnisse.push(wettkampfErgebnis);
+    }
+    this.matches = [];
+    this.passen = [];
+    this.wettkaempfe = [];
+    return this.wettkampErgebnisse;
+
+  }
+
+  // backend-calls to get data from DB
+  public loadWettkaempfe(veranstaltungsId: number) {
+
+    this.wettkampfDataProvider.findAllByVeranstaltungId(veranstaltungsId)
+        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
+        .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([]));
+  }
+
+  handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
+
+    console.log('Wettkaempfe geladen: ' + wettkaempfe);
     this.wettkaempfe = wettkaempfe;
-    this.loadMatches(all);
+    this.wettkaempfe.forEach((wettkampfDO) => {
+        this.loadMatches(wettkampfDO.id);
+        this.loadPassen(wettkampfDO.id);
+      });
   }
 
-  private filterMannschaften() {
-    let success = false;
-    for (const m of this.mannschaften) {
-      if (m.veranstaltungId === this.veranstaltung.id
-        && this.veranstaltung.sportjahr === this.sportjahr
-        && m.id === this.currentManschaft.id) {
-        this.currentManschaft = m;
-        success = true;
-        break;
-      }
-    }
-    if (!success) {
-      this.currentManschaft = null;
-    }
+  public loadMatches(wettkampfId: number) {
+
+    this.matchDataProvider.findAllWettkampfMatchesById(wettkampfId)
+        .then((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches(response.payload))
+        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([]));
   }
 
-  public loadMatches(all: boolean) {
-    this.matchDataProvider.findAll()
-        .then((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches(response.payload, all))
-        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([], all));
-  }
+  public loadPassen(wettkampfId: number) {
 
-  handleLoadMatches(matches: MatchDO[], all: boolean): WettkampfErgebnis[] {
-    this.matches = matches;
-    for (const i of this.wettkaempfe) {
-      if (i.wettkampfVeranstaltungsId === this.veranstaltung.id && this.currentWettkampf === null) {
-        this.currentWettkampf = i;
-      }
-    }
-    this.filterMannschaften();
-    return this.createWettkampfergebnisse(all);
-  }
-
-  loadPassen() {
-    this.passeDataProvider.findAll()
+    this.passeDataProvider.findByWettkampfId(wettkampfId)
         .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleLoadPassen(response.payload))
         .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleLoadPassen([]));
   }
 
+  handleLoadMatches(matches: MatchDO[]) {
+
+    console.log('Matches geladen: ' + matches);
+    this.matches = this.matches.concat(matches);
+  }
+
   handleLoadPassen(passen: PasseDoClass[]): void {
-    this.passen = passen;
+
+    console.log('Passen geladen: ' + passen);
+    this.passen = this.passen.concat(passen);
   }
 }
-
-
-
-
-
