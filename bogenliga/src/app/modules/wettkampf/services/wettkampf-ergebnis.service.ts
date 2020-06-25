@@ -57,7 +57,7 @@ export class WettkampfErgebnisService {
 
     let Satz = 0;
     const passenFiltered = this.passen.filter(passenFiltered => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
-    for (const passe of passenFiltered) {
+    for (let passe of passenFiltered) {
         for (const i of passe.ringzahl) {
           Satz += i;
         }
@@ -107,21 +107,19 @@ export class WettkampfErgebnisService {
 
   public filterMannschaft() : Array<MatchDO> {
 
-      let mannschaftMatches : Array<MatchDO> = [];
-      for(let i = 0; i < this.matches.length; i += 2) {
-        if (this.currentMannschaft.id === this.matches[i].mannschaftId || this.currentMannschaft.id === this.matches[i + 1].mannschaftId) {
-          mannschaftMatches.push(this.matches[i]);
-          mannschaftMatches.push(this.matches[i + 1]);
-        }
+    let mannschaftMatches : Array<MatchDO> = [];
+    for(let i = 0; i < this.matches.length; i += 2) {
+      if (this.currentMannschaft.id === this.matches[i].mannschaftId || this.currentMannschaft.id === this.matches[i + 1].mannschaftId) {
+        mannschaftMatches.push(this.matches[i]);
+        mannschaftMatches.push(this.matches[i + 1]);
       }
-      return mannschaftMatches;
+    }
+    return mannschaftMatches;
   }
 
   public createWettkampfergebnisse(): WettkampfErgebnis[] {
 
     this.wettkampErgebnisse = [];
-    console.log('Alle passen: ' + this.passen);
-    console.log('Passenlaenge: ' + this.passen.length);
     for (let i = 0; i < this.matches.length ; i = i + 2) {
       const wettkampfErgebnis = new WettkampfErgebnis (
         this.matches[i].nr,
@@ -145,10 +143,12 @@ export class WettkampfErgebnisService {
     }
     this.matches = [];
     this.passen = [];
+    this.wettkaempfe = [];
     return this.wettkampErgebnisse;
 
   }
 
+  //backend-calls to get data from DB
   public loadWettkaempfe(veranstaltungsId : number) {
 
     this.wettkampfDataProvider.findAllByVeranstaltungId(veranstaltungsId)
