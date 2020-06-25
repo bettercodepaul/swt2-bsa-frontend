@@ -28,4 +28,5 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
       width:       6
     },
 
+
 };

@@ -25,7 +25,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
         icon:           'wrench',
         route:          'klassen',
-        permissions:    [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_READ_STAMMDATEN]
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
@@ -39,21 +39,21 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga',
-        permissions:    [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_READ_STAMMDATEN]
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.DESCRIPTION',
         icon:           'sitemap',
         route:          'regionen',
-        permissions:    [UserPermission.CAN_READ_STAMMDATEN]
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.DESCRIPTION',
         icon:           'calendar-alt',
         route:          'veranstaltung',
-        permissions:    [UserPermission.CAN_READ_WETTKAMPF]
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN,UserPermission.CAN_MODIFY_MY_VERANSTALTUNG]
       },
       // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
       // because the exactly function of the site "Sportjahre" is still unclear.
