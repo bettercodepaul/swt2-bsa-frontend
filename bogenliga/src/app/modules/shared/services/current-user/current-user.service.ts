@@ -184,5 +184,7 @@ export class CurrentUserService {
   private getCurrentUser(): UserSignInDTO {
     return this.currentUser;
   }
-
+public getVerein() :String{
+return "1";
+}
 }

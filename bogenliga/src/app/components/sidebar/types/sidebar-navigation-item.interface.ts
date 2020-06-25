@@ -5,7 +5,8 @@ import {SideBarNavigationSubitem} from './sidebar-navigation-subitem.interface';
 export interface SideBarNavigationItem {
   label: string;
   icon: IconDefinition;
-  route: string;
+  route : String;
+  detailType ?: String;
   permissons?: UserPermission[];
   subitems?: SideBarNavigationSubitem[];
   inProdVisible?: boolean;
