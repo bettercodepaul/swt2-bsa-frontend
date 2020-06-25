@@ -26,6 +26,7 @@ export class SchusszettelProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<MatchDTOExt>>(new UriBuilder().fromPath(this.getUrl()).path(match1Id).path(match2Id).build())
           .then((data: Array<MatchDTOExt>) => {
+            console.log("data in MatchDTO", data)
             const matches = [MatchMapperExt.matchToDO(data[0]), MatchMapperExt.matchToDO(data[1])];
             resolve({result: RequestResult.SUCCESS, payload: matches});
           }, (error: HttpErrorResponse) => {
