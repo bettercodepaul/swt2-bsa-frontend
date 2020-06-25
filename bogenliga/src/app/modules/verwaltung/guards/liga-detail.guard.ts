@@ -8,7 +8,7 @@ export class LigaDetailGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.currentUserService.hasAnyPermisson(//TODO: Überprüfen, ob tatsächlich Liga gemeint ist
-      [UserPermission.CAN_READ_MY_ORT, UserPermission.CAN_MODIFY_MY_ORT]);
+    return this.currentUserService.hasAnyPermisson(//TODO: braucht der Ligaleiter hier auch zugrif ?
+      [UserPermission.CAN_MODIFY_SYSTEMDATEN]);
   }
 }
