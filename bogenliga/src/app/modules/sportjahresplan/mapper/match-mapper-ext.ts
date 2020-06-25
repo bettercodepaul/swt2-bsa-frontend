@@ -22,24 +22,31 @@ export class MatchMapperExt {
     const schuetzen = [];
     let sumSatz = [];
     if (payload.passen.length > 0) {
+      const schuetzenPasseMap = new Map<number, PasseDO[]>();
       schuetzen[0] = [];
       schuetzen[1] = [];
       schuetzen[2] = [];
       sumSatz = [0, 0, 0, 0, 0];
+      // Map Passen to Schuetzen using rueckennummern
       for (const passe of payload.passen) {
-        switch (passe.schuetzeNr) {
-          case 1:
-            schuetzen[0].push(PasseMapper.passeToDO(passe));
-            break;
-          case 2:
-            schuetzen[1].push(PasseMapper.passeToDO(passe));
-            break;
-          case 3:
-            schuetzen[2].push(PasseMapper.passeToDO(passe));
-            break;
+        const passeDO = PasseMapper.passeToDO(passe);
+        if (!schuetzenPasseMap.has(passe.rueckennummer)) {
+          const passen = [];
+          passen.push(passeDO);
+          schuetzenPasseMap.set(passe.rueckennummer, passen);
+        } else {
+          schuetzenPasseMap.get(passe.rueckennummer).push(passeDO);
         }
-
       }
+      console.log("schuetzenPasseMap", schuetzenPasseMap);
+      // Convert map to array
+      let i = 0;
+      schuetzenPasseMap.forEach((passen, rueckennummer) => {
+        schuetzen[i] = passen;
+        i++;
+      });
+
+      console.log("schuetzen", schuetzen);
 
       for (let i = 0; i < schuetzen[0].length; i++) {
         for (const passen of schuetzen) {
@@ -83,7 +90,7 @@ export class MatchMapperExt {
     const passen = [];
     for (const schuetze of payload.schuetzen) {
       for (const passe of schuetze) {
-        passe.schuetzeNr = schuetze[0].schuetzeNr;
+        passe.rueckennummer = schuetze[0].rueckennummer;
         passen.push(PasseMapper.passeToDTO(passe));
       }
     }
