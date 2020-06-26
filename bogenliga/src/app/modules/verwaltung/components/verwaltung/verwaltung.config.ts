@@ -53,7 +53,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.DESCRIPTION',
         icon:           'calendar-alt',
         route:          'veranstaltung',
-        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN,UserPermission.CAN_MODIFY_MY_VERANSTALTUNG]
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN,UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
+        detailType: "Veranstalltungen",
       },
       // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
       // because the exactly function of the site "Sportjahre" is still unclear.

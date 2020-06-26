@@ -190,6 +190,6 @@ return "1";
 }
 public getLigas() :String[]{
     //TODO: implement
-    return  ["1","2","4"]
+    return  []
 }
 }

@@ -25,5 +25,27 @@ export class NavigationCardsComponent extends CommonComponent implements OnInit 
       return this.currentUserService.hasAnyPermisson(userPermissions);
     }
   }
+  public getLink(route:String,detailType:String):String{
+    if(detailType !== undefined){
+    let result = route;
+    let allowedData :String[] = [];
+    switch(detailType){
+      case("Veranstalltungen"):
+        //TODO: umschreiben auf get Veranstaltungen
+        allowedData = this.currentUserService.getLigas();
+        break;
+    }
+    if(allowedData.length > 0){
+      if(allowedData.length == 1){
+       result += "/"+allowedData[0];
+      }
+    }
+
+    return result;
+    }else{
+      return route
+    }
+
+  }
 
 }
