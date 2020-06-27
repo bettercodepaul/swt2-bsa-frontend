@@ -67,7 +67,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM]);
+        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         console.log('This.providedID: ' + this.providedID);
       }
     });
@@ -88,7 +88,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
         );
   }
   // sets currentVerein to response and pushes it on selectedVereine
-  private getVereinSuccsess(response: VereinDTO){
+  private getVereinSuccsess(response: VereinDTO) {
     console.log('response in getVerein: ' + response.name);
     this.currentVerein = response;
     this.selectedVereine.push(this.currentVerein);
