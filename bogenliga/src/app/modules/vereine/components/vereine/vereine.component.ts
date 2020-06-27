@@ -57,7 +57,8 @@ export class VereineComponent extends CommonComponent implements OnInit {
               private mannschaftsDataProvider: DsbMannschaftDataProviderService) {
     super();
   }
-
+  // If no ID is given, the ID 0 is used.
+  // Otherwise the data of the selected Verein is displayed.
   ngOnInit() {
     console.log('Bin in Vereine');
     this.providedID = 0;
@@ -86,7 +87,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
           console.log('Fehler im Verein laden')
         );
   }
-
+  // sets currentVerein to response and pushes it on selectedVereine
   private getVereinSuccsess(response: VereinDTO){
     console.log('response in getVerein: ' + response.name);
     this.currentVerein = response;
