@@ -90,12 +90,12 @@
 
     <!-- Row 1 -->
 
-    <div class="row">
+    <div class="row" >
       <div id="Table1" *ngIf="show">
         <h3>{{"Wettkampftag 1"}}</h3>
         <bla-data-table [config]="config_table"
                         [rows]="rows[0]"
-                        [loading]="loadingwettkampf">
+                        [loading]="this.wettkampfErgebnisService.getLoading()">
         </bla-data-table>
       </div>
     </div>
@@ -104,7 +104,7 @@
         <h3>{{"Wettkampftag 2"}}</h3>
         <bla-data-table [config]="config_table"
                         [rows]="rows[1]"
-                        [loading]="loadingwettkampf">
+                        [loading]="this.wettkampfErgebnisService.getLoading()">
         </bla-data-table>
       </div>
     </div>
@@ -113,7 +113,7 @@
         <h3>{{"Wettkampftag 3"}}</h3>
         <bla-data-table [config]="config_table"
                         [rows]="rows[2]"
-                        [loading]="loadingwettkampf">
+                        [loading]="this.wettkampfErgebnisService.getLoading()">
         </bla-data-table>
       </div>
     </div>
@@ -122,7 +122,7 @@
         <h3>{{"Wettkampftag 4"}}</h3>
         <bla-data-table [config]="config_table"
                         [rows]="rows[3]"
-                        [loading]="loadingwettkampf">
+                        [loading]="this.wettkampfErgebnisService.getLoading()">
         </bla-data-table>
       </div>
     </div>
