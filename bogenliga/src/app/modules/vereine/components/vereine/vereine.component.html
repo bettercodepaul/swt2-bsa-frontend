@@ -6,7 +6,7 @@
       <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
 
       <bla-quicksearch-list (onSelect)="onSelect($event)"
-                            [selectedItemIds]="[5]"
+                            [selectedItemIds]= [selectedVereinsId]
                             [items]="vereine"
                             [loading]="loadingVereine"
                             [multipleSelections]="!multipleSelections"
