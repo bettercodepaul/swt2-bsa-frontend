@@ -130,12 +130,10 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.show = true;
   }
 
-  public loadErgebnisse(loadCase: boolean) {
+  public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
     this.show = false;
     this.loadingwettkampf = true;
     console.log('loadErgebnisse');
-    let selectedMannschaft;
-    loadCase ? selectedMannschaft = this.currentMannschaft : selectedMannschaft = undefined;
     this.rows = [];
     this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
       this.mannschaften, this.currentVeranstaltung)));

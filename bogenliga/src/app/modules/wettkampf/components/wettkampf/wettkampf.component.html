@@ -38,7 +38,7 @@
                   id="vereine"
                   name="VereinName"
                   [(ngModel)]="currentMannschaft"
-                  (ngModelChange)="loadErgebnisse(false)">
+                  (ngModelChange)="loadErgebnisse(this.currentMannschaft)">
             <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
           </select>
           <div class="invalid-feedback">
@@ -58,7 +58,7 @@
                 id="jahr"
                 name="Jahre"
                 [(ngModel)]="currentJahr"
-                (ngModelChange)="loadErgebnisse(false)"
+                (ngModelChange)="loadErgebnisse(this.currentMannschaft)"
                 disabled="true">
           <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
         </select>
@@ -71,13 +71,13 @@
     <div id="Button">
       <bla-button
         [id]="'showResultButton'"
-        (onClick)="loadErgebnisse(true); refresh();">
+        (onClick)="loadErgebnisse(this.currentMannschaft); refresh();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadErgebnisse(false); refresh();">
+        (onClick)="loadErgebnisse(undefined); refresh();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
       </bla-button>
     </div>

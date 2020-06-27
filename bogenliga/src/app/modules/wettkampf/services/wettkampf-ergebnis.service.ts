@@ -168,7 +168,7 @@ export class WettkampfErgebnisService {
 
   public loadMatches(wettkampfId: number) {
 
-    this.matchDataProvider.findAllWettkampfMatchesById(wettkampfId)
+    this.matchDataProvider.findByWettkampfId(wettkampfId)
         .then((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches(response.payload))
         .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([]));
   }
