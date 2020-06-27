@@ -16,9 +16,9 @@
           <bla-selectionlist [id]="'quickSearch'"
                              [loading]="areVeranstaltungenloading"
                              [items]="veranstaltungen"
+                             [selectedItemIds]=[currentVeranstaltung.id]
                              [optionFieldSelector]="'name'"
                              (onSelect)="onSelect($event); "
-                             [selectedItemIds]="[0]"
                              [multipleSelections]="!multipleSelections"
                              style="width: 50%; height: 10em;">
 
