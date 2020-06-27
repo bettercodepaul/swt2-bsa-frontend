@@ -40,7 +40,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public loadingVereine = true;
   public loadingTable = false;
   public rows: TableRow[];
-  private selectedVereinsId: number;
+  public selectedVereinsId: number;
   private selectedVereine: VereinDTO[];
   private remainingRequests: number;
   private remainingMannschaftsRequests: number;
@@ -85,24 +85,10 @@ export class VereineComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<VereinDTO>) =>
           console.log('Fehler im Verein laden')
         );
-
-
-
-
-    //this.onSelect(this.selectedVereine);
   }
 
   private getVereinSuccsess(response: VereinDTO){
     console.log('response in getVerein: ' + response.name);
-    /*
-    let zwVerein: VereinDTO;
-    zwVerein.id = response.id; console.log('Geholter Verein ID: '+ response.id);
-    zwVerein.identifier = response.identifier; console.log('Geholter Verein identifier: '+ response.identifier);
-    zwVerein.name = response.name; console.log('Geholter Verein name: '+ response.name);
-    zwVerein.regionId = response.regionId; console.log('Geholter Verein regionenID: '+ response.regionName);
-    zwVerein.version = response.version; console.log('Geholter Verein version: '+ response.version);
-    this.currentVerein = zwVerein;
-    */
     this.currentVerein = response;
     this.selectedVereine.push(this.currentVerein);
     console.log('CurrentVerein: ' + this.currentVerein);
