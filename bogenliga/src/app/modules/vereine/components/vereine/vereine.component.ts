@@ -66,7 +66,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = params[ID_PATH_PARAM];
+        this.providedID = parseInt(params[ID_PATH_PARAM]);
         console.log('This.providedID: ' + this.providedID);
       }
     });
