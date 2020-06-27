@@ -132,12 +132,18 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
     this.show = false;
-    this.loadingwettkampf = true;
+    this.loading = false;
     console.log('loadErgebnisse');
     this.rows = [];
-    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
-      this.mannschaften, this.currentVeranstaltung)));
-    this.loadingwettkampf = false;
+    let wettkampf = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
+      this.mannschaften, this.currentVeranstaltung);
+    console.log("Laenge: " + wettkampf.length);
+    const amount = new Set(wettkampf.map(item => item.wettkampfId)).size;
+    const safeLength = wettkampf.length;
+    while(wettkampf.length > 0) {
+      this.rows.push(toTableRows(wettkampf.splice(0, safeLength / amount)));
+    }
+    this.loading = true;
   }
 
   public onSelect($event: VeranstaltungDO[]): void {
@@ -145,7 +151,6 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.showAll = false;
     this.wettkampErgebnisse = [];
     this.rows = [];
-    this.loadingwettkampf = true;
     console.log('loadErgebnisse');
     this.currentVeranstaltung = $event.concat()[0];
     this.currentJahr = this.currentVeranstaltung.sportjahr;
@@ -157,7 +162,6 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     if (this.wettkampErgebnisse.push(result)) {
       this.rows = [];
       this.rows.push(toTableRows(this.wettkampErgebnisse[0]));
-      this.loadingwettkampf = false;
     }
   }
 }

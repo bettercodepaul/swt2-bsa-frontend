@@ -44,6 +44,10 @@ export class WettkampfErgebnisService {
 
   }
 
+  public getLoading() : boolean {
+    return this.loading;
+  }
+
   public getMannschaftsname(id: number): string {
 
     for (const mannschaften of this.mannschaften) {
@@ -93,7 +97,7 @@ export class WettkampfErgebnisService {
   }
 
   public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO): WettkampfErgebnis[] {
-
+    this.loading = true;
     this.currentMannschaft = mannschaft;
     this.veranstaltung = veranstaltung;
     this.mannschaften = allMannschaften;
@@ -102,6 +106,7 @@ export class WettkampfErgebnisService {
     if (this.currentMannschaft !== undefined) {
       this.matches = this.filterMannschaft();
     }
+    this.loading = false;
     return this.createWettkampfergebnisse();
   }
 
