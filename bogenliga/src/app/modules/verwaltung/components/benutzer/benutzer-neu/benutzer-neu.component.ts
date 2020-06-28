@@ -44,7 +44,7 @@ export class BenutzerNeuComponent extends CommonComponent implements OnInit {
   public dsbMitgliederRows: DsbMitgliedDTO[];
   public selectedDTOs: DsbMitgliedDTO[];
   public selectedDsbMitgliedId: number;
-  public newBenutzerId:  number;
+  public multipleSelections = true;
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
               private router: Router,
