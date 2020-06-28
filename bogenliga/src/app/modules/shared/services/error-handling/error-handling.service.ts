@@ -37,14 +37,15 @@ export class ErrorHandlingService {
 
     const statusCode = httpError.status;
     const errorCategory: number = Math.round(statusCode / 100);
-
+    console.log("Number for Category", statusCode);
     if (errorCategory === 4) {
       this.handleHttpClientError(statusCode, errorDto);
     } else if (errorCategory === 5) {
       this.handleHttpServerError(statusCode, errorDto);
     } else if (errorCategory === 0) {
       this.handleHttpConnectionError(statusCode, errorDto);
-      throw httpError;
+      console.log("errordto:",errorDto);
+      //throw httpError;
     } else {
       this.handleUnexpectedError(statusCode, errorDto);
     }
@@ -121,7 +122,8 @@ export class ErrorHandlingService {
 
   private handleHttpConnectionError(statusCode: number, errorDto: ErrorDTO) {
     const connectionError = 'CONNECTION_ERROR';
-
+    console.log("statusCode handleHttpConnectionError: ",statusCode);
+    console.log(errorDto);
     const notification: Notification = {
       id: connectionError,
       title: 'NOTIFICATION.ERROR.' + connectionError + '.TITLE',
