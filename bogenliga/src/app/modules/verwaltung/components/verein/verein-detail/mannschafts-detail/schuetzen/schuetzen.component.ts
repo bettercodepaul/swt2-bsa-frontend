@@ -155,11 +155,11 @@ export class SchuetzenComponent extends CommonComponent implements OnInit {
         .then((mannschaftsMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
           if (mannschaftsMitgliedResponse.payload.length > 0 && mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt <= 1) {
             this.memberToAdd.dsbMitgliedEingesetzt = mannschaftsMitgliedResponse.payload[0].dsbMitgliedEingesetzt;
-            this.memberToAdd.rueckennummer = teamMembers.length+1;
+            this.memberToAdd.rueckennummer = teamMembers.length + 1;
             this.createLizentForMember(memberId);
           } else if (mannschaftsMitgliedResponse.payload.length === 0) {
             this.memberToAdd.dsbMitgliedEingesetzt = 0;
-            this.memberToAdd.rueckennummer = teamMembers.length+1;
+            this.memberToAdd.rueckennummer = teamMembers.length + 1;
             this.createLizentForMember(memberId);
           } else {
             this.showMemberInTooManyTeams();
