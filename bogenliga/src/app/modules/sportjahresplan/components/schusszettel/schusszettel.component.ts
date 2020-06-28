@@ -76,8 +76,8 @@ export class SchusszettelComponent implements OnInit {
             .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
-              console.log("match1", this.match1);
-              console.log("match2", this.match2);
+              console.log('match1', this.match1);
+              console.log('match2', this.match2);
               let shouldInitSumSatz = true;
               if (this.match1.schuetzen.length <= 0) {
                 this.initSchuetzenMatch1();
