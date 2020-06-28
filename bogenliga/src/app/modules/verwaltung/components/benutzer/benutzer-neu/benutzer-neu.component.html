@@ -20,6 +20,7 @@
                               [items]="getVersionedDataObjects()"
                               [optionFieldSelector]="'nachname'"
                               (onSelect)="onSelect($event)"
+                              [multipleSelections]="!multipleSelections"
                               selectionListHeight="15em"
                               style="width: 50%;">
 
