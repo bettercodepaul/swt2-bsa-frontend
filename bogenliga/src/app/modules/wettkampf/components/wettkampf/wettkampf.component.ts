@@ -39,9 +39,6 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
-
-  public ligaMannschaften: Array<DsbMannschaftDO> = [];
-
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
@@ -73,11 +70,11 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     });
 
     this.loadVeranstaltungen();
-    this.loadMannschaft(this.currentVeranstaltung.id);
+
 
 
   }
-  loadMannschaft(veranstaltungsID) {
+  loadMannschaft(veranstaltungsID: number) {
     this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsID)
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleSuccessLoadMannschaft(response))
         .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.mannschaften === []);
