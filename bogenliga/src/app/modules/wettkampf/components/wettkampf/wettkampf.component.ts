@@ -25,7 +25,6 @@ const ID_PATH_PARAM = 'id';
 export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public show = false;
-  public showAll: boolean;
   public directMannschaft = null;
   public directWettkampf = null;
   public routes = null;
@@ -44,6 +43,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public wettkampErgebnisse: Array<WettkampfErgebnis[]> = new Array<WettkampfErgebnis[]>();
   public areVeranstaltungenloading = true;
+  public loading = true;
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -59,7 +59,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        const id = params[ID_PATH_PARAM];
+        const id = parseInt(params[ID_PATH_PARAM], 10);
         this.directWettkampf = id;
         this.directMannschaft = id;
         this.directMannschaft = this.directMannschaft.replace(/-/g, ' ');
@@ -124,15 +124,11 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         this.jahre[this.jahre.length] = i.sportjahr;
       }
     }
-  }
-
-  public refresh() {
-    this.show = true;
+    this.loadErgebnisse(undefined);
   }
 
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
-    this.show = false;
-    this.loading = false;
+    this.loading = true;
     console.log('loadErgebnisse');
     this.rows = [];
     let wettkampf = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
@@ -143,25 +139,15 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     while(wettkampf.length > 0) {
       this.rows.push(toTableRows(wettkampf.splice(0, safeLength / amount)));
     }
-    this.loading = true;
+    this.loading = this.wettkampfErgebnisService.getLoadingData();
   }
 
   public onSelect($event: VeranstaltungDO[]): void {
-    this.show = false;
-    this.showAll = false;
-    this.wettkampErgebnisse = [];
-    this.rows = [];
     console.log('loadErgebnisse');
     this.currentVeranstaltung = $event.concat()[0];
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
-    let result;
-    result = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
-      this.mannschaften, $event.concat()[0]);
-    this.wettkampErgebnisse = [];
-    if (this.wettkampErgebnisse.push(result)) {
-      this.rows = [];
-      this.rows.push(toTableRows(this.wettkampErgebnisse[0]));
-    }
+    this.rows = [];
+    this.loadErgebnisse(undefined);
   }
 }
