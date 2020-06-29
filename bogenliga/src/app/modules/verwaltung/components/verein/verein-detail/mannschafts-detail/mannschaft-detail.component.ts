@@ -377,7 +377,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   // deletes the selected member in the team
   public onDeleteMitglied(versionedDataObject: VersionedDataObject): void {
-
     this.notificationService.discardNotification();
 
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, versionedDataObject.id);
@@ -390,22 +389,28 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     const currentDate = new Date();
 
     // checks if the current date is before the deadline
+    // deadline here: "Meldedeadline"
     if (deadlineYear > currentDate.getFullYear() ||
       (deadlineYear === currentDate.getFullYear() && deadlineMonth > currentDate.getMonth()) ||
       (deadlineYear === currentDate.getFullYear() && deadlineMonth === currentDate.getMonth() && deadlineDay > currentDate.getDay())) {
-      if (this.checkExistingResults(versionedDataObject.id)) {
-        const teamMemberId = this.members.get(versionedDataObject.id).id;
-        this.deleteMitglied(teamMemberId, versionedDataObject.id);
-      } else {
-        this.showExistingResultsNotification(versionedDataObject.id);
-      }
+//      if (this.checkExistingResults(versionedDataObject.id)) {
+        const teamMemberId = versionedDataObject.id;//this.members.get(versionedDataObject.id).id;
+
+        this.deleteMitglied(this.currentMannschaft.id, teamMemberId);
+        //HERE TODO call update for Rueckennummer for all remaining teamMembers
+        this.mannschaftMitgliedProvider.findAllByTeamId(this.currentMannschaft.id);
+        //all remaining team members: all left in table with this.currentMannschaft.id, sorted by date
+//      } else {
+//        this.showExistingResultsNotification(versionedDataObject.id);
+//      }
     } else {
       this.showDeadlineReachedNoitification(versionedDataObject.id);
     }
   }
 
+  //@param memberId: MannschaftsId of Mannschaft of Member to delete
+  //@param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
    private deleteMitglied(memberId: number, dsbMitgliedId: number) {
-
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_MITGLIED + memberId,
       title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.TITLE',
@@ -421,7 +426,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.mannschaftMitgliedProvider.deleteById(memberId)
+            this.mannschaftMitgliedProvider.deleteById(this.currentMannschaftsMitglied.id)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
@@ -433,7 +438,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.notificationService.showNotification(notification);
   }
 
-  // checks if the dsbmitglied has existing match results
+  //checks if the dsbmitglied has existing match results
+  //can't use this for checking if deleting is allowed for mapping of dsp Mitglied to Mannschaft!
+  //This deletion only happens if the deadline hasn't been reached - which is only the case before matches happened,
+  //so no vital data can be lost by deleting this mapping of Mannschaftsmitglied to mannschaft.
   private checkExistingResults(dsbMitgliedId: number): boolean {
 
     let resultsExist = false;

@@ -56,13 +56,15 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
       this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
         .then((noData) => {
           resolve({result: RequestResult.SUCCESS});
-
+          console.log("delete Member", id, "success");
         }, (error: HttpErrorResponse) => {
 
           if (error.status === 0) {
             reject({result: RequestResult.CONNECTION_PROBLEM});
+            console.log("delete Member", id, "error.status = 0, reject");
           } else {
             reject({result: RequestResult.FAILURE});
+            console.log("delete Member", id, "error.status = other, reject");
           }
         });
     });
