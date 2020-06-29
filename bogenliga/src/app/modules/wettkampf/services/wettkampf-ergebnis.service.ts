@@ -54,8 +54,8 @@ export class WettkampfErgebnisService {
     let Satz = 0;
     const passenFil = this.passen.filter((passenFiltered) => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
     for (const passe of passenFil) {
-        for (let i = 0; i < passe.ringzahl.length; i++) {
-          Satz += passe.ringzahl[i];
+        for (const i of passe.ringzahl) {
+          Satz += i;
         }
     }
     return Satz;
@@ -89,7 +89,7 @@ export class WettkampfErgebnisService {
   }
 
   public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO,
-    matches: Array<MatchDO>, wettkaempfe: Array<WettkampfDO>, passen: Array<PasseDoClass>): WettkampfErgebnis[] {
+                          matches: Array<MatchDO>, wettkaempfe: Array<WettkampfDO>, passen: Array<PasseDoClass>): WettkampfErgebnis[] {
     this.matches = matches;
     this.passen = passen;
     this.wettkaempfe = wettkaempfe;
