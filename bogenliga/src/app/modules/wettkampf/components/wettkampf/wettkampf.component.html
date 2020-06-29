@@ -18,7 +18,7 @@
                              [items]="veranstaltungen"
                              [selectedItemIds]=[currentVeranstaltung.id]
                              [optionFieldSelector]="'name'"
-                             (onSelect)="onSelect($event); this.loadWettkaempfe(this.currentVeranstaltung.id); this.loadErgebnisse(undefined)"
+                             (onSelect)="onSelect($event);"
                              [multipleSelections]="!multipleSelections"
                              style="width: 50%; height: 10em;">
 
