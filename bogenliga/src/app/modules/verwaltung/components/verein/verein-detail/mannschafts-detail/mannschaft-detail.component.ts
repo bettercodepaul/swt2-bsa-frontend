@@ -358,7 +358,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.mannschaftMitgliedProvider.findByMemberAndTeamId(member.id, this.currentMannschaft.id)
       .then(
         (response: BogenligaResponse<MannschaftsmitgliedDTO>) => {
-          console.log('payload:');
+          console.log('payload in addMember - mannschaft-detail.component.ts:');
           console.log(response.payload);
           this.currentMannschaftsMitglied.dsbMitgliedId = response.payload.dsbMitgliedId;
           this.currentMannschaftsMitglied.dsbMitgliedEingesetzt = response.payload.dsbMitgliedEingesetzt;
@@ -397,12 +397,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         const teamMemberId = versionedDataObject.id;//this.members.get(versionedDataObject.id).id;
 
         this.deleteMitglied(this.currentMannschaft.id, teamMemberId);
-        //HERE TODO call update for Rueckennummer for all remaining teamMembers
-        this.mannschaftMitgliedProvider.findAllByTeamId(this.currentMannschaft.id);
-        //all remaining team members: all left in table with this.currentMannschaft.id, sorted by date
-//      } else {
-//        this.showExistingResultsNotification(versionedDataObject.id);
-//      }
+
     } else {
       this.showDeadlineReachedNoitification(versionedDataObject.id);
     }
@@ -411,11 +406,12 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   //@param memberId: MannschaftsId of Mannschaft of Member to delete
   //@param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
    private deleteMitglied(memberId: number, dsbMitgliedId: number) {
+    console.log("in deleteMitglied param: memberId: ", memberId, " dsbMitgliedId: ", dsbMitgliedId);
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_MITGLIED + memberId,
       title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.TITLE',
       description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.DESCRIPTION',
-      descriptionParam: '' + memberId,
+      descriptionParam: '' + dsbMitgliedId,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
       type:             NotificationType.YES_NO,
@@ -426,15 +422,13 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.mannschaftMitgliedProvider.deleteById(this.currentMannschaftsMitglied.id)
+            this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
           }
-
         });
-
     this.notificationService.showNotification(notification);
   }
 

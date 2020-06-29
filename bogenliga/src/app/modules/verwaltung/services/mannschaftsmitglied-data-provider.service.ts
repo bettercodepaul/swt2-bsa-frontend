@@ -48,6 +48,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     });
   }
 
+  //param id: mannschaftsmitglied_id in table mannschaftsmitglied
   public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
@@ -57,11 +58,12 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
         .then((noData) => {
           resolve({result: RequestResult.SUCCESS});
           console.log("delete Member", id, "success");
+
         }, (error: HttpErrorResponse) => {
 
           if (error.status === 0) {
             reject({result: RequestResult.CONNECTION_PROBLEM});
-            console.log("delete Member", id, "error.status = 0, reject");
+            console.log("delete Member", id, "error.status = 0, connection problem");
           } else {
             reject({result: RequestResult.FAILURE});
             console.log("delete Member", id, "error.status = other, reject");
@@ -70,7 +72,8 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     });
   }
 
-
+  //param teamId: mannschaftsmitglied_mannschaft_id
+  //param memberId: mannschaftsmitglied_dsb_mitglied_id
   public deleteByMannschaftIdAndDsbMitgliedId(teamId: number, memberId: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
