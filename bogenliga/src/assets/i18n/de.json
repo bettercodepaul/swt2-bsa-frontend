@@ -1180,6 +1180,10 @@
     "BENUTZER_NEU": {
       "TITLE": "BENUTZER - Neuanlage",
       "FORM": {
+        "DSBMITGLIED": {
+          "LABEL": "Vorhandenes DSB-Mitglied",
+          "PLACEHOLDER": "Bitte ein existierendes DSB-Mitgiled auswählen"
+        },
         "EMAIL": {
           "LABEL": "E-Mail",
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Benutzerkennung eingeben",
@@ -1324,7 +1328,9 @@
       "EDIT": "Editieren",
       "DELETE": "Löschen",
       "ADD": "Hinzufügen",
-      "DOWNLOAD": "Lizenz herunterladen"
+      "DOWNLOADRUECKENNUMMER": "Rueckennummern herunterladen",
+      "DOWNLOAD": "Lizenz herunterladen",
+      "MAP": "Ort anzeigen"
     },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",

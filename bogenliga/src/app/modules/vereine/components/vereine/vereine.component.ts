@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {VEREINE_CONFIG, VEREINE_TABLE_CONFIG} from './vereine.config';
-import {isNullOrUndefined} from '@shared/functions';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {VereinDO} from '../../../verwaltung/types/verein-do.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
-import {BogenligaResponse} from '@shared/data-provider';
+import {BogenligaResponse, RequestResult} from '@shared/data-provider';
 import {VereinDTO} from '../../../verwaltung/types/datatransfer/verein-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
@@ -17,16 +17,8 @@ import {VeranstaltungDTO} from '../../../verwaltung/types/datatransfer/veranstal
 import {VereinTabelleDO} from '@vereine/types/vereinsTabelle-do.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 
-import {ActivatedRoute, Router, RouterModule, Routes} from '@angular/router';
-import {isUndefined} from '@shared/functions';
-import {
-  Notification,
-  NotificationOrigin,
-  NotificationService,
-  NotificationSeverity,
-  NotificationType,
-  NotificationUserAction
-} from '@shared/services/notification';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NotificationService} from '@shared/services/notification';
 
 
 const ID_PATH_PARAM = 'id';
@@ -48,12 +40,13 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public loadingVereine = true;
   public loadingTable = false;
   public rows: TableRow[];
-  private selectedVereinsId: number;
+  public selectedVereinsId: number;
   private selectedVereine: VereinDTO[];
   private remainingRequests: number;
   private remainingMannschaftsRequests: number;
   private tableContent: Array<VereinTabelleDO> = [];
   private providedID: number;
+  private currentVerein: VereinDO;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -64,21 +57,43 @@ export class VereineComponent extends CommonComponent implements OnInit {
               private mannschaftsDataProvider: DsbMannschaftDataProviderService) {
     super();
   }
-
+  // If no ID is given, the ID 0 is used.
+  // Otherwise the data of the selected Verein is displayed.
   ngOnInit() {
     console.log('Bin in Vereine');
-    this.providedID = null;
+    this.providedID = 0;
     this.loadVereine();
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = params[ID_PATH_PARAM];
+        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         console.log('This.providedID: ' + this.providedID);
-        this.selectedVereinsId = this.providedID;
       }
     });
+    this.selectedVereinsId = this.providedID;
+    console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
+    this.changeSelectedVerein();
+    this.onSelect(this.selectedVereine);
   }
+  // Changes the selectedVereine acording to the current selectedVereinsID.
+  private changeSelectedVerein(): void {
+    this.selectedVereine = [];
+
+    this.vereinDataProvider.findById(this.selectedVereinsId)
+        .then((response: BogenligaResponse<VereinDTO>) =>
+          this.getVereinSuccsess(response.payload))
+        .catch((response: BogenligaResponse<VereinDTO>) =>
+          console.log('Fehler im Verein laden')
+        );
+  }
+  // sets currentVerein to response and pushes it on selectedVereine
+  private getVereinSuccsess(response: VereinDTO) {
+    console.log('response in getVerein: ' + response.name);
+    this.currentVerein = response;
+    this.selectedVereine.push(this.currentVerein);
+    console.log('CurrentVerein: ' + this.currentVerein);
+}
 
   // when a Verein gets selected from the list
   public onSelect($event: VereinDO[]): void {
@@ -124,7 +139,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   public onDelete(versionedDataObject: VersionedDataObject): void {
   }
 
-  public onDownload($event: WettkampfDO): void {
+  public onMap($event: WettkampfDO): void {
 
     const str = $event.wettkampfOrt;
     let splits: string[];

@@ -38,5 +38,5 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
   },
   // TODO exchange modify for create
-  createPermission : [UserPermission.CAN_MODIFY_STAMMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
 };
