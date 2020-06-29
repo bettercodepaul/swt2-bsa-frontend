@@ -71,8 +71,6 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
     this.loadVeranstaltungen();
 
-
-
   }
   loadMannschaft(veranstaltungsID: number) {
     this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsID)
