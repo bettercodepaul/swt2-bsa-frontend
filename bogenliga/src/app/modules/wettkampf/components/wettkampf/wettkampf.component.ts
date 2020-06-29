@@ -15,6 +15,8 @@ import {isUndefined} from '@shared/functions';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {WettkampfDataProviderService} from '@wettkampf/services/wettkampf-data-provider.service';
+import {consoleTestResultHandler} from 'tslint/lib/test';
+import {forEach} from '@angular/router/src/utils/collection';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -37,6 +39,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
+
+  public ligaMannschaften: Array<DsbMannschaftDO> = [];
+
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
@@ -66,28 +71,38 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         this.directMannschaft = this.directMannschaft.replace(/-/g, ' ');
       }
     });
-    this.loadMannschaft();
+
     this.loadVeranstaltungen();
+    this.loadMannschaft(this.currentVeranstaltung.id);
 
 
   }
-  loadMannschaft() {
-    this.mannschaftDataProvider.findAll()
+  loadMannschaft(veranstaltungsID) {
+    this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsID)
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleSuccessLoadMannschaft(response))
         .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.mannschaften === []);
   }
 
   handleSuccessLoadMannschaft(response: BogenligaResponse<DsbMannschaftDO[]>) {
     this.mannschaften = response.payload;
-    if (this.directMannschaft != null) {
-      for (const i of this.mannschaften) {
-        if (this.directMannschaft === i.name) {
-          this.mannschaften[0] = i;
+    if (response.payload.length > 0) {
+      if (this.directMannschaft != null) {
+        for (const i of this.mannschaften) {
+          if (this.directMannschaft === i.name) {
+            this.mannschaften[0] = i;
+          }
+          this.currentMannschaft = this.mannschaften[0];
+
         }
+      } else if (this.currentMannschaft !== null) {
+
+
         this.currentMannschaft = this.mannschaften[0];
+        console.log(this.currentMannschaft.veranstaltungId);
       }
-    } else if (this.currentMannschaft !== null) {
-      this.currentMannschaft = this.mannschaften[0];
+
+    } else {
+      this.mannschaften = [];
     }
   }
 
@@ -108,14 +123,17 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
           break;
         }
         this.currentVeranstaltung = this.veranstaltungen[0];
+
       }
     } else {
+
       this.currentVeranstaltung = this.veranstaltungen[0];
     }
     this.areVeranstaltungenloading = false;
 
 
     this.currentJahr = this.currentVeranstaltung.sportjahr;
+    this.loadMannschaft(this.currentVeranstaltung.id);
     this.loadJahre();
   }
 
@@ -140,6 +158,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
     buttonVisibility.style.display = 'block';
     this.loadingwettkampf = true;
+    console.log('');
     console.log('loadErgebnisse');
     this.delay(10).then((any) => {
       this.rows = [];
@@ -163,6 +182,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
     let result;
+
+
+    this.loadMannschaft(this.currentVeranstaltung.id);
     result = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, this.currentMannschaft,
       this.mannschaften, $event.concat()[0], this.loadAll);
     this.wettkampErgebnisse = [];
