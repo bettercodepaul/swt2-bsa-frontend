@@ -18,7 +18,7 @@
                              [items]="veranstaltungen"
                              [selectedItemIds]=[currentVeranstaltung.id]
                              [optionFieldSelector]="'name'"
-                             (onSelect)="onSelect($event); "
+                             (onSelect)="onSelect($event); this.loadWettkaempfe(this.currentVeranstaltung.id); this.loadErgebnisse(undefined)"
                              [multipleSelections]="!multipleSelections"
                              style="width: 50%; height: 10em;">
 
@@ -37,8 +37,7 @@
           <select class="form-control"
                   id="vereine"
                   name="VereinName"
-                  [(ngModel)]="currentMannschaft"
-                  (ngModelChange)="loadErgebnisse(this.currentMannschaft)">
+                  [(ngModel)]="currentMannschaft">
             <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
           </select>
           <div class="invalid-feedback">
@@ -58,7 +57,6 @@
                 id="jahr"
                 name="Jahre"
                 [(ngModel)]="currentJahr"
-                (ngModelChange)="loadErgebnisse(this.currentMannschaft)"
                 disabled="true">
           <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
         </select>
@@ -92,8 +90,8 @@
     <div class="row">
       <div id="Table1">
         <h3>{{"Wettkampftag 1"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [loading]="loading"
+        <bla-data-table [loading]="loadingData"
+                        [config]="config_table"
                         [rows]="rows[0]">
         </bla-data-table>
       </div>
@@ -101,8 +99,8 @@
     <div class="row" >
       <div id="Table2">
         <h3>{{"Wettkampftag 2"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [loading]="loading"
+        <bla-data-table [loading]="loadingData"
+                        [config]="config_table"
                         [rows]="rows[1]">
         </bla-data-table>
       </div>
@@ -110,8 +108,8 @@
     <div class="row">
       <div id="Table3">
         <h3>{{"Wettkampftag 3"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [loading]="loading"
+        <bla-data-table [loading]="loadingData"
+                        [config]="config_table"
                         [rows]="rows[2]">
         </bla-data-table>
       </div>
@@ -119,8 +117,8 @@
     <div class="row">
       <div id="Table4">
         <h3>{{"Wettkampftag 4"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [loading]="loading"
+        <bla-data-table [loading]="loadingData"
+                        [config]="config_table"
                         [rows]="rows[3]">
         </bla-data-table>
       </div>
