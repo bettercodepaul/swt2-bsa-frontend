@@ -67,7 +67,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        const id = parseInt(params[ID_PATH_PARAM], 10);
+        const id = params[ID_PATH_PARAM];
         this.directWettkampf = id;
         this.directMannschaft = id;
         this.directMannschaft = this.directMannschaft.replace(/-/g, ' ');
@@ -78,7 +78,6 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
 
-    console.log('loadErgebnisse');
     this.rows = [];
     let wettkampf = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
       this.mannschaften, this.currentVeranstaltung, this.matches, this.wettkaempfe, this.passen,);
@@ -88,22 +87,22 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     while(wettkampf.length > 0) {
       this.rows.push(toTableRows(wettkampf.splice(0, safeLength / amount)));
     }
-    console.log("rows.length: " + this.rows.length);
   }
 
   public onSelect($event: VeranstaltungDO[]): void {
-    console.log('loadErgebnisse');
+    //console.log('loadErgebnisse');
     this.currentVeranstaltung = $event.concat()[0];
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
     this.clear();
+    this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
 
   private clear() {
-    this.rows = [];
-    this.wettkaempfe = [];
     this.matches = [];
     this.passen = [];
+    this.wettkaempfe = [];
+    this.rows = [];
   }
 
   // backend-calls to get data from DB
@@ -131,6 +130,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.loadMannschaft();
     this.loadJahre();
+    this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
 
   public loadMannschaft() {
@@ -149,6 +149,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         this.currentMannschaft = this.mannschaften[0];
       }
     } else if (this.currentMannschaft !== null) {
+
       this.currentMannschaft = this.mannschaften[0];
     }
   }
@@ -169,43 +170,37 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
-
-    this.wettkaempfe = wettkaempfe;
+    this.wettkaempfe = this.wettkaempfe.concat(wettkaempfe);
     if(wettkaempfe.length > 0) {
-      this.wettkaempfe.forEach((wettkampfDO) => {
-        this.loadMatches(wettkampfDO.id);
+      wettkaempfe.forEach((wettkampfDO) => {
+        this.loadMatches(wettkampfDO);
       });
     }
     this.loadingData = false;
-    console.log("This.matches: " + this.matches.length);
-    console.log("This.passen: " + this.passen.length);
   }
 
-  public loadMatches(wettkampfId: number) {
+  public loadMatches(wettkampf) {
 
-    this.matchDataProviderService.findByWettkampfId(wettkampfId)
-        .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId))
-        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches([], wettkampfId));
+    this.matchDataProviderService.findByWettkampfId(wettkampf.id)
+        .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampf))
+        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches([], wettkampf));
   }
 
 
-  handleSuccessLoadMatches(matches: MatchDO[], wettkampfId) {
-
+  handleSuccessLoadMatches(matches: MatchDO[], wettkampf) {
     this.matches = this.matches.concat(matches);
-    console.log("This.matches Inside: " + this.matches.length);
-    this.loadPassen(wettkampfId);
+    this.loadPassen(wettkampf, matches);
   }
 
-  public loadPassen(wettkampfId) {
-    this.passeDataProviderService.findByWettkampfId(wettkampfId)
-        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload))
-        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([]));
+  public loadPassen(wettkampf, matches) {
+    this.passeDataProviderService.findByWettkampfId(wettkampf.id)
+        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, wettkampf, matches))
+        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], wettkampf, matches));
   }
 
-  handleSuccessLoadPassen(passen: PasseDoClass[]): void {
-    //console.log('Passen geladen: ' + passen);
+  handleSuccessLoadPassen(passen: PasseDoClass[], wettkampf, matches): void {
     this.passen = this.passen.concat(passen);
-    console.log("This.passen Inside: " + this.passen.length);
-
+    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
+      this.mannschaften, this.currentVeranstaltung, matches, wettkampf, passen)));
   }
 }
