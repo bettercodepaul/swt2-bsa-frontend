@@ -37,5 +37,5 @@ export const REGION_OVERVIEW_CONFIG: OverviewDialogConfig = {
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
   },
   // TODO exchange modify for create
-  createPermission : [UserPermission.CAN_MODIFY_STAMMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
 };

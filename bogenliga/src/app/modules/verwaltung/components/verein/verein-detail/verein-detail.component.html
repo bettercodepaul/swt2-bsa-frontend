@@ -119,8 +119,10 @@
                [loading]="loading"
                (onViewEntry)="onView($event)"
                (onEditEntry)="onEdit($event)"
+              (onDownloadRueckennummerEntry)="onDownloadRueckennummer($event)"
                (onDeleteEntry)="onDeleteMannschaft($event)">
     </bla-data-table>
+    <a #downloadLink></a>
   </div>
 
 </bla-common-dialog>
