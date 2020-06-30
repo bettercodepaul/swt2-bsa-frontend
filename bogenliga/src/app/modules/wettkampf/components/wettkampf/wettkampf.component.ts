@@ -47,9 +47,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public areVeranstaltungenloading = true;
   public loadingData = false;
-  public matches: Array<MatchDO> = [];
+  public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
-  private passen: Array<PasseDoClass> = [];
+  private passen: Array<PasseDoClass[]> = [];
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -79,18 +79,14 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
 
     this.rows = [];
-    const wettkampf = this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
-      this.mannschaften, this.currentVeranstaltung, this.matches, this.wettkaempfe, this.passen, );
-    console.log('wettkampf.length: ' + wettkampf.length);
-    const amount = new Set(wettkampf.map((item) => item.wettkampfId)).size;
-    const safeLength = wettkampf.length;
-    while (wettkampf.length > 0) {
-      this.rows.push(toTableRows(wettkampf.splice(0, safeLength / amount)));
+    for(let i = 0; i < this.wettkaempfe.length; i++) {
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
+        this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i]))));
     }
   }
 
   public onSelect($event: VeranstaltungDO[]): void {
-    // console.log('loadErgebnisse');
+
     this.currentVeranstaltung = $event.concat()[0];
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
@@ -139,7 +135,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.mannschaften === []);
   }
 
-  handleSuccessLoadMannschaft(response: BogenligaResponse<DsbMannschaftDO[]>) {
+  public handleSuccessLoadMannschaft(response: BogenligaResponse<DsbMannschaftDO[]>) {
     this.mannschaften = response.payload;
     if (this.directMannschaft != null) {
       for (const i of this.mannschaften) {
@@ -163,44 +159,44 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   public loadWettkaempfe(veranstaltungsId: number) {
-    this.loadingData = true;
     this.wettkampfDataProviderService.findAllByVeranstaltungId(veranstaltungsId)
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
         .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([]));
   }
 
-  handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
+  public handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = this.wettkaempfe.concat(wettkaempfe);
-    if (wettkaempfe.length > 0) {
-      wettkaempfe.forEach((wettkampfDO) => {
-        this.loadMatches(wettkampfDO);
+    if (this.wettkaempfe.length > 0) {
+      this.wettkaempfe.forEach((wettkampfDO) => {
+        this.loadingData = true;
+        this.loadMatches(wettkampfDO.id);
       });
     }
-    this.loadingData = false;
   }
 
-  public loadMatches(wettkampf) {
+  public loadMatches(wettkampfId : number) {
 
-    this.matchDataProviderService.findByWettkampfId(wettkampf.id)
-        .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampf))
-        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches([], wettkampf));
+    this.matchDataProviderService.findByWettkampfId(wettkampfId)
+        .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId))
+        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches([], wettkampfId));
   }
 
 
-  handleSuccessLoadMatches(matches: MatchDO[], wettkampf) {
-    this.matches = this.matches.concat(matches);
-    this.loadPassen(wettkampf, matches);
+  public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number) {
+    this.matches.push(matches);
+    this.loadPassen(wettkampfId, matches);
   }
 
-  public loadPassen(wettkampf, matches) {
-    this.passeDataProviderService.findByWettkampfId(wettkampf.id)
-        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, wettkampf, matches))
-        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], wettkampf, matches));
+  public loadPassen(wettkampfId : number, matches: MatchDO[]) {
+    this.passeDataProviderService.findByWettkampfId(wettkampfId)
+        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, matches))
+        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], matches));
   }
 
-  handleSuccessLoadPassen(passen: PasseDoClass[], wettkampf, matches): void {
-    this.passen = this.passen.concat(passen);
+  public handleSuccessLoadPassen(passen: PasseDoClass[], matches): void {
+    this.passen.push(passen);
     this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
-      this.mannschaften, this.currentVeranstaltung, matches, wettkampf, passen)));
+      this.mannschaften, this.currentVeranstaltung, matches, passen)));
+    this.loadingData = false;
   }
 }

@@ -3,18 +3,8 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
-import {BogenligaResponse} from '@shared/data-provider';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
-import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
-import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
-import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {UserPermission} from '@shared/services';
-import {unwrapFirst} from 'codelyzer/util/function';
-
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +22,6 @@ export class WettkampfErgebnisService {
   // toLoad
   public matches: Array<MatchDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
-  public wettkaempfe: Array<WettkampfDO> = [];
   public currentMannschaft: DsbMannschaftDO;
   private passen: Array<PasseDoClass> = [];
 
@@ -89,10 +78,9 @@ export class WettkampfErgebnisService {
   }
 
   public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO,
-                          matches: Array<MatchDO>, wettkaempfe: Array<WettkampfDO>, passen: Array<PasseDoClass>): WettkampfErgebnis[] {
+                          matches: Array<MatchDO>, passen: Array<PasseDoClass>): WettkampfErgebnis[] {
     this.matches = matches;
     this.passen = passen;
-    this.wettkaempfe = wettkaempfe;
     this.currentMannschaft = mannschaft;
     this.veranstaltung = veranstaltung;
     this.mannschaften = allMannschaften;
@@ -141,7 +129,6 @@ export class WettkampfErgebnisService {
     }
     this.matches = [];
     this.passen = [];
-    this.wettkaempfe = [];
     return this.wettkampErgebnisse;
   }
 }
