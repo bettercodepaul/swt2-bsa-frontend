@@ -216,13 +216,13 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
           });
     });
   }
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
+  public update(payload: MannschaftsMitgliedDO): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-        .then((data: VersionedDataTransferObject) => {
+      this.restClient.PUT<MannschaftsMitgliedDO>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+        .then((data:MannschaftsMitgliedDO) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
         }, (error: HttpErrorResponse) => {
