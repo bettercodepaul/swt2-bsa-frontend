@@ -20,9 +20,9 @@ export class WettkampfErgebnisService {
   public wettkampErgebnisse: WettkampfErgebnis[] = [];
 
   // toLoad
-  public matches: Array<MatchDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
   public currentMannschaft: DsbMannschaftDO;
+  public matches: Array<MatchDO> = [];
   private passen: Array<PasseDoClass> = [];
 
   constructor() {
@@ -77,6 +77,15 @@ export class WettkampfErgebnisService {
     return matchpunkte1 + ' : ' + matchpunkte2;
   }
 
+  /**
+   * Initializes class variables with given values and starts @createWettkampfergebnisse
+   * @param jahr
+   * @param mannschaft
+   * @param allMannschaften
+   * @param veranstaltung
+   * @param matches
+   * @param passen
+   */
   public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO,
                           matches: Array<MatchDO>, passen: Array<PasseDoClass>): WettkampfErgebnis[] {
     this.matches = matches;
@@ -91,6 +100,11 @@ export class WettkampfErgebnisService {
     return this.createWettkampfergebnisse();
   }
 
+  /**
+   * If this.currentMannschaft != undefined this method is used to select only match encounters where currentMannschaft
+   * participated. Returns the new match Array<MatchDO>.
+   * @todo Should be possible to load match encounters via sql from table. If thats possible this method is not needed.
+   */
   public filterMannschaft(): Array<MatchDO> {
 
     const mannschaftMatches: Array<MatchDO> = [];
@@ -103,6 +117,9 @@ export class WettkampfErgebnisService {
     return mannschaftMatches;
   }
 
+  /**
+   * Creates all new wettkampfErgebnisse and returns the WettkampfErgebnis[] from the selected wettkampf.
+   */
   public createWettkampfergebnisse(): WettkampfErgebnis[] {
 
     this.wettkampErgebnisse = [];
