@@ -7,7 +7,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../shared/components';
-import {BogenligaResponse, UriBuilder} from '../../../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder, VersionedDataTransferObject} from '../../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -406,7 +406,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   //@param memberId: MannschaftsId of Mannschaft of Member to delete
   //@param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
    private deleteMitglied(memberId: number, dsbMitgliedId: number) {
-    console.log("in deleteMitglied param: memberId: ", memberId, " dsbMitgliedId: ", dsbMitgliedId);
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_MITGLIED + memberId,
       title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.TITLE',
@@ -423,8 +422,29 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
-                .then((response) => this.loadTableRows())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
+                .then((response) => {
+                  //const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
+                  //console.log("MemberIdTest",test);
+                  //const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
+                  //console.log("TeamIdTest", test2);
+                  this.mannschaftMitgliedProvider.findAllByTeamId(memberId)
+                      .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+                        //let mannschaftsMitglied[] = response.payload;
+                        for (let i = 0; i < response.payload.length; i++) {
+
+                          console.log("response.payload is:", response.payload[i]);
+                          response.payload[i].rueckennummer = i+1;
+                          //this.mannschaftMitgliedProvider.save(response.payload[i]);
+                          this.mannschaftMitgliedProvider.update(response.payload[i]);
+                          console.log("updated response.payload is: ", response.payload[i]);
+                        }
+                      })
+                      .catch((response : void) => console.log("this is catch thingy, are there mannschaftsMitglieder?"))
+                  this.loadTableRows();
+                })
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId))
+
+
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
           }
@@ -432,10 +452,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.notificationService.showNotification(notification);
   }
 
-  //checks if the dsbmitglied has existing match results
-  //can't use this for checking if deleting is allowed for mapping of dsp Mitglied to Mannschaft!
-  //This deletion only happens if the deadline hasn't been reached - which is only the case before matches happened,
-  //so no vital data can be lost by deleting this mapping of Mannschaftsmitglied to mannschaft.
   private checkExistingResults(dsbMitgliedId: number): boolean {
 
     let resultsExist = false;
