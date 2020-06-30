@@ -28,16 +28,20 @@ export class NavigationCardsComponent extends CommonComponent implements OnInit 
   public getLink(route:String,detailType:String):String{
     if(detailType !== undefined){
     let result = route;
-    let allowedData :String[] = [];
+    let allowedData :number[] = [];
     switch(detailType){
       case("Veranstalltungen"):
-        //TODO: umschreiben auf get Veranstaltungen
-        allowedData = this.currentUserService.getLigas();
+        if(this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VERANSTALTUNG)){
+        allowedData = this.currentUserService.getVeranstaltungen();}
+        break;
+      case("Verein"):
+        if(this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VEREIN)){
+        allowedData = [this.currentUserService.getVerein()];}
         break;
     }
     if(allowedData.length > 0){
       if(allowedData.length == 1){
-       result += "/"+allowedData[0];
+       result += "/"+allowedData[0].toString();
       }
     }
 

@@ -184,12 +184,13 @@ export class CurrentUserService {
   private getCurrentUser(): UserSignInDTO {
     return this.currentUser;
   }
-public getVerein() :String{
-  //TODO: implement
-return "1";
+public getVerein() :number{
+return this.getCurrentUser().vereinId;
 }
-public getLigas() :String[]{
-    //TODO: implement
-    return  []
+public getVeranstaltungen() :number[]{
+    return  this.getCurrentUser().veranstaltungenIds;
+}
+public hasVeranstaltung(input:number):boolean{
+    return this.getVeranstaltungen().includes(input);
 }
 }

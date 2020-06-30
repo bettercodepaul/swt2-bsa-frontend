@@ -16,6 +16,7 @@ import {
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {DsbMitgliedDTO} from '../../../types/datatransfer/dsb-mitglied-dto.class';
 import {DSB_MITGLIED_OVERVIEW_CONFIG} from './dsb-mitglied-overview.config';
+import {CurrentUserService, UserPermission} from '@shared/services';
 
 export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
 
@@ -29,7 +30,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
   public config = DSB_MITGLIED_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
-  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService, private router: Router, private notificationService: NotificationService,private currentUserService:CurrentUserService) {
     super();
   }
 
@@ -96,6 +97,9 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
+    if(this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER)){
+      response.payload = response.payload.filter((entry)=>{return this.currentUserService.getVerein() === entry.vereinsId});
+    }
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

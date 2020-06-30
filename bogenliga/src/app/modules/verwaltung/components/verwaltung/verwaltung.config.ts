@@ -11,7 +11,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.DESCRIPTION',
         icon:           'users',
         route:          'dsbmitglieder',
-        permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER]
+        permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER,UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.LABEL',
@@ -32,7 +32,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.DESCRIPTION',
         icon:           'sitemap',
         route:          'vereine',
-        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT]
+        detailType:     'Verein',
+        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT,UserPermission.CAN_READ_MY_VEREIN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',

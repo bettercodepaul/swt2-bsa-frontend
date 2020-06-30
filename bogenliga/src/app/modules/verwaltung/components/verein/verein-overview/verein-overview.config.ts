@@ -28,7 +28,7 @@ export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
+    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN,UserPermission.CAN_CREATE_MANNSCHAFT],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
 
 
