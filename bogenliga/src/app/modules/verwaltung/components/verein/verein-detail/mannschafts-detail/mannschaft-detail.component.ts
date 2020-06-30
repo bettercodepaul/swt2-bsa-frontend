@@ -394,7 +394,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
       (deadlineYear === currentDate.getFullYear() && deadlineMonth > currentDate.getMonth()) ||
       (deadlineYear === currentDate.getFullYear() && deadlineMonth === currentDate.getMonth() && deadlineDay > currentDate.getDay())) {
 //      if (this.checkExistingResults(versionedDataObject.id)) {
-        const teamMemberId = versionedDataObject.id;//this.members.get(versionedDataObject.id).id;
+        const teamMemberId = versionedDataObject.id; // this.members.get(versionedDataObject.id).id;
 
         this.deleteMitglied(this.currentMannschaft.id, teamMemberId);
 
@@ -403,8 +403,8 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     }
   }
 
-  //@param memberId: MannschaftsId of Mannschaft of Member to delete
-  //@param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
+  // @param memberId: MannschaftsId of Mannschaft of Member to delete
+  // @param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
    private deleteMitglied(memberId: number, dsbMitgliedId: number) {
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_MITGLIED + memberId,
@@ -423,26 +423,31 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
                 .then((response) => {
-                  //const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
-                  //console.log("MemberIdTest",test);
-                  //const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
-                  //console.log("TeamIdTest", test2);
+                  // const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
+                  // console.log("MemberIdTest",test);
+                  // const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
+                  // console.log("TeamIdTest", test2);
                   this.mannschaftMitgliedProvider.findAllByTeamId(memberId)
-                      .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
-                        //let mannschaftsMitglied[] = response.payload;
-                        for (let i = 0; i < response.payload.length; i++) {
+                      .then((mannschaftMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
 
-                          console.log("response.payload is:", response.payload[i]);
-                          response.payload[i].rueckennummer = i+1;
-                          //this.mannschaftMitgliedProvider.save(response.payload[i]);
-                          this.mannschaftMitgliedProvider.update(response.payload[i]);
-                          console.log("updated response.payload is: ", response.payload[i]);
+                        for (let i = 0; i < mannschaftMitgliedResponse.payload.length; i++) {
+
+                          // workaround because update method does not work due to "Vorname" bzw. "Nachname" Attributes
+                          // not existing consistently in backend/frontend objects.
+                          this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(
+                            mannschaftMitgliedResponse.payload[i].mannschaftsId,
+                            mannschaftMitgliedResponse.payload[i].dsbMitgliedId);
+
+                          mannschaftMitgliedResponse.payload[i].rueckennummer = i + 1;
+                          this.mannschaftMitgliedProvider.save(mannschaftMitgliedResponse.payload[i]);
+
+
                         }
                       })
-                      .catch((response : void) => console.log("this is catch thingy, are there mannschaftsMitglieder?"))
+                      .catch((mannschaftMitgliedResponse: void) => console.log('this is catch thingy, are there mannschaftsMitglieder?'));
                   this.loadTableRows();
                 })
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId))
+                .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
 
 
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
