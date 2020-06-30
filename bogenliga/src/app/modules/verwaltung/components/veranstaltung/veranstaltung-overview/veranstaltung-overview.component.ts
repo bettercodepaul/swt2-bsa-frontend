@@ -18,6 +18,7 @@ import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.cl
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_OVERVIEW_CONFIG} from './veranstaltung-overview.config';
 import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components/liga/liga-overview/liga-overview.component';
+import {CurrentUserService, UserPermission} from '@shared/services';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
 
@@ -32,7 +33,7 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
   public rows: TableRow[];
 
 
-  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService, private router: Router, private notificationService: NotificationService,private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -81,7 +82,6 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
 
   private loadTableRows() {
     this.loading = true;
-
     this.veranstaltungDataProvider.findAll()
         .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadTableRowsFailure(response));
@@ -93,6 +93,9 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    if(this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG)){
+      response.payload =response.payload.filter((entry)=>{return this.currentUserService.hasVeranstaltung(entry.id)});
+    console.log("detected");}
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

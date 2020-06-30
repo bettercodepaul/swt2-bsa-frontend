@@ -34,14 +34,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     route: '/vereine',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: []
-  },{
-  label: 'SIDEBAR.VERWALTUNG',
-  icon: faArchive,
-  route: '/vereine',
-    detailType :'verein',
-    //TODO change permissons
-  permissons: [UserPermission.CAN_MODIFY_MY_VEREIN],
-  subitems: []},
+  },
   {
     label: 'SIDEBAR.VERWALTUNG',
     icon: faArchive,
