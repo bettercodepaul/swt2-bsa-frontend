@@ -32,36 +32,36 @@ export class MatchDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byMannschaftsId/' + id).build())
-        .then((data: VersionedDataTransferObject[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-        }, (error: HttpErrorResponse) => {
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
 
-          if (error.status === 0) {
-            reject({result: RequestResult.CONNECTION_PROBLEM});
-          } else {
-            reject({result: RequestResult.FAILURE});
-          }
-        });
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
     });
   }
 
 
-  public findByWettkampfId(id: number): Promise<BogenligaResponse<MatchDO[]>> {
+  public findAllWettkampfMatchesById(id: number): Promise<BogenligaResponse<MatchDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + id).build())
-        .then((data: VersionedDataTransferObject[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-        }, (error: HttpErrorResponse) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findAllWettkampfMatches/wettkampfid=' + id).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
 
-          if (error.status === 0) {
-            reject({result: RequestResult.CONNECTION_PROBLEM});
-          } else {
-            reject({result: RequestResult.FAILURE});
-          }
-        });
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
     });
   }
 
@@ -84,24 +84,24 @@ export class MatchDataProviderService extends DataProviderService {
   }
 
   public createInitialMatchesWT0(payload: VeranstaltungDO): Promise<BogenligaResponse<VeranstaltungDO>> {
-      // return promise
-      // sign in success -> resolve promise
-      // sign in failure -> reject promise with result
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-          this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('WT0').build(), payload)
-            .then((data: VersionedDataTransferObject) => {
-              resolve({result: RequestResult.SUCCESS, payload: fromVeranstaltungsPayload(data)});
+      this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('WT0').build(), payload)
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromVeranstaltungsPayload(data)});
 
-            }, (error: HttpErrorResponse) => {
+          }, (error: HttpErrorResponse) => {
 
-              if (error.status === 0) {
-                reject({result: RequestResult.CONNECTION_PROBLEM});
-              } else {
-                reject({result: RequestResult.FAILURE});
-              }
-            });
-        });
-    }
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
 
   //
   // public deleteById(id: number): Promise<BogenligaResponse<void>> {

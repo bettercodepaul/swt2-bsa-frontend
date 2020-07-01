@@ -1,25 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
-import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
-import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
-import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
-import {WettkampfErgebnis} from './wettkampergebnis/WettkampfErgebnis';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
+import {MatchDataProviderService} from '@wettkampf/services/match-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
-import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
+import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
-import {MatchDO} from '@verwaltung/types/match-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {MatchDO} from '@verwaltung/types/match-do.class';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -53,14 +52,14 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-              private vereinDataProvider: VereinDataProviderService,
-              private wettkampfDataProviderService: WettkampfDataProviderService,
-              private matchDataProviderService: MatchDataProviderService,
-              private passeDataProviderService: PasseDataProviderService,
-              private wettkampfErgebnisService: WettkampfErgebnisService,
-              private mannschaftDataProvider: DsbMannschaftDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute) {
+    private vereinDataProvider: VereinDataProviderService,
+    private wettkampfDataProviderService: WettkampfDataProviderService,
+    private matchDataProviderService: MatchDataProviderService,
+    private passeDataProviderService: PasseDataProviderService,
+    private wettkampfErgebnisService: WettkampfErgebnisService,
+    private mannschaftDataProvider: DsbMannschaftDataProviderService,
+    private router: Router,
+    private route: ActivatedRoute) {
     super();
   }
 
