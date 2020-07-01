@@ -11,7 +11,7 @@ export class PasseDTO implements DataTransferObject {
   dsbMitgliedId: number;
 
   ringzahl: Array<number>;
-  schuetzeNr: number;
+  rueckennummer: number;
 
   constructor(id?: number,
               matchId?: number,
@@ -21,7 +21,7 @@ export class PasseDTO implements DataTransferObject {
               lfdNr?: number,
               dsbMitgliedId?: number,
               ringzahl?: Array<number>,
-              schuetzeNr?: number) {
+              rueckennummer?: number) {
     this.id = !!id ? id : null;
     this.matchId = !!matchId ? matchId : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
@@ -30,6 +30,6 @@ export class PasseDTO implements DataTransferObject {
     this.lfdNr = !!lfdNr ? lfdNr : null;
     this.dsbMitgliedId = !!dsbMitgliedId ? dsbMitgliedId : null;
     this.ringzahl = !!ringzahl ? ringzahl : [];
-    this.schuetzeNr = !!schuetzeNr ? schuetzeNr : null;
+    this.rueckennummer = !!rueckennummer ? rueckennummer : null;
   }
 }
