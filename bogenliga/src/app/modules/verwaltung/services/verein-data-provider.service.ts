@@ -123,4 +123,23 @@ export class VereinDataProviderService extends DataProviderService {
         });
     });
   }
+  // Robin Keinert! Gibt den ersten Verein aus der Datenbank zurück.
+  public findFirst(): Promise<BogenligaResponse<VereinDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('findfirst').build())
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
 }

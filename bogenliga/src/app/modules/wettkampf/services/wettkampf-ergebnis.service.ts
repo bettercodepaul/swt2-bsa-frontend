@@ -3,18 +3,8 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
-import {BogenligaResponse} from '@shared/data-provider';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
-import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
-import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
-import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import {UserPermission} from '@shared/services';
-import {unwrapFirst} from 'codelyzer/util/function';
-
 
 @Injectable({
   providedIn: 'root'
@@ -30,17 +20,12 @@ export class WettkampfErgebnisService {
   public wettkampErgebnisse: WettkampfErgebnis[] = [];
 
   // toLoad
-  public matches: Array<MatchDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
-  public wettkaempfe: Array<WettkampfDO> = [];
   public currentMannschaft: DsbMannschaftDO;
-  private loading = false;
+  public matches: Array<MatchDO> = [];
   private passen: Array<PasseDoClass> = [];
 
-  constructor(private wettkampfDataProvider: WettkampfDataProviderService,
-              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
-              private matchDataProvider: MatchDataProviderService,
-              private passeDataProvider: PasseDataProviderService) {
+  constructor() {
 
   }
 
@@ -51,7 +36,7 @@ export class WettkampfErgebnisService {
         return mannschaften.name;
       }
     }
-  }
+}
 
   public getSatzergebnis(nr: number, satznummer: number, id: number): number {
 
@@ -92,19 +77,34 @@ export class WettkampfErgebnisService {
     return matchpunkte1 + ' : ' + matchpunkte2;
   }
 
-  public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO): WettkampfErgebnis[] {
-
+  /**
+   * Initializes class variables with given values and starts @createWettkampfergebnisse
+   * @param jahr
+   * @param mannschaft
+   * @param allMannschaften
+   * @param veranstaltung
+   * @param matches
+   * @param passen
+   */
+  public createErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, allMannschaften: DsbMannschaftDO[], veranstaltung: VeranstaltungDO,
+                          matches: Array<MatchDO>, passen: Array<PasseDoClass>): WettkampfErgebnis[] {
+    this.matches = matches;
+    this.passen = passen;
     this.currentMannschaft = mannschaft;
     this.veranstaltung = veranstaltung;
     this.mannschaften = allMannschaften;
     this.sportjahr = jahr;
-    this.loadWettkaempfe(this.veranstaltung.id);
     if (this.currentMannschaft !== undefined) {
       this.matches = this.filterMannschaft();
     }
     return this.createWettkampfergebnisse();
   }
 
+  /**
+   * If this.currentMannschaft != undefined this method is used to select only match encounters where currentMannschaft
+   * participated. Returns the new match Array<MatchDO>.
+   * @todo Should be possible to load match encounters via sql from table. If thats possible this method is not needed.
+   */
   public filterMannschaft(): Array<MatchDO> {
 
     const mannschaftMatches: Array<MatchDO> = [];
@@ -117,6 +117,9 @@ export class WettkampfErgebnisService {
     return mannschaftMatches;
   }
 
+  /**
+   * Creates all new wettkampfErgebnisse and returns the WettkampfErgebnis[] from the selected wettkampf.
+   */
   public createWettkampfergebnisse(): WettkampfErgebnis[] {
 
     this.wettkampErgebnisse = [];
@@ -143,52 +146,6 @@ export class WettkampfErgebnisService {
     }
     this.matches = [];
     this.passen = [];
-    this.wettkaempfe = [];
     return this.wettkampErgebnisse;
-
-  }
-
-  // backend-calls to get data from DB
-  public loadWettkaempfe(veranstaltungsId: number) {
-
-    this.wettkampfDataProvider.findAllByVeranstaltungId(veranstaltungsId)
-        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
-        .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([]));
-  }
-
-  handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
-
-    console.log('Wettkaempfe geladen: ' + wettkaempfe);
-    this.wettkaempfe = wettkaempfe;
-    this.wettkaempfe.forEach((wettkampfDO) => {
-        this.loadMatches(wettkampfDO.id);
-        this.loadPassen(wettkampfDO.id);
-      });
-  }
-
-  public loadMatches(wettkampfId: number) {
-
-    this.matchDataProvider.findAllWettkampfMatchesById(wettkampfId)
-        .then((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches(response.payload))
-        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleLoadMatches([]));
-  }
-
-  public loadPassen(wettkampfId: number) {
-
-    this.passeDataProvider.findByWettkampfId(wettkampfId)
-        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleLoadPassen(response.payload))
-        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleLoadPassen([]));
-  }
-
-  handleLoadMatches(matches: MatchDO[]) {
-
-    console.log('Matches geladen: ' + matches);
-    this.matches = this.matches.concat(matches);
-  }
-
-  handleLoadPassen(passen: PasseDoClass[]): void {
-
-    console.log('Passen geladen: ' + passen);
-    this.passen = this.passen.concat(passen);
   }
 }
