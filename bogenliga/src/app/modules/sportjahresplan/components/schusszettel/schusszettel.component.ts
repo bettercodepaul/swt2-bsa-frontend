@@ -76,7 +76,8 @@ export class SchusszettelComponent implements OnInit {
             .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
-
+              console.log('match1', this.match1);
+              console.log('match2', this.match2);
               let shouldInitSumSatz = true;
               if (this.match1.schuetzen.length <= 0) {
                 this.initSchuetzenMatch1();
@@ -87,6 +88,7 @@ export class SchusszettelComponent implements OnInit {
                 this.initSchuetzenMatch2();
                 shouldInitSumSatz = false;
               }
+
 
               if (shouldInitSumSatz) {
                 this.initSumSatz();
@@ -108,13 +110,13 @@ export class SchusszettelComponent implements OnInit {
    * After that, sets the match's sumSatzx depending on which Satz was edited.
    * @param value
    * @param matchNr
-   * @param schuetzenNr
+   * @param rueckennnummer
    * @param satzNr
    * @param pfeilNr
    */
-  onChange(value: string, matchNr: number, schuetzenNr: number, satzNr: number, pfeilNr: number) {
+  onChange(value: string, matchNr: number, rueckennummer: number, satzNr: number, pfeilNr: number) {
     const match = this['match' + matchNr];
-    const satz = match.schuetzen[schuetzenNr][satzNr];
+    const satz = match.schuetzen[rueckennummer][satzNr];
     let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
     realValue = realValue >= 0 ? realValue : null;
     pfeilNr === 1 ? satz.ringzahlPfeil1 = realValue : satz.ringzahlPfeil2 = realValue;
@@ -147,12 +149,12 @@ export class SchusszettelComponent implements OnInit {
     } else if (
       // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
       // daher prüfen wir hier ersten auf "leer" d.h. gleich 0
-        this.match1.schuetzen[0][0].schuetzeNr == null ||
-        this.match1.schuetzen[1][0].schuetzeNr == null ||
-        this.match1.schuetzen[2][0].schuetzeNr == null ||
-        this.match2.schuetzen[0][0].schuetzeNr == null ||
-        this.match2.schuetzen[1][0].schuetzeNr == null ||
-        this.match2.schuetzen[2][0].schuetzeNr == null ) {
+        this.match1.schuetzen[0][0].rueckennummer == null ||
+        this.match1.schuetzen[1][0].rueckennummer == null ||
+        this.match1.schuetzen[2][0].rueckennummer == null ||
+        this.match2.schuetzen[0][0].rueckennummer == null ||
+        this.match2.schuetzen[1][0].rueckennummer == null ||
+        this.match2.schuetzen[2][0].rueckennummer == null ) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
@@ -165,12 +167,12 @@ export class SchusszettelComponent implements OnInit {
     } else if (
       // und jetzt prüfen wir noch ob in einer Mannschaft die gleiche
       // Schützennummer zweimal angegeben wurde -> auch nicht möglich
-      this.match1.schuetzen[0][0].schuetzeNr === this.match1.schuetzen[1][0].schuetzeNr ||
-      this.match1.schuetzen[1][0].schuetzeNr === this.match1.schuetzen[2][0].schuetzeNr ||
-      this.match1.schuetzen[2][0].schuetzeNr === this.match1.schuetzen[0][0].schuetzeNr ||
-      this.match2.schuetzen[0][0].schuetzeNr === this.match2.schuetzen[1][0].schuetzeNr ||
-      this.match2.schuetzen[1][0].schuetzeNr === this.match2.schuetzen[2][0].schuetzeNr ||
-      this.match2.schuetzen[2][0].schuetzeNr === this.match2.schuetzen[0][0].schuetzeNr ) {
+      this.match1.schuetzen[0][0].rueckennummer === this.match1.schuetzen[1][0].rueckennummer ||
+      this.match1.schuetzen[1][0].rueckennummer === this.match1.schuetzen[2][0].rueckennummer ||
+      this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer ||
+      this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer ||
+      this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer ||
+      this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer ) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
@@ -205,16 +207,16 @@ export class SchusszettelComponent implements OnInit {
           this.match1.schuetzen[i][j].dsbMitgliedId = this.match1.schuetzen[i][0].dsbMitgliedId;
           this.match2.schuetzen[i][j].dsbMitgliedId = this.match2.schuetzen[i][0].dsbMitgliedId;
 
-          this.match1.schuetzen[i][j].schuetzeNr = this.match1.schuetzen[i][0].schuetzeNr;
-          this.match2.schuetzen[i][j].schuetzeNr = this.match2.schuetzen[i][0].schuetzeNr;
+          this.match1.schuetzen[i][j].rueckennummer = this.match1.schuetzen[i][0].rueckennummer;
+          this.match2.schuetzen[i][j].rueckennummer = this.match2.schuetzen[i][0].rueckennummer;
         }
       }
       this.schusszettelService.create(this.match1, this.match2)
         .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
           this.match1 = data.payload[0];
           this.match2 = data.payload[1];
-          this.initSumSatz();
-          this.setPoints();
+          // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
+          this.ngOnInit();
           this.notificationService.discardNotification();
         }, (error) => {
           console.error(error);
