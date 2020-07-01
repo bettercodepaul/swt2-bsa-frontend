@@ -20,7 +20,6 @@ import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
-import {WettkampfDataProviderService} from '@wettkampf/services/wettkampf-data-provider.service';
 import {consoleTestResultHandler} from 'tslint/lib/test';
 import {forEach} from '@angular/router/src/utils/collection';
 
@@ -110,6 +109,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
     this.clear();
+    this.loadMannschaft(this.currentVeranstaltung.id);
     this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
 
@@ -118,6 +118,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.passen = [];
     this.wettkaempfe = [];
     this.rows = [];
+
   }
 
   // backend-calls to get data from DB
@@ -143,13 +144,13 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     }
     this.areVeranstaltungenloading = false;
     this.currentJahr = this.currentVeranstaltung.sportjahr;
-    this.loadMannschaft();
+    this.loadMannschaft(this.currentVeranstaltung.id);
     this.loadJahre();
     this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
 
-  public loadMannschaft() {
-    this.mannschaftDataProvider.findAll()
+  public loadMannschaft(veranstaltungsId: number) {
+    this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleSuccessLoadMannschaft(response))
         .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.mannschaften === []);
   }
@@ -162,11 +163,15 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
           this.mannschaften[0] = i;
         }
         this.currentMannschaft = this.mannschaften[0];
+
       }
-    } else if (this.currentMannschaft !== null) {
+    } else if (this.currentMannschaft  !== null) {
 
       this.currentMannschaft = this.mannschaften[0];
+
     }
+
+
   }
 
   public loadJahre() {
@@ -214,8 +219,18 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
   public handleSuccessLoadPassen(passen: PasseDoClass[], matches): void {
     this.passen.push(passen);
-    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
-      this.mannschaften, this.currentVeranstaltung, matches, passen)));
+    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined
+      , this.mannschaften, this.currentVeranstaltung, matches, passen)));
+
     this.loadingData = false;
+  }
+  // method to change the name to a default, incase there isnt a Team
+  private getTitle(): string {
+    let placeholder = 'Mannschaftsname';
+    if (this.currentMannschaft !== undefined) {
+      placeholder = this.currentMannschaft.name;
+    }
+    return placeholder;
+
   }
 }
