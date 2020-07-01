@@ -129,7 +129,7 @@ export class VereinDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path("findfirst").build())
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('findfirst').build())
           .then((data: VersionedDataTransferObject) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
           }, (error: HttpErrorResponse) => {
