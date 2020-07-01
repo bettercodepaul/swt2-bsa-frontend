@@ -17,7 +17,7 @@ export class PasseMapper {
       payload.ringzahl[3],
       payload.ringzahl[4],
       payload.ringzahl[5],
-      payload.schuetzeNr);
+      payload.rueckennummer);
   }
 
   static passeToDTO(payload: PasseDO): PasseDTO {
@@ -37,6 +37,6 @@ export class PasseMapper {
       payload.lfdNr,
       payload.dsbMitgliedId,
       ringzahl,
-      payload.schuetzeNr);
+      payload.rueckennummer);
   }
 }

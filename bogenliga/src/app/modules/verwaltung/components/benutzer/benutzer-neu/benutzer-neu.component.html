@@ -7,6 +7,26 @@
         class="horizontal-form half-page"
         #benutzerNeuForm="ngForm">
 
+    <!-- Basis für einen Account ist ein bestehender Eintrag eines DSB-Mitglieds -->
+    <div class="form-group row">
+      <label for="benutzerDsbMitglied"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.DSBMITGLIED.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <bla-quicksearch-list id="benutzerDsbMitglied"
+                              name="benutzerDsbMitglied"
+                              [items]="getVersionedDataObjects()"
+                              [optionFieldSelector]="'nachname'"
+                              (onSelect)="onSelect($event)"
+                              [multipleSelections]="!multipleSelections"
+                              selectionListHeight="15em"
+                              style="width: 50%;">
+
+        </bla-quicksearch-list>
+      </div>
+    </div>
 
     <!-- username / email -->
     <div class="form-group row">
