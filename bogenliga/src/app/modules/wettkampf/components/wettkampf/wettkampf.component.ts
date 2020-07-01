@@ -178,39 +178,44 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([]));
   }
 
+  /**
+   * Load all matches and passen for all wettkaempfe. The index variable is used to make sure the loaded WettkampfErgebnisse
+   * are put in correct order into this.rows
+   * @param wettkaempfe the amount of wettkaempfe of one Veranstaltung
+   */
   public handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = this.wettkaempfe.concat(wettkaempfe);
-    if (this.wettkaempfe.length > 0) {
-      this.wettkaempfe.forEach((wettkampfDO) => {
+      for(let index = 0; index < this.wettkaempfe.length; index++) {
         this.loadingData = true;
-        this.loadMatches(wettkampfDO.id);
-      });
-    }
+        this.loadMatches(this.wettkaempfe[index].id, index);
+      }
   }
 
-  public loadMatches(wettkampfId: number) {
+  public loadMatches(wettkampfId: number, index: number) {
 
     this.matchDataProviderService.findByWettkampfId(wettkampfId)
-        .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId))
-        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches([], wettkampfId));
+        .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId, index))
+        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches([], wettkampfId, index));
   }
 
 
-  public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number) {
+  public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number, index : number) {
     this.matches.push(matches);
-    this.loadPassen(wettkampfId, matches);
+    this.loadPassen(wettkampfId, matches, index);
   }
 
-  public loadPassen(wettkampfId: number, matches: MatchDO[]) {
+  public loadPassen(wettkampfId: number, matches: MatchDO[], index: number) {
     this.passeDataProviderService.findByWettkampfId(wettkampfId)
-        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, matches))
-        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], matches));
+        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, matches, index))
+        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], matches, index));
   }
 
-  public handleSuccessLoadPassen(passen: PasseDoClass[], matches): void {
+  public handleSuccessLoadPassen(passen: PasseDoClass[], matches, index: number): void {
     this.passen.push(passen);
-    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
-      this.mannschaften, this.currentVeranstaltung, matches, passen)));
+    // We insert the new generated WettkampfErgebnis[] into index from this.rows. This is nesessary because the backend
+    // loading times are different and would cause a wrong order if we would just load then step by step.
+    this.rows.splice(index, 0,(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
+      this.mannschaften, this.currentVeranstaltung, matches, passen))));
     this.loadingData = false;
   }
 }
