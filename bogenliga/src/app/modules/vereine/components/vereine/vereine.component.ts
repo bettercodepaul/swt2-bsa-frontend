@@ -61,7 +61,8 @@ export class VereineComponent extends CommonComponent implements OnInit {
   // Otherwise the data of the selected Verein is displayed.
   ngOnInit() {
     console.log('Bin in Vereine');
-    this.providedID = 0;
+    this.currentVerein = null;
+    this.providedID = this.findFirstVereinID();
     this.loadVereine();
     this.loading = true;
     this.notificationService.discardNotification();
@@ -76,6 +77,20 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.changeSelectedVerein();
     this.onSelect(this.selectedVereine);
   }
+
+  // Gibt die ID des ersten Vereins zurück.
+  private findFirstVereinID(): number {
+    let zahl: number;
+    zahl = 0;
+    this.vereinDataProvider.findFirst()
+        .then((response: BogenligaResponse<VereinDTO>) =>
+          zahl = response.payload.id)
+        .catch((response: BogenligaResponse<VereinDTO>) =>
+          console.log('Fehler im findFirst')
+        );
+    return zahl;
+  }
+
   // Changes the selectedVereine acording to the current selectedVereinsID.
   private changeSelectedVerein(): void {
     this.selectedVereine = [];
