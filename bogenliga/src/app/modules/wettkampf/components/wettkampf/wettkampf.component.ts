@@ -67,6 +67,10 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     super();
   }
 
+  /**
+   * Gets the value from path if Wettkampfergebnisse page is called. Starts after than loading of all Veranstaltungen
+   * @see this.loadVeranstaltungen
+   */
   ngOnInit() {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -80,15 +84,26 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.loadVeranstaltungen();
   }
 
+  /**
+   * Create Results for a Match encounter from a single Wettkampf and push it to this.rows. Rows is used to get the
+   * values in the correct table in wettkampf.component.html
+   * @param selectedMannschaft | Is this.currentMannschaft or undefined.
+   * If this.currentMannschaft all match encounters from one team get created, else from all.
+   */
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
 
     this.rows = [];
-    for(let i = 0; i < this.wettkaempfe.length; i++) {
+    for (let i = 0; i < this.wettkaempfe.length; i++) {
       this.rows.push((toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
         this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i]))));
     }
   }
 
+  /**
+   * Get the data from the currently selected Veranstaltung. Starts the loading chain for all Wettkaempfe
+   * @see this.loadWettkaempfe
+   * @param $event
+   */
   public onSelect($event: VeranstaltungDO[]): void {
 
     this.currentVeranstaltung = $event.concat()[0];
@@ -178,7 +193,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     }
   }
 
-  public loadMatches(wettkampfId : number) {
+  public loadMatches(wettkampfId: number) {
 
     this.matchDataProviderService.findByWettkampfId(wettkampfId)
         .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId))
@@ -191,7 +206,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.loadPassen(wettkampfId, matches);
   }
 
-  public loadPassen(wettkampfId : number, matches: MatchDO[]) {
+  public loadPassen(wettkampfId: number, matches: MatchDO[]) {
     this.passeDataProviderService.findByWettkampfId(wettkampfId)
         .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, matches))
         .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], matches));
