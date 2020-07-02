@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
@@ -9,6 +9,8 @@ import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
 import {BenutzerRolleDTO} from '../../../types/datatransfer/benutzer-rolle-dto.class';
 import {RoleDTO} from '../../../types/datatransfer/role-dto.class';
 import {RoleDO} from '../../../types/role-do.class';
+import {ChangeCredentialsDO} from '@user/types/changecredentials-do.class';
+import {UserPwdDataProviderService} from '@user/services/user-pwd-data-provider.service';
 import {BENUTZER_DETAIL_CONFIG} from './benutzer-detail.config';
 
 import {
@@ -33,6 +35,7 @@ const NOTIFICATION_SAVE_BENUTZER = 'benutzer_detail_save';
 })
 export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
+  @Output() public onAction = new EventEmitter<void>();
   public config = BENUTZER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentBenutzerRolleDO: BenutzerRolleDO[];
@@ -40,7 +43,8 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public tobeRole: RoleDO;
   public currentRoles: BenutzerRolleDTO[] = [];
   public roleNames;
-
+  public show = false;
+  public changeCredentials: ChangeCredentialsDO = new ChangeCredentialsDO();
   public saveLoading = false;
   public selectedDTOs: RoleVersionedDataObject[];
 
@@ -84,6 +88,10 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
       }
     });
   }
+
+  public showPasswordResetField(){
+    this.show = true;
+}
 
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
