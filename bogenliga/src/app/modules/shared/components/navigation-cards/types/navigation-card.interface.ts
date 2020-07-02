@@ -6,5 +6,5 @@ export interface NavigationCard {
   icon: string;
   route: string;
   permissions?: UserPermission[];
-  detailType ?: String;
+  detailType ?: string;
 }

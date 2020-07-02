@@ -60,7 +60,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
               private vereinDataProvider: VereinDataProviderService,
               private httpService: HttpClient,
               private notificationService: NotificationService,
-              private currentUserService:CurrentUserService) {
+              private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -343,8 +343,8 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
     this.vereine = [];
     this.vereinDataProvider.findAll()
         .then((response: BogenligaResponse<VereinDTO[]>) => {
-          if(this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER)) {
-            response.payload = response.payload.filter((entry)=>{return this.currentUserService.getVerein() === entry.id;});
+          if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER)) {
+            response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.id);
           }
           this.currentVerein = response.payload[0];
           this.vereine = response.payload;

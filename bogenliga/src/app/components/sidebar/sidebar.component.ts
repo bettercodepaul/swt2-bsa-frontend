@@ -44,14 +44,14 @@ export class SidebarComponent implements OnInit {
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     return this.currentUserService.hasAnyPermisson(userPermissions);
   }
-  public getRoute(route:String,detailType:String) :String{
-    let result : String = route;
-    if(detailType === 'undefined'){
+  public getRoute(route: string, detailType: string): string {
+    let result: string = route;
+    if (detailType === 'undefined') {
      return(route);
-    }else{
-      switch(detailType) {
-        case "verein":
-          result = result + "/" + this.currentUserService.getVerein();
+    } else {
+      switch (detailType) {
+        case 'verein':
+          result = result + '/' + this.currentUserService.getVerein();
           break;
         default:
           result = result;

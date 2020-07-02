@@ -25,29 +25,31 @@ export class NavigationCardsComponent extends CommonComponent implements OnInit 
       return this.currentUserService.hasAnyPermisson(userPermissions);
     }
   }
-  public getLink(route:String,detailType:String):String{
-    if(detailType !== undefined){
+  public getLink(route: string, detailType: string): string {
+    if (detailType !== undefined) {
     let result = route;
-    let allowedData :number[] = [];
-    switch(detailType){
-      case("Veranstalltungen"):
-        if(this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VERANSTALTUNG ) && !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN ) ){
-        allowedData = this.currentUserService.getVeranstaltungen();}
+    let allowedData: number[] = [];
+    switch (detailType) {
+      case('Veranstalltungen'):
+        if (this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VERANSTALTUNG ) && !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN ) ) {
+        allowedData = this.currentUserService.getVeranstaltungen(); }
         break;
-      case("Verein"):
-        if(this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VEREIN) &&!this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN) &&! this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)){
-        allowedData = [this.currentUserService.getVerein()];}
+      case('Verein'):
+        if (this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VEREIN) &&
+          !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)
+          && ! this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)) {
+        allowedData = [this.currentUserService.getVerein()]; }
         break;
     }
-    if(allowedData.length > 0){
-      if(allowedData.length == 1){
-       result += "/"+allowedData[0].toString();
+    if (allowedData.length > 0) {
+      if (allowedData.length === 1) {
+       result += '/' + allowedData[0].toString();
       }
     }
 
     return result;
-    }else{
-      return route
+    } else {
+      return route;
     }
 
   }

@@ -38,7 +38,7 @@ export const MANNSCHAFT_DETAIL_TABLE_CONFIG: TableConfig = {
 
     width:       6
   },
-  deletePermission:[UserPermission.CAN_MODIFY_STAMMDATEN,UserPermission.CAN_MODIFY_MY_VEREIN]
+  deletePermission: [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VEREIN]
 
 
 };

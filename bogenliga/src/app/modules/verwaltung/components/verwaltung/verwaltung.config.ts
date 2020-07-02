@@ -11,7 +11,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.DESCRIPTION',
         icon:           'users',
         route:          'dsbmitglieder',
-        permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER,UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER]
+        permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.LABEL',
@@ -33,7 +33,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'sitemap',
         route:          'vereine',
         detailType:     'Verein',
-        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT,UserPermission.CAN_READ_MY_VEREIN]
+        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
@@ -54,8 +54,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.DESCRIPTION',
         icon:           'calendar-alt',
         route:          'veranstaltung',
-        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN,UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
-        detailType: "Veranstaltungen",
+        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
+        detailType: 'Veranstaltungen',
       },
       // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
       // because the exactly function of the site "Sportjahre" is still unclear.
