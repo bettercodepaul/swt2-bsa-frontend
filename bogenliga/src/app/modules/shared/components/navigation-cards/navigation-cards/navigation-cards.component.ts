@@ -31,11 +31,11 @@ export class NavigationCardsComponent extends CommonComponent implements OnInit 
     let allowedData :number[] = [];
     switch(detailType){
       case("Veranstalltungen"):
-        if(this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VERANSTALTUNG)){
+        if(this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VERANSTALTUNG ) && !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN ) ){
         allowedData = this.currentUserService.getVeranstaltungen();}
         break;
       case("Verein"):
-        if(this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VEREIN)){
+        if(this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VEREIN) &&!this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN) &&! this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)){
         allowedData = [this.currentUserService.getVerein()];}
         break;
     }
