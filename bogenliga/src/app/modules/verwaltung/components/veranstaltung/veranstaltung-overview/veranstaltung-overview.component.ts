@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 import {CommonComponent} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {isNullOrUndefined} from '@shared/functions';
 import {
   Notification,
   NotificationOrigin,
@@ -18,6 +20,11 @@ import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.cl
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_OVERVIEW_CONFIG} from './veranstaltung-overview.config';
 import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components/liga/liga-overview/liga-overview.component';
+import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
+import {of} from 'rxjs';
+import {delay} from 'rxjs/operators';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
 
@@ -31,6 +38,14 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
   public config = VERANSTALTUNG_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
+  public loading = true;
+  public loadingYear = true;
+  public loadingSearch = true;
+  public selectDTO: SportjahrVeranstaltungDO[];
+  public selecetedYear = 2020;
+  public selectedDTOs: SportjahrVeranstaltungDO[];
+  public multipleSelections = true;
+
 
   constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
@@ -38,6 +53,8 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
 
   ngOnInit() {
     this.loadTableRows();
+    this.loadDistinctSporjahr();
+    this.loadBySportjahr();
   }
 
 
@@ -100,6 +117,52 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + versionedDataObject.id);
+  }
+
+// Diese Methode lädt Veranstaltungen aus dem Backend anhand ihres Sportjahres
+
+  private loadBySportjahr(): void {
+    this.loadingSearch = true;
+    this.veranstaltungDataProvider.findBySportyear(this.selecetedYear)
+        .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadBySportjahrSecess(newList))
+        .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
+
+  }
+
+  private handleLoadBySportjahrSecess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    this.rows = [];
+    this.rows = toTableRows(response.payload);
+    this.loadingSearch = false;
+
+
+  }
+
+  private handleLoadBySportjahrfailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
+    this.rows = [];
+    this.loadingSearch = false;
+  }
+
+  // Diese Methode lädt alle Sportjahr von Veranstaltungen Distinct
+
+  private loadDistinctSporjahr(): void {
+    this.loadingYear = true;
+    this.veranstaltungDataProvider.findAllSportyearDestinct()
+        .then((newList: BogenligaResponse<SportjahrVeranstaltungDO[]>) => this.handleLoadDistinctSportjahrSecess(newList))
+        .catch((newList: BogenligaResponse<SportjahrVeranstaltungDTO[]>) => this.handleLoadDistinctSportjahrFailure(newList));
+  }
+
+
+  private handleLoadDistinctSportjahrSecess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+    this.selectedDTOs = [];
+    this.selectedDTOs = response.payload;
+    this.loadingYear = false;
+
+
+  }
+
+  private handleLoadDistinctSportjahrFailure(response: BogenligaResponse<SportjahrVeranstaltungDTO[]>): void {
+    this.selectedDTOs = [];
+    this.loadingYear = false;
   }
 
 
