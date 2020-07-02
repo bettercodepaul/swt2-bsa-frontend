@@ -52,14 +52,14 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private vereinDataProvider: VereinDataProviderService,
-    private wettkampfDataProviderService: WettkampfDataProviderService,
-    private matchDataProviderService: MatchDataProviderService,
-    private passeDataProviderService: PasseDataProviderService,
-    private wettkampfErgebnisService: WettkampfErgebnisService,
-    private mannschaftDataProvider: DsbMannschaftDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute) {
+              private vereinDataProvider: VereinDataProviderService,
+              private wettkampfDataProviderService: WettkampfDataProviderService,
+              private matchDataProviderService: MatchDataProviderService,
+              private passeDataProviderService: PasseDataProviderService,
+              private wettkampfErgebnisService: WettkampfErgebnisService,
+              private mannschaftDataProvider: DsbMannschaftDataProviderService,
+              private router: Router,
+              private route: ActivatedRoute) {
     super();
   }
 
@@ -185,9 +185,9 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
    */
   public handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = this.wettkaempfe.concat(wettkaempfe);
-      for(let index = 0; index < this.wettkaempfe.length; index++) {
-        this.loadingData = true;
-        this.loadMatches(this.wettkaempfe[index].id, index);
+    for (let index = 0; index < this.wettkaempfe.length; index++) {
+      this.loadingData = true;
+      this.loadMatches(this.wettkaempfe[index].id, index);
       }
   }
 
@@ -199,7 +199,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
 
-  public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number, index : number) {
+  public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number, index: number) {
     this.matches.push(matches);
     this.loadPassen(wettkampfId, matches, index);
   }
@@ -214,8 +214,11 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.passen.push(passen);
     // We insert the new generated WettkampfErgebnis[] into index from this.rows. This is nesessary because the backend
     // loading times are different and would cause a wrong order if we would just load then step by step.
-    this.rows.splice(index, 0,(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
+    this.rows.splice(index, 0, (toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
       this.mannschaften, this.currentVeranstaltung, matches, passen))));
-    this.loadingData = false;
+    // if index is at the end of this.wettkaempfe loading is finished and can be displayed in wettkampf.component.html
+    if (index === this.wettkaempfe.length - 1) {
+      this.loadingData = false;
+    }
   }
 }
