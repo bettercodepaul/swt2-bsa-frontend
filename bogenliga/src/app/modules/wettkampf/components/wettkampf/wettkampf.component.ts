@@ -223,7 +223,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     }
   }
   // method to change the name to a default, incase if there isnt a Team to for currentMannschaft
-  private getTitle(): string {
+  public getTitle(): string {
     let placeholder = 'Mannschaftsname';
     if (this.currentMannschaft !== undefined) {
       placeholder = this.currentMannschaft.name;
