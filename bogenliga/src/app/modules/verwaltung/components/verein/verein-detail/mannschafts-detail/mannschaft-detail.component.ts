@@ -8,7 +8,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../shared/components';
-import {BogenligaResponse, UriBuilder, VersionedDataTransferObject} from '../../../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '../../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -323,7 +323,8 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.ligen = [];
     this.ligen = response.payload;
-    if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)) {
+    if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT) &&
+    !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)) {
       this.ligen = this.ligen.filter((entry) => {
         return this.currentUserService.hasVeranstaltung(entry.id);
       });
