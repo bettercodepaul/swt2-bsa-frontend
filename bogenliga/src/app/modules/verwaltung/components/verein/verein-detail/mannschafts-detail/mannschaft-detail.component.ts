@@ -8,7 +8,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../shared/components';
-import {BogenligaResponse, UriBuilder} from '../../../../../shared/data-provider';
+import {BogenligaResponse, UriBuilder, VersionedDataTransferObject} from '../../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -366,7 +366,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.mannschaftMitgliedProvider.findByMemberAndTeamId(member.id, this.currentMannschaft.id)
       .then(
         (response: BogenligaResponse<MannschaftsmitgliedDTO>) => {
-          console.log('payload:');
+          console.log('payload in addMember - mannschaft-detail.component.ts:');
           console.log(response.payload);
           this.currentMannschaftsMitglied.dsbMitgliedId = response.payload.dsbMitgliedId;
           this.currentMannschaftsMitglied.dsbMitgliedEingesetzt = response.payload.dsbMitgliedEingesetzt;
@@ -385,7 +385,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
   // deletes the selected member in the team
   public onDeleteMitglied(versionedDataObject: VersionedDataObject): void {
-
     this.notificationService.discardNotification();
 
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, versionedDataObject.id);
@@ -398,27 +397,28 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     const currentDate = new Date();
 
     // checks if the current date is before the deadline
+    // deadline here: "Meldedeadline"
     if (deadlineYear > currentDate.getFullYear() ||
       (deadlineYear === currentDate.getFullYear() && deadlineMonth > currentDate.getMonth()) ||
       (deadlineYear === currentDate.getFullYear() && deadlineMonth === currentDate.getMonth() && deadlineDay > currentDate.getDay())) {
-      if (this.checkExistingResults(versionedDataObject.id)) {
-        const teamMemberId = this.members.get(versionedDataObject.id).id;
-        this.deleteMitglied(teamMemberId, versionedDataObject.id);
-      } else {
-        this.showExistingResultsNotification(versionedDataObject.id);
-      }
+//      if (this.checkExistingResults(versionedDataObject.id)) {
+        const teamMemberId = versionedDataObject.id; // this.members.get(versionedDataObject.id).id;
+
+        this.deleteMitglied(this.currentMannschaft.id, teamMemberId);
+
     } else {
       this.showDeadlineReachedNoitification(versionedDataObject.id);
     }
   }
 
+  // @param memberId: MannschaftsId of Mannschaft of Member to delete
+  // @param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
    private deleteMitglied(memberId: number, dsbMitgliedId: number) {
-
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_MITGLIED + memberId,
       title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.TITLE',
       description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.DESCRIPTION',
-      descriptionParam: '' + memberId,
+      descriptionParam: '' + dsbMitgliedId,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
       type:             NotificationType.YES_NO,
@@ -429,19 +429,42 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.mannschaftMitgliedProvider.deleteById(memberId)
-                .then((response) => this.loadTableRows())
+            this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
+                .then((response) => {
+                  // const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
+                  // console.log("MemberIdTest",test);
+                  // const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
+                  // console.log("TeamIdTest", test2);
+                  this.mannschaftMitgliedProvider.findAllByTeamId(memberId)
+                      .then((mannschaftMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+
+                        for (let i = 0; i < mannschaftMitgliedResponse.payload.length; i++) {
+
+                          // workaround because update method does not work due to "Vorname" bzw. "Nachname" Attributes
+                          // not existing consistently in backend/frontend objects.
+                          this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(
+                            mannschaftMitgliedResponse.payload[i].mannschaftsId,
+                            mannschaftMitgliedResponse.payload[i].dsbMitgliedId);
+
+                          mannschaftMitgliedResponse.payload[i].rueckennummer = i + 1;
+                          this.mannschaftMitgliedProvider.save(mannschaftMitgliedResponse.payload[i]);
+
+
+                        }
+                      })
+                      .catch((mannschaftMitgliedResponse: void) => console.log('this is catch thingy, are there mannschaftsMitglieder?'));
+                  this.loadTableRows();
+                })
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
+
+
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
           }
-
         });
-
     this.notificationService.showNotification(notification);
   }
 
-  // checks if the dsbmitglied has existing match results
   private checkExistingResults(dsbMitgliedId: number): boolean {
 
     let resultsExist = false;
@@ -674,6 +697,11 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
           }
         });
     this.notificationService.showNotification(noLicenseNotification);
+  }
+
+  private navigateMergedLicenses() {
+    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
+      + '/' + this.currentMannschaft.id + '/lizenz/lizenz');
   }
 
 }
