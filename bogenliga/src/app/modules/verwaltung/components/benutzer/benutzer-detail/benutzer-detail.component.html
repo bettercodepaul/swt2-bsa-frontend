@@ -64,14 +64,12 @@
       </label>
       <div class="col-sm-9">
         <bla-selectionlist
-                           [id]="'quickSearch'"
-                           [items]="getVersionedDataObjects()"
-                           [optionFieldSelector]="'roleName'"
-                           (onSelect)="onSelect($event)"
-                           [multipleSelections]="true"
-                           style="width: 50%; height: 10em;">
-
-
+          [id]="'quickSearch'"
+          [items]="getVersionedDataObjects()"
+          [optionFieldSelector]="'roleName'"
+          (onSelect)="onSelect($event)"
+          [multipleSelections]="true"
+          style="width: 50%; height: 10em;">
         </bla-selectionlist>
       </div>
     </div>
@@ -128,7 +126,6 @@
       <div class="col-sm-9 button-box">
         <bla-button
                     [id]="'benutzerUpdateButton'"
-                    [disabled]="benutzerForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onUpdate($event)">
           {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
