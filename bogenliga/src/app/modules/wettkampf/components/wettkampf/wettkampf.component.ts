@@ -180,8 +180,8 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   /**
-   * Load all matches and passen for all wettkaempfe. The index variable is used to make sure the loaded WettkampfErgebnisse
-   * are put in correct order into this.rows
+   * Load all matches and passen for all wettkaempfe. The index variable is used to make sure the loaded
+   * WettkampfErgebnisse are put in correct order into this.rows
    * @param wettkaempfe the amount of wettkaempfe of one Veranstaltung
    */
   public handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
@@ -221,5 +221,13 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     if (index === this.wettkaempfe.length - 1) {
       this.loadingData = false;
     }
+  }
+  // method to change the name to a default, incase if there isnt a Team to for currentMannschaft
+  private getTitle(): string {
+    let placeholder = 'Mannschaftsname';
+    if (this.currentMannschaft !== undefined) {
+      placeholder = this.currentMannschaft.name;
+    }
+    return placeholder;
   }
 }
