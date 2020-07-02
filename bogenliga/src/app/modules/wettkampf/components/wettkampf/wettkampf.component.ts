@@ -201,7 +201,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
 
   public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number, index: number) {
-    this.matches.push(matches);
+    this.matches.splice(index, 0, matches);
     this.loadPassen(wettkampfId, matches, index);
   }
 
@@ -212,7 +212,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
   }
 
   public handleSuccessLoadPassen(passen: PasseDoClass[], matches, index: number): void {
-    this.passen.push(passen);
+    this.passen.splice(index, 0, passen);
     // We insert the new generated WettkampfErgebnis[] into index from this.rows. This is nesessary because the backend
     // loading times are different and would cause a wrong order if we would just load then step by step.
     this.rows.splice(index, 0, (toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
