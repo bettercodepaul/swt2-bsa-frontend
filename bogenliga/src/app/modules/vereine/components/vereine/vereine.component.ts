@@ -65,7 +65,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     this.currentVerein = null;
     this.providedID = null;
     this.hasID = false;
-    //this.providedID = this.findFirstVereinID();
+    // this.providedID = this.findFirstVereinID();
 
     this.loading = true;
     this.notificationService.discardNotification();
@@ -102,7 +102,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
     return zahl;
   }
 
-  private findFirstSucess (response: VereinDTO): number {
+  private findFirstSucess(response: VereinDTO): number {
     console.log('Found first: ' + response);
     return response.id;
   }
