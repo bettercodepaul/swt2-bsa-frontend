@@ -81,14 +81,20 @@ export class VereineComponent extends CommonComponent implements OnInit {
   // Gibt die ID des ersten Vereins zurück.
   private findFirstVereinID(): number {
     let zahl: number;
-    zahl = 0;
+    zahl = null;
     this.vereinDataProvider.findFirst()
         .then((response: BogenligaResponse<VereinDTO>) =>
-          zahl = response.payload.id)
+          zahl = this.findFirstSucess(response.payload))
         .catch((response: BogenligaResponse<VereinDTO>) =>
           console.log('Fehler im findFirst')
         );
+    console.log('Gefundene ID: ' + zahl);
     return zahl;
+  }
+
+  private findFirstSucess (response: VereinDTO): number {
+    console.log('Found first: ' + response);
+    return response.id;
   }
 
   // Changes the selectedVereine acording to the current selectedVereinsID.
