@@ -28,7 +28,7 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOADRUECKENNUMMER],
       width:       6
     },
-    deletePermission :[UserPermission.CAN_DELETE_STAMMDATEN],
-    editPermission:[UserPermission.CAN_MODIFY_MY_VEREIN]
+    deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
+    editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN]
 
 };

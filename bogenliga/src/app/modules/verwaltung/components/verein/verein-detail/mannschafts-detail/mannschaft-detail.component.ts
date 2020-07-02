@@ -99,7 +99,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService,
-              private currentUserService:CurrentUserService) {
+              private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -323,10 +323,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.ligen = [];
     this.ligen = response.payload;
-    if(this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)){
-      this.ligen = this.ligen.filter((entry)=>{
+    if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)) {
+      this.ligen = this.ligen.filter((entry) => {
         return this.currentUserService.hasVeranstaltung(entry.id);
-      })
+      });
     }
     if (this.currentMannschaft.veranstaltungId != null) {
       this.currentVeranstaltung = this.ligen.filter((liga) => liga.id === this.currentMannschaft.veranstaltungId)[0];

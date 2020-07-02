@@ -30,7 +30,10 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
   public config = DSB_MITGLIED_OVERVIEW_CONFIG;
   public rows: TableRow[];
 
-  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService, private router: Router, private notificationService: NotificationService,private currentUserService:CurrentUserService) {
+  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
+              private router: Router,
+              private notificationService: NotificationService,
+              private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -97,8 +100,8 @@ export class DsbMitgliedOverviewComponent extends CommonComponent implements OnI
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
-    if(this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER)){
-      response.payload = response.payload.filter((entry)=>{return this.currentUserService.getVerein() === entry.vereinsId});
+    if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER)) {
+      response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.vereinsId);
     }
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);

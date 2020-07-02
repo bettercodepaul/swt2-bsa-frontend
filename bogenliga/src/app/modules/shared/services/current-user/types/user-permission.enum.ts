@@ -74,7 +74,7 @@ export enum UserPermission {
   CAN_CREATE_SYSTEMDATEN,
   CAN_CREATE_WETTKAMPF,
 
-  //DSB Mitglieder Permissions
+  // DSB Mitglieder Permissions
   CAN_READ_DSBMITGLIEDER,
   CAN_CREATE_DSBMITGLIEDER,
   CAN_MODIFY_DSBMITGLIEDER,

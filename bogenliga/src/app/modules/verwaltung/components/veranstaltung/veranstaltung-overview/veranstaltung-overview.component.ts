@@ -33,7 +33,9 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
   public rows: TableRow[];
 
 
-  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService, private router: Router, private notificationService: NotificationService,private currentUserService: CurrentUserService) {
+  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
+              private router: Router, private notificationService: NotificationService,
+              private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -93,9 +95,9 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
-    if(this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG)){
-      response.payload =response.payload.filter((entry)=>{return this.currentUserService.hasVeranstaltung(entry.id)});
-    console.log("detected");}
+    if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG)) {
+      response.payload = response.payload.filter((entry) => this.currentUserService.hasVeranstaltung(entry.id));
+      console.log('detected'); }
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;

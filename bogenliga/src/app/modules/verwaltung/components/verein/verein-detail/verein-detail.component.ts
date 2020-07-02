@@ -69,7 +69,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   constructor(private vereinProvider: VereinDataProviderService,
               private downloadService: DownloadButtonResourceProviderService,
               private regionProvider: RegionDataProviderService,
-              private currentUserService:CurrentUserService,
+              private currentUserService: CurrentUserService,
               private mannschaftsDataProvider: DsbMannschaftDataProviderService,
               private veranstaltungsProvider: VeranstaltungDataProviderService,
               private router: Router,

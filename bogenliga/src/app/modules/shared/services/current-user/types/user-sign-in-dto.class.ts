@@ -9,8 +9,8 @@ export class UserSignInDTO implements DataTransferObject {
   qrCode: string;
   jwt: string;
   permissions: string[];
-  veranstaltungenIds : number[];
-  vereinId : number;
+  veranstaltungenIds: number[];
+  vereinId: number;
   // permissionsID: UserPermission[];
 
   static copyFromJson(json: {
@@ -21,7 +21,7 @@ export class UserSignInDTO implements DataTransferObject {
     jwt: string,
     permissions?: string[]
     vereinId: number,
-    veranstaltungenIds : number[]
+    veranstaltungenIds: number[]
   }): UserSignInDTO {
     const userSign = new UserSignInDTO();
     userSign.id = json.id;
