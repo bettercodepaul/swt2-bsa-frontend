@@ -50,6 +50,8 @@ import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail
 
 import {SchuetzenComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
 import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
+import {LizenzComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/lizenzen/lizenz.component';
+
 
 @NgModule({
   imports:      [
@@ -78,7 +80,8 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
     WettkampftageComponent,
-    SportjahrOverviewComponent
+    SportjahrOverviewComponent,
+    LizenzComponent
   ]
 })
 export class VerwaltungModule {
