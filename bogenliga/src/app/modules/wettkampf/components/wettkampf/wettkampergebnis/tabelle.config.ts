@@ -6,7 +6,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
   columns: [
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH',
-      propertyName:   'wettkampftag',
+      propertyName:   'matchNr',
       width:          5,
     },
     {
