@@ -1,6 +1,7 @@
 import {CommonDialogConfig} from '../../../../../shared/components/dialogs';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
+import {UserPermission} from '@shared/services';
 
 export const MANNSCHAFT_DETAIL_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -37,6 +38,7 @@ export const MANNSCHAFT_DETAIL_TABLE_CONFIG: TableConfig = {
 
     width:       6
   },
+  deletePermission: [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VEREIN]
 
 
 };
