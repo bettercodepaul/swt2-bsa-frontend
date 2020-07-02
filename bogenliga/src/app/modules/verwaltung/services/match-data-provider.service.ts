@@ -46,7 +46,7 @@ export class MatchDataProviderService extends DataProviderService {
   }
 
 
-  public findAllWettkampfMatchesById(id: number): Promise<BogenligaResponse<MatchDO[]>> {
+  public findByWettkampfId(id: number): Promise<BogenligaResponse<MatchDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
