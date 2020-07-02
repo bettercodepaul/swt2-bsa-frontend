@@ -68,7 +68,6 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
   }
 
   public onEdit(versionedDataObject: VersionedDataObject): void {
-    console.log('veranstaltung-overview.component.ts');
     this.navigateToDetailDialog(versionedDataObject);
   }
 
@@ -106,6 +105,7 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
       response.payload = response.payload.filter((entry) => this.currentUserService.hasVeranstaltung(entry.id));
       console.log('detected');
     }
+
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;
