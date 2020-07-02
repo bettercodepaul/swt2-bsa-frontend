@@ -18,14 +18,14 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.DESCRIPTION',
         icon:           'address-card',
         route:          'benutzer',
-        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
         icon:           'wrench',
         route:          'klassen',
-        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
@@ -40,14 +40,14 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga',
-        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.DESCRIPTION',
         icon:           'sitemap',
         route:          'regionen',
-        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
