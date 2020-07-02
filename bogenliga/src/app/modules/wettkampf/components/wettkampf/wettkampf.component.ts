@@ -105,6 +105,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
     this.clear();
+    this.loadMannschaft(this.currentVeranstaltung.id);
     this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
 
@@ -138,13 +139,13 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     }
     this.areVeranstaltungenloading = false;
     this.currentJahr = this.currentVeranstaltung.sportjahr;
-    this.loadMannschaft();
+    this.loadMannschaft(this.currentVeranstaltung.id);
     this.loadJahre();
     this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
 
-  public loadMannschaft() {
-    this.mannschaftDataProvider.findAll()
+  public loadMannschaft(veranstaltungsId: number) {
+    this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleSuccessLoadMannschaft(response))
         .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.mannschaften === []);
   }
