@@ -691,4 +691,9 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.notificationService.showNotification(noLicenseNotification);
   }
 
+  private navigateMergedLicenses() {
+    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
+      + '/' + this.currentMannschaft.id + '/lizenz/lizenz');
+  }
+
 }
