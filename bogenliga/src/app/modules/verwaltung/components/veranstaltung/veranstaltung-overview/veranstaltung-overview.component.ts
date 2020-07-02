@@ -1,3 +1,4 @@
+
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 import {CommonComponent} from '../../../../shared/components/common';
@@ -5,6 +6,7 @@ import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from 
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {isNullOrUndefined} from '@shared/functions';
 import {
   Notification,
   NotificationOrigin,
@@ -21,6 +23,11 @@ import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components/liga/liga-overvie
 import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 
+import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
+import {of} from 'rxjs';
+import {delay} from 'rxjs/operators';
 import {CurrentUserService, UserPermission} from '@shared/services';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
