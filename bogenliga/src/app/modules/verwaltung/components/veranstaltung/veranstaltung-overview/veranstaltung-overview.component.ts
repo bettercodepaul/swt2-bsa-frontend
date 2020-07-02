@@ -26,6 +26,11 @@ import {PlaygroundVersionedDataObject} from '../../../../playground/components/p
 import {of} from 'rxjs';
 import {delay} from 'rxjs/operators';
 import {CurrentUserService, UserPermission} from '@shared/services';
+import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
+import {of} from 'rxjs';
+import {delay} from 'rxjs/operators';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
 
