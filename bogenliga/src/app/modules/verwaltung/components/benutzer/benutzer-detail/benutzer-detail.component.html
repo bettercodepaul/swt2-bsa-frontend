@@ -7,30 +7,29 @@
         class="horizontal-form half-page"
         #benutzerForm="ngForm">
 
-
-
       <!-- Email / Username -->
-      <div class="form-group row">
-        <label for="benutzerEmail"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <input type="email"
-                 class="form-control"
-                 [disabled]=true
-                 id="benutzerEmail"
-                 name="benutzerEmail"
-                 #benutzerEmail="ngModel"
-                 [(ngModel)]="currentBenutzerRolleDO[0].email"
-                 placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
+    <div class="form-group row">
+      <label for="benutzerEmail"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="email"
+               class="form-control"
+               [disabled]=true
+               id="benutzerEmail"
+               name="benutzerEmail"
+               #benutzerEmail="ngModel"
+               [(ngModel)]="currentBenutzerRolleDO[0].email"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
 
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.ERROR' | translate }}
-          </div>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.ERROR' | translate }}
         </div>
       </div>
+    </div>
+
       <!-- Rolle -->
     <!-- Email / Username -->
     <div class="form-group row">
@@ -55,43 +54,92 @@
       </div>
     </div>
 
-      <div class="form-group row">
-        <label for="benutzerrolle"
-               id="benutzerrolle"
-               name="benutzerrolle"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLENEW.LABEL' | translate }}: {{ getSelectedDTO() }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <bla-selectionlist
-                             [id]="'quickSearch'"
-                             [items]="getVersionedDataObjects()"
-                             [optionFieldSelector]="'roleName'"
-                             (onSelect)="onSelect($event)"
-                             [multipleSelections]="true"
-                             style="width: 50%; height: 10em;">
+    <div class="form-group row" >
+      <label for="benutzerrolle"
+             id="benutzerrolle"
+             name="benutzerrolle"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLENEW.LABEL' | translate }}: {{ getSelectedDTO() }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <bla-selectionlist
+                           [id]="'quickSearch'"
+                           [items]="getVersionedDataObjects()"
+                           [optionFieldSelector]="'roleName'"
+                           (onSelect)="onSelect($event)"
+                           [multipleSelections]="true"
+                           style="width: 50%; height: 10em;">
 
 
-          </bla-selectionlist>
+        </bla-selectionlist>
+      </div>
+    </div>
+
+      <!-- Passwort -->
+    <div class="form-group row" *ngIf="show">
+      <label for="userPwdFormNewPwd"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDNEW.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               id="userPwdFormNewPwd"
+               name="userPwdFormNewPwd"
+               required
+               minlength="8"
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"
+               #userPwdFormNewPwd="ngModel"
+               [(ngModel)]="changeCredentials.newPassword"
+               [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDNEW.PLACEHOLDER' | translate }}">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDNEW.ERROR' | translate }}
         </div>
       </div>
+      <div class="form-group row"></div>
 
-      <div class="form-group row">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-9 button-box">
-          <bla-button
-                      [id]="'benutzerUpdateButton'"
-                      [disabled]="benutzerForm.valid"
-                      [loading]="saveLoading"
-                      (onClick)="onUpdate($event)">
-            {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
-          </bla-button>
+      <label for="userPwdFormVerifyPwd"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDREPEAT.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               id="userPwdFormVerifyPwd"
+               name="userPwdFormVerifyPwd"
+               required
+               minlength="8"
+               #userPwdFormVerifyPwd="ngModel"
+               [(ngModel)]="changeCredentials.verifyPassword"
+               [class.is-invalid]="userPwdFormVerifyPwd.value != userPwdFormNewPwd.value"
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDREPEAT.PLACEHOLDER' | translate }}">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDREPEAT.ERROR' | translate }}
         </div>
       </div>
+    </div>
 
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+        <bla-button
+                    [id]="'benutzerUpdateButton'"
+                    [disabled]="benutzerForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
 
-
+        <bla-button
+          [id]="'benutzerPasswordResetButton'"
+          (onClick)="showPasswordResetField()">
+          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.RESET_PASSWORD' | translate }}
+        </bla-button>
+      </div>
+    </div>
   </form>
-
 </bla-common-dialog>

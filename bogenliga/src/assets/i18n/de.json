@@ -440,6 +440,7 @@
           "LABEL": "Mannschaftsnummer",
           "PLACEHOLDER": "Mannschaftsnummer"
         },
+        "RESET_PASSWORD": "Passwort ändern",
         "SAVE": "Speichern",
         "UPDATE": "Ändern",
         "DELETE": "Löschen"
@@ -1168,12 +1169,22 @@
           "LABEL": "Zukünftige Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen"
         },
+        "PASSWORDNEW": {
+          "LABEL": "Neues Passwort",
+          "PLACEHOLDER": "Bitte neues Passwort eingeben",
+          "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
+        },
+        "PASSWORDREPEAT": {
+          "LABEL": "Passwort wiederholen",
+          "PLACEHOLDER": "Bitte neues Passwort wiederholen",
+          "ERROR": "Die Eingabe stimmt mit dem neuen Passwort nicht über ein. Bitte geben Sie das Passwort erneut ein"
+        },
         "UPDATE": "Aktualisieren"
       },
       "NOTIFICATION": {
         "UPDATE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Rolle des Benutzer wurde erfolgreich geändert."
+          "DESCRIPTION": "Die Benutzerdaten wurden erfolgreich geändert."
         }
       }
     },
