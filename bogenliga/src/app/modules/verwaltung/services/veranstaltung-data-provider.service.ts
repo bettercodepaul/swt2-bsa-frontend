@@ -9,8 +9,9 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {fromPayload, fromPayloadArray} from '../mapper/veranstaltung-mapper';
+import {fromPayload, fromPayloadArray, fromPlayloadArraySp} from '../mapper/veranstaltung-mapper';
 import {VeranstaltungDO} from '../types/veranstaltung-do.class';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,47 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
           });
     });
   }
+
+
+  public findAllSportyearDestinct(): Promise<BogenligaResponse<SportjahrVeranstaltungDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('destinct/sportjahr').build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPlayloadArraySp(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  public findBySportyear(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('find/by/year/' + sportjahr).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            console.log(data.toString());
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
 
   public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
