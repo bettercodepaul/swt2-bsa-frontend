@@ -25,36 +25,6 @@ export class PasseDataProviderService extends DataProviderService {
     super();
   }
 
-  public findByWettkampfIdAndDsbMitgliedId(wettkampfId: number, dsbMitgliedId: number): Promise<BogenligaResponse<PasseDTOClass[]>> {
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byWettkampfIdAndDsbMitgliedId/' + wettkampfId + '/' + dsbMitgliedId).build())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
-  }
-
-  public findByMatchId(matchId: number): Promise<BogenligaResponse<PasseDTOClass[]>> {
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findByMatchId/matchid=' + matchId).build())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
-  }
-
   public findByWettkampfId(wettkampfId: number): Promise<BogenligaResponse<PasseDTOClass[]>> {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + wettkampfId).build())

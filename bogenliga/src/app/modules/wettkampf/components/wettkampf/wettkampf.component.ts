@@ -1,27 +1,24 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
-import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponent, toTableRows} from '@shared/components';
-import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
-import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
-import {WettkampfErgebnis} from './wettkampergebnis/WettkampfErgebnis';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
+import {MatchDataProviderService} from '@wettkampf/services/match-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
-import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
+import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
-import {MatchDO} from '@verwaltung/types/match-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
-import {consoleTestResultHandler} from 'tslint/lib/test';
-import {forEach} from '@angular/router/src/utils/collection';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {MatchDO} from '@verwaltung/types/match-do.class';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -79,7 +76,6 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         this.directMannschaft = this.directMannschaft.replace(/-/g, ' ');
       }
     });
-
     this.loadVeranstaltungen();
   }
 
@@ -118,7 +114,6 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     this.passen = [];
     this.wettkaempfe = [];
     this.rows = [];
-
   }
 
   // backend-calls to get data from DB
@@ -163,15 +158,11 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
           this.mannschaften[0] = i;
         }
         this.currentMannschaft = this.mannschaften[0];
-
       }
-    } else if (this.currentMannschaft  !== null) {
+    } else if (this.currentMannschaft !== null) {
 
       this.currentMannschaft = this.mannschaften[0];
-
     }
-
-
   }
 
   public loadJahre() {
@@ -188,49 +179,47 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([]));
   }
 
+  /**
+   * Load all matches and passen for all wettkaempfe. The index variable is used to make sure the loaded WettkampfErgebnisse
+   * are put in correct order into this.rows
+   * @param wettkaempfe the amount of wettkaempfe of one Veranstaltung
+   */
   public handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = this.wettkaempfe.concat(wettkaempfe);
-    if (this.wettkaempfe.length > 0) {
-      this.wettkaempfe.forEach((wettkampfDO) => {
-        this.loadingData = true;
-        this.loadMatches(wettkampfDO.id);
-      });
-    }
+    for (let index = 0; index < this.wettkaempfe.length; index++) {
+      this.loadingData = true;
+      this.loadMatches(this.wettkaempfe[index].id, index);
+      }
   }
 
-  public loadMatches(wettkampfId: number) {
+  public loadMatches(wettkampfId: number, index: number) {
 
     this.matchDataProviderService.findByWettkampfId(wettkampfId)
-        .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId))
-        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches([], wettkampfId));
+        .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId, index))
+        .catch((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches([], wettkampfId, index));
   }
 
 
-  public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number) {
+  public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number, index: number) {
     this.matches.push(matches);
-    this.loadPassen(wettkampfId, matches);
+    this.loadPassen(wettkampfId, matches, index);
   }
 
-  public loadPassen(wettkampfId: number, matches: MatchDO[]) {
+  public loadPassen(wettkampfId: number, matches: MatchDO[], index: number) {
     this.passeDataProviderService.findByWettkampfId(wettkampfId)
-        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, matches))
-        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], matches));
+        .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, matches, index))
+        .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], matches, index));
   }
 
-  public handleSuccessLoadPassen(passen: PasseDoClass[], matches): void {
+  public handleSuccessLoadPassen(passen: PasseDoClass[], matches, index: number): void {
     this.passen.push(passen);
-    this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined
-      , this.mannschaften, this.currentVeranstaltung, matches, passen)));
-
-    this.loadingData = false;
-  }
-  // method to change the name to a default, incase there isnt a Team
-  private getTitle(): string {
-    let placeholder = 'Mannschaftsname';
-    if (this.currentMannschaft !== undefined) {
-      placeholder = this.currentMannschaft.name;
+    // We insert the new generated WettkampfErgebnis[] into index from this.rows. This is nesessary because the backend
+    // loading times are different and would cause a wrong order if we would just load then step by step.
+    this.rows.splice(index, 0, (toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
+      this.mannschaften, this.currentVeranstaltung, matches, passen))));
+    // if index is at the end of this.wettkaempfe loading is finished and can be displayed in wettkampf.component.html
+    if (index === this.wettkaempfe.length - 1) {
+      this.loadingData = false;
     }
-    return placeholder;
-
   }
 }
