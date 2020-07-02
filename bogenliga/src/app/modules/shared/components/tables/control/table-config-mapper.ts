@@ -35,8 +35,8 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     },
 
     downloadrueckennummer: {
-      active: 'download',
-      inactive: 'download'
+      active: 'tshirt',
+      inactive: 'tshirt'
     },
     map: {
       active: 'map-marker',
