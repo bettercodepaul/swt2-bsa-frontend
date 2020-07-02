@@ -1,9 +1,10 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
   ButtonType,
-  CommonComponent, hideLoadingIndicator,
+  CommonComponent,
+  hideLoadingIndicator,
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../shared/components';
@@ -38,6 +39,7 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {PasseDTOClass} from '@verwaltung/types/datatransfer/passe-dto.class';
+import {CurrentUserService, UserPermission} from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
@@ -96,7 +98,8 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
               private passeService: PasseDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -320,6 +323,11 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private handleVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.ligen = [];
     this.ligen = response.payload;
+    if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)) {
+      this.ligen = this.ligen.filter((entry) => {
+        return this.currentUserService.hasVeranstaltung(entry.id);
+      });
+    }
     if (this.currentMannschaft.veranstaltungId != null) {
       this.currentVeranstaltung = this.ligen.filter((liga) => liga.id === this.currentMannschaft.veranstaltungId)[0];
     } else {

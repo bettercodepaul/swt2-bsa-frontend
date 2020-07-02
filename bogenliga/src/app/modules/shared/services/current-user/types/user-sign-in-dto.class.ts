@@ -9,6 +9,8 @@ export class UserSignInDTO implements DataTransferObject {
   qrCode: string;
   jwt: string;
   permissions: string[];
+  veranstaltungenIds: number[];
+  vereinId: number;
   // permissionsID: UserPermission[];
 
   static copyFromJson(json: {
@@ -18,6 +20,8 @@ export class UserSignInDTO implements DataTransferObject {
     qrCode: string,
     jwt: string,
     permissions?: string[]
+    vereinId: number,
+    veranstaltungenIds: number[]
   }): UserSignInDTO {
     const userSign = new UserSignInDTO();
     userSign.id = json.id;
@@ -25,6 +29,8 @@ export class UserSignInDTO implements DataTransferObject {
     userSign.email = json.email;
     userSign.qrCode = json.qrCode;
     userSign.jwt = json.jwt;
+    userSign.vereinId = json.vereinId;
+    userSign.veranstaltungenIds = json.veranstaltungenIds;
     userSign.permissions = [];
     // userSign.permissionsID = [];
     // do not map permissions to enum-values here because the mapping is done in
@@ -47,6 +53,8 @@ export class UserSignInDTO implements DataTransferObject {
     this.qrCode = null;
     this.jwt = null;
     this.permissions = null;
+    this.veranstaltungenIds = [];
+    this.vereinId = 0;
     // this.permissionsID = null;
   }
 
