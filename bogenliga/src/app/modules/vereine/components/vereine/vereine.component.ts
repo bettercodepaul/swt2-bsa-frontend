@@ -47,6 +47,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
   private tableContent: Array<VereinTabelleDO> = [];
   private providedID: number;
   private currentVerein: VereinDO;
+  private hasID: boolean;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -62,33 +63,48 @@ export class VereineComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     console.log('Bin in Vereine');
     this.currentVerein = null;
-    this.providedID = this.findFirstVereinID();
-    this.loadVereine();
+    this.providedID = null;
+    this.hasID = false;
+    // this.providedID = this.findFirstVereinID();
+
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
+        this.hasID = true;
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         console.log('This.providedID: ' + this.providedID);
       }
+
     });
+    this.loadVereine();
+    /*
     this.selectedVereinsId = this.providedID;
-    console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
-    this.changeSelectedVerein();
-    this.onSelect(this.selectedVereine);
+      console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
+      this.changeSelectedVerein();
+
+      this.onSelect(this.selectedVereine);
+
+     */
   }
 
   // Gibt die ID des ersten Vereins zurück.
   private findFirstVereinID(): number {
     let zahl: number;
-    zahl = 0;
+    zahl = null;
     this.vereinDataProvider.findFirst()
         .then((response: BogenligaResponse<VereinDTO>) =>
-          zahl = response.payload.id)
+          zahl = this.findFirstSucess(response.payload))
         .catch((response: BogenligaResponse<VereinDTO>) =>
           console.log('Fehler im findFirst')
         );
+    console.log('Gefundene ID: ' + zahl);
     return zahl;
+  }
+
+  private findFirstSucess(response: VereinDTO): number {
+    console.log('Found first: ' + response);
+    return response.id;
   }
 
   // Changes the selectedVereine acording to the current selectedVereinsID.
@@ -164,10 +180,27 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
   }
   // backend-call to get the list of vereine
+  /*
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
         .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; })
+        .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
+  }
+
+   */
+    // Verantwortung liegt bei den Jonas Brothers. Lambda = Feind
+  private loadVereine(): void {
+    this.vereine = [];
+    this.vereinDataProvider.findAll()
+        .then((response: BogenligaResponse<VereinDTO[]>) => {
+          this.vereine = response.payload.sort();
+          this.loadingVereine = false;
+          this.selectedVereinsId = this.hasID ? this.providedID : response.payload[0].id;
+          console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
+          this.changeSelectedVerein();
+          this.onSelect(this.selectedVereine);
+        })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 
