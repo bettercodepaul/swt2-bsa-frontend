@@ -25,8 +25,7 @@ export class JwtInterceptor implements HttpInterceptor {
           }
         });
         return next.handle(cloned);
-      }
-      else{
+      } else {
         return next.handle(request);
       }
     } catch (e) {
