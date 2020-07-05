@@ -18,6 +18,8 @@ import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+import {CurrentUserService, UserPermission} from '@shared/services';
+
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
 const NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS = 'dsb_mitglied_detail_delete_success';
@@ -57,7 +59,8 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
               private route: ActivatedRoute,
               private vereinDataProvider: VereinDataProviderService,
               private httpService: HttpClient,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -339,7 +342,13 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; this.vereineLoaded = true; })
+        .then((response: BogenligaResponse<VereinDTO[]>) => {
+          if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER)) {
+            response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.id);
+          }
+          this.currentVerein = response.payload[0];
+          this.vereine = response.payload;
+          this.loadingVereine = false; this.vereineLoaded = true; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
 }

@@ -38,15 +38,15 @@ export class MatchMapperExt {
           schuetzenPasseMap.get(passe.rueckennummer).push(passeDO);
         }
       }
-      console.log("schuetzenPasseMap", schuetzenPasseMap);
+      console.log('schuetzenPasseMap', schuetzenPasseMap);
       // Convert map to array
-      let i = 0;
+      let k = 0;
       schuetzenPasseMap.forEach((passen, rueckennummer) => {
-        schuetzen[i] = passen;
-        i++;
+        schuetzen[k] = passen;
+        k++;
       });
 
-      console.log("schuetzen", schuetzen);
+      console.log('schuetzen', schuetzen);
 
       for (let i = 0; i < schuetzen[0].length; i++) {
         for (const passen of schuetzen) {
@@ -60,6 +60,7 @@ export class MatchMapperExt {
         for (let j = 0; j < (5 - schuetzenInitialLength); j++) {
           schuetzen[i].push(new PasseDO(null, payload.id, payload.mannschaftId, payload.wettkampfId, payload.nr, j + 1));
         }
+        schuetzen[i] = schuetzen[i].sort((p1, p2) => p1.lfdNr - p2.lfdNr);
       }
     }
     const fehlerpunkte = [

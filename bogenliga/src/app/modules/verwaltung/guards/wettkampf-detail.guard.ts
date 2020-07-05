@@ -9,6 +9,6 @@ export class WettkampfDetailGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_WETTKAMPF]);
+      [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_READ_MY_VERANSTALTUNG, UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_READ_MY_ORT]);
   }
 }
