@@ -27,6 +27,7 @@ export class MatchProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<MatchDTOExt>(new UriBuilder().fromPath(this.getUrl()).path(matchId).build())
           .then((data: MatchDTOExt) => {
+
             const matchDO = MatchMapperExt.matchToDO(data);
             resolve({result: RequestResult.SUCCESS, payload: matchDO});
           }, (error: HttpErrorResponse) => {
@@ -44,6 +45,7 @@ export class MatchProviderService extends DataProviderService {
     return new Promise(((resolve, reject) => {
       this.restClient.POST(this.getUrl(), matchDTO)
           .then((data: MatchDTOExt) => {
+
             const newMatchDO = MatchMapperExt.matchToDO(data);
             resolve({result: RequestResult.SUCCESS, payload: newMatchDO});
           }, (error: HttpErrorResponse) => {
