@@ -181,7 +181,7 @@ export class CurrentUserService {
       filter((notification) => notification.id === 'NO_SESSION_ERROR'),
       filter((notification) => notification.userAction === NotificationUserAction.ACCEPTED)
     ).subscribe((notification: Notification) => {
-      console.log("ExpiredNotification")
+      console.log('ExpiredNotification');
       this.logout();
       this.router.navigateByUrl('user/login');
     });
