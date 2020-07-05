@@ -3,7 +3,7 @@
   <div *ngIf="hasUserPermissions(card.permissions)" class="card navigation-card"
        >
     <a class="card-header-link"
-       [routerLink]="card.route">
+       [routerLink]="getLink(card.route,card.detailType)">
       <div class="card-header">
         <fa-icon [icon]="card.icon"
                  size="3x"></fa-icon>
@@ -14,7 +14,7 @@
       <h5 class="card-title">{{ card.labelKey | translate }}</h5>
       <p class="card-text">{{ card.descriptionKey | translate }}</p>
       <button class="btn btn-primary"
-              [routerLink]="card.route">{{ card.labelKey | translate }}
+              [routerLink]="getLink(card.route,card.detailType)">{{ card.labelKey | translate }}
       </button>
     </div>
   </div>

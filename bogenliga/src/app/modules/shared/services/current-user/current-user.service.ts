@@ -191,5 +191,13 @@ export class CurrentUserService {
     this.observeSessionExpiredNotifications();
     return this.currentUser;
   }
-
+public getVerein(): number {
+return this.getCurrentUser().vereinId;
+}
+public getVeranstaltungen(): number[] {
+    return  this.getCurrentUser().veranstaltungenIds;
+}
+public hasVeranstaltung(input: number): boolean {
+    return this.getVeranstaltungen().includes(input);
+}
 }
