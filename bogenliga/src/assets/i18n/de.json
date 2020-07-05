@@ -1283,8 +1283,8 @@
         "DESCRIPTION": "Sie haben keine Rechte diese Seite zu sehen oder Daten für diese Seite abzurufen."
       },
       "CONNECTION_ERROR": {
-        "TITLE": "Verbindungsprobleme",
-        "DESCRIPTION": "Der Service konnte nicht erreicht werden. Bitte probieren sie es später erneut."
+        "TITLE": "Sitzung abgelaufen",
+        "DESCRIPTION": "Es scheint als wäre Ihre Sitzung abgelaufen! Bitte loggen Sie sich erneut ein."
       },
       "CONNECTION_RESET": {
         "TITLE": "Verbindungsprobleme",
