@@ -9,6 +9,6 @@ export class VerwaltungGuard implements CanActivate {
 
   canActivate() {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN]);
+      [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_READ_SYSTEMDATEN]);
   }
 }

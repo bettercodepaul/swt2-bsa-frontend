@@ -32,7 +32,7 @@ class SchuetzeErgebnisse {
   addPasse() {
     const p = new PasseDO();
     p.lfdNr = this.passen.length + 1;
-    p.schuetzeNr = this.schuetzeNr;
+    p.rueckennummer = this.schuetzeNr;
     this.passen.push(p);
   }
 }
@@ -418,6 +418,6 @@ export class TabletEingabeComponent implements OnInit {
     passe.matchNr = this.currentMatch.nr;
     passe.matchId = this.currentMatch.id;
     passe.wettkampfId = this.currentMatch.wettkampfId;
-    passe.schuetzeNr = schuetze.schuetzeNr;
+    passe.rueckennummer = schuetze.schuetzeNr;
   }
 }
