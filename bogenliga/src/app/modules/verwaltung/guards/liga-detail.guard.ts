@@ -9,6 +9,6 @@ export class LigaDetailGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_MY_ORT, UserPermission.CAN_MODIFY_MY_ORT]);
+      [UserPermission.CAN_MODIFY_SYSTEMDATEN]);
   }
 }

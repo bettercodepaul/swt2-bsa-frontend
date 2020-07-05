@@ -6,6 +6,7 @@ export interface SideBarNavigationItem {
   label: string;
   icon: IconDefinition;
   route: string;
+  detailType ?: string;
   permissons?: UserPermission[];
   subitems?: SideBarNavigationSubitem[];
   inProdVisible?: boolean;
