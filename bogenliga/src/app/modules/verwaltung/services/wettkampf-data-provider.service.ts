@@ -36,7 +36,7 @@ export class WettkampfDataProviderService  extends DataProviderService {
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
-
+            console.log('wettkampf-data-provider', error);
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
             } else {

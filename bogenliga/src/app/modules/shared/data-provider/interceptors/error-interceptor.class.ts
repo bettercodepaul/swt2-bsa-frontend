@@ -3,6 +3,8 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {catchError, retry} from 'rxjs/operators';
 import {ErrorHandlingService} from '../../services/error-handling';
+import {Router} from '@angular/router';
+import {CurrentUserService} from '@shared/services';
 
 const MAX_RETRIES = 2;
 
@@ -12,7 +14,7 @@ const MAX_RETRIES = 2;
 })
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private errorHandlingService: ErrorHandlingService) {
+  constructor(private router: Router, private errorHandlingService: ErrorHandlingService, private currentUserService: CurrentUserService) {
 
   }
 
@@ -28,10 +30,15 @@ export class ErrorInterceptor implements HttpInterceptor {
                    (error: any, caught: Observable<HttpEvent<any>>) => {
 
                      // handle connection (0), client (4xx), server (5xx) and custom error codes (9xx)
-                     if (error.status === 0 || error.status >= 400) {
+                     if (error.status === 0) {
+                       console.log('Exipred Token', error);
+                       this.router.navigateByUrl('user/login');
+                       this.currentUserService.logout();
                        return this.errorHandlingService.handleHttpError(error);
                        // caught and handle the error
                        // return of(error);
+                     } else if (error.status >= 400) {
+                       return this.errorHandlingService.handleHttpError(error);
                      }
 
                      throw error;
