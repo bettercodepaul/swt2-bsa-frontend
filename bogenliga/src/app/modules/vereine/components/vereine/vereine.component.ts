@@ -78,29 +78,8 @@ export class VereineComponent extends CommonComponent implements OnInit {
 
     });
     this.loadVereine();
-    /*
-    this.selectedVereinsId = this.providedID;
-      console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
-      this.changeSelectedVerein();
-
-      this.onSelect(this.selectedVereine);
-
-     */
   }
 
-  // Gibt die ID des ersten Vereins zurück.
-  private findFirstVereinID(): number {
-    let zahl: number;
-    zahl = null;
-    this.vereinDataProvider.findFirst()
-        .then((response: BogenligaResponse<VereinDTO>) =>
-          zahl = this.findFirstSucess(response.payload))
-        .catch((response: BogenligaResponse<VereinDTO>) =>
-          console.log('Fehler im findFirst')
-        );
-    console.log('Gefundene ID: ' + zahl);
-    return zahl;
-  }
 
   private findFirstSucess(response: VereinDTO): number {
     console.log('Found first: ' + response);
@@ -179,17 +158,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
     window.open(locationUrl);
 
   }
-  // backend-call to get the list of vereine
-  /*
-  private loadVereine(): void {
-    this.vereine = [];
-    this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload;  this.loadingVereine = false; })
-        .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
-  }
-
-   */
-    // Verantwortung liegt bei den Jonas Brothers. Lambda = Feind
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
@@ -281,4 +249,3 @@ export class VereineComponent extends CommonComponent implements OnInit {
     }
   }
 }
-
