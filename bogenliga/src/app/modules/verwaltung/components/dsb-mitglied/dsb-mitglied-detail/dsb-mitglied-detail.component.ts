@@ -90,6 +90,7 @@ export class DsbMitgliedDetailComponent extends CommonComponent implements OnIni
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
+          this.currentMitgliedNat = 'Germany';
         } else {
           this.loadById(params[ID_PATH_PARAM]);
         }
