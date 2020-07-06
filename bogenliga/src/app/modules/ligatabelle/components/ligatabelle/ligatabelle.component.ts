@@ -119,11 +119,6 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     if (this.selectedVeranstaltungId != null) {
       this.loadLigaTableRows();
     }
-    this.rowsLigatabelle = [];
-    this.tableContent = [];
-    if (this.selectedVeranstaltungId != null) {
-      this.loadLigaTableRows();
-    }
   }
 
 // backend-call to get the list of veranstaltungen
