@@ -19,13 +19,15 @@ export class JwtInterceptor implements HttpInterceptor {
       const jwt = this.currentUserService.getJsonWebToken();
 
       if (jwt) {
-        request = request.clone({
+        const cloned = request.clone({
           setHeaders: {
             Authorization: `Bearer ${jwt}`
           }
         });
+        return next.handle(cloned);
+      } else {
+        return next.handle(request);
       }
-
     } catch (e) {
       // TODO correct error handling
       console.log('JWT token could not be append to http request header. Please login.');
