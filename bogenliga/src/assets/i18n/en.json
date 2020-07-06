@@ -1279,8 +1279,8 @@
         "DESCRIPTION": "You don't have permission to enter or edit this page."
       },
       "CONNECTION_ERROR": {
-        "TITLE": "Connection Error",
-        "DESCRIPTION": "Could not reach service. Try again later."
+        "TITLE": "Session Token expired",
+        "DESCRIPTION": "It seems that your session has expired! Please login again."
       },
       "CONNECTION_RESET": {
         "TITLE": "Connection Reset",
