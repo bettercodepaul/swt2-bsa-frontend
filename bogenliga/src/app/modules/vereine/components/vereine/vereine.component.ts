@@ -81,11 +81,6 @@ export class VereineComponent extends CommonComponent implements OnInit {
   }
 
 
-  private findFirstSucess(response: VereinDTO): number {
-    console.log('Found first: ' + response);
-    return response.id;
-  }
-
   // Changes the selectedVereine acording to the current selectedVereinsID.
   private changeSelectedVerein(): void {
     this.selectedVereine = [];
