@@ -58,7 +58,7 @@ export class VereineComponent extends CommonComponent implements OnInit {
               private mannschaftsDataProvider: DsbMannschaftDataProviderService) {
     super();
   }
-  // If no ID is given, the ID 0 is used.
+
   // Otherwise the data of the selected Verein is displayed.
   ngOnInit() {
     console.log('Bin in Vereine');
