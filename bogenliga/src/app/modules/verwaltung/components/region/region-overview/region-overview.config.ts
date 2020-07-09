@@ -33,9 +33,8 @@ export const REGION_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
-    deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
+    editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
+    deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
-  // TODO exchange modify for create
-  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN]
 };
