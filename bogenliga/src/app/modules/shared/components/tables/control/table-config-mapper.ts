@@ -38,6 +38,11 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
       active: 'tshirt',
       inactive: 'tshirt'
     },
+
+    downloadlizenzen: {
+      active: 'download',
+      inactive: 'download'
+    },
     map: {
       active: 'map-marker',
       inactive: 'map-marker'
@@ -54,7 +59,8 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
 
     download: 'TABLE.ACTIONS.DOWNLOAD',
     downloadrueckennummer: 'TABLE.ACTIONS.DOWNLOADRUECKENNUMMER',
-    map:         'TABLE.ACTIONS.MAP'
+    map:         'TABLE.ACTIONS.MAP',
+    downloadlizenzen: 'TABLE.ACTIONS.DOWNLOADLIZENZEN'
 
   }
 };

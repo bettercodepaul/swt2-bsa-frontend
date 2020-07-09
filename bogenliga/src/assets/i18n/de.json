@@ -1329,6 +1329,7 @@
       "DELETE": "Löschen",
       "ADD": "Hinzufügen",
       "DOWNLOADRUECKENNUMMER": "Rueckennummern herunterladen",
+      "DOWNLOADLIZENZEN": "Lizenzen herunterladen",
       "DOWNLOAD": "Lizenz herunterladen",
       "MAP": "Ort anzeigen"
     },
