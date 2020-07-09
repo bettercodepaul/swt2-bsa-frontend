@@ -450,6 +450,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
 
 
+
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
           }
