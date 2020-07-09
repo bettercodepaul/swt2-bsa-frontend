@@ -269,6 +269,17 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<string>) => console.log(response));
   }
 
+  public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
+    const URL: string = new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path('pdf/lizenzen')
+      .path('?mannschaftid=' + versionedDataObject.id)
+      .build();
+    this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
+        .then((response: BogenligaResponse<string>) => console.log(response))
+        .catch((response: BogenligaResponse<string>) => console.log(response));
+  }
 
   public onView(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
