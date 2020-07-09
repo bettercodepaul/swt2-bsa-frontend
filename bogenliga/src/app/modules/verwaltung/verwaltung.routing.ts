@@ -44,7 +44,6 @@ import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-de
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
 import {SchuetzenComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
 import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
-import {LizenzComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/lizenzen/lizenz.component';
 
 export const VERWALTUNG_ROUTES: Routes = [
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
@@ -81,7 +80,6 @@ export const VERWALTUNG_ROUTES: Routes = [
   {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
   {path: 'vereine/:id/:id', component: MannschaftDetailComponent, canActivate: [DsbMannschaftDetailGuard]},
   {path: 'vereine/:id/:id/:id', component: SchuetzenComponent, canActivate: [SchuetzenNeuGuard]},
-  {path: 'vereine/:id/:id/lizenz/lizenz', component: LizenzComponent, canActivate: [DsbMannschaftDetailGuard], pathMatch: 'full'},
 
   {
     path: 'liga',
