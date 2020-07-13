@@ -45,9 +45,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes:{
-//        '/': (context)=> StartScreen(),
+          '/': (context)=> StartScreen(),
 //        '/': (context)=> IdentScreen(),
-        '/': (context)=> Request_Ident(),
+//        '/': (context)=> Request_Ident(),
         //der nächste Screen mit:
         //When navigating to the "/second" route, build the SecondScreen widget.
         //    '/second': (context) => SecondScreen(),

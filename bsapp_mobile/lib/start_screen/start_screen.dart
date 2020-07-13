@@ -56,16 +56,16 @@ class StartScreen extends StatelessWidget{
             Align(
               alignment: Alignment.topLeft,
               child: Container(
-                width: 199,
-                height: 78,
-                margin: EdgeInsets.only(left: 20, top: 25),
+                width: MediaQuery.of(context).size.width,
+                height: 83,
+                margin: EdgeInsets.only(left: 20, top: 40),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        width: 58,
+                        width: MediaQuery.of(context).size.width*0.2,
                         height: 58,
                         child: Image.asset(
                           "assets/images/logo.png",
@@ -76,10 +76,12 @@ class StartScreen extends StatelessWidget{
                     Align(
                       alignment: Alignment.topLeft,
                       child: Container(
-                        margin: EdgeInsets.only(left: 49, top: 26),
+                        width: MediaQuery.of(context).size.width*0.3,
+                        margin: EdgeInsets.only(left: 29, top: 26),
+                        height: 58,
                         child: Text(
                           "Bogenliga-App",
-                          textAlign: TextAlign.left,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             color: AppColors.primaryText,
                             fontFamily: "Helvetica",
@@ -90,12 +92,12 @@ class StartScreen extends StatelessWidget{
                       ),
                     ),
                     Align(
-                      alignment: Alignment.topRight,
+                      alignment: Alignment.topLeft,
                       child: Container(
-                        width: 58,
+                        width: MediaQuery.of(context).size.width*0.3,
                         height: 58,
                         child: Image.asset(
-                          "assets/images/wsv1850-logo.png",
+                          "assets/images/wsv1850-kl.png",
                           fit: BoxFit.none,
                         ),
                       ),
@@ -104,28 +106,9 @@ class StartScreen extends StatelessWidget{
                 ),
               ),
             ),
-            Container(
-              height: 269,
-              margin: EdgeInsets.only(left: 19, top: 7, right: 17),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Positioned(
-                    left: 1,
-                    top: 2,
-                    right: 0,
-                    child: Opacity(
-                      opacity: 0.99,
-                      child: Image.asset(
-                        "assets/images/wsv1850-logo.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
+            // Ende der Titelzeile
+             Container(
+              width: MediaQuery.of(context).size.width,
               height: 103,
               margin: EdgeInsets.only(left: 19, top: 8, right: 18),
               child: Stack(
@@ -145,7 +128,7 @@ class StartScreen extends StatelessWidget{
                     ),
                   ),
                   Positioned(
-                    left: 12,
+                    width: MediaQuery.of(context).size.width-18-19,
                     top: 11,
                     child: FlatButton(
                       child: Text('\nWillkommen in der Bogensport-Liga in Württemberg\n\nWeiter...\n',
@@ -166,7 +149,8 @@ class StartScreen extends StatelessWidget{
               ),
              ),
             Container(
-              height: 363,
+              width: MediaQuery.of(context).size.width,
+              height: (MediaQuery.of(context).size.height)-83-103-160,
               margin: EdgeInsets.only(left: 19, top: 8, right: 18),
               child: Stack(
                 alignment: Alignment.center,
@@ -176,7 +160,7 @@ class StartScreen extends StatelessWidget{
                     top: 0,
                     right: 0,
                     child: Container(
-                      height: 363,
+                      height: (MediaQuery.of(context).size.height)-83-103-160-8,
                       decoration: BoxDecoration(
                         border: Border.fromBorderSide(Borders.primaryBorder),
                         borderRadius: Radii.k8pxRadius,
@@ -199,6 +183,48 @@ class StartScreen extends StatelessWidget{
                 ],
               ),
             ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 76,
+              margin: EdgeInsets.only(top: 26),
+              color: Color.fromARGB(55, 55, 55, 55),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                        icon:Icon(Icons.home),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/');
+                        }
+                    ),
+                    IconButton(
+                        icon:Icon(Icons.settings),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/');
+                        }
+                    ),
+                    IconButton(
+                        icon:Icon(Icons.person),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/');
+                        }
+                    ),
+                    IconButton(
+                        icon:Icon(Icons.people),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/');
+                        }
+                    ),
+                    IconButton(
+                        icon:Icon(Icons.view_list),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/');
+                        }
+                    )
+                  ]
+              ),
+            )
+            // Navigationsleiste
           ],
         ),
       ),

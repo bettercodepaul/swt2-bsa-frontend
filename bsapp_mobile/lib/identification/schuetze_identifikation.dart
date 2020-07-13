@@ -6,7 +6,7 @@
 *  Copyright © 2018 [Company]. All rights reserved.
     */
 
-import 'dart:html';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
 
@@ -261,7 +261,7 @@ class Request_Ident extends StatelessWidget{
                                 ]
                             )
                         ),
-                        IconButton(
+/*                        IconButton(
                           icon: Icon(Icons.edit),
                           tooltip: 'Ändern',
                           onPressed: () {
@@ -280,9 +280,8 @@ class Request_Ident extends StatelessWidget{
                                 );
                               },
                             )
-                          },
-                        ),
-                      ],
+ */
+                       ],
                     ),
                   ),
                   // Ende Geburtsdatum
