@@ -9,8 +9,7 @@ import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
 import {BenutzerRolleDTO} from '../../../types/datatransfer/benutzer-rolle-dto.class';
 import {RoleDTO} from '../../../types/datatransfer/role-dto.class';
 import {RoleDO} from '../../../types/role-do.class';
-import {ChangeCredentialsDO} from '@user/types/changecredentials-do.class';
-import {UserPwdDataProviderService} from '@user/services/user-pwd-data-provider.service';
+import {CredentialsDO} from '@user/types/credentials-do.class';
 import {BENUTZER_DETAIL_CONFIG} from './benutzer-detail.config';
 
 import {
@@ -43,10 +42,21 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public tobeRole: RoleDO;
   public currentRoles: BenutzerRolleDTO[] = [];
   public roleNames;
-  public show = false;
-  public changeCredentials: ChangeCredentialsDO = new ChangeCredentialsDO();
+  public credentials: CredentialsDO;
   public saveLoading = false;
+  public savePW = false;
   public selectedDTOs: RoleVersionedDataObject[];
+  public selectionRole;
+  public enableButton = false;
+  private notification: Notification = {
+    id:          NOTIFICATION_SAVE_BENUTZER,
+    title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
+    description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
+    severity:    NotificationSeverity.INFO,
+    origin:      NotificationOrigin.USER,
+    type:        NotificationType.OK,
+    userAction:  NotificationUserAction.PENDING
+  };
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
               private roleDataProvider: RoleDataProviderService,
@@ -59,6 +69,8 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.tobeRole = new RoleDO();
+    this.credentials = new CredentialsDO();
+    console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
 
 
     this.notificationService.discardNotification();
@@ -89,11 +101,31 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     });
   }
 
-  public showPasswordResetField(){
-    this.show = true;
-}
+  public resetPW(ignore: any): void{
+    this.savePW = true;
 
-  public onUpdate(ignore: any): void {
+    this.benutzerDataProvider.resetPW(this.credentials)
+      .then((response: BogenligaResponse<Array<BenutzerDO>>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload[0])
+          && !isNullOrUndefined(response.payload[0].id)) {
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.savePW = false;
+                  this.router.navigateByUrl('/verwaltung/benutzer');
+                }
+              });
+          this.notificationService.showNotification(this.notification);
+        }
+        }, (response: BogenligaResponse<BenutzerDO>) => {
+        console.log('Failed');
+        this.savePW = false;
+      });
+
+  }
+
+  public resetRole(ignore: any): void {
     this.saveLoading = true;
 
     // persist
@@ -108,20 +140,11 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
       this.currentRoles.push(currentBenutzerRolleDTO);
     });
 
-    this.benutzerDataProvider.update(this.currentRoles)
+    this.benutzerDataProvider.updateRole(this.currentRoles)
         .then((response: BogenligaResponse<Array<BenutzerDO>>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload[0])
             && !isNullOrUndefined(response.payload[0].id)) {
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_BENUTZER,
-              title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
-              description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
                 .subscribe((myNotification) => {
@@ -131,7 +154,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
                   }
                 });
 
-            this.notificationService.showNotification(notification);
+            this.notificationService.showNotification(this.notification);
           }
 
         }, (response: BogenligaResponse<BenutzerDO>) => {
@@ -181,6 +204,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public onSelect($event: RoleVersionedDataObject[]): void {
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
+    this.enableButton = true;
   }
 
   public getSelectedDTO(): string {
