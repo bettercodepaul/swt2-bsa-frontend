@@ -5,7 +5,7 @@
 
   <form id="benutzerForm"
         class="horizontal-form half-page"
-        #benutzerForm="ngForm">
+        #benutzerForm="ngForm" >
 
       <!-- Email / Username -->
     <div class="form-group row">
@@ -35,7 +35,7 @@
     <div class="form-group row">
       <label for="benutzerRolleAlt"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLEOLD.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_OLD.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -46,7 +46,7 @@
                name="benutzerRolleAlt"
                #benutzerRolleAlt="ngModel"
                [(ngModel)]="roleNames"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLEOLD.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_OLD.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLLE.ERROR' | translate }}
@@ -54,12 +54,12 @@
       </div>
     </div>
 
-    <div class="form-group row" >
+    <div class="form-group row">
       <label for="benutzerrolle"
              id="benutzerrolle"
              name="benutzerrolle"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLENEW.LABEL' | translate }}: {{ getSelectedDTO() }}</span>
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_NEW.LABEL' | translate }}: {{ getSelectedDTO() }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -73,12 +73,28 @@
         </bla-selectionlist>
       </div>
     </div>
+      <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+        <bla-button
+          [id]="'benutzerUpdateButton'"
+          [disabled]="!enableButton"
+          [loading]="saveLoading"
+          (onClick)="resetRole($event)">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_UPDATE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
 
       <!-- Passwort -->
-    <div class="form-group row" *ngIf="show">
+  <form id="passwordForm"
+        class="horizontal-form half-page"
+        #passwordForm="ngForm">
+    <div class="form-group row">
       <label for="userPwdFormNewPwd"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDNEW.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD_NEW.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -90,51 +106,23 @@
                minlength="8"
                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"
                #userPwdFormNewPwd="ngModel"
-               [(ngModel)]="changeCredentials.newPassword"
+               [(ngModel)]="credentials.password"
                [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDNEW.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD_NEW.PLACEHOLDER' | translate }}">
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDNEW.ERROR' | translate }}
-        </div>
-      </div>
-      <div class="form-group row"></div>
-
-      <label for="userPwdFormVerifyPwd"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDREPEAT.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               id="userPwdFormVerifyPwd"
-               name="userPwdFormVerifyPwd"
-               required
-               minlength="8"
-               #userPwdFormVerifyPwd="ngModel"
-               [(ngModel)]="changeCredentials.verifyPassword"
-               [class.is-invalid]="userPwdFormVerifyPwd.value != userPwdFormNewPwd.value"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDREPEAT.PLACEHOLDER' | translate }}">
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORDREPEAT.ERROR' | translate }}
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD_NEW.ERROR' | translate }}
         </div>
       </div>
     </div>
-
     <div class="form-group row">
-      <div class="col-sm-3"></div>
+    <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
         <bla-button
-                    [id]="'benutzerUpdateButton'"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
-          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
-        </bla-button>
-
-        <bla-button
-          [id]="'benutzerPasswordResetButton'"
-          (onClick)="showPasswordResetField()">
-          {{ 'MANAGEMENT.DSBMANNSCHAFT_DETAIL.FORM.RESET_PASSWORD' | translate }}
+          [id]="'passwordUpdateButton'"
+          [disabled]="!passwordForm.valid"
+          [loading]="savePW"
+          (onClick)="resetPW($event)">
+          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PW_UPDATE' | translate }}
         </bla-button>
       </div>
     </div>

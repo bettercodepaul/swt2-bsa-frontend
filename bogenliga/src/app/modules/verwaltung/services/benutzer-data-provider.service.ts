@@ -16,6 +16,7 @@ import {fromPayloadArrayBenutzerRolle, fromPayloadBenutzerRolle} from '../mapper
 import {BenutzerDO} from '../types/benutzer-do.class';
 import {BenutzerRolleDO} from '../types/benutzer-rolle-do.class';
 import {BenutzerRolleDTO} from '../types/datatransfer/benutzer-rolle-dto.class';
+import {CredentialsDO} from '@user/types/credentials-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: Array<BenutzerRolleDTO>): Promise<BogenligaResponse<Array<BenutzerDO>>> {
+  public updateRole(payload: Array<BenutzerRolleDTO>): Promise<BogenligaResponse<Array<BenutzerDO>>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -66,6 +67,29 @@ export class BenutzerDataProviderService extends DataProviderService {
           }
         });
     });
+  }
+
+  public resetPW(credentialsDO: CredentialsDO): Promise<BogenligaResponse<Array<BenutzerDO>>> {
+
+    return new Promise((resolve, reject) => {
+      //const credentialsDTO = new CredentialsDTO(credentialsDO.password);
+      //this.sendupdaterequest(credentialsDTO, resolve, reject);
+    });
+  }
+
+  public sendupdaterequest(credentialsDTO: CredentialsDTO, resolve, reject) {
+    this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), credentialsDTO)
+        .then((data: VersionedDataTransferObject) => {
+          resolve(RequestResult.SUCCESS);
+
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
   }
 
   public deleteById(id: number): Promise<BogenligaResponse<void>> {

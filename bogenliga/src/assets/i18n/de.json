@@ -1161,25 +1161,21 @@
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
           "ERROR": "Bitte eine gültige Email eingeben."
         },
-        "ROLEOLD": {
+        "ROLE_OLD": {
           "LABEL": "Aktuelle Rolle",
           "PLACEHOLDER": "aktuelle Rolle"
         },
-        "ROLENEW": {
+        "ROLE_NEW": {
           "LABEL": "Zukünftige Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen"
         },
-        "PASSWORDNEW": {
+        "PASSWORD_NEW": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte neues Passwort eingeben",
           "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
-        "PASSWORDREPEAT": {
-          "LABEL": "Passwort wiederholen",
-          "PLACEHOLDER": "Bitte neues Passwort wiederholen",
-          "ERROR": "Die Eingabe stimmt mit dem neuen Passwort nicht über ein. Bitte geben Sie das Passwort erneut ein"
-        },
-        "UPDATE": "Aktualisieren"
+        "ROLE_UPDATE": "Rolle ändern",
+        "PW_UPDATE": "Passwort ändern"
       },
       "NOTIFICATION": {
         "UPDATE": {
