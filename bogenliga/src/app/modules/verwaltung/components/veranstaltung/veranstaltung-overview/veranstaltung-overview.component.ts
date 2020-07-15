@@ -1,4 +1,3 @@
-
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 import {CommonComponent} from '../../../../shared/components/common';
@@ -6,7 +5,6 @@ import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from 
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
-import {isNullOrUndefined} from '@shared/functions';
 import {
   Notification,
   NotificationOrigin,
@@ -113,7 +111,6 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
       response.payload = response.payload.filter((entry) => this.currentUserService.hasVeranstaltung(entry.id));
       console.log('detected');
     }
-
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;
@@ -127,7 +124,6 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
 
   private loadBySportjahr(): void {
     this.loadingSearch = true;
-    console.log(this.selecetedYear);
     this.veranstaltungDataProvider.findBySportyear(this.selecetedYear)
         .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(newList))
         .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
@@ -153,7 +149,7 @@ export class VeranstaltungOverviewComponent extends CommonComponent implements O
     this.selectedDTOs = [];
     this.selectedDTOs = response.payload;
     this.loadingYear = false;
-    console.log(this.selectedDTOs);
+
 
   }
 
