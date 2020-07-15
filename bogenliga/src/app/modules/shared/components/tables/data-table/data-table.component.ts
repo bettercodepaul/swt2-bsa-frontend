@@ -396,4 +396,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
     }
     return this.hasUserPermissions(neededPermissions);
   }
+
+  isSortable(column: TableColumnConfig): boolean {
+    const sortingClasses = this.tableSorter.getSortingClasses(column);
+    return sortingClasses.indexOf('sortable') > -1;
+  }
 }

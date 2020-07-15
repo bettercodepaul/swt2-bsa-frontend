@@ -35,7 +35,7 @@ import * as LocalDataProvider from './local-data-provider/services';
 import * as SharedService from './services';
 
 import {RouterModule} from '@angular/router';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {FaIconLibrary, FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {NavigationCardsComponent} from './components/navigation-cards';
 import {TruncationPipe} from './pipes';
 import {SetzlisteDownloadComponent} from '@shared/components/buttons/setzliste-download/setzliste-download.component';
@@ -43,7 +43,9 @@ import {BogenkontrolllisteDownloadComponent} from '@shared/components/buttons/bo
 import {SchusszettelDownloadComponent} from '@shared/components/buttons/schusszettel-download/schusszettel-download.component';
 import {MeldezettelDownloadComponent} from '@shared/components/buttons/meldezettel-download/meldezettel-download.component';
 import {StorageServiceModule} from 'ngx-webstorage-service';
-
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import {fab} from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
   imports: [
@@ -129,6 +131,10 @@ import {StorageServiceModule} from 'ngx-webstorage-service';
   ]
 })
 export class SharedModule {
+  constructor(library: FaIconLibrary) {
+    // Add multiple icons to the library
+    library.addIconPacks(fas, far, fab);
+  }
 
   static forRoot(): ModuleWithProviders<SharedModule> {
     return {

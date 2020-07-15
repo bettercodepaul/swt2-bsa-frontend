@@ -164,10 +164,8 @@ export class CurrentUserService {
           this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
           if (this.currentUser.email === DEFAULT_USERNAME) {
             this.isDefaultUserLoggedIn = true;
-            state.isDefaultUserLoggedIn = true;
           } else {
             this.isDefaultUserLoggedIn = false;
-            state.isDefaultUserLoggedIn = false;
           }
         });
   }
