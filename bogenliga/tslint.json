@@ -4,9 +4,24 @@
     "codelyzer"
   ],
   "rules": {
+    "align": {
+      "options": [
+        "parameters",
+        "statements"
+      ]
+    },
+    "arrow-return-shorthand": true,
     "class-name": true,
     "array-type": false,
     "arrow-parens": true,
+    "curly": true,
+    "eofline": true,
+    "import-spacing": true,
+    "indent": {
+      "options": [
+        "spaces"
+      ]
+    },
     "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
     "deprecation": {
       "severity": "warn" // ignore warning
@@ -57,8 +72,7 @@
     "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
-    "no-unused-expression": true,
-    "no-use-before-declare": true, // ignore warning
+    "no-unused-expression": true, // ignore warning
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "import-sources-order": false,
@@ -75,6 +89,20 @@
       "single"
     ],
     "radix": true,
+    "semicolon": {
+      "options": [
+        "always"
+      ]
+    },
+    "space-before-function-paren": {
+      "options": {
+        "anonymous": "never",
+        "asyncArrow": "always",
+        "constructor": "never",
+        "method": "never",
+        "named": "never"
+      }
+    },
     "triple-equals": [
       true,
       "allow-null-check"
