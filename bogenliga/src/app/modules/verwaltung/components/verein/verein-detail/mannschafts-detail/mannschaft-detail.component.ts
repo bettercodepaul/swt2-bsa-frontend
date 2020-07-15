@@ -80,7 +80,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
   private duplicateSubscription;
   private deleteSubscription;
 
-  @ViewChild('downloadLink', { static: false })
+  @ViewChild('downloadLink')
   private aElementRef: ElementRef;
 
 

@@ -12,7 +12,7 @@ export class MeldezettelDownloadComponent implements OnInit {
   @Input()
   wettkampfid: number;
 
-  @ViewChild('downloadLink', { static: false })
+  @ViewChild('downloadLink')
   private aElementRef: ElementRef;
 
   constructor() {}

@@ -3,12 +3,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {library} from '@fortawesome/fontawesome-svg-core';
-import {fab} from '@fortawesome/free-brands-svg-icons';
-import {far} from '@fortawesome/free-regular-svg-icons';
-import {fas} from '@fortawesome/free-solid-svg-icons';
 import {TranslateModule} from '@ngx-translate/core';
-import {StorageServiceModule} from 'angular-webstorage-service';
 import {
   AlertComponent,
   BreadcrumbsComponent,
@@ -47,12 +42,7 @@ import {SetzlisteDownloadComponent} from '@shared/components/buttons/setzliste-d
 import {BogenkontrolllisteDownloadComponent} from '@shared/components/buttons/bogenkontrollliste-download/bogenkontrollliste-download.component';
 import {SchusszettelDownloadComponent} from '@shared/components/buttons/schusszettel-download/schusszettel-download.component';
 import {MeldezettelDownloadComponent} from '@shared/components/buttons/meldezettel-download/meldezettel-download.component';
-
-
-/*
- * define font awesome icon libraries
- */
-library.add(fas, far, fab); // add all icon types
+import {StorageServiceModule} from 'ngx-webstorage-service';
 
 
 @NgModule({
@@ -140,7 +130,7 @@ library.add(fas, far, fab); // add all icon types
 })
 export class SharedModule {
 
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: [
@@ -155,7 +145,7 @@ export class SharedModule {
     };
   }
 
-  static forChild(): ModuleWithProviders {
+  static forChild(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: []

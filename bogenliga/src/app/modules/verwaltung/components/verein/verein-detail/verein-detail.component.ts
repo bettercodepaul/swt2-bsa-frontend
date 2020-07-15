@@ -64,7 +64,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   public deleteLoading = false;
   public saveLoading = false;
 
-  @ViewChild('downloadLink', { static: false })
+  @ViewChild('downloadLink')
   private aElementRef: ElementRef;
   constructor(private vereinProvider: VereinDataProviderService,
               private downloadService: DownloadButtonResourceProviderService,

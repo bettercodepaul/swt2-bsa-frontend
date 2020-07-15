@@ -12,7 +12,7 @@ export class SchusszettelDownloadComponent implements OnInit {
   @Input()
   wettkampfid: number;
 
-  @ViewChild('downloadLink', { static: false })
+  @ViewChild('downloadLink')
   private aElementRef: ElementRef;
 
   constructor() {}

@@ -116,7 +116,7 @@ export class RegionenComponent implements OnInit {
       .height(window.innerHeight * chartDetailsSizeMultiplikator)
       .size('size')
       .color('color')
-      .onNodeClick((node) => {
+      .onClick((node) => {
         // what should happen after clicking the node
         myChart.focusOnNode(node);
 
@@ -128,7 +128,7 @@ export class RegionenComponent implements OnInit {
         })
       (this.myDiv.nativeElement);
 
-    console.log(myChart.showLabel);
+    console.log(myChart.label());
 
     // for automatic resizing
     window.addEventListener('resize', (func) => {
