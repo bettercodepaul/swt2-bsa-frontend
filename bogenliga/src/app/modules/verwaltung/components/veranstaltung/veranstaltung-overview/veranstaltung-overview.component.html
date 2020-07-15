@@ -1,13 +1,16 @@
+<bla-breadcrumbs></bla-breadcrumbs>
+<bla-row-layout>
 
-<
+<bla-selection-overview-dialog [config]="table_config"
+                                 [rows]="rows"
+                                 [loading]="loading"
+                                 (onViewClicked)="onView($event)"
+                                 (onEditClicked)="onEdit($event)"
+                                 (onDeleteClicked)="onDelete($event)"
+                               [items]="selectedDTOs"
+                               [multipleSelections]="!multipleSelections"
+                               [optionFieldSelector]="'sportjahr'">
 
-  <bla-overview-dialog [config]="config"
-                       [rows]="rows"
-                       [loading]="loading"
-                       (onViewClicked)="onView($event)"
-                       (onEditClicked)="onEdit($event)"
-                       (onDeleteClicked)="onDelete($event)">
-  </bla-overview-dialog>
+</bla-selection-overview-dialog>
 
-
-
+</bla-row-layout>

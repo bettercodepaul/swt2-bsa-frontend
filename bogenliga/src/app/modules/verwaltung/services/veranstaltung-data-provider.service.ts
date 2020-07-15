@@ -165,9 +165,4 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
           });
     });
   }
-
-
-
-
-
 }

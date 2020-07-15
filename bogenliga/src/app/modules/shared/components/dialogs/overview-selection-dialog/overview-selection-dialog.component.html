@@ -1,0 +1,47 @@
+
+<div class="dialog-content">
+
+  <!-- Heading-->
+  <section class="overview-dialog-header">
+    <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
+    <div style="width: 10%; margin-top: 3%" class="playground-row">
+      <bla-selectionlist (onSelect)="onSelect($event)"
+                         [items]="items"
+                         [multipleSelections]="multipleSelections"
+                         [optionFieldSelector]="optionFieldSelector"
+                         selectionListHeight="15em"
+                         style="width: 10%; flex-grow: 0;">
+      </bla-selectionlist>
+
+    </div>
+    <div style="margin-top: 3%" class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
+      <button class="btn btn-success"
+              routerLink="add">
+        <fa-icon icon="plus"></fa-icon>
+        <span> Neu</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="overview-dialog-content">
+
+    <bla-data-table [config]="config.tableConfig"
+                    [rows]="rows"
+                    [loading]="loading"
+                    (onViewEntry)="onView($event)"
+                    (onEditEntry)="onEdit($event)"
+                    (onDeleteEntry)="onDelete($event)"
+                    (onAddEntry)="onAdd($event)">
+
+    </bla-data-table>
+
+  </section>
+
+  <!-- Footer -->
+  <section class="overview-dialog-footer">
+
+
+  </section>
+
+</div>
