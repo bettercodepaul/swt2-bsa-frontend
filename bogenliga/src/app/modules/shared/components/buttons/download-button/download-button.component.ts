@@ -29,7 +29,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
   @Input()
   public fileName: string;
 
-  @ViewChild('downloadLink')
+  @ViewChild('downloadLink', { static: true })
   private aElementRef: ElementRef;
 
   constructor(private downloadButtonResourceProvider: DownloadButtonResourceProviderService,

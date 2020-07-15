@@ -45,7 +45,7 @@ export class RegionenComponent implements OnInit {
   private vereine: VereinDTO[];
 
 
-  @ViewChild('chart') myDiv: ElementRef;
+  @ViewChild('chart', { static: true }) myDiv: ElementRef;
 
   constructor(private regionDataProviderService: RegionDataProviderService,
               private vereinDataProviderService: VereinDataProviderService,

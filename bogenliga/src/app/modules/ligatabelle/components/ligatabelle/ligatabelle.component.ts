@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+// import {NotificationService} from '@shared/services';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponent, toTableRows} from '@shared/components';
 import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './ligatabelle.config';
@@ -8,22 +9,9 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {WettkampfDataProviderService} from '../../../wettkampf/services/wettkampf-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {} from '@shared/components/forms/';
 import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis-do.class';
-import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wettkampf-ergebnis-dto.class';
-// import {NotificationService} from '@shared/services';
-import { RouterModule, Routes } from '@angular/router';
 import {isUndefined} from '@shared/functions';
-import {Subscription} from 'rxjs';
-import {
-  Notification,
-  NotificationOrigin,
-  NotificationService,
-  NotificationSeverity,
-  NotificationType,
-  NotificationUserAction
-} from '@shared/services/notification';
-import {forEach} from '@angular/router/src/utils/collection';
+import {NotificationService} from '@shared/services/notification';
 
 const ID_PATH_PARAM = 'id';
 

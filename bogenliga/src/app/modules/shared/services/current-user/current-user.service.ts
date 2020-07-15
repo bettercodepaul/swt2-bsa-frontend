@@ -7,9 +7,8 @@ import {LocalDataProviderService} from '@shared/local-data-provider';
 import {AppState, Login, Logout} from '../../redux-store';
 import {UserState} from '@shared/redux-store';
 import {Notification, NotificationUserAction} from '../notification/types';
-import {UserPermission} from '@shared/services';
-import {UserSignInDTO} from '@shared/services';
-import {forEach} from '@angular/router/src/utils/collection';
+import {UserPermission} from '../current-user/types/user-permission.enum';
+import {UserSignInDTO} from '../current-user/types/user-sign-in-dto.class';
 
 const CURRENT_USER_KEY = 'current_user';
 const LOGIN_EMAIL_KEY = 'login_email';

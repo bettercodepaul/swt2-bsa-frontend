@@ -17,8 +17,6 @@ import {NotificationService} from '@shared/services/notification';
 import {environment} from '@environment';
 import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
-
 
 
 @Component({

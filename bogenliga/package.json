@@ -15,14 +15,13 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "7.2.11",
-    "@angular/compiler": "7.2.11",
-    "@angular/core": "7.2.11",
-    "@angular/forms": "7.2.11",
-    "@angular/http": "7.2.11",
-    "@angular/platform-browser": "7.2.11",
-    "@angular/platform-browser-dynamic": "7.2.11",
-    "@angular/router": "7.2.11",
+    "@angular/common": "8.2.14",
+    "@angular/compiler": "8.2.14",
+    "@angular/core": "8.2.14",
+    "@angular/forms": "8.2.14",
+    "@angular/platform-browser": "8.2.14",
+    "@angular/platform-browser-dynamic": "8.2.14",
+    "@angular/router": "8.2.14",
     "@fortawesome/angular-fontawesome": "0.3.0",
     "@fortawesome/fontawesome-svg-core": "1.2.17",
     "@fortawesome/free-brands-svg-icons": "5.8.1",
@@ -37,20 +36,20 @@
     "core-js": "2.5.4",
     "jquery": "3.3.1",
     "popper.js": "1.14.3",
-    "rxjs": "6.4.0",
+    "rxjs": "6.6.0",
     "sunburst-chart": "^1.4.6",
     "tslib": "1.9.0",
-    "zone.js": "0.8.26"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.13.7",
-    "@angular/cli": "7.3.7",
-    "@angular/compiler-cli": "7.2.11",
-    "@angular/language-service": "7.2.11",
+    "@angular-devkit/build-angular": "~0.803.28",
+    "@angular/cli": "8.3.28",
+    "@angular/compiler-cli": "8.2.14",
+    "@angular/language-service": "8.2.14",
     "@types/jasmine": "2.8.8",
     "@types/jasminewd2": "2.0.3",
     "@types/node": "8.9.4",
-    "codelyzer": "4.5.0",
+    "codelyzer": "^5.0.1",
     "events": "3.0.0",
     "jasmine-core": "2.99.1",
     "jasmine-spec-reporter": "4.2.1",
@@ -63,6 +62,6 @@
     "rimraf": "2.6.2",
     "ts-node": "7.0.0",
     "tslint": "5.11.0",
-    "typescript": "3.2.4"
+    "typescript": "3.5.3"
   }
 }

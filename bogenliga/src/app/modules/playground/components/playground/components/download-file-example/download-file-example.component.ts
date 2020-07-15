@@ -23,7 +23,7 @@ export class DownloadFileExampleComponent implements OnInit {
 
   public downloadingFile = false;
 
-  @ViewChild('downloadLink')
+  @ViewChild('downloadLink', { static: true })
   private aElementRef: ElementRef;
 
 

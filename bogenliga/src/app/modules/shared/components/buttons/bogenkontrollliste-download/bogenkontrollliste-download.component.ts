@@ -12,7 +12,7 @@ export class BogenkontrolllisteDownloadComponent implements OnInit {
   @Input()
   wettkampfid: number;
 
-  @ViewChild('downloadLink')
+  @ViewChild('downloadLink', { static: false })
   private aElementRef: ElementRef;
 
   constructor() {}
