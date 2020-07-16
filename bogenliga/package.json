@@ -6,6 +6,7 @@
     "start": "ng serve",
     "open": "ng serve -o",
     "build": "ng build",
+    "build:dev": "ng build --configuration=dev",
     "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "tslint \"src/**/*.ts\"",

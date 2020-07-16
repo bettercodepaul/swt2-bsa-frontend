@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 import {CurrentUserService} from '../../../services/current-user';
-import {CommonSecuredComponent} from '../../common/common-secured-component.class';
+import {CommonSecuredDirective} from '../../common/common-secured-component.class';
 import {TableRow} from '../../tables/types/table-row.class';
 import {SimpleOverviewDialogConfig} from '../types/simple-overview-dialog-config.interface';
 
@@ -10,7 +10,7 @@ import {SimpleOverviewDialogConfig} from '../types/simple-overview-dialog-config
   templateUrl: './simple-overview-dialog.component.html',
   styleUrls: ['./simple-overview-dialog.component.scss']
 })
-export class SimpleOverviewDialogComponent extends CommonSecuredComponent implements OnInit {
+export class SimpleOverviewDialogComponent extends CommonSecuredDirective implements OnInit {
 
   @Input() public config: SimpleOverviewDialogConfig;
   @Input() public rows: TableRow[];
