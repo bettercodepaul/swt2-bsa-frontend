@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
 import {BogenligaResponse, RequestResult} from '../../../../shared/data-provider';
 import {
   Notification,
@@ -33,7 +33,7 @@ const NOTIFICATION_DUPLICATE_DSB_MITGLIED = 'dsb_mitglied_detail_duplicate';
   templateUrl: './dsb-mitglied-detail.component.html',
   styleUrls: ['./dsb-mitglied-detail.component.scss']
 })
-export class DsbMitgliedDetailComponent extends CommonComponent implements OnInit {
+export class DsbMitgliedDetailComponent extends CommonComponentDirective implements OnInit {
 
   public config = DSB_MITGLIED_DETAIL_CONFIG;
   public ButtonType = ButtonType;

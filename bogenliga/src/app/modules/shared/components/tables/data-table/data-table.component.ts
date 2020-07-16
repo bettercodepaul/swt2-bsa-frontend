@@ -3,7 +3,7 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {isNullOrUndefined} from '@shared/functions';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 import {TruncationPipe} from '../../../pipes';
-import {CommonComponent} from '../../common';
+import {CommonComponentDirective} from '../../common';
 import {BaseTableSorter} from '../control/base-table-sorter.class';
 import {DefaultTableSorter} from '../control/default-table-sorter.class';
 import {tableConfigWithDefaults} from '../control/table-config-mapper';
@@ -22,7 +22,7 @@ import {CurrentUserService, UserPermission} from '@shared/services';
   styleUrls:   ['./data-table.component.scss'],
   providers:   [TranslatePipe, TruncationPipe]
 })
-export class DataTableComponent extends CommonComponent implements OnInit, OnChanges {
+export class DataTableComponent extends CommonComponentDirective implements OnInit, OnChanges {
   @Input() public config: TableConfig;
   @Input() public rows: TableRow[] = [];
   @Input() tableSorter: BaseTableSorter;

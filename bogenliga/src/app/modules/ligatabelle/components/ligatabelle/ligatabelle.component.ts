@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 // import {NotificationService} from '@shared/services';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent, toTableRows} from '@shared/components';
+import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './ligatabelle.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
@@ -21,7 +21,7 @@ const ID_PATH_PARAM = 'id';
   templateUrl: './ligatabelle.component.html',
   styleUrls:   ['./ligatabelle.component.scss']
 })
-export class LigatabelleComponent extends CommonComponent implements OnInit {
+export class LigatabelleComponent extends CommonComponentDirective implements OnInit {
 
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;

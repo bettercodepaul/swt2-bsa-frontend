@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
   ButtonType,
-  CommonComponent,
+  CommonComponentDirective,
   hideLoadingIndicator,
   showDeleteLoadingIndicatorIcon,
   toTableRows
@@ -59,7 +59,7 @@ const NOTIFICATION_NO_LICENSE = 'no_license_found';
   styleUrls:   ['./mannschaft-detail.component.scss']
 })
 
-export class MannschaftDetailComponent extends CommonComponent implements OnInit, OnDestroy {
+export class MannschaftDetailComponent extends CommonComponentDirective implements OnInit, OnDestroy {
   public config = MANNSCHAFT_DETAIL_CONFIG;
   public config_table = MANNSCHAFT_DETAIL_TABLE_CONFIG;
 

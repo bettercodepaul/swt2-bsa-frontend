@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommonComponent} from '../../common';
+import {CommonComponentDirective} from '../../common';
 import {NavigationCardsConfig} from '../types/navigation-cards-config.interface';
 import {CurrentUserService, UserPermission} from '@shared/services';
 
@@ -8,7 +8,7 @@ import {CurrentUserService, UserPermission} from '@shared/services';
   templateUrl: './navigation-cards.component.html',
   styleUrls:   ['./navigation-cards.component.scss']
 })
-export class NavigationCardsComponent extends CommonComponent implements OnInit {
+export class NavigationCardsComponent extends CommonComponentDirective implements OnInit {
 
   @Input() public config: NavigationCardsConfig = {navigationCards: []};
 

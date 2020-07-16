@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
-import {CommonComponent, toTableRows} from '@shared/components';
+import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
@@ -26,7 +26,7 @@ const ID_PATH_PARAM = 'id';
   templateUrl: './wettkampf.component.html'
 })
 
-export class WettkampfComponent extends CommonComponent implements OnInit {
+export class WettkampfComponent extends CommonComponentDirective implements OnInit {
 
   public show = false;
   public directMannschaft = null;

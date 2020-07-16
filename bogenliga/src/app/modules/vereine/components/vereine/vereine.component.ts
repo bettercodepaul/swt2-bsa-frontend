@@ -3,7 +3,7 @@ import {VEREINE_CONFIG, VEREINE_TABLE_CONFIG} from './vereine.config';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {VereinDO} from '../../../verwaltung/types/verein-do.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
-import {CommonComponent, toTableRows} from '@shared/components';
+import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse, RequestResult} from '@shared/data-provider';
 import {VereinDTO} from '../../../verwaltung/types/datatransfer/verein-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
@@ -29,7 +29,7 @@ const ID_PATH_PARAM = 'id';
   templateUrl: './vereine.component.html',
   styleUrls: ['./vereine.component.scss'],
 })
-export class VereineComponent extends CommonComponent implements OnInit {
+export class VereineComponent extends CommonComponentDirective implements OnInit {
 
   public PLACEHOLDER_VAR = 'Bitte Verein eingeben...';
   public config = VEREINE_CONFIG;
