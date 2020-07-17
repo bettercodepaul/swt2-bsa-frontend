@@ -19,7 +19,39 @@ export class NavigationCardsComponent extends CommonComponent implements OnInit 
   ngOnInit() {
   }
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
-    return this.currentUserService.hasAnyPermisson(userPermissions);
+    if (userPermissions === undefined) {
+      return true;
+    } else {
+      return this.currentUserService.hasAnyPermisson(userPermissions);
+    }
+  }
+  public getLink(route: string, detailType: string): string {
+    if (detailType !== undefined) {
+    let result = route;
+    let allowedData: number[] = [];
+    switch (detailType) {
+      case('Veranstalltungen'):
+        if (this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VERANSTALTUNG ) && !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN ) ) {
+        allowedData = this.currentUserService.getVeranstaltungen(); }
+        break;
+      case('Verein'):
+        if (this.currentUserService.hasPermission(UserPermission.CAN_READ_MY_VEREIN) &&
+          !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)
+          && ! this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT)) {
+        allowedData = [this.currentUserService.getVerein()]; }
+        break;
+    }
+    if (allowedData.length > 0) {
+      if (allowedData.length === 1) {
+       result += '/' + allowedData[0].toString();
+      }
+    }
+
+    return result;
+    } else {
+      return route;
+    }
+
   }
 
 }

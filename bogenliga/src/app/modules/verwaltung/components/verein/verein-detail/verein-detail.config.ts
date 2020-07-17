@@ -1,6 +1,7 @@
-import {CommonDialogConfig, OverviewDialogConfig} from '../../../../shared/components/dialogs';
+import {CommonDialogConfig} from '../../../../shared/components/dialogs';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
+import {UserPermission} from '@shared/services';
 
 
 export const VEREIN_DETAIL_CONFIG: CommonDialogConfig = {
@@ -24,8 +25,10 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
       },
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOADLIZENZEN, TableActionType.DOWNLOADRUECKENNUMMER],
       width:       6
     },
+    deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
+    editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN]
 
 };
