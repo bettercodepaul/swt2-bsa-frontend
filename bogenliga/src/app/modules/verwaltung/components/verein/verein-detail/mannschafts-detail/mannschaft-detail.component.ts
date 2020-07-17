@@ -681,6 +681,19 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         .catch((response: BogenligaResponse<string>) => console.log(response));
   }
 
+
+  public onDownloadLizenzen(): void {
+    const URL: string = new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path('pdf/lizenzen')
+      .path('?mannschaftid=' + this.currentMannschaft.id)
+      .build();
+    this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
+        .then((response: BogenligaResponse<string>) => console.log(response))
+        .catch((response: BogenligaResponse<string>) => console.log(response));
+  }
+
   private showNoLicense(): void {
     const noLicenseNotification: Notification = {
       id:          NOTIFICATION_NO_LICENSE,
@@ -699,10 +712,4 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         });
     this.notificationService.showNotification(noLicenseNotification);
   }
-
-  private navigateMergedLicenses() {
-    this.router.navigateByUrl('/verwaltung/vereine/' + this.currentVerein.id
-      + '/' + this.currentMannschaft.id + '/lizenz/lizenz');
-  }
-
 }
