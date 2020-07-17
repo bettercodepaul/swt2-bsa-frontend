@@ -36,6 +36,7 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   @Output() public onDownloadEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onMapEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadRueckennummerEntry = new EventEmitter<VersionedDataObject>();
+  @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
 
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
@@ -190,7 +191,6 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
     let iconSelector = TableActionType[action].toLowerCase();
     let iconStateSelector = 'active';
 
-
     if (row.loadingActions.indexOf(action) > -1) {
       // override normal icon with loading indicator icon
       iconSelector = 'loading';
@@ -255,6 +255,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
           break;
         case TableActionType.DOWNLOADRUECKENNUMMER:
           this.onDownloadRueckennummer(row.payload);
+          break;
+        case TableActionType.DOWNLOADLIZENZEN:
+          this.onDownloadLizenzen(row.payload);
           break;
         default:
           console.warn('Could not handle click on action icon. Unknown action type: ', action);
@@ -353,6 +356,10 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
 
   private onDownloadRueckennummer(affectedRowPayload: VersionedDataObject) {
     this.onDownloadRueckennummerEntry.emit(affectedRowPayload);
+  }
+
+  private onDownloadLizenzen(affectedRowPayload: VersionedDataObject) {
+    this.onDownloadLizenzenEntry.emit(affectedRowPayload);
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
