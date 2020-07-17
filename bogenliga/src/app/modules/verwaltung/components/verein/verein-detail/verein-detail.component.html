@@ -66,7 +66,8 @@
                 name="vereinRegion"
                 #vereinRegion="ngModel"
                 [(ngModel)]="currentRegion">
-          <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
+          <option [ngValue]="region"
+                  *ngFor="let region of regionen"> {{region.regionName}}</option>
         </select>
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.ERROR' | translate }}
@@ -78,7 +79,6 @@
     <div class="form-group row">
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
-
 
 
         <bla-button *ngIf="!entityExists()"
@@ -109,18 +109,21 @@
     <h5> Mannschaftsübersicht</h5>
     <div class="overview-dialog-add">
       <button class="btn btn-success"
-            routerLink="add">
-            <fa-icon icon="plus"></fa-icon>
-            <span> Neu</span>
+              routerLink="add">
+        <fa-icon icon="plus"></fa-icon>
+        <span> Neu</span>
       </button>
     </div>
     <bla-data-table [config]="config_table"
-               [rows]="rows"
-               [loading]="loading"
-               (onViewEntry)="onView($event)"
-               (onEditEntry)="onEdit($event)"
-               (onDeleteEntry)="onDeleteMannschaft($event)">
+                    [rows]="rows"
+                    [loading]="loading"
+                    (onViewEntry)="onView($event)"
+                    (onEditEntry)="onEdit($event)"
+                    (onDownloadLizenzenEntry)="onDownloadLizenzen($event)"
+                    (onDownloadRueckennummerEntry)="onDownloadRueckennummer($event)"
+                    (onDeleteEntry)="onDeleteMannschaft($event)">
     </bla-data-table>
+    <a #downloadLink></a>
   </div>
 
 </bla-common-dialog>

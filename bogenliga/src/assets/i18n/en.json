@@ -1,52 +1,57 @@
 {
   "NAVBAR": {
-    "TITLE": "Archery League GER"
+    "TITLE": "Archery League GER",
+    "USER_DROPDOWN": {
+      "PROFILE": "Profile and Account",
+      "PWD": "change password",
+      "SETTINGS": "Settings",
+      "LOGOUT": "Logout"
+    }
   },
-
   "SIDEBAR": {
     "TITLE": "Archery League",
     "TITLESHORT": "AL",
     "HOME": "HOME",
-    "VEREINE": "CLUBS",
     "VERWALTUNG": "MANAGEMENT",
     "WETTKAMPF": "COMPETITIONS",
+    "REGIONEN": "REGIONS",
+    "VEREINE": "CLUBS",
     "SPORTJAHRESPLAN": "YEARLY SPORT PLAN",
-    "SETTINGS": "SETTINGS"
+    "MANNSCHAFTEN": "LEAGUE TABLE",
+    "SETTINGS": "SETTINGS",
+    "PLAYGROUND": "PLAYGROUND",
+    "SPOTTING": "SPOTTING",
+    "COLLAPSE": "Collapse"
   },
-
   "APP": {
     "SUPPORT": "With support from:",
     "TITLE": "Archery League",
-    "ABOUT": "On this Website of the german Bowleague you can find all the important Information. Let it inspire you.",
+    "ABOUT": "On this Website of the german Archery League you can find all the important Information. Let it inspire you.",
     "KONTAKT": "Contact",
     "IMPRESSUM": "Copyright and Data Protection",
     "COPYRIGHT": "Copyright: 2018"
   },
-
-  "LOGIN": {
-    "TITLE": "Login",
-    "USERNAME": "Username",
-    "PASSWORD": "Password",
-    "LOGGED": "Remember me?",
-    "FORGOT": "Forgot Password?"
-  },
-
   "HOME": {
-    "TITLE": "Archery League GER",
-    "WELCOME": "Welcome",
-    "WETTKAEMPFE": "Our next competitions",
-    "FURTHER": "further information",
-    "CONTENT": "to the website of Archery League GER. Here you can find all the important information about archery. Let it inspire you.",
-    "BOX1HEADING": "STUDENT CUP 2018",
-    "BOX1CONTENT": "Be there..."
-  },
-  "VEREINE": {
-    "VEREINE": {
-     "TITLE": "Clubs"
+    "HOME": {
+      "TITLE": "Archery League GER",
+      "WELCOME": "Welcome",
+      "WETTKAEMPFE": "Our next competitions",
+      "FURTHER": "further information",
+      "CONTENT": "to the website of Archery League GER. Here you can find all the important information about archery. Let it inspire you.",
+      "BOX1HEADING": "STUDENT CUP 2018",
+      "BOX1CONTENT": "Be there..."
+    },
+    "IMPRESSUM": {
+      "TITLE": "Imprint"
     }
   },
-
-
+  "REGIONEN": {
+    "REGIONEN": {
+      "TITLE": "Regions",
+      "DESCRIPTION": "To select a league, click on the corresponding region. For example for the Wuerttemberg-league on the Wuerttembergischer Schuetzenverband",
+      "CLOSE" : "To navigate back, click on the inner circle."
+    }
+  },
   "VEREINE": {
     "VEREINE": {
       "TITLE": "Clubs",
@@ -54,23 +59,1276 @@
         "HEADERS": {
           "WETTKAMPF": "Competition",
           "MANNSCHAFT": "Team",
-          "VERANSTALTUNG": "Veranstaltung"
+          "VERANSTALTUNG": "Event"
         }
       }
     }
   },
+  "WETTKAEMPFE": {
+    "WETTKAEMPFE": {
+      "TITLE": "League-Ranking"
+    },
+    "TITEL": {
+      "VERANSTALTUNG": "League-Selection"
+    },
+    "LIGATABELLE": {
+      "TITEL": "League-Ranking",
+      "LINKDESCRIPTION": "To the competition results of" ,
+      "TABELLENPLATZ": "Rank",
+      "MANNSCHAFTNAME": "Team",
+      "MATCHPUNKTE": "Match-score",
+      "SATZPUNKTE": "Set-score",
+      "SATZPUNKTDIFFERENZ": "Set-score-difference",
+      "HEADER": {
+        "VERANSTALTUNG": "League",
+        "WETTKAMPFTAG_AKT": "Competition day",
+        "WETTKAMPFTAG": "0"
+      }
+    }
 
+  },
+  "MANNSCHAFTSMITGLIEDER": {
+    "TABLE": {
+      "HEADERS": {
+        "VORNAME": "first name",
+        "NACHNAME": "last name",
+        "EINGESETZT": "used"
+      }
+    }
+  },
+  "SPORTJAHRESPLAN": {
+    "SPORTJAHRESPLAN": {
+      "TITLE": "Dates overview"
+    },
+    "TITEL": {
+      "VERANSTALTUNG": "Events",
+      "WETTKAEMPFE": "competition days"
+    },
+    "WETTKAMPF": {
+      "TABLE": {
+        "CDAY": "competition day",
+        "DAY":"weekday",
+        "DATE": "date",
+        "TIME": "time",
+        "LIGA": "discipline",
+        "PLACE": "event location"
+      }
+    },
+    "SCHUSSZETTEL": {
+      "NOTIFICATION": {
+        "EINGABEFEHLER":{
+          "TITLE":"Input error",
+          "DESCRIPTION": "Arrow value invalid..."
+        },
+        "ENTSCHIEDEN":{
+          "TITLE":"Input error - saving canceled",
+          "DESCRIPTION": "Set-points > 7"
+        },
+        "SCHUETZENNUMMER":{
+          "TITLE":"Input error - saving canceled",
+          "DESCRIPTION": "Please enter all marksman numbers."
+        },
+        "SCHUETZENEINDEUTIG":{
+          "TITLE":"Input error - saving canceled",
+          "DESCRIPTION": "Please enter three different marksman numbers."
+        },
+        "SPEICHERN":{
+          "TITLE":"Save Shot-note",
+          "DESCRIPTION": "Saving Shot-note..."
+        },
+        "WEITER":{
+          "TITLE":"There are unsaved changes",
+          "DESCRIPTION": "Are you sure you want to leave this dialog? All unsaved changes will be lost."
+        }
+      }
+    },
+    "MATCH": {
+      "TABLE": {
+        "NUMMER": "Match",
+        "SCHEIBE":"Disc",
+        "MANNSCHAFT": "Team",
+        "BEGEGNUNG": "Encounter",
+        "MATCHPUNKTE": "Match-points",
+        "SATZPUNKTE": "Set-points"
+      }
+    }
+  },
+  "MANNSCHAFTEN": {
+    "LIGATABELLE": {
+      "TITLE": "Current League-ranking"
+    },
+    "MANNSCHAFTEN": {
+      "TITLE": "Competition results",
+      "BUTTONS": {
+        "ANZEIGEN": {
+          "LABEL": "Show"
+        },
+        "ANZEIGENALL": {
+          "LABEL": "Show all"
+        }
+      },
+      "FORM": {
+        "MANNSCHAFT_NAME": {
+          "LABEL": "Team:"
+        },
+        "VEREIN_NAME": {
+          "LABEL": "Clubs:"
+        },
+        "VERANSTALTUNG_NAME": {
+          "LABEL": "Events:"
+        },
+        "SPORTJAHR":{
+          "LABEL": "Sport year:"
+        }
+
+      },
+      "TABLE": {
+        "COLUMNS": {
+          "MATCH": "Match",
+          "MANNSCHAFT": "Team",
+          "OPPONENT": "Opponent",
+          "SATZ1": "S1",
+          "SATZ2": "S2",
+          "SATZ3": "S3",
+          "SATZ4": "S4",
+          "SATZ5": "S5",
+          "SATZPUNKTE": "Set-points",
+          "MATCHPUNKTE": "Match-points"
+        }
+      }
+    }
+  },
+  "USER": {
+    "USER": {
+      "TITLE": "User"
+    },
+    "PROFILE": {
+      "TITLE": "User profile",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "First name",
+          "PLACEHOLDER": "No data available.",
+          "ERROR": "No data available."
+        },
+        "NACHNAME": {
+          "LABEL": "Last name",
+          "PLACEHOLDER": "No data available.",
+          "ERROR": "No data available."
+        },
+        "EMAIL": {
+          "LABEL": "Email",
+          "PLACEHOLDER": "No data available.",
+          "ERROR": "No data available."
+        },
+        "GEBURTSDATUM": {
+          "LABEL": "Date of birth",
+          "PLACEHOLDER": "No data available.",
+          "ERROR": "No data available."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Membership number",
+          "PLACEHOLDER": "No data available.",
+          "ERROR": "No data available."
+        },
+        "NATIONALITAET": {
+          "LABEL": "Nationality",
+          "PLACEHOLDER": "No data available.",
+          "ERROR": "No data available."
+        },
+        "VEREIN": {
+          "LABEL": "Club",
+          "PLACEHOLDER": "No data available.",
+          "ERROR": "No data available."
+        }
+      }
+    },
+    "PWD": {
+      "TITLE": "Change password",
+      "BUTTON": {
+        "SAVE": "Save"
+      },
+      "FORM": {
+        "UPDATE": "Refresh",
+        "EMAIL": {
+          "LABEL": "E-Mail-Address",
+          "PLACEHOLDER": "Please enter your E-Mail-Address",
+          "ERROR": "Please enter a valid E-Mail-Address."
+        },
+        "PASSWORD": {
+          "LABEL": "Current password",
+          "PLACEHOLDER": "Please enter your password",
+          "ERROR": "Please enter a valid password."
+        },
+        "NEWPASSWORD": {
+          "LABEL": "New password",
+          "PLACEHOLDER": "Please enter your new password",
+          "ERROR": "Min. 8 characters, 1 number and upper- and lowercase letters"
+        },
+        "VERIFYPASSWORD": {
+          "LABEL": "Verify new password",
+          "PLACEHOLDER": "Please enter your password",
+          "ERROR": "Entered password does not match new password."
+        }
+      },
+      "NOTIFICATION": {
+        "PWD_SUCCESSFUL": {
+          "HEADER": "Password change - Success",
+          "TEXT": "You successfully changed your password."
+        },
+        "PWD_FAILURE": {
+          "HEADER": "Password change - Failed",
+          "TEXT": "Your Login data remains unchanged."
+        },
+        "PWD_CONNECTION_PROBLEM": {
+          "HEADER": "Password change - Not possible",
+          "TEXT": "Could not establish connection to Server."
+        }
+      }
+    },
+    "LOGIN": {
+      "TITLE": "Login",
+      "HEADER": "Please login:",
+      "BUTTON": {
+        "LOGIN": "Login"
+      },
+      "USERNAME": {
+        "LABEL": "Please enter your E-Mail",
+        "PLACEHOLDER": "Please enter your E-Mail",
+        "ERROR": "Please enter a valid E-Mail"
+      },
+      "PASSWORD": {
+        "LABEL": "Password",
+        "PLACEHOLDER": "Please enter your password",
+        "ERROR": "Please enter a valid password."
+      },
+      "CODE": {
+        "LABEL": "Google Authenticator Verification Code",
+        "PLACEHOLDER": "Please enter authentication code",
+        "ERROR": "Please enter a valid authentication code."
+      },
+      "REMEMBER_ME": {
+        "LABEL": "Remember E-Mail?"
+      },
+      "NOTIFICATION": {
+        "LOGIN_SUCCESSFUL": {
+          "HEADER": "Login successful",
+          "TEXT": "You successfully logged-in"
+        },
+        "LOGIN_FAILURE": {
+          "HEADER": "Login failed",
+          "TEXT": "Provided login data is wrong."
+        },
+        "LOGIN_CONNECTION_PROBLEM": {
+          "HEADER": "Login not possible",
+          "TEXT": "Could not establish connection to Login-server."
+        }
+      },
+      "SPOTTER": {
+        "LABEL": "Access Code",
+        "PLACEHOLDER": "Please enter access code",
+        "HEADER": "Spotter Login",
+        "ERROR": "Please enter a valid access code."
+      }
+    }
+  },
+  "MANAGEMENT": {
+    "VERWALTUNG": {
+      "TITLE": "Administration",
+      "NAVIGATION": {
+        "DSBMITGLIEDER": {
+          "LABEL": "DSB members",
+          "DESCRIPTION": "Management of DSB members"
+        },
+        "BENUTZER": {
+          "LABEL": "User",
+          "DESCRIPTION": "Management of user-accounts"
+        },
+        "KLASSEN": {
+          "LABEL": "(Competition-) Classes",
+          "DESCRIPTION": "Management of classes"
+        },
+        "DSBMANNSCHAFTEN": {
+          "LABEL": "Teams",
+          "DESCRIPTION": "Management of teams"
+        },
+        "VEREINE": {
+          "LABEL": "Clubs",
+          "DESCRIPTION": "Management of clubs"
+        },
+        "LIGA": {
+          "LABEL": "Leagues",
+          "DESCRIPTION": "Management of leagues"
+        },
+        "REGIONEN": {
+          "LABEL": "Regions",
+          "DESCRIPTION": "Management of regions"
+        },
+        "SPORTJAHR": {
+          "LABEL": "Sport years",
+          "DESCRIPTION": "Management of sport years"
+        },
+        "VERANSTALTUNG": {
+          "LABEL": "Events",
+          "DESCRIPTION": "Management of events"
+        }
+      }
+    },
+    "SPORTJAHR": {
+      "TITLE": "Choose league",
+      "TABLE": {
+        "HEADERS": {
+          "LIGANAME": "League name",
+          "REGIONNAME": "Region name",
+          "UEBERGEORDNETNAME": "League parent name",
+          "VERANTWORTLICHMAIL": "League responsible E-Mail"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete league member",
+          "DESCRIPTION": "Are you sure, you want to delete the league with ID=%s? This can not be undone."
+        }
+      }
+    },
+    "SPORTJAHR_OVERVIEW": {
+      "TITLE": "Events",
+      "TABLE": {
+        "HEADERS": {
+          "NAME": "Event name",
+          "SPORTJAHR": "Sport year",
+          "DEADLINE": "Registration deadline",
+          "WETTKAMPFTYPNAME": "competition type",
+          "LIGALEITEREMAIL": "League leader"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete event",
+          "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
+        }
+      }
+    },
+    "DSBMANNSCHAFT": {
+      "TITLE": "DSB Teams - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "DSBVEREINNUMMER": "Club-number",
+          "DSBMANNSCHAFTNUMMER": "Team-number",
+          "VEREIN": "Club"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete DSB Team",
+          "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
+        }
+      }
+    },
+    "DSBMANNSCHAFT_DETAIL": {
+      "TITLE": "DSB Teams - Details",
+      "FORM": {
+        "DSBVEREINNUMMER": {
+          "LABEL": "Club-number",
+          "PLACEHOLDER": "Club-number"
+        },
+        "BENUTZER_ID": {
+          "LABEL": "User-ID",
+          "PLACEHOLDER": "User-ID"
+        },
+        "DSBMANNSCHAFTNUMMER": {
+          "LABEL": "Team-number",
+          "PLACEHOLDER": "Team-number"
+        },
+        "SAVE": "Save",
+        "UPDATE": "Update",
+        "DELETE": "Delete"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete DSB Team",
+          "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
+        }
+      }
+    },
+    "DSBMITGLIEDER": {
+      "TITLE": "DSB Members - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "VORNAME": "first name",
+          "NACHNAME": "last name",
+          "GEBURTSDATUM": "date of birth",
+          "MITGLIEDSNUMMER": "member-number"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete DSB Member",
+          "DESCRIPTION": "Are you sure, you want to delete the DSB Member with ID=%s? This can not be undone."
+        }
+      }
+    },
+    "KLASSEN": {
+      "TITLE": "Classes - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "KLASSENR": "Class-number",
+          "KLASSENAME": "Class name",
+          "KLASSEALTERMIN": "min. year",
+          "KLASSEALTERMAX": "max. year"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete class",
+          "DESCRIPTION": "Are you sure, you want to delete the class with ID=%s? This can not be undone."
+        }
+      }
+    },
+    "LIGA": {
+      "TITLE": "League - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "LIGANAME": "League name",
+          "REGIONID": "Region ID",
+          "REGIONNAME": "Region name",
+          "UEBERGEORDNETID": "League parent ID",
+          "UEBERGEORDNETNAME": "League parent name",
+          "VERANTWORTLICHID": "League responsible ID",
+          "VERANTWORTLICHMAIL": "League responsible E-Mail"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete league",
+          "DESCRIPTION": "Are you sure, you want to delete the league with ID=%s? WARNING! This will also delete all data referenced by the league! This can not be undone."
+        }
+      }
+    },
+    "LIGA_DETAIL": {
+      "TITLE": "League - Details",
+      "FORM": {
+        "NAME": {
+          "LABEL": "League name",
+          "PLACEHOLDER": "Please enter a name for the league",
+          "ERROR": "Please enter a valid name"
+        },
+        "REGION": {
+          "LABEL": "Region",
+          "PLACEHOLDER": "Please select a region",
+          "ERROR": "Please select a valid region"
+        },
+        "UEBERGEORDNET": {
+          "LABEL": "Parent league",
+          "PLACEHOLDER": "Please select a parent league",
+          "ERROR": "Please select a valid parent league"
+        },
+        "VERANTWORTLICH_MAIL": {
+          "LABEL": "E-Mail of the league responsible",
+          "PLACEHOLDER": "Please select a league responsible",
+          "ERROR": "Please enter a valid E-Mail"
+        },
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete league",
+          "DESCRIPTION": "Are you sure, you want to delete the league with ID=%s? WARNING! This will also delete all data referenced by the league! This can not be undone."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Success",
+          "DESCRIPTION": "The league was successfully deleted."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete league."
+        },
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "The league was successfully saved."
+        }
+      }
+    },
+    "VEREINE": {
+      "TITLE": "Clubs - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Club name",
+          "IDENTIFIER": "Identifier",
+          "REGION_ID": "Region ID",
+          "REGION_NAME": "Region name"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete club",
+          "DESCRIPTION": "Are you sure, you want to delete the club with ID=%s? This can not be undone."
+        }
+      }
+    },
+    "VEREIN_DETAIL": {
+      "TITLE": "Club - Details",
+      "FORM": {
+        "VEREIN_NAME": {
+          "LABEL": "Club name",
+          "PLACEHOLDER": "Please enter a name",
+          "ERROR": "Please enter a valid name."
+        },
+        "VEREIN_IDENTIFIER": {
+          "LABEL": "Club number",
+          "PLACEHOLDER": "Please enter a identifier for the club",
+          "ERROR": "Please enter a valid identifier."
+        },
+        "VEREIN_REGION": {
+          "LABEL": "Region",
+          "PLACEHOLDER": "Please select a region",
+          "ERROR": "Please select a valid region."
+        },
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete"
+      },
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "MANNSCHAFTSNAME": "Name",
+          "LIGA": "League"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete club",
+          "DESCRIPTION": "Are you sure, you want to delete the club with ID=%s? This can not be undone."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully deleted club."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete club."
+        },
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully saved club."
+        },
+        "DUPLICATE": {
+          "TITLE": "Team-number already in use!",
+          "DESCRIPTION": "Add team anyway?"
+        }
+      }
+    },
+    "REGIONEN": {
+      "TITLE": "Regions - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Region name",
+          "CONTRACTION": "shorthand symbol",
+          "REGION_ID": "Region ID",
+          "REGION_TYP": "Region type",
+          "REGION_SUPERORDINATE": "Parent region"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete region",
+          "DESCRIPTION": "Are you sure, you want to delete the region with ID=%s? This can not be undone."
+        }
+      }
+    },
+    "REGION_DETAIL": {
+      "TITLE": "Region - Details",
+      "FORM": {
+        "REGION_NAME": {
+          "LABEL": "Region name",
+          "PLACEHOLDER": "Please enter a name for the region",
+          "ERROR": "Please enter a valid name."
+        },
+        "REGION_CONTRACTION": {
+          "LABEL": "Region shorthand symbol",
+          "PLACEHOLDER": "Please enter a shorthand symbol for the region",
+          "ERROR1": "Please enter a valid shorthand symbol (min. 1 character, max. 7 characters).",
+          "ERROR2": "Shorthand symbol is used by another region already. Please choose a different symbol."
+        },
+        "REGION_TYP": {
+          "LABEL": "Region type",
+          "PLACEHOLDER": "Please choose a region type",
+          "ERROR": "Please choose a region type"
+        },
+        "REGION_SUPERORDINATE": {
+          "LABEL": "Parent region",
+          "PLACEHOLDER": "Please choose a parent region",
+          "ERROR": "Please choose a parent region"
+        },
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete region",
+          "DESCRIPTION": "Are you sure, you want to delete the region with ID=%s? This can not be undone."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully deleted region."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete region."
+        },
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully saved region."
+        }
+      }
+    },
+    "MANNSCHAFT_DETAIL": {
+      "TITLE": "DSB Team - Details",
+      "FORM": {
+        "MANNSCHAFT_NAME": {
+          "LABEL": "Team name",
+          "PLACEHOLDER": "name is generated from number and club name"
+        },
+        "MANNSCHAFT_NUMMER": {
+          "LABEL": "Team-Number",
+          "PLACEHOLDER": "Please enter a number",
+          "ERROR": "Please enter a valid number"
+        },
+        "MANNSCHAFT_VERANSTALTUNG": {
+          "LABEL": "League",
+          "PLACEHOLDER": "Please select a league",
+          "ERROR": "Please select a valid league"
+        },
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete"
+      },
+      "TABLE": {
+        "HEADERS": {
+          "MITGLIED_VORNAME": "first name",
+          "MITGLIED_NACHNAME": "last name",
+          "MITGLIED_NATIONALITAET": "nationality",
+          "MITGLIED_NUMMER": "member number"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete Team",
+          "DESCRIPTION": "Are you sure, you want to delete the team? This can not be undone."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully deleted team."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete team."
+        },
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully saved team."
+        },
+        "DELETE_MITGLIED": {
+          "TITLE": "Delete marksman from team",
+          "DESCRIPTION": "Are you sure, you want to delete the marksman with ID=%s from the team?"
+        },
+        "DELETE_MITGLIED_SUCCESS": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully deleted marksman."
+        },
+        "DELETE_MITGLIED_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "could not delete marksman."
+        },
+        "DELETE_MITGLIED_DEADLINE_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete marksman, because the registration deadline for the event was exceeded."
+        },
+        "DELETE_MITGLIED_EXISTING_RESULTS_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete marksman, because results for the marksman are already available for the competition."
+        },
+        "NO_LICENSE": {
+          "TITLE": "Error while downloading",
+          "DESCRIPTION": "Could not download licence, because there is none available for this marksman."
+        }
+      }
+    },
+    "SCHUETZE_HINZUFUEGEN": {
+      "TITLE": "Add marksman to team",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "first name",
+          "PLACEHOLDER": "Enter a first name to search."
+        },
+        "NACHNAME": {
+          "LABEL": "last name",
+          "PLACEHOLDER": "Enter a last name to search."
+        },
+        "VEREINE": {
+          "LABEL": "Club",
+          "PLACEHOLDER": "Select a club to search."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Member number",
+          "PLACEHOLDER": "Enter a member number to search."
+        },
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete",
+        "RESET_FILTER": "Reset filter"
+      },
+      "TABLE": {
+        "HEADERS": {
+          "MITGLIED_VORNAME": "first name",
+          "MITGLIED_NACHNAME": "last name",
+          "MITGLIED_VEREIN": "club",
+          "MITGLIED_NUMMER": "member number"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully added marksman to team. No licence was created, because the marksman already has one in this discipline."
+        },
+        "DUPLICATE": {
+          "TITLE": "Error",
+          "DESCRIPTION": "Marksman already in team. Please add a different marksman."
+        },
+        "OVERUSED": {
+          "TITLE": "Error",
+          "DESCRIPTION": "Can not add marksman to this team, because he already is part of to many teams."
+        },
+        "NOWETTKAEMPFE": {
+          "TITLE": "Could not check licence.",
+          "DESCRIPTION": "The teams league has no competition days."
+        },
+        "SAVE_AND_LIZENZ_ERSTELLT": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully added marksman to team and created a licence."
+        }
+      }
+    },
+    "DSBMITGLIEDER_DETAIL": {
+      "TITLE": "DSB Member - Details",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "first name",
+          "PLACEHOLDER": "Please enter a first name",
+          "ERROR": "Please enter a valid first name."
+        },
+        "NACHNAME": {
+          "LABEL": "last name",
+          "PLACEHOLDER": "Please enter a last name",
+          "ERROR": "Please enter a valid last name."
+        },
+        "GEBURTSDATUM": {
+          "LABEL": "Date of birth",
+          "PLACEHOLDER": "Please enter a date of birth",
+          "ERROR": "Please enter a valid date of birth (Format: DD-MM-YYYY)."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Member number",
+          "PLACEHOLDER": "Please enter a member number",
+          "ERROR": "Please enter a valid member number."
+        },
+        "NATIONALITAET": {
+          "LABEL": "Nationality",
+          "PLACEHOLDER": "Please enter a nationality",
+          "ERROR": "Please enter a valid nationality."
+        },
+        "VEREIN": {
+          "LABEL": "Club",
+          "PLACEHOLDER": "Please enter a club ID",
+          "ERROR": "Please enter a valid club ID."
+        },
+        "KAMPFRICHTER": {
+          "LABEL": "Referee license"
+        },
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete DSB member",
+          "DESCRIPTION": "Are you sure, you want to delete the DSB member with ID=%s? This can not be undone."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully deleted DSB member."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete DSB member."
+        },
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully saved DSB member."
+        },
+        "DUPLICATE": {
+          "TITLE": "Failed to add",
+          "DESCRIPTION": "Member number already taken. Please choose a different number."
+        }
+      }
+    },
+    "VERANSTALTUNG": {
+      "TITLE": "Event - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Event name",
+          "WETTKAMPFTYPID": "Competition type ID",
+          "WETTKAMPFTYPNAME": "Competition type name",
+          "SPORTJAHR": "Sport year",
+          "MELDEDEADLINE": "Registration deadline",
+          "LIGANAME": "League name",
+          "LIGALEITERID": "League leader ID",
+          "LIGALEITERMAIL": "League leader E-Mail"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete event",
+          "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? WARNING: all referenced data will be deleted too! This can not be undone."
+        }
+      }
+    },
+    "VERANSTALTUNG_DETAIL": {
+      "TITLE": "Event - Details",
+      "TABLE": {
+        "TITLE": "Partaking teams:",
+        "BUTTON": "Create initial league table",
+        "SORTIERUNG": "Initial rank",
+        "EDIT": {
+          "TITLE": "New initial rank",
+          "DESCRIPTION1": "Please set the new initial rank:",
+          "DESCRIPTION2": "Selected team: ",
+          "BUTTONS": {
+            "SAVE": "Save",
+            "CANCEL": "Cancel"
+          }
+        },
+        "NOTIFICATION": {
+          "SAVE": {
+            "TITLE": "Success",
+            "DESCRIPTION": "Successfully saved changes to the team."
+          },
+          "MATCHES": {
+            "SUC": {
+              "TITLE": "Success",
+              "DESCRIPTION": "Successfully initialized league table"
+            },
+            "FAILURE": {
+              "TITLE": "Error while initializing",
+              "DESCRIPTION": "Could not initialize league table"
+            }
+          }
+        }
+      },
+      "FORM": {
+        "NAME": {
+          "LABEL": "Event name",
+          "PLACEHOLDER": "Please enter a name for the event",
+          "ERROR": "Please enter a valid name."
+        },
+
+        "SPORTJAHR": {
+          "LABEL": "Sport year",
+          "PLACEHOLDER": "Please enter a year",
+          "ERROR": "Please enter a valid year."
+        },
+
+        "WETTKAMPFTYPID": {
+          "LABEL": "Competition type",
+          "PLACEHOLDER": "Please enter a competition type for the event",
+          "ERROR": "Please enter a valid competition type."
+        },
+        "WETTKAMPFTYPNAME": {
+          "LABEL": "Competition type name",
+          "PLACEHOLDER": "Please enter a competition type name for the event",
+          "ERROR": "Please enter a valid competition type name."
+        },
+        "MELDEDEADLINE": {
+          "LABEL": "Registration deadline",
+          "PLACEHOLDER": "Please enter a registration deadline date",
+          "ERROR": "Please enter a valid date (Format: YYYY-MM-DD)."
+        },
+
+        "LIGANAME": {
+          "LABEL": "League name",
+          "PLACEHOLDER": "Select a league",
+          "ERROR": "Please select a valid league"
+        },
+        "LIGALEITER_MAIL": {
+          "LABEL": "E-Mail of league leader",
+          "PLACEHOLDER": "Select a league leader",
+          "ERROR": "Please select a valid E-Mail."
+        },
+        "WETTKAMPFTAG1": {
+          "LABEL": "1. competition day",
+          "DATUM": {
+            "LABEL": "date",
+            "PLACEHOLDER": "date",
+            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
+          },
+          "ORT": {
+            "LABEL": "location",
+            "PLACEHOLDER": "address",
+            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Start",
+            "PLACEHOLDER": "time",
+            "ERROR": "Enter valid time (Format: HH:MM)."
+          },
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Success",
+              "DESCRIPTION": "Successfully saved competition day"
+            },
+            "UPDATE": {
+              "TITLE": "Success",
+              "DESCRIPTION": "Successfully updated competition day"
+            }
+          }
+        },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Referee"
+
+        },
+        "WETTKAMPFTAG2": {
+          "LABEL": "2. competition day",
+          "DATUM": {
+            "LABEL": "date",
+            "PLACEHOLDER": "date",
+            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
+          },
+          "ORT": {
+            "LABEL": "location",
+            "PLACEHOLDER": "address",
+            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Start",
+            "PLACEHOLDER": "time",
+            "ERROR": "Enter valid time (Format: HH:MM)."
+          }
+        },
+        "WETTKAMPFTAG3": {
+          "LABEL": "3. competition day",
+          "DATUM": {
+            "LABEL": "date",
+            "PLACEHOLDER": "date",
+            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
+          },
+          "ORT": {
+            "LABEL": "location",
+            "PLACEHOLDER": "address",
+            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Start",
+            "PLACEHOLDER": "time",
+            "ERROR": "Enter valid time (Format: HH:MM)."
+          }
+        },
+        "WETTKAMPFTAG4": {
+          "LABEL": "4. competition day",
+          "DATUM": {
+            "LABEL": "date",
+            "PLACEHOLDER": "date",
+            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
+          },
+          "ORT": {
+            "LABEL": "location",
+            "PLACEHOLDER": "address",
+            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Start",
+            "PLACEHOLDER": "time",
+            "ERROR": "Enter valid time (Format: HH:MM)."
+          }
+        },
+
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete",
+        "WETTKAMPFTAGE": "Competition days",
+        "MANNSCHAFT": "Copy teams",
+        "BACK": "Back"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete event",
+          "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Event deleted",
+          "DESCRIPTION": "Successfully deleted event."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Error while deleting event",
+          "DESCRIPTION": "Could not delete event."
+        },
+        "SAVE": {
+          "TITLE": "Event created",
+          "DESCRIPTION": "Successfully created event."
+        },
+        "SAVEMANNSCHAFT": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully copied teams from last season."
+        },
+        "UPDATE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully updated event."
+        }
+      }
+    },
+    "VERANSTALTUNG_NEU": {
+      "TITLE": "Event - Create",
+      "FORM": {
+        "NAME": {
+          "LABEL": "Name",
+          "PLACEHOLDER": "Please enter a name",
+          "ERROR": "Please enter a valid name."
+        },
+        "WETTKAMPFTYP": {
+          "LABEL": "Competition type",
+          "PLACEHOLDER": "Select a competition type",
+          "ERROR": "Please select a valid competition type."
+        },
+        "SPORTJAHR": {
+          "LABEL": "Sport year",
+          "PLACEHOLDER": "Please enter a sport year",
+          "ERROR": "Please enter a valid sport year"
+        },
+        "MELDEDEADLINE": {
+          "LABEL": "Registration deadline",
+          "PLACEHOLDER": "Please enter a date",
+          "ERROR": "Please enter a valid date."
+        },
+        "LIGALEITER": {
+          "LABEL": "League leader",
+          "PLACEHOLDER": "Please select a league leader",
+          "ERROR": "Please select a valid league leader."
+        },
+        "LIGANAME": {
+          "LABEL": "League name",
+          "PLACEHOLDER": "Select a league name",
+          "ERROR": "Please select a valid league name"
+        },
+        "SAVE": "Save"
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully saved event."
+        }
+      }
+    },
+    "BENUTZER": {
+      "TITLE": "User - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "EMAIL": "E-Mail",
+          "ROLE": "Role",
+          "ACTIVE": "Activated"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete user",
+          "DESCRIPTION": "Are you sure you want to delete the user with the ID=%s?"
+        }
+      }
+    },
+    "BENUTZER_DETAIL": {
+      "TITLE": "User - Details",
+      "FORM": {
+        "EMAIL": {
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Please enter a e-mail",
+          "ERROR": "Please enter a valid e-mail."
+        },
+        "ROLEOLD": {
+          "LABEL": "Current role",
+          "PLACEHOLDER": "current role"
+        },
+        "ROLENEW": {
+          "LABEL": "Future role",
+          "PLACEHOLDER": "please select a role"
+        },
+        "UPDATE": "Refresh"
+      },
+      "NOTIFICATION": {
+        "UPDATE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "The role of the user has been changed."
+        }
+      }
+    },
+    "BENUTZER_NEU": {
+      "TITLE": "User - Create",
+      "FORM": {
+        "EMAIL": {
+          "LABEL": "E-Mail",
+          "PLACEHOLDER": "Please enter a e-mail",
+          "ERROR": "Please enter a valid e-mail."
+        },
+        "PASSWORD": {
+          "LABEL": "New password",
+          "PLACEHOLDER": "Enter password",
+          "ERROR": "Minimum length: 8 characters, min. 1 number and upper-/lowercase letter."
+        },
+        "VERIFYPASSWORD": {
+          "LABEL": "Verify password",
+          "PLACEHOLDER": "re-enter password",
+          "ERROR": "Passwords do not match!"
+        },
+        "2FA": {
+          "LABEL": "Enable Two-Factor-Authentication?"
+        },
+        "SAVE": "Save"
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully saved user."
+        }
+      }
+    },
+    "WETTKAMPFKLASSE_DETAIL": {
+      "TITLE": "Competition class - Details",
+      "FORM": {
+        "WETTKAMPF_ID": {
+          "LABEL": "Competition-ID",
+          "PLACEHOLDER": "Please enter an ID",
+          "ERROR": "Please enter an valid ID."
+        },
+        "WETTKAMPFNAME": {
+          "LABEL": "Name of the competition class",
+          "PLACEHOLDER": "Please enter name",
+          "ERROR": "Please enter a valid name"
+        },
+        "WETTKAMPF_JAHRGANG_MIN": {
+          "LABEL": "Competition year from",
+          "PLACEHOLDER": "please enter a year",
+          "ERROR": "Please enter a valid year."
+        },
+        "WETTKAMPF_JAHRGANG_MAX": {
+          "LABEL": "Competition year to",
+          "PLACEHOLDER": "please enter a year",
+          "ERROR": "Please enter a valid year."
+        },
+        "WETTKAMPF_NR": {
+          "LABEL": "Number of the Competition class",
+          "PLACEHOLDER": "Please enter a number",
+          "ERROR": "Please enter a valid number (max. 2 digits)."
+        },
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete competition class",
+          "DESCRIPTION": "Are you sure you want to delete the competition class with the ID=%s? This can not be undone."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully deleted competition class"
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete competition class."
+        },
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully saved competition class"
+        }
+      }
+    }
+  },
   "NOTIFICATION": {
     "BUTTON": {
       "OK": "OK",
       "CANCEL": "Cancel",
       "YES": "Yes",
       "NO": "No"
+    },
+    "ERROR": {
+      "GENERIC_ERROR": {
+        "TITLE": "Error"
+      },
+      "UNEXPECTED_ERROR": {
+        "TITLE": "Unexpected Error",
+        "DESCRIPTION": "An unexpected error occurred on the server."
+      },
+      "NO_PERMISSION_ERROR": {
+        "TITLE": "No Permission Error",
+        "DESCRIPTION": "You don't have permission to enter or edit this page."
+      },
+      "CONNECTION_ERROR": {
+        "TITLE": "Session Token expired",
+        "DESCRIPTION": "It seems that your session has expired! Please login again."
+      },
+      "CONNECTION_RESET": {
+        "TITLE": "Connection Reset",
+        "DESCRIPTION": "Could not reach service. Try again later."
+      },
+      "NO_SESSION_ERROR": {
+        "TITLE": "No Session Error",
+        "DESCRIPTION": "Your session has expired. You will be redirected to the login page."
+      },
+      "BAD_REQUEST": {
+        "TITLE": "Bad Request",
+        "DESCRIPTION": "Your request was rejected by the server."
+      },
+      "INVALID_ARGUMENT_ERROR": {
+        "TITLE": "Invalid Argument Error",
+        "DESCRIPTION": "Your request was rejected by the server."
+      },
+      "INVALID_SIGN_IN_CREDENTIALS": {
+        "TITLE": "Invalid Sign In Credentials",
+        "DESCRIPTION": "Please check your email address and password"
+      },
+      "DATABASE_ERROR": {
+        "TITLE": "Database Error",
+        "DESCRIPTION": "Your request was rejected by the database."
+      },
+      "ENTITY_NOT_FOUND_ERROR": {
+        "TITLE": "Entity Not Found Error",
+        "DESCRIPTION": "The requested resource was not found."
+      }
     }
   },
-
+  "BREADCRUMB": {
+    "NEW_ENTITY": "New"
+  },
   "TABLE": {
-    "TITLE": "Table",
+    "HEADERS": {
+      "ACTION": "Action"
+    },
+    "ACTIONS": {
+      "VIEW": "View",
+      "EDIT": "Edit",
+      "DELETE": "Delete",
+      "ADD": "Add",
+      "DOWNLOAD": "Download licence"
+    },
+    "NO_ENTRIES_FOUND": "No entries found",
+    "LOADING": "Loading entries",
+    "TITLE": "Title",
     "KEY": "Key",
     "VALUE": "Value",
     "ACTION": "Action",
@@ -79,16 +1337,51 @@
     "TIME": "Time",
     "LIGA": "League",
     "PLACE": "Place",
-    "CDAY": "Competition Day",
-    "NODATA": "No data to display..."
+    "CDAY": "Competition day",
+    "NODATA": "There is no data to be displayed..."
   },
-
+  "DIALOG": {
+    "LOADING": "Loading entries"
+  },
+  "DROPDOWN": {
+    "PLEASE_SELECT_ITEM": "Please select a entry",
+    "NO_ENTRIES_FOUND": "No entries found",
+    "LOADING": "Loading entries..."
+  },
+  "SELECTIONLIST": {
+    "NO_ENTRIES_FOUND": "No entries found",
+    "LOADING": "Loading entries...",
+    "SEARCH_PLACEHOLDER": "search"
+  },
   "DETAILS": {
-    "TITLE": "Entität-Details",
+    "TITLE": "Entity-Details",
     "DELETE": "Delete",
     "SAVE": "Save",
     "KEY": "Key",
     "VALUE": "Value",
-    "VERSION": "Releasenumber"
+    "VERSION": "Version"
+  },
+  "PLAYGROUND": {
+    "PLAYGROUND": {
+      "TITLE": "Component Playground"
+    }
+  },
+  "FILE_DOWNLOAD": {
+    "NOTIFICATION": {
+      "SUCCESS": "Download started for:",
+      "FAILURE": "Download failed for:"
+    }
+  },
+  "SPOTTER": {
+    "LINK": {
+      "TEXT": "To Spotter-Authentication"
+    },
+    "AUTH": {
+      "TITLE": "Authentication as a Spotter",
+      "TEXT": "Enter the code.",
+      "BUTTON": "To the Spotter-Interface",
+      "INFO": "x x x x x x",
+      "ERROR": "Wrong input"
+    }
   }
 }

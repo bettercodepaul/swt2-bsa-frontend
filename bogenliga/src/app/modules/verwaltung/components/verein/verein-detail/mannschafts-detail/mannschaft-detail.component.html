@@ -21,7 +21,7 @@
                name="mannschaftName"
                #mannschaftName="ngModel"
                [(ngModel)]="currentMannschaft.name"
-               placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_Name.PLACEHOLDER' | translate }}">
+               placeholder="{{'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NAME.PLACEHOLDER' | translate }}">
       </div>
     </div>
 
@@ -108,6 +108,11 @@
         <fa-icon icon="plus"></fa-icon>
         <span> Neu</span>
       </button>
+      <button class="btn btn-success button-margin" style="margin-left: 5px;" (click)="onDownloadLizenzen()">
+        <fa-icon icon="file-download"></fa-icon>
+        <span> Alle Lizenzen drucken</span>
+        <router-outlet name="onDownloadLizenzen"></router-outlet>
+      </button>
     </div>
     <bla-data-table [config]="config_table"
                     [rows]="rows"
@@ -115,6 +120,7 @@
                     (onViewEntry)="onView($event)"
                     (onEditEntry)="onEdit($event)"
                     (onDeleteEntry)="onDeleteMitglied($event)"
+                    (onDownloadRueckennummerEntry)= "onDownloadRueckennummer($event)"
                     (onDownloadEntry) = "onDownload($event)">
     </bla-data-table>
     <a #downloadLink></a>

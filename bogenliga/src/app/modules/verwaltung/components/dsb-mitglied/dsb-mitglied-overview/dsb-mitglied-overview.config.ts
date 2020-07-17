@@ -1,6 +1,7 @@
 import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
 import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
 import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
+import {UserPermission} from '@shared/services';
 
 export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -35,5 +36,8 @@ export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-  }
+    editPermission : [UserPermission.CAN_MODIFY_DSBMITGLIEDER],
+    deletePermission : [UserPermission.CAN_DELETE_DSBMITGLIEDER]
+  },
+  createPermission : [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER]
 };

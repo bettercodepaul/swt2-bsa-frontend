@@ -12,8 +12,8 @@ import {TableColumnConfig} from '../types/table-column-config.interface';
 import {TableColumnType} from '../types/table-column-type.enum';
 import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
-import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {Router} from '@angular/router';
+import {CurrentUserService, UserPermission} from '@shared/services';
 
 
 @Component({
@@ -34,6 +34,9 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   @Output() public onAddEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onRowEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadEntry = new EventEmitter<VersionedDataObject>();
+  @Output() public onMapEntry = new EventEmitter<VersionedDataObject>();
+  @Output() public onDownloadRueckennummerEntry = new EventEmitter<VersionedDataObject>();
+  @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
 
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
@@ -42,7 +45,8 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
   private router: Router;
 
   constructor(private truncationPipe: TruncationPipe,
-              private translatePipe: TranslatePipe) {
+              private translatePipe: TranslatePipe,
+              private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -187,7 +191,6 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
     let iconSelector = TableActionType[action].toLowerCase();
     let iconStateSelector = 'active';
 
-
     if (row.loadingActions.indexOf(action) > -1) {
       // override normal icon with loading indicator icon
       iconSelector = 'loading';
@@ -246,6 +249,15 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
           break;
         case TableActionType.DOWNLOAD:
           this.onDownload(row.payload);
+          break;
+        case TableActionType.MAP:
+          this.onMap(row.payload);
+          break;
+        case TableActionType.DOWNLOADRUECKENNUMMER:
+          this.onDownloadRueckennummer(row.payload);
+          break;
+        case TableActionType.DOWNLOADLIZENZEN:
+          this.onDownloadLizenzen(row.payload);
           break;
         default:
           console.warn('Could not handle click on action icon. Unknown action type: ', action);
@@ -336,5 +348,52 @@ export class DataTableComponent extends CommonComponent implements OnInit, OnCha
 
   private onDownload(affectedRowPayload: VersionedDataObject) {
     this.onDownloadEntry.emit(affectedRowPayload);
+  }
+
+  private onMap(affectedRowPayload: VersionedDataObject) {
+    this.onMapEntry.emit(affectedRowPayload);
+  }
+
+  private onDownloadRueckennummer(affectedRowPayload: VersionedDataObject) {
+    this.onDownloadRueckennummerEntry.emit(affectedRowPayload);
+  }
+
+  private onDownloadLizenzen(affectedRowPayload: VersionedDataObject) {
+    this.onDownloadLizenzenEntry.emit(affectedRowPayload);
+  }
+
+  public hasUserPermissions(userPermissions: UserPermission[]): boolean {
+    if (userPermissions === undefined) {
+      return true;
+    } else {
+      return this.currentUserService.hasAnyPermisson(userPermissions);
+    }
+  }
+
+  public hasActionPermission(action: TableActionType): boolean {
+    let neededPermissions: UserPermission[] = [];
+    switch (action) {
+      case TableActionType.EDIT:
+        neededPermissions = this.config.editPermission;
+        break;
+      case TableActionType.DELETE:
+        neededPermissions = this.config.deletePermission;
+        break;
+      case TableActionType.VIEW:
+        neededPermissions = this.config.viewPermission;
+        break;
+      case TableActionType.ADD:
+        neededPermissions = this.config.addPermission;
+        break;
+      case TableActionType.DOWNLOAD:
+        neededPermissions = this.config.downloadPermission;
+        break;
+      case TableActionType.MAP:
+        neededPermissions = this.config.mapPermission;
+        break;
+      default:
+        console.warn('Could not handle click on action icon. Unknown action type: ', action);
+    }
+    return this.hasUserPermissions(neededPermissions);
   }
 }

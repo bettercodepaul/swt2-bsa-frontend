@@ -1,6 +1,7 @@
 import {OverviewDialogConfig} from '@shared/components';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
+import {UserPermission} from '@shared/services';
 
 export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey: 'MANAGEMENT',
@@ -34,5 +35,9 @@ export const WETTKAMPFKLASE_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT],
       width: 6
     },
-  }
+    editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN]
+
+  },
+  // TODO exchange modify for create
+  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN]
 };

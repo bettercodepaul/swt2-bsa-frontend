@@ -32,7 +32,23 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     download: {
       active: 'download',
       inactive: 'download'
+    },
+
+    downloadrueckennummer: {
+      active: 'tshirt',
+      inactive: 'tshirt'
+    },
+
+    downloadlizenzen: {
+      active: 'download',
+      inactive: 'download'
+    },
+    map: {
+      active: 'map-marker',
+      inactive: 'map-marker'
     }
+
+
   },
   localizationKeys: {
     actionColum: 'TABLE.HEADERS.ACTION',
@@ -40,7 +56,12 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
     delete:      'TABLE.ACTIONS.DELETE',
     view:        'TABLE.ACTIONS.VIEW',
     add:         'TABLE.ACTIONS.ADD',
-    download: 'TABLE.ACTIONS.DOWNLOAD'
+
+    download: 'TABLE.ACTIONS.DOWNLOAD',
+    downloadrueckennummer: 'TABLE.ACTIONS.DOWNLOADRUECKENNUMMER',
+    map:         'TABLE.ACTIONS.MAP',
+    downloadlizenzen: 'TABLE.ACTIONS.DOWNLOADLIZENZEN'
+
   }
 };
 
