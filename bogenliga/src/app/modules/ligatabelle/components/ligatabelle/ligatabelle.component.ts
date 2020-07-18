@@ -140,8 +140,8 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVeranstaltungId = this.selectedDTOs[0].id;
       this.selectedVeranstaltungName = this.selectedDTOs[0].name;
-  }
-  this.changeVeranstaltung();
+    }
+    this.changeVeranstaltung();
   }
 
   // Changes the displayed Veranstaltung with the current selected one from selectedDTOs.
