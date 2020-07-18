@@ -58,7 +58,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
 
 
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
-  private selectedVeranstaltungId: number;
+  public selectedVeranstaltungId: number;
   public selectedVeranstaltungName: string;
   private selectedVeranstaltung: VeranstaltungDO;
   public selectedDTOs: VeranstaltungDO[];
@@ -75,9 +75,9 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   private remainingLigatabelleRequests: number;
   public providedID: number;
   private selectedLiga: LigaDO;
-  private selectedLigaId: number;
+  public selectedLigaId: number;
 
-  private veranstaltungenInLiga: VeranstaltungDO[];
+  public veranstaltungenInLiga: VeranstaltungDO[];
 
 
 
