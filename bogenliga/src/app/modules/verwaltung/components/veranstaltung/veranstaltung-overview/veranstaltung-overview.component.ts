@@ -20,9 +20,6 @@ import {VERANSTALTUNG_OVERVIEW_TABLE_CONFIG} from './veranstaltung-overview.conf
 import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components/liga/liga-overview/liga-overview.component';
 import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
-
-import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
-import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
 import {of} from 'rxjs';
 import {delay} from 'rxjs/operators';
