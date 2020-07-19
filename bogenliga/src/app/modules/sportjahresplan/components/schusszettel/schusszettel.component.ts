@@ -219,8 +219,8 @@ export class SchusszettelComponent implements OnInit {
           this.ngOnInit();
           this.notificationService.showNotification({
             id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-            title:       'Speichern erfolgreich',
-            description: 'Schusszettel wurde erfolgreich gespeichert.',
+            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
+            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
             severity:    NotificationSeverity.ERROR,
             origin:      NotificationOrigin.SYSTEM,
             type:        NotificationType.OK,
@@ -230,13 +230,14 @@ export class SchusszettelComponent implements OnInit {
           console.error(error);
           this.notificationService.showNotification({
             id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
-            description: 'Rückennummer existiert nicht in der Mannschaft',
+            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
+            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
             severity:    NotificationSeverity.ERROR,
             origin:      NotificationOrigin.SYSTEM,
             type:        NotificationType.OK,
             userAction:  NotificationUserAction.ACCEPTED
         });
+          this.notificationService.discardNotification();
         });
       this.dirtyFlag = false; // Daten gespeichert
     }
