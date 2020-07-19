@@ -189,7 +189,7 @@ export class SchusszettelComponent implements OnInit {
         description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
         severity: NotificationSeverity.INFO,
         origin: NotificationOrigin.USER,
-        //type: NotificationType.OK, //--TO-DO Maximilian
+        // type: NotificationType.OK, //--TO-DO Maximilian
         userAction: NotificationUserAction.PENDING
       });
 
