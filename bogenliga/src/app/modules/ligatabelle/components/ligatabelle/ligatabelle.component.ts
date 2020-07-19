@@ -15,6 +15,7 @@ import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wett
 import { RouterModule, Routes } from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {Subscription} from 'rxjs';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 import {
   Notification,
   NotificationOrigin,
@@ -24,6 +25,11 @@ import {
   NotificationUserAction
 } from '@shared/services/notification';
 import {forEach} from '@angular/router/src/utils/collection';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
+import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
+import {SportjahrDataProviderService} from '@verwaltung/services/sportjahr-data-provider.service';
+import {UserPermission} from '@shared/services';
+import {SportjahrDO} from '@verwaltung/types/sportjahr-do.class';
 
 const ID_PATH_PARAM = 'id';
 
@@ -35,17 +41,32 @@ const ID_PATH_PARAM = 'id';
 })
 export class LigatabelleComponent extends CommonComponent implements OnInit {
 
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+              private ligatabelleDataProvider: WettkampfDataProviderService,
+              private ligaDataProviderService: LigaDataProviderService,
+              private sportjahrDataProviderService: SportjahrDataProviderService) {
+    super();
+  }
+
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
 
 
 
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
-  private selectedVeranstaltungId: number;
+  public selectedVeranstaltungId: number;
   public selectedVeranstaltungName: string;
+  private selectedVeranstaltung: VeranstaltungDO;
   public selectedDTOs: VeranstaltungDO[];
   public multipleSelections = true;
   public veranstaltungen: VeranstaltungDO[];
+  public loadingYear: boolean;
+  public ligen: LigaDO[];
+  public selectedLigen: LigaDO[];
   public zwVeranstaltung: VeranstaltungDTO;
   public loadingVeranstaltungen = true;
   public loadingLigatabelle = false;
@@ -53,22 +74,17 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   private tableContent: Array<LigatabelleErgebnisDO> = [];
   private remainingLigatabelleRequests: number;
   public providedID: number;
+  private selectedLiga: LigaDO;
+  public selectedLigaId: number;
 
-
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService,
-              private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-              private ligatabelleDataProvider: WettkampfDataProviderService) {
-    super();
-  }
+  public veranstaltungenInLiga: VeranstaltungDO[];
 
 
 
 
   ngOnInit() {
     console.log('Bin im Liga');
-    this.loadVeranstaltungen();
+    this.loadLigen();
     this.loading = true;
     this.providedID = undefined;
     this.notificationService.discardNotification();
@@ -97,6 +113,21 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     console.log(this.providedID);
   }
 
+  public onSelectLiga($event: LigaDO[]): void {
+    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+    buttonVisibility.style.display = 'block';
+
+    this.selectedLigen = [];
+    this.selectedLigen = $event;
+
+    if (!!this.selectedLigen && this.selectedLigen.length > 0) {
+      this.loadTableRows(this.selectedLigen[0].id);
+    }
+    this.selectedDTOs = [];
+    this.selectedVeranstaltungId = null;
+
+    this.onSelect(this.veranstaltungsDataProvider.findByLigaId(this.selectedLigen[0].id)[0]);
+  }
 
   // when a Veranstaltung gets selected from the list
   // load LigaTabelle
@@ -105,6 +136,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     buttonVisibility.style.display = 'block';
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
+
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedVeranstaltungId = this.selectedDTOs[0].id;
       this.selectedVeranstaltungName = this.selectedDTOs[0].name;
@@ -121,14 +153,25 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     }
   }
 
+
 // backend-call to get the list of veranstaltungen
   private loadVeranstaltungen(): void {
     this.veranstaltungen = [];
     this.veranstaltungsDataProvider.findAll()
-      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-                                                                  buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload;
-                                                                  this.loadingVeranstaltungen = false; })
-    .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+                                                                    buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload; this.onSelect(this.veranstaltungen);
+                                                                    this.loadingVeranstaltungen = false; })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
+  }
+
+  private loadLigen(): void {
+    this.ligen = [];
+    this.ligaDataProviderService.findAll()
+        .then((response: BogenligaResponse<LigaDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+                                                           buttonVisibility.style.display = 'none'; this.ligen = response.payload; this.selectedLiga = response.payload[0];
+                                                           this.selectedLigaId = this.selectedLiga.id; console.log(this.selectedLigaId); this.onSelectLiga(this.ligen);
+                                                           this.loadingVeranstaltungen = false; })
+        .catch((response: BogenligaResponse<LigaDTO[]>) => {this.ligen = response.payload; });
   }
 
 
@@ -182,6 +225,25 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     }
 
 
+  }
+
+  private loadTableRows(ligaID: number) {
+    this.loading = true;
+    this.veranstaltungsDataProvider.findByLigaId(ligaID)
+        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadTableRowsFailure(response));
+  }
+  private handleLoadTableRowsFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
+    this.veranstaltungenInLiga = [];
+    this.loading = false;
+  }
+
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    this.veranstaltungenInLiga = []; // reset array to ensure change detection
+    this.veranstaltungenInLiga = response.payload;
+    this.onSelect(this.veranstaltungenInLiga);
+    console.log(this.veranstaltungenInLiga);
+    this.loading = false;
   }
 
 }
