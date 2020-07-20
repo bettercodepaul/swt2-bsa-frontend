@@ -136,6 +136,14 @@
           "TITLE":"Save Shot-note",
           "DESCRIPTION": "Saving Shot-note..."
         },
+        "GESPEICHERT":{
+          "TITLE":"Saved",
+          "DESCRIPTION": "Save successful"
+        },
+        "RUECKENNUMMERZUHOCH":{
+          "TITLE":"Save not successful",
+          "DESCRIPTION": "Backnumber does not exist in this team"
+        },
         "WEITER":{
           "TITLE":"There are unsaved changes",
           "DESCRIPTION": "Are you sure you want to leave this dialog? All unsaved changes will be lost."
