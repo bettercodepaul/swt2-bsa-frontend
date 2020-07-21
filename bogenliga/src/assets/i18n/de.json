@@ -136,6 +136,14 @@
           "TITLE":"Schusszettel speichern",
           "DESCRIPTION": "Schusszettel wird gespeichert..."
         },
+        "GESPEICHERT":{
+          "TITLE":"Schusszettel gespeichert",
+          "DESCRIPTION": "Schusszettel wurde erfolgreich gespeichert"
+        },
+        "RUECKENNUMMERZUHOCH":{
+          "TITLE":"Eingabefehler - Speichern abgebrochen",
+          "DESCRIPTION": "Eingegebene Rueckennummer existiert nicht in dieser Mannschaft"
+        },
         "WEITER":{
           "TITLE":"Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
