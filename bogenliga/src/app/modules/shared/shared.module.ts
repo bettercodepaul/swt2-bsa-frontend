@@ -33,7 +33,7 @@ import {
   SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  TooltipComponent
+  TooltipComponent,
 } from './components';
 import {RestClient} from './data-provider';
 import * as LocalDataProvider from './local-data-provider/services';
@@ -47,6 +47,7 @@ import {SetzlisteDownloadComponent} from '@shared/components/buttons/setzliste-d
 import {BogenkontrolllisteDownloadComponent} from '@shared/components/buttons/bogenkontrollliste-download/bogenkontrollliste-download.component';
 import {SchusszettelDownloadComponent} from '@shared/components/buttons/schusszettel-download/schusszettel-download.component';
 import {MeldezettelDownloadComponent} from '@shared/components/buttons/meldezettel-download/meldezettel-download.component';
+import {OverviewSelectionDialogComponent} from '@shared/components/dialogs/overview-selection-dialog/overview-selection-dialog.component';
 
 
 /*
@@ -103,7 +104,7 @@ library.add(fas, far, fab); // add all icon types
     SetzlisteDownloadComponent,
     SchusszettelDownloadComponent,
     MeldezettelDownloadComponent,
-
+    OverviewSelectionDialogComponent,
   ],
   declarations: [
     ButtonComponent,
@@ -136,6 +137,7 @@ library.add(fas, far, fab); // add all icon types
     SchusszettelDownloadComponent,
     SetzlisteDownloadComponent,
     MeldezettelDownloadComponent,
+    OverviewSelectionDialogComponent,
   ]
 })
 export class SharedModule {
