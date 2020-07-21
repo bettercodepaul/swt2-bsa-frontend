@@ -603,9 +603,10 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     this.mannschaften = response.payload;
   }
 
-  private existsMannschaftsNummer(mannschaftsnummer: String): boolean {
+  private existsMannschaftsNummer(mannschaftsnummer: string): boolean {
+
     for (const mannschaft of this.mannschaften) {
-      if (mannschaft.nummer == mannschaftsnummer) {
+      if (parseInt(mannschaft.nummer , 10) === parseInt(mannschaftsnummer, 10)) {
         this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
         this.mannschaften = [];
         return true;
