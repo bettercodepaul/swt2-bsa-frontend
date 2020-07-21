@@ -12,19 +12,31 @@
                style="width:80%">
           <!-- headlines -->
 
-          <bla-quicksearch-list (onSelect)="onSelect($event)"
-                                [items]="veranstaltungen"
+          <bla-quicksearch-list (onSelect)="onSelectLiga($event)"
+                                [items]="ligen"
                                 [loading]="loadingVeranstaltungen"
                                 [multipleSelections]="!multipleSelections"
                                 [placeholderTranslationKey]="PLACEHOLDER_VAR"
                                 [optionFieldSelector]="'name'"
+                                [selectedItemIds]=[selectedLigaId]
 
                                 selectionListHeight="15em"
                                 style="width: 60%; flex-grow: 0;">
 
           </bla-quicksearch-list>
         </table>
+        <table style="width: 10%; margin-bottom: 3%;">
+          <bla-selectionlist (onSelect)="onSelect($event)"
+                             [items]="veranstaltungenInLiga"
+                             [optionFieldSelector]="'sportjahr'"
+                             [selectedItemIds]=[selectedVeranstaltungId]
+                             style="width: 10%; flex-grow: 0; height: 20px"
+                             selectionListHeight="3em">
+
+          </bla-selectionlist>
+        </table>
       </div>
+
 
        <!-- Ligatabelle -->
       <div>
