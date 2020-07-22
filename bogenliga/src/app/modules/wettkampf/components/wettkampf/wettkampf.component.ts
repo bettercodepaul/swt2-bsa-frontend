@@ -23,7 +23,8 @@ import {MatchDO} from '@verwaltung/types/match-do.class';
 const ID_PATH_PARAM = 'id';
 @Component({
   selector:    'bla-mannschaft',
-  templateUrl: './wettkampf.component.html'
+  templateUrl: './wettkampf.component.html',
+  styleUrls:   ['./wettkampf.component.scss']
 })
 
 export class WettkampfComponent extends CommonComponent implements OnInit {
