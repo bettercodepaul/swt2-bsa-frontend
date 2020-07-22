@@ -76,6 +76,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   public providedID: number;
   private selectedLiga: LigaDO;
   public selectedLigaId: number;
+  private hasID: boolean;
 
   public veranstaltungenInLiga: VeranstaltungDO[];
 
@@ -84,34 +85,41 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
 
   ngOnInit() {
     console.log('Bin im Liga');
-    this.loadLigen();
     this.loading = true;
     this.providedID = undefined;
+    this.hasID = false;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = params[ID_PATH_PARAM];
+        this.providedID = parseInt(params[ID_PATH_PARAM],10);
         console.log(this.providedID);
-
-
-      /*
-        this.veranstaltungsDataProvider.findById(this.providedID)
-          .then((response: BogenligaResponse<VeranstaltungDTO>) => {this.handleGivenVeranstaltung(response); console.log(response.payload);});
-        console.log(this.zwVeranstaltung);
-        let zVeranstaltung:  VeranstaltungDTO[];
-        zVeranstaltung = [];
-        zVeranstaltung.push(this.zwVeranstaltung);
-        this.onSelect(zVeranstaltung);
-
-
-       */
+        this.hasID = true;
       } else {
         console.log('no params');
       }
-
-    } );
-    console.log(this.providedID);
+    });
+    console.log(this.selectedLigaId);
+    this.loadLigen();
   }
+
+  private changeSelectedLiga(): void {
+    this.selectedLigen = [];
+    if (this.hasID) {
+      this.ligaDataProviderService.findById(this.selectedLigaId)
+          .then((response: BogenligaResponse<LigaDTO>) =>
+            this.getLigaSuccess(response.payload)
+          ).catch((response: BogenligaResponse<LigaDTO[]>) => {
+        this.ligen = response.payload;
+      });
+    }
+      this.selectedLigen.push(this.selectedLiga);
+      console.log('CurrentLiga: ' + this.selectedLiga);
+  }
+  private getLigaSuccess(response: LigaDTO) {
+    console.log('response in getLiga: ' + response.name);
+    this.selectedLiga = response;
+  }
+
 
   public onSelectLiga($event: LigaDO[]): void {
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
@@ -167,10 +175,13 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
   private loadLigen(): void {
     this.ligen = [];
     this.ligaDataProviderService.findAll()
-        .then((response: BogenligaResponse<LigaDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-                                                           buttonVisibility.style.display = 'none'; this.ligen = response.payload; this.selectedLiga = response.payload[0];
-                                                           this.selectedLigaId = this.selectedLiga.id; console.log(this.selectedLigaId); this.onSelectLiga(this.ligen);
-                                                           this.loadingVeranstaltungen = false; })
+        .then((response: BogenligaResponse<LigaDTO[]>) => {
+          const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+          buttonVisibility.style.display = 'none'; this.ligen = response.payload; this.selectedLiga = response.payload[0];
+          this.selectedLigaId =this.hasID ? this.providedID : response.payload[0].id; console.log(this.selectedLigaId);
+          this.changeSelectedLiga();
+          this.onSelectLiga(this.selectedLigen);
+          this.loadingVeranstaltungen = false; })
         .catch((response: BogenligaResponse<LigaDTO[]>) => {this.ligen = response.payload; });
   }
 
