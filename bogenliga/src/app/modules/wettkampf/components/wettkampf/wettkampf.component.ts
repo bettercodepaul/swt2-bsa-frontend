@@ -187,11 +187,10 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
    */
   public handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = this.wettkaempfe.concat(wettkaempfe);
+    for(let index = 0; index < this.wettkaempfe.length; index++) {
       this.loadingData = true;
-      for(let index = 0; index < this.wettkaempfe.length; index++) {
-        this.loadMatches(this.wettkaempfe[index].id, index);
-      }
-
+      this.loadMatches(this.wettkaempfe[index].id, index);
+    }
   }
 
   public loadMatches(wettkampfId: number, index: number) {
