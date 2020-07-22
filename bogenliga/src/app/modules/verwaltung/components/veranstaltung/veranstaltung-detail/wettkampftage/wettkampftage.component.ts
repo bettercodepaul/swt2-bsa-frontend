@@ -75,10 +75,10 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public currentWettkampftag_4: WettkampfDO = new WettkampfDO();
   public allWettkampf: Array<WettkampfDO> = [];
 
-  public currentAusrichter1: UserProfileDO= new UserProfileDO();
-  public currentAusrichter2: UserProfileDO= new UserProfileDO();
-  public currentAusrichter3: UserProfileDO= new UserProfileDO();
-  public currentAusrichter4: UserProfileDO= new UserProfileDO();
+  public currentAusrichter1: UserProfileDO = new UserProfileDO();
+  public currentAusrichter2: UserProfileDO = new UserProfileDO();
+  public currentAusrichter3: UserProfileDO = new UserProfileDO();
+  public currentAusrichter4: UserProfileDO = new UserProfileDO();
   public allUsers: Array <UserProfileDO> = [new UserProfileDO()];
 
   public deleteLoading = false;

@@ -82,9 +82,9 @@ export class WettkampfDTO implements DataTransferObject {
       copy.wettkampfTypId = null;
     }
     copy.version = optional.version || null;
-    if(optional.wettkampfAusrichter >= 0){
+    if (optional.wettkampfAusrichter >= 0) {
       copy.wettkampfAusrichter = optional.wettkampfAusrichter;
-    }else{
+    } else {
       copy.wettkampfAusrichter = null;
     }
 
