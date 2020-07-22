@@ -91,7 +91,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM],10);
+        this.providedID = parseInt(params[ID_PATH_PARAM] , 10);
         console.log(this.providedID);
         this.hasID = true;
       } else {
@@ -112,8 +112,8 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
         this.ligen = response.payload;
       });
     }
-      this.selectedLigen.push(this.selectedLiga);
-      console.log('CurrentLiga: ' + this.selectedLiga);
+    this.selectedLigen.push(this.selectedLiga);
+    console.log('CurrentLiga: ' + this.selectedLiga);
   }
   private getLigaSuccess(response: LigaDTO) {
     console.log('response in getLiga: ' + response.name);
@@ -178,7 +178,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
         .then((response: BogenligaResponse<LigaDTO[]>) => {
           const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
           buttonVisibility.style.display = 'none'; this.ligen = response.payload; this.selectedLiga = response.payload[0];
-          this.selectedLigaId =this.hasID ? this.providedID : response.payload[0].id; console.log(this.selectedLigaId);
+          this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id; console.log(this.selectedLigaId);
           this.changeSelectedLiga();
           this.onSelectLiga(this.selectedLigen);
           this.loadingVeranstaltungen = false; })
