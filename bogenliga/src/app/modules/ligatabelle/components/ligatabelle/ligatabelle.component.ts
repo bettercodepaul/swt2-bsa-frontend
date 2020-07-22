@@ -171,7 +171,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
                                                                     this.loadingVeranstaltungen = false; })
         .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
   }
-
+  // Load all Ligen into the Tabel and strats the selection from the chosen.
   private loadLigen(): void {
     this.ligen = [];
     this.ligaDataProviderService.findAll()
