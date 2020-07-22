@@ -12,7 +12,7 @@ import {SidebarItemComponent} from './components/sidebar/components/sidebar-item
 import {SidebarComponent} from './components/sidebar/sidebar.component';
 
 import {FormsModule} from '@angular/forms';
-import {RouterModule} from '@angular/router';
+import {ActivatedRouteSnapshot, RouterModule, RouterStateSnapshot} from '@angular/router';
 import {EffectsModule} from '@ngrx/effects';
 import {StoreModule} from '@ngrx/store';
 import {ROUTES} from './app.routing';
@@ -62,7 +62,14 @@ export function createTranslateLoader(http: HttpClient) {
   /* HTTP INTERCEPTORS */
   providers:    [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {
+      provide: 'externalUrlRedirectResolver',
+      useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+               {
+                 window.location.href = (route.data as any).externalUrl;
+               }
+    }
 
   ],
   bootstrap:    [AppComponent]

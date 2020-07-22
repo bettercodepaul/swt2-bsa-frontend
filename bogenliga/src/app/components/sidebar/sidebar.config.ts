@@ -10,7 +10,8 @@ import {
   faListOl,
   faSitemap,
   faUsers,
-  faBinoculars
+  faBinoculars,
+  faHandsHelping
 } from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
@@ -113,5 +114,11 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     permissons: [],
     subitems: [],
     inProdVisible: false
+  },
+  {
+    label: 'SIDEBAR.HELP',
+    icon: faHandsHelping,
+    route: "/help",
+    permissons: [UserPermission.CAN_READ_DEFAULT]
   }
 ];
