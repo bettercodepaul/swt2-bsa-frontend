@@ -127,6 +127,25 @@
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.BEGINN.ERROR' | translate }}
             </div>
+            <label for="ausrichter1"
+                   class="col-sm-3 col-form-label">
+              <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
+              <span> *</span>
+            </label>
+
+            <div class="col-sm-9">
+              <select class="form-control"
+                      required
+                      id="ausrichter1"
+                      name="ausrichter1"
+                      #ausrichter1="ngModel"
+                      [(ngModel)]="currentAusrichter1">
+                <option [ngValue]="currentAusrichter1"
+                        *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
+
+                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
+              </select>
+            </div>
           </div>
         </div>
       </div><!-- End Tagesdaten-->
@@ -263,6 +282,25 @@
 
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.BEGINN.ERROR' | translate }}
+            </div>
+            <label for="ausrichter2"
+                   class="col-sm-3 col-form-label">
+              <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
+              <span> *</span>
+            </label>
+
+            <div class="col-sm-9">
+              <select class="form-control"
+                      required
+                      id="ausrichter2"
+                      name="ausrichter2"
+                      #ausrichter2="ngModel"
+                      [(ngModel)]="currentAusrichter2">
+                <option [ngValue]="currentAusrichter2"
+                        *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
+
+                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
+              </select>
             </div>
           </div>
         </div>
@@ -401,6 +439,25 @@
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.BEGINN.ERROR' | translate }}
             </div>
+            <label for="ausrichter3"
+                   class="col-sm-3 col-form-label">
+              <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
+              <span> *</span>
+            </label>
+
+            <div class="col-sm-9">
+              <select class="form-control"
+                      required
+                      id="ausrichter3"
+                      name="ausrichter3"
+                      #ausrichter3="ngModel"
+                      [(ngModel)]="currentAusrichter3">
+                <option [ngValue]="currentAusrichter3"
+                        *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
+
+                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
+              </select>
+            </div>
           </div>
         </div>
       </div><!-- End Tagesdaten-->
@@ -536,6 +593,25 @@
 
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.BEGINN.ERROR' | translate }}
+            </div>
+            <label for="ausrichter4"
+                   class="col-sm-3 col-form-label">
+              <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
+              <span> *</span>
+            </label>
+
+            <div class="col-sm-9">
+              <select class="form-control"
+                      required
+                      id="ausrichter4"
+                      name="ausrichter4"
+                      #ausrichter4="ngModel"
+                      [(ngModel)]="currentAusrichter4">
+                <option [ngValue]="currentAusrichter4"
+                        *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
+
+                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
+              </select>
             </div>
           </div>
         </div>
