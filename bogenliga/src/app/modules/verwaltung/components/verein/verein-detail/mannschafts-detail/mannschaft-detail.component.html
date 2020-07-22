@@ -92,12 +92,16 @@
           {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
+        <!--When editing Bug: BSAPP-684 it was decided to comment out the Button below ("Löschen")-->
+        <!--Because there is already a Button for the same Funktion and this one is also not working and also caused some trouble with Deleting-Funktion -->
+        <!--
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.DANGER"
                     [loading]="deleteLoading"
                     (onClick)="onDelete($event)">
           {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.DELETE' | translate }}
         </bla-button>
+        -->
       </div>
     </div>
   </form>

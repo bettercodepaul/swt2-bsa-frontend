@@ -169,10 +169,10 @@
       "TITLE": "Wettkampfergebnisse",
       "BUTTONS": {
         "ANZEIGEN": {
-          "LABEL": "Anzeigen"
+          "LABEL": "Aktuelle Mannschaft Anzeigen"
         },
         "ANZEIGENALL": {
-          "LABEL": "Alle anzeigen"
+          "LABEL": "Alle Mannschaften anzeigen"
         }
       },
       "FORM": {
