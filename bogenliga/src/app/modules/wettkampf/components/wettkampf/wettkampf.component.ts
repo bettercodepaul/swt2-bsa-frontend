@@ -187,7 +187,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
    */
   public handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = this.wettkaempfe.concat(wettkaempfe);
-    for(let index = 0; index < this.wettkaempfe.length; index++) {
+    for (let index = 0; index < this.wettkaempfe.length; index++) {
       this.loadingData = true;
       this.loadMatches(this.wettkaempfe[index].id, index);
     }
@@ -218,13 +218,13 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     // loading times are different and would cause a wrong order if we would just load then step by step.
     this.rows[index] = toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
       this.mannschaften, this.currentVeranstaltung, matches, passen));
-    if(index === this.wettkaempfe.length - 1) {
+    if (index === this.wettkaempfe.length - 1) {
       this.loadingData = false;
     }
   }
   // method to change the name to a default, incase if there isn't a Team to for currentMannschaft
   public getTitle(): string {
-    let placeholder = 'Mannschaftsname';
+    let placeholder = 'Keine Mannschaft in der Liga';
     if (this.currentMannschaft !== undefined) {
       placeholder = this.currentMannschaft.name;
     }
