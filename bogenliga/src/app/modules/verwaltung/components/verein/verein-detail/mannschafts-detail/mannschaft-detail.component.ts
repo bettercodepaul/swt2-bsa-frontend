@@ -428,7 +428,7 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
         .subscribe((myNotification) => {
-
+          //Delete the requested Mannschaftsmitglied and update ruckennummer für all others.
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
                 .then((response) => {
@@ -438,22 +438,14 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
                   // console.log("TeamIdTest", test2);
                   this.mannschaftMitgliedProvider.findAllByTeamId(memberId)
                       .then((mannschaftMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
-
                         for (let i = 0; i < mannschaftMitgliedResponse.payload.length; i++) {
-
-                          // workaround because update method does not work due to "Vorname" bzw. "Nachname" Attributes
-                          // not existing consistently in backend/frontend objects.
-                          this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(
-                            mannschaftMitgliedResponse.payload[i].mannschaftsId,
-                            mannschaftMitgliedResponse.payload[i].dsbMitgliedId);
-
                           mannschaftMitgliedResponse.payload[i].rueckennummer = i + 1;
-                          this.mannschaftMitgliedProvider.save(mannschaftMitgliedResponse.payload[i]);
-
-
+                          this.mannschaftMitgliedProvider.update(
+                            mannschaftMitgliedResponse.payload[i]);
                         }
                       })
-                      .catch((mannschaftMitgliedResponse: void) => console.log('this is catch thingy, are there mannschaftsMitglieder?'));
+                      .catch((mannschaftMitgliedResponse: void) =>
+                        console.log(''));
                   this.loadTableRows();
                 })
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
