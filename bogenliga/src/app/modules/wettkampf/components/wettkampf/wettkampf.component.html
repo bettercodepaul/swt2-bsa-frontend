@@ -1,7 +1,7 @@
 <bla-common-dialog [config]="config">
   <form id="regionenForm"
         class="horizontal-form half-page">
-    <h3>{{currentMannschaft.name}}</h3>
+    <h3>{{getTitle()}}</h3>
     <h3>{{currentVeranstaltung.name}}</h3>
 
 
@@ -16,9 +16,9 @@
           <bla-selectionlist [id]="'quickSearch'"
                              [loading]="areVeranstaltungenloading"
                              [items]="veranstaltungen"
+                             [selectedItemIds]=[currentVeranstaltung.id]
                              [optionFieldSelector]="'name'"
-                             (onSelect)="onSelect($event); "
-                             [selectedItemIds]="[0]"
+                             (onSelect)="onSelect($event);"
                              [multipleSelections]="!multipleSelections"
                              style="width: 50%; height: 10em;">
 
@@ -37,8 +37,7 @@
           <select class="form-control"
                   id="vereine"
                   name="VereinName"
-                  [(ngModel)]="currentMannschaft"
-                  (ngModelChange)="loadErgebnisse(false)">
+                  [(ngModel)]="currentMannschaft">
             <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
           </select>
           <div class="invalid-feedback">
@@ -58,7 +57,6 @@
                 id="jahr"
                 name="Jahre"
                 [(ngModel)]="currentJahr"
-                (ngModelChange)="loadErgebnisse(false)"
                 disabled="true">
           <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
         </select>
@@ -71,13 +69,13 @@
     <div id="Button">
       <bla-button
         [id]="'showResultButton'"
-        (onClick)="loadErgebnisse(true); refresh();">
+        (onClick)="loadErgebnisse(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadErgebnisse(false); refresh();">
+        (onClick)="loadErgebnisse(undefined);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
       </bla-button>
     </div>
@@ -89,40 +87,39 @@
 
 
     <!-- Row 1 -->
-
     <div class="row">
-      <div id="Table1" *ngIf="show">
+      <div id="Table1">
         <h3>{{"Wettkampftag 1"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [rows]="rows[0]"
-                        [loading]="loadingwettkampf">
+        <bla-data-table [loading]="loadingData"
+                        [config]="config_table"
+                        [rows]="rows[0]">
         </bla-data-table>
       </div>
     </div>
     <div class="row" >
-      <div id="Table2" *ngIf="show">
+      <div id="Table2">
         <h3>{{"Wettkampftag 2"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [rows]="rows[1]"
-                        [loading]="loadingwettkampf">
+        <bla-data-table [loading]="loadingData"
+                        [config]="config_table"
+                        [rows]="rows[1]">
         </bla-data-table>
       </div>
     </div>
     <div class="row">
-      <div id="Table3"*ngIf="show">
+      <div id="Table3">
         <h3>{{"Wettkampftag 3"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [rows]="rows[2]"
-                        [loading]="loadingwettkampf">
+        <bla-data-table [loading]="loadingData"
+                        [config]="config_table"
+                        [rows]="rows[2]">
         </bla-data-table>
       </div>
     </div>
     <div class="row">
-      <div id="Table4" *ngIf="show">
+      <div id="Table4">
         <h3>{{"Wettkampftag 4"}}</h3>
-        <bla-data-table [config]="config_table"
-                        [rows]="rows[3]"
-                        [loading]="loadingwettkampf">
+        <bla-data-table [loading]="loadingData"
+                        [config]="config_table"
+                        [rows]="rows[3]">
         </bla-data-table>
       </div>
     </div>

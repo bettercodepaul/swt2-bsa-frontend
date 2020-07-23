@@ -136,6 +136,14 @@
           "TITLE":"Schusszettel speichern",
           "DESCRIPTION": "Schusszettel wird gespeichert..."
         },
+        "GESPEICHERT":{
+          "TITLE":"Schusszettel gespeichert",
+          "DESCRIPTION": "Schusszettel wurde erfolgreich gespeichert"
+        },
+        "RUECKENNUMMERZUHOCH":{
+          "TITLE":"Eingabefehler - Speichern abgebrochen",
+          "DESCRIPTION": "Eingegebene Rueckennummer existiert nicht in dieser Mannschaft"
+        },
         "WEITER":{
           "TITLE":"Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
@@ -161,10 +169,10 @@
       "TITLE": "Wettkampfergebnisse",
       "BUTTONS": {
         "ANZEIGEN": {
-          "LABEL": "Anzeigen"
+          "LABEL": "Aktuelle Mannschaft Anzeigen"
         },
         "ANZEIGENALL": {
-          "LABEL": "Alle anzeigen"
+          "LABEL": "Alle Mannschaften anzeigen"
         }
       },
       "FORM": {
@@ -1062,6 +1070,7 @@
          },
 
         "SAVE": "Speichern",
+        "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen",
         "WETTKAMPFTAGE": "Wettkampftage",
@@ -1187,6 +1196,10 @@
     "BENUTZER_NEU": {
       "TITLE": "BENUTZER - Neuanlage",
       "FORM": {
+        "DSBMITGLIED": {
+          "LABEL": "Vorhandenes DSB-Mitglied",
+          "PLACEHOLDER": "Bitte ein existierendes DSB-Mitgiled auswählen"
+        },
         "EMAIL": {
           "LABEL": "E-Mail",
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Benutzerkennung eingeben",
@@ -1286,8 +1299,8 @@
         "DESCRIPTION": "Sie haben keine Rechte diese Seite zu sehen oder Daten für diese Seite abzurufen."
       },
       "CONNECTION_ERROR": {
-        "TITLE": "Verbindungsprobleme",
-        "DESCRIPTION": "Der Service konnte nicht erreicht werden. Bitte probieren sie es später erneut."
+        "TITLE": "Sitzung abgelaufen",
+        "DESCRIPTION": "Es scheint als wäre Ihre Sitzung abgelaufen! Bitte loggen Sie sich erneut ein."
       },
       "CONNECTION_RESET": {
         "TITLE": "Verbindungsprobleme",
@@ -1332,6 +1345,7 @@
       "DELETE": "Löschen",
       "ADD": "Hinzufügen",
       "DOWNLOADRUECKENNUMMER": "Rueckennummern herunterladen",
+      "DOWNLOADLIZENZEN": "Lizenzen herunterladen",
       "DOWNLOAD": "Lizenz herunterladen",
       "MAP": "Ort anzeigen"
     },

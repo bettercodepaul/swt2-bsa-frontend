@@ -80,6 +80,7 @@ export const VERWALTUNG_ROUTES: Routes = [
   {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
   {path: 'vereine/:id/:id', component: MannschaftDetailComponent, canActivate: [DsbMannschaftDetailGuard]},
   {path: 'vereine/:id/:id/:id', component: SchuetzenComponent, canActivate: [SchuetzenNeuGuard]},
+
   {
     path: 'liga',
     component: LigaOverviewComponent,

@@ -5,5 +5,6 @@ export enum TableActionType {
   ADD,
   DOWNLOAD,
   DOWNLOADRUECKENNUMMER,
-  MAP
+  MAP,
+  DOWNLOADLIZENZEN
 }

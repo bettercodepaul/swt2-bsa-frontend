@@ -29,12 +29,11 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {forEach} from '@angular/router/src/utils/collection';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {environment} from '@environment';
-import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
 import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
+import {CurrentUserService, UserPermission} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
@@ -70,6 +69,7 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
   constructor(private vereinProvider: VereinDataProviderService,
               private downloadService: DownloadButtonResourceProviderService,
               private regionProvider: RegionDataProviderService,
+              private currentUserService: CurrentUserService,
               private mannschaftsDataProvider: DsbMannschaftDataProviderService,
               private veranstaltungsProvider: VeranstaltungDataProviderService,
               private router: Router,
@@ -269,6 +269,17 @@ export class VereinDetailComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<string>) => console.log(response));
   }
 
+  public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
+    const URL: string = new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path('pdf/lizenzen')
+      .path('?mannschaftid=' + versionedDataObject.id)
+      .build();
+    this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
+        .then((response: BogenligaResponse<string>) => console.log(response))
+        .catch((response: BogenligaResponse<string>) => console.log(response));
+  }
 
   public onView(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
