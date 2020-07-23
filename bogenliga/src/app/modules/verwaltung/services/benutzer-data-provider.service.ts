@@ -48,7 +48,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public update(payload: Array<BenutzerRolleDTO>): Promise<BogenligaResponse<Array<BenutzerDO>>> {
+  public updateRole(payload: Array<BenutzerRolleDTO>): Promise<BogenligaResponse<Array<BenutzerDO>>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -66,6 +66,29 @@ export class BenutzerDataProviderService extends DataProviderService {
           }
         });
     });
+  }
+
+  public resetPW(payload: CredentialsDTO): Promise<BogenligaResponse<Array<BenutzerDO>>> {
+
+    return new Promise((resolve, reject) => {
+      const newCredentialsDTO = new CredentialsDTO(payload.username, payload.password, payload.dsb_mitglied_id, payload.using2FA, payload.code);
+      this.sendUpdateRequest(newCredentialsDTO, resolve, reject);
+    });
+  }
+
+  public sendUpdateRequest(payload: CredentialsDTO, resolve, reject) {
+    this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('resetPW').build(), payload)
+        .then((data: VersionedDataTransferObject) => {
+          resolve(RequestResult.SUCCESS);
+
+        }, (error: HttpErrorResponse) => {
+
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
   }
 
   public deleteById(id: number): Promise<BogenligaResponse<void>> {
