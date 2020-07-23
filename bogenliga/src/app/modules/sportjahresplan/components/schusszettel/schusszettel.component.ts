@@ -237,7 +237,7 @@ export class SchusszettelComponent implements OnInit {
             type:        NotificationType.OK,
             userAction:  NotificationUserAction.ACCEPTED
         });
-          this.notificationService.discardNotification();
+          //this.notificationService.discardNotification();
         });
       this.dirtyFlag = false; // Daten gespeichert
     }
