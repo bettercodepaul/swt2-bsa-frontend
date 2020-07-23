@@ -68,7 +68,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.tobeRole = new RoleDO();
-    this.resetCredentials = new CredentialsDTO('', '', false, '');
+    this.resetCredentials = new CredentialsDTO('', '', null,false, '');
     this.notificationService.discardNotification();
 
     this.route.params.subscribe((params) => {
@@ -97,7 +97,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
     });
   }
 
-  public resetPW(ignore: any): void{
+  public resetPW(ignore: any): void {
     this.savePW = true;
     this.resetCredentials.username = this.currentBenutzerRolleDO[0].email;
     this.benutzerDataProvider.resetPW(this.resetCredentials)
