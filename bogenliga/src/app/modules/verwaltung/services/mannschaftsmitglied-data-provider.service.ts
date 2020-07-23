@@ -49,6 +49,8 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
   // param id: mannschaftsmitglied_id in table mannschaftsmitglied
+//  Never used, makes no sense.
+  /*
   public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
@@ -71,6 +73,8 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
         });
     });
   }
+
+   */
 
   // param teamId: mannschaftsmitglied_mannschaft_id
   // param memberId: mannschaftsmitglied_dsb_mitglied_id

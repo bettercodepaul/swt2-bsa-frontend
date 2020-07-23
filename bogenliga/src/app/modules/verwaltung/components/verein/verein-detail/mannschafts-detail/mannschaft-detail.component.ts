@@ -412,6 +412,12 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
     }
   }
 
+  /*
+  calls delete in mannschaftsmitglied-data-provider.service.ts - this method uses one id wich is the
+  mannschaftsmitglied_id in mannschaftsmitglied. All other methods work with member id and team id
+  CAREFUL: member_id can mean team_id or the id of the person!
+  the sent request is refused by the other end of rest communication
+   */
   // @param memberId: MannschaftsId of Mannschaft of Member to delete
   // @param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
   private deleteMitglied(memberId: number, dsbMitgliedId: number) {
@@ -430,6 +436,9 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
         .subscribe((myNotification) => {
           //Delete the requested Mannschaftsmitglied and update ruckennummer für all others.
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            console.log("mannschaftsmitgliedId" + dsbMitgliedId + "MemberId" + memberId);
+            this.mannschaftMitgliedProvider.findByMemberAndTeamId(dsbMitgliedId, memberId);
+
             this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
                 .then((response) => {
                   // const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
@@ -449,8 +458,6 @@ export class MannschaftDetailComponent extends CommonComponent implements OnInit
                   this.loadTableRows();
                 })
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
-
-
 
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
