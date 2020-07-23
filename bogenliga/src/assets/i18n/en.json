@@ -136,6 +136,14 @@
           "TITLE":"Save Shot-note",
           "DESCRIPTION": "Saving Shot-note..."
         },
+        "GESPEICHERT":{
+          "TITLE":"Saved",
+          "DESCRIPTION": "Save successful"
+        },
+        "RUECKENNUMMERZUHOCH":{
+          "TITLE":"Save not successful",
+          "DESCRIPTION": "Backnumber does not exist in this team"
+        },
         "WEITER":{
           "TITLE":"There are unsaved changes",
           "DESCRIPTION": "Are you sure you want to leave this dialog? All unsaved changes will be lost."
@@ -1279,8 +1287,8 @@
         "DESCRIPTION": "You don't have permission to enter or edit this page."
       },
       "CONNECTION_ERROR": {
-        "TITLE": "Connection Error",
-        "DESCRIPTION": "Could not reach service. Try again later."
+        "TITLE": "Session Token expired",
+        "DESCRIPTION": "It seems that your session has expired! Please login again."
       },
       "CONNECTION_RESET": {
         "TITLE": "Connection Reset",
