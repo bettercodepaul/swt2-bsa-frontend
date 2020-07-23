@@ -9,7 +9,6 @@ import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
 import {BenutzerRolleDTO} from '../../../types/datatransfer/benutzer-rolle-dto.class';
 import {RoleDTO} from '../../../types/datatransfer/role-dto.class';
 import {RoleDO} from '../../../types/role-do.class';
-import {ResetCredentialsDO} from '@user/types/resetcredentials-do.class';
 import {BENUTZER_DETAIL_CONFIG} from './benutzer-detail.config';
 
 import {
@@ -22,6 +21,7 @@ import {
 } from '../../../../shared/services/notification';
 import {RoleVersionedDataObject} from '../../../services/models/roles-versioned-data-object.class';
 import {RoleDataProviderService} from '../../../services/role-data-provider.service';
+import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_BENUTZER = 'benutzer_detail_save';
@@ -42,11 +42,10 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public tobeRole: RoleDO;
   public currentRoles: BenutzerRolleDTO[] = [];
   public roleNames;
-  public resetCredentials: ResetCredentialsDO;
+  public resetCredentials: CredentialsDTO;
   public saveLoading = false;
   public savePW = false;
   public selectedDTOs: RoleVersionedDataObject[];
-  public selectionRole;
   public enableButton = false;
   private notification: Notification = {
     id:          NOTIFICATION_SAVE_BENUTZER,
@@ -69,10 +68,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.tobeRole = new RoleDO();
-    this.resetCredentials = new ResetCredentialsDO();
-    console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
-
-
+    this.resetCredentials = new CredentialsDTO('', '', false, '');
     this.notificationService.discardNotification();
 
     this.route.params.subscribe((params) => {
@@ -103,12 +99,10 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
 
   public resetPW(ignore: any): void{
     this.savePW = true;
-
+    this.resetCredentials.username = this.currentBenutzerRolleDO[0].email;
     this.benutzerDataProvider.resetPW(this.resetCredentials)
       .then((response: BogenligaResponse<Array<BenutzerDO>>) => {
-        if (!isNullOrUndefined(response)
-          && !isNullOrUndefined(response.payload[0])
-          && !isNullOrUndefined(response.payload[0].id)) {
+        if (!isNullOrUndefined(response)) {
           this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
               .subscribe((myNotification) => {
                 if (myNotification.userAction === NotificationUserAction.ACCEPTED) {

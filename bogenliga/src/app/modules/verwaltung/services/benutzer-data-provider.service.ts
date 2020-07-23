@@ -16,8 +16,6 @@ import {fromPayloadArrayBenutzerRolle, fromPayloadBenutzerRolle} from '../mapper
 import {BenutzerDO} from '../types/benutzer-do.class';
 import {BenutzerRolleDO} from '../types/benutzer-rolle-do.class';
 import {BenutzerRolleDTO} from '../types/datatransfer/benutzer-rolle-dto.class';
-import {ResetCredentialsDO} from '@user/types/resetcredentials-do.class';
-import {ResetCredentialsDTO} from '@user/types/model/resetcredentials-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -70,15 +68,15 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public resetPW(payload: ResetCredentialsDO): Promise<BogenligaResponse<Array<BenutzerDO>>> {
+  public resetPW(payload: CredentialsDTO): Promise<BogenligaResponse<Array<BenutzerDO>>> {
 
     return new Promise((resolve, reject) => {
-      const resetCredentialsDTO = new ResetCredentialsDTO(payload.newPassword);
-      this.sendUpdateRequest(resetCredentialsDTO, resolve, reject);
+      const newCredentialsDTO = new CredentialsDTO(payload.username, payload.password, payload.using2FA, payload.code);
+      this.sendUpdateRequest(newCredentialsDTO, resolve, reject);
     });
   }
 
-  public sendUpdateRequest(payload: ResetCredentialsDTO, resolve, reject) {
+  public sendUpdateRequest(payload: CredentialsDTO, resolve, reject) {
     this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('resetPW').build(), payload)
         .then((data: VersionedDataTransferObject) => {
           resolve(RequestResult.SUCCESS);
