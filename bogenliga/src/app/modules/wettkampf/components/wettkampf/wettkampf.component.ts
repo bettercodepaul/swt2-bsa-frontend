@@ -23,7 +23,8 @@ import {MatchDO} from '@verwaltung/types/match-do.class';
 const ID_PATH_PARAM = 'id';
 @Component({
   selector:    'bla-mannschaft',
-  templateUrl: './wettkampf.component.html'
+  templateUrl: './wettkampf.component.html',
+  styleUrls:   ['./wettkampf.component.scss']
 })
 
 export class WettkampfComponent extends CommonComponent implements OnInit {
@@ -189,7 +190,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
     for (let index = 0; index < this.wettkaempfe.length; index++) {
       this.loadingData = true;
       this.loadMatches(this.wettkaempfe[index].id, index);
-      }
+    }
   }
 
   public loadMatches(wettkampfId: number, index: number) {
@@ -201,7 +202,7 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
 
 
   public handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number, index: number) {
-    this.matches.splice(index, 0, matches);
+    this.matches[index] = matches;
     this.loadPassen(wettkampfId, matches, index);
   }
 
@@ -211,20 +212,19 @@ export class WettkampfComponent extends CommonComponent implements OnInit {
         .catch((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen([], matches, index));
   }
 
-  public handleSuccessLoadPassen(passen: PasseDoClass[], matches, index: number): void {
-    this.passen.splice(index, 0, passen);
-    // We insert the new generated WettkampfErgebnis[] into index from this.rows. This is nesessary because the backend
+  public handleSuccessLoadPassen(passen: PasseDoClass[], matches, index: number) {
+    this.passen[index] = passen;
+    // Insert the new generated WettkampfErgebnis[] into index from this.rows. This is nesessary because the backend
     // loading times are different and would cause a wrong order if we would just load then step by step.
-    this.rows.splice(index, 0, (toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
-      this.mannschaften, this.currentVeranstaltung, matches, passen))));
-    // if index is at the end of this.wettkaempfe loading is finished and can be displayed in wettkampf.component.html
+    this.rows[index] = toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, undefined,
+      this.mannschaften, this.currentVeranstaltung, matches, passen));
     if (index === this.wettkaempfe.length - 1) {
       this.loadingData = false;
     }
   }
-  // method to change the name to a default, incase if there isnt a Team to for currentMannschaft
+  // method to change the name to a default, incase if there isn't a Team to for currentMannschaft
   public getTitle(): string {
-    let placeholder = 'Mannschaftsname';
+    let placeholder = 'Keine Mannschaft in der Liga';
     if (this.currentMannschaft !== undefined) {
       placeholder = this.currentMannschaft.name;
     }
