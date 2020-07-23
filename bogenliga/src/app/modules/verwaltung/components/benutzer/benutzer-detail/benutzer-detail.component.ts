@@ -68,7 +68,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.tobeRole = new RoleDO();
-    this.resetCredentials = new CredentialsDTO('', '', null,false, '');
+    this.resetCredentials = new CredentialsDTO('', '', null, false, '');
     this.notificationService.discardNotification();
 
     this.route.params.subscribe((params) => {
