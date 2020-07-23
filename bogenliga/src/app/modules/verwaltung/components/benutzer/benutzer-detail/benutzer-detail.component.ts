@@ -9,7 +9,7 @@ import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
 import {BenutzerRolleDTO} from '../../../types/datatransfer/benutzer-rolle-dto.class';
 import {RoleDTO} from '../../../types/datatransfer/role-dto.class';
 import {RoleDO} from '../../../types/role-do.class';
-import {CredentialsDO} from '@user/types/credentials-do.class';
+import {ResetCredentialsDO} from '@user/types/resetcredentials-do.class';
 import {BENUTZER_DETAIL_CONFIG} from './benutzer-detail.config';
 
 import {
@@ -42,7 +42,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public tobeRole: RoleDO;
   public currentRoles: BenutzerRolleDTO[] = [];
   public roleNames;
-  public credentials: CredentialsDO;
+  public resetCredentials: ResetCredentialsDO;
   public saveLoading = false;
   public savePW = false;
   public selectedDTOs: RoleVersionedDataObject[];
@@ -69,7 +69,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.tobeRole = new RoleDO();
-    this.credentials = new CredentialsDO();
+    this.resetCredentials = new ResetCredentialsDO();
     console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
 
 
@@ -104,7 +104,7 @@ export class BenutzerDetailComponent extends CommonComponent implements OnInit {
   public resetPW(ignore: any): void{
     this.savePW = true;
 
-    this.benutzerDataProvider.resetPW(this.credentials)
+    this.benutzerDataProvider.resetPW(this.resetCredentials)
       .then((response: BogenligaResponse<Array<BenutzerDO>>) => {
         if (!isNullOrUndefined(response)
           && !isNullOrUndefined(response.payload[0])
