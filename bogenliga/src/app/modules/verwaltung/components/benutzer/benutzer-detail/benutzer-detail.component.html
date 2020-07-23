@@ -106,7 +106,7 @@
                minlength="8"
                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"
                #userPwdFormNewPwd="ngModel"
-               [(ngModel)]="credentials.password"
+               [(ngModel)]="resetCredentials.newPassword"
                [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
                placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD_NEW.PLACEHOLDER' | translate }}">
         <div class="invalid-feedback">
