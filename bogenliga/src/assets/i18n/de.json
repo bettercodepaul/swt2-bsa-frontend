@@ -136,6 +136,14 @@
           "TITLE":"Schusszettel speichern",
           "DESCRIPTION": "Schusszettel wird gespeichert..."
         },
+        "GESPEICHERT":{
+          "TITLE":"Schusszettel gespeichert",
+          "DESCRIPTION": "Schusszettel wurde erfolgreich gespeichert"
+        },
+        "RUECKENNUMMERZUHOCH":{
+          "TITLE":"Eingabefehler - Speichern abgebrochen",
+          "DESCRIPTION": "Eingegebene Rueckennummer existiert nicht in dieser Mannschaft"
+        },
         "WEITER":{
           "TITLE":"Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
@@ -161,10 +169,10 @@
       "TITLE": "Wettkampfergebnisse",
       "BUTTONS": {
         "ANZEIGEN": {
-          "LABEL": "Anzeigen"
+          "LABEL": "Aktuelle Mannschaft Anzeigen"
         },
         "ANZEIGENALL": {
-          "LABEL": "Alle anzeigen"
+          "LABEL": "Alle Mannschaften anzeigen"
         }
       },
       "FORM": {
@@ -1061,6 +1069,7 @@
          },
 
         "SAVE": "Speichern",
+        "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen",
         "WETTKAMPFTAGE": "Wettkampftage",
@@ -1329,6 +1338,7 @@
       "DELETE": "Löschen",
       "ADD": "Hinzufügen",
       "DOWNLOADRUECKENNUMMER": "Rueckennummern herunterladen",
+      "DOWNLOADLIZENZEN": "Lizenzen herunterladen",
       "DOWNLOAD": "Lizenz herunterladen",
       "MAP": "Ort anzeigen"
     },
