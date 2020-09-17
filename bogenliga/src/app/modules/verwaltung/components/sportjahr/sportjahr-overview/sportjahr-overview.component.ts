@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponent} from '../../../../shared/components/common';
+import {CommonComponentDirective} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
@@ -25,7 +25,7 @@ export const NOTIFICATION_DELETE_SPORTJAHR = 'sportjahr_overview_delete';
   templateUrl: './sportjahr-overview.component.html',
   styleUrls:   ['./sportjahr-overview.component.scss']
 })
-export class SportjahrOverviewComponent extends CommonComponent implements OnInit {
+export class SportjahrOverviewComponent extends CommonComponentDirective implements OnInit {
 
   public config = SPORTJAHR_OVERVIEW_CONFIG;
   public rows: TableRow[];

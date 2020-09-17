@@ -1,7 +1,9 @@
 import {CurrentUserService, UserPermission} from '../../services/current-user';
-import {CommonComponent} from './common-component.class';
+import {CommonComponentDirective} from './common-component.class';
+import { Directive } from '@angular/core';
 
-export class CommonSecuredComponent extends CommonComponent {
+@Directive()
+export class CommonSecuredDirective extends CommonComponentDirective {
 
   public userPermissions: UserPermission[];
 

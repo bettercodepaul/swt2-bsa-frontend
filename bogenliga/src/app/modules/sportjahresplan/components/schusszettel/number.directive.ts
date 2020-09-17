@@ -3,6 +3,7 @@ import {NotificationOrigin, NotificationService, NotificationSeverity, Notificat
 /**
  * A element-directive to ensure only-number inputs.
  */
+@Directive()
 export class NumberOnlyDirective {
 
   protected el: ElementRef;

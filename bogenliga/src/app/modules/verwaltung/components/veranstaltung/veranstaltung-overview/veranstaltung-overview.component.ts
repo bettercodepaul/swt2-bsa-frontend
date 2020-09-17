@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponent} from '../../../../shared/components/common';
+import {CommonComponentDirective} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
@@ -32,7 +32,7 @@ export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete'
   templateUrl: './veranstaltung-overview.component.html',
   styleUrls:   ['./veranstaltung-overview.component.scss']
 })
-export class VeranstaltungOverviewComponent extends CommonComponent implements OnInit {
+export class VeranstaltungOverviewComponent extends CommonComponentDirective implements OnInit {
 
   public table_config = VERANSTALTUNG_OVERVIEW_TABLE_CONFIG;
 

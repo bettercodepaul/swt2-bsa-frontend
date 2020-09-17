@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent, toTableRows} from '@shared/components';
+import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {MATCH_TABLE_CONFIG, SPORTJAHRESPLAN_CONFIG, WETTKAMPF_TABLE_CONFIG} from './sportjahresplan.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
@@ -17,8 +17,6 @@ import {NotificationService} from '@shared/services/notification';
 import {environment} from '@environment';
 import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
-import {el} from '@angular/platform-browser/testing/src/browser_util';
-
 
 
 @Component({
@@ -26,7 +24,7 @@ import {el} from '@angular/platform-browser/testing/src/browser_util';
   templateUrl: './sportjahresplan.component.html',
   styleUrls:   ['./sportjahresplan.component.scss']
 })
-export class SportjahresplanComponent extends CommonComponent implements OnInit {
+export class SportjahresplanComponent extends CommonComponentDirective implements OnInit {
 
   public config = SPORTJAHRESPLAN_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;

@@ -5,19 +5,19 @@ import {HomeComponent} from '@home/components/home/home.component';
 export const ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
-  {path: 'wettkaempfe', loadChildren: 'src/app/modules/wettkampf/wettkampf.module#WettkampfModule'},
-  {path: 'wettkaempfe/:id', loadChildren: 'src/app/modules/wettkampf/wettkampf.module#WettkampfModule'},
-  {path: 'verwaltung', loadChildren: 'src/app/modules/verwaltung/verwaltung.module#VerwaltungModule'},
+  {path: 'wettkaempfe', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
+  {path: 'wettkaempfe/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
+  {path: 'verwaltung', loadChildren: () => import('src/app/modules/verwaltung/verwaltung.module').then((m) => m.VerwaltungModule)},
   {
     path: 'sportjahresplan',
-    loadChildren: 'src/app/modules/sportjahresplan/sportjahresplan.module#SportjahresplanModule'
+    loadChildren: () => import('src/app/modules/sportjahresplan/sportjahresplan.module').then((m) => m.SportjahresplanModule)
   },
-  {path: 'user', loadChildren: 'src/app/modules/user/user.module#UserModule'},
-  {path: 'regionen', loadChildren: 'src/app/modules/regionen/regionen.module#RegionenModule'},
-  {path: 'vereine', loadChildren: 'src/app/modules/vereine/vereine.module#VereineModule'},
-  {path: 'vereine/:id', loadChildren: 'src/app/modules/vereine/vereine.module#VereineModule'},
-  {path: 'playground', loadChildren: 'src/app/modules/playground/playground.module#PlaygroundModule'},
-  {path: 'ligatabelle', loadChildren: 'src/app/modules/ligatabelle/ligatabelle.module#LigatabelleModule'},
-  {path: 'ligatabelle/:id', loadChildren: 'src/app/modules/ligatabelle/ligatabelle.module#LigatabelleModule'},
-  {path: 'spotter', loadChildren: 'src/app/modules/spotter/spotter.module#SpotterModule'},
+  {path: 'user', loadChildren: () => import('src/app/modules/user/user.module').then((m) => m.UserModule)},
+  {path: 'regionen', loadChildren: () => import('src/app/modules/regionen/regionen.module').then((m) => m.RegionenModule)},
+  {path: 'vereine', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
+  {path: 'vereine/:id', loadChildren: () => import('src/app/modules/vereine/vereine.module').then((m) => m.VereineModule)},
+  {path: 'playground', loadChildren: () => import('src/app/modules/playground/playground.module').then((m) => m.PlaygroundModule)},
+  {path: 'ligatabelle', loadChildren: () => import('src/app/modules/ligatabelle/ligatabelle.module').then((m) => m.LigatabelleModule)},
+  {path: 'ligatabelle/:id', loadChildren: () => import('src/app/modules/ligatabelle/ligatabelle.module').then((m) => m.LigatabelleModule)},
+  {path: 'spotter', loadChildren: () => import('src/app/modules/spotter/spotter.module').then((m) => m.SpotterModule)},
 ];

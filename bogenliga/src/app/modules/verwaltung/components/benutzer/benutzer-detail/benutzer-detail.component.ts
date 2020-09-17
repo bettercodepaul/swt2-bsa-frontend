@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {BenutzerDO} from '../../../types/benutzer-do.class';
 import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
@@ -32,7 +32,7 @@ const NOTIFICATION_SAVE_BENUTZER = 'benutzer_detail_save';
   templateUrl: './benutzer-detail.component.html',
   styleUrls:   ['./benutzer-detail.component.scss']
 })
-export class BenutzerDetailComponent extends CommonComponent implements OnInit {
+export class BenutzerDetailComponent extends CommonComponentDirective implements OnInit {
 
   @Output() public onAction = new EventEmitter<void>();
   public config = BENUTZER_DETAIL_CONFIG;
