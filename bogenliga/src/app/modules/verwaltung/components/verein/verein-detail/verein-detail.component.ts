@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
   ButtonType,
-  CommonComponent,
+  CommonComponentDirective,
   hideLoadingIndicator,
   showDeleteLoadingIndicatorIcon,
   toTableRows
@@ -50,7 +50,7 @@ const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure
   templateUrl: './verein-detail.component.html',
   styleUrls:   ['./verein-detail.component.scss']
 })
-export class VereinDetailComponent extends CommonComponent implements OnInit {
+export class VereinDetailComponent extends CommonComponentDirective implements OnInit {
   public regionType = 'KREIS';
   public config = VEREIN_DETAIL_CONFIG;
   public config_table = VEREIN_DETAIL_TABLE_CONFIG;

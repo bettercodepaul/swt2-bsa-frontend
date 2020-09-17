@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponent} from '../../../../shared/components/common';
+import {CommonComponentDirective} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
@@ -24,7 +24,7 @@ export const NOTIFICATION_DELETE_REGIONEN = 'region_overview_delete';
   templateUrl: './region-overview.component.html',
   styleUrls: ['./region-overview.component.scss']
 })
-export class RegionOverviewComponent extends CommonComponent implements OnInit {
+export class RegionOverviewComponent extends CommonComponentDirective implements OnInit {
 
   public config = REGION_OVERVIEW_CONFIG;
   public rows: TableRow[];

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent} from '@shared/components';
+import {CommonComponentDirective} from '@shared/components';
 import {ButtonType} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
@@ -35,7 +35,7 @@ const NOTIFICATION_UPDATE_LIGA = 'liga_detail_update';
   templateUrl: './liga-detail.component.html',
   styleUrls: ['./liga-detail.component.scss']
 })
-export class LigaDetailComponent extends CommonComponent implements OnInit {
+export class LigaDetailComponent extends CommonComponentDirective implements OnInit {
   public config = LIGA_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentLiga: LigaDO = new LigaDO();

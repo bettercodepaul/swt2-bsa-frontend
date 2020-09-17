@@ -1,7 +1,7 @@
 
 import {Component, NgModule, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent} from '@shared/components';
+import {CommonComponentDirective} from '@shared/components';
 import {ButtonType} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
@@ -45,7 +45,7 @@ const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
   styleUrls:   ['./wettkampftage.component.scss']
 })
 
-export class WettkampftageComponent extends CommonComponent implements OnInit {
+export class WettkampftageComponent extends CommonComponentDirective implements OnInit {
   public config = WETTKMAPFTAGE_CONFIG;
   public ButtonType = ButtonType;
 

@@ -4,7 +4,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined} from '@shared/functions';
 import {CredentialsDO} from '@user/types/credentials-do.class';
 import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
 import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
 import {BenutzerDO} from '../../../types/benutzer-do.class';
 import {BENUTZER_NEU_CONFIG} from './benutzer-neu.config';
@@ -31,7 +31,7 @@ const NOTIFICATION_SAVE_BENUTZER = 'benutzer_neu_save';
   templateUrl: './benutzer-neu.component.html',
   styleUrls:   ['./benutzer-neu.component.scss']
 })
-export class BenutzerNeuComponent extends CommonComponent implements OnInit {
+export class BenutzerNeuComponent extends CommonComponentDirective implements OnInit {
 
   public config = BENUTZER_NEU_CONFIG;
   public ButtonType = ButtonType;

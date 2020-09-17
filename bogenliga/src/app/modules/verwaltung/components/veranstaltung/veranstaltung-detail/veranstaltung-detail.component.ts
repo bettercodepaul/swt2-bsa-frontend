@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertType, ButtonType, CommonComponent, toTableRows} from '@shared/components';
+import {AlertType, ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -52,7 +52,7 @@ const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
   templateUrl: './veranstaltung-detail.component.html',
   styleUrls:   ['./veranstaltung-detail.component.scss']
 })
-export class VeranstaltungDetailComponent extends CommonComponent implements OnInit {
+export class VeranstaltungDetailComponent extends CommonComponentDirective implements OnInit {
   public config = VERANSTALTUNG_DETAIL_CONFIG;
   public tableConfig = VERANSTALTUNG_DETAIL_TABLE_Config;
   public ButtonType = ButtonType;

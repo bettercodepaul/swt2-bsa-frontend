@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 import {CurrentUserService, UserPermission} from '../../../services/current-user';
-import {CommonSecuredComponent} from '../../common/common-secured-component.class';
+import {CommonSecuredDirective} from '../../common/common-secured-component.class';
 import {TableRow} from '../../tables/types/table-row.class';
 import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
 
@@ -10,7 +10,7 @@ import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
   templateUrl: './overview-dialog.component.html',
   styleUrls:   ['./overview-dialog.component.scss']
 })
-export class OverviewDialogComponent extends CommonSecuredComponent implements OnInit {
+export class OverviewDialogComponent extends CommonSecuredDirective implements OnInit {
 
   @Input() public config: OverviewDialogConfig;
   @Input() public rows: TableRow[];

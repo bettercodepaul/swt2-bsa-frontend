@@ -83,7 +83,7 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
 })
 export class VerwaltungModule {
 
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: [
@@ -111,7 +111,7 @@ export class VerwaltungModule {
     };
   }
 
-  static forChild(): ModuleWithProviders {
+  static forChild(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: []
