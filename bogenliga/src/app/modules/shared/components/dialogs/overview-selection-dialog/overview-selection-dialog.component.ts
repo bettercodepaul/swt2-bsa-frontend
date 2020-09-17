@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 import {CurrentUserService, UserPermission} from '../../../services/current-user';
-import {CommonSecuredComponent} from '../../common/common-secured-component.class';
+import {CommonSecuredDirective} from '../../common/common-secured-component.class';
 import {TableRow} from '../../tables/types/table-row.class';
 import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
@@ -16,7 +16,7 @@ import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltu
   templateUrl: './overview-selection-dialog.component.html',
   styleUrls:   ['./overview-selection-dialog.component.scss']
 })
-export class OverviewSelectionDialogComponent extends CommonSecuredComponent implements OnInit {
+export class OverviewSelectionDialogComponent extends CommonSecuredDirective implements OnInit {
 
   @Input() public config: OverviewDialogConfig;
   @Input() public rows: TableRow[];

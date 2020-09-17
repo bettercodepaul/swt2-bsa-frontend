@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+// import {NotificationService} from '@shared/services';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent, toTableRows} from '@shared/components';
+import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './ligatabelle.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
@@ -8,28 +9,12 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {WettkampfDataProviderService} from '../../../wettkampf/services/wettkampf-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {} from '@shared/components/forms/';
 import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis-do.class';
-import {LigatabelleErgebnisDTO} from '../../../wettkampf/types/datatransfer/wettkampf-ergebnis-dto.class';
-// import {NotificationService} from '@shared/services';
-import { RouterModule, Routes } from '@angular/router';
 import {isUndefined} from '@shared/functions';
-import {Subscription} from 'rxjs';
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
-import {
-  Notification,
-  NotificationOrigin,
-  NotificationService,
-  NotificationSeverity,
-  NotificationType,
-  NotificationUserAction
-} from '@shared/services/notification';
-import {forEach} from '@angular/router/src/utils/collection';
+import {NotificationService} from '@shared/services/notification';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
-import {SportjahrDataProviderService} from '@verwaltung/services/sportjahr-data-provider.service';
-import {UserPermission} from '@shared/services';
-import {SportjahrDO} from '@verwaltung/types/sportjahr-do.class';
 
 const ID_PATH_PARAM = 'id';
 
@@ -39,7 +24,7 @@ const ID_PATH_PARAM = 'id';
   templateUrl: './ligatabelle.component.html',
   styleUrls:   ['./ligatabelle.component.scss']
 })
-export class LigatabelleComponent extends CommonComponent implements OnInit {
+export class LigatabelleComponent extends CommonComponentDirective implements OnInit {
 
 
   constructor(private router: Router,
@@ -47,8 +32,7 @@ export class LigatabelleComponent extends CommonComponent implements OnInit {
               private notificationService: NotificationService,
               private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private ligatabelleDataProvider: WettkampfDataProviderService,
-              private ligaDataProviderService: LigaDataProviderService,
-              private sportjahrDataProviderService: SportjahrDataProviderService) {
+              private ligaDataProviderService: LigaDataProviderService) {
     super();
   }
 
