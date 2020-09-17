@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
@@ -21,6 +21,7 @@ import {
 } from '../../../../shared/services/notification';
 import {RoleVersionedDataObject} from '../../../services/models/roles-versioned-data-object.class';
 import {RoleDataProviderService} from '../../../services/role-data-provider.service';
+import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_BENUTZER = 'benutzer_detail_save';
@@ -33,6 +34,7 @@ const NOTIFICATION_SAVE_BENUTZER = 'benutzer_detail_save';
 })
 export class BenutzerDetailComponent extends CommonComponentDirective implements OnInit {
 
+  @Output() public onAction = new EventEmitter<void>();
   public config = BENUTZER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentBenutzerRolleDO: BenutzerRolleDO[];
@@ -40,9 +42,20 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
   public tobeRole: RoleDO;
   public currentRoles: BenutzerRolleDTO[] = [];
   public roleNames;
-
+  public resetCredentials: CredentialsDTO;
   public saveLoading = false;
+  public savePW = false;
   public selectedDTOs: RoleVersionedDataObject[];
+  public enableButton = false;
+  private notification: Notification = {
+    id:          NOTIFICATION_SAVE_BENUTZER,
+    title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
+    description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
+    severity:    NotificationSeverity.INFO,
+    origin:      NotificationOrigin.USER,
+    type:        NotificationType.OK,
+    userAction:  NotificationUserAction.PENDING
+  };
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService,
               private roleDataProvider: RoleDataProviderService,
@@ -55,8 +68,7 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
   ngOnInit() {
     this.loading = true;
     this.tobeRole = new RoleDO();
-
-
+    this.resetCredentials = new CredentialsDTO('', '', null, false, '');
     this.notificationService.discardNotification();
 
     this.route.params.subscribe((params) => {
@@ -85,7 +97,29 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
     });
   }
 
-  public onUpdate(ignore: any): void {
+  public resetPW(ignore: any): void {
+    this.savePW = true;
+    this.resetCredentials.username = this.currentBenutzerRolleDO[0].email;
+    this.benutzerDataProvider.resetPW(this.resetCredentials)
+      .then((response: BogenligaResponse<Array<BenutzerDO>>) => {
+        if (!isNullOrUndefined(response)) {
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.savePW = false;
+                  this.router.navigateByUrl('/verwaltung/benutzer');
+                }
+              });
+          this.notificationService.showNotification(this.notification);
+        }
+        }, (response: BogenligaResponse<BenutzerDO>) => {
+        console.log('Failed');
+        this.savePW = false;
+      });
+
+  }
+
+  public resetRole(ignore: any): void {
     this.saveLoading = true;
 
     // persist
@@ -100,20 +134,11 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
       this.currentRoles.push(currentBenutzerRolleDTO);
     });
 
-    this.benutzerDataProvider.update(this.currentRoles)
+    this.benutzerDataProvider.updateRole(this.currentRoles)
         .then((response: BogenligaResponse<Array<BenutzerDO>>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload[0])
             && !isNullOrUndefined(response.payload[0].id)) {
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_BENUTZER,
-              title:       'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.TITLE',
-              description: 'MANAGEMENT.BENUTZER_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
                 .subscribe((myNotification) => {
@@ -123,7 +148,7 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
                   }
                 });
 
-            this.notificationService.showNotification(notification);
+            this.notificationService.showNotification(this.notification);
           }
 
         }, (response: BogenligaResponse<BenutzerDO>) => {
@@ -173,6 +198,7 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
   public onSelect($event: RoleVersionedDataObject[]): void {
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
+    this.enableButton = true;
   }
 
   public getSelectedDTO(): string {

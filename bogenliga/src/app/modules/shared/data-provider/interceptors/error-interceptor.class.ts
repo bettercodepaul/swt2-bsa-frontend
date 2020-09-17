@@ -30,6 +30,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                    (error: any, caught: Observable<HttpEvent<any>>) => {
 
                      // handle connection (0), client (4xx), server (5xx) and custom error codes (9xx)
+                     // if it is a connection error, it could be a masked error indicated by an expired session token
+                     // this is very likely, so the user should be routed to the login-site again and
+                     // of course for the system itself the currentUser should be logged out
                      if (error.status === 0) {
                        console.log('Exipred Token', error);
                        this.router.navigateByUrl('user/login');

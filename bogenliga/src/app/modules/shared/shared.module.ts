@@ -42,6 +42,8 @@ import {SetzlisteDownloadComponent} from '@shared/components/buttons/setzliste-d
 import {BogenkontrolllisteDownloadComponent} from '@shared/components/buttons/bogenkontrollliste-download/bogenkontrollliste-download.component';
 import {SchusszettelDownloadComponent} from '@shared/components/buttons/schusszettel-download/schusszettel-download.component';
 import {MeldezettelDownloadComponent} from '@shared/components/buttons/meldezettel-download/meldezettel-download.component';
+import {OverviewSelectionDialogComponent} from '@shared/components/dialogs/overview-selection-dialog/overview-selection-dialog.component';
+
 import {StorageServiceModule} from 'ngx-webstorage-service';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
@@ -95,7 +97,7 @@ import {fab} from '@fortawesome/free-brands-svg-icons';
     SetzlisteDownloadComponent,
     SchusszettelDownloadComponent,
     MeldezettelDownloadComponent,
-
+    OverviewSelectionDialogComponent,
   ],
   declarations: [
     ButtonComponent,
@@ -128,6 +130,7 @@ import {fab} from '@fortawesome/free-brands-svg-icons';
     SchusszettelDownloadComponent,
     SetzlisteDownloadComponent,
     MeldezettelDownloadComponent,
+    OverviewSelectionDialogComponent,
   ]
 })
 export class SharedModule {

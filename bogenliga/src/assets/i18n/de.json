@@ -136,6 +136,14 @@
           "TITLE":"Schusszettel speichern",
           "DESCRIPTION": "Schusszettel wird gespeichert..."
         },
+        "GESPEICHERT":{
+          "TITLE":"Schusszettel gespeichert",
+          "DESCRIPTION": "Schusszettel wurde erfolgreich gespeichert"
+        },
+        "RUECKENNUMMERZUHOCH":{
+          "TITLE":"Eingabefehler - Speichern abgebrochen",
+          "DESCRIPTION": "Eingegebene Rueckennummer existiert nicht in dieser Mannschaft"
+        },
         "WEITER":{
           "TITLE":"Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
@@ -161,10 +169,10 @@
       "TITLE": "Wettkampfergebnisse",
       "BUTTONS": {
         "ANZEIGEN": {
-          "LABEL": "Anzeigen"
+          "LABEL": "Aktuelle Mannschaft anzeigen"
         },
         "ANZEIGENALL": {
-          "LABEL": "Alle anzeigen"
+          "LABEL": "Alle Mannschaften anzeigen"
         }
       },
       "FORM": {
@@ -440,6 +448,7 @@
           "LABEL": "Mannschaftsnummer",
           "PLACEHOLDER": "Mannschaftsnummer"
         },
+        "RESET_PASSWORD": "Passwort ändern",
         "SAVE": "Speichern",
         "UPDATE": "Ändern",
         "DELETE": "Löschen"
@@ -1061,6 +1070,7 @@
          },
 
         "SAVE": "Speichern",
+        "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen",
         "WETTKAMPFTAGE": "Wettkampftage",
@@ -1160,20 +1170,26 @@
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
           "ERROR": "Bitte eine gültige Email eingeben."
         },
-        "ROLEOLD": {
+        "ROLE_OLD": {
           "LABEL": "Aktuelle Rolle",
           "PLACEHOLDER": "aktuelle Rolle"
         },
-        "ROLENEW": {
+        "ROLE_NEW": {
           "LABEL": "Zukünftige Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen"
         },
-        "UPDATE": "Aktualisieren"
+        "PASSWORD_NEW": {
+          "LABEL": "Neues Passwort",
+          "PLACEHOLDER": "Bitte neues Passwort eingeben",
+          "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
+        },
+        "ROLE_UPDATE": "Rolle ändern",
+        "PW_UPDATE": "Passwort ändern"
       },
       "NOTIFICATION": {
         "UPDATE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Die Rolle des Benutzer wurde erfolgreich geändert."
+          "DESCRIPTION": "Die Benutzerdaten wurden erfolgreich geändert."
         }
       }
     },
