@@ -1,7 +1,8 @@
-import {Input} from '@angular/core';
+import { Input, Directive } from '@angular/core';
 import {UserPermission} from '../../services/current-user';
 
-export class CommonComponent {
+@Directive()
+export class CommonComponentDirective {
   @Input() public id: string;
   @Input() public visible = true;
   @Input() public loading = false;

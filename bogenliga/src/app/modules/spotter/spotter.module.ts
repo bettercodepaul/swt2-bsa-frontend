@@ -27,7 +27,7 @@ import { InterfaceComponent, AuthenticationComponent } from './components';
 
 })
 export class SpotterModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: [
@@ -37,7 +37,7 @@ export class SpotterModule {
     };
   }
 
-  static forChild(): ModuleWithProviders {
+  static forChild(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: []

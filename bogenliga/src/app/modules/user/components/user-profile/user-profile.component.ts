@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ButtonType, CommonComponent} from '../../../shared/components';
+import {ButtonType, CommonComponentDirective} from '../../../shared/components';
 import {BogenligaResponse} from '../../../shared/data-provider';
 import {NotificationService} from '../../../shared/services/notification';
 import {UserProfileDataProviderService} from '../../services/user-profile-data-provider.service';
@@ -13,7 +13,7 @@ import {USER_PROFILE_CONFIG} from './user-profile.config';
   styleUrls:   ['./user-profile.component.scss'],
   providers:   []
 })
-export class UserProfileComponent extends CommonComponent implements OnInit {
+export class UserProfileComponent extends CommonComponentDirective implements OnInit {
 
   public config = USER_PROFILE_CONFIG;
   public ButtonType = ButtonType;

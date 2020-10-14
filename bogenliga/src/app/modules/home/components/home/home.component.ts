@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HOME_CONFIG} from './home.config';
 import {BogenligaResponse} from '@shared/data-provider';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
-import {CommonComponent, toTableRows} from '@shared/components';
+import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {WETTKAMPF_TABLE_CONFIG} from '@home/components/home/wettkampf/wettkampf.config';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
@@ -20,7 +20,7 @@ import {CurrentUserService} from '@shared/services';
   templateUrl: './home.component.html',
   styleUrls:   ['./home.component.scss']
 })
-export class HomeComponent extends CommonComponent implements OnInit {
+export class HomeComponent extends CommonComponentDirective implements OnInit {
 
   public config = HOME_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;

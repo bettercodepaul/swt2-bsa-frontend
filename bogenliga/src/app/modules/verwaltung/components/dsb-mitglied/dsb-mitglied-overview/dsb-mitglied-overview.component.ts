@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponent} from '../../../../shared/components/common';
+import {CommonComponentDirective} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
@@ -25,7 +25,7 @@ export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
   templateUrl: './dsb-mitglied-overview.component.html',
   styleUrls: ['./dsb-mitglied-overview.component.scss']
 })
-export class DsbMitgliedOverviewComponent extends CommonComponent implements OnInit {
+export class DsbMitgliedOverviewComponent extends CommonComponentDirective implements OnInit {
 
   public config = DSB_MITGLIED_OVERVIEW_CONFIG;
   public rows: TableRow[];

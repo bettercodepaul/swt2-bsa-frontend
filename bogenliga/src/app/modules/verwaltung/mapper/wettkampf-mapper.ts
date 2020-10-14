@@ -25,7 +25,8 @@ export function ToDO(payload: WettkampfDTO): WettkampfDO {
     payload.wettkampfTag,
     payload.wettkampfDisziplinId,
     payload.wettkampfTypId,
-    payload.version);
+    payload.version,
+    payload.wettkampfAusrichter);
 }
 
 export function ToDTO(payload: WettkampfDO): WettkampfDTO {
@@ -38,5 +39,6 @@ export function ToDTO(payload: WettkampfDO): WettkampfDTO {
     payload.wettkampfTag,
     payload.wettkampfDisziplinId,
     payload.wettkampfTypId,
-    payload.version);
+    payload.version,
+    payload.wettkampfAusrichter);
 }

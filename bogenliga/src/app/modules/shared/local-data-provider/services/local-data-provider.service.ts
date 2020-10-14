@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {isNullOrUndefined} from '@shared/functions';
-import {isStorageAvailable} from 'angular-webstorage-service';
+import {isStorageAvailable} from 'ngx-webstorage-service';
 import {LocalStorageDataProvider} from './data-sources/local-storage-data-provider.class';
 import {SessionStorageDataProvider} from './data-sources/session-storage-data-provider.class';
 

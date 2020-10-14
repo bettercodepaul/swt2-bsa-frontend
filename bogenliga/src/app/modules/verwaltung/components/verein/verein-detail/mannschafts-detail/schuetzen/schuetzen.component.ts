@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   ButtonType,
-  CommonComponent, hideLoadingIndicator,
+  CommonComponentDirective, hideLoadingIndicator,
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../../../shared/components';
@@ -47,7 +47,7 @@ const NOTIFICATION_NO_WETTKAMPFE = 'keine_wettkaempfe_fehler';
   templateUrl: './schuetzen.component.html',
   styleUrls:   ['./schuetzen.component.scss']
 })
-export class SchuetzenComponent extends CommonComponent implements OnInit {
+export class SchuetzenComponent extends CommonComponentDirective implements OnInit {
   public config = SCHUETZEN_CONFIG;
   public table_config = SCHUETZE_TABLE_CONFIG;
   public rows: TableRow[];

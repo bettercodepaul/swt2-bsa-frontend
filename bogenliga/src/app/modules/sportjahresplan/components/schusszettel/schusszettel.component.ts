@@ -189,7 +189,7 @@ export class SchusszettelComponent implements OnInit {
         description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
         severity: NotificationSeverity.INFO,
         origin: NotificationOrigin.USER,
-        type: NotificationType.OK,
+        // type: NotificationType.OK, //--TO-DO Maximilian
         userAction: NotificationUserAction.PENDING
       });
 
@@ -217,9 +217,26 @@ export class SchusszettelComponent implements OnInit {
           this.match2 = data.payload[1];
           // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
           this.ngOnInit();
-          this.notificationService.discardNotification();
+          this.notificationService.showNotification({
+            id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
+            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.SYSTEM,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.ACCEPTED
+          });
         }, (error) => {
           console.error(error);
+          this.notificationService.showNotification({
+            id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
+            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.SYSTEM,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.ACCEPTED
+        });
           this.notificationService.discardNotification();
         });
       this.dirtyFlag = false; // Daten gespeichert

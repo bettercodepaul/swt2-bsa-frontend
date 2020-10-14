@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommonComponent} from '../../common';
+import {CommonComponentDirective} from '../../common';
 import {NavigationDialogConfig} from '../types/navigation-dialog-config.interface';
 
 @Component({
@@ -7,7 +7,7 @@ import {NavigationDialogConfig} from '../types/navigation-dialog-config.interfac
   templateUrl: './navigation-dialog.component.html',
   styleUrls:   ['./navigation-dialog.component.scss']
 })
-export class NavigationDialogComponent extends CommonComponent implements OnInit {
+export class NavigationDialogComponent extends CommonComponentDirective implements OnInit {
 
   @Input() public config: NavigationDialogConfig;
 

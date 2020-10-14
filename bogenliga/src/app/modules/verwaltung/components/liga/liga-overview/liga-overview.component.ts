@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponent} from '../../../../shared/components/common';
+import {CommonComponentDirective} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
@@ -24,7 +24,7 @@ export const NOTIFICATION_DELETE_LIGA = 'liga_overview_delete';
   templateUrl: './liga-overview.component.html',
   styleUrls: ['./liga-overview.component.scss']
 })
-export class LigaOverviewComponent extends CommonComponent implements OnInit {
+export class LigaOverviewComponent extends CommonComponentDirective implements OnInit {
 
   public config = LIGA_OVERVIEW_CONFIG;
   public rows: TableRow[];

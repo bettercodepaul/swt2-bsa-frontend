@@ -52,7 +52,7 @@ import {
 
 
 export class SportjahresplanModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: [

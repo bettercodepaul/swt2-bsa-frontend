@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponent} from '@shared/components';
+import {CommonComponentDirective} from '@shared/components';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -24,7 +24,7 @@ export const NOTIFICATION_DELETE_BENUTZER = 'benutzer_overview_delete';
   templateUrl: './benutzer-overview.component.html',
   styleUrls:   ['./benutzer-overview.component.scss']
 })
-export class BenutzerOverviewComponent extends CommonComponent implements OnInit {
+export class BenutzerOverviewComponent extends CommonComponentDirective implements OnInit {
 
   public configActive = BENUTZER_OVERVIEW_CONFIG_ACTIVE;
   public rowsActive: TableRow[];

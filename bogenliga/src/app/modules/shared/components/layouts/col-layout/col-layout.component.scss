@@ -5,6 +5,6 @@
   flex-direction: row;
 }
 
-:host /deep/ * {
+:host ::ng-deep * {
   flex-grow: 1;
 }

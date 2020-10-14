@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {
   Notification,
@@ -31,7 +31,7 @@ const NOTIFICATION_UPDATE_REGION = 'region_detail_update';
   templateUrl: './region-detail.component.html',
   styleUrls:   ['./region-detail.component.scss']
 })
-export class RegionDetailComponent extends CommonComponent implements OnInit {
+export class RegionDetailComponent extends CommonComponentDirective implements OnInit {
   public config = REGION_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentRegion: RegionDO = new RegionDO();
