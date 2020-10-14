@@ -28,12 +28,12 @@ export class UserPwdDataProviderService extends DataProviderService {
 
     return new Promise((resolve, reject) => {
       const changeCredentialsDTO = new ChangeCredentialsDTO(changeCredentialsDO.password, changeCredentialsDO.newPassword);
-      this.sendupdaterequest(changeCredentialsDTO, resolve, reject);
+      this.sendUpdateRequest(changeCredentialsDTO, resolve, reject);
     });
   }
 
 
-  public sendupdaterequest(changeCredentialsDTO: ChangeCredentialsDTO, resolve, reject) {
+  public sendUpdateRequest(changeCredentialsDTO: ChangeCredentialsDTO, resolve, reject) {
     this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), changeCredentialsDTO)
       .then((data: VersionedDataTransferObject) => {
         resolve(RequestResult.SUCCESS);

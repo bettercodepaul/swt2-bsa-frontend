@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponent} from '../../../../shared/components/common';
+import {CommonComponentDirective} from '../../../../shared/components/common';
 import {toTableRows} from '../../../../shared/components/tables';
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
@@ -15,7 +15,7 @@ import {WETTKAMPFKLASE_OVERVIEW_CONFIG} from './wettkampfklasse-overview.config'
   templateUrl: './wettkampfklasse-overview.component.html',
   styleUrls: ['./wettkampfklasse-overview.component.scss']
 })
-export class WettkampfklasseOverviewComponent extends CommonComponent implements OnInit {
+export class WettkampfklasseOverviewComponent extends CommonComponentDirective implements OnInit {
 
   public config = WETTKAMPFKLASE_OVERVIEW_CONFIG;
   public rows: TableRow[];

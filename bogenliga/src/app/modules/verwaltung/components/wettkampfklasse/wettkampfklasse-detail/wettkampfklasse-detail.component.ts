@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
-import {ButtonType, CommonComponent} from '../../../../shared/components';
+import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {
   Notification,
@@ -27,7 +27,7 @@ const NOTIFICATION_UPDATE_DSB_MITGLIED = 'dsb_mitglied_detail_update';
   templateUrl: './wettkampfklasse-detail.component.html',
   styleUrls: ['./wettkampfklasse-detail.component.scss']
 })
-export class WettkampfklasseDetailComponent extends CommonComponent implements OnInit {
+export class WettkampfklasseDetailComponent extends CommonComponentDirective implements OnInit {
   public config = WETTKAMPFKLASSE_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentWettkampfklasse: WettkampfKlasseDO = new WettkampfKlasseDO();

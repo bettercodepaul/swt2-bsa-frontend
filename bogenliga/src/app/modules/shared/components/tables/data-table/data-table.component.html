@@ -14,7 +14,7 @@
         {{ column.translationKey | translate}}
         <span id="{{column.translationKey.toLowerCase()}}Sorted"
               (click)="sortColumn(column)">
-            <fa-icon [icon]="getSortingIcon(column)"></fa-icon>
+            <fa-icon [icon]="getSortingIcon(column)" *ngIf="isSortable(column)"></fa-icon>
         </span>
       </div>
     </th>

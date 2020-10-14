@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {isNullOrUndefined} from '@shared/functions';
-import {CommonComponent} from '../../common';
+import {CommonComponentDirective} from '../../common';
 import {FormConfig} from '../types/form-config.interface';
 import {FormContent} from '../types/form-content.class';
 import {FormPropertyConfig} from '../types/form-property-config.interface';
@@ -12,7 +12,7 @@ import {FormPropertyType} from '../types/form-protperty-type.enum';
   templateUrl: './horizontal-form.component.html',
   styleUrls:   ['./horizontal-form.component.scss']
 })
-export class HorizontalFormComponent extends CommonComponent implements OnInit {
+export class HorizontalFormComponent extends CommonComponentDirective implements OnInit {
 
   @Input()
   public config: FormConfig;

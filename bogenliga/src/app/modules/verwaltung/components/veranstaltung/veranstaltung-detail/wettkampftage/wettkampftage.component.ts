@@ -1,7 +1,7 @@
 
 import {Component, NgModule, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponent} from '@shared/components';
+import {CommonComponentDirective} from '@shared/components';
 import {ButtonType} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
@@ -45,7 +45,7 @@ const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
   styleUrls:   ['./wettkampftage.component.scss']
 })
 
-export class WettkampftageComponent extends CommonComponent implements OnInit {
+export class WettkampftageComponent extends CommonComponentDirective implements OnInit {
   public config = WETTKMAPFTAGE_CONFIG;
   public ButtonType = ButtonType;
 
@@ -75,6 +75,11 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
   public currentWettkampftag_4: WettkampfDO = new WettkampfDO();
   public allWettkampf: Array<WettkampfDO> = [];
 
+  public currentAusrichter1: UserProfileDO = new UserProfileDO();
+  public currentAusrichter2: UserProfileDO = new UserProfileDO();
+  public currentAusrichter3: UserProfileDO = new UserProfileDO();
+  public currentAusrichter4: UserProfileDO = new UserProfileDO();
+  public allUsers: Array <UserProfileDO> = [new UserProfileDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -111,6 +116,7 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
           this.saveLoading = false;
         } else {
           this.loadById(params[ID_PATH_PARAM]);
+          this.loadUsers();
         }
       }
     });
@@ -118,6 +124,35 @@ export class WettkampftageComponent extends CommonComponent implements OnInit {
 
   public onVeranstaltungDetail(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
+  }
+
+  private loadUsers() {
+    this.userProvider.findAll()
+        .then((response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
+
+  }
+
+  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
+    this.allUsers = [];
+    this.allUsers = response.payload;
+    if (this.id === 'add') {
+      this.currentAusrichter1 = this.allUsers[0];
+      this.currentAusrichter2 = this.allUsers[0];
+      this.currentAusrichter3 = this.allUsers[0];
+      this.currentAusrichter4 = this.allUsers[0];
+    } else {
+      this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0];
+      this.currentAusrichter2 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_2.wettkampfAusrichter)[0];
+      this.currentAusrichter3 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_3.wettkampfAusrichter)[0];
+      this.currentAusrichter4 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_4.wettkampfAusrichter)[0];
+    }
+    this.loading = false;
+  }
+
+  private handleUserResponseArrayFailure(response: BogenligaResponse<UserProfileDTO[]>): void {
+    this.allUsers = [];
+    this.loading = false;
   }
 
   private navigateToWettkampftage(ignore: any) {

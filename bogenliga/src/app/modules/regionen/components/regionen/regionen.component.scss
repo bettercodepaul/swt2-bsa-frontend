@@ -4,6 +4,6 @@
   flex-direction: column;
 }
 
-/deep/ .sunburst-tooltip {
+::ng-deep .sunburst-tooltip {
   max-width: none;
 }
