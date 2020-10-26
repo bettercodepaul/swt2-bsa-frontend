@@ -239,7 +239,7 @@
           <!-- End Row  -->
         </div>
 
-        <!-- Wettkampftag1 Ort-->
+        <!-- Wettkampftag2 Ort-->
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
@@ -264,7 +264,7 @@
           </div>
         </div>
 
-        <!-- Wettkampftag1 Zeit-Beginn-->
+        <!-- Wettkampftag2 Zeit-Beginn-->
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
@@ -336,7 +336,7 @@
         <div class="form-group row">
           <div class="col-sm-9 button-box">
             <bla-button [id]="'wettkampftagSaveButton2'"
-                        [disabled]="(wettkampftag2_wettkampfOrt.invalid && wettkampftag2_wettkampfBeginn.invalid &&  wettkampftag2_datum.invalid)"
+                        [disabled]="(wettkampftag2_wettkampfOrt.invalid || wettkampftag2_wettkampfBeginn.invalid ||  wettkampftag2_datum.invalid)"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampfTag2($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
@@ -492,7 +492,7 @@
         <div class="form-group row">
           <div class="col-sm-9 button-box">
             <bla-button [id]="'wettkampftagSaveButton3'"
-                        [disabled]="!wettkampftagForm.valid"
+                        [disabled]="(wettkampftag3_wettkampfOrt.invalid || wettkampftag3_wettkampfBeginn.invalid || wettkampftag3_datum.invalid)"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampfTag3($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
@@ -647,7 +647,7 @@
         <div class="form-group row">
           <div class="col-sm-9 button-box">
             <bla-button [id]="'wettkampftagSaveButton4'"
-                        [disabled]="!wettkampftagForm.valid"
+                        [disabled]="(wettkampftag4_wettkampfOrt.invalid || wettkampftag4_wettkampfBeginn.invalid || wettkampftag4_datum.invalid)"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampfTag4($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
