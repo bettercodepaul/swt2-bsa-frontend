@@ -668,7 +668,7 @@
       <div class="col-xs-6 col-sm-2 col-md-2">
         <bla-button *ngIf="entityExists()"
                     [id]="'wettkampfSaveButton'"
-                    [disabled]="true"
+                    [disabled]="false"
                     [loading]="saveLoading"
                     (onClick)="onVeranstaltungDetail($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
