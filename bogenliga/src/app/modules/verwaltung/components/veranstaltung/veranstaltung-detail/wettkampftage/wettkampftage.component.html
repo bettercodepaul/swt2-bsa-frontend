@@ -140,7 +140,7 @@
                       name="ausrichter1"
                       #ausrichter1="ngModel"
                       [(ngModel)]="currentAusrichter1">
-                <option [ngValue]="ausrichter"
+                <option [ngValue]="currentAusrichter1"
                         *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
@@ -296,7 +296,7 @@
                       name="ausrichter2"
                       #ausrichter2="ngModel"
                       [(ngModel)]="currentAusrichter2">
-                <option [ngValue]="ausrichter"
+                <option [ngValue]="currentAusrichter2"
                         *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
@@ -452,7 +452,7 @@
                       name="ausrichter3"
                       #ausrichter3="ngModel"
                       [(ngModel)]="currentAusrichter3">
-                <option [ngValue]="ausrichter"
+                <option [ngValue]="currentAusrichter3"
                         *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
@@ -607,7 +607,7 @@
                       name="ausrichter4"
                       #ausrichter4="ngModel"
                       [(ngModel)]="currentAusrichter4">
-                <option [ngValue]="ausrichter"
+                <option [ngValue]="currentAusrichter4"
                         *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
@@ -668,7 +668,7 @@
       <div class="col-xs-6 col-sm-2 col-md-2">
         <bla-button *ngIf="entityExists()"
                     [id]="'wettkampfSaveButton'"
-                    [disabled]="false"
+                    [disabled]="!wettkampftagForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onVeranstaltungDetail($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
