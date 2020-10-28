@@ -569,7 +569,7 @@
         "HEADERS": {
           "ID": "ID",
           "NAME": "Verein Name",
-          "IDENTIFIER": "Identifier",
+
           "REGION_ID": "Region ID",
           "REGION_NAME": "Region Name"
         }

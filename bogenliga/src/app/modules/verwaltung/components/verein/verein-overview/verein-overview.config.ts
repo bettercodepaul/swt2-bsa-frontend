@@ -13,11 +13,8 @@ export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
         propertyName:   'name',
         width:          20,
       },
-      {
-        translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.IDENTIFIER',
-        propertyName:   'identifier',
-        width:          20,
-      },
+
+
       {
         translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.REGION_NAME',
         propertyName:   'regionName',
