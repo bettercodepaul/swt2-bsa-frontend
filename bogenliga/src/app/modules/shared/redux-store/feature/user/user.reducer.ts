@@ -14,7 +14,8 @@ export function userReducer(state = initialUserState, action: Actions.UserAction
     case Actions.LOGIN: {
       newState = {
         ...state,
-        user:       action.payload,
+        user: action.payload,
+        //isDefaultUserLoggedIn: false,
         isLoggedIn: true
       };
       break;

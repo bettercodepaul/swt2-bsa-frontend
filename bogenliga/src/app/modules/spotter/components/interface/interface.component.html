@@ -47,6 +47,7 @@
                 [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber >= (6) && !spotting, 'unsure': !match.set().play(6).final}">
                 {{match.set().play(6).result}}
               </button>
+
             </div>
           </div>
         </div>
@@ -124,6 +125,9 @@
       </div>
     </div>
     <!--FOOTER-->
+    <a class="btn btn-info" href="downloads/test.pdf" download>
+      Hilfe
+    </a>
     <div *ngIf="spotting || editing" class="row h-25 align-items-center" style="padding: 20px 0px;">
       <div class="col-4 text-center align-center">
         <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onBack()">Back</button>
@@ -147,7 +151,9 @@
         <button type="button" class="button-footer" (click)="onFinishMatch()"
           [disabled]="!match.set().canFinish()">Match Beenden</button>
       </div>
+
     </div>
+
   </div>
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>

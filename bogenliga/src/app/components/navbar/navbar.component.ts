@@ -24,11 +24,11 @@ export class NavbarComponent implements OnInit {
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService) {
     store.pipe(select((state) => state.sidebarState))
-         .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
+          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
     store.pipe(select((state) => state.userState))
-      .subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn);
+          .subscribe((state: UserState) => this.isLoggedIn = state.isLoggedIn);
     store.pipe(select((state) => state.userState))
-      .subscribe((state: UserState) => this.isDefaultUserLoggedIn = state.isDefaultUserLoggedIn);
+          .subscribe((state: UserState) => this.isDefaultUserLoggedIn = state.isDefaultUserLoggedIn);
   }
 
   ngOnInit() {
