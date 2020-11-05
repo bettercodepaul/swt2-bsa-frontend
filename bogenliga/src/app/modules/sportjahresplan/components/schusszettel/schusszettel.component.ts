@@ -242,6 +242,13 @@ export class SchusszettelComponent implements OnInit {
       this.dirtyFlag = false; // Daten gespeichert
     }
   }
+  back(){
+//this.router.navigate("[/sportjahresplan"]);
+    this.router.navigate(['/sportjahresplan/' ]);
+
+
+
+  }
 
   next() {
 
