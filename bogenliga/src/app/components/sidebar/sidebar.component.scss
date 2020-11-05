@@ -13,6 +13,7 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   min-width: 300px;
   max-width: 300px;
   min-height: calc(100vh - 4em); //full view - Navbar on top
+  max-height: calc(100vh - 4em); //max-height needed to support scrollabilty
   margin-top: $navbar-height; //height of NavBar
   background: $primary-light; //#343a40;
   color: $primary-dark;
@@ -22,6 +23,9 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   position: fixed; // stays fixed on the side while scrolling
   z-index: 12; // layers of the rest of the page
   border-right: $sidebar-border-style;
+  overflow-y: scroll; // overflow in y direction is scrollable
+  -ms-overflow-style: none; // scrollbar wont be displayed on firefox
+  scrollbar-width: none;
 }
 
 // basic sidebar inactive css
