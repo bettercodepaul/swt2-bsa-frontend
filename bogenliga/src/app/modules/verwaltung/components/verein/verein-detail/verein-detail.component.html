@@ -5,7 +5,7 @@
         class="horizontal-form half-page"
         #vereineForm="ngForm">
 
-    <!-- ID -->
+    <!-- textfield "Vereinsname *" -->
     <div class="form-group row">
       <label for="vereinName"
              class="col-sm-3 col-form-label">
@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <!-- Identifier -->
+    <!-- textfield "Vereinsnummer" -->
     <div class="form-group row">
       <label for="vereinIdentifier"
              class="col-sm-3 col-form-label">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <!-- REGION ID -->
+    <!-- dropdown Region -->
     <div class="form-group row">
       <label for="vereinRegion"
              class="col-sm-3 col-form-label">
@@ -75,6 +75,29 @@
       </div>
     </div>
 
+    <!-- textfield "Webseite" -->
+    <div class="form-group row">
+      <label for="vereinWebsite"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="vereinWebsite"
+               name="vereinWebsite"
+               #vereinWebsite="ngModel"
+               [(ngModel)]="currentVerein.website"
+               [class.is-invalid]="vereinWebsite.invalid && !vereinWebsite.untouched"
+               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
 
     <div class="form-group row">
       <div class="col-sm-3"></div>
