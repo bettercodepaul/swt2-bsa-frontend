@@ -112,7 +112,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'Download Failure:',
-      description: 'You have first to create a Setzliste',
+      description: 'You have first to create a full Setzliste',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
