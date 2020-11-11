@@ -94,6 +94,7 @@ export class SchusszettelComponent implements OnInit {
               this.match2 = data.payload[1];
               console.log('match1', this.match1);
               console.log('match2', this.match2);
+              this.loadDsbMannschaft();
               let shouldInitSumSatz = true;
               if (this.match1.schuetzen.length <= 0) {
                 this.initSchuetzenMatch1();
@@ -286,7 +287,7 @@ export class SchusszettelComponent implements OnInit {
     console.log("Bin in findMatch1Veranstaltung");
     if(this.match1Mannschaft.veranstaltungId == veranstaltung.id){
       this.match1Veranstaltung=veranstaltung;
-      console.log("Veranstaltung", this.match1Veranstaltung);
+      console.log("Veranstaltung gefunden:", this.match1Veranstaltung);
     }
   }
 
@@ -354,10 +355,10 @@ export class SchusszettelComponent implements OnInit {
       this.notificationService.showNotification(notification);
 
     } else {
-      console.log("Keine Änderung")
-      console.log("WETTKAMPFTAG", this.match1.wettkampfTag);
+      console.log("Keine Änderung");
       this.loadDsbMannschaft();
-      console.log("VERANSTALTUNG", this.match1Veranstaltung.name);
+      console.log("Veranstaltung", this.match1Veranstaltung);
+      console.log("Wettkampftag", this.match1.wettkampfTag);
       this.router.navigate(['/sportjahresplan']);
     }
   }
