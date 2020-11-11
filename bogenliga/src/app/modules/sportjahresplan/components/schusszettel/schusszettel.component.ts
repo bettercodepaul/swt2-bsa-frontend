@@ -6,6 +6,10 @@ import {BogenligaResponse, UriBuilder} from '../../../shared/data-provider';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {isUndefined} from '@shared/functions';
 import {ActivatedRoute, Router} from '@angular/router';
+import {VeranstaltungDO} from '../../../verwaltung/types/veranstaltung-do.class';
+import {VeranstaltungDataProviderService} from '../../../verwaltung/services/veranstaltung-data-provider.service';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {
   Notification,
   NotificationOrigin,
@@ -15,6 +19,10 @@ import {
   NotificationUserAction
 } from '../../../shared/services';
 import {environment} from '@environment';
+import {HttpParams} from '@angular/common/http';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {toTableRows} from '@shared/components';
 
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
 const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
@@ -35,10 +43,18 @@ export class SchusszettelComponent implements OnInit {
   dirtyFlag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
+  veranstaltungen: Array<VeranstaltungDO> = [new VeranstaltungDO()];
+  mannschaften: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
+  match1Mannschaft: DsbMannschaftDO;
+  match1Veranstaltung: VeranstaltungDO;
+
+
 
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
               private matchProvider: MatchProviderService,
+              private veranstaltungProvider: VeranstaltungDataProviderService,
+              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
   }
@@ -242,12 +258,108 @@ export class SchusszettelComponent implements OnInit {
       this.dirtyFlag = false; // Daten gespeichert
     }
   }
-  back(){
-//this.router.navigate("[/sportjahresplan"]);
-    this.router.navigate(['/sportjahresplan/' ]);
 
+  // load Veranstaltungen: lade alle Veranstaltungen
+  private loadVeranstaltungen() {
+    console.log("Bin in  loadVeranstaltungen");
+    this.veranstaltungProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadVeranstaltungenSuccess(response))
+        .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadVeranstaltungenFailure(response));
+  }
 
+  // laden der Veranstaltungen war erfolgreich
+  private handleLoadVeranstaltungenSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    console.log("Bin in loadVeranstaltungenSucccess");
+    this.veranstaltungen = [];
+    // Übergabe aller Veranstaltungen an this.veranstaltungen
+    this.veranstaltungen = response.payload;
+    this.veranstaltungen.forEach((veranstaltung) => this.findMatch1Veranstaltung(veranstaltung));
+  }
 
+  // laden der Veranstaltungen war nicht erfolgreich
+  private handleLoadVeranstaltungenFailure(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    console.log("ERROR: Keine Veranstaltung gefunden");
+  }
+
+  // Ermittlung der Veranstaltung der Mannschaft von match1
+  private findMatch1Veranstaltung(veranstaltung: VeranstaltungDO) {
+    console.log("Bin in findMatch1Veranstaltung");
+    if(this.match1Mannschaft.veranstaltungId == veranstaltung.id){
+      this.match1Veranstaltung=veranstaltung;
+      console.log("Veranstaltung", this.match1Veranstaltung);
+    }
+  }
+
+  // load DsbMannschaft: laden aller DsbMannschaften
+  private loadDsbMannschaft() {
+    console.log("Bin in  loadDsbMannschaft");
+    this.mannschaftsDataProvider.findAll()
+        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadDsbMannschaftenSuccess(response))
+        .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadDsbMannschaftenFailure(response));
+  }
+
+  // laden aller DsbMannschaften war erfolgreich
+  private handleLoadDsbMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDO[]>): void {
+    console.log("Bin in  loadDsbMannschaftSucccess");
+    this.mannschaften = [];
+    // Übergabe aller DsbMannschaften an this.mannschaften
+    this.mannschaften = response.payload;
+    this.mannschaften.forEach((mannschaft) => this.findMatch1DsbMannschaft(mannschaft));
+  }
+
+  // laden aller DsbMannschaften war nicht erfolgreich
+  private handleLoadDsbMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDO[]>): void {
+    console.log("ERROR: Keine Mannschaften gefunden");
+  }
+
+  // Ermittlung der DsbMannschaft von match1
+  private findMatch1DsbMannschaft(mannschaft: DsbMannschaftDO) {
+    console.log("Bin in findMatch1Mannschaft");
+    if(this.match1.mannschaftId==mannschaft.id){
+      this.match1Mannschaft=mannschaft;
+      // Aufruf der Funktion zum laden aller Veranstaltungen
+      // über diese Funktion (und weitere) wird die Veranstaltung der DsbMannschaft von match1 ermittelt
+      // z.B. Würtembergliga
+      this.loadVeranstaltungen();
+    }
+
+  }
+
+  // zurueck zu Sportjahresplan
+  back() {
+    // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
+    if (this.dirtyFlag === true) {
+      // TODO Texte in json.de anlegen
+      const notification: Notification = {
+        id:               NOTIFICATION_WEITER_SCHALTEN,
+        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
+          .subscribe((myNotification) => {
+            console.log("observe notification");
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              console.log("Daten verworfen");
+              this.dirtyFlag = false;
+              this.router.navigate(['/sportjahresplan/']);
+            }
+          });
+      console.log("show notification");
+
+      this.notificationService.showNotification(notification);
+
+    } else {
+      console.log("Keine Änderung")
+      console.log("WETTKAMPFTAG", this.match1.wettkampfTag);
+      this.loadDsbMannschaft();
+      console.log("VERANSTALTUNG", this.match1Veranstaltung.name);
+      this.router.navigate(['/sportjahresplan']);
+    }
   }
 
   next() {
