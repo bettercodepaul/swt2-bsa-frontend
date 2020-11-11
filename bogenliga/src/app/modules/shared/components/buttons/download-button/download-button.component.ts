@@ -42,8 +42,12 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
 
   public onFileDownload(): void {
     this.loading = true;
-
-    if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel' || this.id === 'downloadBogenkontrollliste') {
+    if(this.id === 'downloadBogenkontrollliste'){
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((() => this.handleBogenkontrolllisteFailure()))
+          .catch((() => this.handleBogenkontrolllisteFailure()));
+    }
+    else if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
         .then((() => this.handleWithoutNotification()))
         .catch((() => this.handleWithoutNotification()));
@@ -101,6 +105,21 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
           }
         });
 
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleBogenkontrolllisteFailure() {
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'Download Failure:',
+      description: 'You have first to create a Setzliste',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
     this.notificationService.showNotification(notification);
   }
 }
