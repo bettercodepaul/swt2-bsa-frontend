@@ -6,6 +6,17 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { AppState, SidebarState } from './modules/shared/redux-store';
 
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {FeedbackProviderService} from '@verwaltung/services/feedback-data-provider.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+
 @Component({
   selector: 'bla-root',
   templateUrl: './app.component.html',
@@ -13,15 +24,34 @@ import { AppState, SidebarState } from './modules/shared/redux-store';
 })
 export class AppComponent implements OnInit {
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   public isActive: boolean;
   public fullscreen = false;
 
-  constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router) {
+  popup: boolean;
+  isAnonymous: boolean;
+  marked: any;
+  public feedbackTextArea: string;
+  public emailTextArea: string;
+  public feedbackAndEmail: string;
+
+  baseurl: 'v1';
+  feedbackurl: 'feedback'
+
+  constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router, private feedbackDataProvider: FeedbackProviderService) {
     translate.setDefaultLang('de');
     translate.use('de');
     store.pipe(select((state) => state.sidebarState))
-      .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
+         .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
+
+
+
 
   public showLabel(): boolean {
     return environment.showLabel;
@@ -53,4 +83,15 @@ export class AppComponent implements OnInit {
       this.fullscreen = false;
     }
   }
+
+  //Create new String with Feedback and the E-Mail address
+  sendFeedback() {
+    this.feedbackAndEmail = this.feedbackTextArea;
+    if ( !this.isAnonymous ) {
+        this.feedbackAndEmail += " " + this.emailTextArea
+    }
+    this.emailTextArea = "";
+    this.feedbackDataProvider.sendFeedback(this.feedbackAndEmail);
+  }
+
 }
