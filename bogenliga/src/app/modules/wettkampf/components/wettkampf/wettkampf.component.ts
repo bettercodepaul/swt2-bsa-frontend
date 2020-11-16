@@ -19,6 +19,7 @@ import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
+import {NotificationService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -60,7 +61,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               private wettkampfErgebnisService: WettkampfErgebnisService,
               private mannschaftDataProvider: DsbMannschaftDataProviderService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private notificationService: NotificationService) {
     super();
   }
 
@@ -70,12 +72,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    */
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        const id = params[ID_PATH_PARAM];
-        this.directWettkampf = id;
-        this.directMannschaft = id;
-        this.directMannschaft = this.directMannschaft.replace(/-/g, ' ');
+
+
+      if(!isUndefined(params['Wettkampf']) && !isUndefined(params['Mannschaft'])) {
+        this.directWettkampf = parseInt(params['Wettkampf']);
+        this.directMannschaft = parseInt(params['Mannschaft']);
       }
+
+      else if (!isUndefined(params['Wettkampf'])) {
+        this.directWettkampf = parseInt(params['Wettkampf']);
+      }
+
     });
     this.loadVeranstaltungen();
   }
@@ -123,13 +130,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
         .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.veranstaltungen = []);
 
+
   }
+
 
   handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.veranstaltungen = response.payload;
     if (this.directWettkampf != null) {
       for (const i of this.veranstaltungen) {
-        if (this.directWettkampf === i.name) {
+        if (this.directWettkampf === i.ligaId) {
           this.currentVeranstaltung = i;
           break;
         }
@@ -155,7 +164,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.mannschaften = response.payload;
     if (this.directMannschaft != null) {
       for (const i of this.mannschaften) {
-        if (this.directMannschaft === i.name) {
+        if (this.directMannschaft === i.id) {
           this.mannschaften[0] = i;
         }
         this.currentMannschaft = this.mannschaften[0];
