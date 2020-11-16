@@ -50,7 +50,6 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   private currentVerein: VereinDO;
   private hasID: boolean;
   private typeOfTableColumn: String;
-  private valueOfTableRow: VersionedDataObject;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -147,48 +146,60 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   public onDelete(versionedDataObject: VersionedDataObject): void {
   }
 
+  /**
+   * Gets the type of a clicked column of the verein table
+   * @params $event: TableColumnConfig which are the headings of the columns
+   */
   public getSelectedColumn($event: TableColumnConfig): void {
     this.typeOfTableColumn = $event.propertyName;
   }
 
+  /**
+   * Gets the value of a clicked row of the verein table
+   * then uses a 'if' to determine which column is clicked
+   * depending on the column differnet id's need to send to wettkaempfe
+   * For veranstalung:
+   * the veranstaltungsId through getCurrentVeranstalung
+   * For mannschaft:
+   * the veranstaltungsId through getCurrentVeranstalung + the day but without ". Wettkampftag"
+   * and the mannschaftsID through mannschaftsDataProvider
+   *
+   * Then do the linking to wettkaempfe
+   * @params $event: all the values in the table
+   */
   public async getSelectedRow($event): Promise<void> {
     const rowValues = $event;
     const veranstalungsName = rowValues.veranstaltung_name;
     let veranstalungsId;
     const mannschaftsName = rowValues.mannschaftsName.replace(". Mannschaft", "");
     let mannschaftsId;
-    const wettkampfTagString = rowValues.wettkampfTag;
-    let wettkampfTag;
     const type = this.typeOfTableColumn;
 
-    switch (type) {
 
-      case "veranstaltung_name":
-        console.log(type);
+      if(type === "veranstaltung_name") {
         veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
         this.vereineLinking(veranstalungsId);
-        break;
-
-      case "wettkampfTag":
-        console.log(type)
+      } else if(type === "mannschaftsName") {
         veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
-        wettkampfTag = wettkampfTagString.replace(". Wettkampftag", "");
-        this.vereineLinking(veranstalungsId + "/" + wettkampfTag);
-        break;
-
-      case "mannschaftsName":
-        console.log(type);
-        veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
-        wettkampfTag = wettkampfTagString.replace(". Wettkampftag", "");
+        /**
+         * finds all Mannschaften through a http call -> needs to be async
+         * find the one whose name matches with the mannschaft in the table
+         * gets the id from this mannschaft
+         */
         await this.mannschaftsDataProvider.findAll()
-          .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
-            const currentMannschaft = response.payload.find(mannschaft => mannschaft.name === mannschaftsName)
-            mannschaftsId = currentMannschaft.id;
-          })
-        this.vereineLinking(veranstalungsId + "/" + wettkampfTag + "/" + mannschaftsId);
+                  .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
+                    const currentMannschaft = response.payload.find(mannschaft => mannschaft.name === mannschaftsName)
+                    mannschaftsId = currentMannschaft.id;
+                  })
+        this.vereineLinking(veranstalungsId + "/" + mannschaftsId);
+      }
     }
-  }
 
+  /**
+   * finds all Veranstaltungen through a http call -> needs to be async
+   * find the one whose name matches with the veranstaltung in the table
+   * gets the id from this veranstaltung
+   */
   public async getCurrentVeranstalung(veranstalungsName: string) {
     let currentVeranstalung;
     await this.veranstaltungsDataProvider.findAll()
@@ -199,7 +210,10 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     return currentVeranstalung.ligaId;
   }
 
-
+  /**
+   * routs to wettkaempfe
+   * @param linkParameter: string - the ids of the values
+   */
   public vereineLinking(linkParameter: string) {
     const link = '/wettkaempfe/' + linkParameter;
     this.router.navigateByUrl(link);
