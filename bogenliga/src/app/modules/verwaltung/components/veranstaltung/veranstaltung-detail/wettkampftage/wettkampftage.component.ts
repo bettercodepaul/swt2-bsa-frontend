@@ -1,4 +1,3 @@
-
 import {Component, NgModule, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective} from '@shared/components';
@@ -37,7 +36,9 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_s
 const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
-// TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne funktion und unterscheidet nicht den Status der Eingabefelder
+
+// TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne Funktion und unterscheidet nicht den
+// Status der Eingabefelder
 
 @Component({
   selector:    'bla-wettkampftage',
@@ -79,7 +80,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public currentAusrichter2: UserProfileDO = new UserProfileDO();
   public currentAusrichter3: UserProfileDO = new UserProfileDO();
   public currentAusrichter4: UserProfileDO = new UserProfileDO();
-  public allUsers: Array <UserProfileDO> = [new UserProfileDO()];
+  public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -109,14 +110,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
           this.currentVeranstaltung = new VeranstaltungDO();
 
 
-
-
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
         } else {
           this.loadById(params[ID_PATH_PARAM]);
-          this.loadUsers();
+          this.loadUsers();   // This should only execute, when loadById has already finished!
         }
       }
     });
@@ -142,7 +141,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.currentAusrichter3 = this.allUsers[0];
       this.currentAusrichter4 = this.allUsers[0];
     } else {
-      this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0];
+      this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0]; // this.currentWettkampftag_1.wettkampfAusrichter is null?
+      console.log("currentWettkampftag_1.wettkampfAusrichter: " + this.currentWettkampftag_1.wettkampfAusrichter);
       this.currentAusrichter2 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_2.wettkampfAusrichter)[0];
       this.currentAusrichter3 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_3.wettkampfAusrichter)[0];
       this.currentAusrichter4 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_4.wettkampfAusrichter)[0];
@@ -167,6 +167,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_1.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
     this.currentWettkampftag_1.kampfrichterID = this.selectedKampfrichterTag1[0].id;
     console.log('Selected kampfrichter-ID: ' + this.currentWettkampftag_1.kampfrichterID);
+    this.currentWettkampftag_1.wettkampfAusrichter = this.currentAusrichter1.id;
     if (this.currentWettkampftag_1.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
       this.currentWettkampftag_1.id = this.saveWettkampftag(this.currentWettkampftag_1);
@@ -219,9 +220,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
-  private  saveWettkampftag(wettkampfDO: WettkampfDO): number {
+  private saveWettkampftag(wettkampfDO: WettkampfDO): number {
 
-      this.wettkampfDataProvider.create(wettkampfDO)
+    this.wettkampfDataProvider.create(wettkampfDO)
         .then((response: BogenligaResponse<WettkampfDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
@@ -241,12 +242,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
-              .subscribe((myNotification) => {
-                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                  this.saveLoading = false;
-                  this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
-                }
-              });
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
+                  }
+                });
 
             this.notificationService.showNotification(notification);
 
@@ -256,12 +257,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
           this.saveLoading = false;
         });
 
-      return wettkampfDO.id;
-    } // end save wettkampftag
+    return wettkampfDO.id;
+  } // end save wettkampftag
 
 
   private updateWettkampftag(wettkampfDO: WettkampfDO): void {
-
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    console.log(wettkampfDO);
     this.wettkampfDataProvider.update(wettkampfDO)
         .then((response: BogenligaResponse<WettkampfDO>) => {
           if (!isNullOrUndefined(response)
@@ -294,7 +296,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
           this.saveLoading = false;
         });
   }
-
 
 
   public onDelete(ignore: any): void {
@@ -343,6 +344,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleBenutzerrolleResponseArraySuccess(response))
         .catch((response: BogenligaResponse<BenutzerRolleDTO[]>) => this.handleBenutzerrolleResponseArrayFailure(response));
   }
+
   private loadKampfrichter() {
     this.kampfrichterProvider.findAll()
         .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccess(response))
@@ -352,7 +354,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
 
   private loadWettkampf() {
-
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySuccess(response))
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response));
@@ -419,8 +420,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
 
-
-
   private handleWettkampfResponseArraySuccess(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
@@ -432,6 +431,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     } else {
       this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
+      console.log("--------------Jetzt--------------");
 
     }
 
