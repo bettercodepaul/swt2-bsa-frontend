@@ -94,10 +94,10 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   }
   // sets currentVerein to response and pushes it on selectedVereine
   private getVereinSuccsess(response: VereinDTO) {
-    console.log('response in getVerein: ' + response.name);
+    // console.log('response in getVerein: ' + response.name);
     this.currentVerein = response;
     this.selectedVereine.push(this.currentVerein);
-    console.log('CurrentVerein: ' + this.currentVerein);
+    // console.log('CurrentVerein: ' + this.currentVerein);
 }
 
   // when a Verein gets selected from the list
@@ -123,7 +123,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     if (isNullOrUndefined(this.selectedDTOs)) {
       return '';
     } else {
-      console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
+      // console.log('Auswahllisten: selectedDTO = ' + JSON.stringify(this.selectedDTOs));
       const names: string[] = [];
 
       this.selectedDTOs.forEach((item) => {
@@ -160,7 +160,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
           this.vereine = response.payload.sort();
           this.loadingVereine = false;
           this.selectedVereinsId = this.hasID ? this.providedID : response.payload[0].id;
-          console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
+          // console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
           this.changeSelectedVerein();
           this.onSelect(this.selectedVereine);
         })
@@ -189,7 +189,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
       this.loadingTable = false;
     }
     for (i = 0; i < response.payload.length; i++) {
-      const mannschaftsName: string = this.selectedDTOs[0].name + ' ' + response.payload[i].nummer + '. Mannschaft';
+      const mannschaftsName: string = response.payload[i].name + '. Mannschaft';
       this.wettkampfDataProvider.findAllWettkaempfeByMannschaftsId(response.payload[i].id)
           .then((responseb: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkaempfeSuccess(responseb, mannschaftsName))
           .catch((responseb: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkaempfeFailure(responseb));
