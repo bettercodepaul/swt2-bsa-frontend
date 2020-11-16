@@ -115,7 +115,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
           this.saveLoading = false;
         } else {
           this.loadById(params[ID_PATH_PARAM]);
-          this.loadUsers();   // This should only execute, when loadById has already finished!
+          // this.loadUsers();   // This should only execute, when loadById has already finished!
         }
       }
     });
@@ -135,14 +135,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
     this.allUsers = [];
     this.allUsers = response.payload;
-    if (this.id === 'add') {
+    if (this.currentAusrichter1.id === undefined) {  // on the first call every currentAusrichter is undefined
       this.currentAusrichter1 = this.allUsers[0];
       this.currentAusrichter2 = this.allUsers[0];
       this.currentAusrichter3 = this.allUsers[0];
       this.currentAusrichter4 = this.allUsers[0];
     } else {
       this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0]; // this.currentWettkampftag_1.wettkampfAusrichter is null?
-      console.log("currentWettkampftag_1.wettkampfAusrichter: " + this.currentWettkampftag_1.wettkampfAusrichter);
       this.currentAusrichter2 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_2.wettkampfAusrichter)[0];
       this.currentAusrichter3 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_3.wettkampfAusrichter)[0];
       this.currentAusrichter4 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_4.wettkampfAusrichter)[0];
@@ -182,7 +181,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_2.wettkampfTag = 2;
     this.currentWettkampftag_2.wettkampfDisziplinId = 0;
     this.currentWettkampftag_2.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
-
+    this.currentWettkampftag_2.wettkampfAusrichter = this.currentAusrichter2.id;
     if (this.currentWettkampftag_2.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
       this.currentWettkampftag_2.id = this.saveWettkampftag(this.currentWettkampftag_2);
@@ -197,7 +196,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_3.wettkampfTag = 3;
     this.currentWettkampftag_3.wettkampfDisziplinId = 0;
     this.currentWettkampftag_3.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
-
+    this.currentWettkampftag_3.wettkampfAusrichter = this.currentAusrichter3.id;
     if (this.currentWettkampftag_3.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
       this.currentWettkampftag_3.id = this.saveWettkampftag(this.currentWettkampftag_3);
@@ -211,7 +210,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_4.wettkampfTag = 4;
     this.currentWettkampftag_4.wettkampfDisziplinId = 0;
     this.currentWettkampftag_4.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
-
+    this.currentWettkampftag_4.wettkampfAusrichter = this.currentAusrichter4.id;
     if (this.currentWettkampftag_4.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
       this.currentWettkampftag_4.id = this.saveWettkampftag(this.currentWettkampftag_4);
@@ -356,7 +355,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private loadWettkampf() {
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response));
+        .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response)).then(() => this.loadUsers());
 
   }
 
