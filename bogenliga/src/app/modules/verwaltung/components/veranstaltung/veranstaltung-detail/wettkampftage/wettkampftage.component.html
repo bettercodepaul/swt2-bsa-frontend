@@ -140,7 +140,7 @@
                       name="ausrichter1"
                       #ausrichter1="ngModel"
                       [(ngModel)]="currentAusrichter1">
-                <option [ngValue]="currentAusrichter1"
+                <option [ngValue]="ausrichter"
                         *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
