@@ -38,6 +38,8 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   @Output() public onDownloadRueckennummerEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
 
+  @Output() public onColumnEntry = new EventEmitter<TableColumnConfig>();
+
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
 
@@ -344,6 +346,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
 
   private onRowClicked(affectedRowPayload: VersionedDataObject) {
     this.onRowEntry.emit(affectedRowPayload);
+  }
+
+  private onColumnClicked(affectedColumn: TableColumnConfig) {
+    this.onColumnEntry.emit(affectedColumn)
   }
 
   private onDownload(affectedRowPayload: VersionedDataObject) {
