@@ -135,17 +135,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
     this.allUsers = [];
     this.allUsers = response.payload;
-    if (this.currentAusrichter1.id === undefined) {  // on the first call every currentAusrichter is undefined
-      this.currentAusrichter1 = this.allUsers[0];
-      this.currentAusrichter2 = this.allUsers[0];
-      this.currentAusrichter3 = this.allUsers[0];
-      this.currentAusrichter4 = this.allUsers[0];
-    } else {
-      this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0]; // this.currentWettkampftag_1.wettkampfAusrichter is null?
-      this.currentAusrichter2 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_2.wettkampfAusrichter)[0];
-      this.currentAusrichter3 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_3.wettkampfAusrichter)[0];
-      this.currentAusrichter4 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_4.wettkampfAusrichter)[0];
-    }
+    this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0] ?? this.allUsers[0]; // this.currentWettkampftag_1.wettkampfAusrichter is null?
+    this.currentAusrichter2 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_2.wettkampfAusrichter)[0] ?? this.allUsers[0];
+    this.currentAusrichter3 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_3.wettkampfAusrichter)[0] ?? this.allUsers[0];
+    this.currentAusrichter4 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_4.wettkampfAusrichter)[0] ?? this.allUsers[0];
     this.loading = false;
   }
 
@@ -430,7 +423,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     } else {
       this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
-      console.log("--------------Jetzt--------------");
+      console.log('--------------Jetzt--------------');
 
     }
 
