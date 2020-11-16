@@ -19,6 +19,7 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '@shared/services/notification';
+import {TableColumnConfig} from '@shared/components/tables/types/table-column-config.interface';
 
 
 const ID_PATH_PARAM = 'id';
@@ -48,6 +49,8 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   private providedID: number;
   private currentVerein: VereinDO;
   private hasID: boolean;
+  private typeOfTableColumn: String;
+  private valueOfTableRow: VersionedDataObject;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -134,7 +137,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     }
   }
 
-  public onView(versionedDataObject: VersionedDataObject): void {
+  public onView(versionedDataObject: TableColumnConfig): void {
 
   }
 
@@ -142,6 +145,64 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   }
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
+  }
+
+  public getSelectedColumn($event: TableColumnConfig): void {
+    this.typeOfTableColumn = $event.propertyName;
+  }
+
+  public async getSelectedRow($event): Promise<void> {
+    const rowValues = $event;
+    const veranstalungsName = rowValues.veranstaltung_name;
+    let veranstalungsId;
+    const mannschaftsName = rowValues.mannschaftsName.replace(". Mannschaft", "");
+    let mannschaftsId;
+    const wettkampfTagString = rowValues.wettkampfTag;
+    let wettkampfTag;
+    const type = this.typeOfTableColumn;
+
+    switch (type) {
+
+      case "veranstaltung_name":
+        console.log(type);
+        veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
+        this.vereineLinking(veranstalungsId);
+        break;
+
+      case "wettkampfTag":
+        console.log(type)
+        veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
+        wettkampfTag = wettkampfTagString.replace(". Wettkampftag", "");
+        this.vereineLinking(veranstalungsId + "/" + wettkampfTag);
+        break;
+
+      case "mannschaftsName":
+        console.log(type);
+        veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
+        wettkampfTag = wettkampfTagString.replace(". Wettkampftag", "");
+        await this.mannschaftsDataProvider.findAll()
+          .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
+            const currentMannschaft = response.payload.find(mannschaft => mannschaft.name === mannschaftsName)
+            mannschaftsId = currentMannschaft.id;
+          })
+        this.vereineLinking(veranstalungsId + "/" + wettkampfTag + "/" + mannschaftsId);
+    }
+  }
+
+  public async getCurrentVeranstalung(veranstalungsName: string) {
+    let currentVeranstalung;
+    await this.veranstaltungsDataProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          currentVeranstalung = response.payload.find(veranstalung => veranstalung.name = veranstalungsName)
+          console.log(currentVeranstalung.ligaId);
+        })
+    return currentVeranstalung.ligaId;
+  }
+
+
+  public vereineLinking(linkParameter: string) {
+    const link = '/wettkaempfe/' + linkParameter;
+    this.router.navigateByUrl(link);
   }
 
   public onMap($event: WettkampfDO): void {
