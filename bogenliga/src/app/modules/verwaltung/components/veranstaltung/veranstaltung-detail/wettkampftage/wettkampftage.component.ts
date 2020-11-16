@@ -174,6 +174,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_2.wettkampfTag = 2;
     this.currentWettkampftag_2.wettkampfDisziplinId = 0;
     this.currentWettkampftag_2.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
+    this.currentWettkampftag_2.kampfrichterID = this.selectedKampfrichterTag2[0].id;
+    console.log('Selected kampfrichter-ID: ' + this.currentWettkampftag_2.kampfrichterID);
     this.currentWettkampftag_2.wettkampfAusrichter = this.currentAusrichter2.id;
     if (this.currentWettkampftag_2.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
@@ -189,6 +191,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_3.wettkampfTag = 3;
     this.currentWettkampftag_3.wettkampfDisziplinId = 0;
     this.currentWettkampftag_3.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
+    this.currentWettkampftag_3.kampfrichterID = this.selectedKampfrichterTag3[0].id;
+    console.log('Selected kampfrichter-ID: ' + this.currentWettkampftag_3.kampfrichterID);
     this.currentWettkampftag_3.wettkampfAusrichter = this.currentAusrichter3.id;
     if (this.currentWettkampftag_3.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
@@ -203,6 +207,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_4.wettkampfTag = 4;
     this.currentWettkampftag_4.wettkampfDisziplinId = 0;
     this.currentWettkampftag_4.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
+    this.currentWettkampftag_4.kampfrichterID = this.selectedKampfrichterTag4[0].id;
+    console.log('Selected kampfrichter-ID: ' + this.currentWettkampftag_4.kampfrichterID);
     this.currentWettkampftag_4.wettkampfAusrichter = this.currentAusrichter4.id;
     if (this.currentWettkampftag_4.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
