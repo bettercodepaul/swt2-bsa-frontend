@@ -296,7 +296,7 @@
                       name="ausrichter2"
                       #ausrichter2="ngModel"
                       [(ngModel)]="currentAusrichter2">
-                <option [ngValue]="currentAusrichter2"
+                <option [ngValue]="ausrichter"
                         *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
@@ -452,7 +452,7 @@
                       name="ausrichter3"
                       #ausrichter3="ngModel"
                       [(ngModel)]="currentAusrichter3">
-                <option [ngValue]="currentAusrichter3"
+                <option [ngValue]="ausrichter"
                         *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
@@ -607,7 +607,7 @@
                       name="ausrichter4"
                       #ausrichter4="ngModel"
                       [(ngModel)]="currentAusrichter4">
-                <option [ngValue]="currentAusrichter4"
+                <option [ngValue]="ausrichter"
                         *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
