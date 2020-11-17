@@ -120,7 +120,7 @@ ul ul a {
   }
 }
 
-
+/* Zeigt das Popup hintergrund wird unscharf */
 .overlay {
   position: fixed;
   top: 0;
@@ -132,7 +132,7 @@ ul ul a {
   visibility: visible;
   opacity: 1;
 }
-
+/* Grösse und Farbe des Popup Fenster */
 .popup {
   margin: 70px auto;
   padding: 20px;
@@ -143,11 +143,13 @@ ul ul a {
   position: relative;
   transition: all 5s ease-in-out;
 }
+/* erste Überschrift im Popup Fenster*/
 .popup h2 {
   margin-top: 0;
   color: #333;
   font-family: Tahoma, Arial, sans-serif;
 }
+/* Symbol zum schliessen des Popup Fensters (oben rechts) */
 .popup .close {
   position: absolute;
   top: 20px;
@@ -162,16 +164,13 @@ ul ul a {
   color: $primary;
   cursor: pointer;
 }
-.popup .content_popup {
-
-}
-
+/* Gibt die max. laenge des Popup Fensters an */
 @media screen and (max-width: 700px){
   .popup{
     width: 70%;
   }
 }
-
+/* Inhalt vom Popup Fenster*/
 .container {
   display: block;
   position: relative;
