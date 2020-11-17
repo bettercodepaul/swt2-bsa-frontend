@@ -571,7 +571,8 @@
           "NAME": "Verein Name",
           "IDENTIFIER": "Identifier",
           "REGION_ID": "Region ID",
-          "REGION_NAME": "Region Name"
+          "REGION_NAME": "Region Name",
+          "WEBSITE": "Webseite"
         }
       },
       "NOTIFICATION": {
