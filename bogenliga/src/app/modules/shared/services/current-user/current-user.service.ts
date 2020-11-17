@@ -31,15 +31,14 @@ export class CurrentUserService {
 
   constructor(private localDataProviderService: LocalDataProviderService,
               private store: Store<AppState>,
-              private router: Router)
-  {
+              private router: Router) {
     this.observeUserState();
     this.observeSessionExpiredNotifications();
     this.loadCurrentUser(true);
   }
 
   public disableDefaultUser() : void {
-    this.isDefaultUserLoggedIn = false;
+    this.isDefaultUserLoggedIn= false;
   }
 
   public persistCurrentUser(currentUser: UserSignInDTO, isDefault: boolean): void {
@@ -66,9 +65,9 @@ export class CurrentUserService {
       }
       this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue)), isDefault));
     }
-    console.log("CurrentUserValue: " + currentUserValue);
-    console.log("CurrentUserPermission: " + this.currentUserPermissions);
-    console.log("DefaultUser: " + isDefault);
+    console.log('CurrentUserValue: ' + currentUserValue);
+    console.log('CurrentUserPermission: ' + this.currentUserPermissions);
+    console.log('DefaultUser: ' + isDefault);
   }
 
   public getEmail(): string {
