@@ -88,6 +88,11 @@ export class AppComponent implements OnInit {
     }
     this.emailTextArea = "";
     this.feedbackDataProvider.sendFeedback(this.feedbackAndEmail);
+
+    this.feedbackTextArea = "";
+    this.emailTextArea = "";
+    this.popup = false;
+
   }
 
 }
