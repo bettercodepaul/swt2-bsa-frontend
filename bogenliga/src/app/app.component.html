@@ -30,6 +30,7 @@
                                 src="assets/img/IT-Solutions_Logo.png"></a>
       </div>
 
+      <!-- Impressum  -->
       <div id="footer"
            style="flex-grow: 0"
            class="navbar navbar-expand-sm bg-light justify-content-center">
@@ -38,10 +39,12 @@
             <a class="color-black"
                routerLink="/impressum">{{ 'APP.IMPRESSUM' | translate }}
             </a>
+
+            <!-- Feedback -->
           </li>
           <a style="padding-left: 10%" class="color-black" href="#" (click)="popup=true">{{ 'APP.FEEDBACK' | translate }}
           </a>
-
+          <!-- Popup  -->
           <div class="overlay" *ngIf="popup">
             <div class="popup">
               <h2>Feedback geben</h2>
