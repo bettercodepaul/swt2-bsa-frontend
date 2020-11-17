@@ -31,21 +31,25 @@ export class CurrentUserService {
 
   constructor(private localDataProviderService: LocalDataProviderService,
               private store: Store<AppState>,
-              private router: Router
-  ) {
+              private router: Router)
+  {
     this.observeUserState();
     this.observeSessionExpiredNotifications();
-    this.loadCurrentUser();
-    }
-
-  public persistCurrentUser(currentUser: UserSignInDTO): void {
-    this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
-    this.store.dispatch(new Login(currentUser));
-    // load current User after persisting the token
-    this.loadCurrentUser();
+    this.loadCurrentUser(true);
   }
 
-  public loadCurrentUser(): void {
+  public disableDefaultUser() : void {
+    this.isDefaultUserLoggedIn = false;
+  }
+
+  public persistCurrentUser(currentUser: UserSignInDTO, isDefault: boolean): void {
+    this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
+    this.store.dispatch(new Login(currentUser, this.isDefaultUserLoggedIn));
+    // load current User after persisting the token
+    this.loadCurrentUser(isDefault);
+  }
+
+  public loadCurrentUser(isDefault: boolean): void {
     this.observeSessionExpiredNotifications();
     this.currentUserPermissions = [];
     console.log('Load current user from storage');
@@ -60,10 +64,11 @@ export class CurrentUserService {
           this.currentUserPermissions.push(userPermit);
         });
       }
-      this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue))));
+      this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue)), isDefault));
     }
-    console.log(currentUserValue);
-    console.log(this.currentUserPermissions);
+    console.log("CurrentUserValue: " + currentUserValue);
+    console.log("CurrentUserPermission: " + this.currentUserPermissions);
+    console.log("DefaultUser: " + isDefault);
   }
 
   public getEmail(): string {
