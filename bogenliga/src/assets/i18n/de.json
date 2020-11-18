@@ -571,7 +571,8 @@
           "NAME": "Verein Name",
           "IDENTIFIER": "Identifier",
           "REGION_ID": "Region ID",
-          "REGION_NAME": "Region Name"
+          "REGION_NAME": "Region Name",
+          "WEBSITE": "Webseite"
         }
       },
       "NOTIFICATION": {
@@ -585,12 +586,12 @@
       "TITLE": "Verein - Details",
       "FORM": {
         "VEREIN_NAME": {
-          "LABEL": "Verein-Name",
+          "LABEL": "Vereinsname",
           "PLACEHOLDER": "Bitte einen Namen eingeben",
           "ERROR": "Bitte einen gültigen Namen eingeben."
         },
         "VEREIN_IDENTIFIER": {
-          "LABEL": "Vereins Nr.",
+          "LABEL": "Vereinsnummer",
           "PLACEHOLDER": "Bitte einen Identifier eingeben",
           "ERROR": "Bitte einen gültigen Identifier eingeben."
         },
@@ -598,6 +599,11 @@
           "LABEL": "Region",
           "PLACEHOLDER": "Bitte eine Region auswählen",
           "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "VEREIN_WEBSITE": {
+          "LABEL": "Webseite",
+          "PLACEHOLDER": "Bitte eine Webseite angeben",
+          "ERROR": "Bitte eine gültige Webseite angeben."
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
