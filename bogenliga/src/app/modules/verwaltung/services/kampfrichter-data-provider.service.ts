@@ -123,8 +123,4 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
-
-
-
-
 }
