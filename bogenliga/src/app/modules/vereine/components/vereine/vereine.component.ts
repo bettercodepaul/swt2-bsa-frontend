@@ -49,7 +49,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   private providedID: number;
   private currentVerein: VereinDO;
   private hasID: boolean;
-  private typeOfTableColumn: String;
+  private typeOfTableColumn: string;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -171,29 +171,29 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     const rowValues = $event;
     const veranstalungsName = rowValues.veranstaltung_name;
     let veranstalungsId;
-    const mannschaftsName = rowValues.mannschaftsName.replace(". Mannschaft", "");
+    const mannschaftsName = rowValues.mannschaftsName.replace('. Mannschaft', '');
     let mannschaftsId;
     const type = this.typeOfTableColumn;
 
 
-      if(type === "veranstaltung_name") {
-        veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
-        this.vereineLinking(veranstalungsId);
-      } else if(type === "mannschaftsName") {
-        veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
-        /**
-         * finds all Mannschaften through a http call -> needs to be async
-         * find the one whose name matches with the mannschaft in the table
-         * gets the id from this mannschaft
-         */
-        await this.mannschaftsDataProvider.findAll()
-                  .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
-                    const currentMannschaft = response.payload.find(mannschaft => mannschaft.name === mannschaftsName)
-                    mannschaftsId = currentMannschaft.id;
-                  })
-        this.vereineLinking(veranstalungsId + "/" + mannschaftsId);
-      }
+    if (type === 'veranstaltung_name') {
+      veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
+      this.vereineLinking(veranstalungsId);
+    } else if (type === 'mannschaftsName') {
+      veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
+      /**
+       * finds all Mannschaften through a http call -> needs to be async
+       * find the one whose name matches with the mannschaft in the table
+       * gets the id from this mannschaft
+       */
+      await this.mannschaftsDataProvider.findAll()
+                .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
+                  const currentMannschaft = response.payload.find((mannschaft: DsbMannschaftDTO) => mannschaft.name === mannschaftsName);
+                  mannschaftsId = currentMannschaft.id;
+                });
+      this.vereineLinking(veranstalungsId + '/' + mannschaftsId);
     }
+  }
 
   /**
    * finds all Veranstaltungen through a http call -> needs to be async
@@ -204,9 +204,9 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     let currentVeranstalung;
     await this.veranstaltungsDataProvider.findAll()
         .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-          currentVeranstalung = response.payload.find(veranstalung => veranstalung.name = veranstalungsName)
+          currentVeranstalung = response.payload.find((veranstalung: VeranstaltungDTO) => veranstalung.name = veranstalungsName);
           console.log(currentVeranstalung.ligaId);
-        })
+        });
     return currentVeranstalung.ligaId;
   }
 
