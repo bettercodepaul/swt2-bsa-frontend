@@ -52,7 +52,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
-
+  //?
   public currentUser: UserProfileDO;
   public allUserswt1: Array<BenutzerRolleDO> = [];
   public allUserswt2: Array<BenutzerRolleDO> = [];
@@ -100,7 +100,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   ngOnInit() {
-
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
@@ -108,8 +107,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
           this.currentVeranstaltung = new VeranstaltungDO();
-
-
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
@@ -133,12 +130,14 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
+    console.log("==> HandleUserResponseArraySuccess")
     this.allUsers = [];
     this.allUsers = response.payload;
     this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0] ?? this.allUsers[0]; // this.currentWettkampftag_1.wettkampfAusrichter is null?
     this.currentAusrichter2 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_2.wettkampfAusrichter)[0] ?? this.allUsers[0];
     this.currentAusrichter3 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_3.wettkampfAusrichter)[0] ?? this.allUsers[0];
     this.currentAusrichter4 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_4.wettkampfAusrichter)[0] ?? this.allUsers[0];
+
     this.loading = false;
   }
 
@@ -157,8 +156,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_1.wettkampfTag = 1;
     this.currentWettkampftag_1.wettkampfDisziplinId = 0;
     this.currentWettkampftag_1.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
+
     this.currentWettkampftag_1.kampfrichterID = this.selectedKampfrichterTag1[0].id;
-    console.log('Selected kampfrichter-ID: ' + this.currentWettkampftag_1.kampfrichterID);
+    console.log('==>onSaveWettkampfTag1: Selected kampfrichter-ID: ' + this.currentWettkampftag_1.kampfrichterID);
+
     this.currentWettkampftag_1.wettkampfAusrichter = this.currentAusrichter1.id;
     if (this.currentWettkampftag_1.id == null) {
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
@@ -260,7 +261,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
 
   private updateWettkampftag(wettkampfDO: WettkampfDO): void {
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    console.log("==> updateWettkampf");
     console.log(wettkampfDO);
     this.wettkampfDataProvider.update(wettkampfDO)
         .then((response: BogenligaResponse<WettkampfDO>) => {
@@ -429,7 +430,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     } else {
       this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
-      console.log('--------------Jetzt--------------');
+      console.log("==> handleWettkampfResponseArraySuccess: wettkampfTag 1 existiert schon...");
 
     }
 
@@ -498,10 +499,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.allKampfrichter = [];
     this.allKampfrichter = response.payload;
 
+    console.log("==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: " + this.allKampfrichter[0].userid)
+    console.log("==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: " + this.KampfrichterTag1[0])
+    console.log(" ==> response.payload: " + response.result)
+
     this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_1.id);
     for (const iter of Object.keys(this.KampfrichterTag1)) {
       this.selectedKampfrichterTag1.push(this.allUserswt1.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
     }
+
+    console.log("==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: " + this.KampfrichterTag1[0])
     this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_2.id);
     for (const iter of Object.keys(this.KampfrichterTag2)) {
       this.selectedKampfrichterTag2.push(this.allUserswt2.filter((user) => user.id === this.KampfrichterTag2[iter].userid)[0]);
@@ -514,6 +521,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     for (const iter of Object.keys(this.KampfrichterTag4)) {
       this.selectedKampfrichterTag4.push(this.allUserswt4.filter((user) => user.id === this.KampfrichterTag4[iter].userid)[0]);
     }
+    console.log("==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID v2: " + this.allKampfrichter[0].userid)
+
     this.loading = false;
   }
 

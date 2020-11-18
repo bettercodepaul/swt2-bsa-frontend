@@ -20,16 +20,16 @@ export class WettkampfDO implements VersionedDataObject {
 
 
   constructor(id?: number,
-    wettkampfVeranstaltungsId?: number,
-    wettkampfDatum?: string,
-    wettkampfOrt?: string,
-    wettkampfBeginn?: string,
-    wettkampfTag?: number,
-    wettkampfDisziplinId?: number,
-    wettkampfTypId?: number,
-    version?: number,
-    kampfrichterID?: number,
-    wettkampfAusrichter?: number) {
+    wettkampfVeranstaltungsId ?: number,
+    wettkampfDatum ?: string,
+    wettkampfOrt ?: string,
+    wettkampfBeginn ?: string,
+    wettkampfTag ?: number,
+    wettkampfDisziplinId ?: number,
+    wettkampfTypId ?: number,
+    version ?: number,
+    kampfrichterID ?: number,
+    wettkampfAusrichter ?: number) {
     this.id = !!id ? id : null;
     this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
     this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';
@@ -42,21 +42,5 @@ export class WettkampfDO implements VersionedDataObject {
     this.kampfrichterID = !!kampfrichterID ? kampfrichterID : null;
     this.wettkampfAusrichter = !!wettkampfAusrichter ? wettkampfAusrichter : null;
   }
-
-  // public toString(): string {
-  //   return 'WettkampfDO {\n' +
-  //     '\tId:' + this.id + ',\n' +
-  //     '\tWettkampfVeranstaltungsId:' + this.wettkampfVeranstaltungsId + ',\n' +
-  //     '\tWettkampfDatum:' + this.wettkampfDatum + ',\n' +
-  //     '\tWettkampfOrt:' + this.wettkampfOrt + ',\n' +
-  //     '\tWettkampfBeginn:' + this.wettkampfBeginn + ',\n' +
-  //     '\tWettkampfTag:' + this.wettkampfTag + ',\n' +
-  //     '\tWettkampfDisziplinId:' + this.wettkampfDisziplinId + ',\n' +
-  //     '\tWettkampfTypId:' + this.wettkampfTypId + ',\n' +
-  //     '\tVersion:' + this.version + ',\n' +
-  //     '\tKampfrichterID:' + this.kampfrichterID + ',\n' +
-  //     '\tWettkampfAusrichter:' + this.wettkampfAusrichter + '\n' +
-  //     '}';
-  // }
 
 }
