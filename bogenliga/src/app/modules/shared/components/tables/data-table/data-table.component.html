@@ -35,13 +35,15 @@
   <tbody *ngIf="!isLoading() && !isEmptyTable()">
   <tr *ngFor="let row of rows"
       [id]="getRowId(row)"
-      (click)="hasActions() == false && onRowClicked(row.payload)"
+      (click)="hasActions() == true && onRowClicked(row.payload)"
       [style.cursor]="!hasActions() ? 'pointer' : 'default'"
       [class.disabled]="hasLoadingActions(row)"> <!-- Click event is only active if table has no action items -->
 
     <!-- data columns -->
     <td *ngFor="let column of config.columns"
         [id]="getCellId(row, column)"
+        (click)="onColumnClicked(column)"
+        [style.cursor]="'pointer'"
         [ngSwitch]="column.type"
         [class]="getStyleClass(row, column)">
 
