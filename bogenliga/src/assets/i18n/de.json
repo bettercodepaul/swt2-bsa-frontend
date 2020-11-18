@@ -147,6 +147,10 @@
         "WEITER":{
           "TITLE":"Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
+        },
+        "ZURUECK": {
+          "TITLE":"Es gibt ungespeicherte Änderungen",
+          "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
         }
       }
     },
