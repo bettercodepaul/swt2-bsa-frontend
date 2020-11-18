@@ -349,7 +349,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   }
 
   private onColumnClicked(affectedColumn: TableColumnConfig) {
-    this.onColumnEntry.emit(affectedColumn)
+    this.onColumnEntry.emit(affectedColumn);
   }
 
   private onDownload(affectedRowPayload: VersionedDataObject) {

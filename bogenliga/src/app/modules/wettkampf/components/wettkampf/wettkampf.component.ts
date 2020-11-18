@@ -74,13 +74,11 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.route.params.subscribe((params) => {
 
 
-      if(!isUndefined(params['Wettkampf']) && !isUndefined(params['Mannschaft'])) {
-        this.directWettkampf = parseInt(params['Wettkampf']);
-        this.directMannschaft = parseInt(params['Mannschaft']);
-      }
-
-      else if (!isUndefined(params['Wettkampf'])) {
-        this.directWettkampf = parseInt(params['Wettkampf']);
+      if (!isUndefined(params['Wettkampf']) && !isUndefined(params['Mannschaft'])) {
+        this.directWettkampf = parseInt(params['Wettkampf'], 10);
+        this.directMannschaft = parseInt(params['Mannschaft'], 10);
+      } else if (!isUndefined(params['Wettkampf'])) {
+        this.directWettkampf = parseInt(params['Wettkampf'], 10);
       }
 
     });
@@ -88,8 +86,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               .then(() => {
                 console.log(this.currentMannschaft);
                 this.loadErgebnisse(this.currentMannschaft);
-              })
-
+              });
   }
 
   /**
