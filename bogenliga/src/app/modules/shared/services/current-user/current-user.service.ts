@@ -37,8 +37,8 @@ export class CurrentUserService {
     this.loadCurrentUser(true);
   }
 
-  public disableDefaultUser() : void {
-    this.isDefaultUserLoggedIn= false;
+  public disableDefaultUser(): void {
+    this.isDefaultUserLoggedIn = false;
   }
 
   public persistCurrentUser(currentUser: UserSignInDTO, isDefault: boolean): void {

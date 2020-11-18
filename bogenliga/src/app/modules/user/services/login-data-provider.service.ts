@@ -45,7 +45,7 @@ export class LoginDataProviderService extends DataProviderService {
    * resolve(), if the request was successful
    * reject(), if an error occurred
    */
-  public signIn(credentialsDO: CredentialsDO, isDefault : boolean): Promise<LoginResult> {
+  public signIn(credentialsDO: CredentialsDO, isDefault: boolean): Promise<LoginResult> {
     // check remember me flag
     if (credentialsDO.rememberMe) {
       this.currentUserService.rememberUsername(credentialsDO.username);
