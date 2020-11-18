@@ -122,10 +122,12 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
     const str = $event.wettkampfOrt;
     let splits: string[];
-    splits = str.split(', ', 5);
-    const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
+    splits = str.split(',', 5);
+    let locationUrl = 'https://www.google.de/maps/place/';
+    for(let i = 0; i < splits.length; i++){
+      locationUrl += splits[i];
+    }
     window.open(locationUrl);
-
   }
 
   // when a Wettkampf gets selected from the list --> ID for Buttons
