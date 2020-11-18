@@ -24,6 +24,7 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {toTableRows} from '@shared/components';
 
+const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
 const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
 const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
@@ -332,27 +333,30 @@ export class SchusszettelComponent implements OnInit {
     if (this.dirtyFlag === true) {
       // TODO Texte in json.de anlegen
       const notification: Notification = {
-        id:               NOTIFICATION_WEITER_SCHALTEN,
-        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        id:               NOTIFICATION_ZURUECK,
+        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
         severity:         NotificationSeverity.QUESTION,
         origin:           NotificationOrigin.USER,
         type:             NotificationType.YES_NO,
         userAction:       NotificationUserAction.PENDING
       };
 
-      this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
+      console.log("show notification");
+      this.notificationService.showNotification(notification);
+
+      console.log("notification.userAction before: " + notification.userAction);
+      this.notificationService.observeNotification(NOTIFICATION_ZURUECK)
           .subscribe((myNotification) => {
             console.log("observe notification");
+            this.notificationService.updateNotification(notification.userAction);
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              console.log("Daten verworfen");
+              console.log("accepted");
               this.dirtyFlag = false;
-              this.router.navigate(['/sportjahresplan/']);
+              this.router.navigateByUrl('/sportjahresplan');
             }
+            console.log("notification.userAction after: " + notification.userAction);
           });
-      console.log("show notification");
-
-      this.notificationService.showNotification(notification);
 
     } else {
       console.log("Keine Änderung");
@@ -360,6 +364,7 @@ export class SchusszettelComponent implements OnInit {
       console.log("Veranstaltung", this.match1Veranstaltung);
       console.log("Wettkampftag", this.match1.wettkampfTag);
       this.router.navigate(['/sportjahresplan']);
+
     }
   }
 
