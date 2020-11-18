@@ -187,5 +187,8 @@
       }
     }
   },
-  "defaultProject": "bogenliga"
+  "defaultProject": "bogenliga",
+  "cli": {
+    "analytics": false
+  }
 }
