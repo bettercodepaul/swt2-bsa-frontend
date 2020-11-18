@@ -8,7 +8,7 @@ export const LOGIN_AS_DEFAULT = '[User] Login as Default';
 export class Login implements Action {
   readonly type = this.isDefault ? LOGIN_AS_DEFAULT : LOGIN_AS_SPECIFIC;
 
-  constructor(public payload: UserSignInDTO, public isDefault : boolean) {
+  constructor(public payload: UserSignInDTO, public isDefault: boolean) {
   }
 }
 
