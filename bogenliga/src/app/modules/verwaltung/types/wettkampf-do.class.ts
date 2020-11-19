@@ -20,16 +20,16 @@ export class WettkampfDO implements VersionedDataObject {
 
 
   constructor(id?: number,
-    wettkampfVeranstaltungsId ?: number,
-    wettkampfDatum ?: string,
-    wettkampfOrt ?: string,
-    wettkampfBeginn ?: string,
-    wettkampfTag ?: number,
-    wettkampfDisziplinId ?: number,
-    wettkampfTypId ?: number,
-    version ?: number,
-    kampfrichterID ?: number,
-    wettkampfAusrichter ?: number) {
+    wettkampfVeranstaltungsId?: number,
+    wettkampfDatum?: string,
+    wettkampfOrt?: string,
+    wettkampfBeginn?: string,
+    wettkampfTag?: number,
+    wettkampfDisziplinId?: number,
+    wettkampfTypId?: number,
+    version?: number,
+    kampfrichterID?: number,
+    wettkampfAusrichter?: number) {
     this.id = !!id ? id : null;
     this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
     this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';
