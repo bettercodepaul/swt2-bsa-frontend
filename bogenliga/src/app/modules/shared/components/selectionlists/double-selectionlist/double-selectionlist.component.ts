@@ -19,7 +19,7 @@ export class DoubleSelectionlistComponent implements OnInit {
   public rightItemsChange = new EventEmitter();
 
   @Output()
-  public leftItemsChange = new EventEmitter();//___________________________
+  public leftItemsChange = new EventEmitter();
 
   @Input()
   public fieldSelector = 'id';
@@ -36,17 +36,17 @@ export class DoubleSelectionlistComponent implements OnInit {
     return this.rightItemList;
   }
 
-  @Input()
-  get leftItems (){
-    return this.leftItemList;
-  }
-
   set rightItems(val) {
     this.rightItemList = val;
     this.rightItemsChange.emit(this.rightItemList);
   }
 
-  set leftItems (val){
+  @Input()
+  get leftItems() {
+    return this.leftItemList;
+  }
+
+  set leftItems(val) {
     this.leftItemList = val;
     this.leftItemsChange.emit(this.leftItemList);
   }

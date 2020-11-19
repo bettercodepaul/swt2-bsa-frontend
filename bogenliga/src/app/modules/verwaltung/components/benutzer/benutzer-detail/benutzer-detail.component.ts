@@ -46,8 +46,8 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
   public saveLoading = false;
   public savePW = false;
   public enableButton = false;
-  public rightList: RoleDTO[] = [];//Objekt zur Anzeige der zukünftigen Rollen auf der Applikation
-  public leftList: RoleDTO[] = [];//Objekt zur Anzeige der aller übrigen Rollen auf der Applikation
+  public rightList: RoleDTO[] = []; // Objekt zur Anzeige der zukünftigen Rollen auf der Applikation
+  public leftList: RoleDTO[] = []; // Objekt zur Anzeige der aller übrigen Rollen auf der Applikation
 
   private notification: Notification = {
     id:          NOTIFICATION_SAVE_BENUTZER,
@@ -228,19 +228,18 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
   die Liste meiner derzeitigen Rollen (currentBenutzerRolleDO) entferne
    */
   public updateView() {
-    var inList = 0;
+    let inList = 0;
     this.leftList = [];
     this.rightList = [];
-    this.roles.forEach((item, index)=> {
-      for(const role of this.currentBenutzerRolleDO){
-        if(role.roleName == item.roleName){
+    this.roles.forEach((item, index) => {
+      for (const role of this.currentBenutzerRolleDO) {
+        if (role.roleName === item.roleName) {
           inList = 1;
         }
       }
-      if(inList == 0){
+      if (inList === 0) {
         this.leftList.push(item);
-      }
-      else{
+      } else {
         this.rightList.push(item);
       }
       inList = 0;

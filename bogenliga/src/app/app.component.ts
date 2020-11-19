@@ -36,8 +36,6 @@ export class AppComponent implements OnInit {
   public emailTextArea: string;
   public feedbackAndEmail: string;
 
-  baseurl: 'v1';
-  feedbackurl: 'feedback'
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router, private feedbackDataProvider: FeedbackProviderService) {
     translate.setDefaultLang('de');
@@ -80,21 +78,21 @@ export class AppComponent implements OnInit {
     }
   }
 
-  //Create new String with Feedback and the E-Mail address
-  //then call the sendFeedback function to send the feedback
-  //to the backend
+  // Create new String with Feedback and the E-Mail address
+  // then call the sendFeedback function to send the feedback
+  // to the backend
   sendFeedback() {
     this.feedbackAndEmail = this.feedbackTextArea;
-    //Check if user want to send it anonymous
+    // Check if user want to send it anonymous
     if ( !this.isAnonymous ) {
-      this.feedbackAndEmail += " " + this.emailTextArea
+      this.feedbackAndEmail += ' ' + this.emailTextArea;
     }
 
-    //make textareas empty again and call sendFeedback function
-    this.emailTextArea = "";
+    // make textareas empty again and call sendFeedback function
+    this.emailTextArea = '';
     this.feedbackDataProvider.sendFeedback(this.feedbackAndEmail);
-    this.feedbackTextArea = "";
-    this.emailTextArea = "";
+    this.feedbackTextArea = '';
+    this.emailTextArea = '';
     this.popup = false;
 
   }
