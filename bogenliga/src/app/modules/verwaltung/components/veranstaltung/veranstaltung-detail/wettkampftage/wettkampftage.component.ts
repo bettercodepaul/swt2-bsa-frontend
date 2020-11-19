@@ -30,6 +30,7 @@ import {KampfrichterDTO} from '../../../../../verwaltung/types/datatransfer/kamp
 import {KampfrichterProviderService} from '../../../../services/kampfrichter-data-provider.service';
 import {fromPayload} from '@verwaltung/mapper/wettkampf-mapper';
 
+
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
 const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_success';
