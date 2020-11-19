@@ -146,11 +146,6 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   public onDelete(versionedDataObject: VersionedDataObject): void {
   }
 
-  /** DUPLICATE
-   * Creates Link to Google Maps
-   * Splits given Location at every comma and passes it to Google Maps
-   * @param $event
-   */
   /**
    * Gets the type of a clicked column of the verein table
    * @params $event: TableColumnConfig which are the headings of the columns
@@ -224,6 +219,11 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.router.navigateByUrl(link);
   }
 
+  /** DUPLICATE
+   * Creates Link to Google Maps
+   * Splits given Location at every comma and passes it to Google Maps
+   * @param $event
+   */
   public onMap($event: WettkampfDO): void {
 
     const str = $event.wettkampfOrt;
