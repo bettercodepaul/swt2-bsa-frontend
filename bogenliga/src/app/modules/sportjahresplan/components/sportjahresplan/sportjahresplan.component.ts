@@ -127,8 +127,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     let splits: string[];
     splits = str.split(', ', 5);
     let locationUrl = 'https://www.google.de/maps/place/';
-    for(let i = 0; i < splits.length; i++){
-      if (i!=0){
+    for (let i = 0; i < splits.length; i++) {
+      if (i !== 0) {
         locationUrl += '+';
       }
       locationUrl += splits[i];
