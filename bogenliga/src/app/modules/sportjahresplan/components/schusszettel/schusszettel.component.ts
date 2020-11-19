@@ -349,7 +349,6 @@ export class SchusszettelComponent implements OnInit {
       this.notificationService.observeNotification(NOTIFICATION_ZURUECK)
           .subscribe((myNotification) => {
             console.log("observe notification");
-            this.notificationService.updateNotification(notification.userAction);
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               console.log("accepted");
               this.dirtyFlag = false;
