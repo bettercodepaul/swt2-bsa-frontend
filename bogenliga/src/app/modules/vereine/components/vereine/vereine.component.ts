@@ -19,6 +19,7 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '@shared/services/notification';
+import {TableColumnConfig} from '@shared/components/tables/types/table-column-config.interface';
 
 
 const ID_PATH_PARAM = 'id';
@@ -48,6 +49,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   private providedID: number;
   private currentVerein: VereinDO;
   private hasID: boolean;
+  private typeOfTableColumn: string;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -134,7 +136,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     }
   }
 
-  public onView(versionedDataObject: VersionedDataObject): void {
+  public onView(versionedDataObject: TableColumnConfig): void {
 
   }
 
@@ -149,6 +151,79 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    * Splits given Location at every comma and passes it to Google Maps
    * @param $event
    */
+  /**
+   * Gets the type of a clicked column of the verein table
+   * @params $event: TableColumnConfig which are the headings of the columns
+   */
+  public getSelectedColumn($event: TableColumnConfig): void {
+    this.typeOfTableColumn = $event.propertyName;
+  }
+
+  /**
+   * Gets the value of a clicked row of the verein table
+   * then uses a 'if' to determine which column is clicked
+   * depending on the column differnet id's need to send to wettkaempfe
+   * For veranstalung:
+   * the veranstaltungsId through getCurrentVeranstalung
+   * For mannschaft:
+   * the veranstaltungsId through getCurrentVeranstalung + the day but without ". Wettkampftag"
+   * and the mannschaftsID through mannschaftsDataProvider
+   *
+   * Then do the linking to wettkaempfe
+   * @params $event: all the values in the table
+   */
+  public async getSelectedRow($event): Promise<void> {
+    const rowValues = $event;
+    const veranstalungsName = rowValues.veranstaltung_name;
+    let veranstalungsId;
+    const mannschaftsName = rowValues.mannschaftsName.replace('. Mannschaft', '');
+    let mannschaftsId;
+    const type = this.typeOfTableColumn;
+
+
+    if (type === 'veranstaltung_name') {
+      veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
+      this.vereineLinking(veranstalungsId);
+    } else if (type === 'mannschaftsName') {
+      veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
+      /**
+       * finds all Mannschaften through a http call -> needs to be async
+       * find the one whose name matches with the mannschaft in the table
+       * gets the id from this mannschaft
+       */
+      await this.mannschaftsDataProvider.findAll()
+                .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
+                  const currentMannschaft = response.payload.find((mannschaft: DsbMannschaftDTO) => mannschaft.name === mannschaftsName);
+                  mannschaftsId = currentMannschaft.id;
+                });
+      this.vereineLinking(veranstalungsId + '/' + mannschaftsId);
+    }
+  }
+
+  /**
+   * finds all Veranstaltungen through a http call -> needs to be async
+   * find the one whose name matches with the veranstaltung in the table
+   * gets the id from this veranstaltung
+   */
+  public async getCurrentVeranstalung(veranstalungsName: string) {
+    let currentVeranstalung;
+    await this.veranstaltungsDataProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          currentVeranstalung = response.payload.find((veranstalung: VeranstaltungDTO) => veranstalung.name = veranstalungsName);
+          console.log(currentVeranstalung.ligaId);
+        });
+    return currentVeranstalung.ligaId;
+  }
+
+  /**
+   * routs to wettkaempfe
+   * @param linkParameter: string - the ids of the values
+   */
+  public vereineLinking(linkParameter: string) {
+    const link = '/wettkaempfe/' + linkParameter;
+    this.router.navigateByUrl(link);
+  }
+
   public onMap($event: WettkampfDO): void {
 
     const str = $event.wettkampfOrt;
