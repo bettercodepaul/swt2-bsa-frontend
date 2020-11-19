@@ -15,21 +15,21 @@ export class WettkampfDO implements VersionedDataObject {
   wettkampfAusrichter: number;
 
 
-  // not set, find Liga by Wettkampfid
+  // not set, find Liga by WettkampfId
   wettkampfLiga: string;
 
 
   constructor(id?: number,
-              wettkampfVeranstaltungsId?: number,
-              wettkampfDatum?: string,
-              wettkampfOrt?: string,
-              wettkampfBeginn?: string,
-              wettkampfTag?: number,
-              wettkampfDisziplinId?: number,
-              wettkampfTypId?: number,
-              version?: number,
-              kampfrichterID?: number,
-              wettkampfAusrichter?: number) {
+    wettkampfVeranstaltungsId ?: number,
+    wettkampfDatum ?: string,
+    wettkampfOrt ?: string,
+    wettkampfBeginn ?: string,
+    wettkampfTag ?: number,
+    wettkampfDisziplinId ?: number,
+    wettkampfTypId ?: number,
+    version ?: number,
+    kampfrichterID ?: number,
+    wettkampfAusrichter ?: number) {
     this.id = !!id ? id : null;
     this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
     this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';
@@ -39,8 +39,8 @@ export class WettkampfDO implements VersionedDataObject {
     this.wettkampfDisziplinId = !!wettkampfDisziplinId ? wettkampfDisziplinId : null;
     this.wettkampfTypId = !!wettkampfTypId ? wettkampfTypId : null;
     this.version = !!version ? version : null;
-    this.kampfrichterID = !! kampfrichterID ? kampfrichterID : null;
-    this.wettkampfAusrichter = !! wettkampfAusrichter ? wettkampfAusrichter : null;
+    this.kampfrichterID = !!kampfrichterID ? kampfrichterID : null;
+    this.wettkampfAusrichter = !!wettkampfAusrichter ? wettkampfAusrichter : null;
   }
 
 }
