@@ -43,12 +43,11 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
   public onFileDownload(): void {
     this.loading = true;
 
-    if(this.id === 'downloadBogenkontrollliste'){
+    if (this.id === 'downloadBogenkontrollliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((() => this.handleBogenkontrolllisteFailure()))
           .catch((() => this.handleBogenkontrolllisteFailure()));
-    }
-    else if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
+    } else if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
         .then((() => this.handleWithoutNotification()))
         .catch((() => this.handleWithoutNotification()));
