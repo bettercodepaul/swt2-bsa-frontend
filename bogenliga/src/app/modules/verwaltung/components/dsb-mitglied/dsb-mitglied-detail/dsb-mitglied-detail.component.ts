@@ -128,7 +128,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
               severity: NotificationSeverity.INFO,
               origin: NotificationOrigin.USER,
               type: NotificationType.OK,
-              userAction: NotificationUserAction.PENDING
+              userAction: NotificationUserAction.ACCEPTED
             };
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_DSB_MITGLIED)
@@ -195,7 +195,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
               severity: NotificationSeverity.INFO,
               origin: NotificationOrigin.USER,
               type: NotificationType.OK,
-              userAction: NotificationUserAction.PENDING
+              userAction: NotificationUserAction.ACCEPTED
             };
 
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSB_MITGLIED + id)
@@ -230,6 +230,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
           }
           this.saveLoading = false;
         });
+    (document.getElementById('dsbMitgliedSaveButton') as HTMLInputElement).disabled = true;
     // show response message
   }
 
@@ -247,7 +248,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
       severity: NotificationSeverity.QUESTION,
       origin: NotificationOrigin.USER,
       type: NotificationType.YES_NO,
-      userAction: NotificationUserAction.PENDING
+      userAction: NotificationUserAction.ACCEPTED
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
@@ -305,7 +306,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
       severity: NotificationSeverity.INFO,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
-      userAction: NotificationUserAction.PENDING
+      userAction: NotificationUserAction.ACCEPTED
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS)
@@ -328,7 +329,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
-      userAction: NotificationUserAction.PENDING
+      userAction: NotificationUserAction.ACCEPTED
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE)
