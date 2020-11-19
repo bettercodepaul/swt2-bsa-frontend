@@ -53,7 +53,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
-  //?
+  // ?
   public currentUser: UserProfileDO;
   public allUserswt1: Array<BenutzerRolleDO> = [];
   public allUserswt2: Array<BenutzerRolleDO> = [];
@@ -131,10 +131,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
-    console.log("==> HandleUserResponseArraySuccess")
+    console.log('==> HandleUserResponseArraySuccess');
     this.allUsers = [];
     this.allUsers = response.payload;
-    this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0] ?? this.allUsers[0]; // this.currentWettkampftag_1.wettkampfAusrichter is null?
+    // this.currentWettkampftag_1.wettkampfAusrichter is null?
+    this.currentAusrichter1 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_1.wettkampfAusrichter)[0] ?? this.allUsers[0];
     this.currentAusrichter2 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_2.wettkampfAusrichter)[0] ?? this.allUsers[0];
     this.currentAusrichter3 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_3.wettkampfAusrichter)[0] ?? this.allUsers[0];
     this.currentAusrichter4 = this.allUsers.filter((user) => user.id === this.currentWettkampftag_4.wettkampfAusrichter)[0] ?? this.allUsers[0];
@@ -262,7 +263,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
 
   private updateWettkampftag(wettkampfDO: WettkampfDO): void {
-    console.log("==> updateWettkampf");
+    console.log('==> updateWettkampf');
     console.log(wettkampfDO);
     this.wettkampfDataProvider.update(wettkampfDO)
         .then((response: BogenligaResponse<WettkampfDO>) => {
@@ -431,7 +432,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     } else {
       this.currentWettkampftag_1 = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === 1)[0];
-      console.log("==> handleWettkampfResponseArraySuccess: wettkampfTag 1 existiert schon...");
+      console.log('==> handleWettkampfResponseArraySuccess: wettkampfTag 1 existiert schon...');
 
     }
 
@@ -500,16 +501,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.allKampfrichter = [];
     this.allKampfrichter = response.payload;
 
-    console.log("==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: " + this.allKampfrichter[0].userid)
-    console.log("==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: " + this.KampfrichterTag1[0])
-    console.log(" ==> response.payload: " + response.result)
+    console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: ' + this.allKampfrichter[0].userid);
+    console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.KampfrichterTag1[0]);
+    console.log(' ==> response.payload: ' + response.result);
 
     this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_1.id);
     for (const iter of Object.keys(this.KampfrichterTag1)) {
       this.selectedKampfrichterTag1.push(this.allUserswt1.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
     }
 
-    console.log("==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: " + this.KampfrichterTag1[0])
+    console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.KampfrichterTag1[0]);
     this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_2.id);
     for (const iter of Object.keys(this.KampfrichterTag2)) {
       this.selectedKampfrichterTag2.push(this.allUserswt2.filter((user) => user.id === this.KampfrichterTag2[iter].userid)[0]);
@@ -522,7 +523,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     for (const iter of Object.keys(this.KampfrichterTag4)) {
       this.selectedKampfrichterTag4.push(this.allUserswt4.filter((user) => user.id === this.KampfrichterTag4[iter].userid)[0]);
     }
-    console.log("==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID v2: " + this.allKampfrichter[0].userid)
+    console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID v2: ' + this.allKampfrichter[0].userid);
 
     this.loading = false;
   }
