@@ -184,7 +184,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.loadingLigatabelle = false;
   }
   public ligatabelleLinking() {
-    const link = '/wettkaempfe/' + this.selectedVeranstaltungName;
+    const link = '/wettkaempfe/' + this.selectedVeranstaltungId;
     this.router.navigateByUrl(link);
   }
 
