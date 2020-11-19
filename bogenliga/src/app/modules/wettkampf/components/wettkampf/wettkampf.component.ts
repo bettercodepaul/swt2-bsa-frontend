@@ -45,7 +45,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public multipleSelections = true;
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
-  public areVeranstaltungenloading = true;
+  public areVeranstaltungenLoading = true;
   public loadingData = false;
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
@@ -138,7 +138,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     } else {
       this.currentVeranstaltung = this.veranstaltungen[0];
     }
-    this.areVeranstaltungenloading = false;
+    this.areVeranstaltungenLoading = false;
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.loadMannschaft(this.currentVeranstaltung.id);
     this.loadJahre();
