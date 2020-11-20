@@ -219,15 +219,26 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.router.navigateByUrl(link);
   }
 
+  /** DUPLICATE
+   * Creates Link to Google Maps
+   * Splits given Location at every comma and passes it to Google Maps
+   * @param $event
+   */
   public onMap($event: WettkampfDO): void {
 
     const str = $event.wettkampfOrt;
     let splits: string[];
     splits = str.split(', ', 5);
-    const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
+    let locationUrl = 'https://www.google.de/maps/place/';
+    for (let i = 0; i < splits.length; i++) {
+      if (i !== 0) {
+        locationUrl += '+';
+      }
+      locationUrl += splits[i];
+    }
     window.open(locationUrl);
-
   }
+
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
