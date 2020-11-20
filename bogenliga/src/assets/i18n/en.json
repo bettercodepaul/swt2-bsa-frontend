@@ -570,7 +570,8 @@
           "NAME": "Club name",
           "IDENTIFIER": "Identifier",
           "REGION_ID": "Region ID",
-          "REGION_NAME": "Region name"
+          "REGION_NAME": "Region name",
+          "WEBSITE": "Website"
         }
       },
       "NOTIFICATION": {
@@ -597,6 +598,11 @@
           "LABEL": "Region",
           "PLACEHOLDER": "Please select a region",
           "ERROR": "Please select a valid region."
+        },
+        "VEREIN_WEBSITE": {
+          "LABEL": "Website",
+          "PLACEHOLDER": "Please enter a website",
+          "ERROR": "Please enter a valid website."
         },
         "SAVE": "Save",
         "UPDATE": "Refresh",
