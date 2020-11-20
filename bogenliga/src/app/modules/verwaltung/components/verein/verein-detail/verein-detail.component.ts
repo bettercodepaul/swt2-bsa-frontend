@@ -79,16 +79,9 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   ngOnInit() {
-
-
     this.loading = true;
-
     this.notificationService.discardNotification();
-
     this.loadRegions(this.regionType); // Request all regions from the backend
-
-
-
   }
 
   private loadVerein(): void {
@@ -399,7 +392,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   private addTableAttributes(mannschaft: DsbMannschaftDO) {
     this.veranstaltungsProvider.findById(mannschaft.veranstaltungId)
         .then((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = response.payload.name)
-        .catch((resposne: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = '');
+        .catch((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = '');
     mannschaft.name = this.currentVerein.name + ' '  + mannschaft.nummer + '.Mannschaft';
   }
 
