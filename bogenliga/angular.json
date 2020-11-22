@@ -189,6 +189,10 @@
   },
   "defaultProject": "bogenliga",
   "cli": {
+<<<<<<< HEAD
     "analytics": false
+=======
+    "analytics": "44e30b61-94ad-4eb4-8967-7489b7a113d9"
+>>>>>>> JSON Parse fehler wurde aufgehoben und die sessionstorages richtig implementiert in der Ermittlung der Veranstaltungen
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
@@ -19,10 +19,16 @@ import {
   NotificationUserAction
 } from '../../../shared/services';
 import {environment} from '@environment';
+
+
+
 import {HttpParams} from '@angular/common/http';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {toTableRows} from '@shared/components';
+import {SessionStorageDataProvider} from '@shared/local-data-provider';
+import {SESSION_STORAGE} from 'ngx-webstorage-service';
+
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
@@ -38,6 +44,7 @@ const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
   styleUrls:   ['./schusszettel.component.scss']
 })
 export class SchusszettelComponent implements OnInit {
+
 
   match1: MatchDOExt;
   match2: MatchDOExt;
@@ -82,7 +89,7 @@ export class SchusszettelComponent implements OnInit {
     // am Anfang sind keine Änderungen
     this.dirtyFlag = false;
 
-    // this.initSchuetzen();
+    // this.initSchuetzen();sessionStorage
     this.initSchuetzenMatch1();
     this.initSchuetzenMatch2();
     this.route.params.subscribe((params) => {
@@ -153,6 +160,8 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
+
+  puffer: VeranstaltungDO;
   save() {
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
@@ -286,9 +295,14 @@ export class SchusszettelComponent implements OnInit {
   // Ermittlung der Veranstaltung der Mannschaft von match1
   private findMatch1Veranstaltung(veranstaltung: VeranstaltungDO) {
     console.log("Bin in findMatch1Veranstaltung");
-    if(this.match1Mannschaft.veranstaltungId == veranstaltung.id){
+    if(this.match1Mannschaft.veranstaltungId== veranstaltung.id){
       this.match1Veranstaltung=veranstaltung;
+
       console.log("Veranstaltung gefunden:", this.match1Veranstaltung);
+
+      sessionStorage.setItem("pro",JSON.stringify(this.match1Veranstaltung));
+
+      console.log("Veranstaltung-infindMatchVeranstaltung", this.match1Veranstaltung);
     }
   }
 
@@ -324,13 +338,15 @@ export class SchusszettelComponent implements OnInit {
       // z.B. Würtembergliga
       this.loadVeranstaltungen();
     }
-
   }
 
   // zurueck zu Sportjahresplan
-  back() {
-    // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
-    if (this.dirtyFlag === true) {
+
+ back() {
+      console.log("veranstaltungback()", this.match1Veranstaltung);
+
+       // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
+   if (this.dirtyFlag === true) {
       // TODO Texte in json.de anlegen
       const notification: Notification = {
         id:               NOTIFICATION_ZURUECK,
@@ -358,14 +374,39 @@ export class SchusszettelComponent implements OnInit {
           });
 
     } else {
+
       console.log("Keine Änderung");
       this.loadDsbMannschaft();
       console.log("Veranstaltung", this.match1Veranstaltung);
       console.log("Wettkampftag", this.match1.wettkampfTag);
+
+      //console.log("Keine Änderung")
+      //console.log("WETTKAMPFTAG", this.match1.wettkampfTag);
+      //this.loadDsbMannschaft();
+
+      //console.log("VERANSTALTUNG", this.match1Veranstaltung.name);
+      //console.log("691", this.match1Veranstaltung);
+      //this.router.navigate(['/sportjahresplan']);
+
+
+      console.log("Keine Änderung");
+      this.loadDsbMannschaft();
+      console.log("Veranstaltung",this.match1Veranstaltung);
+      console.log("Wettkampftag", this.match1.wettkampfTag);
+      sessionStorage.setItem("key2", JSON.stringify(this.match1Veranstaltung));
+      //console.log("Test2"+sessionStorage);
+     // ist undefind
+     console.log("probe",sessionStorage.getItem("pro"));
+      const test= sessionStorage.getItem("key2");
+      console.log("691session", test);
+
       this.router.navigate(['/sportjahresplan']);
 
     }
   }
+
+
+
 
   next() {
 
