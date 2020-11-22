@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {MATCH_TABLE_CONFIG, SPORTJAHRESPLAN_CONFIG, WETTKAMPF_TABLE_CONFIG} from './sportjahresplan.config';
@@ -17,6 +17,7 @@ import {NotificationService} from '@shared/services/notification';
 import {environment} from '@environment';
 import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 
 @Component({
@@ -25,6 +26,8 @@ import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
   styleUrls:   ['./sportjahresplan.component.scss']
 })
 export class SportjahresplanComponent extends CommonComponentDirective implements OnInit {
+
+  @Output() EventEmitterSchusszettelonSelect = new EventEmitter<any>();
 
   public config = SPORTJAHRESPLAN_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
@@ -55,6 +58,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private remainingMatchRequests: number;
   private urlString: string;
   private currentVeranstaltungName;
+  private veranstaltungSchusszettel;
 
 
   constructor(private router: Router,
@@ -68,8 +72,38 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   ngOnInit() {
-    this.loadVeranstaltungen();
-    this.visible = false;
+
+    // NUR beim Zurück-gehen von der Schusszettel-Seite relevant
+    // beim Zurück-gehen von der Schusszettel-Seite werden Veranstaltung und Wettkampf übernommen
+    // Abfrage und Abspeichern der Veranstaltung und des Wettkampfs
+    this.veranstaltungSchusszettel =JSON.parse(sessionStorage.getItem("pro"));
+    console.log("691 OBJEKT", this.veranstaltungSchusszettel);
+
+    // wenn von der Schusszettel-Seite zurück gegangen wurde, wurden Veranstaltung und Wettkampf abgespeichert
+    // wenn man die Schusszettel-Seite noch nicht betreten wurde, sind 'this.veranstaltungSchusszettel' und 'this.wettkampfSchusszettel' undefined bzw. null
+    if(this.veranstaltungSchusszettel== null){
+      // die Schusszettel-Seite wurde noch nicht betreten
+      console.log("691 IF");
+      this.loadVeranstaltungen();
+      this.visible = false;
+    }
+    else{
+      // die Schusszettel-Seite wurde bereits betreten, die zuvor ausgewählte Veranstaltung und der zuvor ausgewählte Wettkampf
+      // sollen wieder hergestellt werden
+
+      // laden der Veranstaltungen für Ermittlung des DO der Veranstaltung
+      console.log("691 ELSE");
+      console.log("691", this.veranstaltungSchusszettel);
+      this.loadVeranstaltungen();
+   const selectedItems : VersionedDataObject[] = [];
+   selectedItems.push(this.veranstaltungSchusszettel);
+   console.log("SelectedItems:",selectedItems);
+     //this.EventEmitterSchusszettelonSelect.emit(selectedItems);
+    //Asuwahl der Entsprechenden veranstaltung
+      this.onSelect(this.veranstaltungSchusszettel);
+      this.visible=false;
+
+    }
   }
 
 
