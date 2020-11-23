@@ -89,7 +89,7 @@ export class SchusszettelComponent implements OnInit {
     // am Anfang sind keine Änderungen
     this.dirtyFlag = false;
 
-    // this.initSchuetzen();sessionStorage
+    // this.initSchuetzen();
     this.initSchuetzenMatch1();
     this.initSchuetzenMatch2();
     this.route.params.subscribe((params) => {
@@ -102,7 +102,6 @@ export class SchusszettelComponent implements OnInit {
               this.match2 = data.payload[1];
               console.log('match1', this.match1);
               console.log('match2', this.match2);
-              this.loadDsbMannschaft();
               let shouldInitSumSatz = true;
               if (this.match1.schuetzen.length <= 0) {
                 this.initSchuetzenMatch1();
@@ -161,7 +160,7 @@ export class SchusszettelComponent implements OnInit {
   }
 
 
-  puffer: VeranstaltungDO;
+
   save() {
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
@@ -343,7 +342,6 @@ export class SchusszettelComponent implements OnInit {
   // zurueck zu Sportjahresplan
 
  back() {
-      console.log("veranstaltungback()", this.match1Veranstaltung);
 
        // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
    if (this.dirtyFlag === true) {
@@ -377,29 +375,9 @@ export class SchusszettelComponent implements OnInit {
 
       console.log("Keine Änderung");
       this.loadDsbMannschaft();
-      console.log("Veranstaltung", this.match1Veranstaltung);
-      console.log("Wettkampftag", this.match1.wettkampfTag);
-
-      //console.log("Keine Änderung")
-      //console.log("WETTKAMPFTAG", this.match1.wettkampfTag);
-      //this.loadDsbMannschaft();
-
-      //console.log("VERANSTALTUNG", this.match1Veranstaltung.name);
-      //console.log("691", this.match1Veranstaltung);
-      //this.router.navigate(['/sportjahresplan']);
-
-
-      console.log("Keine Änderung");
-      this.loadDsbMannschaft();
       console.log("Veranstaltung",this.match1Veranstaltung);
       console.log("Wettkampftag", this.match1.wettkampfTag);
-      sessionStorage.setItem("key2", JSON.stringify(this.match1Veranstaltung));
-      //console.log("Test2"+sessionStorage);
-     // ist undefind
-     console.log("probe",sessionStorage.getItem("pro"));
-      const test= sessionStorage.getItem("key2");
-      console.log("691session", test);
-
+      console.log("probe",sessionStorage.getItem("pro"));
       this.router.navigate(['/sportjahresplan']);
 
     }
