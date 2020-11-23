@@ -300,6 +300,7 @@ export class SchusszettelComponent implements OnInit {
       console.log("Veranstaltung gefunden:", this.match1Veranstaltung);
 
       sessionStorage.setItem("pro",JSON.stringify(this.match1Veranstaltung));
+      sessionStorage.setItem("key2",JSON.stringify(this.match1Veranstaltung.name));
 
       console.log("Veranstaltung-infindMatchVeranstaltung", this.match1Veranstaltung);
     }
