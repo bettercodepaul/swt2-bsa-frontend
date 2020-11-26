@@ -12,23 +12,21 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../../shared/services/notification';
-import {UserProfileDataProviderService} from '../../../../../user/services/user-profile-data-provider.service';
-import {UserProfileDTO} from '../../../../../user/types/model/user-profile-dto.class';
-import {UserProfileDO} from '../../../../../user/types/user-profile-do.class';
+import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
+import {UserProfileDTO} from '@user/types/model/user-profile-dto.class';
+import {UserProfileDO} from '@user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../../services/veranstaltung-data-provider.service';
-import {VeranstaltungDTO} from '../../../../types/datatransfer/veranstaltung-dto.class';
 import {VeranstaltungDO} from '../../../../types/veranstaltung-do.class';
 import {WETTKMAPFTAGE_CONFIG} from './wettkampftage.config';
-import {WettkampfDO} from '../../../../../verwaltung/types/wettkampf-do.class';
-import {WettkampfDTO} from '../../../../../verwaltung/types/datatransfer/wettkampf-dto.class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {WettkampfDataProviderService} from '../../../../services/wettkampf-data-provider.service';
-import {BenutzerRolleDO} from '../../../../../verwaltung/types/benutzer-rolle-do.class';
-import {BenutzerRolleDTO} from '../../../../../verwaltung/types/datatransfer/benutzer-rolle-dto.class';
+import {BenutzerRolleDO} from '@verwaltung/types/benutzer-rolle-do.class';
+import {BenutzerRolleDTO} from '@verwaltung/types/datatransfer/benutzer-rolle-dto.class';
 import {BenutzerDataProviderService} from '../../../../services/benutzer-data-provider.service';
-import {KampfrichterDO} from '../../../../../verwaltung/types/kampfrichter-do.class';
-import {KampfrichterDTO} from '../../../../../verwaltung/types/datatransfer/kampfrichter-dto.class';
+import {KampfrichterDO} from '@verwaltung/types/kampfrichter-do.class';
+import {KampfrichterDTO} from '@verwaltung/types/datatransfer/kampfrichter-dto.class';
 import {KampfrichterProviderService} from '../../../../services/kampfrichter-data-provider.service';
-import {fromPayload} from '@verwaltung/mapper/wettkampf-mapper';
 
 
 const ID_PATH_PARAM = 'id';
@@ -53,12 +51,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
-  // ?
   public currentUser: UserProfileDO;
-  public allUserswt1: Array<BenutzerRolleDO> = [];
-  public allUserswt2: Array<BenutzerRolleDO> = [];
-  public allUserswt3: Array<BenutzerRolleDO> = [];
-  public allUserswt4: Array<BenutzerRolleDO> = [];
+  public allUsersTag1: Array<BenutzerRolleDO> = [];
+  public allUsersTag2: Array<BenutzerRolleDO> = [];
+  public allUsersTag3: Array<BenutzerRolleDO> = [];
+  public allUsersTag4: Array<BenutzerRolleDO> = [];
 
   public selectedKampfrichterTag1: Array<BenutzerRolleDO> = [];
   public selectedKampfrichterTag2: Array<BenutzerRolleDO> = [];
@@ -464,35 +461,35 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   private handleWettkampfResponseArrayFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
-    this.allUserswt1 = [];
-    this.allUserswt2 = [];
-    this.allUserswt3 = [];
-    this.allUserswt4 = [];
+    this.allUsersTag1 = [];
+    this.allUsersTag2 = [];
+    this.allUsersTag3 = [];
+    this.allUsersTag4 = [];
     this.loading = false;
   }
 
   private handleBenutzerrolleResponseArraySuccess(response: BogenligaResponse<BenutzerRolleDO[]>): void {
-    this.allUserswt1 = [];
-    this.allUserswt2 = [];
-    this.allUserswt3 = [];
-    this.allUserswt4 = [];
-    this.allUserswt1 = response.payload;
-    this.allUserswt2 = response.payload;
-    this.allUserswt3 = response.payload;
-    this.allUserswt4 = response.payload;
-    this.allUserswt1 = this.allUserswt1.filter((user) => user.roleId === 5);
-    this.allUserswt2 = this.allUserswt2.filter((user) => user.roleId === 5);
-    this.allUserswt3 = this.allUserswt3.filter((user) => user.roleId === 5);
-    this.allUserswt4 = this.allUserswt4.filter((user) => user.roleId === 5);
+    this.allUsersTag1 = [];
+    this.allUsersTag2 = [];
+    this.allUsersTag3 = [];
+    this.allUsersTag4 = [];
+    this.allUsersTag1 = response.payload;
+    this.allUsersTag2 = response.payload;
+    this.allUsersTag3 = response.payload;
+    this.allUsersTag4 = response.payload;
+    this.allUsersTag1 = this.allUsersTag1.filter((user) => user.roleId === 5);
+    this.allUsersTag2 = this.allUsersTag2.filter((user) => user.roleId === 5);
+    this.allUsersTag3 = this.allUsersTag3.filter((user) => user.roleId === 5);
+    this.allUsersTag4 = this.allUsersTag4.filter((user) => user.roleId === 5);
 
     this.loading = false;
   }
 
   private handleBenutzerrolleResponseArrayFailure(response: BogenligaResponse<BenutzerRolleDTO[]>): void {
-    this.allUserswt1 = [];
-    this.allUserswt2 = [];
-    this.allUserswt3 = [];
-    this.allUserswt4 = [];
+    this.allUsersTag1 = [];
+    this.allUsersTag2 = [];
+    this.allUsersTag3 = [];
+    this.allUsersTag4 = [];
     this.loading = false;
   }
 
@@ -507,21 +504,21 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_1.id);
     for (const iter of Object.keys(this.KampfrichterTag1)) {
-      this.selectedKampfrichterTag1.push(this.allUserswt1.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
+      this.selectedKampfrichterTag1.push(this.allUsersTag1.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
     }
 
     console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.KampfrichterTag1[0]);
     this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_2.id);
     for (const iter of Object.keys(this.KampfrichterTag2)) {
-      this.selectedKampfrichterTag2.push(this.allUserswt2.filter((user) => user.id === this.KampfrichterTag2[iter].userid)[0]);
+      this.selectedKampfrichterTag2.push(this.allUsersTag2.filter((user) => user.id === this.KampfrichterTag2[iter].userid)[0]);
     }
     this.KampfrichterTag3 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_3.id);
     for (const iter of Object.keys(this.KampfrichterTag3)) {
-      this.selectedKampfrichterTag3.push(this.allUserswt3.filter((user) => user.id === this.KampfrichterTag3[iter].userid)[0]);
+      this.selectedKampfrichterTag3.push(this.allUsersTag3.filter((user) => user.id === this.KampfrichterTag3[iter].userid)[0]);
     }
     this.KampfrichterTag4 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_4.id);
     for (const iter of Object.keys(this.KampfrichterTag4)) {
-      this.selectedKampfrichterTag4.push(this.allUserswt4.filter((user) => user.id === this.KampfrichterTag4[iter].userid)[0]);
+      this.selectedKampfrichterTag4.push(this.allUsersTag4.filter((user) => user.id === this.KampfrichterTag4[iter].userid)[0]);
     }
     console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID v2: ' + this.allKampfrichter[0].userid);
 
