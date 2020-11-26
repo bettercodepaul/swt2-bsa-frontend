@@ -17,7 +17,7 @@ import {UserProfileDTO} from '@user/types/model/user-profile-dto.class';
 import {UserProfileDO} from '@user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../../services/veranstaltung-data-provider.service';
 import {VeranstaltungDO} from '../../../../types/veranstaltung-do.class';
-import {WETTKMAPFTAGE_CONFIG} from './wettkampftage.config';
+import {WETTKAMPFTAGE_CONFIG} from './wettkampftage.config';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {WettkampfDataProviderService} from '../../../../services/wettkampf-data-provider.service';
@@ -46,7 +46,7 @@ const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 })
 
 export class WettkampftageComponent extends CommonComponentDirective implements OnInit {
-  public config = WETTKMAPFTAGE_CONFIG;
+  public config = WETTKAMPFTAGE_CONFIG;
   public ButtonType = ButtonType;
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
