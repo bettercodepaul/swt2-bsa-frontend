@@ -2,14 +2,14 @@ import {DataTransferObject} from '@shared/data-provider';
 
 export class KampfrichterDTO implements DataTransferObject {
   // TODO:  if else for every number
-  id: number;
-  userid: number;
+  userID: number;
+  wettkampfID: number;
   leitend: boolean;
   version: number;
 
   static copyFrom(optional: {
-    id?: number;
     userid?: number;
+    id?: number;
     leitend?: boolean;
     version?: number;
   } = {}): KampfrichterDTO {
@@ -17,15 +17,15 @@ export class KampfrichterDTO implements DataTransferObject {
 
     // show '0' value
     if (optional.userid >= 0) {
-      copy.userid = optional.userid;
+      copy.userID = optional.userid;
     } else {
-      copy.userid = null;
+      copy.userID = null;
     }
 
     if (optional.id >= 0) {
-      copy.id = optional.id;
+      copy.wettkampfID = optional.id;
     } else {
-      copy.id = null;
+      copy.wettkampfID = null;
     }
 
 
