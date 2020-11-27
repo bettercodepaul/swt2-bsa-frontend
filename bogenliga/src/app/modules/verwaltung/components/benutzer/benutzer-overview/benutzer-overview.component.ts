@@ -28,6 +28,7 @@ export class BenutzerOverviewComponent extends CommonComponentDirective implemen
 
   public configActive = BENUTZER_OVERVIEW_CONFIG_ACTIVE;
   public rowsActive: TableRow[];
+  public displayRoles: TableRow[];
 
   constructor(private benutzerDataProvider: BenutzerDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
@@ -96,9 +97,31 @@ export class BenutzerOverviewComponent extends CommonComponentDirective implemen
     this.loading = false;
   }
 
+  /*
+  handleLoadTableRowsSuccess
+  displayRoles wurden oben angelegt.
+  ich hole mir aus der Datenbank alle aktiven Nutzer.
+  Für die Anzeige schreibe ich jeden Nutzer in displayRoles, falls ein Benutzer doppelt vorkommen würde,
+  zeige ich nur die Rolle mit dem höchsten Rang an.
+  */
   private handleLoadTableRowsSuccess(response: BogenligaResponse<BenutzerRolleDO[]>): void {
     this.rowsActive = []; // reset array to ensure change detection
+    this.displayRoles = [];
+
+    let exist = 0;
     this.rowsActive = toTableRows(response.payload.filter((benutzer) => benutzer.active));
+    this.rowsActive.forEach((item, index) => {
+      this.displayRoles.forEach((item2, index2) => {
+        if (item.payload.id === item2.payload.id) {
+          exist = 1;
+        }
+      });
+      if (exist === 0) {
+        this.displayRoles.push(item);
+      } else {
+        exist = 0;
+      }
+    });
     this.loading = false;
   }
 }
