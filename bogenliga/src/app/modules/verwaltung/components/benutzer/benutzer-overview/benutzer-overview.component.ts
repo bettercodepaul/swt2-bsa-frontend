@@ -110,19 +110,18 @@ export class BenutzerOverviewComponent extends CommonComponentDirective implemen
 
     let exist = 0;
     this.rowsActive = toTableRows(response.payload.filter((benutzer) => benutzer.active));
-    this.rowsActive.forEach((item,index)=>{
-      this.displayRoles.forEach((item2,index2)=>{
-        if(item.payload.id === item2.payload.id){
+    this.rowsActive.forEach((item, index) => {
+      this.displayRoles.forEach((item2, index2) => {
+        if (item.payload.id === item2.payload.id) {
           exist = 1;
         }
-      })
-      if (exist === 0){
+      });
+      if (exist === 0) {
         this.displayRoles.push(item);
-      }
-      else{
+      } else {
         exist = 0;
       }
-    })
+    });
     this.loading = false;
   }
 }
