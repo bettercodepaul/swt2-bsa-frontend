@@ -3,12 +3,12 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {CurrentUserService, UserPermission} from '@shared/services';
 
 @Injectable()
-export class EinstellungenOverviewGuard implements CanActivate {
+export class EinstellungenGuard implements CanActivate {
   constructor(private currentUserService: CurrentUserService) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_SYSTEMDATEN]);
+      [UserPermission.CAN_MODIFY_SYSTEMDATEN]);
   }
 }
