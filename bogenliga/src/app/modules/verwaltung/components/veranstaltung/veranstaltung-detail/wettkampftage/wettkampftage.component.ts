@@ -173,6 +173,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
 
     // Justins code
+    // TODO: Deal with the following error that sometimes occurs: "this.kampfrichterTag1[iter] is undefined"
     for (const iter of Object.keys(this.selectedKampfrichterTag1)) {
       this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.selectedKampfrichterTag1[iter].id)[0]);
       this.kampfrichterTag1[iter].wettkampfID = this.currentWettkampftag_1.id;
