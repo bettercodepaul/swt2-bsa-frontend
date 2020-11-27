@@ -97,9 +97,17 @@ export class BenutzerOverviewComponent extends CommonComponentDirective implemen
     this.loading = false;
   }
 
+  /*
+  handleLoadTableRowsSuccess
+  displayRoles wurden oben angelegt.
+  ich hole mir aus der Datenbank alle aktiven Nutzer.
+  Für die Anzeige schreibe ich jeden Nutzer in displayRoles, falls ein Benutzer doppelt vorkommen würde,
+  zeige ich nur die Rolle mit dem höchsten Rang an.
+  */
   private handleLoadTableRowsSuccess(response: BogenligaResponse<BenutzerRolleDO[]>): void {
     this.rowsActive = []; // reset array to ensure change detection
     this.displayRoles = [];
+
     let exist = 0;
     this.rowsActive = toTableRows(response.payload.filter((benutzer) => benutzer.active));
     this.rowsActive.forEach((item,index)=>{
