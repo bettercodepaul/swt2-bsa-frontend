@@ -151,28 +151,45 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
 
   public onSaveWettkampfTag1(ignore: any): void {
+    let wettkampftagAlreadyExists: boolean;
+
     this.currentWettkampftag_1.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
     this.currentWettkampftag_1.wettkampfTag = 1;
     this.currentWettkampftag_1.wettkampfDisziplinId = 0;
     this.currentWettkampftag_1.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
-
-    // Justins code
-    // TODO: Fix this
-    for (const iter of Object.keys(this.selectedKampfrichterTag1)) {
-      this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.selectedKampfrichterTag1[iter].id)[0]);
-    }
-    console.log("!?!?!?!?!?!?!?!?!?!?!?");
-    console.log(this.kampfrichterTag1);
+    this.currentWettkampftag_1.wettkampfAusrichter = this.currentAusrichter1.id;
 
     // this.currentWettkampftag_1.kampfrichterID = this.selectedKampfrichterTag1[0].id;
     // console.log('==>onSaveWettkampfTag1: Selected kampfrichter-ID: ' + this.currentWettkampftag_1.kampfrichterID);
 
-    this.currentWettkampftag_1.wettkampfAusrichter = this.currentAusrichter1.id;
+
     if (this.currentWettkampftag_1.id == null) {
+      wettkampftagAlreadyExists = false;
       // die Daten sind initial angelegt - es exitsiert noch keine ID --> Save nicht update
       this.currentWettkampftag_1.id = this.saveWettkampftag(this.currentWettkampftag_1);
     } else {
+      wettkampftagAlreadyExists = true;
       this.updateWettkampftag(this.currentWettkampftag_1);
+    }
+
+    // Justins code
+    for (const iter of Object.keys(this.selectedKampfrichterTag1)) {
+      this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.selectedKampfrichterTag1[iter].id)[0]);
+      this.kampfrichterTag1[iter].wettkampfID = this.currentWettkampftag_1.id;
+      this.kampfrichterTag1[iter].leitend = false;
+    }
+
+    console.log('selectedKampfrichterTag1:');
+    console.log(this.selectedKampfrichterTag1)
+    console.log('allKampfrichter:');
+    console.log(this.allKampfrichter)
+    console.log('kampfrichterTag1:');
+    console.log(this.kampfrichterTag1);
+
+    if (!wettkampftagAlreadyExists) {
+      this.saveKampfrichterArray(this.kampfrichterTag1);
+    } else {
+      this.updateKampfrichterArray(this.kampfrichterTag1);
     }
   }
 
@@ -301,6 +318,44 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
           console.log('Failed');
           this.saveLoading = false;
         });
+  }
+
+  // Justins Code
+  private saveKampfrichterArray(kampfrichterArray: Array<KampfrichterDO>): void {
+    for (const iter of Object.keys(kampfrichterArray)) {
+      // TODO: Fix the provider so that it doesn't send the data to the liga API
+      this.kampfrichterProvider.create(kampfrichterArray[iter])
+          .then((response: BogenligaResponse<KampfrichterDO>) => {
+            if (!isNullOrUndefined(response)
+              && !isNullOrUndefined(response.payload)
+              && !isNullOrUndefined(response.payload.id)) {
+              console.log('Saved with id: ' + response.payload.id);
+
+              // TODO: Figure out what exactly saveLoading does and if the code has to be modified accordingly
+              this.saveLoading = false;
+            }
+          }, (response: BogenligaResponse<KampfrichterDO>) => {
+            console.log('Failed');
+            this.saveLoading = false;
+          });
+    }
+  }
+
+  private updateKampfrichterArray(kampfrichterArray: Array<KampfrichterDO>): void {
+    for (const iter of Object.keys(kampfrichterArray)) {
+      this.kampfrichterProvider.update(kampfrichterArray[iter])
+          .then((response: BogenligaResponse<KampfrichterDO>) => {
+            if (!isNullOrUndefined(response)
+              && !isNullOrUndefined(response.payload)
+              && !isNullOrUndefined(response.payload.id)) {
+              console.log('Saved with id: ' + response.payload.id);
+              this.saveLoading = false;
+            }
+          }, (response: BogenligaResponse<KampfrichterDO>) => {
+            console.log('Failed');
+            this.saveLoading = false;
+          });
+    }
   }
 
 
