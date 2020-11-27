@@ -16,7 +16,9 @@ import {KampfrichterDO} from '../types/kampfrichter-do.class';
   providedIn: 'root'
 })
 export class KampfrichterProviderService  extends DataProviderService {
-  serviceSubUrl = 'v1/liga';
+
+  //Justins Code
+  serviceSubUrl = 'v1/kampfrichter';
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
