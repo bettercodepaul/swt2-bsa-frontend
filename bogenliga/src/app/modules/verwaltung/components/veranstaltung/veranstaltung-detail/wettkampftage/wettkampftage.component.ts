@@ -63,10 +63,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public selectedKampfrichterTag4: Array<BenutzerRolleDO> = [];
 
   public allKampfrichter: Array<KampfrichterDO> = [];
-  public KampfrichterTag1: Array<KampfrichterDO> = [];
-  public KampfrichterTag2: Array<KampfrichterDO> = [];
-  public KampfrichterTag3: Array<KampfrichterDO> = [];
-  public KampfrichterTag4: Array<KampfrichterDO> = [];
+  public kampfrichterTag1: Array<KampfrichterDO> = [];
+  public kampfrichterTag2: Array<KampfrichterDO> = [];
+  public kampfrichterTag3: Array<KampfrichterDO> = [];
+  public kampfrichterTag4: Array<KampfrichterDO> = [];
 
   public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_2: WettkampfDO = new WettkampfDO();
@@ -156,8 +156,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentWettkampftag_1.wettkampfDisziplinId = 0;
     this.currentWettkampftag_1.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
 
-    this.currentWettkampftag_1.kampfrichterID = this.selectedKampfrichterTag1[0].id;
-    console.log('==>onSaveWettkampfTag1: Selected kampfrichter-ID: ' + this.currentWettkampftag_1.kampfrichterID);
+    // Justins code
+    for (const iter of Object.keys(this.selectedKampfrichterTag1)) {
+      this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.selectedKampfrichterTag1[iter].id)[0]);
+    }
+
+    // this.currentWettkampftag_1.kampfrichterID = this.selectedKampfrichterTag1[0].id;
+    // console.log('==>onSaveWettkampfTag1: Selected kampfrichter-ID: ' + this.currentWettkampftag_1.kampfrichterID);
 
     this.currentWettkampftag_1.wettkampfAusrichter = this.currentAusrichter1.id;
     if (this.currentWettkampftag_1.id == null) {
@@ -500,26 +505,26 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.allKampfrichter = response.payload;
 
     console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: ' + this.allKampfrichter[0].id);
-    console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.KampfrichterTag1[0]);
+    console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.kampfrichterTag1[0]);
     console.log(' ==> response.payload: ' + response.result);
 
-    this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_1.id);
-    for (const iter of Object.keys(this.KampfrichterTag1)) {
-      this.selectedKampfrichterTag1.push(this.allUsersTag1.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
+    this.kampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_1.id);
+    for (const iter of Object.keys(this.kampfrichterTag1)) {
+      this.selectedKampfrichterTag1.push(this.allUsersTag1.filter((user) => user.id === this.kampfrichterTag1[iter].userID)[0]);
     }
 
-    console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.KampfrichterTag1[0]);
-    this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_2.id);
-    for (const iter of Object.keys(this.KampfrichterTag2)) {
-      this.selectedKampfrichterTag2.push(this.allUsersTag2.filter((user) => user.id === this.KampfrichterTag2[iter].userid)[0]);
+    console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.kampfrichterTag1[0]);
+    this.kampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_2.id);
+    for (const iter of Object.keys(this.kampfrichterTag2)) {
+      this.selectedKampfrichterTag2.push(this.allUsersTag2.filter((user) => user.id === this.kampfrichterTag2[iter].userID)[0]);
     }
-    this.KampfrichterTag3 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_3.id);
-    for (const iter of Object.keys(this.KampfrichterTag3)) {
-      this.selectedKampfrichterTag3.push(this.allUsersTag3.filter((user) => user.id === this.KampfrichterTag3[iter].userid)[0]);
+    this.kampfrichterTag3 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_3.id);
+    for (const iter of Object.keys(this.kampfrichterTag3)) {
+      this.selectedKampfrichterTag3.push(this.allUsersTag3.filter((user) => user.id === this.kampfrichterTag3[iter].userID)[0]);
     }
-    this.KampfrichterTag4 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_4.id);
-    for (const iter of Object.keys(this.KampfrichterTag4)) {
-      this.selectedKampfrichterTag4.push(this.allUsersTag4.filter((user) => user.id === this.KampfrichterTag4[iter].userid)[0]);
+    this.kampfrichterTag4 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_4.id);
+    for (const iter of Object.keys(this.kampfrichterTag4)) {
+      this.selectedKampfrichterTag4.push(this.allUsersTag4.filter((user) => user.id === this.kampfrichterTag4[iter].userID)[0]);
     }
     console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID v2: ' + this.allKampfrichter[0].id);
 
