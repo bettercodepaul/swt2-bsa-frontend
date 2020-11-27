@@ -89,7 +89,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampfDataProvider: WettkampfDataProviderService,
     private userProvider: UserProfileDataProviderService,
-    private benutzerrolleProvider: BenutzerDataProviderService,
+    private benutzerRolleProvider: BenutzerDataProviderService,
     private kampfrichterProvider: KampfrichterProviderService,
     private router: Router,
     private route: ActivatedRoute,
@@ -338,7 +338,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
 
   private loadBenutzer() {
-    this.benutzerrolleProvider.findAll()
+    this.benutzerRolleProvider.findAll()
         .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleBenutzerrolleResponseArraySuccess(response))
         .catch((response: BogenligaResponse<BenutzerRolleDTO[]>) => this.handleBenutzerrolleResponseArrayFailure(response));
   }
@@ -493,34 +493,35 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
   }
 
+  // TODO: Fix this method
   private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterDO[]>): void {
 
     this.allKampfrichter = [];
     this.allKampfrichter = response.payload;
 
-    console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: ' + this.allKampfrichter[0].userid);
+    console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: ' + this.allKampfrichter[0].id);
     console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.KampfrichterTag1[0]);
     console.log(' ==> response.payload: ' + response.result);
 
-    this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_1.id);
+    this.KampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_1.id);
     for (const iter of Object.keys(this.KampfrichterTag1)) {
       this.selectedKampfrichterTag1.push(this.allUsersTag1.filter((user) => user.id === this.KampfrichterTag1[iter].userid)[0]);
     }
 
     console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.KampfrichterTag1[0]);
-    this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_2.id);
+    this.KampfrichterTag2 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_2.id);
     for (const iter of Object.keys(this.KampfrichterTag2)) {
       this.selectedKampfrichterTag2.push(this.allUsersTag2.filter((user) => user.id === this.KampfrichterTag2[iter].userid)[0]);
     }
-    this.KampfrichterTag3 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_3.id);
+    this.KampfrichterTag3 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_3.id);
     for (const iter of Object.keys(this.KampfrichterTag3)) {
       this.selectedKampfrichterTag3.push(this.allUsersTag3.filter((user) => user.id === this.KampfrichterTag3[iter].userid)[0]);
     }
-    this.KampfrichterTag4 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.currentWettkampftag_4.id);
+    this.KampfrichterTag4 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_4.id);
     for (const iter of Object.keys(this.KampfrichterTag4)) {
       this.selectedKampfrichterTag4.push(this.allUsersTag4.filter((user) => user.id === this.KampfrichterTag4[iter].userid)[0]);
     }
-    console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID v2: ' + this.allKampfrichter[0].userid);
+    console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID v2: ' + this.allKampfrichter[0].id);
 
     this.loading = false;
   }

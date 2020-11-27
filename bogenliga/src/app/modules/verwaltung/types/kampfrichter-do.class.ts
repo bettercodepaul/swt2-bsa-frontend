@@ -3,7 +3,7 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 
 export class KampfrichterDO implements VersionedDataObject {
   id: number;
-  userid: number;
+  wettkampfID: number;
   leitend: boolean;
   version: number;
 
