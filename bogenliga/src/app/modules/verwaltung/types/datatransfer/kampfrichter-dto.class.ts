@@ -2,7 +2,7 @@ import {DataTransferObject} from '@shared/data-provider';
 
 export class KampfrichterDTO implements DataTransferObject {
   // TODO:  if else for every number
-  userID: number;
+  id: number;
   wettkampfID: number;
   leitend: boolean;
   version: number;
@@ -17,9 +17,9 @@ export class KampfrichterDTO implements DataTransferObject {
 
     // show '0' value
     if (optional.userid >= 0) {
-      copy.userID = optional.userid;
+      copy.id = optional.userid;
     } else {
-      copy.userID = null;
+      copy.id = null;
     }
 
     if (optional.id >= 0) {
