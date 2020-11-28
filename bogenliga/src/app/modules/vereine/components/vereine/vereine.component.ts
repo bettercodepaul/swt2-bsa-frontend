@@ -220,7 +220,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.router.navigateByUrl(link);
   }
 
-  /** DUPLICATE
+  /**
    * Creates Link to Google Maps
    * Splits given Location at every comma and passes it to Google Maps
    * @param $event

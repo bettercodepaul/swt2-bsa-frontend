@@ -1,7 +1,11 @@
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 
-
-export function onMapService($event: WettkampfDO): void {
+/**
+ * Creates Link to Google Maps
+ * Splits given Location at every comma and passes it to Google Maps
+ * @param $event
+ */
+export const onMapService = ($event: WettkampfDO): void => {
 
   const str = $event.wettkampfOrt;
   let splits: string[];
@@ -14,7 +18,7 @@ export function onMapService($event: WettkampfDO): void {
     locationUrl += splits[i];
   }
   window.open(locationUrl);
-}
+};
 
 
 
