@@ -14,6 +14,7 @@ import {registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
 import {CurrentUserService} from '@shared/services';
+import {onMapService} from '@shared/functions/onMap-service';
 
 @Component({
   selector:    'bla-home',
@@ -94,14 +95,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   }
 
   public onMap($event: WettkampfDO): void {
-
-    const str = $event.wettkampfOrt;
-    let splits: string[];
-    splits = str.split(', ', 5);
-    const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
-    window.open(locationUrl);
-
+    onMapService($event);
   }
+
   /**
    * Restriction that only a maximum of six events are portrayed
    * BSAPP- 367

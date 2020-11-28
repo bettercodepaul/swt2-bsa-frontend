@@ -20,6 +20,7 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '@shared/services/notification';
 import {TableColumnConfig} from '@shared/components/tables/types/table-column-config.interface';
+import {onMapService} from '@shared/functions/onMap-service';
 
 
 const ID_PATH_PARAM = 'id';
@@ -225,18 +226,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    * @param $event
    */
   public onMap($event: WettkampfDO): void {
-
-    const str = $event.wettkampfOrt;
-    let splits: string[];
-    splits = str.split(', ', 5);
-    let locationUrl = 'https://www.google.de/maps/place/';
-    for (let i = 0; i < splits.length; i++) {
-      if (i !== 0) {
-        locationUrl += '+';
-      }
-      locationUrl += splits[i];
-    }
-    window.open(locationUrl);
+    onMapService($event);
   }
 
   private loadVereine(): void {
