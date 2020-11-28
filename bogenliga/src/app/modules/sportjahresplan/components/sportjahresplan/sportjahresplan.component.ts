@@ -117,13 +117,12 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 // TODO URL-Sprung bei TabletButtonClick
   }
 
-  /** DUPLICATE
+  /**
    * Creates Link to Google Maps
    * Splits given Location at every comma and passes it to Google Maps
    * @param $event
    */
   public onMap($event: WettkampfDO): void {
-
     onMapService($event);
   }
 
