@@ -52,6 +52,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
   public currentUser: UserProfileDO;
+
+  // TODO: Rename allUsers to allSportleiter and check, if we even need them
   public allUsersTag1: Array<BenutzerRolleDO> = [];
   public allUsersTag2: Array<BenutzerRolleDO> = [];
   public allUsersTag3: Array<BenutzerRolleDO> = [];
@@ -120,6 +122,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.navigateToWettkampftage(this.currentVeranstaltung);
   }
 
+  // TODO: Rename in loadAusrichter or make it also load Kampfrichter
   private loadUsers() {
     this.userProvider.findAll()
         .then((response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess(response))
@@ -173,11 +176,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
 
     // Justins code
-    // TODO: Deal with the following error that sometimes occurs: "this.kampfrichterTag1[iter] is undefined"
-    for (const iter of Object.keys(this.selectedKampfrichterTag1)) {
-      this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.selectedKampfrichterTag1[iter].id)[0]);
-      this.kampfrichterTag1[iter].wettkampfID = this.currentWettkampftag_1.id;
-      this.kampfrichterTag1[iter].leitend = false;
+    // TODO: Deal with the following error that sometimes occurs: "this.kampfrichterTag1[i] is undefined"
+    for (const i of Object.keys(this.selectedKampfrichterTag1)) {
+      this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.selectedKampfrichterTag1[i].id)[0]);
+      console.log(i);
+      this.kampfrichterTag1[i].wettkampfID = this.currentWettkampftag_1.id;
+      this.kampfrichterTag1[i].leitend = false;
     }
 
     console.log('selectedKampfrichterTag1:');
@@ -255,25 +259,23 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
             wettkampfDO.id = response.payload.id;
             console.log(wettkampfDO);
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
-                  }
-                });
-
-            this.notificationService.showNotification(notification);
+            // const notification: Notification = {
+            //   id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+            //   title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
+            //   description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
+            //   severity:    NotificationSeverity.INFO,
+            //   origin:      NotificationOrigin.USER,
+            //   type:        NotificationType.OK,
+            //   userAction:  NotificationUserAction.PENDING
+            // };
+            //
+            // this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+            //     .subscribe((myNotification) => {
+            //       if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            //         this.saveLoading = false;
+            //         this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' +
+            // this.currentVeranstaltung.id); } });  this.notificationService.showNotification(notification);
 
           }
         }, (response: BogenligaResponse<WettkampfDO>) => {
@@ -295,25 +297,22 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
 
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.UPDATE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.UPDATE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
-
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
-                  }
-                });
-
-            this.notificationService.showNotification(notification);
+            // const notification: Notification = {
+            //   id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+            //   title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.UPDATE.TITLE',
+            //   description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.UPDATE.DESCRIPTION',
+            //   severity:    NotificationSeverity.INFO,
+            //   origin:      NotificationOrigin.USER,
+            //   type:        NotificationType.OK,
+            //   userAction:  NotificationUserAction.PENDING
+            // };
+            //
+            // this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+            //     .subscribe((myNotification) => {
+            //       if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            //         this.saveLoading = false;
+            //         this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' +
+            // this.currentVeranstaltung.id); } });  this.notificationService.showNotification(notification);
           }
         }, (response: BogenligaResponse<WettkampfDO>) => {
           console.log('Failed');
@@ -332,8 +331,26 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
               && !isNullOrUndefined(response.payload.id)) {
               console.log('Saved with id: ' + response.payload.id);
 
-              // TODO: Figure out what exactly saveLoading does and if the code has to be modified accordingly
-              this.saveLoading = false;
+              // TODO: Put this code in it's own method
+              const notification: Notification = {
+                id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+                title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
+                description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
+                severity:    NotificationSeverity.INFO,
+                origin:      NotificationOrigin.USER,
+                type:        NotificationType.OK,
+                userAction:  NotificationUserAction.PENDING
+              };
+
+              this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+                  .subscribe((myNotification) => {
+                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                      this.saveLoading = false;
+                      this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
+                    }
+                  });
+
+              this.notificationService.showNotification(notification);
             }
           }, (response: BogenligaResponse<KampfrichterDO>) => {
             console.log('Failed');
@@ -350,7 +367,26 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
               && !isNullOrUndefined(response.payload)
               && !isNullOrUndefined(response.payload.id)) {
               console.log('Saved with id: ' + response.payload.id);
-              this.saveLoading = false;
+
+              const notification: Notification = {
+                id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+                title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.UPDATE.TITLE',
+                description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.UPDATE.DESCRIPTION',
+                severity:    NotificationSeverity.INFO,
+                origin:      NotificationOrigin.USER,
+                type:        NotificationType.OK,
+                userAction:  NotificationUserAction.PENDING
+              };
+
+              this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+                  .subscribe((myNotification) => {
+                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                      this.saveLoading = false;
+                      this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
+                    }
+                  });
+
+              this.notificationService.showNotification(notification);
             }
           }, (response: BogenligaResponse<KampfrichterDO>) => {
             console.log('Failed');

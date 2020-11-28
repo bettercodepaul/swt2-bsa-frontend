@@ -18,7 +18,8 @@ import {KampfrichterDO} from '../types/kampfrichter-do.class';
 export class KampfrichterProviderService  extends DataProviderService {
 
   //Justins Code
-  serviceSubUrl = 'v1/kampfrichter';
+  // TODO: Make url v1/kampfrichter and fix KampfrichterService
+  serviceSubUrl = 'v1/liga';
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
