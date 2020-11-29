@@ -605,6 +605,11 @@
           "PLACEHOLDER": "Bitte eine Webseite angeben",
           "ERROR": "Bitte eine gültige Webseite angeben."
         },
+        "VEREIN_DESCRIPTION": {
+          "LABEL": "Freitext",
+          "PLACEHOLDER": "Bitte eine kurze Vorstellung eingeben",
+          "ERROR": "Bitte einen gültigen Freitext eingeben."
+        },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
