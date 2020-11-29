@@ -11,6 +11,7 @@ import {
 import {CurrentUserService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/kampfrichter-mapper';
 import {KampfrichterDO} from '../types/kampfrichter-do.class';
+import {KampfrichterDTO} from '@verwaltung/types/datatransfer/kampfrichter-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -87,7 +88,9 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDTO>> { // DO or DTO?
+    console.log("KampfrichterProviderService:");
+    console.log(payload);
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
