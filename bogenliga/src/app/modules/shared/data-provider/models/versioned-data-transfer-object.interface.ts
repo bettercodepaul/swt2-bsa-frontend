@@ -1,4 +1,4 @@
-import {DataTransferObject} from './data-transfer-object.interface';
+import {DataTransferObject} from '@shared/data-provider';
 
 export interface VersionedDataTransferObject extends DataTransferObject {
   id: number;

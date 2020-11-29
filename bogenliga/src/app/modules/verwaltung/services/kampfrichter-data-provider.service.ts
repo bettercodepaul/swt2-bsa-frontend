@@ -88,7 +88,7 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDTO>> { // DO or DTO?
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> { // DO or DTO? Probably DO.
     console.log("KampfrichterProviderService:");
     console.log(payload);
     // return promise
@@ -109,6 +109,8 @@ export class KampfrichterProviderService  extends DataProviderService {
           });
     });
   }
+
+
   public create(payload: KampfrichterDO): Promise<BogenligaResponse<KampfrichterDO>> {
     // return promise
     // sign in success -> resolve promise
