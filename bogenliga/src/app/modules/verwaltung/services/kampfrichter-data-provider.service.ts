@@ -19,7 +19,7 @@ export class KampfrichterProviderService  extends DataProviderService {
 
   //Justins Code
   // TODO: Make url v1/kampfrichter and fix KampfrichterService
-  serviceSubUrl = 'v1/liga';
+  serviceSubUrl = 'v1/kampfrichter';
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {

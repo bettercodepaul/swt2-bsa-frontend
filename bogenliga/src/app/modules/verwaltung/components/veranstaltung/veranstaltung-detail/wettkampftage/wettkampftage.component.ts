@@ -27,6 +27,7 @@ import {BenutzerDataProviderService} from '../../../../services/benutzer-data-pr
 import {KampfrichterDO} from '@verwaltung/types/kampfrichter-do.class';
 import {KampfrichterDTO} from '@verwaltung/types/datatransfer/kampfrichter-dto.class';
 import {KampfrichterProviderService} from '../../../../services/kampfrichter-data-provider.service';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 
 
 const ID_PATH_PARAM = 'id';
@@ -177,6 +178,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     // Justins code
     // TODO: Deal with the following error that sometimes occurs: "this.kampfrichterTag1[i] is undefined"
+    // The error probably appears when TeamSportleiter is selected, because of the "liga" error
     for (const i of Object.keys(this.selectedKampfrichterTag1)) {
       this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id === this.selectedKampfrichterTag1[i].id)[0]);
       console.log(i);
@@ -445,7 +447,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private loadKampfrichter() {
     this.kampfrichterProvider.findAll()
-        .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccess(response))
+        .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccess(
+          // response
+        ))
         .catch((response: BogenligaResponse<KampfrichterDTO[]>) => this.handleKampfrichterResponseArrayFailure(response));
 
   }
@@ -594,14 +598,24 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   // TODO: Fix this method
-  private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterDO[]>): void {
+  private handleKampfrichterResponseArraySuccess(
+    // response: BogenligaResponse<KampfrichterDO[]>
+  ): void {
 
     this.allKampfrichter = [];
-    this.allKampfrichter = response.payload;
+
+    // TODO: Delete the following lines
+    for (let i = 0; i < 7; i++) {
+      this.allKampfrichter[i] = new KampfrichterDO();
+      this.allKampfrichter[i].id = i;
+    }
+
+    // TODO: Uncomment the following line
+    // this.allKampfrichter = response.payload;
 
     console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: ' + this.allKampfrichter[0].id);
     console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.kampfrichterTag1[0]);
-    console.log(' ==> response.payload: ' + response.result);
+    // console.log(' ==> response.payload: ' + response.result);
 
     this.kampfrichterTag1 = this.allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_1.id);
     for (const iter of Object.keys(this.kampfrichterTag1)) {
