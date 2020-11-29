@@ -20,6 +20,7 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {NotificationService} from '@shared/services';
+import {assertNotNull} from '@angular/compiler/src/output/output_ast';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -51,6 +52,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
+
+
+  popup: boolean;
+
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -96,11 +101,34 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * If this.currentMannschaft all match encounters from one team get created, else from all.
    */
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
+    this.rows = [];
+    for (let i = 0; i < this.wettkaempfe.length; i++) {
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
+        this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i]))));
+    }
+  }
+
+  /* loadEinzelstatistik
+  Hier wir die Tabelle befüllt für die Einzelstatistik der Schützen
+  Derzeit sind die Daten der Aktuellen Mannschaft implementiert um die Funktionalität zu sätzen
+  Das muss noch geändert werden TODO
+   */
+  public loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
 
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
       this.rows.push((toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
         this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i]))));
+    }
+  }
+
+  /* loadPopup
+   ich werde in html aufgerufen,
+   wenn ein Popup erscheinen soll das aufmerksam macht, dass die Mannschaft noch nicht ausgewählt wurde.
+   */
+  public loadPopup(selectedMannschaft: DsbMannschaftDO) {
+    if (!selectedMannschaft) {
+      this.popup = true;
     }
   }
 
