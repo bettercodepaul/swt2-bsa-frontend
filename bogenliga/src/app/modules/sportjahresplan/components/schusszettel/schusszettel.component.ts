@@ -298,11 +298,6 @@ export class SchusszettelComponent implements OnInit {
       this.match1Veranstaltung=veranstaltung;
 
       console.log("Veranstaltung gefunden:", this.match1Veranstaltung);
-
-      sessionStorage.setItem("pro",JSON.stringify(this.match1Veranstaltung));
-      sessionStorage.setItem("key2",JSON.stringify(this.match1Veranstaltung.name));
-
-      console.log("Veranstaltung-infindMatchVeranstaltung", this.match1Veranstaltung);
     }
   }
 
@@ -378,9 +373,7 @@ export class SchusszettelComponent implements OnInit {
       this.loadDsbMannschaft();
       console.log("Veranstaltung",this.match1Veranstaltung);
       console.log("Wettkampftag", this.match1.wettkampfTag);
-      console.log("probe",sessionStorage.getItem("pro"));
-      this.router.navigate(['/sportjahresplan']);
-
+      this.router.navigate(['/sportjahresplan'+'/'+this.match1.wettkampfId]);
     }
   }
 
