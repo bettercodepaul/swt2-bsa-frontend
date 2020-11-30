@@ -397,6 +397,10 @@
         "VERANSTALTUNG": {
           "LABEL": "Veranstaltungen",
           "DESCRIPTION": "Verwaltung der Veranstaltungen"
+        },
+        "EINSTELLUNGEN": {
+          "LABEL": "Einstellungen",
+          "DESCRIPTION": "Einstellungen bearbeiten"
         }
       }
     },
@@ -1252,6 +1256,11 @@
         }
       }
     },
+
+    "EINSTELLUNGEN": {
+      "TITLE": "Einstellungen - Übersicht"
+    },
+
     "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
