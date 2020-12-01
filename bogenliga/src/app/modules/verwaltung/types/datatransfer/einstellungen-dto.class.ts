@@ -5,27 +5,23 @@ export class EinstellungenDTO implements DataTransferObject {
   id: number;
   version: number;
 
-  smtpName: string;
-  smtpHost: string;
-  smtpPort: number;
-  smtpPasswort: string;
+  key: string;
+  value: string;
+
 
   static copyFrom(optional: {
     id?: number;
     version?: number;
-    smtpName?: string;
-    smtpHost?: string;
-    smtpPort?: number;
-    smtpPasswort?: string;
+    key?: string;
+    value?: string;
+
 
   } = {}): EinstellungenDTO {
     const copy = new EinstellungenDTO();
     copy.id = optional.id || null;
     copy.version = optional.version || null;
-    copy.smtpName = optional.smtpName || '';
-    copy.smtpHost = optional.smtpHost || '';
-    copy.smtpPort = optional.smtpPort || null;
-    copy.smtpPasswort = optional.smtpPasswort || '';
+    copy.key = optional.key || '';
+    copy.value = optional.value || '';
 
     return copy;
   }
