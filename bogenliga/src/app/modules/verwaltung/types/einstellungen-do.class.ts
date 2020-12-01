@@ -4,8 +4,7 @@ export class EinstellungenDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  smtpName: string;
-  smtpHost: string;
-  smtpPort: number;
-  smtpPasswort: string;
+  key: string;
+  value: string;
+
 }
