@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
@@ -12,6 +12,10 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 import {EINSTELLUNGEN_DETAIL_CONFIG} from './einstellungen-detail.config';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
+import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 
 
 @Component({
@@ -25,11 +29,42 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
   public deleteLoading = false;
   public saveLoading = false;
+  public type = `KREIS`;
+
+
+  // müssen ersetzt werden
+  //public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
+  //public currentVerein: VereinDO = new VereinDO();
+  //public nationen: Array<string> = [];
+  //public nationenKuerzel: Array<string> = [];
+  //public currentMitgliedNat: string;
+
+@ViewChild('downloadLink')
+private aElementRef: ElementRef;
+constructor(private dbsProvider: DsbMitgliedDataProviderService) {
+  super();
+}
 
 
   ngOnInit() {
-    this.loading = true;
+   // this.loading = true;
+  //  this.loadingeinstellung(this.type);
 
-    };
-  }
+
+
+  };
+
+  //private loadingeinstellung(type: string){
+    //this.dbsProvider.findAll(type)
+      //.then((response)=>{
+        //this.handle
+      //} )
+  //}
+
+
+
+
+
+}
+
 

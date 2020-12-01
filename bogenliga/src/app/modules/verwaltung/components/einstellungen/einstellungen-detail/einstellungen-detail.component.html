@@ -1,20 +1,52 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
-  <form id="Einstellungen" class="horizontal-form half-page">
 
-    <div class="form-group row">
-      <label class="col-sm-4 col-form-label">
 
-        <span> *</span>
-      </label>
-      <div class="col-sm-8">
+  <form id="dsbMitgliedForm"
+        class="horizontal-form half-page"
+        #dsbMitgliedForm="ngForm">
 
-        <div class="invalid-feedback">
 
-       </div>
-     </div>
-    </div>
+
+
+
+      <div class="form-group row">
+        <label for="dsbMitgliedVorname"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 required
+                 id="dsbMitgliedVorname"
+                 name="dsbMitgliedVorname"
+                 #dsbMitgliedVorname="ngModel"
+                 [(ngModel)]="currentMitglied.vorname"
+                 [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
+                 placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}">
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
+
+      <bla-button *ngIf="entityExists()"
+                  [id]="'dsbMitgliedUpdateButton'"
+                  [disabled]="!dsbMitgliedForm.valid"
+                  [loading]="saveLoading"
+                  (onClick)="onUpdate($event)">
+        {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
+      </bla-button>
+
+
+
+
+
   </form>
 
  </bla-common-dialog>

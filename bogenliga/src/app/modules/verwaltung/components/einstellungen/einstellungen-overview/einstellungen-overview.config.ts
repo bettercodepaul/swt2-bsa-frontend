@@ -8,15 +8,40 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
   pageTitleTranslationKey: 'MANAGEMENT.EINSTELLUNGEN.TITLE',
 
   tableConfig: {
+
     columns: [
+
+      {
+        translationKey:'MANAGMENT.EINSTELLUNGEN.TABLE.HEADERS.Key',
+        propertyName: 'vorname',
+        width: 20,
+      },
+
+      {
+        translationKey:'MANAGMENT.EINSTELLUNGEN.TABLE.HEADERS.Value',
+        propertyName: 'nachname',
+        width: 20,
+      },
+
+
+
     ],
     actions: {
       actionTypes: [TableActionType.EDIT],
-      width: 6
+      width:       6
     },
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN]
 
   },
   // TODO exchange modify for create
   createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN]
+
+
+
+
+
+
+
+
+
 };
