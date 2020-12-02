@@ -168,12 +168,23 @@
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
+      "POPUPTXT": {
+        "POPUPÜBERSCHRIFT": {
+          "LABEL": "Mannschaft nicht ausgewählt!"
+        },
+        "POPUPINHALT": {
+          "LABEL": "Bitte wähle zuerst eine Mannschaft aus, um die Wettkampfdaten der Mannschaft anzuzeigen."
+        }
+      },
       "BUTTONS": {
         "ANZEIGEN": {
           "LABEL": "Aktuelle Mannschaft anzeigen"
         },
         "ANZEIGENALL": {
           "LABEL": "Alle Mannschaften anzeigen"
+        },
+        "ANZEIGENEinzel": {
+          "LABEL": "Einzelstatistik anzeigen"
         }
       },
       "FORM": {
