@@ -87,10 +87,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       }
 
     });
-      this.loadVeranstaltungen()
+    this.loadVeranstaltungen()
         .then(() => {
           this.loadErgebnisse(this.currentMannschaft);
-        });
+      });
   }
 
   /**
