@@ -169,13 +169,13 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   }
 
   /**
-  * Gets all Mannschaften through a backend call
-  */
+   * Gets all Mannschaften through a backend call
+   */
   public getAllMannschaften(): void {
     this.mannschaftsDataProvider.findAll()
       .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
         this.mannschaften = response.payload;
-      })
+      });
   }
 
   /**
