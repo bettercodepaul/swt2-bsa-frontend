@@ -86,12 +86,18 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         console.log("WettkampfID:", this.wettkampfId);
 
 
-        // loadVeranstaltungen: damit die Tabelle Veranstaltungen angezeigt wird
-        // die Ermittlung des (der WettkampfId entsprechenden) WettkampfDO wird in this.loadVeranstaltungenSuccess aufgerufen
-        // da die Informationen in this.veranstaltungen öfters verloren gehen
-        // Veranstaltung des Wettkampfs muss ermittelt werden, damit unter die Tabelle Veranstaltungen folgende Ausgabe ausgegeben werden kann:
+        // Ermitteln des Wettkampfs: für automatische Auswahl
+        // Ermitteln aller Veranstaltungen: für die Tabelle Veranstaltungen
+        // Ermitteln der Veranstaltung des aktuellen Wettkampfs: für die Ausgabe unter der Tabelle "Veranstaltungen",
+        // diese besteht aus folgendem Muster:
         // VeranstaltungName VeranstaltungSportjahr - WettkampfTag. Wettkampftag
-        this.loadVeranstaltungen();
+
+        // zunaechst wird der Wettkampf ermittelt, danach werden alle Veranstaltungen und die jeweilige Veranstaltung des Wettkampfs ermittelt
+        // die Funktionen dazu werden nach der erfolgreichen Ermittlung des Wettkampfs aufgerufen
+        // im Anschluss wird der Wettkampf automatisch aufgerufen
+        // im Falle einer nicht erfolgreichen Ermittlung werden nur alle Veranstaltungen ermittelt, damit diese in der Tabelle "Veranstaltung" angezeigt werden können
+        this.LoadWettkampf();
+
         this.visible = false;
 
       }
@@ -121,6 +127,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   // Wettkampftage konnten nicht ermittelt werden -> Fehlermeldung in der Konsole
   private handleLoadWettkampfFailure(response: BogenligaResponse<WettkampfDO[]>): void {
     console.log("ERROR: Keine Wettkaempfe gefunden");
+    // die Wettkampftage konnten nicht erfolgreich geladen werden -> Ermittlung der Veranstaltung wird auch nicht möglich sein
+    // somit sollen nur die Veranstaltungen für die Tabelle ermittelt werden, die Veranstaltung kann ja gar nicht mehr erfolgreich ermittelt werden
+    // -> this.wettkampfIdEnthalten auf false setzen, damit die Veranstaltungen wie sonst auch geladen werden können
+    this.wettkampfIdEnthalten = false;
+    this.loadVeranstaltungen();
   }
 
   // Wettkampftage konnten ermittelt werden -> Aufruf von this.findWettkampf damit entsprechendes WettkampfDO ermittelt werden kann
@@ -141,45 +152,44 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       this.wettkampf=Wettkampf;
       console.log("Wettkampf gefunden:", this.wettkampf);
 
-      // Veranstaltung des Wettkampfs muss ermittelt werden, damit unter die Tabelle Veranstaltungen folgende Ausgabe ausgegeben werden kann:
-      // VeranstaltungName VeranstaltungSportjahr - WettkampfTag. Wettkampftag
-      this.loadVeranstaltungenFindVeranstaltung();
+      // als nächstes müssen alle Veranstaltungen für die Tabelle "Veranstaltung" und die aktuelle Veranstaltung für die Ausgabe darunter ermittelt werden
+      this.loadVeranstaltungen();
     }
   }
 
-  // folgende loadVeranstaltung - Funktionen sind nur für die Ermittlung der Veranstaltung, wenn die WettkampfId gedacht
-  // und somit von den unteren Funktionen loadVeranstaltungen, loadVeranstaltungenSuccess, loadVeranstalatungenFailure,
-  // die sowohl bei WettkampfId als auch ohne gebraucht werden zu unterscheiden!
-  // die Funktionen sind getrennt niedergeschrieben, da die unteren Funktionen auszuführen sind
-  private loadVeranstaltungenFindVeranstaltung() {
-    // in this.loadVeranstaltungen() wurden bereits alle Veranstaltungen ermittelt
-    // Abfrage, ob dies erfolgreich war
-    if(!this.loadingVeranstaltungen){
-      // Veranstaltungen wurden bereits erfolgreich geladen
-      this.handleLoadVeranstaltungenSuccess();
-    }
-    else{
-      // Veranstaltungen wurden nicht erfolgreich geladen
-      this.handleLoadVeranstaltungenFailure();
-    }
-
+  // backend-call to get the list of veranstaltungen
+  private loadVeranstaltungen(): void {
+    this.veranstaltungen = [];
+    this.selectedWettkampf = '';
+    this.selectedWettkampfId = null;
+    this.veranstaltungsDataProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response) })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response) });
   }
 
   // Ermittlung der Veranstaltungen war erfolgreich
-  handleLoadVeranstaltungenSuccess() {
-    console.log("Bin in handleLoadVeranstaltungenSuccess");
-    // Veranstaltungen wurden bereits in this.loadVeranstaltungen() an this.veranstaltungen übergeben
-    this.veranstaltungen.forEach((veranstaltung) => this.findVeranstaltung(veranstaltung));
+  private loadVeranstaltungenSuccess(response: BogenligaResponse<VeranstaltungDTO[]>): void{
+    console.log("Bin in loadVeranstaltungenSuccess");
+    this.veranstaltungen = response.payload;
+    this.loadingVeranstaltungen = false;
+
+    // wenn eine WettkampfId übergeben wurde, soll die Veranstaltung des Wettkampfs ermittelt werden
+    if(this.wettkampfIdEnthalten){
+      this.veranstaltungen.forEach((veranstaltung) => this.findVeranstaltung(veranstaltung));
+    }
   }
 
-  // Ermittlung der Veranstaltungen war nicht erfolgreich -> Fehlermeldung in der Konsole
-  private handleLoadVeranstaltungenFailure() {
-    console.log("ERROR: Keine Veranstaltung gefunden");
+  // Ermittlung der Veranstaltungen war nicht erfolrgreich
+  private loadVeranstaltungenFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void{
+    console.log("Bin in loadVeranstaltungenFailure");
+    this.veranstaltungen = response.payload;
   }
 
-  // Ermittlung der Veranstaltung von WettkampfDO
+
+  // Ermittlung der Veranstaltung des Wettkampfs
   private findVeranstaltung(veranstaltung: VeranstaltungDO) {
     console.log("Bin in findVeranstaltung");
+
     if(this.wettkampf.wettkampfVeranstaltungsId== veranstaltung.id){
       // Veranstaltung von WettkampfDO wurde gefunden -> Übergabe an this.veranstaltung
       this.veranstaltung=veranstaltung;
@@ -191,7 +201,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       this.currentVeranstaltungName=veranstaltungNameMitJahr;
 
       // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
-      // -> automatische Auswahl des Wettkampfes
+      // -> automatische Auswahl des Wettkampfs
       this.onView(this.wettkampf);
     }
   }
@@ -304,38 +314,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     }
   }
 
-  // backend-call to get the list of veranstaltungen
-  private loadVeranstaltungen(): void {
-    this.veranstaltungen = [];
-    this.selectedWettkampf = '';
-    this.selectedWettkampfId = null;
-    this.veranstaltungsDataProvider.findAll()
-        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response) })
-        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response) });
-  }
-
-  // Ermittlung der Veranstaltungen war erfolgreich
-  private loadVeranstaltungenSuccess(response: BogenligaResponse<VeranstaltungDTO[]>): void{
-    console.log("Bin in loadVeranstaltungenSuccess");
-    this.veranstaltungen = response.payload;
-    this.loadingVeranstaltungen = false;
-
-    // wenn eine WettkampfId übergeben wurde, soll das WettkampfDO ermittelt werden
-    if(this.wettkampfIdEnthalten){
-      // Ermitteln des entsprechenden WettkampfDO und automatische Auswahl (daraufhin)
-      this.LoadWettkampf();
-    }
-  }
-
-  // Ermittlung der Veranstaltungen war nicht erfolrgreich
-  private loadVeranstaltungenFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void{
-    console.log("Bin in loadVeranstaltungenFailure");
-    this.veranstaltungen = response.payload;
-  }
-
-
-
-private loadTableRows() {
+  private loadTableRows() {
     this.loadingWettkampfe = true;
     this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
