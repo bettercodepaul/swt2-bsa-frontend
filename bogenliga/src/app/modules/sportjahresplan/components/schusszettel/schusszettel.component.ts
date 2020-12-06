@@ -277,7 +277,8 @@ export class SchusszettelComponent implements OnInit {
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               console.log("accepted");
               this.dirtyFlag = false;
-              this.router.navigateByUrl('/sportjahresplan');
+              console.log("Wettkampftag", this.match1.wettkampfTag);
+              this.router.navigate(['/sportjahresplan'+'/'+this.match1.wettkampfId]);
             }
             console.log("notification.userAction after: " + notification.userAction);
           });
