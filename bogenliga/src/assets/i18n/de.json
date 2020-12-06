@@ -1251,8 +1251,43 @@
     },
 
     "EINSTELLUNGEN": {
-      "TITLE": "Einstellungen - Übersicht"
+      "TITLE": "Einstellungen - Übersicht",
+      "FORM": {
+        "EINTRAG": {
+          "LABEL": "Eintrag erstellen",
+          "PLACEHOLDER": "Eintrag neu erstellen",
+          "ERROR": "Bitte geben Sie einen gültigen Namen ein"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Der Eintrag wurde erfolgreich gespeichert."
+        },
+        "DUPLICATE": {
+          "TITLE": "Fehler",
+          "DESCRIPTION": "Eintrag ist schon vorhanden. Bitte fügen Sie andere Werte hinzu."
+        }
+      }
     },
+
+    "EINSTELLUNGEN_DETAIL": {
+      "TITLE": "Einstellungen - Neuer Eintrag",
+      "FORM": {
+        "VALUE": {
+          "LABEL": "Value",
+          "PLACEHOLDER": "Bitte ein Value eingeben",
+          "ERROR": "Bitte eine gültigen Text eingeben."
+        },
+        "KEY": {
+          "LABEL": "Key",
+          "PLACEHOLDER": "Bitte einen Key eingeben",
+          "ERROR": "Bitte einen gültigen Text eingeben."
+        },
+        "SAVE": "Speichern"
+      }
+    },
+
 
     "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",

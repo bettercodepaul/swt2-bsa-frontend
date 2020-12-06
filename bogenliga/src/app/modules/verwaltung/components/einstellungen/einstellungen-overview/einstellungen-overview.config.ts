@@ -1,5 +1,6 @@
 import {OverviewDialogConfig} from '@shared/components';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
+import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
 import {UserPermission} from '@shared/services';
 
 export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
@@ -29,18 +30,10 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT,TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN]
+    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
+    deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
 
   },
-  // TODO exchange modify for create
-  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN]
-
-
-
-
-
-
-
-
-
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
 };
+
