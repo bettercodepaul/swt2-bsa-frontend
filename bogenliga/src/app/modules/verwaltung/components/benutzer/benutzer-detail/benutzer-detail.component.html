@@ -53,32 +53,36 @@
         </div>
       </div>
     </div>
-
     <div class="form-group row">
       <label for="benutzerrolle"
              id="benutzerrolle"
              name="benutzerrolle"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_NEW.LABEL' | translate }}: {{ getSelectedDTO() }}</span>
+        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_NEW.LABEL' | translate }}</span>
         <span> *</span>
       </label>
+
+      <!--SelectionList für zukünftige Rolle  -->
       <div class="col-sm-9">
-        <bla-selectionlist
-          [id]="'quickSearch'"
-          [items]="getVersionedDataObjects()"
-          [optionFieldSelector]="'roleName'"
-          (onSelect)="onSelect($event)"
-          [multipleSelections]="true"
-          style="width: 50%; height: 10em;">
-        </bla-selectionlist>
+        <div class="form-group row">
+          <bla-double-selectionlist [leftItems]="leftList"
+                                    [(rightItems)]="rightList"
+                                    [fieldSelector]="'roleName'"
+                                    [idLeftList]="'left'"
+                                    [idRightList]="'right'"
+
+                                    style="height: 12em; width: 36em; margin-left: 1em">
+
+          </bla-double-selectionlist>
+        </div>
       </div>
+
     </div>
       <div class="form-group row">
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
         <bla-button
           [id]="'benutzerUpdateButton'"
-          [disabled]="!enableButton"
           [loading]="saveLoading"
           (onClick)="resetRole($event)">
           {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_UPDATE' | translate }}

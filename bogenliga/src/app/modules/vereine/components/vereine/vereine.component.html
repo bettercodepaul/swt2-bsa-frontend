@@ -25,6 +25,8 @@
                     [loading]="loadingTable"
                     [rows]="rows"
 
+                    (onColumnEntry)="getSelectedColumn($event)"
+                    (onRowEntry)="getSelectedRow($event)"
                     (onMapEntry)="onMap($event)">
       <!-- Is currently not in use/implemented
                     (onDeleteClicked)="onDelete($event)"

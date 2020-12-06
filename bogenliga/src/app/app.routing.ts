@@ -7,6 +7,7 @@ export const ROUTES: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'wettkaempfe', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
   {path: 'wettkaempfe/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
+  {path: 'wettkaempfe/:id/:id', loadChildren: () => import('src/app/modules/wettkampf/wettkampf.module').then((m) => m.WettkampfModule)},
   {path: 'verwaltung', loadChildren: () => import('src/app/modules/verwaltung/verwaltung.module').then((m) => m.VerwaltungModule)},
   {path: 'sportjahresplan', loadChildren: () => import('src/app/modules/sportjahresplan/sportjahresplan.module').then((m) => m.SportjahresplanModule)},
   {path: 'sportjahresplan/:id', loadChildren: () => import('src/app/modules/sportjahresplan/sportjahresplan.module').then((m) => m.SportjahresplanModule)},
