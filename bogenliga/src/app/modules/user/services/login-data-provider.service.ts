@@ -45,7 +45,7 @@ export class LoginDataProviderService extends DataProviderService {
    * resolve(), if the request was successful
    * reject(), if an error occurred
    */
-  public signIn(credentialsDO: CredentialsDO): Promise<LoginResult> {
+  public signIn(credentialsDO: CredentialsDO, isDefault: boolean): Promise<LoginResult> {
     // check remember me flag
     if (credentialsDO.rememberMe) {
       this.currentUserService.rememberUsername(credentialsDO.username);
@@ -58,7 +58,7 @@ export class LoginDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       const credentialsDTO = new CredentialsDTO(credentialsDO.username, credentialsDO.password, null, credentialsDO.using2FA, credentialsDO.code);
-      this.sendSignInRequest(credentialsDTO, resolve, reject);
+      this.sendSignInRequest(credentialsDTO, resolve, reject, isDefault);
     });
   }
 
@@ -69,12 +69,12 @@ export class LoginDataProviderService extends DataProviderService {
   /**
    * I send the request and handle the response
    */
-  private sendSignInRequest(credentialsDTO: CredentialsDTO, resolve, reject) {
+  private sendSignInRequest(credentialsDTO: CredentialsDTO, resolve, reject, isDefault: boolean) {
 
     this.restClient.POST<UserSignInDTO>(new UriBuilder().fromPath(this.getUrl()).build(), credentialsDTO)
         .then((data: UserSignInDTO) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          this.currentUserService.persistCurrentUser(data);
+          this.currentUserService.persistCurrentUser(data, isDefault);
           resolve(LoginResult.SUCCESS);
 
         }, (error: HttpErrorResponse) => {
@@ -93,6 +93,6 @@ export class LoginDataProviderService extends DataProviderService {
   // signs in the Default user and returns the Promise
   signInDefaultUser(): Promise<LoginResult> {
     const defaultUserCredentials: CredentialsDO = new CredentialsDO('ligadefault', 'user');
-    return this.signIn(defaultUserCredentials);
+    return this.signIn(defaultUserCredentials, true);
   }
 }

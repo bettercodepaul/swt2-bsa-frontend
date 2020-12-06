@@ -79,16 +79,9 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   ngOnInit() {
-
-
     this.loading = true;
-
     this.notificationService.discardNotification();
-
     this.loadRegions(this.regionType); // Request all regions from the backend
-
-
-
   }
 
   private loadVerein(): void {

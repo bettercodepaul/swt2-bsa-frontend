@@ -29,7 +29,8 @@
     "ABOUT": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschafts Bogensport ziehen.",
     "KONTAKT": "Kontakt",
     "IMPRESSUM": "Impressum und Datenschutz",
-    "COPYRIGHT": "Copyright: 2018"
+    "COPYRIGHT": "Copyright: 2018",
+    "FEEDBACK": "Feedback"
   },
   "HOME": {
     "HOME": {
@@ -171,12 +172,23 @@
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
+      "POPUPTXT": {
+        "POPUPÜBERSCHRIFT": {
+          "LABEL": "Mannschaft nicht ausgewählt!"
+        },
+        "POPUPINHALT": {
+          "LABEL": "Bitte wähle zuerst eine Mannschaft aus, um die Wettkampfdaten der Mannschaft anzuzeigen."
+        }
+      },
       "BUTTONS": {
         "ANZEIGEN": {
           "LABEL": "Aktuelle Mannschaft anzeigen"
         },
         "ANZEIGENALL": {
           "LABEL": "Alle Mannschaften anzeigen"
+        },
+        "ANZEIGENEinzel": {
+          "LABEL": "Einzelstatistik anzeigen"
         }
       },
       "FORM": {
@@ -575,7 +587,8 @@
           "NAME": "Verein Name",
           "IDENTIFIER": "Identifier",
           "REGION_ID": "Region ID",
-          "REGION_NAME": "Region Name"
+          "REGION_NAME": "Region Name",
+          "WEBSITE": "Webseite"
         }
       },
       "NOTIFICATION": {
@@ -589,12 +602,12 @@
       "TITLE": "Verein - Details",
       "FORM": {
         "VEREIN_NAME": {
-          "LABEL": "Verein-Name",
+          "LABEL": "Vereinsname",
           "PLACEHOLDER": "Bitte einen Namen eingeben",
           "ERROR": "Bitte einen gültigen Namen eingeben."
         },
         "VEREIN_IDENTIFIER": {
-          "LABEL": "Vereins Nr.",
+          "LABEL": "Vereinsnummer",
           "PLACEHOLDER": "Bitte einen Identifier eingeben",
           "ERROR": "Bitte einen gültigen Identifier eingeben."
         },
@@ -602,6 +615,11 @@
           "LABEL": "Region",
           "PLACEHOLDER": "Bitte eine Region auswählen",
           "ERROR": "Bitte eine gültige Region eingeben."
+        },
+        "VEREIN_WEBSITE": {
+          "LABEL": "Webseite",
+          "PLACEHOLDER": "Bitte eine Webseite angeben",
+          "ERROR": "Bitte eine gültige Webseite angeben."
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
