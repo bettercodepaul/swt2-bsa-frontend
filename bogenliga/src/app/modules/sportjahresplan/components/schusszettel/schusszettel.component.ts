@@ -349,6 +349,7 @@ export class SchusszettelComponent implements OnInit {
       this.notificationService.observeNotification(NOTIFICATION_ZURUECK)
           .subscribe((myNotification) => {
             console.log("observe notification");
+            // Wenn Notification accepted ist zurück zum Sportjahresplan navigieren und Änderungen verwerfen
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               console.log("accepted");
               this.dirtyFlag = false;
