@@ -389,7 +389,8 @@ export class SchusszettelComponent implements OnInit {
             this.matchProvider.pairToFollow(this.match2.id)
               .then((data) => {
                 if (data.payload.length === 2) {
-                  this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                  this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0]
+                                                                                    + '/' + data.payload[1]]);
                 }
               });
           }
