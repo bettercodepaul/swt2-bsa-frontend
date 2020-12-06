@@ -167,7 +167,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der Veranstaltungen war erfolgreich
-  private loadVeranstaltungenSuccess (response: BogenligaResponse<VeranstaltungDTO[]>) : void{
+  private loadVeranstaltungenSuccess(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     console.log('Bin in loadVeranstaltungenSuccess');
     this.veranstaltungen = response.payload;
     this.loadingVeranstaltungen = false;
@@ -179,7 +179,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der Veranstaltungen war nicht erfolrgreich
-  private loadVeranstaltungenFailure (response: BogenligaResponse<VeranstaltungDTO[]>) : void{
+  private loadVeranstaltungenFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     console.log('Bin in loadVeranstaltungenFailure');
     this.veranstaltungen = response.payload;
   }
@@ -229,7 +229,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   // when a Ligatabelle gets selected from the list --> ID for Buttons
 
   public onView($event: WettkampfDO): void {
-    console.log('DataOBJ' ,$event);
+    console.log('DataOBJ', $event);
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
