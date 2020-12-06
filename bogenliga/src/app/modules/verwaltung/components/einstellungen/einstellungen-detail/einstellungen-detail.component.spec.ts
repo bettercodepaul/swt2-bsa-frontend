@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EinstellungenDetailComponent } from './einstellungen-detail.component';
 
+
 describe('EinstellungenDetailComponent', () => {
   let component: EinstellungenDetailComponent;
   let fixture: ComponentFixture<EinstellungenDetailComponent>;

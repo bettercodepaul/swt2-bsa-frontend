@@ -14,9 +14,10 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT],
       width: 6
     },
-    editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN]
+    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
+    deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
 
   },
-  // TODO exchange modify for create
-  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
 };
+
