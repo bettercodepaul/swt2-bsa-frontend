@@ -267,27 +267,27 @@ export class SchusszettelComponent implements OnInit {
         userAction:       NotificationUserAction.PENDING
       };
 
-      console.log("show notification");
+      console.log('show notification');
       this.notificationService.showNotification(notification);
 
-      console.log("notification.userAction before: " + notification.userAction);
+      console.log('notification.userAction before: ' + notification.userAction);
       this.notificationService.observeNotification(NOTIFICATION_ZURUECK)
           .subscribe((myNotification) => {
-            console.log("observe notification");
+            console.log('observe notification');
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              console.log("accepted");
+              console.log('accepted');
               this.dirtyFlag = false;
-              console.log("Wettkampftag", this.match1.wettkampfTag);
-              this.router.navigate(['/sportjahresplan'+'/'+this.match1.wettkampfId]);
+              console.log('Wettkampftag', this.match1.wettkampfTag);
+              this.router.navigate(['/sportjahresplan' + '/' + this.match1.wettkampfId]);
             }
-            console.log("notification.userAction after: " + notification.userAction);
+            console.log('notification.userAction after: ' + notification.userAction);
           });
 
     } else {
 
-      console.log("Keine Änderung");
-      console.log("Wettkampftag", this.match1.wettkampfTag);
-      this.router.navigate(['/sportjahresplan'+'/'+this.match1.wettkampfId]);
+      console.log('Keine Änderung');
+      console.log('Wettkampftag', this.match1.wettkampfTag);
+      this.router.navigate(['/sportjahresplan' + '/' + this.match1.wettkampfId]);
     }
   }
 
