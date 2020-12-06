@@ -93,13 +93,13 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
 
     this.vereinDataProvider.findById(this.selectedVereinsId)
         .then((response: BogenligaResponse<VereinDTO>) =>
-          this.getVereinSuccsess(response.payload))
+          this.getVereinSuccess(response.payload))
         .catch((response: BogenligaResponse<VereinDTO>) =>
           console.log('Fehler im Verein laden')
         );
   }
   // sets currentVerein to response and pushes it on selectedVereine
-  private getVereinSuccsess(response: VereinDTO) {
+  private getVereinSuccess(response: VereinDTO) {
     // console.log('response in getVerein: ' + response.name);
     this.currentVerein = response;
     this.selectedVereine.push(this.currentVerein);
