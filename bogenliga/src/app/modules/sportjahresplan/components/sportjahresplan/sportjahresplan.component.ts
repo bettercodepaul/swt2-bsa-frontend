@@ -100,9 +100,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
         this.visible = false;
 
-      }
-
-      else {
+      } else {
         // Pfad ohne WettkampfId
         // -> normaler Aufruf der Webseite (ohne Zusaetze)
         // loadVeranstaltungen: damit die Tabelle Veranstaltungen angezeigt wird
@@ -148,9 +146,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private findWettkampf(Wettkampf: WettkampfDO) {
     console.log('Bin in findWettkampf');
 
-    if (this.wettkampfId=== Wettkampf.id) {
+    if (this.wettkampfId === Wettkampf.id) {
       // entsprechendes WettkampfDO wurde gefunden -> an this.wettkampf uebergeben
-      this.wettkampf=Wettkampf;
+      this.wettkampf = Wettkampf;
       console.log('Wettkampf gefunden:', this.wettkampf);
 
       // als nächstes müssen alle Veranstaltungen für die Tabelle "Veranstaltung" und die aktuelle Veranstaltung für die Ausgabe darunter ermittelt werden
@@ -169,7 +167,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der Veranstaltungen war erfolgreich
-  private loadVeranstaltungenSuccess(response: BogenligaResponse<VeranstaltungDTO[]>): void{
+  private loadVeranstaltungenSuccess (response: BogenligaResponse<VeranstaltungDTO[]>) : void{
     console.log('Bin in loadVeranstaltungenSuccess');
     this.veranstaltungen = response.payload;
     this.loadingVeranstaltungen = false;
@@ -181,7 +179,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der Veranstaltungen war nicht erfolrgreich
-  private loadVeranstaltungenFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void{
+  private loadVeranstaltungenFailure (response: BogenligaResponse<VeranstaltungDTO[]>) : void{
     console.log('Bin in loadVeranstaltungenFailure');
     this.veranstaltungen = response.payload;
   }
@@ -191,15 +189,15 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private findVeranstaltung(veranstaltung: VeranstaltungDO) {
     console.log('Bin in findVeranstaltung');
 
-    if (this.wettkampf.wettkampfVeranstaltungsId== veranstaltung.id) {
+    if (this.wettkampf.wettkampfVeranstaltungsId === veranstaltung.id) {
       // Veranstaltung von WettkampfDO wurde gefunden -> Übergabe an this.veranstaltung
-      this.veranstaltung=veranstaltung;
+      this.veranstaltung = veranstaltung;
       console.log('Veranstaltung gefunden:', this.veranstaltung);
 
       // fuer Ausgabe unter der Veranstaltung Tabelle muss this.currentVeranstaltungName gesetzt werden:
       // dieses besteht aus dem Namen und dem Sportjahr der Veranstaltung
-      const veranstaltungNameMitJahr = this.veranstaltung.name+' '+this.veranstaltung.sportjahr;
-      this.currentVeranstaltungName=veranstaltungNameMitJahr;
+      const veranstaltungNameMitJahr = this.veranstaltung.name + ' ' + this.veranstaltung.sportjahr;
+      this.currentVeranstaltungName = veranstaltungNameMitJahr;
 
       // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
       // -> automatische Auswahl des Wettkampfs
@@ -231,7 +229,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   // when a Ligatabelle gets selected from the list --> ID for Buttons
 
   public onView($event: WettkampfDO): void {
-    console.log('DataOBJ',$event);
+    console.log('DataOBJ' ,$event);
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
@@ -294,8 +292,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   public isDisabled(): boolean {
     if (this.selectedWettkampf === '') {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
