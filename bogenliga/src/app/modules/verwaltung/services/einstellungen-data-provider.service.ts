@@ -19,6 +19,7 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +35,7 @@ export class EinstellungenProviderService  extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    console.log("findall wurde aufgerufen");
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
           .then((data: VersionedDataTransferObject[]) => {
