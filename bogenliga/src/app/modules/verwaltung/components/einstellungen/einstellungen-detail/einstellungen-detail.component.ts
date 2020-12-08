@@ -12,14 +12,14 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 
-import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
-import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
-
+import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {EINSTELLUNGEN_DETAIL_CONFIG} from './einstellungen-detail.config';
 import {CurrentUserService, UserPermission} from '@shared/services';
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_EINSTELLUNGEN = 'einstellungen_detail_save';
 const NOTIFICATION_DUPLICATE_EINSTELLUNGEN = 'einstellungen_detail_duplicate';
+
+import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 
 @Component({
   selector: 'bla-einstellungen-detail',
@@ -33,7 +33,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   public deleteLoading = false;
   public saveLoading = false;
 
-  public currentMitglied;
+  public currentEintrag;
   public loadById;
 
   constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
@@ -53,7 +53,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
-          this.currentMitglied = new DsbMitgliedDO();
+          this.currentEintrag = new EinstellungenDO();
           this.loading = false;
           this.deleteLoading = false;
           this.saveLoading = false;
@@ -68,8 +68,8 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
     this.saveLoading = true;
 
     // persist
-    this.dsbMitgliedDataProvider.create(this.currentMitglied)
-        .then((response: BogenligaResponse<DsbMitgliedDO>) => {
+    this.dsbMitgliedDataProvider.create(this.currentEintrag)
+        .then((response: BogenligaResponse<EinstellungenDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -95,7 +95,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+        }, (response: BogenligaResponse<EinstellungenDO>) => {
           console.log('Failed');
           if (response.result === RequestResult.DUPLICATE_DETECTED) {
             const notification: Notification = {
@@ -123,7 +123,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
 
   public entityExists(): boolean {
-    return this.currentMitglied.id >= 0;
+    return this.currentEintrag.id >= 0;
   }
 
 }
