@@ -16,6 +16,8 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
       
 
+
+
       {
         translationKey:'MANAGEMENT.EINSTELLUNGEN.TABLE',
         propertyName: 'value',
