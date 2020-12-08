@@ -77,6 +77,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public currentWettkampftag_4: WettkampfDO = new WettkampfDO();
   public allWettkampf: Array<WettkampfDO> = [];
 
+
   public currentAusrichter1: UserProfileDO = new UserProfileDO();
   public currentAusrichter2: UserProfileDO = new UserProfileDO();
   public currentAusrichter3: UserProfileDO = new UserProfileDO();
