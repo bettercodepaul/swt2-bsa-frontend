@@ -108,6 +108,67 @@
           </div>
         </div>
 
+        <div class="form-group row">
+          <label
+            class="col-sm-2 col-form-label test_label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.STRASSE.LABEL' | translate }}</span><span> *</span>
+          </label>
+          <div class="col-sm-8 test">
+            <input class="form-control"
+                   id="wettkampftag1_wettkampfStrasse"
+                   name="wettkampftag1_wettkampfStrasse"
+                   #wettkampftag1_wettkampfStrasse="ngModel"
+                   [(ngModel)]="currentWettkampftag_1.wettkampfStrasse"
+                   [class.is-invalid]="wettkampftag1_wettkampfStrasse.invalid && ! wettkampftag1_wettkampfStrasse.untouched"
+                   placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.STRASSE.PLACEHOLDER' | translate }}">
+
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.STRASSE.ERROR' | translate }}
+            </div>
+
+            <input class="form-control"
+                   id="wettkampftag1_wettkampfPlz"
+                   name="wettkampftag1_wettkampfPlz"
+                   #wettkampftag1_wettkampfPlz="ngModel"
+                   [(ngModel)]="currentWettkampftag_1.wettkampfPlz"
+                   [class.is-invalid]="wettkampftag1_wettkampfPlz.invalid && ! wettkampftag1_wettkampfPlz.untouched"
+                   placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.PLZ.PLACEHOLDER' | translate }}">
+
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.PLZ.ERROR' | translate }}
+            </div>
+
+            <input class="form-control"
+                   id="wettkampftag1_wettkampfOrtsname"
+                   name="wettkampftag1_wettkampfOrtsname"
+                   #wettkampftag1_wettkampfOrtsname="ngModel"
+                   [(ngModel)]="currentWettkampftag_1.wettkampfOrtsname"
+                   [class.is-invalid]="wettkampftag1_wettkampfOrtsname.invalid && ! wettkampftag1_wettkampfOrtsname.untouched"
+                   placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORTSNAME.PLACEHOLDER' | translate }}">
+
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORTSNAME.ERROR' | translate }}
+            </div>
+
+            <textarea class="form-control"
+                      id="wettkampftag1_wettkampfOrtsinfo"
+                      name="wettkampftag1_wettkampfOrtsinfo"
+                      #wettkampftag1_wettkampfOrtsinfo="ngModel"
+                      [(ngModel)]="currentWettkampftag_1.wettkampfOrtsinfo"
+                      [class.is-invalid]="wettkampftag1_wettkampfOrtsinfo.invalid && ! wettkampftag1_wettkampfOrtsinfo.untouched"
+                      placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORTSINFO.PLACEHOLDER' | translate }}"
+                      rows="3"
+            ></textarea>
+
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORTSINFO.ERROR' | translate }}
+            </div>
+
+
+
+        </div>
+        </div>
+
         <!-- Wettkampftag1 Zeit-Beginn-->
         <div class="form-group row">
           <label
