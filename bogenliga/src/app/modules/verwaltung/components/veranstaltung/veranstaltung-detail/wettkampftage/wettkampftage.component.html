@@ -68,14 +68,14 @@
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.DATUM.LABEL' | translate }}</span><span> *</span>
           </label>
           <div class="col-sm-8 test">
-            <input
-              class="form-control"
-              id="wettkampftag1_datum"
-              name="wettkampftag1_datum"
-              #wettkampftag1_datum="ngModel"
-              [(ngModel)]="currentWettkampftag_1.wettkampfDatum"
-              [class.is-invalid]="wettkampftag1_datum.invalid && ! wettkampftag1_datum.untouched"
-              placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.DATUM.PLACEHOLDER' | translate }}">
+            <input type="date"
+                   class="form-control"
+                   id="wettkampftag1_datum"
+                   name="wettkampftag1_datum"
+                   #wettkampftag1_datum="ngModel"
+                   [(ngModel)]="currentWettkampftag_1.wettkampfDatum"
+                   [class.is-invalid]="wettkampftag1_datum.invalid && ! wettkampftag1_datum.untouched"
+                   placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.DATUM.PLACEHOLDER' | translate }}">
 
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.DATUM.ERROR' | translate }}
@@ -431,6 +431,7 @@
               </select>
             </div>
         </div>
+
       </div><!-- End Tagesdaten-->
 
       <div class="col-sm-5"> <!-- Beginn Kampfrichter -->
