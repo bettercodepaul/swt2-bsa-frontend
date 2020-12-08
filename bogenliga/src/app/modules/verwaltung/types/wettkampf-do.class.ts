@@ -6,6 +6,10 @@ export class WettkampfDO implements VersionedDataObject {
   wettkampfVeranstaltungsId: number;
   wettkampfDatum: string;
   wettkampfOrt: string;
+  wettkampfStrasse: string;
+  wettkampfPlz : number;
+  wettkampfOrtsname: string;
+  wettkampfOrtsinfo : string;
   wettkampfBeginn: string;
   wettkampfTag: number;
   wettkampfDisziplinId: number;
