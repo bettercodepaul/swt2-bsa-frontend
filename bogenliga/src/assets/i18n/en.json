@@ -378,7 +378,12 @@
         "VERANSTALTUNG": {
           "LABEL": "Events",
           "DESCRIPTION": "Management of events"
-        }
+        },
+
+      "EINSTELLUNG": {
+        "LABEL": "einstellungen",
+        "DESCRIPTION": "Management of einstellungen"
+
       }
     },
     "SPORTJAHR": {
@@ -1249,6 +1254,11 @@
           "PLACEHOLDER": "Please enter a number",
           "ERROR": "Please enter a valid number (max. 2 digits)."
         },
+
+
+
+
+
         "SAVE": "Save",
         "UPDATE": "Refresh",
         "DELETE": "Delete"

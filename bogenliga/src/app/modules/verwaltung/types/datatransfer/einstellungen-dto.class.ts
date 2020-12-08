@@ -2,11 +2,13 @@ import {DataTransferObject} from '../../../shared/data-provider';
 
 export class EinstellungenDTO implements DataTransferObject {
 
-  id: number;
-  version: number;
+
 
   key: string;
   value: string;
+
+  id: number;
+  version: number;
 
 
   static copyFrom(optional: {

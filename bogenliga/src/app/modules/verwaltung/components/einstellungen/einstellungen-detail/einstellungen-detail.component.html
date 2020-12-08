@@ -1,52 +1,75 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
-
-
-  <form id="dsbMitgliedForm"
+  <form id="einstellungenForm"
         class="horizontal-form half-page"
-        #dsbMitgliedForm="ngForm">
+        #einstellungenForm="ngForm">
 
+    <!-- KEY -->
+    <div class="form-group row">
+      <label for="einstellungenKey"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="einstellungenKey"
+               name="einstellungenKey"
+               #einstellungenKey="ngModel"
+               [(ngModel)]="currentEintrag.e_key"
+               [class.is-invalid]="einstellungenKey.invalid && !einstellungenKey.untouched"
+               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.PLACEHOLDER' | translate }}">
 
-
-
-
-      <div class="form-group row">
-        <label for="dsbMitgliedVorname"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <input type="text"
-                 class="form-control"
-                 required
-                 id="dsbMitgliedVorname"
-                 name="dsbMitgliedVorname"
-                 #dsbMitgliedVorname="ngModel"
-                 [(ngModel)]="currentMitglied.vorname"
-                 [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
-                 placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}">
-
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.ERROR' | translate }}
-          </div>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.ERROR' | translate }}
         </div>
       </div>
+    </div>
+
+    <!-- VALUE -->
+    <div class="form-group row">
+      <label for="einstellungenValue"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               required
+               id="einstellungenValue"
+               name="einstellungenValue"
+               #einstellungenValue="ngModel"
+               [(ngModel)]="currentEintrag.e_value"
+               [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
+               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
 
 
-      <bla-button *ngIf="entityExists()"
-                  [id]="'dsbMitgliedUpdateButton'"
-                  [disabled]="!dsbMitgliedForm.valid"
-                  [loading]="saveLoading"
-                  (onClick)="onUpdate($event)">
-        {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
-      </bla-button>
 
 
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
 
 
-
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'einstellungenSaveButton'"
+                    [disabled]="!einstellungenForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+      </div>
+    </div>
   </form>
 
- </bla-common-dialog>
+</bla-common-dialog>

@@ -1,3 +1,5 @@
+import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
+
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CommonComponentDirective} from '../../../../shared/components/common';
@@ -6,12 +8,13 @@ import {TableRow} from '../../../../shared/components/tables/types/table-row.cla
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
 import {NotificationService} from '../../../../shared/services/notification';
-import {EINSTELLUNGEN_OVERVIEW_CONFIG} from './einstellungen-overview.config';
+import {EINSTELLUNGEN_OVERVIEW_CONFIG} from '@verwaltung/components/einstellungen/einstellungen-overview/einstellungen-overview.config';
 import {BenutzerRolleDO} from '@verwaltung/types/benutzer-rolle-do.class';
 import {BenutzerDO} from '@verwaltung/types/benutzer-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {CurrentUserService, UserPermission} from '@shared/services';
+import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
 
 @Component({
   selector: 'bla-einstellungen-overview',
@@ -25,7 +28,7 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
 
 
   //private einstellungenDataProvider: EinstellungenDataProviderService
-  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService, private router: Router,private currentUserService: CurrentUserService) {
+  constructor(private einstellungenDataProvider: EinstellungenProviderService, private router: Router,private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -44,28 +47,32 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
     // TODO
-   }
+  }
 
 
 
   private loadTableRows() {
     this.loading = true;
 
-    this.dsbMitgliedDataProvider.findAll()
-       .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
+    this.einstellungenDataProvider.findAll()
+        .then((response: BogenligaResponse<EinstellungenDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<EinstellungenDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
-    if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER)) {
-      response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.vereinsId);
-    }
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<EinstellungenDTO[]>): void {
+
+
+
+
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
+    console.log(this.rows[1]);
     this.loading = false;
+
+
   }
 
-  private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<EinstellungenDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }

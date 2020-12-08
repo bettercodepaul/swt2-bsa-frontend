@@ -2,19 +2,9 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
-import {BogenligaResponse} from '../../../../shared/data-provider';
-import {
-  Notification,
-  NotificationOrigin,
-  NotificationService,
-  NotificationSeverity,
-  NotificationType,
-  NotificationUserAction
-} from '../../../../shared/services/notification';
+
 import {EINSTELLUNGEN_DETAIL_CONFIG} from './einstellungen-detail.config';
-import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
-import {VereinDO} from '@verwaltung/types/verein-do.class';
-import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
+
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 
 
