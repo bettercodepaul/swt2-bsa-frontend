@@ -5,7 +5,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
-import {ActivatedRoute, Route, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
@@ -75,7 +75,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * Gets the value from path if Wettkampfergebnisse page is called. Starts after than loading of all Veranstaltungen
    * @see this.loadVeranstaltungen
    */
-  async ngOnInit() {
+  ngOnInit() {
     this.route.params.subscribe((params) => {
 
 
@@ -87,11 +87,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       }
 
     });
-    await this.loadVeranstaltungen()
-              .then(() => {
-                console.log(this.currentMannschaft);
-                this.loadErgebnisse(this.currentMannschaft);
-              });
+    this.loadVeranstaltungen()
+        .then(() => {
+          this.loadErgebnisse(this.currentMannschaft);
+      });
   }
 
   /**
