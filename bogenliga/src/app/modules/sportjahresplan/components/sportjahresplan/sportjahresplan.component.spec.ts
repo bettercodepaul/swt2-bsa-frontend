@@ -5,9 +5,9 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {StoreModule} from '@ngrx/store';
 import {TranslateModule} from '@ngx-translate/core';
 import {ROUTES} from '../../../../app.routing';
-import {HomeModule} from '../../../home/home.module';
-import {APP_REDUCERS} from '../../../shared/redux-store';
-import {SharedModule} from '../../../shared/shared.module';
+import {HomeModule} from '@home/home.module';
+import {APP_REDUCERS} from '@shared/redux-store';
+import {SharedModule} from '@shared/shared.module';
 import {SportjahresplanComponent} from './sportjahresplan.component';
 import {LigatabelleComponent} from 'src/app/modules/ligatabelle/components/ligatabelle/ligatabelle.component';
 
