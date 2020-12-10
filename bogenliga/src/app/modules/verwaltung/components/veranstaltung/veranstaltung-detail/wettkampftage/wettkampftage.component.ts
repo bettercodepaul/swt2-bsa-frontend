@@ -209,11 +209,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     if (this.kampfrichterTag1.length > 0) {
       console.log(this.kampfrichterTag1.length);
-      if (!wettkampftagAlreadyExists) {
+      // if (!wettkampftagAlreadyExists) {
         this.saveKampfrichterArray(this.kampfrichterTag1);
-      } else {
-        this.updateKampfrichterArray(this.kampfrichterTag1);
-      }
+      // } else {
+      //   this.updateKampfrichterArray(this.kampfrichterTag1);
+      // }
     }
   }
 
@@ -378,6 +378,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
+  // TODO: Check if we even need this
   private updateKampfrichterArray(kampfrichterArray: Array<KampfrichterDO>): void {
     for (const iter of Object.keys(kampfrichterArray)) {
       this.kampfrichterProvider.update(kampfrichterArray[iter])
@@ -476,7 +477,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private loadKampfrichter() {
     this.kampfrichterProvider.findAll()
         .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccess(
-          // response
+          response
         ))
         .catch((response: BogenligaResponse<KampfrichterDTO[]>) => this.handleKampfrichterResponseArrayFailure(response));
 
@@ -666,22 +667,21 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   // TODO: Fix this method
   private handleKampfrichterResponseArraySuccess(
-    // response: BogenligaResponse<KampfrichterDO[]>
+    response: BogenligaResponse<KampfrichterDO[]>
   ): void {
-
     let allKampfrichter: Array<KampfrichterDO> = [];
 
     // TODO: Delete the following lines
-    for (let i = 0; i < 3; i++) {
-      allKampfrichter[i] = new KampfrichterDO();
-      allKampfrichter[i].id = i;
-    }
+    // for (let i = 0; i < 3; i++) {
+    //   allKampfrichter[i] = new KampfrichterDO();
+    //   allKampfrichter[i].id = i;
+    // }
     // allKampfrichter[0].id = 5;
     // allKampfrichter[0].wettkampfID = 30;
     // allKampfrichter[0].leitend = false;
 
     // TODO: Uncomment the following line
-    // this.allKampfrichter = response.payload;
+    allKampfrichter = response.payload;
 
     // console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: ' + this.allKampfrichter[0].id);
     // console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.kampfrichterTag1[0]);
