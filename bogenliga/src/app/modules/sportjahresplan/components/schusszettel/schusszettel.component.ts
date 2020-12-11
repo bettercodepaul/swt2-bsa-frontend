@@ -15,6 +15,12 @@ import {
   NotificationUserAction
 } from '../../../shared/services';
 import {environment} from '@environment';
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+
 
 
 
@@ -46,7 +52,10 @@ export class SchusszettelComponent implements OnInit {
               private schusszettelService: SchusszettelProviderService,
               private matchProvider: MatchProviderService,
               private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private vereinDataProvider: VereinDataProviderService,
+              private dsbMannschaftDataProvider:DsbMannschaftDataProviderService,
+    ) {
   }
 
   /**
@@ -143,7 +152,38 @@ export class SchusszettelComponent implements OnInit {
 
 
 
+  private checkSchuetze(): void {
+    console.log("checkSchuetze")
+      let mannschaften: DsbMannschaftDO[] = [];
+      let mannschaft: DsbMannschaftDO;
+      let verein: VereinDO;
+      this.dsbMannschaftDataProvider.findById(this.match1.mannschaftId)
+          .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+            mannschaft = response.payload;
+            this.vereinDataProvider.findById(mannschaft.vereinId)
+                .then((response: BogenligaResponse<VereinDO>) => {
+                  verein = response.payload;
+                  this.dsbMannschaftDataProvider.findAllByVereinsId(verein.id)
+                      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
+                        mannschaften = response.payload;
+                        console.log("mannschaft:");
+                        console.log(mannschaft);
+                        console.log("verein:");
+                        console.log(verein);
+                        console.log("mannschaften:");
+                        console.log(mannschaften);
+                      })
+                })
+          })
+
+
+
+    }
+
+
   save() {
+    console.log("Methoden Aufruf");
+    this.checkSchuetze();
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
@@ -249,6 +289,8 @@ export class SchusszettelComponent implements OnInit {
         });
       this.dirtyFlag = false; // Daten gespeichert
     }
+    console.log("Methoden Aufruf");
+    this.checkSchuetze();
   }
 
  // zurueck zu Sportjahresplan
