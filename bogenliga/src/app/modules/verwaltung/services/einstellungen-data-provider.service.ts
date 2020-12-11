@@ -12,6 +12,9 @@ import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {fromPayloadArray} from '@verwaltung/mapper/einstellungen-mapper';
 import {HttpErrorResponse} from '@angular/common/http';
 
+import {fromPayload} from '@verwaltung/mapper/einstellungen-mapper';
+import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
+
 
 
 @Injectable({
@@ -45,5 +48,35 @@ export class EinstellungenProviderService  extends DataProviderService {
           });
     });
   }
+
+
+
+
+  public findById(id: string | number): Promise<BogenligaResponse<EinstellungenDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+          .then((data: VersionedDataTransferObject) => {
+
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+
+
+
+
+
 
 }

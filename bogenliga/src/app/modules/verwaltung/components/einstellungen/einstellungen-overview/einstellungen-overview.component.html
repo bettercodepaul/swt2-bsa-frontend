@@ -2,10 +2,23 @@
                      [rows]="rows"
                      [loading]="loading"
                      (onViewClicked)="onView($event)"
-                     (onEditClicked)="onEdit($event)">
+                     (onEditClicked)="onEdit($event)"
+
+
                      (onDeleteClicked)="onDelete($event)">
 
 
+  <form id="einstellungenEdit"
+        class="horizontal-form half-page"
+        #einstellungenForm="ngForm">
+
+  <bla-button *ngIf="!entityExists()"
+              [id]="'dsbMitgliedSaveButton'"
+              [disabled]="!einstellungenFo.valid"
+              [loading]="saveLoading"
+              (onClick)="onSave($event)">
+    {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
+  </bla-button>
 
 
 

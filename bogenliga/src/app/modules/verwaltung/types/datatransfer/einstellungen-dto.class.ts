@@ -4,11 +4,12 @@ export class EinstellungenDTO implements DataTransferObject {
 
 
 
-  key: string;
-  value: string;
 
   id: number;
   version: number;
+  key: string;
+  value: string;
+
 
 
   static copyFrom(optional: {

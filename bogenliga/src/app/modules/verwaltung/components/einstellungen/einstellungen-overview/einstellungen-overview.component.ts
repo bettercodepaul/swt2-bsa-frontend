@@ -15,6 +15,7 @@ import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-
 import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {CurrentUserService, UserPermission} from '@shared/services';
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
+import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 
 @Component({
   selector: 'bla-einstellungen-overview',
@@ -25,7 +26,10 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
 
   public config = EINSTELLUNGEN_OVERVIEW_CONFIG;
   public rows: TableRow[];
+  public currentEinstellung: EinstellungenDO= new EinstellungenDO();
+  public neucurrentEinstellung: EinstellungenDO= new EinstellungenDO();
 
+  public saveLoading = false
 
   //private einstellungenDataProvider: EinstellungenDataProviderService
   constructor(private einstellungenDataProvider: EinstellungenProviderService, private router: Router,private currentUserService: CurrentUserService) {
@@ -37,6 +41,14 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
   }
 
 
+
+
+
+
+
+
+
+
   public onView(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
   }
@@ -45,9 +57,7 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
     this.navigateToDetailDialog(versionedDataObject);
   }
 
-  public onDelete(versionedDataObject: VersionedDataObject): void {
-    // TODO
-  }
+
 
 
 
@@ -80,5 +90,15 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/einstellungen/' + versionedDataObject.id);
+  }
+
+
+  public onDelete(versionedDataObject: VersionedDataObject): void {
+    // TODO
+  }
+
+
+  entityExists() {
+    return false;
   }
 }
