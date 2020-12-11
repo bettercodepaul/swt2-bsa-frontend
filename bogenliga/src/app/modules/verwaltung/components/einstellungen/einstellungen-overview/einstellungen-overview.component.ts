@@ -93,12 +93,5 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
   }
 
 
-  public onDelete(versionedDataObject: VersionedDataObject): void {
-    // TODO
-  }
 
-
-  entityExists() {
-    return false;
-  }
 }

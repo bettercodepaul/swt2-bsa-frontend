@@ -11,10 +11,16 @@ import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {HttpClient} from '@angular/common/http';
-import {CurrentUserService, NotificationService, UserPermission} from '@shared/services';
+import {
+  CurrentUserService,
+  Notification, NotificationOrigin,
+  NotificationService,
+  NotificationSeverity, NotificationType, NotificationUserAction,
+  UserPermission
+} from '@shared/services';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
-import {BogenligaResponse} from '@shared/data-provider';
+import {BogenligaResponse, RequestResult} from '@shared/data-provider';
 import {toTableRows} from '../../../../shared/components/tables';
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
@@ -25,6 +31,7 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 
 
 const ID_PATH_PARAM = 'id';
+const NOTIFICATION_UPDATE_EINSTELLUNG = 'einstellung_detail_update';
 
 @Component({
   selector: 'bla-einstellungen-detail',
@@ -194,8 +201,29 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   //}
 
 
+  onView($event: MouseEvent) {
+    this.saveLoading = true;
 
 
+    this.currentEinstellung.value = this.neucurrentEinstellung.value;
+
+
+    this.einstellungenProviderService.update(this.currentEinstellung)
+        .then((response: BogenligaResponse<EinstellungenDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+          }
+
+          const id = this.currentEinstellung.id;
+
+        }, (response: BogenligaResponse<EinstellungenDO>) => {
+          console.log('Failed');
+          this.saveLoading = false;
+        });
+
+
+  }
 
 
 

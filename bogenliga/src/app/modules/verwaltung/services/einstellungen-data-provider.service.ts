@@ -17,6 +17,7 @@ import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -73,6 +74,28 @@ export class EinstellungenProviderService  extends DataProviderService {
     });
   }
 
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<EinstellungenDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else if (error.status === 500) {
+              console.log(error.status);
+              reject({result: RequestResult.DUPLICATE_DETECTED});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
 
 
 

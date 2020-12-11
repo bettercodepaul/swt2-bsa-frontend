@@ -5,6 +5,12 @@
         class="horizontal-form half-page"
         #einstellungenForm="ngForm">
 
+
+
+
+
+    <div>
+
     <!-- KEY -->
     <div class="form-group row">
       <label for="einstellungenKey"
@@ -77,17 +83,19 @@
           {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}
         </div>
       </div>
+
+
+
+
+
+    </div>
+
+    <button  (click)="onView($event)">hi</button>
+
     </div>
 
 
 
-    <bla-button *ngIf="!entityExists()"
-                [id]="'dsbMitgliedSaveButton'"
-                [disabled]="!einstellungenForm.valid"
-                [loading]="saveLoading"
-                (onClick)="onSave($event)">
-      {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
-    </bla-button>
 
 
 
