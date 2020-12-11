@@ -1,4 +1,4 @@
-<bla-common-dialog [config]="config">
+<bla-common-dialog [config]="config" >
   <form id="regionenForm"
         class="horizontal-form half-page">
     <h3>{{getTitle()}}</h3>
@@ -104,15 +104,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
     <div class="col-sm-9">
       <div class="invalid-feedback">
         {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -120,12 +111,19 @@
     </div>
 
 
+
     <!-- Row 1 -->
     <div class="row">
-      <div id="Table1">
+      <div id="Table1" >
         <h3>{{"Wettkampftag 1"}}</h3>
-        <bla-data-table [loading]="loadingData"
+        <bla-data-table id="row0"
+                        [loading]="loadingData"
                         [config]="config_table"
+                        [rows]="rows[0]">
+        </bla-data-table>
+        <bla-data-table id="row01" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzel_table"
                         [rows]="rows[0]">
         </bla-data-table>
       </div>
@@ -133,8 +131,14 @@
     <div class="row" >
       <div id="Table2">
         <h3>{{"Wettkampftag 2"}}</h3>
-        <bla-data-table [loading]="loadingData"
+        <bla-data-table id="row1"
+                        [loading]="loadingData"
                         [config]="config_table"
+                        [rows]="rows[1]">
+        </bla-data-table>
+        <bla-data-table id="row11" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzel_table"
                         [rows]="rows[1]">
         </bla-data-table>
       </div>
@@ -142,8 +146,14 @@
     <div class="row">
       <div id="Table3">
         <h3>{{"Wettkampftag 3"}}</h3>
-        <bla-data-table [loading]="loadingData"
+        <bla-data-table id="row2"
+                        [loading]="loadingData"
                         [config]="config_table"
+                        [rows]="rows[2]">
+        </bla-data-table>
+        <bla-data-table id="row21" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzel_table"
                         [rows]="rows[2]">
         </bla-data-table>
       </div>
@@ -151,8 +161,14 @@
     <div class="row">
       <div id="Table4">
         <h3>{{"Wettkampftag 4"}}</h3>
-        <bla-data-table [loading]="loadingData"
+        <bla-data-table id="row3"
+                        [loading]="loadingData"
                         [config]="config_table"
+                        [rows]="rows[3]">
+        </bla-data-table>
+        <bla-data-table id="row31" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzel_table"
                         [rows]="rows[3]">
         </bla-data-table>
       </div>
