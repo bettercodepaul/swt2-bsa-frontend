@@ -217,7 +217,10 @@
           "SATZ4": "S4",
           "SATZ5": "S5",
           "SATZPUNKTE": "Satzpunkte",
-          "MATCHPUNKTE": "Matchpunkte"
+          "MATCHPUNKTE": "Matchpunkte",
+          "SCHUETZE": "Schütze",
+          "PASSE": "Passe",
+          "PASSPUNKTESCHUETZE": "Punkte je Passe"
         }
       }
     }

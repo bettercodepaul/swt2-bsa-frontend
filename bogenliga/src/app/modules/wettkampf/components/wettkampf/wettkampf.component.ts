@@ -4,6 +4,7 @@ import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
+import {WETTKAMPF_TABLE_EINZEL_CONFIG} from './wettkampergebnis/tabelle.einzel.config';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
@@ -21,6 +22,7 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {NotificationService} from '@shared/services';
 import {assertNotNull} from '@angular/compiler/src/output/output_ast';
+import {logger} from 'codelyzer/util/logger';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -37,6 +39,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public routes = null;
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
+  public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
   public jahre: Array<number> = [];
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
@@ -94,12 +97,22 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /**
+   * Based on the IDs of the rows using for-loop the appropriate match-days will be loaded.
+   * Depending on the row number the table config_table will be loaded.
    * Create Results for a Match encounter from a single Wettkampf and push it to this.rows. Rows is used to get the
    * values in the correct table in wettkampf.component.html
    * @param selectedMannschaft | Is this.currentMannschaft or undefined.
    * If this.currentMannschaft all match encounters from one team get created, else from all.
    */
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
+    for (let i = 0; i < 4; i++) {
+      let rowNumber = 'row';
+      rowNumber += i;
+      document.getElementById(rowNumber).classList.remove('hidden');
+      rowNumber += '1';
+      document.getElementById(rowNumber).classList.add('hidden');
+    }
+
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
       this.rows.push((toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
@@ -108,16 +121,24 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /* loadEinzelstatistik
-  Hier wir die Tabelle befüllt für die Einzelstatistik der Schützen
-  Derzeit sind die Daten der Aktuellen Mannschaft implementiert um die Funktionalität zu sätzen
-  Das muss noch geändert werden TODO
+  Anhand der Ids der Reihen "row" in der html Datei werden mithilfe einer for-Schleife
+  das dazugehörige table config: config_einzel_table geladen.
+  Desweiteren wird hier die Tabelle befüllt für die Einzelstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
    */
   public loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
 
+    for (let i = 0; i < 4; i++) {
+      let rowNumber = 'row';
+      rowNumber += i;
+      document.getElementById(rowNumber).classList.add('hidden');
+      rowNumber += '1';
+      document.getElementById(rowNumber).classList.remove('hidden');
+    }
+
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
-      this.rows.push((toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
-        this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i]))));
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.currentJahr, selectedMannschaft,
+        this.passen[i]))));
     }
   }
 
@@ -260,6 +281,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
   }
   // method to change the name to a default, incase if there isn't a Team to for currentMannschaft
+
   public getTitle(): string {
     let placeholder = 'Keine Mannschaft in der Liga';
     if (this.currentMannschaft !== undefined) {
@@ -267,4 +289,5 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
     return placeholder;
   }
+
 }
