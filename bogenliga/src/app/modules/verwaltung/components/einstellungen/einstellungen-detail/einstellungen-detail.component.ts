@@ -18,8 +18,7 @@ import {CurrentUserService, UserPermission} from '@shared/services';
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_EINSTELLUNGEN = 'einstellungen_detail_save';
 const NOTIFICATION_DUPLICATE_EINSTELLUNGEN = 'einstellungen_detail_duplicate';
-
-import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
+import {EinstellungenProviderService} from '../../../services/einstellungen-data-provider.service';
 
 @Component({
   selector: 'bla-einstellungen-detail',
@@ -36,7 +35,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   public currentEintrag;
   public loadById;
 
-  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
+  constructor(private einstellungenDataProvider: EinstellungenProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
@@ -68,7 +67,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
     this.saveLoading = true;
 
     // persist
-    this.dsbMitgliedDataProvider.create(this.currentEintrag)
+    this.einstellungenDataProvider.create(this.currentEintrag)
         .then((response: BogenligaResponse<EinstellungenDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)

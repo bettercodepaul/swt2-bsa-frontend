@@ -19,7 +19,7 @@
                id="einstellungenKey"
                name="einstellungenKey"
                #einstellungenKey="ngModel"
-               [(ngModel)]="currentEintrag.e_key"
+               [(ngModel)]="currentEintrag.einstellungenKey"
                [class.is-invalid]="einstellungenKey.invalid && !einstellungenKey.untouched"
                placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.PLACEHOLDER' | translate }}">
 
@@ -43,7 +43,7 @@
                id="einstellungenValue"
                name="einstellungenValue"
                #einstellungenValue="ngModel"
-               [(ngModel)]="currentEintrag.e_value"
+               [(ngModel)]="currentEintrag.einstellungenValue"
                [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
                placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.PLACEHOLDER' | translate }}">
 

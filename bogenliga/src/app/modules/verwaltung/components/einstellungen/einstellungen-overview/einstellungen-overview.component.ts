@@ -15,6 +15,7 @@ import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-
 import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {CurrentUserService, UserPermission} from '@shared/services';
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
+import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 
 @Component({
   selector: 'bla-einstellungen-overview',
@@ -55,8 +56,8 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
     this.loading = true;
 
     this.einstellungenDataProvider.findAll()
-        .then((response: BogenligaResponse<EinstellungenDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<EinstellungenDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<EinstellungenDO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<EinstellungenDO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<EinstellungenDTO[]>): void {

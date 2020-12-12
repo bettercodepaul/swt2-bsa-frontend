@@ -11,6 +11,8 @@ import {CurrentUserService} from '../../shared/services/current-user';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {fromPayloadArray} from '@verwaltung/mapper/einstellungen-mapper';
 import {HttpErrorResponse} from '@angular/common/http';
+import {fromPayload} from '@verwaltung/mapper/einstellungen-mapper';
+import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
 
 
 
@@ -26,16 +28,16 @@ export class EinstellungenProviderService  extends DataProviderService {
     super();
   }
 
-  public findAll(): Promise<BogenligaResponse<EinstellungenDO[]>> {
+  public findAll(): Promise<BogenligaResponse<EinstellungenDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     console.log("findall wurde aufgerufen");
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
-          .then((data: VersionedDataTransferObject[]) => {
+      this.restClient.GET<VersionedDataTransferObject>(this.getUrl())
+          .then((data: VersionedDataTransferObject) => {
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
           }, (error: HttpErrorResponse) => {
 
@@ -47,5 +49,29 @@ export class EinstellungenProviderService  extends DataProviderService {
           });
     });
   }
+
+  public create(payload: EinstellungenDO): Promise<BogenligaResponse<EinstellungenDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else if (error.status === 500) {
+              console.log(error.status);
+              reject({result: RequestResult.DUPLICATE_DETECTED});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
 
 }
