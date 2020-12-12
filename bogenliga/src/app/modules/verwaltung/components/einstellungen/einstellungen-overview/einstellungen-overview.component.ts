@@ -72,7 +72,7 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
       severity: NotificationSeverity.QUESTION,
       origin: NotificationOrigin.USER,
       type: NotificationType.YES_NO,
-      userAction: NotificationUserAction.PENDING
+      userAction: NotificationUserAction.ACCEPTED
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
