@@ -63,6 +63,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public allKampfrichterLizenzen: Array<LizenzDO> = [];
   public allDsbMitgliederWithKampfrichterLizenz: Array<DsbMitgliedDO> = [];
   public allBenutzerWithKampfrichterLizenz: Array<BenutzerRolleDO> = [];
+  public notSelectedKampfrichterWettkampftag1: Array<BenutzerRolleDO> = [];
   public allUsersTag1: Array<BenutzerRolleDO> = [];
   public allUsersTag2: Array<BenutzerRolleDO> = [];
   public allUsersTag3: Array<BenutzerRolleDO> = [];
@@ -692,12 +693,17 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     for (const iter of Object.keys(this.kampfrichterTag1)) {
       this.selectedKampfrichterTag1.push(this.allBenutzerWithKampfrichterLizenz.filter((user) => user.id === this.kampfrichterTag1[iter].id)[0]);
     }
+
+    this.notSelectedKampfrichterWettkampftag1 = this.allBenutzerWithKampfrichterLizenz.filter(user => this.selectedKampfrichterTag1.indexOf(user) < 0);
+
     console.log('All initial Kampfrichter for any Wettkampf:');
     console.log(allKampfrichter);
     console.log('All initial KampfrichterTag1:');
     console.log(this.kampfrichterTag1);
     console.log('All initial selectedKampfrichterTag1:');
     console.log(this.selectedKampfrichterTag1);
+    console.log('All initial notSelectedKampfrichterWettkampftag1:');
+    console.log(this.notSelectedKampfrichterWettkampftag1);
 
     // TODO: Write all changes for the other days too
     this.kampfrichterTag2 = allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_2.id);
