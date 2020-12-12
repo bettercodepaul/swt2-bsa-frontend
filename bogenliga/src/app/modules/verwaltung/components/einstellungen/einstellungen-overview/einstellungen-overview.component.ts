@@ -73,6 +73,8 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
       origin: NotificationOrigin.USER,
       type: NotificationType.YES_NO,
       userAction: NotificationUserAction.ACCEPTED
+
+      
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
