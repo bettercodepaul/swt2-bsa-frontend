@@ -352,6 +352,13 @@
     }
   },
   "MANAGEMENT": {
+
+
+
+
+
+
+
     "VERWALTUNG": {
       "TITLE": "Verwaltung",
       "NAVIGATION": {
@@ -414,6 +421,40 @@
         }
       }
     },
+    "EINSTELLUNG": {
+      "TITLE": "Einstellungen - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "KEY": "KEY",
+          "VALUE": "VALUE"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Einstellung löschen",
+          "DESCRIPTION": "Wollen Sie die Einstellung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+
+    "EINSTELLUNG_DETAIL": {
+      "TITLE": "Einstellungen Detail - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "KEY": "KEY",
+          "VALUE": "VALUE"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Einstellung löschen",
+          "DESCRIPTION": "Wollen Sie die Einstellung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
+
+
+
     "SPORTJAHR_OVERVIEW": {
       "TITLE": "Veranstaltungen",
       "TABLE": {
@@ -476,6 +517,10 @@
         }
       }
     },
+
+
+
+
     "DSBMITGLIEDER": {
       "TITLE": "DSB Mitglieder - Übersicht",
       "TABLE": {
@@ -1272,7 +1317,7 @@
     },
 
     "EINSTELLUNGEN_DETAIL": {
-      "TITLE": "Einstellungen - Neuer Eintrag",
+      "TITLE": "Einstellungen - Detail",
       "FORM": {
         "VALUE": {
           "LABEL": "Value",
@@ -1283,6 +1328,11 @@
           "LABEL": "Key",
           "PLACEHOLDER": "Bitte einen Key eingeben",
           "ERROR": "Bitte einen gültigen Text eingeben."
+        },
+        "NEWVALUE": {
+          "LABEL": "Neuer Value",
+          "PLACEHOLDER": "Bitte einen neuen Value eingeben",
+          "ERROR": "Bitte einen gültigen Value eingeben."
         },
         "SAVE": "Speichern"
       }

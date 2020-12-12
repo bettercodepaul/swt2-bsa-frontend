@@ -65,7 +65,7 @@
     <div class="form-group row">
       <label for="einstellungenValue"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -77,7 +77,7 @@
                #einstellungenValue="ngModel"
                [(ngModel)]="neucurrentEinstellung.value"
                [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
-               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}

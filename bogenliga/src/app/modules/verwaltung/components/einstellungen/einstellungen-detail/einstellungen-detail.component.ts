@@ -247,8 +247,8 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
             const notification: Notification = {
               id:          NOTIFICATION_SAVE_EINSTELLUNG,
-              title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
