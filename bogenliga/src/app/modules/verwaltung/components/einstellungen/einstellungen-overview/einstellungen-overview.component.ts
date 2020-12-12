@@ -40,15 +40,6 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
     this.loadTableRows();
   }
 
-
-
-
-
-
-
-
-
-
   public onView(versionedDataObject: VersionedDataObject): void {
     this.navigateToDetailDialog(versionedDataObject);
   }

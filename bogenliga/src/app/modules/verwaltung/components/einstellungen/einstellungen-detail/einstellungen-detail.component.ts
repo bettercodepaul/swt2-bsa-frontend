@@ -81,7 +81,6 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
-
     this.currentEinstellung.value = this.neucurrentEinstellung.value;
 
   }
@@ -232,9 +231,12 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
     // persist
     //this.currentEinstellung.key = this.currentEinstellung.key; // Set selected region id
-    this.currentEinstellung.id = 10;
+    //this.currentEinstellung.id = 10;
 
     console.log('Saving verein: ', this.currentEinstellung);
+
+    this.einstellungenProviderService.findAll()
+        .then((response: BogenligaResponse<EinstellungenDTO[]>) => this.currentEinstellung.id = response.payload.length+1)
 
     this.einstellungenProviderService.create(this.currentEinstellung)
         .then((response: BogenligaResponse<EinstellungenDO>) => {
@@ -252,16 +254,17 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
-
+            /*
             this.notificationService.observeNotification(NOTIFICATION_SAVE_EINSTELLUNG)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/einstellungen/' + response.payload.id);
+                    this.router.navigateByUrl('/verwaltung/einstellungen/' + response.payload.key);
                   }
                 });
 
             this.notificationService.showNotification(notification);
+            */
           }
         }, (response: BogenligaResponse<EinstellungenDO>) => {
           console.log('Failed');
