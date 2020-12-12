@@ -14,6 +14,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 
 import {fromPayload} from '@verwaltung/mapper/einstellungen-mapper';
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
 
 
 
@@ -90,6 +91,27 @@ export class EinstellungenProviderService  extends DataProviderService {
             } else if (error.status === 500) {
               console.log(error.status);
               reject({result: RequestResult.DUPLICATE_DETECTED});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+
+  public create(payload: EinstellungenDO): Promise<BogenligaResponse<EinstellungenDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
             } else {
               reject({result: RequestResult.FAILURE});
             }

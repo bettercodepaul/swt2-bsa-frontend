@@ -32,6 +32,7 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_UPDATE_EINSTELLUNG = 'einstellung_detail_update';
+const NOTIFICATION_SAVE_EINSTELLUNG = 'einstellung_detail_save';
 
 @Component({
   selector: 'bla-einstellungen-detail',
@@ -201,7 +202,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   //}
 
 
-  onView($event: MouseEvent) {
+  changevalue($event: MouseEvent) {
     this.saveLoading = true;
 
 
@@ -226,8 +227,55 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   }
 
 
+  createEinstellung($event: MouseEvent) {
+    this.saveLoading = true;
+
+    // persist
+    //this.currentEinstellung.key = this.currentEinstellung.key; // Set selected region id
+    this.currentEinstellung.id = 10;
+
+    console.log('Saving verein: ', this.currentEinstellung);
+
+    this.einstellungenProviderService.create(this.currentEinstellung)
+        .then((response: BogenligaResponse<EinstellungenDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+            console.log('Saved with id: ' + response.payload.id);
+
+            const notification: Notification = {
+              id:          NOTIFICATION_SAVE_EINSTELLUNG,
+              title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_EINSTELLUNG)
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                    this.router.navigateByUrl('/verwaltung/einstellungen/' + response.payload.id);
+                  }
+                });
+
+            this.notificationService.showNotification(notification);
+          }
+        }, (response: BogenligaResponse<EinstellungenDO>) => {
+          console.log('Failed');
+          this.saveLoading = false;
 
 
+        });
+
+
+
+
+
+
+  }
 }
 
 
