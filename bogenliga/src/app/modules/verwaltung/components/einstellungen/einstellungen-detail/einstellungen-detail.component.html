@@ -120,13 +120,16 @@
 
 
 
-      <div class="col-sm-9 button-box">
 
-    <button class="btn btn-primary"  *ngIf = "currentEinstellung.id != null"  (click)="changevalue($event)">ändern</button>
-      <button class="btn btn-primary"    *ngIf = "currentEinstellung.id == null" (click)="createEinstellung($event)">hinzufügen</button>
+        <bla-button style="float: right"  *ngIf = "currentEinstellung.id == null" (click)="createEinstellung($event)">Speichern</bla-button>
+          <bla-button style="float: right" *ngIf = "currentEinstellung.id != null"  (click)="changevalue($event)">Ändern</bla-button>
+
+      <br>
+      <br>
       </div>
 
-    </div>
+
+
 
 
 
