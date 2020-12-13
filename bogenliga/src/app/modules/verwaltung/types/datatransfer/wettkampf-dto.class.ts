@@ -59,7 +59,7 @@ export class WettkampfDTO implements DataTransferObject {
     datum?: string;
     wettkampfOrt?: string;
     wettkampfStrasse?: string;
-    wettkampfPlz?: number;
+    wettkampfPlz?: string;
     wettkampfOrtsname?: string;
     wettkampfOrtsinfo?: string;
     wettkampfBeginn?: string;
@@ -85,6 +85,11 @@ export class WettkampfDTO implements DataTransferObject {
     }
     copy.wettkampfDatum = optional.datum || '';
     copy.wettkampfOrt = optional.wettkampfOrt || null;
+    copy.wettkampfStrasse = optional.wettkampfStrasse || null;
+    copy.wettkampfPlz = optional.wettkampfPlz || null;
+    copy.wettkampfOrtsname = optional.wettkampfOrtsname || null;
+    copy.wettkampfOrtsinfo = optional.wettkampfOrtsinfo || null;
+
     copy.wettkampfBeginn = optional.wettkampfBeginn || null;
 
     if (optional.wettkampfTag >= 0) {
