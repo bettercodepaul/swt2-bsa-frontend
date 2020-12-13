@@ -216,11 +216,9 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
             this.notificationService.showNotification(notification);
 
-
-            this.navigateToDetailDialog();
-
-
+            
           }
+          this.navigateToDetailDialog();
         }, (response: BogenligaResponse<EinstellungenDO> ) => {
           console.log('Failed');
           this.saveLoading = false;

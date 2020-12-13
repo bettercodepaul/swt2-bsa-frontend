@@ -31,7 +31,9 @@ export class EinstellungenProviderService  extends DataProviderService {
     super();
   }
 
+
   public findAll(): Promise<BogenligaResponse<EinstellungenDO[]>> {
+
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
