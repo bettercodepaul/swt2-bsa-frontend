@@ -189,6 +189,9 @@
         },
         "ANZEIGENEinzel": {
           "LABEL": "Einzelstatistik anzeigen"
+        },
+        "ANZEIGENEinzelDrucken": {
+          "LABEL": "Einzelstatistik drucken"
         }
       },
       "FORM": {

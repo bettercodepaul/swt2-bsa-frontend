@@ -1,10 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
 <bla-common-dialog [config]="config" >
   <form id="regionenForm"
         class="horizontal-form half-page">
-    <h3>{{getTitle()}}</h3>
-    <h3>{{currentVeranstaltung.name}}</h3>
+    <h3 class="print1">{{getTitle()}}</h3>
+    <h3 class="print1">{{currentVeranstaltung.name}}</h3>
 
     <!-- Die Texte werden in der de.json Datei gesetzt-->
+    <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
+    gesetzt wird es in styles.scss-->
 
     <!-- Veranstaltung -->
     <div id="selectVereink">
@@ -28,7 +33,7 @@
     </div>
 
     <!-- Mannschaft -->
-    <div id="selectVerein">
+    <div id="selectVerein" class=" print1">
       <div class="row">
         <label class="col-sm-1 col-form-label">
           <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
@@ -48,7 +53,7 @@
     </div>
 
     <!-- Jahr -->
-    <div class="row">
+    <div class="row print1">
       <label class="col-sm-1 col-form-label">
         <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
       </label>
@@ -76,7 +81,7 @@
       &nbsp;
       <!-- Button - Aktuelle Mannschaft anzeigen -->
       <bla-button
-        [id]="'showResultButton'"
+        [id]="'showResultsButton'"
         (onClick)="loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
@@ -84,8 +89,15 @@
       <!-- Button - Einzelstatistik anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadPopup(this.currentMannschaft);loadEinzelstatistik(this.currentMannschaft);">
+        (onClick)="loadPopup(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
+      </bla-button>
+      &nbsp;
+      <!-- Button - Einzelstatistik Drucken -->
+      <bla-button class = "hidden" id = "druckButton"
+        [id]="'showResultsButton'"
+        (onClick)="druck();">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelDrucken.LABEL' | translate }}
       </bla-button>
     </div>
 <!-- popup -->
@@ -113,8 +125,8 @@
 
 
     <!-- Row 1 -->
-    <div class="row">
-      <div id="Table1" >
+    <div class="row print1">
+      <div id="Table1">
         <h3>{{"Wettkampftag 1"}}</h3>
         <bla-data-table id="row0"
                         [loading]="loadingData"
@@ -128,7 +140,7 @@
         </bla-data-table>
       </div>
     </div>
-    <div class="row" >
+    <div class="row print1">
       <div id="Table2">
         <h3>{{"Wettkampftag 2"}}</h3>
         <bla-data-table id="row1"
@@ -143,7 +155,7 @@
         </bla-data-table>
       </div>
     </div>
-    <div class="row">
+    <div class="row print1">
       <div id="Table3">
         <h3>{{"Wettkampftag 3"}}</h3>
         <bla-data-table id="row2"
@@ -158,7 +170,7 @@
         </bla-data-table>
       </div>
     </div>
-    <div class="row">
+    <div class="row print1">
       <div id="Table4">
         <h3>{{"Wettkampftag 4"}}</h3>
         <bla-data-table id="row3"
@@ -182,3 +194,5 @@
     </div>
   </form>
 </bla-common-dialog>
+</body>
+</html>
