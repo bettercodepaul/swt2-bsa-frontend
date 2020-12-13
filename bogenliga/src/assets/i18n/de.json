@@ -432,7 +432,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Einstellung löschen",
-          "DESCRIPTION": "Wollen Sie die Einstellung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht."
         }
       }
     },
@@ -459,7 +459,7 @@
 
         "DELETE": {
           "TITLE": "Einstellung löschen",
-          "DESCRIPTION": "Wollen Sie die Einstellung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht"
         }
       }
     },
