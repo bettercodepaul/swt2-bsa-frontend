@@ -2,138 +2,123 @@
                    [loading]="loading">
 
 
-
-
   <form id="einstellungenForm"
         class="horizontal-form half-page"
         #einstellungenForm="ngForm">
 
 
-
-
-
     <div>
 
 
-
-    <!-- KEY -->
-    <div class="form-group row">
-      <label for="einstellungenValue"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-
+      <!-- KEY -->
+      <div class="form-group row">
+        <label for="einstellungenKey"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
 
 
-        <input type="text"
-               class="form-control"
-               required
-               id="einstellungenValue"
-               name="einstellungenValue"
-               #einstellungenValue="ngModel"
-               [(ngModel)]="currentEinstellung.key"
+          <input type="text"
+                 class="form-control"
+                 required
+                 id="einstellungenKey"
+                 name="einstellungenKey"
+                 #einstellungenKey="ngModel"
+                 [(ngModel)]="currentEinstellung.key"
 
-               [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
-               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.PLACEHOLDER' | translate }}"
-               [disabled] = "currentEinstellung.id != null"
+                 [class.is-invalid]="einstellungenKey.invalid && !einstellungenKey.untouched"
+                 placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.PLACEHOLDER' | translate }}"
+                 [disabled]="currentEinstellung.id != null"
 
-        >
+          >
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- VALUE -->
-    <div class="form-group row">
-      <label for="einstellungenKey"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               id="einstellungenKey"
-               name="einstellungenKey"
-               #einstellungenKey="ngModel"
-               [(ngModel)]="currentEinstellung.value"
-               [class.is-invalid]="einstellungenKey.invalid && !einstellungenKey.untouched"
-               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.PLACEHOLDER' | translate }}"
-               [disabled] = "currentEinstellung.id != null"
-              >
+      <!-- VALUE -->
+      <div class="form-group row">
+        <label for="einstellungenValue"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 required
+                 id="einstellungenValue"
+                 name="einstellungenValue"
+                 #einstellungenValue="ngModel"
+                 [(ngModel)]="currentEinstellung.value"
+                 [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
+                 placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.PLACEHOLDER' | translate }}"
+                 [disabled]="currentEinstellung.id != null"
+          >
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-
-
-    <!-- newVALUE -->
-    <div class="form-group row">
-
-
-
-      <label for="einstellungenValueNeu"
-
-             *ngIf = "currentEinstellung.id  != null"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-
-      <div class="col-sm-9">
-
-        <input id="test" type="text"
-
-               *ngIf = "currentEinstellung.id != null"
-
-               class="form-control"
-               required
-               id="einstellungenValueNeu"
-               name="einstellungenValueNeu"
-               #einstellungenValue="ngModel"
-               [(ngModel)]="neucurrentEinstellung.value"
-               [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
-               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.PLACEHOLDER' | translate }}"
-
-
-
-                >
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}
+          </div>
         </div>
       </div>
 
 
+      <!-- newVALUE -->
+      <div class="form-group row">
 
 
+        <label for="einstellungenValueNeu"
 
-    </div>
+               *ngIf="currentEinstellung.id  != null"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+
+        <div class="col-sm-9">
+
+          <input id="test"
+                 type="text"
+
+                 *ngIf="currentEinstellung.id != null"
+
+                 class="form-control"
+                 required
+                 id="einstellungenValueNeu"
+                 name="einstellungenValueNeu"
+                 #einstellungenValue="ngModel"
+                 [(ngModel)]="neucurrentEinstellung.value"
+                 [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
+                 placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.PLACEHOLDER' | translate }}"
 
 
+          >
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}
+          </div>
+        </div>
 
 
-        <bla-button style="float: right"  *ngIf = "currentEinstellung.id == null" (click)="createEinstellung($event)">Speichern</bla-button>
-          <bla-button style="float: right" *ngIf = "currentEinstellung.id != null"  (click)="changevalue($event)">Ändern</bla-button>
+      </div>
+
+
+      <bla-button style="float: right"
+                  *ngIf="currentEinstellung.id == null"
+                  (click)="createEinstellung($event)">Speichern
+      </bla-button>
+      <bla-button style="float: right"
+                  *ngIf="currentEinstellung.id != null"
+                  (click)="changevalue($event)">Ändern
+      </bla-button>
 
       <br>
       <br>
-      </div>
-
-
-
-
-
-
-
+    </div>
 
 
   </form>
