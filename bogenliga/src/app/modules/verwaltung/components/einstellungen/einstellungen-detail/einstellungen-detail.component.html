@@ -1,6 +1,9 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
+
+
+
   <form id="einstellungenForm"
         class="horizontal-form half-page"
         #einstellungenForm="ngForm">
@@ -11,6 +14,8 @@
 
     <div>
 
+
+
     <!-- KEY -->
     <div class="form-group row">
       <label for="einstellungenKey"
@@ -19,6 +24,9 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
+
+
+
         <input type="text"
                class="form-control"
                required
@@ -26,8 +34,12 @@
                name="einstellungenKey"
                #einstellungenKey="ngModel"
                [(ngModel)]="currentEinstellung.key"
+
                [class.is-invalid]="einstellungenKey.invalid && !einstellungenKey.untouched"
-               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.PLACEHOLDER' | translate }}"
+               [disabled] = "currentEinstellung.id != null"
+
+        >
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.ERROR' | translate }}
@@ -51,7 +63,9 @@
                #einstellungenValue="ngModel"
                [(ngModel)]="currentEinstellung.value"
                [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
-               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.PLACEHOLDER' | translate }}"
+               [disabled] = "currentEinstellung.id != null"
+              >
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}
@@ -61,23 +75,37 @@
 
 
 
-    <!-- VALUE -->
+    <!-- newVALUE -->
     <div class="form-group row">
-      <label for="einstellungenValue"
+
+
+
+      <label for="einstellungenValueNeu"
+
+             *ngIf = "currentEinstellung.id  != null"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.LABEL' | translate }}</span>
         <span> *</span>
       </label>
+
       <div class="col-sm-9">
-        <input type="text"
+
+        <input id="test" type="text"
+
+               *ngIf = "currentEinstellung.id != null"
+
                class="form-control"
                required
                id="einstellungenValueNeu"
-               name="einstellungenValue"
+               name="einstellungenValueNeu"
                #einstellungenValue="ngModel"
                [(ngModel)]="neucurrentEinstellung.value"
                [class.is-invalid]="einstellungenValue.invalid && !einstellungenValue.untouched"
-               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.NEWVALUE.PLACEHOLDER' | translate }}"
+
+
+
+                >
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.VALUE.ERROR' | translate }}
@@ -90,9 +118,13 @@
 
     </div>
 
-    <button  (click)="changevalue($event)">ändern</button>
-      <button  (click)="createEinstellung($event)">hinzufügen</button>
 
+
+      <div class="col-sm-9 button-box">
+
+    <button class="btn btn-primary"  *ngIf = "currentEinstellung.id != null"  (click)="changevalue($event)">ändern</button>
+      <button class="btn btn-primary"    *ngIf = "currentEinstellung.id == null" (click)="createEinstellung($event)">hinzufügen</button>
+      </div>
 
     </div>
 

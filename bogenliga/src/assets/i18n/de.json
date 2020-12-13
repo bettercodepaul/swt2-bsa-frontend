@@ -446,6 +446,17 @@
         }
       },
       "NOTIFICATION": {
+        "SAVE":{
+          "TITLE": "Einstellung speichern",
+          "DESCRIPTION": "Einstellung wurde gespeichert "
+
+        },
+        "EDIT":{
+          "TITLE": "Einstellung bearbeiten",
+          "DESCRIPTION": "Neue Value wurde gesetzt "
+
+        },
+
         "DELETE": {
           "TITLE": "Einstellung löschen",
           "DESCRIPTION": "Wollen Sie die Einstellung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."

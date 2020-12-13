@@ -87,6 +87,8 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   public deleteLoading = false;
   public saveLoading = false;
 
+  public test = true;
+
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
               private vereinProvider: VereinDataProviderService,
               private veranstaltungProvider: VeranstaltungDataProviderService,

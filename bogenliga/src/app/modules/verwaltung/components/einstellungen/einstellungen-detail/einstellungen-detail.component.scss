@@ -1,13 +1,15 @@
 .half-page {
-  width: 50%;
+  width: 20%;
 }
 
 .button-box {
-  display: flex;
+  margin: 5%;
+  display: inline-flex;
   justify-content: space-between;
   flex-direction: row-reverse;
-  flex-wrap: wrap;
+
 }
+
 
 // for small devices
 @media (max-width: 1400px) {

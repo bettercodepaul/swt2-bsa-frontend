@@ -1,39 +1,32 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
 
 import {EINSTELLUNGEN_DETAIL_CONFIG} from './einstellungen-detail.config';
 
-import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
-import {DSB_MITGLIED_DETAIL_CONFIG} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.config';
-import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
-import {VereinDO} from '@verwaltung/types/verein-do.class';
-import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
+
 import {HttpClient} from '@angular/common/http';
 import {
-  CurrentUserService,
+
   Notification, NotificationOrigin,
   NotificationService,
-  NotificationSeverity, NotificationType, NotificationUserAction,
-  UserPermission
+  NotificationSeverity, NotificationType,
+
 } from '@shared/services';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
-import {BogenligaResponse, RequestResult} from '@shared/data-provider';
-import {toTableRows} from '../../../../shared/components/tables';
+import {BogenligaResponse} from '@shared/data-provider';
+
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
-import {LigaDO} from '@verwaltung/types/liga-do.class';
-import {UserProfileDO} from '@user/types/user-profile-do.class';
-import {UserProfileDTO} from '@user/types/model/user-profile-dto.class';
-import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_UPDATE_EINSTELLUNG = 'einstellung_detail_update';
 const NOTIFICATION_SAVE_EINSTELLUNG = 'einstellung_detail_save';
-
+const NOTIFICATION_CREATE_EINSTELLUNG = 'einstellung_detail_save';
 @Component({
   selector: 'bla-einstellungen-detail',
   templateUrl: './einstellungen-detail.component.html',
@@ -42,23 +35,10 @@ const NOTIFICATION_SAVE_EINSTELLUNG = 'einstellung_detail_save';
 export class EinstellungenDetailComponent extends CommonComponentDirective implements OnInit {
   public config = EINSTELLUNGEN_DETAIL_CONFIG;
   public ButtonType = ButtonType;
-  public currentEinstellung: EinstellungenDO= new EinstellungenDO();
-  public neucurrentEinstellung: EinstellungenDO= new EinstellungenDO();
-  public allEinstellungen: Array<EinstellungenDO> = [new EinstellungenDO()];
+  public currentEinstellung: EinstellungenDO = new EinstellungenDO();
+  public neucurrentEinstellung: EinstellungenDO = new EinstellungenDO();
 
 
-
-
-  //public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
-  //public currentVerein: VereinDO = new VereinDO();
-  // public vereine: Array<VereinDO> = [new VereinDO()];
-  //public vereine: VereinDO[];
-  // public currentVerein: VereinDO;
-
-  //public dsbMitgliedNationalitaet: string[];
-  public loadingVereine = true;
-
-  public vereineLoaded;
 
   public  nationen: Array<string> = [];
 
@@ -67,10 +47,15 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   public saveLoading = false;
   public rows: TableRow[];
   public id;
-  public test = "app.bogenliga.frontend.autorefresh.active";
+  public test = 'app.bogenliga.frontend.autorefresh.active';
 
-  constructor(private einstellungenDataProvider: EinstellungenProviderService,private router: Router,private route: ActivatedRoute,private notificationService: NotificationService, private einstellungenProviderService:EinstellungenProviderService,private httpService: HttpClient, ) {
-    super();
+
+  constructor(private einstellungenDataProvider: EinstellungenProviderService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private einstellungenProviderService: EinstellungenProviderService) {
+              super();
   }
 
   public entityExists(): boolean {
@@ -79,43 +64,48 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
 
   public onSave(ignore: any): void {
+
     this.saveLoading = true;
+
+
+
 
     this.currentEinstellung.value = this.neucurrentEinstellung.value;
 
+    const notificationSave: Notification = {
+      id:          NOTIFICATION_SAVE_EINSTELLUNG,
+      title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.SAVE.TITLE',
+      description: 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+
+    };
+
+    this.notificationService.showNotification(notificationSave);
+
+
+
+
+
   }
-
-  //console.log('current nation: ' + this.currentMitgliedNat);
-  //console.log('current kampfrichter: ' + this.currentMitglied.kampfrichter);
-
-  //for (let i = 0; i < this.nationen.length; i++) {
-  //if (this.nationen[i] === this.currentMitgliedNat) {
-  //this.currentMitglied.nationalitaet = this.nationenKuerzel[i];
-  //}
-  //}
-
-  // müssen ersetzt werden
-  //public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
-  //public currentVerein: VereinDO = new VereinDO();
-  //public nationen: Array<string> = [];
-  //public nationenKuerzel: Array<string> = [];
-  //public currentMitgliedNat: string;
-
 
 
   ngOnInit() {
 
+
+
+
+
+
     this.loading = true;
-    //this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
           this.currentEinstellung = new EinstellungenDO();
-          console.log("test");
+          console.log('test');
 
-
-          //this.loadAllEinstellungen();
 
           this.loading = false;
           this.deleteLoading = false;
@@ -132,25 +122,17 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
 
 
-  };
-
-
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<EinstellungenDTO[]>): void {
-
-    this.rows = []; // reset array to ensure change detection
-    this.rows = toTableRows(response.payload);
-    this.loading = false;
-
-
   }
 
 
-  private loadById(id:string) {
 
-    console.log("loadByid wurde aufgerufen");
+
+  private loadById(id: string) {
+
+    console.log('loadByid wurde aufgerufen');
 
     this.einstellungenProviderService.findById(id)
-        .then((response: BogenligaResponse<EinstellungenDO>) =>this.handleSuccess(response))
+        .then((response: BogenligaResponse<EinstellungenDO>) => this.handleSuccess(response))
         .catch((response: BogenligaResponse<EinstellungenDO>) => this.handleSuccess(response));
   }
 
@@ -160,50 +142,14 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
     this.loading = false;
 
 
-
-
-
-
-  }
-
-  private handleLoadTableRowsFail(response: BogenligaResponse<EinstellungenDTO[]>) {
-    this.loading = false;
-
   }
 
 
-
-
-
-
-
-  private handleUserResponseArraySuccess(response: BogenligaResponse<EinstellungenDO[]>): void {
-    this.allEinstellungen = [];
-    this.allEinstellungen = response.payload;
-    if (this.id === 'add') {
-      this.currentEinstellung = this.allEinstellungen[0];
-    } else {
-      this.currentEinstellung = this.allEinstellungen.filter((user) => user.id === this.currentEinstellung.id)[0];
-    }
-    this.loading = false;
-  }
-
-  private handleUserResponseArrayFailure(response: BogenligaResponse<EinstellungenDTO[]>): void {
-    this.allEinstellungen = [];
-    this.loading = false;
-  }
-
-  //private loadingeinstellung(type: string){
-  //this.dbsProvider.findAll(type)
-  //.then((response)=>{
-  //this.handle
-  //} )
-  //}
 
 
   changevalue($event: MouseEvent) {
-    this.saveLoading = true;
 
+    this.saveLoading = true;
 
     this.currentEinstellung.value = this.neucurrentEinstellung.value;
 
@@ -215,7 +161,23 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
             && !isNullOrUndefined(response.payload.id)) {
           }
 
+
+          const notificationUpdate: Notification = {
+
+            id:          NOTIFICATION_UPDATE_EINSTELLUNG,
+            title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.TITLE',
+            description: 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.DESCRIPTION',
+            severity:    NotificationSeverity.INFO,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+
+          };
+
+          this.notificationService.showNotification(notificationUpdate);
+
           const id = this.currentEinstellung.id;
+
+          this.navigateToDetailDialog();
 
         }, (response: BogenligaResponse<EinstellungenDO>) => {
           console.log('Failed');
@@ -229,14 +191,11 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   createEinstellung($event: MouseEvent) {
     this.saveLoading = true;
 
-    // persist
-    //this.currentEinstellung.key = this.currentEinstellung.key; // Set selected region id
-    //this.currentEinstellung.id = 10;
 
     console.log('Saving verein: ', this.currentEinstellung);
 
     this.einstellungenProviderService.findAll()
-        .then((response: BogenligaResponse<EinstellungenDTO[]>) => this.currentEinstellung.id = response.payload.length+1)
+        .then((response: BogenligaResponse<EinstellungenDTO[]> ) => this.currentEinstellung.id = response.payload.length + 1);
 
     this.einstellungenProviderService.create(this.currentEinstellung)
         .then((response: BogenligaResponse<EinstellungenDO>) => {
@@ -246,39 +205,37 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
             console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_EINSTELLUNG,
+              id:          NOTIFICATION_CREATE_EINSTELLUNG,
               title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.SAVE.TITLE',
               description: 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
+
             };
-            /*
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_EINSTELLUNG)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/einstellungen/' + response.payload.key);
-                  }
-                });
 
             this.notificationService.showNotification(notification);
-            */
+
+
+            this.navigateToDetailDialog();
+
+
           }
-        }, (response: BogenligaResponse<EinstellungenDO>) => {
+        }, (response: BogenligaResponse<EinstellungenDO> ) => {
           console.log('Failed');
           this.saveLoading = false;
 
 
         });
 
-
-
-
-
-
   }
+
+
+  private navigateToDetailDialog() {
+    this.router.navigateByUrl('/verwaltung/einstellungen');
+  }
+
+
 }
 
 

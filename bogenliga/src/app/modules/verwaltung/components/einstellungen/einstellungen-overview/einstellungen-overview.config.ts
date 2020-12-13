@@ -15,15 +15,14 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
 
       {
-        translationKey:'MANAGEMENT.EINSTELLUNGEN.TABLE',
-        propertyName: 'value',
-
+        translationKey: 'MANAGEMENT.EINSTELLUNG.TABLE.HEADERS.KEY',
+        propertyName: 'key',
         width: 20,
       },
 
       {
-        translationKey:'MANAGMENT.EINSTELLUNGEN.TABLE.HEADERS.Value',
-        propertyName: 'key',
+        translationKey: 'MANAGEMENT.EINSTELLUNG.TABLE.HEADERS.VALUE',
+        propertyName: 'value',
         width: 20,
       },
 
@@ -34,10 +33,10 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_DSBMITGLIEDER],
-    deletePermission : [UserPermission.CAN_DELETE_DSBMITGLIEDER]
+    editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
+    deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
-  createPermission : [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER,UserPermission.CAN_MODIFY_DSBMITGLIEDER]
+  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN, UserPermission.CAN_CREATE_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
 
 
 
