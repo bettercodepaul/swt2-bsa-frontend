@@ -40,7 +40,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
 
 
-  public  nationen: Array<string> = [];
+
 
   public currentMitgliedNat: string;
   public deleteLoading = false;
@@ -70,7 +70,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
 
 
-    this.currentEinstellung.value = this.neucurrentEinstellung.value;
+    this.currentEinstellung.key = this.neucurrentEinstellung.key;
 
     const notificationSave: Notification = {
       id:          NOTIFICATION_SAVE_EINSTELLUNG,
@@ -104,8 +104,6 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
           this.currentEinstellung = new EinstellungenDO();
-          console.log('test');
-
 
           this.loading = false;
           this.deleteLoading = false;
@@ -119,17 +117,10 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
     });
 
 
-
-
-
   }
 
 
-
-
   private loadById(id: string) {
-
-    console.log('loadByid wurde aufgerufen');
 
     this.einstellungenProviderService.findById(id)
         .then((response: BogenligaResponse<EinstellungenDO>) => this.handleSuccess(response))
@@ -180,7 +171,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
           this.navigateToDetailDialog();
 
         }, (response: BogenligaResponse<EinstellungenDO>) => {
-          console.log('Failed');
+
           this.saveLoading = false;
         });
 
@@ -191,9 +182,6 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   createEinstellung($event: MouseEvent) {
     this.saveLoading = true;
 
-
-    console.log('Saving verein: ', this.currentEinstellung);
-
     this.einstellungenProviderService.findAll()
         .then((response: BogenligaResponse<EinstellungenDTO[]> ) => this.currentEinstellung.id = response.payload.length + 1);
 
@@ -202,7 +190,6 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
 
             const notification: Notification = {
               id:          NOTIFICATION_CREATE_EINSTELLUNG,
@@ -222,7 +209,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
           }
         }, (response: BogenligaResponse<EinstellungenDO> ) => {
-          console.log('Failed');
+
           this.saveLoading = false;
 
 
