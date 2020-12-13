@@ -352,13 +352,6 @@
     }
   },
   "MANAGEMENT": {
-
-
-
-
-
-
-
     "VERWALTUNG": {
       "TITLE": "Verwaltung",
       "NAVIGATION": {
@@ -528,10 +521,6 @@
         }
       }
     },
-
-
-
-
     "DSBMITGLIEDER": {
       "TITLE": "DSB Mitglieder - Übersicht",
       "TABLE": {
