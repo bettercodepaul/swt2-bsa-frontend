@@ -9,7 +9,6 @@
   flex-wrap: wrap;
 }
 
-
 // for small devices
 @media (max-width: 1400px) {
 
@@ -26,4 +25,9 @@
     width: 100%;
   }
 
+}
+.overview-dialog-add {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 1em;
 }

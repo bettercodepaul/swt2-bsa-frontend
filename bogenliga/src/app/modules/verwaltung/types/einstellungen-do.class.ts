@@ -9,7 +9,7 @@ export class EinstellungenDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  key: string;
   value: string;
+  key: string;
 
 }

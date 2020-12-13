@@ -178,7 +178,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
   }
 
-
+ // Aufruf der Funktion wo ein neuer Eintrag erstellt wird
   createEinstellung($event: MouseEvent) {
     this.saveLoading = true;
 
@@ -204,10 +204,8 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
             this.notificationService.showNotification(notification);
 
 
-            this.navigateToDetailDialog();
-
-
           }
+          this.navigateToDetailDialog();
         }, (response: BogenligaResponse<EinstellungenDO> ) => {
 
           this.saveLoading = false;
