@@ -11,13 +11,13 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
     columns: [
 
       {
-        translationKey:'MANAGEMENT.EINSTELLUNGEN_DETAIL.KEY',
+        translationKey: 'MANAGEMENT.EINSTELLUNGEN_DETAIL.KEY',
         propertyName: 'key',
         width: 20,
       },
 
       {
-        translationKey:'MANAGEMENT.EINSTELLUNGEN_DETAIL.VALUE',
+        translationKey: 'MANAGEMENT.EINSTELLUNGEN_DETAIL.VALUE',
         propertyName: 'value',
         width: 20,
       },
@@ -26,7 +26,7 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT,TableActionType.DELETE],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN]

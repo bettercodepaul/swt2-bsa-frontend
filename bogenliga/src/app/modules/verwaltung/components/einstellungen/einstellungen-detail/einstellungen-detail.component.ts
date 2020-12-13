@@ -29,7 +29,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
   ngOnInit() {
     this.loading = true;
+    }
 
-    };
   }
 

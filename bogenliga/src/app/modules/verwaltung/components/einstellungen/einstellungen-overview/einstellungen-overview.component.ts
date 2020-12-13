@@ -27,8 +27,8 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
   public rows: TableRow[];
 
 
-  //private einstellungenDataProvider: EinstellungenDataProviderService
-  constructor(private einstellungenDataProvider: EinstellungenProviderService, private router: Router,private currentUserService: CurrentUserService) {
+  // private einstellungenDataProvider: EinstellungenDataProviderService
+  constructor(private einstellungenDataProvider: EinstellungenProviderService, private router: Router, private currentUserService: CurrentUserService) {
     super();
   }
 

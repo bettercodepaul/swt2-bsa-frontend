@@ -118,6 +118,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.rows.push((toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
         this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i]))));
     }
+
+    document.getElementById('druckButton').classList.add('hidden');
   }
 
   /* loadEinzelstatistik
@@ -140,6 +142,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.currentJahr, selectedMannschaft,
         this.passen[i]))));
     }
+
+    document.getElementById('druckButton').classList.remove('hidden');
+
   }
 
   /* loadPopup
@@ -149,7 +154,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public loadPopup(selectedMannschaft: DsbMannschaftDO) {
     if (!selectedMannschaft) {
       this.popup = true;
+    } else {
+      this.loadEinzelstatistik(this.currentMannschaft);
     }
+  }
+
+  /*
+  druck
+  Öffnet das Fenster um Einzelstatistik zu drucken
+   */
+  public druck() {
+    window.print();
   }
 
   /**
