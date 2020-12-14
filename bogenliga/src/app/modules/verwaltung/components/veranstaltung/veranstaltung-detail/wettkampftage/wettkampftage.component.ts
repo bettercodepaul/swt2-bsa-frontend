@@ -63,11 +63,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public allKampfrichterLizenzen: Array<LizenzDO> = [];
   public allDsbMitgliederWithKampfrichterLizenz: Array<DsbMitgliedDO> = [];
   public allBenutzerWithKampfrichterLizenz: Array<BenutzerRolleDO> = [];
+  public notSelectedKampfrichterWettkampftag1: Array<BenutzerRolleDO> = [];
   public allUsersTag1: Array<BenutzerRolleDO> = [];
   public allUsersTag2: Array<BenutzerRolleDO> = [];
   public allUsersTag3: Array<BenutzerRolleDO> = [];
   public allUsersTag4: Array<BenutzerRolleDO> = [];
 
+  public initiallySelectedKampfrichterTag1: Array<BenutzerRolleDO> = [];
   public selectedKampfrichterTag1: Array<BenutzerRolleDO> = [];
   public selectedKampfrichterTag2: Array<BenutzerRolleDO> = [];
   public selectedKampfrichterTag3: Array<BenutzerRolleDO> = [];
@@ -188,6 +190,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
 
     // Justins code
+    // TODO: Figure out which Kampfrichter to delete ot not to update
     // TODO: Deal with the following error that sometimes occurs: "this.kampfrichterTag1[i] is undefined"
     // The error probably appears when TeamSportleiter is selected, because of the "liga" error
     this.kampfrichterTag1 = [];
@@ -201,8 +204,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.kampfrichterTag1[i].leitend = false;
     }
 
+    console.log('initiallySelectedKampfrichterTag1:');
+    console.log(this.initiallySelectedKampfrichterTag1);
     console.log('selectedKampfrichterTag1:');
-    console.log(this.selectedKampfrichterTag1)
+    console.log(this.selectedKampfrichterTag1);
     // console.log('allKampfrichter:');
     // console.log(this.allKampfrichter)
     console.log('kampfrichterTag1:');
@@ -691,14 +696,22 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.kampfrichterTag1.push(allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_1.id)[0]);
     // TODO: Make sure, that allUsersTag1 are already loaded
     for (const iter of Object.keys(this.kampfrichterTag1)) {
-      this.selectedKampfrichterTag1.push(this.allBenutzerWithKampfrichterLizenz.filter((user) => user.id === this.kampfrichterTag1[iter].id)[0]);
+      this.initiallySelectedKampfrichterTag1.push(this.allBenutzerWithKampfrichterLizenz.filter((user) => user.id === this.kampfrichterTag1[iter].id)[0]);
     }
+
+    this.initiallySelectedKampfrichterTag1.forEach(val => this.selectedKampfrichterTag1.push(Object.assign({}, val)));
+    this.notSelectedKampfrichterWettkampftag1 = this.allBenutzerWithKampfrichterLizenz.filter(user => this.initiallySelectedKampfrichterTag1.indexOf(user) < 0);
+
     console.log('All initial Kampfrichter for any Wettkampf:');
     console.log(allKampfrichter);
     console.log('All initial KampfrichterTag1:');
     console.log(this.kampfrichterTag1);
-    console.log('All initial selectedKampfrichterTag1:');
+    console.log('All initiallySelectedKampfrichterTag1:');
+    console.log(this.initiallySelectedKampfrichterTag1);
+    console.log('All selectedKampfrichterTag1:');
     console.log(this.selectedKampfrichterTag1);
+    console.log('All initial notSelectedKampfrichterWettkampftag1:');
+    console.log(this.notSelectedKampfrichterWettkampftag1);
 
     // TODO: Write all changes for the other days too
     this.kampfrichterTag2 = allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_2.id);
