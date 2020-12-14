@@ -340,6 +340,53 @@
     }
   },
   "MANAGEMENT": {
+
+
+
+
+    "EINSTELLUNGEN": {
+      "TITLE": "Settings - Overview",
+      "FORM": {
+        "EINTRAG": {
+          "LABEL": "Create Setting",
+          "PLACEHOLDER": "Create New Setting",
+          "ERROR": "Please enter a valid setting"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "The setting was created"
+        },
+        "DUPLICATE": {
+          "TITLE": "Fail",
+          "DESCRIPTION": "The setting was not created"
+        }
+      }
+    },
+
+    "EINSTELLUNGEN_DETAIL": {
+      "TITLE": "Setting - Detail",
+      "FORM": {
+        "VALUE": {
+          "LABEL": "Value",
+          "PLACEHOLDER": "Please enter a Value",
+          "ERROR": "Please enter a correct Value ."
+        },
+        "KEY": {
+          "LABEL": "Key",
+          "PLACEHOLDER": "Please enter a Value",
+          "ERROR": "Please enter a correct Value "
+        },
+        "NEWVALUE": {
+          "LABEL": "New Value",
+          "PLACEHOLDER": "Please enter a new Value",
+          "ERROR": "Please enter a correct Value"
+        },
+        "SAVE": "Safe"
+      }
+    }
+  },
     "VERWALTUNG": {
       "TITLE": "Administration",
       "NAVIGATION": {
@@ -378,7 +425,12 @@
         "VERANSTALTUNG": {
           "LABEL": "Events",
           "DESCRIPTION": "Management of events"
-        }
+        },
+
+      "EINSTELLUNG": {
+        "LABEL": "einstellungen",
+        "DESCRIPTION": "Management of einstellungen"
+
       }
     },
     "SPORTJAHR": {
@@ -1249,6 +1301,11 @@
           "PLACEHOLDER": "Please enter a number",
           "ERROR": "Please enter a valid number (max. 2 digits)."
         },
+
+
+
+
+
         "SAVE": "Save",
         "UPDATE": "Refresh",
         "DELETE": "Delete"
