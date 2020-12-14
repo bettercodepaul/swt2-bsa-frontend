@@ -18,6 +18,10 @@ export class VereinTabelleDO implements VersionedDataObject {
   veranstaltung_name: string;
   wettkampfTag: string;
   wettkampfOrt: string;
+  wettkampfStrasse: string;
+  wettkampfPlz: string;
+  wettkampfOrtsname: string;
+  wettkampfOrtsinfo: string;
   mannschaftsName: string;
 
 }

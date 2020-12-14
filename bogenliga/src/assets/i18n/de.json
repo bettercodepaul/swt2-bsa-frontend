@@ -1016,6 +1016,26 @@
             "PLACEHOLDER": "Adresse",
             "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
           },
+          "STRASSE": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Straße und Hausnummer",
+            "ERROR": "Gültige Eingabe (Straße Hausnummer)."
+          },
+          "PLZ": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Postleitzahl",
+            "ERROR": "UNgültige Postleitzahl."
+          },
+          "ORTSNAME": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Ort/Stadt",
+            "ERROR": "Ungültiger Ort."
+          },
+          "ORTSINFO": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Zusatzinformationen",
+            "ERROR": "Ungültige Eingabe."
+          },
           "BEGINN": {
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
