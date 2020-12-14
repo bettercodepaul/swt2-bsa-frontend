@@ -189,6 +189,9 @@
         },
         "ANZEIGENEinzel": {
           "LABEL": "Einzelstatistik anzeigen"
+        },
+        "ANZEIGENEinzelDrucken": {
+          "LABEL": "Einzelstatistik drucken"
         }
       },
       "FORM": {
@@ -217,7 +220,10 @@
           "SATZ4": "S4",
           "SATZ5": "S5",
           "SATZPUNKTE": "Satzpunkte",
-          "MATCHPUNKTE": "Matchpunkte"
+          "MATCHPUNKTE": "Matchpunkte",
+          "SCHUETZE": "Schütze",
+          "PASSE": "Passe",
+          "PASSPUNKTESCHUETZE": "Punkte je Passe"
         }
       }
     }
@@ -394,6 +400,10 @@
         "VERANSTALTUNG": {
           "LABEL": "Veranstaltungen",
           "DESCRIPTION": "Verwaltung der Veranstaltungen"
+        },
+        "EINSTELLUNGEN": {
+          "LABEL": "Einstellungen",
+          "DESCRIPTION": "Einstellungen bearbeiten"
         }
       }
     },
@@ -414,6 +424,51 @@
         }
       }
     },
+    "EINSTELLUNG": {
+      "TITLE": "Einstellungen - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "KEY": "KEY",
+          "VALUE": "VALUE"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Einstellung löschen",
+          "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht."
+        }
+      }
+    },
+
+    "EINSTELLUNG_DETAIL": {
+      "TITLE": "Einstellungen Detail - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "KEY": "KEY",
+          "VALUE": "VALUE"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE":{
+          "TITLE": "Einstellung speichern",
+          "DESCRIPTION": "Einstellung wurde gespeichert "
+
+        },
+        "EDIT":{
+          "TITLE": "Einstellung bearbeiten",
+          "DESCRIPTION": "Neue Value wurde gesetzt "
+
+        },
+
+        "DELETE": {
+          "TITLE": "Einstellung löschen",
+          "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht"
+        }
+      }
+    },
+
+
+
     "SPORTJAHR_OVERVIEW": {
       "TITLE": "Veranstaltungen",
       "TABLE": {
@@ -1249,6 +1304,51 @@
         }
       }
     },
+
+    "EINSTELLUNGEN": {
+      "TITLE": "Einstellungen - Übersicht",
+      "FORM": {
+        "EINTRAG": {
+          "LABEL": "Eintrag erstellen",
+          "PLACEHOLDER": "Eintrag neu erstellen",
+          "ERROR": "Bitte geben Sie einen gültigen Namen ein"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Der Eintrag wurde erfolgreich gespeichert."
+        },
+        "DUPLICATE": {
+          "TITLE": "Fehler",
+          "DESCRIPTION": "Eintrag ist schon vorhanden. Bitte fügen Sie andere Werte hinzu."
+        }
+      }
+    },
+
+    "EINSTELLUNGEN_DETAIL": {
+      "TITLE": "Einstellungen - Detail",
+      "FORM": {
+        "VALUE": {
+          "LABEL": "Value",
+          "PLACEHOLDER": "Bitte ein Value eingeben",
+          "ERROR": "Bitte eine gültigen Text eingeben."
+        },
+        "KEY": {
+          "LABEL": "Key",
+          "PLACEHOLDER": "Bitte einen Key eingeben",
+          "ERROR": "Bitte einen gültigen Text eingeben."
+        },
+        "NEWVALUE": {
+          "LABEL": "Neuer Value",
+          "PLACEHOLDER": "Bitte einen neuen Value eingeben",
+          "ERROR": "Bitte einen gültigen Value eingeben."
+        },
+        "SAVE": "Speichern"
+      }
+    },
+
+
     "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
