@@ -186,10 +186,22 @@ a:hover, a:focus {
   table, figure {
     page-break-inside: avoid;
   }
+  *{
+    overflow: visible!important;
+  }
+  .print1{
+    visibility: visible;
+    page-break-after: always;
+  }
+
+  #selectVereink{
+    display: none;
+  }
+  #selectVerin{
+    display: none;
+  }
 
 }
-
-
 
 
 .environment-corner-ribbon {
