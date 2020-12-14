@@ -215,7 +215,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     if (this.kampfrichterTag1.length > 0) {
       console.log(this.kampfrichterTag1.length);
       // if (!wettkampftagAlreadyExists) {
-        this.saveKampfrichterArray(this.kampfrichterTag1);
+      this.saveKampfrichterArray(this.kampfrichterTag1);
       // } else {
       //   this.updateKampfrichterArray(this.kampfrichterTag1);
       // }
@@ -675,6 +675,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     response: BogenligaResponse<KampfrichterDO[]>
   ): void {
     let allKampfrichter: Array<KampfrichterDO> = [];
+    console.log('HIIIII 1');
 
     // TODO: Delete the following lines
     // for (let i = 0; i < 3; i++) {
@@ -692,10 +693,14 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     // console.log('==> handleKampfrichterResponseArraySuccess: KampfrichterTag1-ID: ' + this.kampfrichterTag1[0]);
     // console.log(' ==> response.payload: ' + response.result);
 
+    this.kampfrichterTag1 = [];
+
     this.kampfrichterTag1.push(allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_1.id)[0]);
     // TODO: Make sure, that allUsersTag1 are already loaded
-    for (const iter of Object.keys(this.kampfrichterTag1)) {
-      this.initiallySelectedKampfrichterTag1.push(this.allBenutzerWithKampfrichterLizenz.filter((user) => user.id === this.kampfrichterTag1[iter].id)[0]);
+    if (this.kampfrichterTag1[0] != undefined) {
+      for (const iter of Object.keys(this.kampfrichterTag1)) {
+        this.initiallySelectedKampfrichterTag1.push(this.allBenutzerWithKampfrichterLizenz.filter((user) => user.id === this.kampfrichterTag1[iter].id)[0]);
+      }
     }
 
     this.initiallySelectedKampfrichterTag1.forEach(val => this.selectedKampfrichterTag1.push(Object.assign({}, val)));
