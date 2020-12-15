@@ -867,6 +867,8 @@
         "KAMPFRICHTER": {
           "LABEL": "Referee license"
         },
+        "NO_USER": "Member has no User-Account. Please create one first. If you already created a User-Account then click on update.",
+        "REGISTRATION": "Userregistration",
         "SAVE": "Save",
         "UPDATE": "Refresh",
         "DELETE": "Delete"
