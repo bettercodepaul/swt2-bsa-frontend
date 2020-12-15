@@ -443,11 +443,15 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
+  // TODO: Fix the delete process so that it also reads the wettkampfId of the kampfrichter
   private deleteKampfrichterArray(kampfrichterArray: Array<KampfrichterDO>): void {
     for (const iter of Object.keys(kampfrichterArray)) {
+
       // TODO: Fix the provider so that it doesn't send the data to the liga API
+      // this.kampfrichterProvider.delete(kampfrichterArray[iter]);
       this.kampfrichterProvider.deleteById(kampfrichterArray[iter].id);
-          // .create(kampfrichterArray[iter])
+
+      // .create(kampfrichterArray[iter])
           // .then((response: BogenligaResponse<KampfrichterDO>) => {
           //   if (!isNullOrUndefined(response)
           //     && !isNullOrUndefined(response.payload)
@@ -769,7 +773,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
   }
 
-  // TODO: Fix this method
+  // TODO: Fix this method so that it also works when the wettkampfID is null (the createWettkampf-method instead of updateWettkampf gets called
   private handleKampfrichterResponseArraySuccess(
     response: BogenligaResponse<KampfrichterDO[]>
   ): void {
@@ -785,7 +789,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     // allKampfrichter[0].wettkampfID = 30;
     // allKampfrichter[0].leitend = false;
 
-    // TODO: Uncomment the following line
     allKampfrichter = response.payload;
 
     // console.log('==> handleKampfrichterResponseArraySuccess: allKampfrichter-ID: ' + this.allKampfrichter[0].id);
