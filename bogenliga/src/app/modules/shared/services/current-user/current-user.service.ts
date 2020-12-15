@@ -63,7 +63,14 @@ export class CurrentUserService {
           this.currentUserPermissions.push(userPermit);
         });
       }
-      this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue)), isDefault));
+      const json = UserSignInDTO.copyFromJson(JSON.parse(currentUserValue));
+      // At this point we cannot be sure if the user is default or not, so we check the raw json directly
+      if (json.email === DEFAULT_USERNAME) {
+        isDefault = true;
+      } else {
+        isDefault = false;
+      }
+      this.store.dispatch(new Login(json, isDefault));
     }
     console.log('CurrentUserValue: ' + currentUserValue);
     console.log('CurrentUserPermission: ' + this.currentUserPermissions);
