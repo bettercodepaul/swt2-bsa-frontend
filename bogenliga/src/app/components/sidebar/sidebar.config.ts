@@ -44,6 +44,8 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'DSB Mitglieder',
         route: '/verwaltung/dsbmitglieder',
+        //TODO: Should it be UserPermission.CAN_READ_DBSMITGLIEDER ??
+        // see https://www.exxcellent.de/confluence/display/BSAPP/Rollentabelle --> Sportleiter
         permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN]
       },
       {
@@ -82,7 +84,9 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label: 'SIDEBAR.WETTKAMPF',
     icon: faSitemap,
     route: '/wettkaempfe',
-    permissons: [UserPermission.CAN_READ_SPORTJAHR, UserPermission.CAN_MODIFY_SPORTJAHR],
+    //TODO: Should be User.Permission.CAN_READ_DEFAULT
+    // see https://www.exxcellent.de/confluence/display/BSAPP/Rollentabelle --> Anonymous
+    permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: []
   },
   {
