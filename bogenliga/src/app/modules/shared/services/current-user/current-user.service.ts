@@ -55,8 +55,7 @@ export class CurrentUserService {
     const currentUserValue = this.localDataProviderService.get(CURRENT_USER_KEY);
 
     // Track the default user
-    let isDefault : boolean;
-    
+    let isDefault: boolean;
     if (currentUserValue != null) {
       // Map the permissions from the redux to its values
       const currentUserJSONMap = JSON.parse(currentUserValue);
