@@ -7,13 +7,12 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
  */
 export const onMapService = ($event: WettkampfDO): void => {
 
-  const ort = $event.wettkampfOrt;
   const strasse = $event.wettkampfStrasse;
   const plz = $event.wettkampfPlz;
   const ortsname = $event.wettkampfOrtsname;
 
 
-  let location = [ort, strasse, plz, ortsname]
+  let location = [strasse, plz, ortsname]
 
 
   //location = ort.split(', ', 5);
