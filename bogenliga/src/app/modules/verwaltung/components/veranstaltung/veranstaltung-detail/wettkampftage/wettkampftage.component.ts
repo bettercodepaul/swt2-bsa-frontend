@@ -190,17 +190,68 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     // Justins code
     // TODO: Figure out which Kampfrichter to delete ot not to update
-    // TODO: Deal with the following error that sometimes occurs: "this.kampfrichterTag1[i] is undefined"
+    // TODO: Deal with the following error that sometimes occurs: "this.kampfrichterTag1[i] is undefined" (SOLVED)
     // The error probably appears when TeamSportleiter is selected, because of the "liga" error
+
+
+    let kampfrichterBenutzerToSaveTag1: Array<BenutzerRolleDO> = [];
+    let kampfrichterBenutzerToDeleteTag1: Array<BenutzerRolleDO> = [];
+
+    // this.selectedKampfrichterTag1.filter(user => this.initiallySelectedKampfrichterTag1.indexOf(user) < 0).forEach(user => kampfrichterBenutzerToSaveTag1.push(Object.assign({}, user)));
+    // this.initiallySelectedKampfrichterTag1.filter(user => this.selectedKampfrichterTag1.indexOf(user) < 0).forEach(user => kampfrichterBenutzerToDeleteTag1.push(Object.assign({}, user)));
+
+
+    function comparer(otherArray){
+      return function(current){
+        return otherArray.filter(function(other){
+          return JSON.stringify(other) === JSON.stringify(current) //&& other.display == current.display
+        }).length == 0;
+      }
+    }
+
+    kampfrichterBenutzerToSaveTag1 = this.selectedKampfrichterTag1.filter(comparer(this.initiallySelectedKampfrichterTag1));
+    kampfrichterBenutzerToDeleteTag1 = this.initiallySelectedKampfrichterTag1.filter(comparer(this.selectedKampfrichterTag1));
+
+    // kampfrichterBenutzerToSaveTag1 = this.selectedKampfrichterTag1.filter(user => !this.initiallySelectedKampfrichterTag1.includes(user));
+    // kampfrichterBenutzerToDeleteTag1 = this.initiallySelectedKampfrichterTag1.filter(user => !this.selectedKampfrichterTag1.includes(user));
+
+    // kampfrichterBenutzerToSaveTag1 = this.selectedKampfrichterTag1.filter(user => this.initiallySelectedKampfrichterTag1.indexOf(user) < 0);
+    // kampfrichterBenutzerToDeleteTag1 = this.initiallySelectedKampfrichterTag1.filter(user => this.selectedKampfrichterTag1.indexOf(user) < 0);
+    console.log('kampfrichterBenutzerToSaveTag1:');
+    console.log(kampfrichterBenutzerToSaveTag1);
+    console.log('kampfrichterBenutzerToDeleteTag1:');
+    console.log(kampfrichterBenutzerToDeleteTag1);
+
+
+    // this.initiallySelectedKampfrichterTag1.forEach(val => this.selectedKampfrichterTag1.push(Object.assign({},
+    // val))); this.notSelectedKampfrichterWettkampftag1 = this.allBenutzerWithKampfrichterLizenz.filter(user =>
+    // this.initiallySelectedKampfrichterTag1.indexOf(user) < 0);
+
+
     this.kampfrichterTag1 = [];
-    for (const i of Object.keys(this.selectedKampfrichterTag1)) {
-      this.kampfrichterTag1.push(new KampfrichterDO());
+    let kampfrichterToSaveTag1: Array<KampfrichterDO> = [];
+
+    for (const i of Object.keys(kampfrichterBenutzerToSaveTag1)) {
+      kampfrichterToSaveTag1.push(new KampfrichterDO());
       // this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id ===
       // this.selectedKampfrichterTag1[i].id)[0]);
       console.log(i);
-      this.kampfrichterTag1[i].id = this.selectedKampfrichterTag1[i].id;
-      this.kampfrichterTag1[i].wettkampfID = this.currentWettkampftag_1.id;
-      this.kampfrichterTag1[i].leitend = false;
+      kampfrichterToSaveTag1[i].id = kampfrichterBenutzerToSaveTag1[i].id;
+      kampfrichterToSaveTag1[i].wettkampfID = this.currentWettkampftag_1.id;
+      kampfrichterToSaveTag1[i].leitend = false;
+    }
+
+
+    let kampfrichterToDeleteTag1: Array<KampfrichterDO> = [];
+
+    for (const i of Object.keys(kampfrichterBenutzerToDeleteTag1)) {
+      kampfrichterToDeleteTag1.push(new KampfrichterDO());
+      // this.kampfrichterTag1.push(this.allKampfrichter.filter((kampfrichter) => kampfrichter.id ===
+      // this.selectedKampfrichterTag1[i].id)[0]);
+      console.log(i);
+      kampfrichterToDeleteTag1[i].id = kampfrichterBenutzerToDeleteTag1[i].id;
+      kampfrichterToDeleteTag1[i].wettkampfID = this.currentWettkampftag_1.id;
+      kampfrichterToDeleteTag1[i].leitend = false;
     }
 
     console.log('initiallySelectedKampfrichterTag1:');
@@ -212,10 +263,19 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     console.log('kampfrichterTag1:');
     console.log(this.kampfrichterTag1);
 
-    if (this.kampfrichterTag1.length > 0) {
-      console.log(this.kampfrichterTag1.length);
+    if (kampfrichterToSaveTag1.length > 0) {
+      console.log(kampfrichterToSaveTag1.length);
       // if (!wettkampftagAlreadyExists) {
-      this.saveKampfrichterArray(this.kampfrichterTag1);
+      this.saveKampfrichterArray(kampfrichterToSaveTag1);
+      // } else {
+      //   this.updateKampfrichterArray(this.kampfrichterTag1);
+      // }
+    }
+
+    if (kampfrichterToDeleteTag1.length > 0) {
+      console.log(kampfrichterToDeleteTag1.length);
+      // if (!wettkampftagAlreadyExists) {
+      this.deleteKampfrichterArray(kampfrichterToDeleteTag1);
       // } else {
       //   this.updateKampfrichterArray(this.kampfrichterTag1);
       // }
@@ -380,6 +440,45 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
             console.log('Failed');
             this.saveLoading = false;
           });
+    }
+  }
+
+  private deleteKampfrichterArray(kampfrichterArray: Array<KampfrichterDO>): void {
+    for (const iter of Object.keys(kampfrichterArray)) {
+      // TODO: Fix the provider so that it doesn't send the data to the liga API
+      this.kampfrichterProvider.deleteById(kampfrichterArray[iter].id);
+          // .create(kampfrichterArray[iter])
+          // .then((response: BogenligaResponse<KampfrichterDO>) => {
+          //   if (!isNullOrUndefined(response)
+          //     && !isNullOrUndefined(response.payload)
+          //     && !isNullOrUndefined(response.payload.id)) {
+          //     console.log('Saved with id: ' + response.payload.id);
+          //
+          //     // TODO: Put this code in it's own method
+          //     const notification: Notification = {
+          //       id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+          //       title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
+          //       description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
+          //       severity:    NotificationSeverity.INFO,
+          //       origin:      NotificationOrigin.USER,
+          //       type:        NotificationType.OK,
+          //       userAction:  NotificationUserAction.PENDING
+          //     };
+          //
+          //     this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+          //         .subscribe((myNotification) => {
+          //           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          //             this.saveLoading = false;
+          //             this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
+          //           }
+          //         });
+          //
+          //     this.notificationService.showNotification(notification);
+          //   }
+          // }, (response: BogenligaResponse<KampfrichterDO>) => {
+          //   console.log('Failed');
+          //   this.saveLoading = false;
+          // });
     }
   }
 
@@ -695,8 +794,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     this.kampfrichterTag1 = [];
 
-    this.kampfrichterTag1.push(allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_1.id)[0]);
-    // TODO: Make sure, that allUsersTag1 are already loaded
+    allKampfrichter.forEach(kampfrichter => this.kampfrichterTag1.push(Object.assign({}, kampfrichter)));
+
+    // this.kampfrichterTag1.push(allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID ===
+    // this.currentWettkampftag_1.id)); // [0]? TODO: Make sure, that allUsersTag1 are already loaded
     if (this.kampfrichterTag1[0] != undefined) {
       for (const iter of Object.keys(this.kampfrichterTag1)) {
         this.initiallySelectedKampfrichterTag1.push(this.allBenutzerWithKampfrichterLizenz.filter((user) => user.id === this.kampfrichterTag1[iter].id)[0]);
