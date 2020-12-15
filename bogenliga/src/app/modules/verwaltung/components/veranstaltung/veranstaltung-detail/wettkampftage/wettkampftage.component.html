@@ -84,30 +84,8 @@
           <!-- End Row  -->
         </div>
 
-                             <!-- Wettkampftag1 Ort-->
-        <div class="form-group row">
-          <label
-            class="col-sm-2 col-form-label test_label">
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORT.LABEL' | translate }}</span><span> *</span>
-          </label>
-          <div class="col-sm-8 test">
-            <textarea #wettkampftag1_wettkampfOrt="ngModel"
-                      [(ngModel)]="currentWettkampftag_1.wettkampfOrt"
-                      [class.is-invalid]="wettkampftag1_wettkampfOrt.invalid && ! wettkampftag1_wettkampfOrt.untouched"
-                      class="form-control"
-                      id="wettkampftag1_wettkampfOrt"
-                      name="wettkampftag1_wettkampfOrt"
-                      placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORT.PLACEHOLDER' | translate }}"
-                      rows="3"
-            ></textarea>
+                             <!-- Wettkampftag1 Adresse-->
 
-
-            <div class="invalid-feedback">
-              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORT.ERROR' | translate }}
-            </div>
-
-          </div>
-        </div>
 
         <div class="form-group row">
           <label
@@ -245,7 +223,7 @@
         <div class="form-group row">
           <div class="col-sm-9 button-box">
             <bla-button [id]="'wettkampftagSaveButton1'"
-                        [disabled]="(wettkampftag1_wettkampfOrt.invalid || wettkampftag1_wettkampfBeginn.invalid ||  wettkampftag1_datum.invalid)"
+                        [disabled]="(wettkampftag1_wettkampfStrasse.invalid || wettkampftag1_wettkampfPlz.invalid || wettkampftag1_wettkampfOrtsname.invalid ||wettkampftag1_wettkampfBeginn.invalid ||  wettkampftag1_datum.invalid)"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampfTag1($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
@@ -304,30 +282,8 @@
           <!-- End Row  -->
         </div>
 
-                             <!-- Wettkampftag2 Ort-->
-        <div class="form-group row">
-          <label
-            class="col-sm-2 col-form-label test_label">
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.ORT.LABEL' | translate }}</span><span> *</span>
-          </label>
-          <div class="col-sm-8 test">
-            <textarea #wettkampftag2_wettkampfOrt="ngModel"
-                      [(ngModel)]="currentWettkampftag_2.wettkampfOrt"
-                      [class.is-invalid]="wettkampftag2_wettkampfOrt.invalid && ! wettkampftag2_wettkampfOrt.untouched"
-                      class="form-control"
-                      id="wettkampftag2_wettkampfOrt"
-                      name="wettkampftag2_wettkampfOrt"
-                      placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.ORT.PLACEHOLDER' | translate }}"
-                      rows="3"
-            ></textarea>
+                             <!-- Wettkampftag2 Adresse-->
 
-
-            <div class="invalid-feedback">
-              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG2.ORT.ERROR' | translate }}
-            </div>
-
-          </div>
-        </div>
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
@@ -464,7 +420,7 @@
         <div class="form-group row">
           <div class="col-sm-9 button-box">
             <bla-button [id]="'wettkampftagSaveButton2'"
-                        [disabled]="(wettkampftag2_wettkampfOrt.invalid || wettkampftag2_wettkampfBeginn.invalid ||  wettkampftag2_datum.invalid)"
+                        [disabled]="(wettkampftag2_wettkampfStrasse.invalid || wettkampftag2_wettkampfPlz.invalid || wettkampftag2_wettkampfOrtsname.invalid  || wettkampftag2_wettkampfBeginn.invalid ||  wettkampftag2_datum.invalid)"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampfTag2($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
@@ -523,30 +479,8 @@
           <!-- End Row  -->
         </div>
 
-                             <!-- Wettkampftag3 Ort-->
-        <div class="form-group row">
-          <label
-            class="col-sm-2 col-form-label test_label">
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.ORT.LABEL' | translate }}</span><span> *</span>
-          </label>
-          <div class="col-sm-8 test">
-            <textarea #wettkampftag3_wettkampfOrt="ngModel"
-                      [(ngModel)]="currentWettkampftag_3.wettkampfOrt"
-                      [class.is-invalid]="wettkampftag3_wettkampfOrt.invalid && ! wettkampftag3_wettkampfOrt.untouched"
-                      class="form-control"
-                      id="wettkampftag3_wettkampfOrt"
-                      name="wettkampftag3_wettkampfOrt"
-                      placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.ORT.PLACEHOLDER' | translate }}"
-                      rows="3"
-            ></textarea>
+                             <!-- Wettkampftag3 Adresse-->
 
-
-            <div class="invalid-feedback">
-              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG3.ORT.ERROR' | translate }}
-            </div>
-
-          </div>
-        </div>
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
@@ -682,7 +616,7 @@
         <div class="form-group row">
           <div class="col-sm-9 button-box">
             <bla-button [id]="'wettkampftagSaveButton3'"
-                        [disabled]="(wettkampftag3_wettkampfOrt.invalid || wettkampftag3_wettkampfBeginn.invalid || wettkampftag3_datum.invalid)"
+                        [disabled]="(wettkampftag3_wettkampfStrasse.invalid || wettkampftag3_wettkampfPlz.invalid || wettkampftag3_wettkampfOrtsname.invalid || wettkampftag3_wettkampfBeginn.invalid || wettkampftag3_datum.invalid)"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampfTag3($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
@@ -741,29 +675,8 @@
           <!-- End Row  -->
         </div>
 
-                             <!-- Wettkampftag3 Ort-->
-        <div class="form-group row">
-          <label
-            class="col-sm-2 col-form-label test_label">
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.ORT.LABEL' | translate }}</span><span> *</span>
-          </label>
-          <div class="col-sm-8 test">
-            <textarea #wettkampftag4_wettkampfOrt="ngModel"
-                      [(ngModel)]="currentWettkampftag_4.wettkampfOrt"
-                      [class.is-invalid]="wettkampftag4_wettkampfOrt.invalid && ! wettkampftag4_wettkampfOrt.untouched"
-                      class="form-control"
-                      id="wettkampftag4_wettkampfOrt"
-                      name="wettkampftag4_wettkampfOrt"
-                      placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.ORT.PLACEHOLDER' | translate }}"
-                      rows="3"
-            ></textarea>
+                             <!-- Wettkampftag4 Adresse-->
 
-            <div class="invalid-feedback">
-              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG4.ORT.ERROR' | translate }}
-            </div>
-
-          </div>
-        </div>
         <div class="form-group row">
           <label
             class="col-sm-2 col-form-label test_label">
@@ -899,7 +812,7 @@
         <div class="form-group row">
           <div class="col-sm-9 button-box">
             <bla-button [id]="'wettkampftagSaveButton4'"
-                        [disabled]="(wettkampftag4_wettkampfOrt.invalid || wettkampftag4_wettkampfBeginn.invalid || wettkampftag4_datum.invalid)"
+                        [disabled]="(wettkampftag4_wettkampfStrasse.invalid || wettkampftag4_wettkampfPlz.invalid || wettkampftag4_wettkampfOrtsname.invalid  || wettkampftag4_wettkampfBeginn.invalid || wettkampftag4_datum.invalid)"
                         [loading]="saveLoading"
                         (onClick)="onSaveWettkampfTag4($event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
