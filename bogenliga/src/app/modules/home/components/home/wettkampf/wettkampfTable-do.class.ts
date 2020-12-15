@@ -7,7 +7,6 @@ export class WettkampfTableDo implements DataObject {
     this.wettkampfTag = wettkampfTag;
     this.wettkampfUhrzeit = wettkampfUhrzeit;
     this.wettkampfLiga = wettkampfLiga;
-    this.wettkampfOrt = wettkampfOrt;
     this.wettkampfStrasse = wettkampfStrasse;
     this.wettkampfPlz = wettkampfPlz;
     this.wettkampfOrtsname = wettkampfOrtsname;
@@ -18,7 +17,6 @@ export class WettkampfTableDo implements DataObject {
   wettkampfTag: string;
   wettkampfUhrzeit: string;
   wettkampfLiga: string;
-  wettkampfOrt: string;
   wettkampfStrasse: string;
   wettkampfPlz: string;
   wettkampfOrtsname: string;
