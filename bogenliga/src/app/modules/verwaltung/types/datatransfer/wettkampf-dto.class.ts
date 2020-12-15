@@ -6,7 +6,6 @@ export class WettkampfDTO implements DataTransferObject {
   id: number;
   wettkampfVeranstaltungsId: number;
   wettkampfDatum: string;
-  wettkampfOrt: string;
   wettkampfStrasse: string;
   wettkampfPlz: string;
   wettkampfOrtsname: string;
@@ -22,7 +21,6 @@ export class WettkampfDTO implements DataTransferObject {
   constructor(id?: number,
     wettkampfVeranstaltungsId?: number,
     wettkampfDatum?: string,
-    wettkampfOrt?: string,
     wettkampfStrasse?: string,
     wettkampfPlz?: string,
     wettkampfOrtsname?: string,
@@ -38,7 +36,6 @@ export class WettkampfDTO implements DataTransferObject {
     this.id = !!id ? id : null;
     this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
     this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';
-    this.wettkampfOrt = !!wettkampfOrt ? wettkampfOrt : '';
     this.wettkampfStrasse = !!wettkampfStrasse ? wettkampfStrasse : '';
     this.wettkampfPlz = !!wettkampfPlz ? wettkampfPlz : '';
     this.wettkampfOrtsname = !!wettkampfOrtsname ? wettkampfOrtsname : '';
@@ -57,7 +54,6 @@ export class WettkampfDTO implements DataTransferObject {
     id?: number;
     wettkampfVeranstaltungsId?: number;
     datum?: string;
-    wettkampfOrt?: string;
     wettkampfStrasse?: string;
     wettkampfPlz?: string;
     wettkampfOrtsname?: string;
@@ -84,7 +80,6 @@ export class WettkampfDTO implements DataTransferObject {
       copy.wettkampfVeranstaltungsId = null;
     }
     copy.wettkampfDatum = optional.datum || '';
-    copy.wettkampfOrt = optional.wettkampfOrt || null;
     copy.wettkampfStrasse = optional.wettkampfStrasse || null;
     copy.wettkampfPlz = optional.wettkampfPlz || null;
     copy.wettkampfOrtsname = optional.wettkampfOrtsname || null;

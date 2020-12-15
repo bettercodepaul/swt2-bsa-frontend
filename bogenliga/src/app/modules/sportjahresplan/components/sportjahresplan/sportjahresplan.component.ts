@@ -339,7 +339,6 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       tableContentRow.wettkampfPlz = wettkampf.wettkampfPlz;
       tableContentRow.wettkampfOrtsname = wettkampf.wettkampfOrtsname;
       tableContentRow.wettkampfOrtsinfo = wettkampf.wettkampfOrtsinfo;
-      tableContentRow.wettkampfOrt = wettkampf.wettkampfOrt;
       tableContentRow.wettkampfBeginn = wettkampf.wettkampfBeginn;
       tableContentRow.wettkampfTag = wettkampf.wettkampfTag;
       tableContentRow.wettkampfDatum = wettkampf.wettkampfDatum;
