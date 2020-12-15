@@ -5,7 +5,6 @@ export class WettkampfDO implements VersionedDataObject {
   id: number;
   wettkampfVeranstaltungsId: number;
   wettkampfDatum: string;
-  wettkampfOrt: string;
   wettkampfStrasse: string;
   wettkampfPlz: string;
   wettkampfOrtsname: string;
@@ -42,7 +41,6 @@ export class WettkampfDO implements VersionedDataObject {
     this.id = !!id ? id : null;
     this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
     this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';
-    this.wettkampfOrt = !!wettkampfOrt ? wettkampfOrt : '';
     this.wettkampfStrasse = !!wettkampfStrasse ? wettkampfStrasse : '';
     this.wettkampfPlz = !!wettkampfPlz ? wettkampfPlz : '';
     this.wettkampfOrtsname = !!wettkampfOrtsname ? wettkampfOrtsname : '';
