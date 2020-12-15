@@ -7,6 +7,7 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
  */
 export const onMapService = ($event: WettkampfDO): void => {
 
+
   const strasse = $event.wettkampfStrasse;
   const plz = $event.wettkampfPlz;
   const ortsname = $event.wettkampfOrtsname;
