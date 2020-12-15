@@ -171,8 +171,8 @@
                [(ngModel)]="currentMitglied.kampfrichter"
                [disabled]="currentMitglied.userId===null || currentMitglied.userId===undefined"
                [class.is-invalid]="dsbMitgliedKampfrichter.invalid && !dsbMitgliedKampfrichter.untouched">
-        <span *ngIf="currentMitglied.userId==null">Mitglied hat noch keinen Benutzer-Account. Bitte legen Sie vorher einen an.
-          <a href="#/verwaltung/benutzer/add">Benutzerregistrierung</a>
+        <span *ngIf="currentMitglied.userId==null">{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NO_USER' | translate }}
+          <a href="#/verwaltung/benutzer/add">{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.REGISTRATION' | translate }}</a>
         </span>
        </div>
      </div>
