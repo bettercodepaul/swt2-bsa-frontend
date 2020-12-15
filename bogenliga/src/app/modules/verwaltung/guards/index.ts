@@ -17,3 +17,5 @@ export * from './veranstaltung-overview.guard';
 export * from './sportjahr-overview.guard';
 export * from './wettkampftage.guard';
 export * from './sportjahr-overview.guard';
+export * from './einstellungen-detail.guard';
+export * from './einstellungen-overview.guard';

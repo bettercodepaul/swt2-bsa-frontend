@@ -18,7 +18,9 @@ import {
   VeranstaltungDetailComponent,
   VeranstaltungOverviewComponent,
   WettkampftageComponent,
-  SportjahrOverviewComponent
+  SportjahrOverviewComponent,
+  EinstellungenDetailComponent,
+  EinstellungenOverviewComponent
 } from './components';
 import {
   BenutzerDetailGuard,
@@ -39,6 +41,8 @@ import {
   VeranstaltungOverviewGuard,
   WettkampftageGuard,
   SportjahrOverviewGuard,
+  EinstellungenDetailGuard,
+  EinstellungenOverviewGuard
 } from './guards';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
@@ -108,6 +112,13 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch:   'full',
     canActivate: [SportjahrOverviewGuard]
   },
+  {
+    path: 'einstellungen',
+    component: EinstellungenOverviewComponent,
+    pathMatch: 'full',
+    canActivate: [EinstellungenOverviewGuard]
+  },
+  {path: 'einstellungen/:id', component: EinstellungenDetailComponent, canActivate: [EinstellungenDetailGuard]},
   {path: 'sportjahr/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
   {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
   {path: 'veranstaltung/:id/:id', component: WettkampftageComponent, canActivate: [WettkampftageGuard]}

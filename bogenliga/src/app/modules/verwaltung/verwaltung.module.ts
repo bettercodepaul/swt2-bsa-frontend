@@ -22,6 +22,8 @@ import {
   VeranstaltungDetailComponent,
   SportjahrOverviewComponent,
   WettkampftageComponent,
+  EinstellungenOverviewComponent,
+  EinstellungenDetailComponent
 
 } from './components';
 import {
@@ -42,7 +44,10 @@ import {
   VeranstaltungDetailGuard,
   VeranstaltungOverviewGuard,
   WettkampftageGuard,
-  SportjahrOverviewGuard
+  SportjahrOverviewGuard,
+  EinstellungenDetailGuard,
+  EinstellungenOverviewGuard
+
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
@@ -78,7 +83,9 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
     WettkampftageComponent,
-    SportjahrOverviewComponent
+    SportjahrOverviewComponent,
+    EinstellungenDetailComponent,
+    EinstellungenOverviewComponent
   ]
 })
 export class VerwaltungModule {
@@ -106,7 +113,9 @@ export class VerwaltungModule {
         VeranstaltungOverviewGuard,
         VeranstaltungDetailGuard,
         WettkampftageGuard,
-        SportjahrOverviewGuard
+        SportjahrOverviewGuard,
+        EinstellungenDetailGuard,
+        EinstellungenOverviewGuard
       ]
     };
   }
