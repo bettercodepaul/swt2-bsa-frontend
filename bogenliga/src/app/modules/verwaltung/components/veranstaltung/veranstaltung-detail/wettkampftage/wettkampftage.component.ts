@@ -794,7 +794,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     this.kampfrichterTag1 = [];
 
-    allKampfrichter.forEach(kampfrichter => this.kampfrichterTag1.push(Object.assign({}, kampfrichter)));
+    allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag_1.id).forEach(kampfrichter => this.kampfrichterTag1.push(Object.assign({}, kampfrichter)));
 
     // this.kampfrichterTag1.push(allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID ===
     // this.currentWettkampftag_1.id)); // [0]? TODO: Make sure, that allUsersTag1 are already loaded
