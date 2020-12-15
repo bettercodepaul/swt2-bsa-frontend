@@ -14,9 +14,6 @@ export const onMapService = ($event: WettkampfDO): void => {
 
   let location = [strasse, plz, ortsname]
 
-
-  //location = ort.split(', ', 5);
-
   let locationUrl = 'https://www.google.de/maps/place/';
   for (let i = 0; i < location.length; i++) {
     if (i !== 0) {
