@@ -65,7 +65,6 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
   }
 
   ngOnInit() {
-    console.log("TEST: " + this.currentMitglied.userId);
     this.loading = true;
     this.loadVereine();
     this.notificationService.discardNotification();
