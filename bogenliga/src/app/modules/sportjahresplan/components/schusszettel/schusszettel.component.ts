@@ -17,9 +17,11 @@ import {
 import {environment} from '@environment';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 
 
 
@@ -45,6 +47,9 @@ export class SchusszettelComponent implements OnInit {
   dirtyFlag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
+  mannschaften: DsbMannschaftDO[] = [];
+  vereine: VereinDO[] = [];
+  allPasse: PasseDoClass[] = [];
 
 
 
@@ -54,7 +59,8 @@ export class SchusszettelComponent implements OnInit {
               private route: ActivatedRoute,
               private notificationService: NotificationService,
               private vereinDataProvider: VereinDataProviderService,
-              private dsbMannschaftDataProvider:DsbMannschaftDataProviderService,
+              private dsbMannschaftDataProvider: DsbMannschaftDataProviderService,
+              private passeDataProvider: PasseDataProviderService,
     ) {
   }
 
@@ -115,6 +121,9 @@ export class SchusszettelComponent implements OnInit {
 
       }
     });
+    this.getAllMannschaften();
+    this.getAllVerien();
+    this.getAllPasse();
   }
 
   /**
@@ -151,34 +160,47 @@ export class SchusszettelComponent implements OnInit {
   }
 
 
+  private getAllMannschaften(): void {
+    this.dsbMannschaftDataProvider.findAll()
+      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
+        this.mannschaften = response.payload;
+      })
+  }
+
+  private getAllVerien(): void {
+    this.vereinDataProvider.findAll()
+        .then((response: BogenligaResponse<VereinDO[]>) => {
+          this.vereine = response.payload;
+        })
+  }
+
+  private getAllPasse(): void {
+    this.passeDataProvider.findAll()
+      .then((response: BogenligaResponse<PasseDoClass[]>) => {
+        this.allPasse =response.payload;
+      })
+  }
 
   private checkSchuetze(): void {
     console.log("checkSchuetze")
-      let mannschaften: DsbMannschaftDO[] = [];
-      let mannschaft: DsbMannschaftDO;
-      let verein: VereinDO;
-      this.dsbMannschaftDataProvider.findById(this.match1.mannschaftId)
-          .then((response: BogenligaResponse<DsbMannschaftDO>) => {
-            mannschaft = response.payload;
-            this.vereinDataProvider.findById(mannschaft.vereinId)
-                .then((response: BogenligaResponse<VereinDO>) => {
-                  verein = response.payload;
-                  this.dsbMannschaftDataProvider.findAllByVereinsId(verein.id)
-                      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
-                        mannschaften = response.payload;
-                        console.log("mannschaft:");
-                        console.log(mannschaft);
-                        console.log("verein:");
-                        console.log(verein);
-                        console.log("mannschaften:");
-                        console.log(mannschaften);
-                      })
-                })
-          })
+    let matchOneVereinAllMannschaften: DsbMannschaftDO[];
+    let matchOneMannschaft: DsbMannschaftDO;
+    let matchOneVerein: VereinDO;
+    let matchOneFirstSchuetzeAllPasse: PasseDoClass[];
+    matchOneMannschaft = this.mannschaften.find(mannschaft => mannschaft.id == this.match1.mannschaftId);
+    matchOneVerein = this.vereine.find(verein => verein.id == matchOneMannschaft.vereinId);
+    matchOneVereinAllMannschaften = this.mannschaften.filter(mannschaft => mannschaft.vereinId == matchOneVerein.id);
+    matchOneFirstSchuetzeAllPasse = this.allPasse.filter(passe => passe.mannschaftId == matchOneMannschaft.id);
 
-
-
-    }
+    console.log("mannschaft:");
+    console.log(matchOneMannschaft);
+    console.log("verein:");
+    console.log(matchOneVerein);
+    console.log("mannschaften:");
+    console.log(matchOneVereinAllMannschaften);
+    console.log("Passe:");
+    console.log(matchOneFirstSchuetzeAllPasse);
+  }
 
 
   save() {
