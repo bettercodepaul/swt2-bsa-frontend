@@ -210,11 +210,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     function comparer(otherArray) {
 
-      return function(current) {
-        return otherArray.filter(function(other){
-          return JSON.stringify(other) === JSON.stringify(current); // && other.display == current.display
-        }).length === 0;
-      };
+      return (current) => otherArray.filter((other) => {
+        return JSON.stringify(other) === JSON.stringify(current); // && other.display == current.display
+      }).length === 0;
 
     }
 
@@ -328,12 +326,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     // this.initiallySelectedKampfrichterTag2.filter(user => this.selectedKampfrichterTag2.indexOf(user) < 0).forEach(user => kampfrichterBenutzerToDeleteTag2.push(Object.assign({}, user)));
 
 
-    function comparer(otherArray){
-      return function(current){
-        return otherArray.filter(function(other){
-          return JSON.stringify(other) === JSON.stringify(current) //&& other.display == current.display
-        }).length == 0;
-      }
+    function comparer(otherArray) {
+      return (current) => otherArray.filter((other) => {
+        return JSON.stringify(other) === JSON.stringify(current); // && other.display == current.display
+      }).length === 0
     }
 
     kampfrichterBenutzerToSaveTag2 = this.selectedKampfrichterTag2.filter(comparer(this.initiallySelectedKampfrichterTag2));
@@ -446,11 +442,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
 
     function comparer(otherArray){
-      return function(current){
-        return otherArray.filter(function(other){
-          return JSON.stringify(other) === JSON.stringify(current) //&& other.display == current.display
-        }).length == 0;
-      }
+      return (current) => otherArray.filter((other) => {
+        return JSON.stringify(other) === JSON.stringify(current) //&& other.display == current.display
+      }).length == 0
     }
 
     kampfrichterBenutzerToSaveTag3 = this.selectedKampfrichterTag3.filter(comparer(this.initiallySelectedKampfrichterTag3));
@@ -562,11 +556,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
 
     function comparer(otherArray){
-      return function(current){
-        return otherArray.filter(function(other){
-          return JSON.stringify(other) === JSON.stringify(current) //&& other.display == current.display
-        }).length == 0;
-      }
+      return (current) => otherArray.filter((other) => {
+        return JSON.stringify(other) === JSON.stringify(current) //&& other.display == current.display
+      }).length == 0
     }
 
     kampfrichterBenutzerToSaveTag4 = this.selectedKampfrichterTag4.filter(comparer(this.initiallySelectedKampfrichterTag4));
