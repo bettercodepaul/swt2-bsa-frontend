@@ -884,6 +884,8 @@
         "KAMPFRICHTER": {
           "LABEL": "Kampfrichterlizenz"
         },
+        "NO_USER": "Mitglied hat noch keinen Benutzer-Account. Bitte legen Sie vorher einen an. Falls es bereits einen Benutzer-Account gibt, dann klicken Sie auf aktualisieren.",
+        "REGISTRATION": "Benutzerregistrierung",
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Mitglied Löschen"
