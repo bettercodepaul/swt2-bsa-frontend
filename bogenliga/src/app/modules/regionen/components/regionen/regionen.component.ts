@@ -182,9 +182,9 @@ export class RegionenComponent implements OnInit {
     // initialize new variable to save recursion progress
     let node1 = node;
 
-    if (node.children != undefined) {
+    if (node.children !== undefined) {
       // check for each child if its the searched element
-      for (let child of node.children) {
+      for (const child of node.children) {
         if (child.name === this.currentRegionDO.regionName) {
           return child;
         } else { // search recursivly downwards the tree-elements
@@ -292,7 +292,7 @@ export class RegionenComponent implements OnInit {
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedRegionsId = this.selectedDTOs[0].id;
       this.currentRegionDO = this.selectedDTOs[0];
-      //updates sunburst after clicking table
+      // updates sunburst after clicking table
       this.updateSunburst(this.findCurrentRegionDOInSunburstTree());
       this.loadDetails();
     }
