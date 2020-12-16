@@ -8,7 +8,6 @@ export class HomeGuard implements CanActivate {
   }
 
   canActivate() {
-    return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_DEFAULT]);
+    return this.currentUserService.hasAnyPermisson([]);
   }
 }
