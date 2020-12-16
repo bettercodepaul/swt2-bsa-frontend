@@ -9,6 +9,6 @@ export class VereinOverviewGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_MODIFY_STAMMDATEN]);
+      [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT]);
   }
 }
