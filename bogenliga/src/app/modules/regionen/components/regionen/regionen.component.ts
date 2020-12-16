@@ -113,8 +113,10 @@ export class RegionenComponent implements OnInit {
       .size('size')
       .color('color')
       .onClick((node) => {
-        //outsourced update function so it is possible to use for other functions
+        // outsourced update function so it is possible to use for other functions
         this.updateSunburst(node);
+
+        this.selectInSelectionList(node);
       })
       (this.myDiv.nativeElement);
 
@@ -135,42 +137,62 @@ export class RegionenComponent implements OnInit {
     });
   }
 
-  //used for sync sunburst and table. If table is clicked we search trough the sunburst-tree for the clicked element.
-  findCurrentRegionDOInSunburstTree(){
-    //this.myChart.data() gives back root element of sunburst tree
-    let node = this.myChart.data();
-
-    if(node === undefined){
+  /**
+   * Selects the item in the selectionListRegions according to the name of the selected node in the sunburst
+   * @param node - The Node which should be selected in the SelectionLost
+   */
+  selectInSelectionList(node: Node): void {
+    if (node === null) {
+      console.log('NodeName = Null. Es scheint du bist am oberen ende angekommen!');
       return;
     }
-    //if root is the searched element we are done here
-    else if(node.name === this.currentRegionDO.regionName){
-      return node;
-    }
-    //if not we have to search trough the children of the root element
-    else{
-      if(node.children != undefined){
-        node = this.searchChildren(node);
-        return node;
-      }
-      else{
+    const list = document.getElementById('selectionListRegions') as HTMLSelectElement;
+    const nameToSearch = node.name;
+    const options = list.options;
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].text === nameToSearch) {
+        list.selectedIndex = i;
         return;
       }
     }
   }
 
-  //We need a Node-object so we can update the sunburst with it. So we use a Node-object as parameter nad return value.
+
+  // used for sync sunburst and table. If table is clicked we search trough the sunburst-tree for the clicked element.
+  findCurrentRegionDOInSunburstTree(){
+    // this.myChart.data() gives back root element of sunburst tree
+    let node = this.myChart.data();
+
+    if (node === undefined){
+      return;
+    }
+    // if root is the searched element we are done here
+    else if (node.name === this.currentRegionDO.regionName){
+      return node;
+    }
+    // if not we have to search trough the children of the root element
+    else {
+      if (node.children != undefined) {
+        node = this.searchChildren(node);
+        return node;
+      } else {
+        return;
+      }
+    }
+  }
+
+  // We need a Node-object so we can update the sunburst with it. So we use a Node-object as parameter nad return value.
   searchChildren(node: Node): Node{
-    //initialize new variable to save recursion progress
+    // initialize new variable to save recursion progress
     let node1 = node;
 
-    if(node.children != undefined){
-      //check for each child if its the searched element
-      for(let i = 0; i < node.children.length; i++){
-        if(node.children[i].name === this.currentRegionDO.regionName){
+    if (node.children != undefined) {
+      // check for each child if its the searched element
+      for (let i = 0; i < node.children.length; i++){
+        if (node.children[i].name === this.currentRegionDO.regionName){
           return node.children[i];
         }
-        //search recursivly downwards the tree-elements
+        // search recursivly downwards the tree-elements
         else {
           node1 = this.searchChildren(node.children[i]);
           if(node1.name === this.currentRegionDO.regionName){
@@ -179,7 +201,7 @@ export class RegionenComponent implements OnInit {
         }
       }
     }
-    return;
+    return node;
   }
 
   //What should happen if we click on sunburst-diagramm
