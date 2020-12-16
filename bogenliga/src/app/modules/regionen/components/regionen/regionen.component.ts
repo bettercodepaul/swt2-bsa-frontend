@@ -42,15 +42,15 @@ export class RegionenComponent implements OnInit {
 
   private ligen: LigaDTO[];
   private vereine: VereinDTO[];
-  private myChart = Sunburst(); //initializes sunburst-diagramm
+  private myChart = Sunburst(); // initializes sunburst-diagramm
 
 
   @ViewChild('chart', { static: true }) myDiv: ElementRef;
 
   constructor(private regionDataProviderService: RegionDataProviderService,
-    private vereinDataProviderService: VereinDataProviderService,
-    private ligaDataProviderService: LigaDataProviderService,
-    private router: Router) {
+              private vereinDataProviderService: VereinDataProviderService,
+              private ligaDataProviderService: LigaDataProviderService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -159,20 +159,16 @@ export class RegionenComponent implements OnInit {
 
 
   // used for sync sunburst and table. If table is clicked we search trough the sunburst-tree for the clicked element.
-  findCurrentRegionDOInSunburstTree(){
+  findCurrentRegionDOInSunburstTree() {
     // this.myChart.data() gives back root element of sunburst tree
     let node = this.myChart.data();
 
-    if (node === undefined){
+    if (node === undefined) {
       return;
-    }
-    // if root is the searched element we are done here
-    else if (node.name === this.currentRegionDO.regionName){
+    } else if (node.name === this.currentRegionDO.regionName) { // if root is the searched element we are done here
       return node;
-    }
-    // if not we have to search trough the children of the root element
-    else {
-      if (node.children != undefined) {
+    } else {
+      if (node.children !== undefined) { // if not we have to search trough the children of the root element
         node = this.searchChildren(node);
         return node;
       } else {
@@ -182,20 +178,18 @@ export class RegionenComponent implements OnInit {
   }
 
   // We need a Node-object so we can update the sunburst with it. So we use a Node-object as parameter nad return value.
-  searchChildren(node: Node): Node{
+  searchChildren(node: Node): Node {
     // initialize new variable to save recursion progress
     let node1 = node;
 
     if (node.children != undefined) {
       // check for each child if its the searched element
-      for (let i = 0; i < node.children.length; i++){
-        if (node.children[i].name === this.currentRegionDO.regionName){
-          return node.children[i];
-        }
-        // search recursivly downwards the tree-elements
-        else {
-          node1 = this.searchChildren(node.children[i]);
-          if(node1.name === this.currentRegionDO.regionName){
+      for (let child of node.children) {
+        if (child.name === this.currentRegionDO.regionName) {
+          return child;
+        } else { // search recursivly downwards the tree-elements
+          node1 = this.searchChildren(child);
+          if (node1.name === this.currentRegionDO.regionName) {
             return node1;
           }
         }
@@ -204,8 +198,8 @@ export class RegionenComponent implements OnInit {
     return node;
   }
 
-  //What should happen if we click on sunburst-diagramm
-  updateSunburst(node){
+  // What should happen if we click on sunburst-diagramm
+  updateSunburst(node) {
     this.myChart.focusOnNode(node);
     this.myChart.width(window.innerWidth * chartDetailsSizeMultiplikator);
     this.myChart.height(window.innerHeight * chartDetailsSizeMultiplikator);
