@@ -16,6 +16,9 @@ import {
 } from '../../../shared/services';
 import {environment} from '@environment';
 
+
+
+const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
 const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
 const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
@@ -30,11 +33,14 @@ const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
 })
 export class SchusszettelComponent implements OnInit {
 
+
   match1: MatchDOExt;
   match2: MatchDOExt;
   dirtyFlag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
+
+
 
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
@@ -134,6 +140,8 @@ export class SchusszettelComponent implements OnInit {
     this.setPoints();
     this.dirtyFlag = true; // Daten geändert
   }
+
+
 
   save() {
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
@@ -242,6 +250,49 @@ export class SchusszettelComponent implements OnInit {
       this.dirtyFlag = false; // Daten gespeichert
     }
   }
+
+ // zurueck zu Sportjahresplan
+ back() {
+
+       // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
+   if (this.dirtyFlag === true) {
+      // TODO Texte in json.de anlegen
+      const notification: Notification = {
+        id:               NOTIFICATION_ZURUECK,
+        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
+
+      console.log('show notification');
+      this.notificationService.showNotification(notification);
+
+      console.log('notification.userAction before: ' + notification.userAction);
+      this.notificationService.observeNotification(NOTIFICATION_ZURUECK)
+          .subscribe((myNotification) => {
+            console.log('observe notification');
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              console.log('accepted');
+              this.dirtyFlag = false;
+              console.log('Wettkampftag', this.match1.wettkampfTag);
+              this.router.navigate(['/sportjahresplan' + '/' + this.match1.wettkampfId]);
+            }
+            console.log('notification.userAction after: ' + notification.userAction);
+          });
+
+    } else {
+
+      console.log('Keine Änderung');
+      console.log('Wettkampftag', this.match1.wettkampfTag);
+      this.router.navigate(['/sportjahresplan' + '/' + this.match1.wettkampfId]);
+    }
+  }
+
+
+
 
   next() {
 

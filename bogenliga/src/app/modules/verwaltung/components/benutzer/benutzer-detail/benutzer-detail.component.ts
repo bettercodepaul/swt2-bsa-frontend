@@ -167,11 +167,11 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/benutzer');
                   }
                 });
 
             this.notificationService.showNotification(this.notification);
+            this.router.navigateByUrl('/verwaltung/benutzer');
           }
 
         }, (response: BogenligaResponse<BenutzerDO>) => {
@@ -183,12 +183,6 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
 
   public entityExists(): boolean {
     return this.currentBenutzerRolleDO[0].id > 0;
-  }
-
-  private loadById(id: number) {
-    this.benutzerDataProvider.findUserRoleById(id)
-        .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleSuccess(response))
-        .catch((response: BogenligaResponse<BenutzerRolleDO>) => this.handleFailure(response));
   }
 
   private handleSuccess(response: BogenligaResponse<BenutzerRolleDO[]>) {
@@ -231,7 +225,7 @@ export class BenutzerDetailComponent extends CommonComponentDirective implements
     let inList = 0;
     this.leftList = [];
     this.rightList = [];
-    this.roles.forEach((item, index) => {
+    this.roles.forEach((item) => {
       for (const role of this.currentBenutzerRolleDO) {
         if (role.roleName === item.roleName) {
           inList = 1;

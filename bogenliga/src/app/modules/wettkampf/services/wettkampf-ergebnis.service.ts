@@ -5,6 +5,7 @@ import {MatchDO} from '@verwaltung/types/match-do.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {Injectable} from '@angular/core';
+import {WettkampfEinzelErgebnis} from '@wettkampf/components/wettkampf/wettkampergebnis/WettkampfEinzelErgebnis';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,8 @@ export class WettkampfErgebnisService {
 
   // Output
   public wettkampErgebnisse: WettkampfErgebnis[] = [];
+  public wettkampfEinzelErgebnisse: WettkampfEinzelErgebnis[] = [];
+
 
   // toLoad
   public mannschaften: Array<DsbMannschaftDO> = [];
@@ -100,6 +103,9 @@ export class WettkampfErgebnisService {
     return this.createWettkampfergebnisse();
   }
 
+
+
+
   /**
    * If this.currentMannschaft != undefined this method is used to select only match encounters where currentMannschaft
    * participated. Returns the new match Array<MatchDO>.
@@ -148,4 +154,63 @@ export class WettkampfErgebnisService {
     this.passen = [];
     return this.wettkampErgebnisse;
   }
+
+
+  /*
+  createEinzelErgebnisse()
+  Initialisiert alle Variablen welche für createWettkampfEinzelergebnisse benötigt werden
+  und gibt die Funktion creatWettkampfEinzelergebniss zurück, bzw startet diese.
+  Die uebergebenen Passe werden anhand der aktuellen Mannschaft gefiltert.
+   */
+  public createEinzelErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelErgebnis[] {
+    this.passen = passen;
+    this.currentMannschaft = mannschaft;
+    if (this.currentMannschaft !== undefined) {
+      this.passen = this.filterPassen();
+    }
+    return this.createWettkampfEinzelergebnisse();
+  }
+
+  /*
+  createWettkampfEinzelergebnisse()
+  Erstellt alle Wettkampfergebnisse in "wettkampfEinzelErgebnis", welches die benoetigten Werte übergeben bekommt,
+  für die einzelnen Schuetzen.
+  Diese werden in den Array wettkampfEinzelErgebnisse gepusht und dieser wird am Ende zurückgegeben.
+   */
+  public createWettkampfEinzelergebnisse(): WettkampfEinzelErgebnis[] {
+    this.wettkampfEinzelErgebnisse = [];
+    for (const passe of this.passen) {
+      const wettkampfEinzelErgebnis = new WettkampfEinzelErgebnis(passe.matchNr, passe.wettkampfId,
+        this.getMannschaftsname(passe.mannschaftId), passe.dsbMitgliedId, passe.lfdNr, this.ringzahl(passe.ringzahl));
+      this.wettkampfEinzelErgebnisse.push(wettkampfEinzelErgebnis);
+    }
+    return this.wettkampfEinzelErgebnisse;
+  }
+
+  /*
+  ringzahl()
+  Berrechnet die Summe aller ringzahlen einer Passe und gibt diese zurück.
+   */
+  public ringzahl(ringzahlen: Array<number>): number {
+    let ringzahlenSumme = 0;
+    for (const ringzahl of ringzahlen) {
+      ringzahlenSumme += ringzahl;
+    }
+    return ringzahlenSumme;
+  }
+
+  /*
+  filterPassen()
+  Filtert alle Passe nach der aktuellen Mannschaft und gibt diese als Array zurück
+   */
+  public filterPassen(): Array<PasseDoClass> {
+    const passeMatches: Array<PasseDoClass> = [];
+    for (const passe of this.passen) {
+      if (this.currentMannschaft.id === passe.mannschaftId) {
+        passeMatches.push(passe);
+      }
+    }
+    return passeMatches;
+  }
 }
+
