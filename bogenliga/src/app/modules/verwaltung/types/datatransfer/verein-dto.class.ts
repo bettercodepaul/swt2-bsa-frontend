@@ -9,6 +9,7 @@ export class VereinDTO implements DataTransferObject {
   regionId: number;
   regionName: string;
   website: string;
+  description: string;
 
   static copyFrom(optional: {
     id?: number,
@@ -17,6 +18,7 @@ export class VereinDTO implements DataTransferObject {
     regionId?: number,
     regionName?: string,
     website ?: string,
+    description ?: string,
     version?: number
   } = {}): VereinDTO {
     const copy = new VereinDTO();
@@ -36,6 +38,7 @@ export class VereinDTO implements DataTransferObject {
     copy.identifier = optional.identifier || '';
     copy.regionName = optional.regionName || '';
     copy.website = optional.website || '';
+    copy.description = optional.description || '';
 
     copy.version = optional.version || null;
 

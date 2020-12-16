@@ -604,6 +604,11 @@
           "PLACEHOLDER": "Please enter a website",
           "ERROR": "Please enter a valid website."
         },
+        "VEREIN_DESCRIPTION": {
+          "LABEL": "Description",
+          "PLACEHOLDER": "Please enter a short description",
+          "ERROR": "Please enter a valid description."
+        },
         "SAVE": "Save",
         "UPDATE": "Refresh",
         "DELETE": "Delete"
