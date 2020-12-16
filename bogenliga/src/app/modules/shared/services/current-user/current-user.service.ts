@@ -103,7 +103,7 @@ export class CurrentUserService {
     return this.currentUserPermissions.indexOf(permission) >= 0;
   }
 
-  //TODO: remove this function because it has no use
+  // TODO: remove this function because it has no use
   public hasAllPermissions(requiredPermissions: UserPermission[]): boolean {
     const userPermissions: UserPermission[] = this.getPermissions();
 
