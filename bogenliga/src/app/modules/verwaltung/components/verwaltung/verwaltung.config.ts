@@ -57,6 +57,13 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
         detailType: 'Veranstaltungen',
       },
+      {
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.DESCRIPTION',
+        icon:           'wrench',
+        route:          'einstellungen',
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN]
+      },
       // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
       // because the exactly function of the site "Sportjahre" is still unclear.
       // If the button is needed again, just delete the uncommenting below.
