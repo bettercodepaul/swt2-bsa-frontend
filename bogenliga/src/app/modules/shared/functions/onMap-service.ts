@@ -12,7 +12,7 @@ export const onMapService = ($event: WettkampfDO): void => {
   const plz = $event.wettkampfPlz;
   const ortsname = $event.wettkampfOrtsname;
 
-  let location = [strasse, plz, ortsname]
+  const location = [strasse, plz, ortsname];
 
   let locationUrl = 'https://www.google.de/maps/place/';
   for (let i = 0; i < location.length; i++) {
