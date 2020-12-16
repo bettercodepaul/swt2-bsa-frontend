@@ -18,7 +18,8 @@ export class WettkampfDTO implements DataTransferObject {
   wettkampfAusrichter: number;
   kampfrichterID: number;
 
-  constructor(id?: number,
+  constructor(
+    id?: number,
     wettkampfVeranstaltungsId?: number,
     wettkampfDatum?: string,
     wettkampfStrasse?: string,
@@ -31,8 +32,7 @@ export class WettkampfDTO implements DataTransferObject {
     wettkampfTypId?: number,
     version?: number,
     wettkampfAusrichter ?: number,
-    kampfrichterID ?: number
-  ) {
+    kampfrichterID ?: number) {
     this.id = !!id ? id : null;
     this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
     this.wettkampfDatum = !!wettkampfDatum ? wettkampfDatum : '';

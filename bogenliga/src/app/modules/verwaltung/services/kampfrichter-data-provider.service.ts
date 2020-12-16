@@ -18,7 +18,7 @@ import {KampfrichterDTO} from '@verwaltung/types/datatransfer/kampfrichter-dto.c
 })
 export class KampfrichterProviderService  extends DataProviderService {
 
-  //Justins Code
+  // Justins Code
   // TODO: Make url v1/kampfrichter and fix KampfrichterService
   serviceSubUrl = 'v1/kampfrichter';
 
@@ -110,7 +110,7 @@ export class KampfrichterProviderService  extends DataProviderService {
   }
 
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> { // DO or DTO? Probably DO.
-    console.log("KampfrichterProviderService:");
+    console.log('KampfrichterProviderService:');
     console.log(payload);
     // return promise
     // sign in success -> resolve promise
