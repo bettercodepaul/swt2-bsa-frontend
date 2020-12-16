@@ -21,7 +21,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
     },
     {
       translationKey: 'TABLE.PLACE',
-      propertyName:   'wettkampfOrt',
+      propertyName:   'wettkampfOrtsname',
       width:          20,
     }
   ],

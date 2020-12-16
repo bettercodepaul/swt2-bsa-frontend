@@ -1,16 +1,16 @@
-import { UserPermission } from '@shared/services';
-import { SideBarNavigationItem } from './types/sidebar-navigation-item.interface';
+import {UserPermission} from '@shared/services';
+import {SideBarNavigationItem} from './types/sidebar-navigation-item.interface';
 
 import {
   faArchive,
+  faBinoculars,
   faBullseye,
   faCalendarAlt,
   faFootballBall,
   faHome,
   faListOl,
   faSitemap,
-  faUsers,
-  faBinoculars
+  faUsers
 } from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
@@ -18,7 +18,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label: 'SIDEBAR.HOME',
     icon: faHome,
     route: '/home',
-    permissons: [],
+    permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: []
   },
   {
@@ -54,7 +54,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Klassen',
         route: '/verwaltung/klassen',
-        permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF]
+        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
       {
         label: 'Vereine',
@@ -74,7 +74,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Veranstaltungen',
         route: '/verwaltung/veranstaltung',
-        permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF]
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN]
       }
     ]
   },
@@ -89,7 +89,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label: 'SIDEBAR.SPORTJAHRESPLAN',
     icon: faCalendarAlt,
     route: '/sportjahresplan',
-    permissons: [UserPermission.CAN_READ_WETTKAMPF],
+    permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: []
   },
   {
@@ -110,7 +110,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     label: 'SIDEBAR.PLAYGROUND',
     icon: faFootballBall,
     route: '/playground',
-    permissons: [],
+    permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     inProdVisible: false
   }
