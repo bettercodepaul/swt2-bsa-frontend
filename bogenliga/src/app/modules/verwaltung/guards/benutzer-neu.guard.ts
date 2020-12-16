@@ -9,6 +9,6 @@ export class BenutzerNeuGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_MODIFY_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER]);
+    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_CREATE_SYSTEMDATEN]);
   }
 }

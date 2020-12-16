@@ -1,10 +1,15 @@
-<bla-common-dialog [config]="config">
+<!DOCTYPE html>
+<html>
+<body>
+<bla-common-dialog [config]="config" >
   <form id="regionenForm"
         class="horizontal-form half-page">
-    <h3>{{getTitle()}}</h3>
-    <h3>{{currentVeranstaltung.name}}</h3>
+    <h3 class="print1">{{getTitle()}}</h3>
+    <h3 class="print1">{{currentVeranstaltung.name}}</h3>
 
-
+    <!-- Die Texte werden in der de.json Datei gesetzt-->
+    <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
+    gesetzt wird es in styles.scss-->
 
     <!-- Veranstaltung -->
     <div id="selectVereink">
@@ -14,7 +19,7 @@
         </label>
         <div class="col-sm-8">
           <bla-selectionlist [id]="'quickSearch'"
-                             [loading]="areVeranstaltungenloading"
+                             [loading]="areVeranstaltungenLoading"
                              [items]="veranstaltungen"
                              [selectedItemIds]=[currentVeranstaltung.id]
                              [optionFieldSelector]="'name'"
@@ -28,7 +33,7 @@
     </div>
 
     <!-- Mannschaft -->
-    <div id="selectVerein">
+    <div id="selectVerein" class=" print1">
       <div class="row">
         <label class="col-sm-1 col-form-label">
           <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
@@ -48,7 +53,7 @@
     </div>
 
     <!-- Jahr -->
-    <div class="row">
+    <div class="row print1">
       <label class="col-sm-1 col-form-label">
         <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
       </label>
@@ -67,18 +72,50 @@
     </div>
     <!-- Button -->
     <div id="Button">
-      <bla-button
-        [id]="'showResultButton'"
-        (onClick)="loadErgebnisse(this.currentMannschaft);">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
-      </bla-button>
-      &nbsp;
+      <!-- Button - Alle Mannschaften anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
         (onClick)="loadErgebnisse(undefined);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
       </bla-button>
+      &nbsp;
+      <!-- Button - Aktuelle Mannschaft anzeigen -->
+      <bla-button
+        [id]="'showResultsButton'"
+        (onClick)="loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
+      </bla-button>
+      &nbsp;
+      <!-- Button - Einzelstatistik anzeigen -->
+      <bla-button
+        [id]="'showResultsButton'"
+        (onClick)="loadPopup(this.currentMannschaft);">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
+      </bla-button>
+      &nbsp;
+      <!-- Button - Einzelstatistik Drucken -->
+      <bla-button class = "hidden" id = "druckButton"
+        [id]="'showResultsButton'"
+        (onClick)="druck();">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelDrucken.LABEL' | translate }}
+      </bla-button>
     </div>
+<!-- popup -->
+    <div class="overlay" *ngIf="popup">
+      <div class="popup">
+        <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.POPUPTXT.POPUPÜBERSCHRIFT.LABEL' | translate }}</h2>
+        <a class="close" (click)="popup = false">&times;</a>
+        <div class="content_popup">
+          <p>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.POPUPTXT.POPUPINHALT.LABEL' | translate }}
+          </p>
+          <p></p>
+        </div>
+      </div>
+    </div>
+
+
+
+
     <div class="col-sm-9">
       <div class="invalid-feedback">
         {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -86,39 +123,64 @@
     </div>
 
 
+
     <!-- Row 1 -->
-    <div class="row">
+    <div class="row print1">
       <div id="Table1">
         <h3>{{"Wettkampftag 1"}}</h3>
-        <bla-data-table [loading]="loadingData"
+        <bla-data-table id="row0"
+                        [loading]="loadingData"
                         [config]="config_table"
+                        [rows]="rows[0]">
+        </bla-data-table>
+        <bla-data-table id="row01" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzel_table"
                         [rows]="rows[0]">
         </bla-data-table>
       </div>
     </div>
-    <div class="row" >
+    <div class="row print1">
       <div id="Table2">
         <h3>{{"Wettkampftag 2"}}</h3>
-        <bla-data-table [loading]="loadingData"
+        <bla-data-table id="row1"
+                        [loading]="loadingData"
                         [config]="config_table"
+                        [rows]="rows[1]">
+        </bla-data-table>
+        <bla-data-table id="row11" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzel_table"
                         [rows]="rows[1]">
         </bla-data-table>
       </div>
     </div>
-    <div class="row">
+    <div class="row print1">
       <div id="Table3">
         <h3>{{"Wettkampftag 3"}}</h3>
-        <bla-data-table [loading]="loadingData"
+        <bla-data-table id="row2"
+                        [loading]="loadingData"
                         [config]="config_table"
+                        [rows]="rows[2]">
+        </bla-data-table>
+        <bla-data-table id="row21" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzel_table"
                         [rows]="rows[2]">
         </bla-data-table>
       </div>
     </div>
-    <div class="row">
+    <div class="row print1">
       <div id="Table4">
         <h3>{{"Wettkampftag 4"}}</h3>
-        <bla-data-table [loading]="loadingData"
+        <bla-data-table id="row3"
+                        [loading]="loadingData"
                         [config]="config_table"
+                        [rows]="rows[3]">
+        </bla-data-table>
+        <bla-data-table id="row31" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzel_table"
                         [rows]="rows[3]">
         </bla-data-table>
       </div>
@@ -132,3 +194,5 @@
     </div>
   </form>
 </bla-common-dialog>
+</body>
+</html>

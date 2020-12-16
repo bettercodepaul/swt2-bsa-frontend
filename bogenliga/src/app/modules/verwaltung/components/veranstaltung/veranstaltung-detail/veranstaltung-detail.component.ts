@@ -70,7 +70,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public currentAllDsbMannschaft: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
   public allDsbMannschaft: Array<DsbMannschaftDO> = [new DsbMannschaftDO()];
-  public testManschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public testMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
 
 
 
@@ -216,15 +216,15 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
       for (let i = 0; i <= this.allDsbMannschaft.length; i++) {
 
-        this.testManschaft.veranstaltungId = this.currentVeranstaltung.id;
-        this.testManschaft.veranstaltungName = this.currentVeranstaltung.name;
-        this.testManschaft.benutzerId = this.allDsbMannschaft[i].benutzerId;
-        this.testManschaft.vereinId = this.allDsbMannschaft[i].vereinId;
-        this.testManschaft.nummer = this.allDsbMannschaft[i].nummer;
-        this.testManschaft.name = this.allDsbMannschaft[i].name;
+        this.testMannschaft.veranstaltungId = this.currentVeranstaltung.id;
+        this.testMannschaft.veranstaltungName = this.currentVeranstaltung.name;
+        this.testMannschaft.benutzerId = this.allDsbMannschaft[i].benutzerId;
+        this.testMannschaft.vereinId = this.allDsbMannschaft[i].vereinId;
+        this.testMannschaft.nummer = this.allDsbMannschaft[i].nummer;
+        this.testMannschaft.name = this.allDsbMannschaft[i].name;
         // persist
 
-        this.mannschaftDataProvider.create(this.testManschaft, null)
+        this.mannschaftDataProvider.create(this.testMannschaft, null)
             .then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
                 && !isNullOrUndefined(response.payload)

@@ -4,7 +4,7 @@ import {UserState} from './user.state';
 export const initialUserState: UserState = {
   isLoggedIn: false,
   isDefaultUserLoggedIn: true,
-  user:       null
+  user: null
 };
 
 export function userReducer(state = initialUserState, action: Actions.UserActions): UserState {
