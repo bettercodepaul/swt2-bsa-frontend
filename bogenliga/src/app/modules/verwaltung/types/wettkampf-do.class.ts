@@ -22,7 +22,8 @@ export class WettkampfDO implements VersionedDataObject {
   wettkampfLiga: string;
 
 
-  constructor(id?: number,
+  constructor(
+    id?: number,
     wettkampfVeranstaltungsId?: number,
     wettkampfDatum?: string,
     wettkampfStrasse?: string,

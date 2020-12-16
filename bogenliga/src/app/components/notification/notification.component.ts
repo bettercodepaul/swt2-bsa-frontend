@@ -68,10 +68,10 @@ export class NotificationComponent implements OnInit {
     windowWithRawData.document.write(this.notification.details);
   }
 
-  public toggleDetails(): void{
-    if(this.toggleOn){
+  public toggleDetails(): void {
+    if (this.toggleOn) {
       this.toggleOn = false;
-    } else{
+    } else {
       this.toggleOn = true;
     }
   }
