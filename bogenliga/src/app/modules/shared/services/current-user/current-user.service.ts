@@ -34,26 +34,28 @@ export class CurrentUserService {
               private router: Router) {
     this.observeUserState();
     this.observeSessionExpiredNotifications();
-    this.loadCurrentUser(true);
+    this.loadCurrentUser();
   }
 
   public disableDefaultUser(): void {
     this.isDefaultUserLoggedIn = false;
   }
 
-  public persistCurrentUser(currentUser: UserSignInDTO, isDefault: boolean): void {
+  public persistCurrentUser(currentUser: UserSignInDTO): void {
     this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
     this.store.dispatch(new Login(currentUser, this.isDefaultUserLoggedIn));
     // load current User after persisting the token
-    this.loadCurrentUser(isDefault);
+    this.loadCurrentUser();
   }
 
-  public loadCurrentUser(isDefault: boolean): void {
+  public loadCurrentUser(): void {
     this.observeSessionExpiredNotifications();
     this.currentUserPermissions = [];
     console.log('Load current user from storage');
     const currentUserValue = this.localDataProviderService.get(CURRENT_USER_KEY);
 
+    // Track the default user
+    let isDefault: boolean;
     if (currentUserValue != null) {
       // Map the permissions from the redux to its values
       const currentUserJSONMap = JSON.parse(currentUserValue);
@@ -63,7 +65,14 @@ export class CurrentUserService {
           this.currentUserPermissions.push(userPermit);
         });
       }
-      this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue)), isDefault));
+      const json = UserSignInDTO.copyFromJson(JSON.parse(currentUserValue));
+      // At this point we cannot be sure if the user is default or not, so we check the raw json directly
+      if (json.email === DEFAULT_USERNAME) {
+        isDefault = true;
+      } else {
+        isDefault = false;
+      }
+      this.store.dispatch(new Login(json, isDefault));
     }
     console.log('CurrentUserValue: ' + currentUserValue);
     console.log('CurrentUserPermission: ' + this.currentUserPermissions);
