@@ -113,7 +113,7 @@ export class CurrentUserService {
     });
   }
 
-  //Q: why requiredPermission.length == 0 ==> true ?
+  // Q: why requiredPermission.length == 0 ==> true ?
   public hasAnyPermisson(requiredPermissions: UserPermission[]): boolean {
     const userPermissions: UserPermission[] = this.getPermissions();
 
@@ -140,7 +140,7 @@ export class CurrentUserService {
     return this.isUserLoggedIn;
   }
 
-  //TODO: remove because unused
+  // TODO: remove because unused
   public isDefaultUser(): boolean {
     return this.isDefaultUserLoggedIn;
   }
