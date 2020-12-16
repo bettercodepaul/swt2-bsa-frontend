@@ -24,7 +24,7 @@ export function notificationReducer(state = initialNavigationState, action: Acti
       // Zeile wird auskommentiert, da ein Fehler auftritt, der verhindert, dass Benachrichtigungen angezeigt werden.
       // Das Entfernen der Zeile hat allem Anschein nach keine weiteren Konsequenzen.
       // => BSAPP-752
-      //modifiedState.notification.userAction = NotificationUserAction.ACCEPTED;
+      // modifiedState.notification.userAction = NotificationUserAction.ACCEPTED;
       modifiedState.showNotification = false;
 
       break;
@@ -35,7 +35,7 @@ export function notificationReducer(state = initialNavigationState, action: Acti
       // Zeile wird auskommentiert, da ein Fehler auftritt, der verhindert, dass Benachrichtigungen angezeigt werden.
       // Das Entfernen der Zeile hat allem Anschein nach keine weiteren Konsequenzen.
       // => BSAPP-752
-      //modifiedState.notification.userAction = NotificationUserAction.DECLINED;
+      // modifiedState.notification.userAction = NotificationUserAction.DECLINED;
       modifiedState.showNotification = false;
 
       break;
