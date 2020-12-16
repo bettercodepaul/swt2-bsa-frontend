@@ -1014,12 +1014,12 @@
           "STRASSE": {
             "LABEL": "Adresse",
             "PLACEHOLDER": "Straße und Hausnummer",
-            "ERROR": "Gültige Eingabe (Straße Hausnummer)."
+            "ERROR": "Ungültige Eingabe"
           },
           "PLZ": {
             "LABEL": "Adresse",
             "PLACEHOLDER": "Postleitzahl",
-            "ERROR": "UNgültige Postleitzahl."
+            "ERROR": "Ungültige Postleitzahl."
           },
           "ORTSNAME": {
             "LABEL": "Adresse",
