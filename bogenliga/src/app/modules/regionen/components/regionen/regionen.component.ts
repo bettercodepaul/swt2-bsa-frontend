@@ -1,13 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {REGIONEN_CONFIG} from './regionen.config';
-import Sunburst from 'sunburst-chart';
+import Sunburst, {Node} from 'sunburst-chart';
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {ChartNode} from './ChartNode';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
-import {RegionDataProviderService} from '../../../verwaltung/services/region-data-provider.service';
+import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {RegionDTO} from '@verwaltung/types/datatransfer/region-dto.class';
 import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
@@ -17,7 +17,6 @@ import {Router} from '@angular/router';
 // import {LigatabelleComponent} from '../../../ligatabelle/components/ligatabelle/ligatabelle.component';
 // import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 
-const chartMaxSizeMultiplikator = 0.8;
 const chartDetailsSizeMultiplikator = 0.5;
 
 @Component({
@@ -43,6 +42,7 @@ export class RegionenComponent implements OnInit {
 
   private ligen: LigaDTO[];
   private vereine: VereinDTO[];
+  private myChart = Sunburst(); // initializes sunburst-diagramm
 
 
   @ViewChild('chart', { static: true }) myDiv: ElementRef;
@@ -63,7 +63,6 @@ export class RegionenComponent implements OnInit {
 
     const root = new ChartNode(currentRegion.regionName, this.createColor(currentRegion), currentRegion.id);
 
-    // console.log(currentRegion.regionName);
     if (currentRegion.regionTyp === 'KREIS') {
       return root;
     }
@@ -100,7 +99,6 @@ export class RegionenComponent implements OnInit {
         );
   }
 
-
   loadSunburst() {
     const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
     desc.style.display = 'block';
@@ -108,41 +106,104 @@ export class RegionenComponent implements OnInit {
     const data = this.convertDataToTree(this.regionen.filter((f) =>
       f.regionTyp === 'BUNDESVERBAND')[0], this.regionen).toJsonString();
 
-    const myChart = Sunburst();
-
-    myChart
+    this.myChart
       .data(JSON.parse(data))
       .width(window.innerWidth * chartDetailsSizeMultiplikator)
       .height(window.innerHeight * chartDetailsSizeMultiplikator)
       .size('size')
       .color('color')
       .onClick((node) => {
-        // what should happen after clicking the node
-        myChart.focusOnNode(node);
+        // outsourced update function so it is possible to use for other functions
+        this.updateSunburst(node);
 
-        myChart.width(window.innerWidth * chartDetailsSizeMultiplikator);
-        myChart.height(window.innerHeight * chartDetailsSizeMultiplikator);
-        // }
-        this.showDetails(node);
-
-        })
+        this.selectInSelectionList(node);
+      })
       (this.myDiv.nativeElement);
 
-    console.log(myChart.label());
+    console.log(this.myChart.label());
 
     // for automatic resizing
     window.addEventListener('resize', (func) => {
-      const node = myChart.focusOnNode();
+      const node = this.myChart.focusOnNode();
       if (node != null) {
-        myChart
+        this.myChart
           .width(window.innerWidth * chartDetailsSizeMultiplikator)
           .height(window.innerHeight * chartDetailsSizeMultiplikator);
       } else {
-        myChart
+        this.myChart
           .width(window.innerWidth * chartDetailsSizeMultiplikator)
           .height(window.innerHeight * chartDetailsSizeMultiplikator);
       }
     });
+  }
+
+  /**
+   * Selects the item in the selectionListRegions according to the name of the selected node in the sunburst
+   * @param node - The Node which should be selected in the SelectionLost
+   */
+  selectInSelectionList(node: Node): void {
+    if (node === null) {
+      console.log('NodeName = Null. Es scheint du bist am oberen ende angekommen!');
+      return;
+    }
+    const list = document.getElementById('selectionListRegions') as HTMLSelectElement;
+    const nameToSearch = node.name;
+    const options = list.options;
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].text === nameToSearch) {
+        list.selectedIndex = i;
+        return;
+      }
+    }
+  }
+
+
+  // used for sync sunburst and table. If table is clicked we search trough the sunburst-tree for the clicked element.
+  findCurrentRegionDOInSunburstTree() {
+    // this.myChart.data() gives back root element of sunburst tree
+    let node = this.myChart.data();
+
+    if (node === undefined) {
+      return;
+    } else if (node.name === this.currentRegionDO.regionName) { // if root is the searched element we are done here
+      return node;
+    } else {
+      if (node.children !== undefined) { // if not we have to search trough the children of the root element
+        node = this.searchChildren(node);
+        return node;
+      } else {
+        return;
+      }
+    }
+  }
+
+  // We need a Node-object so we can update the sunburst with it. So we use a Node-object as parameter nad return value.
+  searchChildren(node: Node): Node {
+    // initialize new variable to save recursion progress
+    let node1 = node;
+
+    if (node.children !== undefined) {
+      // check for each child if its the searched element
+      for (const child of node.children) {
+        if (child.name === this.currentRegionDO.regionName) {
+          return child;
+        } else { // search recursivly downwards the tree-elements
+          node1 = this.searchChildren(child);
+          if (node1.name === this.currentRegionDO.regionName) {
+            return node1;
+          }
+        }
+      }
+    }
+    return node;
+  }
+
+  // What should happen if we click on sunburst-diagramm
+  updateSunburst(node) {
+    this.myChart.focusOnNode(node);
+    this.myChart.width(window.innerWidth * chartDetailsSizeMultiplikator);
+    this.myChart.height(window.innerHeight * chartDetailsSizeMultiplikator);
+    this.showDetails(node);
   }
 
   showDetails(node) {
@@ -197,9 +258,9 @@ export class RegionenComponent implements OnInit {
 
     this.ligen = [];
     response.payload.forEach((responseItem) =>  {
-       if (responseItem.regionId === this.currentRegionDO.id) {
-         console.log(responseItem);
-         this.ligen.push(responseItem);
+      if (responseItem.regionId === this.currentRegionDO.id) {
+        console.log(responseItem);
+        this.ligen.push(responseItem);
       }
     });
 
@@ -231,6 +292,8 @@ export class RegionenComponent implements OnInit {
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
       this.selectedRegionsId = this.selectedDTOs[0].id;
       this.currentRegionDO = this.selectedDTOs[0];
+      // updates sunburst after clicking table
+      this.updateSunburst(this.findCurrentRegionDOInSunburstTree());
       this.loadDetails();
     }
   }

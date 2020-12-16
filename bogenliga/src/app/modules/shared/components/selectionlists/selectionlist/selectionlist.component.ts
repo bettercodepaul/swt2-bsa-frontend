@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {isNullOrUndefined} from '@shared/functions';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
+import {RegionDO} from '@verwaltung/types/region-do.class';
 
 @Component({
   selector: 'bla-selectionlist',
@@ -71,6 +72,7 @@ export class SelectionlistComponent implements OnInit, OnChanges {
         }
       });
     });
+
     console.log('On Selection Changed: ' + JSON.stringify(selectedItems));
 
     this.onSelect.emit(selectedItems);
