@@ -54,7 +54,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Klassen',
         route: '/verwaltung/klassen',
-        permissons:[UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissons: [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]
       },
       {
         label: 'Vereine',
