@@ -676,6 +676,11 @@
           "PLACEHOLDER": "Bitte eine Webseite angeben",
           "ERROR": "Bitte eine gültige Webseite angeben."
         },
+        "VEREIN_DESCRIPTION": {
+          "LABEL": "Freitext",
+          "PLACEHOLDER": "Bitte eine kurze Vorstellung eingeben",
+          "ERROR": "Bitte einen gültigen Freitext eingeben."
+        },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
@@ -939,6 +944,8 @@
         "KAMPFRICHTER": {
           "LABEL": "Kampfrichterlizenz"
         },
+        "NO_USER": "Mitglied hat noch keinen Benutzer-Account. Bitte legen Sie vorher einen an. Falls es bereits einen Benutzer-Account gibt, dann klicken Sie auf aktualisieren.",
+        "REGISTRATION": "Benutzerregistrierung",
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Mitglied Löschen"
@@ -1066,10 +1073,25 @@
             "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
-          "ORT": {
-            "LABEL": "Ort",
-            "PLACEHOLDER": "Adresse",
-            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
+          "STRASSE": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Straße und Hausnummer",
+            "ERROR": "Ungültige Eingabe"
+          },
+          "PLZ": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Postleitzahl",
+            "ERROR": "Ungültige Postleitzahl."
+          },
+          "ORTSNAME": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Ort/Stadt",
+            "ERROR": "Ungültiger Ort."
+          },
+          "ORTSINFO": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Zusatzinformationen",
+            "ERROR": "Ungültige Eingabe."
           },
           "BEGINN": {
             "LABEL": "Beginn",
@@ -1116,11 +1138,7 @@
             "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
-          "ORT": {
-            "LABEL": "Ort",
-            "PLACEHOLDER": "Adresse",
-            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
-          },
+
           "BEGINN": {
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
@@ -1134,11 +1152,7 @@
             "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
-          "ORT": {
-            "LABEL": "Ort",
-            "PLACEHOLDER": "Adresse",
-            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
-          },
+
           "BEGINN": {
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",

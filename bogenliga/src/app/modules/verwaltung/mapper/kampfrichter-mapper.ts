@@ -1,4 +1,4 @@
-import {VersionedDataTransferObject} from '../../shared/data-provider';
+import {VersionedDataTransferObject} from '@shared/data-provider';
 import {KampfrichterDTO} from '../types/datatransfer/kampfrichter-dto.class';
 
 

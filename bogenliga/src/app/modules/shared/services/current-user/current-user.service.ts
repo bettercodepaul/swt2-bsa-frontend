@@ -103,6 +103,7 @@ export class CurrentUserService {
     return this.currentUserPermissions.indexOf(permission) >= 0;
   }
 
+  // TODO: remove this function because it has no use
   public hasAllPermissions(requiredPermissions: UserPermission[]): boolean {
     const userPermissions: UserPermission[] = this.getPermissions();
 
@@ -121,6 +122,7 @@ export class CurrentUserService {
     });
   }
 
+  // Q: why requiredPermission.length == 0 ==> true ?
   public hasAnyPermisson(requiredPermissions: UserPermission[]): boolean {
     const userPermissions: UserPermission[] = this.getPermissions();
 
@@ -147,6 +149,7 @@ export class CurrentUserService {
     return this.isUserLoggedIn;
   }
 
+  // TODO: remove because unused
   public isDefaultUser(): boolean {
     return this.isDefaultUserLoggedIn;
   }
@@ -201,13 +204,17 @@ export class CurrentUserService {
     this.observeSessionExpiredNotifications();
     return this.currentUser;
   }
-public getVerein(): number {
-return this.getCurrentUser().vereinId;
-}
-public getVeranstaltungen(): number[] {
-    return  this.getCurrentUser().veranstaltungenIds;
-}
-public hasVeranstaltung(input: number): boolean {
-    return this.getVeranstaltungen().includes(input);
-}
+
+  public getVerein(): number {
+    return this.getCurrentUser().vereinId;
+  }
+
+  public getVeranstaltungen(): number[] {
+      return  this.getCurrentUser().veranstaltungenIds;
+  }
+
+  public hasVeranstaltung(input: number): boolean {
+      return this.getVeranstaltungen().includes(input);
+  }
+
 }

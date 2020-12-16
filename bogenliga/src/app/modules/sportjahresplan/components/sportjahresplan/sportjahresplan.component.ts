@@ -17,6 +17,7 @@ import {NotificationService} from '@shared/services/notification';
 import {environment} from '@environment';
 import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
+import {onMapService} from '@shared/functions/onMap-service';
 
 
 @Component({
@@ -249,24 +250,13 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 // TODO URL-Sprung bei TabletButtonClick
   }
 
-  /** DUPLICATE
+  /**
    * Creates Link to Google Maps
    * Splits given Location at every comma and passes it to Google Maps
    * @param $event
    */
   public onMap($event: WettkampfDO): void {
-
-    const str = $event.wettkampfOrt;
-    let splits: string[];
-    splits = str.split(', ', 5);
-    let locationUrl = 'https://www.google.de/maps/place/';
-    for (let i = 0; i < splits.length; i++) {
-      if (i !== 0) {
-        locationUrl += '+';
-      }
-      locationUrl += splits[i];
-    }
-    window.open(locationUrl);
+    onMapService($event);
   }
 
   // when a Wettkampf gets selected from the list --> ID for Buttons
@@ -345,7 +335,10 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     }
     for (const wettkampf of response.payload) {
       const tableContentRow: WettkampfDO = new WettkampfDO();
-      tableContentRow.wettkampfOrt = wettkampf.wettkampfOrt;
+      tableContentRow.wettkampfStrasse = wettkampf.wettkampfStrasse;
+      tableContentRow.wettkampfPlz = wettkampf.wettkampfPlz;
+      tableContentRow.wettkampfOrtsname = wettkampf.wettkampfOrtsname;
+      tableContentRow.wettkampfOrtsinfo = wettkampf.wettkampfOrtsinfo;
       tableContentRow.wettkampfBeginn = wettkampf.wettkampfBeginn;
       tableContentRow.wettkampfTag = wettkampf.wettkampfTag;
       tableContentRow.wettkampfDatum = wettkampf.wettkampfDatum;

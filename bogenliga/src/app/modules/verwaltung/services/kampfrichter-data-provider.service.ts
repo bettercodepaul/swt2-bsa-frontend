@@ -8,15 +8,19 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '../../shared/services/current-user';
+import {CurrentUserService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/kampfrichter-mapper';
 import {KampfrichterDO} from '../types/kampfrichter-do.class';
+import {KampfrichterDTO} from '@verwaltung/types/datatransfer/kampfrichter-dto.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KampfrichterProviderService  extends DataProviderService {
-  serviceSubUrl = 'v1/liga';
+
+  // Justins Code
+  // TODO: Make url v1/kampfrichter and fix KampfrichterService
+  serviceSubUrl = 'v1/kampfrichter';
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
@@ -61,6 +65,27 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
+  // TODO: See if this works
+  // public delete(payload: VersionedDataTransferObject): Promise<BogenligaResponse<void>> {
+  //   // return promise
+  //   // sign in success -> resolve promise
+  //   // sign in failure -> reject promise with result
+  //   return new Promise((resolve, reject) => {
+  //     this.restClient.DELETE<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+  //         .then((data: VersionedDataTransferObject) => {
+  //           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+  //
+  //         }, (error: HttpErrorResponse) => {
+  //
+  //           if (error.status === 0) {
+  //             reject({result: RequestResult.CONNECTION_PROBLEM});
+  //           } else {
+  //             reject({result: RequestResult.FAILURE});
+  //           }
+  //         });
+  //   });
+  // }
+
 
 
   public findById(id: string | number): Promise<BogenligaResponse<KampfrichterDO>> {
@@ -84,7 +109,9 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> {
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> { // DO or DTO? Probably DO.
+    console.log('KampfrichterProviderService:');
+    console.log(payload);
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -103,6 +130,8 @@ export class KampfrichterProviderService  extends DataProviderService {
           });
     });
   }
+
+
   public create(payload: KampfrichterDO): Promise<BogenligaResponse<KampfrichterDO>> {
     // return promise
     // sign in success -> resolve promise
