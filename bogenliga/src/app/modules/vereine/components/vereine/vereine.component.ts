@@ -20,6 +20,7 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '@shared/services/notification';
 import {TableColumnConfig} from '@shared/components/tables/types/table-column-config.interface';
+import {onMapService} from '@shared/functions/onMap-service';
 
 
 const ID_PATH_PARAM = 'id';
@@ -221,24 +222,13 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.router.navigateByUrl(link);
   }
 
-  /** DUPLICATE
+  /**
    * Creates Link to Google Maps
    * Splits given Location at every comma and passes it to Google Maps
    * @param $event
    */
   public onMap($event: WettkampfDO): void {
-
-    const str = $event.wettkampfOrt;
-    let splits: string[];
-    splits = str.split(', ', 5);
-    let locationUrl = 'https://www.google.de/maps/place/';
-    for (let i = 0; i < splits.length; i++) {
-      if (i !== 0) {
-        locationUrl += '+';
-      }
-      locationUrl += splits[i];
-    }
-    window.open(locationUrl);
+    onMapService($event);
   }
 
   private loadVereine(): void {
@@ -299,13 +289,14 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     }
     for (const wettkampf of response.payload) {
       const wettkampfTag: string = wettkampf.wettkampfTag + '. Wettkampftag';
-      const wettkampfOrt: string = wettkampf.wettkampfOrt;
+      const wettkampfOrtsname: string = wettkampf.wettkampfOrtsname;
+
       this.veranstaltungsDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
-          .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag, wettkampfOrt ))
+          .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag, wettkampfOrtsname))
           .catch((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(responseb));
     }
     if (response.payload.length === 0) {
-      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '', '' , mannschaftsName);
+      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '', mannschaftsName, '');
       this.tableContent.push(tableContentRow);
     }
     if (this.remainingMannschaftsRequests <= 0) {
@@ -318,9 +309,9 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.loadingTable = false;
   }
 
-  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string, wettkampfOrt: string): void {
-    console.log('Content:' + response.payload.name + wettkampfTag +  mannschaftsName);
-    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, wettkampfOrt, mannschaftsName);
+  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string, wettkampfOrtsname: string): void {
+    console.log('Content:' + response.payload.name + wettkampfTag +  mannschaftsName + wettkampfOrtsname);
+    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, mannschaftsName, wettkampfOrtsname);
     this.tableContent.push(tableRowContent);
     this.remainingRequests -= 1;
 
