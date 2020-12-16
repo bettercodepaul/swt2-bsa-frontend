@@ -18,12 +18,11 @@ import {environment} from '@environment';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
-import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
-
-
 
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
@@ -50,6 +49,8 @@ export class SchusszettelComponent implements OnInit {
   mannschaften: DsbMannschaftDO[] = [];
   vereine: VereinDO[] = [];
   allPasse: PasseDoClass[] = [];
+  allVeranstaltungen: VeranstaltungDO[];
+  veranstaltung: VeranstaltungDO;
 
 
 
@@ -61,6 +62,7 @@ export class SchusszettelComponent implements OnInit {
               private vereinDataProvider: VereinDataProviderService,
               private dsbMannschaftDataProvider: DsbMannschaftDataProviderService,
               private passeDataProvider: PasseDataProviderService,
+              private veranstaltungDataProvider: VeranstaltungDataProviderService,
     ) {
   }
 
@@ -124,6 +126,8 @@ export class SchusszettelComponent implements OnInit {
     this.getAllMannschaften();
     this.getAllVerien();
     this.getAllPasse();
+    this.getAllVeranstaltungen();
+
   }
 
   /**
@@ -181,16 +185,25 @@ export class SchusszettelComponent implements OnInit {
       })
   }
 
+  private getAllVeranstaltungen(): void {
+    this.veranstaltungDataProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDO[]>)=> {
+          this.allVeranstaltungen = response.payload;
+        })
+  }
+
   private checkSchuetze(): void {
     console.log("checkSchuetze")
     let matchOneVereinAllMannschaften: DsbMannschaftDO[];
     let matchOneMannschaft: DsbMannschaftDO;
     let matchOneVerein: VereinDO;
     let matchOneFirstSchuetzeAllPasse: PasseDoClass[];
+    let veranstaltung: VeranstaltungDO;
     matchOneMannschaft = this.mannschaften.find(mannschaft => mannschaft.id == this.match1.mannschaftId);
     matchOneVerein = this.vereine.find(verein => verein.id == matchOneMannschaft.vereinId);
     matchOneVereinAllMannschaften = this.mannschaften.filter(mannschaft => mannschaft.vereinId == matchOneVerein.id);
     matchOneFirstSchuetzeAllPasse = this.allPasse.filter(passe => passe.mannschaftId == matchOneMannschaft.id);
+    veranstaltung = this.allVeranstaltungen.find(veranstaltung => veranstaltung.id == matchOneMannschaft.veranstaltungId);
 
     console.log("mannschaft:");
     console.log(matchOneMannschaft);
@@ -200,6 +213,8 @@ export class SchusszettelComponent implements OnInit {
     console.log(matchOneVereinAllMannschaften);
     console.log("Passe:");
     console.log(matchOneFirstSchuetzeAllPasse);
+    console.log("Veranstaltung:");
+    console.log(veranstaltung);
   }
 
 
