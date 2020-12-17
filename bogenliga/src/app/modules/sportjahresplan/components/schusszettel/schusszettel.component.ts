@@ -24,6 +24,7 @@ const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
 const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
 const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
+const NOTIFACTION_SCHUETZE = 'schuetze';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class SchusszettelComponent implements OnInit {
   dirtyFlag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
+  popup: boolean;
 
 
 
@@ -143,8 +145,18 @@ export class SchusszettelComponent implements OnInit {
 
 
 
-  save() {
-    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+  savepop() {
+    if (0 == 0) {
+      this.popup = true;
+    } else {
+      this.save();
+    }
+  }
+
+
+
+    save(){
+   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
