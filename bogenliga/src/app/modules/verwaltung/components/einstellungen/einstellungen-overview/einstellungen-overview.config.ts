@@ -30,7 +30,7 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
+      actionTypes: [TableActionType.EDIT, /*TableActionType.DELETE*/],
       width:       6
     },
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
