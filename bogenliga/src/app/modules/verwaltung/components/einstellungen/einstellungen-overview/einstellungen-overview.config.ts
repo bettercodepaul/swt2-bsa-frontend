@@ -36,7 +36,7 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
-  createPermission : [UserPermission.CAN_CREATE_EINSTELLUNGEN /*, UserPermission.CAN_CREATE_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN */ ]
+  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN  /*, UserPermission.CAN_CREATE_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN */ ]
 
  // Auskommentierung für eventuell späteren Verwendung von der Delete und Create Funktion
 
