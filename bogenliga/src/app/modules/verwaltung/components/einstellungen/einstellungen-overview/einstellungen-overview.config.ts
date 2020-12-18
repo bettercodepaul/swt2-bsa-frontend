@@ -30,15 +30,24 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
 
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, /*TableActionType.DELETE*/],
+      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
-  createPermission : [UserPermission.CAN_CREATE_EINSTELLUNGEN /*, UserPermission.CAN_CREATE_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN */ ]
+  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN  /*, UserPermission.CAN_CREATE_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN */ ]
 
  // Auskommentierung für eventuell späteren Verwendung von der Delete und Create Funktion
 
 
-}
+
+
+
+
+
+
+
+
+
+};
