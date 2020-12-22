@@ -46,7 +46,8 @@ export class SchusszettelComponent implements OnInit {
   match1: MatchDOExt;
   match2: MatchDOExt;
   dirtyFlag: boolean;
-  popup: boolean;
+  popupSelberTag: boolean;
+  popupAndererTag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
   mannschaften: DsbMannschaftDO[] = [];
@@ -248,16 +249,13 @@ export class SchusszettelComponent implements OnInit {
           console.log('matchOneAllPasse:');
           console.log(matchOneAllPasse[i]);
 
-          // Ermittlung, ob es derselbe Wettkampftag und dasselbe Sportjahr ist
+          // Ermittlung, ob es dasselbe Sportjahr ist
           let vorherigerWettkampfTagSchuetze: WettkampfDO;
           vorherigerWettkampfTagSchuetze = this.allWettkaempfe.find(wettkampf => schuetze.wettkampfId == wettkampf.id);
           let vorherigeVeranstaltungSchuetze: VeranstaltungDO;
           vorherigeVeranstaltungSchuetze = this.allVeranstaltungen.find(veranstaltung => veranstaltung.id == vorherigerWettkampfTagSchuetze.wettkampfVeranstaltungsId);
 
-          // Überprüfung
-          if((wettkampf.wettkampfTag==vorherigerWettkampfTagSchuetze.wettkampfTag) && (veranstaltung.sportjahr == vorherigeVeranstaltungSchuetze.sportjahr)){
-            console.log('derselbe Wettkampftag:');
-            console.log(wettkampf.wettkampfTag);
+          if(veranstaltung.sportjahr == vorherigeVeranstaltungSchuetze.sportjahr){
             console.log('dasselbe Sportjahr:');
             console.log(veranstaltung.sportjahr);
 
@@ -269,20 +267,22 @@ export class SchusszettelComponent implements OnInit {
               console.log('Veranstaltung liegt darüber');
               darüberLiegendeLiga = true;
               console.log('darüberLiegendeLiga', darüberLiegendeLiga);
+
+              // wird derselbe Wettkampftag geschossen?
+              if(vorherigerWettkampfTagSchuetze.wettkampfTag == wettkampf.wettkampfTag){
+                this.savepopSelberTag();
+              }
+              else{
+                this.savepopAndererTag();
+              }
+
             } else{
               console.log('Veranstaltung liegt darunter');
               console.log('darüberLiegendeLiga', darüberLiegendeLiga);
+              console.log("Hier auch noch ne Ausgabe?")
             }
-
-
-
-
-
           } else{
-            console.log('unterschiedliche Wettkampftage:');
-            console.log('wettkampf:', wettkampf.wettkampfTag);
-            console.log('wettkampfTagSchuetze', vorherigerWettkampfTagSchuetze.wettkampfTag);
-            console.log('oder unterschiedliche Sportjahre:');
+            console.log('unterschiedliche Sportjahre:');
             console.log('veranstaltung:', veranstaltung.sportjahr);
             console.log('veranstaltungSchuetze', vorherigeVeranstaltungSchuetze.sportjahr);
           }
@@ -298,12 +298,12 @@ export class SchusszettelComponent implements OnInit {
 
   }
 
-  savepop() {
-    if (0 == 0) {
-      this.popup = true;
-    } else {
-      this.save();
-    }
+  savepopSelberTag() {
+      this.popupSelberTag = true;
+  }
+
+  savepopAndererTag(){
+    this.popupAndererTag = true;
   }
 
   save() {
