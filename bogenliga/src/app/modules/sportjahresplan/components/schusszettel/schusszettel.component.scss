@@ -172,3 +172,49 @@ label {
 .fehlerfeld {
   margin-left: -26px;
 }
+
+/* popup Hintergrund unscharf */
+.schuetze-popup{
+  position: fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  transition: opacity;
+  visibility: visible;
+  opacity: 1;
+}
+/* Das eigentliche popup fenster Desigen */
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  height: auto;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+/*  Überschrift Desigen im Popup Fenster*/
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+/* popup close desigen */
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+/* schliessende x wird vorgehoben */
+.popup .close:hover {
+  color: $primary;
+  cursor: pointer;
+}

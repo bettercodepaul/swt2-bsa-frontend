@@ -448,6 +448,34 @@
 
   </div>
 
+  <div class ="schuetze-popup"*ngIf="popupSelberTag">
+    <div class="popup">
+      <h2>Schuetzen Fehler! </h2>
+      <br>
+      <a class="close" (click)="popupSelberTag =false">&times;</a>
+      <a>Schütze X hat bereits diesen Wettkampftag in der XXXLiga geschossen</a>
+      <br>
+      <br>
+      <button type="submit"(click)="popupSelberTag=false" class="btn btn-primary">OK</button>
+
+    </div>
+
+  </div>
+
+  <div class ="schuetze-popup"*ngIf="popupAndererTag">
+    <div class="popup">
+      <h2>Schuetzen Fehler! </h2>
+      <br>
+      <a class="close" (click)="popupAndererTag =false">&times;</a>
+      <a>Schütze X hat bereits X mal  in der Bundesliga geschossen</a>
+      <br>
+      <br>
+      <button type="submit"(click)="popupAndererTag=false" class="btn btn-primary">OK</button>
+
+    </div>
+
+  </div>
+
   <div class="print signature">
     <div class="m1">
       <h1>{{match2.mannschaftName}}</h1>
