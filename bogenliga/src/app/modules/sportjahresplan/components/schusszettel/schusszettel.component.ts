@@ -23,6 +23,8 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
@@ -49,8 +51,9 @@ export class SchusszettelComponent implements OnInit {
   mannschaften: DsbMannschaftDO[] = [];
   vereine: VereinDO[] = [];
   allPasse: PasseDoClass[] = [];
+  allWettkaempfe: WettkampfDO[];
+  wettkampf: WettkampfDO;
   allVeranstaltungen: VeranstaltungDO[];
-  veranstaltung: VeranstaltungDO;
 
 
 
@@ -62,6 +65,7 @@ export class SchusszettelComponent implements OnInit {
               private vereinDataProvider: VereinDataProviderService,
               private dsbMannschaftDataProvider: DsbMannschaftDataProviderService,
               private passeDataProvider: PasseDataProviderService,
+              private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungDataProvider: VeranstaltungDataProviderService,
     ) {
   }
@@ -126,6 +130,7 @@ export class SchusszettelComponent implements OnInit {
     this.getAllMannschaften();
     this.getAllVerien();
     this.getAllPasse();
+    this.getAllWettkaempfe();
     this.getAllVeranstaltungen();
 
   }
@@ -185,6 +190,13 @@ export class SchusszettelComponent implements OnInit {
       })
   }
 
+  private getAllWettkaempfe(): void {
+    this.wettkampfDataProvider.findAll()
+      .then((response: BogenligaResponse<WettkampfDO[]>) => {
+        this.allWettkaempfe = response.payload;
+      })
+  }
+
   private getAllVeranstaltungen(): void {
     this.veranstaltungDataProvider.findAll()
         .then((response: BogenligaResponse<VeranstaltungDO[]>)=> {
@@ -193,33 +205,101 @@ export class SchusszettelComponent implements OnInit {
   }
 
   private checkSchuetze(): void {
-    console.log("checkSchuetze")
-    let matchOneVereinAllMannschaften: DsbMannschaftDO[];
+    console.log('checkSchuetze');
+
+    // Ermittlung der Mannschaft, der Schützen, des Vereins, der Mannschaften des Vereins von match1
+    // Ermittlung des Wettkampfs und der Veranstaltung
     let matchOneMannschaft: DsbMannschaftDO;
+    let matchOneAllPasse: PasseDoClass[];
     let matchOneVerein: VereinDO;
-    let matchOneFirstSchuetzeAllPasse: PasseDoClass[];
+    let matchOneVereinAllMannschaften: DsbMannschaftDO[];
+    let wettkampf: WettkampfDO;
     let veranstaltung: VeranstaltungDO;
     matchOneMannschaft = this.mannschaften.find(mannschaft => mannschaft.id == this.match1.mannschaftId);
+    matchOneAllPasse = this.allPasse.filter(passe => passe.mannschaftId == matchOneMannschaft.id);
     matchOneVerein = this.vereine.find(verein => verein.id == matchOneMannschaft.vereinId);
     matchOneVereinAllMannschaften = this.mannschaften.filter(mannschaft => mannschaft.vereinId == matchOneVerein.id);
-    matchOneFirstSchuetzeAllPasse = this.allPasse.filter(passe => passe.mannschaftId == matchOneMannschaft.id);
+    wettkampf = this.allWettkaempfe.find(wettkampf => wettkampf.id == this.match1.wettkampfId);
     veranstaltung = this.allVeranstaltungen.find(veranstaltung => veranstaltung.id == matchOneMannschaft.veranstaltungId);
 
-    console.log("mannschaft:");
+    console.log('match1:');
+    console.log('Passe:');
+    console.log(matchOneAllPasse);
+    console.log('mannschaft:');
     console.log(matchOneMannschaft);
-    console.log("verein:");
+    console.log('verein:');
     console.log(matchOneVerein);
-    console.log("mannschaften:");
+    console.log('mannschaften:');
     console.log(matchOneVereinAllMannschaften);
-    console.log("Passe:");
-    console.log(matchOneFirstSchuetzeAllPasse);
-    console.log("Veranstaltung:");
+    console.log('wettkampf:');
+    console.log(wettkampf);
+    console.log('Veranstaltung:');
     console.log(veranstaltung);
+
+    // Vergleich aller Schützen mit den Schützen von match1
+    // Ermittlung, ob der Schütze bereits geschossen hat
+    for(let i=0; i < matchOneAllPasse.length; i++){
+      this.allPasse.forEach((schuetze)=> {
+        if(schuetze.dsbMitgliedId===matchOneAllPasse[i].dsbMitgliedId){
+          console.log('Passe hat bereits geschossen');
+          console.log('schütze:');
+          console.log(schuetze);
+          console.log('matchOneAllPasse:');
+          console.log(matchOneAllPasse[i]);
+
+          // Ermittlung, ob es derselbe Wettkampftag und dasselbe Sportjahr ist
+          let vorherigerWettkampfTagSchuetze: WettkampfDO;
+          vorherigerWettkampfTagSchuetze = this.allWettkaempfe.find(wettkampf => schuetze.wettkampfId == wettkampf.id);
+          let vorherigeVeranstaltungSchuetze: VeranstaltungDO;
+          vorherigeVeranstaltungSchuetze = this.allVeranstaltungen.find(veranstaltung => veranstaltung.id == vorherigerWettkampfTagSchuetze.wettkampfVeranstaltungsId);
+
+          // Überprüfung
+          if((wettkampf.wettkampfTag==vorherigerWettkampfTagSchuetze.wettkampfTag) && (veranstaltung.sportjahr == vorherigeVeranstaltungSchuetze.sportjahr)){
+            console.log('derselbe Wettkampftag:');
+            console.log(wettkampf.wettkampfTag);
+            console.log('dasselbe Sportjahr:');
+            console.log(veranstaltung.sportjahr);
+
+            // Ermittlung, ob die aktuelle Veranstaltung über der bereits geschossen Veranstaltung liegt
+            let darüberLiegendeLiga: boolean = false;
+            // Veranstaltung liegt darüber, wenn id der bereits geschossenen Veranstaltung niedriger als die id der gegenwärtigen Veranstaltung ist
+
+            if(vorherigeVeranstaltungSchuetze.id < veranstaltung.id){
+              console.log('Veranstaltung liegt darüber');
+              darüberLiegendeLiga = true;
+              console.log('darüberLiegendeLiga', darüberLiegendeLiga);
+            } else{
+              console.log('Veranstaltung liegt darunter');
+              console.log('darüberLiegendeLiga', darüberLiegendeLiga);
+            }
+
+
+
+
+
+          } else{
+            console.log('unterschiedliche Wettkampftage:');
+            console.log('wettkampf:', wettkampf.wettkampfTag);
+            console.log('wettkampfTagSchuetze', vorherigerWettkampfTagSchuetze.wettkampfTag);
+            console.log('oder unterschiedliche Sportjahre:');
+            console.log('veranstaltung:', veranstaltung.sportjahr);
+            console.log('veranstaltungSchuetze', vorherigeVeranstaltungSchuetze.sportjahr);
+          }
+        } else{
+          console.log('anderer Passe');
+          console.log('schütze', schuetze.dsbMitgliedId);
+          console.log('schütze', schuetze);
+          console.log('matchOneAllPasse', matchOneAllPasse[i].dsbMitgliedId);
+        }
+      })
+    }
+
+
   }
 
 
   save() {
-    console.log("Methoden Aufruf");
+    console.log('Methoden Aufruf');
     this.checkSchuetze();
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
@@ -326,7 +406,7 @@ export class SchusszettelComponent implements OnInit {
         });
       this.dirtyFlag = false; // Daten gespeichert
     }
-    console.log("Methoden Aufruf");
+    console.log('Methoden Aufruf');
     this.checkSchuetze();
   }
 
