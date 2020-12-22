@@ -33,7 +33,7 @@ const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
 const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
 const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
-
+const NOTIFACTION_SCHUETZE = 'schuetze';
 
 @Component({
   selector:    'bla-schusszettel',
@@ -46,6 +46,7 @@ export class SchusszettelComponent implements OnInit {
   match1: MatchDOExt;
   match2: MatchDOExt;
   dirtyFlag: boolean;
+  popup: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
   mannschaften: DsbMannschaftDO[] = [];
@@ -297,6 +298,13 @@ export class SchusszettelComponent implements OnInit {
 
   }
 
+  savepop() {
+    if (0 == 0) {
+      this.popup = true;
+    } else {
+      this.save();
+    }
+  }
 
   save() {
     console.log('Methoden Aufruf');
