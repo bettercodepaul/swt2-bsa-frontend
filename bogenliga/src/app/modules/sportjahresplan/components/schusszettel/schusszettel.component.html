@@ -450,10 +450,10 @@
 
   <div class ="schuetze-popup"*ngIf="popupSelberTag">
     <div class="popup">
-      <h2>Schuetzen Fehler! </h2>
+      <h2>Prüfung der Schützen</h2>
       <br>
       <a class="close" (click)="popupSelberTag =false">&times;</a>
-      <a>Schütze X hat bereits diesen Wettkampftag in der XXXLiga geschossen</a>
+      <a>Schütze {{passeRueckennummerSelberTag}} hat bereits diesen Wettkampftag in der {{selberTagVeranstaltung.name}} geschossen</a>
       <br>
       <br>
       <button type="submit"(click)="popupSelberTag=false" class="btn btn-primary">OK</button>
@@ -464,10 +464,10 @@
 
   <div class ="schuetze-popup"*ngIf="popupAndererTag">
     <div class="popup">
-      <h2>Schuetzen Fehler! </h2>
+      <h2>Prüfung der Schützen</h2>
       <br>
       <a class="close" (click)="popupAndererTag =false">&times;</a>
-      <a>Schütze X hat bereits X mal  in der Bundesliga geschossen</a>
+      <a>Schütze {{passeRueckennummerAndererTag}} hat bereits {{andererTagAnzahl}} mal in der {{andererTagVeranstaltung.name}} geschossen</a>
       <br>
       <br>
       <button type="submit"(click)="popupAndererTag=false" class="btn btn-primary">OK</button>
