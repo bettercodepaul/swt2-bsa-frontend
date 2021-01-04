@@ -26,7 +26,6 @@ import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 
-
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
 const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
@@ -61,6 +60,8 @@ export class SchusszettelComponent implements OnInit {
   selberTagVeranstaltung: VeranstaltungDO;
   andererTagVeranstaltung: VeranstaltungDO;
   andererTagAnzahl: number;
+  ligaleiterAktuelleLiga: String;
+  ligaleiterVorherigeLiga: String;
 
 
   constructor(private router: Router,
@@ -134,11 +135,10 @@ export class SchusszettelComponent implements OnInit {
       }
     });
     this.getAllMannschaften();
-    this.getAllVerien();
+    this.getAllVerein();
     this.getAllPasse();
     this.getAllWettkaempfe();
     this.getAllVeranstaltungen();
-
   }
 
   /**
@@ -182,7 +182,7 @@ export class SchusszettelComponent implements OnInit {
       })
   }
 
-  private getAllVerien(): void {
+  private getAllVerein(): void {
     this.vereinDataProvider.findAll()
         .then((response: BogenligaResponse<VereinDO[]>) => {
           this.vereine = response.payload;
@@ -210,7 +210,7 @@ export class SchusszettelComponent implements OnInit {
         })
   }
 
-  private maxVeranstaltungId(): number {
+ private maxVeranstaltungId(): number {
     let maxVid=this.allVeranstaltungen[0].id;
     this.allVeranstaltungen.forEach((veranstaltung)=> {
       if(veranstaltung.id > maxVid){
@@ -286,6 +286,7 @@ export class SchusszettelComponent implements OnInit {
         anzahlAnTagenLigen[i][j] = 0;
       }
     }
+
     // Ermittlung der Anzahl der Wettkampftage
     this.allPasse.forEach((passe)=>{
       for(let i=0; i < matchOneAllPasse.length; i++){
@@ -315,7 +316,8 @@ export class SchusszettelComponent implements OnInit {
             // Zuweisung der Teilnahme an der Veranstaltung an anzahlAnTagenLigen
             anzahlAnTagenLigen[i][vorherigeVeranstaltung.id]+=1;
 
-            console.log('Schuetze', matchOneAllPasse[i].rueckennummer, 'hat bereits am Wettkampf', vorherigerWettkampf, 'der Veranstaltung', vorherigeVeranstaltung, anzahlAnTagenLigen[i][vorherigeVeranstaltung.id], 'Mal teilgenommen');
+            console.log('Schuetze', matchOneAllPasse[i].rueckennummer, 'hat bereits am Wettkampf', vorherigerWettkampf);
+            console.log('der Veranstaltung', vorherigeVeranstaltung, anzahlAnTagenLigen[i][vorherigeVeranstaltung.id], 'Mal teilgenommen');
           }
 
         }
@@ -342,7 +344,13 @@ export class SchusszettelComponent implements OnInit {
             // Popup
             //Festlegung der Attribute
             this.passeRueckennummerAndererTag=matchOneAllPasse[i].rueckennummer;
-            this.andererTagVeranstaltung=veranstaltung;
+            this.veranstaltungDataProvider.findByLigaId(j)
+              .then((response: BogenligaResponse<VeranstaltungDO[]>)=>{
+                // ligaId ist PK -> es kann also immer nur 1 Liga gefunden werden
+                this.andererTagVeranstaltung=response.payload[0];
+              })
+            this.ligaleiterVorherigeLiga=this.andererTagVeranstaltung.ligaleiterEmail;
+            this.ligaleiterAktuelleLiga=veranstaltung.ligaleiterEmail;
             this.andererTagAnzahl=anzahlAnTagenLigen[i][j];
             console.log('Popup: ', this.passeRueckennummerAndererTag, 'hat bereits ', this.andererTagAnzahl, ' Mal in der', this.andererTagVeranstaltung.name);
             this.savepopAndererTag();
