@@ -41,13 +41,4 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
  // Auskommentierung für eventuell späteren Verwendung von der Delete und Create Funktion
 
 
-
-
-
-
-
-
-
-
-
-};
+}
