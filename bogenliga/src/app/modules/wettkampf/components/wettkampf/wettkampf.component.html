@@ -82,14 +82,14 @@
       <!-- Button - Aktuelle Mannschaft anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
+        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadPopup(this.currentMannschaft);">
+        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
       </bla-button>
       &nbsp;
