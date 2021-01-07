@@ -93,6 +93,13 @@
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
       </bla-button>
       &nbsp;
+      <!-- Button - Einzelstatistik Gesamt anzeigen -->
+      <bla-button
+        [id]="'showResultsButton'"
+        (onClick)="gesamt = true; loadPopup(this.currentMannschaft);">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
+      </bla-button>
+      &nbsp;
       <!-- Button - Einzelstatistik Drucken -->
       <bla-button class = "hidden" id = "druckButton"
         [id]="'showResultsButton'"
@@ -138,6 +145,11 @@
                         [config]="config_einzel_table"
                         [rows]="rows[0]">
         </bla-data-table>
+        <bla-data-table id="row010" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzelGesamt_table"
+                        [rows]="rows[0]">
+        </bla-data-table>
       </div>
     </div>
     <div class="row print1">
@@ -151,6 +163,11 @@
         <bla-data-table id="row11" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
+                        [rows]="rows[1]">
+        </bla-data-table>
+        <bla-data-table id="row110" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzelGesamt_table"
                         [rows]="rows[1]">
         </bla-data-table>
       </div>
@@ -168,6 +185,11 @@
                         [config]="config_einzel_table"
                         [rows]="rows[2]">
         </bla-data-table>
+        <bla-data-table id="row210" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzelGesamt_table"
+                        [rows]="rows[2]">
+        </bla-data-table>
       </div>
     </div>
     <div class="row print1">
@@ -181,6 +203,11 @@
         <bla-data-table id="row31" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
+                        [rows]="rows[3]">
+        </bla-data-table>
+        <bla-data-table id="row310" class="hidden"
+                        [loading]="loadingData"
+                        [config]="config_einzelGesamt_table"
                         [rows]="rows[3]">
         </bla-data-table>
       </div>
