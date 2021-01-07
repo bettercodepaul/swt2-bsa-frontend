@@ -24,6 +24,8 @@ import {MatchDO} from '@verwaltung/types/match-do.class';
 import {NotificationService} from '@shared/services';
 import {assertNotNull} from '@angular/compiler/src/output/output_ast';
 import {logger} from 'codelyzer/util/logger';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -57,6 +59,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
+  public dsbMitglieder: Array<DsbMitgliedDO> = [];
 
 
   popup: boolean;
@@ -71,6 +74,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               private passeDataProviderService: PasseDataProviderService,
               private wettkampfErgebnisService: WettkampfErgebnisService,
               private mannschaftDataProvider: DsbMannschaftDataProviderService,
+              private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -146,7 +150,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
-      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.currentJahr, selectedMannschaft,
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.dsbMitglieder, this.currentJahr, selectedMannschaft,
         this.passen[i]))));
     }
 
@@ -171,7 +175,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
-      this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.currentJahr, this.matches[i], selectedMannschaft,
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.dsbMitglieder, this.currentJahr, this.matches[i], selectedMannschaft,
         this.passen[i]))));
     }
 
@@ -249,6 +253,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.areVeranstaltungenLoading = false;
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.loadMannschaft(this.currentVeranstaltung.id);
+    this.loadMitglieder();
     this.loadJahre();
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
@@ -338,5 +343,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
     return placeholder;
   }
+
+  /*
+  Todo
+   */
+  public loadMitglieder() {
+    this.dsbMitgliedDataProvider.findAll()
+              .then((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = response.payload)
+              .catch((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = []);
+  }
+
+
+
 
 }
