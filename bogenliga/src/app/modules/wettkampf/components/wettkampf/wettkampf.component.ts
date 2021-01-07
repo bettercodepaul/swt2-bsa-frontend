@@ -171,7 +171,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
-      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.currentJahr, selectedMannschaft,
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.currentJahr, this.matches[i], selectedMannschaft,
         this.passen[i]))));
     }
 
