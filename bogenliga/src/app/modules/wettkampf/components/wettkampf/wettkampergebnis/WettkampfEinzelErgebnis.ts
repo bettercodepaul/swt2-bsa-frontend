@@ -8,21 +8,19 @@ export class WettkampfEinzelErgebnis implements VersionedDataObject {
   wettkampfId: number;
   mannschaftName: string;
   schuetze: number;
-  passeNr: number;
-  passpunkteEinzel: number;
+  durchschPfeilwert: number;
 
   constructor(matchNr?: number,
               wettkampfId?: number,
               mannschaftName?: string,
               schuetze?: number,
-              passeNr?: number,
-              passpunkteEinzel?: number) {
+              durchschPfeilwert?: number) {
     this.matchNr = matchNr;
     this.wettkampfId = wettkampfId;
     this.mannschaftName = mannschaftName;
     this.schuetze = schuetze;
-    this.passeNr = passeNr;
-    this.passpunkteEinzel = passpunkteEinzel;
+    this.durchschPfeilwert = durchschPfeilwert;
+
 
 
   }

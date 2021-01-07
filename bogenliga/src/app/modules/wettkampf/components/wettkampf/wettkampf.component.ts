@@ -5,6 +5,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WETTKAMPF_TABLE_EINZEL_CONFIG} from './wettkampergebnis/tabelle.einzel.config';
+import {WETTKAMPF_TABLE_EINZELGESAMT_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzelGesamt.config';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
@@ -40,6 +41,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
+  public config_einzelGesamt_table = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public jahre: Array<number> = [];
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
@@ -58,6 +60,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
 
   popup: boolean;
+  gesamt: boolean = false;
 
 
 
@@ -111,6 +114,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       document.getElementById(rowNumber).classList.remove('hidden');
       rowNumber += '1';
       document.getElementById(rowNumber).classList.add('hidden');
+      rowNumber += '0';
+      document.getElementById(rowNumber).classList.add('hidden');
     }
 
     this.rows = [];
@@ -135,6 +140,33 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       document.getElementById(rowNumber).classList.add('hidden');
       rowNumber += '1';
       document.getElementById(rowNumber).classList.remove('hidden');
+      rowNumber += '0';
+      document.getElementById(rowNumber).classList.add('hidden');
+    }
+
+    this.rows = [];
+    for (let i = 0; i < this.wettkaempfe.length; i++) {
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.currentJahr, selectedMannschaft,
+        this.passen[i]))));
+    }
+
+    document.getElementById('druckButton').classList.remove('hidden');
+
+  }
+
+  /* loadGesamtstatistik
+
+   */
+  public loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
+
+    for (let i = 0; i < 4; i++) {
+      let rowNumber = 'row';
+      rowNumber += i;
+      document.getElementById(rowNumber).classList.add('hidden');
+      rowNumber += '1';
+      document.getElementById(rowNumber).classList.add('hidden');
+      rowNumber += '0';
+      document.getElementById(rowNumber).classList.remove('hidden');
     }
 
     this.rows = [];
@@ -154,6 +186,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public loadPopup(selectedMannschaft: DsbMannschaftDO) {
     if (!selectedMannschaft) {
       this.popup = true;
+    } else if(this.gesamt){
+      this.loadGesamtstatistik(this.currentMannschaft);
     } else {
       this.loadEinzelstatistik(this.currentMannschaft);
     }
