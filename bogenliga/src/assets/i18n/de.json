@@ -190,6 +190,9 @@
         "ANZEIGENEinzel": {
           "LABEL": "Einzelstatistik anzeigen"
         },
+        "ANZEIGENEinzelGesamt": {
+          "LABEL": "Gesamtstatistik anzeigen"
+        },
         "ANZEIGENEinzelDrucken": {
           "LABEL": "Einzelstatistik drucken"
         }
@@ -222,8 +225,8 @@
           "SATZPUNKTE": "Satzpunkte",
           "MATCHPUNKTE": "Matchpunkte",
           "SCHUETZE": "Schütze",
-          "PASSE": "Passe",
-          "PASSPUNKTESCHUETZE": "Punkte je Passe"
+          "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Matsch",
+          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr"
         }
       }
     }
