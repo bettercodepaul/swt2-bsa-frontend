@@ -59,6 +59,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   popup: boolean;
 
+  public currentVerein: VereinDO = new VereinDO();
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -94,6 +95,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         .then(() => {
           this.loadErgebnisse(this.currentMannschaft);
       });
+  }
+
+  // load verein
+  loadVerein(vereinId: number) : void{
+    this.vereinDataProvider.findById(vereinId)
+        .then((response: BogenligaResponse<VereinDO>) => this.currentVerein = response.payload)
+        .catch((response: BogenligaResponse<VereinDO>) => this.currentVerein = response.payload);
+    document.getElementById("vereinsinformationen").classList.remove("hidden");
   }
 
   /**
@@ -156,6 +165,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.popup = true;
     } else {
       this.loadEinzelstatistik(this.currentMannschaft);
+      this.loadVerein(selectedMannschaft.vereinId);
     }
   }
 
