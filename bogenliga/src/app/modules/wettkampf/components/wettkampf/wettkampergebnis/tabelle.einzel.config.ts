@@ -19,13 +19,8 @@ export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
       width:          10,
     },
     {
-      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.PASSE',
-      propertyName:   'passeNr',
-      width:          10,
-    },
-    {
-      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.PASSPUNKTESCHUETZE',
-      propertyName:   'passpunkteEinzel',
+      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTMATCH',
+      propertyName:   'durchschPfeilwert',
       width:          10,
     }
   ],
