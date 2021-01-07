@@ -6,12 +6,12 @@ export const WETTKAMPF_TABLE_EINZELGESAMT_CONFIG: TableConfig = {
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MANNSCHAFT',
       propertyName:   'mannschaftName',
-      width:          40,
+      width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
       propertyName:   'schuetze',
-      width:          50,
+      width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTJAHR',

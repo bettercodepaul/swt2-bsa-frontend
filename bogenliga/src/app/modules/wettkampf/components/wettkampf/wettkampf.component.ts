@@ -26,6 +26,7 @@ import {assertNotNull} from '@angular/compiler/src/output/output_ast';
 import {logger} from 'codelyzer/util/logger';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
+import {fromPayloadLigatabelleErgebnisArray} from '@wettkampf/mapper/wettkampf-ergebnis-mapper';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -118,8 +119,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       document.getElementById(rowNumber).classList.remove('hidden');
       rowNumber += '1';
       document.getElementById(rowNumber).classList.add('hidden');
-      rowNumber += '0';
-      document.getElementById(rowNumber).classList.add('hidden');
+    }
+    for (let i = 0; i<=4; i++){
+      let tableNumber = 'Table';
+      tableNumber += i;
+      if(i === 0){
+        document.getElementById(tableNumber).classList.add('hidden');
+      } else {
+        document.getElementById(tableNumber).classList.remove('hidden');
+      }
     }
 
     this.rows = [];
@@ -144,8 +152,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       document.getElementById(rowNumber).classList.add('hidden');
       rowNumber += '1';
       document.getElementById(rowNumber).classList.remove('hidden');
-      rowNumber += '0';
-      document.getElementById(rowNumber).classList.add('hidden');
+    }
+    for (let i = 0; i<=4; i++){
+      let tableNumber = 'Table';
+      tableNumber += i;
+      if(i === 0){
+        document.getElementById(tableNumber).classList.add('hidden');
+      } else {
+        document.getElementById(tableNumber).classList.remove('hidden');
+      }
     }
 
     this.rows = [];
@@ -169,15 +184,23 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       document.getElementById(rowNumber).classList.add('hidden');
       rowNumber += '1';
       document.getElementById(rowNumber).classList.add('hidden');
-      rowNumber += '0';
-      document.getElementById(rowNumber).classList.remove('hidden');
+    }
+    for (let i = 0; i<=4; i++){
+      let tableNumber = 'Table';
+      tableNumber += i;
+      if(i === 0){
+        document.getElementById(tableNumber).classList.remove('hidden');
+      } else {
+        document.getElementById(tableNumber).classList.add('hidden');
+      }
     }
 
     this.rows = [];
-    for (let i = 0; i < this.wettkaempfe.length; i++) {
-      this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.dsbMitglieder, this.currentJahr, this.matches[i], selectedMannschaft,
-        this.passen[i]))));
-    }
+
+    this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.dsbMitglieder, this.currentJahr, this.matches[0], selectedMannschaft,
+      this.passen[0]))));
+
+
 
     document.getElementById('druckButton').classList.remove('hidden');
 
