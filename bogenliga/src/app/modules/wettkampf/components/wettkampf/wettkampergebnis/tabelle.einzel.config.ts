@@ -11,12 +11,12 @@ export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MANNSCHAFT',
       propertyName:   'mannschaftName',
-      width:          40,
+      width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
       propertyName:   'schuetze',
-      width:          45,
+      width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTMATCH',
