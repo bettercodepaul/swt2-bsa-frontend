@@ -133,7 +133,16 @@
 
     <!-- Row 1 -->
     <div class="row print1">
-      <div id="Table1">
+      <div id="Table0" class="hidden">
+        <h3>{{"Gesamtstatistik pro Schütze"}}</h3>
+        <bla-data-table id="row00"
+                        [loading]="loadingData"
+                        [config]="config_einzelGesamt_table"
+                        [rows]="rows[0]">
+        </bla-data-table>
+      </div>
+    </div>
+      <div id="Table1" class="hidden">
         <h3>{{"Wettkampftag 1"}}</h3>
         <bla-data-table id="row0"
                         [loading]="loadingData"
@@ -145,15 +154,10 @@
                         [config]="config_einzel_table"
                         [rows]="rows[0]">
         </bla-data-table>
-        <bla-data-table id="row010" class="hidden"
-                        [loading]="loadingData"
-                        [config]="config_einzelGesamt_table"
-                        [rows]="rows[0]">
-        </bla-data-table>
       </div>
-    </div>
+
     <div class="row print1">
-      <div id="Table2">
+      <div id="Table2" class="hidden">
         <h3>{{"Wettkampftag 2"}}</h3>
         <bla-data-table id="row1"
                         [loading]="loadingData"
@@ -165,15 +169,10 @@
                         [config]="config_einzel_table"
                         [rows]="rows[1]">
         </bla-data-table>
-        <bla-data-table id="row110" class="hidden"
-                        [loading]="loadingData"
-                        [config]="config_einzelGesamt_table"
-                        [rows]="rows[1]">
-        </bla-data-table>
       </div>
     </div>
     <div class="row print1">
-      <div id="Table3">
+      <div id="Table3" class="hidden">
         <h3>{{"Wettkampftag 3"}}</h3>
         <bla-data-table id="row2"
                         [loading]="loadingData"
@@ -185,15 +184,10 @@
                         [config]="config_einzel_table"
                         [rows]="rows[2]">
         </bla-data-table>
-        <bla-data-table id="row210" class="hidden"
-                        [loading]="loadingData"
-                        [config]="config_einzelGesamt_table"
-                        [rows]="rows[2]">
-        </bla-data-table>
       </div>
     </div>
     <div class="row print1">
-      <div id="Table4">
+      <div id="Table4" class="hidden">
         <h3>{{"Wettkampftag 4"}}</h3>
         <bla-data-table id="row3"
                         [loading]="loadingData"
@@ -203,11 +197,6 @@
         <bla-data-table id="row31" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[3]">
-        </bla-data-table>
-        <bla-data-table id="row310" class="hidden"
-                        [loading]="loadingData"
-                        [config]="config_einzelGesamt_table"
                         [rows]="rows[3]">
         </bla-data-table>
       </div>
