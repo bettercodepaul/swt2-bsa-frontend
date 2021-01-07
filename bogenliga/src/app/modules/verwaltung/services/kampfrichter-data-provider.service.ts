@@ -65,6 +65,26 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
+  public delete(userID: number, wettkampfID: number): Promise<BogenligaResponse<void>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(`${userID}/${wettkampfID}`).build())
+          .then((noData) => {
+            resolve({result: RequestResult.SUCCESS});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
   // TODO: See if this works
   // public delete(payload: VersionedDataTransferObject): Promise<BogenligaResponse<void>> {
   //   // return promise

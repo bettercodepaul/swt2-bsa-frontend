@@ -754,7 +754,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
       // TODO: Fix the provider so that it doesn't send the data to the liga API
       // this.kampfrichterProvider.delete(kampfrichterArray[iter]);
-      this.kampfrichterProvider.deleteById(kampfrichterArray[iter].id);
+      // this.kampfrichterProvider.deleteById(kampfrichterArray[iter].id);
+      this.kampfrichterProvider.delete(kampfrichterArray[iter].id, kampfrichterArray[iter].wettkampfID);
 
       // .create(kampfrichterArray[iter])
           // .then((response: BogenligaResponse<KampfrichterDO>) => {
