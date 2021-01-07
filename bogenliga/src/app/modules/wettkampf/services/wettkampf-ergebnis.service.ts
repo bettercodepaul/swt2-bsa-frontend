@@ -7,6 +7,7 @@ import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {Injectable} from '@angular/core';
 import {WettkampfEinzelErgebnis} from '@wettkampf/components/wettkampf/wettkampergebnis/WettkampfEinzelErgebnis';
 import {WettkampfEinzelGesamtErgebnis} from '@wettkampf/components/wettkampf/wettkampergebnis/WettkampfEinzelGesamtErgebnis';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class WettkampfErgebnisService {
   public veranstaltung: VeranstaltungDO;
   public sportjahr: number;
   public match: number;
+
 
 
   // Output
@@ -31,6 +33,7 @@ export class WettkampfErgebnisService {
   public matches: Array<MatchDO> = [];
   private passen: Array<PasseDoClass> = [];
   private schuetze: Array<PasseDoClass> = [];
+  public mitglieder: Array<DsbMitgliedDO>;
 
   constructor() {
 
@@ -166,8 +169,9 @@ export class WettkampfErgebnisService {
   und gibt die Funktion creatWettkampfEinzelergebniss zurück, bzw startet diese.
   Die uebergebenen Passe werden anhand der aktuellen Mannschaft gefiltert.
    */
-  public createEinzelErgebnisse(jahr: number, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelErgebnis[] {
+  public createEinzelErgebnisse(mitglieder: Array<DsbMitgliedDO>, jahr: number, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelErgebnis[] {
     this.passen = passen;
+    this.mitglieder = mitglieder;
     this.currentMannschaft = mannschaft;
     if (this.currentMannschaft !== undefined) {
       this.passen = this.filterPassen();
@@ -187,13 +191,29 @@ export class WettkampfErgebnisService {
     this.wettkampfEinzelErgebnisse = [];
     for (const schuetze of this.schuetze) {
       const wettkampfEinzelErgebnis = new WettkampfEinzelErgebnis(schuetze.matchNr, schuetze.wettkampfId,
-        this.getMannschaftsname(schuetze.mannschaftId), schuetze.dsbMitgliedId, this.getPfeilwertProMatch(schuetze.matchNr, schuetze.dsbMitgliedId));
+        this.getMannschaftsname(schuetze.mannschaftId), this.getMitgliederName(schuetze.dsbMitgliedId), this.getPfeilwertProMatch(schuetze.matchNr, schuetze.dsbMitgliedId));
       this.wettkampfEinzelErgebnisse.push(wettkampfEinzelErgebnis);
     }
     return this.wettkampfEinzelErgebnisse;
   }
 
 
+  /*
+   getMitgliederName
+   Todo
+   */
+  public getMitgliederName(dsbMitgliedId: number): string{
+    let mitgliederName = "";
+    let name = this.mitglieder.find(mitglied => {
+      return mitglied.id === dsbMitgliedId;
+    })
+    if(name !== undefined){
+      mitgliederName += dsbMitgliedId + ", " + name.vorname + " " + name.nachname;
+    } else {
+      mitgliederName += dsbMitgliedId;
+    }
+    return mitgliederName;
+  }
 
   /*
   getPfeilwertProMatch()
@@ -237,8 +257,9 @@ export class WettkampfErgebnisService {
    createGesamtErgebnisse()
 
    */
-  public createGesamtErgebnisse(jahr: number, matches: Array<MatchDO>, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelGesamtErgebnis[] {
+  public createGesamtErgebnisse(mitglieder: Array<DsbMitgliedDO>, jahr: number, matches: Array<MatchDO>, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelGesamtErgebnis[] {
     this.passen = passen;
+    this.mitglieder = mitglieder;
     this.currentMannschaft = mannschaft;
     this.matches = matches;
     if (this.currentMannschaft !== undefined) {
@@ -258,7 +279,7 @@ export class WettkampfErgebnisService {
     this.wettkampfGesamtErgebnisse = [];
     for (const schuetze of this.schuetze) {
       const wettkampfGesamtErgebnis = new WettkampfEinzelGesamtErgebnis(schuetze.wettkampfId,
-        this.getMannschaftsname(schuetze.mannschaftId), schuetze.dsbMitgliedId, this.getPfeilwertProJahr(schuetze.dsbMitgliedId))
+        this.getMannschaftsname(schuetze.mannschaftId), this.getMitgliederName(schuetze.dsbMitgliedId), this.getPfeilwertProJahr(schuetze.dsbMitgliedId))
       this.wettkampfGesamtErgebnisse.push(wettkampfGesamtErgebnis);
     }
     return this.wettkampfGesamtErgebnisse;
