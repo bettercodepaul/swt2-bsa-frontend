@@ -6,6 +6,7 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {Injectable} from '@angular/core';
 import {WettkampfEinzelErgebnis} from '@wettkampf/components/wettkampf/wettkampergebnis/WettkampfEinzelErgebnis';
+import {WettkampfEinzelGesamtErgebnis} from '@wettkampf/components/wettkampf/wettkampergebnis/WettkampfEinzelGesamtErgebnis';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,11 @@ export class WettkampfErgebnisService {
   public sportjahr: number;
   public match: number;
 
+
   // Output
   public wettkampErgebnisse: WettkampfErgebnis[] = [];
   public wettkampfEinzelErgebnisse: WettkampfEinzelErgebnis[] = [];
+  public wettkampfGesamtErgebnisse: WettkampfEinzelGesamtErgebnis[] = [];
 
 
   // toLoad
@@ -27,6 +30,7 @@ export class WettkampfErgebnisService {
   public currentMannschaft: DsbMannschaftDO;
   public matches: Array<MatchDO> = [];
   private passen: Array<PasseDoClass> = [];
+  private schuetze: Array<PasseDoClass> = [];
 
   constructor() {
 
@@ -168,6 +172,8 @@ export class WettkampfErgebnisService {
     if (this.currentMannschaft !== undefined) {
       this.passen = this.filterPassen();
     }
+    this.schuetze = this.passen.filter((thing, index, self) =>
+      index === self.findIndex((t) => (t.matchNr === thing.matchNr && t.dsbMitgliedId === thing.dsbMitgliedId)))
     return this.createWettkampfEinzelergebnisse();
   }
 
@@ -179,24 +185,38 @@ export class WettkampfErgebnisService {
    */
   public createWettkampfEinzelergebnisse(): WettkampfEinzelErgebnis[] {
     this.wettkampfEinzelErgebnisse = [];
-    for (const passe of this.passen) {
-      const wettkampfEinzelErgebnis = new WettkampfEinzelErgebnis(passe.matchNr, passe.wettkampfId,
-        this.getMannschaftsname(passe.mannschaftId), passe.dsbMitgliedId, passe.lfdNr, this.ringzahl(passe.ringzahl));
+    for (const schuetze of this.schuetze) {
+      const wettkampfEinzelErgebnis = new WettkampfEinzelErgebnis(schuetze.matchNr, schuetze.wettkampfId,
+        this.getMannschaftsname(schuetze.mannschaftId), schuetze.dsbMitgliedId, this.getPfeilwertProMatch(schuetze.matchNr, schuetze.dsbMitgliedId));
       this.wettkampfEinzelErgebnisse.push(wettkampfEinzelErgebnis);
     }
     return this.wettkampfEinzelErgebnisse;
   }
 
+
+
   /*
-  ringzahl()
-  Berrechnet die Summe aller ringzahlen einer Passe und gibt diese zurück.
+  getPfeilwertProMatch()
+  todo
    */
-  public ringzahl(ringzahlen: Array<number>): number {
-    let ringzahlenSumme = 0;
-    for (const ringzahl of ringzahlen) {
-      ringzahlenSumme += ringzahl;
+  public getPfeilwertProMatch(matchNr: number, dsbMitgliedId: number): number {
+    let pfeilwertSummeMatch = 0;
+    let count = 0;
+    const filteredPasse: Array<PasseDoClass> = this.passen.filter(function (passe) {
+      return passe.matchNr === matchNr && passe.dsbMitgliedId === dsbMitgliedId;
+    });
+    for(const passe of filteredPasse){
+      for(const ringzahl of passe.ringzahl){
+        if(ringzahl !== null){
+          count++;
+          pfeilwertSummeMatch += ringzahl;
+        }
+      }
     }
-    return ringzahlenSumme;
+    if(count !== 0){
+      pfeilwertSummeMatch = pfeilwertSummeMatch / count;
+    }
+    return pfeilwertSummeMatch;
   }
 
   /*
@@ -212,5 +232,53 @@ export class WettkampfErgebnisService {
     }
     return passeMatches;
   }
+
+  /*
+   createGesamtErgebnisse()
+
+   */
+  public createGesamtErgebnisse(jahr: number, matches: Array<MatchDO>, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelGesamtErgebnis[] {
+    this.passen = passen;
+    this.currentMannschaft = mannschaft;
+    this.matches = matches;
+    if (this.currentMannschaft !== undefined) {
+      this.passen = this.filterPassen();
+      this.matches = this.filterMannschaft();
+    }
+    this.schuetze = this.passen.filter((thing, index, self) =>
+      index === self.findIndex((t) => (t.dsbMitgliedId === thing.dsbMitgliedId)))
+    return this.createWettkampfGesamtergebnisse();
+  }
+
+  /*
+   createWettkampfGesamtergebnisse()
+
+   */
+  public createWettkampfGesamtergebnisse(): WettkampfEinzelGesamtErgebnis[] {
+    this.wettkampfGesamtErgebnisse = [];
+    for (const schuetze of this.schuetze) {
+      const wettkampfGesamtErgebnis = new WettkampfEinzelGesamtErgebnis(schuetze.wettkampfId,
+        this.getMannschaftsname(schuetze.mannschaftId), schuetze.dsbMitgliedId, this.getPfeilwertProJahr(schuetze.dsbMitgliedId))
+      this.wettkampfGesamtErgebnisse.push(wettkampfGesamtErgebnis);
+    }
+    return this.wettkampfGesamtErgebnisse;
+  }
+
+  public getPfeilwertProJahr(dsbMitgliedId: number): number{
+    let pfeilwertSumme = 0;
+    let count = 0;
+    for(const match of this.matches){
+      pfeilwertSumme += this.getPfeilwertProMatch(match.nr, dsbMitgliedId);
+      console.log("halööööööööö " + this.getPfeilwertProMatch(match.nr, dsbMitgliedId))
+      count++;
+    }
+    if(count !== 0){
+      pfeilwertSumme = pfeilwertSumme / count;
+    }
+    console.log("halloooooooooo " + pfeilwertSumme)
+    return pfeilwertSumme;
+}
+
+
 }
 
