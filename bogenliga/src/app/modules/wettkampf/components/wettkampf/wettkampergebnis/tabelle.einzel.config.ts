@@ -16,7 +16,7 @@ export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
       propertyName:   'schuetze',
-      width:          20,
+      width:          10,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTMATCH',
