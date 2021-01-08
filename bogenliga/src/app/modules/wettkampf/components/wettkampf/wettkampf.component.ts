@@ -64,7 +64,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
 
   popup: boolean;
-  gesamt: boolean = false;
+  gesamt = false;
 
 
 
@@ -105,12 +105,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /**
+   * At first the selected rows throw rowNumber will be hidden depending on what statistic will be loaded.
    * Based on the IDs of the rows using for-loop the appropriate match-days will be loaded.
    * Depending on the row number the table config_table will be loaded.
    * Create Results for a Match encounter from a single Wettkampf and push it to this.rows. Rows is used to get the
    * values in the correct table in wettkampf.component.html
    * @param selectedMannschaft | Is this.currentMannschaft or undefined.
    * If this.currentMannschaft all match encounters from one team get created, else from all.
+   * At the end the button for printing will be hidden so that its only available for 'Einzelstatistik'.
    */
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
     for (let i = 0; i < 4; i++) {
@@ -120,10 +122,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       rowNumber += '1';
       document.getElementById(rowNumber).classList.add('hidden');
     }
-    for (let i = 0; i<=4; i++){
+    for (let i = 0; i <= 4; i++) {
       let tableNumber = 'Table';
       tableNumber += i;
-      if(i === 0){
+      if (i === 0) {
         document.getElementById(tableNumber).classList.add('hidden');
       } else {
         document.getElementById(tableNumber).classList.remove('hidden');
@@ -140,9 +142,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /* loadEinzelstatistik
-  Anhand der Ids der Reihen "row" in der html Datei werden mithilfe einer for-Schleife
-  das dazugehörige table config: config_einzel_table geladen.
+  Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
   Desweiteren wird hier die Tabelle befüllt für die Einzelstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
+  Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
 
@@ -153,10 +155,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       rowNumber += '1';
       document.getElementById(rowNumber).classList.remove('hidden');
     }
-    for (let i = 0; i<=4; i++){
+    for (let i = 0; i <= 4; i++) {
       let tableNumber = 'Table';
       tableNumber += i;
-      if(i === 0){
+      if (i === 0) {
         document.getElementById(tableNumber).classList.add('hidden');
       } else {
         document.getElementById(tableNumber).classList.remove('hidden');
@@ -174,7 +176,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /* loadGesamtstatistik
-
+   Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
+   Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
+   Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
 
@@ -185,10 +189,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       rowNumber += '1';
       document.getElementById(rowNumber).classList.add('hidden');
     }
-    for (let i = 0; i<=4; i++){
+    for (let i = 0; i <= 4; i++) {
       let tableNumber = 'Table';
       tableNumber += i;
-      if(i === 0){
+      if (i === 0) {
         document.getElementById(tableNumber).classList.remove('hidden');
       } else {
         document.getElementById(tableNumber).classList.add('hidden');
@@ -209,11 +213,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   /* loadPopup
    ich werde in html aufgerufen,
    wenn ein Popup erscheinen soll das aufmerksam macht, dass die Mannschaft noch nicht ausgewählt wurde.
+   Es werden die funktionen loadGesamtstatistik und loadEinzelstatistik im zusammenhang mit der variable gesamt aufgerufen,
+   sofern diese in dem jeweiligen Button auf true oder false gesetzt ist.
    */
   public loadPopup(selectedMannschaft: DsbMannschaftDO) {
     if (!selectedMannschaft) {
       this.popup = true;
-    } else if(this.gesamt){
+    } else if (this.gesamt) {
       this.loadGesamtstatistik(this.currentMannschaft);
     } else {
       this.loadEinzelstatistik(this.currentMannschaft);
@@ -368,7 +374,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /*
-  Todo
+  loadMitglieder:
+  Es stellt einen Request an das Backend um alle Mitglieder in der Datenbank dsb_mitglied zu erhalten
+  und diese dann in dem Array dsbMitglieder zu speichern.
    */
   public loadMitglieder() {
     this.dsbMitgliedDataProvider.findAll()

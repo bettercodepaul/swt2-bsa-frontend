@@ -177,7 +177,7 @@ export class WettkampfErgebnisService {
       this.passen = this.filterPassen();
     }
     this.schuetze = this.passen.filter((thing, index, self) =>
-      index === self.findIndex((t) => (t.matchNr === thing.matchNr && t.dsbMitgliedId === thing.dsbMitgliedId)))
+      index === self.findIndex((t) => (t.matchNr === thing.matchNr && t.dsbMitgliedId === thing.dsbMitgliedId)));
     return this.createWettkampfEinzelergebnisse();
   }
 
@@ -199,16 +199,17 @@ export class WettkampfErgebnisService {
 
 
   /*
-   getMitgliederName
-   Todo
+   getMitgliederName()
+   Mit hilfe der dsbMitgliedID wird in dem Array Mitglieder, welche die dsbMitglieder aus der Datenbank enthält,
+   nach dem zugehörigen Namen gesucht und daraufhin zusammen mit der ID zurückgegeben.
    */
-  public getMitgliederName(dsbMitgliedId: number): string{
-    let mitgliederName = "";
-    let name = this.mitglieder.find(mitglied => {
+  public getMitgliederName(dsbMitgliedId: number): string {
+    let mitgliederName = '';
+    const name = this.mitglieder.find((mitglied) => {
       return mitglied.id === dsbMitgliedId;
-    })
-    if(name !== undefined){
-      mitgliederName += dsbMitgliedId + ", " + name.vorname + " " + name.nachname;
+    });
+    if (name !== undefined) {
+      mitgliederName += dsbMitgliedId + ', ' + name.vorname + ' ' + name.nachname;
     } else {
       mitgliederName += dsbMitgliedId;
     }
@@ -217,23 +218,24 @@ export class WettkampfErgebnisService {
 
   /*
   getPfeilwertProMatch()
-  todo
+  Es werden MatchNummer und die dsbMitgliederID übergeben und daraufhin die Pfeilwerte des dsbMitglieds
+  in einem Match zusammen gerechnet und der Durchschnitt ermittelt.
    */
   public getPfeilwertProMatch(matchNr: number, dsbMitgliedId: number): number {
     let pfeilwertSummeMatch = 0;
     let count = 0;
-    const filteredPasse: Array<PasseDoClass> = this.passen.filter(function (passe) {
+    const filteredPasse: Array<PasseDoClass> = this.passen.filter((passe) => {
       return passe.matchNr === matchNr && passe.dsbMitgliedId === dsbMitgliedId;
     });
-    for(const passe of filteredPasse){
-      for(const ringzahl of passe.ringzahl){
-        if(ringzahl !== null){
+    for (const passe of filteredPasse) {
+      for (const ringzahl of passe.ringzahl) {
+        if (ringzahl !== null) {
           count++;
           pfeilwertSummeMatch += ringzahl;
         }
       }
     }
-    if(count !== 0){
+    if (count !== 0) {
       pfeilwertSummeMatch = pfeilwertSummeMatch / count;
     }
     return pfeilwertSummeMatch;
@@ -255,7 +257,9 @@ export class WettkampfErgebnisService {
 
   /*
    createGesamtErgebnisse()
-
+   Initialisiert alle Variablen welche für createWettkampfGesamtergebnisse benötigt werden
+   und gibt die Funktion creatWettkampfGesamtergebniss zurück, bzw startet diese.
+   Die uebergebenen Passe und Matches werden anhand der aktuellen Mannschaft gefiltert und daraufhin die Schuetzen herausgefiltert.
    */
   public createGesamtErgebnisse(mitglieder: Array<DsbMitgliedDO>, jahr: number, matches: Array<MatchDO>, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelGesamtErgebnis[] {
     this.passen = passen;
@@ -267,36 +271,41 @@ export class WettkampfErgebnisService {
       this.matches = this.filterMannschaft();
     }
     this.schuetze = this.passen.filter((thing, index, self) =>
-      index === self.findIndex((t) => (t.dsbMitgliedId === thing.dsbMitgliedId)))
+      index === self.findIndex((t) => (t.dsbMitgliedId === thing.dsbMitgliedId)));
     return this.createWettkampfGesamtergebnisse();
   }
 
   /*
    createWettkampfGesamtergebnisse()
-
+   Erstellt alle Wettkampfergebnisse in "wettkampfEinzelGesamtErgebnis", welches die benoetigten Werte übergeben bekommt,
+   für die einzelnen Schuetzen.
+   Diese werden in den Array wettkampfGesamtErgebnisse gepusht und dieser wird am Ende zurückgegeben.
    */
   public createWettkampfGesamtergebnisse(): WettkampfEinzelGesamtErgebnis[] {
     this.wettkampfGesamtErgebnisse = [];
     for (const schuetze of this.schuetze) {
       const wettkampfGesamtErgebnis = new WettkampfEinzelGesamtErgebnis(schuetze.wettkampfId,
-        this.getMannschaftsname(schuetze.mannschaftId), this.getMitgliederName(schuetze.dsbMitgliedId), this.getPfeilwertProJahr(schuetze.dsbMitgliedId))
+        this.getMannschaftsname(schuetze.mannschaftId), this.getMitgliederName(schuetze.dsbMitgliedId), this.getPfeilwertProJahr(schuetze.dsbMitgliedId));
       this.wettkampfGesamtErgebnisse.push(wettkampfGesamtErgebnis);
     }
     return this.wettkampfGesamtErgebnisse;
   }
 
-  public getPfeilwertProJahr(dsbMitgliedId: number): number{
+  /*
+  getPfeilwertProJahr()
+  Es werden alle durchschnittswerte eines Matches mithilfe der getPfeilwertProMatch funktion ermittelt
+  und daraufhin für das gesamte jahr ausgerechnet.
+   */
+  public getPfeilwertProJahr(dsbMitgliedId: number): number {
     let pfeilwertSumme = 0;
     let count = 0;
-    for(const match of this.matches){
+    for (const match of this.matches) {
       pfeilwertSumme += this.getPfeilwertProMatch(match.nr, dsbMitgliedId);
-      console.log("halööööööööö " + this.getPfeilwertProMatch(match.nr, dsbMitgliedId))
       count++;
     }
-    if(count !== 0){
+    if (count !== 0) {
       pfeilwertSumme = pfeilwertSumme / count;
     }
-    console.log("halloooooooooo " + pfeilwertSumme)
     return pfeilwertSumme;
 }
 
