@@ -11,9 +11,9 @@ export class WettkampfEinzelGesamtErgebnis implements VersionedDataObject {
 
 
   constructor(wettkampfId?: number,
-    mannschaftName?: string,
-    schuetze?: string,
-    durchschPfeilwert?: number) {
+              mannschaftName?: string,
+              schuetze?: string,
+              durchschPfeilwert?: number) {
 
     this.wettkampfId = wettkampfId;
     this.mannschaftName = mannschaftName;
