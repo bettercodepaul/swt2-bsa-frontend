@@ -62,10 +62,11 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   private passen: Array<PasseDoClass[]> = [];
   public dsbMitglieder: Array<DsbMitgliedDO> = [];
 
-
   popup: boolean;
   gesamt = false;
 
+
+  isTableEmpty: Array<boolean> = [].fill(false,0,this.rows.length - 1);
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -136,6 +137,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     for (let i = 0; i < this.wettkaempfe.length; i++) {
       this.rows.push((toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
         this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i]))));
+    }
+
+    //This loop saves that the table is either empty or not. If table empty -> don't show on frontend
+    for(let i = 0; i < this.rows.length - 1; i++) {
+      if(this.rows[i].length > 0) {
+        this.isTableEmpty[i] = true;
+      }
     }
 
     document.getElementById('druckButton').classList.add('hidden');
