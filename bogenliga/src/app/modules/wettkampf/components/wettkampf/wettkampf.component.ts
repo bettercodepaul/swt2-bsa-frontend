@@ -97,12 +97,23 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       });
   }
 
-  // load verein
-  loadVerein(vereinId: number) : void{
+  /**
+   * Loads the currently selected verein
+   * @param vereinId | loads the verein with this Id
+   */
+  public loadVerein(vereinId: number) : void{
     this.vereinDataProvider.findById(vereinId)
-        .then((response: BogenligaResponse<VereinDO>) => this.currentVerein = response.payload)
-        .catch((response: BogenligaResponse<VereinDO>) => this.currentVerein = response.payload);
+        .then((response: BogenligaResponse<VereinDO>) => this.handleLoadVerein(response))
+        .catch((response: BogenligaResponse<VereinDO>) => this.handleLoadVerein(null));
     document.getElementById("vereinsinformationen").classList.remove("hidden");
+  }
+
+  /**
+   * Sets the currently selected verein to the response
+   * @param response | sets the current verein to the response
+   */
+  public handleLoadVerein(response: BogenligaResponse<VereinDO>){
+    this.currentVerein = response.payload;
   }
 
   /**
@@ -129,6 +140,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     document.getElementById('druckButton').classList.add('hidden');
+    // hide verein information if the user presses "Alle Mannschaften anzeigen"
+    if(selectedMannschaft === undefined) {
+      document.getElementById("vereinsinformationen").classList.add("hidden");
+    }
   }
 
   /* loadEinzelstatistik
