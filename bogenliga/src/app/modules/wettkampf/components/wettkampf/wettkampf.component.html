@@ -82,15 +82,22 @@
       <!-- Button - Aktuelle Mannschaft anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
+        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadPopup(this.currentMannschaft);">
+        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
+      </bla-button>
+      &nbsp;
+      <!-- Button - Einzelstatistik Gesamt anzeigen -->
+      <bla-button
+        [id]="'showResultsButton'"
+        (onClick)="gesamt = true; loadPopup(this.currentMannschaft);">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik Drucken -->
@@ -124,9 +131,20 @@
 
 
 
+    <!-- Row Gesamtstatistik -->
+    <div class="row print1">
+      <div id="Table0" class="hidden">
+        <h3>{{"Gesamtstatistik pro Schütze"}}</h3>
+        <bla-data-table id="row00"
+                        [loading]="loadingData"
+                        [config]="config_einzelGesamt_table"
+                        [rows]="rows[0]">
+        </bla-data-table>
+      </div>
+    </div>
     <!-- Row 1 -->
     <div class="row print1">
-      <div id="Table1">
+      <div id="Table1" class="hidden">
         <h3>{{"Wettkampftag 1"}}</h3>
         <bla-data-table id="row0"
                         [loading]="loadingData"
@@ -140,8 +158,9 @@
         </bla-data-table>
       </div>
     </div>
+    <!-- Row 2 -->
     <div class="row print1">
-      <div id="Table2">
+      <div id="Table2" class="hidden">
         <h3>{{"Wettkampftag 2"}}</h3>
         <bla-data-table id="row1"
                         [loading]="loadingData"
@@ -155,8 +174,9 @@
         </bla-data-table>
       </div>
     </div>
+    <!-- Row 3 -->
     <div class="row print1">
-      <div id="Table3">
+      <div id="Table3" class="hidden">
         <h3>{{"Wettkampftag 3"}}</h3>
         <bla-data-table id="row2"
                         [loading]="loadingData"
@@ -170,8 +190,9 @@
         </bla-data-table>
       </div>
     </div>
+    <!-- Row 4 -->
     <div class="row print1">
-      <div id="Table4">
+      <div id="Table4" class="hidden">
         <h3>{{"Wettkampftag 4"}}</h3>
         <bla-data-table id="row3"
                         [loading]="loadingData"
