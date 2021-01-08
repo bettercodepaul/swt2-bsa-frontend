@@ -88,7 +88,7 @@
       <!-- Vereinsname -->
       <div class="row print1">
         <label class="col-sm-1 col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}</span>
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}:</span>
         </label>
         <div class="col-sm-8">
           <div class="form-control">
@@ -99,7 +99,7 @@
       <!-- Vereinsnummer -->
       <div class="row print1">
         <label class="col-sm-1 col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.LABEL' | translate }}</span>
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.LABEL' | translate }}:</span>
         </label>
         <div class="col-sm-8">
           <div class="form-control">
@@ -110,7 +110,7 @@
       <!-- Regionsname -->
       <div class="row print1">
         <label class="col-sm-1 col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}</span>
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}:</span>
         </label>
         <div class="col-sm-8">
           <div class="form-control">
@@ -121,7 +121,7 @@
       <!-- Webseite -->
       <div class="row print1">
         <label class="col-sm-1 col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}</span>
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}:</span>
         </label>
         <div class="col-sm-8">
           <div class="form-control">
@@ -132,12 +132,10 @@
       <!-- Freitext -->
       <div class="row print1">
         <label class="col-sm-1 col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}</span>
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}:</span>
         </label>
         <div class="col-sm-8">
-          <div class="form-control">
-            <div>{{this.currentVerein.description}}</div>
-          </div>
+            <textarea class="form-control" readonly>{{this.currentVerein.description}}</textarea>
         </div>
       </div>
     </div>
