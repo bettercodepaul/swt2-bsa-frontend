@@ -126,7 +126,7 @@
 
     <!-- Row 1 -->
     <div class="row print1">
-      <div id="Table1">
+      <div id="Table1" [hidden]="!isTableEmpty[0]">
         <h3>{{"Wettkampftag 1"}}</h3>
         <bla-data-table id="row0"
                         [loading]="loadingData"
@@ -141,7 +141,7 @@
       </div>
     </div>
     <div class="row print1">
-      <div id="Table2">
+      <div id="Table2" [hidden]="!isTableEmpty[1]">
         <h3>{{"Wettkampftag 2"}}</h3>
         <bla-data-table id="row1"
                         [loading]="loadingData"
@@ -156,7 +156,7 @@
       </div>
     </div>
     <div class="row print1">
-      <div id="Table3">
+      <div id="Table3" [hidden]="!isTableEmpty[2]">
         <h3>{{"Wettkampftag 3"}}</h3>
         <bla-data-table id="row2"
                         [loading]="loadingData"
@@ -171,7 +171,7 @@
       </div>
     </div>
     <div class="row print1">
-      <div id="Table4">
+      <div id="Table4" [hidden]="!isTableEmpty[3]">
         <h3>{{"Wettkampftag 4"}}</h3>
         <bla-data-table id="row3"
                         [loading]="loadingData"
