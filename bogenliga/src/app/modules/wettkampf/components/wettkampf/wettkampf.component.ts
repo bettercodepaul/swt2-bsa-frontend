@@ -239,7 +239,23 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   Öffnet das Fenster um Einzelstatistik zu drucken
    */
   public druck() {
+    var printContents = document.getElementById("titel").innerHTML;
+    printContents += "<br>";
+    printContents += document.getElementById("titel2").innerHTML;
+    printContents += "<br>";
+    printContents += document.getElementById("jahr").innerHTML;
+    printContents += "<br>";
+    printContents += document.getElementById("Table1").innerHTML;
+    printContents += document.getElementById("Table2").innerHTML;
+    printContents += document.getElementById("Table3").innerHTML;
+    printContents += document.getElementById("Table4").innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
     window.print();
+
+    document.body.innerHTML = originalContents;
   }
 
   /**

@@ -4,8 +4,8 @@
 <bla-common-dialog [config]="config" >
   <form id="regionenForm"
         class="horizontal-form half-page">
-    <h3 class="print1">{{getTitle()}}</h3>
-    <h3 class="print1">{{currentVeranstaltung.name}}</h3>
+    <h3 class="print1" id="titel">{{getTitle()}}</h3>
+    <h3 class="print1" id="titel2">{{currentVeranstaltung.name}}</h3>
 
     <!-- Die Texte werden in der de.json Datei gesetzt-->
     <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
@@ -33,7 +33,7 @@
     </div>
 
     <!-- Mannschaft -->
-    <div id="selectVerein" class=" print1">
+    <div id="selectVerein">
       <div class="row">
         <label class="col-sm-1 col-form-label">
           <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
@@ -165,12 +165,12 @@
         <bla-data-table id="row1"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[1]">
+                        [rows]="rows[0]">
         </bla-data-table>
         <bla-data-table id="row11" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[1]">
+                        [rows]="rows[0]">
         </bla-data-table>
       </div>
     </div>
@@ -181,12 +181,12 @@
         <bla-data-table id="row2"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[2]">
+                        [rows]="rows[0]">
         </bla-data-table>
         <bla-data-table id="row21" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[2]">
+                        [rows]="rows[0]">
         </bla-data-table>
       </div>
     </div>
@@ -197,12 +197,12 @@
         <bla-data-table id="row3"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[3]">
+                        [rows]="rows[0]">
         </bla-data-table>
         <bla-data-table id="row31" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[3]">
+                        [rows]="rows[0]">
         </bla-data-table>
       </div>
     </div>
