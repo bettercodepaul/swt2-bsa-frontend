@@ -5,6 +5,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WETTKAMPF_TABLE_EINZEL_CONFIG} from './wettkampergebnis/tabelle.einzel.config';
+import {WETTKAMPF_TABLE_EINZELGESAMT_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzelGesamt.config';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
@@ -23,6 +24,9 @@ import {MatchDO} from '@verwaltung/types/match-do.class';
 import {NotificationService} from '@shared/services';
 import {assertNotNull} from '@angular/compiler/src/output/output_ast';
 import {logger} from 'codelyzer/util/logger';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
+import {fromPayloadLigatabelleErgebnisArray} from '@wettkampf/mapper/wettkampf-ergebnis-mapper';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -40,6 +44,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
+  public config_einzelGesamt_table = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public jahre: Array<number> = [];
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
@@ -55,9 +60,11 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
+  public dsbMitglieder: Array<DsbMitgliedDO> = [];
 
 
   popup: boolean;
+  gesamt = false;
 
 
 
@@ -68,6 +75,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               private passeDataProviderService: PasseDataProviderService,
               private wettkampfErgebnisService: WettkampfErgebnisService,
               private mannschaftDataProvider: DsbMannschaftDataProviderService,
+              private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -97,12 +105,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /**
+   * At first the selected rows throw rowNumber will be hidden depending on what statistic will be loaded.
    * Based on the IDs of the rows using for-loop the appropriate match-days will be loaded.
    * Depending on the row number the table config_table will be loaded.
    * Create Results for a Match encounter from a single Wettkampf and push it to this.rows. Rows is used to get the
    * values in the correct table in wettkampf.component.html
    * @param selectedMannschaft | Is this.currentMannschaft or undefined.
    * If this.currentMannschaft all match encounters from one team get created, else from all.
+   * At the end the button for printing will be hidden so that its only available for 'Einzelstatistik'.
    */
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
     for (let i = 0; i < 4; i++) {
@@ -111,6 +121,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       document.getElementById(rowNumber).classList.remove('hidden');
       rowNumber += '1';
       document.getElementById(rowNumber).classList.add('hidden');
+    }
+    for (let i = 0; i <= 4; i++) {
+      let tableNumber = 'Table';
+      tableNumber += i;
+      if (i === 0) {
+        document.getElementById(tableNumber).classList.add('hidden');
+      } else {
+        document.getElementById(tableNumber).classList.remove('hidden');
+      }
     }
 
     this.rows = [];
@@ -123,9 +142,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /* loadEinzelstatistik
-  Anhand der Ids der Reihen "row" in der html Datei werden mithilfe einer for-Schleife
-  das dazugehörige table config: config_einzel_table geladen.
+  Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
   Desweiteren wird hier die Tabelle befüllt für die Einzelstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
+  Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
 
@@ -136,12 +155,56 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       rowNumber += '1';
       document.getElementById(rowNumber).classList.remove('hidden');
     }
+    for (let i = 0; i <= 4; i++) {
+      let tableNumber = 'Table';
+      tableNumber += i;
+      if (i === 0) {
+        document.getElementById(tableNumber).classList.add('hidden');
+      } else {
+        document.getElementById(tableNumber).classList.remove('hidden');
+      }
+    }
 
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
-      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.currentJahr, selectedMannschaft,
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.dsbMitglieder, this.currentJahr, selectedMannschaft,
         this.passen[i]))));
     }
+
+    document.getElementById('druckButton').classList.remove('hidden');
+
+  }
+
+  /* loadGesamtstatistik
+   Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
+   Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
+   Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
+   */
+  public loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
+
+    for (let i = 0; i < 4; i++) {
+      let rowNumber = 'row';
+      rowNumber += i;
+      document.getElementById(rowNumber).classList.add('hidden');
+      rowNumber += '1';
+      document.getElementById(rowNumber).classList.add('hidden');
+    }
+    for (let i = 0; i <= 4; i++) {
+      let tableNumber = 'Table';
+      tableNumber += i;
+      if (i === 0) {
+        document.getElementById(tableNumber).classList.remove('hidden');
+      } else {
+        document.getElementById(tableNumber).classList.add('hidden');
+      }
+    }
+
+    this.rows = [];
+
+    this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.dsbMitglieder, this.currentJahr, this.matches[0], selectedMannschaft,
+      this.passen[0]))));
+
+
 
     document.getElementById('druckButton').classList.remove('hidden');
 
@@ -150,10 +213,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   /* loadPopup
    ich werde in html aufgerufen,
    wenn ein Popup erscheinen soll das aufmerksam macht, dass die Mannschaft noch nicht ausgewählt wurde.
+   Es werden die funktionen loadGesamtstatistik und loadEinzelstatistik im zusammenhang mit der variable gesamt aufgerufen,
+   sofern diese in dem jeweiligen Button auf true oder false gesetzt ist.
    */
   public loadPopup(selectedMannschaft: DsbMannschaftDO) {
     if (!selectedMannschaft) {
       this.popup = true;
+    } else if (this.gesamt) {
+      this.loadGesamtstatistik(this.currentMannschaft);
     } else {
       this.loadEinzelstatistik(this.currentMannschaft);
     }
@@ -215,6 +282,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.areVeranstaltungenLoading = false;
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.loadMannschaft(this.currentVeranstaltung.id);
+    this.loadMitglieder();
     this.loadJahre();
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
@@ -304,5 +372,19 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
     return placeholder;
   }
+
+  /*
+  loadMitglieder:
+  Es stellt einen Request an das Backend um alle Mitglieder in der Datenbank dsb_mitglied zu erhalten
+  und diese dann in dem Array dsbMitglieder zu speichern.
+   */
+  public loadMitglieder() {
+    this.dsbMitgliedDataProvider.findAll()
+              .then((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = response.payload)
+              .catch((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = []);
+  }
+
+
+
 
 }
