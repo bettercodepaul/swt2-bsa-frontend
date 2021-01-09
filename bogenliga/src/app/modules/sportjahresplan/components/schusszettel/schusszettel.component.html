@@ -453,7 +453,7 @@
       <h2>Prüfung der Schützen</h2>
       <br>
       <a class="close" (click)="popupSelberTag =false">&times;</a>
-      <a>Schütze {{passeRueckennummerSelberTag}} hat bereits diesen Wettkampftag in der {{selberTagVeranstaltung.name}} geschossen</a>
+      <a>Schütze {{passeSelberTag}} hat bereits diesen Wettkampftag in der {{selberTagVeranstaltung}} geschossen</a>
       <br>
       <br>
       <button type="submit"(click)="popupSelberTag=false" class="btn btn-primary">OK</button>
@@ -467,7 +467,7 @@
       <h2>Prüfung der Schützen</h2>
       <br>
       <a class="close" (click)="popupAndererTag =false">&times;</a>
-      <a>Schütze {{passeRueckennummerAndererTag}} hat bereits {{andererTagAnzahl}} mal in der {{andererTagVeranstaltung.name}} geschossen</a>
+      <a>Schütze {{passeAndererTag}} hat bereits {{andererTagAnzahl}} mal in der {{andererTagVeranstaltung}} geschossen</a>
       <br>
       <br>
       <button type="submit"(click)="popupAndererTag=false" class="btn btn-primary">OK</button>
