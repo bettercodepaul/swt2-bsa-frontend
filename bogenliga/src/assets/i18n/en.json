@@ -405,6 +405,16 @@
           "ERROR": "Please enter a correct Value"
         },
         "SAVE": "Safe"
+      },
+      "NOTIFICATION": {
+        "EINSTELLUNGEN_ERROR": {
+          "TITLE": "Falsch Eingabe",
+          "DESCRIPTION": {
+            "EMAIL": "Bitte korrekte E-Mail eingeben",
+            "HOST": "Bitte vollständige Hostadresse eingeben",
+            "PORT": "Bitte nur Zahlen eingeben"
+          }
+        }
       }
     }
   },
