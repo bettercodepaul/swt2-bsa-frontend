@@ -139,43 +139,74 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
 
   changevalue($event: MouseEvent) {
+    const notificationUpdateError: Notification = {
+
+      id:          NOTIFICATION_UPDATE_EINSTELLUNG,
+      title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.TITLE',
+      description: '',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+
+    };
 
     this.saveLoading = true;
 
-    this.currentEinstellung.value = this.neucurrentEinstellung.value;
+    const tempEinstellung = this.neucurrentEinstellung.value;
+
+    if (this.currentEinstellung.key === 'SMTPEmail') {
+      let valueArray: string[];
+      valueArray = tempEinstellung.split('@');
+
+      if (valueArray.length < 2 || valueArray[0].length < 3 || valueArray[1].split('.').length < 2) {
+        notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.EMAIL';
+      }
+    } else if (this.currentEinstellung.key === 'SMTPPort') {
+      const portNumber = Number(tempEinstellung);
+      if (isNaN(portNumber)) {
+        notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.PORT';
+      }
+    } else if (this.currentEinstellung.key === 'SMTPHost') {
+      const hostSplit = tempEinstellung.split('.');
+      if (hostSplit.length < 2 || hostSplit[0].length < 1 || hostSplit[1].length < 1) {
+        notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.HOST';
+      }
+    }
+
+    if (notificationUpdateError.description !== '') {
+        this.notificationService.showNotification(notificationUpdateError);
+      } else {
+        this.currentEinstellung.value = this.neucurrentEinstellung.value;
+        this.einstellungenProviderService.update(this.currentEinstellung)
+            .then((response: BogenligaResponse<EinstellungenDO>) => {
+              if (!isNullOrUndefined(response)
+                && !isNullOrUndefined(response.payload)
+                && !isNullOrUndefined(response.payload.id)) {
+              }
 
 
-    this.einstellungenProviderService.update(this.currentEinstellung)
-        .then((response: BogenligaResponse<EinstellungenDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-          }
+              const notificationUpdate: Notification = {
 
+                id:          NOTIFICATION_UPDATE_EINSTELLUNG,
+                title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.TITLE',
+                description: 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.DESCRIPTION',
+                severity:    NotificationSeverity.INFO,
+                origin:      NotificationOrigin.USER,
+                type:        NotificationType.OK,
 
-          const notificationUpdate: Notification = {
+              };
 
-            id:          NOTIFICATION_UPDATE_EINSTELLUNG,
-            title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.TITLE',
-            description: 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.DESCRIPTION',
-            severity:    NotificationSeverity.INFO,
-            origin:      NotificationOrigin.USER,
-            type:        NotificationType.OK,
+              this.notificationService.showNotification(notificationUpdate);
 
-          };
+              const id = this.currentEinstellung.id;
 
-          this.notificationService.showNotification(notificationUpdate);
+              this.navigateToDetailDialog();
 
-          const id = this.currentEinstellung.id;
+            }, (response: BogenligaResponse<EinstellungenDO>) => {
 
-          this.navigateToDetailDialog();
-
-        }, (response: BogenligaResponse<EinstellungenDO>) => {
-
-          this.saveLoading = false;
-        });
-
-
+              this.saveLoading = false;
+            });
+      }
   }
 
  // Aufruf der Funktion wo ein neuer Eintrag erstellt wird
