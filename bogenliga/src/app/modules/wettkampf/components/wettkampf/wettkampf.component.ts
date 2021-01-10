@@ -238,20 +238,43 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   druck
   Öffnet das Fenster um Einzelstatistik zu drucken
    */
-  public druck() {
+  public druck(selectedMannschaft: DsbMannschaftDO) {
+    var originalContents = document.body.innerHTML;
+
     var printContents = document.getElementById("titel").innerHTML;
     printContents += "<br>";
     printContents += document.getElementById("titel2").innerHTML;
     printContents += "<br>";
     printContents += document.getElementById("jahr").innerHTML;
     printContents += "<br>";
+    printContents += "Gesamtstatistik";
+    printContents += "<br>";
+    this.loadGesamtstatistik(this.currentMannschaft);
+    document.getElementById("Table1").classList.remove('hidden');
+    document.getElementById("Table2").classList.remove('hidden');
+    document.getElementById("Table3").classList.remove('hidden');
+    document.getElementById("Table4").classList.remove('hidden');
+    document.getElementById("Table0").classList.remove('hidden');
+    printContents += document.getElementById("Table0").innerHTML;
+    printContents += "<br>";
+    printContents += "Einzelstatsitik";
+    printContents += "<br>";
+    this.loadEinzelstatistik(this.currentMannschaft);
+    document.getElementById("Table1").classList.remove('hidden');
+    document.getElementById("Table2").classList.remove('hidden');
+    document.getElementById("Table3").classList.remove('hidden');
+    document.getElementById("Table4").classList.remove('hidden');
+    document.getElementById("Table0").classList.remove('hidden');
     printContents += document.getElementById("Table1").innerHTML;
     printContents += document.getElementById("Table2").innerHTML;
     printContents += document.getElementById("Table3").innerHTML;
     printContents += document.getElementById("Table4").innerHTML;
-    var originalContents = document.body.innerHTML;
+
+
 
     document.body.innerHTML = printContents;
+
+    //this.loadGesamtstatistik(this.currentMannschaft);
 
     window.print();
 
