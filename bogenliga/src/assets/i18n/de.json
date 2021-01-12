@@ -195,6 +195,9 @@
         },
         "ANZEIGENEinzelDrucken": {
           "LABEL": "Einzelstatistik drucken"
+        },
+        "ANZEIGENEinzelGesamtDrucken": {
+          "LABEL": "Gesamtstatistik drucken"
         }
       },
       "FORM": {

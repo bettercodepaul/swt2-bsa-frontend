@@ -103,8 +103,15 @@
       <!-- Button - Einzelstatistik Drucken -->
       <bla-button class = "hidden" id = "druckButton"
         [id]="'showResultsButton'"
-        (onClick)="druck(this.currentMannschaft);">
+        (onClick)="einzeldruck();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelDrucken.LABEL' | translate }}
+      </bla-button>
+
+      <!-- Button - Einzelstatistik Drucken -->
+      <bla-button class = "hidden" id = "gesamtdruckButton"
+                  [id]="'showResultsButton'"
+                  (onClick)="gesamtdruck();">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamtDrucken.LABEL' | translate }}
       </bla-button>
     </div>
 <!-- popup -->
