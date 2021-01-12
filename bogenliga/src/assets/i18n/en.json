@@ -408,11 +408,11 @@
       },
       "NOTIFICATION": {
         "EINSTELLUNGEN_ERROR": {
-          "TITLE": "Falsch Eingabe",
+          "TITLE": "Wrong Input",
           "DESCRIPTION": {
-            "EMAIL": "Bitte korrekte E-Mail eingeben",
-            "HOST": "Bitte vollständige Hostadresse eingeben",
-            "PORT": "Bitte nur Zahlen eingeben"
+            "EMAIL": "Please enter a correct E-Mail address",
+            "HOST": "Please enter a full Host address",
+            "PORT": "Only numbers are allowed"
           }
         }
       }
