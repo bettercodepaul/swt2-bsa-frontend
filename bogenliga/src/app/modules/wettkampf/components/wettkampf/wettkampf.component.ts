@@ -147,6 +147,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     document.getElementById('druckButton').classList.add('hidden');
+    document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
 
   /* loadEinzelstatistik
@@ -180,7 +181,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     document.getElementById('druckButton').classList.remove('hidden');
-
+    document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
 
   /* loadGesamtstatistik
@@ -214,7 +215,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
 
 
-    document.getElementById('druckButton').classList.remove('hidden');
+    document.getElementById('druckButton').classList.add('hidden');
+    document.getElementById('gesamtdruckButton').classList.remove('hidden');
 
   }
 
@@ -235,50 +237,88 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /*
-  druck
+  einzeldruck
   Öffnet das Fenster um Einzelstatistik zu drucken
    */
-  public druck(selectedMannschaft: DsbMannschaftDO) {
-    var originalContents = document.body.innerHTML;
+  public einzeldruck() {
 
-    var printContents = document.getElementById("titel").innerHTML;
+    let printContents = "<h2>Einzelstatistik</h2>";
+    printContents += "<br>";
+    printContents += document.getElementById("titel").innerHTML;
     printContents += "<br>";
     printContents += document.getElementById("titel2").innerHTML;
     printContents += "<br>";
     printContents += document.getElementById("jahr").innerHTML;
+    printContents += "<br><br>";
+    printContents += "<h3>Wettkampftag 1</h3>";
+    printContents += document.getElementById("row01").innerHTML;
+    printContents += "<br><h3>Wettkampftag 2</h3>";
+    printContents += document.getElementById("row11").innerHTML;
+    printContents += "<br><h3>Wettkampftag 3</h3>";
+    printContents += document.getElementById("row21").innerHTML;
+    printContents += "<br><h3>Wettkampftag 4</h3>";
+    printContents += document.getElementById("row31").innerHTML;
+
+    var htmlToPrint = '' +
+      '<style type="text/css">' +
+      'table th, table td {' +
+      'padding: 5px; ' +
+      '}' +
+      ' #walkheader{border-left: none!important; border-right: none!important;}' +
+      ' #Table1{padding: 4px; border-collapse:collapse; font; font-size:12pt;}' +
+      ' #printHeader2 td{ border-bottom: solid black 1px; border-right: solid black 1px!important; }' +
+      ' td{ border-bottom: solid black 1px; border-right: solid black 1px!important; border-left: solid black 1px!important; }' +
+      '</style>';
+    htmlToPrint += printContents;
+    var printWindow = window.open('', '', 'height=800,width=800');
+    printWindow.document.write('<html><head><title>Wettkampfergebnisse</title>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write(htmlToPrint);
+    printWindow.document.write('<script>var spans = document.getElementsByTagName("fa-icon");  for (var i = 0; i<spans.length; i++) {' +
+      ' spans[i].style.display = "none" };  </script>')
+    printWindow.document.write('</body></html>');
+    printWindow.print();
+    printWindow.document.close();
+  }
+
+
+  /*
+   gesamtdruck
+   Öffnet das Fenster um Gesamtstatistik zu drucken
+   */
+
+  public gesamtdruck() {
+
+    let printContents = "<h2>Gesamtstatistik</h2>";
     printContents += "<br>";
-    printContents += "Gesamtstatistik";
+    printContents += document.getElementById("titel").innerHTML;
     printContents += "<br>";
-    this.loadGesamtstatistik(this.currentMannschaft);
-    document.getElementById("Table1").classList.remove('hidden');
-    document.getElementById("Table2").classList.remove('hidden');
-    document.getElementById("Table3").classList.remove('hidden');
-    document.getElementById("Table4").classList.remove('hidden');
-    document.getElementById("Table0").classList.remove('hidden');
+    printContents += document.getElementById("titel2").innerHTML;
+    printContents += "<br>";
+    printContents += document.getElementById("jahr").innerHTML;
+    printContents += "<br><br>";
     printContents += document.getElementById("Table0").innerHTML;
-    printContents += "<br>";
-    printContents += "Einzelstatsitik";
-    printContents += "<br>";
-    this.loadEinzelstatistik(this.currentMannschaft);
-    document.getElementById("Table1").classList.remove('hidden');
-    document.getElementById("Table2").classList.remove('hidden');
-    document.getElementById("Table3").classList.remove('hidden');
-    document.getElementById("Table4").classList.remove('hidden');
-    document.getElementById("Table0").classList.remove('hidden');
-    printContents += document.getElementById("Table1").innerHTML;
-    printContents += document.getElementById("Table2").innerHTML;
-    printContents += document.getElementById("Table3").innerHTML;
-    printContents += document.getElementById("Table4").innerHTML;
 
-
-
-    document.body.innerHTML = printContents;
-
-    //this.loadGesamtstatistik(this.currentMannschaft);
-
-    window.print();
-
-    document.body.innerHTML = originalContents;
+    var htmlToPrint = '' +
+      '<style type="text/css">' +
+      'table th, table td {' +
+      'padding: 5px; ' +
+      '}' +
+      ' #walkheader{border-left: none!important; border-right: none!important;}' +
+      ' #Table1{padding: 4px; border-collapse:collapse; font; font-size:12pt;}' +
+      ' #printHeader2 td{ border-bottom: solid black 1px; border-right: solid black 1px!important; }' +
+      ' td{ border-bottom: solid black 1px; border-right: solid black 1px!important; border-left: solid black 1px!important; }' +
+      '</style>';
+    htmlToPrint += printContents;
+    var printWindow = window.open('', '', 'height=800,width=800');
+    printWindow.document.write('<html><head><title>Wettkampfergebnisse</title>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write(htmlToPrint);
+    printWindow.document.write('<script>var spans = document.getElementsByTagName("fa-icon");  for (var i = 0; i<spans.length; i++) {' +
+      ' spans[i].style.display = "none" };  </script>')
+    printWindow.document.write('</body></html>');
+    printWindow.print();
+    printWindow.document.close();
   }
 
   /**
