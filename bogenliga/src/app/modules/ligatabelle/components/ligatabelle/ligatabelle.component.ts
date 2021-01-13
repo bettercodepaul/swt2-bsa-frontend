@@ -44,14 +44,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
   public selectedVeranstaltungId: number;
   public selectedVeranstaltungName: string;
-  private selectedVeranstaltung: VeranstaltungDO;
   public selectedDTOs: VeranstaltungDO[];
   public multipleSelections = true;
   public veranstaltungen: VeranstaltungDO[];
-  public loadingYear: boolean;
   public ligen: LigaDO[];
   public selectedLigen: LigaDO[];
-  public zwVeranstaltung: VeranstaltungDTO;
   public loadingVeranstaltungen = true;
   public loadingLigatabelle = false;
   public rowsLigatabelle: TableRow[];
