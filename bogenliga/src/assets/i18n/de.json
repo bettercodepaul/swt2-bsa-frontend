@@ -434,8 +434,8 @@
       "TITLE": "Einstellungen - Übersicht",
       "TABLE": {
         "HEADERS": {
-          "KEY": "KEY",
-          "VALUE": "VALUE"
+          "KEY": "Schlüssel",
+          "VALUE": "Wert"
         }
       },
       "NOTIFICATION": {
