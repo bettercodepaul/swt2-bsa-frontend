@@ -191,10 +191,13 @@
           "LABEL": "Show individual statistics"
         },
         "ANZEIGENEinzelGesamt": {
-          "LABEL": "Show over all statistics of individual"
+          "LABEL": "Show overall statistics of individual"
         },
         "ANZEIGENEinzelDrucken": {
-          "LABEL": "Print individual statistic"
+          "LABEL": "Print individual statistics"
+        },
+        "ANZEIGENEinzelGesamtDrucken": {
+          "LABEL": "Print overall statistics"
         }
     },
       "FORM": {
@@ -365,26 +368,26 @@
     }
   },
   "MANAGEMENT": {
-    "EINSTELLUNGEN": {
+    "EINSTELLUNG": {
       "TITLE": "Settings - Overview",
-      "FORM": {
-        "EINTRAG": {
-          "LABEL": "Create Setting",
-          "PLACEHOLDER": "Create New Setting",
-          "ERROR": "Please enter a valid setting"
+      "TABLE": {
+        "HEADERS": {
+          "KEY": "Key",
+          "VALUE": "Value"
         }
       },
       "NOTIFICATION": {
-        "SAVE": {
-          "TITLE": "Success",
-          "DESCRIPTION": "The setting was created"
-        },
-        "DUPLICATE": {
-          "TITLE": "Fail",
-          "DESCRIPTION": "The setting was not created"
+        "DELETE": {
+          "TITLE": "delete settings",
+          "DESCRIPTION": "deleted setting successfully"
         }
+      },
+      "DUPLICATE": {
+        "TITLE": "Fail",
+        "DESCRIPTION": "The setting was not created"
       }
     },
+
 
     "EINSTELLUNGEN_DETAIL": {
       "TITLE": "Setting - Detail",
@@ -459,8 +462,8 @@
         },
 
       "EINSTELLUNG": {
-        "LABEL": "einstellungen",
-        "DESCRIPTION": "Management of einstellungen"
+        "LABEL": "settings",
+        "DESCRIPTION": "Management of settings"
 
       }
     },

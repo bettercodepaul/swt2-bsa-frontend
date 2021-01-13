@@ -66,7 +66,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   gesamt = false;
 
 
-  isTableEmpty: Array<boolean> = [].fill(false,0,this.rows.length - 1);
+  isTableEmpty: Array<boolean> = [].fill(false, 0 , this.rows.length - 1);
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -139,9 +139,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i]))));
     }
 
-    //This loop saves that the table is either empty or not. If table empty -> don't show on frontend
-    for(let i = 0; i < this.rows.length - 1; i++) {
-      if(this.rows[i].length > 0) {
+    // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
+    for (let i = 0; i < this.rows.length - 1; i++) {
+      if (this.rows[i].length > 0) {
         this.isTableEmpty[i] = true;
       }
     }
@@ -242,24 +242,27 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    */
   public einzeldruck() {
 
-    let printContents = "<h2>Einzelstatistik</h2>";
-    printContents += "<br>";
-    printContents += document.getElementById("titel").innerHTML;
-    printContents += "<br>";
-    printContents += document.getElementById("titel2").innerHTML;
-    printContents += "<br>";
-    printContents += document.getElementById("jahr").innerHTML;
-    printContents += "<br><br>";
-    printContents += "<h3>Wettkampftag 1</h3>";
-    printContents += document.getElementById("row01").innerHTML;
-    printContents += "<br><h3>Wettkampftag 2</h3>";
-    printContents += document.getElementById("row11").innerHTML;
-    printContents += "<br><h3>Wettkampftag 3</h3>";
-    printContents += document.getElementById("row21").innerHTML;
-    printContents += "<br><h3>Wettkampftag 4</h3>";
-    printContents += document.getElementById("row31").innerHTML;
+    let printContents = '<h2>Einzelstatistik</h2>';
+    printContents += '<br>';
+    printContents += document.getElementById('titel').innerHTML;
+    printContents += '<br>';
+    printContents += document.getElementById('titel2').innerHTML;
+    printContents += '<br>';
+    printContents += document.getElementById('jahr').innerHTML;
+    printContents += '<br><br>';
+    let count = 1;
+    for (let i = 0; i < 4; i++) {
+      let rowNumber = 'row';
+      rowNumber += i + '1';
+      if (this.isTableEmpty[i]) {
+        printContents += '<h3>Wettkampftag  ' + count + ' </h3>';
+        printContents += document.getElementById(rowNumber).innerHTML;
+        count += 1;
+      }
+    }
 
-    var htmlToPrint = '' +
+
+    let htmlToPrint = '' +
       '<style type="text/css">' +
       'table th, table td {' +
       'padding: 5px; ' +
@@ -270,12 +273,12 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       ' td{ border-bottom: solid black 1px; border-right: solid black 1px!important; border-left: solid black 1px!important; }' +
       '</style>';
     htmlToPrint += printContents;
-    var printWindow = window.open('', '', 'height=800,width=800');
+    const printWindow = window.open('', '', 'height=800,width=800');
     printWindow.document.write('<html><head><title>Wettkampfergebnisse</title>');
     printWindow.document.write('</head><body >');
     printWindow.document.write(htmlToPrint);
     printWindow.document.write('<script>var spans = document.getElementsByTagName("fa-icon");  for (var i = 0; i<spans.length; i++) {' +
-      ' spans[i].style.display = "none" };  </script>')
+      ' spans[i].style.display = "none" };  </script>');
     printWindow.document.write('</body></html>');
     printWindow.print();
     printWindow.document.close();
@@ -289,17 +292,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   public gesamtdruck() {
 
-    let printContents = "<h2>Gesamtstatistik</h2>";
-    printContents += "<br>";
-    printContents += document.getElementById("titel").innerHTML;
-    printContents += "<br>";
-    printContents += document.getElementById("titel2").innerHTML;
-    printContents += "<br>";
-    printContents += document.getElementById("jahr").innerHTML;
-    printContents += "<br><br>";
-    printContents += document.getElementById("Table0").innerHTML;
+    let printContents = '<h2>Gesamtstatistik</h2>';
+    printContents += '<br>';
+    printContents += document.getElementById('titel').innerHTML;
+    printContents += '<br>';
+    printContents += document.getElementById('titel2').innerHTML;
+    printContents += '<br>';
+    printContents += document.getElementById('jahr').innerHTML;
+    printContents += '<br><br>';
+    printContents += document.getElementById('Table0').innerHTML;
 
-    var htmlToPrint = '' +
+    let htmlToPrint = '' +
       '<style type="text/css">' +
       'table th, table td {' +
       'padding: 5px; ' +
@@ -310,12 +313,12 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       ' td{ border-bottom: solid black 1px; border-right: solid black 1px!important; border-left: solid black 1px!important; }' +
       '</style>';
     htmlToPrint += printContents;
-    var printWindow = window.open('', '', 'height=800,width=800');
+    const printWindow = window.open('', '', 'height=800,width=800');
     printWindow.document.write('<html><head><title>Wettkampfergebnisse</title>');
     printWindow.document.write('</head><body >');
     printWindow.document.write(htmlToPrint);
     printWindow.document.write('<script>var spans = document.getElementsByTagName("fa-icon");  for (var i = 0; i<spans.length; i++) {' +
-      ' spans[i].style.display = "none" };  </script>')
+      ' spans[i].style.display = "none" };  </script>');
     printWindow.document.write('</body></html>');
     printWindow.print();
     printWindow.document.close();
