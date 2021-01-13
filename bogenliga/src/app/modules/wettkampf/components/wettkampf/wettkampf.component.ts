@@ -203,7 +203,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.veranstaltungen = response.payload;
     if (this.directWettkampf != null) {
       for (const i of this.veranstaltungen) {
-        if (this.directWettkampf === i.ligaId) {
+        if (this.directWettkampf === i.id) {
           this.currentVeranstaltung = i;
           break;
         }
