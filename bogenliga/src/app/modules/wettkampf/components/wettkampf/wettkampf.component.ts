@@ -66,7 +66,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   gesamt = false;
 
 
-  isTableEmpty: Array<boolean> = [].fill(false, 0 , this.rows.length - 1);
+  isTableEmpty: Array<boolean> = [false, false, false, false];
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -140,7 +140,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
-    for (let i = 0; i < this.rows.length - 1; i++) {
+    for (let i = 0; i < this.rows.length; i++) {
       if (this.rows[i].length > 0) {
         this.isTableEmpty[i] = true;
       }
