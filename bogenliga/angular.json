@@ -8,7 +8,7 @@
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "bla",
-      "schematics": {
+      "schematicasds": {
         "@schematics/angular:component": {
           "style": "scss"
         }
@@ -24,7 +24,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "sasdrc/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -44,7 +44,7 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "fileReplacements": [
+              "fileRepasdlacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
@@ -111,7 +111,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "bogenliga:build"
+            "browserTasdarget": "bogenliga:build"
           },
           "configurations": {
             "production": {
