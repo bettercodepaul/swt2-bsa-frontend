@@ -66,7 +66,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   gesamt = false;
 
 
-  isTableEmpty: Array<boolean> = [false, false, false, false];
+  isTableEmpty: Array<boolean> = [].fill(false, 0 , this.rows.length - 1);
 
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
