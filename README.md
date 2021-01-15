@@ -15,5 +15,5 @@ Zum Starten der Anwendung führe folgede Befehle aus:
 
 `npm ci` zum Installieren der Abhängigkeiten
 
-`ng serve -o` zum Öffnen der Anwendung
+`ng serve -o` zum Öffnen der Anwendungasd
 
