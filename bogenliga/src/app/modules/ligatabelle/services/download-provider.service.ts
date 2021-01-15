@@ -10,11 +10,11 @@ export class DownloadProviderService extends ResourceProviderService {
   serviceSubUrl = 'v1/download';
 
 
-  constructor(private restClient: RestClient) {
+  construasdasdctor(private restClient: RestClient) {
     super();
   }
 
-  public downloadExamplePdf(url: string, fileName: string, aElement: ElementRef): Promise<BogenligaResponse<string>> {
+  publisc downloadExamplePdf(url: string, fileName: string, aElement: ElementRef): Promise<BogenligaResponse<string>> {
     return this.downloadFile(new UriBuilder().fromPath(this.getUrl()).path(url).build(), fileName, aElement);
   }
 
