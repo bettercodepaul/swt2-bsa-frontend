@@ -18,7 +18,7 @@ export class WettkampfErgebnisService {
   public veranstaltung: VeranstaltungDO;
   public sportjahr: number;
   public match: number;
-
+  public matchCount: number;
 
 
   // Output
@@ -223,20 +223,20 @@ export class WettkampfErgebnisService {
    */
   public getPfeilwertProMatch(matchNr: number, dsbMitgliedId: number): number {
     let pfeilwertSummeMatch = 0;
-    let count = 0;
+    this.matchCount = 0;
     const filteredPasse: Array<PasseDoClass> = this.passen.filter((passe) => {
       return passe.matchNr === matchNr && passe.dsbMitgliedId === dsbMitgliedId;
     });
     for (const passe of filteredPasse) {
       for (const ringzahl of passe.ringzahl) {
         if (ringzahl !== null) {
-          count++;
+          this.matchCount++;
           pfeilwertSummeMatch += ringzahl;
         }
       }
     }
-    if (count !== 0) {
-      pfeilwertSummeMatch = pfeilwertSummeMatch / count;
+    if (this.matchCount !== 0) {
+      pfeilwertSummeMatch = pfeilwertSummeMatch / this.matchCount;
     }
     return pfeilwertSummeMatch;
   }
@@ -301,7 +301,10 @@ export class WettkampfErgebnisService {
     let count = 0;
     for (const match of this.matches) {
       pfeilwertSumme += this.getPfeilwertProMatch(match.nr, dsbMitgliedId);
-      count++;
+      if (this.matchCount !== 0) {
+        count++;
+      }
+
     }
     if (count !== 0) {
       pfeilwertSumme = pfeilwertSumme / count;
