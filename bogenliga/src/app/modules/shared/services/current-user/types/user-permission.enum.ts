@@ -87,7 +87,8 @@ export enum UserPermission {
   CAN_MODIFY_VEREIN_DSBMITGLIEDER,
 
   CAN_DELETE_MANNSCHAFT,
-  CAN_MODIFY_MANNSCHAFT
+  CAN_MODIFY_MANNSCHAFT,
 
-
+  //This is a specific LIGALEITER Permission for allowing the function 'Benutzer anlegen'
+  CAN_MODIFY_SYSTEMDATEN_LIGALEITER
 }
