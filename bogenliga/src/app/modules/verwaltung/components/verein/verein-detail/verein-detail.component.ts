@@ -104,7 +104,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
     // persist
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
-
+    // check if website has http:// in it. If not then add it
+    if(this.currentVerein.website.search('http://')){
+      this.currentVerein.website = 'http://' + this.currentVerein.website;
+    }
     console.log('Saving verein: ', this.currentVerein);
 
     this.vereinProvider.create(this.currentVerein)
@@ -148,6 +151,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
     // persist
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
+    // check if website has http:// in it. If not then add it
+    if(this.currentVerein.website.search('http://')){
+      this.currentVerein.website = 'http://' + this.currentVerein.website;
+    }
 
     this.vereinProvider.update(this.currentVerein)
         .then((response: BogenligaResponse<VereinDO>) => {

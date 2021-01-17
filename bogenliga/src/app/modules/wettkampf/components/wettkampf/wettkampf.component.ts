@@ -47,6 +47,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public currentVerein: VereinDO = new VereinDO();
   public multipleSelections = true;
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
@@ -56,11 +57,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
 
-
   popup: boolean;
-
-  public currentVerein: VereinDO = new VereinDO();
-
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
