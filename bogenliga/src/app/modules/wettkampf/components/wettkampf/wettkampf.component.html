@@ -4,8 +4,8 @@
 <bla-common-dialog [config]="config" >
   <form id="regionenForm"
         class="horizontal-form half-page">
-    <h3 class="print1">{{getTitle()}}</h3>
-    <h3 class="print1">{{currentVeranstaltung.name}}</h3>
+    <h3 class="print1" id="titel">{{getTitle()}}</h3>
+    <h3 class="print1" id="titel2">{{currentVeranstaltung.name}}</h3>
 
     <!-- Die Texte werden in der de.json Datei gesetzt-->
     <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
@@ -33,7 +33,7 @@
     </div>
 
     <!-- Mannschaft -->
-    <div id="selectVerein" class=" print1">
+    <div id="selectVerein">
       <div class="row">
         <label class="col-sm-1 col-form-label">
           <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
@@ -164,22 +164,36 @@
       <!-- Button - Aktuelle Mannschaft anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
+        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadPopup(this.currentMannschaft);">
+        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
+      </bla-button>
+      &nbsp;
+      <!-- Button - Einzelstatistik Gesamt anzeigen -->
+      <bla-button
+        [id]="'showResultsButton'"
+        (onClick)="gesamt = true; loadPopup(this.currentMannschaft);">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik Drucken -->
       <bla-button class = "hidden" id = "druckButton"
         [id]="'showResultsButton'"
-        (onClick)="druck();">
+        (onClick)="einzeldruck();">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelDrucken.LABEL' | translate }}
+      </bla-button>
+
+      <!-- Button - Einzelstatistik Drucken -->
+      <bla-button class = "hidden" id = "gesamtdruckButton"
+                  [id]="'showResultsButton'"
+                  (onClick)="gesamtdruck();">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamtDrucken.LABEL' | translate }}
       </bla-button>
     </div>
 <!-- popup -->
@@ -201,9 +215,20 @@
       </div>
     </div>
 
+    <!-- Row Gesamtstatistik -->
+    <div class="row print1">
+      <div id="Table0" class="hidden">
+        <h3>{{"Gesamtstatistik pro Schütze"}}</h3>
+        <bla-data-table id="row00"
+                        [loading]="loadingData"
+                        [config]="config_einzelGesamt_table"
+                        [rows]="rows[0]">
+        </bla-data-table>
+      </div>
+    </div>
     <!-- Row 1 -->
     <div class="row print1">
-      <div id="Table1">
+      <div id="Table1" class="hidden" [hidden]="!isTableEmpty[0]">
         <h3>{{"Wettkampftag 1"}}</h3>
         <bla-data-table id="row0"
                         [loading]="loadingData"
@@ -217,48 +242,51 @@
         </bla-data-table>
       </div>
     </div>
+    <!-- Row 2 -->
     <div class="row print1">
-      <div id="Table2">
+      <div id="Table2" class="hidden" [hidden]="!isTableEmpty[1]">
         <h3>{{"Wettkampftag 2"}}</h3>
         <bla-data-table id="row1"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[1]">
+                        [rows]="rows[0]">
         </bla-data-table>
         <bla-data-table id="row11" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[1]">
+                        [rows]="rows[0]">
         </bla-data-table>
       </div>
     </div>
+    <!-- Row 3 -->
     <div class="row print1">
-      <div id="Table3">
+      <div id="Table3" class="hidden" [hidden]="!isTableEmpty[2]">
         <h3>{{"Wettkampftag 3"}}</h3>
         <bla-data-table id="row2"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[2]">
+                        [rows]="rows[0]">
         </bla-data-table>
         <bla-data-table id="row21" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[2]">
+                        [rows]="rows[0]">
         </bla-data-table>
       </div>
     </div>
+    <!-- Row 4 -->
     <div class="row print1">
-      <div id="Table4">
+      <div id="Table4" class="hidden" [hidden]="!isTableEmpty[3]">
         <h3>{{"Wettkampftag 4"}}</h3>
         <bla-data-table id="row3"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[3]">
+                        [rows]="rows[0]">
         </bla-data-table>
         <bla-data-table id="row31" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[3]">
+                        [rows]="rows[0]">
         </bla-data-table>
       </div>
     </div>
