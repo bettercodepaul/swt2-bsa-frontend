@@ -138,6 +138,18 @@
             <textarea class="form-control" readonly>{{this.currentVerein.description}}</textarea>
         </div>
       </div>
+
+      <!-- Vereinslogo -->
+      <div class="row print1">
+        <label class="col-sm-1 col-form-label">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-8">
+          <img src="{{this.currentVerein.icon}}"
+               alt="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.ERROR_PLACEHOLDER' | translate }}"
+               width="100" height="100"/>
+        </div>
+      </div>
     </div>
 
     <!-- Button -->
