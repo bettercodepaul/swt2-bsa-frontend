@@ -16,6 +16,7 @@ import {NotificationService} from '@shared/services/notification';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 
+
 const ID_PATH_PARAM = 'id';
 
 
@@ -76,33 +77,43 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM] , 10);
-        console.log(this.providedID);
+        console.log("Provided Id "+this.providedID);
         this.hasID = true;
+
       } else {
         console.log('no params');
       }
     });
-    console.log(this.selectedLigaId);
+    //this.selectedLigaId=this.providedID;
+    console.log("SelectedLigaID " +this.selectedLigaId);
     this.loadLigen();
   }
 
   private changeSelectedLiga(): void {
+    console.log("Bin im changeSelectedLiga")
     this.selectedLigen = [];
     if (this.hasID) {
       this.ligaDataProviderService.findById(this.selectedLigaId)
+
           .then((response: BogenligaResponse<LigaDTO>) =>
             this.getLigaSuccess(response.payload)
           ).catch((response: BogenligaResponse<LigaDTO[]>) => {
         this.ligen = response.payload;
+        console.log("This.LIGEN : " +this.ligen);
       });
     }
+
     this.selectedLigen.push(this.selectedLiga);
-    console.log('CurrentLiga: ' + this.selectedLiga);
+    console.log('SelectedLiga ' + this.selectedLiga.id);
+    console.log('CurrentLiga: ' + this.selectedLiga.id);
   }
   private getLigaSuccess(response: LigaDTO) {
     console.log('response in getLiga: ' + response.name);
     this.selectedLiga = response;
   }
+
+
+
 
 
   public onSelectLiga($event: LigaDO[]): void {
@@ -144,25 +155,40 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.loadLigaTableRows();
     }
   }
-
-
 // backend-call to get the list of veranstaltungen
-  private loadVeranstaltungen(): void {
+   private loadVeranstaltungen(): void {
     this.veranstaltungen = [];
+   // this.selectedLiga = '';
+    //this.selectedLigaId = null;
+
     this.veranstaltungsDataProvider.findAll()
         .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
                                                                     buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload; this.onSelect(this.veranstaltungen);
                                                                     this.loadingVeranstaltungen = false; })
         .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
   }
-  // Load all Ligen into the Tabel and strats the selection from the chosen.
+
+     // Load all Ligen into the Tabel and strats the selection from the chosen.
   private loadLigen(): void {
     this.ligen = [];
     this.ligaDataProviderService.findAll()
         .then((response: BogenligaResponse<LigaDTO[]>) => {
           const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-          buttonVisibility.style.display = 'none'; this.ligen = response.payload; this.selectedLiga = response.payload[0];
-          this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id; console.log(this.selectedLigaId);
+          buttonVisibility.style.display = 'none';
+          this.ligen = response.payload;
+          console.log("Ligen "+ this.ligen[0],this.ligen[1],this.ligen[2],this.ligen[3]);
+          console.log("prov " + this.providedID)
+
+          //Ermittlung der veranstaltungsid
+          let id;
+          for (let i =0; i<this.ligen.length;i++){
+            if (this.ligen[i].id == this.providedID){
+              id = i;
+            }
+          }
+          //Die ermittelte id wird in den selektiereten veranstaltung geschrieben
+          this.selectedLiga = response.payload[id];
+          this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id;
           this.changeSelectedLiga();
           this.onSelectLiga(this.selectedLigen);
           this.loadingVeranstaltungen = false; })
