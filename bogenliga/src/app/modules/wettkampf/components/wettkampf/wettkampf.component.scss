@@ -47,4 +47,6 @@
   display: none;
 }
 
-
+textarea[readonly]{
+  background-color: white;
+}
