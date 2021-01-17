@@ -10,5 +10,5 @@ export class VereinDO implements VersionedDataObject {
   regionName: string;
   website: string;
   description: string;
-  icon: string;// | ArrayBuffer;
+  icon: string;
 }
