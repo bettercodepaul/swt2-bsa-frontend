@@ -70,6 +70,88 @@
         </div>
       </div>
     </div>
+
+    <!--
+    <div id="vereinsinformationen" class="hidden">
+      <h3>Vereinsinformationen</h3>
+      <div>Vereinsname: {{this.currentVerein.name}}</div>
+      <div>Vereinsnummer: {{this.currentVerein.identifier}}</div>
+      <div>Regionname: {{this.currentVerein.regionName}}</div>
+      <div>Webseite: <a href="{{this.currentVerein.website}}">Webseite</a></div>
+      <div>Freitext: {{this.currentVerein.description}}</div>
+    </div>
+    -->
+
+    <br>
+    <div id="vereinsinformationen" class="hidden">
+      <h3>{{ 'MANAGEMENT.VEREIN_DETAIL.TITLE' | translate }}</h3>
+      <!-- Vereinsname -->
+      <div class="row print1">
+        <label class="col-sm-1 col-form-label">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-8">
+          <div class="form-control">
+            <div>{{this.currentVerein.name}}</div>
+          </div>
+        </div>
+      </div>
+      <!-- Vereinsnummer -->
+      <div class="row print1">
+        <label class="col-sm-1 col-form-label">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-8">
+          <div class="form-control">
+            <div>{{this.currentVerein.identifier}}</div>
+          </div>
+        </div>
+      </div>
+      <!-- Regionsname -->
+      <div class="row print1">
+        <label class="col-sm-1 col-form-label">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-8">
+          <div class="form-control">
+            <div>{{this.currentVerein.regionName}}</div>
+          </div>
+        </div>
+      </div>
+      <!-- Webseite -->
+      <div class="row print1">
+        <label class="col-sm-1 col-form-label">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-8">
+          <div class="form-control">
+            <div><a href="{{this.currentVerein.website}}">{{this.currentVerein.website}}</a></div>
+          </div>
+        </div>
+      </div>
+      <!-- Freitext -->
+      <div class="row print1">
+        <label class="col-sm-1 col-form-label">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-8">
+            <textarea class="form-control" readonly>{{this.currentVerein.description}}</textarea>
+        </div>
+      </div>
+
+      <!-- Vereinslogo -->
+      <div class="row print1">
+        <label class="col-sm-1 col-form-label">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-8">
+          <img src="{{this.currentVerein.icon}}"
+               alt="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.ERROR_PLACEHOLDER' | translate }}"
+               width="100" height="100"/>
+        </div>
+      </div>
+    </div>
+
     <!-- Button -->
     <div id="Button">
       <!-- Button - Alle Mannschaften anzeigen -->
@@ -127,16 +209,11 @@
       </div>
     </div>
 
-
-
-
     <div class="col-sm-9">
       <div class="invalid-feedback">
         {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
       </div>
     </div>
-
-
 
     <!-- Row Gesamtstatistik -->
     <div class="row print1">
