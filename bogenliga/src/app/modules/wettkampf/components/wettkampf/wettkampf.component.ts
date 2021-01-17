@@ -164,6 +164,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         this.passen[i]))));
     }
 
+
     document.getElementById('druckButton').classList.remove('hidden');
 
   }
@@ -326,5 +327,4 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
     return placeholder;
   }
-
 }
