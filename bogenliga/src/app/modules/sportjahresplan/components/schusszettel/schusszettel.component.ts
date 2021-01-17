@@ -385,9 +385,6 @@ export class SchusszettelComponent implements OnInit {
   }
 
   save() {
-    console.log('Methoden Aufruf');
-    this.checkSchuetze(this.match1);
-    this.checkSchuetze(this.match2);
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
@@ -493,6 +490,9 @@ export class SchusszettelComponent implements OnInit {
           });
       this.dirtyFlag = false; // Daten gespeichert
     }
+    console.log('Methoden Aufruf');
+    this.checkSchuetze(this.match1);
+    this.checkSchuetze(this.match2);
   }
 
   // zurueck zu Sportjahresplan
