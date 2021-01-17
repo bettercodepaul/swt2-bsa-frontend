@@ -207,12 +207,12 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   public readThis(inputValue: any): void {
-    var file:File = inputValue.files[0];
-    var myReader:FileReader = new FileReader();
+    const file: File = inputValue.files[0];
+    const myReader: FileReader = new FileReader();
 
     myReader.onloadend = (e) => {
       this.currentVerein.icon = String(myReader.result);
-    }
+    };
 
     myReader.readAsDataURL(file);
   }
