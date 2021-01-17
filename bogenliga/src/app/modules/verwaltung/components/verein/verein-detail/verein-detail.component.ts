@@ -105,8 +105,8 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     // persist
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
     // check if website has http:// in it. If not then add it
-    if(!this.currentVerein.website === undefined){
-      if(this.currentVerein.website.search('http://')){
+    if (!this.currentVerein.website === undefined) {
+      if (this.currentVerein.website.search('http://')) {
         this.currentVerein.website = 'http://' + this.currentVerein.website;
       }
     }
@@ -155,7 +155,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     // persist
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
     // check if website has http:// in it. If not then add it
-    if(this.currentVerein.website !== "") {
+    if (this.currentVerein.website !== '') {
       if (this.currentVerein.website.search('http://')) {
         this.currentVerein.website = 'http://' + this.currentVerein.website;
       }
