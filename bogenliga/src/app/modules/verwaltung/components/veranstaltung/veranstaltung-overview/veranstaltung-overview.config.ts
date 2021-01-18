@@ -1,9 +1,8 @@
-import {NavigationDialogConfig, OverviewDialogConfig} from '@shared/components';
+import {OverviewDialogConfig} from '@shared/components';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {TableColumnSortOrder} from '@shared/components/tables/types/table-column-sort-order.enum';
 import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
 import {UserPermission} from '@shared/services';
-import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
 export const VERANSTALTUNG_OVERVIEW_TABLE_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -52,5 +51,5 @@ export const VERANSTALTUNG_OVERVIEW_TABLE_CONFIG: OverviewDialogConfig = {
     editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
   },
-  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN],
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN, UserPermission.CAN_CREATE_STAMMDATEN_LIGALEITER],
 };
