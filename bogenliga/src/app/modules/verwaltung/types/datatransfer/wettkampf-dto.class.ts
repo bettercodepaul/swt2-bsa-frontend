@@ -13,7 +13,6 @@ export class WettkampfDTO implements DataTransferObject {
   wettkampfTypId: number;
   version: number;
   wettkampfAusrichter: number;
-  kampfrichterID: number;
 
   constructor(id?: number,
               wettkampfVeranstaltungsId?: number,
@@ -37,7 +36,6 @@ export class WettkampfDTO implements DataTransferObject {
     this.wettkampfTypId = !!wettkampfTypId ? wettkampfTypId : null;
     this.version = !!version ? version : null;
     this.wettkampfAusrichter = !!wettkampfAusrichter ? wettkampfAusrichter : null;
-    this.kampfrichterID = !!kampfrichterID ? kampfrichterID : null;
   }
 
 
@@ -52,7 +50,6 @@ export class WettkampfDTO implements DataTransferObject {
     wettkampfTypId ?: number;
     version ?: number;
     wettkampfAusrichter ?: number;
-    kampfrichterID ?: number;
   } = {}): WettkampfDTO {
     const copy = new WettkampfDTO();
 
@@ -91,11 +88,6 @@ export class WettkampfDTO implements DataTransferObject {
       copy.wettkampfAusrichter = optional.wettkampfAusrichter;
     } else {
       copy.wettkampfAusrichter = null;
-    }
-    if (optional.kampfrichterID >= 0) {
-      copy.kampfrichterID = optional.kampfrichterID;
-    } else {
-      copy.kampfrichterID = null;
     }
 
     return copy;

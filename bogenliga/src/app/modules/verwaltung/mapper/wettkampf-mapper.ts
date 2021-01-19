@@ -28,7 +28,6 @@ export function ToDO(payload: WettkampfDTO): WettkampfDO {
     payload.wettkampfTypId,
     payload.version,
     payload.wettkampfAusrichter,
-    payload.kampfrichterID
   );
 }
 
@@ -45,6 +44,5 @@ export function ToDTO(payload: WettkampfDO): WettkampfDTO {
     payload.wettkampfTypId,
     payload.version,
     payload.wettkampfAusrichter,
-    payload.kampfrichterID
   );
 }
