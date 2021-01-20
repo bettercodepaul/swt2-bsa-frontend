@@ -189,6 +189,15 @@
         },
         "ANZEIGENEinzel": {
           "LABEL": "Einzelstatistik anzeigen"
+        },
+        "ANZEIGENEinzelGesamt": {
+          "LABEL": "Gesamtstatistik anzeigen"
+        },
+        "ANZEIGENEinzelDrucken": {
+          "LABEL": "Einzelstatistik drucken"
+        },
+        "ANZEIGENEinzelGesamtDrucken": {
+          "LABEL": "Gesamtstatistik drucken"
         }
       },
       "FORM": {
@@ -217,7 +226,10 @@
           "SATZ4": "S4",
           "SATZ5": "S5",
           "SATZPUNKTE": "Satzpunkte",
-          "MATCHPUNKTE": "Matchpunkte"
+          "MATCHPUNKTE": "Matchpunkte",
+          "SCHUETZE": "Schütze",
+          "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
+          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr"
         }
       }
     }
@@ -394,6 +406,10 @@
         "VERANSTALTUNG": {
           "LABEL": "Veranstaltungen",
           "DESCRIPTION": "Verwaltung der Veranstaltungen"
+        },
+        "EINSTELLUNGEN": {
+          "LABEL": "Einstellungen",
+          "DESCRIPTION": "Einstellungen bearbeiten"
         }
       }
     },
@@ -414,6 +430,58 @@
         }
       }
     },
+    "EINSTELLUNG": {
+      "TITLE": "Einstellungen - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "KEY": "KEY",
+          "VALUE": "VALUE"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Einstellung löschen",
+          "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht."
+        }
+      }
+    },
+    "EINSTELLUNG_DETAIL": {
+      "TITLE": "Einstellungen Detail - Übersicht",
+      "TABLE": {
+        "HEADERS": {
+          "KEY": "KEY",
+          "VALUE": "VALUE"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE":{
+          "TITLE": "Einstellung speichern",
+          "DESCRIPTION": "Einstellung wurde gespeichert "
+
+        },
+        "EDIT":{
+          "TITLE": "Einstellung bearbeiten",
+          "DESCRIPTION": "Neue Value wurde gesetzt "
+
+        },
+
+        "DELETE": {
+          "TITLE": "Einstellung löschen",
+          "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht"
+        },
+        "EINSTELLUNGEN_ERROR": {
+          "TITLE": "Falsch Eingabe",
+          "DESCRIPTION": {
+            "EMAIL": "Bitte korrekte E-Mail eingeben",
+            "HOST": "Bitte vollständige Hostadresse eingeben",
+            "PORT": "Bitte nur Zahlen eingeben"
+          }
+        }
+      }
+    },
+
+
+
     "SPORTJAHR_OVERVIEW": {
       "TITLE": "Veranstaltungen",
       "TABLE": {
@@ -588,7 +656,8 @@
           "IDENTIFIER": "Identifier",
           "REGION_ID": "Region ID",
           "REGION_NAME": "Region Name",
-          "WEBSITE": "Webseite"
+          "WEBSITE": "Webseite",
+          "ICON": "Vereinslogo"
         }
       },
       "NOTIFICATION": {
@@ -620,6 +689,17 @@
           "LABEL": "Webseite",
           "PLACEHOLDER": "Bitte eine Webseite angeben",
           "ERROR": "Bitte eine gültige Webseite angeben."
+        },
+        "VEREIN_DESCRIPTION": {
+          "LABEL": "Freitext",
+          "PLACEHOLDER": "Bitte eine kurze Vorstellung eingeben",
+          "ERROR": "Bitte einen gültigen Freitext eingeben."
+        },
+        "VEREIN_ICON": {
+          "LABEL": "Vereinslogo",
+          "PLACEHOLDER": "Bitte Datei auswählen.",
+          "ERROR_PLACEHOLDER": "Vereinslogo konnte nicht geladen werden.",
+          "ERROR": "Hochladen nicht möglich."
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
@@ -884,6 +964,8 @@
         "KAMPFRICHTER": {
           "LABEL": "Kampfrichterlizenz"
         },
+        "NO_USER": "Mitglied hat noch keinen Benutzer-Account. Bitte legen Sie vorher einen an. Falls es bereits einen Benutzer-Account gibt, dann klicken Sie auf aktualisieren.",
+        "REGISTRATION": "Benutzerregistrierung",
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Mitglied Löschen"
@@ -1011,10 +1093,25 @@
             "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
-          "ORT": {
-            "LABEL": "Ort",
-            "PLACEHOLDER": "Adresse",
-            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
+          "STRASSE": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Straße und Hausnummer",
+            "ERROR": "Ungültige Eingabe"
+          },
+          "PLZ": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Postleitzahl",
+            "ERROR": "Ungültige Postleitzahl."
+          },
+          "ORTSNAME": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Ort/Stadt",
+            "ERROR": "Ungültiger Ort."
+          },
+          "ORTSINFO": {
+            "LABEL": "Adresse",
+            "PLACEHOLDER": "Zusatzinformationen",
+            "ERROR": "Ungültige Eingabe."
           },
           "BEGINN": {
             "LABEL": "Beginn",
@@ -1061,11 +1158,7 @@
             "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
-          "ORT": {
-            "LABEL": "Ort",
-            "PLACEHOLDER": "Adresse",
-            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
-          },
+
           "BEGINN": {
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
@@ -1079,11 +1172,7 @@
             "PLACEHOLDER": "Datum",
             "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
           },
-          "ORT": {
-            "LABEL": "Ort",
-            "PLACEHOLDER": "Adresse",
-            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
-          },
+
           "BEGINN": {
             "LABEL": "Beginn",
             "PLACEHOLDER": "Uhrzeit",
@@ -1249,6 +1338,51 @@
         }
       }
     },
+
+    "EINSTELLUNGEN": {
+      "TITLE": "Einstellungen - Übersicht",
+      "FORM": {
+        "EINTRAG": {
+          "LABEL": "Eintrag erstellen",
+          "PLACEHOLDER": "Eintrag neu erstellen",
+          "ERROR": "Bitte geben Sie einen gültigen Namen ein"
+        }
+      },
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Erfolg",
+          "DESCRIPTION": "Der Eintrag wurde erfolgreich gespeichert."
+        },
+        "DUPLICATE": {
+          "TITLE": "Fehler",
+          "DESCRIPTION": "Eintrag ist schon vorhanden. Bitte fügen Sie andere Werte hinzu."
+        }
+      }
+    },
+
+    "EINSTELLUNGEN_DETAIL": {
+      "TITLE": "Einstellungen - Detail",
+      "FORM": {
+        "VALUE": {
+          "LABEL": "Value",
+          "PLACEHOLDER": "Bitte ein Value eingeben",
+          "ERROR": "Bitte eine gültigen Text eingeben."
+        },
+        "KEY": {
+          "LABEL": "Key",
+          "PLACEHOLDER": "Bitte einen Key eingeben",
+          "ERROR": "Bitte einen gültigen Text eingeben."
+        },
+        "NEWVALUE": {
+          "LABEL": "Neuer Value",
+          "PLACEHOLDER": "Bitte einen neuen Value eingeben",
+          "ERROR": "Bitte einen gültigen Value eingeben."
+        },
+        "SAVE": "Speichern"
+      }
+    },
+
+
     "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {

@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <!-- textfield "Vereinsnummer" -->
+    <!-- textfield "Vereinsnummer *" -->
     <div class="form-group row">
       <label for="vereinIdentifier"
              class="col-sm-3 col-form-label">
@@ -80,7 +80,6 @@
       <label for="vereinWebsite"
              class="col-sm-3 col-form-label">
         <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}</span>
-        <span> *</span>
       </label>
       <div class="col-sm-9">
         <input type="url"
@@ -94,6 +93,76 @@
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- textfield "Freitext" -->
+    <div class="form-group row">
+      <label for="vereinDescription"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-9">
+        <textarea maxlength="300"
+                  class="form-control"
+                  id="vereinDescription"
+                  name="vereinDescription"
+                  #vereinDescription="ngModel"
+                  [(ngModel)]="currentVerein.description"
+                  [class.is-invalid]="vereinDescription.invalid && !vereinDescription.untouched"
+                  placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.PLACEHOLDER' | translate }}">
+        </textarea>
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- box for club icon
+    <div class="form-group row">
+      <label for="vereinIcon"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-9">
+        <div class="file_upload">
+          <input
+            type="file"
+            name="myLogo"
+            class="form-control"
+            id="vereinIcon"
+            accept="image/*"
+            (change)="convertIconToBase64($event)"
+            #vereinIcon="ngModel"
+            [(ngModel)]="currentVerein.icon"
+            [class.is-invalid]="vereinIcon.invalid && !vereinIcon.untouched"
+            placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.PLACEHOLDER' | translate }}">
+        </div>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.ERROR' | translate }}
+        </div>
+      </div>
+    </div>-->
+
+
+
+    <!-- box for club icon -->
+    <div class="form-group row">
+      <label for="vereinIcon"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}</span>
+      </label>
+      <div class="col-sm-9">
+        <div class="file_upload">
+          <input
+            type="file"
+            name="myLogo"
+            class="form-control"
+            id="vereinIcon"
+            accept="image/*"
+            (change)="convertIconToBase64($event)">
         </div>
       </div>
     </div>
@@ -127,6 +196,7 @@
       </div>
     </div>
   </form>
+
   <div *ngIf="entityExists()">
     <h5> Mannschaftsübersicht</h5>
     <div class="overview-dialog-add">

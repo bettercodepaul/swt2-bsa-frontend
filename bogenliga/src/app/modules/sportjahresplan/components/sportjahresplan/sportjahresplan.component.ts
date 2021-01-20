@@ -335,7 +335,10 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     }
     for (const wettkampf of response.payload) {
       const tableContentRow: WettkampfDO = new WettkampfDO();
-      tableContentRow.wettkampfOrt = wettkampf.wettkampfOrt;
+      tableContentRow.wettkampfStrasse = wettkampf.wettkampfStrasse;
+      tableContentRow.wettkampfPlz = wettkampf.wettkampfPlz;
+      tableContentRow.wettkampfOrtsname = wettkampf.wettkampfOrtsname;
+      tableContentRow.wettkampfOrtsinfo = wettkampf.wettkampfOrtsinfo;
       tableContentRow.wettkampfBeginn = wettkampf.wettkampfBeginn;
       tableContentRow.wettkampfTag = wettkampf.wettkampfTag;
       tableContentRow.wettkampfDatum = wettkampf.wettkampfDatum;

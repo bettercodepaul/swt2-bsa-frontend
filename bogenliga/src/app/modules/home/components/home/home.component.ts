@@ -14,7 +14,7 @@ import {registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
 import {CurrentUserService} from '@shared/services';
-import {onMapService} from '@shared/functions/onMap-service';
+import {onMapService} from '@shared/functions/onMap-service.ts';
 
 @Component({
   selector:    'bla-home',
@@ -69,7 +69,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
       wettkampf.id,
       wettkampf.wettkampfVeranstaltungsId,
       wettkampf.wettkampfDatum,
-      wettkampf.wettkampfOrt,
+      wettkampf.wettkampfStrasse,
+      wettkampf.wettkampfPlz,
+      wettkampf.wettkampfOrtsname,
+      wettkampf.wettkampfOrtsinfo,
       wettkampf.wettkampfBeginn,
       wettkampf.wettkampfTag,
       wettkampf.wettkampfDisziplinId,

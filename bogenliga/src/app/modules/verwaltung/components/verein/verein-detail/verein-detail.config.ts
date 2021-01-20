@@ -1,4 +1,4 @@
-import {CommonDialogConfig} from '../../../../shared/components/dialogs';
+import {CommonDialogConfig} from '@shared/components';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 import {UserPermission} from '@shared/services';

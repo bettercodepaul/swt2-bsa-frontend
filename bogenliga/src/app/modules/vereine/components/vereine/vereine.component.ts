@@ -204,7 +204,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    * mannschaftsName: string -  value of the Mannschaft of the selected row
    */
   public linkPreperation(type: string, veranstaltungsName: string, mannschaftsName: string): void {
-    const currentVeranstaltung = this.veranstaltungen.find((veranstalung: VeranstaltungDTO) => veranstalung.name = veranstaltungsName);
+    const currentVeranstaltung = this.veranstaltungen.find((veranstalung: VeranstaltungDTO) => veranstalung.name === veranstaltungsName);
     if (type === 'veranstaltung_name') {
       this.vereineLinking(currentVeranstaltung.id.toString(10));
     } else if (type === 'mannschaftsName') {
@@ -289,13 +289,14 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     }
     for (const wettkampf of response.payload) {
       const wettkampfTag: string = wettkampf.wettkampfTag + '. Wettkampftag';
-      const wettkampfOrt: string = wettkampf.wettkampfOrt;
+      const wettkampfOrtsname: string = wettkampf.wettkampfOrtsname;
+
       this.veranstaltungsDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
-          .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag, wettkampfOrt ))
+          .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag, wettkampfOrtsname))
           .catch((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(responseb));
     }
     if (response.payload.length === 0) {
-      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '', '' , mannschaftsName);
+      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '', mannschaftsName, '');
       this.tableContent.push(tableContentRow);
     }
     if (this.remainingMannschaftsRequests <= 0) {
@@ -308,9 +309,9 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.loadingTable = false;
   }
 
-  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string, wettkampfOrt: string): void {
-    console.log('Content:' + response.payload.name + wettkampfTag +  mannschaftsName);
-    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, wettkampfOrt, mannschaftsName);
+  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string, wettkampfOrtsname: string): void {
+    console.log('Content:' + response.payload.name + wettkampfTag +  mannschaftsName + wettkampfOrtsname);
+    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, mannschaftsName, wettkampfOrtsname);
     this.tableContent.push(tableRowContent);
     this.remainingRequests -= 1;
 
