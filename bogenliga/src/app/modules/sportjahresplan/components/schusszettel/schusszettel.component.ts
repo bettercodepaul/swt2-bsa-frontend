@@ -56,11 +56,11 @@ export class SchusszettelComponent implements OnInit {
   allVeranstaltungen: VeranstaltungDO[];
   passeSelberTag: number;
   passeAndererTag: number;
-  selberTagVeranstaltung: String;
+  selberTagVeranstaltung: string;
   andererTagVeranstaltung: VeranstaltungDO;
   andererTagAnzahl: number;
-  ligaleiterAktuelleLiga: String;
-  ligaleiterVorherigeLiga: String;
+  ligaleiterAktuelleLiga: string;
+  ligaleiterVorherigeLiga: string;
 
   matchMannschaft: DsbMannschaftDO;
   matchAllPasseMannschaft: PasseDoClass[];
@@ -73,18 +73,20 @@ export class SchusszettelComponent implements OnInit {
   vorherigerWettkampf: WettkampfDO;
   vorherigeVeranstaltung: VeranstaltungDO;
   anzahlAnTagenMannschaft = new Array<Array<number>>();
+  veranstaltungVorherig: VeranstaltungDO;
+  veranstaltungGegenwaertig: VeranstaltungDO;
 
 
   constructor(private router: Router,
-    private schusszettelService: SchusszettelProviderService,
-    private matchProvider: MatchProviderService,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
-    private vereinDataProvider: VereinDataProviderService,
-    private dsbMannschaftDataProvider: DsbMannschaftDataProviderService,
-    private passeDataProvider: PasseDataProviderService,
-    private wettkampfDataProvider: WettkampfDataProviderService,
-    private veranstaltungDataProvider: VeranstaltungDataProviderService,
+              private schusszettelService: SchusszettelProviderService,
+              private matchProvider: MatchProviderService,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private vereinDataProvider: VereinDataProviderService,
+              private dsbMannschaftDataProvider: DsbMannschaftDataProviderService,
+              private passeDataProvider: PasseDataProviderService,
+              private wettkampfDataProvider: WettkampfDataProviderService,
+              private veranstaltungDataProvider: VeranstaltungDataProviderService,
   ) {
   }
 
@@ -191,35 +193,35 @@ export class SchusszettelComponent implements OnInit {
     this.dsbMannschaftDataProvider.findAll()
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
           this.mannschaften = response.payload;
-        })
+        });
   }
 
   private getAllVerein(): void {
     this.vereinDataProvider.findAll()
         .then((response: BogenligaResponse<VereinDO[]>) => {
           this.vereine = response.payload;
-        })
+        });
   }
 
   private getAllPasse(): void {
     this.passeDataProvider.findAll()
         .then((response: BogenligaResponse<PasseDoClass[]>) => {
           this.allPasse = response.payload;
-        })
+        });
   }
 
   private getAllWettkaempfe(): void {
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => {
           this.allWettkaempfe = response.payload;
-        })
+        });
   }
 
   private getAllVeranstaltungen(): void {
     this.veranstaltungDataProvider.findAll()
         .then((response: BogenligaResponse<VeranstaltungDO[]>) => {
           this.allVeranstaltungen = response.payload;
-        })
+        });
   }
 
   private maxMannschaftsId(): number {
@@ -228,7 +230,7 @@ export class SchusszettelComponent implements OnInit {
       if (mannschaft.id > maxMid) {
         maxMid = mannschaft.id;
       }
-    })
+    });
     return maxMid;
   }
 
@@ -236,10 +238,10 @@ export class SchusszettelComponent implements OnInit {
     // Ermittlung der Mannschaft, der Schützen, des Vereins, der Mannschaften des Vereins von match1
     // Ermittlung des Wettkampfs und der Veranstaltung
 
-    this.matchMannschaft = this.mannschaften.find(mannschaft => mannschaft.id == match.mannschaftId);
-    this.matchAllPasseMannschaft = this.allPasse.filter(passe => passe.mannschaftId == this.matchMannschaft.id);
-    this.wettkampf = this.allWettkaempfe.find(wettkampf => wettkampf.id == match.wettkampfId);
-    this.veranstaltung = this.allVeranstaltungen.find(veranstaltung => veranstaltung.id == this.matchMannschaft.veranstaltungId);
+    this.matchMannschaft = this.mannschaften.find((mannschaft) => mannschaft.id === match.mannschaftId);
+    this.matchAllPasseMannschaft = this.allPasse.filter((passe) => passe.mannschaftId === this.matchMannschaft.id);
+    this.wettkampf = this.allWettkaempfe.find((wettkampf) => wettkampf.id === match.wettkampfId);
+    this.veranstaltung = this.allVeranstaltungen.find((veranstaltung) => veranstaltung.id === this.matchMannschaft.veranstaltungId);
     for (let i = 0; i < match.schuetzen.length; i++) {
       this.matchAllPasse[i] = match.schuetzen[i][0];
     }
@@ -252,9 +254,9 @@ export class SchusszettelComponent implements OnInit {
     this.selberWettkampftagVeranstaltung.length = this.matchAllPasse.length;
 
     // Anzahl an Veranstaltungen orientiert sich der Einfachheit halber an der höchsten VeranstaltungsId
-    // 2 dimensionales Array für jeden Schützen von match1 und jede Veranstaltung, an der er möglicherweise
+    // 2 dimensionales Array für jeden Schützen von match1 und jede Mannschaft, mit der er möglicherweise
     // teilgenommen hat, wird die Anzahl an Wettkampftagen, an denen geschossen wurde, gespeichert
-    let maxMannschaftId = this.maxMannschaftsId();
+    const maxMannschaftId = this.maxMannschaftsId();
     for (let i = 0; i < this.matchAllPasse.length; i++) {
       this.anzahlAnTagenMannschaft[i] = [];
       for (let j = 0; j < maxMannschaftId; j++) {
@@ -269,19 +271,19 @@ export class SchusszettelComponent implements OnInit {
       for (let i = 0; i < this.matchAllPasse.length; i++) {
 
         // Aussortierung aller Schützen, die nicht Teil von match1 sind
-        if (passe.dsbMitgliedId == this.matchAllPasse[i].dsbMitgliedId) {
+        if (passe.dsbMitgliedId === this.matchAllPasse[i].dsbMitgliedId) {
 
           // Ermittlung des Wettkampfs
-          this.vorherigerWettkampf = this.allWettkaempfe.find(wettkampf => passe.wettkampfId == wettkampf.id);
+          this.vorherigerWettkampf = this.allWettkaempfe.find((wettkampf) => passe.wettkampfId === wettkampf.id);
 
           // Ermittlung der Veranstaltung
-          this.vorherigeVeranstaltung = this.allVeranstaltungen.find(veranstaltung => veranstaltung.id == this.vorherigerWettkampf.wettkampfVeranstaltungsId);
+          this.vorherigeVeranstaltung = this.allVeranstaltungen.find((veranstaltung) => veranstaltung.id === this.vorherigerWettkampf.wettkampfVeranstaltungsId);
 
           // Aussortierung aller Veranstaltungen von vorherigen Sportjahren
-          if (this.vorherigeVeranstaltung.sportjahr == this.veranstaltung.sportjahr) {
+          if (this.vorherigeVeranstaltung.sportjahr === this.veranstaltung.sportjahr) {
 
             // Ermittlung, ob es derselbe Wettkampftag war
-            if (this.vorherigerWettkampf.wettkampfTag == this.wettkampf.wettkampfTag) {
+            if (this.vorherigerWettkampf.wettkampfTag === this.wettkampf.wettkampfTag) {
               this.selberWettkampftag[i] = true;
               this.selberWettkampftagVeranstaltung[i] = this.vorherigeVeranstaltung;
             }
@@ -291,30 +293,29 @@ export class SchusszettelComponent implements OnInit {
           }
         }
       }
-    })
+    });
   }
 
   private darunterLiegendeMannschaftenToCheckSchuetze(mannschaftsId: number, passe: PasseDO, positionMatchAllPasse: number): void {
-    let mannschaft: DsbMannschaftDO;
-    mannschaft = this.mannschaften.find(mannschaft => mannschaft.id == mannschaftsId);
-    for (let i = 0; i < this.mannschaften.length; i++) {
-      if (this.mannschaften[i].vereinId == mannschaft.vereinId && this.mannschaften[i].id != mannschaftsId) {
-        if (this.mannschaften[i].nummer > mannschaft.nummer && mannschaft.veranstaltungId != this.mannschaften[i].veranstaltungId) {
+    let mannschaft = this.mannschaften.find((mannschaft) => mannschaft.id === mannschaftsId);
+    for (let mannschaftValue of this.mannschaften) {
+      if (mannschaftValue.vereinId === mannschaft.vereinId && mannschaftValue.id !== mannschaftsId) {
+        if (mannschaftValue.nummer > mannschaft.nummer && mannschaft.veranstaltungId !== mannschaftValue.veranstaltungId) {
           this.allPasse.forEach((passeDoClass) => {
-            if (passeDoClass.dsbMitgliedId == passe.dsbMitgliedId) {
-              if (this.anzahlAnTagenMannschaft[positionMatchAllPasse][this.mannschaften[i].id] >= 2) {
+            if (passeDoClass.dsbMitgliedId === passe.dsbMitgliedId) {
+              if (this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftValue.id] >= 1) {
                 this.passeAndererTag = passeDoClass.dsbMitgliedId;
-                this.andererTagAnzahl = this.anzahlAnTagenMannschaft[positionMatchAllPasse][this.mannschaften[i].id];
-                this.andererTagVeranstaltung = this.allVeranstaltungen.find(veranstaltung => veranstaltung.id === this.mannschaften[i].veranstaltungId)
+                this.andererTagAnzahl = this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftValue.id];
+                this.andererTagVeranstaltung = this.allVeranstaltungen.find((veranstaltung) => veranstaltung.id === mannschaftValue.veranstaltungId);
                 console.log('Popup: ', this.passeAndererTag, 'hat bereits ', this.andererTagAnzahl, ' Mal in der', this.andererTagVeranstaltung.name);
-                let veranstaltungVorherig = this.allVeranstaltungen.find(veranstaltung => this.mannschaften[i].veranstaltungId == veranstaltung.id);
-                let veranstaltungGegenwaertig = this.allVeranstaltungen.find(veranstaltung => mannschaft.veranstaltungId == veranstaltung.id);
-                this.ligaleiterAktuelleLiga = veranstaltungGegenwaertig.ligaleiterEmail;
-                this.ligaleiterVorherigeLiga = veranstaltungVorherig.ligaleiterEmail;
+                this.veranstaltungVorherig = this.allVeranstaltungen.find((veranstaltung) => mannschaftValue.veranstaltungId === veranstaltung.id);
+                this.veranstaltungGegenwaertig = this.allVeranstaltungen.find((veranstaltung) => mannschaft.veranstaltungId === veranstaltung.id);
+                this.ligaleiterAktuelleLiga = this.veranstaltungGegenwaertig.ligaleiterEmail;
+                this.ligaleiterVorherigeLiga = this.veranstaltungVorherig.ligaleiterEmail;
                 this.savepopAndererTag();
               }
             }
-          })
+          });
         }
       }
     }
@@ -338,7 +339,7 @@ export class SchusszettelComponent implements OnInit {
 
 
       // es ist nicht erlaubt, dass der Schütze 2x am selben Wettkampftag teilnimmt
-      if (this.selberWettkampftag[i] == true
+      if (this.selberWettkampftag[i] === true
         && this.selberWettkampftagVeranstaltung[i].id !== this.veranstaltung.id) {
         this.passeSelberTag = this.matchAllPasse[i].dsbMitgliedId;
         this.selberTagVeranstaltung = this.selberWettkampftagVeranstaltung[i].name;
