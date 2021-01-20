@@ -358,14 +358,6 @@ export class SchusszettelComponent implements OnInit {
     this.popupAndererTag = true;
   }
 
-  savepop() {
-    if (0 === 0) {
-      this.popup = true;
-    } else {
-      this.save();
-    }
-  }
-
 
 
     save() {
