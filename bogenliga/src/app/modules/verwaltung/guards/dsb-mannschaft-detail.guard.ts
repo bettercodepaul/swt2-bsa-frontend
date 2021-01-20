@@ -8,6 +8,7 @@ export class DsbMannschaftDetailGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // CAN_READMY_VEREIN or CAN_READ_STAMMDATEN or CAN_CREATE_MANNSCHAFT required to activate DSB Mannschaft Detail
     return this.currentUserService.hasAnyPermisson(
       [UserPermission.CAN_READ_MY_VEREIN, UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT]);
   }
