@@ -2,11 +2,11 @@ import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-d
 
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponentDirective} from '../../../../shared/components/common';
+import {CommonComponentDirective} from '@shared/components';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {BogenligaResponse} from '../../../../shared/data-provider';
-import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {BogenligaResponse} from '@shared/data-provider';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
   NotificationService,
