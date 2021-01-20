@@ -8,6 +8,7 @@ export class UserGuard implements CanActivate {
   }
 
   canActivate() {
+    // no permission required to activate User
     return this.currentUserService.hasAnyPermisson(
       []);
   }

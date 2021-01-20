@@ -9,6 +9,7 @@ export class SchuetzenNeuGuard implements CanActivate {
 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // CAN_MODIFY_STAMMMDATEN or CAN_MODIFY_MY_VEREIN required to activate Schützen neu
     return this.currentUserService.hasAnyPermisson(
       [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VEREIN]);
   }
