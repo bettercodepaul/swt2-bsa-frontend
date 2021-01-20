@@ -1,7 +1,6 @@
 import {DataTransferObject} from '@shared/data-provider';
 
 export class VeranstaltungDTO implements DataTransferObject {
-  // TODO:  if else for every number
   id: number;
   wettkampfTypId: number;
   name: string;
@@ -58,6 +57,12 @@ export class VeranstaltungDTO implements DataTransferObject {
     } else {
       copy.ligaId = null;
     }
+    if (optional.version >= 0) {
+      copy.version = optional.version;
+    } else {
+      copy.version = null;
+    }
+
 
     copy.name = optional.name || '';
     copy.meldeDeadline = optional.meldeDeadline || '';
