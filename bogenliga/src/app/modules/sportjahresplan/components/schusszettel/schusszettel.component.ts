@@ -299,8 +299,8 @@ export class SchusszettelComponent implements OnInit {
   }
 
   private darunterLiegendeMannschaftenToCheckSchuetze(mannschaftsId: number, passe: PasseDO, positionMatchAllPasse: number): void {
-    let mannschaft = this.mannschaften.find((mannschaft) => mannschaft.id === mannschaftsId);
-    for (let mannschaftValue of this.mannschaften) {
+    const mannschaft = this.mannschaften.find((mannschaftVal) => mannschaftVal.id === mannschaftsId);
+    for (const mannschaftValue of this.mannschaften) {
       if (mannschaftValue.vereinId === mannschaft.vereinId && mannschaftValue.id !== mannschaftsId) {
         if (mannschaftValue.nummer > mannschaft.nummer && mannschaft.veranstaltungId !== mannschaftValue.veranstaltungId) {
           this.allPasse.forEach((passeDoClass) => {
