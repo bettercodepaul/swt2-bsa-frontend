@@ -4,7 +4,7 @@ import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {VereinDO} from '../../../verwaltung/types/verein-do.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
-import {BogenligaResponse, RequestResult} from '@shared/data-provider';
+import {BogenligaResponse} from '@shared/data-provider';
 import {VereinDTO} from '../../../verwaltung/types/datatransfer/verein-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
@@ -20,6 +20,7 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '@shared/services/notification';
 import {TableColumnConfig} from '@shared/components/tables/types/table-column-config.interface';
+import {onMapService} from '@shared/functions/onMap-service';
 
 
 const ID_PATH_PARAM = 'id';
@@ -50,6 +51,8 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   private currentVerein: VereinDO;
   private hasID: boolean;
   private typeOfTableColumn: string;
+  private veranstaltungen: VeranstaltungDTO[];
+  private mannschaften: DsbMannschaftDTO[];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -80,6 +83,8 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
 
     });
     this.loadVereine();
+    this.getAllVeranstaltungen();
+    this.getAllMannschaften();
   }
 
 
@@ -89,13 +94,13 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
 
     this.vereinDataProvider.findById(this.selectedVereinsId)
         .then((response: BogenligaResponse<VereinDTO>) =>
-          this.getVereinSuccsess(response.payload))
+          this.getVereinSuccess(response.payload))
         .catch((response: BogenligaResponse<VereinDTO>) =>
           console.log('Fehler im Verein laden')
         );
   }
   // sets currentVerein to response and pushes it on selectedVereine
-  private getVereinSuccsess(response: VereinDTO) {
+  private getVereinSuccess(response: VereinDTO) {
     // console.log('response in getVerein: ' + response.name);
     this.currentVerein = response;
     this.selectedVereine.push(this.currentVerein);
@@ -155,63 +160,61 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   }
 
   /**
-   * Gets the value of a clicked row of the verein table
-   * then uses a 'if' to determine which column is clicked
-   * depending on the column differnet id's need to send to wettkaempfe
-   * For veranstalung:
-   * the veranstaltungsId through getCurrentVeranstalung
-   * For mannschaft:
-   * the veranstaltungsId through getCurrentVeranstalung + the day but without ". Wettkampftag"
-   * and the mannschaftsID through mannschaftsDataProvider
-   *
-   * Then do the linking to wettkaempfe
+   * Gets all Veranstaltungen through a backend call
+   */
+  public getAllVeranstaltungen(): void {
+    this.veranstaltungsDataProvider.findAll()
+      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+        this.veranstaltungen = response.payload;
+      });
+  }
+
+  /**
+   * Gets all Mannschaften through a backend call
+   */
+  public getAllMannschaften(): void {
+    this.mannschaftsDataProvider.findAll()
+      .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
+        this.mannschaften = response.payload;
+      });
+  }
+
+  /**
+   * Gets the values of a clicked row of the verein table
+   * saves the name of Veranstaltung and Mannschaft
+   *  saves the type of the clicked column
+   * then: call linkPreperation with these parameters
    * @params $event: all the values in the table
    */
   public async getSelectedRow($event): Promise<void> {
     const rowValues = $event;
-    const veranstalungsName = rowValues.veranstaltung_name;
-    let veranstalungsId;
+    const veranstaltungsName = rowValues.veranstaltung_name;
     const mannschaftsName = rowValues.mannschaftsName.replace('. Mannschaft', '');
-    let mannschaftsId;
     const type = this.typeOfTableColumn;
 
+    this.linkPreperation(type, veranstaltungsName, mannschaftsName);
+  }
 
+  /**
+   * based on the type gets the ID of either only veranstaltung or veranstaltung and mannschaft
+   * then: call vereineLinking with these IDs
+   * @param
+   * type: string - type of the clicked column
+   * veranstaltungsName: string -  value of Veranstaltung of the selected row
+   * mannschaftsName: string -  value of the Mannschaft of the selected row
+   */
+  public linkPreperation(type: string, veranstaltungsName: string, mannschaftsName: string): void {
+    const currentVeranstaltung = this.veranstaltungen.find((veranstalung: VeranstaltungDTO) => veranstalung.name === veranstaltungsName);
     if (type === 'veranstaltung_name') {
-      veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
-      this.vereineLinking(veranstalungsId);
+      this.vereineLinking(currentVeranstaltung.id.toString(10));
     } else if (type === 'mannschaftsName') {
-      veranstalungsId = await this.getCurrentVeranstalung(veranstalungsName);
-      /**
-       * finds all Mannschaften through a http call -> needs to be async
-       * find the one whose name matches with the mannschaft in the table
-       * gets the id from this mannschaft
-       */
-      await this.mannschaftsDataProvider.findAll()
-                .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
-                  const currentMannschaft = response.payload.find((mannschaft: DsbMannschaftDTO) => mannschaft.name === mannschaftsName);
-                  mannschaftsId = currentMannschaft.id;
-                });
-      this.vereineLinking(veranstalungsId + '/' + mannschaftsId);
+      const currentMannschaft = this.mannschaften.find((mannschaft: DsbMannschaftDTO) => mannschaft.name === mannschaftsName);
+      this.vereineLinking(currentVeranstaltung.id + '/' + currentMannschaft.id);
     }
   }
 
   /**
-   * finds all Veranstaltungen through a http call -> needs to be async
-   * find the one whose name matches with the veranstaltung in the table
-   * gets the id from this veranstaltung
-   */
-  public async getCurrentVeranstalung(veranstalungsName: string) {
-    let currentVeranstalung;
-    await this.veranstaltungsDataProvider.findAll()
-        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-          currentVeranstalung = response.payload.find((veranstalung: VeranstaltungDTO) => veranstalung.name = veranstalungsName);
-          console.log(currentVeranstalung.ligaId);
-        });
-    return currentVeranstalung.ligaId;
-  }
-
-  /**
-   * routs to wettkaempfe
+   * routes to Wettkaempfe
    * @param linkParameter: string - the ids of the values
    */
   public vereineLinking(linkParameter: string) {
@@ -219,15 +222,15 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.router.navigateByUrl(link);
   }
 
+  /**
+   * Creates Link to Google Maps
+   * Splits given Location at every comma and passes it to Google Maps
+   * @param $event
+   */
   public onMap($event: WettkampfDO): void {
-
-    const str = $event.wettkampfOrt;
-    let splits: string[];
-    splits = str.split(', ', 5);
-    const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
-    window.open(locationUrl);
-
+    onMapService($event);
   }
+
   private loadVereine(): void {
     this.vereine = [];
     this.vereinDataProvider.findAll()
@@ -286,13 +289,14 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     }
     for (const wettkampf of response.payload) {
       const wettkampfTag: string = wettkampf.wettkampfTag + '. Wettkampftag';
-      const wettkampfOrt: string = wettkampf.wettkampfOrt;
+      const wettkampfOrtsname: string = wettkampf.wettkampfOrtsname;
+
       this.veranstaltungsDataProvider.findById(wettkampf.wettkampfVeranstaltungsId)
-          .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag, wettkampfOrt ))
+          .then((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungSuccess(responseb, mannschaftsName, wettkampfTag, wettkampfOrtsname))
           .catch((responseb: BogenligaResponse<VeranstaltungDTO>) => this.handleFindVeranstaltungFailure(responseb));
     }
     if (response.payload.length === 0) {
-      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '', '' , mannschaftsName);
+      const tableContentRow: VereinTabelleDO = new VereinTabelleDO('' , '', mannschaftsName, '');
       this.tableContent.push(tableContentRow);
     }
     if (this.remainingMannschaftsRequests <= 0) {
@@ -305,9 +309,9 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.loadingTable = false;
   }
 
-  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string, wettkampfOrt: string): void {
-    console.log('Content:' + response.payload.name + wettkampfTag +  mannschaftsName);
-    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, wettkampfOrt, mannschaftsName);
+  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string, wettkampfOrtsname: string): void {
+    console.log('Content:' + response.payload.name + wettkampfTag +  mannschaftsName + wettkampfOrtsname);
+    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, mannschaftsName, wettkampfOrtsname);
     this.tableContent.push(tableRowContent);
     this.remainingRequests -= 1;
 

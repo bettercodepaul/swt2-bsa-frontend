@@ -5,6 +5,13 @@ import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
 import { AppState, SidebarState } from './modules/shared/redux-store';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {FeedbackProviderService} from '@verwaltung/services/feedback-data-provider.service';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'bla-root',
@@ -13,15 +20,32 @@ import { AppState, SidebarState } from './modules/shared/redux-store';
 })
 export class AppComponent implements OnInit {
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   public isActive: boolean;
   public fullscreen = false;
 
-  constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router) {
+  popup: boolean;
+  isAnonymous: boolean;
+  marked: any;
+  public feedbackTextArea: string;
+  public emailTextArea: string;
+  public feedbackAndEmail: string;
+
+
+  constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router, private feedbackDataProvider: FeedbackProviderService) {
     translate.setDefaultLang('de');
     translate.use('de');
     store.pipe(select((state) => state.sidebarState))
-      .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
+         .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
+
+
+
 
   public showLabel(): boolean {
     return environment.showLabel;
@@ -53,4 +77,24 @@ export class AppComponent implements OnInit {
       this.fullscreen = false;
     }
   }
+
+  // Create new String with Feedback and the E-Mail address
+  // then call the sendFeedback function to send the feedback
+  // to the backend
+  sendFeedback() {
+    this.feedbackAndEmail = this.feedbackTextArea;
+    // Check if user want to send it anonymous
+    if ( !this.isAnonymous ) {
+      this.feedbackAndEmail += ' ' + this.emailTextArea;
+    }
+
+    // make textareas empty again and call sendFeedback function
+    this.emailTextArea = '';
+    this.feedbackDataProvider.sendFeedback(this.feedbackAndEmail);
+    this.feedbackTextArea = '';
+    this.emailTextArea = '';
+    this.popup = false;
+
+  }
+
 }

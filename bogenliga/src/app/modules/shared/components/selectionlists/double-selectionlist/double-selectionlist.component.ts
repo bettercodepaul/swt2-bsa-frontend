@@ -15,11 +15,11 @@ export class DoubleSelectionlistComponent implements OnInit {
   @Input()
   public idRightList: string;
 
-  @Input()
-  public leftItems: VersionedDataObject[] = [];
-
   @Output()
   public rightItemsChange = new EventEmitter();
+
+  @Output()
+  public leftItemsChange = new EventEmitter();
 
   @Input()
   public fieldSelector = 'id';
@@ -39,6 +39,16 @@ export class DoubleSelectionlistComponent implements OnInit {
   set rightItems(val) {
     this.rightItemList = val;
     this.rightItemsChange.emit(this.rightItemList);
+  }
+
+  @Input()
+  get leftItems() {
+    return this.leftItemList;
+  }
+
+  set leftItems(val) {
+    this.leftItemList = val;
+    this.leftItemsChange.emit(this.leftItemList);
   }
 
   constructor() {
@@ -78,8 +88,6 @@ export class DoubleSelectionlistComponent implements OnInit {
     });
 
     this.leftItemList.sort(this.compare);
-
-    this.leftItemList.forEach((item) => this.leftItems.push(Object.assign(item)));
   }
 
   public onLeftItemSelect($event: VersionedDataObject[]): void {

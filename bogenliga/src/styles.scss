@@ -183,13 +183,29 @@ a:hover, a:focus {
     margin: 1cm;
     height: auto;
   }
+  body{
+    visibility: visible;
+  }
   table, figure {
     page-break-inside: avoid;
   }
-
+  *{
+    overflow: visible!important;
+    visibility: visible;
+    margin: auto;
+    visibility: visible;
+    page-break-inside: avoid;
+    table { page-break-inside:avoid}
+    tr    { page-break-inside:avoid; page-break-after:auto }
+  }
+  .print1{
+    margin: auto;
+    visibility: visible;
+    page-break-inside: avoid;
+    table { page-break-inside:avoid}
+    tr    { page-break-inside:avoid; page-break-after:auto }
+  }
 }
-
-
 
 
 .environment-corner-ribbon {

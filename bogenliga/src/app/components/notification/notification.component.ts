@@ -27,6 +27,7 @@ export class NotificationComponent implements OnInit {
   public ModalDialogOption = ModalDialogOption;
   public NotificationType = NotificationType;
   public ButtonSize = ButtonSize;
+  public toggleOn = false;
 
   constructor(private notificationService: NotificationService, private translatePipe: TranslatePipe) {
     this.notificationService.observeNotifications().subscribe((state: NotificationState) => {
@@ -65,6 +66,14 @@ export class NotificationComponent implements OnInit {
   public showRaw(): void {
     const windowWithRawData = window.open('#');
     windowWithRawData.document.write(this.notification.details);
+  }
+
+  public toggleDetails(): void {
+    if (this.toggleOn) {
+      this.toggleOn = false;
+    } else {
+      this.toggleOn = true;
+    }
   }
 
 
