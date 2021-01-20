@@ -167,6 +167,7 @@ export class RegionDetailComponent extends CommonComponentDirective implements O
                 });
 
             this.notificationService.showNotification(notification);
+            this.saveLoading = false;
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log('Failed');

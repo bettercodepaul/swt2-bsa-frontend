@@ -179,6 +179,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
                 });
 
             this.notificationService.showNotification(notification);
+            this.saveLoading = false;
           }
         }, (response: BogenligaResponse<LigaDO>) => {
           console.log('Failed');
