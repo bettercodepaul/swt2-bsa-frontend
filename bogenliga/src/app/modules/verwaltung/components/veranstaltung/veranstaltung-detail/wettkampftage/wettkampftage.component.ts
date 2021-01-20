@@ -100,13 +100,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public notSelectedKampfrichterWettkampftag3: Array<BenutzerRolleDO> = [];
   public notSelectedKampfrichterWettkampftag4: Array<BenutzerRolleDO> = [];
 
-  // public allUsersTag1: Array<BenutzerRolleDO> = [];
-  // public allUsersTag2: Array<BenutzerRolleDO> = [];
-  // public allUsersTag3: Array<BenutzerRolleDO> = [];
-  // public allUsersTag4: Array<BenutzerRolleDO> = [];
-
-  // public allKampfrichter: Array<KampfrichterDO> = [];
-
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampfDataProvider: WettkampfDataProviderService,
