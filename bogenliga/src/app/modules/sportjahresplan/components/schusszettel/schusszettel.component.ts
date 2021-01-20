@@ -45,10 +45,10 @@ export class SchusszettelComponent implements OnInit {
   match1: MatchDOExt;
   match2: MatchDOExt;
   dirtyFlag: boolean;
-  popupSelberTag: boolean;
-  popupAndererTag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
+  popupSelberTag: boolean;
+  popupAndererTag: boolean;
   mannschaften: DsbMannschaftDO[] = [];
   vereine: VereinDO[] = [];
   allPasse: PasseDoClass[] = [];
