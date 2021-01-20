@@ -48,6 +48,7 @@ export class SchusszettelComponent implements OnInit {
   dirtyFlag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
+  popup: boolean;
   popupSelberTag: boolean;
   popupAndererTag: boolean;
   mannschaften: DsbMannschaftDO[] = [];
