@@ -8,7 +8,8 @@ export class WettkampfklasseOverviewGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_SYSTEMDATEN]);
+    // CAN_READ_SYSTEMDATEN required to activate Wettkampfklasse Overview
+    return this.currentUserService.hasPermission(
+      UserPermission.CAN_READ_SYSTEMDATEN);
   }
 }
