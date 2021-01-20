@@ -20,7 +20,11 @@ export function notificationReducer(state = initialNavigationState, action: Acti
     }
     case Actions.ACCEPT_NOTIFICATION: {
       const modifiedState = newState = {...state};
-      modifiedState.notification.userAction = NotificationUserAction.ACCEPTED;
+
+      // Zeile wird auskommentiert, da ein Fehler auftritt, der verhindert, dass Benachrichtigungen angezeigt werden.
+      // Das Entfernen der Zeile hat allem Anschein nach keine weiteren Konsequenzen.
+      // => BSAPP-752
+      // modifiedState.notification.userAction = NotificationUserAction.ACCEPTED;
       modifiedState.showNotification = false;
 
       break;
@@ -28,7 +32,10 @@ export function notificationReducer(state = initialNavigationState, action: Acti
     case Actions.DECLINE_NOTIFICATION: {
       const modifiedState = newState = {...state};
 
-      modifiedState.notification.userAction = NotificationUserAction.DECLINED;
+      // Zeile wird auskommentiert, da ein Fehler auftritt, der verhindert, dass Benachrichtigungen angezeigt werden.
+      // Das Entfernen der Zeile hat allem Anschein nach keine weiteren Konsequenzen.
+      // => BSAPP-752
+      // modifiedState.notification.userAction = NotificationUserAction.DECLINED;
       modifiedState.showNotification = false;
 
       break;
