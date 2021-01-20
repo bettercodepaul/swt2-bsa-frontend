@@ -9,6 +9,8 @@ export class InterfaceGuard implements CanActivate {
   }
 
   canActivate() {
-    return this.currentUserService.hasAnyPermisson([UserPermission.CAN_OPERATE_SPOTTING]);
+    // CAN_OPERATE_SPOTTING required to activate Spotter Interface
+    return this.currentUserService.hasPermission(
+      UserPermission.CAN_OPERATE_SPOTTING);
   }
 }
