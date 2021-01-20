@@ -1,13 +1,8 @@
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
-export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
+export const WETTKAMPF_TABLE_EINZELGESAMT_CONFIG: TableConfig = {
   // Tabellenspaltenbezeichner in die JSON auslagern
   columns: [
-    {
-      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH',
-      propertyName:   'matchNr',
-      width:          5,
-    },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MANNSCHAFT',
       propertyName:   'mannschaftName',
@@ -19,7 +14,7 @@ export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
       width:          20,
     },
     {
-      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTMATCH',
+      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTJAHR',
       propertyName:   'durchschPfeilwert',
       width:          10,
     }

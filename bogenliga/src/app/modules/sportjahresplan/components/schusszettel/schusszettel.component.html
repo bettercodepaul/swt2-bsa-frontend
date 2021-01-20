@@ -425,7 +425,7 @@
               class="btn btn-primary backButton">Zurück
       </button>
 
-      <button (click)="save()"
+      <button (click)="savepop()"
               class="btn btn-primary saveButton">Speichern
       </button>
 
@@ -445,7 +445,19 @@
                 class="btn btn-primary nextButton">Weiter
       </button>
     </div>
+  </div>
 
+  <div class ="schuetze-popup"*ngIf="popup">
+    <div class="popup">
+      <h2>Schuetzen Fehler! </h2>
+      <br>
+      <a class="close" (click)="popup =false">&times;</a>
+      <a>Der gewählte Schuetze darf nicht schießen, da er bereits in einer anderen Liga geschossen hat.</a>
+      <br>
+      <br>
+      <button type="submit"(click)="popup=false" class="btn btn-primary">OK</button>
+
+    </div>
   </div>
 
   <div class="print signature">
@@ -459,3 +471,4 @@
     </div>
   </div>
 </div>
+
