@@ -190,8 +190,14 @@
         "ANZEIGENEinzel": {
           "LABEL": "Einzelstatistik anzeigen"
         },
+        "ANZEIGENEinzelGesamt": {
+          "LABEL": "Gesamtstatistik anzeigen"
+        },
         "ANZEIGENEinzelDrucken": {
           "LABEL": "Einzelstatistik drucken"
+        },
+        "ANZEIGENEinzelGesamtDrucken": {
+          "LABEL": "Gesamtstatistik drucken"
         }
       },
       "FORM": {
@@ -222,8 +228,8 @@
           "SATZPUNKTE": "Satzpunkte",
           "MATCHPUNKTE": "Matchpunkte",
           "SCHUETZE": "Schütze",
-          "PASSE": "Passe",
-          "PASSPUNKTESCHUETZE": "Punkte je Passe"
+          "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
+          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr"
         }
       }
     }
@@ -439,7 +445,6 @@
         }
       }
     },
-
     "EINSTELLUNG_DETAIL": {
       "TITLE": "Einstellungen Detail - Übersicht",
       "TABLE": {
@@ -463,6 +468,14 @@
         "DELETE": {
           "TITLE": "Einstellung löschen",
           "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht"
+        },
+        "EINSTELLUNGEN_ERROR": {
+          "TITLE": "Falsch Eingabe",
+          "DESCRIPTION": {
+            "EMAIL": "Bitte korrekte E-Mail eingeben",
+            "HOST": "Bitte vollständige Hostadresse eingeben",
+            "PORT": "Bitte nur Zahlen eingeben"
+          }
         }
       }
     },
