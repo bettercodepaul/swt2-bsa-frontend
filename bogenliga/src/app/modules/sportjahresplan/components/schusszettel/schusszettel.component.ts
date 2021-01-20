@@ -234,7 +234,6 @@ export class SchusszettelComponent implements OnInit {
   }
 
   private getInfosToCheckSchuetze(match: MatchDOExt): void {
-    console.log('getInfosToCheckSchuetze');
     // Ermittlung der Mannschaft, der Schützen, des Vereins, der Mannschaften des Vereins von match1
     // Ermittlung des Wettkampfs und der Veranstaltung
 
@@ -245,19 +244,6 @@ export class SchusszettelComponent implements OnInit {
     for (let i = 0; i < match.schuetzen.length; i++) {
       this.matchAllPasse[i] = match.schuetzen[i][0];
     }
-
-    console.log('match1:');
-    console.log('Passe:');
-    console.log(this.matchAllPasse);
-    console.log('Passe Mannschaft match1:');
-    console.log(this.matchAllPasseMannschaft);
-    console.log('mannschaft:');
-    console.log(this.matchMannschaft);
-    console.log('wettkampf:');
-    console.log(this.wettkampf);
-    console.log('Veranstaltung:');
-    console.log(this.veranstaltung);
-
     // Vergleich aller Schützen mit den Schützen von match1
     // Ermittlung, ob der Schütze bereits geschossen hat, wann (Wettkampftag) und wo (Veranstaltung/Liga) und wie oft
 
@@ -300,7 +286,6 @@ export class SchusszettelComponent implements OnInit {
 
             // der Schütze hat somit bereits geschossen
             this.schuetzeBereitsgeschossen[i] = true;
-            console.log(this.matchAllPasse[i].rueckennummer, 'hatte bereits geschossen');
 
             // Ermittlung, ob es derselbe Wettkampftag war
             if (this.vorherigerWettkampf.wettkampfTag == this.wettkampf.wettkampfTag) {
@@ -310,9 +295,6 @@ export class SchusszettelComponent implements OnInit {
 
             // Zuweisung der Teilnahme an der Veranstaltung an anzahlAnTagenMannschaft
             this.anzahlAnTagenMannschaft[i][passe.mannschaftId] += 1;
-
-            console.log('Schuetze', this.matchAllPasse[i].rueckennummer, 'hat bereits am Wettkampf', this.vorherigerWettkampf);
-            console.log('der Veranstaltung', this.vorherigeVeranstaltung, this.anzahlAnTagenMannschaft[i][passe.mannschaftId], 'Mal teilgenommen');
           }
         }
       }
@@ -327,7 +309,7 @@ export class SchusszettelComponent implements OnInit {
         if (this.mannschaften[i].nummer > mannschaft.nummer && mannschaft.veranstaltungId != this.mannschaften[i].veranstaltungId) {
           this.allPasse.forEach((passeDoClass) => {
             if (passeDoClass.dsbMitgliedId == passe.dsbMitgliedId) {
-              if(this.anzahlAnTagenMannschaft[positionMatchAllPasse][this.mannschaften[i].id] >= 2) {
+              if (this.anzahlAnTagenMannschaft[positionMatchAllPasse][this.mannschaften[i].id] >= 2) {
                 this.passeAndererTag = passeDoClass.dsbMitgliedId;
                 this.andererTagAnzahl = this.anzahlAnTagenMannschaft[positionMatchAllPasse][this.mannschaften[i].id];
                 this.andererTagVeranstaltung = this.allVeranstaltungen.find(veranstaltung => veranstaltung.id === this.mannschaften[i].veranstaltungId)
@@ -346,7 +328,6 @@ export class SchusszettelComponent implements OnInit {
   }
 
   private checkSchuetze(match: MatchDOExt): void {
-    console.log('checkSchuetze');
     this.getInfosToCheckSchuetze(match);
     this.getBereitsgeschossenToCheckSchuetze();
 
@@ -461,10 +442,7 @@ export class SchusszettelComponent implements OnInit {
       this.schusszettelService.create(this.match1, this.match2)
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
             this.match1 = data.payload[0];
-            console.log("match creation");
-            console.log(this.match1);
             this.match2 = data.payload[1];
-            console.log('Methoden Aufruf');
             this.checkSchuetze(this.match1);
             this.checkSchuetze(this.match2);
             // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
