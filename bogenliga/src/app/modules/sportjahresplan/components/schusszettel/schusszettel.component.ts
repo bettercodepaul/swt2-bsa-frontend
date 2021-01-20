@@ -68,7 +68,6 @@ export class SchusszettelComponent implements OnInit {
   veranstaltung: VeranstaltungDO;
   matchAllPasse = new Array<PasseDO>();
 
-  schuetzeBereitsgeschossen = new Array<boolean>();
   selberWettkampftag = new Array<boolean>();
   selberWettkampftagVeranstaltung = Array<VeranstaltungDO>();
   vorherigerWettkampf: WettkampfDO;
@@ -247,9 +246,6 @@ export class SchusszettelComponent implements OnInit {
     // Vergleich aller Schützen mit den Schützen von match1
     // Ermittlung, ob der Schütze bereits geschossen hat, wann (Wettkampftag) und wo (Veranstaltung/Liga) und wie oft
 
-    // hat der Schütze bereits geschossen?
-    this.schuetzeBereitsgeschossen.length = this.matchAllPasse.length;
-
     // ist es derselbe Wettkampftag gewesen?
     this.selberWettkampftag.length = this.matchAllPasse.length;
     // und welche Veranstaltung war es
@@ -283,9 +279,6 @@ export class SchusszettelComponent implements OnInit {
 
           // Aussortierung aller Veranstaltungen von vorherigen Sportjahren
           if (this.vorherigeVeranstaltung.sportjahr == this.veranstaltung.sportjahr) {
-
-            // der Schütze hat somit bereits geschossen
-            this.schuetzeBereitsgeschossen[i] = true;
 
             // Ermittlung, ob es derselbe Wettkampftag war
             if (this.vorherigerWettkampf.wettkampfTag == this.wettkampf.wettkampfTag) {
