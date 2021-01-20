@@ -8,7 +8,8 @@ export class TableteingabeGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_OPERATE_SPOTTING]);
+    // CAN_OPERATE_SPOTTING required to activate Tablet Eingabe
+    return this.currentUserService.hasPermission(
+      UserPermission.CAN_OPERATE_SPOTTING);
   }
 }

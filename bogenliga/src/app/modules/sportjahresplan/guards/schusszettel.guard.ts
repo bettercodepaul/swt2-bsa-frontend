@@ -8,7 +8,8 @@ export class SchusszettelGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_MY_VERANSTALTUNG]);
+    // CAN_READ_MY_VERANSTALTUNG required to activate Schusszettel
+    return this.currentUserService.hasPermission(
+      UserPermission.CAN_READ_MY_VERANSTALTUNG);
   }
 }

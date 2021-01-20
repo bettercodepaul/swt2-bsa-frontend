@@ -8,9 +8,10 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '../../shared/services/current-user';
+import {CurrentUserService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/verein-mapper';
 import {VereinDO} from '../types/verein-do.class';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -123,4 +124,5 @@ export class VereinDataProviderService extends DataProviderService {
         });
     });
   }
+
 }

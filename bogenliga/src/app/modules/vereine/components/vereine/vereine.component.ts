@@ -204,7 +204,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    * mannschaftsName: string -  value of the Mannschaft of the selected row
    */
   public linkPreperation(type: string, veranstaltungsName: string, mannschaftsName: string): void {
-    const currentVeranstaltung = this.veranstaltungen.find((veranstalung: VeranstaltungDTO) => veranstalung.name = veranstaltungsName);
+    const currentVeranstaltung = this.veranstaltungen.find((veranstalung: VeranstaltungDTO) => veranstalung.name === veranstaltungsName);
     if (type === 'veranstaltung_name') {
       this.vereineLinking(currentVeranstaltung.id.toString(10));
     } else if (type === 'mannschaftsName') {
