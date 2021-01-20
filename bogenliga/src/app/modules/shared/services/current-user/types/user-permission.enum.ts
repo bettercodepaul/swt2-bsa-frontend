@@ -89,7 +89,7 @@ export enum UserPermission {
   CAN_DELETE_MANNSCHAFT,
   CAN_MODIFY_MANNSCHAFT,
 
-  //This is a specific LIGALEITER Permission for allowing the function 'Benutzer anlegen'
+  // This is a specific LIGALEITER Permission for allowing the function 'Benutzer anlegen'
   CAN_MODIFY_SYSTEMDATEN_LIGALEITER,
   CAN_CREATE_SYSTEMDATEN_LIGALEITER,
   CAN_CREATE_STAMMDATEN_LIGALEITER,

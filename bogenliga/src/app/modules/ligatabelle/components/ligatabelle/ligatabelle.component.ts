@@ -28,18 +28,19 @@ const ID_PATH_PARAM = 'id';
 export class LigatabelleComponent extends CommonComponentDirective implements OnInit {
 
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService,
-              private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-              private ligatabelleDataProvider: WettkampfDataProviderService,
-              private ligaDataProviderService: LigaDataProviderService) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+    private ligatabelleDataProvider: WettkampfDataProviderService,
+    private ligaDataProviderService: LigaDataProviderService
+  ) {
     super();
   }
 
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
-
 
 
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
@@ -63,8 +64,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public veranstaltungenInLiga: VeranstaltungDO[];
 
 
-
-
   ngOnInit() {
     console.log('Bin im Liga');
     this.loading = true;
@@ -73,21 +72,20 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM] , 10);
-        console.log("Provided Id "+this.providedID);
+        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
+        console.log('Provided Id ' + this.providedID);
         this.hasID = true;
 
       } else {
         console.log('no params');
       }
     });
-    //this.selectedLigaId=this.providedID;
-    console.log("SelectedLigaID " +this.selectedLigaId);
+    console.log('SelectedLigaID ' + this.selectedLigaId);
     this.loadLigen();
   }
 
   private changeSelectedLiga(): void {
-    console.log("Bin im changeSelectedLiga")
+    console.log('Bin im changeSelectedLiga');
     this.selectedLigen = [];
     if (this.hasID) {
       this.ligaDataProviderService.findById(this.selectedLigaId)
@@ -96,7 +94,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
             this.getLigaSuccess(response.payload)
           ).catch((response: BogenligaResponse<LigaDTO[]>) => {
         this.ligen = response.payload;
-        console.log("This.LIGEN : " +this.ligen);
+        console.log('This.LIGEN : ' + this.ligen);
       });
     }
 
@@ -104,13 +102,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     console.log('SelectedLiga ' + this.selectedLiga.id);
     console.log('CurrentLiga: ' + this.selectedLiga.id);
   }
+
   private getLigaSuccess(response: LigaDTO) {
     console.log('response in getLiga: ' + response.name);
     this.selectedLiga = response;
   }
-
-
-
 
 
   public onSelectLiga($event: LigaDO[]): void {
@@ -152,20 +148,27 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.loadLigaTableRows();
     }
   }
+
 // backend-call to get the list of veranstaltungen
-   private loadVeranstaltungen(): void {
+  private loadVeranstaltungen(): void {
     this.veranstaltungen = [];
-   // this.selectedLiga = '';
-    //this.selectedLigaId = null;
+    // this.selectedLiga = '';
+    // this.selectedLigaId = null;
 
     this.veranstaltungsDataProvider.findAll()
-        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-                                                                    buttonVisibility.style.display = 'none'; this.veranstaltungen = response.payload; this.onSelect(this.veranstaltungen);
-                                                                    this.loadingVeranstaltungen = false; })
-        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.veranstaltungen = response.payload; });
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
+          buttonVisibility.style.display = 'none';
+          this.veranstaltungen = response.payload;
+          this.onSelect(this.veranstaltungen);
+          this.loadingVeranstaltungen = false;
+        })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          this.veranstaltungen = response.payload;
+        });
   }
 
-     // Load all Ligen into the Tabel and strats the selection from the chosen.
+  // Load all Ligen into the Tabel and strats the selection from the chosen.
   private loadLigen(): void {
     this.ligen = [];
     this.ligaDataProviderService.findAll()
@@ -173,32 +176,34 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
           const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
           buttonVisibility.style.display = 'none';
           this.ligen = response.payload;
-          console.log("Ligen "+ this.ligen[0],this.ligen[1],this.ligen[2],this.ligen[3]);
-          console.log("prov " + this.providedID)
+          console.log('Ligen ' + this.ligen[0], this.ligen[1], this.ligen[2], this.ligen[3]);
+          console.log('prov ' + this.providedID);
 
-          //Ermittlung der veranstaltungsid
+          // Ermittlung der veranstaltungsid
           let id;
-          for (let i =0; i<this.ligen.length;i++){
-            if (this.ligen[i].id == this.providedID){
+          for (let i = 0; i < this.ligen.length; i++) {
+            if (this.ligen[i].id === this.providedID) {
               id = i;
             }
           }
-          //Die ermittelte id wird in den selektiereten veranstaltung geschrieben
+          // Die ermittelte id wird in den selektiereten veranstaltung geschrieben
           this.selectedLiga = response.payload[id];
           this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id;
           this.changeSelectedLiga();
           this.onSelectLiga(this.selectedLigen);
-          this.loadingVeranstaltungen = false; })
-        .catch((response: BogenligaResponse<LigaDTO[]>) => {this.ligen = response.payload; });
+          this.loadingVeranstaltungen = false;
+        })
+        .catch((response: BogenligaResponse<LigaDTO[]>) => {
+          this.ligen = response.payload;
+        });
   }
-
 
 
   private loadLigaTableRows() {
     this.loadingLigatabelle = true;
     this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.selectedVeranstaltungId)
-      .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleSuccess(response))
-      .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleFailure(response));
+        .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleSuccess(response))
+        .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleFailure(response));
   }
 
 
@@ -206,6 +211,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.rowsLigatabelle = [];
     this.loadingLigatabelle = false;
   }
+
   public ligatabelleLinking() {
     const link = '/wettkaempfe/' + this.selectedVeranstaltungId;
     this.router.navigateByUrl(link);
@@ -251,6 +257,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
+
   private handleLoadTableRowsFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     this.veranstaltungenInLiga = [];
     this.loading = false;

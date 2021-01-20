@@ -524,9 +524,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     // this.allVeranstaltung = this.allVeranstaltung.filter((name) => name.name === this.currentVeranstaltung.name);
     this.lastVeranstaltung = this.allVeranstaltung[0];
 
-    console.log("This AlL DsbManschaften "+ this.allDsbMannschaft.length);
+    console.log('This AlL DsbManschaften ' + this.allDsbMannschaft.length);
     this.allDsbMannschaft = this.allDsbMannschaft.filter((veranstaltung) => veranstaltung.veranstaltungId === this.lastVeranstaltung.id);
-    console.log("This AlL DsbManschaften unten "+ this.allDsbMannschaft.length);
+    console.log('This AlL DsbManschaften unten ' + this.allDsbMannschaft.length);
     this.loading = false;
   }
 
