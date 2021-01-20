@@ -8,7 +8,8 @@ export class UserProfileGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_DEFAULT]);
+    // CAN_READ_DEFAULT required to activate User Profile
+    return this.currentUserService.hasPermission(
+      UserPermission.CAN_READ_DEFAULT);
   }
 }

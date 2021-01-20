@@ -10,7 +10,8 @@ export class AuthenticationGuard implements CanActivate {
 
   canActivate() {
     return this.currentUserService.hasAnyPermisson(
-      // ggf. Rechte nachtragen nach der Authentifizierung für Schreibenden Zugriff
+      // TODO: ggf. Rechte nachtragen nach der Authentifizierung für Schreibenden Zugriff
+      // TODO: prüfen ob Recht CAN_OPERATE_SPOTTING ausreicht
       []);
   }
 }

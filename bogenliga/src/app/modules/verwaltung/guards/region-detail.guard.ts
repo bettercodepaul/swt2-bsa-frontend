@@ -8,7 +8,8 @@ export class RegionDetailGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_MODIFY_SYSTEMDATEN]);
+    // CAN_MODIFY_SYSTEMDATEN required to activate Region Detail
+    return this.currentUserService.hasPermission(
+      UserPermission.CAN_MODIFY_SYSTEMDATEN);
   }
 }

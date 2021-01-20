@@ -116,7 +116,7 @@ export class CurrentUserService {
       // permissions needed but user has none
       return false;
     }
-
+    // return true when user has all required permissions
     return requiredPermissions.every(function hasPermissions(value) {
       return (userPermissions.indexOf(value) >= 0);
     });
@@ -127,7 +127,8 @@ export class CurrentUserService {
     const userPermissions: UserPermission[] = this.getPermissions();
 
     // preconditions
-    if (requiredPermissions.length > 0 && this.isUserLoggedIn === false) { // no user and data needs permission --> access denied
+    if (requiredPermissions.length > 0 && this.isUserLoggedIn === false) {
+      // no user and data needs permission --> access denied
       return false;
     } else if (requiredPermissions.length === 0) { // no permissions needed
       return true;
@@ -135,7 +136,7 @@ export class CurrentUserService {
       // permissions needed but user has none
       return false;
     }
-
+    // return true when user has any required permissions
     for (const requiredPermission of requiredPermissions) {
       if (userPermissions.indexOf(requiredPermission) >= 0) {
         return true;
