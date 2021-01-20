@@ -34,6 +34,7 @@ const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
 const NOTIFACTION_SCHUETZE = 'schuetze';
 
+
 @Component({
   selector:    'bla-schusszettel',
   templateUrl: './schusszettel.component.html',
@@ -305,8 +306,8 @@ export class SchusszettelComponent implements OnInit {
             if (passeDoClass.dsbMitgliedId === passe.dsbMitgliedId) {
               if (this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftValue.id] >= 1) {
                 this.passeAndererTag = passeDoClass.dsbMitgliedId;
-                this.andererTagAnzahl = this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftValue.id];
-                this.andererTagVeranstaltung = this.allVeranstaltungen.find((veranstaltung) => veranstaltung.id === mannschaftValue.veranstaltungId);
+                this.andererTagAnzahl = this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftsId];
+                this.andererTagVeranstaltung = this.veranstaltung;
                 console.log('Popup: ', this.passeAndererTag, 'hat bereits ', this.andererTagAnzahl, ' Mal in der', this.andererTagVeranstaltung.name);
                 this.veranstaltungVorherig = this.allVeranstaltungen.find((veranstaltung) => mannschaftValue.veranstaltungId === veranstaltung.id);
                 this.veranstaltungGegenwaertig = this.allVeranstaltungen.find((veranstaltung) => mannschaft.veranstaltungId === veranstaltung.id);
