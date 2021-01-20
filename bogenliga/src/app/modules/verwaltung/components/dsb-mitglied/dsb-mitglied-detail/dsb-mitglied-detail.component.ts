@@ -227,6 +227,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
                 });
 
             this.notificationService.showNotification(notification);
+            this.saveLoading = false;
           }
           this.saveLoading = false;
         });
