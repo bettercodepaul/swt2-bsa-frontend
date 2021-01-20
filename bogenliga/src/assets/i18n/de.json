@@ -656,7 +656,8 @@
           "IDENTIFIER": "Identifier",
           "REGION_ID": "Region ID",
           "REGION_NAME": "Region Name",
-          "WEBSITE": "Webseite"
+          "WEBSITE": "Webseite",
+          "ICON": "Vereinslogo"
         }
       },
       "NOTIFICATION": {
@@ -693,6 +694,12 @@
           "LABEL": "Freitext",
           "PLACEHOLDER": "Bitte eine kurze Vorstellung eingeben",
           "ERROR": "Bitte einen gültigen Freitext eingeben."
+        },
+        "VEREIN_ICON": {
+          "LABEL": "Vereinslogo",
+          "PLACEHOLDER": "Bitte Datei auswählen.",
+          "ERROR_PLACEHOLDER": "Vereinslogo konnte nicht geladen werden.",
+          "ERROR": "Hochladen nicht möglich."
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",

@@ -14,7 +14,6 @@ export class WettkampfDO implements VersionedDataObject {
   wettkampfDisziplinId: number;
   wettkampfTypId: number;
   version: number;
-  kampfrichterID: number;
   wettkampfAusrichter: number;
 
 
@@ -35,8 +34,7 @@ export class WettkampfDO implements VersionedDataObject {
     wettkampfDisziplinId?: number,
     wettkampfTypId?: number,
     version?: number,
-    wettkampfAusrichter ?: number,
-    kampfrichterID ?: number
+    wettkampfAusrichter ?: number
   ) {
     this.id = !!id ? id : null;
     this.wettkampfVeranstaltungsId = !!wettkampfVeranstaltungsId ? wettkampfVeranstaltungsId : null;
@@ -51,7 +49,6 @@ export class WettkampfDO implements VersionedDataObject {
     this.wettkampfTypId = !!wettkampfTypId ? wettkampfTypId : null;
     this.version = !!version ? version : null;
     this.wettkampfAusrichter = !!wettkampfAusrichter ? wettkampfAusrichter : null;
-    this.kampfrichterID = !!kampfrichterID ? kampfrichterID : null;
   }
 
 }

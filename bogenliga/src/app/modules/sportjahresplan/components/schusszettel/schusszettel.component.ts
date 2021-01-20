@@ -146,7 +146,7 @@ export class SchusszettelComponent implements OnInit {
 
 
   savepop() {
-    if (0 == 0) {
+    if (0 === 0) {
       this.popup = true;
     } else {
       this.save();
@@ -155,7 +155,7 @@ export class SchusszettelComponent implements OnInit {
 
 
 
-    save(){
+    save() {
    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
