@@ -42,6 +42,17 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_f
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 
+const notification: Notification = { //here
+  id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+  title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
+  description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
+  severity:    NotificationSeverity.INFO,
+  origin:      NotificationOrigin.USER,
+  type:        NotificationType.OK,
+  userAction:  NotificationUserAction.PENDING
+};
+
+
 // TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne Funktion und unterscheidet nicht den
 // Status der Eingabefelder
 
@@ -285,15 +296,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
                    wettkampfDO.id = response.payload.id;
                    console.log(wettkampfDO);
 
-                   const notification: Notification = {
-                     id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-                     title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
-                     description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
-                     severity:    NotificationSeverity.INFO,
-                     origin:      NotificationOrigin.USER,
-                     type:        NotificationType.OK,
-                     userAction:  NotificationUserAction.PENDING
-                   };
 
                    this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
                        .subscribe((myNotification) => {
@@ -362,7 +364,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
               console.log('Saved with id: ' + response.payload.id);
 
               // TODO: Put this code in it's own method
-              const notification: Notification = {
+              const notification: Notification = {             //here
                 id:          NOTIFICATION_SAVE_VERANSTALTUNG,
                 title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
                 description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
@@ -398,15 +400,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
             console.log('Successfully deleted');
 
             // TODO: Put this code in it's own method
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+
 
             this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
                 .subscribe((myNotification) => {
