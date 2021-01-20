@@ -48,7 +48,6 @@ export class SchusszettelComponent implements OnInit {
   dirtyFlag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
-  popup: boolean;
   popupSelberTag: boolean;
   popupAndererTag: boolean;
   mannschaften: DsbMannschaftDO[] = [];
@@ -359,8 +358,18 @@ export class SchusszettelComponent implements OnInit {
     this.popupAndererTag = true;
   }
 
-  save() {
-    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+  savepop() {
+    if (0 === 0) {
+      this.popup = true;
+    } else {
+      this.save();
+    }
+  }
+
+
+
+    save() {
+   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',

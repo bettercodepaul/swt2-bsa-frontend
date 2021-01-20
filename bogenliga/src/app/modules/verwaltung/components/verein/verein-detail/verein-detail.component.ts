@@ -64,6 +64,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   public deleteLoading = false;
   public saveLoading = false;
 
+
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
   constructor(private vereinProvider: VereinDataProviderService,
@@ -99,11 +100,18 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       }
     });
   }
+
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
     // persist
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
+    // check if website has http:// in it. If not then add it
+    if (!this.currentVerein.website === undefined) {
+      if (this.currentVerein.website.search('http://')) {
+        this.currentVerein.website = 'http://' + this.currentVerein.website;
+      }
+    }
 
     console.log('Saving verein: ', this.currentVerein);
 
@@ -148,6 +156,12 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
     // persist
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
+    // check if website has http:// in it. If not then add it
+    if (this.currentVerein.website !== '') {
+      if (this.currentVerein.website.search('http://')) {
+        this.currentVerein.website = 'http://' + this.currentVerein.website;
+      }
+    }
 
     this.vereinProvider.update(this.currentVerein)
         .then((response: BogenligaResponse<VereinDO>) => {
@@ -183,6 +197,26 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         });
     // show response message
   }
+
+  /**
+   * Base64 is a process to store e.g. images as 8-bit binary files.
+   * It is called if an image (logo) is inside the upload field.
+   */
+  public convertIconToBase64($event): void {
+    this.readThis($event.target);
+  }
+
+  public readThis(inputValue: any): void {
+    const file: File = inputValue.files[0];
+    const myReader: FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.currentVerein.icon = String(myReader.result);
+    };
+
+    myReader.readAsDataURL(file);
+  }
+
 
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
@@ -301,8 +335,6 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         } )
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
-
-
 
   private handleSuccess(response: BogenligaResponse<VereinDO>) {
     this.currentVerein = response.payload;

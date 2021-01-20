@@ -8,7 +8,8 @@ export class WettkampfklasseDetailGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_MODIFY_SYSTEMDATEN]);
+    // CAN_MODIFY_SYSTEMDATEN required to activate Wettkampfklasse Detail
+    return this.currentUserService.hasPermission(
+      UserPermission.CAN_MODIFY_SYSTEMDATEN);
   }
 }
