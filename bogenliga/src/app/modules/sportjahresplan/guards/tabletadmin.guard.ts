@@ -8,6 +8,7 @@ export class TabletadminGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // CAN_MODIFY_MY_WETTKAMPF or CAN_OPERATE_SPOTTING required to activate Tablet Admin
     return this.currentUserService.hasAnyPermisson(
       [UserPermission.CAN_MODIFY_MY_VERANSTALTUNG, UserPermission.CAN_OPERATE_SPOTTING]);
   }
