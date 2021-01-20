@@ -134,6 +134,7 @@ export class WettkampfklasseDetailComponent extends CommonComponentDirective imp
                 });
 
             this.notificationService.showNotification(notification);
+            this.saveLoading = false;
           }
         }, (response: BogenligaResponse<WettkampfKlasseDO>) => {
           console.log('Failed');
