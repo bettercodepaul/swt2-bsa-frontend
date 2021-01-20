@@ -17,28 +17,40 @@ export function fromPayloadArray(payload: VersionedDataTransferObject[]): Wettka
 
 export function ToDO(payload: WettkampfDTO): WettkampfDO {
 
-  return new WettkampfDO(payload.id,
+  return new WettkampfDO(
+    payload.id,
     payload.wettkampfVeranstaltungsId,
     payload.wettkampfDatum,
-    payload.wettkampfOrt,
+    payload.wettkampfStrasse,
+    payload.wettkampfPlz,
+    payload.wettkampfOrtsname,
+    payload.wettkampfOrtsinfo,
     payload.wettkampfBeginn,
     payload.wettkampfTag,
     payload.wettkampfDisziplinId,
     payload.wettkampfTypId,
     payload.version,
-    payload.wettkampfAusrichter);
+    payload.wettkampfAusrichter,
+    payload.kampfrichterID
+  );
 }
 
 export function ToDTO(payload: WettkampfDO): WettkampfDTO {
 
-  return new WettkampfDTO(payload.id,
+  return new WettkampfDTO(
+    payload.id,
     payload.wettkampfVeranstaltungsId,
     payload.wettkampfDatum,
-    payload.wettkampfOrt,
+    payload.wettkampfStrasse,
+    payload.wettkampfPlz,
+    payload.wettkampfOrtsname,
+    payload.wettkampfOrtsinfo,
     payload.wettkampfBeginn,
     payload.wettkampfTag,
     payload.wettkampfDisziplinId,
     payload.wettkampfTypId,
     payload.version,
-    payload.wettkampfAusrichter);
+    payload.wettkampfAusrichter,
+    payload.kampfrichterID
+  );
 }

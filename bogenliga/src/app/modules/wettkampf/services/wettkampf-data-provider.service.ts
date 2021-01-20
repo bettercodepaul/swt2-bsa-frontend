@@ -8,10 +8,9 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '@shared/data-provider';
-import {CurrentUserService} from '../../shared/services/current-user';
+import {CurrentUserService} from '@shared/services';
 import {fromPayloadLigatabelleErgebnisArray} from '../mapper/wettkampf-ergebnis-mapper';
 import {LigatabelleErgebnisDO} from '../types/wettkampf-ergebnis-do.class';
-import {LigatabelleErgebnisDTO} from '../types/datatransfer/wettkampf-ergebnis-dto.class';
 
 @Injectable({
   providedIn: 'root'

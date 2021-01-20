@@ -1,6 +1,6 @@
-import {CommonDialogConfig} from '../../../../../shared/components/dialogs';
+import {CommonDialogConfig} from '@shared/components';
 
-export const WETTKMAPFTAGE_CONFIG: CommonDialogConfig = {
+export const WETTKAMPFTAGE_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
   pageTitleTranslationKey: 'MANAGEMENT.VERANSTALTUNG_DETAIL.TITLE'
 };

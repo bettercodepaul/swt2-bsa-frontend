@@ -13,6 +13,7 @@ export const SPORTJAHRESPLAN_ROUTES: Routes = [
   {path: '', pathMatch: 'full', component: SchusszettelComponent},
   {path: '', pathMatch: 'full', component: TabletEingabeComponent},
   {path: '', pathMatch: 'full', component: TabletAdminComponent},
+  {path: ':wettkampfId', pathMatch: 'full', component: SportjahresplanComponent},
   {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent},
   {path: 'schusszettel/:match1id/:match2id', pathMatch: 'full', component: SchusszettelComponent},
   {path: ':match1id/:match2id/tablet', pathMatch: 'full', component: TabletEingabeComponent},
