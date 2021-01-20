@@ -7,20 +7,23 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
  */
 export const onMapService = ($event: WettkampfDO): void => {
 
-  const str = $event.wettkampfOrt;
-  let splits: string[];
-  splits = str.split(', ', 5);
+
+  const strasse = $event.wettkampfStrasse;
+  const plz = $event.wettkampfPlz;
+  const ortsname = $event.wettkampfOrtsname;
+
+  const location = [strasse, plz, ortsname];
+
   let locationUrl = 'https://www.google.de/maps/place/';
-  for (let i = 0; i < splits.length; i++) {
+  for (let i = 0; i < location.length; i++) {
+    // vor ersten Übergabewert kein "+" setzen
     if (i !== 0) {
       locationUrl += '+';
     }
-    locationUrl += splits[i];
+    locationUrl += location[i];
   }
   window.open(locationUrl);
 };
-
-
 
 
 

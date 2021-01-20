@@ -11,29 +11,29 @@ export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
       {
         translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.NAME',
         propertyName:   'name',
-        width:          20,
+        width:          25.00,
       },
       {
         translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.IDENTIFIER',
         propertyName:   'identifier',
-        width:          20,
+        width:          25.00,
       },
       {
         translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.REGION_NAME',
         propertyName:   'regionName',
-        width:          20,
+        width:          25.00,
       },
       {
         translationKey: 'MANAGEMENT.VEREINE.TABLE.HEADERS.WEBSITE',
         propertyName:   'website',
-        width:          20,
+        width:          25.00,
       },
     ],
     actions: {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT],
+    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
   },
 

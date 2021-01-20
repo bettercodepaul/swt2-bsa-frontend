@@ -6,7 +6,7 @@ export class KampfrichterDTO implements DataTransferObject {
   leitend: boolean;
   version: number;
 
-  //TODO: Fix the userid to wettkampfID assignment so that name name, order and function are all correct
+  // TODO: Fix the userid to wettkampfID assignment so that name name, order and function are all correct
 
   // The attribute names of the optional have to be exactly the same as the getters in KampfrichterDTO.java
   static copyFrom(optional: {

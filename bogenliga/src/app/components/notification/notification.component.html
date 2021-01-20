@@ -12,15 +12,23 @@
 
 
   <div class="modal-dialog-details"
-       *ngIf="!!notification.details">
+       *ngIf="notification.details">
 
-    <a
-      data-toggle="collapse"
-      href="#collapseErrorMessage"
-      aria-expanded="false"
-      aria-controls="collapseErrorMessage">
-      <i class="fas fa-caret-down"></i> Mehr Informationen anzeigen
-    </a>
+    <bla-button style="background-color: #8ac679"
+          [buttonSize]="ButtonSize.SMALL"
+          (onClick)="toggleDetails()"
+          data-toggle="collapse"
+          href="#collapseErrorMessage"
+          aria-expanded="false"
+          aria-controls="collapseErrorMessage">
+          <div *ngIf="toggleOn; else elseBlock">
+            <i class="fas fa-caret-up"></i> Weniger Informationen anzeigen
+          </div>
+          <ng-template #elseBlock>
+            <i class="fas fa-caret-down"></i> Mehr Informationen anzeigen
+          </ng-template>
+    </bla-button>
+
 
     <div class="collapse"
          id="collapseErrorMessage">

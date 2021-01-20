@@ -33,7 +33,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
     },
     {
       translationKey: 'SPORTJAHRESPLAN.WETTKAMPF.TABLE.PLACE',
-      propertyName:   'wettkampfOrt',
+      propertyName:   'wettkampfOrtsname',
       width:          40,
     },
    ],

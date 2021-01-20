@@ -26,7 +26,7 @@
   padding: 20px;
   background: #fff;
   border-radius: 5px;
-  width: 30%;
+  width: 40%;
   height: auto;
   position: relative;
   transition: all 5s ease-in-out;
@@ -41,4 +41,12 @@
   font-weight: bold;
   text-decoration: none;
   color: #333;
+}
+
+.hidden {
+  display: none;
+}
+
+textarea[readonly]{
+  background-color: white;
 }
