@@ -52,6 +52,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public currentVerein: VereinDO = new VereinDO();
   public multipleSelections = true;
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
@@ -60,14 +61,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
+
   public dsbMitglieder: Array<DsbMitgliedDO> = [];
+
 
   popup: boolean;
   gesamt = false;
 
-
   isTableEmpty: Array<boolean> = [false, false, false, false];
-
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
@@ -103,6 +104,25 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         .then(() => {
           this.loadErgebnisse(this.currentMannschaft);
       });
+  }
+
+  /**
+   * Loads the currently selected verein
+   * @param vereinId | loads the verein with this Id
+   */
+  public loadVerein(vereinId: number): void {
+    this.vereinDataProvider.findById(vereinId)
+        .then((response: BogenligaResponse<VereinDO>) => this.handleLoadVerein(response))
+        .catch((response: BogenligaResponse<VereinDO>) => this.handleLoadVerein(null));
+    document.getElementById('vereinsinformationen').classList.remove('hidden');
+  }
+
+  /**
+   * Sets the currently selected verein to the response
+   * @param response | sets the current verein to the response
+   */
+  public handleLoadVerein(response: BogenligaResponse<VereinDO>) {
+    this.currentVerein = response.payload;
   }
 
   /**
@@ -147,6 +167,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     document.getElementById('druckButton').classList.add('hidden');
+    // hide verein information if the user presses "Alle Mannschaften anzeigen"
+    if (selectedMannschaft === undefined) {
+      document.getElementById('vereinsinformationen').classList.add('hidden');
+    }
     document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
 
@@ -179,6 +203,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.dsbMitglieder, this.currentJahr, selectedMannschaft,
         this.passen[i]))));
     }
+
 
     document.getElementById('druckButton').classList.remove('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
@@ -233,6 +258,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.loadGesamtstatistik(this.currentMannschaft);
     } else {
       this.loadEinzelstatistik(this.currentMannschaft);
+      this.loadVerein(selectedMannschaft.vereinId);
     }
   }
 
@@ -473,8 +499,5 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               .then((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = response.payload)
               .catch((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = []);
   }
-
-
-
 
 }

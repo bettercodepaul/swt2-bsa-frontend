@@ -654,7 +654,8 @@
           "IDENTIFIER": "Identifier",
           "REGION_ID": "Region ID",
           "REGION_NAME": "Region name",
-          "WEBSITE": "Website"
+          "WEBSITE": "Website",
+          "ICON": "Club logo"
         }
       },
       "NOTIFICATION": {
@@ -691,6 +692,12 @@
           "LABEL": "Description",
           "PLACEHOLDER": "Please enter a short description",
           "ERROR": "Please enter a valid description."
+        },
+        "VEREIN_ICON": {
+          "LABEL": "Club logo",
+          "PLACEHOLDER:": "Please select a file.",
+          "ERROR_PLACEHOLDER": "Club logo cannot be displayed.",
+          "ERROR": "Cannot upload file."
         },
         "SAVE": "Save",
         "UPDATE": "Refresh",

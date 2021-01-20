@@ -16,16 +16,14 @@ import {KampfrichterDTO} from '@verwaltung/types/datatransfer/kampfrichter-dto.c
 @Injectable({
   providedIn: 'root'
 })
-export class KampfrichterProviderService  extends DataProviderService {
+export class KampfrichterProviderService extends DataProviderService {
 
-  // Justins Code
-  // TODO: Make url v1/kampfrichter and fix KampfrichterService
   serviceSubUrl = 'v1/kampfrichter';
-
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
     super();
   }
+
   public findAll(): Promise<BogenligaResponse<KampfrichterDO[]>> {
     // return promise
     // sign in success -> resolve promise
@@ -45,12 +43,33 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<BogenligaResponse<void>> {
+  // // This method has been replaced by the delete() method
+  // public deleteById(id: number): Promise<BogenligaResponse<void>> {
+  //   // return promise
+  //   // sign in success -> resolve promise
+  //   // sign in failure -> reject promise with result
+  //   return new Promise((resolve, reject) => {
+  //     this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+  //         .then((noData) => {
+  //           resolve({result: RequestResult.SUCCESS});
+  //
+  //         }, (error: HttpErrorResponse) => {
+  //
+  //           if (error.status === 0) {
+  //             reject({result: RequestResult.CONNECTION_PROBLEM});
+  //           } else {
+  //             reject({result: RequestResult.FAILURE});
+  //           }
+  //         });
+  //   });
+  // }
+
+  public delete(userID: number, wettkampfID: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+      this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(`${userID}/${wettkampfID}`).build())
           .then((noData) => {
             resolve({result: RequestResult.SUCCESS});
 
@@ -64,29 +83,6 @@ export class KampfrichterProviderService  extends DataProviderService {
           });
     });
   }
-
-  // TODO: See if this works
-  // public delete(payload: VersionedDataTransferObject): Promise<BogenligaResponse<void>> {
-  //   // return promise
-  //   // sign in success -> resolve promise
-  //   // sign in failure -> reject promise with result
-  //   return new Promise((resolve, reject) => {
-  //     this.restClient.DELETE<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-  //         .then((data: VersionedDataTransferObject) => {
-  //           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
-  //
-  //         }, (error: HttpErrorResponse) => {
-  //
-  //           if (error.status === 0) {
-  //             reject({result: RequestResult.CONNECTION_PROBLEM});
-  //           } else {
-  //             reject({result: RequestResult.FAILURE});
-  //           }
-  //         });
-  //   });
-  // }
-
-
 
   public findById(id: string | number): Promise<BogenligaResponse<KampfrichterDO>> {
     // return promise
@@ -109,27 +105,27 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> { // DO or DTO? Probably DO.
-    console.log('KampfrichterProviderService:');
-    console.log(payload);
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-          .then((data: VersionedDataTransferObject) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
-
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
-  }
+  // public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> { // DO or DTO? Probably DO.
+  //   console.log('KampfrichterProviderService:');
+  //   console.log(payload);
+  //   // return promise
+  //   // sign in success -> resolve promise
+  //   // sign in failure -> reject promise with result
+  //   return new Promise((resolve, reject) => {
+  //     this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+  //         .then((data: VersionedDataTransferObject) => {
+  //           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+  //
+  //         }, (error: HttpErrorResponse) => {
+  //
+  //           if (error.status === 0) {
+  //             reject({result: RequestResult.CONNECTION_PROBLEM});
+  //           } else {
+  //             reject({result: RequestResult.FAILURE});
+  //           }
+  //         });
+  //   });
+  // }
 
 
   public create(payload: KampfrichterDO): Promise<BogenligaResponse<KampfrichterDO>> {
@@ -151,5 +147,4 @@ export class KampfrichterProviderService  extends DataProviderService {
           });
     });
   }
-
 }
