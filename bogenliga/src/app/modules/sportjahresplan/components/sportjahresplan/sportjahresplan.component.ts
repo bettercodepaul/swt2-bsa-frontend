@@ -20,6 +20,7 @@ import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
 import {onMapService} from '@shared/functions/onMap-service';
 
 
+
 @Component({
   selector:    'bla-sportjahresplan',
   templateUrl: './sportjahresplan.component.html',
