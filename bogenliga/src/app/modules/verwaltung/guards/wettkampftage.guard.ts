@@ -8,6 +8,7 @@ export class WettkampftageGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // CAN_READ_MY_VERANSTALTUNG or CAN_MODIFY_WETTKAMPF or CAN_MODIFY_MY_ORT required to activate Wettkampftage
     return this.currentUserService.hasAnyPermisson(
       [UserPermission.CAN_READ_MY_VERANSTALTUNG, UserPermission.CAN_MODIFY_WETTKAMPF, UserPermission.CAN_MODIFY_MY_ORT]);
   }

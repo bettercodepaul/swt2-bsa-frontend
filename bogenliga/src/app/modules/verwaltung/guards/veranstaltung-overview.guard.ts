@@ -13,6 +13,7 @@ export class VeranstaltungOverviewGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    // CAN_READ_STAMMDATEN or CAN_MODIFY_MY_VERANSTALTUNG required to activate Veranstaltung Overview
     return this.currentUserService.hasAnyPermisson(
       [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG]);
   }

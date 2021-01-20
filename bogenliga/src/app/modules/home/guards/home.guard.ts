@@ -8,6 +8,7 @@ export class HomeGuard implements CanActivate {
   }
 
   canActivate() {
+    // no permission required to activate Home and Impressum
     return this.currentUserService.hasAnyPermisson(
       []);
   }
