@@ -304,6 +304,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
                 });
 
             this.notificationService.showNotification(notification);
+            this.saveLoading = false;
           }
         }, (response: BogenligaResponse<VeranstaltungDO>) => {
           console.log('Failed');
