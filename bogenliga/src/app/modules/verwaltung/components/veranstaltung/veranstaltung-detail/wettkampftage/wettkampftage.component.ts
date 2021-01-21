@@ -42,6 +42,17 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_f
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 
+const wettkampfTagNotification: Notification = {
+  id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+  title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
+  description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
+  severity:    NotificationSeverity.INFO,
+  origin:      NotificationOrigin.USER,
+  type:        NotificationType.OK,
+  userAction:  NotificationUserAction.PENDING
+};
+
+
 // TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne Funktion und unterscheidet nicht den
 // Status der Eingabefelder
 
@@ -272,6 +283,17 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
+  private wettkampftagService() {
+    this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+            this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' +
+              this.currentVeranstaltung.id);
+          }
+        });
+  }
+
 
   private saveWettkampftag(wettkampfDO: WettkampfDO): Promise<number> {
 
@@ -285,25 +307,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
                    wettkampfDO.id = response.payload.id;
                    console.log(wettkampfDO);
 
-                   const notification: Notification = {
-                     id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-                     title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
-                     description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
-                     severity:    NotificationSeverity.INFO,
-                     origin:      NotificationOrigin.USER,
-                     type:        NotificationType.OK,
-                     userAction:  NotificationUserAction.PENDING
-                   };
-
-                   this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
-                       .subscribe((myNotification) => {
-                         if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                           this.saveLoading = false;
-                           this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' +
-                             this.currentVeranstaltung.id);
-                         }
-                       });
-                   this.notificationService.showNotification(notification);
+                   this.wettkampftagService();
 
                  }
                  return response.payload.id;
@@ -335,14 +339,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' +
-                      this.currentVeranstaltung.id);
-                  }
-                });
+            this.wettkampftagService();
             this.notificationService.showNotification(notification);
           }
         }, (response: BogenligaResponse<WettkampfDO>) => {
@@ -389,6 +386,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
+
+
   private deleteKampfrichterArray(kampfrichterArray: Array<KampfrichterDO>): void {
     for (const iter of Object.keys(kampfrichterArray)) {
 
@@ -397,26 +396,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
             console.log('Successfully deleted');
 
-            // TODO: Put this code in it's own method
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' +
-                      this.currentVeranstaltung.id);
-                  }
-                });
-            this.notificationService.showNotification(notification);
+            this.wettkampftagService();
+
+
+            this.notificationService.showNotification(wettkampfTagNotification);
 
           }, (response:
             BogenligaResponse<void>) => {
