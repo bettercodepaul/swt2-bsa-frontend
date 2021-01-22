@@ -172,7 +172,8 @@ export class WettkampfErgebnisService {
   und gibt die Funktion creatWettkampfEinzelergebniss zurück, bzw startet diese.
   Die uebergebenen Passe werden anhand der aktuellen Mannschaft gefiltert.
    */
-  public createEinzelErgebnisse(mitglieder: Array<DsbMitgliedDO>, mannschaftsmitglieder: Array <MannschaftsMitgliedDO>, jahr: number, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelErgebnis[] {
+  public createEinzelErgebnisse(mitglieder: Array<DsbMitgliedDO>, mannschaftsmitglieder: Array <MannschaftsMitgliedDO>,
+                                jahr: number, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelErgebnis[] {
     this.passen = passen;
     this.mitglieder = mitglieder;
     this.mannschaftsmitglieder = mannschaftsmitglieder;
@@ -215,10 +216,9 @@ export class WettkampfErgebnisService {
     const rueckennummer = this.mannschaftsmitglieder.find((mannschaftsmitglied) => {
       return mannschaftsmitglied.dsbMitgliedId === dsbMitgliedId;
     });
-    console.log("hallo " + rueckennummer.dsbMitgliedId + " , " + rueckennummer.mannschaftsId + " , " + rueckennummer.rueckennummer)
     if (name !== undefined && rueckennummer.rueckennummer !== undefined) {
       mitgliederName += rueckennummer.rueckennummer + ', ' + name.vorname + ' ' + name.nachname;
-    } else if (rueckennummer.rueckennummer === undefined){
+    } else if (rueckennummer.rueckennummer === undefined) {
       mitgliederName += name.vorname + ' ' + name.nachname;
     } else if (name === undefined) {
       mitgliederName += rueckennummer.rueckennummer;
@@ -273,7 +273,8 @@ export class WettkampfErgebnisService {
    und gibt die Funktion creatWettkampfGesamtergebniss zurück, bzw startet diese.
    Die uebergebenen Passe und Matches werden anhand der aktuellen Mannschaft gefiltert und daraufhin die Schuetzen herausgefiltert.
    */
-  public createGesamtErgebnisse(mitglieder: Array<DsbMitgliedDO>, mannschaftsmitglieder: Array <MannschaftsMitgliedDO>, jahr: number, matches: Array<MatchDO>, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelGesamtErgebnis[] {
+  public createGesamtErgebnisse(mitglieder: Array<DsbMitgliedDO>, mannschaftsmitglieder: Array <MannschaftsMitgliedDO>,
+                                jahr: number, matches: Array<MatchDO>, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelGesamtErgebnis[] {
     this.passen = passen;
     this.mitglieder = mitglieder;
     this.mannschaftsmitglieder = mannschaftsmitglieder;
