@@ -89,7 +89,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedLigen = [];
     if (this.hasID) {
       this.ligaDataProviderService.findById(this.selectedLigaId)
-
           .then((response: BogenligaResponse<LigaDTO>) =>
             this.getLigaSuccess(response.payload)
           ).catch((response: BogenligaResponse<LigaDTO[]>) => {
@@ -97,7 +96,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         console.log('This.LIGEN : ' + this.ligen);
       });
     }
-
     this.selectedLigen.push(this.selectedLiga);
     console.log('SelectedLiga ' + this.selectedLiga.id);
     console.log('CurrentLiga: ' + this.selectedLiga.id);
@@ -174,21 +172,27 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.ligaDataProviderService.findAll()
         .then((response: BogenligaResponse<LigaDTO[]>) => {
           const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-          buttonVisibility.style.display = 'none';
-          this.ligen = response.payload;
-          console.log('Ligen ' + this.ligen[0], this.ligen[1], this.ligen[2], this.ligen[3]);
-          console.log('prov ' + this.providedID);
+          if (this.hasID) {
+            buttonVisibility.style.display = 'none';
+            this.ligen = response.payload;
+            console.log('Ligen ' + this.ligen[0], this.ligen[1], this.ligen[2], this.ligen[3]);
+            console.log('prov ' + this.providedID);
 
-          // Ermittlung der veranstaltungsid
-          let id;
-          for (let i = 0; i < this.ligen.length; i++) {
-            if (this.ligen[i].id === this.providedID) {
-              id = i;
+            // Ermittlung der veranstaltungsid
+            let id;
+            for (let i = 0; i < this.ligen.length; i++) {
+              if (this.ligen[i].id === this.providedID) {
+                id = i;
+              }
             }
+            // Die ermittelte id wird in den selektiereten veranstaltung geschrieben
+            this.selectedLiga = response.payload[id];
+            console.log('selectedLiga', this.selectedLiga);
+            this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id;
+          } else {
+            buttonVisibility.style.display = 'none'; this.ligen = response.payload; this.selectedLiga = response.payload[0];
+            this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id; console.log(this.selectedLigaId);
           }
-          // Die ermittelte id wird in den selektiereten veranstaltung geschrieben
-          this.selectedLiga = response.payload[id];
-          this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id;
           this.changeSelectedLiga();
           this.onSelectLiga(this.selectedLigen);
           this.loadingVeranstaltungen = false;
