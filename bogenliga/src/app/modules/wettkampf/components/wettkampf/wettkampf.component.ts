@@ -68,7 +68,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   popup: boolean;
   gesamt = false;
 
-  isTableEmpty: Array<boolean> = [false, false, false, false];
+  //Die Werte des Array's entspricht dem Inhalt von allen 4 Wettkampftagen. false = leere Tablee, true = Tabelle mit Inhalt
+  isTableFilled: Array<boolean> = [false, false, false, false];
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
@@ -162,7 +163,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
     for (let i = 0; i < this.rows.length; i++) {
       if (this.rows[i].length > 0) {
-        this.isTableEmpty[i] = true;
+        this.isTableFilled[i] = true;
       }
     }
 
@@ -280,7 +281,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
       rowNumber += i + '1';
-      if (this.isTableEmpty[i]) {
+      if (this.isTableFilled[i]) {
         printContents += '<h3>Wettkampftag  ' + count + ' </h3>';
         printContents += document.getElementById(rowNumber).innerHTML;
         count += 1;
