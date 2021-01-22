@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    
+
     <br>
     <div id="vereinsinformationen" class="hidden">
       <h3>{{ 'MANAGEMENT.VEREIN_DETAIL.TITLE' | translate }}</h3>
@@ -206,7 +206,7 @@
     </div>
     <!-- Row 1 -->
     <div class="row print1">
-      <div id="Table1" class="hidden" [hidden]="!isTableEmpty[0]">
+      <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]">
         <h3>{{"Wettkampftag 1"}}</h3>
         <bla-data-table id="row0"
                         [loading]="loadingData"
@@ -222,7 +222,7 @@
     </div>
     <!-- Row 2 -->
     <div class="row print1">
-      <div id="Table2" class="hidden" [hidden]="!isTableEmpty[1]">
+      <div id="Table2" class="hidden" [hidden]="!isTableFilled[1]">
         <h3>{{"Wettkampftag 2"}}</h3>
         <bla-data-table id="row1"
                         [loading]="loadingData"
@@ -238,7 +238,7 @@
     </div>
     <!-- Row 3 -->
     <div class="row print1">
-      <div id="Table3" class="hidden" [hidden]="!isTableEmpty[2]">
+      <div id="Table3" class="hidden" [hidden]="!isTableFilled[2]">
         <h3>{{"Wettkampftag 3"}}</h3>
         <bla-data-table id="row2"
                         [loading]="loadingData"
@@ -254,7 +254,7 @@
     </div>
     <!-- Row 4 -->
     <div class="row print1">
-      <div id="Table4" class="hidden" [hidden]="!isTableEmpty[3]">
+      <div id="Table4" class="hidden" [hidden]="!isTableFilled[3]">
         <h3>{{"Wettkampftag 4"}}</h3>
         <bla-data-table id="row3"
                         [loading]="loadingData"
