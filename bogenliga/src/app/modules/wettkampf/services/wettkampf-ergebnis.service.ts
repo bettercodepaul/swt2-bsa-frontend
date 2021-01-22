@@ -6,8 +6,9 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {Injectable} from '@angular/core';
 import {WettkampfEinzelErgebnis} from '@wettkampf/components/wettkampf/wettkampergebnis/WettkampfEinzelErgebnis';
-import {WettkampfEinzelGesamtErgebnis} from '@wettkampf/components/wettkampf/wettkampergebnis/WettkampfEinzelGesamtErgebnis';
+import {WettkampfEinzelGesamtErgebnis} from '../components/wettkampf/wettkampergebnis/WettkampfEinzelGesamtErgebnis';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,8 @@ export class WettkampfErgebnisService {
   public matches: Array<MatchDO> = [];
   private passen: Array<PasseDoClass> = [];
   private schuetze: Array<PasseDoClass> = [];
-  public mitglieder: Array<DsbMitgliedDO>;
+  public mitglieder: Array<DsbMitgliedDO> = [];
+  public mannschaftsmitglieder: Array <MannschaftsMitgliedDO> = [];
 
   constructor() {
 
@@ -169,9 +171,10 @@ export class WettkampfErgebnisService {
   und gibt die Funktion creatWettkampfEinzelergebniss zurück, bzw startet diese.
   Die uebergebenen Passe werden anhand der aktuellen Mannschaft gefiltert.
    */
-  public createEinzelErgebnisse(mitglieder: Array<DsbMitgliedDO>, jahr: number, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelErgebnis[] {
+  public createEinzelErgebnisse(mitglieder: Array<DsbMitgliedDO>, mannschaftsmitglieder: Array <MannschaftsMitgliedDO>, jahr: number, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelErgebnis[] {
     this.passen = passen;
     this.mitglieder = mitglieder;
+    this.mannschaftsmitglieder = mannschaftsmitglieder;
     this.currentMannschaft = mannschaft;
     if (this.currentMannschaft !== undefined) {
       this.passen = this.filterPassen();
@@ -208,10 +211,15 @@ export class WettkampfErgebnisService {
     const name = this.mitglieder.find((mitglied) => {
       return mitglied.id === dsbMitgliedId;
     });
-    if (name !== undefined) {
-      mitgliederName += dsbMitgliedId + ', ' + name.vorname + ' ' + name.nachname;
+    const rueckennummer = this.mannschaftsmitglieder.find((mannschaftsmitglied) => {
+      return mannschaftsmitglied.dsbMitgliedId === dsbMitgliedId;
+    });
+    if (name !== undefined && rueckennummer !== undefined) {
+      mitgliederName += rueckennummer.rueckennummer + ', ' + name.vorname + ' ' + name.nachname;
+    } else if(rueckennummer !== undefined){
+      mitgliederName += rueckennummer.rueckennummer;
     } else {
-      mitgliederName += dsbMitgliedId;
+      mitgliederName += ' - ';
     }
     return mitgliederName;
   }
@@ -261,9 +269,10 @@ export class WettkampfErgebnisService {
    und gibt die Funktion creatWettkampfGesamtergebniss zurück, bzw startet diese.
    Die uebergebenen Passe und Matches werden anhand der aktuellen Mannschaft gefiltert und daraufhin die Schuetzen herausgefiltert.
    */
-  public createGesamtErgebnisse(mitglieder: Array<DsbMitgliedDO>, jahr: number, matches: Array<MatchDO>, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelGesamtErgebnis[] {
+  public createGesamtErgebnisse(mitglieder: Array<DsbMitgliedDO>, mannschaftsmitglieder: Array <MannschaftsMitgliedDO>, jahr: number, matches: Array<MatchDO>, mannschaft: DsbMannschaftDO, passen: Array<PasseDoClass>): WettkampfEinzelGesamtErgebnis[] {
     this.passen = passen;
     this.mitglieder = mitglieder;
+    this.mannschaftsmitglieder = mannschaftsmitglieder;
     this.currentMannschaft = mannschaft;
     this.matches = matches;
     if (this.currentMannschaft !== undefined) {
