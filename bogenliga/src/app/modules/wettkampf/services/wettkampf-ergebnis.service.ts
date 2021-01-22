@@ -218,9 +218,9 @@ export class WettkampfErgebnisService {
     console.log("hallo " + rueckennummer.dsbMitgliedId + " , " + rueckennummer.mannschaftsId + " , " + rueckennummer.rueckennummer)
     if (name !== undefined && rueckennummer.rueckennummer !== undefined) {
       mitgliederName += rueckennummer.rueckennummer + ', ' + name.vorname + ' ' + name.nachname;
-    } else if (rueckennummer.rueckennummer !== undefined){
+    } else if (rueckennummer.rueckennummer === undefined){
       mitgliederName += name.vorname + ' ' + name.nachname;
-    } else if (name !== undefined) {
+    } else if (name === undefined) {
       mitgliederName += rueckennummer.rueckennummer;
     } else {
       mitgliederName += ' - ';
