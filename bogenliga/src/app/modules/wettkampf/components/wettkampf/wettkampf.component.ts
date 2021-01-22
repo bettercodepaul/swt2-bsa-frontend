@@ -68,7 +68,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   popup: boolean;
   gesamt = false;
 
-  //Die Werte des Array's entspricht dem Inhalt von allen 4 Wettkampftagen. false = leere Tablee, true = Tabelle mit Inhalt
+  //Die Werte des Array's entspricht dem Inhalt von allen 4 Wettkampftagen. false = leere Tabelle, true = Tabelle mit Inhalt
   isTableFilled: Array<boolean> = [false, false, false, false];
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
