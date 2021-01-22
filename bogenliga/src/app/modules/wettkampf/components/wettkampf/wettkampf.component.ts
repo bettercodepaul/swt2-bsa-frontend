@@ -508,7 +508,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public loadMannschaftsmitglieder() {
     this.mannschaftsmitgliedDataProvider.findAll()
         .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = response.payload)
-        .catch((response: BogenligaResponse<MannschaftsMitgliedDO>) => this.mannschaftsmitglieder = []);
+        .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = []);
   }
 
 }

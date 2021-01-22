@@ -4,6 +4,7 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
+
 import {Injectable} from '@angular/core';
 import {WettkampfEinzelErgebnis} from '@wettkampf/components/wettkampf/wettkampergebnis/WettkampfEinzelErgebnis';
 import {WettkampfEinzelGesamtErgebnis} from '../components/wettkampf/wettkampergebnis/WettkampfEinzelGesamtErgebnis';
@@ -214,9 +215,12 @@ export class WettkampfErgebnisService {
     const rueckennummer = this.mannschaftsmitglieder.find((mannschaftsmitglied) => {
       return mannschaftsmitglied.dsbMitgliedId === dsbMitgliedId;
     });
-    if (name !== undefined && rueckennummer !== undefined) {
+    console.log("hallo " + rueckennummer.dsbMitgliedId + " , " + rueckennummer.mannschaftsId + " , " + rueckennummer.rueckennummer)
+    if (name !== undefined && rueckennummer.rueckennummer !== undefined) {
       mitgliederName += rueckennummer.rueckennummer + ', ' + name.vorname + ' ' + name.nachname;
-    } else if(rueckennummer !== undefined){
+    } else if (rueckennummer.rueckennummer !== undefined){
+      mitgliederName += name.vorname + ' ' + name.nachname;
+    } else if (name !== undefined) {
       mitgliederName += rueckennummer.rueckennummer;
     } else {
       mitgliederName += ' - ';
