@@ -27,6 +27,8 @@ import {logger} from 'codelyzer/util/logger';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {fromPayloadLigatabelleErgebnisArray} from '@wettkampf/mapper/wettkampf-ergebnis-mapper';
+import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
+import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -61,14 +63,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
-
+  public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public dsbMitglieder: Array<DsbMitgliedDO> = [];
 
 
   popup: boolean;
   gesamt = false;
 
-  isTableEmpty: Array<boolean> = [false, false, false, false];
+  // Die Werte des Array's entspricht dem Inhalt von allen 4 Wettkampftagen. false = leere Tabelle, true = Tabelle mit Inhalt
+  isTableFilled: Array<boolean> = [false, false, false, false];
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
@@ -78,6 +81,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               private wettkampfErgebnisService: WettkampfErgebnisService,
               private mannschaftDataProvider: DsbMannschaftDataProviderService,
               private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
+              private mannschaftsmitgliedDataProvider: MannschaftsmitgliedDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -162,7 +166,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
     for (let i = 0; i < this.rows.length; i++) {
       if (this.rows[i].length > 0) {
-        this.isTableEmpty[i] = true;
+        this.isTableFilled[i] = true;
       }
     }
 
@@ -200,7 +204,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
-      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.dsbMitglieder, this.currentJahr, selectedMannschaft,
+      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.dsbMitglieder, this.mannschaftsmitglieder, this.currentJahr, selectedMannschaft,
         this.passen[i]))));
     }
 
@@ -235,7 +239,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     this.rows = [];
 
-    this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.dsbMitglieder, this.currentJahr, this.matches[0], selectedMannschaft,
+    this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.dsbMitglieder, this.mannschaftsmitglieder, this.currentJahr, this.matches[0], selectedMannschaft,
       this.passen[0]))));
 
 
@@ -280,7 +284,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
       rowNumber += i + '1';
-      if (this.isTableEmpty[i]) {
+      if (this.isTableFilled[i]) {
         printContents += '<h3>Wettkampftag  ' + count + ' </h3>';
         printContents += document.getElementById(rowNumber).innerHTML;
         count += 1;
@@ -400,6 +404,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadMannschaft(this.currentVeranstaltung.id);
     this.loadMitglieder();
     this.loadJahre();
+    this.loadMannschaftsmitglieder();
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
   }
 
@@ -498,6 +503,12 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.dsbMitgliedDataProvider.findAll()
               .then((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = response.payload)
               .catch((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = []);
+  }
+
+  public loadMannschaftsmitglieder() {
+    this.mannschaftsmitgliedDataProvider.findAll()
+        .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = response.payload)
+        .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = []);
   }
 
 }

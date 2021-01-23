@@ -112,7 +112,6 @@ export class SchusszettelComponent implements OnInit {
 
     // am Anfang sind keine Änderungen
     this.dirtyFlag = false;
-
     // this.initSchuetzen();
     this.initSchuetzenMatch1();
     this.initSchuetzenMatch2();
