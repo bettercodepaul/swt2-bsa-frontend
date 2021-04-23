@@ -115,7 +115,7 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
 
   /*
   resetPW
-  ändert Passworteintrag für ausgewählten Nutzer
+  ändert Passworteintrag für ausgewählten User
    */
   public resetPW(ignore: any): void {
     this.savePW = true;
