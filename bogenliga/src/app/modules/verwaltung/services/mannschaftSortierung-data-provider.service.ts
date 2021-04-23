@@ -7,7 +7,7 @@ import {
   VersionedDataTransferObject
 } from '@shared/data-provider';
 import {CurrentUserService} from '@shared/services';
-import {BenutzerRolleDTO} from '@verwaltung/types/datatransfer/benutzer-rolle-dto.class';
+import {BenutzerRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {BenutzerDO} from '@verwaltung/types/user-do.class';
 import {fromPayloadArray} from '@verwaltung/mapper/benutzer-mapper';
 import {HttpErrorResponse} from '@angular/common/http';

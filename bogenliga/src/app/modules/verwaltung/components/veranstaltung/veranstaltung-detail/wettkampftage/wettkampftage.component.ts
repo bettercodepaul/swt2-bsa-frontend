@@ -22,7 +22,7 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {WettkampfDataProviderService} from '../../../../services/wettkampf-data-provider.service';
 import {BenutzerRolleDO} from '@verwaltung/types/user-rolle-do.class';
-import {BenutzerRolleDTO} from '@verwaltung/types/datatransfer/benutzer-rolle-dto.class';
+import {BenutzerRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {BenutzerDataProviderService} from '../../../../services/benutzer-data-provider.service';
 import {KampfrichterDO} from '@verwaltung/types/kampfrichter-do.class';
 import {KampfrichterDTO} from '@verwaltung/types/datatransfer/kampfrichter-dto.class';
