@@ -1,5 +1,5 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {BenutzerDTO} from '../types/datatransfer/benutzer-dto.class';
+import {BenutzerDTO} from '../types/datatransfer/user-dto.class';
 
 
 // export function toDO(benutzerDTO: BenutzerDTO): BenutzerDO {
