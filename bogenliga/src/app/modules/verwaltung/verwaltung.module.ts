@@ -5,7 +5,7 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
   BenutzerDetailComponent,
-  BenutzerNeuComponent,
+  UserNeuComponent,
   BenutzerOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
@@ -68,7 +68,7 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
     DsbMitgliedOverviewComponent,
     DsbMitgliedDetailComponent,
     BenutzerDetailComponent,
-    BenutzerNeuComponent,
+    UserNeuComponent,
     BenutzerOverviewComponent,
     WettkampfklasseOverviewComponent,
     WettkampfklasseDetailComponent,
