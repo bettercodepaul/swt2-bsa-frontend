@@ -1,6 +1,6 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {BenutzerDO} from '../types/benutzer-do.class';
-import {BenutzerRolleDO} from '../types/benutzer-rolle-do.class';
+import {BenutzerDO} from '../types/user-do.class';
+import {BenutzerRolleDO} from '../types/user-rolle-do.class';
 import {BenutzerRolleDTO} from '../types/datatransfer/benutzer-rolle-dto.class';
 
 
