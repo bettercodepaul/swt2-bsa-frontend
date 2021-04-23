@@ -2,7 +2,7 @@ import {Routes} from '@angular/router';
 
 import {
   BenutzerDetailComponent,
-  BenutzerNeuComponent,
+  UserNeuComponent,
   BenutzerOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
@@ -65,7 +65,7 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [BenutzerOverviewGuard]
   },
-  {path: 'benutzer/add', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]}
+  {path: 'benutzer/add', component: UserNeuComponent, canActivate: [BenutzerNeuGuard]}
   ,
   {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
   {

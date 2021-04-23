@@ -5,9 +5,9 @@ import {isNullOrUndefined} from '@shared/functions';
 import {CredentialsDO} from '@user/types/credentials-do.class';
 import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
-import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
-import {BenutzerDO} from '../../../types/benutzer-do.class';
-import {BENUTZER_NEU_CONFIG} from './benutzer-neu.config';
+import {BenutzerDataProviderService} from '../../../services/user-data-provider.service';
+import {BenutzerDO} from '../../../types/user-do.class';
+import {USER_NEU_CONFIG} from './user-neu.config';
 import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 
@@ -23,17 +23,17 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_SAVE_BENUTZER = 'benutzer_neu_save';
+const NOTIFICATION_SAVE_USER = 'user_neu_save';
 
 
 @Component({
-  selector:    'bla-benutzer-neu',
-  templateUrl: './benutzer-neu.component.html',
-  styleUrls:   ['./benutzer-neu.component.scss']
+  selector:    'bla-user-neu',
+  templateUrl: './user-neu.component.html',
+  styleUrls:   ['./user-neu.component.scss']
 })
-export class BenutzerNeuComponent extends CommonComponentDirective implements OnInit {
+export class UserNeuComponent extends CommonComponentDirective implements OnInit {
 
-  public config = BENUTZER_NEU_CONFIG;
+  public config = USER_NEU_CONFIG;
   public ButtonType = ButtonType;
   public currentCredentials: CredentialsDO = new CredentialsDO();
   public verifyCredentials: CredentialsDO = new CredentialsDO();
@@ -46,7 +46,7 @@ export class BenutzerNeuComponent extends CommonComponentDirective implements On
   public selectedDsbMitgliedId: number;
   public multipleSelections = true;
 
-  constructor(private benutzerDataProvider: BenutzerDataProviderService,
+  constructor(private userDataProvider: BenutzerDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService,
@@ -74,7 +74,7 @@ export class BenutzerNeuComponent extends CommonComponentDirective implements On
     // persist
 
     this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password, this.selectedDsbMitgliedId, this.currentCredentials.using2FA);
-    this.benutzerDataProvider.create(this.currentCredentialsDTO)
+    this.userDataProvider.create(this.currentCredentialsDTO)
         .then((response: BogenligaResponse<BenutzerDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
@@ -83,9 +83,9 @@ export class BenutzerNeuComponent extends CommonComponentDirective implements On
 
 
             const notification: Notification = {
-              id:          NOTIFICATION_SAVE_BENUTZER,
-              title:       'MANAGEMENT.BENUTZER_NEU.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.BENUTZER_NEU.NOTIFICATION.SAVE.DESCRIPTION',
+              id:          NOTIFICATION_SAVE_USER,
+              title:       'MANAGEMENT.USER_NEU.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.USER_NEU.NOTIFICATION.SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
@@ -93,7 +93,7 @@ export class BenutzerNeuComponent extends CommonComponentDirective implements On
             };
 
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_BENUTZER)
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_USER)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
@@ -103,7 +103,7 @@ export class BenutzerNeuComponent extends CommonComponentDirective implements On
                       console.log('QR:');
                       console.log(this.qrCode);
                     } else {
-                      this.router.navigateByUrl('/verwaltung/benutzer');
+                      this.router.navigateByUrl('/verwaltung/user');
                     }
                   }
                 });
