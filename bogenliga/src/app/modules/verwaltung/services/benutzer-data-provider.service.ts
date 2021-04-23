@@ -15,7 +15,7 @@ import {fromPayload, fromPayloadArray} from '../mapper/benutzer-mapper';
 import {fromPayloadArrayBenutzerRolle, fromPayloadBenutzerRolle} from '../mapper/benutzer-rolle-mapper';
 import {BenutzerDO} from '../types/user-do.class';
 import {BenutzerRolleDO} from '../types/user-rolle-do.class';
-import {BenutzerRolleDTO} from '../types/datatransfer/benutzer-rolle-dto.class';
+import {BenutzerRolleDTO} from '../types/datatransfer/user-rolle-dto.class';
 
 @Injectable({
   providedIn: 'root'
