@@ -120,7 +120,7 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
   public resetPW(ignore: any): void {
     this.savePW = true;
     this.resetCredentials.username = this.currentUserRolleDO[0].email;
-    this.UserDataProvider.resetPW(this.resetCredentials)
+    this.userDataProvider.resetPW(this.resetCredentials)
       .then((response: BogenligaResponse<Array<UserDO>>) => {
         if (!isNullOrUndefined(response)) {
           this.notificationService.observeNotification(NOTIFICATION_SAVE_USER)
