@@ -4,9 +4,9 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
-  BenutzerDetailComponent,
+  UserDetailComponent,
   UserNeuComponent,
-  BenutzerOverviewComponent,
+  UserOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
@@ -27,9 +27,9 @@ import {
 
 } from './components';
 import {
-  BenutzerDetailGuard,
-  BenutzerNeuGuard,
-  BenutzerOverviewGuard,
+  UserDetailGuard,
+  UserNeuGuard,
+  UserOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
@@ -67,9 +67,9 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
     VerwaltungComponent,
     DsbMitgliedOverviewComponent,
     DsbMitgliedDetailComponent,
-    BenutzerDetailComponent,
+    UserDetailComponent,
     UserNeuComponent,
-    BenutzerOverviewComponent,
+    UserOverviewComponent,
     WettkampfklasseOverviewComponent,
     WettkampfklasseDetailComponent,
     VereinDetailComponent,
@@ -98,9 +98,9 @@ export class VerwaltungModule {
         DsbMitgliedOverviewGuard,
         DsbMitgliedDetailGuard,
         DsbMannschaftDetailGuard,
-        BenutzerOverviewGuard,
-        BenutzerNeuGuard,
-        BenutzerDetailGuard,
+        UserOverviewGuard,
+        UserNeuGuard,
+        UserDetailGuard,
         WettkampfklasseOverviewGuard,
         WettkampfklasseDetailGuard,
         VereinOverviewGuard,
