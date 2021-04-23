@@ -1,9 +1,9 @@
 import {Routes} from '@angular/router';
 
 import {
-  BenutzerDetailComponent,
+  UserDetailComponent,
   UserNeuComponent,
-  BenutzerOverviewComponent,
+  UserOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
@@ -23,9 +23,9 @@ import {
   EinstellungenOverviewComponent
 } from './components';
 import {
-  BenutzerDetailGuard,
-  BenutzerNeuGuard,
-  BenutzerOverviewGuard,
+  UserDetailGuard,
+  UserNeuGuard,
+  UserOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
