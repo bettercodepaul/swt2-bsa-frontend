@@ -5,8 +5,8 @@ import {isNullOrUndefined} from '@shared/functions';
 import {CredentialsDO} from '@user/types/credentials-do.class';
 import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
-import {BenutzerDataProviderService} from '../../../services/user-data-provider.service';
-import {BenutzerDO} from '../../../types/user-do.class';
+import {UserDataProviderService} from '../../../services/user-data-provider.service';
+import {UserDO} from '../../../types/user-do.class';
 import {USER_NEU_CONFIG} from './user-neu.config';
 import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
@@ -46,7 +46,7 @@ export class UserNeuComponent extends CommonComponentDirective implements OnInit
   public selectedDsbMitgliedId: number;
   public multipleSelections = true;
 
-  constructor(private userDataProvider: BenutzerDataProviderService,
+  constructor(private userDataProvider: UserDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService,
@@ -75,7 +75,7 @@ export class UserNeuComponent extends CommonComponentDirective implements OnInit
 
     this.currentCredentialsDTO = new CredentialsDTO(this.currentCredentials.username, this.currentCredentials.password, this.selectedDsbMitgliedId, this.currentCredentials.using2FA);
     this.userDataProvider.create(this.currentCredentialsDTO)
-        .then((response: BogenligaResponse<BenutzerDO>) => {
+        .then((response: BogenligaResponse<UserDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
@@ -110,7 +110,7 @@ export class UserNeuComponent extends CommonComponentDirective implements OnInit
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<BenutzerDO>) => {
+        }, (response: BogenligaResponse<UserDO>) => {
           console.log('Failed');
           this.saveLoading = false;
 
