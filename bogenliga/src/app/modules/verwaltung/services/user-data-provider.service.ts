@@ -13,14 +13,14 @@ import {CurrentUserService} from '../../shared/services/current-user';
 import {CredentialsDTO} from '../../user/types/model/credentials-dto.class';
 import {fromPayload, fromPayloadArray} from '../mapper/benutzer-mapper';
 import {fromPayloadArrayBenutzerRolle, fromPayloadBenutzerRolle} from '../mapper/benutzer-rolle-mapper';
-import {BenutzerDO} from '../types/user-do.class';
-import {BenutzerRolleDO} from '../types/user-rolle-do.class';
-import {BenutzerRolleDTO} from '../types/datatransfer/user-rolle-dto.class';
+import {UserDO} from '../types/user-do.class';
+import {UserRolleDO} from '../types/user-rolle-do.class';
+import {UserRolleDTO} from '../types/datatransfer/user-rolle-dto.class';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BenutzerDataProviderService extends DataProviderService {
+export class UserDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/user';
 
@@ -28,7 +28,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     super();
   }
 
-  public create(payload: CredentialsDTO): Promise<BogenligaResponse<BenutzerDO>> {
+  public create(payload: CredentialsDTO): Promise<BogenligaResponse<UserDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -48,7 +48,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public updateRole(payload: Array<BenutzerRolleDTO>): Promise<BogenligaResponse<Array<BenutzerDO>>> {
+  public updateRole(payload: Array<UserRolleDTO>): Promise<BogenligaResponse<Array<UserDO>>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -68,7 +68,7 @@ export class BenutzerDataProviderService extends DataProviderService {
     });
   }
 
-  public resetPW(payload: CredentialsDTO): Promise<BogenligaResponse<Array<BenutzerDO>>> {
+  public resetPW(payload: CredentialsDTO): Promise<BogenligaResponse<Array<UserDO>>> {
 
     return new Promise((resolve, reject) => {
       const newCredentialsDTO = new CredentialsDTO(payload.username, payload.password, payload.dsb_mitglied_id, payload.using2FA, payload.code);
@@ -112,7 +112,7 @@ export class BenutzerDataProviderService extends DataProviderService {
   }
 
 
-  public findAll(): Promise<BogenligaResponse<BenutzerRolleDO[]>> {
+  public findAll(): Promise<BogenligaResponse<UserRolleDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -134,7 +134,7 @@ export class BenutzerDataProviderService extends DataProviderService {
   }
 
 
-  public findUserRoleById(id: string | number): Promise<BogenligaResponse<BenutzerRolleDO[]>> {
+  public findUserRoleById(id: string | number): Promise<BogenligaResponse<UserRolleDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -157,7 +157,7 @@ export class BenutzerDataProviderService extends DataProviderService {
 
 
 
-  public findById(id: string | number): Promise<BogenligaResponse<BenutzerDO>> {
+  public findById(id: string | number): Promise<BogenligaResponse<UserDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
