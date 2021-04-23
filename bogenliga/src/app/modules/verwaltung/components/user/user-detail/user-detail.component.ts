@@ -70,14 +70,14 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
   /*
   ngOnInit
   ich blocke die Applikation während ich lade
-  ich hole mir aus der Datenbank den ausgewählten Nutzer als BenutzerRolleDO
-  die derzeitigen Rollen von dem ausgewählten Benutzer werden in currentBenutzerRolleDO gespeichert
+  ich hole mir aus der Datenbank den ausgewählten Nutzer als UserRolleDO
+  die derzeitigen Rollen von dem ausgewählten User werden in currentUserRolleDO gespeichert
   alle Rollennamen werden mit | getrennt in das Feld Aktuelle Rollen geschrieben
 
   ich hole mir aus der Datenbank mit roleDataProvider.findAll alle RoleDO die in der Datenbank vorhanden sind
   und speichere sie in roles ab
 
-  beim ändern der Objekte currentBenutzerRolleDO oder roles wird updateView() aufgerufen
+  beim ändern der Objekte currentUserRolleDO oder roles wird updateView() aufgerufen
   */
   ngOnInit() {
     this.loading = true;
@@ -171,7 +171,7 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
                 });
 
             this.notificationService.showNotification(this.notification);
-            this.router.navigateByUrl('/verwaltung/benutzer');
+            this.router.navigateByUrl('/verwaltung/user');
           }
 
         }, (response: BogenligaResponse<UserDO>) => {
