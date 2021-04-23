@@ -101,7 +101,7 @@ export class UserOverviewComponent extends CommonComponentDirective implements O
   handleLoadTableRowsSuccess
   displayRoles wurden oben angelegt.
   ich hole mir aus der Datenbank alle aktiven Nutzer.
-  Für die Anzeige schreibe ich jeden Nutzer in displayRoles, falls ein Benutzer doppelt vorkommen würde,
+  Für die Anzeige schreibe ich jeden Nutzer in displayRoles, falls ein User doppelt vorkommen würde,
   zeige ich nur die Rolle mit dem höchsten Rang an.
   */
   private handleLoadTableRowsSuccess(response: BogenligaResponse<UserRolleDO[]>): void {
