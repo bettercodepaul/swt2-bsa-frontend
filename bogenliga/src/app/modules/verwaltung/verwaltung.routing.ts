@@ -61,13 +61,13 @@ export const VERWALTUNG_ROUTES: Routes = [
   ,
   {
     path: 'benutzer',
-    component: BenutzerOverviewComponent,
+    component: UserOverviewComponent,
     pathMatch: 'full',
-    canActivate: [BenutzerOverviewGuard]
+    canActivate: [UserOverviewGuard]
   },
-  {path: 'benutzer/add', component: UserNeuComponent, canActivate: [BenutzerNeuGuard]}
+  {path: 'benutzer/add', component: UserNeuComponent, canActivate: [UserNeuGuard]}
   ,
-  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
+  {path: 'benutzer/:id', component: UserDetailComponent, canActivate: [UserDetailGuard]},
   {
     path: 'klassen',
     component: WettkampfklasseOverviewComponent,

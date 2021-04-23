@@ -1,6 +1,7 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {BenutzerDTO} from '../types/datatransfer/user-dto.class';
+import {UserDTO} from '../types/datatransfer/user-dto.class';
 import {RoleDTO} from '../types/datatransfer/role-dto.class';
+import {UserOverviewGuard} from '@verwaltung/guards';
 
 
 // export function toDO(roleDTO: RoleDTO): RoleDO {
