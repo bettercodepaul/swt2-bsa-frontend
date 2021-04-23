@@ -13,8 +13,8 @@ import {CurrentUserService} from '../../shared/services/current-user';
 import {CredentialsDTO} from '../../user/types/model/credentials-dto.class';
 import {fromPayload, fromPayloadArray} from '../mapper/benutzer-mapper';
 import {fromPayloadArrayBenutzerRolle, fromPayloadBenutzerRolle} from '../mapper/benutzer-rolle-mapper';
-import {BenutzerDO} from '../types/benutzer-do.class';
-import {BenutzerRolleDO} from '../types/benutzer-rolle-do.class';
+import {BenutzerDO} from '../types/user-do.class';
+import {BenutzerRolleDO} from '../types/user-rolle-do.class';
 import {BenutzerRolleDTO} from '../types/datatransfer/benutzer-rolle-dto.class';
 
 @Injectable({
