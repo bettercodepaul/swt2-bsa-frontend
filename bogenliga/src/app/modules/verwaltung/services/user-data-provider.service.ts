@@ -11,8 +11,8 @@ import {
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
 import {CredentialsDTO} from '../../user/types/model/credentials-dto.class';
-import {fromPayload, fromPayloadArray} from '../mapper/benutzer-mapper';
-import {fromPayloadArrayBenutzerRolle, fromPayloadBenutzerRolle} from '../mapper/benutzer-rolle-mapper';
+import {fromPayload, fromPayloadArray} from '../mapper/user-mapper';
+import {fromPayloadArrayUserRolle, fromPayloadUserRolle} from '../mapper/user-rolle-mapper';
 import {UserDO} from '../types/user-do.class';
 import {UserRolleDO} from '../types/user-rolle-do.class';
 import {UserRolleDTO} from '../types/datatransfer/user-rolle-dto.class';
@@ -120,7 +120,7 @@ export class UserDataProviderService extends DataProviderService {
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
           .then((data: VersionedDataTransferObject[]) => {
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayBenutzerRolle(data)});
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayUserRolle(data)});
 
           }, (error: HttpErrorResponse) => {
 
@@ -142,7 +142,7 @@ export class UserDataProviderService extends DataProviderService {
       this.restClient.GET<VersionedDataTransferObject[]>(new UriBuilder().fromPath(this.getUrl()).path('userrole').path(id).build())
         .then((data: VersionedDataTransferObject[]) => {
 
-          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayBenutzerRolle(data)});
+          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayUserRolle(data)});
 
         }, (error: HttpErrorResponse) => {
 
