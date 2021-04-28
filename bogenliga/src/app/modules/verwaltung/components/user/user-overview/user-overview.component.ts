@@ -13,24 +13,24 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {BenutzerDataProviderService} from '../../../services/benutzer-data-provider.service';
-import {BenutzerRolleDO} from '../../../types/benutzer-rolle-do.class';
-import {BENUTZER_OVERVIEW_CONFIG_ACTIVE} from '@verwaltung/components/benutzer/benutzer-overview/benutzer-overview-active.config';
+import {UserDataProviderService} from '../../../services/user-data-provider.service';
+import {UserRolleDO} from '../../../types/user-rolle-do.class';
+import {USER_OVERVIEW_CONFIG_ACTIVE} from '@verwaltung/components/user/user-overview/user-overview-active.config';
 
-export const NOTIFICATION_DELETE_BENUTZER = 'benutzer_overview_delete';
+export const NOTIFICATION_DELETE_USER = 'user_overview_delete';
 
 @Component({
-  selector:    'bla-benutzer-overview',
-  templateUrl: './benutzer-overview.component.html',
-  styleUrls:   ['./benutzer-overview.component.scss']
+  selector:    'bla-user-overview',
+  templateUrl: './user-overview.component.html',
+  styleUrls:   ['./user-overview.component.scss']
 })
-export class BenutzerOverviewComponent extends CommonComponentDirective implements OnInit {
+export class UserOverviewComponent extends CommonComponentDirective implements OnInit {
 
-  public configActive = BENUTZER_OVERVIEW_CONFIG_ACTIVE;
+  public configActive = USER_OVERVIEW_CONFIG_ACTIVE;
   public rowsActive: TableRow[];
   public displayRoles: TableRow[];
 
-  constructor(private benutzerDataProvider: BenutzerDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private userDataProvider: UserDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 
@@ -55,9 +55,9 @@ export class BenutzerOverviewComponent extends CommonComponentDirective implemen
     this.rowsActive = showDeleteLoadingIndicatorIcon(this.rowsActive, id);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_BENUTZER + id,
-      title:            'MANAGEMENT.BENUTZER.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.BENUTZER.NOTIFICATION.DELETE.DESCRIPTION',
+      id:               NOTIFICATION_DELETE_USER + id,
+      title:            'MANAGEMENT.USER.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.USER.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
@@ -65,10 +65,10 @@ export class BenutzerOverviewComponent extends CommonComponentDirective implemen
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_BENUTZER + id)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_USER + id)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.benutzerDataProvider.deleteById(id)
+            this.userDataProvider.deleteById(id)
                 .then((response) => this.loadTableRows())
                 .catch((response) => this.rowsActive = hideLoadingIndicator(this.rowsActive, id));
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
@@ -83,16 +83,16 @@ export class BenutzerOverviewComponent extends CommonComponentDirective implemen
   private loadTableRows() {
     this.loading = true;
 
-    this.benutzerDataProvider.findAll()
-        .then((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<BenutzerRolleDO[]>) => this.handleLoadTableRowsFailure(response));
+    this.userDataProvider.findAll()
+        .then((response: BogenligaResponse<UserRolleDO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<UserRolleDO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/benutzer/' + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/user/' + versionedDataObject.id);
   }
 
-  private handleLoadTableRowsFailure(response: BogenligaResponse<BenutzerRolleDO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<UserRolleDO[]>): void {
     this.rowsActive = [];
     this.loading = false;
   }
@@ -101,15 +101,15 @@ export class BenutzerOverviewComponent extends CommonComponentDirective implemen
   handleLoadTableRowsSuccess
   displayRoles wurden oben angelegt.
   ich hole mir aus der Datenbank alle aktiven Nutzer.
-  Für die Anzeige schreibe ich jeden Nutzer in displayRoles, falls ein Benutzer doppelt vorkommen würde,
+  Für die Anzeige schreibe ich jeden Nutzer in displayRoles, falls ein User doppelt vorkommen würde,
   zeige ich nur die Rolle mit dem höchsten Rang an.
   */
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<BenutzerRolleDO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<UserRolleDO[]>): void {
     this.rowsActive = []; // reset array to ensure change detection
     this.displayRoles = [];
 
     let exist = 0;
-    this.rowsActive = toTableRows(response.payload.filter((benutzer) => benutzer.active));
+    this.rowsActive = toTableRows(response.payload.filter((user) => user.active));
     this.rowsActive.forEach((item, index) => {
       this.displayRoles.forEach((item2, index2) => {
         if (item.payload.id === item2.payload.id) {
