@@ -13,8 +13,6 @@ import {fromPayloadArray} from '@verwaltung/mapper/einstellungen-mapper';
 import {HttpErrorResponse} from '@angular/common/http';
 
 import {fromPayload} from '@verwaltung/mapper/einstellungen-mapper';
-import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
-import {VereinDO} from '@verwaltung/types/verein-do.class';
 
 
 
