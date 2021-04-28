@@ -1,9 +1,9 @@
 import {Routes} from '@angular/router';
 
 import {
-  BenutzerDetailComponent,
-  BenutzerNeuComponent,
-  BenutzerOverviewComponent,
+  UserDetailComponent,
+  UserNeuComponent,
+  UserOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
@@ -23,9 +23,9 @@ import {
   EinstellungenOverviewComponent
 } from './components';
 import {
-  BenutzerDetailGuard,
-  BenutzerNeuGuard,
-  BenutzerOverviewGuard,
+  UserDetailGuard,
+  UserNeuGuard,
+  UserOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
@@ -61,13 +61,13 @@ export const VERWALTUNG_ROUTES: Routes = [
   ,
   {
     path: 'benutzer',
-    component: BenutzerOverviewComponent,
+    component: UserOverviewComponent,
     pathMatch: 'full',
-    canActivate: [BenutzerOverviewGuard]
+    canActivate: [UserOverviewGuard]
   },
-  {path: 'benutzer/add', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]}
+  {path: 'benutzer/add', component: UserNeuComponent, canActivate: [UserNeuGuard]}
   ,
-  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
+  {path: 'benutzer/:id', component: UserDetailComponent, canActivate: [UserDetailGuard]},
   {
     path: 'klassen',
     component: WettkampfklasseOverviewComponent,
