@@ -24,7 +24,7 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
   providedIn: 'root'
 })
 export class EinstellungenProviderService  extends DataProviderService {
-  serviceSubUrl = 'v1/einstellungen';
+  serviceSubUrl = 'v1/configuration';
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
