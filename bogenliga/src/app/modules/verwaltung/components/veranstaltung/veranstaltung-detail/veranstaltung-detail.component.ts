@@ -255,7 +255,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
               console.log('Failed');
               this.saveLoading = false;
 
-
             });
 
       }} else {
