@@ -180,6 +180,20 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichter(wettkampfTagNumber, wettkampfID));
   }
 
+  public displayNextWettkampfTag(wettkampfTagNumber: number): void{
+    switch(wettkampfTagNumber){
+      case 1:
+        document.getElementById('Tag2').style.display ="block";
+        break;
+      case 2:
+        document.getElementById('Tag3').style.display ="block";
+        break;
+      case 3:
+        document.getElementById('Tag4').style.display ="block";
+        break;
+    }
+  }
+
   public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number> {
     let currentWettkampftag: WettkampfDO;
     let currentAusrichter: UserProfileDO;
