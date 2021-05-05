@@ -131,8 +131,8 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
   private handleSetzlisteFailure(){
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
-      title: 'Creation Failure:',
-      description: 'Creation of Setzliste was not successful',
+      title: 'Fehler beim Erstellen:',
+      description: 'Das Erstellen einer Setzliste war nicht erfolgreich.',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
