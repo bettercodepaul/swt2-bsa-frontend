@@ -47,10 +47,14 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((() => this.handleBogenkontrolllisteFailure()))
           .catch((() => this.handleBogenkontrolllisteFailure()));
-    } else if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
+    } else if (this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-        .then((() => this.handleWithoutNotification()))
-        .catch((() => this.handleWithoutNotification()));
+          .then((() => this.handleWithoutNotification()))
+          .catch((() => this.handleWithoutNotification()));
+    } else if (this.id === 'downloadSetzliste') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((() => this.handleSetzlisteFailure()))
+          .catch((() => this.handleSetzlisteFailure()));
     } else {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
         .then((response) => this.handleSuccess(response))
@@ -113,6 +117,22 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'Download Failure:',
       description: 'You have first to create a full Setzliste',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleSetzlisteFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'Creation Failure:',
+      description: 'Creation of Setzliste was not successful',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
