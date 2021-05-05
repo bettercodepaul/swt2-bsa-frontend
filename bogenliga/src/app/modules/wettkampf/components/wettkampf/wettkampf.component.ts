@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
-import {BogenligaResponse} from '@shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WETTKAMPF_TABLE_EINZEL_CONFIG} from './wettkampergebnis/tabelle.einzel.config';
@@ -29,6 +29,7 @@ import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-
 import {fromPayloadLigatabelleErgebnisArray} from '@wettkampf/mapper/wettkampf-ergebnis-mapper';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
+import {environment} from '@environment';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -511,4 +512,11 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = []);
   }
 
+  public onButtonDownload(path: string): string {
+    return new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path(path)
+      .build();
+  }
 }

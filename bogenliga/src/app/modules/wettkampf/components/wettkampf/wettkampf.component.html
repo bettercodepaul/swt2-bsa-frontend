@@ -161,11 +161,11 @@
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik Drucken -->
-      <bla-button class = "hidden" id = "druckButton"
-        [id]="'showResultsButton'"
-        (onClick)="einzeldruck();">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelDrucken.LABEL' | translate }}
-      </bla-button>
+      <bla-download-button
+        [id]="'downloadEinzelstatistik'"
+        [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
+        [fileName]="'bogenkontrollliste.pdf'"> Einzelstatistik als PDF
+      </bla-download-button>
 
       <!-- Button - Einzelstatistik Drucken -->
       <bla-button class = "hidden" id = "gesamtdruckButton"
