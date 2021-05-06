@@ -209,11 +209,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     // show response message
   }
   public onCopyMannschaft(ignore: any): void {
-    console.log('Last Veranstaltung: ' + this.lastVeranstaltung);
+    console.log('Last Veranstaltung: ' + this.lastVeranstaltung.id);
     if (typeof this.lastVeranstaltung != null) {
       this.saveLoading = true;
 
-        this.mannschaftDataProvider.copyMannschaftOnVeranstaltung(this.lastVeranstaltung.id);
+        this.mannschaftDataProvider.copyMannschaftOnVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id);
             /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
                 && !isNullOrUndefined(response.payload)
