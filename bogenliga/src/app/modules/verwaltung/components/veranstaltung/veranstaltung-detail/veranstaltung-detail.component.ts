@@ -209,23 +209,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     // show response message
   }
   public onCopyMannschaft(ignore: any): void {
-    this.loadDsbMannschaft();
+    console.log('Last Veranstaltung: ' + this.lastVeranstaltung);
     if (typeof this.lastVeranstaltung != null) {
       this.saveLoading = true;
-      if (this.allDsbMannschaft.length > 0) {
 
-      for (let i = 0; i <= this.allDsbMannschaft.length; i++) {
-
-        this.testMannschaft.veranstaltungId = this.currentVeranstaltung.id;
-        this.testMannschaft.veranstaltungName = this.currentVeranstaltung.name;
-        this.testMannschaft.benutzerId = this.allDsbMannschaft[i].benutzerId;
-        this.testMannschaft.vereinId = this.allDsbMannschaft[i].vereinId;
-        this.testMannschaft.nummer = this.allDsbMannschaft[i].nummer;
-        this.testMannschaft.name = this.allDsbMannschaft[i].name;
-        // persist
-
-        this.mannschaftDataProvider.create(this.testMannschaft, null)
-            .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+        this.mannschaftDataProvider.copyMannschaftOnVeranstaltung(this.lastVeranstaltung.id);
+            /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
                 && !isNullOrUndefined(response.payload)
                 && !isNullOrUndefined(response.payload.id)) {
@@ -260,7 +249,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       }} else {
         console.log('Keine Mannschaften verfügbar');
         this.saveLoading = false;
-      }
+      }*/
     } else {
       console.log('Veranstaltung ist nicht vorhanden');
     }
