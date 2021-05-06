@@ -1,4 +1,6 @@
 import {Component, NgModule, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormArray} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective} from '@shared/components';
 import {ButtonType} from '@shared/components';
@@ -63,6 +65,32 @@ const wettkampfTagNotification: Notification = {
 })
 
 export class WettkampftageComponent extends CommonComponentDirective implements OnInit {
+
+  //Irem
+  profileForm = this.fb.group({
+    date: new FormControl(''),
+    start: new FormControl(''),
+    ausrichter: new FormControl(''),
+    address: this.fb.group({
+      street: new FormControl(''),
+      citynumber: new FormControl(''),
+      city: new FormControl(''),
+      information: new FormControl('')
+    }),
+    wettkampftage: this.fb.array([
+      this.fb.control('')
+    ])
+  });
+
+  get wettkampftage(){
+    return this.profileForm.get('wettkampftage') as FormArray;
+  }
+
+  addNewWettkampftag(){
+    this.wettkampftage.push(this.fb.control(''));
+  }
+  //-Irem
+
   public config = WETTKAMPFTAGE_CONFIG;
   public ButtonType = ButtonType;
 
@@ -112,6 +140,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public notSelectedKampfrichterWettkampftag4: Array<BenutzerRolleDO> = [];
 
   constructor(
+    private fb: FormBuilder,
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampfDataProvider: WettkampfDataProviderService,
     private userProvider: UserProfileDataProviderService,

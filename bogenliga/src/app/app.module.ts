@@ -22,6 +22,7 @@ import {HomeModule} from './modules/home';
 import {ErrorInterceptor, JwtInterceptor, SharedModule} from './modules/shared';
 import {APP_REDUCERS} from '@shared/redux-store';
 import {VerwaltungModule} from '@verwaltung/verwaltung.module';
+import {ReactiveFormsModule} from '@angular/forms';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -41,6 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports:      [
     BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule,
     TranslateModule.forRoot({
       loader: {
