@@ -517,7 +517,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path(path)
-      .path('?manschaft=' + this.currentMannschaft.id)
+      .path('?manschaftsid=' + this.currentMannschaft.id)
       .build();
   }
 }

@@ -24,7 +24,7 @@ export class EinzelstatistikDownloadComponent implements OnInit {
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path(path)
-      .path('?manschaft=' + this.currentMannschaftid)
+      .path('?manschaftsid=' + this.currentMannschaftid)
       .build();
   }
 }
