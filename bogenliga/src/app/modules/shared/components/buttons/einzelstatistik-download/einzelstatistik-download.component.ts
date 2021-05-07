@@ -10,7 +10,7 @@ export class EinzelstatistikDownloadComponent implements OnInit {
 
   // Get the value of the attribute from the html tag
   @Input()
-  wettkampfid: number;
+  currentMannschaftid: number;
 
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
@@ -24,7 +24,7 @@ export class EinzelstatistikDownloadComponent implements OnInit {
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path(path)
-      .path('?wettkampfid=' + this.wettkampfid)
+      .path('?manschaft=' + this.currentMannschaftid)
       .build();
   }
 }
