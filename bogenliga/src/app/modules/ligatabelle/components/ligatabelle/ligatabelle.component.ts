@@ -55,6 +55,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   private loadedVeranstaltungen: Map<number, VeranstaltungDO[]>;
   private selectedVeranstaltung: VeranstaltungDO;
   public loadedYears: SportjahrVeranstaltungDO[];
+  public availableYears: SportjahrVeranstaltungDO[];
   public veranstaltungenForYear: VeranstaltungDO[];
 
   private yearIdMap: Map<number, SportjahrVeranstaltungDO>;
@@ -83,6 +84,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   private async loadTableData() {
     this.loadedYears = [];
+    this.availableYears = [];
     this.loadedVeranstaltungen = new Map();
     this.yearIdMap = new Map();
     this.veranstaltungIdMap = new Map();
@@ -92,18 +94,22 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
     for (const year of responseYear.payload) {
       this.yearIdMap.set(year.id, year);
-      const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportyear(year.sportjahr)
+      const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportjahrDestinct(year.sportjahr)
       this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);
 
       for (const veranstaltung of responseVeranstaltung.payload) {
-        this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung)
+        this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung);
+
+        if(!veranstaltung !=null){
+          this.availableYears.push(year);
+        }
       }
     }
 
     this.loading = false;
     this.loadingLigatabelle = false;
-    this.selectedYearId = this.loadedYears[0].id;
-    this.onSelectYear(this.loadedYears); //automatische Auswahl
+    this.selectedYearId = this.availableYears[0].id;
+    this.onSelectYear(this.availableYears); //automatische Auswahl
   }
 
   private loadLigaTableRows() {
