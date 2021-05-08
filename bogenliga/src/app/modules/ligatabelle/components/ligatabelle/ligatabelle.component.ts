@@ -66,22 +66,45 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   ngOnInit() {
     console.log('Bin im Liga');
-    this.loading = true;
+    this.loadTableData();
     this.providedID = undefined;
     this.hasID = false;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        console.log('Provided Id ' + this.providedID);
+        console.log('Provided Id ', this.providedID);
         this.hasID = true;
 
       } else {
         console.log('no params');
       }
     });
-    console.log('SelectedLigaID ' + this.selectedLigaId);
-    this.loadLigen();
+  }
+
+  private async loadTableData() {
+    this.loadedYears = [];
+    this.loadedVeranstaltungen = new Map();
+    this.yearIdMap = new Map();
+    this.veranstaltungIdMap = new Map();
+
+    const responseYear = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
+    this.loadedYears = responseYear.payload;
+
+    for (const year of responseYear.payload) {
+      this.yearIdMap.set(year.id, year);
+      const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportyear(year.sportjahr)
+      this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);
+
+      for (const veranstaltung of responseVeranstaltung.payload) {
+        this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung)
+      }
+    }
+
+    this.loading = false;
+    this.loadingLigatabelle = false;
+    this.selectedYearId = this.loadedYears[0].id;
+    this.onSelectYear(this.loadedYears); //automatische Auswahl
   }
 
   private changeSelectedLiga(): void {
