@@ -205,54 +205,34 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   private loadLigaTableRows() {
     this.loadingLigatabelle = true;
-    this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.selectedVeranstaltungId)
+    this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.selectedVeranstaltung.id)
         .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleSuccess(response))
-        .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleFailure(response));
+        .catch(() => this.handleLigatabelleFailure());
   }
 
-
-  private handleLigatabelleFailure(response: BogenligaResponse<LigatabelleErgebnisDO[]>): void {
+  private handleLigatabelleFailure() {
+    console.log('failure');
     this.rowsLigatabelle = [];
     this.loadingLigatabelle = false;
   }
 
-  public ligatabelleLinking() {
-    const link = '/wettkaempfe/' + this.selectedVeranstaltungId;
-    this.router.navigateByUrl(link);
-  }
-
-  private handleLigatabelleSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>): void {
+  private handleLigatabelleSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
+    console.log('success')
     this.rowsLigatabelle = []; // reset array to ensure change detection
     this.remainingLigatabelleRequests = response.payload.length;
-    if (response.payload.length <= 0) {
+    if (response.payload.length <= 0
+    ) {
       this.loadingLigatabelle = false;
     } else {
-      for (const ligatabelle of response.payload) {
-        const tableContentRow: LigatabelleErgebnisDO = new LigatabelleErgebnisDO();
-
-        tableContentRow.veranstaltung_id = ligatabelle.veranstaltung_id;
-        tableContentRow.veranstaltung_name = ligatabelle.veranstaltung_name;
-        tableContentRow.wettkampf_id = ligatabelle.wettkampf_id;
-        tableContentRow.wettkampf_tag = ligatabelle.wettkampf_tag;
-        tableContentRow.mannschaft_id = ligatabelle.mannschaft_id;
-        tableContentRow.mannschaft_name = ligatabelle.mannschaft_name;
-        tableContentRow.verein_id = ligatabelle.verein_id;
-        tableContentRow.matchpunkte = ligatabelle.matchpunkte;
-        tableContentRow.satzpunkte = ligatabelle.satzpunkte;
-        tableContentRow.satzpkt_differenz = ligatabelle.satzpkt_differenz;
-        tableContentRow.tabellenplatz = ligatabelle.tabellenplatz;
-
-
-        tableContentRow.id = ligatabelle.id;
-        tableContentRow.version = ligatabelle.version;
-
-        this.tableContent.push(tableContentRow);
-      }
-      this.rowsLigatabelle = toTableRows(this.tableContent);
+      this.rowsLigatabelle = toTableRows(response.payload);
       this.loadingLigatabelle = false;
     }
+  }
 
 
+  public ligatabelleLinking() {
+    const link = '/wettkaempfe/' + this.buttonForward;
+    this.router.navigateByUrl(link);
   }
 
   private loadTableRows(ligaID: number) {
