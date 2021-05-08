@@ -82,7 +82,25 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     });
   }
 
-
+  public findBySportjahrDestinct(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('find/by/sorted/' + sportjahr).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            console.log(data.toString());
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+  
   public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
