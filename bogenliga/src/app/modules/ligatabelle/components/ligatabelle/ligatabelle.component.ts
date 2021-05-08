@@ -4,17 +4,14 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './ligatabelle.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
-import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {WettkampfDataProviderService} from '../../../wettkampf/services/wettkampf-data-provider.service';
+import {WettkampfDataProviderService} from '@wettkampf/services/wettkampf-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {LigatabelleErgebnisDO} from '../../../wettkampf/types/wettkampf-ergebnis-do.class';
+import {LigatabelleErgebnisDO} from '@wettkampf/types/wettkampf-ergebnis-do.class';
 import {isUndefined} from '@shared/functions';
-import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 import {NotificationService} from '@shared/services/notification';
-import {LigaDO} from '@verwaltung/types/liga-do.class';
-import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 
 
 const ID_PATH_PARAM = 'id';
@@ -34,7 +31,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private notificationService: NotificationService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private ligatabelleDataProvider: WettkampfDataProviderService,
-    private ligaDataProviderService: LigaDataProviderService
   ) {
     super();
   }
@@ -44,24 +40,28 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
 
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
-  public selectedVeranstaltungId: number;
+  public buttonForward: number;
   public selectedVeranstaltungName: string;
-  public selectedDTOs: VeranstaltungDO[];
-  public multipleSelections = true;
-  public veranstaltungen: VeranstaltungDO[];
-  public ligen: LigaDO[];
-  public selectedLigen: LigaDO[];
-  public loadingVeranstaltungen = true;
-  public loadingLigatabelle = false;
-  public rowsLigatabelle: TableRow[];
-  private tableContent: Array<LigatabelleErgebnisDO> = [];
-  private remainingLigatabelleRequests: number;
-  public providedID: number;
-  private selectedLiga: LigaDO;
-  public selectedLigaId: number;
-  private hasID: boolean;
 
-  public veranstaltungenInLiga: VeranstaltungDO[];
+
+  public loading = true;
+  public loadingLigatabelle = true;
+  public multipleSelections = true;
+  public rowsLigatabelle: TableRow[];
+  public providedID: number;
+  private hasID: boolean;
+  private remainingLigatabelleRequests: number;
+
+  private loadedVeranstaltungen: Map<number, VeranstaltungDO[]>;
+  private selectedVeranstaltung: VeranstaltungDO;
+  public loadedYears: SportjahrVeranstaltungDO[];
+  public veranstaltungenForYear: VeranstaltungDO[];
+
+  private yearIdMap: Map<number, SportjahrVeranstaltungDO>;
+  private veranstaltungIdMap: Map<number, VeranstaltungDO>;
+
+  public selectedVeranstaltungId: number;
+  public selectedYearId: number;
 
 
   ngOnInit() {
