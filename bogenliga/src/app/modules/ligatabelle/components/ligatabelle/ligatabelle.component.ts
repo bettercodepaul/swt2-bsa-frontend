@@ -63,7 +63,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedVeranstaltungId: number;
   public selectedYearId: number;
 
-
   ngOnInit() {
     console.log('Bin im Liga');
     this.loadTableData();
@@ -107,125 +106,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.onSelectYear(this.loadedYears); //automatische Auswahl
   }
 
-  private changeSelectedLiga(): void {
-    console.log('Bin im changeSelectedLiga');
-    this.selectedLigen = [];
-    if (this.hasID) {
-      this.ligaDataProviderService.findById(this.selectedLigaId)
-          .then((response: BogenligaResponse<LigaDTO>) =>
-            this.getLigaSuccess(response.payload)
-          ).catch((response: BogenligaResponse<LigaDTO[]>) => {
-        this.ligen = response.payload;
-        console.log('This.LIGEN : ' + this.ligen);
-      });
-    }
-    this.selectedLigen.push(this.selectedLiga);
-    console.log('SelectedLiga ' + this.selectedLiga.id);
-    console.log('CurrentLiga: ' + this.selectedLiga.id);
-  }
-
-  private getLigaSuccess(response: LigaDTO) {
-    console.log('response in getLiga: ' + response.name);
-    this.selectedLiga = response;
-  }
-
-
-  public onSelectLiga($event: LigaDO[]): void {
-    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-    buttonVisibility.style.display = 'block';
-
-    this.selectedLigen = [];
-    this.selectedLigen = $event;
-
-    if (!!this.selectedLigen && this.selectedLigen.length > 0) {
-      this.loadTableRows(this.selectedLigen[0].id);
-    }
-    this.selectedDTOs = [];
-    this.selectedVeranstaltungId = null;
-
-    this.onSelect(this.veranstaltungsDataProvider.findByLigaId(this.selectedLigen[0].id)[0]);
-  }
-
-  // when a Veranstaltung gets selected from the list
-  // load LigaTabelle
-  public onSelect($event: VeranstaltungDO[]): void {
-    const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-    buttonVisibility.style.display = 'block';
-    this.selectedDTOs = [];
-    this.selectedDTOs = $event;
-
-    if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
-      this.selectedVeranstaltungId = this.selectedDTOs[0].id;
-      this.selectedVeranstaltungName = this.selectedDTOs[0].name;
-    }
-    this.changeVeranstaltung();
-  }
-
-  // Changes the displayed Veranstaltung with the current selected one from selectedDTOs.
-  private changeVeranstaltung(): void {
-    this.rowsLigatabelle = [];
-    this.tableContent = [];
-    if (this.selectedVeranstaltungId != null) {
-      this.loadLigaTableRows();
-    }
-  }
-
-// backend-call to get the list of veranstaltungen
-  private loadVeranstaltungen(): void {
-    this.veranstaltungen = [];
-    // this.selectedLiga = '';
-    // this.selectedLigaId = null;
-
-    this.veranstaltungsDataProvider.findAll()
-        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-          const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-          buttonVisibility.style.display = 'none';
-          this.veranstaltungen = response.payload;
-          this.onSelect(this.veranstaltungen);
-          this.loadingVeranstaltungen = false;
-        })
-        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-          this.veranstaltungen = response.payload;
-        });
-  }
-
-  // Load all Ligen into the Tabel and strats the selection from the chosen.
-  private loadLigen(): void {
-    this.ligen = [];
-    this.ligaDataProviderService.findAll()
-        .then((response: BogenligaResponse<LigaDTO[]>) => {
-          const buttonVisibility: HTMLInputElement = document.querySelector('#Button') as HTMLInputElement;
-          if (this.hasID) {
-            buttonVisibility.style.display = 'none';
-            this.ligen = response.payload;
-            console.log('Ligen ' + this.ligen[0], this.ligen[1], this.ligen[2], this.ligen[3]);
-            console.log('prov ' + this.providedID);
-
-            // Ermittlung der veranstaltungsid
-            let id;
-            for (let i = 0; i < this.ligen.length; i++) {
-              if (this.ligen[i].id === this.providedID) {
-                id = i;
-              }
-            }
-            // Die ermittelte id wird in den selektiereten veranstaltung geschrieben
-            this.selectedLiga = response.payload[id];
-            console.log('selectedLiga', this.selectedLiga);
-            this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id;
-          } else {
-            buttonVisibility.style.display = 'none'; this.ligen = response.payload; this.selectedLiga = response.payload[0];
-            this.selectedLigaId = this.hasID ? this.providedID : response.payload[0].id; console.log(this.selectedLigaId);
-          }
-          this.changeSelectedLiga();
-          this.onSelectLiga(this.selectedLigen);
-          this.loadingVeranstaltungen = false;
-        })
-        .catch((response: BogenligaResponse<LigaDTO[]>) => {
-          this.ligen = response.payload;
-        });
-  }
-
-
   private loadLigaTableRows() {
     this.loadingLigatabelle = true;
     this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.selectedVeranstaltung.id)
@@ -252,30 +132,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     }
   }
 
-
   public ligatabelleLinking() {
     const link = '/wettkaempfe/' + this.buttonForward;
     this.router.navigateByUrl(link);
-  }
-
-  private loadTableRows(ligaID: number) {
-    this.loading = true;
-    this.veranstaltungsDataProvider.findByLigaId(ligaID)
-        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadTableRowsFailure(response));
-  }
-
-  private handleLoadTableRowsFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
-    this.veranstaltungenInLiga = [];
-    this.loading = false;
-  }
-
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
-    this.veranstaltungenInLiga = []; // reset array to ensure change detection
-    this.veranstaltungenInLiga = response.payload;
-    this.onSelect(this.veranstaltungenInLiga);
-    console.log(this.veranstaltungenInLiga);
-    this.loading = false;
   }
 
   public onSelectYear($event: SportjahrVeranstaltungDO[]) {
@@ -286,6 +145,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id
     this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); //automatische Auswahl
   }
+
   public onSelectVeranstaltung($event: VeranstaltungDO[]) {
     this.selectedVeranstaltung = $event[0];
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
