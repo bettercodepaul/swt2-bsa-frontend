@@ -275,4 +275,19 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.loading = false;
   }
 
+  public onSelectYear($event: SportjahrVeranstaltungDO[]) {
+    const buttonVisibility: HTMLInputElement = document.querySelector('#Button');
+    buttonVisibility.style.display = 'block';
+    this.veranstaltungenForYear = [];
+    this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
+    this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id
+    this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); //automatische Auswahl
+  }
+  public onSelectVeranstaltung($event: VeranstaltungDO[]) {
+    this.selectedVeranstaltung = $event[0];
+    this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
+    this.buttonForward = this.selectedVeranstaltung.id;
+    this.loadLigaTableRows();
+  }
+
 }
