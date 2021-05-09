@@ -4,8 +4,8 @@
 
     <bla-row-layout>
       <div class="flexChild">
-        <h3><a class="blackLink"
-        >{{ 'WETTKAEMPFE.TITEL.VERANSTALTUNG' | translate }}</a></h3>
+        <h5><a class="blackLink"
+        >{{ 'MANAGEMENT.SPORTJAHR_OVERVIEW.TABLE.HEADERS.SPORTJAHR' | translate }}</a></h5>
 
         <table style="width: 10%; margin-bottom: 3%;">
           <bla-selectionlist (onSelect)="onSelectYear($event)"
@@ -19,23 +19,27 @@
 
           </bla-selectionlist>
         </table>
+        <div>
+          <h5><a class="blackLink"
+          >{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.VERANSTALTUNG' | translate }}</a></h5>
+          <table id="example"
+                 class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+                 style="width:80%">
+            <!-- headlines -->
 
-        <table id="example"
-               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-               style="width:80%">
-          <!-- headlines -->
+            <bla-quicksearch-list (onSelect)="onSelectVeranstaltung($event)"
+                                  [items]="veranstaltungenForYear"
+                                  [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                                  [optionFieldSelector]="'ligaName'"
+                                  [multipleSelections]="!multipleSelections"
+                                  [selectedItemIds]=[selectedVeranstaltungId]
+                                  selectionListHeight="15em"
+                                  style="width: 60%; flex-grow: 0;">
 
-          <bla-quicksearch-list (onSelect)="onSelectVeranstaltung($event)"
-                                [items]="veranstaltungenForYear"
-                                [placeholderTranslationKey]="PLACEHOLDER_VAR"
-                                [optionFieldSelector]="'ligaName'"
-                                [multipleSelections]="!multipleSelections"
-                                [selectedItemIds]=[selectedVeranstaltungId]
-                                selectionListHeight="15em"
-                                style="width: 60%; flex-grow: 0;">
+            </bla-quicksearch-list>
+          </table>
+        </div>
 
-          </bla-quicksearch-list>
-        </table>
 
       </div>
 
