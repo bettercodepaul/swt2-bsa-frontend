@@ -266,61 +266,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.loadVerein(selectedMannschaft.vereinId);
     }
   }
-
-  /*
-  einzeldruck
-  Öffnet das Fenster um Einzelstatistik zu drucken
-   */
-  public einzeldruck() {
-
-    let printContents = '<h2>Einzelstatistik</h2>';
-    printContents += '<br>';
-    printContents += document.getElementById('titel').innerHTML;
-    printContents += '<br>';
-    printContents += document.getElementById('titel2').innerHTML;
-    printContents += '<br>';
-    printContents += document.getElementById('jahr').innerHTML;
-    printContents += '<br><br>';
-    let count = 1;
-    for (let i = 0; i < 4; i++) {
-      let rowNumber = 'row';
-      rowNumber += i + '1';
-      if (this.isTableFilled[i]) {
-        printContents += '<h3>Wettkampftag  ' + count + ' </h3>';
-        printContents += document.getElementById(rowNumber).innerHTML;
-        count += 1;
-      }
-    }
-
-
-    let htmlToPrint = '' +
-      '<style type="text/css">' +
-      'table th, table td {' +
-      'padding: 5px; ' +
-      '}' +
-      ' #walkheader{border-left: none!important; border-right: none!important;}' +
-      ' #Table1{padding: 4px; border-collapse:collapse; font; font-size:12pt;}' +
-      ' #printHeader2 td{ border-bottom: solid black 1px; border-right: solid black 1px!important; }' +
-      ' td{ border-bottom: solid black 1px; border-right: solid black 1px!important; border-left: solid black 1px!important; }' +
-      '</style>';
-    htmlToPrint += printContents;
-    const printWindow = window.open('', '', 'height=800,width=800');
-    printWindow.document.write('<html><head><title>Wettkampfergebnisse</title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(htmlToPrint);
-    printWindow.document.write('<script>var spans = document.getElementsByTagName("fa-icon");  for (var i = 0; i<spans.length; i++) {' +
-      ' spans[i].style.display = "none" };  </script>');
-    printWindow.document.write('</body></html>');
-    printWindow.print();
-    printWindow.document.close();
-  }
-
-
   /*
    gesamtdruck
    Öffnet das Fenster um Gesamtstatistik zu drucken
    */
-
   public gesamtdruck() {
 
     let printContents = '<h2>Gesamtstatistik</h2>';
