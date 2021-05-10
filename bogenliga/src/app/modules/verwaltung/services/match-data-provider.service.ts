@@ -51,7 +51,7 @@ export class MatchDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findAllWettkampfMatches/wettkampfid=' + id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + id).build())
         .then((data: VersionedDataTransferObject[]) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
         }, (error: HttpErrorResponse) => {
