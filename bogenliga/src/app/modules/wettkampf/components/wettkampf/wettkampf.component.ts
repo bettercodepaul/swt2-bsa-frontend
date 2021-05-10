@@ -484,10 +484,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.loadingData = false;
     }
   }
-  // method to change the name to a default, incase if there isn't a Team to for currentMannschaft
+  // method to change the name to a default, in case if there isn't a Team to for currentMannschaft
 
   public getTitle(): string {
-    let placeholder = 'Keine Mannschaft in der Liga';
+    let placeholder = ' ';
     if (this.currentMannschaft !== undefined) {
       placeholder = this.currentMannschaft.name;
     }
