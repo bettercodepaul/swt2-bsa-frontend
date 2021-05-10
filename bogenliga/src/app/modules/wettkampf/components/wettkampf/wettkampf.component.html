@@ -161,13 +161,13 @@
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik Drucken -->
-      <bla-download-button
+      <bla-download-button class = "hidden" id = "einzeldruckButton"
         [id]="'downloadEinzelstatistik'"
         [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
-        [fileName]="'bogenkontrollliste.pdf'"> Einzelstatistik als PDF
+        [fileName]="'Einzelstatistik.pdf'"> Einzelstatistik als PDF
       </bla-download-button>
 
-      <!-- Button - Einzelstatistik Drucken -->
+      <!-- Button - Gesamtstatistik Drucken -->
       <bla-button class = "hidden" id = "gesamtdruckButton"
                   [id]="'showResultsButton'"
                   (onClick)="gesamtdruck();">

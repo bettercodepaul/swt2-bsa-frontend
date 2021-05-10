@@ -210,7 +210,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
 
-    document.getElementById('druckButton').classList.remove('hidden');
+    document.getElementById('einzeldruckButton').classList.remove('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
 
