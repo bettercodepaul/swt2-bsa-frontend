@@ -115,6 +115,14 @@
         "PLACE": "Veranstaltungsort"
       }
     },
+    "SETZLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Fehler beim generieren der Setzliste",
+          "DESCRIPTION": "Setzliste konnte nicht generiert werden, da keine Daten zum vorherigen Wettkampftag vcrhanden sind."
+        }
+      }
+    },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
         "EINGABEFEHLER":{
