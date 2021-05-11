@@ -216,7 +216,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     if (typeof this.lastVeranstaltung != null) {
       this.saveLoading = true;
 
-        this.mannschaftDataProvider.copyMannschaftOnVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id);
+      this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id);
+
             /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
                 && !isNullOrUndefined(response.payload)
@@ -255,7 +256,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       }*/
     } else {
       console.log('Veranstaltung ist nicht vorhanden');
+      this.saveLoading = false;
+
     }
+    this.saveLoading = false;
     // show response message
   }
 
