@@ -131,6 +131,14 @@
         }
       }
     },
+    "MELDEZETTEL" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Fehler beim generieren des Meldezettels:",
+          "DESCRIPTION": "Meldezettel konnte nicht generiert werden, da keine Schützen vorhanden sind."
+        }
+      }
+    },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
         "DOWNLOADFEHLER":{
