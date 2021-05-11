@@ -131,6 +131,14 @@
         }
       }
     },
+    "MELDEZETTEL" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the registration from:",
+          "DESCRIPTION": "Registration from was not created successful because there are no existing achers."
+        }
+      }
+    },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
         "EINGABEFEHLER":{

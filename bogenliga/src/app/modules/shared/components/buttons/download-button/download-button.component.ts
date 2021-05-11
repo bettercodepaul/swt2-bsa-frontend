@@ -47,10 +47,14 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleSuccess(response))
           .catch((() => this.handleBogenkontrolllisteFailure()));
-    } else if (this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
+    } else if (this.id === 'downloadSchusszettel') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((() => this.handleWithoutNotification()))
-          .catch((() => this.handleWithoutNotification()));
+          .then((response) => this.handleSuccess(response))
+          .catch((() => this.handleSchusszettelFailure()));
+    } else if (this.id === 'downloadMeldezettel') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((response) => this.handleSuccess(response))
+          .catch((() => this.handleMeldezettelFailure()));
     } else if (this.id === 'downloadSetzliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleSuccess(response))
@@ -133,6 +137,22 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'SPORTJAHRESPLAN.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
       description: 'SPORTJAHRESPLAN.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleMeldezettelFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'SPORTJAHRESPLAN.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'SPORTJAHRESPLAN.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
