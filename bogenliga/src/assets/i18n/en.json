@@ -134,7 +134,7 @@
     "MELDEZETTEL" : {
       "NOTIFICATION" : {
         "DOWNLOADFEHLER" : {
-          "TITLE" :"Failure while creating the registration from:",
+          "TITLE" :"Failure while creating the registration form:",
           "DESCRIPTION": "Registration from was not created successful because there are no existing achers."
         }
       }
