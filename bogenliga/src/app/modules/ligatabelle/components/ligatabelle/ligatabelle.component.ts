@@ -101,14 +101,17 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     for (const year of responseYear.payload) {
       this.yearIdMap.set(year.id, year);
       const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportjahrDestinct(year.sportjahr)
-      this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);
 
       for (const veranstaltung of responseVeranstaltung.payload) {
-        this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung);
+        /*
+         Sobald es keine Veranstaltung für dieses Sporjahr gibt bekommen wir einen leeren Array in responseVeranstaltung.payload zurück,
+         somit kann nicht iteriert werden. Ist veranstaltung als VeranstaltungDO aber vorhanden iterieren wir.
+         Dadurch wird gleichzeitig nur die Tabellen mit Werten befüllt die auch Veranstaltungen haben.
+         */
 
-        if (!veranstaltung != null) {
-          this.availableYears.push(year);
-        }
+        this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung); // -> Ligatabelle
+        this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);  // -> "Liga"
+        this.availableYears.push(year); // -> "Sportjahr"
       }
     }
 
