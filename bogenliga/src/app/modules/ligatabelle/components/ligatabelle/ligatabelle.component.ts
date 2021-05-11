@@ -58,7 +58,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public availableYears: SportjahrVeranstaltungDO[];
   public veranstaltungenForYear: VeranstaltungDO[];
 
-  private yearIdMap: Map<number, SportjahrVeranstaltungDO>;
   private veranstaltungIdMap: Map<number, VeranstaltungDO>;
 
   public selectedVeranstaltungId: number;
@@ -92,14 +91,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.loadedYears = [];
     this.availableYears = [];
     this.loadedVeranstaltungen = new Map();
-    this.yearIdMap = new Map();
     this.veranstaltungIdMap = new Map();
 
     const responseYear = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
     this.loadedYears = responseYear.payload;
 
     for (const year of responseYear.payload) {
-      this.yearIdMap.set(year.id, year);
       const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportjahrDestinct(year.sportjahr)
 
       for (const veranstaltung of responseVeranstaltung.payload) {
@@ -118,7 +115,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.loading = false;
     this.loadingLigatabelle = false;
     this.selectedYearId = this.availableYears[0].id;
-    this.onSelectYear(this.availableYears); //automatische Auswahl
+
+    if(this.availableYears.length > 0){
+      this.onSelectYear(this.availableYears); //automatische Auswahl nur bei vorhandenen Daten
+    }
   }
 
   private loadLigaTableRows() {
