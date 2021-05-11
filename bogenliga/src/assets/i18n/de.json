@@ -118,8 +118,16 @@
     "SETZLISTE" : {
       "NOTIFICATION" : {
         "DOWNLOADFEHLER" : {
-          "TITLE" :"Fehler beim generieren der Setzliste",
+          "TITLE" :"Fehler beim generieren der Setzliste:",
           "DESCRIPTION": "Setzliste konnte nicht generiert werden, da keine Daten zum vorherigen Wettkampftag vcrhanden sind."
+        }
+      }
+    },
+    "BOGENKONTROLLLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Fehler beim generieren der Bogenkontrollliste:",
+          "DESCRIPTION": "Bogenkontrollliste konnte nicht generiert werden, da keine Setzliste vorhanden ist."
         }
       }
     },
