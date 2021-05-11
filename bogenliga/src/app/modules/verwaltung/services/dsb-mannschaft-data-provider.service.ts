@@ -190,7 +190,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
   }
 
   // Kommentare
-  public copyMannschaftFromVeranstaltung(lastVeranstaltungID: string | number, currentVeranstaltungID: string | number): Promise<BogenligaResponse<string>> {
+  public copyMannschaftFromVeranstaltung(lastVeranstaltungID: string | number, currentVeranstaltungID: string | number): Promise<BogenligaResponse<void>> {
 
     // return promise
     // sign in success -> resolve promise
@@ -198,11 +198,9 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('byLastVeranstaltungsID/' + lastVeranstaltungID + '/' + currentVeranstaltungID ).build())
           .then((data: VersionedDataTransferObject) => {
-
             resolve({result: RequestResult.SUCCESS});
 
           }, (error: HttpErrorResponse) => {
-
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
             } else {

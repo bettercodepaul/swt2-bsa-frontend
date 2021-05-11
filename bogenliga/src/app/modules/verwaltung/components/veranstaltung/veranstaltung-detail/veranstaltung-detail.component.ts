@@ -410,33 +410,16 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
     this.loading = false;
-
   }
 
-  private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<string>) {
-    console.log("HANDLE COPY SUCCESS");
-    console.log(response.payload);
+  private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
     this.loading = false;
-    this.loadWettkampftyp();
-    this.loadUsers();
-    this.loadLiga();
-    this.loadAllVeranstaltung();
-    this.loadMannschaftsTable();
-
-  }
-  private handleCopyFromVeranstaltungFailure(response: BogenligaResponse<string>) {
-    console.log("HANDLE COPY FAILURE");
-    this.loading = false;
-    this.loadWettkampftyp();
-    this.loadUsers();
-    this.loadLiga();
-    this.loadAllVeranstaltung();
     this.loadMannschaftsTable();
   }
 
-
-
-
+  private handleCopyFromVeranstaltungFailure(response: BogenligaResponse<void>) {
+    this.loading = false;
+  }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
