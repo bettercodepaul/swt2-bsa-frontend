@@ -133,6 +133,10 @@
     },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
+        "DOWNLOADFEHLER":{
+          "TITLE":"Fehler beim generieren des Schusszettels:",
+          "DESCRIPTION": "Schusszettel konnte nicht genertiert werden, da keine Matches für den Wettkampf vorhanden sind."
+        },
         "EINGABEFEHLER":{
           "TITLE":"Eingabefehler",
           "DESCRIPTION": "Pfeilwert ungültig..."

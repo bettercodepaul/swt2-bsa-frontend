@@ -143,4 +143,19 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
 
     this.notificationService.showNotification(notification);
   }
+  private handleSchusszettelFailure() {
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
 }

@@ -132,6 +132,10 @@
       }
     },
     "SCHUSSZETTEL": {
+      "DOWNLOADFEHLER":{
+        "TITLE":"Failure while creating the scorecard:",
+        "DESCRIPTION": "Scorecard could not be generated, because there are no matches in the competition."
+      },
       "NOTIFICATION": {
         "EINGABEFEHLER":{
           "TITLE":"Input error",
