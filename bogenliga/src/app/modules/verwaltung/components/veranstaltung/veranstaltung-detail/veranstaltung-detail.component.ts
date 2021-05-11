@@ -216,9 +216,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     if (typeof this.lastVeranstaltung != null) {
       this.saveLoading = true;
 
-      this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id);
+      this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
+          .then((response) => this.handleCopyFromVeranstaltungSuccess(response))
+          .catch((response) => this.handleCopyFromVeranstaltungFailure(response));
 
-            /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
+      /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
                 && !isNullOrUndefined(response.payload)
                 && !isNullOrUndefined(response.payload.id)) {
@@ -248,7 +250,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
               console.log('Failed');
               this.saveLoading = false;
 
-            });
+            });/*
 
       }} else {
         console.log('Keine Mannschaften verfügbar');
@@ -404,16 +406,37 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadUsers();
     this.loadLiga();
     this.loadAllVeranstaltung();
-
-
-
-
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
     this.loading = false;
 
   }
+
+  private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<string>) {
+    console.log("HANDLE COPY SUCCESS");
+    console.log(response.payload);
+    this.loading = false;
+    this.loadWettkampftyp();
+    this.loadUsers();
+    this.loadLiga();
+    this.loadAllVeranstaltung();
+    this.loadMannschaftsTable();
+
+  }
+  private handleCopyFromVeranstaltungFailure(response: BogenligaResponse<string>) {
+    console.log("HANDLE COPY FAILURE");
+    this.loading = false;
+    this.loadWettkampftyp();
+    this.loadUsers();
+    this.loadLiga();
+    this.loadAllVeranstaltung();
+    this.loadMannschaftsTable();
+  }
+
+
+
+
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 

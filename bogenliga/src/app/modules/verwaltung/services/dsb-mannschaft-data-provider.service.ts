@@ -190,7 +190,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
   }
 
   // Kommentare
-  public copyMannschaftFromVeranstaltung(lastVeranstaltungID: string | number, currentVeranstaltungID: string | number): Promise<BogenligaResponse<void>> {
+  public copyMannschaftFromVeranstaltung(lastVeranstaltungID: string | number, currentVeranstaltungID: string | number): Promise<BogenligaResponse<string>> {
 
     // return promise
     // sign in success -> resolve promise
