@@ -119,7 +119,7 @@
       "NOTIFICATION" : {
         "DOWNLOADFEHLER" : {
           "TITLE" :"Fehler beim generieren der Setzliste:",
-          "DESCRIPTION": "Setzliste konnte nicht generiert werden, da keine Daten zum vorherigen Wettkampftag vcrhanden sind."
+          "DESCRIPTION": "Setzliste konnte nicht generiert werden, da keine Daten zum vorherigen Wettkampftag vorhanden sind."
         }
       }
     },
