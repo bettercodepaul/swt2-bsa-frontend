@@ -22,11 +22,8 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {NotificationService} from '@shared/services';
-import {assertNotNull} from '@angular/compiler/src/output/output_ast';
-import {logger} from 'codelyzer/util/logger';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
-import {fromPayloadLigatabelleErgebnisArray} from '@wettkampf/mapper/wettkampf-ergebnis-mapper';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {environment} from '@environment';
@@ -171,7 +168,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       }
     }
 
-    document.getElementById('druckButton').classList.add('hidden');
+    document.getElementById('einzeldruckButton').classList.add('hidden');
     // hide verein information if the user presses "Alle Mannschaften anzeigen"
     if (selectedMannschaft === undefined) {
       document.getElementById('vereinsinformationen').classList.add('hidden');
@@ -245,7 +242,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
 
 
-    document.getElementById('druckButton').classList.add('hidden');
+    document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.remove('hidden');
 
   }
