@@ -83,6 +83,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   private async loadTableData() {
+    /*
+     Hier werden zu Beginn alle benötigten Daten geladen und die jeweiligen Variablen geschrieben.
+     Jahr -> Liga (ohne Dopplung) -> Veranstaltung
+     laodedYears sind dabei alle vorhanden Jahre, availableYears nur die in denen auch etwas steht.
+     */
+
     this.loadedYears = [];
     this.availableYears = [];
     this.loadedVeranstaltungen = new Map();
@@ -100,7 +106,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       for (const veranstaltung of responseVeranstaltung.payload) {
         this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung);
 
-        if(!veranstaltung !=null){
+        if (!veranstaltung != null) {
           this.availableYears.push(year);
         }
       }
@@ -144,6 +150,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   public onSelectYear($event: SportjahrVeranstaltungDO[]) {
+    /*
+     onSelectYear wird einmal zu Beginn für eine automatische Auswahl aufgerufen und jedes mal wenn das Jahr geändert wird.
+     Dabei werden die Ligen für das ausgewählte Jahr aufgerufen und angezeigt.
+     */
+
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button');
     buttonVisibility.style.display = 'block';
     this.veranstaltungenForYear = [];
@@ -153,6 +164,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   public onSelectVeranstaltung($event: VeranstaltungDO[]) {
+    /*
+     onSelectVeranstaltung wird einmal zu Beginn für eine automatische Auswahl aufgerufen und jedes mal wenn die "Liga" geändert wird.
+     In der Liga kann aber nur eine Veranstaltung sein also wählt man quasi durch die Liga direkt die Veranstaltung daher der Name.
+     Dabei wird loadLigaTableRows aufgerufen welches ganz unten auf der Seite die Ligatabelle anzeigt.
+     */
     this.selectedVeranstaltung = $event[0];
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
     this.buttonForward = this.selectedVeranstaltung.id;
