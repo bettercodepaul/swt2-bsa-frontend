@@ -208,6 +208,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
     // show response message
   }
+
+  //"Mannschaften kopieren"
+  //
   public onCopyMannschaft(ignore: any): void {
     console.log('Last Veranstaltung: ' + this.lastVeranstaltung.id);
     if (typeof this.lastVeranstaltung != null) {
