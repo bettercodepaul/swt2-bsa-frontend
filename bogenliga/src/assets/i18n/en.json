@@ -115,6 +115,22 @@
         "PLACE": "event location"
       }
     },
+    "SETZLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the seeding list:",
+          "DESCRIPTION": "Seeding list was not created successful because there is no data about the former competition day.."
+        }
+      }
+    },
+    "BOGENKONTROLLLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the arch control list:",
+          "DESCRIPTION": "Arch control list was not created successful because there is no seeding list existing."
+        }
+      }
+    },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
         "EINGABEFEHLER":{
