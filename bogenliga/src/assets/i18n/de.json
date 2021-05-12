@@ -85,8 +85,15 @@
         "WETTKAMPFTAG_AKT": "Wettkampftag",
         "WETTKAMPFTAG": "0"
       }
+    },
+    "EINZELSTATISTIK": {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren der Einzelstatistik:",
+          "DESCRIPTION": "Einzelstatistik konnte nicht generiert werden. Es wurden keine Schützen für die Auswahl gefunden"
+        }
+      }
     }
-
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -115,8 +122,36 @@
         "PLACE": "Veranstaltungsort"
       }
     },
+    "SETZLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Fehler beim generieren der Setzliste:",
+          "DESCRIPTION": "Setzliste konnte nicht generiert werden, da keine Daten zum vorherigen Wettkampftag vorhanden sind."
+        }
+      }
+    },
+    "BOGENKONTROLLLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Fehler beim generieren der Bogenkontrollliste:",
+          "DESCRIPTION": "Bogenkontrollliste konnte nicht generiert werden, da keine Setzliste vorhanden ist."
+        }
+      }
+    },
+    "MELDEZETTEL" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Fehler beim generieren des Meldezettels:",
+          "DESCRIPTION": "Meldezettel konnte nicht generiert werden, da keine Schützen vorhanden sind."
+        }
+      }
+    },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
+        "DOWNLOADFEHLER":{
+          "TITLE":"Fehler beim generieren des Schusszettels:",
+          "DESCRIPTION": "Schusszettel konnte nicht genertiert werden, da keine Matches für den Wettkampf vorhanden sind."
+        },
         "EINGABEFEHLER":{
           "TITLE":"Eingabefehler",
           "DESCRIPTION": "Pfeilwert ungültig..."

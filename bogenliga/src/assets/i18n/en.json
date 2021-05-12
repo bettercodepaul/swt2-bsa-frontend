@@ -85,8 +85,15 @@
         "WETTKAMPFTAG_AKT": "Competition day",
         "WETTKAMPFTAG": "0"
       }
+    },
+    "EINZELSTATISTIK": {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Error creating Singlestatistic:",
+          "DESCRIPTION": "Could not generate Singlestatistic. Could not find Archers for selection."
+        }
+      }
     }
-
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -115,7 +122,35 @@
         "PLACE": "event location"
       }
     },
+    "SETZLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the seeding list:",
+          "DESCRIPTION": "Seeding list was not created successful because there is no data about the former competition day.."
+        }
+      }
+    },
+    "BOGENKONTROLLLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the arch control list:",
+          "DESCRIPTION": "Arch control list was not created successful because there is no seeding list existing."
+        }
+      }
+    },
+    "MELDEZETTEL" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the registration form:",
+          "DESCRIPTION": "Registration from was not created successful because there are no existing achers."
+        }
+      }
+    },
     "SCHUSSZETTEL": {
+      "DOWNLOADFEHLER":{
+        "TITLE":"Failure while creating the scorecard:",
+        "DESCRIPTION": "Scorecard could not be generated, because there are no matches in the competition."
+      },
       "NOTIFICATION": {
         "EINGABEFEHLER":{
           "TITLE":"Input error",

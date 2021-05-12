@@ -160,14 +160,14 @@
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
       </bla-button>
       &nbsp;
-      <!-- Button - Einzelstatistik Drucken -->
-      <bla-button class = "hidden" id = "druckButton"
-        [id]="'showResultsButton'"
-        (onClick)="einzeldruck();">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelDrucken.LABEL' | translate }}
-      </bla-button>
+      <!-- Button - Einzelstatistik als PDF -->
+      <bla-download-button class = "hidden" id = "einzeldruckButton"
+        [id]="'downloadEinzelstatistik'"
+        [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
+        [fileName]="'Einzelstatistik.pdf'"> Einzelstatistik als PDF
+      </bla-download-button>
 
-      <!-- Button - Einzelstatistik Drucken -->
+      <!-- Button - Gesamtstatistik Drucken -->
       <bla-button class = "hidden" id = "gesamtdruckButton"
                   [id]="'showResultsButton'"
                   (onClick)="gesamtdruck();">
