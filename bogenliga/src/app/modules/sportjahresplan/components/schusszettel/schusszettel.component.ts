@@ -15,8 +15,16 @@ import {
   NotificationUserAction
 } from '../../../shared/services';
 import {environment} from '@environment';
-
-
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {PasseDoClass} from '@verwaltung/types/passe-do-class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
@@ -24,6 +32,7 @@ const NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER = 'schusszettelEingabefehler';
 const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
 const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
+const NOTIFACTION_SCHUETZE = 'schuetze';
 
 
 @Component({
@@ -39,14 +48,47 @@ export class SchusszettelComponent implements OnInit {
   dirtyFlag: boolean;
   match1singlesatzpoints = [];
   match2singlesatzpoints = [];
+  popupSelberTag: boolean;
+  popupAndererTag: boolean;
+  mannschaften: DsbMannschaftDO[] = [];
+  vereine: VereinDO[] = [];
+  allPasse: PasseDoClass[] = [];
+  allWettkaempfe: WettkampfDO[];
+  allVeranstaltungen: VeranstaltungDO[];
+  passeSelberTag: number;
+  passeAndererTag: number;
+  selberTagVeranstaltung: string;
+  andererTagVeranstaltung: VeranstaltungDO;
+  andererTagAnzahl: number;
+  ligaleiterAktuelleLiga: string;
+  ligaleiterVorherigeLiga: string;
 
+  matchMannschaft: DsbMannschaftDO;
+  matchAllPasseMannschaft: PasseDoClass[];
+  wettkampf: WettkampfDO;
+  veranstaltung: VeranstaltungDO;
+  matchAllPasse = new Array<PasseDO>();
+
+  selberWettkampftag = new Array<boolean>();
+  selberWettkampftagVeranstaltung = Array<VeranstaltungDO>();
+  vorherigerWettkampf: WettkampfDO;
+  vorherigeVeranstaltung: VeranstaltungDO;
+  anzahlAnTagenMannschaft = new Array<Array<number>>();
+  veranstaltungVorherig: VeranstaltungDO;
+  veranstaltungGegenwaertig: VeranstaltungDO;
 
 
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
               private matchProvider: MatchProviderService,
               private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private vereinDataProvider: VereinDataProviderService,
+              private dsbMannschaftDataProvider: DsbMannschaftDataProviderService,
+              private passeDataProvider: PasseDataProviderService,
+              private wettkampfDataProvider: WettkampfDataProviderService,
+              private veranstaltungDataProvider: VeranstaltungDataProviderService,
+  ) {
   }
 
   /**
@@ -70,7 +112,6 @@ export class SchusszettelComponent implements OnInit {
 
     // am Anfang sind keine Änderungen
     this.dirtyFlag = false;
-
     // this.initSchuetzen();
     this.initSchuetzenMatch1();
     this.initSchuetzenMatch2();
@@ -106,6 +147,11 @@ export class SchusszettelComponent implements OnInit {
 
       }
     });
+    this.getAllMannschaften();
+    this.getAllVerein();
+    this.getAllPasse();
+    this.getAllWettkaempfe();
+    this.getAllVeranstaltungen();
   }
 
   /**
@@ -133,7 +179,8 @@ export class SchusszettelComponent implements OnInit {
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
     const match = this['match' + matchNr];
-    let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number --> umwandeln
+    let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number -->
+                                         // umwandeln
     realValue = realValue >= 1 ? realValue : null;
     match.fehlerpunkte[satzNr] = realValue;
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
@@ -142,9 +189,178 @@ export class SchusszettelComponent implements OnInit {
   }
 
 
+  private getAllMannschaften(): void {
+    this.dsbMannschaftDataProvider.findAll()
+        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
+          this.mannschaften = response.payload;
+        });
+  }
 
-  save() {
-    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+  private getAllVerein(): void {
+    this.vereinDataProvider.findAll()
+        .then((response: BogenligaResponse<VereinDO[]>) => {
+          this.vereine = response.payload;
+        });
+  }
+
+  private getAllPasse(): void {
+    this.passeDataProvider.findAll()
+        .then((response: BogenligaResponse<PasseDoClass[]>) => {
+          this.allPasse = response.payload;
+        });
+  }
+
+  private getAllWettkaempfe(): void {
+    this.wettkampfDataProvider.findAll()
+        .then((response: BogenligaResponse<WettkampfDO[]>) => {
+          this.allWettkaempfe = response.payload;
+        });
+  }
+
+  private getAllVeranstaltungen(): void {
+    this.veranstaltungDataProvider.findAll()
+        .then((response: BogenligaResponse<VeranstaltungDO[]>) => {
+          this.allVeranstaltungen = response.payload;
+        });
+  }
+
+  private maxMannschaftsId(): number {
+    let maxMid = this.mannschaften[0].id;
+    this.mannschaften.forEach((mannschaft) => {
+      if (mannschaft.id > maxMid) {
+        maxMid = mannschaft.id;
+      }
+    });
+    return maxMid;
+  }
+
+  private getInfosToCheckSchuetze(match: MatchDOExt): void {
+    // Ermittlung der Mannschaft, der Schützen, des Vereins, der Mannschaften des Vereins von match1
+    // Ermittlung des Wettkampfs und der Veranstaltung
+
+    this.matchMannschaft = this.mannschaften.find((mannschaft) => mannschaft.id === match.mannschaftId);
+    this.matchAllPasseMannschaft = this.allPasse.filter((passe) => passe.mannschaftId === this.matchMannschaft.id);
+    this.wettkampf = this.allWettkaempfe.find((wettkampf) => wettkampf.id === match.wettkampfId);
+    this.veranstaltung = this.allVeranstaltungen.find((veranstaltung) => veranstaltung.id === this.matchMannschaft.veranstaltungId);
+    for (let i = 0; i < match.schuetzen.length; i++) {
+      this.matchAllPasse[i] = match.schuetzen[i][0];
+    }
+    // Vergleich aller Schützen mit den Schützen von match1
+    // Ermittlung, ob der Schütze bereits geschossen hat, wann (Wettkampftag) und wo (Veranstaltung/Liga) und wie oft
+
+    // ist es derselbe Wettkampftag gewesen?
+    this.selberWettkampftag.length = this.matchAllPasse.length;
+    // und welche Veranstaltung war es
+    this.selberWettkampftagVeranstaltung.length = this.matchAllPasse.length;
+
+    // Anzahl an Veranstaltungen orientiert sich der Einfachheit halber an der höchsten VeranstaltungsId
+    // 2 dimensionales Array für jeden Schützen von match1 und jede Mannschaft, mit der er möglicherweise
+    // teilgenommen hat, wird die Anzahl an Wettkampftagen, an denen geschossen wurde, gespeichert
+    const maxMannschaftId = this.maxMannschaftsId();
+    for (let i = 0; i < this.matchAllPasse.length; i++) {
+      this.anzahlAnTagenMannschaft[i] = [];
+      for (let j = 0; j < maxMannschaftId; j++) {
+        this.anzahlAnTagenMannschaft[i][j] = 0;
+      }
+    }
+  }
+
+  private getBereitsgeschossenToCheckSchuetze(): void {
+    // Ermittlung der Anzahl der Wettkampftage
+    this.allPasse.forEach((passe) => {
+      for (let i = 0; i < this.matchAllPasse.length; i++) {
+
+        // Aussortierung aller Schützen, die nicht Teil von match1 sind
+        if (passe.dsbMitgliedId === this.matchAllPasse[i].dsbMitgliedId) {
+
+          // Ermittlung des Wettkampfs
+          this.vorherigerWettkampf = this.allWettkaempfe.find((wettkampf) => passe.wettkampfId === wettkampf.id);
+
+          // Ermittlung der Veranstaltung
+          this.vorherigeVeranstaltung = this.allVeranstaltungen.find((veranstaltung) => veranstaltung.id === this.vorherigerWettkampf.wettkampfVeranstaltungsId);
+
+          // Aussortierung aller Veranstaltungen von vorherigen Sportjahren
+          if (this.vorherigeVeranstaltung.sportjahr === this.veranstaltung.sportjahr) {
+
+            // Ermittlung, ob es derselbe Wettkampftag war
+            if (this.vorherigerWettkampf.wettkampfTag === this.wettkampf.wettkampfTag) {
+              this.selberWettkampftag[i] = true;
+              this.selberWettkampftagVeranstaltung[i] = this.vorherigeVeranstaltung;
+            }
+
+            // Zuweisung der Teilnahme an der Veranstaltung an anzahlAnTagenMannschaft
+            this.anzahlAnTagenMannschaft[i][passe.mannschaftId] += 1;
+          }
+        }
+      }
+    });
+  }
+
+  private darunterLiegendeMannschaftenToCheckSchuetze(mannschaftsId: number, passe: PasseDO, positionMatchAllPasse: number): void {
+    const mannschaft = this.mannschaften.find((mannschaftVal) => mannschaftVal.id === mannschaftsId);
+    for (const mannschaftValue of this.mannschaften) {
+      if (mannschaftValue.vereinId === mannschaft.vereinId && mannschaftValue.id !== mannschaftsId) {
+        if (mannschaftValue.nummer > mannschaft.nummer && mannschaft.veranstaltungId !== mannschaftValue.veranstaltungId) {
+          this.allPasse.forEach((passeDoClass) => {
+            if (passeDoClass.dsbMitgliedId === passe.dsbMitgliedId) {
+              if (this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftValue.id] >= 1) {
+                this.passeAndererTag = passeDoClass.dsbMitgliedId;
+                this.andererTagAnzahl = this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftsId];
+                this.andererTagVeranstaltung = this.veranstaltung;
+                console.log('Popup: ', this.passeAndererTag, 'hat bereits ', this.andererTagAnzahl, ' Mal in der', this.andererTagVeranstaltung.name);
+                this.veranstaltungVorherig = this.allVeranstaltungen.find((veranstaltung) => mannschaftValue.veranstaltungId === veranstaltung.id);
+                this.veranstaltungGegenwaertig = this.allVeranstaltungen.find((veranstaltung) => mannschaft.veranstaltungId === veranstaltung.id);
+                this.ligaleiterAktuelleLiga = this.veranstaltungGegenwaertig.ligaleiterEmail;
+                this.ligaleiterVorherigeLiga = this.veranstaltungVorherig.ligaleiterEmail;
+                this.savepopAndererTag();
+              }
+            }
+          });
+        }
+      }
+    }
+  }
+
+  private checkSchuetze(match: MatchDOExt): void {
+    this.getInfosToCheckSchuetze(match);
+    this.getBereitsgeschossenToCheckSchuetze();
+
+    // Kontrolle, ob die die Regeln eingehalten wurden
+    for (let i = 0; i < this.matchAllPasse.length; i++) {
+
+      // Hat der Schütze 2x in einer Liga geschossen -> darf er nicht mehr in einer Liga darunter schießen
+      // hat er bereits in einer Liga darunter geschossen, werden die Ergebnisse auf verloren gesetzt
+      // -> Email an den Ligaleiter
+
+      if (this.anzahlAnTagenMannschaft[i][match.mannschaftId] >= 2) {
+
+        this.darunterLiegendeMannschaftenToCheckSchuetze(match.mannschaftId, this.matchAllPasse[i], i);
+      }
+
+
+      // es ist nicht erlaubt, dass der Schütze 2x am selben Wettkampftag teilnimmt
+      if (this.selberWettkampftag[i] === true
+        && this.selberWettkampftagVeranstaltung[i].id !== this.veranstaltung.id) {
+        this.passeSelberTag = this.matchAllPasse[i].dsbMitgliedId;
+        this.selberTagVeranstaltung = this.selberWettkampftagVeranstaltung[i].name;
+        console.log('Popup: ', this.passeSelberTag, 'hat bereits diesen Wettkampftag in der', this.selberTagVeranstaltung, 'geschossen');
+        this.savepopSelberTag();
+      }
+    }
+  }
+
+  savepopSelberTag() {
+    this.popupSelberTag = true;
+  }
+
+  savepopAndererTag() {
+    this.popupAndererTag = true;
+  }
+
+
+
+    save() {
+   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
@@ -157,12 +373,12 @@ export class SchusszettelComponent implements OnInit {
     } else if (
       // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
       // daher prüfen wir hier ersten auf "leer" d.h. gleich 0
-        this.match1.schuetzen[0][0].rueckennummer == null ||
-        this.match1.schuetzen[1][0].rueckennummer == null ||
-        this.match1.schuetzen[2][0].rueckennummer == null ||
-        this.match2.schuetzen[0][0].rueckennummer == null ||
-        this.match2.schuetzen[1][0].rueckennummer == null ||
-        this.match2.schuetzen[2][0].rueckennummer == null ) {
+      this.match1.schuetzen[0][0].rueckennummer == null ||
+      this.match1.schuetzen[1][0].rueckennummer == null ||
+      this.match1.schuetzen[2][0].rueckennummer == null ||
+      this.match2.schuetzen[0][0].rueckennummer == null ||
+      this.match2.schuetzen[1][0].rueckennummer == null ||
+      this.match2.schuetzen[2][0].rueckennummer == null) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
@@ -180,7 +396,7 @@ export class SchusszettelComponent implements OnInit {
       this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer ||
       this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer ||
       this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer ||
-      this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer ) {
+      this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
@@ -192,13 +408,13 @@ export class SchusszettelComponent implements OnInit {
       });
     } else {
       this.notificationService.showNotification({
-        id: 'NOTIFICATION_SCHUSSZETTEL_SPEICHERN',
-        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
+        id:          'NOTIFICATION_SCHUSSZETTEL_SPEICHERN',
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
         description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
-        severity: NotificationSeverity.INFO,
-        origin: NotificationOrigin.USER,
+        severity:    NotificationSeverity.INFO,
+        origin:      NotificationOrigin.USER,
         // type: NotificationType.OK, //--TO-DO Maximilian
-        userAction: NotificationUserAction.PENDING
+        userAction:  NotificationUserAction.PENDING
       });
 
       // im Ausgabefeld ist die Schutzennummer aktuell nur in der 0-ten Passe gesetzt
@@ -220,51 +436,53 @@ export class SchusszettelComponent implements OnInit {
         }
       }
       this.schusszettelService.create(this.match1, this.match2)
-        .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
-          this.match1 = data.payload[0];
-          this.match2 = data.payload[1];
-          // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
-          this.ngOnInit();
-          this.notificationService.showNotification({
-            id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
-            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
-            severity:    NotificationSeverity.ERROR,
-            origin:      NotificationOrigin.SYSTEM,
-            type:        NotificationType.OK,
-            userAction:  NotificationUserAction.ACCEPTED
+          .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
+            this.match1 = data.payload[0];
+            this.match2 = data.payload[1];
+            this.checkSchuetze(this.match1);
+            this.checkSchuetze(this.match2);
+            // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
+            this.ngOnInit();
+            this.notificationService.showNotification({
+              id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+              title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
+              description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
+              severity:    NotificationSeverity.ERROR,
+              origin:      NotificationOrigin.SYSTEM,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.ACCEPTED
+            });
+          }, (error) => {
+            console.error(error);
+            this.notificationService.showNotification({
+              id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+              title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
+              description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
+              severity:    NotificationSeverity.ERROR,
+              origin:      NotificationOrigin.SYSTEM,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.ACCEPTED
+            });
+            this.notificationService.discardNotification();
           });
-        }, (error) => {
-          console.error(error);
-          this.notificationService.showNotification({
-            id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
-            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
-            severity:    NotificationSeverity.ERROR,
-            origin:      NotificationOrigin.SYSTEM,
-            type:        NotificationType.OK,
-            userAction:  NotificationUserAction.ACCEPTED
-        });
-          this.notificationService.discardNotification();
-        });
       this.dirtyFlag = false; // Daten gespeichert
     }
   }
 
- // zurueck zu Sportjahresplan
- back() {
+  // zurueck zu Sportjahresplan
+  back() {
 
-       // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
-   if (this.dirtyFlag === true) {
+    // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
+    if (this.dirtyFlag === true) {
       // TODO Texte in json.de anlegen
       const notification: Notification = {
-        id:               NOTIFICATION_ZURUECK,
-        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
+        id:          NOTIFICATION_ZURUECK,
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
         description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
-        severity:         NotificationSeverity.QUESTION,
-        origin:           NotificationOrigin.USER,
-        type:             NotificationType.YES_NO,
-        userAction:       NotificationUserAction.PENDING
+        severity:    NotificationSeverity.QUESTION,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.YES_NO,
+        userAction:  NotificationUserAction.PENDING
       };
 
       console.log('show notification');
@@ -292,45 +510,43 @@ export class SchusszettelComponent implements OnInit {
   }
 
 
-
-
   next() {
 
     // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
     if (this.dirtyFlag === true) {
       // TODO TExte in json.de anlegen
       const notification: Notification = {
-        id:               NOTIFICATION_WEITER_SCHALTEN,
-        title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        id:          NOTIFICATION_WEITER_SCHALTEN,
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
         description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
-        severity:         NotificationSeverity.QUESTION,
-        origin:           NotificationOrigin.USER,
-        type:             NotificationType.YES_NO,
-        userAction:       NotificationUserAction.PENDING
+        severity:    NotificationSeverity.QUESTION,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.YES_NO,
+        userAction:  NotificationUserAction.PENDING
       };
 
       this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.dirtyFlag = false;
-            this.matchProvider.pairToFollow(this.match2.id)
-              .then((data) => {
-                if (data.payload.length === 2) {
-                  this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
-                }
-              });
-          }
-         });
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.dirtyFlag = false;
+              this.matchProvider.pairToFollow(this.match2.id)
+                  .then((data) => {
+                    if (data.payload.length === 2) {
+                      this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                    }
+                  });
+            }
+          });
       this.notificationService.showNotification(notification);
 
     } else {
       // nächste Matches bestimmen --> schusszettel-service --> Backend-Call --> zwei IDs
       this.matchProvider.pairToFollow(this.match2.id)
-        .then((data) => {
-          if (data.payload.length === 2) {
-            this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
-          }
-        });
+          .then((data) => {
+            if (data.payload.length === 2) {
+              this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+            }
+          });
     }
 
 
@@ -371,7 +587,6 @@ export class SchusszettelComponent implements OnInit {
       }
     }
   }
-
 
 
   /**
@@ -429,7 +644,7 @@ export class SchusszettelComponent implements OnInit {
     // kumulativ
     if (this.match1.wettkampfTyp === 'Liga kummulativ') {
       this.setKummulativePoints();
-    } else  {
+    } else {
       this.setSatzPoints();
     }
 

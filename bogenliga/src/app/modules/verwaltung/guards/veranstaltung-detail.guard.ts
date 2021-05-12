@@ -8,6 +8,7 @@ export class VeranstaltungDetailGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // CAN_MODIFY_MY_VERANSTALTUNG or CAN_MODIFY_STAMMDATEN required to activate Veranstaltung Detail
     return this.currentUserService.hasAnyPermisson(
       [UserPermission.CAN_MODIFY_MY_VERANSTALTUNG, UserPermission.CAN_MODIFY_STAMMDATEN]);
   }

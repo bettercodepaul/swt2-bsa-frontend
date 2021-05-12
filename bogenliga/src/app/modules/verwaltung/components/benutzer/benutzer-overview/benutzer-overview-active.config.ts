@@ -26,5 +26,5 @@ export const BENUTZER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
-  createPermission: [UserPermission.CAN_CREATE_SYSTEMDATEN]
+  createPermission: [UserPermission.CAN_CREATE_SYSTEMDATEN, UserPermission.CAN_CREATE_SYSTEMDATEN_LIGALEITER]
 };

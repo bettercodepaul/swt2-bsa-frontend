@@ -8,7 +8,8 @@ export class RegionOverviewGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_SYSTEMDATEN]);
+    // CAN_READ_SYSTEMDATEN required to activate Region Overview
+    return this.currentUserService.hasPermission(
+      UserPermission.CAN_READ_SYSTEMDATEN);
   }
 }

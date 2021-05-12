@@ -29,7 +29,8 @@
     "ABOUT": "On this Website of the german Archery League you can find all the important Information. Let it inspire you.",
     "KONTAKT": "Contact",
     "IMPRESSUM": "Copyright and Data Protection",
-    "COPYRIGHT": "Copyright: 2018"
+    "COPYRIGHT": "Copyright: 2018",
+    "FEEDBACK": "Feedback"
   },
   "HOME": {
     "HOME": {
@@ -84,8 +85,15 @@
         "WETTKAMPFTAG_AKT": "Competition day",
         "WETTKAMPFTAG": "0"
       }
+    },
+    "EINZELSTATISTIK": {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Error creating Singlestatistic:",
+          "DESCRIPTION": "Could not generate Singlestatistic. Could not find Archers for selection."
+        }
+      }
     }
-
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -114,7 +122,35 @@
         "PLACE": "event location"
       }
     },
+    "SETZLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the seeding list:",
+          "DESCRIPTION": "Seeding list was not created successful because there is no data about the former competition day.."
+        }
+      }
+    },
+    "BOGENKONTROLLLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the arch control list:",
+          "DESCRIPTION": "Arch control list was not created successful because there is no seeding list existing."
+        }
+      }
+    },
+    "MELDEZETTEL" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the registration form:",
+          "DESCRIPTION": "Registration from was not created successful because there are no existing achers."
+        }
+      }
+    },
     "SCHUSSZETTEL": {
+      "DOWNLOADFEHLER":{
+        "TITLE":"Failure while creating the scorecard:",
+        "DESCRIPTION": "Scorecard could not be generated, because there are no matches in the competition."
+      },
       "NOTIFICATION": {
         "EINGABEFEHLER":{
           "TITLE":"Input error",
@@ -147,6 +183,10 @@
         "WEITER":{
           "TITLE":"There are unsaved changes",
           "DESCRIPTION": "Are you sure you want to leave this dialog? All unsaved changes will be lost."
+        },
+        "ZURUECK": {
+          "TITLE":"There are unsaved changes",
+          "DESCRIPTION": "Are you sure you want to leave this dialog? All unsaved changes will be lost."
         }
       }
     },
@@ -167,14 +207,31 @@
     },
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
+      "POPUPTXT": {
+        "POPUPÜBERSCHRIFT": {
+          "LABEL": "Team is not selected!"
+        },
+        "POPUPINHALT": {
+          "LABEL": "Please select a Team before competition results can be shown."
+        }
+      },
       "BUTTONS": {
         "ANZEIGEN": {
           "LABEL": "Show"
         },
         "ANZEIGENALL": {
           "LABEL": "Show all"
+        },
+        "ANZEIGENEinzel": {
+          "LABEL": "Show individual statistics"
+        },
+        "ANZEIGENEinzelGesamt": {
+          "LABEL": "Show over all statistics of individual"
+        },
+        "ANZEIGENEinzelDrucken": {
+          "LABEL": "Print individual statistic"
         }
-      },
+    },
       "FORM": {
         "MANNSCHAFT_NAME": {
           "LABEL": "Team:"
@@ -201,7 +258,10 @@
           "SATZ4": "S4",
           "SATZ5": "S5",
           "SATZPUNKTE": "Set-points",
-          "MATCHPUNKTE": "Match-points"
+          "MATCHPUNKTE": "Match-points",
+          "SCHUETZE": "Archer",
+          "DURCHSCHPFEILWERTMATCH": "average arrow-point per match",
+          "DURCHSCHPFEILWERTJAHR": "average arrow-point per year"
         }
       }
     }
@@ -340,10 +400,6 @@
     }
   },
   "MANAGEMENT": {
-
-
-
-
     "EINSTELLUNGEN": {
       "TITLE": "Settings - Overview",
       "FORM": {
@@ -384,6 +440,16 @@
           "ERROR": "Please enter a correct Value"
         },
         "SAVE": "Safe"
+      },
+      "NOTIFICATION": {
+        "EINSTELLUNGEN_ERROR": {
+          "TITLE": "Wrong Input",
+          "DESCRIPTION": {
+            "EMAIL": "Please enter a correct E-Mail address",
+            "HOST": "Please enter a full Host address",
+            "PORT": "Only numbers are allowed"
+          }
+        }
       }
     }
   },
@@ -623,7 +689,8 @@
           "IDENTIFIER": "Identifier",
           "REGION_ID": "Region ID",
           "REGION_NAME": "Region name",
-          "WEBSITE": "Website"
+          "WEBSITE": "Website",
+          "ICON": "Club logo"
         }
       },
       "NOTIFICATION": {
@@ -660,6 +727,12 @@
           "LABEL": "Description",
           "PLACEHOLDER": "Please enter a short description",
           "ERROR": "Please enter a valid description."
+        },
+        "VEREIN_ICON": {
+          "LABEL": "Club logo",
+          "PLACEHOLDER:": "Please select a file.",
+          "ERROR_PLACEHOLDER": "Club logo cannot be displayed.",
+          "ERROR": "Cannot upload file."
         },
         "SAVE": "Save",
         "UPDATE": "Refresh",
