@@ -45,16 +45,28 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
 
     if (this.id === 'downloadBogenkontrollliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((() => this.handleBogenkontrolllisteFailure()))
+          .then((response) => this.handleSuccess(response))
           .catch((() => this.handleBogenkontrolllisteFailure()));
-    } else if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
+    } else if (this.id === 'downloadSchusszettel') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-        .then((() => this.handleWithoutNotification()))
-        .catch((() => this.handleWithoutNotification()));
+          .then((response) => this.handleSuccess(response))
+          .catch((() => this.handleSchusszettelFailure()));
+    } else if (this.id === 'downloadMeldezettel') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((response) => this.handleSuccess(response))
+          .catch((() => this.handleMeldezettelFailure()));
+    } else if(this.id == 'downloadEinzelstatistik') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((response) => this.handleSuccess(response))
+          .catch(() => this.handleEinzelstatistikFailure());
+    } else if (this.id === 'downloadSetzliste') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((response) => this.handleSuccess(response))
+          .catch((() => this.handleSetzlisteFailure()));
     } else {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-        .then((response) => this.handleSuccess(response))
-        .catch((response) => this.handleFailure(response));
+          .then((response) => this.handleSuccess(response))
+          .catch((response) => this.handleFailure(response));
     }
   }
 
@@ -73,12 +85,11 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       type: NotificationType.OK,
       userAction: NotificationUserAction.PENDING
     };
-
+    this.loading = false;
     this.notificationService.observeNotification(NOTIFICATION_DOWNLOAD_SUCCESS)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             console.log('Download ' + this.fileName + ' from ' + response.payload + ' completed');
-            this.loading = false;
           }
         });
 
@@ -111,8 +122,8 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
   private handleBogenkontrolllisteFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
-      title: 'Download Failure:',
-      description: 'You have first to create a full Setzliste',
+      title: 'SPORTJAHRESPLAN.BOGENKONTROLLLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'SPORTJAHRESPLAN.BOGENKONTROLLLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
@@ -123,4 +134,69 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
 
     this.notificationService.showNotification(notification);
   }
+
+  private handleSetzlisteFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'SPORTJAHRESPLAN.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'SPORTJAHRESPLAN.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleSchusszettelFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleMeldezettelFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'SPORTJAHRESPLAN.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'SPORTJAHRESPLAN.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleEinzelstatistikFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'WETTKAEMPFE.EINZELSTATISTIK.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'WETTKAEMPFE.EINZELSTATISTIK.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
 }
