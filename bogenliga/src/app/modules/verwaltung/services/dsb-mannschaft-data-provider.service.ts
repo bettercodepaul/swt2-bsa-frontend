@@ -189,7 +189,8 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     });
   }
 
-  // Kommentare
+  //Method to send ids to the backend. Returns backends response
+  //Gets executed when button "Mannschaft kopieren" is pressed
   public copyMannschaftFromVeranstaltung(lastVeranstaltungID: string | number, currentVeranstaltungID: string | number): Promise<BogenligaResponse<void>> {
 
     // return promise
