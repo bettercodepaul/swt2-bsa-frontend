@@ -551,20 +551,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
   public checkMannschaftsTableEmpty(){
-
     let empty = true;
-    // let mannschaftCount = 0;
-    //
-    // this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
-    //     .then((response) => mannschaftCount = response.payload.length);
-    //
-    // if(mannschaftCount > 0){
-    //   empty = false;
-    // }
-    //
-    // console.log("checkMannschaftsTableEmpty()");
-    // console.log(mannschaftCount);
-    // console.log(empty);
+    if(this.rows.length > 0){
+      empty = false;
+    }
+
     return empty;
   }
 
