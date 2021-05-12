@@ -85,8 +85,15 @@
         "WETTKAMPFTAG_AKT": "Wettkampftag",
         "WETTKAMPFTAG": "0"
       }
+    },
+    "EINZELSTATISTIK": {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren der Einzelstatistik:",
+          "DESCRIPTION": "Einzelstatistik konnte nicht generiert werden. Es wurden keine Schützen für die Auswahl gefunden"
+        }
+      }
     }
-
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
