@@ -208,24 +208,18 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
     // show response message
   }
+
+  //Gets executed when button "Mannschaft kopieren" is pressed
   public onCopyMannschaft(ignore: any): void {
-    this.loadDsbMannschaft();
+    console.log('Last Veranstaltung: ' + this.lastVeranstaltung.id);
     if (typeof this.lastVeranstaltung != null) {
       this.saveLoading = true;
-      if (this.allDsbMannschaft.length > 0) {
 
-      for (let i = 0; i <= this.allDsbMannschaft.length; i++) {
+      this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
+          .then((response) => this.handleCopyFromVeranstaltungSuccess(response))
+          .catch((response) => this.handleCopyFromVeranstaltungFailure(response));
 
-        this.testMannschaft.veranstaltungId = this.currentVeranstaltung.id;
-        this.testMannschaft.veranstaltungName = this.currentVeranstaltung.name;
-        this.testMannschaft.benutzerId = this.allDsbMannschaft[i].benutzerId;
-        this.testMannschaft.vereinId = this.allDsbMannschaft[i].vereinId;
-        this.testMannschaft.nummer = this.allDsbMannschaft[i].nummer;
-        this.testMannschaft.name = this.allDsbMannschaft[i].name;
-        // persist
-
-        this.mannschaftDataProvider.create(this.testMannschaft, null)
-            .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+      /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
                 && !isNullOrUndefined(response.payload)
                 && !isNullOrUndefined(response.payload.id)) {
@@ -255,16 +249,18 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
               console.log('Failed');
               this.saveLoading = false;
 
-
-            });
+            });/*
 
       }} else {
         console.log('Keine Mannschaften verfügbar');
         this.saveLoading = false;
-      }
+      }*/
     } else {
       console.log('Veranstaltung ist nicht vorhanden');
+      this.saveLoading = false;
+
     }
+    this.saveLoading = false;
     // show response message
   }
 
@@ -410,15 +406,19 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadUsers();
     this.loadLiga();
     this.loadAllVeranstaltung();
-
-
-
-
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
     this.loading = false;
+  }
 
+  private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
+    this.loading = false;
+    this.loadMannschaftsTable();
+  }
+
+  private handleCopyFromVeranstaltungFailure(response: BogenligaResponse<void>) {
+    this.loading = false;
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
@@ -550,14 +550,22 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loading = false;
   }
 
+  /**
+   * Checks if current Table is empty
+   * If not button which uses copyMannschaftFromVeranstaltung will be greyed out
+   */
+  public checkMannschaftsTableEmpty(){
+    let empty = true;
+    if(this.rows.length > 0){
+      empty = false;
+    }
+    return empty;
+  }
 
   private loadMannschaftsTable() {
     this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
       .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.loadTableRows(response.payload))
       .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
-      // this.ligatabellenService.getLigatabelleVeranstaltung(this.id)
-      //   .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.loadTableRows(response.payload))
-      //   .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.rows = []);
   }
 
   private loadTableRows(payload: DsbMannschaftDO[]) {
