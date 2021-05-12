@@ -39,9 +39,9 @@
 
     <!-- Überschrift Tag1 & Kampfrichter -->
     <!-- Irem -->
-    <form [formGroup]="profileForm">
+    <form [formGroup]="wettkampftageForm">
       <div formArrayName="wettkampftage">
-        <button (click)="addNewWettkampftag()">Add new Wettkampftag</button>
+        <button (click)="addNewWettkampftag()">Weiteren Wettkampftag hinzufügen</button>
 
         <div *ngFor="let tage of wettkampftage.controls; let i=index">
           <label><b>Wettkampftag {{i+1}}</b></label>
@@ -51,24 +51,24 @@
         <input type="date" formControlName="date">
       </label>
       <div formGroupName="address">
-        <h6>Adresse</h6>
+        <h6>Adresse *:</h6>
         <label>
-          Straße und Hausnummer *:
+          Straße und Hausnummer *
           <input type="text" formControlName="street">
         </label>
         <br>
         <label>
-          Postleitzahl *:
+          Postleitzahl *
           <input type="text" formControlName="citynumber">
         </label>
         <br>
         <label>
-          Ort/Stadt *:
+          Ort/Stadt *
           <input type="text" formControlName="city">
         </label>
         <br>
         <label>
-          Zusatzinformationen:
+          Zusatzinformationen
           <input type="text" formControlName="information">
         </label>
       </div>

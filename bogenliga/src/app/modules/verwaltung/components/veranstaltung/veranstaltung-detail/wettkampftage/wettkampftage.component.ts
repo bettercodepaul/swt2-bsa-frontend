@@ -67,23 +67,23 @@ const wettkampfTagNotification: Notification = {
 export class WettkampftageComponent extends CommonComponentDirective implements OnInit {
 
   //Irem
-  profileForm = this.fb.group({
-    date: new FormControl(''),
-    start: new FormControl(''),
-    ausrichter: new FormControl(''),
+  wettkampftageForm = this.fb.group({
+    date: [''],
+    start: [''],
+    ausrichter: [''],
     address: this.fb.group({
-      street: new FormControl(''),
-      citynumber: new FormControl(''),
-      city: new FormControl(''),
-      information: new FormControl('')
+      street: [''],
+      citynumber: [''],
+      city: [''],
+      information: ['']
     }),
     wettkampftage: this.fb.array([
       this.fb.control('')
-    ])
+    ]),
   });
 
   get wettkampftage(){
-    return this.profileForm.get('wettkampftage') as FormArray;
+    return this.wettkampftageForm.get('wettkampftage') as FormArray;
   }
 
   addNewWettkampftag(){
