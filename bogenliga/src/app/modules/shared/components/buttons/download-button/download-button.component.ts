@@ -45,9 +45,9 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
 
     if (this.id === 'downloadBogenkontrollliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((() => this.handleBogenkontrolllisteFailure()))
+          .then((response) => this.handleSuccess(response))
           .catch((() => this.handleBogenkontrolllisteFailure()));
-    } else if (this.id === 'downloadSetzliste' || this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
+    } else if (this.id === 'downloadSchusszettel' || this.id === 'downloadMeldezettel') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
         .then((() => this.handleWithoutNotification()))
         .catch((() => this.handleWithoutNotification()));
@@ -55,7 +55,11 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then(() => this.handleEinzelstatistikSuccess())
           .catch(() => this.handleEinzelstatistikFailure());
-    }else {
+    } else if (this.id === 'downloadSetzliste') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((response) => this.handleSuccess(response))
+          .catch((() => this.handleSetzlisteFailure()));
+    } else {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
         .then((response) => this.handleSuccess(response))
         .catch((response) => this.handleFailure(response));
@@ -115,8 +119,24 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
   private handleBogenkontrolllisteFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
-      title: 'Download Failure:',
-      description: 'You have first to create a full Setzliste',
+      title: 'SPORTJAHRESPLAN.BOGENKONTROLLLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'SPORTJAHRESPLAN.BOGENKONTROLLLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleSetzlisteFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'SPORTJAHRESPLAN.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'SPORTJAHRESPLAN.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
