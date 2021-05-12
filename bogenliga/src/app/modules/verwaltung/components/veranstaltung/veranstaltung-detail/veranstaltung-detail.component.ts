@@ -547,6 +547,23 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loading = false;
   }
 
+  public checkMannschaftsTableEmpty(){
+
+    let empty = true;
+    // let mannschaftCount = 0;
+    //
+    // this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
+    //     .then((response) => mannschaftCount = response.payload.length);
+    //
+    // if(mannschaftCount > 0){
+    //   empty = false;
+    // }
+    //
+    // console.log("checkMannschaftsTableEmpty()");
+    // console.log(mannschaftCount);
+    // console.log(empty);
+    return empty;
+  }
 
   private loadMannschaftsTable() {
     this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)

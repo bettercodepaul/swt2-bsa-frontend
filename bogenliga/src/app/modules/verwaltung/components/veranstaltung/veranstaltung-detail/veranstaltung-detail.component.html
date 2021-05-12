@@ -181,7 +181,7 @@
 
         <bla-button *ngIf="!mannschaftExists()"
                     [id]="'veranstaltungMannschaftSaveButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
+                    [disabled]="!this.checkMannschaftsTableEmpty()"
                     [loading]="saveLoading"
                     (onClick)="onCopyMannschaft($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
