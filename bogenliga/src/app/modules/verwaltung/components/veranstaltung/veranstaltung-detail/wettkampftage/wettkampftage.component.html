@@ -134,7 +134,7 @@
                       name="wettkampftag1_wettkampfOrtsinfo"
                       #wettkampftag1_wettkampfOrtsinfo="ngModel"
                       [(ngModel)]="currentWettkampftag_1.wettkampfOrtsinfo"
-                      [class.is-invalid]="wettkampftag1_wettkampfOrtsinfo.invalid && ! wettkampftag1_wettkampfOrtsinfo.untouched"
+                      [class.is-invalid]="wettkampftag1_wettkampfOrtsinfo.invalid"
                       placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORTSINFO.PLACEHOLDER' | translate }}"
                       rows="3"
             ></textarea>
@@ -170,40 +170,40 @@
         </div>
 
         <div class="form-group row">
-        <label for="ausrichter1"
-               class="col-sm-2 col-form-label">
-          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
-          <span> *</span>
-        </label>
+          <label for="ausrichter1"
+                 class="col-sm-2 col-form-label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
+            <span> *</span>
+          </label>
 
-        <div class="col-sm-8">
-          <select class="form-control"
-                  required
-                  id="ausrichter1"
-                  name="ausrichter1"
-                  #ausrichter1="ngModel"
-                  [(ngModel)]="currentAusrichter1">
-            <option [ngValue]="ausrichter"
-                    *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
+          <div class="col-sm-8">
+            <select class="form-control"
+                    required
+                    id="ausrichter1"
+                    name="ausrichter1"
+                    #ausrichter1="ngModel"
+                    [(ngModel)]="currentAusrichter1">
+              <option [ngValue]="ausrichter"
+                      *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
-            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
-          </select>
+              placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
+            </select>
+          </div>
         </div>
-      </div>
       </div>
                       <!-- End Tagesdaten-->
 
       <div class="col-sm-5"> <!-- Beginn Kampfrichter -->
         <div class="form-group row">
-            <bla-double-selectionlist [leftItems]="selectedKampfrichterTag1"
-                                      [(rightItems)]="notSelectedKampfrichterWettkampftag1"
-                                      [fieldSelector]="'email'"
-                                      [idLeftList]="'left'"
-                                      [idRightList]="'right'"
+          <bla-double-selectionlist [leftItems]="selectedKampfrichterTag1"
+                                    [(rightItems)]="notSelectedKampfrichterWettkampftag1"
+                                    [fieldSelector]="'email'"
+                                    [idLeftList]="'left'"
+                                    [idRightList]="'right'"
 
-                                      style="height: 12em; width: 36em">
+                                    style="height: 12em; width: 36em">
 
-            </bla-double-selectionlist>
+          </bla-double-selectionlist>
         </div>
       </div><!-- Ende Kampfrichter -->
 
@@ -225,7 +225,7 @@
             <bla-button [id]="'wettkampftagSaveButton1'"
                         [disabled]="(wettkampftag1_wettkampfStrasse.invalid || wettkampftag1_wettkampfPlz.invalid || wettkampftag1_wettkampfOrtsname.invalid ||wettkampftag1_wettkampfBeginn.invalid ||  wettkampftag1_datum.invalid)"
                         [loading]="saveLoading"
-                        (onClick)="onSaveWettkampfTag1($event)">
+                        (onClick)="onSaveWettkampfTag(1, $event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
           </div>
@@ -365,26 +365,26 @@
           </div>
         </div>
 
-            <div class="form-group row">
-            <label for="ausrichter2"
-                   class="col-sm-2 col-form-label">
-              <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
-              <span> *</span>
-            </label>
+        <div class="form-group row">
+          <label for="ausrichter2"
+                 class="col-sm-2 col-form-label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
+            <span> *</span>
+          </label>
 
-            <div class="col-sm-8">
-              <select class="form-control"
-                      required
-                      id="ausrichter2"
-                      name="ausrichter2"
-                      #ausrichter2="ngModel"
-                      [(ngModel)]="currentAusrichter2">
-                <option [ngValue]="ausrichter"
-                        *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
+          <div class="col-sm-8">
+            <select class="form-control"
+                    required
+                    id="ausrichter2"
+                    name="ausrichter2"
+                    #ausrichter2="ngModel"
+                    [(ngModel)]="currentAusrichter2">
+              <option [ngValue]="ausrichter"
+                      *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
-                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
-              </select>
-            </div>
+              placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
+            </select>
+          </div>
         </div>
       </div><!-- End Tagesdaten-->
 
@@ -420,7 +420,7 @@
             <bla-button [id]="'wettkampftagSaveButton2'"
                         [disabled]="(wettkampftag2_wettkampfStrasse.invalid || wettkampftag2_wettkampfPlz.invalid || wettkampftag2_wettkampfOrtsname.invalid  || wettkampftag2_wettkampfBeginn.invalid ||  wettkampftag2_datum.invalid)"
                         [loading]="saveLoading"
-                        (onClick)="onSaveWettkampfTag2($event)">
+                        (onClick)="onSaveWettkampfTag(2, $event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
           </div>
@@ -526,7 +526,7 @@
                       name="wettkampftag3_wettkampfOrtsinfo"
                       #wettkampftag3_wettkampfOrtsinfo="ngModel"
                       [(ngModel)]="currentWettkampftag_3.wettkampfOrtsinfo"
-                      [class.is-invalid]="wettkampftag3_wettkampfOrtsinfo.invalid && ! wettkampftag3_wettkampfOrtsinfo.untouched"
+                      [class.is-invalid]="wettkampftag3_wettkampfOrtsinfo.invalid"
                       placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORTSINFO.PLACEHOLDER' | translate }}"
                       rows="3"
             ></textarea>
@@ -560,26 +560,26 @@
           </div>
         </div>
 
-            <div class="form-group row">
-            <label for="ausrichter3"
-                   class="col-sm-2 col-form-label">
-              <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
-              <span> *</span>
-            </label>
+        <div class="form-group row">
+          <label for="ausrichter3"
+                 class="col-sm-2 col-form-label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
+            <span> *</span>
+          </label>
 
-            <div class="col-sm-8">
-              <select class="form-control"
-                      required
-                      id="ausrichter3"
-                      name="ausrichter3"
-                      #ausrichter3="ngModel"
-                      [(ngModel)]="currentAusrichter3">
-                <option [ngValue]="ausrichter"
-                        *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
+          <div class="col-sm-8">
+            <select class="form-control"
+                    required
+                    id="ausrichter3"
+                    name="ausrichter3"
+                    #ausrichter3="ngModel"
+                    [(ngModel)]="currentAusrichter3">
+              <option [ngValue]="ausrichter"
+                      *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
-                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
-              </select>
-            </div>
+              placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
+            </select>
+          </div>
         </div>
       </div><!-- End Tagesdaten-->
 
@@ -615,7 +615,7 @@
             <bla-button [id]="'wettkampftagSaveButton3'"
                         [disabled]="(wettkampftag3_wettkampfStrasse.invalid || wettkampftag3_wettkampfPlz.invalid || wettkampftag3_wettkampfOrtsname.invalid || wettkampftag3_wettkampfBeginn.invalid || wettkampftag3_datum.invalid)"
                         [loading]="saveLoading"
-                        (onClick)="onSaveWettkampfTag3($event)">
+                        (onClick)="onSaveWettkampfTag(3, $event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
           </div>
@@ -721,7 +721,7 @@
                       name="wettkampftag4_wettkampfOrtsinfo"
                       #wettkampftag4_wettkampfOrtsinfo="ngModel"
                       [(ngModel)]="currentWettkampftag_4.wettkampfOrtsinfo"
-                      [class.is-invalid]="wettkampftag4_wettkampfOrtsinfo.invalid && ! wettkampftag4_wettkampfOrtsinfo.untouched"
+                      [class.is-invalid]="wettkampftag4_wettkampfOrtsinfo.invalid"
                       placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.ORTSINFO.PLACEHOLDER' | translate }}"
                       rows="3"
             ></textarea>
@@ -755,27 +755,27 @@
           </div>
         </div>
 
-            <div class="form-group row">
-            <label for="ausrichter4"
-                   class="col-sm-2 col-form-label">
-              <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
-              <span> *</span>
-            </label>
+        <div class="form-group row">
+          <label for="ausrichter4"
+                 class="col-sm-2 col-form-label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
+            <span> *</span>
+          </label>
 
-            <div class="col-sm-8">
-              <select class="form-control"
-                      required
-                      id="ausrichter4"
-                      name="ausrichter4"
-                      #ausrichter4="ngModel"
-                      [(ngModel)]="currentAusrichter4">
-                <option [ngValue]="ausrichter"
-                        *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
+          <div class="col-sm-8">
+            <select class="form-control"
+                    required
+                    id="ausrichter4"
+                    name="ausrichter4"
+                    #ausrichter4="ngModel"
+                    [(ngModel)]="currentAusrichter4">
+              <option [ngValue]="ausrichter"
+                      *ngFor="let ausrichter of allUsers"> {{ausrichter.email}}</option>
 
-                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
-              </select>
-            </div>
+              placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
+            </select>
           </div>
+        </div>
       </div><!-- End Tagesdaten-->
 
       <div class="col-sm-5"> <!-- Beginn Kampfrichter -->
@@ -810,7 +810,7 @@
             <bla-button [id]="'wettkampftagSaveButton4'"
                         [disabled]="(wettkampftag4_wettkampfStrasse.invalid || wettkampftag4_wettkampfPlz.invalid || wettkampftag4_wettkampfOrtsname.invalid  || wettkampftag4_wettkampfBeginn.invalid || wettkampftag4_datum.invalid)"
                         [loading]="saveLoading"
-                        (onClick)="onSaveWettkampfTag4($event)">
+                        (onClick)="onSaveWettkampfTag(4, $event)">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
             </bla-button>
           </div>
