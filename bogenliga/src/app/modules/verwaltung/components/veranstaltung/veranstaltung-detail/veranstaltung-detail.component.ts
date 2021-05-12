@@ -550,12 +550,15 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loading = false;
   }
 
+  /**
+   * Checks if current Table is empty
+   * If not button which uses copyMannschaftFromVeranstaltung will be greyed out
+   */
   public checkMannschaftsTableEmpty(){
     let empty = true;
     if(this.rows.length > 0){
       empty = false;
     }
-
     return empty;
   }
 
@@ -563,9 +566,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
       .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.loadTableRows(response.payload))
       .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
-      // this.ligatabellenService.getLigatabelleVeranstaltung(this.id)
-      //   .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.loadTableRows(response.payload))
-      //   .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.rows = []);
   }
 
   private loadTableRows(payload: DsbMannschaftDO[]) {
