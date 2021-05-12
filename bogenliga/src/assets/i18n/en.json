@@ -85,8 +85,15 @@
         "WETTKAMPFTAG_AKT": "Competition day",
         "WETTKAMPFTAG": "0"
       }
+    },
+    "EINZELSTATISTIK": {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Error creating Singlestatistic:",
+          "DESCRIPTION": "Could not generate Singlestatistic. Could not find Archers for selection."
+        }
+      }
     }
-
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
