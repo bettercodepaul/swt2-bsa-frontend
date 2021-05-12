@@ -1134,10 +1134,11 @@
         },
 
         "SAVE": "Save",
+        "AUSRICHTER": "Organizer",
         "UPDATE": "Refresh",
         "DELETE": "Delete",
         "WETTKAMPFTAGE": "Competition days",
-        "MANNSCHAFT": "Copy teams",
+        "MANNSCHAFT": "Copy teams from previous year",
         "BACK": "Back"
       },
       "NOTIFICATION": {
