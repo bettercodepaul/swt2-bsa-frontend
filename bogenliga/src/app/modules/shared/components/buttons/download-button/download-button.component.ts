@@ -55,14 +55,18 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleSuccess(response))
           .catch((() => this.handleMeldezettelFailure()));
+    } else if(this.id == 'downloadEinzelstatistik') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then(() => this.handleEinzelstatistikSuccess())
+          .catch(() => this.handleEinzelstatistikFailure());
     } else if (this.id === 'downloadSetzliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleSuccess(response))
           .catch((() => this.handleSetzlisteFailure()));
     } else {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-        .then((response) => this.handleSuccess(response))
-        .catch((response) => this.handleFailure(response));
+          .then((response) => this.handleSuccess(response))
+          .catch((response) => this.handleFailure(response));
     }
   }
 
@@ -174,9 +178,41 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       type: NotificationType.OK,
       userAction: NotificationUserAction.PENDING
     };
-
+  
     this.loading = false;
 
     this.notificationService.showNotification(notification);
   }
+  
+  private handleEinzelstatistikFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'Download Fehlgeschlagen',
+      description: 'Einzelstatistik konnte nicht als PDF erstellt Werden',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+      
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+  
+  private handleEinzelstatistikSuccess() {
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'Download Erfolgreich',
+      description: 'Einzelstatistik wurde als PDF erstellt',
+      severity: NotificationSeverity.INFO,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+    this.loading = true;
+
+    this.notificationService.showNotification(notification);
+  }
+  
 }
