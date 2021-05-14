@@ -384,7 +384,7 @@
         "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
       },
       "CODE": {
-        "LABEL": "Google Autheticator Verification Code",
+        "LABEL": "Google Authenticator Verification Code",
         "PLACEHOLDER": "Bitte Authentifizierungscode eingeben",
         "ERROR": "Bitte einen gültigen Code mit mehr als 3 Zeichen eingeben."
       },
