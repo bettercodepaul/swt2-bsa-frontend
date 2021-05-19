@@ -1,6 +1,7 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
+
   <form id="veranstaltungForm"
         class="horizontal-form "
         #wettkampftagForm="ngForm">
@@ -38,53 +39,6 @@
     <hr>
 
     <!-- Überschrift Tag1 & Kampfrichter -->
-    <!-- Irem -->
-    <form [formGroup]="wettkampftageForm">
-      <div formArrayName="wettkampftage">
-        <button (click)="addNewWettkampftag()">Weiteren Wettkampftag hinzufügen</button>
-
-        <div *ngFor="let tage of wettkampftage.controls; let i=index">
-          <label><b>Wettkampftag {{i+1}}</b></label>
-          <br>
-      <label>
-        Datum *:
-        <input type="date" formControlName="date">
-      </label>
-      <div formGroupName="address">
-        <h6>Adresse *:</h6>
-        <label>
-          Straße und Hausnummer *
-          <input type="text" formControlName="street">
-        </label>
-        <br>
-        <label>
-          Postleitzahl *
-          <input type="text" formControlName="citynumber">
-        </label>
-        <br>
-        <label>
-          Ort/Stadt *
-          <input type="text" formControlName="city">
-        </label>
-        <br>
-        <label>
-          Zusatzinformationen
-          <input type="text" formControlName="information">
-        </label>
-      </div>
-      <label>
-        Beginn *:
-        <input type="time" formControlName="start">
-      </label>
-      <br>
-      <label>
-        Ausrichter *:
-        <input type="text" formControlName="ausrichter">
-      </label>
-        </div>
-      </div>
-    </form>
-    <!-- Irem -->
 
     <div class="row">
       <div class="col-sm-5">
