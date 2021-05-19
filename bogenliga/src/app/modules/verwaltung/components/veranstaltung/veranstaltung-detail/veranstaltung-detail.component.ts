@@ -45,6 +45,7 @@ const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
 const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
 const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
+const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failure';
 
 
 @Component({
@@ -84,7 +85,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public id;
 
   // For the Mannschaft-Table
-  public rows: TableRow[];
+  public rows: TableRow[] = [];
   public showTable = false;
   public AlertType = AlertType;
   public showPopup = false;
@@ -211,13 +212,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   //Gets executed when button "Mannschaft kopieren" is pressed
   public onCopyMannschaft(ignore: any): void {
-    console.log('Last Veranstaltung: ' + this.lastVeranstaltung.id);
-    if (typeof this.lastVeranstaltung != null) {
+    if (!isNullOrUndefined(this.lastVeranstaltung)) {
       this.saveLoading = true;
 
       this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
           .then((response) => this.handleCopyFromVeranstaltungSuccess(response))
-          .catch((response) => this.handleCopyFromVeranstaltungFailure(response));
+          .catch((response) => this.handleCopyFromVeranstaltungFailure());
 
       /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
@@ -257,6 +257,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       }*/
     } else {
       console.log('Veranstaltung ist nicht vorhanden');
+      this.handleCopyFromVeranstaltungFailure()
       this.saveLoading = false;
 
     }
@@ -417,8 +418,45 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadMannschaftsTable();
   }
 
-  private handleCopyFromVeranstaltungFailure(response: BogenligaResponse<void>) {
+  private handleCopyFromVeranstaltungFailure() {
     this.loading = false;
+    if(isNullOrUndefined(this.lastVeranstaltung.id) || isNullOrUndefined(this.lastVeranstaltung)){
+       const notification: Notification = {
+        id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_LAST_VERANSTALTUNG',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+      this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.deleteLoading = false;
+            }
+          });
+
+      this.notificationService.showNotification(notification);
+    } else {
+      const notification: Notification = {
+        id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_DEFAULT',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+      this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.deleteLoading = false;
+            }
+          });
+
+      this.notificationService.showNotification(notification);
+    }
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
