@@ -1309,7 +1309,7 @@
       }
     },
     "USER_DETAIL": {
-      "TITLE": "BENUTZER - Details",
+      "TITLE": "Benutzer - Details",
       "FORM": {
         "EMAIL": {
           "LABEL": "E-Mail",
@@ -1369,7 +1369,7 @@
       "NOTIFICATION": {
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das Benutzer wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Der Benutzer wurde erfolgreich gespeichert."
         }
       }
     },
