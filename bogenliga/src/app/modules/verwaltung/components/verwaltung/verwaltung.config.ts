@@ -14,10 +14,10 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER]
       },
       {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.LABEL',
-        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.BENUTZER.DESCRIPTION',
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.DESCRIPTION',
         icon:           'address-card',
-        route:          'benutzer',
+        route:          'user',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER]
       },
       {
