@@ -13,6 +13,8 @@ import {fromPayload, fromPayloadArray, fromVeranstaltungsPayload} from '../mappe
 import {MatchDO} from '../types/match-do.class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,7 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 export class MatchDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/match';
+  wettkampfId : WettkampfDO;
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
@@ -102,6 +105,21 @@ export class MatchDataProviderService extends DataProviderService {
             });
         });
     }
+
+  public generateDataForMatches(payload: MatchDTO[]): Promise<BogenligaResponse<MatchDO[]>>{
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('/generate' + this.wettkampfId.id).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    })
+  }
 
   //
   // public deleteById(id: number): Promise<BogenligaResponse<void>> {
