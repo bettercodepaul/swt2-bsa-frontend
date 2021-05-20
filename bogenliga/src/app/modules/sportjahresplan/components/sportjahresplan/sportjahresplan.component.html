@@ -58,6 +58,15 @@
   </bla-col-layout>
 
   <bla-col-layout>
+
+    <div>
+      <bla-button
+        [id]="'generiereMatches'"
+        [disabled]="!isDisabled()"
+        (onClick)="generateMatches()">
+        generiere Matches
+      </bla-button>
+    </div>
     <div>
           <bla-download-button
             [id]="'downloadSetzliste'"
