@@ -116,6 +116,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.id = params[ID_PATH_PARAM];
+
         if (this.id === 'add') {
           this.currentVeranstaltung = new VeranstaltungDO();
           this.currentWettkampftyp = new WettkampftypDO();
@@ -212,12 +213,40 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   //Gets executed when button "Mannschaft kopieren" is pressed
   public onCopyMannschaft(ignore: any): void {
-    if (!isNullOrUndefined(this.lastVeranstaltung)) {
-      this.saveLoading = true;
+    //this.loading = true;
+   // this.saveLoading = true;
+    this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
+        .then((response)=>{
+          this.lastVeranstaltung=response.payload
+          this.saveLoading = true;
+          console.log('Mannschaften werden kopiert');
+          this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
+              .then((response) => this.handleCopyFromVeranstaltungSuccess(response))
+              .catch((response) => this.handleCopyFromVeranstaltungFailure());
+             // this.saveLoading = false;
+          }
+        )
+        .catch((response)=> {
+          console.log('Veranstaltung ist nicht vorhanden');
+          const notification: Notification = {
+            id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
+            title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
+            description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_LAST_VERANSTALTUNG',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
+          this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                }
+              });
 
-      this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
-          .then((response) => this.handleCopyFromVeranstaltungSuccess(response))
-          .catch((response) => this.handleCopyFromVeranstaltungFailure());
+          this.notificationService.showNotification(notification);
+          this.loading = false;
+
+        });
 
       /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
@@ -255,12 +284,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         console.log('Keine Mannschaften verfügbar');
         this.saveLoading = false;
       }*/
-    } else {
-      console.log('Veranstaltung ist nicht vorhanden');
-      this.handleCopyFromVeranstaltungFailure()
-      this.saveLoading = false;
 
-    }
     this.saveLoading = false;
     // show response message
   }
@@ -384,7 +408,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         .catch((response: BogenligaResponse<WettkampftypDTO[]>) => this.handleWettkampftypResponseArrayFailure(response));
 
   }
-
+/*
   private loadDsbMannschaft() {
     this.mannschaftDataProvider.findAll()
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleDsbMannschaftResponseArraySuccess(response))
@@ -398,7 +422,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleAllVeranstaltungResponseArrayFailure(response));
 
   }
-
+*/
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
@@ -406,7 +430,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadWettkampftyp();
     this.loadUsers();
     this.loadLiga();
-    this.loadAllVeranstaltung();
+   // this.loadAllVeranstaltung();
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
@@ -420,43 +444,24 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleCopyFromVeranstaltungFailure() {
     this.loading = false;
-    if(isNullOrUndefined(this.lastVeranstaltung.id) || isNullOrUndefined(this.lastVeranstaltung)){
-       const notification: Notification = {
-        id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
-        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
-        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_LAST_VERANSTALTUNG',
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.PENDING
-      };
-      this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
-          .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.deleteLoading = false;
-            }
-          });
 
-      this.notificationService.showNotification(notification);
-    } else {
-      const notification: Notification = {
-        id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
-        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
-        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_DEFAULT',
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.PENDING
-      };
-      this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
-          .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.deleteLoading = false;
-            }
-          });
+    const notification: Notification = {
+      id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_DEFAULT',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.deleteLoading = false;
+          }
+        });
 
-      this.notificationService.showNotification(notification);
-    }
+    this.notificationService.showNotification(notification);
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
@@ -551,7 +556,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.allUsers = [];
     this.loading = false;
   }
-
+/*
   private handleDsbMannschaftResponseArraySuccess(response: BogenligaResponse<DsbMannschaftDO[]>): void {
     this.allDsbMannschaft = [];
     this.allDsbMannschaft = response.payload;
@@ -586,7 +591,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleAllVeranstaltungResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
     this.allVeranstaltung = [];
     this.loading = false;
-  }
+  }*/
 
   /**
    * Checks if current Table is empty
