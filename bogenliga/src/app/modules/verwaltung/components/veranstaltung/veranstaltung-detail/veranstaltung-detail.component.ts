@@ -213,17 +213,16 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   //Gets executed when button "Mannschaft kopieren" is pressed
   public onCopyMannschaft(ignore: any): void {
-    //this.loading = true;
-   // this.saveLoading = true;
+    this.saveLoading = true;
     this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
         .then((response)=>{
           this.lastVeranstaltung=response.payload
-          this.saveLoading = true;
+          console.log(this.lastVeranstaltung.id);
           console.log('Mannschaften werden kopiert');
           this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
               .then((response) => this.handleCopyFromVeranstaltungSuccess(response))
               .catch((response) => this.handleCopyFromVeranstaltungFailure());
-             // this.saveLoading = false;
+          // this.saveLoading = false;
           }
         )
         .catch((response)=> {
@@ -240,14 +239,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
               .subscribe((myNotification) => {
                 if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
                 }
               });
 
           this.notificationService.showNotification(notification);
-          this.loading = false;
-
         });
-
       /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
               if (!isNullOrUndefined(response)
                 && !isNullOrUndefined(response.payload)
@@ -284,8 +281,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         console.log('Keine Mannschaften verfügbar');
         this.saveLoading = false;
       }*/
-
-    this.saveLoading = false;
     // show response message
   }
 
@@ -438,13 +433,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
   private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
-    this.loading = false;
     this.loadMannschaftsTable();
+    // this.saveLoading = false;
   }
 
   private handleCopyFromVeranstaltungFailure() {
-    this.loading = false;
-
     const notification: Notification = {
       id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
       title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
@@ -457,11 +450,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
+            this.saveLoading = false;
           }
         });
 
     this.notificationService.showNotification(notification);
+
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
@@ -613,6 +607,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private loadTableRows(payload: DsbMannschaftDO[]) {
     this.rows = toTableRows(payload);
+    this.saveLoading = false;
   }
 
   public onEdit(versionedDataObject: VersionedDataObject) {
