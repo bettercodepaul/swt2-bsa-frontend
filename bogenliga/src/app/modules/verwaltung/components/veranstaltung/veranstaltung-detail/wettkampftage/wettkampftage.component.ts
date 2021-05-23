@@ -32,8 +32,9 @@ import {LizenzDO} from '@verwaltung/types/lizenz-do.class';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provider.service';
-import {log} from 'util';
+//import {log} from 'util';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {RegionDO} from '@verwaltung/types/region-do.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -71,6 +72,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public currentUser: UserProfileDO;
   public rows: TableRow[];
+  public selectedDTOs: WettkampfDO[];
+  private selectedVeranstaltungsId: number;
+  public currentWettkampftagDO: WettkampfDO;
+
   public currentWettkampftag: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_2: WettkampfDO = new WettkampfDO();
