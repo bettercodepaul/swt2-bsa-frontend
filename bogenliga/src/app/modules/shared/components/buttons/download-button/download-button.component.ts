@@ -59,6 +59,10 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleSuccess(response))
           .catch(() => this.handleEinzelstatistikFailure());
+    } else if(this.id == 'downloadGesamtstatistik') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((response) => this.handleSuccess(response))
+          .catch(() => this.handleGesamtstatistikFailure());
     } else if (this.id === 'downloadSetzliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleSuccess(response))
@@ -188,6 +192,22 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'WETTKAEMPFE.EINZELSTATISTIK.NOTIFICATION.DOWNLOADFEHLER.TITLE',
       description: 'WETTKAEMPFE.EINZELSTATISTIK.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleGesamtstatistikFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'Download Fehlgeschlagen',
+      description: 'Gesamtstatistik konnte nicht als PDF erstellt Werden',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
