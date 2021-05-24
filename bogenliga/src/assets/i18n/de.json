@@ -1122,55 +1122,70 @@
           "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
         },
         "WETTKAMPFTAG": {
-          "LABEL": "Wettkampftag",
-          "DATUM": {
-            "LABEL": "Datum",
-            "PLACEHOLDER": "Datum",
-            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
-          },
-          "ADRESSE": {
-            "LABEL": "Adresse"
-          },
-          "STRASSE": {
-            "LABEL": "Strasse",
-            "PLACEHOLDER": "Straße und Hausnummer",
-            "ERROR": "Ungültige Eingabe"
-          },
-          "PLZ": {
-            "LABEL": "Postleitzahl",
-            "PLACEHOLDER": "Postleitzahl",
-            "ERROR": "Ungültige Postleitzahl."
-          },
-          "ORTSNAME": {
-            "LABEL": "Ort/Stadt",
-            "PLACEHOLDER": "Ort/Stadt",
-            "ERROR": "Ungültiger Ort."
-          },
-          "ORTSINFO": {
-            "LABEL": "Zusatzinformation",
-            "PLACEHOLDER": "Zusatzinformationen",
-            "ERROR": "Ungültige Eingabe."
-          },
-          "BEGINN": {
-            "LABEL": "Beginn",
-            "PLACEHOLDER": "Uhrzeit",
-            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
-          },
-          "NOTIFICATION": {
-            "SAVE": {
-              "TITLE": "Speichern erfolgreich",
-              "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+          "TITLE": "Wettkampftage - Details",
+          "FORM": {
+            "LABEL": "Wettkampftag",
+            "DATUM": {
+              "LABEL": "Datum",
+              "PLACEHOLDER": "Datum",
+              "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
             },
-            "UPDATE": {
-              "TITLE": "Update erfolgreich",
-              "DESCRIPTION": "Daten vom Wettkampftag aktualisert"
+            "ADRESSE": {
+              "LABEL": "Adresse"
+            },
+            "STRASSE": {
+              "LABEL": "Strasse",
+              "PLACEHOLDER": "Straße und Hausnummer *",
+              "ERROR": "Ungültige Eingabe"
+            },
+            "PLZ": {
+              "LABEL": "Postleitzahl",
+              "PLACEHOLDER": "Postleitzahl *",
+              "ERROR": "Ungültige Postleitzahl."
+            },
+            "ORTSNAME": {
+              "LABEL": "Ort/Stadt",
+              "PLACEHOLDER": "Ort/Stadt *",
+              "ERROR": "Ungültiger Ort."
+            },
+            "ORTSINFO": {
+              "LABEL": "Zusatzinformation",
+              "PLACEHOLDER": "Zusatzinformationen",
+              "ERROR": "Ungültige Eingabe."
+            },
+            "BEGINN": {
+              "LABEL": "Beginn",
+              "PLACEHOLDER": "Uhrzeit",
+              "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
             }
-          }
-        },
-        "KAMPFRICHTERLISTE": {
-          "LABEL": "Kampfrichter"
+          },
+            "NOTIFICATION": {
+              "SAVE": {
+                "TITLE": "Speichern erfolgreich",
+                "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+              },
+              "UPDATE": {
+                "TITLE": "Update erfolgreich",
+                "DESCRIPTION": "Daten vom Wettkampftag aktualisert"
+              },
+              "DELETE": {
+                "TITLE": "Wettkampftag löschen",
+                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+              },
+              "DELETE_SUCCESS": {
+                "TITLE": "Erfolgreich",
+                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+              },
+              "DELETE_FAILURE": {
+                "TITLE": "Fehler beim Löschen",
+                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              }
+            }
+          },
+          "KAMPFRICHTERLISTE": {
+            "LABEL": "Kampfrichter"
 
-        },
+          },
         "WETTKAMPFTAG1": {
           "LABEL": "1. Wettkampftag",
           "DATUM": {

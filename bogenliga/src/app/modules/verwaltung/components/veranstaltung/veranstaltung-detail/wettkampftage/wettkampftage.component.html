@@ -9,7 +9,7 @@
     <div class="form-group row">
       <label for="wettkampftageDatum"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.DATUM.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.DATUM.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -21,27 +21,23 @@
                #wettkampftageDatum="ngModel"
                [(ngModel)]="currentWettkampftag.wettkampfDatum"
                [class.is-invalid]="wettkampftageDatum.invalid && !wettkampftageDatum.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.DATUM.LABEL' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.DATUM.LABEL' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.DATUM.ERROR' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.DATUM.ERROR' | translate }}
         </div>
       </div>
     </div>
 
     <!-- ADRESSE -->
     <div class="form-group row">
-      <label class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.ADRESSE.LABEL' | translate }}</span>
+      <label for="wettkampftageStrasse"
+        class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.ADRESSE.LABEL' | translate }}</span>
         <span> *</span>
       </label>
-    </div>
 
     <!-- STRASSE -->
-    <div class="form-group row">
-      <label for="wettkampftageStrasse"
-             class="col-sm-3 col-form-label">
-      </label>
       <div class="col-sm-9">
         <input type="text"
                class="form-control"
@@ -51,10 +47,10 @@
                #wettkampftageStrasse="ngModel"
                [(ngModel)]="currentWettkampftag.wettkampfStrasse"
                [class.is-invalid]="wettkampftageStrasse.invalid && !wettkampftageStrasse.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.STRASSE.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.STRASSE.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.STRASSE.ERROR' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.STRASSE.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -73,10 +69,10 @@
                #wettkampftagePLZ="ngModel"
                [(ngModel)]="currentWettkampftag.wettkampfPlz"
                [class.is-invalid]="wettkampftagePLZ.invalid && !wettkampftagePLZ.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.PLZ.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.PLZ.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.PLZ.ERROR' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.PLZ.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -95,10 +91,10 @@
                #wettkampftageOrt="ngModel"
                [(ngModel)]="currentWettkampftag.wettkampfOrtsname"
                [class.is-invalid]="wettkampftageOrt.invalid && !wettkampftageOrt.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.ORTSNAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.ORTSNAME.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.ORTSNAME.ERROR' | translate }}
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.ORTSNAME.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -116,7 +112,7 @@
                #wettkampftageOrtsinfo="ngModel"
                [(ngModel)]="currentWettkampftag.wettkampfOrtsinfo"
                [class.is-invalid]="wettkampftageOrtsinfo.invalid"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.ORTSINFO.PLACEHOLDER' | translate }}"
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.ORTSINFO.PLACEHOLDER' | translate }}"
                rows="3">
         </textarea>
       </div>
@@ -126,7 +122,7 @@
       <div class="form-group row">
         <label for="wettkampftageBeginn"
                class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.BEGINN.LABEL' | translate }}</span>
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.BEGINN.LABEL' | translate }}</span>
           <span> *</span>
         </label>
         <div class="col-sm-9">
@@ -138,10 +134,10 @@
                  #wettkampftageBeginn="ngModel"
                  [(ngModel)]="currentWettkampftag.wettkampfBeginn"
                  [class.is-invalid]="wettkampftageBeginn.invalid && !wettkampftageBeginn.untouched"
-                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.BEGINN.PLACEHOLDER' | translate }}">
+                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.BEGINN.PLACEHOLDER' | translate }}">
 
           <div class="invalid-feedback">
-            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.BEGINN.ERROR' | translate }}
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.BEGINN.ERROR' | translate }}
           </div>
         </div>
       </div>
@@ -179,6 +175,35 @@
                                   style="height: 12em; width: 36em">
 
         </bla-double-selectionlist>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+
+<!--
+        <bla-button *ngIf="!entityExists()"
+                    [id]="'dsbMitgliedSaveButton'"
+                    [disabled]="!wettkampftageForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onSave($event)">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
+        </bla-button>
+        <bla-button *ngIf="entityExists()"
+                    [id]="'dsbMitgliedUpdateButton'"
+                    [disabled]="!wettkampftageForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onUpdate($event)">
+          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
+        </bla-button>
+-->
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
+        </bla-button>
       </div>
     </div>
 
