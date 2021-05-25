@@ -60,14 +60,14 @@ export const VERWALTUNG_ROUTES: Routes = [
   {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]}
   ,
   {
-    path: 'benutzer',
+    path: 'user',
     component: UserOverviewComponent,
     pathMatch: 'full',
     canActivate: [UserOverviewGuard]
   },
-  {path: 'benutzer/add', component: UserNeuComponent, canActivate: [UserNeuGuard]}
+  {path: 'user/add', component: UserNeuComponent, canActivate: [UserNeuGuard]}
   ,
-  {path: 'benutzer/:id', component: UserDetailComponent, canActivate: [UserDetailGuard]},
+  {path: 'user/:id', component: UserDetailComponent, canActivate: [UserDetailGuard]},
   {
     path: 'klassen',
     component: WettkampfklasseOverviewComponent,

@@ -410,7 +410,7 @@
           "LABEL": "DSB Mitglieder",
           "DESCRIPTION": "Verwaltung der DSB Mitglieder"
         },
-        "BENUTZER": {
+        "USER": {
           "LABEL": "Benutzer",
           "DESCRIPTION": "Verwaltung der Benutzer-Accounts"
         },
@@ -559,7 +559,7 @@
           "LABEL": "Vereinsnummer",
           "PLACEHOLDER": "Vereinsnummer"
         },
-        "BENUTZER_ID": {
+        "USER_ID": {
           "LABEL": "Benutzer-ID",
           "PLACEHOLDER": "Benutzer-ID"
         },
@@ -1292,7 +1292,7 @@
         }
       }
     },
-    "BENUTZER": {
+    "USER": {
       "TITLE": "Benutzer - Übersicht",
       "TABLE": {
         "HEADERS": {
@@ -1308,8 +1308,8 @@
         }
       }
     },
-    "BENUTZER_DETAIL": {
-      "TITLE": "BENUTZER - Details",
+    "USER_DETAIL": {
+      "TITLE": "Benutzer - Details",
       "FORM": {
         "EMAIL": {
           "LABEL": "E-Mail",
@@ -1339,7 +1339,7 @@
         }
       }
     },
-    "BENUTZER_NEU": {
+    "USER_NEU": {
       "TITLE": "BENUTZER - Neuanlage",
       "FORM": {
         "DSBMITGLIED": {
@@ -1369,7 +1369,7 @@
       "NOTIFICATION": {
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das Benutzer wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Der Benutzer wurde erfolgreich gespeichert."
         }
       }
     },
