@@ -1,6 +1,6 @@
 import {DataTransferObject} from '../../../shared/data-provider';
 
-export class BenutzerRolleDTO implements DataTransferObject {
+export class UserRolleDTO implements DataTransferObject {
   id: number;
   email: string;
   roleId: number;
@@ -15,8 +15,8 @@ export class BenutzerRolleDTO implements DataTransferObject {
     roleName?: string,
     version?: number;
     active?: boolean;
-  } = {}): BenutzerRolleDTO {
-    const copy = new BenutzerRolleDTO();
+  } = {}): UserRolleDTO {
+    const copy = new UserRolleDTO();
     copy.id = optional.id || null;
     copy.email = optional.email || '';
     copy.roleId = optional.roleId || null;

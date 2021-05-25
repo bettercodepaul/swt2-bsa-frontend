@@ -3,20 +3,20 @@
 
   <a name="bla-selectionlist"></a>
 
-  <form id="benutzerNeuForm"
+  <form id="userNeuForm"
         class="horizontal-form half-page"
-        #benutzerNeuForm="ngForm">
+        #userNeuForm="ngForm">
 
     <!-- Basis für einen Account ist ein bestehender Eintrag eines DSB-Mitglieds -->
     <div class="form-group row">
-      <label for="benutzerDsbMitglied"
+      <label for="userDsbMitglied"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.DSBMITGLIED.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.USER_NEU.FORM.DSBMITGLIED.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <bla-quicksearch-list id="benutzerDsbMitglied"
-                              name="benutzerDsbMitglied"
+        <bla-quicksearch-list id="userDsbMitglied"
+                              name="userDsbMitglied"
                               [items]="getVersionedDataObjects()"
                               [optionFieldSelector]="'nachname'"
                               (onSelect)="onSelect($event)"
@@ -30,32 +30,32 @@
 
     <!-- username / email -->
     <div class="form-group row">
-      <label for="benutzerUsername"
+      <label for="userUsername"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <input type="email"
                class="form-control"
-               id="benutzerUsername"
-               name="benutzerUsername"
-               #benutzerUsername="ngModel"
+               id="userUsername"
+               name="userUsername"
+               #userUsername="ngModel"
                [(ngModel)]="currentCredentials.username"
-               [class.is-invalid]="benutzerUsername.invalid && !benutzerUsername.untouched"
+               [class.is-invalid]="userUsername.invalid && !userUsername.untouched"
                pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}">
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.EMAIL.ERROR' | translate }}
+          {{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.ERROR' | translate }}
         </div>
       </div>
     </div>
 
     <!-- Passwort -->
     <div class="form-group row">
-      <label for="benutzerPassword"
+      <label for="userPassword"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -64,54 +64,54 @@
                required
                minlength="8"
                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d#\$\^+=!\*()@%&?]{8,}$"
-               id="benutzerPassword"
-               name="benutzerPassword"
-               #benutzerPassword="ngModel"
+               id="userPassword"
+               name="userPassword"
+               #userPassword="ngModel"
                [(ngModel)]="currentCredentials.password"
-               [class.is-invalid]="benutzerPassword.invalid  && !benutzerPassword.untouched"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+               [class.is-invalid]="userPassword.invalid  && !userPassword.untouched"
+               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.PLACEHOLDER' | translate }}">
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.PASSWORD.ERROR' | translate }}
+          {{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.ERROR' | translate }}
         </div>
       </div>
     </div>
 
     <!-- Passwort -->
     <div class="form-group row">
-      <label for="benutzerVerifyPassword"
+      <label for="userVerifyPassword"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <input type="password"
                class="form-control"
                required
-               id="benutzerVerifyPassword"
-               name="benutzerVerifyPassword"
-               #benutzerVerifyPassword="ngModel"
+               id="userVerifyPassword"
+               name="userVerifyPassword"
+               #userVerifyPassword="ngModel"
                [(ngModel)]="verifyCredentials.password"
                [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.VERIFYPASSWORD.ERROR' | translate }}
+          {{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.ERROR' | translate }}
         </div>
       </div>
     </div>
 
     <div class="form-group row">
-      <label for="benutzer2FA"
+      <label for="user2FA"
              class="col-sm-6 col-form-label">
-        {{ 'MANAGEMENT.BENUTZER_NEU.FORM.2FA.LABEL' | translate }}
+        {{ 'MANAGEMENT.USER_NEU.FORM.2FA.LABEL' | translate }}
       </label>
       <div class="col-sm-1">
         <input type="checkbox"
                class="form-control"
-               id="benutzer2FA"
-               name="benutzer2FA"
-               #benutzer2FA="ngModel"
+               id="user2FA"
+               name="user2FA"
+               #user2FA="ngModel"
                [(ngModel)]="currentCredentials.using2FA"
-               [class.is-invalid]="benutzer2FA.invalid">
+               [class.is-invalid]="user2FA.invalid">
       </div>
     </div>
     <div id="qr">
@@ -127,11 +127,11 @@
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
         <bla-button
-          [id]="'benutzerSaveButton'"
-          [disabled]="!benutzerNeuForm.valid"
+          [id]="'userSaveButton'"
+          [disabled]="!userNeuForm.valid"
           [loading]="saveLoading"
           (onClick)="onSave($event)">
-          {{ 'MANAGEMENT.BENUTZER_NEU.FORM.SAVE' | translate }}
+          {{ 'MANAGEMENT.USER_NEU.FORM.SAVE' | translate }}
         </bla-button>
       </div>
     </div>
