@@ -172,7 +172,7 @@
 
         <bla-button *ngIf="entityExists()"
                     [id]="'veranstaltungInitialeLigatabelle'"
-                    [disabled]="this.checkCountMannschaften()"
+                    [disabled]="this.checkInitalisedLigatabelle()"
                     [loading]="saveLoading"
                     (onClick)="this.createMatchesWT0($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.BUTTON' | translate }}
