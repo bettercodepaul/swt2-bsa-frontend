@@ -2,19 +2,19 @@ import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
 import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
 import {UserPermission} from '@shared/services';
 
-export const BENUTZER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
+export const USER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.BENUTZER.TITLE',
+  pageTitleTranslationKey: 'MANAGEMENT.USER.TITLE',
 
   tableConfig: {
     columns: [
       {
-        translationKey: 'MANAGEMENT.BENUTZER.TABLE.HEADERS.EMAIL',
+        translationKey: 'MANAGEMENT.USER.TABLE.HEADERS.EMAIL',
         propertyName:   'email',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.BENUTZER.TABLE.HEADERS.ROLE',
+        translationKey: 'MANAGEMENT.USER.TABLE.HEADERS.ROLE',
         propertyName:   'roleName',
         width:          10,
       },
