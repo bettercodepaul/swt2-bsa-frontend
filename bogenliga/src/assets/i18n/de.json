@@ -1513,6 +1513,10 @@
         "TITLE": "Anmeldung nicht erfolgreich",
         "DESCRIPTION": "Bitte prüfen sie E-Mail-Adresse und Passwort"
       },
+      "TOO_MANY_INCORRECT_LOGIN_ATTEMPTS": {
+        "TITLE": "Anmeldeversuch blockiert",
+        "DESCRIPTION": "Die Anzahl der fehlerhaften Anmeldeversuche wurde überschritten. Bitte versuchen Sie es in 5 Minuten erneut."
+      },
       "DATABASE_ERROR": {
         "TITLE": "Datenbankfehler",
         "DESCRIPTION": "Ihre Anfrage wurde von der Datenbank abgewiesen."
