@@ -1515,7 +1515,7 @@
       },
       "TOO_MANY_INCORRECT_LOGIN_ATTEMPTS": {
         "TITLE": "Anmeldeversuch blockiert",
-        "DESCRIPTION": "Die Anzahl der erlaubten Anmeldeversuche wurde überschritten. Bitte versuchen Sie es in 5 Minuten erneut."
+        "DESCRIPTION": "Die Anzahl der fehlerhaften Anmeldeversuche wurde überschritten. Bitte versuchen Sie es in 5 Minuten erneut."
       },
       "DATABASE_ERROR": {
         "TITLE": "Datenbankfehler",
