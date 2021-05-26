@@ -182,7 +182,22 @@
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
 
-<!--
+        <!-- TODO: Disabled auch wenn noch nicht gespeichert wurde und Plus-Symbol hinzufügen-->
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.SUCCESS"
+                    [disabled]="!wettkampftageForm.valid"
+                    [loading]="saveLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'BREADCRUMB.NEW_ENTITY' | translate }}
+        </bla-button>
+
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.DANGER"
+                    [loading]="deleteLoading"
+                    (onClick)="onDelete($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
+        </bla-button>
+
         <bla-button *ngIf="!entityExists()"
                     [id]="'dsbMitgliedSaveButton'"
                     [disabled]="!wettkampftageForm.valid"
@@ -190,6 +205,7 @@
                     (onClick)="onSave($event)">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
+
         <bla-button *ngIf="entityExists()"
                     [id]="'dsbMitgliedUpdateButton'"
                     [disabled]="!wettkampftageForm.valid"
@@ -197,13 +213,7 @@
                     (onClick)="onUpdate($event)">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
--->
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.DANGER"
-                    [loading]="deleteLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
-        </bla-button>
+
       </div>
     </div>
 
