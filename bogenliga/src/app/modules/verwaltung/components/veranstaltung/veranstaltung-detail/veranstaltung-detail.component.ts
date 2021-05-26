@@ -35,6 +35,7 @@ import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mann
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -64,6 +65,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public currentLiga: LigaDO = new LigaDO();
   public allLiga: Array<LigaDO> = [new LigaDO()];
+
+  public currentligaTabelle: Array<LigatabelleErgebnisDO>;
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
@@ -395,9 +398,31 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.veranstaltungDataProvider.findAll()
         .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleAllVeranstaltungResponseArraySuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleAllVeranstaltungResponseArrayFailure(response));
-
   }
 
+  private loadLigaTabelleExists() {
+    this.ligatabellenService.getLigatabelleVeranstaltung(this.id)
+        .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => response.payload.length >= 4 ? this.handleLigatabelleExistsSuccess(response) : this.handleLigatabelleExistsFailure())
+        .catch(() => this.handleLigatabelleExistsFailure())
+  }
+
+  private handleLigatabelleExistsFailure() {
+    console.log("Initiale Ligatabelle does not yet exist");
+    this.currentligaTabelle = undefined;
+  }
+
+  private handleLigatabelleExistsSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
+    try {
+      this.currentligaTabelle = response.payload;
+      for (let i = 0; i < this.rows.length; i++) {
+        let row = this.rows[i];
+        row.disabledActions.push(TableActionType.EDIT);
+        row.hiddenActions.push(TableActionType.EDIT);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
@@ -410,6 +435,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
     this.loading = false;
+    console.error("FAILURE TO LOAD VERANSTALTUNG!");
   }
 
   private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
@@ -564,12 +590,13 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private loadMannschaftsTable() {
     this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
-      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.loadTableRows(response.payload))
+      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadMannschaftsTableSuccess(response.payload))
       .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
   }
 
-  private loadTableRows(payload: DsbMannschaftDO[]) {
+  private handleLoadMannschaftsTableSuccess(payload: DsbMannschaftDO[]) {
     this.rows = toTableRows(payload);
+    this.loadLigaTabelleExists();
   }
 
   public onEdit(versionedDataObject: VersionedDataObject) {
@@ -623,8 +650,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadMannschaftsTable();
   }
 
-  public checkCountMannschaften(): boolean {
-    return !(this.rows !== undefined && this.rows.length === 8);
+  public checkInitalisedLigatabelle(): boolean {
+    return typeof this.currentligaTabelle !== 'undefined';
   }
 
   public createMatchesWT0(event: any) {
@@ -634,6 +661,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
   private handleCreateMatchesWT0Success() {
+    this.loadLigaTabelleExists();
     const notification: Notification = {
       id:          NOTIFICATION_INIT_LIGATABELLE_SUC,
       title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.NOTIFICATION.MATCHES.SUC.TITLE',
