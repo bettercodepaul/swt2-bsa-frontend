@@ -1172,6 +1172,10 @@
                 "TITLE": "Wettkampftag löschen",
                 "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
               },
+              "ADD": {
+                "TITLE": "Wettkampftag hinzufügen",
+                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+              },
               "DELETE_SUCCESS": {
                 "TITLE": "Erfolgreich",
                 "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."

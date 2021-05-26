@@ -187,8 +187,8 @@
                     [buttonType]="ButtonType.SUCCESS"
                     [disabled]="!wettkampftageForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'BREADCRUMB.NEW_ENTITY' | translate }}
+                    (onClick)="onAdd($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
         </bla-button>
 
         <bla-button *ngIf="entityExists()"
@@ -198,7 +198,7 @@
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
         </bla-button>
 
-        <bla-button *ngIf="!entityExists()"
+        <bla-button *ngIf="entityExists()"
                     [id]="'dsbMitgliedSaveButton'"
                     [disabled]="!wettkampftageForm.valid"
                     [loading]="saveLoading"
