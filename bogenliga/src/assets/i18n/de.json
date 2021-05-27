@@ -1122,7 +1122,6 @@
           "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
         },
         "WETTKAMPFTAG": {
-          "TITLE": "Wettkampftage - Details",
           "FORM": {
             "LABEL": "Wettkampftag",
             "DATUM": {
@@ -1160,13 +1159,17 @@
             }
           },
             "NOTIFICATION": {
+              "ADD": {
+                "TITLE": "Wettkampftag hinzufügen",
+                "DESCRIPTION": "Neuer Wettkampftag hinzugefügt"
+              },
               "SAVE": {
                 "TITLE": "Speichern erfolgreich",
                 "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
               },
               "UPDATE": {
                 "TITLE": "Update erfolgreich",
-                "DESCRIPTION": "Daten vom Wettkampftag aktualisert"
+                "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
               },
               "DELETE": {
                 "TITLE": "Wettkampftag löschen",

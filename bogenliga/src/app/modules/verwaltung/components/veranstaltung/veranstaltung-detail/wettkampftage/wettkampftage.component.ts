@@ -689,4 +689,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleKampfrichterResponseArrayFailure(response: BogenligaResponse<KampfrichterDTO[]>): void {
     this.loading = false;
   }
+
+  private addWettkampftag(){
+    var x = document.getElementById("mySelect");
+    var option = document.createElement("option");
+    option.text = 1 + ". Wettkampftag";
+  }
 }

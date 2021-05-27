@@ -1,5 +1,40 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
+<!--
+  <form>
+    <select id="mySelect" size="5" style="width: 200px">
+      <option>1. Wettkampftag</option>
+    </select>
+  </form>
+  <bla-button *ngIf="entityExists()"
+              [buttonType]="ButtonType.SUCCESS"
+              (onClick)="addWettkampftag($event)">
+    {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
+  </bla-button>
+-->
+<!-- VERANSTALTUNG -->
+  <div class="row">
+    <div class="col-sm-2">
+      <input type="text"
+             class="form-control"
+             required
+             id="veranstaltung_name"
+             name="veranstaltung_name"
+             #veranstaltung_name="ngModel"
+             [disabled]=true
+             [(ngModel)]="currentVeranstaltung.name"
+             [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
+             placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+
+      <div class="invalid-feedback">
+        {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
+      </div>
+
+    </div>
+    <div class="col-sm-2">
+    </div>
+  </div>
+<hr>
 
   <form id="wettkampftageForm"
         class="horizontal-form half-page"
@@ -164,8 +199,12 @@
     </div>
 
     <!--Kampfrichter-->
-    <div class="col-sm-5">
+    <div class="col-sm-7">
       <div class="form-group row">
+        <label>
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
         <bla-double-selectionlist [leftItems]="selectedKampfrichterTag1"
                                   [(rightItems)]="notSelectedKampfrichterWettkampftag1"
                                   [fieldSelector]="'email'"
@@ -179,34 +218,36 @@
     </div>
 
     <div class="form-group row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-9 button-box">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-12 button-box">
 
-<!--
-        <bla-button *ngIf="!entityExists()"
-                    [id]="'dsbMitgliedSaveButton'"
-                    [disabled]="!wettkampftageForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onSave($event)">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
-        </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'dsbMitgliedUpdateButton'"
-                    [disabled]="!wettkampftageForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
-          {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
-        </bla-button>
--->
+            <bla-button [id]="'wettkampftagSaveButton'"
+                        [disabled]="(wettkampftageStrasse.invalid || wettkampftagePLZ.invalid || wettkampftageOrt.invalid  || wettkampftageBeginn.invalid || wettkampftageDatum.invalid)"
+                        [loading]="saveLoading"
+                        (onClick)="onSaveWettkampfTag(4, $event)">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+            </bla-button>
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.DANGER"
                     [loading]="deleteLoading"
                     (onClick)="onDelete($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
         </bla-button>
-      </div>
+          </div>
     </div>
 
+    <div class="form-group row">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-12 button-box">
+        <bla-button *ngIf="entityExists()"
+                    [id]="'wettkampfSaveButton'"
+                    [disabled]="false"
+                    [loading]="saveLoading"
+                    (onClick)="onVeranstaltungDetail($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
+        </bla-button>
+      </div>
+    </div>
   </form>
 
 </bla-common-dialog>
