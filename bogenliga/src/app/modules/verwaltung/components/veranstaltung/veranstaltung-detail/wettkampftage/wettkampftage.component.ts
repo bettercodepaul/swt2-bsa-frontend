@@ -91,6 +91,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public deleteLoading = false;
   public saveLoading = false;
+  public savedByUser = false;
 
   public id;
 
@@ -184,7 +185,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   public onSaveWettkampfTag(wettkampfTagNumber: number, ignore: any): void {
+    this.savedByUser = true;
     this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichter(wettkampfTagNumber, wettkampfID));
+  }
+
+  public onAddWettkampfTag(wettkampfTagNumber: number, ignore: any): void {
+    this.savedByUser = false;
+    //TODO Method to add Wettkampftage to a list
   }
 
   public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number> {
