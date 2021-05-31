@@ -182,12 +182,11 @@
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
 
-        <!-- TODO: Disabled auch wenn noch nicht gespeichert wurde und Plus-Symbol hinzufügen-->
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.SUCCESS"
-                    [disabled]="!wettkampftageForm.valid"
+                    [disabled]="!savedByUser"
                     [loading]="saveLoading"
-                    (onClick)="onAdd($event)">
+                    (onClick)="onAddWettkampfTag($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
         </bla-button>
 
@@ -202,7 +201,7 @@
                     [id]="'dsbMitgliedSaveButton'"
                     [disabled]="!wettkampftageForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onSave($event)">
+                    (onClick)="onSaveWettkampfTag($event)">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
 
