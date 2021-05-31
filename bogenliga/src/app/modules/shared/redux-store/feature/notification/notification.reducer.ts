@@ -1,3 +1,4 @@
+
 import {Notification, NotificationUserAction} from '../../../services/notification/types';
 import * as Actions from './notification.actions';
 import {NotificationState} from './notification.state';
@@ -21,10 +22,17 @@ export function notificationReducer(state = initialNavigationState, action: Acti
     case Actions.ACCEPT_NOTIFICATION: {
       const modifiedState = newState = {...state};
 
-      // Zeile wird auskommentiert, da ein Fehler auftritt, der verhindert, dass Benachrichtigungen angezeigt werden.
-      // Das Entfernen der Zeile hat allem Anschein nach keine weiteren Konsequenzen.
-      // => BSAPP-752
-      // modifiedState.notification.userAction = NotificationUserAction.ACCEPTED;
+      const noti : Notification = {
+        id:               modifiedState.notification.id,
+        title:             modifiedState.notification.title,
+        description:       modifiedState.notification.description,
+        descriptionParam: modifiedState.notification.descriptionParam,
+        severity:          modifiedState.notification.severity,
+        origin:            modifiedState.notification.origin,
+        type:              modifiedState.notification.type,
+        userAction:       NotificationUserAction.ACCEPTED
+      }
+      modifiedState.notification = noti;
       modifiedState.showNotification = false;
 
       break;
@@ -35,9 +43,18 @@ export function notificationReducer(state = initialNavigationState, action: Acti
       // Zeile wird auskommentiert, da ein Fehler auftritt, der verhindert, dass Benachrichtigungen angezeigt werden.
       // Das Entfernen der Zeile hat allem Anschein nach keine weiteren Konsequenzen.
       // => BSAPP-752
-      // modifiedState.notification.userAction = NotificationUserAction.DECLINED;
+      const noti : Notification = {
+        id:               modifiedState.notification.id,
+        title:             modifiedState.notification.title,
+        description:       modifiedState.notification.description,
+        descriptionParam: modifiedState.notification.descriptionParam,
+        severity:          modifiedState.notification.severity,
+        origin:            modifiedState.notification.origin,
+        type:              modifiedState.notification.type,
+        userAction:       NotificationUserAction.DECLINED
+      }
+      modifiedState.notification = noti;
       modifiedState.showNotification = false;
-
       break;
     }
     case Actions.DISCARD_NOTIFICATION: {
