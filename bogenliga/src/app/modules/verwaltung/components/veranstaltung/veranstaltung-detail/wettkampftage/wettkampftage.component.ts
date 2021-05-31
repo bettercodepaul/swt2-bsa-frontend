@@ -35,6 +35,9 @@ import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provid
 //import {log} from 'util';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {RegionDO} from '@verwaltung/types/region-do.class';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -72,7 +75,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public currentUser: UserProfileDO;
   public rows: TableRow[];
-  public selectedDTOs: WettkampfDO[];
   private selectedVeranstaltungsId: number;
   public currentWettkampftagDO: WettkampfDO;
 
@@ -116,7 +118,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public notSelectedKampfrichterWettkampftag1: Array<UserRolleDO> = [];
   public notSelectedKampfrichterWettkampftag2: Array<UserRolleDO> = [];
   public notSelectedKampfrichterWettkampftag3: Array<UserRolleDO> = [];
-  public notSelectedKampfrichterWettkampftag4: Array<UserRolleDO> = [];
+  public notSelectedKampfrichterWettkampftag4: Array<UserRolleDO> = []
+  text = '. Wettkampftag';
+
+  public selectedDTOs: WettkampfDO[];
+  public loadingWettkampf = true;
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -134,6 +140,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   ngOnInit() {
     this.loading = true;
+    this.loadDistinctWettkampf();
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -690,9 +697,22 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
   }
 
-  private addWettkampftag(){
-    var x = document.getElementById("mySelect");
-    var option = document.createElement("option");
-    option.text = 1 + ". Wettkampftag";
+  private loadDistinctWettkampf(): void {
+    this.loadingWettkampf = true;
+    this.wettkampfDataProvider.findAll()
+        .then((newList: BogenligaResponse<WettkampfDO[]>) => this.handleLoadDistinctWettkampfSuccess(newList))
+        .catch((newList: BogenligaResponse<WettkampfDTO[]>) => this.handleLoadDistinctWettkampfFailure(newList));
+  }
+
+  private handleLoadDistinctWettkampfSuccess(response: BogenligaResponse<WettkampfDO[]>): void {
+    this.selectedDTOs = [];
+    this.selectedDTOs = response.payload;
+    this.loadingWettkampf = false;
+  }
+
+  private handleLoadDistinctWettkampfFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
+    this.selectedDTOs = [];
+    this.loadingWettkampf = false;
   }
 }
+

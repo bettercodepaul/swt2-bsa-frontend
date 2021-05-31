@@ -1,17 +1,19 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
-<!--
-  <form>
-    <select id="mySelect" size="5" style="width: 200px">
-      <option>1. Wettkampftag</option>
-    </select>
-  </form>
-  <bla-button *ngIf="entityExists()"
-              [buttonType]="ButtonType.SUCCESS"
-              (onClick)="addWettkampftag($event)">
-    {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
-  </bla-button>
--->
+
+  <!--
+  <bla-selection-overview-dialog
+                                 [items]="selectedDTOs"
+                                 [optionFieldSelector]="'wettkampfTag'">
+
+  </bla-selection-overview-dialog>
+  -->
+  <bla-selectionlist
+    [items]="selectedDTOs"
+    [optionFieldSelector]="'wettkampfTag'">
+
+  </bla-selectionlist>
+
 <!-- VERANSTALTUNG -->
   <div class="row">
     <div class="col-sm-2">
@@ -36,6 +38,22 @@
   </div>
 <hr>
 
+  <form>
+    <div id="selectWettkampftag">
+      <label>Wählen Sie einen Wettkampftag</label><br>
+    <select id="chooseWettkampftag" size="5" style="width: 200px">
+      <option>1. Wettkampftag</option>
+    </select>
+    </div>
+  </form>
+
+  <!--
+  <bla-button *ngIf="entityExists()"
+              [buttonType]="ButtonType.SUCCESS"
+              (onClick)="addWettkampftage()">
+    {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
+  </bla-button>
+-->
   <form id="wettkampftageForm"
         class="horizontal-form half-page"
         #wettkampftageForm="ngForm">
