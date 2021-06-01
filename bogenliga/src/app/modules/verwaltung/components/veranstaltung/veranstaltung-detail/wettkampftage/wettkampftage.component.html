@@ -184,9 +184,10 @@
 
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.SUCCESS"
-                    [disabled]="!savedByUser"
+                    [disabled]="!savedByUser || !wettkampftageForm.valid"
                     [loading]="saveLoading"
                     (onClick)="onAddWettkampfTag($event)">
+          <fa-icon icon="plus"></fa-icon>
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
         </bla-button>
 
