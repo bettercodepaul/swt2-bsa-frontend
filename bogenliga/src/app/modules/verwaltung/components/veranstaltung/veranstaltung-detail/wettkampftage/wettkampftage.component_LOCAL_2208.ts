@@ -32,19 +32,9 @@ import {LizenzDO} from '@verwaltung/types/lizenz-do.class';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provider.service';
-<<<<<<< HEAD
 import {callbackify, log} from 'util';
 import {of} from 'rxjs';
 import {element} from 'protractor';
-import { TableRow } from '@shared/components/tables/types/table-row.class';
-=======
-import {log} from 'util';
-import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {RegionDO} from '@verwaltung/types/region-do.class';
-import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
-import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
-import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
->>>>>>> BSAPP-908
 
 
 const ID_PATH_PARAM = 'id';
@@ -81,16 +71,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
   public currentUser: UserProfileDO;
-  public rows: TableRow[];
-  private selectedVeranstaltungsId: number;
-  public currentWettkampftagDO: WettkampfDO;
 
-  public currentWettkampftag: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_2: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_3: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_4: WettkampfDO = new WettkampfDO();
-  public currentWettkampftagArray: Array<WettkampfDO> = [];
+  public currentWettkampftag: Array<WettkampfDO> = [];
   public allWettkampf: Array<WettkampfDO> = [];
 
   public currentAusrichter1: UserProfileDO = new UserProfileDO();
@@ -131,16 +117,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public notSelectedKampfrichterWettkampftag1: Array<UserRolleDO> = [];
   public notSelectedKampfrichterWettkampftag2: Array<UserRolleDO> = [];
   public notSelectedKampfrichterWettkampftag3: Array<UserRolleDO> = [];
-<<<<<<< HEAD
   public notSelectedKampfrichterWettkampftag4: Array<UserRolleDO> = [];
   public notSelectedKampfrichterWettkampfTag: Array<Array<UserRolleDO>> = [];
-=======
-  //public notSelectedKampfrichterWettkampftag4: Array<UserRolleDO> = []
-  text = '. Wettkampftag';
-
-  public selectedDTOs: WettkampfDO[];
-  public loadingWettkampf = true;
->>>>>>> BSAPP-908
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -158,7 +136,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   ngOnInit() {
     this.loading = true;
-    this.loadDistinctWettkampf();
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -193,7 +170,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.allUsers = response.payload;
 
     for(let i=1;i<=this.allUsers.length; i++){
-      this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[i].wettkampfAusrichter)[0] ?? this.allUsers[0];
+      this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftag[i].wettkampfAusrichter)[0] ?? this.allUsers[0];
     }
 
     this.loading = false;
@@ -227,7 +204,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public async saveWettkaempfeNew(wettkampfTagNumber: number): Promise<number>{
     //wettkampfTagNumber = wettkampfTagNumber -1;
-    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.currentWettkampftag.push(new WettkampfDO());
     //public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
     //this.currentWettkampftag[wettkampfTagNumber] = new WettkampfDO();
 
@@ -237,7 +214,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     let currentWettkampfTag: WettkampfDO;
     let currentAusrichter: UserProfileDO;
 
-    currentWettkampfTag = this.currentWettkampftagArray[wettkampfTagNumber];
+    currentWettkampfTag = this.currentWettkampftag[wettkampfTagNumber];
     currentAusrichter = this.currentAusrichter[wettkampfTagNumber];
 
     currentWettkampfTag.wettkampfTag = wettkampfTagNumber;
@@ -305,7 +282,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     let kampfrichterUserToSave: Array<UserRolleDO> = [];
     let kampfrichterUserToDelete: Array<UserRolleDO> = [];
 
-    currentWettkampftag = this.currentWettkampftagArray[wettkampfTagNumber];
+    currentWettkampftag = this.currentWettkampftag[wettkampfTagNumber];
     kampfrichterUserToSave = this.selectedKampfrichterTag[wettkampfTagNumber].filter(comparer(this.initiallySelectedKampfrichterTag[wettkampfTagNumber]));
     kampfrichterUserToDelete = this.initiallySelectedKampfrichterTag[wettkampfTagNumber].filter(comparer(this.selectedKampfrichterTag[wettkampfTagNumber]));
 
@@ -669,9 +646,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     for(let i=1; i<=this.allWettkampf.length;i++){
       if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === (i)).length === 0) {
-        this.currentWettkampftagArray[i] = new WettkampfDO();
+        this.currentWettkampftag[i] = new WettkampfDO();
       } else {
-        this.currentWettkampftagArray[i] = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === i)[0];
+        this.currentWettkampftag[i] = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === i)[0];
       }
     }
 
@@ -769,7 +746,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       tempKampfrichter = this.kampfrichterTag[i];
       tempNotSelectedKampfrichterTag = this.notSelectedKampfrichterWettkampfTag[i];
 
-      allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftagArray[i].id).forEach((kampfrichter) => this.kampfrichterTag[i].push(Object.assign({}, kampfrichter)));
+      allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftag[i].id).forEach((kampfrichter) => this.kampfrichterTag[i].push(Object.assign({}, kampfrichter)));
 
       if (tempKampfrichter[0] !== undefined) {
         for (const iter of Object.keys(this.kampfrichterTag[i])) {
@@ -851,23 +828,4 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleKampfrichterResponseArrayFailure(response: BogenligaResponse<KampfrichterDTO[]>): void {
     this.loading = false;
   }
-
-  private loadDistinctWettkampf(): void {
-    this.loadingWettkampf = true;
-    this.wettkampfDataProvider.findAll()
-        .then((newList: BogenligaResponse<WettkampfDO[]>) => this.handleLoadDistinctWettkampfSuccess(newList))
-        .catch((newList: BogenligaResponse<WettkampfDTO[]>) => this.handleLoadDistinctWettkampfFailure(newList));
-  }
-
-  private handleLoadDistinctWettkampfSuccess(response: BogenligaResponse<WettkampfDO[]>): void {
-    this.selectedDTOs = [];
-    this.selectedDTOs = response.payload;
-    this.loadingWettkampf = false;
-  }
-
-  private handleLoadDistinctWettkampfFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
-    this.selectedDTOs = [];
-    this.loadingWettkampf = false;
-  }
 }
-
