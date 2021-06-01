@@ -138,6 +138,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public selectedDTOs: WettkampfDO[];
   public loadingWettkampf = true;
+  public selectedWettkampfTag: number = 1;
 
 
   constructor(
@@ -866,6 +867,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleLoadDistinctWettkampfFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
     this.selectedDTOs = [];
     this.loadingWettkampf = false;
+  }
+
+  public onSelect($event: WettkampfDO[]): void {
+    this.selectedWettkampfTag = null;
+    this.selectedWettkampfTag = $event[0].wettkampfTag;
+    console.log('onSelect Dialog: ' + this.selectedWettkampfTag);
+    this.loadWettkampf();
   }
 }
 
