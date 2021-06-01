@@ -1490,6 +1490,10 @@
         "TITLE": "Invalid Sign In Credentials",
         "DESCRIPTION": "Please check your email address and password"
       },
+      "TOO_MANY_INCORRECT_LOGIN_ATTEMPTS": {
+        "TITLE": "login attempt blocked",
+        "DESCRIPTION": "The number of incorrect login attempts has been exceeded. Please try again in 5 minutes."
+      },
       "DATABASE_ERROR": {
         "TITLE": "Database Error",
         "DESCRIPTION": "Your request was rejected by the database."
