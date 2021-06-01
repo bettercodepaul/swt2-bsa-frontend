@@ -28,6 +28,7 @@ import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.cl
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {environment} from '@environment';
 
+
 const ID_PATH_PARAM = 'id';
 @Component({
   selector:    'bla-mannschaft',
@@ -459,11 +460,20 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public onButtonDownload(path: string): string {
-    return new UriBuilder()
-      .fromPath(environment.backendBaseUrl)
-      .path('v1/download')
-      .path(path)
-      .path('?veranstaltungsid=' + this.currentVeranstaltung.id + '&manschaftsid=' + this.currentMannschaft.id + '&jahr=' + this.currentJahr)
-      .build();
+      return new UriBuilder()
+        .fromPath(environment.backendBaseUrl)
+        .path('v1/download')
+        .path(path)
+        .path('?veranstaltungsid=' + this.currentVeranstaltung.id + '&manschaftsid=' + this.getMannschaftsID() + '&jahr=' + this.currentJahr)
+        .build();
   }
+  public getMannschaftsID(): number {
+    if (this.currentMannschaft != undefined) {
+      return this.currentMannschaft.id;
+    }
+    else {
+      return -1;
+    }
+  }
+
 }
