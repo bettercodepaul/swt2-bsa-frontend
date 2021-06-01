@@ -1119,6 +1119,38 @@
           "PLACEHOLDER": "Select a league leader",
           "ERROR": "Please select a valid E-Mail."
         },
+        "WETTKAMPFTAG": {
+          "LABEL": "Competition day",
+          "DATUM": {
+            "LABEL": "date",
+            "PLACEHOLDER": "date",
+            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
+          },
+          "ORT": {
+            "LABEL": "location",
+            "PLACEHOLDER": "address",
+            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
+          },
+          "BEGINN": {
+            "LABEL": "Start",
+            "PLACEHOLDER": "time",
+            "ERROR": "Enter valid time (Format: HH:MM)."
+          },
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Success",
+              "DESCRIPTION": "Successfully saved competition day"
+            },
+            "UPDATE": {
+              "TITLE": "Success",
+              "DESCRIPTION": "Successfully updated competition day"
+            }
+          }
+        },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Referee"
+
+        },
         "WETTKAMPFTAG1": {
           "LABEL": "1. competition day",
           "DATUM": {
