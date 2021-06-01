@@ -196,7 +196,7 @@ export class WettkampfErgebnisService {
     this.wettkampfEinzelErgebnisse = [];
     for (const schuetze of this.schuetze) {
       const wettkampfEinzelErgebnis = new WettkampfEinzelErgebnis(schuetze.matchNr, schuetze.wettkampfId,
-        this.getMannschaftsname(schuetze.mannschaftId), this.getMitgliederName(schuetze.dsbMitgliedId), this.getPfeilwertProMatch(schuetze.matchNr, schuetze.dsbMitgliedId));
+        this.getMannschaftsname(schuetze.mannschaftId), this.getMitgliederName(schuetze.dsbMitgliedId), this.getPfeilwertProMatch(schuetze.matchNr, schuetze.dsbMitgliedId),this.getRuekennummer(schuetze.dsbMitgliedId));
       this.wettkampfEinzelErgebnisse.push(wettkampfEinzelErgebnis);
     }
     return this.wettkampfEinzelErgebnisse;
@@ -213,18 +213,7 @@ export class WettkampfErgebnisService {
     const name = this.mitglieder.find((mitglied) => {
       return mitglied.id === dsbMitgliedId;
     });
-    const rueckennummer = this.mannschaftsmitglieder.find((mannschaftsmitglied) => {
-      return mannschaftsmitglied.dsbMitgliedId === dsbMitgliedId;
-    });
-    if (name !== undefined && rueckennummer.rueckennummer !== undefined) {
-      mitgliederName += rueckennummer.rueckennummer + ', ' + name.vorname + ' ' + name.nachname;
-    } else if (rueckennummer.rueckennummer === undefined) {
-      mitgliederName += name.vorname + ' ' + name.nachname;
-    } else if (name === undefined) {
-      mitgliederName += rueckennummer.rueckennummer;
-    } else {
-      mitgliederName += ' - ';
-    }
+    mitgliederName += name.vorname + ' ' + name.nachname;
     return mitgliederName;
   }
 
@@ -299,7 +288,7 @@ export class WettkampfErgebnisService {
     this.wettkampfGesamtErgebnisse = [];
     for (const schuetze of this.schuetze) {
       const wettkampfGesamtErgebnis = new WettkampfEinzelGesamtErgebnis(schuetze.wettkampfId,
-        this.getMannschaftsname(schuetze.mannschaftId), this.getMitgliederName(schuetze.dsbMitgliedId), this.getPfeilwertProJahr(schuetze.dsbMitgliedId));
+        this.getMannschaftsname(schuetze.mannschaftId), this.getMitgliederName(schuetze.dsbMitgliedId), this.getPfeilwertProJahr(schuetze.dsbMitgliedId),this.getRuekennummer(schuetze.dsbMitgliedId));
       this.wettkampfGesamtErgebnisse.push(wettkampfGesamtErgebnis);
     }
     return this.wettkampfGesamtErgebnisse;
@@ -326,6 +315,11 @@ export class WettkampfErgebnisService {
     return pfeilwertSumme;
 }
 
-
+  public getRuekennummer(dsbMitgliedId: number): number{
+    const schuetze = this.mannschaftsmitglieder.find((mannschaftsmitglied) => {
+      return mannschaftsmitglied.dsbMitgliedId === dsbMitgliedId;
+    });
+    return schuetze.rueckennummer;
+  }
 }
 
