@@ -32,19 +32,17 @@ import {LizenzDO} from '@verwaltung/types/lizenz-do.class';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provider.service';
-<<<<<<< HEAD
 import {callbackify, log} from 'util';
 import {of} from 'rxjs';
 import {element} from 'protractor';
 import { TableRow } from '@shared/components/tables/types/table-row.class';
-=======
-import {log} from 'util';
-import {TableRow} from '@shared/components/tables/types/table-row.class';
+//import {log} from 'util';
+//import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
->>>>>>> BSAPP-908
+
 
 
 const ID_PATH_PARAM = 'id';
@@ -131,16 +129,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public notSelectedKampfrichterWettkampftag1: Array<UserRolleDO> = [];
   public notSelectedKampfrichterWettkampftag2: Array<UserRolleDO> = [];
   public notSelectedKampfrichterWettkampftag3: Array<UserRolleDO> = [];
-<<<<<<< HEAD
+
   public notSelectedKampfrichterWettkampftag4: Array<UserRolleDO> = [];
   public notSelectedKampfrichterWettkampfTag: Array<Array<UserRolleDO>> = [];
-=======
+
   //public notSelectedKampfrichterWettkampftag4: Array<UserRolleDO> = []
   text = '. Wettkampftag';
 
   public selectedDTOs: WettkampfDO[];
   public loadingWettkampf = true;
->>>>>>> BSAPP-908
+
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -158,7 +156,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   ngOnInit() {
     this.loading = true;
-    this.loadDistinctWettkampf();
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -610,6 +607,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
     this.loadWettkampf();
     this.loadLizenzen();
+    this.loadDistinctWettkampf();
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
@@ -861,7 +859,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private handleLoadDistinctWettkampfSuccess(response: BogenligaResponse<WettkampfDO[]>): void {
     this.selectedDTOs = [];
-    this.selectedDTOs = response.payload;
+    this.selectedDTOs = response.payload.filter(element => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
     this.loadingWettkampf = false;
   }
 

@@ -1,19 +1,15 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
-  <!--
-  <bla-selection-overview-dialog
-                                 [items]="selectedDTOs"
-                                 [optionFieldSelector]="'wettkampfTag'">
+  <table style="width: 10%; margin-bottom: 3%; float:left">
+    <bla-selectionlist
+      style="width: 10%; flex-grow: 0; height: 20px"
+      selectionListHeight="3em"
+      [items]="selectedDTOs"
+      [optionFieldSelector]="'wettkampfTag'">
 
-  </bla-selection-overview-dialog>
-  -->
-  <bla-selectionlist
-    [items]="selectedDTOs"
-    [optionFieldSelector]="'wettkampfTag'">
-
-  </bla-selectionlist>
-
+    </bla-selectionlist>
+  </table>
 <!-- VERANSTALTUNG -->
   <div class="row">
     <div class="col-sm-2">
@@ -37,23 +33,8 @@
     </div>
 <hr>
 
-  <form>
-    <div id="selectWettkampftag">
-      <label>Wählen Sie einen Wettkampftag</label><br>
-    <select id="chooseWettkampftag" size="5" style="width: 200px">
-      <option>1. Wettkampftag</option>
-    </select>
-    </div>
-  </form>
-
-  <!--
-  <bla-button *ngIf="entityExists()"
-              [buttonType]="ButtonType.SUCCESS"
-              (onClick)="addWettkampftage()">
-    {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
-  </bla-button>
--->
-  <form id="wettkampftageForm"
+  <form style="float:left;"
+        id="wettkampftageForm"
         class="horizontal-form half-page"
         #wettkampftageForm="ngForm">
 
@@ -266,5 +247,5 @@
       </div>
     </div>
   </form>
-
+  </div>
 </bla-common-dialog>
