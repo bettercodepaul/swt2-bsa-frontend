@@ -1,7 +1,40 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
 
-  <form id="wettkampftageForm"
+  <table style="width: 10%; margin-bottom: 3%; float:left">
+    <bla-selectionlist
+      style="width: 10%; flex-grow: 0; height: 20px"
+      selectionListHeight="3em"
+      [items]="selectedDTOs"
+      [optionFieldSelector]="'wettkampfTag'">
+
+    </bla-selectionlist>
+  </table>
+<!-- VERANSTALTUNG -->
+  <div class="row">
+    <div class="col-sm-2">
+      <input type="text"
+             class="form-control"
+             required
+             id="veranstaltung_name"
+             name="veranstaltung_name"
+             #veranstaltung_name="ngModel"
+             [disabled]=true
+             [(ngModel)]="currentVeranstaltung.name"
+             [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
+             placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+
+      <div class="invalid-feedback">
+        {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
+      </div>
+
+    </div>
+    <div class="col-sm-2">
+    </div>
+<hr>
+
+  <form style="float:left;"
+        id="wettkampftageForm"
         class="horizontal-form half-page"
         #wettkampftageForm="ngForm">
 
@@ -164,8 +197,12 @@
     </div>
 
     <!--Kampfrichter-->
-    <div class="col-sm-5">
+    <div class="col-sm-7">
       <div class="form-group row">
+        <label>
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
         <bla-double-selectionlist [leftItems]="selectedKampfrichterTag1"
                                   [(rightItems)]="notSelectedKampfrichterWettkampftag1"
                                   [fieldSelector]="'email'"
@@ -217,6 +254,18 @@
       </div>
     </div>
 
+    <div class="form-group row">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-12 button-box">
+        <bla-button *ngIf="entityExists()"
+                    [id]="'wettkampfSaveButton'"
+                    [disabled]="false"
+                    [loading]="saveLoading"
+                    (onClick)="onVeranstaltungDetail($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
+        </bla-button>
+      </div>
+    </div>
   </form>
-
+  </div>
 </bla-common-dialog>
