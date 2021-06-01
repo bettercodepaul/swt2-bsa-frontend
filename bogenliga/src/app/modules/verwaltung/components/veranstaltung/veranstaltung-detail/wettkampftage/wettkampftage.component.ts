@@ -35,6 +35,7 @@ import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provid
 import {callbackify, log} from 'util';
 import {of} from 'rxjs';
 import {element} from 'protractor';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -71,7 +72,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
   public currentUser: UserProfileDO;
-
+  public rows: TableRow[];
+  public currentWettkampftag: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_1: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_2: WettkampfDO = new WettkampfDO();
   public currentWettkampftag_3: WettkampfDO = new WettkampfDO();
