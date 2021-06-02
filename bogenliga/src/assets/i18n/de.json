@@ -1213,9 +1213,9 @@
           "TITLE": "Veranstaltung angelegt",
           "DESCRIPTION": "Veranstaltung wurde erfolgreich angelegt"
         },
-        "SAVEMANNSCHAFT": {
-          "TITLE": "Kopieren erfolgreich",
-          "DESCRIPTION": "Mannschaften wurden kopiert von der letzten Saison"
+        "COPYMANNSCHAFT_FAILURE": {
+          "TITLE": "Kopieren fehlgeschlagen",
+          "DESCRIPTION": "Keine Veranstaltung im Vorjahr vorhanden"
         },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
