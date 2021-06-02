@@ -1159,10 +1159,6 @@
             }
           },
             "NOTIFICATION": {
-              "ADD": {
-                "TITLE": "Wettkampftag hinzufügen",
-                "DESCRIPTION": "Neuer Wettkampftag hinzugefügt"
-              },
               "SAVE": {
                 "TITLE": "Speichern erfolgreich",
                 "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
@@ -1176,7 +1172,7 @@
                 "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
               },
               "ADD": {
-                "TITLE": "Wettkampftag hinzufügen",
+                "TITLE": "Neu",
                 "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
               },
               "DELETE_SUCCESS": {
