@@ -164,9 +164,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.allUsers = [];
     this.allUsers = response.payload;
 
-    for(let i=1;i<=this.allUsers.length; i++){
+    this.currentAusrichter[1] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
+
+    //it should iterate through the complete array, to show all Ausrichter, but it works with only one call ?
+    /*for(let i=1;i<=this.allUsers.length; i++){
       this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[i].wettkampfAusrichter)[0] ?? this.allUsers[0];
-    }
+    }'*/
 
     this.loading = false;
   }
@@ -625,6 +628,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     if(this.selectedDTOs.length<1){
       this.createInitWettkampfTag();
+      this.selectedDTOs[0] = new WettkampfDO();
       //this.loadDistinctWettkampf();
     }
 
@@ -643,7 +647,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   public createInitWettkampfTag(): void {
-    this.currentWettkampftagArray[this.selectedWettkampfTag] = new WettkampfDO(
+    const temp: WettkampfDO = new WettkampfDO(
       this.selectedWettkampfTag,
       this.currentVeranstaltung.id,
       "leer",
@@ -656,7 +660,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       0,
       0,
       0,
-      0);
+      0
+    );
+    this.currentWettkampftagArray[this.selectedWettkampfTag] = temp;
     this.saveWettkampftag(this.currentWettkampftagArray[this.selectedWettkampfTag]);
   }
 }
