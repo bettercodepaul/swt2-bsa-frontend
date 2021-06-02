@@ -1242,8 +1242,7 @@
         },
         "COPYMANNSCHAFT_FAILURE": {
           "TITLE": "Kopieren fehlgeschlagen",
-          "DESCRIPTION_LAST_VERANSTALTUNG": "Keine Mannschaften im Vorjahr vorhanden",
-          "DESCRIPTION_DEFAULT":"Ein unbekannter Fehler ist aufgetreten"
+          "DESCRIPTION": "Keine Veranstaltung im Vorjahr vorhanden"
         },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",

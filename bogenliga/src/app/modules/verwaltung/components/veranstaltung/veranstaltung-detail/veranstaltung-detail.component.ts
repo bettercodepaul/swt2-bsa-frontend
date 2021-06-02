@@ -235,7 +235,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           const notification: Notification = {
             id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
             title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
-            description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_LAST_VERANSTALTUNG',
+            description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION',
             severity:    NotificationSeverity.ERROR,
             origin:      NotificationOrigin.USER,
             type:        NotificationType.OK,
