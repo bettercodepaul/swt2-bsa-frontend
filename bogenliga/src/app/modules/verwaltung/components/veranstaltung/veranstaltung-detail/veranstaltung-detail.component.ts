@@ -35,6 +35,7 @@ import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mann
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
+import {WettkampfKlasseDO} from '@verwaltung/types/wettkampfklasse-do.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -220,8 +221,13 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           console.log(this.lastVeranstaltung.id);
           console.log('Mannschaften werden kopiert');
           this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
-              .then((response) => this.handleCopyFromVeranstaltungSuccess(response))
-              .catch((response) => this.handleCopyFromVeranstaltungFailure());
+              .then((response) => this.handleCopyFromVeranstaltungSuccess(response)
+              , (response: BogenligaResponse<VeranstaltungDO>) => {
+                  console.log('Failed');
+                  this.saveLoading = false;
+
+
+                });
           }
         )
         .catch((response)=> {
