@@ -213,8 +213,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return currentWettkampfTag.id;
   }
 
-  public onAddWettkampfTag(wettkampfTagNumber: number, ignore: any): void {
-    this.savedByUser = false; 
+  public onAddWettkampfTag(ignore: any): void {
+    this.savedByUser = false;
     //TODO Method to add Wettkampftage to a list
   }
 
