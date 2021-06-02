@@ -7,9 +7,9 @@ import {
   VersionedDataTransferObject
 } from '@shared/data-provider';
 import {CurrentUserService} from '@shared/services';
-import {BenutzerRolleDTO} from '@verwaltung/types/datatransfer/benutzer-rolle-dto.class';
-import {BenutzerDO} from '@verwaltung/types/benutzer-do.class';
-import {fromPayloadArray} from '@verwaltung/mapper/benutzer-mapper';
+import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
+import {UserDO} from '@verwaltung/types/user-do.class';
+import {fromPayloadArray} from '@verwaltung/mapper/user-mapper';
 import {HttpErrorResponse} from '@angular/common/http';
 import {MannschaftSortierungDTO} from '@verwaltung/types/datatransfer/mannschaftSortierung-dto.class';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
