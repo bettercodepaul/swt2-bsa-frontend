@@ -131,6 +131,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   ngOnInit() {
+    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.currentAusrichter.push(new UserProfileDO());
+    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.currentAusrichter.push(new UserProfileDO());
+
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
@@ -164,12 +169,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.allUsers = [];
     this.allUsers = response.payload;
 
-    this.currentAusrichter[1] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
+    //this.currentAusrichter[1] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
 
     //it should iterate through the complete array, to show all Ausrichter, but it works with only one call ?
-    /*for(let i=1;i<=this.allUsers.length; i++){
+    for(let i=1;i<=this.allUsers.length; i++){
       this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[i].wettkampfAusrichter)[0] ?? this.allUsers[0];
-    }'*/
+    }
 
     this.loading = false;
   }
@@ -218,6 +223,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public onAddWettkampfTag(ignore: any): void {
     this.savedByUser = false;
+    this.currentWettkampftagArray.push(new WettkampfDO());
+
+    this.createInitWettkampfTag((this.currentWettkampftagArray.length+1));
+
+    this.loadDistinctWettkampf();
+    this.loadWettkampf();
+
     //TODO Method to add Wettkampftage to a list
   }
 
@@ -280,7 +292,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private saveWettkampftag(wettkampfDO: WettkampfDO): Promise<number> {
 
     return this.wettkampfDataProvider.create(wettkampfDO)
-               .then((response: BogenligaResponse<WettkampfDO>) => {
+               .then((response: BogenligaResponse<WettkampfDTO>) => {
                  if (!isNullOrUndefined(response)
                    && !isNullOrUndefined(response.payload)
                    && !isNullOrUndefined(response.payload.id)) {
@@ -626,10 +638,15 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedDTOs = [];
     this.selectedDTOs = response.payload.filter(element => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
 
-    if(this.selectedDTOs.length<1){
-      this.createInitWettkampfTag();
-      this.selectedDTOs[0] = new WettkampfDO();
+    if(this.selectedDTOs.length===0){
+      //this.saveWettkaempfeNew(1);
+      this.createInitWettkampfTag(1);
+      this.selectedDTOs.push(new WettkampfDO());
+      //this.selectedDTOs[0].wettkampfTag=1;
+      console.log(this.selectedDTOs.toString());
       //this.loadDistinctWettkampf();
+      this.loadWettkampf();
+      this.loadDistinctWettkampf();
     }
 
     this.loadingWettkampf = false;
@@ -646,24 +663,24 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loadWettkampf();
   }
 
-  public createInitWettkampfTag(): void {
+  public createInitWettkampfTag(num: number): void {
     const temp: WettkampfDO = new WettkampfDO(
-      this.selectedWettkampfTag,
+      num,
       this.currentVeranstaltung.id,
+      "0000-00-00",
       "leer",
       "leer",
       "leer",
       "leer",
       "leer",
-      "leer",
+      this.currentWettkampftagArray.length-1,
       1,
-      0,
-      0,
-      0,
-      0
+      1,
+      1,
+      1
     );
-    this.currentWettkampftagArray[this.selectedWettkampfTag] = temp;
-    this.saveWettkampftag(this.currentWettkampftagArray[this.selectedWettkampfTag]);
+    //this.currentWettkampftagArray[this.selectedWettkampfTag] = temp;
+    this.saveWettkampftag(temp);
   }
 }
 
