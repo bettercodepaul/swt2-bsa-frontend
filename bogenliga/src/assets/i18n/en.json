@@ -1201,6 +1201,10 @@
           "TITLE": "Event created",
           "DESCRIPTION": "Successfully created event."
         },
+        "SAVE_FAILURE": {
+          "TITLE": "Error message: Duplication.",
+          "DESCRIPTION": "An event already exists in this sport year for the league you entered. Please check your entry."
+        },
         "SAVEMANNSCHAFT": {
           "TITLE": "Success",
           "DESCRIPTION": "Successfully copied teams from last season."
