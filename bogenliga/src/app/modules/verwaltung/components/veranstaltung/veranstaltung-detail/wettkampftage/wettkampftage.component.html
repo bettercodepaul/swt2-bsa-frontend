@@ -40,6 +40,7 @@
         <div class="col-sm-12 button-box" style="margin-top: 2%">
           <bla-button *ngIf="entityExists()"
                       [buttonType]="ButtonType.SUCCESS"
+                      [disabled]="!savedByUser"
                       [loading]="saveLoading"
                       (onClick)="onAddWettkampfTag($event)">
             <fa-icon icon="plus"></fa-icon>
