@@ -92,7 +92,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public deleteLoading = false;
   public saveLoading = false;
-  public savedByUser = false;
 
   public id;
 
@@ -189,7 +188,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   public onSaveWettkampfTag(wettkampfTagNumber: number, ignore: any): void {
-    this.savedByUser = true;
     this.saveWettkaempfeNew(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichterNew(wettkampfTagNumber, wettkampfID));
   }
 
@@ -222,7 +220,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   public onAddWettkampfTag(ignore: any): void {
-    this.savedByUser = false;
     this.currentWettkampftagArray.push(new WettkampfDO());
 
     this.createInitWettkampfTag((this.currentWettkampftagArray.length+1));
