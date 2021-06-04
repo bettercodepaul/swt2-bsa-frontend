@@ -172,7 +172,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     //it should iterate through the complete array, to show all Ausrichter, but it works with only one call ?
     for(let i=1;i<=this.allUsers.length; i++){
-      this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[i].wettkampfAusrichter)[0] ?? this.allUsers[0];
+      this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
     }
 
     this.loading = false;
