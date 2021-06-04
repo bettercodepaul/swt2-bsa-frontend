@@ -62,7 +62,7 @@
     <div>
       <bla-button
         [id]="'generiereMatches'"
-        [disabled]="!isDisabled()"
+        [disabled]="isDisabledGMButton()"
         (onClick)="generateMatches()">
         generiere Matches
       </bla-button>

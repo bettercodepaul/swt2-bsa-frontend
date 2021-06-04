@@ -65,7 +65,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private urlString: string;
   private currentVeranstaltungName;
   private wettkampfId;
-  private disabledButton = false;
+  private disabledButton = true;
   wettkampfIdEnthalten: boolean;
   wettkampf: WettkampfDO;
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
@@ -260,7 +260,17 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   //Zeigt Matches an
   public showMatches(){
     this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
-        .then((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchSuccess(response))
+        .then((response: BogenligaResponse<MatchDTOExt[]>) => {
+          //Wenn es keine Matches gibt
+          if( response.payload.length == 0){
+            // aktiviere Button
+            this.disabledButton = false;
+          }else{
+            //deaktiviere Button
+            this.disabledButton = true;
+          }
+          this.handleFindMatchSuccess(response)
+        })
         .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
   }
 
@@ -304,6 +314,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private invertDisabled(){
     this.disabled = true;
   }
+
+  public isDisabledGMButton(): boolean{
+
+    return this.disabledButton;
+}
 
   public generateMatches(){
     this.invertDisabled();
