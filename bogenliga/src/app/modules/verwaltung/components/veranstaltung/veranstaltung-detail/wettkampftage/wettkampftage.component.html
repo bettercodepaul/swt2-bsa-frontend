@@ -37,6 +37,8 @@
         [optionFieldSelector]="'wettkampfTag'">
 
       </bla-selectionlist>
+
+
       <div class="form-group row">
         <div class="col-sm-12 button-box" style="margin-top: 2%">
           <bla-button *ngIf="entityExists()"
@@ -49,7 +51,12 @@
           </bla-button>
         </div>
       </div>
+      <!--Small text that reminds user to save changes, pops up when button is disabled-->
+      <p *ngIf="wettkampftageForm.dirty">
+        {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.REMINDSAVE' | translate }}
+      </p>
     </table>
+
 
     <form style="float:left; margin-right: 2%"
           id="wettkampftageForm"
@@ -88,7 +95,7 @@
           <span> *</span>
         </label>
 
-        <!-- STRASSE -->
+        <!-- STRASSE UND HAUSNUMMER -->
         <div class="col-sm-9">
           <input type="text"
                  class="form-control"
@@ -106,7 +113,7 @@
         </div>
       </div>
 
-      <!-- Postleitzahl -->
+      <!-- POSTLEITZAHL -->
       <div class="form-group row">
         <label for="wettkampftagePLZ"
                class="col-sm-3 col-form-label">
@@ -128,7 +135,7 @@
         </div>
       </div>
 
-      <!-- Ort/Stadt -->
+      <!-- ORT/STADT -->
       <div class="form-group row">
         <label for="wettkampftageOrt"
                class="col-sm-3 col-form-label">
@@ -150,7 +157,7 @@
         </div>
       </div>
 
-      <!-- Zusatzinformationen -->
+      <!-- ZUSATZINFORMATIONEN -->
       <div class="form-group row">
         <label for="wettkampftageOrtsinfo"
                class="col-sm-3 col-form-label">
@@ -214,7 +221,7 @@
         </div>
       </div>
 
-      <!--Kampfrichter-->
+      <!--KAMPFRICHTER-->
       <div class="col-sm-7">
         <div class="form-group row">
           <label>

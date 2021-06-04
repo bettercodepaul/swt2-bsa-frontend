@@ -1122,6 +1122,7 @@
         "WETTKAMPFTAG": {
           "FORM": {
             "LABEL": "Competition day",
+            "REMINDSAVE": "Please save your changes first.",
             "DATUM": {
               "LABEL": "date",
               "PLACEHOLDER": "date",

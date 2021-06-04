@@ -1124,6 +1124,7 @@
         "WETTKAMPFTAG": {
           "FORM": {
             "LABEL": "Wettkampftag",
+            "REMINDSAVE": "Bitte speichern Sie zuerst Ihre Änderungen.",
             "DATUM": {
               "LABEL": "Datum",
               "PLACEHOLDER": "Datum",
@@ -1135,7 +1136,7 @@
             "STRASSE": {
               "LABEL": "Strasse",
               "PLACEHOLDER": "Straße und Hausnummer *",
-              "ERROR": "Ungültige Eingabe"
+              "ERROR": "Ungültige Eingabe."
             },
             "PLZ": {
               "LABEL": "Postleitzahl",
