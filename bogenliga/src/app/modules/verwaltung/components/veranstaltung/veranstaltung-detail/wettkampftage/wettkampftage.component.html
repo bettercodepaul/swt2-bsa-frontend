@@ -4,6 +4,7 @@
   <!-- VERANSTALTUNG -->
   <div class="row">
     <div class="col-sm-2">
+
       <input type="text"
              class="form-control"
              required
@@ -20,14 +21,18 @@
       </div>
 
     </div>
+
     <div class="col-sm-2">
     </div>
+
   </div>
   <hr>
 
   <bla-col-layout>
 
     <table style="width: 10%; margin-right: 5%">
+
+      <!-- AUSWAHLLISTE DER WETTKAMPFTAGE -->
       <bla-selectionlist
         (onSelect)="onSelect($event)"
         style="width: 80%"
@@ -35,12 +40,12 @@
         [disabled]="wettkampftageForm.dirty"
         [items]="selectedDTOs"
         [optionFieldSelector]="'wettkampfTag'">
-
       </bla-selectionlist>
 
-
+      <!-- WETTKAMPFTAG HINZUFÜGEN -->
       <div class="form-group row">
         <div class="col-sm-12 button-box" style="margin-top: 2%">
+
           <bla-button *ngIf="entityExists()"
                       [buttonType]="ButtonType.SUCCESS"
                       [disabled]="wettkampftageForm.dirty"
@@ -49,27 +54,32 @@
             <fa-icon icon="plus"></fa-icon>
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
           </bla-button>
+
         </div>
       </div>
+
       <!--Small text that reminds user to save changes, pops up when button is disabled-->
       <p *ngIf="wettkampftageForm.dirty">
         {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.REMINDSAVE' | translate }}
       </p>
+
     </table>
 
 
-    <form style="float:left; margin-right: 2%"
+    <form style="margin-right: 2%"
           id="wettkampftageForm"
           class="horizontal-form half-page"
           #wettkampftageForm="ngForm">
 
       <!-- DATUM -->
       <div class="form-group row">
+
         <label for="wettkampftageDatum"
                class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.DATUM.LABEL' | translate }}</span>
           <span> *</span>
         </label>
+
         <div class="col-sm-9">
           <input type="date"
                  class="form-control"
@@ -84,11 +94,13 @@
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.DATUM.ERROR' | translate }}
           </div>
+
         </div>
       </div>
 
       <!-- ADRESSE -->
       <div class="form-group row">
+
         <label for="wettkampftageStrasse"
                class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.ADRESSE.LABEL' | translate }}</span>
@@ -110,14 +122,17 @@
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.STRASSE.ERROR' | translate }}
           </div>
+
         </div>
       </div>
 
       <!-- POSTLEITZAHL -->
       <div class="form-group row">
+
         <label for="wettkampftagePLZ"
                class="col-sm-3 col-form-label">
         </label>
+
         <div class="col-sm-9">
           <input type="text"
                  class="form-control"
@@ -132,14 +147,17 @@
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.PLZ.ERROR' | translate }}
           </div>
+
         </div>
       </div>
 
       <!-- ORT/STADT -->
       <div class="form-group row">
+
         <label for="wettkampftageOrt"
                class="col-sm-3 col-form-label">
         </label>
+
         <div class="col-sm-9">
           <input type="text"
                  class="form-control"
@@ -154,14 +172,17 @@
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.ORTSNAME.ERROR' | translate }}
           </div>
+
         </div>
       </div>
 
       <!-- ZUSATZINFORMATIONEN -->
       <div class="form-group row">
+
         <label for="wettkampftageOrtsinfo"
                class="col-sm-3 col-form-label">
         </label>
+
         <div class="col-sm-9">
         <textarea type="text"
                   class="form-control"
@@ -174,15 +195,18 @@
                   rows="3">
         </textarea>
         </div>
+
       </div>
 
       <!-- BEGINN -->
       <div class="form-group row">
+
         <label for="wettkampftageBeginn"
                class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.BEGINN.LABEL' | translate }}</span>
           <span> *</span>
         </label>
+
         <div class="col-sm-9">
           <input type="time"
                  class="form-control"
@@ -197,16 +221,19 @@
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.BEGINN.ERROR' | translate }}
           </div>
+
         </div>
       </div>
 
       <!-- AUSRICHTER -->
       <div class="form-group row">
+
         <label for="wettkampftageAusrichter"
                class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}</span>
           <span> *</span>
         </label>
+
         <div class="col-sm-9">
           <select class="form-control"
                   required
@@ -219,15 +246,18 @@
             placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.AUSRICHTER' | translate }}">
           </select>
         </div>
+
       </div>
 
       <!--KAMPFRICHTER-->
       <div class="col-sm-7">
         <div class="form-group row">
+
           <label>
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
             <span> *</span>
           </label>
+
           <bla-double-selectionlist [leftItems]="selectedKampfrichterTag[selectedWettkampfTag]"
                                     [(rightItems)]="notSelectedKampfrichterWettkampfTag[selectedWettkampfTag]"
                                     [fieldSelector]="'email'"
@@ -235,26 +265,32 @@
                                     [idRightList]="'right'"
 
                                     style="height: 12em; width: 36em">
-
           </bla-double-selectionlist>
+
         </div>
       </div>
 
+      <!-- BUTTONS: SPEICHERN UND ZURÜCK -->
       <div class="form-group row">
         <div class="col-sm-11"></div>
         <div class="col-sm-1 button-box">
+
+          <!-- SPEICHERN -->
           <bla-button [id]="'wettkampftagSaveButton'"
                       [disabled]="(wettkampftageStrasse.invalid || wettkampftagePLZ.invalid || wettkampftageOrt.invalid  || wettkampftageBeginn.invalid || wettkampftageDatum.invalid)"
                       [loading]="saveLoading"
                       (onClick)="onSaveWettkampfTag(selectedWettkampfTag, $event); wettkampftageForm.form.markAsPristine();">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
           </bla-button>
+
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-sm-11"></div>
         <div class="col-sm-1 button-box">
+
+          <!-- ZURÜCK -->
           <bla-button *ngIf="entityExists()"
                       [id]="'wettkampfSaveButton'"
                       [disabled]="false"
@@ -262,10 +298,12 @@
                       (onClick)="onVeranstaltungDetail($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
           </bla-button>
+
         </div>
       </div>
 
     </form>
+
   </bla-col-layout>
 
 </bla-common-dialog>
