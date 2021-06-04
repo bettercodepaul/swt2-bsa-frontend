@@ -1073,6 +1073,10 @@
               "TITLE": "Success",
               "DESCRIPTION": "Successfully initialized league table"
             },
+            "COPYMANNSCHAFT_FAILURE": {
+              "TITLE": "Copy failed",
+              "DESCRIPTION": "No Event in last year"
+            },
             "FAILURE": {
               "TITLE": "Error while initializing",
               "DESCRIPTION": "Could not initialize league table"
