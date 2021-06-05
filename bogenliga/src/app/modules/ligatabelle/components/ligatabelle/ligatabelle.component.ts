@@ -108,7 +108,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
           this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung); // -> Ligatabelle
           this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);  // -> "Liga"
-          this.availableYears.push(year); // -> "Sportjahr"
+          if(!this.availableYears.includes(year)){
+            this.availableYears.push(year); // -> "Sportjahr"
+          }
         }
       }
 
