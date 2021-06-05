@@ -107,12 +107,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public notSelectedKampfrichterWettkampfTag: Array<Array<UserRolleDO>> = [];
 
-  //public notSelectedKampfrichterWettkampftag4: Array<UserRolleDO> = []
   text = '. Wettkampftag';
 
   public selectedDTOs: WettkampfDO[];
   public loadingWettkampf = true;
   public selectedWettkampfTag: number = 1;
+  public anzahl: number = 0;
 
 
   constructor(
@@ -168,9 +168,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.allUsers = [];
     this.allUsers = response.payload;
 
-    //this.currentAusrichter[1] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
 
-    //it should iterate through the complete array, to show all Ausrichter, but it works with only one call ?
     for(let i=1;i<=this.allUsers.length; i++){
       this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
     }
@@ -192,6 +190,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   public async saveWettkaempfeNew(wettkampfTagNumber: number): Promise<number>{
+    this.anzahl++;
     this.currentWettkampftagArray.push(new WettkampfDO());
     this.currentAusrichter.push(new UserProfileDO());
 
@@ -221,13 +220,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public onAddWettkampfTag(ignore: any): void {
     this.currentWettkampftagArray.push(new WettkampfDO());
-
-    this.createInitWettkampfTag((this.currentWettkampftagArray.length+1));
-
+    this.createInitWettkampfTag((this.anzahl)+1);
     this.loadDistinctWettkampf();
     this.loadWettkampf();
 
-    //TODO Method to add Wettkampftage to a list
   }
 
   public updateKampfrichterNew(wettkampfTagNumber: number, wettkampfID: number): void{
@@ -636,12 +632,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedDTOs = response.payload.filter(element => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
 
     if(this.selectedDTOs.length===0){
-      //this.saveWettkaempfeNew(1);
       this.createInitWettkampfTag(1);
       this.selectedDTOs.push(new WettkampfDO());
-      //this.selectedDTOs[0].wettkampfTag=1;
       console.log(this.selectedDTOs.toString());
-      //this.loadDistinctWettkampf();
       this.loadWettkampf();
       this.loadDistinctWettkampf();
     }
@@ -661,6 +654,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   public createInitWettkampfTag(num: number): void {
+    this.anzahl++;
     const temp: WettkampfDO = new WettkampfDO(
       num,
       this.currentVeranstaltung.id,
@@ -670,14 +664,14 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       "leer",
       "leer",
       "leer",
-      this.currentWettkampftagArray.length-1,
+      num,
       1,
       1,
       1,
       1
     );
-    //this.currentWettkampftagArray[this.selectedWettkampfTag] = temp;
-    this.saveWettkampftag(temp);
+    this.currentWettkampftagArray[num] = temp;
+    this.saveWettkampftag(this.currentWettkampftagArray[num]);
   }
 }
 
