@@ -53,7 +53,7 @@ export class WettkampfErgebnisService {
 
   public getSatzergebnis(nr: number, satznummer: number, id: number): number {
 
-    let Satz = 0;
+    let Satz = null;
     const passenFil = this.passen.filter((passenFiltered) => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
     for (const passe of passenFil) {
         for (const i of passe.ringzahl) {
