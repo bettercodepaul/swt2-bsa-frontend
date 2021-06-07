@@ -26,6 +26,7 @@ import {WettkampfComponent} from '@wettkampf/components';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 
 
+
 @Component({
   selector:    'bla-sportjahresplan',
   templateUrl: './sportjahresplan.component.html',
@@ -66,7 +67,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private currentVeranstaltungName;
   private wettkampfId;
   private disabledButton = true;
+  private diisabledOtherButtons = true;
   wettkampfIdEnthalten: boolean;
+  public wettkampfListe;
   wettkampf: WettkampfDO;
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
   veranstaltung: VeranstaltungDO;
@@ -261,18 +264,32 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   public showMatches(){
     this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
         .then((response: BogenligaResponse<MatchDTOExt[]>) => {
-          //Wenn es keine Matches gibt
-          if( response.payload.length == 0){
-            // aktiviere Button
-            this.disabledButton = false;
-          }else{
-            //deaktiviere Button
-            this.disabledButton = true;
-          }
+        //prüfe ob es sich um den ersten wettkampftag handelt
+        if(this.selectedWettkampfId-1 < this.wettkampfListe[0].id && response.payload.length != 0){
+          //aktiviere Button
+          this.disabledButton = false;
+        }else{
+          // abfrage für vorherigen Matchtag
+          this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId - 1)
+              .then((response: BogenligaResponse<MatchDTOExt[]>) => {
+                // wenn es keine Matches gibt
+                if( response.payload.length == 0 ){
+                  // dekatviere  Button
+                  this.disabledButton = true;
+                }else {
+                  // aktivere button generiere Mathces
+                  this.disabledButton = false;
+                }//Falls erstes Match angefragt wird
+              }).catch((response: BogenligaResponse<MatchDTOExt[]>) => {
+
+          });
+        }
           this.handleFindMatchSuccess(response)
         })
         .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
   }
+
+
 
   /**
    * Creates Link to Google Maps
@@ -304,11 +321,14 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   public isDisabled(): boolean {
 
+  return this.diisabledOtherButtons;
+
+    /*
     if (!this.disabled) {
       return true;
     } else {
       return false;
-    }
+    }*/
   }
 
   private invertDisabled(){
@@ -356,7 +376,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
     this.wettkampfDataProvider.findAllByVeranstaltungId(this.selectedVeranstaltungId)
-        .then((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfSuccess(response))
+        .then((response: BogenligaResponse<WettkampfDTO[]>) => {
+          //Um rauszufinden ob es sich um ersten Wettkampftag handelt
+          this.wettkampfListe = response.payload;
+          this.handleFindWettkampfSuccess(response)
+        })
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfFailure(response));
   }
 
