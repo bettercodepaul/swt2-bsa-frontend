@@ -197,7 +197,8 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('byLastVeranstaltungsID/' + lastVeranstaltungID + '/' + currentVeranstaltungID ).build())
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).
+      path('byLastVeranstaltungsID/' + lastVeranstaltungID + '/' + currentVeranstaltungID ).build())
           .then((data: VersionedDataTransferObject) => {
             resolve({result: RequestResult.SUCCESS});
 
