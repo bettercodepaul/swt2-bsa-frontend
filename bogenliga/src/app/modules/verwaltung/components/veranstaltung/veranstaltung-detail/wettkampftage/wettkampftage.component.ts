@@ -35,14 +35,15 @@ import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provid
 import {callbackify, log} from 'util';
 import {of} from 'rxjs';
 import {element} from 'protractor';
-import { TableRow } from '@shared/components/tables/types/table-row.class';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
 //import {log} from 'util';
 //import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
-
+import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
+import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -51,6 +52,7 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_s
 const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
+const NOTIFICATION_WETTKAMPFTAG_TOO_MANY = 'veranstaltung_detail_wettkampftage_failure';
 
 const wettkampfTagNotification: Notification = {
   id:          NOTIFICATION_SAVE_VERANSTALTUNG,
@@ -107,7 +109,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public loadingWettkampf = true;
   public selectedWettkampfTag: number = 1;
   public anzahl: number = 0;
-
+  public maxWettkampftageEinstellungenDO: EinstellungenDO = new EinstellungenDO();
+  public maxWettkampftageID: number = 8;
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -119,6 +122,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     private kampfrichterProvider: KampfrichterProviderService,
     private router: Router,
     private route: ActivatedRoute,
+    private einstellungenProvider: EinstellungenProviderService,
     private notificationService: NotificationService) {
     super();
   }
@@ -129,6 +133,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.currentAusrichter.push(new UserProfileDO());
     this.currentWettkampftagArray.push(new WettkampfDO());
     this.currentAusrichter.push(new UserProfileDO());
+
+    //loading configuration parameter od maxWettkampftageID
+    this.loadConfigParam(this.maxWettkampftageID);
 
     this.loading = true;
     this.notificationService.discardNotification();
@@ -212,7 +219,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   //Method adds new Wettkampftag ->called by "hinzufügen"-Button
   public onAddWettkampfTag(ignore: any): void {
     this.currentWettkampftagArray.push(new WettkampfDO());
-    this.createInitWettkampfTag((this.anzahl)+1);
+    this.createInitWettkampfTag((this.anzahl) +1);
     this.loadDistinctWettkampf();
     this.loadWettkampf();
 
@@ -416,6 +423,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFailure(response));
   }
 
+  private loadConfigParam(id: number) {
+    //loads a parameter from the configurations by an id
+    this.einstellungenProvider.findById(id)
+        .then((response: BogenligaResponse<EinstellungenDO>) => this.handleConfigSuccess(response))
+        .catch((response: BogenligaResponse<EinstellungenDO>) => this.handleConfigFailure(response));
+  }
+
   private loadLizenzen() {
     this.lizenzProvider.findAll()
         .then((response: BogenligaResponse<LizenzDO[]>) => this.handleLizenzResponseArraySuccess(response))
@@ -457,6 +471,17 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
+    this.loading = false;
+  }
+
+  private handleConfigSuccess(response: BogenligaResponse<EinstellungenDO>) {
+    //loading configurations successful
+    this.maxWettkampftageEinstellungenDO = response.payload;
+    this.loading = false;
+  }
+
+  private handleConfigFailure(response: BogenligaResponse<EinstellungenDO>) {
+    //loading configurations failure
     this.loading = false;
   }
 
@@ -636,24 +661,40 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   //create an empty Wettkampftag
   public createInitWettkampfTag(num: number): void {
-    this.anzahl++;
-    const temp: WettkampfDO = new WettkampfDO(
-      num,
-      this.currentVeranstaltung.id,
-      "0000-00-00",
-      "",
-      "",
-      "",
-      "",
-      "",
-      this.anzahl,
-      1,
-      1,
-      1,
-      1
-    );
-    this.currentWettkampftagArray[num] = temp;
-    this.saveWettkampftag(this.currentWettkampftagArray[num]);
+    console.log(Number(this.maxWettkampftageEinstellungenDO.value));
+    if (this.anzahl < Number(this.maxWettkampftageEinstellungenDO.value)) {
+      this.anzahl++;
+      const temp: WettkampfDO = new WettkampfDO(
+        num,
+        this.currentVeranstaltung.id,
+        "0000-00-00",
+        "",
+        "",
+        "",
+        "",
+        "",
+        this.anzahl,
+        1,
+        1,
+        1,
+        1
+      );
+      this.currentWettkampftagArray[num] = temp;
+      this.saveWettkampftag(this.currentWettkampftagArray[num]);
+    } else {
+      const notification: Notification = {
+        id:          NOTIFICATION_WETTKAMPFTAG_TOO_MANY,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.TOO_MANY.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.TOO_MANY.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      this.wettkampftagService();
+      this.notificationService.showNotification(notification);
+    }
   }
 }
 
