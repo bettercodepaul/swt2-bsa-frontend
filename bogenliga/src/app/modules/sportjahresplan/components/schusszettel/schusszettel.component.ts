@@ -214,15 +214,22 @@ export class SchusszettelComponent implements OnInit {
     let allowed = [];
 
     if(matchNr == 1){
-      dsbNummer = this.match1.schuetzen[rueckennummer][0].dsbMitgliedId;
+      dsbNummer = this.match1.schuetzen[parseInt(value)][0].dsbMitgliedId;
       allowed = this.allowedMitglieder1;
     }
     else{
-      dsbNummer = this.match2.schuetzen[rueckennummer][0].dsbMitgliedId;
+      dsbNummer = this.match2.schuetzen[parseInt(value)][0].dsbMitgliedId;
       allowed = this.allowedMitglieder2;
     }
 
     if(!allowed.includes(dsbNummer)){
+      this.match1.schuetzen.forEach(val => {
+        console.log('Checking ',val);
+        if(allowed.includes(val[0].dsbMitgliedId)){
+          console.log(val[0].rueckennummer + " is valid");
+        }
+      });
+
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
