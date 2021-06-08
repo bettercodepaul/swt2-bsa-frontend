@@ -124,13 +124,12 @@ export class SchusszettelComponent implements OnInit {
         const match2id = params['match2id'];
 
         //Notification while preparing
-        this.notificationService.showNotification({     //TODO change text
+        this.notificationService.showNotification({
           id:          'NOTIFICATION_SCHUSSZETTEL_LOADING',
-          title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
-          description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
+          title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.LADEN.TITLE',
+          description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.LADEN.DESCRIPTION',
           severity:    NotificationSeverity.INFO,
           origin:      NotificationOrigin.USER,
-          // type: NotificationType.OK, //--TO-DO Maximilian
           userAction:  NotificationUserAction.PENDING
         });
 

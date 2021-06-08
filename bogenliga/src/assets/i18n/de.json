@@ -117,6 +117,10 @@
     },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
+        "LADEN": {
+          "TITLE":"Schusszettel laden",
+          "DESCRIPTION": "Schusszettel wird geladen..."
+        },
         "EINGABEFEHLER":{
           "TITLE":"Eingabefehler",
           "DESCRIPTION": "Pfeilwert ungültig..."
