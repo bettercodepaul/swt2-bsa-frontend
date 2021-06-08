@@ -210,6 +210,10 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
+  onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
+    console.log(value, matchNr, rueckennummer);
+  }
+
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
     const match = this['match' + matchNr];
     let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number -->
