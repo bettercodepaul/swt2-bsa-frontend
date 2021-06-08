@@ -61,7 +61,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
           .catch(() => this.handleEinzelstatistikFailure());
     } else if(this.id == 'downloadGesamtstatistik') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((response) => this.handleSuccess(response))
+          .then((response) => this.handleWithoutNotification(response))
           .catch(() => this.handleGesamtstatistikFailure());
     } else if (this.id === 'downloadSetzliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
