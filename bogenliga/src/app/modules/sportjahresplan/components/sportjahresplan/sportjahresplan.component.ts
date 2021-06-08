@@ -346,9 +346,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 }
 
   public generateMatches(){
-    this.invertDisabled();
-    this.matchDataProvider.generateDataForMatches(null)
-        .then((response: BogenligaResponse<MatchDTO[]>) => this.showMatches())
+    this.matchDataProvider.generateDataForMatches(this.selectedWettkampfId)
+        .then((response: BogenligaResponse<MatchDTO[]>) => {
+          console.log("Response von generateMatches(): ", response);
+          this.showMatches()
+        })
         .catch((response: BogenligaResponse<MatchDTO[]>) => this.showMatches());
   }
 
