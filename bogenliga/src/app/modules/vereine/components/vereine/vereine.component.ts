@@ -7,7 +7,7 @@ import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VereinDTO} from '../../../verwaltung/types/datatransfer/verein-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {MannschaftDataProviderService} from '@verwaltung/services/mannschaft-data-provider.service';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {WettkampfDataProviderService} from '../../../verwaltung/services/wettkampf-data-provider.service';
 import {WettkampfDTO} from '../../../verwaltung/types/datatransfer/wettkampf-dto.class';
@@ -60,7 +60,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
               private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungsDataProvider: VeranstaltungDataProviderService,
               private vereinDataProvider: VereinDataProviderService,
-              private mannschaftsDataProvider: DsbMannschaftDataProviderService) {
+              private mannschaftsDataProvider: MannschaftDataProviderService) {
     super();
   }
 

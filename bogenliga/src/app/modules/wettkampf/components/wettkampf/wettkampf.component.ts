@@ -9,7 +9,7 @@ import {WETTKAMPF_TABLE_EINZELGESAMT_CONFIG} from '@wettkampf/components/wettkam
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {MannschaftDataProviderService} from '@verwaltung/services/mannschaft-data-provider.service';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {MatchDataProviderService} from '@wettkampf/services/match-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
@@ -77,7 +77,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               private matchDataProviderService: MatchDataProviderService,
               private passeDataProviderService: PasseDataProviderService,
               private wettkampfErgebnisService: WettkampfErgebnisService,
-              private mannschaftDataProvider: DsbMannschaftDataProviderService,
+              private mannschaftDataProvider: MannschaftDataProviderService,
               private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
               private mannschaftsmitgliedDataProvider: MannschaftsmitgliedDataProviderService,
               private router: Router,

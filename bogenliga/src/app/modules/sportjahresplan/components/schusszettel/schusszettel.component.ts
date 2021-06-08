@@ -16,7 +16,7 @@ import {
 } from '../../../shared/services';
 import {environment} from '@environment';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {MannschaftDataProviderService} from '@verwaltung/services/mannschaft-data-provider.service';
 import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
@@ -84,7 +84,7 @@ export class SchusszettelComponent implements OnInit {
               private route: ActivatedRoute,
               private notificationService: NotificationService,
               private vereinDataProvider: VereinDataProviderService,
-              private dsbMannschaftDataProvider: DsbMannschaftDataProviderService,
+              private dsbMannschaftDataProvider: MannschaftDataProviderService,
               private passeDataProvider: PasseDataProviderService,
               private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungDataProvider: VeranstaltungDataProviderService,

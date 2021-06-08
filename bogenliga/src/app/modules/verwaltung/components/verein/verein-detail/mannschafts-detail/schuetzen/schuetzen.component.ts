@@ -18,7 +18,7 @@ import {
 import {DsbMitgliedDO} from '../../../../../types/dsb-mitglied-do.class';
 import {SCHUETZE_TABLE_CONFIG, SCHUETZEN_CONFIG} from './schuetzen.config';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {MannschaftDataProviderService} from '@verwaltung/services/mannschaft-data-provider.service';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
@@ -71,7 +71,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
   public deleteLoading = false;
   public saveLoading = false;
 
-  constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
+  constructor(private mannschaftProvider: MannschaftDataProviderService,
               private dsbMitgliedProvider: DsbMitgliedDataProviderService,
               private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
               private vereineProvider: VereinDataProviderService,

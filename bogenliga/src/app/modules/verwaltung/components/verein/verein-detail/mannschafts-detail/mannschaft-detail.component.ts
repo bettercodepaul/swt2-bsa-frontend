@@ -22,7 +22,7 @@ import {DsbMitgliedDO} from '../../../../types/dsb-mitglied-do.class';
 import {VereinDO} from '../../../../types/verein-do.class';
 import {MANNSCHAFT_DETAIL_CONFIG, MANNSCHAFT_DETAIL_TABLE_CONFIG} from './mannschaft-detail.config';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {MannschaftDataProviderService} from '@verwaltung/services/mannschaft-data-provider.service';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
@@ -87,10 +87,10 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   public deleteLoading = false;
   public saveLoading = false;
 
-  constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
+  constructor(private mannschaftProvider: MannschaftDataProviderService,
               private vereinProvider: VereinDataProviderService,
               private veranstaltungProvider: VeranstaltungDataProviderService,
-              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
+              private mannschaftsDataProvider: MannschaftDataProviderService,
               private dsbMitgliedProvider: DsbMitgliedDataProviderService,
               private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
               private downloadService: DownloadButtonResourceProviderService,

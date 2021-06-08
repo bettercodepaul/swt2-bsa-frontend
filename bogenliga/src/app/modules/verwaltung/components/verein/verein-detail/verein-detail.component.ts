@@ -26,7 +26,7 @@ import {VereinDO} from '../../../types/verein-do.class';
 import {VEREIN_DETAIL_CONFIG, VEREIN_DETAIL_TABLE_CONFIG} from './verein-detail.config';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {MannschaftDataProviderService} from '@verwaltung/services/mannschaft-data-provider.service';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
@@ -71,7 +71,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
               private downloadService: DownloadButtonResourceProviderService,
               private regionProvider: RegionDataProviderService,
               private currentUserService: CurrentUserService,
-              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
+              private mannschaftsDataProvider: MannschaftDataProviderService,
               private veranstaltungsProvider: VeranstaltungDataProviderService,
               private router: Router,
               private route: ActivatedRoute,

@@ -27,7 +27,7 @@ import {WettkampftypDO} from '../../../../verwaltung/types/wettkampftyp-do.class
 import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkampftyp-dto.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
-import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
+import {MannschaftDataProviderService} from '../../../services/mannschaft-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDataProviderService} from '../../../../wettkampf/services/wettkampf-data-provider.service';
 import {LigatabelleErgebnisDO} from '../../../../wettkampf/types/wettkampf-ergebnis-do.class';
@@ -100,7 +100,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private ligaProvider: LigaDataProviderService,
-    private mannschaftDataProvider: DsbMannschaftDataProviderService,
+    private mannschaftDataProvider: MannschaftDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,

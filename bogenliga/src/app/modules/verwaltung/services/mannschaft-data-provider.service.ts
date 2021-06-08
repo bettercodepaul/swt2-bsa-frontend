@@ -20,7 +20,7 @@ import {VereinDO} from '../types/verein-do.class';
 @Injectable({
   providedIn: 'root'
 })
-export class DsbMannschaftDataProviderService extends DataProviderService {
+export class MannschaftDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/dsbmannschaft';
 
