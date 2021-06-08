@@ -15,6 +15,7 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {log} from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -106,12 +107,12 @@ export class MatchDataProviderService extends DataProviderService {
         });
     }
 
-  public generateDataForMatches(payload: MatchDTO[]): Promise<BogenligaResponse<MatchDO[]>>{
+  public generateDataForMatches(wetttkampfId: number): Promise<BogenligaResponse<MatchDO[]>>{
+    console.log("In Funktion generateDataForMatches");
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('/generate' + this.wettkampfId.id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('generate?wettkampfid=' + wetttkampfId).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-            console.log("Generate Data for Matches: ", payload);
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
