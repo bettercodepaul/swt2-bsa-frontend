@@ -117,6 +117,10 @@
     },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
+        "LADEN": {
+          "TITLE":"Load Shot-note",
+          "DESCRIPTION": "Loading Shot-note..."
+        },
         "EINGABEFEHLER":{
           "TITLE":"Input error",
           "DESCRIPTION": "Arrow value invalid..."
