@@ -1,6 +1,6 @@
 import {DataTransferObject} from '../../../shared/data-provider';
 
-export class BenutzerDTO implements DataTransferObject {
+export class UserDTO implements DataTransferObject {
   id: number;
   email: string;
   version: number;
@@ -11,8 +11,8 @@ export class BenutzerDTO implements DataTransferObject {
     email?: string,
     version?: number,
     qrCode?: string
-  } = {}): BenutzerDTO {
-    const copy = new BenutzerDTO();
+  } = {}): UserDTO {
+    const copy = new UserDTO();
     copy.id = optional.id || null;
     copy.email = optional.email || '';
     copy.version = optional.version || null;
