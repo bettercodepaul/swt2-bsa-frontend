@@ -210,7 +210,29 @@ export class SchusszettelComponent implements OnInit {
   }
 
   onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
-    console.log(value, matchNr, rueckennummer);
+    let dsbNummer = -1;
+    let allowed = [];
+
+    if(matchNr == 1){
+      dsbNummer = this.match1.schuetzen[rueckennummer][0].dsbMitgliedId;
+      allowed = this.allowedMitglieder1;
+    }
+    else{
+      dsbNummer = this.match2.schuetzen[rueckennummer][0].dsbMitgliedId;
+      allowed = this.allowedMitglieder2;
+    }
+
+    if(!allowed.includes(dsbNummer)){
+      this.notificationService.showNotification({
+        id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.ACCEPTED
+      });
+    }
   }
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
