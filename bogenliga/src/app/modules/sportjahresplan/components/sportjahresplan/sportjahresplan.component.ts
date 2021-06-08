@@ -67,7 +67,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private currentVeranstaltungName;
   private wettkampfId;
   private disabledButton = true;
-  private diisabledOtherButtons = true;
+  private disabledOtherButtons = true;
   wettkampfIdEnthalten: boolean;
   public wettkampfListe;
   wettkampf: WettkampfDO;
@@ -132,7 +132,6 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   // Ermitteln aller Wettkampftage
   private LoadWettkampf() {
-    console.log('Bin in  loadWettkampf');
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfSuccess(response))
         .catch((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfFailure(response));
@@ -150,7 +149,6 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   // Wettkampftage konnten ermittelt werden -> Aufruf von this.findWettkampf damit entsprechendes WettkampfDO ermittelt werden kann
   private handleLoadWettkampfSuccess(response: BogenligaResponse<WettkampfDO[]>): void {
-    console.log('Bin in handleLoadWettkampfSucccess');
     this.wettkaempfe = [];
     // Ãœbergabe aller Wettkaempfe an this.wettkaempfe
     this.wettkaempfe = response.payload;
@@ -264,26 +262,31 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   public showMatches(){
     this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
         .then((response: BogenligaResponse<MatchDTOExt[]>) => {
-        //prüfe ob es sich um den ersten wettkampftag handelt
-        if(this.selectedWettkampfId-1 < this.wettkampfListe[0].id && response.payload.length != 0){
-          //aktiviere Button
-          this.disabledButton = false;
-        }else{
-          // abfrage für vorherigen Matchtag
-          this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId - 1)
-              .then((response: BogenligaResponse<MatchDTOExt[]>) => {
-                // wenn es keine Matches gibt
-                if( response.payload.length == 0 ){
-                  // dekatviere  Button
-                  this.disabledButton = true;
-                }else {
-                  // aktivere button generiere Mathces
-                  this.disabledButton = false;
-                }//Falls erstes Match angefragt wird
-              }).catch((response: BogenligaResponse<MatchDTOExt[]>) => {
-
-          });
-        }
+        //Prüfe ob Matches schon existieren
+          if(response.payload.length != 0){
+            this.matchesExist();
+          }else{
+            this.matchesNotExist();
+            //prüfe ob es sich um den ersten wettkampftag handelt
+            if(this.selectedWettkampfId-1 < this.wettkampfListe[0].id){
+              //aktiviere Button
+              this.disabledButton = false;
+            }else{
+              // abfrage für vorherigen Matchtag
+              this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId - 1)
+                  .then((response: BogenligaResponse<MatchDTOExt[]>) => {
+                    // wenn es keine Matches gibt
+                    if( response.payload.length == 0 ){
+                      // dekatviere  Button
+                      this.disabledButton = true;
+                    }else {
+                      // aktivere button generiere Mathces
+                      this.disabledButton = false;
+                    }//Falls erstes Match angefragt wird
+                  }).catch((response: BogenligaResponse<MatchDTOExt[]>) => {
+              });
+            }
+          }
           this.handleFindMatchSuccess(response)
         })
         .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
@@ -320,23 +323,25 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   // da die Ligatabelle-ID als Parameter weiter gegeben wird.
 
   public isDisabled(): boolean {
-
-  return this.diisabledOtherButtons;
-
-    /*
-    if (!this.disabled) {
-      return true;
-    } else {
-      return false;
-    }*/
+  return this.disabledOtherButtons;
   }
 
   private invertDisabled(){
-    this.disabled = true;
+    this.disabledOtherButtons = false;
+  }
+
+  //Funktion falls Matches existieren -> alle Buttons gehen an, generiere Matches aus
+  private matchesExist(){
+    this.disabledOtherButtons = false;
+    this.disabledButton = true;
+  }
+  //Funktion wenn Matches nicht existieren -> generiere Matches Button geht aus, alle weiteren an
+  private matchesNotExist(){
+    this.disabledOtherButtons = true;
+    this.disabledButton = false;
   }
 
   public isDisabledGMButton(): boolean{
-
     return this.disabledButton;
 }
 
