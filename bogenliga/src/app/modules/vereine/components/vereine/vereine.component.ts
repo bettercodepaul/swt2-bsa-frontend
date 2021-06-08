@@ -8,7 +8,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {VereinDTO} from '../../../verwaltung/types/datatransfer/verein-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {MannschaftDataProviderService} from '@verwaltung/services/mannschaft-data-provider.service';
-import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {MannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {WettkampfDataProviderService} from '../../../verwaltung/services/wettkampf-data-provider.service';
 import {WettkampfDTO} from '../../../verwaltung/types/datatransfer/wettkampf-dto.class';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
@@ -52,7 +52,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   private hasID: boolean;
   private typeOfTableColumn: string;
   private veranstaltungen: VeranstaltungDTO[];
-  private mannschaften: DsbMannschaftDTO[];
+  private mannschaften: MannschaftDTO[];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -174,7 +174,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    */
   public getAllMannschaften(): void {
     this.mannschaftsDataProvider.findAll()
-      .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
+      .then((response: BogenligaResponse<MannschaftDTO[]>) => {
         this.mannschaften = response.payload;
       });
   }
@@ -208,7 +208,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     if (type === 'veranstaltung_name') {
       this.vereineLinking(currentVeranstaltung.id.toString(10));
     } else if (type === 'mannschaftsName') {
-      const currentMannschaft = this.mannschaften.find((mannschaft: DsbMannschaftDTO) => mannschaft.name === mannschaftsName);
+      const currentMannschaft = this.mannschaften.find((mannschaft: MannschaftDTO) => mannschaft.name === mannschaftsName);
       this.vereineLinking(currentVeranstaltung.id + '/' + currentMannschaft.id);
     }
   }
@@ -250,16 +250,16 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   private loadTableRows() {
     this.loadingTable = true;
     this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
-        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenSuccess(response))
-        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenFailure(response));
+        .then((response: BogenligaResponse<MannschaftDTO[]>) => this.handleFindMannschaftenSuccess(response))
+        .catch((response: BogenligaResponse<MannschaftDTO[]>) => this.handleFindMannschaftenFailure(response));
    }
 
-  private handleFindMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+  private handleFindMannschaftenFailure(response: BogenligaResponse<MannschaftDTO[]>): void {
     this.rows = [];
     this.loadingTable = false;
   }
 
-  private handleFindMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+  private handleFindMannschaftenSuccess(response: BogenligaResponse<MannschaftDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     let i: number;
     this.remainingMannschaftsRequests = response.payload.length;

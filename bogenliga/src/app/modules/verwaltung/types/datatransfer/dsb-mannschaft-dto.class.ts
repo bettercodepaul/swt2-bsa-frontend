@@ -1,6 +1,6 @@
 import {DataTransferObject} from '@shared/data-provider';
 
-export class DsbMannschaftDTO implements DataTransferObject {
+export class MannschaftDTO implements DataTransferObject {
   id: number;
   nummer: string;
   vereinId: number;
@@ -20,8 +20,8 @@ export class DsbMannschaftDTO implements DataTransferObject {
     veranstaltungId?: number,
     name?: string,
     sortierung?: number;
-  } = {}): DsbMannschaftDTO {
-    const copy = new DsbMannschaftDTO();
+  } = {}): MannschaftDTO {
+    const copy = new MannschaftDTO();
     // show '0' value
     if (optional.id >= 0) {
       copy.id = optional.id;

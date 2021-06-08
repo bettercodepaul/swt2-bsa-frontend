@@ -1,5 +1,5 @@
 import {VersionedDataTransferObject} from '../../shared/data-provider';
-import {DsbMannschaftDTO} from '../types/datatransfer/dsb-mannschaft-dto.class';
+import {MannschaftDTO} from '../types/datatransfer/dsb-mannschaft-dto.class';
 
 // export function toDO(mannschaftDTO: MannschaftDTO): MannschaftDO {
 //
@@ -9,12 +9,12 @@ import {DsbMannschaftDTO} from '../types/datatransfer/dsb-mannschaft-dto.class';
 //
 // }
 
-export function fromPayload(payload: VersionedDataTransferObject): DsbMannschaftDTO {
-  return DsbMannschaftDTO.copyFrom(payload);
+export function fromPayload(payload: VersionedDataTransferObject): MannschaftDTO {
+  return MannschaftDTO.copyFrom(payload);
 }
 
-export function fromPayloadArray(payload: VersionedDataTransferObject[]): DsbMannschaftDTO[] {
-  const list: DsbMannschaftDTO[] = [];
+export function fromPayloadArray(payload: VersionedDataTransferObject[]): MannschaftDTO[] {
+  const list: MannschaftDTO[] = [];
   payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }

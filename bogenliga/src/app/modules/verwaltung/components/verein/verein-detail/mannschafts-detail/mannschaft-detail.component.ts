@@ -31,7 +31,7 @@ import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.cl
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
-import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {MannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {environment} from '@environment';
 import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
@@ -594,11 +594,11 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   // private checkIfDuplicateMannschaftsNr(mannschaftsNr: Number): Boolean {
   private loadMannschaften(vereinsId: number) {
     this.mannschaftsDataProvider.findAllByVereinsId(vereinsId)
-        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
-        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
+        .then((response: BogenligaResponse<MannschaftDTO[]>) => this.handleLoadMannschaftenSuccess(response))
+        .catch((response: BogenligaResponse<MannschaftDTO[]>) => this.handleLoadMannschaftenFailure(response));
   }
 
-  private handleLoadMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+  private handleLoadMannschaftenSuccess(response: BogenligaResponse<MannschaftDTO[]>): void {
     this.mannschaften = [];
     this.mannschaften = response.payload;
   }
@@ -616,7 +616,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   }
 
 
-  private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+  private handleLoadMannschaftenFailure(response: BogenligaResponse<MannschaftDTO[]>): void {
     this.mannschaften = [];
     this.loading = false;
   }

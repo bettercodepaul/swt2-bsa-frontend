@@ -26,7 +26,7 @@ import {WettkampftypDataProviderService} from '../../../services/wettkampftyp-da
 import {WettkampftypDO} from '../../../../verwaltung/types/wettkampftyp-do.class';
 import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkampftyp-dto.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {MannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {MannschaftDataProviderService} from '../../../services/mannschaft-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDataProviderService} from '../../../../wettkampf/services/wettkampf-data-provider.service';
