@@ -1121,100 +1121,73 @@
           "PLACEHOLDER": "Wählen Sie einen Ligaleiter",
           "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
         },
-        "WETTKAMPFTAG1": {
-          "LABEL": "1. Wettkampftag",
-          "DATUM": {
-            "LABEL": "Datum",
-            "PLACEHOLDER": "Datum",
-            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
-          },
-          "STRASSE": {
-            "LABEL": "Adresse",
-            "PLACEHOLDER": "Straße und Hausnummer",
-            "ERROR": "Ungültige Eingabe"
-          },
-          "PLZ": {
-            "LABEL": "Adresse",
-            "PLACEHOLDER": "Postleitzahl",
-            "ERROR": "Ungültige Postleitzahl."
-          },
-          "ORTSNAME": {
-            "LABEL": "Adresse",
-            "PLACEHOLDER": "Ort/Stadt",
-            "ERROR": "Ungültiger Ort."
-          },
-          "ORTSINFO": {
-            "LABEL": "Adresse",
-            "PLACEHOLDER": "Zusatzinformationen",
-            "ERROR": "Ungültige Eingabe."
-          },
-          "BEGINN": {
-            "LABEL": "Beginn",
-            "PLACEHOLDER": "Uhrzeit",
-            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
-          },
-          "NOTIFICATION": {
-            "SAVE": {
-              "TITLE": "Speichern erfolgreich",
-              "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+        "WETTKAMPFTAG": {
+          "FORM": {
+            "LABEL": "Wettkampftag",
+            "DATUM": {
+              "LABEL": "Datum",
+              "PLACEHOLDER": "Datum",
+              "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
             },
-            "UPDATE": {
-              "TITLE": "Update erfolgreich",
-              "DESCRIPTION": "Daten vom Wettkampftag aktualisert"
+            "ADRESSE": {
+              "LABEL": "Adresse"
+            },
+            "STRASSE": {
+              "LABEL": "Strasse",
+              "PLACEHOLDER": "Straße und Hausnummer *",
+              "ERROR": "Ungültige Eingabe"
+            },
+            "PLZ": {
+              "LABEL": "Postleitzahl",
+              "PLACEHOLDER": "Postleitzahl *",
+              "ERROR": "Ungültige Postleitzahl."
+            },
+            "ORTSNAME": {
+              "LABEL": "Ort/Stadt",
+              "PLACEHOLDER": "Ort/Stadt *",
+              "ERROR": "Ungültiger Ort."
+            },
+            "ORTSINFO": {
+              "LABEL": "Zusatzinformation",
+              "PLACEHOLDER": "Zusatzinformationen",
+              "ERROR": "Ungültige Eingabe."
+            },
+            "BEGINN": {
+              "LABEL": "Beginn",
+              "PLACEHOLDER": "Uhrzeit",
+              "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
             }
-          }
-        },
-        "KAMPFRICHTERLISTE": {
-          "LABEL": "Kampfrichter"
-
           },
-        "WETTKAMPFTAG2": {
-          "LABEL": "2. Wettkampftag",
-          "DATUM": {
-            "LABEL": "Datum",
-            "PLACEHOLDER": "Datum ",
-            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
+            "NOTIFICATION": {
+              "SAVE": {
+                "TITLE": "Speichern erfolgreich",
+                "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+              },
+              "UPDATE": {
+                "TITLE": "Update erfolgreich",
+                "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
+              },
+              "DELETE": {
+                "TITLE": "Wettkampftag löschen",
+                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+              },
+              "ADD": {
+                "TITLE": "Neu",
+                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+              },
+              "DELETE_SUCCESS": {
+                "TITLE": "Erfolgreich",
+                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+              },
+              "DELETE_FAILURE": {
+                "TITLE": "Fehler beim Löschen",
+                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              }
+            }
           },
-          "ORT": {
-            "LABEL": "Ort",
-            "PLACEHOLDER": "Adresse",
-            "ERROR": "Gültige Adresse (Sporthalle, 88454 Hochdorf)."
+          "KAMPFRICHTERLISTE": {
+            "LABEL": "Kampfrichter"
           },
-          "BEGINN": {
-            "LABEL": "Beginn",
-            "PLACEHOLDER": "Uhrzeit",
-            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
-          }
-         },
-        "WETTKAMPFTAG3": {
-          "LABEL": "3. Wettkampftag",
-          "DATUM": {
-            "LABEL": "Datum",
-            "PLACEHOLDER": "Datum",
-            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
-          },
-
-          "BEGINN": {
-            "LABEL": "Beginn",
-            "PLACEHOLDER": "Uhrzeit",
-            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
-          }
-         },
-        "WETTKAMPFTAG4": {
-          "LABEL": "4. Wettkampftag",
-          "DATUM": {
-            "LABEL": "Datum",
-            "PLACEHOLDER": "Datum",
-            "ERROR": "Gültiges Datum (Format: JJJJ-MM-TT)."
-          },
-
-          "BEGINN": {
-            "LABEL": "Beginn",
-            "PLACEHOLDER": "Uhrzeit",
-            "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
-          }
-         },
-
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
@@ -1240,9 +1213,9 @@
           "TITLE": "Veranstaltung angelegt",
           "DESCRIPTION": "Veranstaltung wurde erfolgreich angelegt"
         },
-        "SAVEMANNSCHAFT": {
-          "TITLE": "Kopieren erfolgreich",
-          "DESCRIPTION": "Mannschaften wurden kopiert von der letzten Saison"
+        "COPYMANNSCHAFT_FAILURE": {
+          "TITLE": "Kopieren fehlgeschlagen",
+          "DESCRIPTION": "Keine Veranstaltung im Vorjahr vorhanden"
         },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
