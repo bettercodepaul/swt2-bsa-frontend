@@ -111,6 +111,7 @@ export class MatchDataProviderService extends DataProviderService {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('/generate' + this.wettkampfId.id).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            console.log("Generate Data for Matches: ", payload);
           }, (error: HttpErrorResponse) => {
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
