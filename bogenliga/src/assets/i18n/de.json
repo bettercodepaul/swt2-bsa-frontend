@@ -1183,6 +1183,10 @@
               "DELETE_FAILURE": {
                 "TITLE": "Fehler beim Löschen",
                 "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              },
+              "TOO_MANY": {
+                "TITLE": "Zu viele Wettkampftage",
+                "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
               }
             }
           },
