@@ -100,7 +100,7 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
           });
     });
   }
-  
+
   public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
@@ -196,6 +196,32 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
           .then((data: VersionedDataTransferObject[]) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  /**
+   * returns last Veranstaltung
+   * by using current VeranstaltungId
+   * @param id
+   */
+  public findLastVeranstaltungById(id: string | number): Promise<BogenligaResponse<VeranstaltungDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('findLastVeranstaltungBy/' +id).build())
+          .then((data: VersionedDataTransferObject) => {
+
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
           }, (error: HttpErrorResponse) => {
 

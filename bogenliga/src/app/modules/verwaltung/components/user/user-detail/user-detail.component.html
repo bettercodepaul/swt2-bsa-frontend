@@ -3,29 +3,29 @@
 
   <a name="bla-selectionlist"></a>
 
-  <form id="benutzerForm"
+  <form id="userForm"
         class="horizontal-form half-page"
         #benutzerForm="ngForm" >
 
       <!-- Email / Username -->
     <div class="form-group row">
-      <label for="benutzerEmail"
+      <label for="userEmail"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <input type="email"
                class="form-control"
                [disabled]=true
-               id="benutzerEmail"
-               name="benutzerEmail"
+               id="userEmail"
+               name="userEmail"
                #benutzerEmail="ngModel"
-               [(ngModel)]="currentBenutzerRolleDO[0].email"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
+               [(ngModel)]="currentUserRolleDO[0].email"
+               placeholder="{{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.EMAIL.ERROR' | translate }}
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -33,32 +33,32 @@
       <!-- Rolle -->
     <!-- Email / Username -->
     <div class="form-group row">
-      <label for="benutzerRolleAlt"
+      <label for="userRolleAlt"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_OLD.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_OLD.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
         <input type="text"
                class="form-control"
                [disabled]=true
-               id="benutzerRolleAlt"
-               name="benutzerRolleAlt"
-               #benutzerRolleAlt="ngModel"
+               id="userRolleAlt"
+               name="userRolleAlt"
+               #userRolleAlt="ngModel"
                [(ngModel)]="roleNames"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_OLD.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_OLD.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLLE.ERROR' | translate }}
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.ROLLE.ERROR' | translate }}
         </div>
       </div>
     </div>
     <div class="form-group row">
-      <label for="benutzerrolle"
-             id="benutzerrolle"
-             name="benutzerrolle"
+      <label for="userrolle"
+             id="userrolle"
+             name="userrolle"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_NEW.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_NEW.LABEL' | translate }}</span>
         <span> *</span>
       </label>
 
@@ -82,10 +82,10 @@
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
         <bla-button
-          [id]="'benutzerUpdateButton'"
+          [id]="'userUpdateButton'"
           [loading]="saveLoading"
           (onClick)="resetRole($event)">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.ROLE_UPDATE' | translate }}
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_UPDATE' | translate }}
         </bla-button>
       </div>
     </div>
@@ -98,7 +98,7 @@
     <div class="form-group row">
       <label for="userPwdFormNewPwd"
              class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD_NEW.LABEL' | translate }}</span>
+        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.PASSWORD_NEW.LABEL' | translate }}</span>
         <span> *</span>
       </label>
       <div class="col-sm-9">
@@ -112,9 +112,9 @@
                #userPwdFormNewPwd="ngModel"
                [(ngModel)]="resetCredentials.password"
                [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
-               placeholder="{{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD_NEW.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.USER_DETAIL.FORM.PASSWORD_NEW.PLACEHOLDER' | translate }}">
         <div class="invalid-feedback">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PASSWORD_NEW.ERROR' | translate }}
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.PASSWORD_NEW.ERROR' | translate }}
         </div>
       </div>
     </div>
@@ -126,7 +126,7 @@
           [disabled]="!passwordForm.valid"
           [loading]="savePW"
           (onClick)="resetPW($event)">
-          {{ 'MANAGEMENT.BENUTZER_DETAIL.FORM.PW_UPDATE' | translate }}
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.PW_UPDATE' | translate }}
         </bla-button>
       </div>
     </div>
