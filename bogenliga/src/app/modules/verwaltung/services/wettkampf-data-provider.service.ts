@@ -149,9 +149,11 @@ export class WettkampfDataProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    console.log("create Methode")
     return new Promise((resolve, reject) => {
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
           .then((data: VersionedDataTransferObject) => {
+            console.log("Then create");
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
           }, (error: HttpErrorResponse) => {
