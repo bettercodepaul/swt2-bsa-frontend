@@ -77,6 +77,9 @@ export class SchusszettelComponent implements OnInit {
   veranstaltungVorherig: VeranstaltungDO;
   veranstaltungGegenwaertig: VeranstaltungDO;
 
+  allowedMitglieder1: number[];
+  allowedMitglieder2: number[];
+
 
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
@@ -119,6 +122,18 @@ export class SchusszettelComponent implements OnInit {
       if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
         const match1id = params['match1id'];
         const match2id = params['match2id'];
+
+        //Notification while preparing
+        this.notificationService.showNotification({     //TODO change text
+          id:          'NOTIFICATION_SCHUSSZETTEL_LOADING',
+          title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
+          description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
+          severity:    NotificationSeverity.INFO,
+          origin:      NotificationOrigin.USER,
+          // type: NotificationType.OK, //--TO-DO Maximilian
+          userAction:  NotificationUserAction.PENDING
+        });
+
         this.schusszettelService.findMatches(match1id, match2id)
             .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
               this.match1 = data.payload[0];
@@ -140,6 +155,24 @@ export class SchusszettelComponent implements OnInit {
               if (shouldInitSumSatz) {
                 this.initSumSatz();
                 this.setPoints();
+              }
+
+              this.wettkampfDataProvider.findAllowedMember(this.match1.wettkampfId).then((value) => {
+                this.allowedMitglieder1=value;
+                console.log('Allowed for match1: ', this.allowedMitglieder1);
+                if(this.match1.wettkampfId == this.match2.wettkampfId){
+                  this.allowedMitglieder2 = this.allowedMitglieder1;
+                  //Close notification when ready
+                  this.notificationService.discardNotification();
+                }
+              });
+              if(this.match1.wettkampfId != this.match2.wettkampfId){
+                this.wettkampfDataProvider.findAllowedMember(this.match2.wettkampfId).then((value)=>{
+                  this.allowedMitglieder2 = value;
+                  console.log('Allowed for match2: ', this.allowedMitglieder2);
+                  //Close notification when ready
+                  this.notificationService.discardNotification();
+                });
               }
             }, (error) => {
               console.error(error);
@@ -357,10 +390,8 @@ export class SchusszettelComponent implements OnInit {
     this.popupAndererTag = true;
   }
 
-
-
-    save() {
-   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+  save(){
+    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
