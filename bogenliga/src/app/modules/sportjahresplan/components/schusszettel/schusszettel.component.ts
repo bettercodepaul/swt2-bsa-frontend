@@ -211,45 +211,42 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
-  onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
-    var mannschaftId = matchNr == 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
+  async onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
+    const mannschaftId = matchNr == 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
 
-    this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value).then(result => {
-      if(result.result == RequestResult.SUCCESS){
-        console.log(result.payload.dsbMitgliedId);
+    let valid = true;
 
-        let dsbNummer = result.payload.dsbMitgliedId;
-        let allowed = [];
+    let mitglied = null;
 
-        if(matchNr == 1){
-          allowed = this.allowedMitglieder1;
-        }
-        else{
-          allowed = this.allowedMitglieder2;
-        }
+    try {
+      mitglied = await this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value);
+    }catch (e){
+      valid = false;
+    }
 
-        if(!allowed.includes(dsbNummer)){
-          this.match1.schuetzen.forEach(val => {
-            console.log('Checking ',val);
-            if(allowed.includes(val[0].dsbMitgliedId)){
-              console.log(val[0].rueckennummer + " is valid");
-            }
-          });
+    if(mitglied != null && mitglied.result == RequestResult.SUCCESS) {
+      let dsbNummer = mitglied.payload.dsbMitgliedId;
+      console.log('DsbNummer for Mannschaftsmitglied in Mannschaft ' +
+        mannschaftId + " and Rueckennummer " + value + " is " + dsbNummer);
 
-          this.notificationService.showNotification({
-            id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
-            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
-            severity:    NotificationSeverity.ERROR,
-            origin:      NotificationOrigin.SYSTEM,
-            type:        NotificationType.OK,
-            userAction:  NotificationUserAction.ACCEPTED
-          });
-        }
-      }else{
-        console.log('Error');
+      let allowed = matchNr == 1 ? this.allowedMitglieder1 : this.allowedMitglieder2;
+
+      if (!allowed.includes(dsbNummer)) {
+        valid = false;
       }
-    });
+    }
+
+    if(!valid){
+      this.notificationService.showNotification({
+        id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.ACCEPTED
+      });
+    }
   }
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
