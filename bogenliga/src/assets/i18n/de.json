@@ -264,7 +264,8 @@
           "MATCHPUNKTE": "Matchpunkte",
           "SCHUETZE": "Schütze",
           "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
-          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr"
+          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr",
+          "RUEKENNUMMER": "Rückennummer"
         }
       }
     }
