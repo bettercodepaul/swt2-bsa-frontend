@@ -326,9 +326,6 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   return this.disabledOtherButtons;
   }
 
-  private invertDisabled(){
-    this.disabledOtherButtons = false;
-  }
 
   //Funktion falls Matches existieren -> alle Buttons gehen an, generiere Matches aus
   private matchesExist(){
