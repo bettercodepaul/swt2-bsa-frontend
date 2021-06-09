@@ -18,7 +18,6 @@ import {
   VeranstaltungDetailComponent,
   VeranstaltungOverviewComponent,
   WettkampftageComponent,
-  SportjahrOverviewComponent,
   EinstellungenDetailComponent,
   EinstellungenOverviewComponent
 } from './components';
@@ -104,13 +103,6 @@ export const VERWALTUNG_ROUTES: Routes = [
     component: VeranstaltungOverviewComponent,
     pathMatch: 'full',
     canActivate: [VeranstaltungOverviewGuard]
-  },
-  {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
-  {
-    path:        'sportjahr',
-    component:   SportjahrOverviewComponent,
-    pathMatch:   'full',
-    canActivate: [SportjahrOverviewGuard]
   },
   {
     path: 'einstellungen',

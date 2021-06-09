@@ -20,7 +20,6 @@ import {
   WettkampfklasseOverviewComponent,
   VeranstaltungOverviewComponent,
   VeranstaltungDetailComponent,
-  SportjahrOverviewComponent,
   WettkampftageComponent,
   EinstellungenOverviewComponent,
   EinstellungenDetailComponent
@@ -83,7 +82,6 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
     WettkampftageComponent,
-    SportjahrOverviewComponent,
     EinstellungenDetailComponent,
     EinstellungenOverviewComponent
   ]
