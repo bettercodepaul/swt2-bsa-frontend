@@ -13,7 +13,12 @@ import {isUndefined} from '@shared/functions';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
-import {NotificationService} from '@shared/services/notification';
+import {
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity, NotificationType,
+  NotificationUserAction
+} from '@shared/services/notification';
 import {environment} from '@environment';
 import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
@@ -348,7 +353,23 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
           console.log("Response von generateMatches(): ", response);
           this.showMatches()
         })
-        .catch((response: BogenligaResponse<MatchDTO[]>) => this.showMatches());
+        //handleFailure -> Fehlermeldung muss aufgerufen werden
+        .catch((response: BogenligaResponse<MatchDTO[]>) =>  {
+          this.handleFailureGenerateMatches();
+          this.showMatches();
+        });
+  }
+
+  private handleFailureGenerateMatches(): void{
+    this.notificationService.showNotification({
+      id:          'NOTIFICATION_GENERIERE_MATCHES',
+      title:       'SPORTJAHRESPLAN.GENERIERE_MATCHES.NOTIFICATION.TITLE',
+      description: 'SPORTJAHRESPLAN.GENERIERE_MATCHES.NOTIFICATION.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.ACCEPTED
+  })
   }
 
   // wenn "Edit" an einem Match geklickt wird
