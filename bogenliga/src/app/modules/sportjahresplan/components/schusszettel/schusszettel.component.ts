@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
-import {BogenligaResponse, UriBuilder} from '../../../shared/data-provider';
+import {BogenligaResponse, RequestResult, UriBuilder} from '../../../shared/data-provider';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {isUndefined} from '@shared/functions';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -25,6 +25,7 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
@@ -91,6 +92,7 @@ export class SchusszettelComponent implements OnInit {
               private passeDataProvider: PasseDataProviderService,
               private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungDataProvider: VeranstaltungDataProviderService,
+              private mannschaftsMitgliedDataProvider: MannschaftsmitgliedDataProviderService
   ) {
   }
 
@@ -210,36 +212,44 @@ export class SchusszettelComponent implements OnInit {
   }
 
   onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
-    let dsbNummer = -1;
-    let allowed = [];
+    var mannschaftId = matchNr == 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
 
-    if(matchNr == 1){
-      dsbNummer = this.match1.schuetzen[parseInt(value)][0].dsbMitgliedId;
-      allowed = this.allowedMitglieder1;
-    }
-    else{
-      dsbNummer = this.match2.schuetzen[parseInt(value)][0].dsbMitgliedId;
-      allowed = this.allowedMitglieder2;
-    }
+    this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value).then(result => {
+      if(result.result == RequestResult.SUCCESS){
+        console.log(result.payload.dsbMitgliedId);
 
-    if(!allowed.includes(dsbNummer)){
-      this.match1.schuetzen.forEach(val => {
-        console.log('Checking ',val);
-        if(allowed.includes(val[0].dsbMitgliedId)){
-          console.log(val[0].rueckennummer + " is valid");
+        let dsbNummer = result.payload.dsbMitgliedId;
+        let allowed = [];
+
+        if(matchNr == 1){
+          allowed = this.allowedMitglieder1;
         }
-      });
+        else{
+          allowed = this.allowedMitglieder2;
+        }
 
-      this.notificationService.showNotification({
-        id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.SYSTEM,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.ACCEPTED
-      });
-    }
+        if(!allowed.includes(dsbNummer)){
+          this.match1.schuetzen.forEach(val => {
+            console.log('Checking ',val);
+            if(allowed.includes(val[0].dsbMitgliedId)){
+              console.log(val[0].rueckennummer + " is valid");
+            }
+          });
+
+          this.notificationService.showNotification({
+            id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.SYSTEM,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.ACCEPTED
+          });
+        }
+      }else{
+        console.log('Error');
+      }
+    });
   }
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
