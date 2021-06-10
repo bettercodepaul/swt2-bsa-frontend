@@ -228,8 +228,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
               , (response: BogenligaResponse<VeranstaltungDO>) => {
                   console.log('Failed');
                   this.saveLoading = false;
-
-
                 });
           }
         )
@@ -250,7 +248,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
                   this.saveLoading = false;
                 }
               });
-
           this.notificationService.showNotification(notification);
         });
   }
@@ -378,7 +375,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadWettkampftyp();
     this.loadUsers();
     this.loadLiga();
-   // this.loadAllVeranstaltung();
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
@@ -387,28 +383,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
     this.loadMannschaftsTable();
-    // this.saveLoading = false;
-  }
-
-  private handleCopyFromVeranstaltungFailure() {
-    const notification: Notification = {
-      id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_DEFAULT',
-      severity:    NotificationSeverity.ERROR,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
-    };
-    this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.saveLoading = false;
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
