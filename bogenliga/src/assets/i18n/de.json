@@ -108,6 +108,12 @@
     "SPORTJAHRESPLAN": {
       "TITLE": "Terminübersicht"
     },
+    "GENERIERE_MATCHES": {
+      "NOTIFICATION": {
+        "TITLE": "Es existieren keine Mannschaften für den Tag",
+        "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden"
+      }
+    },
     "TITEL": {
       "VERANSTALTUNG": "Veranstaltungen",
       "WETTKAEMPFE": "Wettkampftage"
