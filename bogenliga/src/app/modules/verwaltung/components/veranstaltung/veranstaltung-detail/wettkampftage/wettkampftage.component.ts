@@ -216,14 +216,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return currentWettkampfTag.id;
   }
 
-  //Method adds new Wettkampftag ->called by "Neu"-Button
+  //Method adds new Wettkampftag ->called by "hinzufügen"-Button
   public onAddWettkampfTag(ignore: any): void {
-    if (this.currentWettkampftagArray.length < this.maxWettkampftageEinstellungenDO) {
-      this.currentWettkampftagArray.push(new WettkampfDO());
-      this.createInitWettkampfTag((this.anzahl) + 1);
-      this.loadDistinctWettkampf();
-      this.loadWettkampf();
-    }
+    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.createInitWettkampfTag((this.anzahl) +1);
+    this.loadDistinctWettkampf();
+    this.loadWettkampf();
+
   }
 
   public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void{
