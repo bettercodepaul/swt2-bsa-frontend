@@ -215,7 +215,7 @@ export class SchusszettelComponent implements OnInit {
     const mannschaftId = matchNr == 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
 
     let valid = true;
-
+    let allowed = [];
     let mitglied = null;
 
     try {
@@ -229,7 +229,7 @@ export class SchusszettelComponent implements OnInit {
       console.log('DsbNummer for Mannschaftsmitglied in Mannschaft ' +
         mannschaftId + " and Rueckennummer " + value + " is " + dsbNummer);
 
-      let allowed = matchNr == 1 ? this.allowedMitglieder1 : this.allowedMitglieder2;
+      allowed = matchNr == 1 ? this.allowedMitglieder1 : this.allowedMitglieder2;
 
       if (!allowed.includes(dsbNummer)) {
         valid = false;
@@ -398,6 +398,7 @@ export class SchusszettelComponent implements OnInit {
     this.getBereitsgeschossenToCheckSchuetze();
 
     // Kontrolle, ob die die Regeln eingehalten wurden
+    /*
     for (let i = 0; i < this.matchAllPasse.length; i++) {
 
       // Hat der Schütze 2x in einer Liga geschossen -> darf er nicht mehr in einer Liga darunter schießen
@@ -418,7 +419,7 @@ export class SchusszettelComponent implements OnInit {
         console.log('Popup: ', this.passeSelberTag, 'hat bereits diesen Wettkampftag in der', this.selberTagVeranstaltung, 'geschossen');
         this.savepopSelberTag();
       }
-    }
+    }*/
   }
 
   savepopSelberTag() {
