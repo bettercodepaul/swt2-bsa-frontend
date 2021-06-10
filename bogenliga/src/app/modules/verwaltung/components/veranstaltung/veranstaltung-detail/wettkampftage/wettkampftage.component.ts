@@ -35,14 +35,15 @@ import {LizenzDataProviderService} from '@verwaltung/services/lizenz-data-provid
 import {callbackify, log} from 'util';
 import {of} from 'rxjs';
 import {element} from 'protractor';
-import { TableRow } from '@shared/components/tables/types/table-row.class';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
 //import {log} from 'util';
 //import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
-
+import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
+import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -51,11 +52,12 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_s
 const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
+const NOTIFICATION_WETTKAMPFTAG_TOO_MANY = 'veranstaltung_detail_wettkampftage_failure';
 
 const wettkampfTagNotification: Notification = {
   id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-  title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
-  description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
+  title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE.TITLE',
+  description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE.DESCRIPTION',
   severity:    NotificationSeverity.INFO,
   origin:      NotificationOrigin.USER,
   type:        NotificationType.OK,
@@ -77,7 +79,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public ButtonType = ButtonType;
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
-
   public currentUser: UserProfileDO;
   public rows: TableRow[];
   private selectedVeranstaltungsId: number;
@@ -86,14 +87,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public currentWettkampftag: WettkampfDO = new WettkampfDO();
   public currentWettkampftagArray: Array<WettkampfDO> = [];
   public allWettkampf: Array<WettkampfDO> = [];
-
   public currentAusrichter: Array<UserProfileDO> = [];
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
-  public savedByUser = false;
-
   public id;
 
   public allKampfrichterLizenzen: Array<LizenzDO> = [];
@@ -101,20 +99,18 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public allUserWithKampfrichterLizenz: Array<UserRolleDO> = [];
 
   public kampfrichterTag: Array<Array<KampfrichterDO>> = [];
-
   public initiallySelectedKampfrichterTag: Array<Array<UserRolleDO>> = [];
-
   public selectedKampfrichterTag: Array<Array<UserRolleDO>> = [];
-
   public notSelectedKampfrichterWettkampfTag: Array<Array<UserRolleDO>> = [];
 
-  //public notSelectedKampfrichterWettkampftag4: Array<UserRolleDO> = []
   text = '. Wettkampftag';
 
   public selectedDTOs: WettkampfDO[];
   public loadingWettkampf = true;
   public selectedWettkampfTag: number = 1;
-
+  public anzahl: number = 0;
+  public maxWettkampftageEinstellungenDO: EinstellungenDO = new EinstellungenDO();
+  public maxWettkampftageID: number = 8;
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -126,11 +122,21 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     private kampfrichterProvider: KampfrichterProviderService,
     private router: Router,
     private route: ActivatedRoute,
+    private einstellungenProvider: EinstellungenProviderService,
     private notificationService: NotificationService) {
     super();
   }
 
   ngOnInit() {
+    //Arrays needs to be filled:
+    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.currentAusrichter.push(new UserProfileDO());
+    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.currentAusrichter.push(new UserProfileDO());
+
+    //loading configuration parameter od maxWettkampftageID
+    this.loadConfigParam(this.maxWettkampftageID);
+
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
@@ -155,19 +161,18 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private loadUsers() {
     this.userProvider.findAll()
-        .then((response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccessNew(response))
+        .then((response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess(response))
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
   }
 
-  private handleUserResponseArraySuccessNew(response: BogenligaResponse<UserProfileDO[]>): void{
+  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void{
     console.log('==> HandleUserResponseArraySuccess');
     this.allUsers = [];
     this.allUsers = response.payload;
 
     for(let i=1;i<=this.allUsers.length; i++){
-      this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[i].wettkampfAusrichter)[0] ?? this.allUsers[0];
+      this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
     }
-
     this.loading = false;
   }
 
@@ -181,11 +186,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   public onSaveWettkampfTag(wettkampfTagNumber: number, ignore: any): void {
-    this.savedByUser = true;
-    this.saveWettkaempfeNew(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichterNew(wettkampfTagNumber, wettkampfID));
+    this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichter(wettkampfTagNumber, wettkampfID));
   }
 
-  public async saveWettkaempfeNew(wettkampfTagNumber: number): Promise<number>{
+  public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number>{
+    this.anzahl++;
     this.currentWettkampftagArray.push(new WettkampfDO());
     this.currentAusrichter.push(new UserProfileDO());
 
@@ -194,9 +199,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     currentWettkampfTag = this.currentWettkampftagArray[wettkampfTagNumber];
     currentAusrichter = this.currentAusrichter[wettkampfTagNumber];
-
     currentWettkampfTag.wettkampfTag = wettkampfTagNumber;
-
     currentWettkampfTag.wettkampfVeranstaltungsId = this.currentVeranstaltung.id;
     currentWettkampfTag.wettkampfDisziplinId = 0;
     currentWettkampfTag.wettkampfTypId = this.currentVeranstaltung.wettkampfTypId;
@@ -213,12 +216,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return currentWettkampfTag.id;
   }
 
+  //Method adds new Wettkampftag ->called by "hinzufügen"-Button
   public onAddWettkampfTag(ignore: any): void {
-    this.savedByUser = false;
-    //TODO Method to add Wettkampftage to a list
+    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.createInitWettkampfTag((this.anzahl) +1);
+    this.loadDistinctWettkampf();
+    this.loadWettkampf();
+
   }
 
-  public updateKampfrichterNew(wettkampfTagNumber: number, wettkampfID: number): void{
+  public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void{
 
     let currentWettkampftag: WettkampfDO;
     let kampfrichterUserToSave: Array<UserRolleDO> = [];
@@ -255,7 +262,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
 
     function comparer(otherArray) {
-
       return (current) => otherArray.filter((other) => {
         return JSON.stringify(other) === JSON.stringify(current); // && other.display == current.display
       }).length === 0;
@@ -275,9 +281,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   private saveWettkampftag(wettkampfDO: WettkampfDO): Promise<number> {
-
     return this.wettkampfDataProvider.create(wettkampfDO)
-               .then((response: BogenligaResponse<WettkampfDO>) => {
+               .then((response: BogenligaResponse<WettkampfDTO>) => {
                  if (!isNullOrUndefined(response)
                    && !isNullOrUndefined(response.payload)
                    && !isNullOrUndefined(response.payload.id)) {
@@ -309,8 +314,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
             const notification: Notification = {
               id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.UPDATE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.UPDATE.DESCRIPTION',
+              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.UPDATE.TITLE',
+              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.UPDATE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
@@ -339,8 +344,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
               // TODO: Put this code in it's own method
               const notification: Notification = {
                 id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-                title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.TITLE',
-                description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG1.NOTIFICATION.SAVE.DESCRIPTION',
+                title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE.TITLE',
+                description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE.DESCRIPTION',
                 severity:    NotificationSeverity.INFO,
                 origin:      NotificationOrigin.USER,
                 type:        NotificationType.OK,
@@ -366,18 +371,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private deleteKampfrichterArray(kampfrichterArray: Array<KampfrichterDO>): void {
     for (const iter of Object.keys(kampfrichterArray)) {
-
       this.kampfrichterProvider.delete(kampfrichterArray[iter].id, kampfrichterArray[iter].wettkampfID)
           .then((response: BogenligaResponse<void>) => {
-
             console.log('Successfully deleted');
-
-
             this.wettkampftagService();
-
-
             this.notificationService.showNotification(wettkampfTagNotification);
-
           }, (response:
             BogenligaResponse<void>) => {
             console.log('Failed');
@@ -389,7 +387,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
-
     const id = this.currentVeranstaltung.id;
 
     const notification: Notification = {
@@ -426,6 +423,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFailure(response));
   }
 
+  private loadConfigParam(id: number) {
+    //loads a parameter from the configurations by an id
+    this.einstellungenProvider.findById(id)
+        .then((response: BogenligaResponse<EinstellungenDO>) => this.handleConfigSuccess(response))
+        .catch((response: BogenligaResponse<EinstellungenDO>) => this.handleConfigFailure(response));
+  }
+
   private loadLizenzen() {
     this.lizenzProvider.findAll()
         .then((response: BogenligaResponse<LizenzDO[]>) => this.handleLizenzResponseArraySuccess(response))
@@ -446,7 +450,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private loadKampfrichter() {
     this.kampfrichterProvider.findAll()
-        .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccessNew(
+        .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccess(
           response
         ))
         .catch((response: BogenligaResponse<KampfrichterDTO[]>) => this.handleKampfrichterResponseArrayFailure(response));
@@ -454,7 +458,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private loadWettkampf() {
     this.wettkampfDataProvider.findAll()
-        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySuccesNew(response))
+        .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySucces(response))
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response)).then(() => this.loadUsers());
   }
 
@@ -467,6 +471,17 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
+    this.loading = false;
+  }
+
+  private handleConfigSuccess(response: BogenligaResponse<EinstellungenDO>) {
+    //loading configurations successful
+    this.maxWettkampftageEinstellungenDO = response.payload;
+    this.loading = false;
+  }
+
+  private handleConfigFailure(response: BogenligaResponse<EinstellungenDO>) {
+    //loading configurations failure
     this.loading = false;
   }
 
@@ -515,7 +530,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.notificationService.showNotification(notification);
   }
 
-  private handleWettkampfResponseArraySuccesNew(response: BogenligaResponse<WettkampfDO[]>) : void {
+  private handleWettkampfResponseArraySucces(response: BogenligaResponse<WettkampfDO[]>) : void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
     this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
@@ -578,7 +593,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
 
-  private handleKampfrichterResponseArraySuccessNew(response: BogenligaResponse<KampfrichterDO[]>): void{
+  private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterDO[]>): void{
     let allKampfrichter: Array<KampfrichterDO> = [];
     allKampfrichter = response.payload;
     let tempKampfrichter: Array<KampfrichterDO> = [];
@@ -586,7 +601,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     for(let i = 1; i<=allKampfrichter.length; i++){
       this.kampfrichterTag[i]= [];
-
       tempKampfrichter = this.kampfrichterTag[i];
       tempNotSelectedKampfrichterTag = this.notSelectedKampfrichterWettkampfTag[i];
 
@@ -600,10 +614,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
       this.initiallySelectedKampfrichterTag[i].forEach((val) => this.selectedKampfrichterTag[i].push(Object.assign({}, val)));
       tempNotSelectedKampfrichterTag = this.allUserWithKampfrichterLizenz.filter((user) => this.initiallySelectedKampfrichterTag[i].indexOf(user) < 0);
-
       this.notSelectedKampfrichterWettkampfTag[i] = tempNotSelectedKampfrichterTag;
     }
-
     this.loading = false;
   }
 
@@ -611,6 +623,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
   }
 
+  //loads all existing Wettkampftage from Backend
   private loadDistinctWettkampf(): void {
     this.loadingWettkampf = true;
     this.wettkampfDataProvider.findAll()
@@ -618,46 +631,71 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         .catch((newList: BogenligaResponse<WettkampfDTO[]>) => this.handleLoadDistinctWettkampfFailure(newList));
   }
 
+  //when loading was succesfull, filter Wettkampftage depending on Veranstaltung
   private handleLoadDistinctWettkampfSuccess(response: BogenligaResponse<WettkampfDO[]>): void {
-
     this.selectedDTOs = [];
     this.selectedDTOs = response.payload.filter(element => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
+    this.anzahl = this.selectedDTOs.length;
 
-    if(this.selectedDTOs.length<1){
-      this.createInitWettkampfTag();
-      //this.loadDistinctWettkampf();
+    //when there are no Wettkampftage for this Veranstaltung yet
+    if(this.selectedDTOs.length===0){
+      this.createInitWettkampfTag(1);
+      this.selectedDTOs.push(new WettkampfDO());
+      this.loadWettkampf();
+      this.loadDistinctWettkampf();
     }
-
     this.loadingWettkampf = false;
   }
 
+  //when loading failed
   private handleLoadDistinctWettkampfFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
     this.selectedDTOs = [];
     this.loadingWettkampf = false;
   }
 
+  //onSelect for SelectionList in html-file, loads currently selected Wettkampftag
   public onSelect($event: WettkampfDO[]): void {
     this.selectedWettkampfTag = $event[0].wettkampfTag;
     console.log('onSelect Dialog: ' + this.selectedWettkampfTag);
     this.loadWettkampf();
   }
 
-  public createInitWettkampfTag(): void {
-    this.currentWettkampftagArray[this.selectedWettkampfTag] = new WettkampfDO(
-      this.selectedWettkampfTag,
-      this.currentVeranstaltung.id,
-      "leer",
-      "leer",
-      "leer",
-      "leer",
-      "leer",
-      "leer",
-      1,
-      0,
-      0,
-      0,
-      0);
-    this.saveWettkampftag(this.currentWettkampftagArray[this.selectedWettkampfTag]);
+  //create an empty Wettkampftag
+  public createInitWettkampfTag(num: number): void {
+    console.log(Number(this.maxWettkampftageEinstellungenDO.value));
+    if (this.anzahl < Number(this.maxWettkampftageEinstellungenDO.value)) {
+      this.anzahl++;
+      const temp: WettkampfDO = new WettkampfDO(
+        num,
+        this.currentVeranstaltung.id,
+        "0000-00-00",
+        "",
+        "",
+        "",
+        "",
+        "",
+        this.anzahl,
+        1,
+        1,
+        1,
+        1
+      );
+      this.currentWettkampftagArray[num] = temp;
+      this.saveWettkampftag(this.currentWettkampftagArray[num]);
+    } else {
+      const notification: Notification = {
+        id:          NOTIFICATION_WETTKAMPFTAG_TOO_MANY,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.TOO_MANY.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.TOO_MANY.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      this.wettkampftagService();
+      this.notificationService.showNotification(notification);
+    }
   }
 }
 
