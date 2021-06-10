@@ -11,7 +11,6 @@ export function fromPayload(payload: VersionedDataTransferObject): WettkampfDTO 
 export function fromPayloadArray(payload: VersionedDataTransferObject[]): WettkampfDTO[] {
   const list: WettkampfDTO[] = [];
   payload.forEach((single) => list.push(fromPayload(single)));
-  console.log(list);
   return list;
 }
 
