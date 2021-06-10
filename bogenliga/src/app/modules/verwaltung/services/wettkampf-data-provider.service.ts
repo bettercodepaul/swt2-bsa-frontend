@@ -91,6 +91,7 @@ export class WettkampfDataProviderService extends DataProviderService {
           .then((data: VersionedDataTransferObject[]) => {
             console.log('wettkaempfe raw data');
             console.log(data);
+
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
 
