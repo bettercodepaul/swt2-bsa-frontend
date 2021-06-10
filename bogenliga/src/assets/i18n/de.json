@@ -154,6 +154,10 @@
     },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
+        "LADEN": {
+          "TITLE":"Schusszettel laden",
+          "DESCRIPTION": "Schusszettel wird geladen..."
+        },
         "DOWNLOADFEHLER":{
           "TITLE":"Fehler beim generieren des Schusszettels:",
           "DESCRIPTION": "Schusszettel konnte nicht genertiert werden, da keine Matches für den Wettkampf vorhanden sind."
