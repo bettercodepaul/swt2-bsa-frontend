@@ -35,6 +35,7 @@ import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mann
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
+import {WettkampfKlasseDO} from '@verwaltung/types/wettkampfklasse-do.class';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -45,6 +46,7 @@ const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
 const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
 const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
+const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failure';
 
 
 @Component({
@@ -84,7 +86,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public id;
 
   // For the Mannschaft-Table
-  public rows: TableRow[];
+  public rows: TableRow[] = [];
   public showTable = false;
   public AlertType = AlertType;
   public showPopup = false;
@@ -115,6 +117,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.id = params[ID_PATH_PARAM];
+
         if (this.id === 'add') {
           this.currentVeranstaltung = new VeranstaltungDO();
           this.currentWettkampftyp = new WettkampftypDO();
@@ -211,57 +214,42 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   //Gets executed when button "Mannschaft kopieren" is pressed
   public onCopyMannschaft(ignore: any): void {
-    console.log('Last Veranstaltung: ' + this.lastVeranstaltung.id);
-    if (typeof this.lastVeranstaltung != null) {
-      this.saveLoading = true;
+    this.saveLoading = true;
+    this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
+        .then((response)=>{
+          this.lastVeranstaltung=response.payload
+          console.log(this.lastVeranstaltung.id);
+          console.log('Mannschaften werden kopiert');
+          this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
+              .then((response) => this.handleCopyFromVeranstaltungSuccess(response)
+              , (response: BogenligaResponse<VeranstaltungDO>) => {
+                  console.log('Failed');
+                  this.saveLoading = false;
 
-      this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
-          .then((response) => this.handleCopyFromVeranstaltungSuccess(response))
-          .catch((response) => this.handleCopyFromVeranstaltungFailure(response));
 
-      /*.then((response: BogenligaResponse<DsbMannschaftDO>) => {
-              if (!isNullOrUndefined(response)
-                && !isNullOrUndefined(response.payload)
-                && !isNullOrUndefined(response.payload.id)) {
-                console.log('Saved with id: ' + response.payload.id);
+                });
+          }
+        )
+        .catch((response)=> {
+          console.log('Veranstaltung ist nicht vorhanden');
+          const notification: Notification = {
+            id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
+            title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
+            description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
+          this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
+                }
+              });
 
-                const notification: Notification = {
-                  id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-                  title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVEMANNSCHAFT.TITLE',
-                  description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVEMANNSCHAFT.DESCRIPTION',
-                  severity:    NotificationSeverity.INFO,
-                  origin:      NotificationOrigin.USER,
-                  type:        NotificationType.OK,
-                  userAction:  NotificationUserAction.PENDING
-                };
-
-                this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
-                    .subscribe((myNotification) => {
-                      if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                        this.saveLoading = false;
-                        this.router.navigateByUrl('/verwaltung/');
-                      }
-                    });
-
-                this.notificationService.showNotification(notification);
-              }
-            }, (response: BogenligaResponse<VeranstaltungDO>) => {
-              console.log('Failed');
-              this.saveLoading = false;
-
-            });/*
-
-      }} else {
-        console.log('Keine Mannschaften verfügbar');
-        this.saveLoading = false;
-      }*/
-    } else {
-      console.log('Veranstaltung ist nicht vorhanden');
-      this.saveLoading = false;
-
-    }
-    this.saveLoading = false;
-    // show response message
+          this.notificationService.showNotification(notification);
+        });
   }
 
 
@@ -306,8 +294,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           console.log('Failed');
           this.saveLoading = false;
         });
-
-
   }
 
   /**
@@ -320,7 +306,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.notificationService.discardNotification();
 
     const id = this.currentVeranstaltung.id;
-
 
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
@@ -384,28 +369,13 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   }
 
-  private loadDsbMannschaft() {
-    this.mannschaftDataProvider.findAll()
-        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleDsbMannschaftResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleDsbMannschaftResponseArrayFailure(response));
-
-  }
-
-  private loadAllVeranstaltung() {
-    this.veranstaltungDataProvider.findAll()
-        .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleAllVeranstaltungResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => this.handleAllVeranstaltungResponseArrayFailure(response));
-
-  }
-
-
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
     this.loading = false;
     this.loadWettkampftyp();
     this.loadUsers();
     this.loadLiga();
-    this.loadAllVeranstaltung();
+   // this.loadAllVeranstaltung();
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
@@ -413,12 +383,29 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
   private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
-    this.loading = false;
     this.loadMannschaftsTable();
+    // this.saveLoading = false;
   }
 
-  private handleCopyFromVeranstaltungFailure(response: BogenligaResponse<void>) {
-    this.loading = false;
+  private handleCopyFromVeranstaltungFailure() {
+    const notification: Notification = {
+      id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_DEFAULT',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+          }
+        });
+
+    this.notificationService.showNotification(notification);
+
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
@@ -514,42 +501,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loading = false;
   }
 
-  private handleDsbMannschaftResponseArraySuccess(response: BogenligaResponse<DsbMannschaftDO[]>): void {
-    this.allDsbMannschaft = [];
-    this.allDsbMannschaft = response.payload;
-
-
-    this.allVeranstaltung = this.allVeranstaltung.filter((liga) => liga.ligaId === this.currentVeranstaltung.ligaId);
-    this.allVeranstaltung = this.allVeranstaltung.filter((sportjahr) => sportjahr.sportjahr === this.currentVeranstaltung.sportjahr - 1);
-    this.allVeranstaltung = this.allVeranstaltung.filter((wettkamptyp) => wettkamptyp.wettkampfTypId === this.currentVeranstaltung.wettkampfTypId);
-    // this.allVeranstaltung = this.allVeranstaltung.filter((name) => name.name === this.currentVeranstaltung.name);
-    this.lastVeranstaltung = this.allVeranstaltung[0];
-
-    console.log('This AlL DsbManschaften ' + this.allDsbMannschaft.length);
-    this.allDsbMannschaft = this.allDsbMannschaft.filter((veranstaltung) => veranstaltung.veranstaltungId === this.lastVeranstaltung.id);
-    console.log('This AlL DsbManschaften unten ' + this.allDsbMannschaft.length);
-    this.loading = false;
-  }
-
-  private handleDsbMannschaftResponseArrayFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
-    this.allDsbMannschaft = [];
-    this.loading = false;
-    console.log('Fehler :DSB Mannschaft konnte nicht abgerufen werden.');
-  }
-
-  private handleAllVeranstaltungResponseArraySuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
-    this.allVeranstaltung = [];
-    this.allVeranstaltung = response.payload;
-
-    this.loading = false;
-    this.loadDsbMannschaft();
-  }
-
-  private handleAllVeranstaltungResponseArrayFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
-    this.allVeranstaltung = [];
-    this.loading = false;
-  }
-
   /**
    * Checks if current Table is empty
    * If not button which uses copyMannschaftFromVeranstaltung will be greyed out
@@ -570,6 +521,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private loadTableRows(payload: DsbMannschaftDO[]) {
     this.rows = toTableRows(payload);
+    this.saveLoading = false;
   }
 
   public onEdit(versionedDataObject: VersionedDataObject) {
