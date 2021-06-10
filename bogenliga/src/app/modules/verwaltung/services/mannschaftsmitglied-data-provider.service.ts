@@ -180,6 +180,28 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     });
   }
 
+  public findByTeamIdAndRueckennummer(teamId: string | number, rueckennummer: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> resolve promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder()
+        .fromPath(this.getUrl()).path(teamId).path('byRueckennummer').path(rueckennummer).build())
+          .then((data: VersionedDataTransferObject) => {
+
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
   public findAllByTeamId(id: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO[]>> {
     // return promise
     // sign in success -> resolve promise
