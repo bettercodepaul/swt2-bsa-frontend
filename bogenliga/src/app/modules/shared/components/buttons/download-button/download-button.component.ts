@@ -45,23 +45,27 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
 
     if (this.id === 'downloadBogenkontrollliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((response) => this.handleSuccess(response))
+          .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleBogenkontrolllisteFailure()));
     } else if (this.id === 'downloadSchusszettel') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((response) => this.handleSuccess(response))
+          .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleSchusszettelFailure()));
     } else if (this.id === 'downloadMeldezettel') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((response) => this.handleSuccess(response))
+          .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleMeldezettelFailure()));
     } else if(this.id == 'downloadEinzelstatistik') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((response) => this.handleSuccess(response))
+          .then((response) => this.handleWithoutNotification(response))
           .catch(() => this.handleEinzelstatistikFailure());
+    } else if(this.id == 'downloadGesamtstatistik') {
+      this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
+          .then((response) => this.handleWithoutNotification(response))
+          .catch(() => this.handleGesamtstatistikFailure());
     } else if (this.id === 'downloadSetzliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
-          .then((response) => this.handleSuccess(response))
+          .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleSetzlisteFailure()));
     } else {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
@@ -70,8 +74,10 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     }
   }
 
-  private handleWithoutNotification(): void {
+  private handleWithoutNotification(response: BogenligaResponse<string>): void {
+    console.log('Download ' + this.fileName + ' from ' + response.payload + ' completed');
     this.loading = false;
+
   }
 
   private handleSuccess(response: BogenligaResponse<string>): void {
@@ -188,6 +194,22 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'WETTKAEMPFE.EINZELSTATISTIK.NOTIFICATION.DOWNLOADFEHLER.TITLE',
       description: 'WETTKAEMPFE.EINZELSTATISTIK.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.loading = false;
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleGesamtstatistikFailure(){
+    const notification: Notification = {
+      id: NOTIFICATION_DOWNLOAD_FAILURE,
+      title: 'Download Fehlgeschlagen',
+      description: 'Gesamtstatistik konnte nicht als PDF erstellt Werden',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
