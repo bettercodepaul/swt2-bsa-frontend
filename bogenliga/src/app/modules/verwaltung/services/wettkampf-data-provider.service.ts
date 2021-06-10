@@ -10,8 +10,7 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '@shared/services';
-import {fromPayload, fromPayloadArray, ToDO, ToDTO} from '../mapper/wettkampf-mapper';
-import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
 
@@ -55,6 +54,27 @@ export class WettkampfDataProviderService extends DataProviderService {
           .then((data: VersionedDataTransferObject) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  public findAllowedMember(wettkampfID: string | number): Promise<number[]> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfID).path("allowedContestants").build())
+          .then((data: number[]) => {
+
+            resolve(data);
 
           }, (error: HttpErrorResponse) => {
 
