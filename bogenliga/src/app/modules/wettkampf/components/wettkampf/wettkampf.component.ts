@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
-import {BogenligaResponse} from '@shared/data-provider';
+import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WETTKAMPF_TABLE_EINZEL_CONFIG} from './wettkampergebnis/tabelle.einzel.config';
@@ -22,13 +22,12 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {NotificationService} from '@shared/services';
-import {assertNotNull} from '@angular/compiler/src/output/output_ast';
-import {logger} from 'codelyzer/util/logger';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
-import {fromPayloadLigatabelleErgebnisArray} from '@wettkampf/mapper/wettkampf-ergebnis-mapper';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
+import {environment} from '@environment';
+
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -170,7 +169,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       }
     }
 
-    document.getElementById('druckButton').classList.add('hidden');
+    document.getElementById('einzeldruckButton').classList.add('hidden');
     // hide verein information if the user presses "Alle Mannschaften anzeigen"
     if (selectedMannschaft === undefined) {
       document.getElementById('vereinsinformationen').classList.add('hidden');
@@ -209,7 +208,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
 
-    document.getElementById('druckButton').classList.remove('hidden');
+    document.getElementById('einzeldruckButton').classList.remove('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
 
@@ -244,7 +243,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
 
 
-    document.getElementById('druckButton').classList.add('hidden');
+    document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.remove('hidden');
 
   }
@@ -265,61 +264,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.loadVerein(selectedMannschaft.vereinId);
     }
   }
-
-  /*
-  einzeldruck
-  Öffnet das Fenster um Einzelstatistik zu drucken
-   */
-  public einzeldruck() {
-
-    let printContents = '<h2>Einzelstatistik</h2>';
-    printContents += '<br>';
-    printContents += document.getElementById('titel').innerHTML;
-    printContents += '<br>';
-    printContents += document.getElementById('titel2').innerHTML;
-    printContents += '<br>';
-    printContents += document.getElementById('jahr').innerHTML;
-    printContents += '<br><br>';
-    let count = 1;
-    for (let i = 0; i < 4; i++) {
-      let rowNumber = 'row';
-      rowNumber += i + '1';
-      if (this.isTableFilled[i]) {
-        printContents += '<h3>Wettkampftag  ' + count + ' </h3>';
-        printContents += document.getElementById(rowNumber).innerHTML;
-        count += 1;
-      }
-    }
-
-
-    let htmlToPrint = '' +
-      '<style type="text/css">' +
-      'table th, table td {' +
-      'padding: 5px; ' +
-      '}' +
-      ' #walkheader{border-left: none!important; border-right: none!important;}' +
-      ' #Table1{padding: 4px; border-collapse:collapse; font; font-size:12pt;}' +
-      ' #printHeader2 td{ border-bottom: solid black 1px; border-right: solid black 1px!important; }' +
-      ' td{ border-bottom: solid black 1px; border-right: solid black 1px!important; border-left: solid black 1px!important; }' +
-      '</style>';
-    htmlToPrint += printContents;
-    const printWindow = window.open('', '', 'height=800,width=800');
-    printWindow.document.write('<html><head><title>Wettkampfergebnisse</title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(htmlToPrint);
-    printWindow.document.write('<script>var spans = document.getElementsByTagName("fa-icon");  for (var i = 0; i<spans.length; i++) {' +
-      ' spans[i].style.display = "none" };  </script>');
-    printWindow.document.write('</body></html>');
-    printWindow.print();
-    printWindow.document.close();
-  }
-
-
   /*
    gesamtdruck
    Öffnet das Fenster um Gesamtstatistik zu drucken
    */
-
   public gesamtdruck() {
 
     let printContents = '<h2>Gesamtstatistik</h2>';
@@ -484,10 +432,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.loadingData = false;
     }
   }
-  // method to change the name to a default, incase if there isn't a Team to for currentMannschaft
+  // method to change the name to a default, in case if there isn't a Team to for currentMannschaft
 
   public getTitle(): string {
-    let placeholder = 'Keine Mannschaft in der Liga';
+    let placeholder = ' ';
     if (this.currentMannschaft !== undefined) {
       placeholder = this.currentMannschaft.name;
     }
@@ -509,6 +457,23 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.mannschaftsmitgliedDataProvider.findAll()
         .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = response.payload)
         .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = []);
+  }
+
+  public onButtonDownload(path: string): string {
+      return new UriBuilder()
+        .fromPath(environment.backendBaseUrl)
+        .path('v1/download')
+        .path(path)
+        .path('?veranstaltungsid=' + this.currentVeranstaltung.id + '&manschaftsid=' + this.getMannschaftsID() + '&jahr=' + this.currentJahr)
+        .build();
+  }
+  public getMannschaftsID(): number {
+    if (this.currentMannschaft != undefined) {
+      return this.currentMannschaft.id;
+    }
+    else {
+      return -1;
+    }
   }
 
 }
