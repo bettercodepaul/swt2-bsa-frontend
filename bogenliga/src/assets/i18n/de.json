@@ -108,6 +108,12 @@
     "SPORTJAHRESPLAN": {
       "TITLE": "Terminübersicht"
     },
+    "GENERIERE_MATCHES": {
+      "NOTIFICATION": {
+        "TITLE": "Es existieren keine Mannschaften für den Tag",
+        "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden"
+      }
+    },
     "TITEL": {
       "VERANSTALTUNG": "Veranstaltungen",
       "WETTKAEMPFE": "Wettkampftage"
@@ -264,7 +270,8 @@
           "MATCHPUNKTE": "Matchpunkte",
           "SCHUETZE": "Schütze",
           "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
-          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr"
+          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr",
+          "RUEKENNUMMER": "Rückennummer"
         }
       }
     }
@@ -1124,6 +1131,7 @@
         "WETTKAMPFTAG": {
           "FORM": {
             "LABEL": "Wettkampftag",
+            "REMINDSAVE": "Bitte speichern Sie zuerst Ihre Änderungen.",
             "DATUM": {
               "LABEL": "Datum",
               "PLACEHOLDER": "Datum",
@@ -1135,7 +1143,7 @@
             "STRASSE": {
               "LABEL": "Strasse",
               "PLACEHOLDER": "Straße und Hausnummer *",
-              "ERROR": "Ungültige Eingabe"
+              "ERROR": "Ungültige Eingabe."
             },
             "PLZ": {
               "LABEL": "Postleitzahl",
@@ -1182,6 +1190,10 @@
               "DELETE_FAILURE": {
                 "TITLE": "Fehler beim Löschen",
                 "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              },
+              "TOO_MANY": {
+                "TITLE": "Zu viele Wettkampftage",
+                "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
               }
             }
           },
