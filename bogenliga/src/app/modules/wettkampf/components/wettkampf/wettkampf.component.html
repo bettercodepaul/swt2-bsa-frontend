@@ -4,8 +4,8 @@
 <bla-common-dialog [config]="config" >
   <form id="regionenForm"
         class="horizontal-form half-page">
-    <h3 class="print1" id="titel">{{getTitle()}}</h3>
-    <h3 class="print1" id="titel2">{{currentVeranstaltung.name}}</h3>
+    <h3 class="print1" id="titel">{{currentVeranstaltung.name}}</h3>
+    <h2 class="print1" id="titel2">{{getTitle()}}</h2>
 
     <!-- Die Texte werden in der de.json Datei gesetzt-->
     <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
@@ -160,19 +160,19 @@
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
       </bla-button>
       &nbsp;
-      <!-- Button - Einzelstatistik Drucken -->
-      <bla-button class = "hidden" id = "druckButton"
-        [id]="'showResultsButton'"
-        (onClick)="einzeldruck();">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelDrucken.LABEL' | translate }}
-      </bla-button>
+      <!-- Button - Einzelstatistik als PDF -->
+      <bla-download-button class = "hidden" id = "einzeldruckButton"
+        [id]="'downloadEinzelstatistik'"
+        [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
+        [fileName]="'Einzelstatistik.pdf'"> Einzelstatistik als PDF
+      </bla-download-button>
 
-      <!-- Button - Einzelstatistik Drucken -->
-      <bla-button class = "hidden" id = "gesamtdruckButton"
-                  [id]="'showResultsButton'"
-                  (onClick)="gesamtdruck();">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamtDrucken.LABEL' | translate }}
-      </bla-button>
+      <!-- Button - Gesamtstatistik Drucken -->
+      <bla-download-button class = "hidden" id = "gesamtdruckButton"
+                           [id]="'downloadGesamtstatistik'"
+                           [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
+                           [fileName]="'Gesamtstatistik.pdf'"> Gesamtstatistik als PDF
+      </bla-download-button>
     </div>
 <!-- popup -->
     <div class="overlay" *ngIf="popup">
@@ -227,12 +227,12 @@
         <bla-data-table id="row1"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[0]">
+                        [rows]="rows[1]">
         </bla-data-table>
         <bla-data-table id="row11" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[0]">
+                        [rows]="rows[1]">
         </bla-data-table>
       </div>
     </div>
@@ -243,12 +243,12 @@
         <bla-data-table id="row2"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[0]">
+                        [rows]="rows[2]">
         </bla-data-table>
         <bla-data-table id="row21" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[0]">
+                        [rows]="rows[2]">
         </bla-data-table>
       </div>
     </div>
@@ -259,12 +259,12 @@
         <bla-data-table id="row3"
                         [loading]="loadingData"
                         [config]="config_table"
-                        [rows]="rows[0]">
+                        [rows]="rows[3]">
         </bla-data-table>
         <bla-data-table id="row31" class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
-                        [rows]="rows[0]">
+                        [rows]="rows[3]">
         </bla-data-table>
       </div>
     </div>

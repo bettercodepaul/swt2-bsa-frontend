@@ -85,8 +85,15 @@
         "WETTKAMPFTAG_AKT": "Competition day",
         "WETTKAMPFTAG": "0"
       }
+    },
+    "EINZELSTATISTIK": {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Error creating Singlestatistic:",
+          "DESCRIPTION": "Could not generate Singlestatistic. Could not find Archers for selection."
+        }
+      }
     }
-
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -115,7 +122,35 @@
         "PLACE": "event location"
       }
     },
+    "SETZLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the seeding list:",
+          "DESCRIPTION": "Seeding list was not created successful because there is no data about the former competition day.."
+        }
+      }
+    },
+    "BOGENKONTROLLLISTE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the arch control list:",
+          "DESCRIPTION": "Arch control list was not created successful because there is no seeding list existing."
+        }
+      }
+    },
+    "MELDEZETTEL" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Failure while creating the registration form:",
+          "DESCRIPTION": "Registration from was not created successful because there are no existing achers."
+        }
+      }
+    },
     "SCHUSSZETTEL": {
+      "DOWNLOADFEHLER":{
+        "TITLE":"Failure while creating the scorecard:",
+        "DESCRIPTION": "Scorecard could not be generated, because there are no matches in the competition."
+      },
       "NOTIFICATION": {
         "LADEN": {
           "TITLE":"Load Shot-note",
@@ -1042,6 +1077,10 @@
               "TITLE": "Success",
               "DESCRIPTION": "Successfully initialized league table"
             },
+            "COPYMANNSCHAFT_FAILURE": {
+              "TITLE": "Copy failed",
+              "DESCRIPTION": "No Event in last year"
+            },
             "FAILURE": {
               "TITLE": "Error while initializing",
               "DESCRIPTION": "Could not initialize league table"
@@ -1088,104 +1127,72 @@
           "PLACEHOLDER": "Select a league leader",
           "ERROR": "Please select a valid E-Mail."
         },
-        "WETTKAMPFTAG1": {
-          "LABEL": "1. competition day",
-          "DATUM": {
-            "LABEL": "date",
-            "PLACEHOLDER": "date",
-            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
-          },
-          "ORT": {
-            "LABEL": "location",
-            "PLACEHOLDER": "address",
-            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
-          },
-          "BEGINN": {
-            "LABEL": "Start",
-            "PLACEHOLDER": "time",
-            "ERROR": "Enter valid time (Format: HH:MM)."
-          },
-          "NOTIFICATION": {
-            "SAVE": {
-              "TITLE": "Success",
-              "DESCRIPTION": "Successfully saved competition day"
+        "WETTKAMPFTAG": {
+          "FORM": {
+            "LABEL": "Competition day",
+            "REMINDSAVE": "Please save your changes first.",
+            "DATUM": {
+              "LABEL": "date",
+              "PLACEHOLDER": "date",
+              "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
             },
-            "UPDATE": {
-              "TITLE": "Success",
-              "DESCRIPTION": "Successfully updated competition day"
+            "ORT": {
+              "LABEL": "location",
+              "PLACEHOLDER": "address",
+              "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
+            },
+            "BEGINN": {
+              "LABEL": "Start",
+              "PLACEHOLDER": "time",
+              "ERROR": "Enter valid time (Format: HH:MM)."
             }
-          }
-        },
+          },
+            "NOTIFICATION": {
+              "SAVE": {
+                "TITLE": "Success",
+                "DESCRIPTION": "Successfully saved competition day"
+              },
+              "UPDATE": {
+                "TITLE": "Success",
+                "DESCRIPTION": "Successfully updated competition day"
+              },
+              "DELETE": {
+                "TITLE": "Wettkampftag löschen",
+                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+              },
+              "ADD": {
+                "TITLE": "Neu",
+                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+              },
+              "DELETE_SUCCESS": {
+                "TITLE": "Erfolgreich",
+                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+              },
+              "DELETE_FAILURE": {
+                "TITLE": "Fehler beim Löschen",
+                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              }
+            }
+          },
         "KAMPFRICHTERLISTE": {
           "LABEL": "Referee"
-
         },
-        "WETTKAMPFTAG2": {
-          "LABEL": "2. competition day",
-          "DATUM": {
-            "LABEL": "date",
-            "PLACEHOLDER": "date",
-            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
-          },
-          "ORT": {
-            "LABEL": "location",
-            "PLACEHOLDER": "address",
-            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
-          },
-          "BEGINN": {
-            "LABEL": "Start",
-            "PLACEHOLDER": "time",
-            "ERROR": "Enter valid time (Format: HH:MM)."
-          }
-        },
-        "WETTKAMPFTAG3": {
-          "LABEL": "3. competition day",
-          "DATUM": {
-            "LABEL": "date",
-            "PLACEHOLDER": "date",
-            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
-          },
-          "ORT": {
-            "LABEL": "location",
-            "PLACEHOLDER": "address",
-            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
-          },
-          "BEGINN": {
-            "LABEL": "Start",
-            "PLACEHOLDER": "time",
-            "ERROR": "Enter valid time (Format: HH:MM)."
-          }
-        },
-        "WETTKAMPFTAG4": {
-          "LABEL": "4. competition day",
-          "DATUM": {
-            "LABEL": "date",
-            "PLACEHOLDER": "date",
-            "ERROR": "Enter valid date (Format: YYYY-MM-DD)."
-          },
-          "ORT": {
-            "LABEL": "location",
-            "PLACEHOLDER": "address",
-            "ERROR": "Enter valid address (Sporthalle, 88454 Hochdorf)."
-          },
-          "BEGINN": {
-            "LABEL": "Start",
-            "PLACEHOLDER": "time",
-            "ERROR": "Enter valid time (Format: HH:MM)."
-          }
-        },
-
         "SAVE": "Save",
+        "AUSRICHTER": "Organizer",
         "UPDATE": "Refresh",
         "DELETE": "Delete",
         "WETTKAMPFTAGE": "Competition days",
-        "MANNSCHAFT": "Copy teams",
+        "MANNSCHAFT": "Copy teams from previous year",
         "BACK": "Back"
       },
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Delete event",
           "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
+        },
+        "ADD": {
+          "TITLE": "Add competition day",
+          "DESCRIPTION": "Do you want to add another competition day?"
         },
         "DELETE_SUCCESS": {
           "TITLE": "Event deleted",
@@ -1421,6 +1428,10 @@
       "INVALID_SIGN_IN_CREDENTIALS": {
         "TITLE": "Invalid Sign In Credentials",
         "DESCRIPTION": "Please check your email address and password"
+      },
+      "TOO_MANY_INCORRECT_LOGIN_ATTEMPTS": {
+        "TITLE": "login attempt blocked",
+        "DESCRIPTION": "The number of incorrect login attempts has been exceeded. Please try again in 5 minutes."
       },
       "DATABASE_ERROR": {
         "TITLE": "Database Error",
