@@ -10,8 +10,7 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '@shared/services';
-import {fromPayload, fromPayloadArray, ToDO, ToDTO} from '../mapper/wettkampf-mapper';
-import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
+import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
 
@@ -67,6 +66,27 @@ export class WettkampfDataProviderService extends DataProviderService {
     });
   }
 
+  public findAllowedMember(wettkampfID: string | number): Promise<number[]> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfID).path("allowedContestants").build())
+          .then((data: number[]) => {
+
+            resolve(data);
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
   public findByVeranstaltungId(veranstaltungId: number): Promise<BogenligaResponse<WettkampfDTO[]>> {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVeranstaltungId/' + veranstaltungId).build())
@@ -91,6 +111,7 @@ export class WettkampfDataProviderService extends DataProviderService {
           .then((data: VersionedDataTransferObject[]) => {
             console.log('wettkaempfe raw data');
             console.log(data);
+
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
 
@@ -149,9 +170,11 @@ export class WettkampfDataProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    console.log("create Methode")
     return new Promise((resolve, reject) => {
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
           .then((data: VersionedDataTransferObject) => {
+            console.log("Then create");
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
           }, (error: HttpErrorResponse) => {

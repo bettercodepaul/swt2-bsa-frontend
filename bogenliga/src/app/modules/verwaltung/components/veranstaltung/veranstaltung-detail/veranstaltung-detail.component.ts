@@ -36,6 +36,7 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
 import {WettkampfKlasseDO} from '@verwaltung/types/wettkampfklasse-do.class';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -94,6 +95,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public selectedMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
   public possibleTabellenplatz: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
   public oldSortierung: number;
+
+  public currentLigatabelle: Array<LigatabelleErgebnisDO>;
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -240,8 +243,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
               , (response: BogenligaResponse<VeranstaltungDO>) => {
                   console.log('Failed');
                   this.saveLoading = false;
-
-
                 });
           }
         )
@@ -262,7 +263,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
                   this.saveLoading = false;
                 }
               });
-
           this.notificationService.showNotification(notification);
         });
   }
@@ -390,7 +390,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadWettkampftyp();
     this.loadUsers();
     this.loadLiga();
-   // this.loadAllVeranstaltung();
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
@@ -399,28 +398,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
     this.loadMannschaftsTable();
-    // this.saveLoading = false;
-  }
-
-  private handleCopyFromVeranstaltungFailure() {
-    const notification: Notification = {
-      id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE.DESCRIPTION_DEFAULT',
-      severity:    NotificationSeverity.ERROR,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
-    };
-    this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.saveLoading = false;
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-
   }
 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
@@ -530,13 +507,13 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private loadMannschaftsTable() {
     this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
-      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.loadTableRows(response.payload))
+      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadMannschaftsTableSuccess(response.payload))
       .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
   }
 
-  private loadTableRows(payload: DsbMannschaftDO[]) {
+  private handleLoadMannschaftsTableSuccess(payload: DsbMannschaftDO[]) {
     this.rows = toTableRows(payload);
-    this.saveLoading = false;
+    this.loadLigaTabelleExists();
   }
 
   public onEdit(versionedDataObject: VersionedDataObject) {
@@ -590,8 +567,34 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadMannschaftsTable();
   }
 
-  public checkCountMannschaften(): boolean {
-    return !(this.rows !== undefined && this.rows.length === 8);
+  public checkForExistingLigatabelle(): boolean {
+    return this.currentLigatabelle !== undefined;
+  }
+
+  private loadLigaTabelleExists() {
+    this.ligatabellenService.getLigatabelleVeranstaltung(this.id)
+        .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => response.payload.length >= 4 ? this.handleLigatabelleExistsSuccess(response) : this.handleLigatabelleExistsFailure())
+        .catch(() => this.handleLigatabelleExistsFailure())
+  }
+
+  private handleLigatabelleExistsFailure() {
+    console.log("Initiale Ligatabelle does not yet exist");
+    this.currentLigatabelle = undefined;
+    this.saveLoading = false;
+  }
+
+  private handleLigatabelleExistsSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
+    try {
+      this.currentLigatabelle = response.payload;
+      for (let i = 0; i < this.rows.length; i++) {
+        let row = this.rows[i];
+        row.disabledActions.push(TableActionType.EDIT);
+        row.hiddenActions.push(TableActionType.EDIT);
+      }
+      this.saveLoading = false;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public createMatchesWT0(event: any) {
@@ -619,6 +622,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       });
 
     this.notificationService.showNotification(notification);
+    this.loadLigaTabelleExists();
   }
 
   private handleCreateMatchesWT0Failure() {
