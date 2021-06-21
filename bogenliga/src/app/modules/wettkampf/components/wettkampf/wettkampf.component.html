@@ -173,6 +173,7 @@
                            [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
                            [fileName]="'Gesamtstatistik.pdf'"> Gesamtstatistik als PDF
       </bla-download-button>
+
     </div>
 <!-- popup -->
     <div class="overlay" *ngIf="popup">
@@ -208,6 +209,11 @@
     <div class="row print1">
       <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]">
         <h3>{{"Wettkampftag 1"}}</h3>
+        <bla-download-button id = "TagesuebersichtButton"
+                             [id]="'downloadTagesuebersicht'"
+                             [downloadUrl]="onButtonDownload('pdf/Uebersicht')"
+                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+        </bla-download-button>
         <bla-data-table id="row0"
                         [loading]="loadingData"
                         [config]="config_table"
