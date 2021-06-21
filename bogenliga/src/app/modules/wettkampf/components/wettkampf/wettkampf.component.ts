@@ -459,6 +459,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = []);
   }
 
+  public onButtonDownloadUebersicht(path: string): string {
+    return new UriBuilder()
+      .fromPath(environment.backendBaseUrl)
+      .path('v1/download')
+      .path(path + "&veranstaltungsid=" + this.currentVeranstaltung.id)
+      .build();
+  }
+
   public onButtonDownload(path: string): string {
       return new UriBuilder()
         .fromPath(environment.backendBaseUrl)

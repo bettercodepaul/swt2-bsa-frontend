@@ -209,9 +209,9 @@
     <div class="row print1">
       <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]">
         <h3>{{"Wettkampftag 1"}}</h3>
-        <bla-download-button id = "TagesuebersichtButton"
+        <bla-download-button id = "TagesuebersichtButton" 
                              [id]="'downloadTagesuebersicht'"
-                             [downloadUrl]="onButtonDownload('pdf/Uebersicht')"
+                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=1')"
                              [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
         </bla-download-button>
         <bla-data-table id="row0"
