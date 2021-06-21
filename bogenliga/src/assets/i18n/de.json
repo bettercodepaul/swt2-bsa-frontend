@@ -37,6 +37,8 @@
       "TITLE": "Home",
       "WELCOME": "Herzlich Willkommen",
       "WETTKAEMPFE": "Unsere nächsten Wettkämpfe",
+      "WETTKAMPFERSATZ": "Derzeit sind keine Wettkämpfe geplant",
+
       "FURTHER": "weitere Infos",
       "CONTENT": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschafts Bogensport ziehen.",
       "BOX1HEADING": "SCHÜLER- UND JUGEND- CUP 2018",
@@ -108,6 +110,12 @@
     "SPORTJAHRESPLAN": {
       "TITLE": "Terminübersicht"
     },
+    "GENERIERE_MATCHES": {
+      "NOTIFICATION": {
+        "TITLE": "Es existieren keine Mannschaften für den Tag",
+        "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden"
+      }
+    },
     "TITEL": {
       "VERANSTALTUNG": "Veranstaltungen",
       "WETTKAEMPFE": "Wettkampftage"
@@ -148,6 +156,10 @@
     },
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
+        "LADEN": {
+          "TITLE":"Schusszettel laden",
+          "DESCRIPTION": "Schusszettel wird geladen..."
+        },
         "DOWNLOADFEHLER":{
           "TITLE":"Fehler beim generieren des Schusszettels:",
           "DESCRIPTION": "Schusszettel konnte nicht genertiert werden, da keine Matches für den Wettkampf vorhanden sind."
@@ -264,7 +276,8 @@
           "MATCHPUNKTE": "Matchpunkte",
           "SCHUETZE": "Schütze",
           "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
-          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr"
+          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr",
+          "RUEKENNUMMER": "Rückennummer"
         }
       }
     }
@@ -1124,6 +1137,7 @@
         "WETTKAMPFTAG": {
           "FORM": {
             "LABEL": "Wettkampftag",
+            "REMINDSAVE": "Bitte speichern Sie zuerst Ihre Änderungen.",
             "DATUM": {
               "LABEL": "Datum",
               "PLACEHOLDER": "Datum",
@@ -1135,7 +1149,7 @@
             "STRASSE": {
               "LABEL": "Strasse",
               "PLACEHOLDER": "Straße und Hausnummer *",
-              "ERROR": "Ungültige Eingabe"
+              "ERROR": "Ungültige Eingabe."
             },
             "PLZ": {
               "LABEL": "Postleitzahl",
@@ -1182,6 +1196,10 @@
               "DELETE_FAILURE": {
                 "TITLE": "Fehler beim Löschen",
                 "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              },
+              "TOO_MANY": {
+                "TITLE": "Zu viele Wettkampftage",
+                "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
               }
             }
           },

@@ -13,8 +13,10 @@
       </div>
 
       <div class="flexChild">
-        <h3><a class="blackLink"
+        <h3> <a class="blackLink"
                routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
+
+        <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
 
         <table id="example"
                class="table table-hover table-sm table-responsive-sm thead-light table-striped"
@@ -34,10 +36,16 @@
             <bla-data-table [config]="config_table"
                             [rows]="rows"
                             [loading]="loadingTable"
+                            [hidden]="checkIfTableIsEmpty()"
                             (onMapEntry)="onMap($event)">
             </bla-data-table>
           </div>
         </table>
+
+
+
+
+
           <!-- Rows -->
 <!--
           <tbody>
