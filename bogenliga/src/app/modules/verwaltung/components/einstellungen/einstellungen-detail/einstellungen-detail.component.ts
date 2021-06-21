@@ -155,20 +155,18 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
     const tempEinstellung = this.neucurrentEinstellung.value;
 
     if (this.currentEinstellung.key === 'SMTPEmail') {
-      let valueArray: string[];
-      valueArray = tempEinstellung.split('@');
-
-      if (valueArray.length < 2 || valueArray[0].length < 3 || valueArray[1].split('.').length < 2) {
+      const regex = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/)
+      if (!regex.test(tempEinstellung)) {
         notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.EMAIL';
       }
     } else if (this.currentEinstellung.key === 'SMTPPort') {
-      const portNumber = Number(tempEinstellung);
-      if (isNaN(portNumber)) {
+      const regex = new RegExp(/^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$/);
+      if (!regex.test(tempEinstellung)) {
         notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.PORT';
       }
     } else if (this.currentEinstellung.key === 'SMTPHost') {
-      const hostSplit = tempEinstellung.split('.');
-      if (hostSplit.length < 2 || hostSplit[0].length < 1 || hostSplit[1].length < 1) {
+      const regex = new RegExp(/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$|^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)+([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$/);
+      if (!regex.test(tempEinstellung)) {
         notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.HOST';
       }
     }
