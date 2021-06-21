@@ -9,9 +9,9 @@ import {UriBuilder} from '../../../data-provider';
 export class TagesuebersichtDownloadComponent implements OnInit {
 
   // Get the value of the attribute from the html tag
+
   @Input()
   currentVeranstaltung : number;
-
   @Input()
   wettkampftag : number;
 
@@ -27,7 +27,7 @@ export class TagesuebersichtDownloadComponent implements OnInit {
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
       .path(path)
-      .path('?veranstaltungsid=' + this.currentVeranstaltung + '?wettkampftag=' + this.wettkampftag)
+      .path('?veranstaltungsid=' + this.currentVeranstaltung + '&wettkampftag=' + this.wettkampftag)
       .build();
   }
 }
