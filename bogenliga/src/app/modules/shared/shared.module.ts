@@ -45,6 +45,7 @@ import {MeldezettelDownloadComponent} from '@shared/components/buttons/meldezett
 import {OverviewSelectionDialogComponent} from '@shared/components/dialogs/overview-selection-dialog/overview-selection-dialog.component';
 import {EinzelstatistikDownloadComponent} from '@shared/components/buttons/einzelstatistik-download/einzelstatistik-download.component';
 import {GesamtstatistikDownloadComponent} from '@shared/components/buttons/gesamtstatistik-download/gesamtstatistik-download.component';
+import {TagesuebersichtDownloadComponent} from '@shared/components/buttons/tagesuebersicht-download/tagesuebersicht-download-component';
 
 import {StorageServiceModule} from 'ngx-webstorage-service';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -102,6 +103,7 @@ import {fab} from '@fortawesome/free-brands-svg-icons';
     OverviewSelectionDialogComponent,
     EinzelstatistikDownloadComponent,
     GesamtstatistikDownloadComponent,
+    TagesuebersichtDownloadComponent,
   ],
   declarations: [
     ButtonComponent,
@@ -137,6 +139,7 @@ import {fab} from '@fortawesome/free-brands-svg-icons';
     OverviewSelectionDialogComponent,
     EinzelstatistikDownloadComponent,
     GesamtstatistikDownloadComponent,
+    TagesuebersichtDownloadComponent,
   ]
 })
 export class SharedModule {
