@@ -79,6 +79,8 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   private deleteNotification: Notification;
   private duplicateSubscription;
   private deleteSubscription;
+  private dsbmitglied: DsbMitgliedDO = new DsbMitgliedDO();
+
 
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
@@ -414,19 +416,24 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
   // @param memberId: MannschaftsId of Mannschaft of Member to delete
   // @param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
-  private deleteMitglied(memberId: number, dsbMitgliedId: number) {
+  private async deleteMitglied(memberId: number, dsbMitgliedId: number) {
+
+    const response = await this.dsbMitgliedProvider.findById(dsbMitgliedId);
+    this.dsbmitglied = response.payload;
+
+    this.rows = showDeleteLoadingIndicatorIcon(this.rows, dsbMitgliedId);
     const notification: Notification = {
       id:               NOTIFICATION_DELETE_MITGLIED + memberId,
       title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.TITLE',
       description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.DESCRIPTION',
-      descriptionParam: '' + dsbMitgliedId,
+      descriptionParam: '' + this.dsbmitglied.vorname + ' ' + this.dsbmitglied.nachname,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
       type:             NotificationType.YES_NO,
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
+    let noti = this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
@@ -461,6 +468,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
+            noti.unsubscribe();
           }
         });
     this.notificationService.showNotification(notification);
