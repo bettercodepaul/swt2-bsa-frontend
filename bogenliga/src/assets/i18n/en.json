@@ -152,6 +152,10 @@
         "DESCRIPTION": "Scorecard could not be generated, because there are no matches in the competition."
       },
       "NOTIFICATION": {
+        "LADEN": {
+          "TITLE":"Load Shot-note",
+          "DESCRIPTION": "Loading Shot-note..."
+        },
         "EINGABEFEHLER":{
           "TITLE":"Input error",
           "DESCRIPTION": "Arrow value invalid..."

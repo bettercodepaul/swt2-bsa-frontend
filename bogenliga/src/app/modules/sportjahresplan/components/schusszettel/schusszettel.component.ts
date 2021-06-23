@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MatchDOExt} from '../../types/match-do-ext.class';
 import {PasseDO} from '../../types/passe-do.class';
 import {SchusszettelProviderService} from '../../services/schusszettel-provider.service';
-import {BogenligaResponse, UriBuilder} from '../../../shared/data-provider';
+import {BogenligaResponse, RequestResult, UriBuilder} from '../../../shared/data-provider';
 import {MatchProviderService} from '../../services/match-provider.service';
 import {isUndefined} from '@shared/functions';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -25,6 +25,7 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
@@ -77,6 +78,9 @@ export class SchusszettelComponent implements OnInit {
   veranstaltungVorherig: VeranstaltungDO;
   veranstaltungGegenwaertig: VeranstaltungDO;
 
+  allowedMitglieder1: number[];
+  allowedMitglieder2: number[];
+
 
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
@@ -88,6 +92,7 @@ export class SchusszettelComponent implements OnInit {
               private passeDataProvider: PasseDataProviderService,
               private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungDataProvider: VeranstaltungDataProviderService,
+              private mannschaftsMitgliedDataProvider: MannschaftsmitgliedDataProviderService
   ) {
   }
 
@@ -119,6 +124,17 @@ export class SchusszettelComponent implements OnInit {
       if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
         const match1id = params['match1id'];
         const match2id = params['match2id'];
+
+        //Notification while preparing
+        this.notificationService.showNotification({
+          id:          'NOTIFICATION_SCHUSSZETTEL_LOADING',
+          title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.LADEN.TITLE',
+          description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.LADEN.DESCRIPTION',
+          severity:    NotificationSeverity.INFO,
+          origin:      NotificationOrigin.USER,
+          userAction:  NotificationUserAction.PENDING
+        });
+
         this.schusszettelService.findMatches(match1id, match2id)
             .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
               this.match1 = data.payload[0];
@@ -140,6 +156,24 @@ export class SchusszettelComponent implements OnInit {
               if (shouldInitSumSatz) {
                 this.initSumSatz();
                 this.setPoints();
+              }
+
+              this.wettkampfDataProvider.findAllowedMember(this.match1.wettkampfId).then((value) => {
+                this.allowedMitglieder1=value;
+                console.log('Allowed for match1: ', this.allowedMitglieder1);
+                if(this.match1.wettkampfId == this.match2.wettkampfId){
+                  this.allowedMitglieder2 = this.allowedMitglieder1;
+                  //Close notification when ready
+                  this.notificationService.discardNotification();
+                }
+              });
+              if(this.match1.wettkampfId != this.match2.wettkampfId){
+                this.wettkampfDataProvider.findAllowedMember(this.match2.wettkampfId).then((value)=>{
+                  this.allowedMitglieder2 = value;
+                  console.log('Allowed for match2: ', this.allowedMitglieder2);
+                  //Close notification when ready
+                  this.notificationService.discardNotification();
+                });
               }
             }, (error) => {
               console.error(error);
@@ -175,6 +209,47 @@ export class SchusszettelComponent implements OnInit {
     match.sumSatz[satzNr] = this.getSumSatz(match, satzNr);
     this.setPoints();
     this.dirtyFlag = true; // Daten geändert
+  }
+
+  onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
+    var mannschaftId = matchNr == 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
+
+    this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value).then(result => {
+      if(result.result == RequestResult.SUCCESS){
+        console.log(result.payload.dsbMitgliedId);
+
+        let dsbNummer = result.payload.dsbMitgliedId;
+        let allowed = [];
+
+        if(matchNr == 1){
+          allowed = this.allowedMitglieder1;
+        }
+        else{
+          allowed = this.allowedMitglieder2;
+        }
+
+        if(!allowed.includes(dsbNummer)){
+          this.match1.schuetzen.forEach(val => {
+            console.log('Checking ',val);
+            if(allowed.includes(val[0].dsbMitgliedId)){
+              console.log(val[0].rueckennummer + " is valid");
+            }
+          });
+
+          this.notificationService.showNotification({
+            id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.SYSTEM,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.ACCEPTED
+          });
+        }
+      }else{
+        console.log('Error');
+      }
+    });
   }
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
@@ -357,10 +432,8 @@ export class SchusszettelComponent implements OnInit {
     this.popupAndererTag = true;
   }
 
-
-
-    save() {
-   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+  save(){
+    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
         title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',

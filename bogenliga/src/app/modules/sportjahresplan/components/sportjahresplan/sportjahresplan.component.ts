@@ -13,11 +13,22 @@ import {isUndefined} from '@shared/functions';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
-import {NotificationService} from '@shared/services/notification';
+import {
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity, NotificationType,
+  NotificationUserAction
+} from '@shared/services/notification';
 import {environment} from '@environment';
 import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
 import {onMapService} from '@shared/functions/onMap-service';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
+import {MatchDO} from '@verwaltung/types/match-do.class';
+import {PasseDoClass} from '@verwaltung/types/passe-do-class';
+import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
+import {WettkampfComponent} from '@wettkampf/components';
+import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 
 
 
@@ -32,7 +43,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   public config = SPORTJAHRESPLAN_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_table_match = MATCH_TABLE_CONFIG;
-  public PLACEHOLDER_VAR = 'Veranstaltung auswählen...';
+  public PLACEHOLDER_VAR = 'Veranstaltung auswÃ¤hlen...';
 
 
 
@@ -60,20 +71,27 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private urlString: string;
   private currentVeranstaltungName;
   private wettkampfId;
+  private disabledButton = true;
+  private disabledOtherButtons = true;
   wettkampfIdEnthalten: boolean;
+  public wettkampfListe;
   wettkampf: WettkampfDO;
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
   veranstaltung: VeranstaltungDO;
+  public matches: Array<MatchDO[]> = [];
+  private wettkampfComponent: WettkampfComponent;
+
 
 
 
   constructor(private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService,
-              private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-              private wettkampfDataProvider: WettkampfDataProviderService,
-              private matchDataProvider: MatchDataProviderService,
-              private matchProvider: MatchProviderService) {
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+    private wettkampfDataProvider: WettkampfDataProviderService,
+    private matchDataProvider: MatchDataProviderService,
+    private passeDataProviderService: PasseDataProviderService,
+    private matchProvider: MatchProviderService) {
     super();
   }
 
@@ -88,16 +106,16 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         console.log('WettkampfID:', this.wettkampfId);
 
 
-        // Ermitteln des Wettkampfs: für automatische Auswahl
-        // Ermitteln aller Veranstaltungen: für die Tabelle Veranstaltungen
-        // Ermitteln der Veranstaltung des aktuellen Wettkampfs: für die Ausgabe unter der Tabelle "Veranstaltungen",
+        // Ermitteln des Wettkampfs: fÃ¼r automatische Auswahl
+        // Ermitteln aller Veranstaltungen: fÃ¼r die Tabelle Veranstaltungen
+        // Ermitteln der Veranstaltung des aktuellen Wettkampfs: fÃ¼r die Ausgabe unter der Tabelle "Veranstaltungen",
         // diese besteht aus folgendem Muster:
         // VeranstaltungName VeranstaltungSportjahr - WettkampfTag. Wettkampftag
 
         // zunaechst wird der Wettkampf ermittelt, danach werden alle Veranstaltungen und die jeweilige Veranstaltung des Wettkampfs ermittelt
         // die Funktionen dazu werden nach der erfolgreichen Ermittlung des Wettkampfs aufgerufen
         // im Anschluss wird der Wettkampf automatisch aufgerufen
-        // im Falle einer nicht erfolgreichen Ermittlung werden nur alle Veranstaltungen ermittelt, damit diese in der Tabelle "Veranstaltung" angezeigt werden können
+        // im Falle einer nicht erfolgreichen Ermittlung werden nur alle Veranstaltungen ermittelt, damit diese in der Tabelle "Veranstaltung" angezeigt werden kÃ¶nnen
         this.LoadWettkampf();
 
         this.visible = false;
@@ -119,7 +137,6 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   // Ermitteln aller Wettkampftage
   private LoadWettkampf() {
-    console.log('Bin in  loadWettkampf');
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfSuccess(response))
         .catch((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfFailure(response));
@@ -128,18 +145,17 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   // Wettkampftage konnten nicht ermittelt werden -> Fehlermeldung in der Konsole
   private handleLoadWettkampfFailure(response: BogenligaResponse<WettkampfDO[]>): void {
     console.log('ERROR: Keine Wettkaempfe gefunden');
-    // die Wettkampftage konnten nicht erfolgreich geladen werden -> Ermittlung der Veranstaltung wird auch nicht möglich sein
-    // somit sollen nur die Veranstaltungen für die Tabelle ermittelt werden, die Veranstaltung kann ja gar nicht mehr erfolgreich ermittelt werden
-    // -> this.wettkampfIdEnthalten auf false setzen, damit die Veranstaltungen wie sonst auch geladen werden können
+    // die Wettkampftage konnten nicht erfolgreich geladen werden -> Ermittlung der Veranstaltung wird auch nicht mÃ¶glich sein
+    // somit sollen nur die Veranstaltungen fÃ¼r die Tabelle ermittelt werden, die Veranstaltung kann ja gar nicht mehr erfolgreich ermittelt werden
+    // -> this.wettkampfIdEnthalten auf false setzen, damit die Veranstaltungen wie sonst auch geladen werden kÃ¶nnen
     this.wettkampfIdEnthalten = false;
     this.loadVeranstaltungen();
   }
 
   // Wettkampftage konnten ermittelt werden -> Aufruf von this.findWettkampf damit entsprechendes WettkampfDO ermittelt werden kann
   private handleLoadWettkampfSuccess(response: BogenligaResponse<WettkampfDO[]>): void {
-    console.log('Bin in handleLoadWettkampfSucccess');
     this.wettkaempfe = [];
-    // Übergabe aller Wettkaempfe an this.wettkaempfe
+    // Ãœbergabe aller Wettkaempfe an this.wettkaempfe
     this.wettkaempfe = response.payload;
     this.wettkaempfe.forEach((Wettkampf: WettkampfDO) => this.findWettkampf(Wettkampf));
   }
@@ -153,7 +169,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       this.wettkampf = Wettkampf;
       console.log('Wettkampf gefunden:', this.wettkampf);
 
-      // als nächstes müssen alle Veranstaltungen für die Tabelle "Veranstaltung" und die aktuelle Veranstaltung für die Ausgabe darunter ermittelt werden
+      // als nÃ¤chstes mÃ¼ssen alle Veranstaltungen fÃ¼r die Tabelle "Veranstaltung" und die aktuelle Veranstaltung fÃ¼r die Ausgabe darunter ermittelt werden
       this.loadVeranstaltungen();
     }
   }
@@ -174,7 +190,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     this.veranstaltungen = response.payload;
     this.loadingVeranstaltungen = false;
 
-    // wenn eine WettkampfId übergeben wurde, soll die Veranstaltung des Wettkampfs ermittelt werden
+    // wenn eine WettkampfId Ã¼bergeben wurde, soll die Veranstaltung des Wettkampfs ermittelt werden
     if (this.wettkampfIdEnthalten) {
       this.veranstaltungen.forEach((veranstaltung) => this.findVeranstaltung(veranstaltung));
     }
@@ -192,7 +208,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     console.log('Bin in findVeranstaltung');
 
     if (this.wettkampf.wettkampfVeranstaltungsId === veranstaltung.id) {
-      // Veranstaltung von WettkampfDO wurde gefunden -> Übergabe an this.veranstaltung
+      // Veranstaltung von WettkampfDO wurde gefunden -> Ãœbergabe an this.veranstaltung
       this.veranstaltung = veranstaltung;
       console.log('Veranstaltung gefunden:', this.veranstaltung);
 
@@ -241,15 +257,47 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         ' - ' + $event.wettkampfTag + '. Wettkampftag';
 
       this.visible = true;
-
       this.tableContentMatch = [];
+      this.showMatches();
 
-      this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
-          .then((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchSuccess(response))
-          .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
+  //Zeigt Matches an
+  public showMatches(){
+    this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
+        .then((response: BogenligaResponse<MatchDTOExt[]>) => {
+        //Prüfe ob Matches schon existieren
+          if(response.payload.length != 0){
+            this.matchesExist();
+          }else{
+            this.matchesNotExist();
+            //prüfe ob es sich um den ersten wettkampftag handelt
+            if(this.selectedWettkampfId-1 < this.wettkampfListe[0].id){
+              //aktiviere Button
+              this.disabledButton = false;
+            }else{
+              // abfrage für vorherigen Matchtag
+              this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId - 1)
+                  .then((response: BogenligaResponse<MatchDTOExt[]>) => {
+                    // wenn es keine Matches gibt
+                    if( response.payload.length == 0 ){
+                      // dekatviere  Button
+                      this.disabledButton = true;
+                    }else {
+                      // aktivere button generiere Mathces
+                      this.disabledButton = false;
+                    }//Falls erstes Match angefragt wird
+                  }).catch((response: BogenligaResponse<MatchDTOExt[]>) => {
+              });
+            }
+          }
+          this.handleFindMatchSuccess(response)
+        })
+        .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
+  }
+
+
 
   /**
    * Creates Link to Google Maps
@@ -276,20 +324,56 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       .build();
   }
 
-
-  // wenn ein Wettkampftag ausgewählt wurde - dann werden die Button enabled,
+  // wenn ein Wettkampftag ausgewÃ¤hlt wurde - dann werden die Button enabled,
   // da die Ligatabelle-ID als Parameter weiter gegeben wird.
 
   public isDisabled(): boolean {
-    if (this.selectedWettkampf === '') {
-      return true;
-    } else {
-      return false;
-    }
+  return this.disabledOtherButtons;
   }
 
-   // wenn "Edit" an einem Match geklickt wird
-  // öffnen wir in einem neuen Tab die Datenerfassung /Schusszettel für die Begegnung
+
+  //Funktion falls Matches existieren -> alle Buttons gehen an, generiere Matches aus
+  private matchesExist(){
+    this.disabledOtherButtons = false;
+    this.disabledButton = true;
+  }
+  //Funktion wenn Matches nicht existieren -> generiere Matches Button geht aus, alle weiteren an
+  private matchesNotExist(){
+    this.disabledOtherButtons = true;
+    this.disabledButton = false;
+  }
+
+  public isDisabledGMButton(): boolean{
+    return this.disabledButton;
+}
+
+  public generateMatches(){
+    this.matchDataProvider.generateDataForMatches(this.selectedWettkampfId)
+        .then((response: BogenligaResponse<MatchDTO[]>) => {
+          console.log("Response von generateMatches(): ", response);
+          this.showMatches()
+        })
+        //handleFailure -> Fehlermeldung muss aufgerufen werden
+        .catch((response: BogenligaResponse<MatchDTO[]>) =>  {
+          this.handleFailureGenerateMatches();
+          this.showMatches();
+        });
+  }
+
+  private handleFailureGenerateMatches(): void{
+    this.notificationService.showNotification({
+      id:          'NOTIFICATION_GENERIERE_MATCHES',
+      title:       'SPORTJAHRESPLAN.GENERIERE_MATCHES.NOTIFICATION.TITLE',
+      description: 'SPORTJAHRESPLAN.GENERIERE_MATCHES.NOTIFICATION.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.ACCEPTED
+  })
+  }
+
+  // wenn "Edit" an einem Match geklickt wird
+  // Ã¶ffnen wir in einem neuen Tab die Datenerfassung /Schusszettel fÃ¼r die Begegnung
 
   public onEdit($event: MatchDOExt): void {
     if ($event.id >= 0) {
@@ -297,8 +381,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       this.matchProvider.pair(this.selectedMatchId)
           .then((data) => {
             if (data.payload.length === 2) {
-// das wäre schöner - funktioniert leider aber noch nicht...
-// öffne die Datenerfassung in einem neuen Tab
+// das wÃ¤re schÃ¶ner - funktioniert leider aber noch nicht...
+// Ã¶ffne die Datenerfassung in einem neuen Tab
               /*            this.urlString = new UriBuilder()
                .fromPath(environment.)
                .path('/#/schusszettel/'+ data.payload[0])
@@ -317,7 +401,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
     this.wettkampfDataProvider.findAllByVeranstaltungId(this.selectedVeranstaltungId)
-        .then((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfSuccess(response))
+        .then((response: BogenligaResponse<WettkampfDTO[]>) => {
+          //Um rauszufinden ob es sich um ersten Wettkampftag handelt
+          this.wettkampfListe = response.payload;
+          this.handleFindWettkampfSuccess(response)
+        })
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfFailure(response));
   }
 
