@@ -346,7 +346,7 @@
         "NEWPASSWORD": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl"
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$+=!*()@%&?"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",
@@ -1322,7 +1322,7 @@
         "PASSWORD_NEW": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte neues Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$+=!*()@%&?"
         },
         "ROLE_UPDATE": "Rolle ändern",
         "PW_UPDATE": "Passwort ändern"
