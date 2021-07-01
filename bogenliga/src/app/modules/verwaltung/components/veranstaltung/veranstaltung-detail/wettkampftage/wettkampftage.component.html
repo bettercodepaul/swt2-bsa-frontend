@@ -235,7 +235,21 @@
         </div>
       </div>
 
-      <!-- BUTTONS: SPEICHERN UND ZURÜCK -->
+      <!-- BUTTONS: LÖSCHEN|SPEICHERN|ZURÜCK -->
+      <div class="form-group row">
+        <div class="col-sm-12"></div>
+        <div class="col-sm-3 button-box">
+
+          <!--LÖSCHEN -->
+          <bla-button *ngIf="entityExists()"
+                      [buttonType]="ButtonType.DANGER"
+                      [loading]="deleteLoading"
+                      (onClick)="onDelete(selectedWettkampfTag, $event)">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
+          </bla-button>
+        </div>
+      </div>
+
       <div class="form-group row">
         <div class="col-sm-11"></div>
         <div class="col-sm-1 button-box">
@@ -246,20 +260,6 @@
                       [loading]="saveLoading"
                       (onClick)="onSaveWettkampfTag(selectedWettkampfTag, $event); wettkampftageForm.form.markAsPristine();">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
-          </bla-button>
-        </div>
-      </div>
-
-      <div class="form-group row">
-        <div class="col-sm-11"></div>
-        <div class="col-sm-1 button-box">
-
-          <!--LÖSCHEN -->
-          <bla-button *ngIf="entityExists()"
-                      [buttonType]="ButtonType.DANGER"
-                      [loading]="deleteLoading"
-                      (onClick)="onDelete(selectedWettkampfTag, $event)">
-            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
           </bla-button>
         </div>
       </div>

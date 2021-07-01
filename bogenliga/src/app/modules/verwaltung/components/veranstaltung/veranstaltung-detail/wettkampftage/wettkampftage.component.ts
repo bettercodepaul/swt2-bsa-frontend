@@ -382,11 +382,14 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
+  //method to delete a wettkampftag (if the deadline has expired, no wettkampftag will be deleted)
   public onDelete(wettkampfTagNumber: number, ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
     
     const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
+    let currentDate = new Date();
+    let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
 
     const notification: Notification = {
       id: NOTIFICATION_DELETE_WETTKAMPFTAG+ id,
@@ -399,12 +402,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       userAction: NotificationUserAction.ACCEPTED
     };
 
-    let dateTime = new Date();
-    let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
-    console.log(deadlineDate);
-    if(deadlineDate < dateTime){
-      console.log(deadlineDate);
-      console.log(dateTime);
+    if(deadlineDate < currentDate){
       const notification_expired: Notification = {
         id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
         title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.TITLE',
@@ -414,7 +412,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         type:        NotificationType.OK,
         userAction:  NotificationUserAction.PENDING
       };
+
       this.notificationService.showNotification(notification_expired);
+
     } else {
       this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG + id)
           .subscribe((myNotification) => {
@@ -430,36 +430,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.notificationService.showNotification(notification);
     }
   }
-
-  /*
-  public onDelete(ignore: any): void {
-    this.deleteLoading = true;
-    this.notificationService.discardNotification();
-    const id = this.currentVeranstaltung.id;
-
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
-      title:            'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG + id)
-        .subscribe((myNotification) => {
-
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.veranstaltungDataProvider.deleteById(id)
-                .then((response) => this.handleDeleteSuccess(response))
-                .catch((response) => this.handleDeleteFailure(response));
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-  }*/
 
   public entityExists(): boolean {
     return this.currentVeranstaltung.id >= 0;
