@@ -47,9 +47,9 @@ import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_detail_delete';
-const NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS = 'wettkampftag_detail_delete_success';
-const NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE = 'wettkampftag_detail_delete_failure';
+const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
+const NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS = 'wettkampftag_delete_success';
+const NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE = 'wettkampftag_delete_failure';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
 const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_success';
 const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
@@ -66,7 +66,6 @@ const wettkampfTagNotification: Notification = {
   type:        NotificationType.OK,
   userAction:  NotificationUserAction.PENDING
 };
-
 
 // TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne Funktion und unterscheidet nicht den
 // Status der Eingabefelder
