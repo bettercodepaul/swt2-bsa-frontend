@@ -1149,17 +1149,17 @@
             "STRASSE": {
               "LABEL": "Strasse",
               "PLACEHOLDER": "Straße und Hausnummer *",
-              "ERROR": "Ungültige Eingabe."
+              "ERROR": "Bitte geben Sie eine gültige Straße und Hausnummer ein."
             },
             "PLZ": {
               "LABEL": "Postleitzahl",
               "PLACEHOLDER": "Postleitzahl *",
-              "ERROR": "Ungültige Postleitzahl."
+              "ERROR": "Bitte geben Sie eine fünfstellige DE-Postleitzahl ein."
             },
             "ORTSNAME": {
               "LABEL": "Ort/Stadt",
               "PLACEHOLDER": "Ort/Stadt *",
-              "ERROR": "Ungültiger Ort."
+              "ERROR": "Bitte geben Sie einen Ort oder eine Stadt ein."
             },
             "ORTSINFO": {
               "LABEL": "Zusatzinformation",
