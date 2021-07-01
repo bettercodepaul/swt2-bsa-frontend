@@ -50,9 +50,6 @@ const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
 const NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS = 'wettkampftag_delete_success';
 const NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE = 'wettkampftag_delete_failure';
-const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
-const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_success';
-const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 const NOTIFICATION_WETTKAMPFTAG_TOO_MANY = 'veranstaltung_detail_wettkampftage_failure';
@@ -401,20 +398,36 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       type: NotificationType.YES_NO,
       userAction: NotificationUserAction.ACCEPTED
     };
+    let dateTime = new Date();
+    let day = dateTime.getDate();
+    let month = dateTime.getMonth()+1;
+    let year = dateTime.getFullYear();
+    let currentDate = year +"-"+month+"-"+day;
+    if(this.currentVeranstaltung.meldeDeadline < currentDate){
+      const notification_expired: Notification = {
+        id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+      this.notificationService.showNotification(notification_expired);
+    } else {
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG + id)
+          .subscribe((myNotification) => {
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG+ id)
-        .subscribe((myNotification) => {
-
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.wettkampfDataProvider.deleteById(id)
-                .then((response) => this.handleDeleteSuccess(response))
-                .catch((response) => this.handleDeleteFailure(response));
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.deleteLoading = false;
-          }
-        });
-
-    this.notificationService.showNotification(notification);
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.wettkampfDataProvider.deleteById(id)
+                  .then((response) => this.handleDeleteSuccess(response))
+                  .catch((response) => this.handleDeleteFailure(response));
+            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.deleteLoading = false;
+            }
+          });
+      this.notificationService.showNotification(notification);
+    }
   }
 
   /*
@@ -522,7 +535,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS,
+      id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
       title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_SUCCESS.TITLE',
       description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
@@ -531,7 +544,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.router.navigateByUrl('/verwaltung/veranstaltung');
@@ -545,7 +558,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE,
+      id:          NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE,
       title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.TITLE',
       description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
@@ -554,7 +567,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
