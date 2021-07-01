@@ -735,5 +735,20 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
     return true;
   }
+
+  //Wettkampftag der gelöscht werden soll, muss hier übergeben werden
+  public updateNumbersDelete(wettkampftagToDelete:WettkampfDO){
+    if(wettkampftagToDelete.wettkampfTag==this.currentWettkampftagArray.length){
+      this.currentWettkampftagArray.pop();
+    }
+    else {
+      for (let i = (wettkampftagToDelete.wettkampfTag + 1); i < this.currentWettkampftagArray.length; i++) {
+        this.currentWettkampftagArray[i].wettkampfTag--;
+        this.currentWettkampftagArray[i].id--;
+        this.currentWettkampftagArray[i - 1] = this.currentWettkampftagArray[i];
+        this.wettkampfDataProvider.update(this.currentWettkampftagArray[i]);
+      }
+    }
+  }
 }
 
