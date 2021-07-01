@@ -1182,7 +1182,7 @@
                 "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
               },
               "DELETE": {
-                "TITLE": "Wettkampftag löschen",
+                "TITLE": "Löschen",
                 "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
               },
               "ADD": {
