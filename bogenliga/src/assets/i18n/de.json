@@ -897,7 +897,7 @@
         },
         "DELETE_MITGLIED": {
           "TITLE": "Schütze aus Mannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Schützen mit der ID=%s wirklich aus der Mannschaft entfernen?"
+          "DESCRIPTION": "Wollen Sie den Schützen %s wirklich aus der Mannschaft entfernen?"
         },
         "DELETE_MITGLIED_SUCCESS": {
           "TITLE": "Erfolg",
