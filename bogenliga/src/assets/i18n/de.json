@@ -119,7 +119,7 @@
     "TITEL": {
       "VERANSTALTUNG": "Veranstaltungen",
       "WETTKAEMPFE": "Wettkampftage"
-      },
+    },
     "WETTKAMPF": {
       "TABLE": {
         "CDAY": "Wettkampftag",
@@ -258,7 +258,7 @@
           "LABEL": "Veranstaltungen:"
         },
         "SPORTJAHR":{
-        "LABEL": "Sportjahr:"
+          "LABEL": "Sportjahr:"
         }
 
       },
@@ -1172,40 +1172,42 @@
               "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
             }
           },
-            "NOTIFICATION": {
-              "SAVE": {
-                "TITLE": "Speichern erfolgreich",
-                "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
-              },
-              "UPDATE": {
-                "TITLE": "Update erfolgreich",
-                "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
-              },
-              "DELETE": {
-                "TITLE": "Wettkampftag löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
-              },
-              "ADD": {
-                "TITLE": "Neu",
-                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
-              },
-              "DELETE_SUCCESS": {
-                "TITLE": "Erfolgreich",
-                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
-              },
-              "DELETE_FAILURE": {
-                "TITLE": "Fehler beim Löschen",
-                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
-              },
-              "TOO_MANY": {
-                "TITLE": "Zu viele Wettkampftage",
-                "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
-              }
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Speichern erfolgreich",
+              "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Update erfolgreich",
+              "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
+            },
+            "DELETE": {
+              "TITLE": "Wettkampftag löschen",
+              "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+            },
+            "ADD": {
+              "TITLE": "Neu",
+              "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+            },
+            "DELETE_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+            },
+            "DELETE_FAILURE": {
+              "TITLE": "Fehler beim Löschen",
+              "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+            },
+            "TOO_MANY": {
+              "TITLE": "Zu viele Wettkampftage",
+              "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
             }
-          },
-          "KAMPFRICHTERLISTE": {
-            "LABEL": "Kampfrichter"
-          },
+          }
+        },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Kampfrichter",
+          "LinkeListe": "Ausgewählte Kampfrichter",
+          "RechteListe": "Freie Kampfrichter"
+        },
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
@@ -1231,10 +1233,6 @@
           "TITLE": "Veranstaltung angelegt",
           "DESCRIPTION": "Veranstaltung wurde erfolgreich angelegt"
         },
-        "SAVE_FAILURE": {
-          "TITLE": "Fehlermeldung: Duplikation",
-          "DESCRIPTION": "Es existiert in diesem Sportjahr bereits eine Veranstaltung für die von Ihnen angegebenen Liga. Bitte überprüfen Sie Ihre Eingabe."
-        },
         "COPYMANNSCHAFT_FAILURE": {
           "TITLE": "Kopieren fehlgeschlagen",
           "DESCRIPTION": "Keine Veranstaltung im Vorjahr vorhanden"
@@ -1243,8 +1241,8 @@
           "TITLE": "Aktualisieren erfolgreich",
           "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
         }
-    }
-  },
+      }
+    },
     "VERANSTALTUNG_NEU": {
       "TITLE": "VERANSTALTUNG - Neuanlage",
       "FORM": {
