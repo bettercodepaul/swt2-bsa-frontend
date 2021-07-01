@@ -385,7 +385,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public onDelete(wettkampfTagNumber: number, ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
-
+    
     const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
 
     const notification: Notification = {
@@ -723,7 +723,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         "",
         "",
         "",
-        "",
+        "00:00",
         this.anzahl,
         1,
         1,
@@ -750,16 +750,20 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   //Wettkampftag der gelöscht werden soll, muss hier übergeben werden
-  public async updateNumbersDelete(wettkampftagToDelete:WettkampfDO){
-    if(wettkampftagToDelete.wettkampfTag==this.currentWettkampftagArray.length){
-      this.currentWettkampftagArray.pop();
+  public async updateNumbersDelete(wettkampftagToDelete:number){
+    this.loadDistinctWettkampf();
+
+    if(wettkampftagToDelete==this.selectedDTOs.length){
+      this.selectedDTOs.pop();
     }
     else {
-      for (let i = (wettkampftagToDelete.wettkampfTag + 1); i < this.currentWettkampftagArray.length; i++) {
-        this.currentWettkampftagArray[i].wettkampfTag--;
-        this.currentWettkampftagArray[i].id--;
-        this.currentWettkampftagArray[i - 1] = this.currentWettkampftagArray[i];
-        await this.wettkampfDataProvider.update(this.currentWettkampftagArray[i]);
+      //Eig wettkampftagToDelete + 1 aber Array startet bei 0
+      for (let i = wettkampftagToDelete; i <= this.selectedDTOs.length; i++) {
+        this.selectedDTOs[i].wettkampfTag = (this.selectedDTOs[i].wettkampfTag)-1;
+        this.selectedDTOs[i].id = (this.selectedDTOs[i].id) -1;
+        this.selectedDTOs[i - 1] = this.selectedDTOs[i];
+
+        await this.wettkampfDataProvider.update(this.selectedDTOs[i-1]);
       }
     }
     this.loadDistinctWettkampf();
