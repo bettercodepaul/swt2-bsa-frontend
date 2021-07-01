@@ -886,7 +886,7 @@
         },
         "DELETE_MITGLIED": {
           "TITLE": "Delete marksman from team",
-          "DESCRIPTION": "Are you sure, you want to delete the marksman with ID=%s from the team?"
+          "DESCRIPTION": "Are you sure, you want to delete the marksman %s from the team?"
         },
         "DELETE_MITGLIED_SUCCESS": {
           "TITLE": "Success",
