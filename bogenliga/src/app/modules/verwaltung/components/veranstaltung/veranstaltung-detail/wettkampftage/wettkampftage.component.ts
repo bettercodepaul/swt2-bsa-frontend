@@ -398,12 +398,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       type: NotificationType.YES_NO,
       userAction: NotificationUserAction.ACCEPTED
     };
+
     let dateTime = new Date();
-    let day = dateTime.getDate();
-    let month = dateTime.getMonth()+1;
-    let year = dateTime.getFullYear();
-    let currentDate = year +"-"+month+"-"+day;
-    if(this.currentVeranstaltung.meldeDeadline < currentDate){
+    let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
+    console.log(deadlineDate);
+    if(deadlineDate < dateTime){
+      console.log(deadlineDate);
+      console.log(dateTime);
       const notification_expired: Notification = {
         id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
         title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.TITLE',
