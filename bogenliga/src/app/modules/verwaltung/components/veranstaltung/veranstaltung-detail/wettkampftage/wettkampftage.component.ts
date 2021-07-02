@@ -44,6 +44,9 @@ import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjah
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
+import {RoleDTO} from '@verwaltung/types/datatransfer/role-dto.class';
+import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-dto.class';
+import {kampfrichterExtendedDTO} from '@verwaltung/types/datatransfer/kampfrichter-extended-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -81,8 +84,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentUser: UserProfileDO;
   public rows: TableRow[];
-  private selectedVeranstaltungsId: number;
-  public currentWettkampftagDO: WettkampfDO;
 
   public currentWettkampftag: WettkampfDO = new WettkampfDO();
   public currentWettkampftagArray: Array<WettkampfDO> = [];
@@ -98,10 +99,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public allDsbMitgliederWithKampfrichterLizenz: Array<DsbMitgliedDO> = [];
   public allUserWithKampfrichterLizenz: Array<UserRolleDO> = [];
 
-  public kampfrichterTag: Array<Array<KampfrichterDO>> = [];
-  public initiallySelectedKampfrichterTag: Array<Array<UserRolleDO>> = [];
-  public selectedKampfrichterTag: Array<Array<UserRolleDO>> = [];
-  public notSelectedKampfrichterWettkampfTag: Array<Array<UserRolleDO>> = [];
+  public notSelectedKampfrichter: Array<Array<KampfrichterExtendedDO>> = [];
+  public selectedKampfrichter: Array<Array<KampfrichterExtendedDO>> = [];
 
   text = '. Wettkampftag';
 
@@ -226,27 +225,27 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void{
 
-    let currentWettkampftag: WettkampfDO;
-    let kampfrichterUserToSave: Array<UserRolleDO> = [];
-    let kampfrichterUserToDelete: Array<UserRolleDO> = [];
+    let kampfrichterExtendedToSave: Array<KampfrichterExtendedDO> = [];
+    let kampfrichterExtendedToDelete: Array<KampfrichterExtendedDO> = [];
 
-    currentWettkampftag = this.currentWettkampftagArray[wettkampfTagNumber];
-    kampfrichterUserToSave = this.selectedKampfrichterTag[wettkampfTagNumber].filter(comparer(this.initiallySelectedKampfrichterTag[wettkampfTagNumber]));
-    kampfrichterUserToDelete = this.initiallySelectedKampfrichterTag[wettkampfTagNumber].filter(comparer(this.selectedKampfrichterTag[wettkampfTagNumber]));
+    kampfrichterExtendedToSave = this.selectedKampfrichter[wettkampfTagNumber].filter(comparer(this.notSelectedKampfrichter[wettkampfTagNumber]));
+    kampfrichterExtendedToDelete = this.notSelectedKampfrichter[wettkampfTagNumber].filter(comparer(this.selectedKampfrichter[wettkampfTagNumber]));
 
+
+    //EXTENDED -> REGULAR DO
     const kampfrichterToSave: Array<KampfrichterDO> = [];
-    for (const i of Object.keys(kampfrichterUserToSave)) {
+    for (const i of Object.keys(kampfrichterExtendedToSave)) {
       kampfrichterToSave.push(new KampfrichterDO());
-      kampfrichterToSave[i].id = kampfrichterUserToSave[i].id;
+      kampfrichterToSave[i].id = kampfrichterExtendedToSave[i].id;
       kampfrichterToSave[i].wettkampfID = wettkampfID;
       kampfrichterToSave[i].leitend = false;
     }
 
     const kampfrichterToDelete: Array<KampfrichterDO> = [];
-    for (const i of Object.keys(kampfrichterUserToDelete)) {
+    for (const i of Object.keys(kampfrichterExtendedToDelete)) {
       kampfrichterToDelete.push(new KampfrichterDO());
-      kampfrichterToDelete[i].id = kampfrichterUserToDelete[i].id;
-      kampfrichterToDelete[i].wettkampfID = currentWettkampftag.id;
+      kampfrichterToDelete[i].id = kampfrichterExtendedToDelete[i].id;
+      kampfrichterToDelete[i].wettkampfID = wettkampfID;
       kampfrichterToDelete[i].leitend = false;
     }
 
@@ -448,11 +447,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   private loadKampfrichter() {
-    this.kampfrichterProvider.findAll()
-        .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccess(
-          response
-        ))
-        .catch((response: BogenligaResponse<KampfrichterDTO[]>) => this.handleKampfrichterResponseArrayFailure(response));
+    this.kampfrichterProvider.findExtendedByIdNotAssignedToId(this.currentWettkampftag.id)
+        .then((response: BogenligaResponse<KampfrichterExtendedDO[]>) => this.handleKampfrichterResponseArraySuccess(response))
+        .catch(() => this.handleKampfrichterResponseArrayFailure());
   }
 
   private loadWettkampf() {
@@ -592,33 +589,22 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
 
-  private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterDO[]>): void{
-    let allKampfrichter: Array<KampfrichterDO> = [];
-    allKampfrichter = response.payload;
-    let tempKampfrichter: Array<KampfrichterDO> = [];
-    let tempNotSelectedKampfrichterTag: Array<UserRolleDO> = [];
+  private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterExtendedDO[]>): void{
 
-    for(let i = 1; i<=allKampfrichter.length; i++){
-      this.kampfrichterTag[i]= [];
-      tempKampfrichter = this.kampfrichterTag[i];
-      tempNotSelectedKampfrichterTag = this.notSelectedKampfrichterWettkampfTag[i];
+    this.selectedKampfrichter[this.selectedWettkampfTag]= [];
+    this.notSelectedKampfrichter[this.selectedWettkampfTag] = []
 
-      allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftagArray[i].id).forEach((kampfrichter) => this.kampfrichterTag[i].push(Object.assign({}, kampfrichter)));
+    this.notSelectedKampfrichter[this.selectedWettkampfTag] = response.payload; //links
 
-      if (tempKampfrichter[0] !== undefined) {
-        for (const iter of Object.keys(this.kampfrichterTag[i])) {
-          this.initiallySelectedKampfrichterTag[i].push(this.allUserWithKampfrichterLizenz.filter((user) => user.id === this.kampfrichterTag[iter].id)[0]);
-        }
-      }
+    this.kampfrichterProvider.findExtendedByIdAssignedToId(this.currentWettkampftag.id).then(reply=>{
+      this.selectedKampfrichter[this.selectedWettkampfTag] = reply.payload; //rechts
+    }).catch(() => this.handleKampfrichterResponseArrayFailure());
 
-      this.initiallySelectedKampfrichterTag[i].forEach((val) => this.selectedKampfrichterTag[i].push(Object.assign({}, val)));
-      tempNotSelectedKampfrichterTag = this.allUserWithKampfrichterLizenz.filter((user) => this.initiallySelectedKampfrichterTag[i].indexOf(user) < 0);
-      this.notSelectedKampfrichterWettkampfTag[i] = tempNotSelectedKampfrichterTag;
-    }
     this.loading = false;
   }
 
-  private handleKampfrichterResponseArrayFailure(response: BogenligaResponse<KampfrichterDTO[]>): void {
+  private handleKampfrichterResponseArrayFailure(): void {
+    console.log("KampfrichterResponseArrayFailure");
     this.loading = false;
   }
 
@@ -659,6 +645,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     console.log('onSelect Dialog: ' + this.selectedWettkampfTag);
     this.loadWettkampf();
     this.loadDistinctWettkampf();
+    this.loadKampfrichter();
   }
 
   //create an empty Wettkampftag
