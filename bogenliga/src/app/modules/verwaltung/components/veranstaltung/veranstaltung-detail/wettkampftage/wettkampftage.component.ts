@@ -386,7 +386,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public onDelete(wettkampfTagNumber: number, ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
-    
+
     const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
     let currentDate = new Date();
     let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
