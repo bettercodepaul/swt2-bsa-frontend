@@ -10,8 +10,9 @@ import {
 } from '../../shared/data-provider';
 import {CurrentUserService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/kampfrichter-mapper';
+import {fromPayloadExtended, fromPayloadArrayExtended} from '../mapper/kampfrichter-extended-mapper';
 import {KampfrichterDO} from '../types/kampfrichter-do.class';
-import {KampfrichterDTO} from '@verwaltung/types/datatransfer/kampfrichter-dto.class';
+import {KampfrichterExtendedDO} from '../types/kampfrichter-extended-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +106,47 @@ export class KampfrichterProviderService extends DataProviderService {
     });
   }
 
+  public findExtendedByIdNotAssignedToId(id: string | number): Promise<BogenligaResponse<KampfrichterExtendedDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("NotAssignedKampfrichter/"+id).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayExtended(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+
+  }
+
+  public findExtendedByIdAssignedToId(id: string | number): Promise<BogenligaResponse<KampfrichterExtendedDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("AssignedKampfrichter/"+id).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayExtended(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+
+  }
+
+
   // public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> { // DO or DTO? Probably DO.
   //   console.log('KampfrichterProviderService:');
   //   console.log(payload);
@@ -148,3 +190,4 @@ export class KampfrichterProviderService extends DataProviderService {
     });
   }
 }
+
