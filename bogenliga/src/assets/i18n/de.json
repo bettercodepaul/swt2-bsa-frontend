@@ -1199,7 +1199,7 @@
               },
               "DEADLINE_EXPIRED": {
                 "TITLE": "Meldedeadline abgelaufen",
-                "DESCRIPTION": "Die Meldedeadline ist abgelaufen. Sie können den Wettkampftag nicht mehr löschen."
+                "DESCRIPTION": "Die Meldedeadline ist für diese Veranstaltung abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
               },
               "TOO_MANY": {
                 "TITLE": "Zu viele Wettkampftage",
