@@ -9,4 +9,5 @@ export class KampfrichterExtendedDO implements VersionedDataObject {
   vorname: string;
   nachname: string;
   email:string;
+  vorNachName : string;
 }
