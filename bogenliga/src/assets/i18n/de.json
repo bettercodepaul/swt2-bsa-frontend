@@ -1154,12 +1154,12 @@
             "PLZ": {
               "LABEL": "Postleitzahl",
               "PLACEHOLDER": "Postleitzahl *",
-              "ERROR": "Bitte geben Sie eine fünfstellige DE-Postleitzahl ein."
+              "ERROR": "Bitte geben Sie eine gültige Postleitzahl ein."
             },
             "ORTSNAME": {
               "LABEL": "Ort/Stadt",
               "PLACEHOLDER": "Ort/Stadt *",
-              "ERROR": "Bitte geben Sie einen Ort oder eine Stadt ein."
+              "ERROR": "Bitte geben Sie einen gültigen Ort oder eine gültige Stadt ein."
             },
             "ORTSINFO": {
               "LABEL": "Zusatzinformation",
