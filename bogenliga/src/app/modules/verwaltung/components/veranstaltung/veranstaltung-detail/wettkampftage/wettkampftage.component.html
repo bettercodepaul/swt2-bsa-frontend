@@ -101,6 +101,7 @@
           <input type="text"
                  class="form-control"
                  required
+                 pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*"
                  id="wettkampftageStrasse"
                  name="wettkampftageStrasse"
                  #wettkampftageStrasse="ngModel"
@@ -122,6 +123,7 @@
           <input type="text"
                  class="form-control"
                  required
+                 pattern="[0-9]{5}"
                  id="wettkampftagePLZ"
                  name="wettkampftagePLZ"
                  #wettkampftagePLZ="ngModel"
@@ -143,6 +145,7 @@
           <input type="text"
                  class="form-control"
                  required
+                 pattern="(?=.*[A-Z])(?=.*[a-z]).*"
                  id="wettkampftageOrt"
                  name="wettkampftageOrt"
                  #wettkampftageOrt="ngModel"
