@@ -12,7 +12,7 @@ import {CurrentUserService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/kampfrichter-mapper';
 import {fromPayloadExtended, fromPayloadArrayExtended} from '../mapper/kampfrichter-extended-mapper';
 import {KampfrichterDO} from '../types/kampfrichter-do.class';
-import {KampfrichterExtendedDO} from '../types/kampfrichter-extended-dto.class';
+import {KampfrichterExtendedDO} from '../types/kampfrichter-extended-do.class';
 
 @Injectable({
   providedIn: 'root'
