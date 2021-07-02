@@ -45,7 +45,7 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {RoleDTO} from '@verwaltung/types/datatransfer/role-dto.class';
-import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-dto.class';
+import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-do.class';
 import {kampfrichterExtendedDTO} from '@verwaltung/types/datatransfer/kampfrichter-extended-dto.class';
 
 
@@ -110,6 +110,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public anzahl: number = 0;
   public maxWettkampftageEinstellungenDO: EinstellungenDO = new EinstellungenDO();
   public maxWettkampftageID: number = 8;
+  public selectedWettkampf: WettkampfDO;
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -447,7 +448,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   private loadKampfrichter() {
-    this.kampfrichterProvider.findExtendedByIdNotAssignedToId(this.currentWettkampftag.id)
+    this.kampfrichterProvider.findExtendedByIdNotAssignedToId(this.selectedWettkampf.id)
         .then((response: BogenligaResponse<KampfrichterExtendedDO[]>) => this.handleKampfrichterResponseArraySuccess(response))
         .catch(() => this.handleKampfrichterResponseArrayFailure());
   }
@@ -596,7 +597,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     this.notSelectedKampfrichter[this.selectedWettkampfTag] = response.payload; //links
 
-    this.kampfrichterProvider.findExtendedByIdAssignedToId(this.currentWettkampftag.id).then(reply=>{
+    this.kampfrichterProvider.findExtendedByIdAssignedToId(this.selectedWettkampf.id).then(reply=>{
       this.selectedKampfrichter[this.selectedWettkampfTag] = reply.payload; //rechts
     }).catch(() => this.handleKampfrichterResponseArrayFailure());
 
@@ -641,7 +642,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   //onSelect for SelectionList in html-file, loads currently selected Wettkampftag
   public onSelect($event: WettkampfDO[]): void {
+    console.log("selected:",$event);
     this.selectedWettkampfTag = $event[0].wettkampfTag;
+    this.selectedWettkampf = $event[0];
     console.log('onSelect Dialog: ' + this.selectedWettkampfTag);
     this.loadWettkampf();
     this.loadDistinctWettkampf();
