@@ -8,16 +8,18 @@ export class kampfrichterExtendedDTO implements DataTransferObject {
   wettkampfID: number;
   leitend: boolean;
   version: number;
+  vorNachName: string;
 
   // The attribute names of the optional have to be exactly the same as the getters in KampfrichterDTO.java
   static copyFrom(optional: {
     userID?: number;
-    vorname?: string;
-    nachname?: string;
+    kampfrichterVorname?: string;
+    kampfrichterNachname?: string;
     email?: string;
     wettkampfID?: number;
     leitend?: boolean;
     version?: number;
+    vorNachName?: string;
 
   } = {}): kampfrichterExtendedDTO {
     const copy = new kampfrichterExtendedDTO();
@@ -36,9 +38,10 @@ export class kampfrichterExtendedDTO implements DataTransferObject {
     }
 
     copy.email = optional.email;
-    copy.vorname = optional.vorname;
-    copy.nachname = optional.nachname;
+    copy.vorname = optional.kampfrichterVorname;
+    copy.nachname = optional.kampfrichterNachname;
     copy.leitend = optional.leitend;
+    copy.vorNachName = optional.kampfrichterVorname + ' ' + optional.kampfrichterNachname;
     return copy;
   }
 }
