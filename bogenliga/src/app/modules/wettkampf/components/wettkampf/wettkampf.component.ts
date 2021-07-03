@@ -139,6 +139,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * At the end the button for printing will be hidden so that its only available for 'Einzelstatistik'.
    */
   public loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
+
+    if(selectedMannschaft == undefined) {
+      this.showUebersichtsButtons();
+    }
+    else {
+      this.hideUebersichtsButtons();
+    }
+
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
       rowNumber += i;
@@ -183,6 +191,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
+    this.hideUebersichtsButtons();
 
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
@@ -218,6 +227,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
+    this.hideUebersichtsButtons();
 
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
@@ -263,43 +273,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.loadEinzelstatistik(this.currentMannschaft);
       this.loadVerein(selectedMannschaft.vereinId);
     }
-  }
-  /*
-   gesamtdruck
-   Öffnet das Fenster um Gesamtstatistik zu drucken
-   */
-  public gesamtdruck() {
-
-    let printContents = '<h2>Gesamtstatistik</h2>';
-    printContents += '<br>';
-    printContents += document.getElementById('titel').innerHTML;
-    printContents += '<br>';
-    printContents += document.getElementById('titel2').innerHTML;
-    printContents += '<br>';
-    printContents += document.getElementById('jahr').innerHTML;
-    printContents += '<br><br>';
-    printContents += document.getElementById('Table0').innerHTML;
-
-    let htmlToPrint = '' +
-      '<style type="text/css">' +
-      'table th, table td {' +
-      'padding: 5px; ' +
-      '}' +
-      ' #walkheader{border-left: none!important; border-right: none!important;}' +
-      ' #Table1{padding: 4px; border-collapse:collapse; font; font-size:12pt;}' +
-      ' #printHeader2 td{ border-bottom: solid black 1px; border-right: solid black 1px!important; }' +
-      ' td{ border-bottom: solid black 1px; border-right: solid black 1px!important; border-left: solid black 1px!important; }' +
-      '</style>';
-    htmlToPrint += printContents;
-    const printWindow = window.open('', '', 'height=800,width=800');
-    printWindow.document.write('<html><head><title>Wettkampfergebnisse</title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(htmlToPrint);
-    printWindow.document.write('<script>var spans = document.getElementsByTagName("fa-icon");  for (var i = 0; i<spans.length; i++) {' +
-      ' spans[i].style.display = "none" };  </script>');
-    printWindow.document.write('</body></html>');
-    printWindow.print();
-    printWindow.document.close();
   }
 
   /**
@@ -465,6 +438,21 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       .path('v1/download')
       .path(path + "&veranstaltungsid=" + this.currentVeranstaltung.id)
       .build();
+  }
+
+  public hideUebersichtsButtons():void
+  {
+    document.getElementById('TagesuebersichtButton').classList.add('hidden');
+    document.getElementById('TagesuebersichtButton2').classList.add('hidden');
+    document.getElementById('TagesuebersichtButton3').classList.add('hidden');
+    document.getElementById('TagesuebersichtButton4').classList.add('hidden');
+  }
+  public showUebersichtsButtons():void
+  {
+    document.getElementById('TagesuebersichtButton').classList.remove('hidden');
+    document.getElementById('TagesuebersichtButton2').classList.remove('hidden');
+    document.getElementById('TagesuebersichtButton3').classList.remove('hidden');
+    document.getElementById('TagesuebersichtButton4').classList.remove('hidden');
   }
 
   public onButtonDownload(path: string): string {
