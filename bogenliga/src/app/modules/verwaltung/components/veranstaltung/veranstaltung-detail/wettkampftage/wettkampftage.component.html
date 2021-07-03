@@ -222,15 +222,17 @@
       </div>
 
       <!--KAMPFRICHTER-->
-      <div class="col-sm-7">
+      <!--KAMPFRICHTER-->
+      <div class="col-sm-11">
+        <div class="col-sm-1"></div>
         <div class="form-group row">
           <label>
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
             <span> *</span>
           </label>
-          <bla-double-selectionlist [leftItems]="selectedKampfrichterTag[selectedWettkampfTag]"
-                                    [(rightItems)]="notSelectedKampfrichterWettkampfTag[selectedWettkampfTag]"
-                                    [fieldSelector]="'email'"
+          <bla-double-selectionlist [(leftItems)]="notSelectedKampfrichter[selectedWettkampfTag]"
+                                    [(rightItems)]="selectedKampfrichter[selectedWettkampfTag]"
+                                    [fieldSelector]="'vorNachName'"
                                     [idLeftList]="'left'"
                                     [idRightList]="'right'"
                                     style="height: 12em; width: 36em">
