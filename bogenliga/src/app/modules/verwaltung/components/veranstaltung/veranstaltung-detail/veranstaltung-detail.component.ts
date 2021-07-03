@@ -12,6 +12,7 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
+import {UserDataProviderService} from '../../../services/user-data-provider.service';
 import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.class';
 import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
@@ -37,6 +38,8 @@ import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
 import {WettkampfKlasseDO} from '@verwaltung/types/wettkampfklasse-do.class';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
+import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
+import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -81,7 +84,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
-  public allLigaleiter: Array<UserProfileDO> = [new UserProfileDO()];
+  public allLigaleiter: Array<UserRolleDO> = [new UserRolleDO()];
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -105,6 +108,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     private wettkampftypDataProvider: WettkampftypDataProviderService,
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
+    private userDataProvider: UserDataProviderService,
     private ligaProvider: LigaDataProviderService,
     private mannschaftDataProvider: DsbMannschaftDataProviderService,
     private router: Router,
@@ -131,6 +135,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
           this.loadUsers();
+          this.loadLigaleiter();
           this.loadWettkampftyp();
           this.loadLiga();
 
@@ -356,6 +361,14 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
+  private loadLigaleiter() {
+    let ligaleiterRolleId = 2;
+    this.userDataProvider.findAllUsersByRoleId(ligaleiterRolleId)
+        .then((response: BogenligaResponse<UserRolleDO[]>) => this.handleLigaleiterResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<UserRolleDTO[]>) => this.handleLigaleiterResponseArrayFailure(response));
+  }
+
+
   private loadLiga() {
     this.ligaProvider.findAll()
         .then((response: BogenligaResponse<LigaDO[]>) => this.handlLigaResponseArraySuccess(response))
@@ -375,6 +388,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loading = false;
     this.loadWettkampftyp();
     this.loadUsers();
+    this.loadLigaleiter()
     this.loadLiga();
   }
 
@@ -484,6 +498,20 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleUserResponseArrayFailure(response: BogenligaResponse<UserProfileDTO[]>): void {
     this.allUsers = [];
+    this.loading = false;
+  }
+
+
+  private handleLigaleiterResponseArraySuccess(response: BogenligaResponse<UserRolleDTO[]>): void {
+    this.allLigaleiter = [];
+    this.allLigaleiter = response.payload;
+
+    this.loading = false;
+  }
+
+
+  private handleLigaleiterResponseArrayFailure(response: BogenligaResponse<UserRolleDTO[]>): void {
+    this.allLigaleiter = [];
     this.loading = false;
   }
 

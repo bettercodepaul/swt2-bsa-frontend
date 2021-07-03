@@ -152,7 +152,7 @@
                 #ligaleiter="ngModel"
                 [(ngModel)]="currentUser">
           <option [ngValue]="ligaleiter"
-                  *ngFor="let ligaleiter of allUsers"> {{ligaleiter.email}}</option>
+                  *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
 
           placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.PLACEHOLDER' | translate }}">
         </select>
