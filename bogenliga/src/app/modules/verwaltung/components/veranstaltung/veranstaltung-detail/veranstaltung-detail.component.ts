@@ -361,6 +361,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
+  /**
+   * receives a promise including a list of all Ligaleiter
+   * @private
+   */
   private loadLigaleiter() {
     let ligaleiterRolleId = 2;
     this.userDataProvider.findAllUsersByRoleId(ligaleiterRolleId)
