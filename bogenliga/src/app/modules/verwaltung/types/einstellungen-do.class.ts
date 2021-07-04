@@ -4,12 +4,12 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 
 
 
-
 export class EinstellungenDO implements VersionedDataObject {
   id: number;
   version: number;
 
   value: string;
   key: string;
+  regex: string;
 
 }
