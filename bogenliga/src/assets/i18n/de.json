@@ -1183,8 +1183,8 @@
                 "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
               },
               "DELETE": {
-                "TITLE": "Wettkampftag löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+                "TITLE": "Löschen",
+                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
               },
               "ADD": {
                 "TITLE": "Neu",
@@ -1197,6 +1197,10 @@
               "DELETE_FAILURE": {
                 "TITLE": "Fehler beim Löschen",
                 "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              },
+              "DEADLINE_EXPIRED": {
+                "TITLE": "Meldedeadline abgelaufen",
+                "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
               },
               "TOO_MANY": {
                 "TITLE": "Zu viele Wettkampftage",
