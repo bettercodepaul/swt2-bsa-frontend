@@ -1,6 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertType, ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
+import {
+  AlertType,
+  ButtonType,
+  CommonComponentDirective, hideLoadingIndicator,
+  showDeleteLoadingIndicatorIcon,
+  toTableRows
+} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -43,11 +49,13 @@ const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
 const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_success';
 const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
+const NOTIFICATION_SAVE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_save_failure';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
 const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
 const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
 const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failure';
+const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 
 
 @Component({
@@ -204,14 +212,28 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
             this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<VeranstaltungDO>) => {
-          console.log('Failed');
-          this.saveLoading = false;
+        }
+        )
+        .catch((response)=> {
+          console.log('Veranstaltung existiert bereits in diesem Sportjahr');
+          const notification: Notification = {
+            id:          NOTIFICATION_SAVE_VERANSTALTUNG_FAILURE,
+            title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE_FAILURE.TITLE',
+            description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE_FAILURE.DESCRIPTION',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG_FAILURE)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
+                }
+              });
 
-
+          this.notificationService.showNotification(notification);
         });
-
-
     // show response message
   }
 
@@ -499,6 +521,41 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleLoadMannschaftsTableSuccess(payload: DsbMannschaftDO[]) {
     this.rows = toTableRows(payload);
     this.loadLigaTabelleExists();
+  }
+
+  public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
+
+    this.notificationService.discardNotification();
+
+    const id = versionedDataObject.id;
+    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+
+    const notification: Notification = {
+      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
+      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      descriptionParam: '' + id,
+      severity:         NotificationSeverity.QUESTION,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.YES_NO,
+      userAction:       NotificationUserAction.PENDING
+    };
+
+    let notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+                                .subscribe((myNotification) => {
+
+                                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                                    this.mannschaftDataProvider.deleteById(id)
+                                        .then((response) => this.loadMannschaftsTable())
+                                        .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+                                  } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+                                    this.rows = hideLoadingIndicator(this.rows, id);
+                                    notificationEvent.unsubscribe();
+                                  }
+
+                                });
+
+    this.notificationService.showNotification(notification);
   }
 
   public onEdit(versionedDataObject: VersionedDataObject) {
