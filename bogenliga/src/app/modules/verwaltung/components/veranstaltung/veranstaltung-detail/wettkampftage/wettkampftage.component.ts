@@ -50,9 +50,9 @@ import {kampfrichterExtendedDTO} from '@verwaltung/types/datatransfer/kampfricht
 
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
-const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_success';
-const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
+const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
+const NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS = 'wettkampftag_delete_success';
+const NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE = 'wettkampftag_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 const NOTIFICATION_WETTKAMPFTAG_TOO_MANY = 'veranstaltung_detail_wettkampftage_failure';
@@ -66,7 +66,6 @@ const wettkampfTagNotification: Notification = {
   type:        NotificationType.OK,
   userAction:  NotificationUserAction.PENDING
 };
-
 
 // TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne Funktion und unterscheidet nicht den
 // Status der Eingabefelder
@@ -388,33 +387,53 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
-  public onDelete(ignore: any): void {
+  //method to delete a wettkampftag (if the deadline has expired, no wettkampftag will be deleted)
+  public onDelete(wettkampfTagNumber: number, ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
-    const id = this.currentVeranstaltung.id;
+
+    const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
+    let currentDate = new Date();
+    let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
-      title:            'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      id: NOTIFICATION_DELETE_WETTKAMPFTAG+ id,
+      title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.ACCEPTED
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG + id)
-        .subscribe((myNotification) => {
+    if(deadlineDate < currentDate){
+      const notification_expired: Notification = {
+        id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
 
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.veranstaltungDataProvider.deleteById(id)
-                .then((response) => this.handleDeleteSuccess(response))
-                .catch((response) => this.handleDeleteFailure(response));
-          }
-        });
+      this.notificationService.showNotification(notification_expired);
 
-    this.notificationService.showNotification(notification);
+    } else {
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG + id)
+          .subscribe((myNotification) => {
+
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.wettkampfDataProvider.deleteById(id)
+                  .then((response) => this.handleDeleteSuccess(response))
+                  .catch((response) => this.handleDeleteFailure(response));
+            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.deleteLoading = false;
+            }
+          });
+      this.notificationService.showNotification(notification);
+    }
   }
 
   public entityExists(): boolean {
@@ -490,16 +509,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.router.navigateByUrl('/verwaltung/veranstaltung');
@@ -513,16 +532,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
@@ -681,7 +700,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         "",
         "",
         "",
-        "",
+        "00:00",
         this.anzahl,
         1,
         1,
@@ -705,6 +724,26 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.notificationService.showNotification(notification);
     }
     return true;
+  }
+
+  //Wettkampftag der gelöscht werden soll, muss hier übergeben werden
+  public async updateNumbersDelete(wettkampftagToDelete:number){
+    this.loadDistinctWettkampf();
+
+    if(wettkampftagToDelete==this.selectedDTOs.length){
+      this.selectedDTOs.pop();
+    }
+    else {
+      //Eig wettkampftagToDelete + 1 aber Array startet bei 0
+      for (let i = wettkampftagToDelete; i <= this.selectedDTOs.length; i++) {
+        this.selectedDTOs[i].wettkampfTag = (this.selectedDTOs[i].wettkampfTag)-1;
+        this.selectedDTOs[i].id = (this.selectedDTOs[i].id) -1;
+        this.selectedDTOs[i - 1] = this.selectedDTOs[i];
+
+        await this.wettkampfDataProvider.update(this.selectedDTOs[i-1]);
+      }
+    }
+    this.loadDistinctWettkampf();
   }
 }
 
