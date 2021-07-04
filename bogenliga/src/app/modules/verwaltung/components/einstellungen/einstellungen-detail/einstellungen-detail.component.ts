@@ -134,6 +134,9 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
           case 'SMTPHost':
             notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.HOST';
             break;
+          default:
+            notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.DEFAULT';
+            break;
         }
       }
     }
