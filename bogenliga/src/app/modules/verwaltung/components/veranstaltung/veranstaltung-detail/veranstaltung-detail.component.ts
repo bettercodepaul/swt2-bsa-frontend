@@ -1,6 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertType, ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
+import {
+  AlertType,
+  ButtonType,
+  CommonComponentDirective, hideLoadingIndicator,
+  showDeleteLoadingIndicatorIcon,
+  toTableRows
+} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -49,6 +55,7 @@ const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
 const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
 const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
 const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failure';
+const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 
 
 @Component({
@@ -514,6 +521,41 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleLoadMannschaftsTableSuccess(payload: DsbMannschaftDO[]) {
     this.rows = toTableRows(payload);
     this.loadLigaTabelleExists();
+  }
+
+  public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
+
+    this.notificationService.discardNotification();
+
+    const id = versionedDataObject.id;
+    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+
+    const notification: Notification = {
+      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
+      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      descriptionParam: '' + id,
+      severity:         NotificationSeverity.QUESTION,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.YES_NO,
+      userAction:       NotificationUserAction.PENDING
+    };
+
+    let notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+                                .subscribe((myNotification) => {
+
+                                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                                    this.mannschaftDataProvider.deleteById(id)
+                                        .then((response) => this.loadMannschaftsTable())
+                                        .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+                                  } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+                                    this.rows = hideLoadingIndicator(this.rows, id);
+                                    notificationEvent.unsubscribe();
+                                  }
+
+                                });
+
+    this.notificationService.showNotification(notification);
   }
 
   public onEdit(versionedDataObject: VersionedDataObject) {
