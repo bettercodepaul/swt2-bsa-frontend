@@ -11,6 +11,7 @@ import {WettkampfEinzelGesamtErgebnis} from '../components/wettkampf/wettkamperg
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +42,8 @@ export class WettkampfErgebnisService {
   constructor() {
 
   }
+
+
 
   public getMannschaftsname(id: number): string {
 

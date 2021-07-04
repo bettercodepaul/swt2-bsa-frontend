@@ -16,6 +16,7 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
+import {SchuetzenstatistikDataProviderService} from '@wettkampf/services/schuetzenstatistik-data-provider-service';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
@@ -81,6 +82,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               private mannschaftDataProvider: DsbMannschaftDataProviderService,
               private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
               private mannschaftsmitgliedDataProvider: MannschaftsmitgliedDataProviderService,
+              private schuetzenstatistikDataProvider: SchuetzenstatistikDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService) {
@@ -105,7 +107,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     });
     this.loadVeranstaltungen()
         .then(() => {
-          this.loadErgebnisse(this.currentMannschaft);
+          this.loadErgebnisse(this.directMannschaft);
+      });
+  }
+
+  public getStatistiken(): any {
+    this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(0, 0)
+      .then((response: any) => console.log(response))
+      .catch(() => {
+        console.log('ERROR');
       });
   }
 
@@ -214,7 +224,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   /* loadGesamtstatistik
    Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
-   Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
+   Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ergebnis-service.ts zu finden)
    Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
@@ -468,10 +478,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         .build();
   }
   public getMannschaftsID(): number {
-    if (this.currentMannschaft != undefined) {
+    if (this.currentMannschaft !== undefined) {
       return this.currentMannschaft.id;
-    }
-    else {
+    } else {
       return -1;
     }
   }

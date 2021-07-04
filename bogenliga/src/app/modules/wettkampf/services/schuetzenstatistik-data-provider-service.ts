@@ -9,7 +9,6 @@ import {
   VersionedDataTransferObject
 } from '@shared/data-provider';
 import {CurrentUserService} from '@shared/services';
-import {fromPayloadLigatabelleErgebnisArray} from '../mapper/wettkampf-ergebnis-mapper';
 import {LigatabelleErgebnisDO} from '../types/wettkampf-ergebnis-do.class';
 
 @Injectable({
@@ -24,18 +23,17 @@ export class SchuetzenstatistikDataProviderService extends DataProviderService {
     super();
   }
 
-  public getSchuetzenstatistikVeranstaltung(vereinId: string | number, veranstaltungId: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
+  public getSchuetzenstatistikVeranstaltung(vereinId: string | number, veranstaltungId: string | number): Promise<any> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder()
         .fromPath(this.getUrl())
-        .path('verein=' + vereinId)
-        .path('&veranstaltung=' + veranstaltungId)
+        .path('byVeranstaltungAndVerein/' + veranstaltungId + '/' + vereinId)
         .build())
-        .then((data: VersionedDataTransferObject[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: fromPayloadLigatabelleErgebnisArray(data)});
+        .then((data: /*VersionedDataTransferObject[]*/any) => {
+          resolve({result: RequestResult.SUCCESS, payload: /*fromPayloadToSchuetzenstatistik*/(data)});
         }, (error: HttpErrorResponse) => {
 
           if (error.status === 0) {
@@ -56,8 +54,8 @@ export class SchuetzenstatistikDataProviderService extends DataProviderService {
         .path('verein=' + vereinId)
         .path('wettkampf=' + wettkampfId)
         .build())
-        .then((data: VersionedDataTransferObject[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: fromPayloadLigatabelleErgebnisArray(data)});
+        .then((data: /*VersionedDataTransferObject[]*/any) => {
+          resolve({result: RequestResult.SUCCESS, payload: /*fromPayloadToSchuetzenstatistik*/(data)});
         }, (error: HttpErrorResponse) => {
 
           if (error.status === 0) {
