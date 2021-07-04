@@ -2,11 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
-
 import {EINSTELLUNGEN_DETAIL_CONFIG} from './einstellungen-detail.config';
-
-
-import {HttpClient} from '@angular/common/http';
 import {
 
   Notification, NotificationOrigin,
@@ -17,16 +13,14 @@ import {
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
-
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
-
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_UPDATE_EINSTELLUNG = 'einstellung_detail_update';
 const NOTIFICATION_SAVE_EINSTELLUNG = 'einstellung_detail_save';
 const NOTIFICATION_CREATE_EINSTELLUNG = 'einstellung_detail_save';
+
 @Component({
   selector: 'bla-einstellungen-detail',
   templateUrl: './einstellungen-detail.component.html',
@@ -37,10 +31,6 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   public ButtonType = ButtonType;
   public currentEinstellung: EinstellungenDO = new EinstellungenDO();
   public neucurrentEinstellung: EinstellungenDO = new EinstellungenDO();
-
-
-
-
 
   public currentMitgliedNat: string;
   public deleteLoading = false;
@@ -66,10 +56,6 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   public onSave(ignore: any): void {
 
     this.saveLoading = true;
-
-
-
-
     this.currentEinstellung.key = this.neucurrentEinstellung.key;
 
     const notificationSave: Notification = {
@@ -84,19 +70,9 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
     this.notificationService.showNotification(notificationSave);
 
-
-
-
-
   }
 
-
   ngOnInit() {
-
-
-
-
-
 
     this.loading = true;
     this.route.params.subscribe((params) => {
@@ -109,16 +85,12 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
           this.deleteLoading = false;
           this.saveLoading = false;
         } else {
-
-
           this.loadById(params[ID_PATH_PARAM]);
         }
       }
     });
 
-
   }
-
 
   private loadById(id: string) {
 
@@ -127,16 +99,11 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
         .catch((response: BogenligaResponse<EinstellungenDO>) => this.handleSuccess(response));
   }
 
-
   private handleSuccess(response: BogenligaResponse<EinstellungenDO>) {
     this.currentEinstellung = response.payload;
     this.loading = false;
 
-
   }
-
-
-
 
   changevalue($event: MouseEvent) {
     const notificationUpdateError: Notification = {
@@ -181,7 +148,6 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
                 && !isNullOrUndefined(response.payload)
                 && !isNullOrUndefined(response.payload.id)) {
               }
-
 
               const notificationUpdate: Notification = {
 
@@ -232,24 +198,17 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
             this.notificationService.showNotification(notification);
 
-
           }
           this.navigateToDetailDialog();
         }, (response: BogenligaResponse<EinstellungenDO> ) => {
-
           this.saveLoading = false;
-
-
         });
 
   }
 
-
   private navigateToDetailDialog() {
     this.router.navigateByUrl('/verwaltung/einstellungen');
   }
-
-
 }
 
 
