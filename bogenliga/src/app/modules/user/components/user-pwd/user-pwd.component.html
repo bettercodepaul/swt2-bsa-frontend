@@ -58,8 +58,7 @@
                 <input type="password"
                        class="form-control"
                        required
-                       minlength="8"
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"
+                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d#$^+=!*()@%&?]{8,}$"
                        id="userPwdFormNewPwd"
                        name="userPwdFormNewPwd"
                        #userPwdFormNewPwd="ngModel"
