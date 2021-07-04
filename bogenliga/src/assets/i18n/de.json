@@ -522,7 +522,8 @@
           "DESCRIPTION": {
             "EMAIL": "Bitte korrekte E-Mail eingeben",
             "HOST": "Bitte vollständige Hostadresse eingeben",
-            "PORT": "Bitte nur Zahlen eingeben"
+            "PORT": "Bitte nur Zahlen eingeben",
+            "DEFAULT": "Bitte korrekten Wert eingeben"
           }
         }
       }
