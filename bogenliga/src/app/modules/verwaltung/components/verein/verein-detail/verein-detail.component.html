@@ -16,6 +16,7 @@
         <input type="text"
                class="form-control"
                required
+               pattern="(?=.*[A-Za-z])[A-Za-z0-9\ \-\.]{1,50}$"
                id="vereinName"
                name="vereinName"
                #vereinName="ngModel"
@@ -40,6 +41,7 @@
         <input type="text"
                class="form-control"
                required
+               pattern="(?=.*[0-9])[A-Z0-9]{10,20}$"
                id="vereinIdentifier"
                name="vereinIdentifier"
                #vereinIdentifier="ngModel"
