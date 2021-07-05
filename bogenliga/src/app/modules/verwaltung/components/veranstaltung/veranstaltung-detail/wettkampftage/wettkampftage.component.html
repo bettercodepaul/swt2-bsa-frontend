@@ -37,10 +37,20 @@
         [optionFieldSelector]="'wettkampfTag'">
       </bla-selectionlist>
 
-      <!-- WETTKAMPFTAG HINZUFÜGEN -->
+      <!-- WETTKAMPFTAG HINZUFÜGEN/ KOPIEREN -->
       <div class="form-group row">
         <div class="col-sm-12 button-box"
              style="margin-top: 2%">
+
+          <!-- WETTKAMPFTAG KOPIEREN -->
+          <bla-button *ngIf="entityExists()"
+                      [disabled]="wettkampftageForm.dirty"
+                      [loading]="saveLoading"
+                      (onClick)="onCopyWettkampfTag($event)">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.COPY.TITLE' | translate }}
+          </bla-button>
+
+          <!-- WETTKAMPFTAG HINZUFÜGEN -->
           <bla-button *ngIf="entityExists()"
                       [buttonType]="ButtonType.SUCCESS"
                       [disabled]="wettkampftageForm.dirty"
@@ -52,7 +62,7 @@
         </div>
       </div>
 
-      <!-- Small text that reminds user to save changes, pops up when button is disabled -->
+      <!-- SMALL TEXT THAT REMINDS USER TO SAVE CHANGES, POPS UP WHEN BUTTON IS DISABLED -->
       <p *ngIf="wettkampftageForm.dirty">
         {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.REMINDSAVE' | translate }}
       </p>
@@ -240,7 +250,21 @@
         </div>
       </div>
 
-      <!-- BUTTONS: SPEICHERN UND ZURÜCK -->
+      <!-- BUTTONS: LÖSCHEN|SPEICHERN|ZURÜCK -->
+      <div class="form-group row">
+        <div class="col-sm-12"></div>
+        <div class="col-sm-3 button-box">
+
+          <!--LÖSCHEN -->
+          <bla-button *ngIf="entityExists()"
+                      [buttonType]="ButtonType.DANGER"
+                      [loading]="deleteLoading"
+                      (onClick)="onDelete(selectedWettkampfTag, $event)">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
+          </bla-button>
+        </div>
+      </div>
+
       <div class="form-group row">
         <div class="col-sm-11"></div>
         <div class="col-sm-1 button-box">
