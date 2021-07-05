@@ -193,8 +193,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number> {
     this.anzahl++;
-    this.currentWettkampftagArray.push(new WettkampfDO());
-    this.currentAusrichter.push(new UserProfileDO());
 
     let currentWettkampfTag: WettkampfDO;
     let currentAusrichter: UserProfileDO;
@@ -404,7 +402,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.notificationService.discardNotification();
 
     const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
-    this.updateNumbersDelete(); 
+    this.updateNumbersDelete();
 
     let currentDate = new Date();
     let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
