@@ -211,45 +211,42 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
-  onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
-    var mannschaftId = matchNr == 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
+  async onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
+    const mannschaftId = matchNr == 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
 
-    this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value).then(result => {
-      if(result.result == RequestResult.SUCCESS){
-        console.log(result.payload.dsbMitgliedId);
+    let valid = true;
+    let allowed = [];
+    let mitglied = null;
 
-        let dsbNummer = result.payload.dsbMitgliedId;
-        let allowed = [];
+    try {
+      mitglied = await this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value);
+    }catch (e){
+      valid = false;
+    }
 
-        if(matchNr == 1){
-          allowed = this.allowedMitglieder1;
-        }
-        else{
-          allowed = this.allowedMitglieder2;
-        }
+    if(mitglied != null && mitglied.result == RequestResult.SUCCESS) {
+      let dsbNummer = mitglied.payload.dsbMitgliedId;
+      console.log('DsbNummer for Mannschaftsmitglied in Mannschaft ' +
+        mannschaftId + " and Rueckennummer " + value + " is " + dsbNummer);
 
-        if(!allowed.includes(dsbNummer)){
-          this.match1.schuetzen.forEach(val => {
-            console.log('Checking ',val);
-            if(allowed.includes(val[0].dsbMitgliedId)){
-              console.log(val[0].rueckennummer + " is valid");
-            }
-          });
+      allowed = matchNr == 1 ? this.allowedMitglieder1 : this.allowedMitglieder2;
 
-          this.notificationService.showNotification({
-            id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
-            title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-            description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
-            severity:    NotificationSeverity.ERROR,
-            origin:      NotificationOrigin.SYSTEM,
-            type:        NotificationType.OK,
-            userAction:  NotificationUserAction.ACCEPTED
-          });
-        }
-      }else{
-        console.log('Error');
+      if (!allowed.includes(dsbNummer)) {
+        valid = false;
       }
-    });
+    }
+
+    if(!valid){
+      this.notificationService.showNotification({
+        id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.ACCEPTED
+      });
+    }
   }
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
@@ -401,6 +398,7 @@ export class SchusszettelComponent implements OnInit {
     this.getBereitsgeschossenToCheckSchuetze();
 
     // Kontrolle, ob die die Regeln eingehalten wurden
+    /*
     for (let i = 0; i < this.matchAllPasse.length; i++) {
 
       // Hat der Schütze 2x in einer Liga geschossen -> darf er nicht mehr in einer Liga darunter schießen
@@ -421,7 +419,7 @@ export class SchusszettelComponent implements OnInit {
         console.log('Popup: ', this.passeSelberTag, 'hat bereits diesen Wettkampftag in der', this.selberTagVeranstaltung, 'geschossen');
         this.savepopSelberTag();
       }
-    }
+    }*/
   }
 
   savepopSelberTag() {

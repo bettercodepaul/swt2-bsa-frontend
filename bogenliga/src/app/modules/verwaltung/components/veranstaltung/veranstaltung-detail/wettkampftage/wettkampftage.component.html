@@ -111,6 +111,7 @@
           <input type="text"
                  class="form-control"
                  required
+                 pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*"
                  id="wettkampftageStrasse"
                  name="wettkampftageStrasse"
                  #wettkampftageStrasse="ngModel"
@@ -132,6 +133,7 @@
           <input type="text"
                  class="form-control"
                  required
+                 pattern="[0-9]{5}"
                  id="wettkampftagePLZ"
                  name="wettkampftagePLZ"
                  #wettkampftagePLZ="ngModel"
@@ -153,6 +155,7 @@
           <input type="text"
                  class="form-control"
                  required
+                 pattern="(?=.*[A-Z])(?=.*[a-z]).*"
                  id="wettkampftageOrt"
                  name="wettkampftageOrt"
                  #wettkampftageOrt="ngModel"
@@ -229,15 +232,17 @@
       </div>
 
       <!--KAMPFRICHTER-->
-      <div class="col-sm-7">
+      <!--KAMPFRICHTER-->
+      <div class="col-sm-11">
+        <div class="col-sm-1"></div>
         <div class="form-group row">
           <label>
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
             <span> *</span>
           </label>
-          <bla-double-selectionlist [leftItems]="selectedKampfrichterTag[selectedWettkampfTag]"
-                                    [(rightItems)]="notSelectedKampfrichterWettkampfTag[selectedWettkampfTag]"
-                                    [fieldSelector]="'email'"
+          <bla-double-selectionlist [(leftItems)]="notSelectedKampfrichter[selectedWettkampfTag]"
+                                    [(rightItems)]="selectedKampfrichter[selectedWettkampfTag]"
+                                    [fieldSelector]="'vorNachName'"
                                     [idLeftList]="'left'"
                                     [idRightList]="'right'"
                                     style="height: 12em; width: 36em">
@@ -245,7 +250,21 @@
         </div>
       </div>
 
-      <!-- BUTTONS: SPEICHERN UND ZURÜCK -->
+      <!-- BUTTONS: LÖSCHEN|SPEICHERN|ZURÜCK -->
+      <div class="form-group row">
+        <div class="col-sm-12"></div>
+        <div class="col-sm-3 button-box">
+
+          <!--LÖSCHEN -->
+          <bla-button *ngIf="entityExists()"
+                      [buttonType]="ButtonType.DANGER"
+                      [loading]="deleteLoading"
+                      (onClick)="onDelete(selectedWettkampfTag, $event)">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
+          </bla-button>
+        </div>
+      </div>
+
       <div class="form-group row">
         <div class="col-sm-11"></div>
         <div class="col-sm-1 button-box">

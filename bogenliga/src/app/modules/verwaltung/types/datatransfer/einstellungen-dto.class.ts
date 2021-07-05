@@ -9,6 +9,7 @@ export class EinstellungenDTO implements DataTransferObject {
   version: number;
   key: string;
   value: string;
+  regex: string;
 
 
 
@@ -17,6 +18,7 @@ export class EinstellungenDTO implements DataTransferObject {
     version?: number;
     key?: string;
     value?: string;
+    regex?: string;
 
 
   } = {}): EinstellungenDTO {
@@ -25,6 +27,7 @@ export class EinstellungenDTO implements DataTransferObject {
     copy.version = optional.version || null;
     copy.key = optional.key || '';
     copy.value = optional.value || '';
+    copy.regex = optional.regex || null;
 
     return copy;
   }
