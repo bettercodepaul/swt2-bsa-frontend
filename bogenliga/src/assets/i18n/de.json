@@ -346,7 +346,7 @@
         "NEWPASSWORD": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$+=!*()@%&?"
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",
@@ -522,7 +522,8 @@
           "DESCRIPTION": {
             "EMAIL": "Bitte korrekte E-Mail eingeben",
             "HOST": "Bitte vollständige Hostadresse eingeben",
-            "PORT": "Bitte nur Zahlen eingeben"
+            "PORT": "Bitte nur Zahlen eingeben",
+            "DEFAULT": "Bitte korrekten Wert eingeben"
           }
         }
       }
@@ -1149,17 +1150,17 @@
             "STRASSE": {
               "LABEL": "Strasse",
               "PLACEHOLDER": "Straße und Hausnummer *",
-              "ERROR": "Ungültige Eingabe."
+              "ERROR": "Bitte geben Sie eine gültige Straße und Hausnummer ein."
             },
             "PLZ": {
               "LABEL": "Postleitzahl",
               "PLACEHOLDER": "Postleitzahl *",
-              "ERROR": "Ungültige Postleitzahl."
+              "ERROR": "Bitte geben Sie eine fünfstellige DE-Postleitzahl ein."
             },
             "ORTSNAME": {
               "LABEL": "Ort/Stadt",
               "PLACEHOLDER": "Ort/Stadt *",
-              "ERROR": "Ungültiger Ort."
+              "ERROR": "Bitte geben Sie einen Ort oder eine Stadt ein."
             },
             "ORTSINFO": {
               "LABEL": "Zusatzinformation",
@@ -1182,8 +1183,8 @@
                 "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
               },
               "DELETE": {
-                "TITLE": "Wettkampftag löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+                "TITLE": "Löschen",
+                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
               },
               "ADD": {
                 "TITLE": "Neu",
@@ -1200,6 +1201,10 @@
               "DELETE_FAILURE": {
                 "TITLE": "Fehler beim Löschen",
                 "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              },
+              "DEADLINE_EXPIRED": {
+                "TITLE": "Meldedeadline abgelaufen",
+                "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
               },
               "TOO_MANY": {
                 "TITLE": "Zu viele Wettkampftage",
@@ -1326,7 +1331,7 @@
         "PASSWORD_NEW": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte neues Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$+=!*()@%&?"
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "ROLE_UPDATE": "Rolle ändern",
         "PW_UPDATE": "Passwort ändern"
@@ -1348,12 +1353,12 @@
         "EMAIL": {
           "LABEL": "E-Mail",
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Benutzerkennung eingeben",
-          "ERROR": "Bitte eine gültige Email eingeben."
+          "ERROR": "Bitte eine gültige E-mail eingeben."
         },
         "PASSWORD": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",

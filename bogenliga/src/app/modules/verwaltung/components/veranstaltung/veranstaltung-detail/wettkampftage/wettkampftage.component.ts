@@ -44,12 +44,15 @@ import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjah
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
+import {RoleDTO} from '@verwaltung/types/datatransfer/role-dto.class';
+import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-do.class';
+import {kampfrichterExtendedDTO} from '@verwaltung/types/datatransfer/kampfrichter-extended-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
-const NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS = 'veranstaltung_detail_delete_success';
-const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_failure';
+const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
+const NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS = 'wettkampftag_delete_success';
+const NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE = 'wettkampftag_delete_failure';
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
 const NOTIFICATION_WETTKAMPFTAG_TOO_MANY = 'veranstaltung_detail_wettkampftage_failure';
@@ -63,7 +66,6 @@ const wettkampfTagNotification: Notification = {
   type:        NotificationType.OK,
   userAction:  NotificationUserAction.PENDING
 };
-
 
 // TODO: die Variable valid zur Steuerung disabled (SaveButton) ist global, ohne Funktion und unterscheidet nicht den
 // Status der Eingabefelder
@@ -81,8 +83,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
   public currentUser: UserProfileDO;
   public rows: TableRow[];
-  private selectedVeranstaltungsId: number;
-  public currentWettkampftagDO: WettkampfDO;
 
   public currentWettkampftag: WettkampfDO = new WettkampfDO();
   public currentWettkampftagArray: Array<WettkampfDO> = [];
@@ -98,10 +98,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public allDsbMitgliederWithKampfrichterLizenz: Array<DsbMitgliedDO> = [];
   public allUserWithKampfrichterLizenz: Array<UserRolleDO> = [];
 
-  public kampfrichterTag: Array<Array<KampfrichterDO>> = [];
-  public initiallySelectedKampfrichterTag: Array<Array<UserRolleDO>> = [];
-  public selectedKampfrichterTag: Array<Array<UserRolleDO>> = [];
-  public notSelectedKampfrichterWettkampfTag: Array<Array<UserRolleDO>> = [];
+  public notSelectedKampfrichter: Array<Array<KampfrichterExtendedDO>> = [];
+  public selectedKampfrichter: Array<Array<KampfrichterExtendedDO>> = [];
+
+  public selectedKampfrichterBeforeSave: Array<Array<KampfrichterExtendedDO>> = [];
+  public notSelectedKampfrichterBeforeSave: Array<Array<KampfrichterExtendedDO>> = [];
 
   text = '. Wettkampftag';
 
@@ -111,6 +112,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public anzahl: number = 0;
   public maxWettkampftageEinstellungenDO: EinstellungenDO = new EinstellungenDO();
   public maxWettkampftageID: number = 8;
+  public selectedWettkampf: WettkampfDO;
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -234,29 +236,31 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void {
 
-    let currentWettkampftag: WettkampfDO;
-    let kampfrichterUserToSave: Array<UserRolleDO> = [];
-    let kampfrichterUserToDelete: Array<UserRolleDO> = [];
+    let kampfrichterExtendedToSave: Array<KampfrichterExtendedDO> = [];
+    let kampfrichterExtendedToDelete: Array<KampfrichterExtendedDO> = [];
 
-    currentWettkampftag = this.currentWettkampftagArray[wettkampfTagNumber];
-    kampfrichterUserToSave = this.selectedKampfrichterTag[wettkampfTagNumber].filter(comparer(this.initiallySelectedKampfrichterTag[wettkampfTagNumber]));
-    kampfrichterUserToDelete = this.initiallySelectedKampfrichterTag[wettkampfTagNumber].filter(comparer(this.selectedKampfrichterTag[wettkampfTagNumber]));
 
+    kampfrichterExtendedToSave = this.selectedKampfrichter[wettkampfTagNumber].filter(comparer(this.selectedKampfrichterBeforeSave[wettkampfTagNumber]));
+    kampfrichterExtendedToDelete = this.notSelectedKampfrichter[wettkampfTagNumber].filter(comparer(this.notSelectedKampfrichterBeforeSave[wettkampfTagNumber]));
+
+
+    //EXTENDED -> REGULAR DO
     const kampfrichterToSave: Array<KampfrichterDO> = [];
-    for (const i of Object.keys(kampfrichterUserToSave)) {
+    for (const i of Object.keys(kampfrichterExtendedToSave)) {
       kampfrichterToSave.push(new KampfrichterDO());
-      kampfrichterToSave[i].id = kampfrichterUserToSave[i].id;
+      kampfrichterToSave[i].id = kampfrichterExtendedToSave[i].id;
       kampfrichterToSave[i].wettkampfID = wettkampfID;
       kampfrichterToSave[i].leitend = false;
     }
 
     const kampfrichterToDelete: Array<KampfrichterDO> = [];
-    for (const i of Object.keys(kampfrichterUserToDelete)) {
+    for (const i of Object.keys(kampfrichterExtendedToDelete)) {
       kampfrichterToDelete.push(new KampfrichterDO());
-      kampfrichterToDelete[i].id = kampfrichterUserToDelete[i].id;
-      kampfrichterToDelete[i].wettkampfID = currentWettkampftag.id;
+      kampfrichterToDelete[i].id = kampfrichterExtendedToDelete[i].id;
+      kampfrichterToDelete[i].wettkampfID = wettkampfID;
       kampfrichterToDelete[i].leitend = false;
     }
+
 
     if (kampfrichterToSave.length > 0) {
       console.log(kampfrichterToSave.length);
@@ -391,33 +395,58 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
-  public onDelete(ignore: any): void {
+  //method that deletes a wettkampftag if the deadline of the veranstaltung has not expired
+  public onDelete(wettkampfTagNumber: number, ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
-    const id = this.currentVeranstaltung.id;
+
+    const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
+
+    let currentDate = new Date();
+    let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
+    //set the time of the dates to zero for comparing
+    deadlineDate.setHours(0,0,0,0);
+    currentDate.setHours(0,0,0,0);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
-      title:            'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+      id: NOTIFICATION_DELETE_WETTKAMPFTAG+ id,
+      title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.ACCEPTED
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG + id)
-        .subscribe((myNotification) => {
+    if(deadlineDate < currentDate){
 
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.veranstaltungDataProvider.deleteById(id)
-                .then((response) => this.handleDeleteSuccess(response))
-                .catch((response) => this.handleDeleteFailure(response));
-          }
-        });
+      const notification_expired: Notification = {
+        id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
 
-    this.notificationService.showNotification(notification);
+      this.notificationService.showNotification(notification_expired);
+
+    } else {
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG + id)
+          .subscribe((myNotification) => {
+
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.wettkampfDataProvider.deleteById(id)
+                  .then((response) => this.handleDeleteSuccess(response))
+                  .catch((response) => this.handleDeleteFailure(response));
+            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.deleteLoading = false;
+            }
+          });
+      this.notificationService.showNotification(notification);
+    }
   }
 
   public entityExists(): boolean {
@@ -452,15 +481,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private loadUser() {
     this.userRolleProvider.findAll()
         .then((response: BogenligaResponse<UserRolleDO[]>) => this.handleUserRolleResponseArraySuccess(response))
-        .catch((response: BogenligaResponse<UserRolleDTO[]>) => this.handleUserRolleResponseArrayFailure(response)).then(() => this.loadKampfrichter());
+        .catch((response: BogenligaResponse<UserRolleDTO[]>) => this.handleUserRolleResponseArrayFailure(response)).then();
   }
 
   private loadKampfrichter() {
-    this.kampfrichterProvider.findAll()
-        .then((response: BogenligaResponse<KampfrichterDO[]>) => this.handleKampfrichterResponseArraySuccess(
-          response
-        ))
-        .catch((response: BogenligaResponse<KampfrichterDTO[]>) => this.handleKampfrichterResponseArrayFailure(response));
+    this.kampfrichterProvider.findExtendedByIdNotAssignedToId(this.selectedWettkampf.id)
+        .then((response: BogenligaResponse<KampfrichterExtendedDO[]>) => this.handleKampfrichterResponseArraySuccess(response))
+        .catch(() => this.handleKampfrichterResponseArrayFailure());
   }
 
   private loadWettkampf() {
@@ -495,16 +522,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleDeleteSuccess(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_SUCCESS.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.router.navigateByUrl('/verwaltung/veranstaltung');
@@ -518,16 +545,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   private handleDeleteFailure(response: BogenligaResponse<void>): void {
 
     const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
+      id:          NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
       userAction:  NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.deleteLoading = false;
@@ -599,34 +626,34 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
   }
 
+  private async handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterExtendedDO[]>): Promise<void> {
 
-  private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterDO[]>): void {
-    let allKampfrichter: Array<KampfrichterDO> = [];
-    allKampfrichter = response.payload;
-    let tempKampfrichter: Array<KampfrichterDO> = [];
-    let tempNotSelectedKampfrichterTag: Array<UserRolleDO> = [];
+    this.selectedKampfrichterBeforeSave[this.selectedWettkampfTag] = [];
+    this.notSelectedKampfrichterBeforeSave[this.selectedWettkampfTag] = [];
 
-    for (let i = 1; i <= allKampfrichter.length; i++) {
-      this.kampfrichterTag[i] = [];
-      tempKampfrichter = this.kampfrichterTag[i];
-      tempNotSelectedKampfrichterTag = this.notSelectedKampfrichterWettkampfTag[i];
+    this.selectedKampfrichter[this.selectedWettkampfTag]= [];
+    this.notSelectedKampfrichter[this.selectedWettkampfTag] = []
 
-      allKampfrichter.filter((kampfrichter) => kampfrichter.wettkampfID === this.currentWettkampftagArray[i].id).forEach((kampfrichter) => this.kampfrichterTag[i].push(Object.assign({}, kampfrichter)));
+    this.notSelectedKampfrichter[this.selectedWettkampfTag] = response.payload; //links
 
-      if (tempKampfrichter[0] !== undefined) {
-        for (const iter of Object.keys(this.kampfrichterTag[i])) {
-          this.initiallySelectedKampfrichterTag[i].push(this.allUserWithKampfrichterLizenz.filter((user) => user.id === this.kampfrichterTag[iter].id)[0]);
-        }
-      }
+    await this.kampfrichterProvider.findExtendedByIdAssignedToId(this.selectedWettkampf.id).then(reply=>{
+      this.selectedKampfrichter[this.selectedWettkampfTag] = reply.payload; //rechts
+    }).catch(() => this.handleKampfrichterResponseArrayFailure());
 
-      this.initiallySelectedKampfrichterTag[i].forEach((val) => this.selectedKampfrichterTag[i].push(Object.assign({}, val)));
-      tempNotSelectedKampfrichterTag = this.allUserWithKampfrichterLizenz.filter((user) => this.initiallySelectedKampfrichterTag[i].indexOf(user) < 0);
-      this.notSelectedKampfrichterWettkampfTag[i] = tempNotSelectedKampfrichterTag;
-    }
+
+    this.selectedKampfrichter[this.selectedWettkampfTag].forEach(x=>{
+      this.selectedKampfrichterBeforeSave[this.selectedWettkampfTag].push(x);
+    })
+
+    this.notSelectedKampfrichter[this.selectedWettkampfTag].forEach(x=>{
+      this.notSelectedKampfrichterBeforeSave[this.selectedWettkampfTag].push(x);
+    })
+
     this.loading = false;
   }
 
-  private handleKampfrichterResponseArrayFailure(response: BogenligaResponse<KampfrichterDTO[]>): void {
+  private handleKampfrichterResponseArrayFailure(): void {
+    console.log("KampfrichterResponseArrayFailure");
     this.loading = false;
   }
 
@@ -662,10 +689,13 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   //onSelect for SelectionList in html-file, loads currently selected Wettkampftag
   public onSelect($event: WettkampfDO[]): void {
+    console.log("selected:",$event);
     this.selectedWettkampfTag = $event[0].wettkampfTag;
+    this.selectedWettkampf = $event[0];
     console.log('onSelect Dialog: ' + this.selectedWettkampfTag);
     this.loadWettkampf();
     this.loadDistinctWettkampf();
+    this.loadKampfrichter();
   }
 
   //create an empty Wettkampftag
@@ -706,6 +736,26 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
     return true;
   }
+  //Wettkampftag der gelöscht werden soll, muss hier übergeben werden
+  public async updateNumbersDelete(wettkampftagToDelete:number){
+    this.loadDistinctWettkampf();
+
+    if(wettkampftagToDelete==this.selectedDTOs.length){
+      this.selectedDTOs.pop();
+    }
+    else {
+      //Eig wettkampftagToDelete + 1 aber Array startet bei 0
+      for (let i = wettkampftagToDelete; i <= this.selectedDTOs.length; i++) {
+        this.selectedDTOs[i].wettkampfTag = (this.selectedDTOs[i].wettkampfTag)-1;
+        this.selectedDTOs[i].id = (this.selectedDTOs[i].id) -1;
+        this.selectedDTOs[i - 1] = this.selectedDTOs[i];
+
+        await this.wettkampfDataProvider.update(this.selectedDTOs[i-1]);
+      }
+    }
+    this.loadDistinctWettkampf();
+  }
+}
 
   //Creates Copy of current Wettkampftag
   public async copyCurrentWettkampfTag(num: number): Promise<boolean> {
