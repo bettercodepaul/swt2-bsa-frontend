@@ -165,12 +165,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
   }
 
-  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void{
+  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
     console.log('==> HandleUserResponseArraySuccess');
     this.allUsers = [];
     this.allUsers = response.payload;
 
-    for(let i=1;i<=this.allUsers.length; i++){
+    for (let i = 1; i <= this.allUsers.length; i++) {
       this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
     }
     this.loading = false;
@@ -189,7 +189,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichter(wettkampfTagNumber, wettkampfID));
   }
 
-  public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number>{
+  public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number> {
     this.anzahl++;
     this.currentWettkampftagArray.push(new WettkampfDO());
     this.currentAusrichter.push(new UserProfileDO());
@@ -232,7 +232,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loadDistinctWettkampf();
   }
 
-  public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void{
+  public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void {
 
     let currentWettkampftag: WettkampfDO;
     let kampfrichterUserToSave: Array<UserRolleDO> = [];
@@ -537,12 +537,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.notificationService.showNotification(notification);
   }
 
-  private handleWettkampfResponseArraySucces(response: BogenligaResponse<WettkampfDO[]>) : void {
+  private handleWettkampfResponseArraySucces(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
     this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
 
-    for(let i=1; i<=this.allWettkampf.length;i++){
+    for (let i = 1; i <= this.allWettkampf.length; i++) {
       if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === (i)).length === 0) {
         this.currentWettkampftagArray[i] = new WettkampfDO();
       } else {
@@ -600,14 +600,14 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
 
-  private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterDO[]>): void{
+  private handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterDO[]>): void {
     let allKampfrichter: Array<KampfrichterDO> = [];
     allKampfrichter = response.payload;
     let tempKampfrichter: Array<KampfrichterDO> = [];
     let tempNotSelectedKampfrichterTag: Array<UserRolleDO> = [];
 
-    for(let i = 1; i<=allKampfrichter.length; i++){
-      this.kampfrichterTag[i]= [];
+    for (let i = 1; i <= allKampfrichter.length; i++) {
+      this.kampfrichterTag[i] = [];
       tempKampfrichter = this.kampfrichterTag[i];
       tempNotSelectedKampfrichterTag = this.notSelectedKampfrichterWettkampfTag[i];
 
@@ -654,7 +654,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
 
-
   //when loading failed
   private handleLoadDistinctWettkampfFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
     this.selectedDTOs = [];
@@ -677,12 +676,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       const temp: WettkampfDO = new WettkampfDO(
         num,
         this.currentVeranstaltung.id,
-        "2021-00-00",
-        "",
-        "",
-        "",
-        "",
-        "",
+        '2021-00-00',
+        '',
+        '',
+        '',
+        '',
+        '',
         this.anzahl,
         1,
         1,
@@ -714,9 +713,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.anzahl++;
 
       //parsing current date
-      let currentYear = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(0,4));
-      let currentMonth= Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(5,7));
-      let currentDate = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(8,10));
+      let currentYear = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(0, 4));
+      let currentMonth = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(5, 7));
+      let currentDate = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(8, 10));
 
       //creating new Date object with parsed year, month and day and incrementing it by + 1
       let nextWettkampfDatum = new Date();
@@ -729,17 +728,17 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       let incrementedDate = nextWettkampfDatum.getDate();
 
       //constructing date string
-      let incrementedWettkampfDatum = incrementedYear.toString() + "-";
+      let incrementedWettkampfDatum = incrementedYear.toString() + '-';
 
       //adding leading 0 to months < 10
-      if (incrementedMonth < 10){
-        incrementedWettkampfDatum += "0";
+      if (incrementedMonth < 10) {
+        incrementedWettkampfDatum += '0';
       }
-      incrementedWettkampfDatum += incrementedMonth.toString() + "-";
+      incrementedWettkampfDatum += incrementedMonth.toString() + '-';
 
       //adding leading 0 to dates < 10
-      if (incrementedDate < 10){
-        incrementedWettkampfDatum += "0";
+      if (incrementedDate < 10) {
+        incrementedWettkampfDatum += '0';
       }
       incrementedWettkampfDatum += incrementedDate.toString();
 
@@ -777,4 +776,3 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return true;
   }
 }
-
