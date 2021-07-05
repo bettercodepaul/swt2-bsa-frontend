@@ -387,14 +387,18 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
-  //method to delete a wettkampftag (if the deadline has expired, no wettkampftag will be deleted)
+  //method that deletes a wettkampftag if the deadline of the veranstaltung has not expired
   public onDelete(wettkampfTagNumber: number, ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
 
     const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
+
     let currentDate = new Date();
     let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
+    //set the time of the dates to zero for comparing
+    deadlineDate.setHours(0,0,0,0);
+    currentDate.setHours(0,0,0,0);
 
     const notification: Notification = {
       id: NOTIFICATION_DELETE_WETTKAMPFTAG+ id,
@@ -408,6 +412,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     };
 
     if(deadlineDate < currentDate){
+
       const notification_expired: Notification = {
         id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
         title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DEADLINE_EXPIRED.TITLE',
