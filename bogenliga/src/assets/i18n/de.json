@@ -1190,6 +1190,10 @@
                 "TITLE": "Neu",
                 "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
               },
+              "COPY": {
+                "TITLE": "Kopieren",
+                "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
+              },
               "DELETE_SUCCESS": {
                 "TITLE": "Erfolgreich",
                 "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."

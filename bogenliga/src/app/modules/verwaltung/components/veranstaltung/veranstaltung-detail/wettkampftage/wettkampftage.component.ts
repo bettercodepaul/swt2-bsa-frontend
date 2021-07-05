@@ -167,12 +167,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure(response));
   }
 
-  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void{
+  private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
     console.log('==> HandleUserResponseArraySuccess');
     this.allUsers = [];
     this.allUsers = response.payload;
 
-    for(let i=1;i<=this.allUsers.length; i++){
+    for (let i = 1; i <= this.allUsers.length; i++) {
       this.currentAusrichter[i] = this.allUsers.filter((user) => user.id === this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfAusrichter)[0] ?? this.allUsers[0];
     }
     this.loading = false;
@@ -191,7 +191,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichter(wettkampfTagNumber, wettkampfID));
   }
 
-  public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number>{
+  public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number> {
     this.anzahl++;
     this.currentWettkampftagArray.push(new WettkampfDO());
     this.currentAusrichter.push(new UserProfileDO());
@@ -218,7 +218,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return currentWettkampfTag.id;
   }
 
-  //Method adds new Wettkampftag ->called by "hinzufügen"-Button
+  //Method adds new Wettkampftag -> called by "+Neu"-Button
   public async onAddWettkampfTag(ignore: any): Promise<void> {
     this.currentWettkampftagArray.push(new WettkampfDO());
     this.loadDistinctWettkampf();
@@ -226,7 +226,15 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loadDistinctWettkampf();
   }
 
-  public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void{
+  //Method copys current Wettkampftag -> called by "Kopieren"-Button
+  public async onCopyWettkampfTag(ignore: any): Promise<void> {
+    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.loadDistinctWettkampf();
+    await this.copyCurrentWettkampfTag((this.anzahl) + 1);
+    this.loadDistinctWettkampf();
+  }
+
+  public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void {
 
     let kampfrichterExtendedToSave: Array<KampfrichterExtendedDO> = [];
     let kampfrichterExtendedToDelete: Array<KampfrichterExtendedDO> = [];
@@ -556,12 +564,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.notificationService.showNotification(notification);
   }
 
-  private handleWettkampfResponseArraySucces(response: BogenligaResponse<WettkampfDO[]>) : void {
+  private handleWettkampfResponseArraySucces(response: BogenligaResponse<WettkampfDO[]>): void {
     this.allWettkampf = [];
     this.allWettkampf = response.payload;
     this.allWettkampf = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
 
-    for(let i=1; i<=this.allWettkampf.length;i++){
+    for (let i = 1; i <= this.allWettkampf.length; i++) {
       if (this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === (i)).length === 0) {
         this.currentWettkampftagArray[i] = new WettkampfDO();
       } else {
@@ -618,7 +626,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
   }
 
-
   private async handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterExtendedDO[]>): Promise<void> {
 
     this.selectedKampfrichterBeforeSave[this.selectedWettkampfTag] = [];
@@ -674,7 +681,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
 
-
   //when loading failed
   private handleLoadDistinctWettkampfFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
     this.selectedDTOs = [];
@@ -700,12 +706,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       const temp: WettkampfDO = new WettkampfDO(
         num,
         this.currentVeranstaltung.id,
-        "2021-00-00",
-        "",
-        "",
-        "",
-        "",
-        "00:00",
+        '2021-01-01',
+        '',
+        '',
+        '',
+        '',
+        '',
         this.anzahl,
         1,
         1,
@@ -750,5 +756,73 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
     this.loadDistinctWettkampf();
   }
-}
 
+  //Creates Copy of current Wettkampftag
+  public async copyCurrentWettkampfTag(num: number): Promise<boolean> {
+    if (this.anzahl < Number(this.maxWettkampftageEinstellungenDO.value)) {
+      this.anzahl++;
+
+      //parsing current date
+      let currentYear = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(0, 4));
+      let currentMonth = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(5, 7));
+      let currentDate = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(8, 10));
+
+      //creating new Date object with parsed year, month and day and incrementing it by + 1
+      let nextWettkampfDatum = new Date();
+      nextWettkampfDatum.setFullYear(currentYear, currentMonth, currentDate)
+      nextWettkampfDatum.setDate(nextWettkampfDatum.getDate() + 1);
+
+      //parsing incremented Date
+      let incrementedYear = nextWettkampfDatum.getFullYear();
+      let incrementedMonth = nextWettkampfDatum.getMonth();
+      let incrementedDate = nextWettkampfDatum.getDate();
+
+      //constructing date string
+      let incrementedWettkampfDatum = incrementedYear.toString() + '-';
+
+      //adding leading 0 to months < 10
+      if (incrementedMonth < 10) {
+        incrementedWettkampfDatum += '0';
+      }
+      incrementedWettkampfDatum += incrementedMonth.toString() + '-';
+
+      //adding leading 0 to dates < 10
+      if (incrementedDate < 10) {
+        incrementedWettkampfDatum += '0';
+      }
+      incrementedWettkampfDatum += incrementedDate.toString();
+
+      const temp: WettkampfDO = new WettkampfDO(
+        num,
+        this.currentVeranstaltung.id,
+        incrementedWettkampfDatum,
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfStrasse.toString(),
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfPlz.toString(),
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfOrtsname.toString(),
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfOrtsinfo.toString(),
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfBeginn.toString(),
+        this.anzahl,
+        1,
+        1,
+        1,
+        1
+      );
+      this.currentWettkampftagArray[num] = temp;
+      await this.saveWettkampftag(this.currentWettkampftagArray[num]);
+    } else {
+      const notification: Notification = {
+        id:          NOTIFICATION_WETTKAMPFTAG_TOO_MANY,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.TOO_MANY.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.TOO_MANY.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      this.wettkampftagService();
+      this.notificationService.showNotification(notification);
+    }
+    return true;
+  }
+}
