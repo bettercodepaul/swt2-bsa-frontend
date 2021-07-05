@@ -157,6 +157,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     });
   }
 
+
+
+
   public onVeranstaltungDetail(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
   }
@@ -193,11 +196,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number>{
     this.anzahl++;
-    this.currentWettkampftagArray.push(new WettkampfDO());
-    this.currentAusrichter.push(new UserProfileDO());
 
     let currentWettkampfTag: WettkampfDO;
     let currentAusrichter: UserProfileDO;
+
+    this.loadWettkampf();
+    this.currentWettkampftagArray.forEach(element => {if(element.wettkampfTag == wettkampfTagNumber){currentWettkampfTag = element;}});
 
     currentWettkampfTag = this.currentWettkampftagArray[wettkampfTagNumber];
     currentAusrichter = this.currentAusrichter[wettkampfTagNumber];
@@ -393,6 +397,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.notificationService.discardNotification();
 
     const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
+    this.updateNumbersDelete();
 
     let currentDate = new Date();
     let deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
@@ -439,6 +444,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
           });
       this.notificationService.showNotification(notification);
     }
+
   }
 
   public entityExists(): boolean {
@@ -482,7 +488,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         .catch(() => this.handleKampfrichterResponseArrayFailure());
   }
 
-  private loadWettkampf() {
+  private loadWettkampf(){
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleWettkampfResponseArraySucces(response))
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response)).then(() => this.loadUsers());
@@ -568,7 +574,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         this.currentWettkampftagArray[i] = this.allWettkampf.filter((wettkampf) => wettkampf.wettkampfTag === i)[0];
       }
     }
-
+    console.log("loadWettkampf: "+this.currentWettkampftagArray.toString());
     this.loading = false;
   }
 
@@ -712,8 +718,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         1,
         1
       );
-      this.currentWettkampftagArray[num] = temp;
-      await this.saveWettkampftag(this.currentWettkampftagArray[num]);
+      //this.currentWettkampftagArray[num] = temp;
+      await this.saveWettkampftag(temp);
     } else {
       const notification: Notification = {
         id:          NOTIFICATION_WETTKAMPFTAG_TOO_MANY,
@@ -731,24 +737,34 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return true;
   }
 
-  //Wettkampftag der gelöscht werden soll, muss hier übergeben werden
-  public async updateNumbersDelete(wettkampftagToDelete:number){
+
+  //Noch nicht zu gebrauchen
+  //Ziel der Funktion ist, dass wenn Wettkampftag gelöscht wird, die Nummerierung der WEttkampftage entsprechend angepasst wird
+  public async updateNumbersDelete(): Promise<boolean>{
+    //TODO Alle existierende Wettkampftage müssen komplett ausgefüllt und abgespeichert sein, Wenn ein Attribut fehlt, funktioniert die Updatefunktion nicht
+
+    this.loadWettkampf();
     this.loadDistinctWettkampf();
 
-    if(wettkampftagToDelete==this.selectedDTOs.length){
-      this.selectedDTOs.pop();
-    }
-    else {
-      //Eig wettkampftagToDelete + 1 aber Array startet bei 0
-      for (let i = wettkampftagToDelete; i <= this.selectedDTOs.length; i++) {
-        this.selectedDTOs[i].wettkampfTag = (this.selectedDTOs[i].wettkampfTag)-1;
-        this.selectedDTOs[i].id = (this.selectedDTOs[i].id) -1;
-        this.selectedDTOs[i - 1] = this.selectedDTOs[i];
+    if(this.selectedWettkampfTag!=this.currentWettkampftagArray.length){    //Wenn letzter Wettkampftag gelöscht werden soll, muss Nummerierung nicht angepasst werden
+      for (let i = this.selectedWettkampfTag +1; i < this.currentWettkampftagArray.length; i++) {   //Man beginnt im Array, ein Tag weiter als der aktuelle (Welcher gelöscht werden soll)
+        console.log("Wettkampftag vorher: " + this.currentWettkampftagArray[i].wettkampfTag);
+        console.log("i = "+ i);
+        this.currentWettkampftagArray[i].wettkampfTag --;     //Wettkampftagnummer wird dekrementiert
 
-        await this.wettkampfDataProvider.update(this.selectedDTOs[i-1]);
+        console.log("Wettkampftag danach: " + this.currentWettkampftagArray[i].wettkampfTag);
+
+        if(this.currentWettkampftagArray[i].wettkampfTag==null) {   //Problem: currentWettkampftagArray wird teilweise falsch befüllt
+          console.log("wettkampf doesnt exist");
+        }
+        else{
+          await this.wettkampfDataProvider.update(this.currentWettkampftagArray[i]);    //Wettkampftag mit aktualisierter Wettkampftagnummer speichern
+          this.currentWettkampftagArray[i - 1] = this.currentWettkampftagArray[i];      //Position im Array verschieben
+        }
       }
     }
     this.loadDistinctWettkampf();
+    return true;
   }
 }
 
