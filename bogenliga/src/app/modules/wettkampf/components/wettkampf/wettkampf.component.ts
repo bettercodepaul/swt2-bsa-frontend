@@ -28,6 +28,7 @@ import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {environment} from '@environment';
+import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -108,14 +109,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadVeranstaltungen()
         .then(() => {
           this.loadErgebnisse(this.directMannschaft);
-      });
-  }
-
-  public getStatistiken(): any {
-    this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(0, 0)
-      .then((response: any) => console.log(response))
-      .catch(() => {
-        console.log('ERROR');
       });
   }
 
@@ -212,11 +205,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     this.rows = [];
-    for (let i = 0; i < this.wettkaempfe.length; i++) {
-      this.rows.push((toTableRows(this.wettkampfErgebnisService.createEinzelErgebnisse(this.dsbMitglieder, this.mannschaftsmitglieder, this.currentJahr, selectedMannschaft,
-        this.passen[i]))));
+    for (const wettkampf of this.wettkaempfe) {
+      this.schuetzenstatistikDataProvider.getSchuetzenstatistikWettkampf(selectedMannschaft.vereinId, wettkampf.id)
+        .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
     }
-
 
     document.getElementById('einzeldruckButton').classList.remove('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
@@ -247,15 +239,26 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     this.rows = [];
-
-    this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.dsbMitglieder, this.mannschaftsmitglieder, this.currentJahr, this.matches[0], selectedMannschaft,
-      this.passen[0]))));
+    this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(selectedMannschaft.vereinId, this.currentVeranstaltung.id)
+      .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
+    // this.rows.push((toTableRows(this.wettkampfErgebnisService.createGesamtErgebnisse(this.dsbMitglieder, this.mannschaftsmitglieder, this.currentJahr, this.matches[0], selectedMannschaft,
+    // this.passen[0]))));
 
 
 
     document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.remove('hidden');
 
+  }
+
+  public handleLoadSchuetzenstatistikSuccess(payload) {
+    console.log('Received from dataProvider');
+    console.log(payload);
+    console.log('Table Rows:');
+    console.log(toTableRows(payload));
+    this.rows.push(toTableRows(payload));
+    console.log('this.rows:');
+    console.log(this.rows);
   }
 
   /* loadPopup

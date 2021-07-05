@@ -153,10 +153,10 @@
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
       </bla-button>
       &nbsp;
-      <!-- Button - Einzelstatistik Gesamt anzeigen (onClick)="gesamt = true; loadPopup(this.currentMannschaft);">-->
+      <!-- Button - Einzelstatistik Gesamt anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="getStatistiken()">
+        (onClick)="gesamt = true; loadPopup(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
       </bla-button>
       &nbsp;
