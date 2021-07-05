@@ -173,6 +173,7 @@
                            [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
                            [fileName]="'Gesamtstatistik.pdf'"> Gesamtstatistik als PDF
       </bla-download-button>
+
     </div>
 <!-- popup -->
     <div class="overlay" *ngIf="popup">
@@ -208,6 +209,11 @@
     <div class="row print1">
       <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]">
         <h3>{{"Wettkampftag 1"}}</h3>
+        <bla-download-button id = "TagesuebersichtButton"
+                             [id]="'downloadTagesuebersicht'"
+                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=1')"
+                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+        </bla-download-button>
         <bla-data-table id="row0"
                         [loading]="loadingData"
                         [config]="config_table"
@@ -224,6 +230,11 @@
     <div class="row print1">
       <div id="Table2" class="hidden" [hidden]="!isTableFilled[1]">
         <h3>{{"Wettkampftag 2"}}</h3>
+        <bla-download-button id = "TagesuebersichtButton2"
+                             [id]="'downloadTagesuebersicht'"
+                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=2')"
+                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+        </bla-download-button>
         <bla-data-table id="row1"
                         [loading]="loadingData"
                         [config]="config_table"
@@ -240,6 +251,11 @@
     <div class="row print1">
       <div id="Table3" class="hidden" [hidden]="!isTableFilled[2]">
         <h3>{{"Wettkampftag 3"}}</h3>
+        <bla-download-button id = "TagesuebersichtButton3"
+                             [id]="'downloadTagesuebersicht'"
+                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=3')"
+                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+        </bla-download-button>
         <bla-data-table id="row2"
                         [loading]="loadingData"
                         [config]="config_table"
@@ -256,6 +272,11 @@
     <div class="row print1">
       <div id="Table4" class="hidden" [hidden]="!isTableFilled[3]">
         <h3>{{"Wettkampftag 4"}}</h3>
+        <bla-download-button id = "TagesuebersichtButton4"
+                             [id]="'downloadTagesuebersicht'"
+                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=4')"
+                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+        </bla-download-button>
         <bla-data-table id="row3"
                         [loading]="loadingData"
                         [config]="config_table"
