@@ -216,11 +216,19 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     return currentWettkampfTag.id;
   }
 
-  //Method adds new Wettkampftag ->called by "hinzufügen"-Button
+  //Method adds new Wettkampftag -> called by "+Neu"-Button
   public async onAddWettkampfTag(ignore: any): Promise<void> {
     this.currentWettkampftagArray.push(new WettkampfDO());
     this.loadDistinctWettkampf();
     await this.createInitWettkampfTag((this.anzahl) + 1);
+    this.loadDistinctWettkampf();
+  }
+
+  //Method copys current Wettkampftag -> called by "Kopieren"-Button
+  public async onCopyWettkampfTag(ignore: any): Promise<void> {
+    this.currentWettkampftagArray.push(new WettkampfDO());
+    this.loadDistinctWettkampf();
+    await this.copyCurrentWettkampfTag((this.anzahl) + 1);
     this.loadDistinctWettkampf();
   }
 
@@ -675,6 +683,75 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         "",
         "",
         "",
+        this.anzahl,
+        1,
+        1,
+        1,
+        1
+      );
+      this.currentWettkampftagArray[num] = temp;
+      await this.saveWettkampftag(this.currentWettkampftagArray[num]);
+    } else {
+      const notification: Notification = {
+        id:          NOTIFICATION_WETTKAMPFTAG_TOO_MANY,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.TOO_MANY.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.TOO_MANY.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      this.wettkampftagService();
+      this.notificationService.showNotification(notification);
+    }
+    return true;
+  }
+
+  //Creates Copy of current Wettkampftag
+  public async copyCurrentWettkampfTag(num: number): Promise<boolean> {
+    if (this.anzahl < Number(this.maxWettkampftageEinstellungenDO.value)) {
+      this.anzahl++;
+
+      //parsing current date
+      let currentYear = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(0,4));
+      let currentMonth= Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(5,7));
+      let currentDate = Number(this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfDatum.substring(8,10));
+
+      //creating new Date object with parsed year, month and day and incrementing it by + 1
+      let nextWettkampfDatum = new Date();
+      nextWettkampfDatum.setFullYear(currentYear, currentMonth, currentDate)
+      nextWettkampfDatum.setDate(nextWettkampfDatum.getDate() + 1);
+
+      //parsing incremented Date
+      let incrementedYear = nextWettkampfDatum.getFullYear();
+      let incrementedMonth = nextWettkampfDatum.getMonth();
+      let incrementedDate = nextWettkampfDatum.getDate();
+
+      //constructing date string
+      let incrementedWettkampfDatum = incrementedYear.toString() + "-";
+
+      //adding leading 0 to months < 10
+      if (incrementedMonth < 10){
+        incrementedWettkampfDatum += "0";
+      }
+      incrementedWettkampfDatum += incrementedMonth.toString() + "-";
+
+      //adding leading 0 to dates < 10
+      if (incrementedDate < 10){
+        incrementedWettkampfDatum += "0";
+      }
+      incrementedWettkampfDatum += incrementedDate.toString();
+
+      const temp: WettkampfDO = new WettkampfDO(
+        num,
+        this.currentVeranstaltung.id,
+        incrementedWettkampfDatum,
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfStrasse.toString(),
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfPlz.toString(),
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfOrtsname.toString(),
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfOrtsinfo.toString(),
+        this.currentWettkampftagArray[this.selectedWettkampfTag].wettkampfBeginn.toString(),
         this.anzahl,
         1,
         1,
