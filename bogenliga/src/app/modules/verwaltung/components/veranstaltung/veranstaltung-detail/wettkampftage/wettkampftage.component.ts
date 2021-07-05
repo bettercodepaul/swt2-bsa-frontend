@@ -676,7 +676,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       const temp: WettkampfDO = new WettkampfDO(
         num,
         this.currentVeranstaltung.id,
-        '2021-00-00',
+        '2021-01-01',
         '',
         '',
         '',
