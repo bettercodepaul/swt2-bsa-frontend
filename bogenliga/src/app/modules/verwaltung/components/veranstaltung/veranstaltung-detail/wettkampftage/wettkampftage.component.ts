@@ -736,6 +736,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
     return true;
   }
+
   //Wettkampftag der gelöscht werden soll, muss hier übergeben werden
   public async updateNumbersDelete(wettkampftagToDelete:number){
     this.loadDistinctWettkampf();
@@ -755,7 +756,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
     this.loadDistinctWettkampf();
   }
-}
 
   //Creates Copy of current Wettkampftag
   public async copyCurrentWettkampfTag(num: number): Promise<boolean> {
