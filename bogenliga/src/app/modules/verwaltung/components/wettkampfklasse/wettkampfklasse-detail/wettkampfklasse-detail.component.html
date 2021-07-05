@@ -5,32 +5,7 @@
         class="horizontal-form half-page"
         #dsbMitgliedForm="ngForm">
 
-
-    <!-- WETTKAMPF ID
-    <div class="form-group row">
-      <label for="wettkampfKlasseId"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               id="wettkampfKlasseId"
-               name="wettkampfKlasseId"
-               #wettkampfKlasseId="ngModel"
-               [(ngModel)]="currentWettkampfklasse.id"
-               [class.is-invalid]="wettkampfKlasseId.invalid && !wettkampfKlasseId.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.PLACEHOLDER' | translate }}">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_ID.ERROR' | translate }}
-        </div>
-      </div>
-    </div>-->
-
-    <!-- WETTKAMPFKLASSE_NR -->
+    <!-- Nummer der Wettkampfklasse -->
     <div class="form-group row">
       <label for="wettkampfKlasseNr"
              class="col-sm-4 col-form-label">
@@ -41,10 +16,10 @@
         <input type="text"
                class="form-control"
                required
+               pattern="(?=.*[0-9])[0-9]{1,2}$"
                id="wettkampfKlasseNr"
                name="wettkampfKlasseNr"
                #wettkampfKlasseNr="ngModel"
-               maxlength="3"
                [(ngModel)]="currentWettkampfklasse.klasseNr"
                [class.is-invalid]="wettkampfKlasseNr.invalid && !wettkampfKlasseNr.untouched"
                placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.PLACEHOLDER' | translate }}">
@@ -55,7 +30,7 @@
       </div>
     </div>
 
-    <!-- WETTKAMPFKLASSE_NAME -->
+    <!-- Name der Wettkampfklasse -->
     <div class="form-group row">
       <label for="wettkampfKlasseName"
              class="col-sm-4 col-form-label">
@@ -66,6 +41,7 @@
         <input type="text"
                class="form-control"
                required
+               pattern="(?=.*[A-Za-z])[A-Za-z\.\-\ ]{1,50}$"
                id="wettkampfKlasseName"
                name="wettkampfKlasseName"
                #wettkampfKlasseName="ngModel"
@@ -80,7 +56,7 @@
     </div>
 
 
-    <!-- WETTKAMPF_JAHRGANG_MIN -->
+    <!-- Wettkampf Jahrgang von -->
     <div class="form-group row">
       <label for="wettkampfKlasseJahrgangMin"
              class="col-sm-4 col-form-label">
@@ -91,11 +67,11 @@
         <input type="text"
                class="form-control"
                required
+               pattern="[0-9]{4,4}"
+               maxlength="4"
                id="wettkampfKlasseJahrgangMin"
                name="wettkampfKlasseJahrgangMin"
                #wettkampfKlasseJahrgangMin="ngModel"
-               maxlength="4"
-               pattern="[0-9]{4}"
                [(ngModel)]="currentWettkampfklasse.klasseJahrgangMin"
                [class.is-invalid]="wettkampfKlasseJahrgangMin.invalid && !wettkampfKlasseJahrgangMin.untouched"
                placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.PLACEHOLDER' | translate }}">
@@ -106,7 +82,7 @@
       </div>
     </div>
 
-    <!-- WETTKAMPF_JAHRGANG_MAX -->
+    <!-- Wettkampf Jahrgang bis -->
     <div class="form-group row">
       <label for="wettkampfKlasseJahrgangMax"
              class="col-sm-4 col-form-label">
@@ -117,11 +93,11 @@
         <input type="text"
                class="form-control"
                required
+               pattern="[0-9]{4,4}"
+               maxlength="4"
                id="wettkampfKlasseJahrgangMax"
                name="wettkampfKlasseJahrgangMax"
                #wettkampfKlasseJahrgangMax="ngModel"
-               maxlength="4"
-               pattern="[0-9]{4}"
                [(ngModel)]="currentWettkampfklasse.klasseJahrgangMax"
                [class.is-invalid]="wettkampfKlasseJahrgangMax.invalid && !wettkampfKlasseJahrgangMax.untouched"
                placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.PLACEHOLDER' | translate }}">
@@ -151,13 +127,6 @@
                     (onClick)="onUpdate($event)">
           {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
-
-        <!-- <bla-button *ngIf="entityExists()"
-                     [buttonType]="ButtonType.DANGER"
-                     [loading]="deleteLoading"
-                     (onClick)="onDelete($event)">
-           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.DELETE' | translate }}
-         </bla-button> -->
        </div>
      </div>
    </form>
