@@ -451,7 +451,8 @@
           "DESCRIPTION": {
             "EMAIL": "Please enter a correct E-Mail address",
             "HOST": "Please enter a full Host address",
-            "PORT": "Only numbers are allowed"
+            "PORT": "Only numbers are allowed",
+            "DEFAULT": "Please enter a valid value"
           }
         }
       }

@@ -156,6 +156,31 @@ export class UserDataProviderService extends DataProviderService {
   }
 
 
+  /**
+   * returns promise that includes List of all users with the role "roleId"
+   * sign in success -> resolve promise
+   * sign in failure -> reject promise with result
+   * @param roleId
+   */
+  public findAllUsersByRoleId(roleId: string | number): Promise<BogenligaResponse<UserRolleDO[]>> {
+    return new Promise((resolve, reject) => {
+
+      this.restClient.GET<VersionedDataTransferObject[]>(new UriBuilder().fromPath(this.getUrl())
+         .path('allusersbyrole').path(roleId).build()).then((data: VersionedDataTransferObject[]) => {
+
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayUserRolle(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
 
   public findById(id: string | number): Promise<BogenligaResponse<UserDO>> {
     // return promise
