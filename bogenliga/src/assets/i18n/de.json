@@ -1429,12 +1429,12 @@
         "WETTKAMPF_JAHRGANG_MIN": {
           "LABEL": "Wettkampf Jahrgang von",
           "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
-          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben (genau 4 Zahlen)."
         },
         "WETTKAMPF_JAHRGANG_MAX": {
           "LABEL": "Wettkampf Jahrgang bis",
           "PLACEHOLDER": "Bitte einen Jahrgang eingeben",
-          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben (genau 4 Zahlen)."
         },
         "WETTKAMPF_NR": {
           "LABEL": "Nummer der Wettkampfklasse",
