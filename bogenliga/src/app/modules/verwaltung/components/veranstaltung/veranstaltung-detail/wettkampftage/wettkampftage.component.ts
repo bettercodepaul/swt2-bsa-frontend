@@ -624,7 +624,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loading = false;
   }
 
-
   private async handleKampfrichterResponseArraySuccess(response: BogenligaResponse<KampfrichterExtendedDO[]>): Promise<void> {
 
     this.selectedKampfrichterBeforeSave[this.selectedWettkampfTag] = [];
@@ -678,8 +677,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
     this.loadingWettkampf = false;
   }
-
-
 
   //when loading failed
   private handleLoadDistinctWettkampfFailure(response: BogenligaResponse<WettkampfDTO[]>): void {
@@ -738,8 +735,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
 
-  //Noch nicht zu gebrauchen
-  //Ziel der Funktion ist, dass wenn Wettkampftag gelöscht wird, die Nummerierung der WEttkampftage entsprechend angepasst wird
+  //Wenn nicht alle Felder von allen Wettkampftagen befüllt sind, gibt es einen Error
   public async updateNumbersDelete(): Promise<boolean>{
     //TODO Alle existierende Wettkampftage müssen komplett ausgefüllt und abgespeichert sein, Wenn ein Attribut fehlt, funktioniert die Updatefunktion nicht
 
@@ -754,7 +750,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
         console.log("Wettkampftag danach: " + this.currentWettkampftagArray[i].wettkampfTag);
 
-        if(this.currentWettkampftagArray[i].wettkampfTag==null) {   //Problem: currentWettkampftagArray wird teilweise falsch befüllt
+        if(this.currentWettkampftagArray[i].wettkampfTag==null) {
           console.log("wettkampf doesnt exist");
         }
         else{
