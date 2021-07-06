@@ -54,7 +54,7 @@ export class SchuetzenstatistikDataProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder()
         .fromPath(this.getUrl())
-        .path('byVeranstaltungAndVerein/' + wettkampfId + '/' + vereinId)
+        .path('byWettkampfAndVerein/' + wettkampfId + '/' + vereinId)
         .build())
         .then((data: VersionedDataTransferObject[]) => {
           console.log('Received from Backend:');
