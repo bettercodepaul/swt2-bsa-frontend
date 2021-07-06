@@ -129,8 +129,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async loadAllErgebnisse(selectedMannschaft: DsbMannschaftDO) {
+    this.loadingData = true;
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
     await this.loadErgebnisse(selectedMannschaft);
+    this.loadingData = false;
+  }
+
+  public async loadErgebnisForMannschaft(selectedMannschaft: DsbMannschaftDO) {
+    this.loadingData = true;
+    await this.loadPopup(this.currentMannschaft);
+    await this.loadErgebnisse(selectedMannschaft);
+    this.loadingData = false;
   }
 
   /**
@@ -189,6 +198,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public async loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
+    this.loadingData = true;
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
       rowNumber += i;
@@ -211,6 +221,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     document.getElementById('einzeldruckButton').classList.remove('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
+    this.loadingData = false;
   }
 
   private async loadSchuetzenstatistiken(vereinId, index) {
@@ -231,6 +242,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
+    this.loadingData = true;
 
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
@@ -255,7 +267,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.remove('hidden');
-
+    this.loadingData = false;
   }
 
   public handleLoadSchuetzenstatistikSuccess(payload) {

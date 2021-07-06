@@ -145,7 +145,7 @@
       <bla-button
         [id]="'showResultsButton'"
         [loading]="loadingData"
-        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
+        (onClick)="gesamt = false; loadErgebnisForMannschaft(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
       &nbsp;
