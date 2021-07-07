@@ -42,7 +42,9 @@
           <select class="form-control"
                   id="vereine"
                   name="VereinName"
-                  [(ngModel)]="currentMannschaft">
+                  [(ngModel)]="currentMannschaft"
+                  [disabled]="loadingData"
+                  (ngModelChange)="onSelectVerein()">
             <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
           </select>
           <div class="invalid-feedback">
@@ -135,43 +137,53 @@
       <!-- Button - Alle Mannschaften anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="loadErgebnisse(undefined);">
+        [loading]="loadingData"
+        (onClick)="loadAllErgebnisse(undefined);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Aktuelle Mannschaft anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);loadErgebnisse(this.currentMannschaft);">
+        [loading]="loadingData"
+        (onClick)="gesamt = false; loadErgebnisForMannschaft(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="gesamt = false; loadPopup(this.currentMannschaft);">
+        [loading]="loadingData"
+        (onClick)="gesamt = false; this.loadEinzelstatistik(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik Gesamt anzeigen -->
       <bla-button
         [id]="'showResultsButton'"
-        (onClick)="gesamt = true; loadPopup(this.currentMannschaft);">
+        [loading]="loadingData"
+        (onClick)="gesamt = true; this.loadGesamtstatistik(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
       </bla-button>
       &nbsp;
       <!-- Button - Einzelstatistik als PDF -->
-      <bla-download-button class = "hidden" id = "einzeldruckButton"
+      <bla-download-button
+        class = "hidden"
+        id = "einzeldruckButton"
         [id]="'downloadEinzelstatistik'"
+        [loading]="loadingData"
         [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
         [fileName]="'Einzelstatistik.pdf'"> Einzelstatistik als PDF
       </bla-download-button>
 
       <!-- Button - Gesamtstatistik Drucken -->
-      <bla-download-button class = "hidden" id = "gesamtdruckButton"
-                           [id]="'downloadGesamtstatistik'"
-                           [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
-                           [fileName]="'Gesamtstatistik.pdf'"> Gesamtstatistik als PDF
+      <bla-download-button
+        class = "hidden"
+        id = "gesamtdruckButton"
+        [id]="'downloadGesamtstatistik'"
+        [loading]="loadingData"
+        [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
+        [fileName]="'Gesamtstatistik.pdf'"> Gesamtstatistik als PDF
       </bla-download-button>
 
     </div>

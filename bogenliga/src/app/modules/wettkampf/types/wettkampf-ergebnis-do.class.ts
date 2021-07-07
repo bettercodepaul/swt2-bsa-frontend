@@ -1,4 +1,4 @@
-import {VersionedDataObject} from '../../shared/data-provider/models/versioned-data-object.interface';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 // die Struktur der Daten ind der Ligatabelle entspricht den Informationen in der Datenbank
 // alle Attribute werden aufgenommen
