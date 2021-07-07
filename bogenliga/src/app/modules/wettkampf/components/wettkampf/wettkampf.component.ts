@@ -130,7 +130,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   public async loadAllErgebnisse(selectedMannschaft: DsbMannschaftDO) {
     this.loadingData = true;
-    await this.loadWettkaempfe(this.currentVeranstaltung.id);
     await this.loadErgebnisse(selectedMannschaft);
     this.loadingData = false;
   }
@@ -199,6 +198,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    */
   public async loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
     this.loadingData = true;
+    this.loadPopup(this.currentMannschaft);
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
       rowNumber += i;
@@ -217,23 +217,18 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     this.rows = [];
-    await this.loadSchuetzenstatistiken(this.currentMannschaft.vereinId, 0);
+    await this.loadSchuetzenstatistiken(selectedMannschaft.vereinId, 0);
 
     document.getElementById('einzeldruckButton').classList.remove('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
-    this.loadingData = false;
-  }
 
-  private async loadSchuetzenstatistiken(vereinId, index) {
-    await this.loadSchuetzenstatistikEinzel(vereinId, this.wettkaempfe[index].id)
-        .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
-    if (index < this.wettkaempfe.length - 1) {
-      return this.loadSchuetzenstatistiken(vereinId, ++index);
+    // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
+    for (let i = 0; i < this.rows.length; i++) {
+      if (this.rows[i].length > 0) {
+        this.isTableFilled[i] = true;
+      }
     }
-  }
-
-  private async loadSchuetzenstatistikEinzel(vereinId, wettkampfId) {
-    return this.schuetzenstatistikDataProvider.getSchuetzenstatistikWettkampf(vereinId, wettkampfId);
+    this.loadingData = false;
   }
 
   /* loadGesamtstatistik
@@ -243,7 +238,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    */
   public loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
     this.loadingData = true;
-
+    this.loadPopup(this.currentMannschaft);
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
       rowNumber += i;
@@ -267,7 +262,27 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.remove('hidden');
+
+    // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
+    for (let i = 0; i < this.rows.length; i++) {
+      if (this.rows[i].length > 0) {
+        this.isTableFilled[i] = true;
+      }
+    }
+
     this.loadingData = false;
+  }
+
+  private async loadSchuetzenstatistiken(vereinId, index) {
+    await this.loadSchuetzenstatistikEinzel(vereinId, this.wettkaempfe[index].id)
+      .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
+    if (index < this.wettkaempfe.length - 1) {
+      return this.loadSchuetzenstatistiken(vereinId, ++index);
+    }
+  }
+
+  private async loadSchuetzenstatistikEinzel(vereinId, wettkampfId) {
+    return this.schuetzenstatistikDataProvider.getSchuetzenstatistikWettkampf(vereinId, wettkampfId);
   }
 
   public handleLoadSchuetzenstatistikSuccess(payload) {
@@ -374,13 +389,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
     this.areVeranstaltungenLoading = false;
     this.currentJahr = this.currentVeranstaltung.sportjahr;
-    this.loadMannschaften(this.currentVeranstaltung.id);
+    await this.loadMannschaften(this.currentVeranstaltung.id);
+    await this.loadWettkaempfe(this.currentVeranstaltung.id);
     await this.loadJahre();
     this.loadingData = false;
   }
 
-  public loadMannschaften(veranstaltungsId: number) {
-    this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
+  public async loadMannschaften(veranstaltungsId: number) {
+    await this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleSuccessLoadMannschaft(response))
         .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.mannschaften === []);
   }
@@ -415,7 +431,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async loadWettkaempfeByCurrentMannschaft(veranstaltungsId: number) {
-    // await this.wettkampfDataProviderService.findAllByVeranstaltungId(veranstaltungsId)
     await this.wettkampfDataProviderService.findAllWettkaempfeByMannschaftsId(this.currentMannschaft.id)
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
         .catch((response: BogenligaResponse<VereinDO[]>) => this.handleLoadWettkaempfe([]));
@@ -485,9 +500,27 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectVerein() {
-    console.log('Verein switched');
+    console.log('Verein switched to ' + this.currentMannschaft.name);
     this.loadingData = true;
-    await this.loadWettkaempfeByCurrentMannschaft(this.currentVeranstaltung.id);
+    if (!this.mannschaftAlreadyLoaded(this.currentMannschaft.id)) {
+      await this.loadWettkaempfeByCurrentMannschaft(this.currentVeranstaltung.id);
+    }
+    await this.loadVerein(this.currentMannschaft.vereinId);
+    this.loadingData = false;
+  }
+
+  public mannschaftAlreadyLoaded(mannschaftId) {
+    for (const m of this.mannschaften) {
+      if (mannschaftId === m.id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public async updateResults() {
+    this.loadingData = true;
+    await this.loadWettkaempfe(this.currentVeranstaltung.id);
     this.loadingData = false;
   }
 }

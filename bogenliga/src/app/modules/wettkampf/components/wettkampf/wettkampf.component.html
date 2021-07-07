@@ -43,6 +43,7 @@
                   id="vereine"
                   name="VereinName"
                   [(ngModel)]="currentMannschaft"
+                  [disabled]="loadingData"
                   (ngModelChange)="onSelectVerein()">
             <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
           </select>
@@ -153,7 +154,7 @@
       <bla-button
         [id]="'showResultsButton'"
         [loading]="loadingData"
-        (onClick)="gesamt = false; loadPopup(this.currentMannschaft); this.loadEinzelstatistik(this.currentMannschaft);this.loadVerein(this.currentMannschaft.vereinId);">
+        (onClick)="gesamt = false; this.loadEinzelstatistik(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
       </bla-button>
       &nbsp;
@@ -161,7 +162,7 @@
       <bla-button
         [id]="'showResultsButton'"
         [loading]="loadingData"
-        (onClick)="gesamt = true; loadPopup(this.currentMannschaft);this.loadGesamtstatistik(this.currentMannschaft);">
+        (onClick)="gesamt = true; this.loadGesamtstatistik(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
       </bla-button>
       &nbsp;
