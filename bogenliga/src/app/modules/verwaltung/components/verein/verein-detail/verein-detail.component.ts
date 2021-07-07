@@ -192,6 +192,18 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
             this.notificationService.showNotification(notification);
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+          const notification: Notification = {
+            id: NOTIFICATION_UPDATE_VEREIN,
+            title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE_FAILURE.TITLE',
+            description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE_FAILURE.DESCRIPTION',
+            severity: NotificationSeverity.INFO,
+            origin: NotificationOrigin.USER,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.PENDING
+          };
+          this.notificationService.showNotification(notification);
+
+
           console.log('Failed');
           this.saveLoading = false;
         });
