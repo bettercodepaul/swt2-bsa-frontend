@@ -579,6 +579,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       }
     }
 
+    console.log("Load Wettkampf: " +this.currentWettkampftagArray.toString());
+    this.currentWettkampftagArray.forEach(element => (console.log("ID: "+ element.id + " Tag: "+element.wettkampfTag)));
     this.loading = false;
   }
 
@@ -720,8 +722,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         1,
         1
       );
-      this.currentWettkampftagArray[num] = temp;
-      await this.saveWettkampftag(this.currentWettkampftagArray[num]);
+      await this.saveWettkampftag(temp);
     } else {
       const notification: Notification = {
         id:          NOTIFICATION_WETTKAMPFTAG_TOO_MANY,
