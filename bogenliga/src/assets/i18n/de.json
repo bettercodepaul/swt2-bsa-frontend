@@ -37,6 +37,8 @@
       "TITLE": "Home",
       "WELCOME": "Herzlich Willkommen",
       "WETTKAEMPFE": "Unsere nächsten Wettkämpfe",
+      "WETTKAMPFERSATZ": "Derzeit sind keine Wettkämpfe geplant",
+
       "FURTHER": "weitere Infos",
       "CONTENT": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschafts Bogensport ziehen.",
       "BOX1HEADING": "SCHÜLER- UND JUGEND- CUP 2018",
@@ -344,7 +346,7 @@
         "NEWPASSWORD": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl"
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",
@@ -520,7 +522,8 @@
           "DESCRIPTION": {
             "EMAIL": "Bitte korrekte E-Mail eingeben",
             "HOST": "Bitte vollständige Hostadresse eingeben",
-            "PORT": "Bitte nur Zahlen eingeben"
+            "PORT": "Bitte nur Zahlen eingeben",
+            "DEFAULT": "Bitte korrekten Wert eingeben"
           }
         }
       }
@@ -778,6 +781,10 @@
         "DUPLICATE": {
           "TITLE": "Mannschaftsnummer in dem Verein bereits vergeben!",
           "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
+        },
+        "SAVE_FAILURE": {
+          "TITLE": "Fehler beim aktualisieren",
+          "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
         }
       }
     },
@@ -793,6 +800,7 @@
           "REGION_SUPERORDINATE": "Übergeordnete Region"
         }
       },
+
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Region löschen",
@@ -895,7 +903,7 @@
         },
         "DELETE_MITGLIED": {
           "TITLE": "Schütze aus Mannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Schützen mit der ID=%s wirklich aus der Mannschaft entfernen?"
+          "DESCRIPTION": "Wollen Sie den Schützen %s wirklich aus der Mannschaft entfernen?"
         },
         "DELETE_MITGLIED_SUCCESS": {
           "TITLE": "Erfolg",
@@ -1147,17 +1155,17 @@
             "STRASSE": {
               "LABEL": "Strasse",
               "PLACEHOLDER": "Straße und Hausnummer *",
-              "ERROR": "Ungültige Eingabe."
+              "ERROR": "Bitte geben Sie eine gültige Straße und Hausnummer ein."
             },
             "PLZ": {
               "LABEL": "Postleitzahl",
               "PLACEHOLDER": "Postleitzahl *",
-              "ERROR": "Ungültige Postleitzahl."
+              "ERROR": "Bitte geben Sie eine gültige Postleitzahl ein."
             },
             "ORTSNAME": {
               "LABEL": "Ort/Stadt",
               "PLACEHOLDER": "Ort/Stadt *",
-              "ERROR": "Ungültiger Ort."
+              "ERROR": "Bitte geben Sie einen gültigen Ort oder eine gültige Stadt ein."
             },
             "ORTSINFO": {
               "LABEL": "Zusatzinformation",
@@ -1180,12 +1188,16 @@
                 "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
               },
               "DELETE": {
-                "TITLE": "Wettkampftag löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+                "TITLE": "Löschen",
+                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
               },
               "ADD": {
                 "TITLE": "Neu",
                 "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+              },
+              "COPY": {
+                "TITLE": "Kopieren",
+                "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
               },
               "DELETE_SUCCESS": {
                 "TITLE": "Erfolgreich",
@@ -1194,6 +1206,10 @@
               "DELETE_FAILURE": {
                 "TITLE": "Fehler beim Löschen",
                 "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              },
+              "DEADLINE_EXPIRED": {
+                "TITLE": "Meldedeadline abgelaufen",
+                "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
               },
               "TOO_MANY": {
                 "TITLE": "Zu viele Wettkampftage",
@@ -1228,6 +1244,10 @@
         "SAVE": {
           "TITLE": "Veranstaltung angelegt",
           "DESCRIPTION": "Veranstaltung wurde erfolgreich angelegt"
+        },
+        "SAVE_FAILURE": {
+          "TITLE": "Fehlermeldung: Duplikation",
+          "DESCRIPTION": "Es existiert in diesem Sportjahr bereits eine Veranstaltung für die von Ihnen angegebenen Liga. Bitte überprüfen Sie Ihre Eingabe."
         },
         "COPYMANNSCHAFT_FAILURE": {
           "TITLE": "Kopieren fehlgeschlagen",
@@ -1316,7 +1336,7 @@
         "PASSWORD_NEW": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte neues Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "ROLE_UPDATE": "Rolle ändern",
         "PW_UPDATE": "Passwort ändern"
@@ -1338,12 +1358,12 @@
         "EMAIL": {
           "LABEL": "E-Mail",
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Benutzerkennung eingeben",
-          "ERROR": "Bitte eine gültige Email eingeben."
+          "ERROR": "Bitte eine gültige E-mail eingeben."
         },
         "PASSWORD": {
           "LABEL": "Neues Passwort",
           "PLACEHOLDER": "Bitte Passwort eingeben",
-          "ERROR": "Mindestlänge 8 Zeichen, mindestens 1 Zahl und jeweils 1 Groß- und ein Kleinbuchstabe. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
+          "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "VERIFYPASSWORD": {
           "LABEL": "Verifikation neues Passwort",
@@ -1423,12 +1443,12 @@
         "WETTKAMPF_JAHRGANG_MIN": {
           "LABEL": "Wettkampf Jahrgang von",
           "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
-          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben (genau 4 Zahlen)."
         },
         "WETTKAMPF_JAHRGANG_MAX": {
           "LABEL": "Wettkampf Jahrgang bis",
           "PLACEHOLDER": "Bitte einen Jahrgang eingeben",
-          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben (genau 4 Zahlen)."
         },
         "WETTKAMPF_NR": {
           "LABEL": "Nummer der Wettkampfklasse",

@@ -29,7 +29,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public wettkaempfeDO: WettkampfDO[];
   public loadingWettkampf = true;
   public loadingTable = false;
-  public rows: TableRow[];
+  public rows: TableRow[] = [];
   public currentDate: number =  Date.now();
   public dateHelper: string;
 
@@ -118,6 +118,14 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     } else {
       this.rows = toTableRows(this.wettkaempfeDO.slice(0, 5));
     }
+  }
+
+  /**
+   * BSAPP - 783
+   * Check if Table is empty
+   */
+  public checkIfTableIsEmpty(): boolean {
+    return this.rows.length === 0;
   }
 
   /**

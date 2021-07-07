@@ -107,8 +107,7 @@
                id="userPwdFormNewPwd"
                name="userPwdFormNewPwd"
                required
-               minlength="8"
-               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$"
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d#$^+=!*()@%&?]{8,}$"
                #userPwdFormNewPwd="ngModel"
                [(ngModel)]="resetCredentials.password"
                [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"

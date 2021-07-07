@@ -451,7 +451,8 @@
           "DESCRIPTION": {
             "EMAIL": "Please enter a correct E-Mail address",
             "HOST": "Please enter a full Host address",
-            "PORT": "Only numbers are allowed"
+            "PORT": "Only numbers are allowed",
+            "DEFAULT": "Please enter a valid value"
           }
         }
       }
@@ -769,6 +770,10 @@
         "DUPLICATE": {
           "TITLE": "Team-number already in use!",
           "DESCRIPTION": "Add team anyway?"
+        },
+        "SAVE_FAILURE": {
+          "TITLE": "Error while saving",
+          "DESCRIPTION": "Sports director has no authority over this club or this target region."
         }
       }
     },
@@ -886,7 +891,7 @@
         },
         "DELETE_MITGLIED": {
           "TITLE": "Delete marksman from team",
-          "DESCRIPTION": "Are you sure, you want to delete the marksman with ID=%s from the team?"
+          "DESCRIPTION": "Are you sure, you want to delete the marksman %s from the team?"
         },
         "DELETE_MITGLIED_SUCCESS": {
           "TITLE": "Success",
@@ -1205,6 +1210,10 @@
         "SAVE": {
           "TITLE": "Event created",
           "DESCRIPTION": "Successfully created event."
+        },
+        "SAVE_FAILURE": {
+          "TITLE": "Error message: Duplication.",
+          "DESCRIPTION": "An event already exists in this sport year for the league you entered. Please check your entry."
         },
         "SAVEMANNSCHAFT": {
           "TITLE": "Success",

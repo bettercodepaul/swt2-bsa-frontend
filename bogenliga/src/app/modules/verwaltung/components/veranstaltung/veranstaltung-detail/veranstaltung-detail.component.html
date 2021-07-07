@@ -152,7 +152,7 @@
                 #ligaleiter="ngModel"
                 [(ngModel)]="currentUser">
           <option [ngValue]="ligaleiter"
-                  *ngFor="let ligaleiter of allUsers"> {{ligaleiter.email}}</option>
+                  *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
 
           placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.PLACEHOLDER' | translate }}">
         </select>
@@ -283,7 +283,8 @@
           <bla-data-table [config]="tableConfig"
                           [rows]="rows"
                           [loading]="loading"
-                          (onEditEntry)="onEdit($event)">
+                          (onEditEntry)="onEdit($event)"
+                          (onDeleteEntry)="onDeleteMannschaft($event)">
           </bla-data-table>
         </div>
       </div>
