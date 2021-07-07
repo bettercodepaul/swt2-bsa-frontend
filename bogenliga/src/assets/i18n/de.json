@@ -781,6 +781,10 @@
         "DUPLICATE": {
           "TITLE": "Mannschaftsnummer in dem Verein bereits vergeben!",
           "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
+        },
+        "SAVE_FAILURE": {
+          "TITLE": "Fehler beim aktualisieren",
+          "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
         }
       }
     },
@@ -796,6 +800,7 @@
           "REGION_SUPERORDINATE": "Übergeordnete Region"
         }
       },
+
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Region löschen",
