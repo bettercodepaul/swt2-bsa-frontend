@@ -246,10 +246,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ergebnis-service.ts zu finden)
    Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
-  public loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
-
+  public async loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
     this.loadingData = true;
-    this.loadPopup(this.currentMannschaft);
+
+    await this.loadPopup(this.currentMannschaft);
 
     this.hideUebersichtsButtons();
 
@@ -271,7 +271,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
 
     this.rows = [];
-    this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(selectedMannschaft.vereinId, this.currentVeranstaltung.id)
+    await this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(selectedMannschaft.vereinId, this.currentVeranstaltung.id)
       .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
 
     document.getElementById('einzeldruckButton').classList.add('hidden');
