@@ -766,6 +766,10 @@
           "TITLE": "Success",
           "DESCRIPTION": "Successfully saved club."
         },
+        "SAVE_FAILURE": {
+          "TITLE": "Error while saving",
+          "DESCRIPTION": "Sports director has no authority over this club or this target region."
+        },
         "DUPLICATE": {
           "TITLE": "Team-number already in use!",
           "DESCRIPTION": "Add team anyway?"

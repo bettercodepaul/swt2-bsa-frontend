@@ -154,6 +154,16 @@
         }
       }
     },
+
+    "VEREINE" : {
+      "NOTIFICATION" : {
+        "DOWNLOADFEHLER" : {
+          "TITLE" :"Fehler beim bearbeiten des Vereins:",
+          "DESCRIPTION": "Benutzer ist nicht Sportleiter des Vereins."
+        }
+      }
+    },
+
     "SCHUSSZETTEL": {
       "NOTIFICATION": {
         "LADEN": {
@@ -776,6 +786,10 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Verein wurde erfolgreich gespeichert."
+        },
+        "SAVE_FAILURE": {
+          "TITLE": "Fehler beim aktualisieren",
+          "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
         },
         "DUPLICATE": {
           "TITLE": "Mannschaftsnummer in dem Verein bereits vergeben!",
