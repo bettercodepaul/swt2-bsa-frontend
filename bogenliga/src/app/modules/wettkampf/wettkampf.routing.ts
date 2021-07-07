@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {WettkampfComponent} from './/components/wettkampf/wettkampf.component';
+import {WettkampfComponent} from '@wettkampf/components';
 import {LigaDetailComponent} from '@verwaltung/components';
 import {LigaDetailGuard} from '@verwaltung/guards';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
