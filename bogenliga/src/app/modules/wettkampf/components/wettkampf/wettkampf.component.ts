@@ -225,6 +225,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         }
       }
 
+
       this.rows = [];
       await this.loadSchuetzenstatistiken(selectedMannschaft.vereinId, 0);
 
@@ -349,8 +350,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.veranstaltungsDataProvider.findAll()
       .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
       .catch(() => this.veranstaltungen = []);
-
-
+    
   }
 
 
