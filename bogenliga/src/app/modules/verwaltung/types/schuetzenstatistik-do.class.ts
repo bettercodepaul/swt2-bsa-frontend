@@ -9,7 +9,9 @@ export class SchuetzenstatistikDO implements VersionedDataObject {
   dsbMitgliedName: string;
   mannschaftNummer: number;
   matchId: number;
+  matchNr: number;
   pfeilpunkteSchnitt: number;
+  rueckenNummer: number;
   veranstaltungId: number;
   veranstaltungName: string;
   vereinId: number;
@@ -26,7 +28,9 @@ export class SchuetzenstatistikDO implements VersionedDataObject {
     dsbMitgliedName?: string,
     mannschaftNummer?: number,
     matchId?: number,
+    matchNr?: number,
     pfeilpunkteSchnitt?: number,
+    rueckenNummer?: number,
     veranstaltungId?: number,
     veranstaltungName?: string,
     vereinId?: number,
@@ -41,7 +45,9 @@ export class SchuetzenstatistikDO implements VersionedDataObject {
     this.dsbMitgliedName = dsbMitgliedName;
     this.mannschaftNummer = mannschaftNummer;
     this.matchId = matchId;
+    this.matchNr = matchNr;
     this.pfeilpunkteSchnitt = pfeilpunkteSchnitt;
+    this.rueckenNummer = rueckenNummer;
     this.veranstaltungId = veranstaltungId;
     this.veranstaltungName = veranstaltungName;
     this.vereinId = vereinId;
