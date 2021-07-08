@@ -8,7 +8,9 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
   dsbMitgliedName: string;
   mannschaftNummer: number;
   matchId: number;
+  matchNr: number;
   pfeilpunkteSchnitt: number;
+  rueckenNummer: number;
   veranstaltungId: number;
   veranstaltungName: string;
   vereinId: number;
@@ -23,7 +25,9 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
               dsbMitgliedName: string,
               mannschaftNummer: number,
               matchId: number,
+              matchNr: number,
               pfeilpunkteSchnitt: number,
+              rueckenNummer: number,
               veranstaltungId: number,
               veranstaltungName: string,
               vereinId: number,
@@ -37,6 +41,8 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
     this.dsbMitgliedName = dsbMitgliedName;
     this.mannschaftNummer = mannschaftNummer;
     this.matchId = matchId;
+    this.matchNr = matchNr;
+    this.rueckenNummer = rueckenNummer;
     this.pfeilpunkteSchnitt = pfeilpunkteSchnitt;
     this.veranstaltungId = veranstaltungId;
     this.veranstaltungName = veranstaltungName;
@@ -54,6 +60,8 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
     dsbMitgliedName?: string;
     mannschaftNummer?: number;
     matchId?: number;
+    matchNr?: number;
+    rueckenNummer?: number;
     pfeilpunkteSchnitt?: number;
     veranstaltungId?: number;
     veranstaltungName?: string;
@@ -70,7 +78,9 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
       optional.dsbMitgliedName || null,
       optional.mannschaftNummer || null,
       optional.matchId || null,
+      optional.matchNr || null,
       optional.pfeilpunkteSchnitt || null,
+      optional.rueckenNummer || null,
       optional.veranstaltungId || null,
       optional.veranstaltungName || null,
       optional.vereinId || null,
