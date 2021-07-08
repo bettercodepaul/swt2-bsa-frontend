@@ -9,7 +9,7 @@ import {
   VersionedDataTransferObject
 } from '@shared/data-provider';
 import {CurrentUserService} from '@shared/services';
-import {fromPayload, fromPayloadArray} from '@verwaltung/mapper/schuetzenstatistik-mapper';
+import {fromPayloadArray} from '@verwaltung/mapper/schuetzenstatistik-mapper';
 import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
 
 @Injectable({
@@ -34,8 +34,6 @@ export class SchuetzenstatistikDataProviderService extends DataProviderService {
         .path('byVeranstaltungAndVerein/' + veranstaltungId + '/' + vereinId)
         .build())
         .then((data: VersionedDataTransferObject[]) => {
-          console.log('Received from Backend:');
-          console.log(data);
           resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
         }, (error: HttpErrorResponse) => {
           if (error.status === 0) {
@@ -57,8 +55,6 @@ export class SchuetzenstatistikDataProviderService extends DataProviderService {
         .path('byWettkampfAndVerein/' + wettkampfId + '/' + vereinId)
         .build())
         .then((data: VersionedDataTransferObject[]) => {
-          console.log('Received from Backend:');
-          console.log(data);
           resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
         }, (error: HttpErrorResponse) => {
 
