@@ -109,7 +109,7 @@ export class CurrentUserService {
 
     // preconditions
     if (this.isUserLoggedIn === false) { // no user and data needs permission --> access denied
-      return false;v
+      return false;
     } else if (requiredPermissions.length === 0) { // no permissions needed
       return true;
     } else if (isNullOrUndefined(userPermissions) || userPermissions.length === 0) {
