@@ -389,6 +389,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   /**
+   *
    * receives a promise including a list of all Ligaleiter
    * @private
    */
@@ -396,7 +397,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     // Achtung: Diese RollenId ist die des Ligaleiters aus der Datenbank
     // Werden Änderungen in der DB gemacht muss auch hier die ID verändert werden!
     let ligaleiterRolleId = 2;
-
     this.userDataProvider.findAllUsersByRoleId(ligaleiterRolleId)
         .then((response: BogenligaResponse<UserRolleDO[]>) => this.handleLigaleiterResponseArraySuccess(response))
         .catch((response: BogenligaResponse<UserRolleDTO[]>) => this.handleLigaleiterResponseArrayFailure(response));
@@ -574,6 +574,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.rows = toTableRows(payload);
     this.loadLigaTabelleExists();
   }
+
 
   public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
 
