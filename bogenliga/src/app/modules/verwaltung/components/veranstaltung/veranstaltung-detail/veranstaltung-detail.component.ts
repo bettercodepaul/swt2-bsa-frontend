@@ -393,7 +393,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
    * @private
    */
   private loadLigaleiter() {
+    // Achtung: Diese RollenId ist die des Ligaleiters aus der Datenbank
+    // Werden Änderungen in der DB gemacht muss auch hier die ID verändert werden!
     let ligaleiterRolleId = 2;
+
     this.userDataProvider.findAllUsersByRoleId(ligaleiterRolleId)
         .then((response: BogenligaResponse<UserRolleDO[]>) => this.handleLigaleiterResponseArraySuccess(response))
         .catch((response: BogenligaResponse<UserRolleDTO[]>) => this.handleLigaleiterResponseArrayFailure(response));
