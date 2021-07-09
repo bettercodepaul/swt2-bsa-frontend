@@ -386,7 +386,7 @@
         "ERROR": "Bitte ein gültiges Passwort mit mehr als 3 Zeichen eingeben."
       },
       "CODE": {
-        "LABEL": "Google Autheticator Verification Code",
+        "LABEL": "Google Authenticator Verification Code",
         "PLACEHOLDER": "Bitte Authentifizierungscode eingeben",
         "ERROR": "Bitte einen gültigen Code mit mehr als 3 Zeichen eingeben."
       },
@@ -781,6 +781,10 @@
         "DUPLICATE": {
           "TITLE": "Mannschaftsnummer in dem Verein bereits vergeben!",
           "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
+        },
+        "SAVE_FAILURE": {
+          "TITLE": "Fehler beim aktualisieren",
+          "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
         }
       }
     },
@@ -796,6 +800,7 @@
           "REGION_SUPERORDINATE": "Übergeordnete Region"
         }
       },
+
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Region löschen",
@@ -1155,12 +1160,12 @@
             "PLZ": {
               "LABEL": "Postleitzahl",
               "PLACEHOLDER": "Postleitzahl *",
-              "ERROR": "Bitte geben Sie eine fünfstellige DE-Postleitzahl ein."
+              "ERROR": "Bitte geben Sie eine gültige Postleitzahl ein."
             },
             "ORTSNAME": {
               "LABEL": "Ort/Stadt",
               "PLACEHOLDER": "Ort/Stadt *",
-              "ERROR": "Bitte geben Sie einen Ort oder eine Stadt ein."
+              "ERROR": "Bitte geben Sie einen gültigen Ort oder eine gültige Stadt ein."
             },
             "ORTSINFO": {
               "LABEL": "Zusatzinformation",
@@ -1438,12 +1443,12 @@
         "WETTKAMPF_JAHRGANG_MIN": {
           "LABEL": "Wettkampf Jahrgang von",
           "PLACEHOLDER": "Bitte ein Jahrgang eingeben",
-          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben (genau 4 Zahlen)."
         },
         "WETTKAMPF_JAHRGANG_MAX": {
           "LABEL": "Wettkampf Jahrgang bis",
           "PLACEHOLDER": "Bitte einen Jahrgang eingeben",
-          "ERROR": "Bitte einen gültigen Jahrgang eingeben."
+          "ERROR": "Bitte einen gültigen Jahrgang eingeben (genau 4 Zahlen)."
         },
         "WETTKAMPF_NR": {
           "LABEL": "Nummer der Wettkampfklasse",

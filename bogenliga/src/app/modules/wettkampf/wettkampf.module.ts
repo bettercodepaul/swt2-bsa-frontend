@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '@shared/shared.module';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
-import {WettkampfComponent} from './components/wettkampf/wettkampf.component';
+import {WettkampfComponent} from '@wettkampf/components';
 
 @NgModule({
   imports: [

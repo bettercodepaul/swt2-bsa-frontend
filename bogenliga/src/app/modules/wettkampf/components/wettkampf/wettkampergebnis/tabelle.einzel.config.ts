@@ -5,22 +5,22 @@ export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
   columns: [
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUEKENNUMMER',
-      propertyName:   'ruekennummer',
-      width:          25,
+      propertyName:   'rueckenNummer',
+      width:          100,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
-      propertyName:   'schuetze',
+      propertyName:   'dsbMitgliedName',
       width:          100,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH',
       propertyName:   'matchNr',
-      width:          10,
+      width:          100,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTMATCH',
-      propertyName:   'durchschPfeilwert',
+      propertyName:   'pfeilpunkteSchnitt',
       width:          30,
     }
   ],

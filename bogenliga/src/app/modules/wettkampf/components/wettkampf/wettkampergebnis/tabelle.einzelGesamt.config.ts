@@ -5,17 +5,17 @@ export const WETTKAMPF_TABLE_EINZELGESAMT_CONFIG: TableConfig = {
   columns: [
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUEKENNUMMER',
-      propertyName:   'ruekennummer',
-      width:          25,
+      propertyName:   'rueckenNummer',
+      width:          100,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
-      propertyName:   'schuetze',
+      propertyName:   'dsbMitgliedName',
       width:          80,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTJAHR',
-      propertyName:   'durchschPfeilwert',
+      propertyName:   'pfeilpunkteSchnitt',
       width:          80,
     }
   ],
