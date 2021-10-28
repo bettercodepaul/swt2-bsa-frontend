@@ -21,6 +21,8 @@ export class SidebarItemComponent implements OnInit {
   public isActive: boolean;
 
 
+
+  
   constructor(private store: Store<AppState>,  private currentUserService: CurrentUserService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
