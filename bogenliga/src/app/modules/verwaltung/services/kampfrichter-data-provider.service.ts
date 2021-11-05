@@ -8,20 +8,23 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '../../shared/services/current-user';
+import {CurrentUserService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/kampfrichter-mapper';
+import {fromPayloadExtended, fromPayloadArrayExtended} from '../mapper/kampfrichter-extended-mapper';
 import {KampfrichterDO} from '../types/kampfrichter-do.class';
+import {KampfrichterExtendedDO} from '../types/kampfrichter-extended-do.class';
 
 @Injectable({
   providedIn: 'root'
 })
-export class KampfrichterProviderService  extends DataProviderService {
-  serviceSubUrl = 'v1/liga';
+export class KampfrichterProviderService extends DataProviderService {
 
+  serviceSubUrl = 'v1/kampfrichter';
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
     super();
   }
+
   public findAll(): Promise<BogenligaResponse<KampfrichterDO[]>> {
     // return promise
     // sign in success -> resolve promise
@@ -41,12 +44,33 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
-  public deleteById(id: number): Promise<BogenligaResponse<void>> {
+  // // This method has been replaced by the delete() method
+  // public deleteById(id: number): Promise<BogenligaResponse<void>> {
+  //   // return promise
+  //   // sign in success -> resolve promise
+  //   // sign in failure -> reject promise with result
+  //   return new Promise((resolve, reject) => {
+  //     this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+  //         .then((noData) => {
+  //           resolve({result: RequestResult.SUCCESS});
+  //
+  //         }, (error: HttpErrorResponse) => {
+  //
+  //           if (error.status === 0) {
+  //             reject({result: RequestResult.CONNECTION_PROBLEM});
+  //           } else {
+  //             reject({result: RequestResult.FAILURE});
+  //           }
+  //         });
+  //   });
+  // }
+
+  public delete(userID: number, wettkampfID: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+      this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(`${userID}/${wettkampfID}`).build())
           .then((noData) => {
             resolve({result: RequestResult.SUCCESS});
 
@@ -60,8 +84,6 @@ export class KampfrichterProviderService  extends DataProviderService {
           });
     });
   }
-
-
 
   public findById(id: string | number): Promise<BogenligaResponse<KampfrichterDO>> {
     // return promise
@@ -84,15 +106,14 @@ export class KampfrichterProviderService  extends DataProviderService {
     });
   }
 
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> {
+  public findExtendedByIdNotAssignedToId(id: string | number): Promise<BogenligaResponse<KampfrichterExtendedDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-          .then((data: VersionedDataTransferObject) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
-
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("NotAssignedKampfrichter/"+id).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayExtended(data)});
           }, (error: HttpErrorResponse) => {
 
             if (error.status === 0) {
@@ -102,7 +123,53 @@ export class KampfrichterProviderService  extends DataProviderService {
             }
           });
     });
+
   }
+
+  public findExtendedByIdAssignedToId(id: string | number): Promise<BogenligaResponse<KampfrichterExtendedDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("AssignedKampfrichter/"+id).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayExtended(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+
+  }
+
+
+  // public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<KampfrichterDO>> { // DO or DTO? Probably DO.
+  //   console.log('KampfrichterProviderService:');
+  //   console.log(payload);
+  //   // return promise
+  //   // sign in success -> resolve promise
+  //   // sign in failure -> reject promise with result
+  //   return new Promise((resolve, reject) => {
+  //     this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+  //         .then((data: VersionedDataTransferObject) => {
+  //           resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+  //
+  //         }, (error: HttpErrorResponse) => {
+  //
+  //           if (error.status === 0) {
+  //             reject({result: RequestResult.CONNECTION_PROBLEM});
+  //           } else {
+  //             reject({result: RequestResult.FAILURE});
+  //           }
+  //         });
+  //   });
+  // }
+
+
   public create(payload: KampfrichterDO): Promise<BogenligaResponse<KampfrichterDO>> {
     // return promise
     // sign in success -> resolve promise
@@ -122,9 +189,5 @@ export class KampfrichterProviderService  extends DataProviderService {
           });
     });
   }
-
-
-
-
-
 }
+

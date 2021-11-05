@@ -4,9 +4,9 @@ import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared';
 import {
-  BenutzerDetailComponent,
-  BenutzerNeuComponent,
-  BenutzerOverviewComponent,
+  UserDetailComponent,
+  UserNeuComponent,
+  UserOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
@@ -20,14 +20,15 @@ import {
   WettkampfklasseOverviewComponent,
   VeranstaltungOverviewComponent,
   VeranstaltungDetailComponent,
-  SportjahrOverviewComponent,
   WettkampftageComponent,
+  EinstellungenOverviewComponent,
+  EinstellungenDetailComponent
 
 } from './components';
 import {
-  BenutzerDetailGuard,
-  BenutzerNeuGuard,
-  BenutzerOverviewGuard,
+  UserDetailGuard,
+  UserNeuGuard,
+  UserOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
@@ -42,7 +43,10 @@ import {
   VeranstaltungDetailGuard,
   VeranstaltungOverviewGuard,
   WettkampftageGuard,
-  SportjahrOverviewGuard
+  SportjahrOverviewGuard,
+  EinstellungenDetailGuard,
+  EinstellungenOverviewGuard
+
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
@@ -62,9 +66,9 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
     VerwaltungComponent,
     DsbMitgliedOverviewComponent,
     DsbMitgliedDetailComponent,
-    BenutzerDetailComponent,
-    BenutzerNeuComponent,
-    BenutzerOverviewComponent,
+    UserDetailComponent,
+    UserNeuComponent,
+    UserOverviewComponent,
     WettkampfklasseOverviewComponent,
     WettkampfklasseDetailComponent,
     VereinDetailComponent,
@@ -78,7 +82,8 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
     WettkampftageComponent,
-    SportjahrOverviewComponent
+    EinstellungenDetailComponent,
+    EinstellungenOverviewComponent
   ]
 })
 export class VerwaltungModule {
@@ -91,9 +96,9 @@ export class VerwaltungModule {
         DsbMitgliedOverviewGuard,
         DsbMitgliedDetailGuard,
         DsbMannschaftDetailGuard,
-        BenutzerOverviewGuard,
-        BenutzerNeuGuard,
-        BenutzerDetailGuard,
+        UserOverviewGuard,
+        UserNeuGuard,
+        UserDetailGuard,
         WettkampfklasseOverviewGuard,
         WettkampfklasseDetailGuard,
         VereinOverviewGuard,
@@ -106,7 +111,9 @@ export class VerwaltungModule {
         VeranstaltungOverviewGuard,
         VeranstaltungDetailGuard,
         WettkampftageGuard,
-        SportjahrOverviewGuard
+        SportjahrOverviewGuard,
+        EinstellungenDetailGuard,
+        EinstellungenOverviewGuard
       ]
     };
   }

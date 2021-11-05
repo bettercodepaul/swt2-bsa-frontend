@@ -11,23 +11,53 @@
 
 // for small devices
 @media (max-width: 1400px) {
-
   .half-page {
     width: 80%;
   }
-
 }
 
 // for small devices
 @media (max-width: 950px) {
-
   .half-page {
     width: 100%;
   }
-
 }
+
 .overview-dialog-add {
   display: flex;
   justify-content: flex-end;
   padding-bottom: 1em;
 }
+
+
+.drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

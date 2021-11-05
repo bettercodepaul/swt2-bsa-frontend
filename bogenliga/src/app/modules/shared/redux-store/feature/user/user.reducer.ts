@@ -4,18 +4,27 @@ import {UserState} from './user.state';
 export const initialUserState: UserState = {
   isLoggedIn: false,
   isDefaultUserLoggedIn: true,
-  user:       null
+  user: null
 };
 
 export function userReducer(state = initialUserState, action: Actions.UserActions): UserState {
   let newState: UserState;
 
   switch (action.type) {
-    case Actions.LOGIN: {
+    case Actions.LOGIN_AS_DEFAULT:
       newState = {
         ...state,
         user:       action.payload,
-        isLoggedIn: true
+        isLoggedIn: true,
+        isDefaultUserLoggedIn: true
+      };
+      break;
+    case Actions.LOGIN_AS_SPECIFIC: {
+      newState = {
+        ...state,
+        user:       action.payload,
+        isLoggedIn: true,
+        isDefaultUserLoggedIn: false
       };
       break;
     }

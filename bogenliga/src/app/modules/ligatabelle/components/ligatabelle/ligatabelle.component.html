@@ -4,62 +4,68 @@
 
     <bla-row-layout>
       <div class="flexChild">
-        <h3><a class="blackLink"
-               >{{ 'WETTKAEMPFE.TITEL.VERANSTALTUNG' | translate }}</a></h3>
+        <h5><a class="blackLink"
+        >{{ 'MANAGEMENT.SPORTJAHR_OVERVIEW.TABLE.HEADERS.SPORTJAHR' | translate }}</a></h5>
 
-        <table id="example"
-               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-               style="width:80%">
-          <!-- headlines -->
-
-          <bla-quicksearch-list (onSelect)="onSelectLiga($event)"
-                                [items]="ligen"
-                                [loading]="loadingVeranstaltungen"
-                                [multipleSelections]="!multipleSelections"
-                                [placeholderTranslationKey]="PLACEHOLDER_VAR"
-                                [optionFieldSelector]="'name'"
-                                [selectedItemIds]=[selectedLigaId]
-
-                                selectionListHeight="15em"
-                                style="width: 60%; flex-grow: 0;">
-
-          </bla-quicksearch-list>
-        </table>
         <table style="width: 10%; margin-bottom: 3%;">
-          <bla-selectionlist (onSelect)="onSelect($event)"
-                             [items]="veranstaltungenInLiga"
+          <bla-selectionlist (onSelect)="onSelectYear($event)"
+                             [items]="availableYears"
                              [optionFieldSelector]="'sportjahr'"
-                             [selectedItemIds]=[selectedVeranstaltungId]
+                             [loading]="loading"
+                             [multipleSelections]="!multipleSelections"
+                             [selectedItemIds]=[selectedYearId]
                              style="width: 10%; flex-grow: 0; height: 20px"
                              selectionListHeight="3em">
 
           </bla-selectionlist>
         </table>
+        <div>
+          <h5><a class="blackLink"
+          >{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.VERANSTALTUNG' | translate }}</a></h5>
+          <table id="example"
+                 class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+                 style="width:80%">
+            <!-- headlines -->
+
+            <bla-quicksearch-list (onSelect)="onSelectVeranstaltung($event)"
+                                  [items]="veranstaltungenForYear"
+                                  [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                                  [optionFieldSelector]="'ligaName'"
+                                  [multipleSelections]="!multipleSelections"
+                                  [selectedItemIds]=[selectedVeranstaltungId]
+                                  selectionListHeight="15em"
+                                  style="width: 60%; flex-grow: 0;">
+
+            </bla-quicksearch-list>
+          </table>
+        </div>
+
+
       </div>
 
 
-       <!-- Ligatabelle -->
+      <!-- Ligatabelle -->
       <div>
         <h5><a class="blackLink"
-               >{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
+        >{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
 
         <div class="row">
 
 
           <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
           <h5>
-          <bla-data-table
-                          [config]="config_table"
-                          [rows]="rowsLigatabelle"
-                          [loading]="loadingLigatabelle"
-                          (onRowEntry)="ligatabelleLinking();"
-          >
-          </bla-data-table>
+            <bla-data-table
+              [config]="config_table"
+              [rows]="rowsLigatabelle"
+              [loading]="loadingLigatabelle"
+              (onRowEntry)="ligatabelleLinking();"
+            >
+            </bla-data-table>
           </h5>
         </div>
       </div>
 
-       <!-- Button -->
+      <!-- Button -->
       <div id="Button">
         <bla-button
           [id]="'regionSaveButton'"

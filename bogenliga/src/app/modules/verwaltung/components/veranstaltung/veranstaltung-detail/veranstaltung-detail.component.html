@@ -152,7 +152,7 @@
                 #ligaleiter="ngModel"
                 [(ngModel)]="currentUser">
           <option [ngValue]="ligaleiter"
-                  *ngFor="let ligaleiter of allUsers"> {{ligaleiter.email}}</option>
+                  *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
 
           placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.PLACEHOLDER' | translate }}">
         </select>
@@ -168,12 +168,11 @@
 
     <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE BUTTON -->
     <div class="form-group row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-9 button-box">
+      <div class="col-sm-12 button-box">
 
         <bla-button *ngIf="entityExists()"
                     [id]="'veranstaltungInitialeLigatabelle'"
-                    [disabled]="this.checkCountMannschaften()"
+                    [disabled]="this.checkForExistingLigatabelle()"
                     [loading]="saveLoading"
                     (onClick)="this.createMatchesWT0($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.BUTTON' | translate }}
@@ -181,7 +180,7 @@
 
         <bla-button *ngIf="!mannschaftExists()"
                     [id]="'veranstaltungMannschaftSaveButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
+                    [disabled]="!this.checkMannschaftsTableEmpty()"
                     [loading]="saveLoading"
                     (onClick)="onCopyMannschaft($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
@@ -284,7 +283,8 @@
           <bla-data-table [config]="tableConfig"
                           [rows]="rows"
                           [loading]="loading"
-                          (onEditEntry)="onEdit($event)">
+                          (onEditEntry)="onEdit($event)"
+                          (onDeleteEntry)="onDeleteMannschaft($event)">
           </bla-data-table>
         </div>
       </div>

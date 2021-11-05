@@ -64,6 +64,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   public deleteLoading = false;
   public saveLoading = false;
 
+
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
   constructor(private vereinProvider: VereinDataProviderService,
@@ -79,16 +80,9 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   ngOnInit() {
-
-
     this.loading = true;
-
     this.notificationService.discardNotification();
-
     this.loadRegions(this.regionType); // Request all regions from the backend
-
-
-
   }
 
   private loadVerein(): void {
@@ -106,11 +100,18 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       }
     });
   }
+
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
     // persist
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
+    // check if website has http:// in it. If not then add it
+    if (!this.currentVerein.website === undefined) {
+      if (this.currentVerein.website.search('http://')) {
+        this.currentVerein.website = 'http://' + this.currentVerein.website;
+      }
+    }
 
     console.log('Saving verein: ', this.currentVerein);
 
@@ -155,6 +156,12 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
     // persist
     this.currentVerein.regionId = this.currentRegion.id; // Set selected region id
+    // check if website has http:// in it. If not then add it
+    if (this.currentVerein.website !== '') {
+      if (this.currentVerein.website.search('http://')) {
+        this.currentVerein.website = 'http://' + this.currentVerein.website;
+      }
+    }
 
     this.vereinProvider.update(this.currentVerein)
         .then((response: BogenligaResponse<VereinDO>) => {
@@ -185,11 +192,43 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
             this.notificationService.showNotification(notification);
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+          const notification: Notification = {
+            id: NOTIFICATION_UPDATE_VEREIN,
+            title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE_FAILURE.TITLE',
+            description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE_FAILURE.DESCRIPTION',
+            severity: NotificationSeverity.INFO,
+            origin: NotificationOrigin.USER,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.PENDING
+          };
+          this.notificationService.showNotification(notification);
+
+
           console.log('Failed');
           this.saveLoading = false;
         });
     // show response message
   }
+
+  /**
+   * Base64 is a process to store e.g. images as 8-bit binary files.
+   * It is called if an image (logo) is inside the upload field.
+   */
+  public convertIconToBase64($event): void {
+    this.readThis($event.target);
+  }
+
+  public readThis(inputValue: any): void {
+    const file: File = inputValue.files[0];
+    const myReader: FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.currentVerein.icon = String(myReader.result);
+    };
+
+    myReader.readAsDataURL(file);
+  }
+
 
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
@@ -241,7 +280,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       userAction:       NotificationUserAction.PENDING
     };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+    let notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
@@ -250,6 +289,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, id);
+            notificationEvent.unsubscribe();
           }
 
         });
@@ -308,8 +348,6 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         } )
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
   }
-
-
 
   private handleSuccess(response: BogenligaResponse<VereinDO>) {
     this.currentVerein = response.payload;
@@ -399,7 +437,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   private addTableAttributes(mannschaft: DsbMannschaftDO) {
     this.veranstaltungsProvider.findById(mannschaft.veranstaltungId)
         .then((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = response.payload.name)
-        .catch((resposne: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = '');
+        .catch((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = '');
     mannschaft.name = this.currentVerein.name + ' '  + mannschaft.nummer + '.Mannschaft';
   }
 

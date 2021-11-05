@@ -2,9 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 @Component({
-  selector: 'bla-double-selectionlist',
+  selector:    'bla-double-selectionlist',
   templateUrl: './double-selectionlist.component.html',
-  styleUrls: ['./double-selectionlist.component.scss']
+  styleUrls:   ['./double-selectionlist.component.scss']
 })
 export class DoubleSelectionlistComponent implements OnInit {
 
@@ -15,11 +15,11 @@ export class DoubleSelectionlistComponent implements OnInit {
   @Input()
   public idRightList: string;
 
-  @Input()
-  public leftItems: VersionedDataObject[] = [];
-
   @Output()
   public rightItemsChange = new EventEmitter();
+
+  @Output()
+  public leftItemsChange = new EventEmitter();
 
   @Input()
   public fieldSelector = 'id';
@@ -41,6 +41,16 @@ export class DoubleSelectionlistComponent implements OnInit {
     this.rightItemsChange.emit(this.rightItemList);
   }
 
+  @Input()
+  get leftItems() {
+    return this.leftItemList;
+  }
+
+  set leftItems(val) {
+    this.leftItemList = val;
+    this.leftItemsChange.emit(this.leftItemList);
+  }
+
   constructor() {
   }
 
@@ -55,8 +65,9 @@ export class DoubleSelectionlistComponent implements OnInit {
 
   public onLeftToRight(): void {
     this.selectedLeftItems.forEach((item) => {
-      this.rightItemList.push(item);
-
+      if (!this.rightItemList.includes(item)) {
+        this.rightItemList.push(item);
+      }
       const index = this.leftItemList.indexOf(item, 0);
       if (index > -1) {
         this.leftItemList.splice(index, 1);
@@ -69,8 +80,9 @@ export class DoubleSelectionlistComponent implements OnInit {
 
   public onRightToLeft(): void {
     this.selectedRightItems.forEach((item) => {
-      this.leftItemList.push(item);
-
+      if (!this.leftItemList.includes(item)) {
+        this.leftItemList.push(item);
+      }
       const index = this.rightItemList.indexOf(item, 0);
       if (index > -1) {
         this.rightItemList.splice(index, 1);
@@ -78,8 +90,6 @@ export class DoubleSelectionlistComponent implements OnInit {
     });
 
     this.leftItemList.sort(this.compare);
-
-    this.leftItemList.forEach((item) => this.leftItems.push(Object.assign(item)));
   }
 
   public onLeftItemSelect($event: VersionedDataObject[]): void {

@@ -1,0 +1,133 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+  <a name="bla-selectionlist"></a>
+
+  <form id="userForm"
+        class="horizontal-form half-page"
+        #benutzerForm="ngForm" >
+
+      <!-- Email / Username -->
+    <div class="form-group row">
+      <label for="userEmail"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="email"
+               class="form-control"
+               [disabled]=true
+               id="userEmail"
+               name="userEmail"
+               #benutzerEmail="ngModel"
+               [(ngModel)]="currentUserRolleDO[0].email"
+               placeholder="{{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+      <!-- Rolle -->
+    <!-- Email / Username -->
+    <div class="form-group row">
+      <label for="userRolleAlt"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_OLD.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               [disabled]=true
+               id="userRolleAlt"
+               name="userRolleAlt"
+               #userRolleAlt="ngModel"
+               [(ngModel)]="roleNames"
+               placeholder="{{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_OLD.PLACEHOLDER' | translate }}">
+
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.ROLLE.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="userrolle"
+             id="userrolle"
+             name="userrolle"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_NEW.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+
+      <!--SelectionList für zukünftige Rolle  -->
+      <div class="col-sm-9">
+        <div class="form-group row">
+          <bla-double-selectionlist [leftItems]="leftList"
+                                    [(rightItems)]="rightList"
+                                    [fieldSelector]="'roleName'"
+                                    [idLeftList]="'left'"
+                                    [idRightList]="'right'"
+
+                                    style="height: 12em; width: 36em; margin-left: 1em">
+
+          </bla-double-selectionlist>
+        </div>
+      </div>
+
+    </div>
+      <div class="form-group row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+        <bla-button
+          [id]="'userUpdateButton'"
+          [loading]="saveLoading"
+          (onClick)="resetRole($event)">
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_UPDATE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+
+      <!-- Passwort -->
+  <form id="passwordForm"
+        class="horizontal-form half-page"
+        #passwordForm="ngForm">
+    <div class="form-group row">
+      <label for="userPwdFormNewPwd"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.PASSWORD_NEW.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <input type="text"
+               class="form-control"
+               id="userPwdFormNewPwd"
+               name="userPwdFormNewPwd"
+               required
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d#$^+=!*()@%&?]{8,}$"
+               #userPwdFormNewPwd="ngModel"
+               [(ngModel)]="resetCredentials.password"
+               [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
+               placeholder="{{ 'MANAGEMENT.USER_DETAIL.FORM.PASSWORD_NEW.PLACEHOLDER' | translate }}">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.PASSWORD_NEW.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+    <div class="col-sm-3"></div>
+      <div class="col-sm-9 button-box">
+        <bla-button
+          [id]="'passwordUpdateButton'"
+          [disabled]="!passwordForm.valid"
+          [loading]="savePW"
+          (onClick)="resetPW($event)">
+          {{ 'MANAGEMENT.USER_DETAIL.FORM.PW_UPDATE' | translate }}
+        </bla-button>
+      </div>
+    </div>
+  </form>
+</bla-common-dialog>

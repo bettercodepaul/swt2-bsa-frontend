@@ -14,6 +14,7 @@ import {registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
 import {CurrentUserService} from '@shared/services';
+import {onMapService} from '@shared/functions/onMap-service.ts';
 
 @Component({
   selector:    'bla-home',
@@ -28,7 +29,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public wettkaempfeDO: WettkampfDO[];
   public loadingWettkampf = true;
   public loadingTable = false;
-  public rows: TableRow[];
+  public rows: TableRow[] = [];
   public currentDate: number =  Date.now();
   public dateHelper: string;
 
@@ -68,7 +69,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
       wettkampf.id,
       wettkampf.wettkampfVeranstaltungsId,
       wettkampf.wettkampfDatum,
-      wettkampf.wettkampfOrt,
+      wettkampf.wettkampfStrasse,
+      wettkampf.wettkampfPlz,
+      wettkampf.wettkampfOrtsname,
+      wettkampf.wettkampfOrtsinfo,
       wettkampf.wettkampfBeginn,
       wettkampf.wettkampfTag,
       wettkampf.wettkampfDisziplinId,
@@ -93,15 +97,15 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
 
   }
 
+  /**
+   * Creates Link to Google Maps
+   * Splits given Location at every comma and passes it to Google Maps
+   * @param $event
+   */
   public onMap($event: WettkampfDO): void {
-
-    const str = $event.wettkampfOrt;
-    let splits: string[];
-    splits = str.split(', ', 5);
-    const locationUrl = 'https://www.google.de/maps/place/' + splits[0] + '+' + splits[1] + '+' + splits[2];
-    window.open(locationUrl);
-
+    onMapService($event);
   }
+
   /**
    * Restriction that only a maximum of six events are portrayed
    * BSAPP- 367
@@ -114,6 +118,14 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     } else {
       this.rows = toTableRows(this.wettkaempfeDO.slice(0, 5));
     }
+  }
+
+  /**
+   * BSAPP - 783
+   * Check if Table is empty
+   */
+  public checkIfTableIsEmpty(): boolean {
+    return this.rows.length === 0;
   }
 
   /**

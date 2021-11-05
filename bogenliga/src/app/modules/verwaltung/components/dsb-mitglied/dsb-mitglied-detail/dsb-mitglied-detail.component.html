@@ -1,4 +1,4 @@
- <bla-common-dialog [config]="config"
+  <bla-common-dialog [config]="config"
                    [loading]="loading">
 
   <form id="dsbMitgliedForm"
@@ -16,6 +16,7 @@
         <input type="text"
                class="form-control"
                required
+               pattern="(?=.*[A-Za-z])[A-Za-z\-\ \(\)]{1,50}$"
                id="dsbMitgliedVorname"
                name="dsbMitgliedVorname"
                #dsbMitgliedVorname="ngModel"
@@ -40,6 +41,7 @@
         <input type="text"
                class="form-control"
                required
+               pattern="(?=.*[A-Za-z])[A-Za-z\-\ \(\)]{1,50}$"
                id="dsbMitgliedNachname"
                name="dsbMitgliedNachname"
                #dsbMitgliedNachname="ngModel"
@@ -90,6 +92,7 @@
         <input type="text"
                class="form-control"
                required
+               pattern="(?=.*[0-9])[A-Z0-9\-\ \(\)]{1,50}$"
                id="dsbMitgliedMitgliedsnummer"
                name="dsbMitgliedMitgliedsnummer"
                #dsbMitgliedMitgliedsnummer="ngModel"
@@ -111,18 +114,6 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <!--
-        <input type="text"
-               class="form-control"
-               required
-               pattern="[D|AT|CH|FR|IT|GB]"
-               id="dsbMitgliedNationalitaet"
-               name="dsbMitgliedNationalitaet"
-               #dsbMitgliedNationalitaet="ngModel"
-               [(ngModel)]="currentMitglied.nationalitaet"
-               [class.is-invalid]="dsbMitgliedNationalitaet.invalid && !dsbMitgliedNationalitaet.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.PLACEHOLDER' | translate }}">
-        -->
         <select class="form-control"
                 id="dsbMitgliedNationalitaet"
                 name="dsbMitgliedNationalitaet"
@@ -151,13 +142,12 @@
                 [(ngModel)]="currentVerein">
           <option [ngValue]="verein" *ngFor="let verein of vereine"> {{verein.name}}</option>
         </select>
-
-
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.ERROR' | translate }}
         </div>
       </div>
     </div>
+
     <!-- Kampfrichterlizenz -->
     <div class="form-group row">
       <label for="dsbMitgliedKampfrichter"
@@ -169,10 +159,11 @@
                name="dsbMitgliedKampfrichter"
                #dsbMitgliedKampfrichter="ngModel"
                [(ngModel)]="currentMitglied.kampfrichter"
+               [disabled]="currentMitglied.userId===null || currentMitglied.userId===undefined"
                [class.is-invalid]="dsbMitgliedKampfrichter.invalid && !dsbMitgliedKampfrichter.untouched">
-        <!-- <span *ngIf="currentMitglied.userId==null">Mitglied hat noch keinen User-Account. Bitte lege vorher einen an: <a href="#/verwaltung/benutzer/add">Userregistrierung</a></span> -->
-
-
+        <span *ngIf="currentMitglied.userId==null">{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NO_USER' | translate }}
+          <a href="#/verwaltung/benutzer/add">{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.REGISTRATION' | translate }}</a>
+        </span>
        </div>
      </div>
 

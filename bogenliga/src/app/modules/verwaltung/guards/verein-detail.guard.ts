@@ -8,7 +8,8 @@ export class VereinDetailGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    // CAN_MODIFY_MY_VEREIN or CAN_MODIFY_STAMMDATEN or CAN_CREATE_MANNSCHAFT required to activate Verein Detail
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT]);
+      [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN]);
   }
 }

@@ -53,7 +53,7 @@ export class TableRow {
       return String(column.propertyMapper(extractedAttribute));
     } else {
       if (isNullOrUndefined(extractedAttribute)) {
-        return '';
+        return '-';
       } else {
         return String(extractedAttribute);
       }

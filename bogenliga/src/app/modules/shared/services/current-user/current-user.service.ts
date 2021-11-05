@@ -31,16 +31,19 @@ export class CurrentUserService {
 
   constructor(private localDataProviderService: LocalDataProviderService,
               private store: Store<AppState>,
-              private router: Router
-  ) {
+              private router: Router) {
     this.observeUserState();
     this.observeSessionExpiredNotifications();
     this.loadCurrentUser();
-    }
+  }
+
+  public disableDefaultUser(): void {
+    this.isDefaultUserLoggedIn = false;
+  }
 
   public persistCurrentUser(currentUser: UserSignInDTO): void {
     this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
-    this.store.dispatch(new Login(currentUser));
+    this.store.dispatch(new Login(currentUser, this.isDefaultUserLoggedIn));
     // load current User after persisting the token
     this.loadCurrentUser();
   }
@@ -51,6 +54,8 @@ export class CurrentUserService {
     console.log('Load current user from storage');
     const currentUserValue = this.localDataProviderService.get(CURRENT_USER_KEY);
 
+    // Track the default user
+    let isDefault: boolean;
     if (currentUserValue != null) {
       // Map the permissions from the redux to its values
       const currentUserJSONMap = JSON.parse(currentUserValue);
@@ -60,10 +65,18 @@ export class CurrentUserService {
           this.currentUserPermissions.push(userPermit);
         });
       }
-      this.store.dispatch(new Login(UserSignInDTO.copyFromJson(JSON.parse(currentUserValue))));
+      const json = UserSignInDTO.copyFromJson(JSON.parse(currentUserValue));
+      // At this point we cannot be sure if the user is default or not, so we check the raw json directly
+      if (json.email === DEFAULT_USERNAME) {
+        isDefault = true;
+      } else {
+        isDefault = false;
+      }
+      this.store.dispatch(new Login(json, isDefault));
     }
-    console.log(currentUserValue);
-    console.log(this.currentUserPermissions);
+    console.log('CurrentUserValue: ' + currentUserValue);
+    console.log('CurrentUserPermission: ' + this.currentUserPermissions);
+    console.log('DefaultUser: ' + isDefault);
   }
 
   public getEmail(): string {
@@ -90,6 +103,7 @@ export class CurrentUserService {
     return this.currentUserPermissions.indexOf(permission) >= 0;
   }
 
+  // TODO: remove this function because it has no use
   public hasAllPermissions(requiredPermissions: UserPermission[]): boolean {
     const userPermissions: UserPermission[] = this.getPermissions();
 
@@ -102,17 +116,19 @@ export class CurrentUserService {
       // permissions needed but user has none
       return false;
     }
-
+    // return true when user has all required permissions
     return requiredPermissions.every(function hasPermissions(value) {
       return (userPermissions.indexOf(value) >= 0);
     });
   }
 
+  // Q: why requiredPermission.length == 0 ==> true ?
   public hasAnyPermisson(requiredPermissions: UserPermission[]): boolean {
     const userPermissions: UserPermission[] = this.getPermissions();
 
     // preconditions
-    if (requiredPermissions.length > 0 && this.isUserLoggedIn === false) { // no user and data needs permission --> access denied
+    if (requiredPermissions.length > 0 && this.isUserLoggedIn === false) {
+      // no user and data needs permission --> access denied
       return false;
     } else if (requiredPermissions.length === 0) { // no permissions needed
       return true;
@@ -120,7 +136,7 @@ export class CurrentUserService {
       // permissions needed but user has none
       return false;
     }
-
+    // return true when user has any required permissions
     for (const requiredPermission of requiredPermissions) {
       if (userPermissions.indexOf(requiredPermission) >= 0) {
         return true;
@@ -134,6 +150,7 @@ export class CurrentUserService {
     return this.isUserLoggedIn;
   }
 
+  // TODO: remove because unused
   public isDefaultUser(): boolean {
     return this.isDefaultUserLoggedIn;
   }
@@ -188,13 +205,17 @@ export class CurrentUserService {
     this.observeSessionExpiredNotifications();
     return this.currentUser;
   }
-public getVerein(): number {
-return this.getCurrentUser().vereinId;
-}
-public getVeranstaltungen(): number[] {
-    return  this.getCurrentUser().veranstaltungenIds;
-}
-public hasVeranstaltung(input: number): boolean {
-    return this.getVeranstaltungen().includes(input);
-}
+
+  public getVerein(): number {
+    return this.getCurrentUser().vereinId;
+  }
+
+  public getVeranstaltungen(): number[] {
+      return  this.getCurrentUser().veranstaltungenIds;
+  }
+
+  public hasVeranstaltung(input: number): boolean {
+      return this.getVeranstaltungen().includes(input);
+  }
+
 }

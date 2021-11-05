@@ -1,9 +1,9 @@
 import {Routes} from '@angular/router';
 
 import {
-  BenutzerDetailComponent,
-  BenutzerNeuComponent,
-  BenutzerOverviewComponent,
+  UserDetailComponent,
+  UserNeuComponent,
+  UserOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
   LigaDetailComponent,
@@ -18,12 +18,13 @@ import {
   VeranstaltungDetailComponent,
   VeranstaltungOverviewComponent,
   WettkampftageComponent,
-  SportjahrOverviewComponent
+  EinstellungenDetailComponent,
+  EinstellungenOverviewComponent
 } from './components';
 import {
-  BenutzerDetailGuard,
-  BenutzerNeuGuard,
-  BenutzerOverviewGuard,
+  UserDetailGuard,
+  UserNeuGuard,
+  UserOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
   LigaDetailGuard,
@@ -39,6 +40,8 @@ import {
   VeranstaltungOverviewGuard,
   WettkampftageGuard,
   SportjahrOverviewGuard,
+  EinstellungenDetailGuard,
+  EinstellungenOverviewGuard
 } from './guards';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
@@ -56,14 +59,14 @@ export const VERWALTUNG_ROUTES: Routes = [
   {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]}
   ,
   {
-    path: 'benutzer',
-    component: BenutzerOverviewComponent,
+    path: 'user',
+    component: UserOverviewComponent,
     pathMatch: 'full',
-    canActivate: [BenutzerOverviewGuard]
+    canActivate: [UserOverviewGuard]
   },
-  {path: 'benutzer/add', component: BenutzerNeuComponent, canActivate: [BenutzerNeuGuard]}
+  {path: 'user/add', component: UserNeuComponent, canActivate: [UserNeuGuard]}
   ,
-  {path: 'benutzer/:id', component: BenutzerDetailComponent, canActivate: [BenutzerDetailGuard]},
+  {path: 'user/:id', component: UserDetailComponent, canActivate: [UserDetailGuard]},
   {
     path: 'klassen',
     component: WettkampfklasseOverviewComponent,
@@ -101,13 +104,13 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch: 'full',
     canActivate: [VeranstaltungOverviewGuard]
   },
-  {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
   {
-    path:        'sportjahr',
-    component:   SportjahrOverviewComponent,
-    pathMatch:   'full',
-    canActivate: [SportjahrOverviewGuard]
+    path: 'einstellungen',
+    component: EinstellungenOverviewComponent,
+    pathMatch: 'full',
+    canActivate: [EinstellungenOverviewGuard]
   },
+  {path: 'einstellungen/:id', component: EinstellungenDetailComponent, canActivate: [EinstellungenDetailGuard]},
   {path: 'sportjahr/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
   {path: 'veranstaltung/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
   {path: 'veranstaltung/:id/:id', component: WettkampftageComponent, canActivate: [WettkampftageGuard]}

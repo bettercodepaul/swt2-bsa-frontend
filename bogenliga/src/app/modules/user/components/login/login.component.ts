@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
    */
   public onLogin($event: any): void {
     this.loading = true;
-
+    this.currentUserService.disableDefaultUser();
     this.loginDataProviderService.signIn(this.credentials)
         .then(
           () => this.handleSuccessfulLogin(),

@@ -4,7 +4,11 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {PasseDoClass} from '@verwaltung/types/passe-do-class';
+
 import {Injectable} from '@angular/core';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +19,19 @@ export class WettkampfErgebnisService {
   public veranstaltung: VeranstaltungDO;
   public sportjahr: number;
   public match: number;
+  public matchCount: number;
+
 
   // Output
-  public wettkampErgebnisse: WettkampfErgebnis[] = [];
+  public wettkampfErgebnisse: WettkampfErgebnis[] = [];
 
   // toLoad
   public mannschaften: Array<DsbMannschaftDO> = [];
   public currentMannschaft: DsbMannschaftDO;
   public matches: Array<MatchDO> = [];
   private passen: Array<PasseDoClass> = [];
+  public mitglieder: Array<DsbMitgliedDO> = [];
+  public mannschaftsmitglieder: Array <MannschaftsMitgliedDO> = [];
 
   constructor() {
 
@@ -40,7 +48,7 @@ export class WettkampfErgebnisService {
 
   public getSatzergebnis(nr: number, satznummer: number, id: number): number {
 
-    let Satz = 0;
+    let Satz = null;
     const passenFil = this.passen.filter((passenFiltered) => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
     for (const passe of passenFil) {
         for (const i of passe.ringzahl) {
@@ -94,9 +102,10 @@ export class WettkampfErgebnisService {
     this.veranstaltung = veranstaltung;
     this.mannschaften = allMannschaften;
     this.sportjahr = jahr;
-    if (this.currentMannschaft !== undefined) {
+    if (this.currentMannschaft !== undefined && this.currentMannschaft !== null) {
       this.matches = this.filterMannschaft();
     }
+
     return this.createWettkampfergebnisse();
   }
 
@@ -122,7 +131,7 @@ export class WettkampfErgebnisService {
    */
   public createWettkampfergebnisse(): WettkampfErgebnis[] {
 
-    this.wettkampErgebnisse = [];
+    this.wettkampfErgebnisse = [];
     for (let i = 0; i < this.matches.length ; i = i + 2) {
       const wettkampfErgebnis = new WettkampfErgebnis (
         this.matches[i].nr,
@@ -142,10 +151,26 @@ export class WettkampfErgebnisService {
         this.getSatzpunkte(i),
         this.getMatchpunkte(i)
       );
-      this.wettkampErgebnisse.push(wettkampfErgebnis);
+      this.wettkampfErgebnisse.push(wettkampfErgebnis);
     }
     this.matches = [];
     this.passen = [];
-    return this.wettkampErgebnisse;
+    return this.wettkampfErgebnisse;
   }
+
+  /*
+  filterPassen()
+  Filtert alle Passe nach der aktuellen Mannschaft und gibt diese als Array zurück
+   */
+  public filterPassen(): Array<PasseDoClass> {
+    const passeMatches: Array<PasseDoClass> = [];
+    for (const passe of this.passen) {
+      if (this.currentMannschaft.id === passe.mannschaftId) {
+        passeMatches.push(passe);
+      }
+    }
+    return passeMatches;
+  }
+
 }
+

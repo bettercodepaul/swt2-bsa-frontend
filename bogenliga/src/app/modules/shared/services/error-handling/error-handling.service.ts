@@ -16,6 +16,7 @@ const HTTP_BAD_REQUEST = 400;
 const HTTP_UNAUTHORIZED = 401;
 const HTTP_FORBIDDEN = 403;
 const HTTP_NOT_FOUND = 404;
+const HTTP_NOT_ACCEPTABLE = 406;
 const HTTP_UNPROCESSABLE_ENTITY = 422;
 // server errors
 const HTTP_INTERNAL_SERVER_ERROR = 500;
@@ -81,7 +82,11 @@ export class ErrorHandlingService {
       errorDto = {errorCode: 'BAD_REQUEST', errorMessage: null, param: null};
     } else if (statusCode === HTTP_NOT_FOUND) {
       errorDto = {errorCode: 'ENTITY_NOT_FOUND_ERROR', errorMessage: null, param: null};
+    }else if (statusCode === HTTP_NOT_ACCEPTABLE) {
+      errorDto = {errorCode: 'HTTP_NOT_ACCEPTABLE_ERROR', errorMessage: null, param: null};
     }
+
+
 
     console.warn(
       `body was: ${JSON.stringify(errorDto)}`);
