@@ -422,6 +422,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     };
 
     if(deadlineDate < currentDate){
+      this.deleteLoading = false;
 
       const notification_expired: Notification = {
         id:          NOTIFICATION_DELETE_WETTKAMPFTAG_SUCCESS,
