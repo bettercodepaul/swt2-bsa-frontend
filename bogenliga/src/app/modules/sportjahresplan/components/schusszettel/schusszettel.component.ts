@@ -186,6 +186,7 @@ export class SchusszettelComponent implements OnInit {
     this.getAllPasse();
     this.getAllWettkaempfe();
     this.getAllVeranstaltungen();
+
   }
 
   /**

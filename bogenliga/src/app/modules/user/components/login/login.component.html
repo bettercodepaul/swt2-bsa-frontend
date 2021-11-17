@@ -111,6 +111,8 @@
               </bla-button>
               <br>
               <bla-button [buttonSize]="ButtonSize.SMALL"
+                          [disabled]="!isSpotterAuthenticationEnabled"
+                          [visible]= "isSpotterAuthenticationEnabled"
                           (onClick)="onSpotterLogin(testModeratorUser)">
                           {{ 'SPOTTER.LINK.TEXT' | translate }}
               </bla-button>
