@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   public AlertType = AlertType;
   public LoginResult = LoginResult;
   public inProd = environment.production;
+  public isSpotterAuthenticationEnabled = false; // disables and hides the potter login button on the login site
 
   // TODO: remove after development
   public testAdminUser: CredentialsDO = new CredentialsDO('admin@bogenliga.de', 'admin');
@@ -80,6 +81,7 @@ export class LoginComponent implements OnInit {
     this.credentials = $event;
     this.onLogin(null);
   }
+
 
   // TODO: remove after development
   public onAutoLogin($event: CredentialsDO): void {
