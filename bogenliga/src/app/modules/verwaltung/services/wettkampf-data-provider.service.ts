@@ -66,12 +66,12 @@ export class WettkampfDataProviderService extends DataProviderService {
     });
   }
 
-  public findAllowedMember(wettkampfID: string | number): Promise<number[]> {
+  public findAllowedMember(wettkampfID: string | number, mannschaft1ID: string | number, mannschaft2ID: string | number): Promise<number[]> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfID).path("allowedContestants").build())
+      this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfID).path(mannschaft1ID).path(mannschaft2ID).path("allowedContestants").build())
           .then((data: number[]) => {
 
             resolve(data);
