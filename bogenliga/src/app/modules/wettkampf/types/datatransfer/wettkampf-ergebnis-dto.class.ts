@@ -14,10 +14,10 @@ export class LigatabelleErgebnisDTO implements DataTransferObject {
   vereinId: number;
   vereinName: string;
   matchpkt: number;
-  matchpkt_gegen: number;
+  matchpktGegen: number;
   satzpkt: number;
-  satzpkt_gegen: number;
-  satzpkt_differenz: number;
+  satzpktGegen: number;
+  satzpktDifferenz: number;
   sortierung: number;
   tabellenplatz: number;
 
@@ -33,10 +33,10 @@ export class LigatabelleErgebnisDTO implements DataTransferObject {
     vereinId?: number,
     vereinName?: string
     matchpkt?: number,
-    matchpkt_gegen?: number,
+    matchpktGegen?: number,
     satzpkt?: number,
-    satzpkt_gegen?: number,
-    satzpkt_differenz?: number,
+    satzpktGegen?: number,
+    satzpktDifferenz?: number,
     sortierung?: number,
     tabellenplatz?: number
   } = {}): LigatabelleErgebnisDTO {
@@ -57,10 +57,10 @@ export class LigatabelleErgebnisDTO implements DataTransferObject {
     copy.vereinId = optional.vereinId;
     copy.vereinName = optional.vereinName || '';
     copy.matchpkt = optional.matchpkt;
-    copy.matchpkt_gegen = optional.matchpkt_gegen;
+    copy.matchpktGegen = optional.matchpktGegen;
     copy.satzpkt = optional.satzpkt;
-    copy.satzpkt_gegen = optional.satzpkt_gegen;
-    copy.satzpkt_differenz = optional.satzpkt_differenz;
+    copy.satzpktGegen = optional.satzpktGegen;
+    copy.satzpktDifferenz = optional.satzpktDifferenz;
     copy.sortierung = optional.sortierung;
     copy.tabellenplatz = optional.tabellenplatz;
 
