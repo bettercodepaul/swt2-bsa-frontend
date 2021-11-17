@@ -785,6 +785,10 @@
         "SAVE_FAILURE": {
           "TITLE": "Fehler beim aktualisieren",
           "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
+        },
+        "NO_LICENSE": {
+          "TITLE": "Fehler beim Download",
+          "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
         }
       }
     },
