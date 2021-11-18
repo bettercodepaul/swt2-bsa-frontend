@@ -440,4 +440,157 @@ describe('Admin User tests', function() {
     cy.get('#wettkampfKlasseForm > .form-group > .col-sm-8 > bla-button > #wettkampfKlasseSaveButton').click()
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
   })
+
+  /**
+   * This test opens the administration table and check whether the table has any content
+   */
+  it('Testfall 16: Anzeige Verwaltung Vereinsliste', function () {
+    cy.visit('http://localhost:4200/#/home')
+    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
+    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.wait(1000)
+    cy.get('tr').last().click()
+  })
+
+  /**
+   * This test checks if it's possible to add a new club to the administration table successfully
+   */
+  it('Testfall 17: Neuen Verein anlegen', function () {
+    cy.visit('http://localhost:4200/#/home')
+    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
+    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.wait(1000)
+    cy.get('.overview-dialog-header > .overview-dialog-add > .btn > .ng-fa-icon > .svg-inline--fa').click()
+    cy.wait(200)
+    cy.get('.dialog-content > #vereineForm > .form-group > .col-sm-9 > #vereinName').click()
+    cy.get('.dialog-content > #vereineForm > .form-group > .col-sm-9 > #vereinName').type('CypressTest')
+    cy.get('.dialog-content > #vereineForm > .form-group > .col-sm-9 > #vereinIdentifier').click()
+    cy.get('.dialog-content > #vereineForm > .form-group > .col-sm-9 > #vereinIdentifier').type('1111111111')
+    cy.get('#vereineForm > .form-group > .col-sm-9 > bla-button > #vereinSaveButton').click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(500)
+    cy.get('#breadcrumb-container > .breadcrumb > .breadcrumb-item:nth-child(3) > a > span').click()
+    cy.wait(1000)
+    cy.get('#undefined > tbody').should('contain.text', 'CypressTest')
+    cy.wait(200)
+    cy.get('#undefined > tbody').should('contain.text', '1111111111')
+  })
+
+  /**
+   * This test checks if it's possible to edit a club (change the website...) successfully
+   */
+  it('Testfall 18: Editieren eines Vereins', function () {
+    cy.visit('http://localhost:4200/#/home')
+    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
+    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.wait(500)
+    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').last().click()
+    cy.wait(500)
+    cy.get('.dialog-content > #vereineForm > .form-group > .col-sm-9 > #vereinWebsite').click()
+    cy.wait(200)
+    cy.get('.dialog-content > #vereineForm > .form-group > .col-sm-9 > #vereinWebsite').type('B')
+    cy.get('.wrapper > .content > bla-verein-detail > bla-common-dialog > .dialog-content').click()
+    cy.wait(500)
+    cy.get('#vereineForm > .form-group > .col-sm-9 > bla-button > #vereinUpdateButton').click()
+    cy.wait(500)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(1000)
+    cy.get('tr').last().find('td').eq(3).should('contain.text', 'http://B')
+    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').last().click()
+    cy.get('.dialog-content > #vereineForm > .form-group > .col-sm-9 > #vereinWebsite').click()
+    cy.wait(200)
+    cy.get('.dialog-content > #vereineForm > .form-group > .col-sm-9 > #vereinWebsite').type('{selectall}{backspace}')
+    cy.wait(200)
+    cy.get('.wrapper > .content > bla-verein-detail > bla-common-dialog > .dialog-content').click()
+    cy.wait(200)
+    cy.get('#vereineForm > .form-group > .col-sm-9 > bla-button > #vereinUpdateButton').click()
+    cy.wait(200)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(200)
+    cy.get('tr').last().find('td').eq(3).should('contain.text', '')
+  })
+
+  /**
+   * This test checks if it is possible to add a new team to a club successfully
+   */
+  it('Testfall 19: Neue Vereins-Mannschaft anlegen', function () {
+    cy.visit('http://localhost:4200/#/home')
+    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
+    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.wait(1000)
+    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').last().click()
+    cy.get('bla-common-dialog > .dialog-content > div > .overview-dialog-add > .btn').click()
+    cy.wait(500)
+    cy.get('.dialog-content > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').click()
+    cy.wait(500)
+    cy.get('.dialog-content > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('7')
+    cy.wait(500)
+    cy.get('.dialog-content > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftVeranstaltung').select('Landesliga Süd')
+    cy.wait(500)
+    cy.get('#mannschaftForm > .form-group > .col-sm-9 > bla-button > #mannschaftSaveButton').click()
+    cy.wait(500)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(500)
+    cy.get('#undefined > tbody').should('contain.text', '7')
+  })
+
+  /**
+   * The test checks if it's possible to edit a team successfully
+   */
+  it('Testfall 20: Vereins-Mannschaft bearbeiten', function () {
+    cy.visit('http://localhost:4200/#/home')
+    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
+    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.wait(1000)
+    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').last().click()
+    cy.wait(500)
+    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').last().click()
+    cy.wait(500)
+    cy.get('.dialog-content > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').click()
+    cy.wait(500)
+    cy.get('.dialog-content > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('6')
+    cy.wait(500)
+    cy.get('.dialog-content > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftVeranstaltung').select('Landesliga Süd')
+    cy.wait(500)
+    cy.get('#mannschaftForm > .form-group > .col-sm-9 > bla-button > #mannschaftUpdateButton').click()
+    cy.wait(500)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(500)
+    cy.get('#undefined > tbody').should('contain.text', '76')
+  })
+
+  /**
+   * The test checks if it's possible to delete a team successfully
+   */
+  it('Testfall 21: Vereins-Mannschaft löschen', function () {
+    cy.visit('http://localhost:4200/#/home')
+    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
+    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.wait(1000)
+    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').last().click()
+    cy.wait(500)
+    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
+    cy.wait(500)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.wait(500)
+    cy.get('#undefined > tbody').should('not.contain.text', '76')
+  })
+
+  /**
+   * This test checks if it's possible to delete a club successfully
+   */
+  it('Testfall 22: Einen Verein löschen', function () {
+    cy.visit('http://localhost:4200/#/home')
+    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
+    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.wait(1000)
+    cy.get('#undefined > tbody').should('contain.text', 'CypressTest')
+    cy.wait(200)
+    cy.get('#undefined > tbody').should('contain.text', '1111111111')
+    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('#undefined > tbody').should('not.contain.text', 'CypressTest')
+    cy.wait(200)
+    cy.get('#undefined > tbody').should('not.contain.text', '1111111111')
+  })
 })
