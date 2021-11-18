@@ -445,7 +445,6 @@ describe('Admin User tests', function() {
    * This test opens the administration table and check whether the table has any content
    */
   it('Testfall 16: Anzeige Verwaltung Vereinsliste', function () {
-    cy.visit('http://localhost:4200/#/home')
     cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
     cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
     cy.wait(1000)
@@ -456,7 +455,6 @@ describe('Admin User tests', function() {
    * This test checks if it's possible to add a new club to the administration table successfully
    */
   it('Testfall 17: Neuen Verein anlegen', function () {
-    cy.visit('http://localhost:4200/#/home')
     cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
     cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
     cy.wait(1000)
@@ -480,7 +478,6 @@ describe('Admin User tests', function() {
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
   it('Testfall 18: Editieren eines Vereins', function () {
-    cy.visit('http://localhost:4200/#/home')
     cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
     cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
     cy.wait(500)
@@ -514,7 +511,6 @@ describe('Admin User tests', function() {
    * This test checks if it is possible to add a new team to a club successfully
    */
   it('Testfall 19: Neue Vereins-Mannschaft anlegen', function () {
-    cy.visit('http://localhost:4200/#/home')
     cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
     cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
     cy.wait(1000)
@@ -538,7 +534,6 @@ describe('Admin User tests', function() {
    * The test checks if it's possible to edit a team successfully
    */
   it('Testfall 20: Vereins-Mannschaft bearbeiten', function () {
-    cy.visit('http://localhost:4200/#/home')
     cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
     cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
     cy.wait(1000)
@@ -563,7 +558,6 @@ describe('Admin User tests', function() {
    * The test checks if it's possible to delete a team successfully
    */
   it('Testfall 21: Vereins-Mannschaft löschen', function () {
-    cy.visit('http://localhost:4200/#/home')
     cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
     cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
     cy.wait(1000)
@@ -580,7 +574,6 @@ describe('Admin User tests', function() {
    * This test checks if it's possible to delete a club successfully
    */
   it('Testfall 22: Einen Verein löschen', function () {
-    cy.visit('http://localhost:4200/#/home')
     cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
     cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
     cy.wait(1000)
