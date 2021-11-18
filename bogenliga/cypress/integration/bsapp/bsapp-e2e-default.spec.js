@@ -593,4 +593,100 @@ describe('Admin User tests', function() {
     cy.wait(200)
     cy.get('#undefined > tbody').should('not.contain.text', '1111111111')
   })
+
+  /**
+   * This test checks if the League-table is filled.
+   */
+  it('Testfall 23: Alle Ligen zu sehen', function() {
+    cy.get('#sidebarCollapseBottom').click()
+    cy.get('div > .list-unstyled > li > .sidebar-text-toggle > .navbar-toggler').click()
+    cy.get('.navbar-nav > .nav-item:nth-child(5) > .nav-link > bla-sidebar-subitem > .sidebar-subink').click()
+    cy.get('#sidebarCollapseBottom').click()
+    cy.wait(4000)
+    cy.get('#undefined').should('have.length.at.least', 1)
+  })
+
+  /**
+   * This test adds a League and checks if it gets added.
+   */
+  it('Testfall 24: Liga Hinzufügen', function() {
+    cy.get('.dialog-content > .overview-dialog-header > .overview-dialog-add > .btn > span').click()
+    cy.get('.dialog-content > #ligaForm > .form-group > .col-sm-9 > #ligaName').type('SWT_Liga')
+    cy.get('.dialog-content > #ligaForm > .form-group > .col-sm-9 > #ligaRegion').select('14: Object')
+    cy.get('#ligaForm > .form-group > .col-sm-9 > bla-button > #ligaSaveButton').click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(5000)
+    cy.get('#undefined').should('contain.text', 'SWT_Liga')
+  })
+
+  /**
+   * This test deletes a League and checks if its deleted in the table.
+   */
+  it('Testfall 25: Liga Löschen', function() {
+    cy.get('#undefined').should('contain.text', 'SWT_Liga')
+    cy.get(' #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.wait(4000)
+    cy.get('#undefined').should('not.contain.text', 'SWT_Liga')
+  })
+
+  /**
+   *  This test checks if the Region-table is filled.
+   */
+  it('Testfall 26: Regionen Anzeigen', function() {
+    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link').click()
+    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(6) > .card-body > .btn').click()
+    cy.wait(4000)
+    cy.get('#undefined').should('have.length.at.least', 1)
+  })
+
+
+  /**
+   * This test adds a Region and checks if it gets added.
+   */
+  it('Testfall 27: Region Hinzufügen', function() {
+    cy.get('bla-overview-dialog > .dialog-content > .overview-dialog-header > .overview-dialog-add > .btn').click()
+    cy.get('.dialog-content > #regionenForm > .form-group > .col-sm-9 > #regionName').type('SWT3_Region')
+    cy.get('.dialog-content > #regionenForm > .form-group > .col-sm-9 > #regionContraction').type('SWT_R')
+    cy.get('.dialog-content > #regionenForm > .form-group > .col-sm-9 > #regionTyp').select('KREIS')
+    cy.get('#regionenForm > .form-group > .col-sm-9 > bla-button > #regionSaveButton').click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(1500)
+    cy.get('#undefined').should('contain.text', 'SWT3_Region')
+  })
+
+  /**
+   * this test changes a Region and checks if the changes worked.
+   */
+  it('Testfall 28: Region Ändern', function() {
+    cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit').last().click()
+    cy.get('.dialog-content > #regionenForm > .form-group > .col-sm-9 > #regionContraction').type('1')
+    cy.get('#regionenForm > .form-group > .col-sm-9 > bla-button > #regionUpdateButton').click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(4000)
+    cy.get('#undefined').should('contain.text', 'SWT_R1')
+  })
+
+  /**
+   * This test deletes a Region and checks if its deleted in the table.
+   */
+  it('Testfall 29: Region Löschen', function() {
+    cy.get('#undefined').should('contain.text', 'SWT3_Region')
+    cy.get(' #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.wait(4000)
+    cy.get('#undefined').should('not.contain.text', 'SWT3_Region')
+  })
+
+  /**
+   * This test checks if the Event-table gets filled.
+   */
+  it('Testfall 30: Veranstaltungen Anzeigen', function() {
+    cy.get('#sidebar > #sidebarFooter > #sidebarCollapseBottom > bla-sidebar-item > .sidebar-link').click()
+    cy.get('.sidebar-text-toggle > .navbar-toggler > .ng-fa-icon > .svg-inline--fa > path').click()
+    cy.get('.nav-item:nth-child(7) > .nav-link > bla-sidebar-subitem > .sidebar-subink > .sidebar-subtext').click()
+    cy.get('#sidebarFooter > #sidebarCollapseBottom > bla-sidebar-item > .sidebar-link > .sidebar-text').click()
+    cy.wait(1000)
+    cy.get('.table-responsive > #undefined').should('have.length.at.least', 1)
+  })
 })
