@@ -16,9 +16,9 @@ export function toDO(ligatabelleErgebnisDTO: LigatabelleErgebnisDTO): Ligatabell
   ligatabelleErgebnisDO.mannschaft_id = ligatabelleErgebnisDTO.mannschaftId;
   ligatabelleErgebnisDO.mannschaft_name = ligatabelleErgebnisDTO.vereinName.toString() + '-' + ligatabelleErgebnisDTO.mannschaftNummer.toString();
   ligatabelleErgebnisDO.verein_id = ligatabelleErgebnisDTO.vereinId;
-  ligatabelleErgebnisDO.matchpunkte = ligatabelleErgebnisDTO.matchpkt.toString() + ' : ' + ligatabelleErgebnisDTO.matchpkt_gegen.toString();
-  ligatabelleErgebnisDO.satzpunkte = ligatabelleErgebnisDTO.satzpkt.toString() + ' : ' + ligatabelleErgebnisDTO.satzpkt_gegen.toString();
-  ligatabelleErgebnisDO.satzpkt_differenz = ligatabelleErgebnisDTO.satzpkt_differenz;
+  ligatabelleErgebnisDO.matchpunkte = ligatabelleErgebnisDTO.matchpkt.toString() + ' : ' + ligatabelleErgebnisDTO.matchpktGegen.toString();
+  ligatabelleErgebnisDO.satzpunkte = ligatabelleErgebnisDTO.satzpkt.toString() + ' : ' + ligatabelleErgebnisDTO.satzpktGegen.toString();
+  ligatabelleErgebnisDO.satzpkt_differenz = ligatabelleErgebnisDTO.satzpktDifferenz;
   ligatabelleErgebnisDO.tabellenplatz = ligatabelleErgebnisDTO.tabellenplatz;
   ligatabelleErgebnisDO.sortierung = ligatabelleErgebnisDTO.sortierung;
 

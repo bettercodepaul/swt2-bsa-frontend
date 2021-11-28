@@ -676,7 +676,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       .build();
     this.downloadService.download(downloadUrl, 'lizenz.pdf', this.aElementRef)
         .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => this.showNoLicense());
+        .catch((response: BogenligaResponse<string>) => this.showNoLicense(true));
   }
 
   public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
@@ -701,14 +701,14 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       .build();
     this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
         .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => console.log(response));
+        .catch((response: BogenligaResponse<string>) => this.showNoLicense(false));
   }
 
-  private showNoLicense(): void {
+  private showNoLicense(is_one: boolean): void {
     const noLicenseNotification: Notification = {
       id:          NOTIFICATION_NO_LICENSE,
-      title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.NO_LICENSE.TITLE',
-      description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.NO_LICENSE.DESCRIPTION',
+      title:       (is_one) ? 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.NO_LICENSE.TITLE' : 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.NO_LICENSE.TITLE',
+      description: (is_one) ? 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.NO_LICENSE.DESCRIPTION' : 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.NO_LICENSE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
