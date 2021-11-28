@@ -71,7 +71,7 @@ export class UserDataProviderService extends DataProviderService {
   public resetPW(payload: CredentialsDTO): Promise<BogenligaResponse<Array<UserDO>>> {
 
     return new Promise((resolve, reject) => {
-      const newCredentialsDTO = new CredentialsDTO(payload.username, payload.password, payload.dsb_mitglied_id, payload.using2FA, payload.code);
+      const newCredentialsDTO = new CredentialsDTO(payload.username, payload.password, payload.dsbMitgliedId, payload.using2FA, payload.code);
       this.sendUpdateRequest(newCredentialsDTO, resolve, reject);
     });
   }
