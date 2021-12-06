@@ -28,6 +28,7 @@ import {MatchDO} from '@verwaltung/types/match-do.class';
 import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
 import {WettkampfComponent} from '@wettkampf/components';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 
 
 @Component({
@@ -79,8 +80,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   public matches: Array<MatchDO[]> = [];
   private wettkampfComponent: WettkampfComponent;
 
-
-
+  public availableYears : SportjahrVeranstaltungDO[];
+  public Jahr: SportjahrVeranstaltungDO;
+  public selectedYearId: number;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -94,7 +96,20 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   ngOnInit() {
+    this.Jahr = new SportjahrVeranstaltungDO();
+    this.availableYears = [];
+    let counter = 1;
+    let currentYear = new Date().getFullYear().valueOf();
+    for (let i = currentYear;i>=2016;i--){
+      let t = new SportjahrVeranstaltungDO()
+      t.sportjahr = i;
+      t.id = counter;
+      counter++;
+      this.availableYears.push(t);
+    }
 
+
+    this.selectedYearId = this.availableYears[0].id;
     this.route.params.subscribe((params) => {
 
       if (!isUndefined(params['wettkampfId'])) {
@@ -123,12 +138,16 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         // -> normaler Aufruf der Webseite (ohne Zusaetze)
         // loadVeranstaltungen: damit die Tabelle Veranstaltungen angezeigt wird
         this.wettkampfIdEnthalten = false;
-        this.loadVeranstaltungen();
+        // Lade zuerst das aktuelle Jahr
+        this.loadVeranstaltungenByYear(currentYear);
         this.visible = false;
       }
     });
 
   }
+
+
+
 
 
   // WettkampfId im Pfad enthalten -> Ermittlung des WettkampfDO:
@@ -170,6 +189,16 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       // als nÃ¤chstes mÃ¼ssen alle Veranstaltungen fÃ¼r die Tabelle "Veranstaltung" und die aktuelle Veranstaltung fÃ¼r die Ausgabe darunter ermittelt werden
       this.loadVeranstaltungen();
     }
+  }
+
+// backend-call to get the list of veranstaltungen of a certain year
+  private loadVeranstaltungenByYear(year: number): void {
+    this.veranstaltungen = [];
+    this.selectedWettkampf = '';
+    this.selectedWettkampfId = null;
+    this.veranstaltungsDataProvider.findBySportyear(year)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response); })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
   }
 
   // backend-call to get the list of veranstaltungen
@@ -220,6 +249,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     }
   }
 
+  public onSelectYear($event: SportjahrVeranstaltungDO): void {
+    this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response); })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
+  }
 
   // when a Veranstaltung gets selected from the list
   // load LigaTabelle
