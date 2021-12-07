@@ -81,8 +81,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private wettkampfComponent: WettkampfComponent;
 
   public availableYears : SportjahrVeranstaltungDO[];
-  public Jahr: SportjahrVeranstaltungDO;
-  public selectedYearId: number;
+  private currentYear: number;
+
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -96,20 +96,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   ngOnInit() {
-    this.Jahr = new SportjahrVeranstaltungDO();
-    this.availableYears = [];
-    let counter = 1;
-    let currentYear = new Date().getFullYear().valueOf();
-    for (let i = currentYear;i>=2016;i--){
-      let t = new SportjahrVeranstaltungDO()
-      t.sportjahr = i;
-      t.id = counter;
-      counter++;
-      this.availableYears.push(t);
-    }
 
+    this.currentYear = new Date().getFullYear().valueOf();
 
-    this.selectedYearId = this.availableYears[0].id;
+    this.getavailableYears();
+
     this.route.params.subscribe((params) => {
 
       if (!isUndefined(params['wettkampfId'])) {
@@ -139,7 +130,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         // loadVeranstaltungen: damit die Tabelle Veranstaltungen angezeigt wird
         this.wettkampfIdEnthalten = false;
         // Lade zuerst das aktuelle Jahr
-        this.loadVeranstaltungenByYear(currentYear);
+        this.loadVeranstaltungenByYear(this.currentYear.valueOf());
         this.visible = false;
       }
     });
@@ -501,5 +492,50 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     }
     this.matchRows = toTableRows(this.tableContentMatch);
     this.loadingMatch = false;
+  }
+  private getavailableYears() {
+    this.availableYears = [];
+
+    this.veranstaltungsDataProvider.findAllSportyearDestinct()
+        .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
+          this.loadVeranstaltungenYearsSuccess(response); })
+        .catch((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {this.loadVeranstaltungenYearsFailure(response); });
+  }
+
+  // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
+  private loadVeranstaltungenYearsSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+    let oldest =this.currentYear;
+    let counter = 1;
+    if(response.payload != []){
+    for(let elem of response.payload){
+      if (elem.sportjahr.valueOf() <= oldest){
+        oldest = elem.sportjahr.valueOf();
+      }
+      // let t = new SportjahrVeranstaltungDO();
+      // t.sportjahr = elem.sportjahr.valueOf();
+      // t.id = counter;
+      // t.version = 1;
+      // counter++;
+      // this.availableYears.push(t);
+    }}
+
+    console.log("oldest Year: "+oldest);
+    for (let i = this.currentYear;i>=oldest;i--){
+      let t = new SportjahrVeranstaltungDO()
+      t.sportjahr = i;
+      t.id = counter;
+      t.version = 1;
+      console.log("id: "+t.id);
+      counter++;
+      this.availableYears.push(t);
+    }
+
+    console.log('Bin in loadVeranstaltungenYearSuccess');
+  }
+
+  // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
+  private loadVeranstaltungenYearsFailure(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+    console.log('Bin in loadVeranstaltungenYearFailure');
+
   }
 }
