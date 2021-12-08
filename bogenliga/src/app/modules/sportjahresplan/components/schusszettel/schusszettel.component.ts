@@ -158,7 +158,7 @@ export class SchusszettelComponent implements OnInit {
                 this.setPoints();
               }
 
-              this.wettkampfDataProvider.findAllowedMember(this.match1.wettkampfId).then((value) => {
+              this.wettkampfDataProvider.findAllowedMember(this.match1.wettkampfId, this.match1.mannschaftId, this.match2.mannschaftId).then((value) => {
                 this.allowedMitglieder1=value;
                 console.log('Allowed for match1: ', this.allowedMitglieder1);
                 if(this.match1.wettkampfId == this.match2.wettkampfId){
@@ -168,7 +168,7 @@ export class SchusszettelComponent implements OnInit {
                 }
               });
               if(this.match1.wettkampfId != this.match2.wettkampfId){
-                this.wettkampfDataProvider.findAllowedMember(this.match2.wettkampfId).then((value)=>{
+                this.wettkampfDataProvider.findAllowedMember(this.match2.wettkampfId, this.match1.mannschaftId, this.match2.mannschaftId).then((value)=>{
                   this.allowedMitglieder2 = value;
                   console.log('Allowed for match2: ', this.allowedMitglieder2);
                   //Close notification when ready
@@ -186,6 +186,7 @@ export class SchusszettelComponent implements OnInit {
     this.getAllPasse();
     this.getAllWettkaempfe();
     this.getAllVeranstaltungen();
+
   }
 
   /**

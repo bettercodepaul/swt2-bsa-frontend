@@ -33,7 +33,7 @@ import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltu
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {environment} from '@environment';
 import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
-import {CurrentUserService, UserPermission} from '@shared/services';
+import {CurrentUserService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
@@ -44,6 +44,7 @@ const NOTIFICATION_UPDATE_VEREIN = 'verein_detail_update';
 const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
+const NOTIFICATION_NO_LICENSE = 'no_license_found';
 
 @Component({
   selector:    'bla-verein-detail',
@@ -318,7 +319,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       .build();
     this.downloadService.download(URL, 'lizenzen.pdf', this.aElementRef)
         .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => console.log(response));
+        .catch((response: BogenligaResponse<string>) => this.showNoLicense());
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
@@ -404,6 +405,24 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
           }
         });
     this.notificationService.showNotification(notification);
+  }
+
+  private showNoLicense(): void {
+    const noLicenseNotification: Notification = {
+      id: NOTIFICATION_NO_LICENSE,
+      title: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.NO_LICENSE.TITLE',
+      description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.NO_LICENSE.DESCRIPTION',
+      severity: NotificationSeverity.ERROR,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_NO_LICENSE)
+      .subscribe(myNotification => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED)
+          this.saveLoading = false;
+      });
+    this.notificationService.showNotification(noLicenseNotification);
   }
 
   private handleResponseArrayFailure(response: BogenligaResponse<RegionDTO[]>): void {
