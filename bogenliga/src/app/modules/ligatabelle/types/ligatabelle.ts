@@ -3,16 +3,16 @@ import {TransferObject} from '../../shared/data-provider/models/transfer-object.
 
 export class Ligatabelle implements TransferObject {
   id: number;
-  veranstaltung_id: number;
+  veranstaltungId: number;
   datum: Date;
   ort: string;
   beginn: Time;
   wettkampf_tag: number;
   disziplin_id: number;
 
-  constructor(id: number, veranstaltung_id: number, datum: Date, ort: string, beginn: Time, wettkampf_tag: number, disziplin_id: number) {
+  constructor(id: number, veranstaltungId: number, datum: Date, ort: string, beginn: Time, wettkampf_tag: number, disziplin_id: number) {
     this.id = id;
-    this.veranstaltung_id = veranstaltung_id;
+    this.veranstaltungId = veranstaltungId;
     this.datum = datum;
     this.ort = ort;
     this.beginn = beginn;

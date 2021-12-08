@@ -3,8 +3,8 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 export class VereinTabelleDO implements VersionedDataObject {
 
   // gets used in Vereins-Reiter to show the Mannschafts-Infos
-  constructor(veranstaltung_name: string, wettkampfTag: string, mannschaftsName: string, wettkampfOrtsname: string) {
-    this.veranstaltung_name = veranstaltung_name;
+  constructor(veranstaltungName: string, wettkampfTag: string, mannschaftsName: string, wettkampfOrtsname: string) {
+    this.veranstaltungName = veranstaltungName;
     this.wettkampfTag = wettkampfTag;
     this.wettkampfOrtsname = wettkampfOrtsname;
     this.mannschaftsName = mannschaftsName;
@@ -15,7 +15,7 @@ export class VereinTabelleDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  veranstaltung_name: string;
+  veranstaltungName: string;
   wettkampfTag: string;
   wettkampfStrasse: string;
   wettkampfPlz: string;

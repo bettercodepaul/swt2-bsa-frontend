@@ -9,8 +9,8 @@ export function toDO(ligatabelleErgebnisDTO: LigatabelleErgebnisDTO): Ligatabell
   ligatabelleErgebnisDO.id = ligatabelleErgebnisDTO.id;
   ligatabelleErgebnisDO.version = ligatabelleErgebnisDTO.version;
 
-  ligatabelleErgebnisDO.veranstaltung_id = ligatabelleErgebnisDTO.veranstaltungId;
-  ligatabelleErgebnisDO.veranstaltung_name = ligatabelleErgebnisDTO.veranstaltungName;
+  ligatabelleErgebnisDO.veranstaltungId = ligatabelleErgebnisDTO.veranstaltungId;
+  ligatabelleErgebnisDO.veranstaltungName = ligatabelleErgebnisDTO.veranstaltungName;
   ligatabelleErgebnisDO.wettkampf_id = ligatabelleErgebnisDTO.wettkampfId;
   ligatabelleErgebnisDO.wettkampf_tag = ligatabelleErgebnisDTO.wettkampfTag;
   ligatabelleErgebnisDO.mannschaft_id = ligatabelleErgebnisDTO.mannschaftId;

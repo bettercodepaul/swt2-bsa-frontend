@@ -15,7 +15,7 @@ export const VEREINE_TABLE_CONFIG: TableConfig = {
     columns: [
       {
         translationKey: 'VEREINE.VEREINE.TABLE.HEADERS.VERANSTALTUNG',
-        propertyName:   'veranstaltung_name',
+        propertyName:   'veranstaltungName',
         width:          20,
       },
       {
