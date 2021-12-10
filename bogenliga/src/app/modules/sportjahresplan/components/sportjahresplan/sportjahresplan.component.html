@@ -16,9 +16,10 @@
 
         <bla-dropdown-menu (onSelect)="onSelectYear($event)"
                            [id]="'Veranstaltungen-dropdown-menu'"
-                           [items]="availableYears"
+                           [items]="getAvailableYears()"
                            [optionFieldSelector]="'sportjahr'"
-                           [selectedItemId]="1"
+                           [loading]="loadingYears"
+                           [selectedItemId]='1'
                            style="width: 50%;">
         </bla-dropdown-menu>
 
