@@ -10,4 +10,5 @@ export interface SideBarNavigationItem {
   permissons?: UserPermission[];
   subitems?: SideBarNavigationSubitem[];
   inProdVisible?: boolean;
+  datacy: string;
 }

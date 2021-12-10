@@ -7,7 +7,8 @@
            [name]="id"
            [placeholder]="getPlacholder()"
            class="form-control quicksearch-list-search"
-           type="text">
+           type="text"
+           data-cy="quicksearch-suchfeld">
     <div class="input-group-append"
          style="">
       <span class="input-group-text"
@@ -26,8 +27,8 @@
                      [optionFieldSelector]="optionFieldSelector"
                      [selectedItemIds]="getSelectedItemIds()"
                      [style.height]="selectionListHeight"
-                     class="quicksearch-list-select">
-
+                     class="quicksearch-list-select"
+                     data-cy="quicksearch-liste">
   </bla-selectionlist>
 
 </div>
