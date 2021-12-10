@@ -9,8 +9,8 @@ export class LigatabelleErgebnisDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  veranstaltungId: number;
-  veranstaltungName: string;
+  veranstaltung_id: number;
+  veranstaltung_name: string;
   wettkampf_id: number;
   wettkampf_tag: number;
   mannschaft_id: number;
