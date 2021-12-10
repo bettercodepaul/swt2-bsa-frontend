@@ -188,7 +188,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    */
   public async getSelectedRow($event): Promise<void> {
     const rowValues = $event;
-    const veranstaltungsName = rowValues.veranstaltungName;
+    const veranstaltungsName = rowValues.veranstaltung_name;
     const mannschaftsName = rowValues.mannschaftsName.replace('. Mannschaft', '');
     const type = this.typeOfTableColumn;
 
@@ -205,7 +205,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    */
   public linkPreperation(type: string, veranstaltungsName: string, mannschaftsName: string): void {
     const currentVeranstaltung = this.veranstaltungen.find((veranstalung: VeranstaltungDTO) => veranstalung.name === veranstaltungsName);
-    if (type === 'veranstaltungName') {
+    if (type === 'veranstaltung_name') {
       this.vereineLinking(currentVeranstaltung.id.toString(10));
     } else if (type === 'mannschaftsName') {
       const currentMannschaft = this.mannschaften.find((mannschaft: DsbMannschaftDTO) => mannschaft.name === mannschaftsName);
