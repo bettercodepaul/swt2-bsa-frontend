@@ -31,6 +31,7 @@ import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 
 
+
 @Component({
   selector:    'bla-sportjahresplan',
   templateUrl: './sportjahresplan.component.html',
@@ -80,6 +81,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   public matches: Array<MatchDO[]> = [];
   private wettkampfComponent: WettkampfComponent;
 
+  public loadingYears = true;
   public availableYears : SportjahrVeranstaltungDO[];
   private currentYear: number;
 
@@ -99,7 +101,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
     this.currentYear = new Date().getFullYear().valueOf();
 
-    this.getavailableYears();
+    this.findAvailableYears();
 
     this.route.params.subscribe((params) => {
 
@@ -493,7 +495,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     this.matchRows = toTableRows(this.tableContentMatch);
     this.loadingMatch = false;
   }
-  private getavailableYears() {
+
+  private findAvailableYears() {
     this.availableYears = [];
 
     this.veranstaltungsDataProvider.findAllSportyearDestinct()
@@ -504,6 +507,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
   private loadVeranstaltungenYearsSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+    this.loadingYears = false;
     let oldest =this.currentYear;
     let counter = 1;
     if(response.payload != []){
@@ -525,17 +529,19 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       t.sportjahr = i;
       t.id = counter;
       t.version = 1;
-      console.log("id: "+t.id);
       counter++;
       this.availableYears.push(t);
     }
-
-    console.log('Bin in loadVeranstaltungenYearSuccess');
+    console.log('Bin in loadVeranstaltungenYearSuccess!');
   }
 
   // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
   private loadVeranstaltungenYearsFailure(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+    this.loadingYears = false;
     console.log('Bin in loadVeranstaltungenYearFailure');
 
+  }
+  public getAvailableYears(): SportjahrVeranstaltungDO[] {
+    return this.availableYears;
   }
 }
