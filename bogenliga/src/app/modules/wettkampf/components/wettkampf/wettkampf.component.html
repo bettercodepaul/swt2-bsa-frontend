@@ -135,8 +135,10 @@
       <bla-button
         [id]="'showResultsButton'"
         [loading]="loadingData"
-        (onClick)="loadAllErgebnisse(undefined);">
+        (onClick)="loadAllErgebnisse(undefined);"
+        data-cy="alle-mannschaften-anzeigen-button">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
+
       </bla-button>
       &nbsp;
       <!-- Button - Aktuelle Mannschaft anzeigen -->
@@ -151,7 +153,8 @@
       <bla-button
         [id]="'showResultsButton'"
         [loading]="loadingData"
-        (onClick)="gesamt = false; this.loadEinzelstatistik(this.currentMannschaft);">
+        (onClick)="gesamt = false; this.loadEinzelstatistik(this.currentMannschaft);"
+        data-cy="einzelstatistik-anzeigen-button">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzel.LABEL' | translate }}
       </bla-button>
       &nbsp;
@@ -159,7 +162,8 @@
       <bla-button
         [id]="'showResultsButton'"
         [loading]="loadingData"
-        (onClick)="gesamt = true; this.loadGesamtstatistik(this.currentMannschaft);">
+        (onClick)="gesamt = true; this.loadGesamtstatistik(this.currentMannschaft);"
+        data-cy="einzelstatistik-gesamt-anzeigen-button">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEinzelGesamt.LABEL' | translate }}
       </bla-button>
       &nbsp;

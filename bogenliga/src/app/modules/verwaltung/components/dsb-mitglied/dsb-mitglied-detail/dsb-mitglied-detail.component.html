@@ -22,7 +22,8 @@
                #dsbMitgliedVorname="ngModel"
                [(ngModel)]="currentMitglied.vorname"
                [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}"
+               data-cy="detail-vorname-feld">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.ERROR' | translate }}
@@ -47,7 +48,8 @@
                #dsbMitgliedNachname="ngModel"
                [(ngModel)]="currentMitglied.nachname"
                [class.is-invalid]="dsbMitgliedNachname.invalid && !dsbMitgliedNachname.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.PLACEHOLDER' | translate }}"
+               data-cy="detail-nachname-feld">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.ERROR' | translate }}
@@ -72,7 +74,8 @@
                #dsbMitgliedGeburtsdatum="ngModel"
                [(ngModel)]="currentMitglied.geburtsdatum"
                [class.is-invalid]="dsbMitgliedGeburtsdatum.invalid && !dsbMitgliedGeburtsdatum.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.PLACEHOLDER' | translate }}"
+               data-cy="detail-geburtsdatum-feld">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.ERROR' | translate }}
@@ -98,7 +101,8 @@
                #dsbMitgliedMitgliedsnummer="ngModel"
                [(ngModel)]="currentMitglied.mitgliedsnummer"
                [class.is-invalid]="dsbMitgliedMitgliedsnummer.invalid && !dsbMitgliedMitgliedsnummer.untouched"
-               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}"
+               data-cy="detail-mitgliedsnummer-feld">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.ERROR' | translate }}
@@ -118,7 +122,8 @@
                 id="dsbMitgliedNationalitaet"
                 name="dsbMitgliedNationalitaet"
                 #dsbMitgliedNationalitaet="ngModel"
-                [(ngModel)]="currentMitgliedNat">
+                [(ngModel)]="currentMitgliedNat"
+                data-cy="detail-nationalitaet-feld">
         <option [ngValue]="nationalitaet" *ngFor="let nationalitaet of nationen"> {{nationalitaet}}</option>
         </select>
         <div class="invalid-feedback">
@@ -177,14 +182,16 @@
                      [id]="'dsbMitgliedSaveButton'"
                      [disabled]="!dsbMitgliedForm.valid"
                      [loading]="saveLoading"
-                     (onClick)="onSave($event)">
+                     (onClick)="onSave($event)"
+                     data-cy="detail-save-button">
            {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
          </bla-button>
          <bla-button *ngIf="entityExists()"
                      [id]="'dsbMitgliedUpdateButton'"
                      [disabled]="!dsbMitgliedForm.valid"
                      [loading]="saveLoading"
-                     (onClick)="onUpdate($event)">
+                     (onClick)="onUpdate($event)"
+                     data-cy="detail-update-button">
            {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
          </bla-button>
 
