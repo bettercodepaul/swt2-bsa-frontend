@@ -83,7 +83,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   public loadingYears = true;
   public availableYears : SportjahrVeranstaltungDO[];
-  private currentYear: number;
+  private newestYear: number;
+
 
 
   constructor(private router: Router,
@@ -99,9 +100,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   ngOnInit() {
 
-    this.currentYear = new Date().getFullYear().valueOf();
 
-    this.findAvailableYears();
+
+
 
     this.route.params.subscribe((params) => {
 
@@ -131,8 +132,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         // -> normaler Aufruf der Webseite (ohne Zusaetze)
         // loadVeranstaltungen: damit die Tabelle Veranstaltungen angezeigt wird
         this.wettkampfIdEnthalten = false;
-        // Lade zuerst das aktuelle Jahr
-        this.loadVeranstaltungenByYear(this.currentYear.valueOf());
+        // Lade zuerst die anzuzeigenden Jahre
+        this.findAvailableYears();
+
         this.visible = false;
       }
     });
@@ -507,26 +509,30 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
   private loadVeranstaltungenYearsSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+
     this.loadingYears = false;
-    let oldest =this.currentYear;
     let counter = 1;
     if(response.payload != []){
     for(let elem of response.payload){
-      if (elem.sportjahr.valueOf() <= oldest){
-        oldest = elem.sportjahr.valueOf();
-      }}}
-
-    console.log("oldest Year: "+oldest);
-    for (let i = this.currentYear;i>=oldest;i--){
-      let t = new SportjahrVeranstaltungDO()
-      t.sportjahr = i;
+      let t = new SportjahrVeranstaltungDO();
+      t.sportjahr = elem.sportjahr.valueOf();
       t.id = counter;
       t.version = 1;
       counter++;
       this.availableYears.push(t);
-    }
+      }
+    this.availableYears.sort((a, b) => {
+      if ( a.sportjahr.valueOf() < b.sportjahr.valueOf()){
+        return 1;
+      }
+      if ( a.sportjahr.valueOf() > b.sportjahr.valueOf()){
+        return -1;
+      }});
+
     console.log('Bin in loadVeranstaltungenYearSuccess!');
-  }
+    //Lade die Veranstaltungen des neusten Jahres
+    this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+  }}
 
   // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
   private loadVeranstaltungenYearsFailure(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
@@ -534,4 +540,6 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     console.log('Bin in loadVeranstaltungenYearFailure');
 
   }
+
+
 }
