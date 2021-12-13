@@ -2,7 +2,10 @@
 
 <div class="layout-elements">
 
+
+
   <bla-col-layout>
+
   <div class="flexChild">
       <h3><a class="blackLink"
              routerLink="/Sportjahresplan">{{ 'SPORTJAHRESPLAN.TITEL.VERANSTALTUNG' | translate }}</a></h3>
@@ -16,12 +19,13 @@
 
         <bla-dropdown-menu (onSelect)="onSelectYear($event)"
                            [id]="'Veranstaltungen-dropdown-menu'"
-                           [items]="getAvailableYears()"
+                           [items]="availableYears"
                            [optionFieldSelector]="'sportjahr'"
                            [loading]="loadingYears"
                            [selectedItemId]='1'
-                           style="width: 50%;">
+                           style="width: 40%;">
         </bla-dropdown-menu>
+
 
         <bla-quicksearch-list (onSelect)="onSelect($event)"
                               [items]="veranstaltungen"
@@ -31,10 +35,13 @@
                               [optionFieldSelector]="'name'"
                               selectionListHeight="15em"
                               style="width: 40%; flex-grow: 0;">
-
         </bla-quicksearch-list>
+
       </table>
+
     </div>
+
+
     <div>
     <h3>
       Wettkampftage der Veranstaltung

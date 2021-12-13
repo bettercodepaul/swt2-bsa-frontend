@@ -184,7 +184,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     }
   }
 
-// backend-call to get the list of veranstaltungen of a certain year
+// backend-call um eine Liste der Veranstaltungen eines bestimmten Jahres zu ermitteln
   private loadVeranstaltungenByYear(year: number): void {
     this.veranstaltungen = [];
     this.selectedWettkampf = '';
@@ -496,9 +496,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     this.loadingMatch = false;
   }
 
+  // Ermittlung der anzuzeigenden Jahre
   private findAvailableYears() {
     this.availableYears = [];
-
     this.veranstaltungsDataProvider.findAllSportyearDestinct()
         .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
           this.loadVeranstaltungenYearsSuccess(response); })
@@ -514,14 +514,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     for(let elem of response.payload){
       if (elem.sportjahr.valueOf() <= oldest){
         oldest = elem.sportjahr.valueOf();
-      }
-      // let t = new SportjahrVeranstaltungDO();
-      // t.sportjahr = elem.sportjahr.valueOf();
-      // t.id = counter;
-      // t.version = 1;
-      // counter++;
-      // this.availableYears.push(t);
-    }}
+      }}}
 
     console.log("oldest Year: "+oldest);
     for (let i = this.currentYear;i>=oldest;i--){
@@ -540,8 +533,5 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     this.loadingYears = false;
     console.log('Bin in loadVeranstaltungenYearFailure');
 
-  }
-  public getAvailableYears(): SportjahrVeranstaltungDO[] {
-    return this.availableYears;
   }
 }
