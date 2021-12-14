@@ -44,7 +44,8 @@
                [(ngModel)]="currentCredentials.username"
                [class.is-invalid]="userUsername.invalid && !userUsername.untouched"
                pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
-               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}"
+               data-cy="username-input">
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.ERROR' | translate }}
         </div>
@@ -69,7 +70,8 @@
                #userPassword="ngModel"
                [(ngModel)]="currentCredentials.password"
                [class.is-invalid]="userPassword.invalid  && !userPassword.untouched"
-               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.PLACEHOLDER' | translate }}"
+               data-cy="password-input">
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.ERROR' | translate }}
         </div>
@@ -92,7 +94,8 @@
                #userVerifyPassword="ngModel"
                [(ngModel)]="verifyCredentials.password"
                [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
-               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}"
+               data-cy="verify-password-input">
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.ERROR' | translate }}
         </div>
@@ -130,7 +133,8 @@
           [id]="'userSaveButton'"
           [disabled]="!userNeuForm.valid"
           [loading]="saveLoading"
-          (onClick)="onSave($event)">
+          (onClick)="onSave($event)"
+          data-cy="user-submit-button">
           {{ 'MANAGEMENT.USER_NEU.FORM.SAVE' | translate }}
         </bla-button>
       </div>
