@@ -14,12 +14,16 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
 
   @Input() public config: OverviewDialogConfig;
   @Input() public rows: TableRow[];
+  @Input() public hidden: boolean = true;
+  @Input() public searchTerm: string;
+
 
 
   @Output() public onEditClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onViewClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onDeleteClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onAddClicked = new EventEmitter<VersionedDataObject>();
+  @Output() public onSearchClicked = new EventEmitter<string>();
 
   constructor(private currentUserService: CurrentUserService) {
     super(currentUserService);
@@ -43,6 +47,11 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   public onAdd(versionedDataObject: VersionedDataObject): void {
     this.onAddClicked.emit(versionedDataObject);
   }
+
+  public onSearch(searchTerm: string): void {
+    this.onSearchClicked.emit(searchTerm);
+  }
+
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     if (userPermissions === undefined) {
       return true;
