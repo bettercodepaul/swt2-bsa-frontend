@@ -3,13 +3,14 @@
 <div class="dialog-content">
 
   <!-- Heading-->
-  
+
   <section class="overview-dialog-header">
     <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
 
     <div class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
       <button class="btn btn-success"
-              routerLink="add">
+              routerLink="add"
+              data-cy="dsb-mitglied-add-button">
         <fa-icon icon="plus"></fa-icon>
         <span> Neu</span>
       </button>
