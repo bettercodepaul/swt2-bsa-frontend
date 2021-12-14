@@ -516,9 +516,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     for(let elem of response.payload){
       let t = new SportjahrVeranstaltungDO();
       t.sportjahr = elem.sportjahr.valueOf();
-      t.id = counter;
       t.version = 1;
-      counter++;
       this.availableYears.push(t);
       }
     this.availableYears.sort((a, b) => {
@@ -528,7 +526,10 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       if ( a.sportjahr.valueOf() > b.sportjahr.valueOf()){
         return -1;
       }});
-
+      for(let sportjahr of this.availableYears){
+        sportjahr.id = counter;
+        counter++;
+      }
     console.log('Bin in loadVeranstaltungenYearSuccess!');
     //Lade die Veranstaltungen des neusten Jahres
     this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
