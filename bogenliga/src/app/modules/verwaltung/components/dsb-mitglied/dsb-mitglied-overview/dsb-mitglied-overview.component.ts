@@ -29,6 +29,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
 
   public config = DSB_MITGLIED_OVERVIEW_CONFIG;
   public rows: TableRow[];
+  public searchTerm = 'searchTermMitglied';
 
   constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
               private router: Router,
@@ -38,7 +39,9 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
   }
 
   ngOnInit() {
-    this.loadTableRows();
+    this.loading = true;
+    if (!localStorage.getItem(this.searchTerm))
+      this.loadTableRows();
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
@@ -82,15 +85,19 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
 
   }
 
-  private loadTableRows() {
-    this.loading = true;
+  public findByName($event : string) {
+    this.dsbMitgliedDataProvider.findByName($event)
+        .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
+  }
 
+  private loadTableRows() {
     this.dsbMitgliedDataProvider.findAll()
         .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  private  navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
+  private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + versionedDataObject.id);
   }
 
