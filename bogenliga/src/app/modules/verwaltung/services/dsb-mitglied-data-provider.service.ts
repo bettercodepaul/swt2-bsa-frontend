@@ -12,7 +12,6 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/dsb-mitglied-mapper';
 import {DsbMitgliedDO} from '../types/dsb-mitglied-do.class';
-import {promise} from 'selenium-webdriver';
 
 @Injectable({
   providedIn: 'root'
@@ -101,6 +100,24 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
             } else {
               reject({result: RequestResult.FAILURE});
             }
+          });
+    });
+  }
+
+  public findByName(searchstring: string): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
+    //return promise
+    //sign in success -> resolve promise
+    //sign in failure -> reject promise with result
+    return (searchstring === "" || searchstring === null)
+      ? this.findAll()
+      : new Promise( (resolve, reject) => {
+          this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('namesearch/' + searchstring).build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
+            (error.status === 0)
+              ? reject({result: RequestResult.CONNECTION_PROBLEM})
+              : reject({result: RequestResult.FAILURE});
           });
     });
   }
