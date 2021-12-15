@@ -51,5 +51,5 @@ export const VERANSTALTUNG_OVERVIEW_TABLE_CONFIG: OverviewDialogConfig = {
     editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
   },
-  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN, UserPermission.CAN_CREATE_STAMMDATEN_LIGALEITER]
 };
