@@ -29,6 +29,7 @@ import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.
 import {WettkampfComponent} from '@wettkampf/components';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 
 
@@ -272,15 +273,15 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   // when a Ligatabelle gets selected from the list --> ID for Buttons
 
-  public onView($event: WettkampfDO): void {
+  public onView($event: VersionedDataObject): void {
     console.log('DataOBJ', $event);
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
-
+      let wettkampfDO = <WettkampfDO>$event;
       // is used to get the title for the currently selected Wettkampf @wettkampf.component.html
       document.getElementById('WettkampfTitle').innerText = this.currentVeranstaltungName +
-        ' - ' + $event.wettkampfTag + '. Wettkampftag';
+        ' - ' + wettkampfDO.wettkampfTag + '. Wettkampftag';
 
       this.visible = true;
       this.tableContentMatch = [];
@@ -330,8 +331,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
    * Splits given Location at every comma and passes it to Google Maps
    * @param $event
    */
-  public onMap($event: WettkampfDO): void {
-    onMapService($event);
+  public onMap($event: VersionedDataObject): void {
+    let wettkampfDO = <WettkampfDO>$event;
+    onMapService(wettkampfDO);
   }
 
   // when a Wettkampf gets selected from the list --> ID for Buttons
@@ -401,9 +403,10 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   // wenn "Edit" an einem Match geklickt wird
   // Ã¶ffnen wir in einem neuen Tab die Datenerfassung /Schusszettel fÃ¼r die Begegnung
 
-  public onEdit($event: MatchDOExt): void {
+  public onEdit($event: VersionedDataObject): void {
+    let matchDoExt = <MatchDOExt>$event;
     if ($event.id >= 0) {
-      this.selectedMatchId = $event.id;
+      this.selectedMatchId = matchDoExt.id;
       this.matchProvider.pair(this.selectedMatchId)
           .then((data) => {
             if (data.payload.length === 2) {
