@@ -484,33 +484,37 @@ describe('Admin User tests', function() {
    * The test checks if it's possible to delete a team successfully
    */
   it('Testfall 21: Vereins-Mannschaft löschen', function () {
-    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
-    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.url().should('include', '#/verwaltung')
+    cy.get('[data-cy=verwaltung-vereine-button]').click()
+    cy.url().should('include', '#/verwaltung/vereine')
     cy.wait(1000)
-    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').last().click()
+    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(500)
-    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
+    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.wait(500)
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
     cy.wait(500)
-    cy.get('#undefined > tbody').should('not.contain.text', '76')
+    cy.get('tbody').should('not.contain.text', '76')
   })
 
   /**
    * This test checks if it's possible to delete a club successfully
    */
   it('Testfall 22: Einen Verein löschen', function () {
-    cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link > .ng-fa-icon').click()
-    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(4) > .card-body > .btn').click()
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.url().should('include', '#/verwaltung')
+    cy.get('[data-cy=verwaltung-vereine-button]').click()
+    cy.url().should('include', '#/verwaltung/vereine')
     cy.wait(1000)
-    cy.get('#undefined > tbody').should('contain.text', 'CypressTest')
+    cy.get('tbody').should('contain.text', 'CypressTest')
     cy.wait(200)
-    cy.get('#undefined > tbody').should('contain.text', '1111111111')
-    cy.get('tr').find('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
+    cy.get('tbody').should('contain.text', '1111111111')
+    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
-    cy.get('#undefined > tbody').should('not.contain.text', 'CypressTest')
+    cy.get('tbody').should('not.contain.text', 'CypressTest')
     cy.wait(200)
-    cy.get('#undefined > tbody').should('not.contain.text', '1111111111')
+    cy.get('tbody').should('not.contain.text', '1111111111')
   })
 
   /**
