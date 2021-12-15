@@ -14,7 +14,8 @@
       <h5 class="card-title">{{ card.labelKey | translate }}</h5>
       <p class="card-text">{{ card.descriptionKey | translate }}</p>
       <button class="btn btn-primary"
-              [routerLink]="getLink(card.route,card.detailType)">{{ card.labelKey | translate }}
+              [routerLink]="getLink(card.route,card.detailType)"
+              [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
       </button>
     </div>
   </div>

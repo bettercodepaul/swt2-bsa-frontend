@@ -28,6 +28,9 @@ import {MatchDO} from '@verwaltung/types/match-do.class';
 import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
 import {WettkampfComponent} from '@wettkampf/components';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+
 
 
 @Component({
@@ -79,6 +82,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   public matches: Array<MatchDO[]> = [];
   private wettkampfComponent: WettkampfComponent;
 
+  public loadingYears = true;
+  public availableYears : SportjahrVeranstaltungDO[];
+  private newestYear: number;
 
 
 
@@ -94,6 +100,10 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   ngOnInit() {
+
+
+
+
 
     this.route.params.subscribe((params) => {
 
@@ -123,12 +133,17 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         // -> normaler Aufruf der Webseite (ohne Zusaetze)
         // loadVeranstaltungen: damit die Tabelle Veranstaltungen angezeigt wird
         this.wettkampfIdEnthalten = false;
-        this.loadVeranstaltungen();
+        // Lade zuerst die anzuzeigenden Jahre
+        this.findAvailableYears();
+
         this.visible = false;
       }
     });
 
   }
+
+
+
 
 
   // WettkampfId im Pfad enthalten -> Ermittlung des WettkampfDO:
@@ -170,6 +185,16 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       // als nÃ¤chstes mÃ¼ssen alle Veranstaltungen fÃ¼r die Tabelle "Veranstaltung" und die aktuelle Veranstaltung fÃ¼r die Ausgabe darunter ermittelt werden
       this.loadVeranstaltungen();
     }
+  }
+
+// backend-call um eine Liste der Veranstaltungen eines bestimmten Jahres zu ermitteln
+  private loadVeranstaltungenByYear(year: number): void {
+    this.veranstaltungen = [];
+    this.selectedWettkampf = '';
+    this.selectedWettkampfId = null;
+    this.veranstaltungsDataProvider.findBySportyear(year)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response); })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
   }
 
   // backend-call to get the list of veranstaltungen
@@ -220,6 +245,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     }
   }
 
+  public onSelectYear($event: SportjahrVeranstaltungDO): void {
+    this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response); })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
+  }
 
   // when a Veranstaltung gets selected from the list
   // load LigaTabelle
@@ -243,15 +273,15 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   // when a Ligatabelle gets selected from the list --> ID for Buttons
 
-  public onView($event: WettkampfDO): void {
+  public onView($event: VersionedDataObject): void {
     console.log('DataOBJ', $event);
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
-
+      let wettkampfDO = <WettkampfDO>$event;
       // is used to get the title for the currently selected Wettkampf @wettkampf.component.html
       document.getElementById('WettkampfTitle').innerText = this.currentVeranstaltungName +
-        ' - ' + $event.wettkampfTag + '. Wettkampftag';
+        ' - ' + wettkampfDO.wettkampfTag + '. Wettkampftag';
 
       this.visible = true;
       this.tableContentMatch = [];
@@ -301,8 +331,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
    * Splits given Location at every comma and passes it to Google Maps
    * @param $event
    */
-  public onMap($event: WettkampfDO): void {
-    onMapService($event);
+  public onMap($event: VersionedDataObject): void {
+    let wettkampfDO = <WettkampfDO>$event;
+    onMapService(wettkampfDO);
   }
 
   // when a Wettkampf gets selected from the list --> ID for Buttons
@@ -372,9 +403,10 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   // wenn "Edit" an einem Match geklickt wird
   // Ã¶ffnen wir in einem neuen Tab die Datenerfassung /Schusszettel fÃ¼r die Begegnung
 
-  public onEdit($event: MatchDOExt): void {
+  public onEdit($event: VersionedDataObject): void {
+    let matchDoExt = <MatchDOExt>$event;
     if ($event.id >= 0) {
-      this.selectedMatchId = $event.id;
+      this.selectedMatchId = matchDoExt.id;
       this.matchProvider.pair(this.selectedMatchId)
           .then((data) => {
             if (data.payload.length === 2) {
@@ -468,4 +500,50 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     this.matchRows = toTableRows(this.tableContentMatch);
     this.loadingMatch = false;
   }
+
+  // Ermittlung der anzuzeigenden Jahre
+  private findAvailableYears() {
+    this.availableYears = [];
+    this.veranstaltungsDataProvider.findAllSportyearDestinct()
+        .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
+          this.loadVeranstaltungenYearsSuccess(response); })
+        .catch((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {this.loadVeranstaltungenYearsFailure(response); });
+  }
+
+  // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
+  private loadVeranstaltungenYearsSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+
+    this.loadingYears = false;
+    let counter = 1;
+    if(response.payload != []){
+    for(let elem of response.payload){
+      let t = new SportjahrVeranstaltungDO();
+      t.sportjahr = elem.sportjahr.valueOf();
+      t.version = 1;
+      this.availableYears.push(t);
+      }
+    this.availableYears.sort((a, b) => {
+      if ( a.sportjahr.valueOf() < b.sportjahr.valueOf()){
+        return 1;
+      }
+      if ( a.sportjahr.valueOf() > b.sportjahr.valueOf()){
+        return -1;
+      }});
+      for(let sportjahr of this.availableYears){
+        sportjahr.id = counter;
+        counter++;
+      }
+    console.log('Bin in loadVeranstaltungenYearSuccess!');
+    //Lade die Veranstaltungen des neusten Jahres
+    this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+  }}
+
+  // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
+  private loadVeranstaltungenYearsFailure(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+    this.loadingYears = false;
+    console.log('Bin in loadVeranstaltungenYearFailure');
+
+  }
+
+
 }
