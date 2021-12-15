@@ -38,7 +38,7 @@
       (click)="hasActions() == true && onRowClicked(row.payload)"
       [style.cursor]="!hasActions() ? 'pointer' : 'default'"
       [class.disabled]="hasLoadingActions(row)"
-      data-cy="test"> <!-- Click event is only active if table has no action items -->
+      > <!-- Click event is only active if table has no action items -->
 
     <!-- data columns -->
     <td *ngFor="let column of config.columns"
