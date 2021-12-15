@@ -11,21 +11,24 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.DESCRIPTION',
         icon:           'users',
         route:          'dsbmitglieder',
-        permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER]
+        permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER],
+        datacy:         'verwaltung-dsb-mitglieder-button'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.DESCRIPTION',
         icon:           'address-card',
         route:          'user',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
+        datacy:         'verwaltung-user-button'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
         icon:           'wrench',
         route:          'klassen',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
+        datacy:         'verwaltung-klassen-button'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
@@ -33,21 +36,24 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'sitemap',
         route:          'vereine',
         detailType:     'Verein',
-        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN]
+        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN],
+        datacy:         'verwaltung-vereine-button'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
+        datacy:         'verwaltung-liga-button'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.DESCRIPTION',
         icon:           'sitemap',
         route:          'regionen',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
+        datacy:         'verwaltung-regionen-button'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
@@ -55,14 +61,16 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'calendar-alt',
         route:          'veranstaltung',
         permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
-        detailType: 'Veranstaltungen',
+        detailType:     'Veranstaltungen',
+        datacy:         'verwaltung-veranstaltung-button'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.DESCRIPTION',
         icon:           'wrench',
         route:          'einstellungen',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN]
+        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        datacy:         'verwaltung-einstellungen-button'
       },
       // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
       // because the exactly function of t^he site "Sportjahre" is still unclear.

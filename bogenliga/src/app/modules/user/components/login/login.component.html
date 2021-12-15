@@ -130,7 +130,8 @@
           <p>Username: admin@bogenliga.de <br>Password: admin<br>Rolle: ADMIN<br>
             <bla-button [buttonSize]="ButtonSize.SMALL"
                         [value]="testAdminUser"
-                        (onClick)="onAutoLogin($event)">Login als Admin
+                        (onClick)="onAutoLogin($event)"
+                        data-cy="login-als-admin-button">Login als Admin
             </bla-button>
           </p>
           <p>Username: moderator@bogenliga.de <br>Password: moderator<br>Rolle: MODERATOR<br>
