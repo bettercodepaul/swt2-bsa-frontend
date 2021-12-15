@@ -22,7 +22,8 @@
                #vereinName="ngModel"
                [(ngModel)]="currentVerein.name"
                [class.is-invalid]="vereinName.invalid && !vereinName.untouched"
-               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.PLACEHOLDER' | translate }}"
+               data-cy="vereine-vereinsname">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.ERROR' | translate }}
@@ -47,7 +48,8 @@
                #vereinIdentifier="ngModel"
                [(ngModel)]="currentVerein.identifier"
                [class.is-invalid]="vereinIdentifier.invalid && !vereinIdentifier.untouched"
-               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.PLACEHOLDER' | translate }}"
+               data-cy="vereine-vereinsnummer">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.ERROR' | translate }}
@@ -91,7 +93,8 @@
                #vereinWebsite="ngModel"
                [(ngModel)]="currentVerein.website"
                [class.is-invalid]="vereinWebsite.invalid && !vereinWebsite.untouched"
-               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.PLACEHOLDER' | translate }}"
+               data-cy="vereine-vereinswebsite">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.ERROR' | translate }}
@@ -113,7 +116,8 @@
                   #vereinDescription="ngModel"
                   [(ngModel)]="currentVerein.description"
                   [class.is-invalid]="vereinDescription.invalid && !vereinDescription.untouched"
-                  placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.PLACEHOLDER' | translate }}">
+                  placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.PLACEHOLDER' | translate }}"
+                  data-cy="vereine-vereinsbeschreibung">
         </textarea>
 
         <div class="invalid-feedback">
@@ -178,14 +182,16 @@
                     [id]="'vereinSaveButton'"
                     [disabled]="!vereineForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onSave($event)">
+                    (onClick)="onSave($event)"
+                    data-cy="vereine-add-button">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'vereinUpdateButton'"
                     [disabled]="!vereineForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
+                    (onClick)="onUpdate($event)"
+                    data-cy="vereine-update-button">
           {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
