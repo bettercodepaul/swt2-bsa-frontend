@@ -64,9 +64,9 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
     super();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loading = true;
-    this.loadVereine();
+    await this.loadVereine();
     this.notificationService.discardNotification();
 
     this.httpService.get('./assets/i18n/Nationalitaeten.json').subscribe(
@@ -289,6 +289,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
     this.vereine.forEach((verein) => {
       if (verein.id === this.currentMitglied.vereinsId) {
         this.currentVerein = verein;
+
       }
     });
   }
@@ -342,14 +343,14 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
     this.notificationService.showNotification(notification);
   }
-  private loadVereine(): void {
+  private loadVereine(): Promise<void> {
     this.vereine = [];
-    this.vereinDataProvider.findAll()
+    return this.vereinDataProvider.findAll()
         .then((response: BogenligaResponse<VereinDTO[]>) => {
           if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER)) {
             response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.id);
           }
-          this.currentVerein = response.payload[0];
+          //this.currentVerein = response.payload[0];
           this.vereine = response.payload;
           this.loadingVereine = false; this.vereineLoaded = true; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
