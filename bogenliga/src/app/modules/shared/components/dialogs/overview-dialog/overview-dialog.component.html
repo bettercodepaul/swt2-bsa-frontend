@@ -6,7 +6,11 @@
 
   <section class="overview-dialog-header">
     <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
+    <bla-quicksearch  (onSearchEntry)="onSearch($event)"
+                      [hidden]="hidden"
+                      [sessionSearch]="searchTerm">
 
+    </bla-quicksearch>
     <div class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
       <button class="btn btn-success"
               routerLink="add"
