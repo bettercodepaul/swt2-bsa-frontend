@@ -55,10 +55,20 @@ export class MatchMapperExt {
           }
         }
       }
+      /**
+       * If there are less than 5 Passe in a Schuetzen-Array
+       * the amount will be added as empty Passe
+       * e.g. 5 - 4(schuetzenInitialLength) = 1 --> 1 Passe will be added to the Array
+       * e.g. 5 - 3(schuetzenInitialLength) = 2 --> 2 Passe will be added to the Array
+       * and so on
+       */
       for (let i = 0; i < 3; i++) {
         const schuetzenInitialLength = schuetzen[i].length;
+        let counter = schuetzenInitialLength;
         for (let j = 0; j < (5 - schuetzenInitialLength); j++) {
-          schuetzen[i].push(new PasseDO(null, payload.id, payload.mannschaftId, payload.wettkampfId, payload.nr, j + 1));
+
+          schuetzen[i].push(new PasseDO(null, payload.id, payload.mannschaftId, payload.wettkampfId, payload.nr, counter));
+          ++counter;
         }
         schuetzen[i] = schuetzen[i].sort((p1, p2) => p1.lfdNr - p2.lfdNr);
       }
