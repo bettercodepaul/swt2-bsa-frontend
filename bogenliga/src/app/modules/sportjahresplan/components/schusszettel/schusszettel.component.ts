@@ -43,9 +43,6 @@ const NOTIFACTION_SCHUETZE = 'schuetze';
 })
 export class SchusszettelComponent implements OnInit {
 
-  tempMatch: MatchDOExt;
-  tempMannschaft1: MatchDOExt;
-  tempMannschaft2: MatchDOExt;
   match1: MatchDOExt;
   match2: MatchDOExt;
   dirtyFlag: boolean;
@@ -142,71 +139,33 @@ export class SchusszettelComponent implements OnInit {
         this.schusszettelService.findMatches(match1id, match2id)
             .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
 
-              this.tempMannschaft1 = data.payload[0];
-              this.tempMannschaft2 = data.payload[1];
-              this.tempMatch = data.payload[0];
+              this.match1 = data.payload[0];
+              this.match2 = data.payload[1];
 
-              //this.initSchuetzenMatch1();
-              //this.initSchuetzenMatch2();
-
-              console.log('tempMatch', this.tempMatch);
-              //console.log('M1', this.match1);
-              //console.log('M2', this.match2);
-
-
-              /*
-              this.match1.id = this.tempMannschaft1.id;
-              this.match1.mannschaftId = this.tempMannschaft1.mannschaftId;
-              this.match1.mannschaftName = this.tempMannschaft1.mannschaftName;
-              this.match1.wettkampfTag = this.tempMannschaft1.wettkampfTag;
-              this.match1.wettkampfTyp = this.tempMannschaft1.wettkampfTyp;
-              this.match1.matchpunkte = this.tempMannschaft1.matchpunkte;
-
-              this.match2.id = this.tempMannschaft2.id;
-              this.match2.mannschaftId = this.tempMannschaft2.mannschaftId;
-              this.match2.mannschaftName = this.tempMannschaft2.mannschaftName;
-              this.match2.wettkampfTag = this.tempMannschaft2.wettkampfTag;
-              this.match2.wettkampfTyp = this.tempMannschaft2.wettkampfTyp;
-              this.match2.matchpunkte = this.tempMannschaft2.matchpunkte;
-
-               this.initSchuetzenMatch1();
-               this.initSchuetzenMatch2();
-
+              /**
+               * Limits the Schützen of match 1 to 3 and each passe-array
+               * for each Schütze to 5
+               * Only a maximum of 15 passe for each match will be possible
                */
 
-              //console.log('Match Temp1', this.tempMannschaft1);
-              //console.log('Match Temp2', this.tempMannschaft2);
+              for( let i= 0; i < 3; i++) {
+                if(this.match1.schuetzen[i].length > 5) {
+                  for(let j = this.match1.schuetzen[i].length; j > 5; j--) {
+                    this.match1.schuetzen[i].pop();
+                  }
+                }
+              }
 
+              /**
+               * Limits the Schützen of match 2 to 3 and each passe-array
+               * for each Schütze to 5
+               * Only a maximum of 15 passe for each match will be possible
+               */
 
-              //console.log('Match Pos1', this.match1);
-              //console.log('Match Pos12', this.match2);
-
-              for(let i = 0; i <this.tempMatch.schuetzen.length; i++) {
-
-                let tempM1 = 0;
-                let tempM2 = 0;
-                console.log('Passe an Stelle ${i}', this.match1.schuetzen[i]);
-                for(let j= 0; j<this.tempMatch.schuetzen[i].length; j++) {
-                  if(this.tempMannschaft1.mannschaftId == this.tempMatch.schuetzen[i][j].mannschaftId && tempM1 <5) {
-
-                    console.log('insert M1',this.tempMatch.schuetzen[i][j], 'tempM1', tempM1);
-
-                    this.match1.schuetzen[i][tempM1] = this.tempMatch.schuetzen[i][j];
-                    ++tempM1;
-
-                    console.log('M1',this.match1.schuetzen[i][tempM1-1], 'tempM1', tempM1);
-
-                  } else if(this.tempMannschaft2.mannschaftId == this.tempMatch.schuetzen[i][j].mannschaftId && tempM2 < 5) {
-                    //console.log('Insert M2', this.tempMatch.schuetzen[i][j], 'TempM2', tempM2);
-                    //console.log('Insert M2', this.match2.schuetzen, 'TempM2', tempM2);
-                    //console.log('Insert M2', this.match2.schuetzen[i], 'TempM2', tempM2);
-
-                    this.match2.schuetzen[i][tempM2] = this.tempMatch.schuetzen[i][j];
-                    ++tempM2;
-
-                    //console.log('M2', this.match2.schuetzen[i][tempM2-1],'TempM2', tempM2);
-                  } else {
-                    console.log('not a Memeber of M1 and M2', this.tempMatch.schuetzen[i][j]);
+              for( let i= 0; i < 3; i++) {
+                if(this.match2.schuetzen[i].length > 5) {
+                  for(let j = this.match2.schuetzen[i].length; j > 5; j--) {
+                    this.match2.schuetzen[i].pop();
                   }
                 }
               }
