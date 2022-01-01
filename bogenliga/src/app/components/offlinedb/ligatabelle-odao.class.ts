@@ -2,9 +2,11 @@
  * the ligatabelle table. We can have methods on it that
  * we could call on retrieved database objects.
  */
-import {ILigatabelle} from './offlinedb.component';
 
-export class OfflineligatabelleClass implements ILigatabelle {
+import {Oligatabelle} from './types/oligatabelle.interface';
+import {OfflinedbComponent} from './offlinedb.component';
+
+export class LigatabelleOdaoClass implements Oligatabelle {
   id?: number; // Primary Key autoincrement
   veranstaltungId: number; // technischer Schüssel der Veranstaltung (Liga im Jahr)
   veranstaltungName: string; // Bezeichnung der Veranstaltung
@@ -19,12 +21,15 @@ export class OfflineligatabelleClass implements ILigatabelle {
   satzpktDifferenz: number; // akt. Stand der Satzpunktedifferenz der Mannschaft vor Wettkampfbeginn
   sortierung: number; // Sortierungskennzeichen zu Liga.Start
   tabellenplatz: number; // Tabellenplatz der Mannschaft vor Wettkampfbeginn
-  ligaranking: ILigatabelle[]; // hier werden die Einträge aus der Tabelle als Feld bereitgestellt
+  ligaranking: Oligatabelle[]; // hier werden die Einträge aus der Tabelle als Feld bereitgestellt
+  db: OfflinedbComponent;
 
-  constructor(
-    veranstaltungId: number, veranstaltungName: string, wettkampfId: number, wettkampfTag: number,
-    mannschaftId: number, mannschaftName: string, matchpkt: number, matchpktGegen: number, satzpkt: number,
-    satzpktGegen: number, satzpktDifferenz: number, sortierung: number, tabellenplatz: number, id?: number) {
+  constructor( db: OfflinedbComponent, veranstaltungId: number,
+               veranstaltungName: string, wettkampfId: number, wettkampfTag: number,
+               mannschaftId: number, mannschaftName: string, matchpkt: number,
+               matchpktGegen: number, satzpkt: number, satzpktGegen: number,
+               satzpktDifferenz: number, sortierung: number, tabellenplatz: number, id?: number) {
+    this.db = db;
     this.veranstaltungId = veranstaltungId;
     this.veranstaltungName = veranstaltungName;
     this.wettkampfId = wettkampfId;
@@ -42,36 +47,7 @@ export class OfflineligatabelleClass implements ILigatabelle {
   }
 
   loadLigatabelle() {
-    return Promise.all()
-      .then(x => this);
+    const ligaranking = this.db.ligatabelle.toArray();
   }
 
-  save() {
-    return db.transaction('rw', db.contacts, db.emails, db.phones, () => {
-      return Promise.all(
-        // Save existing arrays
-        Promise.all(this.emails.map(email => db.emails.put(email))),
-        Promise.all(this.phones.map(phone => db.phones.put(phone)))
-      )
-        .then(results => {
-          // Remove items from DB that is was not saved here:
-          var emailIds = results[0], // array of resulting primary keys
-            phoneIds = results[1]; // array of resulting primary keys
-
-          db.emails.where('contactId').equals(this.id)
-            .and(email => emailIds.indexOf(email.id) === -1)
-            .delete();
-
-          db.phones.where('contactId').equals(this.id)
-            .and(phone => phoneIds.indexOf(phone.id) === -1)
-            .delete();
-
-          // At last, save our own properties.
-          // (Must not do put(this) because we would get
-          // reduntant emails/phones arrays saved into db)
-          db.contacts.put(new Contact(this.first, this.last, this.id))
-            .then(id => this.id = id);
-        });
-    });
-  }
 }

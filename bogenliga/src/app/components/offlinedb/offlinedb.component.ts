@@ -8,6 +8,7 @@ import {LigasyncmannschaftsmitgliedDtoClass} from './types/datatransfer/ligasync
 import {LigasyncmatchDtoClass} from './types/datatransfer/ligasyncmatch-dto.class';
 import {LigasyncligatabelleDtoClass} from './types/datatransfer/ligasyncligatabelle-dto.class';
 import {Store} from '@ngrx/store';
+import {Oligatabelle} from './types/oligatabelle.interface';
 
 
 export class OfflinedbComponent extends Dexie {
@@ -15,7 +16,7 @@ export class OfflinedbComponent extends Dexie {
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public inProd = environment.production;
 
-  ligatabelle!: Dexie.Table<ILigatabelle, number>;
+  ligatabelle!: Dexie.Table<Oligatabelle, number>;
   match!: Dexie.Table<LigasyncmatchDtoClass, number>;
   passe!: Dexie.Table<LigasyncpasseDtoClass, number>;
   mannschaftsmitglieder!: Dexie.Table<LigasyncmannschaftsmitgliedDtoClass, number>;
@@ -27,21 +28,4 @@ export class OfflinedbComponent extends Dexie {
         'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz'
     });
   }
-}
-
-export interface ILigatabelle {
-  id?: number; // Primary Key autoincrement
-  veranstaltungId: number; // technischer Schüssel der Veranstaltung (Liga im Jahr)
-  veranstaltungName: string; // Bezeichnung der Veranstaltung
-  wettkampfId: number; // technischer Schlüssel des aktuellen Wettkampftages
-  wettkampfTag: number; // Nummer des Wettkampftages i.d.R. <= 4
-  mannschaftId: number; // Mannschaft der Liga
-  mannschaftName: string; // Bezeichnung der Mannschaft i.D.R. Vereinsname + ein Nummer
-  matchpkt: number; // akt. Stand der Matchpunkte der Mannschaft vor Wettkampfbeginn
-  matchpktGegen: number; // akt. Stand der Gegen-Matchpunkte der Mannschaft vor Wettkampfbeginn
-  satzpkt: number; // akt. Stand der Satzpunkte der Mannschaft vor Wettkampfbeginn
-  satzpktGegen: number; // akt. Stand der Gegen-Satzpunkte der Mannschaft vor Wettkampfbeginn
-  satzpktDifferenz: number; // akt. Stand der Satzpunktedifferenz der Mannschaft vor Wettkampfbeginn
-  sortierung: number; // Sortierungskennzeichen zu Liga.Start
-  tabellenplatz: number; // Tabellenplatz der Mannschaft vor Wettkampfbeginn
 }
