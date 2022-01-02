@@ -8,22 +8,41 @@ export function toDO(ligasyncligatabelleDTO: LigasyncligatabelleDtoClass): Oliga
 
   const oligatabelle = new Oligatabelle();
 
-  oligatabelle.id = null;
-  oligatabelle.version = 1;
+  oligatabelle.id = ligasyncligatabelleDTO.id;
+  oligatabelle.version = ligasyncligatabelleDTO.version;
 
   oligatabelle.veranstaltungId = ligasyncligatabelleDTO.veranstaltungId;
-  TODO.. weiter machen
-  veranstaltungName: string; // Bezeichnung der Veranstaltung
-  wettkampfId: number; // technischer Schlüssel des aktuellen Wettkampftages
-  wettkampfTag: number; // Nummer des Wettkampftages i.d.R. <= 4
-  mannschaftId: number; // Mannschaft der Liga
-  mannschaftName: string; // Bezeichnung der Mannschaft i.D.R. Vereinsname + ein Nummer
-  matchpkt: number; // akt. Stand der Matchpunkte der Mannschaft vor Wettkampfbeginn
-  matchpktGegen: number; // akt. Stand der Gegen-Matchpunkte der Mannschaft vor Wettkampfbeginn
-  satzpkt: number; // akt. Stand der Satzpunkte der Mannschaft vor Wettkampfbeginn
-  satzpktGegen: number; // akt. Stand der Gegen-Satzpunkte der Mannschaft vor Wettkampfbeginn
-  satzpktDifferenz: number; // akt. Stand der Satzpunktedifferenz der Mannschaft vor Wettkampfbeginn
-  sortierung: number; // Sortierungskennzeichen zu Liga.Start
-  tabellenplatz: number; // Tabellenplatz der Mannschaft vor Wettkampfbeginn
+  oligatabelle.veranstaltungName = ligasyncligatabelleDTO.veranstaltungName;
+  oligatabelle.wettkampfId = ligasyncligatabelleDTO.wettkampfId;
+  oligatabelle.wettkampfTag = ligasyncligatabelleDTO.wettkampfTag;
+  oligatabelle.mannschaftId = ligasyncligatabelleDTO.mannschaftId;
+  oligatabelle.mannschaftName = ligasyncligatabelleDTO.mannschaftName;
+  oligatabelle.matchpkt = ligasyncligatabelleDTO.matchpkt;
+  oligatabelle.matchpktGegen = ligasyncligatabelleDTO.matchpktGegen;
+  oligatabelle.satzpkt = ligasyncligatabelleDTO.satzpkt;
+  oligatabelle.satzpktGegen = ligasyncligatabelleDTO.satzpktGegen;
+  oligatabelle.satzpktDifferenz = ligasyncligatabelleDTO.satzpktDifferenz;
+  oligatabelle.sortierung = ligasyncligatabelleDTO.sortierung;
+  oligatabelle.tabellenplatz = ligasyncligatabelleDTO.tabellenplatz;
 
+  return oligatabelle;
+}
+
+export function toDOArray(ligasyncligatabelleDTO: LigasyncligatabelleDtoClass[]): Oligatabelle[] {
+  const list: Oligatabelle[] = [];
+  ligasyncligatabelleDTO.forEach((single) => list.push(toDO(single)));
+  return list;
+}
+
+export function fromPayload(payload: VersionedDataTransferObject): Oligatabelle {
+
+  const ligasyncligatabelleDTO = LigasyncligatabelleDtoClass.copyFrom(payload);
+  return toDO(ligasyncligatabelleDTO);
+}
+
+
+export function fromPayloadOligatabelleArray(payload: VersionedDataTransferObject[]): Oligatabelle[] {
+  const list: Oligatabelle[] = [];
+  payload.forEach((single) => list.push(fromPayload(single)));
+  return list;
 }

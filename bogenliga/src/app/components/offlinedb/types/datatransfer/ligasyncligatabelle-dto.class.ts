@@ -1,6 +1,9 @@
 import {DataTransferObject} from '@shared/data-provider';
 
 export class LigasyncligatabelleDtoClass implements DataTransferObject {
+  id: number;
+  version: number;
+
   veranstaltungId: number;
   veranstaltungName: string;
   wettkampfId: number;
@@ -16,6 +19,8 @@ export class LigasyncligatabelleDtoClass implements DataTransferObject {
   tabellenplatz: number;
 
   static copyFrom(optional: {
+    id?: number,
+    version?: number,
     veranstaltungId?: number,
     veranstaltungName?: string,
     wettkampfId?: number,
@@ -31,6 +36,12 @@ export class LigasyncligatabelleDtoClass implements DataTransferObject {
     tabellenplatz?: number,
   } = {}): LigasyncligatabelleDtoClass {
     const copy = new LigasyncligatabelleDtoClass();
+    if (optional.id >= 0) {
+      copy.id = optional.id;
+    } else {
+      copy.id = null;
+    }
+    copy.version = optional.version || 1;
     copy.veranstaltungId = optional.veranstaltungId || null;
     copy.veranstaltungName = optional.veranstaltungName || null;
     copy.wettkampfId = optional.wettkampfId || null;
