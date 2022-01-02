@@ -7,7 +7,8 @@ import {Oligatabelle} from './types/oligatabelle.interface';
 import {OfflinedbComponent} from './offlinedb.component';
 
 export class LigatabelleOdaoClass implements Oligatabelle {
-  id?: number; // Primary Key autoincrement
+  id: number; // Primary Key autoincrement
+  version: number;
   veranstaltungId: number; // technischer Schüssel der Veranstaltung (Liga im Jahr)
   veranstaltungName: string; // Bezeichnung der Veranstaltung
   wettkampfId: number; // technischer Schlüssel des aktuellen Wettkampftages
