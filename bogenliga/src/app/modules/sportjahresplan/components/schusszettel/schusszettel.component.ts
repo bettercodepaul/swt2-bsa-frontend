@@ -148,27 +148,46 @@ export class SchusszettelComponent implements OnInit {
                * Only a maximum of 15 passe for each match will be possible
                */
 
-              for( let i= 0; i < 3; i++) {
-                if(this.match1.schuetzen[i].length > 5) {
-                  for(let j = this.match1.schuetzen[i].length; j > 5; j--) {
-                    this.match1.schuetzen[i].pop();
+              if(this.match1.schuetzen.length != 0) {
+
+                if (this.match1.schuetzen.length > 3) {
+                  for (let i = this.match1.schuetzen.length; i > 3; i--) {
+                    this.match1.schuetzen.pop();
+                  }
+                }
+
+                for (let i = 0; i < 3; i++) {
+                  if (this.match1.schuetzen[i].length > 5 && this.match1.schuetzen[i].length != 0) {
+                    for (let j = this.match1.schuetzen[i].length; j > 5; j--) {
+                      this.match1.schuetzen[i].pop();
+                    }
+                  }
+                }
+              }
+                /**
+                 * Limits the Schützen of match 2 to 3 and each passe-array
+                 * for each Schütze to 5
+                 * Only a maximum of 15 passe for each match will be possible
+                 */
+              if(this.match2.schuetzen.length != 0){
+
+                if(this.match2.schuetzen.length > 3){
+                  for(let i=this.match2.schuetzen.length; i>3; i--){
+                    this.match2.schuetzen.pop();
+                  }
+                }
+
+                for( let i= 0; i < 3; i++) {
+                  if(this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length != 0) {
+                    for(let j = this.match2.schuetzen[i].length; j > 5; j--) {
+                      this.match2.schuetzen[i].pop();
+                    }
                   }
                 }
               }
 
-              /**
-               * Limits the Schützen of match 2 to 3 and each passe-array
-               * for each Schütze to 5
-               * Only a maximum of 15 passe for each match will be possible
-               */
 
-              for( let i= 0; i < 3; i++) {
-                if(this.match2.schuetzen[i].length > 5) {
-                  for(let j = this.match2.schuetzen[i].length; j > 5; j--) {
-                    this.match2.schuetzen[i].pop();
-                  }
-                }
-              }
+
 
               console.log('match1', this.match1);
               console.log('match2', this.match2);
@@ -212,12 +231,13 @@ export class SchusszettelComponent implements OnInit {
 
       }
     });
+    /*
     this.getAllMannschaften();
     this.getAllVerein();
     this.getAllPasse();
     this.getAllWettkaempfe();
     this.getAllVeranstaltungen();
-
+    */
   }
 
   /**

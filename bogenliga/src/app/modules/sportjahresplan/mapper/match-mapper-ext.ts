@@ -49,8 +49,14 @@ export class MatchMapperExt {
       console.log('schuetzen', schuetzen);
 
       for (let i = 0; i < schuetzen[0].length; i++) {
+        if(schuetzen[0].length >5) {
+          for(let k=schuetzen[0].length; k>5; k--){
+
+            schuetzen[0].pop();
+          }
+        }
         for (const passen of schuetzen) {
-          if (i < passen.length) {
+          if (i < 5) {
             sumSatz[i] += passen[i].ringzahlPfeil1 + passen[i].ringzahlPfeil2;
           }
         }
