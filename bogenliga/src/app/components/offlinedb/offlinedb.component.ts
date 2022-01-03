@@ -1,38 +1,35 @@
 import {Dexie} from 'dexie';
-import {Router} from '@angular/router';
 import {environment} from '@environment';
-import {AppState} from '@shared/redux-store';
-import {CurrentUserService} from '@shared/services';
 import {LigasyncpasseDtoClass} from './types/datatransfer/ligasyncpasse-dto.class';
 import {LigasyncmannschaftsmitgliedDtoClass} from './types/datatransfer/ligasyncmannschaftsmitglied-dto.class';
-import {LigasyncmatchDtoClass} from './types/datatransfer/ligasyncmatch-dto.class';
-import {Store} from '@ngrx/store';
 import {Oligatabelle} from './types/oligatabelle.interface';
+import {Omatch} from './types/omatch.interface';
 import {BogenligaResponse} from '@shared/data-provider';
 import {SyncDataProviderService} from './services/sync-provider.service';
+import {MatchOdaoClass} from './match-odao.class';
 
 
 export class OfflinedbComponent extends Dexie {
-
-  public isActive: boolean; // for class and css to know if sidebar is wide or small
-  public inProd = environment.production;
-
   public ligatabelle!: Dexie.Table<Oligatabelle, number>;
-  public match!: Dexie.Table<LigasyncmatchDtoClass, number>;
+  public match!: Dexie.Table<Omatch, number>;
   public passe!: Dexie.Table<LigasyncpasseDtoClass, number>;
   public mannschaftsmitglieder!: Dexie.Table<LigasyncmannschaftsmitgliedDtoClass, number>;
 
   public currentLigatabelle: Oligatabelle[];
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router,
-              private syncservice: SyncDataProviderService) {
+  constructor(private syncservice: SyncDataProviderService) {
 
     super('OfflinedbComponent');
+
     this.version(1).stores({
-      ligatabelle: '++id, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
-        'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz'
+      ligatabelle: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
+        'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
+      match: '++id, version, matchVersion, wettkampfId, matchNr, matchScheibennummer, mannschaftId,   mannschaftName, '+
+        'nameGegner, scheibennummerGegner, matchIdGegner, naechsteMatchId, naechsteNaechsteMatchNrMatchId,'+
+        'strafpunkteSatz1, strafpunkteSatz2, strafpunkteSatz3, strafpunkteSatz4, strafpunkteSatz5'
     });
 
+    this.match.mapToClass(MatchOdaoClass);
     // prefill all offline tables
 
   }
@@ -56,6 +53,6 @@ export class OfflinedbComponent extends Dexie {
       console.error(error);
     }
   }
-
-
 }
+export const db = new OfflinedbComponent(private syncservice:  SyncDataProviderService);
+

@@ -9,9 +9,7 @@ import {
   VersionedDataTransferObject
 } from '@shared/data-provider';
 import {CurrentUserService} from '@shared/services/current-user';
-import {fromPayload, fromPayloadArray, fromVeranstaltungsPayload} from '@verwaltung/mapper/match-mapper';
 import {Oligatabelle} from '../types/oligatabelle.interface';
-import {fromPayloadLigatabelleErgebnisArray} from '@wettkampf/mapper/wettkampf-ergebnis-mapper';
 import {fromPayloadOligatabelleArray} from '../mapper/oligatabelle-mapper';
 
 
