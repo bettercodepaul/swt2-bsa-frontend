@@ -1,5 +1,5 @@
 
-import {VersionedDataTransferObject} from '@shared/data-provider';
+import {DataTransferObject} from '@shared/data-provider';
 import {LigasyncligatabelleDtoClass} from '../types/datatransfer/ligasyncligatabelle-dto.class';
 import {Oligatabelle} from '../types/oligatabelle.interface';
 
@@ -8,8 +8,8 @@ export function toDO(ligasyncligatabelleDTO: LigasyncligatabelleDtoClass): Oliga
 
   const oligatabelle = new Oligatabelle();
 
-  oligatabelle.id = ligasyncligatabelleDTO.id;
-  oligatabelle.version = ligasyncligatabelleDTO.version;
+  oligatabelle.id = null;
+  oligatabelle.version = 1;
 
   oligatabelle.veranstaltungId = ligasyncligatabelleDTO.veranstaltungId;
   oligatabelle.veranstaltungName = ligasyncligatabelleDTO.veranstaltungName;
@@ -34,14 +34,14 @@ export function toDOArray(ligasyncligatabelleDTO: LigasyncligatabelleDtoClass[])
   return list;
 }
 
-export function fromPayload(payload: VersionedDataTransferObject): Oligatabelle {
+export function fromPayload(payload: DataTransferObject): Oligatabelle {
 
   const ligasyncligatabelleDTO = LigasyncligatabelleDtoClass.copyFrom(payload);
   return toDO(ligasyncligatabelleDTO);
 }
 
 
-export function fromPayloadOligatabelleArray(payload: VersionedDataTransferObject[]): Oligatabelle[] {
+export function fromPayloadOligatabelleArray(payload: DataTransferObject[]): Oligatabelle[] {
   const list: Oligatabelle[] = [];
   payload.forEach((single) => list.push(fromPayload(single)));
   return list;

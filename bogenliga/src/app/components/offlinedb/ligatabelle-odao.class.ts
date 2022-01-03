@@ -5,6 +5,7 @@
 
 import {Oligatabelle} from './types/oligatabelle.interface';
 import {OfflinedbComponent} from './offlinedb.component';
+import {db} from './offlinedb.component';
 
 export class LigatabelleOdaoClass implements Oligatabelle {
   id: number; // Primary Key autoincrement
@@ -23,14 +24,13 @@ export class LigatabelleOdaoClass implements Oligatabelle {
   sortierung: number; // Sortierungskennzeichen zu Liga.Start
   tabellenplatz: number; // Tabellenplatz der Mannschaft vor Wettkampfbeginn
   ligaranking: Oligatabelle[]; // hier werden die Einträge aus der Tabelle als Feld bereitgestellt
-  db: OfflinedbComponent;
 
-  constructor( db: OfflinedbComponent, veranstaltungId: number,
+  constructor( veranstaltungId: number,
                veranstaltungName: string, wettkampfId: number, wettkampfTag: number,
                mannschaftId: number, mannschaftName: string, matchpkt: number,
                matchpktGegen: number, satzpkt: number, satzpktGegen: number,
-               satzpktDifferenz: number, sortierung: number, tabellenplatz: number, id?: number) {
-    this.db = db;
+               satzpktDifferenz: number, sortierung: number, tabellenplatz: number,
+               id?: number, version?: number) {
     this.veranstaltungId = veranstaltungId;
     this.veranstaltungName = veranstaltungName;
     this.wettkampfId = wettkampfId;
@@ -45,10 +45,29 @@ export class LigatabelleOdaoClass implements Oligatabelle {
     this.sortierung = sortierung;
     this.tabellenplatz = tabellenplatz;
     if (id) { this.id = id; }
+    if (version) { this.version = version; } else { this.version = 1; }
   }
 
-  loadLigatabelle() {
-    const ligaranking = this.db.ligatabelle.toArray();
+  private save() {
+    return db.transaction('rw', db.match, () => {
+      db.ligatabelle.put(new LigatabelleOdaoClass(this.veranstaltungId, this.veranstaltungName, this.wettkampfId,
+        this.wettkampfTag, this.mannschaftId, this.mannschaftName, this.matchpkt, this.matchpktGegen,
+        this.satzpkt, this.satzpktGegen , this.satzpktDifferenz, this.sortierung, this.tabellenplatz));
+    });
   }
 
+  private update() {
+    this.version++;
+    return db.transaction('rw', db.match, () => {
+      db.ligatabelle.update(this.id,
+        {veranstaltungId: this.veranstaltungId, veranstaltungName: this.veranstaltungName,
+          wettkampfId: this.wettkampfId, wettkampfTag: this.wettkampfTag, mannschaftId: this.mannschaftId,
+          mannschaftName: this.mannschaftName, matchpkt: this.matchpkt, matchpktGegen: this.matchpktGegen,
+          satzpkt: this.satzpkt, satzpktGegen: this.satzpktGegen, satzpktDifferenz: this.satzpktDifferenz,
+          sortierung: this.sortierung, tabellenplatz: this.tabellenplatz, version: this.version});
+    });
+  }
+
+  private const
 }
+
