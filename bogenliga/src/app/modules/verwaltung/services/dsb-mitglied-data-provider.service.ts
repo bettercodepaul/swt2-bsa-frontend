@@ -104,7 +104,7 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     });
   }
 
-  public findByName(searchstring: string): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
+  public findBySearch(searchstring: string): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
     //return promise
     //sign in success -> resolve promise
     //sign in failure -> reject promise with result
