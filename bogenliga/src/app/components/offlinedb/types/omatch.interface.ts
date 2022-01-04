@@ -7,7 +7,7 @@
 
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
-export class Omatch implements VersionedDataObject {
+export interface Omatch extends VersionedDataObject {
   id: number; // Backend Primary Key
   version: number; // client side version to identify modifications by version > 1
 
