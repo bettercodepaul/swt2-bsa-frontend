@@ -85,8 +85,8 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
 
   }
 
-  public findByName($event : string) {
-    this.dsbMitgliedDataProvider.findByName($event)
+  public findBySearch($event : string) {
+    this.dsbMitgliedDataProvider.findBySearch($event)
         .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
