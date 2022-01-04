@@ -4,7 +4,6 @@
  */
 
 import {Oligatabelle} from './types/oligatabelle.interface';
-import {OfflinedbComponent} from './offlinedb.component';
 import {db} from './offlinedb.component';
 
 export class LigatabelleOdaoClass implements Oligatabelle {
@@ -67,6 +66,8 @@ export class LigatabelleOdaoClass implements Oligatabelle {
           sortierung: this.sortierung, tabellenplatz: this.tabellenplatz, version: this.version});
     });
   }
+
+
 
 }
 

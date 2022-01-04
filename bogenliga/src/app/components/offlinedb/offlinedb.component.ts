@@ -7,6 +7,7 @@ import {Omatch} from './types/omatch.interface';
 import {BogenligaResponse} from '@shared/data-provider';
 import {SyncDataProviderService} from './services/sync-provider.service';
 import {MatchOdaoClass} from './match-odao.class';
+import {LigatabelleOdaoClass} from './ligatabelle-odao.class';
 
 
 export class OfflinedbComponent extends Dexie {
@@ -29,6 +30,7 @@ export class OfflinedbComponent extends Dexie {
         'strafpunkteSatz1, strafpunkteSatz2, strafpunkteSatz3, strafpunkteSatz4, strafpunkteSatz5'
     });
 
+    this.ligatabelle.mapToClass(LigatabelleOdaoClass);
     this.match.mapToClass(MatchOdaoClass);
     // prefill all offline tables
 
