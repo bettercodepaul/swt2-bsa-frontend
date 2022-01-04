@@ -43,7 +43,8 @@
                #mannschaftNummer="ngModel"
                [(ngModel)]="currentMannschaft.nummer"
                [class.is-invalid]="mannschaftNummer.invalid && !mannschaftNummer.untouched"
-               placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.PLACEHOLDER' | translate }}"
+               data-cy="vereine-mannschaft-detail-mannschaftsnummer">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
@@ -64,7 +65,8 @@
                 id="mannschaftVeranstaltung"
                 name="mannschaftVeranstaltung"
                 #mannschaftVeranstaltung="ngModel"
-                [(ngModel)]="currentVeranstaltung">
+                [(ngModel)]="currentVeranstaltung"
+                data-cy="vereine-mannschaft-detail-mannschaftsveranstaltung">
           <option [ngValue]="liga" *ngFor="let liga of ligen"> {{liga.name}}</option>
         </select>
         <div class="invalid-feedback">
@@ -82,14 +84,16 @@
                     [id]="'mannschaftSaveButton'"
                     [disabled]="!mannschaftForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onSave($event)">
+                    (onClick)="onSave($event)"
+                    data-cy="vereine-mannschaft-detail-save-button">
           {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'mannschaftUpdateButton'"
                     [disabled]="!mannschaftForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
+                    (onClick)="onUpdate($event)"
+                    data-cy="vereine-mannschaft-detail-update-button">
           {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
