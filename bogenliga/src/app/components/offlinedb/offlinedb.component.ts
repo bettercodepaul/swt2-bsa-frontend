@@ -33,7 +33,8 @@ export class OfflinedbComponent extends Dexie {
     // prefill all offline tables
 
   }
-
+  // beispielhaften Laden der Liagatablle aus dem Backend
+  // TODO das gleiche ist beim Instanziieren für die Tabellen match, passe und manschaftsmitglied zu tun
   private loadOfflineLigatabelle(veranstaltungsId: number) {
     this.syncservice.loadLigatabelleVeranstaltung(veranstaltungsId)
       .then((response: BogenligaResponse<Oligatabelle[]>) => response.payload.length >= 4 ? this.handleloadOfflineLigatabelle(response) : this.handleloadOfflineLigatabelleFailure())
@@ -54,5 +55,8 @@ export class OfflinedbComponent extends Dexie {
     }
   }
 }
+
+// sollte zukünftig in der instanziierenden Klasse stehen.
+// über db.  zugriff auf die Tabellen
 export const db = new OfflinedbComponent(private syncservice:  SyncDataProviderService);
 

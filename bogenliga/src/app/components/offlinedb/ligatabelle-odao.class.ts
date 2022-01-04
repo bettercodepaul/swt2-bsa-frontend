@@ -68,6 +68,5 @@ export class LigatabelleOdaoClass implements Oligatabelle {
     });
   }
 
-  private const
 }
 
