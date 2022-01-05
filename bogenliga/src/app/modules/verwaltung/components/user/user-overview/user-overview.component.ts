@@ -16,6 +16,7 @@ import {
 import {UserDataProviderService} from '../../../services/user-data-provider.service';
 import {UserRolleDO} from '../../../types/user-rolle-do.class';
 import {USER_OVERVIEW_CONFIG_ACTIVE} from '@verwaltung/components/user/user-overview/user-overview-active.config';
+import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 
 export const NOTIFICATION_DELETE_USER = 'user_overview_delete';
 
@@ -29,13 +30,16 @@ export class UserOverviewComponent extends CommonComponentDirective implements O
   public configActive = USER_OVERVIEW_CONFIG_ACTIVE;
   public rowsActive: TableRow[];
   public displayRoles: TableRow[];
+  public searchTerm = 'searchTermUser';
 
   constructor(private userDataProvider: UserDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 
   ngOnInit() {
-    this.loadTableRows();
+    this.loading = true;
+    if (!localStorage.getItem(this.searchTerm))
+      this.loadTableRows();
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
@@ -80,9 +84,13 @@ export class UserOverviewComponent extends CommonComponentDirective implements O
 
   }
 
-  private loadTableRows() {
-    this.loading = true;
+  public findBySearch($event: string) {
+    this.userDataProvider.findBySearch($event)
+      .then((response: BogenligaResponse<UserRolleDO[]>) => this.handleLoadTableRowsSuccess(response))
+      .catch((response: BogenligaResponse<UserRolleDO[]>) => this.handleLoadTableRowsFailure(response));
+  }
 
+  private loadTableRows() {
     this.userDataProvider.findAll()
         .then((response: BogenligaResponse<UserRolleDO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<UserRolleDO[]>) => this.handleLoadTableRowsFailure(response));
