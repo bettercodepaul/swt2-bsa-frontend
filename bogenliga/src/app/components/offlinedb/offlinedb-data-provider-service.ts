@@ -28,5 +28,5 @@ export class OfflinedbDataProviderService {
 
   // TODO: getAllPasseForMatch(matchid: number): PasseOdaoClass[]
   // TODO: getAllPasse(): PasseOdaoClass[]
-  // TODO: getAllMemeberOfManschaft(manschaftid): ManschaftOdaoClass[]
+  // TODO: getAllMemberOfManschaft(manschaftid): ManschaftOdaoClass[]
 }
