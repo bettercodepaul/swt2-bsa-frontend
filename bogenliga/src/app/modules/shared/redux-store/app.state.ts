@@ -1,3 +1,4 @@
+import { OnOfflineState } from './feature/onoffline';
 import {NotificationState} from './feature/notification';
 import {SidebarState} from './feature/sidebar';
 import {UserState} from './feature/user';
@@ -9,4 +10,5 @@ export interface AppState {
   notificationState: NotificationState;
   sidebarState: SidebarState;
   userState: UserState;
+  onOfflineState: OnOfflineState;
 }
