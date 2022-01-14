@@ -5,7 +5,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
    */
-  it('Testfall 1: Home aufrufen / Wettkampftabelle gefüllt', function () {
+  it('Home aufrufen / Wettkampftabelle gefüllt', function () {
     cy.visit('http://localhost:4200/')
     cy.url().should('include', '#/home')
   })
@@ -13,7 +13,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test presses the login button on the home page and checks whether the login page opens
    */
-  it('Testfall 2: Login möglich / Fenster öffnet sich', function() {
+  it('Login möglich / Fenster öffnet sich', function() {
     cy.visit('http://localhost:4200/')
     cy.get('[data-cy=login-button]').click()
     cy.url().should('include', '#/user/login')
@@ -22,7 +22,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the sidebar and clicks on the "REGIONEN" tab and checks if the url has changed successfully
    */
-  it('Testfall 3: Anzeige Regionen', function() {
+  it('Anzeige Regionen', function() {
     cy.get('[data-cy=sidebar-regionen-button]').click()
     cy.url().should('include', '#/regionen')
   })
@@ -30,7 +30,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
    */
-  it('Testfall 4: Sunburst details anzeigen', function () {
+  it('Sunburst details anzeigen', function () {
     cy.get(':nth-child(2) > .main-arc').click()
     cy.wait(1000)
     cy.get('#details')
@@ -39,7 +39,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if after an item has been selected the website redirected to the correct location
    */
-  it('Testfall 5: Weiterleitung Ligatabelle', function () {
+  it('Weiterleitung Ligatabelle', function () {
     cy.get('#ligen > bla-selectionlist > #undefined').select(0)
     cy.wait(2000)
     cy.url().should('include', '#/ligatabelle')
@@ -49,7 +49,7 @@ describe('Anonyme User tests', function () {
    * This test opens the sidebar, selects the "REGIONEN" section, selects an item from the list and checks if the website
    * redirected to the correct item's overview page.
    */
-  it('Testfall 6: Weiterleitung Vereinseite', function () {
+  it('Weiterleitung Vereinseite', function () {
     cy.get('[data-cy=sidebar-regionen-button]').click()
     cy.get(':nth-child(11) > .main-arc').click()
     cy.wait(2000)
@@ -61,7 +61,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the sidebar and clicks on the "VEREINE" tab and checks if the url has changed successfully
    */
-  it('Testfall 7: Anzeige Vereine', function () {
+  it('Anzeige Vereine', function () {
     cy.get('[data-cy=sidebar-vereine-button]').click()
     cy.url().should('include', '#/vereine')
   })
@@ -69,7 +69,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if after typing in a search term the list shrinks in size accordingly
    */
-  it('Testfall 8: Vereinsliste Verringert sich', function() {
+  it('Vereinsliste Verringert sich', function() {
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('SV')
     cy.get('[data-cy=quicksearch-liste]').should('have.length.at.least', 1)
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('X')
@@ -79,7 +79,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the sidebar and clicks on the "LIGATABELLE" tab and checks if the url has changed successfully
    */
-  it('Testfall 9: Anzeige Ligatabelle', function () {
+  it('Anzeige Ligatabelle', function () {
     cy.get('[data-cy=sidebar-ligatabelle-button]').click()
     cy.url().should('include', '#/ligatabelle')
   })
@@ -87,7 +87,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if a valid search term yields the expected results from the website
    */
-  it('Testfall 10: Suchfeld Ligatabelle', function() {
+  it('Suchfeld Ligatabelle', function() {
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('Württemberg')
     cy.wait(1000)
     cy.get('[data-cy=quicksearch-liste]').should('contain.text', 'Recurve')
@@ -97,7 +97,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the sidebar and clicks on the "WETTKAEMPFE" tab and checks if the url has changed successfully
    */
-  it('Testfall 11: Anzeige Wettkampf Ergebnisse', function() {
+  it('Anzeige Wettkampf Ergebnisse', function() {
     cy.get('[data-cy=sidebar-wettkampf-button]').click()
     cy.url().should('include', '#/wettkaempfe')
   })
@@ -105,7 +105,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if the shown results contain expected data
    */
-  it('Testfall 12: Ergebnis anzeigen', function() {
+  it('Ergebnis anzeigen', function() {
     cy.wait(10000)
     cy.contains('SWT2')
     cy.wait(15000)
@@ -116,7 +116,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if the selected item of a team shows the expected data
    */
-  it('Testfall 13: Ergebnis anzeigen einzelner Verein', function() {
+  it('Ergebnis anzeigen einzelner Verein', function() {
     cy.wait(1000)
     cy.get('#vereine').select(0)
     cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
@@ -126,7 +126,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test selects a single statistic and checks if the required data is present
    */
-  it('Testfall 14: Ergebnis anzeigen Einzelstatistik', function() {
+  it('Ergebnis anzeigen Einzelstatistik', function() {
     cy.get('[data-cy=einzelstatistik-anzeigen-button]').click()
     cy.contains('Pfeilwert pro Match')
   })
@@ -134,7 +134,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test selects all items from the statistics and checks if the required data is present
    */
-  it('Testfall 15: Ergebnis anzeigen Gesamtstatistik', function() {
+  it('Ergebnis anzeigen Gesamtstatistik', function() {
     cy.get('[data-cy=einzelstatistik-gesamt-anzeigen-button]').click()
     cy.contains('Pfeilwert pro Jahr')
   })
@@ -147,7 +147,7 @@ describe('Admin User tests', function() {
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
-  it('Testfall 1: Login erfolgreich', function() {
+  it('Login erfolgreich', function() {
     cy.visit('http://localhost:4200/#/home')
     cy.get('[data-cy=login-button]').click()
     cy.url().should('include', '#/user/login')
@@ -158,7 +158,7 @@ describe('Admin User tests', function() {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
    */
-  it('Testfall 2: Anzeige Verwaltung', function() {
+  it('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
   })
@@ -166,7 +166,7 @@ describe('Admin User tests', function() {
   /**
    * This test lists all "DSBMitglieder" items and checks if the URI has been updated accordingly
    */
-  it('Testfall 3: Anzeige DSBMitglieder', function() {
+  it('Anzeige DSBMitglieder', function() {
     cy.wait(1000)
     cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
@@ -175,7 +175,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a new "DSB-Mitglied"
    */
-  it('Testfall 6: Neues DSB-Mitglied', function() {
+  it('Neues DSB-Mitglied', function() {
     cy.get('[data-cy=dsb-mitglied-add-button]').click()
     cy.get('[data-cy=detail-vorname-feld]').type('MitgliedVorname')
     cy.get('[data-cy=detail-nachname-feld]').type('MitgliedNachname')
@@ -190,7 +190,7 @@ describe('Admin User tests', function() {
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
    */
-  it('Testfall 4: Edit DSBMitglied', function() {
+  it('Edit DSBMitglied', function() {
     cy.wait(1000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.get('[data-cy=detail-vorname-feld]').click()
@@ -208,13 +208,10 @@ describe('Admin User tests', function() {
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
   })
 
-
-
-
   /**
    * This test adds a new "DSB-Kampfrichter"
    */
-  it('Testfall 7: Neuer DSB-Kampfrichter', function() {
+  it('Neuer DSB-Kampfrichter', function() {
     cy.get('[data-cy=dsb-mitglied-add-button]').click()
     cy.get('[data-cy=detail-vorname-feld]').type('KampfrichterVorname')
     cy.get('[data-cy=detail-nachname-feld]').type('KampfrichterNachname')
@@ -232,7 +229,7 @@ describe('Admin User tests', function() {
   /**
    * This test deletes a single member and checks if after deletion the website redirects the user to the expected location
    */
-  it('Testfall 5: Löschen DSBMitglied', function() {
+  it('Löschen DSBMitglied', function() {
     cy.wait(1000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
@@ -242,7 +239,7 @@ describe('Admin User tests', function() {
   /**
    * This test shows the user tab in the administration
    */
-  it('Testfall 8: Anzeige User', function () {
+  it('Anzeige User', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-user-button]').click()
@@ -350,7 +347,7 @@ describe('Admin User tests', function() {
   /**
    * This test shows the "Wettkampfklassen" tab in administration
    */
-  it('Testfall 13: Anzeige Wettkampfklassen', function () {
+  it('Anzeige Wettkampfklassen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-klassen-button]').click()
     cy.url().should('include', '#/verwaltung/klassen')
@@ -359,7 +356,7 @@ describe('Admin User tests', function() {
   /**
    * This test edits a "Wettkampfklasse"
    */
-  it('Testfall 14: Wettkampfklasse bearbeiten', function () {
+  it('Wettkampfklasse bearbeiten', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.get('[data-cy=wettkampfklassen-jahrgang-bis-button]').type('1973')
     cy.get('[data-cy=wettkampfklassen-update-button]').click()
@@ -373,7 +370,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a new "Wettkampfklasse"
    */
-  it('Testfall 15: Wettkampfklasse hinzufügen', function () {
+  it('Wettkampfklasse hinzufügen', function () {
     cy.get('[data-cy=dsb-mitglied-add-button]').click()
     cy.get('[data-cy=wettkampfklasse-nummer]').type('69')
     cy.get('[data-cy=wettkampfklasse-name]').type('Testfall')
@@ -386,7 +383,7 @@ describe('Admin User tests', function() {
   /**
    * This test opens the administration table and check whether the table has any content
    */
-  it('Testfall 16: Anzeige Verwaltung Vereinsliste', function () {
+  it('Anzeige Verwaltung Vereinsliste', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -398,7 +395,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to add a new club to the administration table successfully
    */
-  it('Testfall 17: Neuen Verein anlegen', function () {
+  it('Neuen Verein anlegen', function () {
     cy.get('[data-cy=dsb-mitglied-add-button]').click()
     cy.url().should('include', '#/verwaltung/vereine/add')
     cy.get('[data-cy=vereine-vereinsname]').click().type('CypressTest')
@@ -419,7 +416,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
-  it('Testfall 18: Editieren eines Vereins', function () {
+  it('Editieren eines Vereins', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
     cy.get('[data-cy=vereine-vereinswebsite]').focus().clear()
@@ -441,7 +438,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it is possible to add a new team to a club successfully
    */
-  it('Testfall 19: Neue Vereins-Mannschaft anlegen', function () {
+  it('Neue Vereins-Mannschaft anlegen', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
     cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
@@ -459,7 +456,7 @@ describe('Admin User tests', function() {
   /**
    * The test checks if it's possible to edit a team successfully
    */
-  it('Testfall 20: Vereins-Mannschaft bearbeiten', function () {
+  it('Vereins-Mannschaft bearbeiten', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -483,7 +480,7 @@ describe('Admin User tests', function() {
   /**
    * The test checks if it's possible to delete a team successfully
    */
-  it('Testfall 21: Vereins-Mannschaft löschen', function () {
+  it('Vereins-Mannschaft löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -501,7 +498,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to delete a club successfully
    */
-  it('Testfall 22: Einen Verein löschen', function () {
+  it('Einen Verein löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
