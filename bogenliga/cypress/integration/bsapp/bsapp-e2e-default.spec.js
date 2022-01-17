@@ -35,7 +35,6 @@ describe('Anonyme User tests', function () {
     cy.wait(1000)
     cy.get('#details')
   })
-
   /**
    * This test checks if after an item has been selected the website redirected to the correct location
    */
@@ -181,6 +180,10 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=detail-nachname-feld]').type('MitgliedNachname')
     cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
     cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('12354321')
+    cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
+    cy.wait(1500)
+    cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
+    cy.wait(1500)
     cy.get('[data-cy=detail-save-button]').click()
     cy.wait(1500)
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
@@ -217,6 +220,10 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=detail-nachname-feld]').type('KampfrichterNachname')
     cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
     cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('34563456')
+    cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
+    cy.wait(1500)
+    cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
+    cy.wait(1500)
     /*
     @TODO implement Kampfrichterlizenz once function is available for testing
      */
