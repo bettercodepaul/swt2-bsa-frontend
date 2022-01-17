@@ -7,23 +7,27 @@ import {AppState, GoOffline, GoOnline, OnOfflineState} from '../../redux-store';
 })
 export class OnOfflineService {
 
-    private isOffline: boolean;
+    private offline: boolean;
 
     constructor(private store: Store<AppState>) {
         this.observeOnOfflineState();
     }
 
-    public goOnline() {
+    public goOnline(): void {
         this.store.dispatch(new GoOnline());
     }
 
-    public goOffline() {
+    public goOffline(): void {
         this.store.dispatch(new GoOffline());
+    }
+
+    public isOffline(): boolean {
+        return this.offline;
     }
 
     private observeOnOfflineState() {
         this.store.pipe(select((state) => state.onOfflineState))
-                  .subscribe((state: OnOfflineState) => this.isOffline = state.isOffline);
+                  .subscribe((state: OnOfflineState) => this.offline = state.isOffline);
     }
 
 }
