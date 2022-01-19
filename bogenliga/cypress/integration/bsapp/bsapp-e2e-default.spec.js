@@ -1,6 +1,7 @@
 /**
  * Testblock describing all anonymous user tests as specified on Confluence
  */
+
 describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
@@ -142,7 +143,7 @@ describe('Anonyme User tests', function () {
 /**
  * This test block describes all administrative user tests
  */
-describe('Admin User tests', function() {
+describe('Admin User tests', async function() {
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
@@ -175,20 +176,24 @@ describe('Admin User tests', function() {
    * This test adds a new "DSB-Mitglied"
    */
   it('Neues DSB-Mitglied', function() {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.get('[data-cy=detail-vorname-feld]').type('MitgliedVorname')
-    cy.get('[data-cy=detail-nachname-feld]').type('MitgliedNachname')
-    cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
-    cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('12354321')
-    cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
-    cy.wait(1500)
-    cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
-    cy.wait(1500)
-    cy.get('[data-cy=detail-save-button]').click()
-    cy.wait(1500)
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-    //Nicht geschaut, ob das Mitglied in der Liste vorhanden ist
+    cy.get('body').then((body) => {
+      if (!body.text().includes('MitgliedVorname')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.get('[data-cy=detail-vorname-feld]').type('MitgliedVorname')
+        cy.get('[data-cy=detail-nachname-feld]').type('MitgliedNachname')
+        cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
+        cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('12354321')
+        cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
+        cy.wait(1500)
+        cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
+        cy.wait(1500)
+        cy.get('[data-cy=detail-save-button]').click()
+        cy.wait(1500)
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+      }
+    });
   })
+
 
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
@@ -215,22 +220,26 @@ describe('Admin User tests', function() {
    * This test adds a new "DSB-Kampfrichter"
    */
   it('Neuer DSB-Kampfrichter', function() {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.get('[data-cy=detail-vorname-feld]').type('KampfrichterVorname')
-    cy.get('[data-cy=detail-nachname-feld]').type('KampfrichterNachname')
-    cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
-    cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('34563456')
-    cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
-    cy.wait(1500)
-    cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
-    cy.wait(1500)
-    /*
-    @TODO implement Kampfrichterlizenz once function is available for testing
-     */
-    cy.get('[data-cy=detail-save-button]').click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-    cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('body').then((body) => {
+      if (!body.text().includes('KampfrichterVorname')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.get('[data-cy=detail-vorname-feld]').type('KampfrichterVorname')
+        cy.get('[data-cy=detail-nachname-feld]').type('KampfrichterNachname')
+        cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
+        cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('34563456')
+        cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
+        cy.wait(1500)
+        cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
+        cy.wait(1500)
+        /*
+        @TODO implement Kampfrichterlizenz once function is available for testing
+         */
+        cy.get('[data-cy=detail-save-button]').click()
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+        cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+      }}
+    );
   })
 
   /**
@@ -378,13 +387,17 @@ describe('Admin User tests', function() {
    * This test adds a new "Wettkampfklasse"
    */
   it('Wettkampfklasse hinzufügen', function () {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.get('[data-cy=wettkampfklasse-nummer]').type('69')
-    cy.get('[data-cy=wettkampfklasse-name]').type('Testfall')
-    cy.get('[data-cy=wettkampfklassen-jahrgang-von-button]').type('2000')
-    cy.get('[data-cy=wettkampfklassen-jahrgang-bis-button]').type('1980')
-    cy.get('[data-cy=wettkampfklassen-save-button]').click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.get('body').then((body) => {
+      if (!body.text().includes('Testfall')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.get('[data-cy=wettkampfklasse-nummer]').type('69')
+        cy.get('[data-cy=wettkampfklasse-name]').type('Testfall')
+        cy.get('[data-cy=wettkampfklassen-jahrgang-von-button]').type('2000')
+        cy.get('[data-cy=wettkampfklassen-jahrgang-bis-button]').type('1980')
+        cy.get('[data-cy=wettkampfklassen-save-button]').click()
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+      }
+    });
   })
 
   /**
@@ -403,21 +416,25 @@ describe('Admin User tests', function() {
    * This test checks if it's possible to add a new club to the administration table successfully
    */
   it('Neuen Verein anlegen', function () {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.url().should('include', '#/verwaltung/vereine/add')
-    cy.get('[data-cy=vereine-vereinsname]').click().type('CypressTest')
-    cy.get('[data-cy=vereine-vereinsnummer]').click().type('1111111111')
-    cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest')
-    cy.get('[data-cy=vereine-add-button]').click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-    cy.wait(500)
-    cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.url().should('include', '#/verwaltung')
-    cy.get('[data-cy=verwaltung-vereine-button]').click()
-    cy.url().should('include', '#/verwaltung/vereine')
-    cy.get('#undefined > tbody').should('contain.text', 'CypressTest')
-    cy.wait(200)
-    cy.get('#undefined > tbody').should('contain.text', '1111111111')
+    cy.get('body').then((body) => {
+      if (!body.text().includes('CypressTest')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.url().should('include', '#/verwaltung/vereine/add')
+        cy.get('[data-cy=vereine-vereinsname]').click().type('CypressTest')
+        cy.get('[data-cy=vereine-vereinsnummer]').click().type('1111111111')
+        cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest')
+        cy.get('[data-cy=vereine-add-button]').click()
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+        cy.wait(500)
+        cy.get('[data-cy=sidebar-verwaltung-button]').click()
+        cy.url().should('include', '#/verwaltung')
+        cy.get('[data-cy=verwaltung-vereine-button]').click()
+        cy.url().should('include', '#/verwaltung/vereine')
+        cy.get('#undefined > tbody').should('contain.text', 'CypressTest')
+        cy.wait(200)
+        cy.get('#undefined > tbody').should('contain.text', '1111111111')
+      }
+    });
   })
 
   /**
@@ -448,16 +465,21 @@ describe('Admin User tests', function() {
   it('Neue Vereins-Mannschaft anlegen', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
-    cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
-    cy.wait(1000)
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('7')
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-    cy.wait(1500)
-    cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
-    cy.wait(1000)
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-    cy.wait(1000)
-    cy.contains('7')
+
+    cy.get('body').then((body) => {
+      if (!body.text().includes('69')) {
+        cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
+        cy.wait(1000)
+        cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
+        cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
+        cy.wait(1500)
+        cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
+        cy.wait(1000)
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+        cy.wait(1000)
+        cy.contains('69')
+      }
+    });
   })
 
   /**
@@ -473,7 +495,7 @@ describe('Admin User tests', function() {
     cy.wait(500)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(500)
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('6')
+    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().clear().type('76')
     cy.wait(500)
     cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
     cy.wait(500)
@@ -535,18 +557,22 @@ describe('Admin User tests', function() {
     * This test adds a League and checks if it gets added.
     */
    it('Liga Hinzufügen', function() {
-     cy.get('[data-cy=dsb-mitglied-add-button]').click()
-     cy.get('[data-cy=liga-detail-name]').type('SWT_Liga')
-     cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
-     cy.wait(1500)
-     cy.get('[data-cy=liga-detail-uebergeordnet]').select('SWT2_Liga')
-     cy.wait(1500)
-     cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
-     cy.wait(1500)
-     cy.get('[data-cy=liga-save-button]').click()
-     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-     cy.wait(5000)
-     cy.get('tbody').should('contain.text', 'SWT_Liga')
+     cy.get('body').then((body) => {
+       if (!body.text().includes('SWT_Liga')) {
+         cy.get('[data-cy=dsb-mitglied-add-button]').click()
+         cy.get('[data-cy=liga-detail-name]').type('SWT_Liga')
+         cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
+         cy.wait(1500)
+         cy.get('[data-cy=liga-detail-uebergeordnet]').select('SWT2_Liga')
+         cy.wait(1500)
+         cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
+         cy.wait(1500)
+         cy.get('[data-cy=liga-save-button]').click()
+         cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+         cy.wait(5000)
+         cy.get('tbody').should('contain.text', 'SWT_Liga')
+       }
+     });
    })
 
    /**
@@ -575,17 +601,21 @@ describe('Admin User tests', function() {
     * This test adds a Region and checks if it gets added.
     */
    it('Region Hinzufügen', function() {
-     cy.get('[data-cy=dsb-mitglied-add-button]').click()
-     cy.get('[data-cy=region-detail-name]').type('SWT3_Region')
-     cy.get('[data-cy=region-detail-kuerzel]').type('SWT_R')
-     cy.get('[data-cy=region-detail-typ]').select('KREIS')
-     cy.wait(2000)
-     cy.get('[data-cy=region-detail-uebergeordnete-region]').select(0)
-     cy.wait(2000)
-     cy.get('[data-cy=region-save-button]').click()
-     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-     cy.wait(1500)
-     cy.get('tbody').should('contain.text', 'SWT3_Region')
+     cy.get('body').then((body) => {
+       if (!body.text().includes('SWT3_Region')) {
+         cy.get('[data-cy=dsb-mitglied-add-button]').click()
+         cy.get('[data-cy=region-detail-name]').type('SWT3_Region')
+         cy.get('[data-cy=region-detail-kuerzel]').type('SWT_R')
+         cy.get('[data-cy=region-detail-typ]').select('KREIS')
+         cy.wait(2000)
+         cy.get('[data-cy=region-detail-uebergeordnete-region]').select(0)
+         cy.wait(2000)
+         cy.get('[data-cy=region-save-button]').click()
+         cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+         cy.wait(1500)
+         cy.get('tbody').should('contain.text', 'SWT3_Region')
+       }
+     });
    })
 
    /**
