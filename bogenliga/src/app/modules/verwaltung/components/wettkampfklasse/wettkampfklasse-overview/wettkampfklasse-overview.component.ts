@@ -19,13 +19,16 @@ export class WettkampfklasseOverviewComponent extends CommonComponentDirective i
 
   public config = WETTKAMPFKLASE_OVERVIEW_CONFIG;
   public rows: TableRow[];
+  public searchTerm = 'searchTermWettkampf';
 
   constructor(private wettkampfklassenDataProvider: WettkampfklassenDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 
   ngOnInit() {
-    this.loadTableRows();
+    this.loading = true;
+    if (!localStorage.getItem(this.searchTerm))
+      this.loadTableRows();
   }
 
 
@@ -41,9 +44,13 @@ export class WettkampfklasseOverviewComponent extends CommonComponentDirective i
     // TODO
    }
 
-  private loadTableRows() {
-    this.loading = true;
+   public findBySearch($event: string) {
+     this.wettkampfklassenDataProvider.findBySearch($event)
+         .then((response: BogenligaResponse<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsSuccess(response))
+         .catch((response: BogenligaResponse<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsFailure(response));
+   }
 
+  private loadTableRows() {
     this.wettkampfklassenDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<WettkampfKlasseDTO[]>) => this.handleLoadTableRowsFailure(response));
