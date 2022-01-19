@@ -1,8 +1,11 @@
-<bla-overview-dialog [config]="config"
+<bla-overview-dialog [hidden]=false
+                     [config]="config"
                      [rows]="rows"
                      [loading]="loading"
+                     [searchTerm]="searchTerm"
                      (onViewClicked)="onView($event)"
                      (onEditClicked)="onEdit($event)"
-                     (onDeleteClicked)="onDelete($event)">
+                     (onDeleteClicked)="onDelete($event)"
+                     (onSearchClicked)="findBySearch($event)">
 
 </bla-overview-dialog>
