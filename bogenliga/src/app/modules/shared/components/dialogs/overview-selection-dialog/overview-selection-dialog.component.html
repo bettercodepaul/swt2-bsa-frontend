@@ -16,7 +16,8 @@
     </div>
     <div style="margin-top: 3%" class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
       <button class="btn btn-success"
-              routerLink="add">
+              routerLink="add"
+              data-cy="veranstaltung-add-button">
         <fa-icon icon="plus"></fa-icon>
         <span> Neu</span>
       </button>
