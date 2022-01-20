@@ -143,7 +143,7 @@ describe('Anonyme User tests', function () {
 /**
  * This test block describes all administrative user tests
  */
-describe('Admin User tests', async function() {
+describe('Admin User tests', function() {
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
@@ -641,16 +641,120 @@ describe('Admin User tests', async function() {
      cy.get('tbody').should('not.contain.text', 'SWT3_Region')
    })
 
-   /**
-    * This test checks if the Event-table gets filled.
-    */
-   it('Veranstaltungen Anzeigen', function() {
-     cy.get('[data-cy=sidebar-verwaltung-button]').click()
-     cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
-     cy.wait(1000)
-     cy.get('[data-cy=bla-selection-list]').select('0: 0')
-     cy.wait(5000)
-     cy.get('tbody').should('have.length.at.least', 1)
-   })
+  /**
+   * This test checks if the Event-table gets filled.
+   */
+  it('Veranstaltungen Anzeigen', function() {
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(1000)
+    cy.get('[data-cy=bla-selection-list]').select('0: 0')
+    cy.wait(5000)
+    cy.get('tbody').should('have.length.at.least', 1)
+  })
+
+  /**
+   * This test adds a "Veranstaltung" and checks if it gets added
+   */
+  it('Veranstaltungen hinzufügen', function() {
+    cy.get('body').then((body) => {
+      if (!body.text().includes('Testveranstaltung')) {
+        cy.get('[data-cy=sidebar-verwaltung-button]').click()
+        cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+        cy.wait(1000)
+        cy.get('[data-cy=veranstaltung-add-button]').click()
+        cy.get('[data-cy=veranstaltung-detail-name]').type('Testveranstaltung')
+        cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
+        cy.wait(500)
+        cy.get('[data-cy=veranstaltung-detail-sportjahr]').type('2018')
+        cy.get('[data-cy=veranstaltung-detail-deadline]').type('2022-01-01')
+        cy.wait(1000)
+        cy.get('[data-cy=veranstaltung-detail-save-button]').click()
+        cy.wait(1000)
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+        cy.get('[data-cy=sidebar-verwaltung-button]').click()
+        cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+        cy.wait(1000)
+        cy.get('[data-cy=bla-selection-list]').select('0: 0')
+        cy.wait(5000)
+        cy.get('tbody').should('contain.text', 'Testveranstaltung')
+      }
+    });
+  })
+
+  /**
+   * This test edits a "Veranstaltung" and checks if it was changed
+   */
+  it('Veranstaltungen bearbeiten', function() {
+    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+    cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
+    cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
+    cy.wait(1000)
+    cy.get('[data-cy=veranstaltung-detail-update-button]').click()
+    cy.wait(1000)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(1000)
+    cy.get('[data-cy=bla-selection-list]').select('0: 0')
+    cy.wait(5000)
+    cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
+
+  })
+
+  /**
+   * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
+   */
+  it('Veranstaltung Löschen', function() {
+    cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
+    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('[data-cy=bla-selection-list]').select('1: 22')
+    cy.wait(5000)
+    cy.get('[data-cy=bla-selection-list]').select('0: 0')
+    cy.wait(5000)
+    cy.get('tbody').should('not.contain.text', 'TestveranstaltungTTT')
+  })
+
+  /**
+   * This test checks if "Wettkampftage" has entries.
+   */
+  it('Wettkampftage anzeigen', function() {
+    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(1000)
+    cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select('0: 2000')
+  })
+
+  /**
+   * This test edits a "Wettkampftag" and checks if it was changed.
+   */
+  it('Wettkampftage bearbeiten', function() {
+    cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
+    cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 221')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(1000)
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(2000)
+    cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 221')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.wait(500)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(1000)
+    cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
+    cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 22')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.wait(500)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(2000)
+    cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
+  })
 
 })
+

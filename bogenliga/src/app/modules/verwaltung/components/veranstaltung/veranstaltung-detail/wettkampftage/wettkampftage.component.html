@@ -67,7 +67,8 @@
                  #wettkampftageDatum="ngModel"
                  [(ngModel)]="currentWettkampftagArray[selectedWettkampfTag].wettkampfDatum"
                  [class.is-invalid]="wettkampftageDatum.invalid && !wettkampftageDatum.untouched"
-                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.DATUM.LABEL' | translate }}">
+                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.DATUM.LABEL' | translate }}"
+                 data-cy="wettkampftage-datum">
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.DATUM.ERROR' | translate }}
           </div>
@@ -93,7 +94,8 @@
                  #wettkampftageStrasse="ngModel"
                  [(ngModel)]="currentWettkampftagArray[selectedWettkampfTag].wettkampfStrasse"
                  [class.is-invalid]="wettkampftageStrasse.invalid && !wettkampftageStrasse.untouched"
-                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.STRASSE.PLACEHOLDER' | translate }}">
+                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.STRASSE.PLACEHOLDER' | translate }}"
+                 data-cy="wettkampftage-adresse">
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.FORM.STRASSE.ERROR' | translate }}
           </div>
@@ -261,7 +263,8 @@
         <bla-button [id]="'wettkampftagSaveButton'"
                     [disabled]="(wettkampftageStrasse.invalid || wettkampftagePLZ.invalid || wettkampftageOrt.invalid  || wettkampftageBeginn.invalid || wettkampftageDatum.invalid)"
                     [loading]="saveLoading"
-                    (onClick)="onSaveWettkampfTag(selectedWettkampfTag, $event); wettkampftageForm.form.markAsPristine();">
+                    (onClick)="onSaveWettkampfTag(selectedWettkampfTag, $event); wettkampftageForm.form.markAsPristine();"
+                    data-cy="wettkampftage-update-button">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
 
@@ -279,7 +282,8 @@
                       [id]="'wettkampfSaveButton'"
                       [disabled]="false"
                       [loading]="saveLoading"
-                      (onClick)="onVeranstaltungDetail($event)">
+                      (onClick)="onVeranstaltungDetail($event)"
+                      data-cy="wettkampftage-zurueck">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
           </bla-button>
         </div>
