@@ -21,7 +21,8 @@
                #veranstaltung_name="ngModel"
                [(ngModel)]="currentVeranstaltung.name"
                [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
+               data-cy="veranstaltung-detail-name">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
@@ -44,7 +45,8 @@
                 id="ligaName"
                 name="ligaName"
                 #ligaName="ngModel"
-                [(ngModel)]="currentLiga">
+                [(ngModel)]="currentLiga"
+                data-cy="veranstaltung-detail-liganame">
           <option [ngValue]="ligaName"
                   *ngFor="let ligaName of allLiga"> {{ligaName.name}}</option>
 
@@ -70,7 +72,8 @@
                 id="wettkampftyp"
                 name="wettkampftyp"
                 #wettkampftyp="ngModel"
-                [(ngModel)]="currentWettkampftyp">
+                [(ngModel)]="currentWettkampftyp"
+                data-cy="veranstaltung-detail-wettkampftyp">
           <option [ngValue]="wettkampftyp"
                   *ngFor="let wettkampftyp of allWettkampftyp"> {{wettkampftyp.name}}</option>
 
@@ -101,7 +104,8 @@
                #sportjahr="ngModel"
                [(ngModel)]="currentVeranstaltung.sportjahr"
                [class.is-invalid]="sportjahr.invalid && ! sportjahr.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.PLACEHOLDER' | translate }}"
+               data-cy="veranstaltung-detail-sportjahr">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.ERROR' | translate }}
@@ -126,7 +130,8 @@
                #deadline="ngModel"
                [(ngModel)]="currentVeranstaltung.meldeDeadline"
                [class.is-invalid]="deadline.invalid && ! deadline.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.PLACEHOLDER' | translate }}"
+               data-cy="veranstaltung-detail-deadline">
 
 
         <div class="invalid-feedback">
@@ -150,7 +155,8 @@
                 id="ligaleiter"
                 name="ligaleiter"
                 #ligaleiter="ngModel"
-                [(ngModel)]="currentUser">
+                [(ngModel)]="currentUser"
+                data-cy="veranstaltung-detail-ligaleiter-email">
           <option [ngValue]="ligaleiter"
                   *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
 
@@ -191,7 +197,8 @@
                     [id]="'veranstaltungSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onSave($event)">
+                    (onClick)="onSave($event)"
+                    data-cy="veranstaltung-detail-save-button">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
 
@@ -199,14 +206,16 @@
                     [id]="'veranstaltungSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onWettkampftag($event)">
+                    (onClick)="onWettkampftag($event)"
+                    data-cy="wettkampftage-button">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAGE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'veranstaltungUpdateButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
+                    (onClick)="onUpdate($event)"
+                    data-cy="veranstaltung-detail-update-button">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 

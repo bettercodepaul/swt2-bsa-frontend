@@ -21,7 +21,8 @@
                #ligaName="ngModel"
                [(ngModel)]="currentLiga.name"
                [class.is-invalid]="ligaName.invalid && !ligaName.untouched"
-               placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+               placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
+               data-cy="liga-detail-name">
 
         <div class="invalid-feedback">
           {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.ERROR' | translate }}
@@ -43,7 +44,8 @@
                 id="ligaRegion"
                 name="ligaRegion"
                 #vereinRegion="ngModel"
-                [(ngModel)]="currentRegion">
+                [(ngModel)]="currentRegion"
+                data-cy="liga-detail-region">
 
           <option [ngValue]="region" *ngFor="let region of regionen"> {{region.regionName}}</option>
         </select>
@@ -66,7 +68,8 @@
                 id="ligaUebergeordnet"
                 name="ligaUebergeordnet"
                 #ligaUebergeordnet="ngModel"
-                [(ngModel)]="currentUbergeordneteLiga">
+                [(ngModel)]="currentUbergeordneteLiga"
+                data-cy="liga-detail-uebergeordnet">
           <option [ngValue]="uebergeordnet" *ngFor="let uebergeordnet of allUebergeordnete"> {{uebergeordnet.name}}</option>
 
           placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
@@ -93,7 +96,8 @@
                 id="ligaVerantwortlicher"
                 name="ligaVerantwortlicher"
                 #ligaUebergeordnet="ngModel"
-                [(ngModel)]="currentUser">
+                [(ngModel)]="currentUser"
+                data-cy="liga-detail-verantwortlicher">
           <option [ngValue]="user" *ngFor="let user of allUsers"> {{user.email}}</option>
 
           placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.PLACEHOLDER' | translate }}">
@@ -120,14 +124,16 @@
                     [id]="'ligaSaveButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onSave($event)">
+                    (onClick)="onSave($event)"
+                    data-cy="liga-save-button">
           {{ 'MANAGEMENT.LIGA_DETAIL.FORM.SAVE' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'ligaUpdateButton'"
                     [disabled]="!dsbMitgliedForm.valid"
                     [loading]="saveLoading"
-                    (onClick)="onUpdate($event)">
+                    (onClick)="onUpdate($event)"
+                    data-cy="liga-update-button">
           {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
