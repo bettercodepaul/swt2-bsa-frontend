@@ -28,6 +28,7 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
 
   public config = LIGA_OVERVIEW_CONFIG;
   public rows: TableRow[];
+  public searchTerm = 'searchTermLiga';
 
 
   constructor(private ligaDataProvider: LigaDataProviderService, private router: Router, private notificationService: NotificationService) {
@@ -35,7 +36,9 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
   }
 
   ngOnInit() {
-    this.loadTableRows();
+    this.loading = true;
+    if (!localStorage.getItem(this.searchTerm))
+      this.loadTableRows();
   }
 
 
@@ -78,9 +81,13 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
   }
 
   private loadTableRows() {
-    this.loading = true;
-
     this.ligaDataProvider.findAll()
+        .then((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
+  }
+
+  public findBySearch($event: string) {
+    this.ligaDataProvider.findBySearch($event)
         .then((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
