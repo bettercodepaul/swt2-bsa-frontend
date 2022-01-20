@@ -144,7 +144,8 @@
                 id="dsbMitgliedVerein"
                 name="dsbMitgliedVerein"
                 #dsbMitgliedVerein="ngModel"
-                [(ngModel)]="currentVerein">
+                [(ngModel)]="currentVerein"
+                data-cy="detail-vereine-dsb">
           <option [ngValue]="verein" *ngFor="let verein of vereine"> {{verein.name}}</option>
         </select>
         <div class="invalid-feedback">
