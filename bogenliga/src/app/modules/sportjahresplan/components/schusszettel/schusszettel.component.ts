@@ -624,6 +624,50 @@ export class SchusszettelComponent implements OnInit {
 
   }
 
+
+  previous() {
+
+    // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
+    if (this.dirtyFlag === true) {
+      // TODO TExte in json.de anlegen
+      const notification: Notification = {
+        id:          NOTIFICATION_WEITER_SCHALTEN,
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        severity:    NotificationSeverity.QUESTION,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.YES_NO,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.dirtyFlag = false;
+              this.matchProvider.previousPair(this.match1.id)
+                  .then((data) => {
+                    if (data.payload.length === 2) {
+                      this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                    }
+                  });
+            }
+          });
+      this.notificationService.showNotification(notification);
+
+    } else {
+      // nächste Matches bestimmen --> schusszettel-service --> Backend-Call --> zwei IDs
+      this.matchProvider.previousPair(this.match1.id)
+          .then((data) => {
+            if (data.payload.length === 2) {
+              this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+            }
+          });
+    }
+
+
+  }
+
+
   trackByIndex(index: number, obj: any): any {
     return index;
   }

@@ -84,7 +84,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   public loadingYears = true;
   public availableYears : SportjahrVeranstaltungDO[];
-  private newestYear: number;
+
 
 
 
@@ -113,6 +113,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         this.wettkampfId = parseInt(params['wettkampfId'], 10);
         console.log('WettkampfID:', this.wettkampfId);
 
+        this.findAvailableYears();
 
         // Ermitteln des Wettkampfs: fÃ¼r automatische Auswahl
         // Ermitteln aller Veranstaltungen: fÃ¼r die Tabelle Veranstaltungen
@@ -534,8 +535,14 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         counter++;
       }
     console.log('Bin in loadVeranstaltungenYearSuccess!');
-    //Lade die Veranstaltungen des neusten Jahres
-    this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+
+      if(this.wettkampfIdEnthalten == false){
+        //Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde
+        this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+      }else {
+
+      }
+
   }}
 
   // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
