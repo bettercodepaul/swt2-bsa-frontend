@@ -30,6 +30,7 @@ import {WettkampfComponent} from '@wettkampf/components';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import {newArray} from '@angular/compiler/src/util';
 
 
 
@@ -88,6 +89,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
 
 
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService,
@@ -113,7 +115,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         this.wettkampfId = parseInt(params['wettkampfId'], 10);
         console.log('WettkampfID:', this.wettkampfId);
 
-        this.findAvailableYears();
+
 
         // Ermitteln des Wettkampfs: fÃ¼r automatische Auswahl
         // Ermitteln aller Veranstaltungen: fÃ¼r die Tabelle Veranstaltungen
@@ -242,7 +244,12 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
       // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
       // -> automatische Auswahl des Wettkampfs
+
+      let test : VeranstaltungDO[];
+      test = [this.veranstaltung];
+      this.onSelect(test);
       this.onView(this.wettkampf);
+
     }
   }
 
