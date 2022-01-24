@@ -1,9 +1,12 @@
-<bla-overview-dialog [config]="configActive"
+<bla-overview-dialog [hidden]=false
+                     [config]="configActive"
                      [rows]="displayRoles"
                      [loading]="loading"
+                     [searchTerm]="searchTerm"
                      (onViewClicked)="onView($event)"
                      data-cy="test"
                      (onEditClicked)="onEdit($event)"
-                     (onDeleteClicked)="onDelete($event)">
+                     (onDeleteClicked)="onDelete($event)"
+                     (onSearchClicked)="findBySearch($event)" >
 
 </bla-overview-dialog>

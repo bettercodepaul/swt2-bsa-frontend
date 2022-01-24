@@ -44,6 +44,24 @@ export class WettkampfklassenDataProviderService  extends DataProviderService {
         });
     });
   }
+
+  public findBySearch(searchTerm: string): Promise<BogenligaResponse<WettkampfKlasseDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return (searchTerm === "" || searchTerm === null)
+      ? this.findAll()
+      : new Promise( (resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('search/' + searchTerm).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+              (error.status === 0)
+                ? reject({result: RequestResult.CONNECTION_PROBLEM})
+                : reject({result: RequestResult.FAILURE});
+            });
+      });
+  }
   public findById(id: string | number): Promise<BogenligaResponse<WettkampfKlasseDO>> {
     // return promise
     // sign in success -> resolve promise
