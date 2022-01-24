@@ -133,6 +133,22 @@ export class UserDataProviderService extends DataProviderService {
     });
   }
 
+  public findBySearch(searchTerm: string): Promise<BogenligaResponse<UserRolleDO[]>> {
+    return (searchTerm === "" || searchTerm === null)
+      ? this.findAll()
+      : new Promise( (resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('search/' + searchTerm).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayUserRolle(data)});
+            }, (error: HttpErrorResponse) => {
+              (error.status === 0)
+                ? reject({result: RequestResult.CONNECTION_PROBLEM})
+                : reject({result: RequestResult.FAILURE});
+            });
+      });
+
+  }
+
 
   public findUserRoleById(id: string | number): Promise<BogenligaResponse<UserRolleDO[]>> {
     // return promise
