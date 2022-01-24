@@ -43,7 +43,6 @@ const NOTIFACTION_SCHUETZE = 'schuetze';
 })
 export class SchusszettelComponent implements OnInit {
 
-
   match1: MatchDOExt;
   match2: MatchDOExt;
   dirtyFlag: boolean;
@@ -120,6 +119,7 @@ export class SchusszettelComponent implements OnInit {
     // this.initSchuetzen();
     this.initSchuetzenMatch1();
     this.initSchuetzenMatch2();
+
     this.route.params.subscribe((params) => {
       if (!isUndefined(params['match1id']) && !isUndefined(params['match2id'])) {
         const match1id = params['match1id'];
@@ -135,10 +135,60 @@ export class SchusszettelComponent implements OnInit {
           userAction:  NotificationUserAction.PENDING
         });
 
+
         this.schusszettelService.findMatches(match1id, match2id)
             .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
+
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
+
+              /**
+               * Limits the Schützen of match 1 to 3 and each passe-array
+               * for each Schütze to 5
+               * Only a maximum of 15 passe for each match will be possible
+               */
+
+              if(this.match1.schuetzen.length != 0) {
+
+                if (this.match1.schuetzen.length > 3) {
+                  for (let i = this.match1.schuetzen.length; i > 3; i--) {
+                    this.match1.schuetzen.pop();
+                  }
+                }
+
+                for (let i = 0; i < 3; i++) {
+                  if (this.match1.schuetzen[i].length > 5 && this.match1.schuetzen[i].length != 0) {
+                    for (let j = this.match1.schuetzen[i].length; j > 5; j--) {
+                      this.match1.schuetzen[i].pop();
+                    }
+                  }
+                }
+              }
+                /**
+                 * Limits the Schützen of match 2 to 3 and each passe-array
+                 * for each Schütze to 5
+                 * Only a maximum of 15 passe for each match will be possible
+                 */
+              if(this.match2.schuetzen.length != 0){
+
+                if(this.match2.schuetzen.length > 3){
+                  for(let i=this.match2.schuetzen.length; i>3; i--){
+                    this.match2.schuetzen.pop();
+                  }
+                }
+
+                for( let i= 0; i < 3; i++) {
+                  if(this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length != 0) {
+                    for(let j = this.match2.schuetzen[i].length; j > 5; j--) {
+                      this.match2.schuetzen[i].pop();
+                    }
+                  }
+                }
+              }
+
+
+
+
               console.log('match1', this.match1);
               console.log('match2', this.match2);
               let shouldInitSumSatz = true;
@@ -181,12 +231,13 @@ export class SchusszettelComponent implements OnInit {
 
       }
     });
+    /*
     this.getAllMannschaften();
     this.getAllVerein();
     this.getAllPasse();
     this.getAllWettkaempfe();
     this.getAllVeranstaltungen();
-
+    */
   }
 
   /**
@@ -511,8 +562,8 @@ export class SchusszettelComponent implements OnInit {
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
             this.match1 = data.payload[0];
             this.match2 = data.payload[1];
-            this.checkSchuetze(this.match1);
-            this.checkSchuetze(this.match2);
+            //this.checkSchuetze(this.match1);
+            //this.checkSchuetze(this.match2);
             // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
             this.ngOnInit();
             this.notificationService.showNotification({
@@ -623,6 +674,50 @@ export class SchusszettelComponent implements OnInit {
 
 
   }
+
+
+  previous() {
+
+    // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
+    if (this.dirtyFlag === true) {
+      // TODO TExte in json.de anlegen
+      const notification: Notification = {
+        id:          NOTIFICATION_WEITER_SCHALTEN,
+        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        severity:    NotificationSeverity.QUESTION,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.YES_NO,
+        userAction:  NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.dirtyFlag = false;
+              this.matchProvider.previousPair(this.match1.id)
+                  .then((data) => {
+                    if (data.payload.length === 2) {
+                      this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                    }
+                  });
+            }
+          });
+      this.notificationService.showNotification(notification);
+
+    } else {
+      // nächste Matches bestimmen --> schusszettel-service --> Backend-Call --> zwei IDs
+      this.matchProvider.previousPair(this.match1.id)
+          .then((data) => {
+            if (data.payload.length === 2) {
+              this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+            }
+          });
+    }
+
+
+  }
+
 
   trackByIndex(index: number, obj: any): any {
     return index;

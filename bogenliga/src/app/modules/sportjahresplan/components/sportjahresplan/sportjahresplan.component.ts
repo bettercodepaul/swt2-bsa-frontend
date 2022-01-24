@@ -33,6 +33,7 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 
 
 
+
 @Component({
   selector:    'bla-sportjahresplan',
   templateUrl: './sportjahresplan.component.html',
@@ -84,7 +85,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   public loadingYears = true;
   public availableYears : SportjahrVeranstaltungDO[];
-  private newestYear: number;
+
+
 
 
 
@@ -114,6 +116,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         console.log('WettkampfID:', this.wettkampfId);
 
 
+
         // Ermitteln des Wettkampfs: fÃ¼r automatische Auswahl
         // Ermitteln aller Veranstaltungen: fÃ¼r die Tabelle Veranstaltungen
         // Ermitteln der Veranstaltung des aktuellen Wettkampfs: fÃ¼r die Ausgabe unter der Tabelle "Veranstaltungen",
@@ -124,6 +127,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         // die Funktionen dazu werden nach der erfolgreichen Ermittlung des Wettkampfs aufgerufen
         // im Anschluss wird der Wettkampf automatisch aufgerufen
         // im Falle einer nicht erfolgreichen Ermittlung werden nur alle Veranstaltungen ermittelt, damit diese in der Tabelle "Veranstaltung" angezeigt werden kÃ¶nnen
+        this.findAvailableYears();
+
         this.LoadWettkampf();
 
         this.visible = false;
@@ -241,15 +246,48 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
       // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
       // -> automatische Auswahl des Wettkampfs
+
+
+
+
+      console.log('Sportjahr der uebergebenen Veranstaltung: '+this.veranstaltung.sportjahr);
+      console.log('Anz der Elem in availableYears: '+this.availableYears.length);
+      let year : SportjahrVeranstaltungDO;
+      for(let sportjahr of this.availableYears){
+        if (sportjahr.sportjahr == this.veranstaltung.sportjahr){
+          year = sportjahr
+        }
+      }
+
+
+
+      let verDOs : VeranstaltungDO[];
+      verDOs = [this.veranstaltung];
+
+      this.onSelectYear(year);
+      this.onSelect(verDOs);
       this.onView(this.wettkampf);
+
     }
   }
 
+  //Ermittelt die entsprechenden Veranstaltungen wenn ein Jahr aus dem Drop-Down Menü ausgewählt wird.
   public onSelectYear($event: SportjahrVeranstaltungDO): void {
-    this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
-        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response); })
-        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
+    if (!this.wettkampfIdEnthalten){
+      this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
+          .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response); })
+          .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
+    }else{ // Sollte eine id enthalten sein darf loadVeranstaltungenSuccess nicht verwendet werden, da sonst eine Enlosschleife entsteht
+      this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
+          .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+            this.veranstaltungen = response.payload;
+            this.loadingVeranstaltungen = false;
+          })
+          .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
+    }
+
   }
+
 
   // when a Veranstaltung gets selected from the list
   // load LigaTabelle
@@ -534,8 +572,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         counter++;
       }
     console.log('Bin in loadVeranstaltungenYearSuccess!');
-    //Lade die Veranstaltungen des neusten Jahres
-    this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+      if(!this.wettkampfIdEnthalten){
+        //Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde
+        this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+      }
+
   }}
 
   // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
