@@ -141,4 +141,19 @@ export class MatchProviderService extends DataProviderService {
     }));
   }
 
+  public previousPair(matchId: number): Promise<BogenligaResponse<Array<number>>> {
+    return new Promise(((resolve, reject) => {
+      this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('previousPair').build())
+          .then((data: Array<number>) => {
+            resolve({result: RequestResult.SUCCESS, payload: data});
+          }, (error: HttpErrorResponse) => {
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    }));
+  }
+
 }
