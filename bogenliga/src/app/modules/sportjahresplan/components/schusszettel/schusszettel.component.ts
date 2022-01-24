@@ -562,8 +562,8 @@ export class SchusszettelComponent implements OnInit {
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
             this.match1 = data.payload[0];
             this.match2 = data.payload[1];
-            this.checkSchuetze(this.match1);
-            this.checkSchuetze(this.match2);
+            //this.checkSchuetze(this.match1);
+            //this.checkSchuetze(this.match2);
             // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
             this.ngOnInit();
             this.notificationService.showNotification({
