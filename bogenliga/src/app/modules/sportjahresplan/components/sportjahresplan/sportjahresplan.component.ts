@@ -273,7 +273,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
             this.veranstaltungen = response.payload;
             this.loadingVeranstaltungen = false;
           })
-          .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
+          .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenYearsFailure(response); });
 
   }
 
