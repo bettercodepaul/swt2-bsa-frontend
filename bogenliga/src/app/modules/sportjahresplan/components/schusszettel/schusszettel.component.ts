@@ -677,7 +677,6 @@ export class SchusszettelComponent implements OnInit {
 
 
   previous() {
-
     // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
     if (this.dirtyFlag === true) {
       // TODO TExte in json.de anlegen
