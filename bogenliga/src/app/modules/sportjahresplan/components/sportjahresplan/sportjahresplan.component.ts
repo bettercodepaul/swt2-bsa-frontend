@@ -104,10 +104,6 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   ngOnInit() {
 
-
-
-
-
     this.route.params.subscribe((params) => {
 
       if (!isUndefined(params['wettkampfId'])) {
@@ -245,14 +241,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       // dieses besteht aus dem Namen und dem Sportjahr der Veranstaltung
       this.currentVeranstaltungName = this.veranstaltung.name + ' ' + this.veranstaltung.sportjahr;
 
-      // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
-      // -> automatische Auswahl des Wettkampfs
-
-
-
-
-
       let year : SportjahrVeranstaltungDO;
+      //Suche nach dem passendem jahr und setze this.selItemId entsprechend.
       for(let sportjahr of this.availableYears){
         if (sportjahr.sportjahr == this.veranstaltung.sportjahr){
           this.selItemId = sportjahr.id;
@@ -260,13 +250,17 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
         }
       }
 
-
-
       let verDOs : VeranstaltungDO[];
       verDOs = [this.veranstaltung];
 
+      //Auswahl des passenden Jahres
       this.onSelectYear(year);
+
+      //Auswahl der richtigen Veranstaltung
       this.onSelect(verDOs);
+
+      // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
+      // -> automatische Auswahl des Wettkampfs
       this.onView(this.wettkampf);
 
     }
@@ -274,18 +268,12 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   //Ermittelt die entsprechenden Veranstaltungen wenn ein Jahr aus dem Drop-Down Menü ausgewählt wird.
   public onSelectYear($event: SportjahrVeranstaltungDO): void {
-    if (!this.wettkampfIdEnthalten){
-      this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
-          .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response); })
-          .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
-    }else{ // Sollte eine id enthalten sein darf loadVeranstaltungenSuccess nicht verwendet werden, da sonst eine Enlosschleife entsteht
       this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
           .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
             this.veranstaltungen = response.payload;
             this.loadingVeranstaltungen = false;
           })
           .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
-    }
 
   }
 
