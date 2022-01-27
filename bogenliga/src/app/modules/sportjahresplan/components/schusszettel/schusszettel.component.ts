@@ -562,6 +562,8 @@ export class SchusszettelComponent implements OnInit {
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
             this.match1 = data.payload[0];
             this.match2 = data.payload[1];
+            //Aufruf der checkSchuetze Funktionen ist unnötig, da bei der Initialisierung des Schusszettels schon überprüft wird, welche Schützen schießen dürfen.
+            //Außerdem ist die Funktion durch BSAPP-929 so verändert worden, dass dadurch ein Bug entsteht.
             //this.checkSchuetze(this.match1);
             //this.checkSchuetze(this.match2);
             // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
@@ -677,7 +679,6 @@ export class SchusszettelComponent implements OnInit {
 
 
   previous() {
-
     // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
     if (this.dirtyFlag === true) {
       // TODO TExte in json.de anlegen
