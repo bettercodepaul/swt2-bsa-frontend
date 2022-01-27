@@ -85,6 +85,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   public loadingYears = true;
   public availableYears : SportjahrVeranstaltungDO[];
+  public selItemId : number;
 
 
 
@@ -102,10 +103,6 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   }
 
   ngOnInit() {
-
-
-
-
 
     this.route.params.subscribe((params) => {
 
@@ -244,28 +241,26 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       // dieses besteht aus dem Namen und dem Sportjahr der Veranstaltung
       this.currentVeranstaltungName = this.veranstaltung.name + ' ' + this.veranstaltung.sportjahr;
 
-      // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
-      // -> automatische Auswahl des Wettkampfs
-
-
-
-
-      console.log('Sportjahr der uebergebenen Veranstaltung: '+this.veranstaltung.sportjahr);
-      console.log('Anz der Elem in availableYears: '+this.availableYears.length);
       let year : SportjahrVeranstaltungDO;
+      //Suche nach dem passendem jahr und setze this.selItemId entsprechend.
       for(let sportjahr of this.availableYears){
         if (sportjahr.sportjahr == this.veranstaltung.sportjahr){
+          this.selItemId = sportjahr.id;
           year = sportjahr
         }
       }
 
-
-
       let verDOs : VeranstaltungDO[];
       verDOs = [this.veranstaltung];
 
+      //Auswahl des passenden Jahres
       this.onSelectYear(year);
+
+      //Auswahl der richtigen Veranstaltung
       this.onSelect(verDOs);
+
+      // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
+      // -> automatische Auswahl des Wettkampfs
       this.onView(this.wettkampf);
 
     }
@@ -273,18 +268,12 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   //Ermittelt die entsprechenden Veranstaltungen wenn ein Jahr aus dem Drop-Down Menü ausgewählt wird.
   public onSelectYear($event: SportjahrVeranstaltungDO): void {
-    if (!this.wettkampfIdEnthalten){
-      this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
-          .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenSuccess(response); })
-          .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
-    }else{ // Sollte eine id enthalten sein darf loadVeranstaltungenSuccess nicht verwendet werden, da sonst eine Enlosschleife entsteht
       this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
           .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
             this.veranstaltungen = response.payload;
             this.loadingVeranstaltungen = false;
           })
-          .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenFailure(response); });
-    }
+          .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {this.loadVeranstaltungenYearsFailure(response); });
 
   }
 
@@ -573,7 +562,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       }
     console.log('Bin in loadVeranstaltungenYearSuccess!');
       if(!this.wettkampfIdEnthalten){
-        //Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde
+        //Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde und setze die Id des vorausgewählten
+        // Jahres auf die id des neusten Jahres
+        this.selItemId = this.availableYears[0].id;
         this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
       }
 
