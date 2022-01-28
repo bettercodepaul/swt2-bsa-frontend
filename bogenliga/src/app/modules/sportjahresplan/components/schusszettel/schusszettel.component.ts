@@ -358,122 +358,6 @@ export class SchusszettelComponent implements OnInit {
     return maxMid;
   }
 
-  private getInfosToCheckSchuetze(match: MatchDOExt): void {
-    // Ermittlung der Mannschaft, der Schützen, des Vereins, der Mannschaften des Vereins von match1
-    // Ermittlung des Wettkampfs und der Veranstaltung
-
-    this.matchMannschaft = this.mannschaften.find((mannschaft) => mannschaft.id === match.mannschaftId);
-    this.matchAllPasseMannschaft = this.allPasse.filter((passe) => passe.mannschaftId === this.matchMannschaft.id);
-    this.wettkampf = this.allWettkaempfe.find((wettkampf) => wettkampf.id === match.wettkampfId);
-    this.veranstaltung = this.allVeranstaltungen.find((veranstaltung) => veranstaltung.id === this.matchMannschaft.veranstaltungId);
-    for (let i = 0; i < match.schuetzen.length; i++) {
-      this.matchAllPasse[i] = match.schuetzen[i][0];
-    }
-    // Vergleich aller Schützen mit den Schützen von match1
-    // Ermittlung, ob der Schütze bereits geschossen hat, wann (Wettkampftag) und wo (Veranstaltung/Liga) und wie oft
-
-    // ist es derselbe Wettkampftag gewesen?
-    this.selberWettkampftag.length = this.matchAllPasse.length;
-    // und welche Veranstaltung war es
-    this.selberWettkampftagVeranstaltung.length = this.matchAllPasse.length;
-
-    // Anzahl an Veranstaltungen orientiert sich der Einfachheit halber an der höchsten VeranstaltungsId
-    // 2 dimensionales Array für jeden Schützen von match1 und jede Mannschaft, mit der er möglicherweise
-    // teilgenommen hat, wird die Anzahl an Wettkampftagen, an denen geschossen wurde, gespeichert
-    const maxMannschaftId = this.maxMannschaftsId();
-    for (let i = 0; i < this.matchAllPasse.length; i++) {
-      this.anzahlAnTagenMannschaft[i] = [];
-      for (let j = 0; j < maxMannschaftId; j++) {
-        this.anzahlAnTagenMannschaft[i][j] = 0;
-      }
-    }
-  }
-
-  private getBereitsgeschossenToCheckSchuetze(): void {
-    // Ermittlung der Anzahl der Wettkampftage
-    this.allPasse.forEach((passe) => {
-      for (let i = 0; i < this.matchAllPasse.length; i++) {
-
-        // Aussortierung aller Schützen, die nicht Teil von match1 sind
-        if (passe.dsbMitgliedId === this.matchAllPasse[i].dsbMitgliedId) {
-
-          // Ermittlung des Wettkampfs
-          this.vorherigerWettkampf = this.allWettkaempfe.find((wettkampf) => passe.wettkampfId === wettkampf.id);
-
-          // Ermittlung der Veranstaltung
-          this.vorherigeVeranstaltung = this.allVeranstaltungen.find((veranstaltung) => veranstaltung.id === this.vorherigerWettkampf.wettkampfVeranstaltungsId);
-
-          // Aussortierung aller Veranstaltungen von vorherigen Sportjahren
-          if (this.vorherigeVeranstaltung.sportjahr === this.veranstaltung.sportjahr) {
-
-            // Ermittlung, ob es derselbe Wettkampftag war
-            if (this.vorherigerWettkampf.wettkampfTag === this.wettkampf.wettkampfTag) {
-              this.selberWettkampftag[i] = true;
-              this.selberWettkampftagVeranstaltung[i] = this.vorherigeVeranstaltung;
-            }
-
-            // Zuweisung der Teilnahme an der Veranstaltung an anzahlAnTagenMannschaft
-            this.anzahlAnTagenMannschaft[i][passe.mannschaftId] += 1;
-          }
-        }
-      }
-    });
-  }
-
-  private darunterLiegendeMannschaftenToCheckSchuetze(mannschaftsId: number, passe: PasseDO, positionMatchAllPasse: number): void {
-    const mannschaft = this.mannschaften.find((mannschaftVal) => mannschaftVal.id === mannschaftsId);
-    for (const mannschaftValue of this.mannschaften) {
-      if (mannschaftValue.vereinId === mannschaft.vereinId && mannschaftValue.id !== mannschaftsId) {
-        if (mannschaftValue.nummer > mannschaft.nummer && mannschaft.veranstaltungId !== mannschaftValue.veranstaltungId) {
-          this.allPasse.forEach((passeDoClass) => {
-            if (passeDoClass.dsbMitgliedId === passe.dsbMitgliedId) {
-              if (this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftValue.id] >= 1) {
-                this.passeAndererTag = passeDoClass.dsbMitgliedId;
-                this.andererTagAnzahl = this.anzahlAnTagenMannschaft[positionMatchAllPasse][mannschaftsId];
-                this.andererTagVeranstaltung = this.veranstaltung;
-                console.log('Popup: ', this.passeAndererTag, 'hat bereits ', this.andererTagAnzahl, ' Mal in der', this.andererTagVeranstaltung.name);
-                this.veranstaltungVorherig = this.allVeranstaltungen.find((veranstaltung) => mannschaftValue.veranstaltungId === veranstaltung.id);
-                this.veranstaltungGegenwaertig = this.allVeranstaltungen.find((veranstaltung) => mannschaft.veranstaltungId === veranstaltung.id);
-                this.ligaleiterAktuelleLiga = this.veranstaltungGegenwaertig.ligaleiterEmail;
-                this.ligaleiterVorherigeLiga = this.veranstaltungVorherig.ligaleiterEmail;
-                this.savepopAndererTag();
-              }
-            }
-          });
-        }
-      }
-    }
-  }
-
-  private checkSchuetze(match: MatchDOExt): void {
-    this.getInfosToCheckSchuetze(match);
-    this.getBereitsgeschossenToCheckSchuetze();
-
-    // Kontrolle, ob die die Regeln eingehalten wurden
-    /*
-    for (let i = 0; i < this.matchAllPasse.length; i++) {
-
-      // Hat der Schütze 2x in einer Liga geschossen -> darf er nicht mehr in einer Liga darunter schießen
-      // hat er bereits in einer Liga darunter geschossen, werden die Ergebnisse auf verloren gesetzt
-      // -> Email an den Ligaleiter
-
-      if (this.anzahlAnTagenMannschaft[i][match.mannschaftId] >= 2) {
-
-        this.darunterLiegendeMannschaftenToCheckSchuetze(match.mannschaftId, this.matchAllPasse[i], i);
-      }
-
-
-      // es ist nicht erlaubt, dass der Schütze 2x am selben Wettkampftag teilnimmt
-      if (this.selberWettkampftag[i] === true
-        && this.selberWettkampftagVeranstaltung[i].id !== this.veranstaltung.id) {
-        this.passeSelberTag = this.matchAllPasse[i].dsbMitgliedId;
-        this.selberTagVeranstaltung = this.selberWettkampftagVeranstaltung[i].name;
-        console.log('Popup: ', this.passeSelberTag, 'hat bereits diesen Wettkampftag in der', this.selberTagVeranstaltung, 'geschossen');
-        this.savepopSelberTag();
-      }
-    }*/
-  }
-
   savepopSelberTag() {
     this.popupSelberTag = true;
   }
@@ -562,10 +446,7 @@ export class SchusszettelComponent implements OnInit {
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
             this.match1 = data.payload[0];
             this.match2 = data.payload[1];
-            //Aufruf der checkSchuetze Funktionen ist unnötig, da bei der Initialisierung des Schusszettels schon überprüft wird, welche Schützen schießen dürfen.
-            //Außerdem ist die Funktion durch BSAPP-929 so verändert worden, dass dadurch ein Bug entsteht.
-            //this.checkSchuetze(this.match1);
-            //this.checkSchuetze(this.match2);
+            
             // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
             this.ngOnInit();
             this.notificationService.showNotification({
