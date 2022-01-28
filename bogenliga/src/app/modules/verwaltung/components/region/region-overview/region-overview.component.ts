@@ -28,13 +28,16 @@ export class RegionOverviewComponent extends CommonComponentDirective implements
 
   public config = REGION_OVERVIEW_CONFIG;
   public rows: TableRow[];
+  public searchTerm = 'searchTermRegion';
 
   constructor(private regionDataProvider: RegionDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 
   ngOnInit() {
-    this.loadTableRows();
+    this.loading = true;
+    if (!localStorage.getItem(this.searchTerm))
+      this.loadTableRows();
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
@@ -80,9 +83,13 @@ export class RegionOverviewComponent extends CommonComponentDirective implements
   }
 
   private loadTableRows() {
-    this.loading = true;
-
     this.regionDataProvider.findAll()
+        .then((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsFailure(response));
+  }
+
+  public findBySearch($event: string) {
+    this.regionDataProvider.findBySearch($event)
         .then((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
