@@ -40,6 +40,9 @@ jobs:
       - name: NPM install (workaround)
         run: npm install
 
+      - name: NPM install Angular CLI
+        run: npm install -g @angular/cli 
+
       - name: Build Angular
         run: ng build --deployUrl="/swt2-bsa-frontend/" --baseHref="https://bettercodepaul.github.io/swt2-bsa-frontend/" --prod --configuration=offline
 
