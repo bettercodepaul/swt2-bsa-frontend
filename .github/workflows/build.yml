@@ -32,43 +32,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Change dir
-        run: cd bogenliga   
+            ${{ runner.os }}-   
 
       - name: NPM install
-        run: npm install
-
-      - name: NPM install (workaround)
-        run: npm install
-
-      - name: NPM install Angular CLI
-        run: npm install -g @angular/cli 
+        working-directory: ./bogenliga
+        run: |
+          npm install
+          npm install
 
       - name: Build Angular
+        working-directory: ./bogenliga
         run: ng build --deployUrl="/swt2-bsa-frontend/" --baseHref="https://bettercodepaul.github.io/swt2-bsa-frontend/" --prod --configuration=offline
 
       - name: Show files
-        run: ls -la
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: dist/bogenliga
-
-  deploy:
-    name: Deploy to DEV
-    needs: [ build ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-
-      - name: Show files
+        working-directory: ./bogenliga
         run: ls -la
 
       - name: Deploy on GitHub Pages
@@ -78,7 +55,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: . # The folder the action should deploy.
-          TARGET_FOLDER: dist/bogenliga
+          TARGET_FOLDER: ./bogenliga/dist/bogenliga
           CLEAN: true # Automatically remove deleted files from the deploy branch
           #COMMIT_MESSAGE: 'Deploy commit $GITHUB_SHA'
           SILENT: true
