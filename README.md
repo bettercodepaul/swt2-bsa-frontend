@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/exxcellent/swt2-bsa-frontend.svg?branch=master)](https://travis-ci.org/exxcellent/swt2-bsa-frontend)
-
 # swt2-bsa-frontend
 SWT2 - Bogenliga Application - Angular Oberfläche
 
