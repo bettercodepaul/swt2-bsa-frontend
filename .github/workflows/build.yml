@@ -47,7 +47,9 @@ jobs:
 
       - name: Show files
         working-directory: ./bogenliga
-        run: ls -la
+        run: |
+          ls -la
+          ls -la ./dist
 
       - name: Deploy on GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
@@ -55,8 +57,8 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: . # The folder the action should deploy.
-          TARGET_FOLDER: ./bogenliga/dist/bogenliga
+          FOLDER: ./bogenliga/dist/bogenliga # The folder the action should deploy.
+          TARGET_FOLDER: dist
           CLEAN: true # Automatically remove deleted files from the deploy branch
           #COMMIT_MESSAGE: 'Deploy commit $GITHUB_SHA'
           SILENT: true
