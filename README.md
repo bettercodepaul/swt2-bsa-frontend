@@ -1,7 +1,7 @@
 # swt2-bsa-frontend
 SWT2 - Bogenliga Application - Angular Oberfläche
 
-Ein Beispiel ist unter [GitHub Demo Seite](https://exxcellent.github.io/swt2-bsa-frontend/) verfügbar.
+Ein Beispiel ist unter [GitHub Demo Seite](https://bettercodepaul.github.io/swt2-bsa-frontend/) verfügbar.
 
 ## Einstieg
 
