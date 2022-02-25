@@ -30,6 +30,8 @@ import {WettkampfComponent} from '@wettkampf/components';
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+import { OnOfflineService } from '@shared/services';
+import { WettkampfOfflineSyncService } from '@wettkampf/services/wettkampf-offline-sync-service';
 
 
 
@@ -95,7 +97,9 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
               private wettkampfDataProvider: WettkampfDataProviderService,
               private matchDataProvider: MatchDataProviderService,
               private passeDataProviderService: PasseDataProviderService,
-              private matchProvider: MatchProviderService) {
+              private matchProvider: MatchProviderService,
+              private onOfflineService: OnOfflineService,
+              private wettkampfOfflineSyncService: WettkampfOfflineSyncService) {
     super();
   }
 
@@ -142,7 +146,11 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
 
   }
 
-
+  public onButtonGoOfflineClick(): void {
+    console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
+    this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
+    this.onOfflineService.goOffline();
+  }
 
 
 
