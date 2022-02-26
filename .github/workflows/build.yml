@@ -1,0 +1,64 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-   
+
+      - name: NPM install
+        working-directory: ./bogenliga
+        run: |
+          npm install
+          npm install
+          npm install -g @angular/cli 
+
+      - name: Build Angular
+        working-directory: ./bogenliga
+        run: ng build --deployUrl="/swt2-bsa-frontend/" --baseHref="https://bettercodepaul.github.io/swt2-bsa-frontend/" --prod --configuration=offline
+
+      - name: Show files
+        working-directory: ./bogenliga
+        run: |
+          ls -la
+          ls -la ./dist
+
+      - name: Deploy on GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        if: success()
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FOLDER: ./bogenliga/dist/bogenliga # The folder the action should deploy.
+          BRANCH: gh-pages # The branch the action should deploy to.
+          TARGET_FOLDER: .
+          CLEAN: true # Automatically remove deleted files from the deploy branch
+          #COMMIT_MESSAGE: 'Deploy commit $GITHUB_SHA'
+          SILENT: true
