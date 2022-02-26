@@ -1,11 +1,12 @@
 /**
  * Testblock describing all anonymous user tests as specified on Confluence
  */
+
 describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
    */
-  it('Testfall 1: Home aufrufen / Wettkampftabelle gefüllt', function () {
+  it('Home aufrufen / Wettkampftabelle gefüllt', function () {
     cy.visit('http://localhost:4200/')
     cy.url().should('include', '#/home')
   })
@@ -13,7 +14,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test presses the login button on the home page and checks whether the login page opens
    */
-  it('Testfall 2: Login möglich / Fenster öffnet sich', function() {
+  it('Login möglich / Fenster öffnet sich', function() {
     cy.visit('http://localhost:4200/')
     cy.get('[data-cy=login-button]').click()
     cy.url().should('include', '#/user/login')
@@ -22,7 +23,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the sidebar and clicks on the "REGIONEN" tab and checks if the url has changed successfully
    */
-  it('Testfall 3: Anzeige Regionen', function() {
+  it('Anzeige Regionen', function() {
     cy.get('[data-cy=sidebar-regionen-button]').click()
     cy.url().should('include', '#/regionen')
   })
@@ -30,16 +31,15 @@ describe('Anonyme User tests', function () {
   /**
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
    */
-  it('Testfall 4: Sunburst details anzeigen', function () {
+  it('Sunburst details anzeigen', function () {
     cy.get(':nth-child(2) > .main-arc').click()
     cy.wait(1000)
     cy.get('#details')
   })
-
   /**
    * This test checks if after an item has been selected the website redirected to the correct location
    */
-  it('Testfall 5: Weiterleitung Ligatabelle', function () {
+  it('Weiterleitung Ligatabelle', function () {
     cy.get('#ligen > bla-selectionlist > #undefined').select(0)
     cy.wait(2000)
     cy.url().should('include', '#/ligatabelle')
@@ -49,7 +49,7 @@ describe('Anonyme User tests', function () {
    * This test opens the sidebar, selects the "REGIONEN" section, selects an item from the list and checks if the website
    * redirected to the correct item's overview page.
    */
-  it('Testfall 6: Weiterleitung Vereinseite', function () {
+  it('Weiterleitung Vereinseite', function () {
     cy.get('[data-cy=sidebar-regionen-button]').click()
     cy.get(':nth-child(11) > .main-arc').click()
     cy.wait(2000)
@@ -61,7 +61,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the sidebar and clicks on the "VEREINE" tab and checks if the url has changed successfully
    */
-  it('Testfall 7: Anzeige Vereine', function () {
+  it('Anzeige Vereine', function () {
     cy.get('[data-cy=sidebar-vereine-button]').click()
     cy.url().should('include', '#/vereine')
   })
@@ -69,7 +69,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if after typing in a search term the list shrinks in size accordingly
    */
-  it('Testfall 8: Vereinsliste Verringert sich', function() {
+  it('Vereinsliste Verringert sich', function() {
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('SV')
     cy.get('[data-cy=quicksearch-liste]').should('have.length.at.least', 1)
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('X')
@@ -79,7 +79,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the sidebar and clicks on the "LIGATABELLE" tab and checks if the url has changed successfully
    */
-  it('Testfall 9: Anzeige Ligatabelle', function () {
+  it('Anzeige Ligatabelle', function () {
     cy.get('[data-cy=sidebar-ligatabelle-button]').click()
     cy.url().should('include', '#/ligatabelle')
   })
@@ -87,7 +87,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if a valid search term yields the expected results from the website
    */
-  it('Testfall 10: Suchfeld Ligatabelle', function() {
+  it('Suchfeld Ligatabelle', function() {
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('Württemberg')
     cy.wait(1000)
     cy.get('[data-cy=quicksearch-liste]').should('contain.text', 'Recurve')
@@ -97,7 +97,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the sidebar and clicks on the "WETTKAEMPFE" tab and checks if the url has changed successfully
    */
-  it('Testfall 11: Anzeige Wettkampf Ergebnisse', function() {
+  it('Anzeige Wettkampf Ergebnisse', function() {
     cy.get('[data-cy=sidebar-wettkampf-button]').click()
     cy.url().should('include', '#/wettkaempfe')
   })
@@ -105,7 +105,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if the shown results contain expected data
    */
-  it('Testfall 12: Ergebnis anzeigen', function() {
+  it('Ergebnis anzeigen', function() {
     cy.wait(10000)
     cy.contains('SWT2')
     cy.wait(15000)
@@ -116,7 +116,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if the selected item of a team shows the expected data
    */
-  it('Testfall 13: Ergebnis anzeigen einzelner Verein', function() {
+  it('Ergebnis anzeigen einzelner Verein', function() {
     cy.wait(1000)
     cy.get('#vereine').select(0)
     cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
@@ -126,7 +126,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test selects a single statistic and checks if the required data is present
    */
-  it('Testfall 14: Ergebnis anzeigen Einzelstatistik', function() {
+  it('Ergebnis anzeigen Einzelstatistik', function() {
     cy.get('[data-cy=einzelstatistik-anzeigen-button]').click()
     cy.contains('Pfeilwert pro Match')
   })
@@ -134,7 +134,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test selects all items from the statistics and checks if the required data is present
    */
-  it('Testfall 15: Ergebnis anzeigen Gesamtstatistik', function() {
+  it('Ergebnis anzeigen Gesamtstatistik', function() {
     cy.get('[data-cy=einzelstatistik-gesamt-anzeigen-button]').click()
     cy.contains('Pfeilwert pro Jahr')
   })
@@ -147,7 +147,7 @@ describe('Admin User tests', function() {
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
-  it('Testfall 1: Login erfolgreich', function() {
+  it('Login erfolgreich', function() {
     cy.visit('http://localhost:4200/#/home')
     cy.get('[data-cy=login-button]').click()
     cy.url().should('include', '#/user/login')
@@ -158,7 +158,7 @@ describe('Admin User tests', function() {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
    */
-  it('Testfall 2: Anzeige Verwaltung', function() {
+  it('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
   })
@@ -166,7 +166,7 @@ describe('Admin User tests', function() {
   /**
    * This test lists all "DSBMitglieder" items and checks if the URI has been updated accordingly
    */
-  it('Testfall 3: Anzeige DSBMitglieder', function() {
+  it('Anzeige DSBMitglieder', function() {
     cy.wait(1000)
     cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
@@ -174,23 +174,32 @@ describe('Admin User tests', function() {
 
   /**
    * This test adds a new "DSB-Mitglied"
+   * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Testfall 6: Neues DSB-Mitglied', function() {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.get('[data-cy=detail-vorname-feld]').type('MitgliedVorname')
-    cy.get('[data-cy=detail-nachname-feld]').type('MitgliedNachname')
-    cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
-    cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('12354321')
-    cy.get('[data-cy=detail-save-button]').click()
-    cy.wait(1500)
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-    //Nicht geschaut, ob das Mitglied in der Liste vorhanden ist
+  it('Neues DSB-Mitglied', function() {
+    cy.get('body').then((body) => {
+      if (!body.text().includes('MitgliedVorname')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.get('[data-cy=detail-vorname-feld]').type('MitgliedVorname')
+        cy.get('[data-cy=detail-nachname-feld]').type('MitgliedNachname')
+        cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
+        cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('12354321')
+        cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
+        cy.wait(1500)
+        cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
+        cy.wait(1500)
+        cy.get('[data-cy=detail-save-button]').click()
+        cy.wait(1500)
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+      }
+    });
   })
+
 
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
    */
-  it('Testfall 4: Edit DSBMitglied', function() {
+  it('Edit DSBMitglied', function() {
     cy.wait(1000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.get('[data-cy=detail-vorname-feld]').click()
@@ -208,31 +217,37 @@ describe('Admin User tests', function() {
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
   })
 
-
-
-
   /**
    * This test adds a new "DSB-Kampfrichter"
+   * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Testfall 7: Neuer DSB-Kampfrichter', function() {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.get('[data-cy=detail-vorname-feld]').type('KampfrichterVorname')
-    cy.get('[data-cy=detail-nachname-feld]').type('KampfrichterNachname')
-    cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
-    cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('34563456')
-    /*
-    @TODO implement Kampfrichterlizenz once function is available for testing
-     */
-    cy.get('[data-cy=detail-save-button]').click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-    cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+  it('Neuer DSB-Kampfrichter', function() {
+    cy.get('body').then((body) => {
+      if (!body.text().includes('KampfrichterVorname')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.get('[data-cy=detail-vorname-feld]').type('KampfrichterVorname')
+        cy.get('[data-cy=detail-nachname-feld]').type('KampfrichterNachname')
+        cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
+        cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('34563456')
+        cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
+        cy.wait(1500)
+        cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
+        cy.wait(1500)
+        /*
+        @TODO implement Kampfrichterlizenz once function is available for testing
+         */
+        cy.get('[data-cy=detail-save-button]').click()
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+        cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+      }}
+    );
   })
 
   /**
    * This test deletes a single member and checks if after deletion the website redirects the user to the expected location
    */
-  it('Testfall 5: Löschen DSBMitglied', function() {
+  it('Löschen DSBMitglied', function() {
     cy.wait(1000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
@@ -242,7 +257,7 @@ describe('Admin User tests', function() {
   /**
    * This test shows the user tab in the administration
    */
-  it('Testfall 8: Anzeige User', function () {
+  it('Anzeige User', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-user-button]').click()
@@ -350,7 +365,7 @@ describe('Admin User tests', function() {
   /**
    * This test shows the "Wettkampfklassen" tab in administration
    */
-  it('Testfall 13: Anzeige Wettkampfklassen', function () {
+  it('Anzeige Wettkampfklassen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-klassen-button]').click()
     cy.url().should('include', '#/verwaltung/klassen')
@@ -359,7 +374,7 @@ describe('Admin User tests', function() {
   /**
    * This test edits a "Wettkampfklasse"
    */
-  it('Testfall 14: Wettkampfklasse bearbeiten', function () {
+  it('Wettkampfklasse bearbeiten', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.get('[data-cy=wettkampfklassen-jahrgang-bis-button]').type('1973')
     cy.get('[data-cy=wettkampfklassen-update-button]').click()
@@ -372,21 +387,26 @@ describe('Admin User tests', function() {
 
   /**
    * This test adds a new "Wettkampfklasse"
+   * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Testfall 15: Wettkampfklasse hinzufügen', function () {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.get('[data-cy=wettkampfklasse-nummer]').type('69')
-    cy.get('[data-cy=wettkampfklasse-name]').type('Testfall')
-    cy.get('[data-cy=wettkampfklassen-jahrgang-von-button]').type('2000')
-    cy.get('[data-cy=wettkampfklassen-jahrgang-bis-button]').type('1980')
-    cy.get('[data-cy=wettkampfklassen-save-button]').click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+  it('Wettkampfklasse hinzufügen', function () {
+    cy.get('body').then((body) => {
+      if (!body.text().includes('Testfall')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.get('[data-cy=wettkampfklasse-nummer]').type('69')
+        cy.get('[data-cy=wettkampfklasse-name]').type('Testfall')
+        cy.get('[data-cy=wettkampfklassen-jahrgang-von-button]').type('2000')
+        cy.get('[data-cy=wettkampfklassen-jahrgang-bis-button]').type('1980')
+        cy.get('[data-cy=wettkampfklassen-save-button]').click()
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+      }
+    });
   })
 
   /**
    * This test opens the administration table and check whether the table has any content
    */
-  it('Testfall 16: Anzeige Verwaltung Vereinsliste', function () {
+  it('Anzeige Verwaltung Vereinsliste', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -397,29 +417,34 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if it's possible to add a new club to the administration table successfully
+   * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Testfall 17: Neuen Verein anlegen', function () {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.url().should('include', '#/verwaltung/vereine/add')
-    cy.get('[data-cy=vereine-vereinsname]').click().type('CypressTest')
-    cy.get('[data-cy=vereine-vereinsnummer]').click().type('1111111111')
-    cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest')
-    cy.get('[data-cy=vereine-add-button]').click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-    cy.wait(500)
-    cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.url().should('include', '#/verwaltung')
-    cy.get('[data-cy=verwaltung-vereine-button]').click()
-    cy.url().should('include', '#/verwaltung/vereine')
-    cy.get('#undefined > tbody').should('contain.text', 'CypressTest')
-    cy.wait(200)
-    cy.get('#undefined > tbody').should('contain.text', '1111111111')
+  it('Neuen Verein anlegen', function () {
+    cy.get('body').then((body) => {
+      if (!body.text().includes('CypressTest')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.url().should('include', '#/verwaltung/vereine/add')
+        cy.get('[data-cy=vereine-vereinsname]').click().type('CypressTest')
+        cy.get('[data-cy=vereine-vereinsnummer]').click().type('1111111111')
+        cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest')
+        cy.get('[data-cy=vereine-add-button]').click()
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+        cy.wait(500)
+        cy.get('[data-cy=sidebar-verwaltung-button]').click()
+        cy.url().should('include', '#/verwaltung')
+        cy.get('[data-cy=verwaltung-vereine-button]').click()
+        cy.url().should('include', '#/verwaltung/vereine')
+        cy.get('#undefined > tbody').should('contain.text', 'CypressTest')
+        cy.wait(200)
+        cy.get('#undefined > tbody').should('contain.text', '1111111111')
+      }
+    });
   })
 
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
-  it('Testfall 18: Editieren eines Vereins', function () {
+  it('Editieren eines Vereins', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
     cy.get('[data-cy=vereine-vereinswebsite]').focus().clear()
@@ -440,26 +465,32 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if it is possible to add a new team to a club successfully
+   * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Testfall 19: Neue Vereins-Mannschaft anlegen', function () {
+  it('Neue Vereins-Mannschaft anlegen', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
-    cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
-    cy.wait(1000)
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('7')
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-    cy.wait(1500)
-    cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
-    cy.wait(1000)
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-    cy.wait(1000)
-    cy.contains('7')
+
+    cy.get('body').then((body) => {
+      if (!body.text().includes('69')) {
+        cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
+        cy.wait(1000)
+        cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
+        cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
+        cy.wait(1500)
+        cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
+        cy.wait(1000)
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+        cy.wait(1000)
+        cy.contains('69')
+      }
+    });
   })
 
   /**
    * The test checks if it's possible to edit a team successfully
    */
-  it('Testfall 20: Vereins-Mannschaft bearbeiten', function () {
+  it('Vereins-Mannschaft bearbeiten', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -469,7 +500,7 @@ describe('Admin User tests', function() {
     cy.wait(500)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(500)
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('6')
+    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().clear().type('76')
     cy.wait(500)
     cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
     cy.wait(500)
@@ -483,7 +514,7 @@ describe('Admin User tests', function() {
   /**
    * The test checks if it's possible to delete a team successfully
    */
-  it('Testfall 21: Vereins-Mannschaft löschen', function () {
+  it('Vereins-Mannschaft löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -501,7 +532,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to delete a club successfully
    */
-  it('Testfall 22: Einen Verein löschen', function () {
+  it('Einen Verein löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -520,97 +551,218 @@ describe('Admin User tests', function() {
   /**
    * This test checks if the League-table is filled.
    */
-  // it('Testfall 23: Alle Ligen zu sehen', function() {
-  //   cy.get('#sidebarCollapseBottom').click()
-  //   cy.get('div > .list-unstyled > li > .sidebar-text-toggle > .navbar-toggler').click()
-  //   cy.get('.navbar-nav > .nav-item:nth-child(5) > .nav-link > bla-sidebar-subitem > .sidebar-subink').click()
-  //   cy.get('#sidebarCollapseBottom').click()
-  //   cy.wait(4000)
-  //   cy.get('#undefined').should('have.length.at.least', 1)
-  // })
-  //
-  // /**
-  //  * This test adds a League and checks if it gets added.
-  //  */
-  // it('Testfall 24: Liga Hinzufügen', function() {
-  //   cy.get('.dialog-content > .overview-dialog-header > .overview-dialog-add > .btn > span').click()
-  //   cy.get('.dialog-content > #ligaForm > .form-group > .col-sm-9 > #ligaName').type('SWT_Liga')
-  //   cy.get('.dialog-content > #ligaForm > .form-group > .col-sm-9 > #ligaRegion').select('14: Object')
-  //   cy.get('#ligaForm > .form-group > .col-sm-9 > bla-button > #ligaSaveButton').click()
+  it('Alle Ligen zu sehen', function() {
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-liga-button]').click()
+    cy.wait(4000)
+    cy.get('tbody').should('have.length.at.least', 1)
+  })
+
+   /**
+    * This test adds a League and checks if it gets added.
+    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+    */
+   it('Liga Hinzufügen', function() {
+     cy.get('body').then((body) => {
+       if (!body.text().includes('SWT_Liga')) {
+         cy.get('[data-cy=dsb-mitglied-add-button]').click()
+         cy.get('[data-cy=liga-detail-name]').type('SWT_Liga')
+         cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
+         cy.wait(1500)
+         cy.get('[data-cy=liga-detail-uebergeordnet]').select('SWT2_Liga')
+         cy.wait(1500)
+         cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
+         cy.wait(1500)
+         cy.get('[data-cy=liga-save-button]').click()
+         cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+         cy.wait(5000)
+         cy.get('tbody').should('contain.text', 'SWT_Liga')
+       }
+     });
+   })
+
+   /**
+    * This test deletes a League and checks if its deleted in the table.
+    */
+   it('Liga Löschen', function() {
+     cy.get('tbody').should('contain.text', 'SWT_Liga')
+     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
+     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+     cy.wait(4000)
+     cy.get('tbody').should('not.contain.text', 'SWT_Liga')
+   })
+
+   /**
+    *  This test checks if the Region-table is filled.
+    */
+   it('Regionen Anzeigen', function() {
+     cy.get('[data-cy=sidebar-verwaltung-button]').click()
+     cy.get('[data-cy=verwaltung-regionen-button]').click()
+     cy.wait(4000)
+     cy.get('tbody').should('have.length.at.least', 1)
+   })
+
+
+   /**
+    * This test adds a Region and checks if it gets added.
+    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+    */
+   it('Region Hinzufügen', function() {
+     cy.get('body').then((body) => {
+       if (!body.text().includes('SWT3_Region')) {
+         cy.get('[data-cy=dsb-mitglied-add-button]').click()
+         cy.get('[data-cy=region-detail-name]').type('SWT3_Region')
+         cy.get('[data-cy=region-detail-kuerzel]').type('SWT_R')
+         cy.get('[data-cy=region-detail-typ]').select('KREIS')
+         cy.wait(2000)
+         cy.get('[data-cy=region-detail-uebergeordnete-region]').select(0)
+         cy.wait(2000)
+         cy.get('[data-cy=region-save-button]').click()
+         cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+         cy.wait(1500)
+         cy.get('tbody').should('contain.text', 'SWT3_Region')
+       }
+     });
+   })
+
+   /**
+    * this test changes a Region and checks if the changes worked.
+    */
+   it('Region Ändern', function() {
+     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+     cy.get('[data-cy=region-detail-kuerzel]').type('1')
+     cy.get('[data-cy=region-update-button]').click()
+     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+     cy.wait(4000)
+     cy.get('tbody').should('contain.text', 'SWT_R1')
+   })
+
+   /**
+    * This test deletes a Region and checks if its deleted in the table.
+    */
+   it('Region Löschen', function() {
+     cy.get('tbody').should('contain.text', 'SWT3_Region')
+     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
+     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+     cy.wait(4000)
+     cy.get('tbody').should('not.contain.text', 'SWT3_Region')
+   })
+
+  /**
+   * This test checks if the Event-table gets filled.
+   */
+  it('Veranstaltungen Anzeigen', function() {
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(1000)
+    cy.get('[data-cy=bla-selection-list]').select('0: 0')
+    cy.wait(5000)
+    cy.get('tbody').should('have.length.at.least', 1)
+  })
+
+  /**
+   * This test adds a "Veranstaltung" and checks if it gets added
+   * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   */
+  it('Veranstaltungen hinzufügen', function() {
+    cy.get('body').then((body) => {
+      if (!body.text().includes('Testveranstaltung')) {
+        cy.get('[data-cy=sidebar-verwaltung-button]').click()
+        cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+        cy.wait(1000)
+        cy.get('[data-cy=veranstaltung-add-button]').click()
+        cy.get('[data-cy=veranstaltung-detail-name]').type('Testveranstaltung')
+        cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
+        cy.wait(500)
+        cy.get('[data-cy=veranstaltung-detail-sportjahr]').type('2018')
+        cy.get('[data-cy=veranstaltung-detail-deadline]').type('2022-01-01')
+        cy.wait(1000)
+        cy.get('[data-cy=veranstaltung-detail-save-button]').click()
+        cy.wait(1000)
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+        cy.get('[data-cy=sidebar-verwaltung-button]').click()
+        cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+        cy.wait(1000)
+        cy.get('[data-cy=bla-selection-list]').select('0: 0')
+        cy.wait(5000)
+        cy.get('tbody').should('contain.text', 'Testveranstaltung')
+      }
+    });
+  })
+
+  /**
+   * This test edits a "Veranstaltung" and checks if it was changed
+   */
+  it('Veranstaltungen bearbeiten', function() {
+    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+    cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
+    cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
+    cy.wait(1000)
+    cy.get('[data-cy=veranstaltung-detail-update-button]').click()
+    cy.wait(1000)
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(1000)
+    cy.get('[data-cy=bla-selection-list]').select('0: 0')
+    cy.wait(5000)
+    cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
+
+  })
+
+  /**
+   * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
+   */
+  it('Veranstaltung Löschen', function() {
+    cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
+    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('[data-cy=bla-selection-list]').select('1: 22')
+    cy.wait(5000)
+    cy.get('[data-cy=bla-selection-list]').select('0: 0')
+    cy.wait(5000)
+    cy.get('tbody').should('not.contain.text', 'TestveranstaltungTTT')
+  })
+
+  /**
+   * This test checks if "Wettkampftage" has entries.
+   */
+  it('Wettkampftage anzeigen', function() {
+    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(1000)
+    cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select('0: 2000')
+  })
+
+  /**
+   * This test edits a "Wettkampftag" and checks if it was changed.
+   */
+  // it('Wettkampftage bearbeiten', function() {
+  //   cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
+  //   cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 221')
+  //   cy.get('[data-cy="wettkampftage-update-button"]').click()
   //   cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-  //   cy.wait(5000)
-  //   cy.get('#undefined').should('contain.text', 'SWT_Liga')
-  // })
-  //
-  // /**
-  //  * This test deletes a League and checks if its deleted in the table.
-  //  */
-  // it('Testfall 25: Liga Löschen', function() {
-  //   cy.get('#undefined').should('contain.text', 'SWT_Liga')
-  //   cy.get(' #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
-  //   cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
-  //   cy.wait(4000)
-  //   cy.get('#undefined').should('not.contain.text', 'SWT_Liga')
-  // })
-  //
-  // /**
-  //  *  This test checks if the Region-table is filled.
-  //  */
-  // it('Testfall 26: Regionen Anzeigen', function() {
-  //   cy.get('li:nth-child(4) > .sidebar-text-toggle > .navbar-text > bla-sidebar-item > .sidebar-link').click()
-  //   cy.get('bla-grid-layout > .grid-layout > .card:nth-child(6) > .card-body > .btn').click()
-  //   cy.wait(4000)
-  //   cy.get('#undefined').should('have.length.at.least', 1)
-  // })
-  //
-  //
-  // /**
-  //  * This test adds a Region and checks if it gets added.
-  //  */
-  // it('Testfall 27: Region Hinzufügen', function() {
-  //   cy.get('bla-overview-dialog > .dialog-content > .overview-dialog-header > .overview-dialog-add > .btn').click()
-  //   cy.get('.dialog-content > #regionenForm > .form-group > .col-sm-9 > #regionName').type('SWT3_Region')
-  //   cy.get('.dialog-content > #regionenForm > .form-group > .col-sm-9 > #regionContraction').type('SWT_R')
-  //   cy.get('.dialog-content > #regionenForm > .form-group > .col-sm-9 > #regionTyp').select('KREIS')
-  //   cy.get('#regionenForm > .form-group > .col-sm-9 > bla-button > #regionSaveButton').click()
-  //   cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-  //   cy.wait(1500)
-  //   cy.get('#undefined').should('contain.text', 'SWT3_Region')
-  // })
-  //
-  // /**
-  //  * this test changes a Region and checks if the changes worked.
-  //  */
-  // it('Testfall 28: Region Ändern', function() {
-  //   cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit').last().click()
-  //   cy.get('.dialog-content > #regionenForm > .form-group > .col-sm-9 > #regionContraction').type('1')
-  //   cy.get('#regionenForm > .form-group > .col-sm-9 > bla-button > #regionUpdateButton').click()
-  //   cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-  //   cy.wait(4000)
-  //   cy.get('#undefined').should('contain.text', 'SWT_R1')
-  // })
-  //
-  // /**
-  //  * This test deletes a Region and checks if its deleted in the table.
-  //  */
-  // it('Testfall 29: Region Löschen', function() {
-  //   cy.get('#undefined').should('contain.text', 'SWT3_Region')
-  //   cy.get(' #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
-  //   cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
-  //   cy.wait(4000)
-  //   cy.get('#undefined').should('not.contain.text', 'SWT3_Region')
-  // })
-  //
-  // /**
-  //  * This test checks if the Event-table gets filled.
-  //  */
-  // it('Testfall 30: Veranstaltungen Anzeigen', function() {
-  //   cy.get('#sidebar > #sidebarFooter > #sidebarCollapseBottom > bla-sidebar-item > .sidebar-link').click()
-  //   cy.get('.sidebar-text-toggle > .navbar-toggler > .ng-fa-icon > .svg-inline--fa > path').click()
-  //   cy.get('.nav-item:nth-child(7) > .nav-link > bla-sidebar-subitem > .sidebar-subink > .sidebar-subtext').click()
-  //   cy.get('#sidebarFooter > #sidebarCollapseBottom > bla-sidebar-item > .sidebar-link > .sidebar-text').click()
   //   cy.wait(1000)
-  //   cy.get('.table-responsive > #undefined').should('have.length.at.least', 1)
+  //   cy.get('[data-cy="wettkampftage-zurueck"]').click()
+  //   cy.get('[data-cy="wettkampftage-button"]').click()
+  //   cy.wait(2000)
+  //   cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 221')
+  //   cy.get('[data-cy="wettkampftage-update-button"]').click()
+  //   cy.wait(500)
+  //   cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+  //   cy.get('[data-cy="wettkampftage-zurueck"]').click()
+  //   cy.get('[data-cy="wettkampftage-button"]').click()
+  //   cy.wait(1000)
+  //   cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
+  //   cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 22')
+  //   cy.get('[data-cy="wettkampftage-update-button"]').click()
+  //   cy.wait(500)
+  //   cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+  //   cy.get('[data-cy="wettkampftage-zurueck"]').click()
+  //   cy.get('[data-cy="wettkampftage-button"]').click()
+  //   cy.wait(2000)
+  //   cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
   // })
 
 })
+

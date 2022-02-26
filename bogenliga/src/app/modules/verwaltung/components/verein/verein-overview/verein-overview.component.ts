@@ -28,13 +28,16 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
   public config = VEREIN_OVERVIEW_CONFIG;
   public rows: TableRow[];
+  public searchTerm = 'searchTermVereine';
 
   constructor(private vereinDataProvider: VereinDataProviderService, private router: Router, private notificationService: NotificationService) {
     super();
   }
 
   ngOnInit() {
-    this.loadTableRows();
+    this.loading = true;
+    if (!localStorage.getItem(this.searchTerm))
+      this.loadTableRows();
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
@@ -79,9 +82,13 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
   }
 
   private loadTableRows() {
-    this.loading = true;
-
     this.vereinDataProvider.findAll()
+        .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
+  }
+
+  public findBySearch($event: string) {
+    this.vereinDataProvider.findBySearch($event)
         .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
   }

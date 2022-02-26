@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/exxcellent/swt2-bsa-frontend.svg?branch=master)](https://travis-ci.org/exxcellent/swt2-bsa-frontend)
+[![Deploy to GitHub Pages](https://github.com/bettercodepaul/swt2-bsa-frontend/actions/workflows/build.yml/badge.svg)](https://github.com/bettercodepaul/swt2-bsa-frontend/actions/workflows/build.yml)
 
 # swt2-bsa-frontend
 SWT2 - Bogenliga Application - Angular Oberfläche
 
-Ein Beispiel ist unter [GitHub Demo Seite](https://exxcellent.github.io/swt2-bsa-frontend/) verfügbar.
+Ein Beispiel ist unter [GitHub Demo Seite](https://bettercodepaul.github.io/swt2-bsa-frontend/) verfügbar.
 
 ## Einstieg
 
