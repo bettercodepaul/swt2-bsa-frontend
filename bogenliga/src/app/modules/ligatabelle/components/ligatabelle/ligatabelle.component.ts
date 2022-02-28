@@ -6,7 +6,7 @@ import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './ligatabelle.config
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {WettkampfDataProviderService} from '@wettkampf/services/wettkampf-data-provider.service';
+import {LigatabelleDataProviderService} from '../../services/ligatabelle-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {LigatabelleErgebnisDO} from '@wettkampf/types/wettkampf-ergebnis-do.class';
 import {isUndefined} from '@shared/functions';
@@ -30,7 +30,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private ligatabelleDataProvider: WettkampfDataProviderService,
+    private ligatabelleDataProvider: LigatabelleDataProviderService,
   ) {
     super();
   }

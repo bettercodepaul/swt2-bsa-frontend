@@ -1,0 +1,23 @@
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
+
+export interface OfflineMatch {
+  id?: number; // Primary Key autoincrement
+  version?: number;
+
+  matchVersion: number; // backend dataset version
+  wettkampfId: number;
+  matchNr: number;
+  matchScheibennummer: number;
+  mannschaftId: number;
+  mannschaftName: string;
+  nameGegner: string;
+  scheibennummerGegner: number;
+  matchIdGegner: number;
+  naechsteMatchId: number;
+  naechsteNaechsteMatchNrMatchId: number;
+  strafpunkteSatz1: number;
+  strafpunkteSatz2: number;
+  strafpunkteSatz3: number;
+  strafpunkteSatz4: number;
+  strafpunkteSatz5: number;
+}

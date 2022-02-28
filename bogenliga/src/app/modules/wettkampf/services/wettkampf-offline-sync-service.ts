@@ -10,7 +10,7 @@ import {
   VersionedDataTransferObject
 } from '@shared/data-provider';
 import { OfflineLigatabelle } from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
-import { fromPayloadOfflineLigatabelleArray } from '@wettkampf/mapper/ligatabelle-offline-mapper';
+import { fromPayloadOfflineLigatabelleArray } from '../../ligatabelle/mapper/ligatabelle-offline-mapper';
 import { db } from '@shared/data-provider/offlinedb/offlinedb';
 
 @Injectable({

@@ -7,7 +7,7 @@
  */
 
 import {Omatch} from './types/omatch.interface';
-import {db} from './offlinedb.component';
+import {db} from '../../modules/shared/data-provider/offlinedb/offlinedb';
 
 
 export class MatchOdaoClass implements Omatch {
@@ -60,8 +60,8 @@ export class MatchOdaoClass implements Omatch {
   }
 
   save() {
-    return db.transaction('rw', db.match, () => {
-      db.match.put(new MatchOdaoClass(this.id, this.version, this.matchVersion, this.wettkampfId,
+    return db.transaction('rw', db.matchTabelle, () => {
+      db.matchTabelle.put(new MatchOdaoClass(this.id, this.version, this.matchVersion, this.wettkampfId,
         this.matchNr, this.matchScheibennummer, this.mannschaftId, this.mannschaftName,
         this.nameGegner, this.scheibennummerGegner, this.matchIdGegner, this.naechsteMatchId,
         this.naechsteNaechsteMatchNrMatchId, this.strafpunkteSatz1, this.strafpunkteSatz2,

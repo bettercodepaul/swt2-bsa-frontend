@@ -11,21 +11,28 @@ import {
 import { db } from '@shared/data-provider/offlinedb/offlinedb';
 import { OfflineLigatabelle } from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
-import {fromPayloadLigatabelleErgebnisArray, fromOfflineLigatabelleArray} from '../mapper/wettkampf-ergebnis-mapper';
-import {LigatabelleErgebnisDO} from '../types/wettkampf-ergebnis-do.class';
+import {fromPayloadLigatabelleErgebnisArray, fromOfflineLigatabelleArray} from '../mapper/ligatabelle-ergebnis-mapper';
+import {LigatabelleErgebnisDO} from '@wettkampf/types/wettkampf-ergebnis-do.class';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WettkampfDataProviderService extends DataProviderService {
+export class LigatabelleDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/mannschaft';
 
 
+  // diese Klasse unterstützt die Offlinefähgikeit, d.h. die bereitgestellten Daten sind auch Teil der Offline Funktionen
+  // bei Veränderung der Datenstrukturen sind neben den Online Data-Providern auch
+  // die Offline-Dataprovider, die Datenstrukturen der offline-CLient-DB sowie ggf. die Snyc-Services anzupassen
+  // evtl. nicht nur die Lesenden sondern auch die schreibenden Services beim.
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService, private onOfflineSerivce: OnOfflineService) {
     super();
   }
 
+
+
+  // ermittelt den aktuellen Tabellenstand gem. den gesamten vorliegen Daten
   public getLigatabelleVeranstaltung(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
     if (this.onOfflineSerivce.isOffline()) {
       console.log('Choosing offline way for Veranstaltung with id ' + id);
@@ -56,6 +63,11 @@ export class WettkampfDataProviderService extends DataProviderService {
       });
     }
   }
+
+
+
+  // ermittelt den Stand der Ligatabelle nach einem definierten Wettkampftag
+  // so lässt sich auch am Ende die Saison noch ermitteln, welchen Platz ein Verein nach dem ersten Wettkampftag hatte
   public getLigatabelleWettkampf(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
     // return promise
     // sign in success -> resolve promise
