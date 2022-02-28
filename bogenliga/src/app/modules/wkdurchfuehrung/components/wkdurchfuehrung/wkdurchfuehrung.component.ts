@@ -249,16 +249,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       // dieses besteht aus dem Namen und dem Sportjahr der Veranstaltung
       this.currentVeranstaltungName = this.veranstaltung.name + ' ' + this.veranstaltung.sportjahr;
 
-      let year : SportjahrVeranstaltungDO;
-      //Suche nach dem passendem jahr und setze this.selItemId entsprechend.
-      for(let sportjahr of this.availableYears){
-        if (sportjahr.sportjahr == this.veranstaltung.sportjahr){
+      let year: SportjahrVeranstaltungDO;
+      // Suche nach dem passendem jahr und setze this.selItemId entsprechend.
+      for (const sportjahr of this.availableYears) {
+        if (sportjahr.sportjahr == this.veranstaltung.sportjahr) {
           this.selItemId = sportjahr.id;
-          year = sportjahr
+          year = sportjahr;
         }
       }
 
-      let verDOs : VeranstaltungDO[];
+      let verDOs: VeranstaltungDO[];
       verDOs = [this.veranstaltung];
 
       // Auswahl des passenden Jahres
@@ -313,7 +313,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
-      let wettkampfDO = $event as WettkampfDO;
+      const wettkampfDO = $event as WettkampfDO;
       // is used to get the title for the currently selected Wettkampf @wettkampf.component.html
       document.getElementById('WettkampfTitle').innerText = this.currentVeranstaltungName +
         ' - ' + wettkampfDO.wettkampfTag + '. Wettkampftag';
@@ -367,7 +367,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
    * @param $event
    */
   public onMap($event: VersionedDataObject): void {
-    let wettkampfDO = $event as WettkampfDO;
+    const wettkampfDO = $event as WettkampfDO;
     onMapService(wettkampfDO);
   }
 
@@ -439,7 +439,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // Ã¶ffnen wir in einem neuen Tab die Datenerfassung /Schusszettel fÃ¼r die Begegnung
 
   public onEdit($event: VersionedDataObject): void {
-    let matchDoExt = $event as MatchDOExt;
+    const matchDoExt = $event as MatchDOExt;
     if ($event.id >= 0) {
       this.selectedMatchId = matchDoExt.id;
       this.matchProvider.pair(this.selectedMatchId)
@@ -550,26 +550,26 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
     this.loadingYears = false;
     let counter = 1;
-    if(response.payload != []){
-    for(let elem of response.payload){
-      let t = new SportjahrVeranstaltungDO();
+    if (response.payload != []) {
+    for (const elem of response.payload) {
+      const t = new SportjahrVeranstaltungDO();
       t.sportjahr = elem.sportjahr.valueOf();
       t.version = 1;
       this.availableYears.push(t);
       }
     this.availableYears.sort((a, b) => {
-      if ( a.sportjahr.valueOf() < b.sportjahr.valueOf()){
+      if ( a.sportjahr.valueOf() < b.sportjahr.valueOf()) {
         return 1;
       }
       if ( a.sportjahr.valueOf() > b.sportjahr.valueOf()) {
         return -1;
       }});
-    for (let sportjahr of this.availableYears) {
+    for (const sportjahr of this.availableYears) {
         sportjahr.id = counter;
         counter++;
       }
     console.log('Bin in loadVeranstaltungenYearSuccess!');
-      if (!this.wettkampfIdEnthalten) {
+    if (!this.wettkampfIdEnthalten) {
         // Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde und setze die Id des vorausgewählten
         // Jahres auf die id des neusten Jahres
         this.selItemId = this.availableYears[0].id;

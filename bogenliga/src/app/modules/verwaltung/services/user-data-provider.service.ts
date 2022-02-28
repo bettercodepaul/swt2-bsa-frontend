@@ -134,7 +134,7 @@ export class UserDataProviderService extends DataProviderService {
   }
 
   public findBySearch(searchTerm: string): Promise<BogenligaResponse<UserRolleDO[]>> {
-    return (searchTerm === "" || searchTerm === null)
+    return (searchTerm === '' || searchTerm === null)
       ? this.findAll()
       : new Promise( (resolve, reject) => {
         this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('search/' + searchTerm).build())

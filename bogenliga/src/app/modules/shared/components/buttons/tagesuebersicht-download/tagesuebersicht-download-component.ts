@@ -11,9 +11,9 @@ export class TagesuebersichtDownloadComponent implements OnInit {
   // Get the value of the attribute from the html tag
 
   @Input()
-  currentVeranstaltung : number;
+  currentVeranstaltung: number;
   @Input()
-  wettkampftag : number;
+  wettkampftag: number;
 
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;

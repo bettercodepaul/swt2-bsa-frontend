@@ -32,19 +32,19 @@ export class LigatabelleOfflineSyncDto implements DataTransferObject {
     tabellenplatz?: number,
   } = {}): LigatabelleOfflineSyncDto {
     const copy = new LigatabelleOfflineSyncDto();
-    copy.veranstaltungId = optional.veranstaltungId || null;
-    copy.veranstaltungName = optional.veranstaltungName || null;
-    copy.wettkampfId = optional.wettkampfId || null;
-    copy.wettkampfTag = optional.wettkampfTag || null;
-    copy.mannschaftId = optional.mannschaftId || null;
-    copy.mannschaftName = optional.mannschaftName || null;
-    copy.matchpkt = optional.matchpkt || null;
-    copy.matchpktGegen = optional.matchpktGegen || null;
-    copy.satzpkt = optional.satzpkt || null;
-    copy.satzpktGegen = optional.satzpktGegen || null;
-    copy.satzpktDifferenz = optional.satzpktDifferenz || null;
-    copy.sortierung = optional.sortierung || null;
-    copy.tabellenplatz = optional.tabellenplatz || null;
+    copy.veranstaltungId = optional.veranstaltungId ;
+    copy.veranstaltungName = optional.veranstaltungName ;
+    copy.wettkampfId = optional.wettkampfId;
+    copy.wettkampfTag = optional.wettkampfTag;
+    copy.mannschaftId = optional.mannschaftId;
+    copy.mannschaftName = optional.mannschaftName;
+    copy.matchpkt = optional.matchpkt;
+    copy.matchpktGegen = optional.matchpktGegen;
+    copy.satzpkt = optional.satzpkt;
+    copy.satzpktGegen = optional.satzpktGegen;
+    copy.satzpktDifferenz = optional.satzpktDifferenz;
+    copy.sortierung = optional.sortierung;
+    copy.tabellenplatz = optional.tabellenplatz;
     return copy;
   }
 }

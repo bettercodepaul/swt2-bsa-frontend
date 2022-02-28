@@ -125,7 +125,7 @@ export class SchusszettelComponent implements OnInit {
         const match1id = params['match1id'];
         const match2id = params['match2id'];
 
-        //Notification while preparing
+        // Notification while preparing
         this.notificationService.showNotification({
           id:          'NOTIFICATION_SCHUSSZETTEL_LOADING',
           title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.LADEN.TITLE',
@@ -148,7 +148,7 @@ export class SchusszettelComponent implements OnInit {
                * Only a maximum of 15 passe for each match will be possible
                */
 
-              if(this.match1.schuetzen.length != 0) {
+              if (this.match1.schuetzen.length != 0) {
 
                 if (this.match1.schuetzen.length > 3) {
                   for (let i = this.match1.schuetzen.length; i > 3; i--) {
@@ -169,17 +169,17 @@ export class SchusszettelComponent implements OnInit {
                  * for each Schütze to 5
                  * Only a maximum of 15 passe for each match will be possible
                  */
-              if(this.match2.schuetzen.length != 0){
+              if (this.match2.schuetzen.length != 0) {
 
-                if(this.match2.schuetzen.length > 3){
-                  for(let i=this.match2.schuetzen.length; i>3; i--){
+                if (this.match2.schuetzen.length > 3) {
+                  for (let i = this.match2.schuetzen.length; i > 3; i--) {
                     this.match2.schuetzen.pop();
                   }
                 }
 
-                for( let i= 0; i < 3; i++) {
-                  if(this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length != 0) {
-                    for(let j = this.match2.schuetzen[i].length; j > 5; j--) {
+                for ( let i = 0; i < 3; i++) {
+                  if (this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length != 0) {
+                    for (let j = this.match2.schuetzen[i].length; j > 5; j--) {
                       this.match2.schuetzen[i].pop();
                     }
                   }
@@ -218,7 +218,7 @@ export class SchusszettelComponent implements OnInit {
                 }
               });
               if (this.match1.wettkampfId !== this.match2.wettkampfId) {
-                this.wettkampfDataProvider.findAllowedMember(this.match2.wettkampfId, this.match1.mannschaftId, this.match2.mannschaftId).then((value)=>{
+                this.wettkampfDataProvider.findAllowedMember(this.match2.wettkampfId, this.match1.mannschaftId, this.match2.mannschaftId).then((value) => {
                   this.allowedMitglieder2 = value;
                   console.log('Allowed for match2: ', this.allowedMitglieder2);
                   // Close notification when ready
@@ -277,7 +277,7 @@ export class SchusszettelComponent implements OnInit {
     }
 
     if (mitglied != null && mitglied.result === RequestResult.SUCCESS) {
-      let dsbNummer = mitglied.payload.dsbMitgliedId;
+      const dsbNummer = mitglied.payload.dsbMitgliedId;
       console.log('DsbNummer for Mannschaftsmitglied in Mannschaft ' +
         mannschaftId + ' and Rueckennummer ' + value + ' is ' + dsbNummer);
 
@@ -367,7 +367,7 @@ export class SchusszettelComponent implements OnInit {
     this.popupAndererTag = true;
   }
 
-  save(){
+  save() {
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',

@@ -37,7 +37,7 @@ import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dt
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {LigatabelleDataProviderService} from '../../../../ligatabelle/services/ligatabelle-data-provider.service';
-import {LigatabelleErgebnisDO} from '../../../../wettkampf/types/wettkampf-ergebnis-do.class';
+import {LigatabelleErgebnisDO} from '../../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
 import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mannschaftSortierung-data-provider.service';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
@@ -223,7 +223,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           }
         }
         )
-        .catch((response)=> {
+        .catch((response) => {
           console.log('Veranstaltung existiert bereits in diesem Sportjahr');
           const notification: Notification = {
             id:          NOTIFICATION_SAVE_VERANSTALTUNG_FAILURE,
@@ -252,8 +252,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public onCopyMannschaft(ignore: any): void {
     this.saveLoading = true;
     this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
-        .then((response)=>{
-          this.lastVeranstaltung=response.payload
+        .then((response) => {
+          this.lastVeranstaltung = response.payload;
           console.log(this.lastVeranstaltung.id);
           console.log('Mannschaften werden kopiert');
           this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
@@ -264,7 +264,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
                 });
           }
         )
-        .catch((response)=> {
+        .catch((response) => {
           console.log('Veranstaltung ist nicht vorhanden');
           const notification: Notification = {
             id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE,
@@ -396,7 +396,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private loadLigaleiter() {
     // Achtung: Diese RollenId ist die des Ligaleiters aus der Datenbank
     // Werden Änderungen in der DB gemacht muss auch hier die ID verändert werden!
-    let ligaleiterRolleId = 2;
+    const ligaleiterRolleId = 2;
     this.userDataProvider.findAllUsersByRoleId(ligaleiterRolleId)
         .then((response: BogenligaResponse<UserRolleDO[]>) => this.handleLigaleiterResponseArraySuccess(response))
         .catch((response: BogenligaResponse<UserRolleDTO[]>) => this.handleLigaleiterResponseArrayFailure(response));
@@ -422,7 +422,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loading = false;
     this.loadWettkampftyp();
     this.loadUsers();
-    this.loadLigaleiter()
+    this.loadLigaleiter();
     this.loadLiga();
   }
 
@@ -554,9 +554,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
    * Checks if current Table is empty
    * If not button which uses copyMannschaftFromVeranstaltung will be greyed out
    */
-  public checkMannschaftsTableEmpty(){
+  public checkMannschaftsTableEmpty() {
     let empty = true;
-    if(this.rows.length > 0){
+    if (this.rows.length > 0) {
       empty = false;
     }
     return empty;
@@ -594,7 +594,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       userAction:       NotificationUserAction.PENDING
     };
 
-    let notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+    const notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
                                 .subscribe((myNotification) => {
 
                                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
@@ -674,12 +674,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private loadLigaTabelleExists() {
     this.ligatabellenService.getLigatabelleVeranstaltung(this.id)
         .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => response.payload.length >= 4 ? this.handleLigatabelleExistsSuccess(response) : this.handleLigatabelleExistsFailure())
-        .catch(() => this.handleLigatabelleExistsFailure())
+        .catch(() => this.handleLigatabelleExistsFailure());
   }
 
 
   private handleLigatabelleExistsFailure() {
-    console.log("Initiale Ligatabelle does not yet exist");
+    console.log('Initiale Ligatabelle does not yet exist');
     this.currentLigatabelle = undefined;
     this.saveLoading = false;
   }
@@ -689,7 +689,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     try {
       this.currentLigatabelle = response.payload;
       for (let i = 0; i < this.rows.length; i++) {
-        let row = this.rows[i];
+        const row = this.rows[i];
         row.disabledActions.push(TableActionType.EDIT);
         row.hiddenActions.push(TableActionType.EDIT);
       }

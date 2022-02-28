@@ -1,6 +1,6 @@
 import { DataTransferObject } from '@shared/data-provider';
 import { OfflineLigatabelle } from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
-import { LigatabelleOfflineSyncDto } from '@wettkampf/types/datatransfer/ligatabelle-offline-sync-dto.class';
+import { LigatabelleOfflineSyncDto } from '@wettkampf/../types/datatransfer/ligatabelle-offline-sync-dto.class';
 
 export function toDO(ligatabelleOfflineSyncDto: LigatabelleOfflineSyncDto): OfflineLigatabelle {
 

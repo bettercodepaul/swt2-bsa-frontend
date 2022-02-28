@@ -325,8 +325,8 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
 
   private handlUebergeordnetResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allUebergeordnete = [];
-    this.allUebergeordnete = response.payload.filter(ubergeordneteLiga=>{
-      if(ubergeordneteLiga.name != this.currentLiga.name){
+    this.allUebergeordnete = response.payload.filter((ubergeordneteLiga) => {
+      if (ubergeordneteLiga.name != this.currentLiga.name) {
         return ubergeordneteLiga.name;
       }
     });

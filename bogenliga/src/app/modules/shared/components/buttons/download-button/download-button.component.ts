@@ -55,21 +55,19 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleMeldezettelFailure()));
-    } else if(this.id == 'downloadEinzelstatistik') {
+    } else if (this.id == 'downloadEinzelstatistik') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch(() => this.handleEinzelstatistikFailure());
-    } else if(this.id == 'downloadGesamtstatistik') {
+    } else if (this.id == 'downloadGesamtstatistik') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch(() => this.handleGesamtstatistikFailure());
-    }
-    else if(this.id == 'downloadTagesuebersicht') {
+    } else if (this.id == 'downloadTagesuebersicht') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch(() => this.handleTagesuebersichtFailure());
-    }
-    else if (this.id === 'downloadSetzliste') {
+    } else if (this.id === 'downloadSetzliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleSetzlisteFailure()));
@@ -147,7 +145,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleSetzlisteFailure(){
+  private handleSetzlisteFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'WKDURCHFUEHRUNG.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
@@ -163,7 +161,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleSchusszettelFailure(){
+  private handleSchusszettelFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
@@ -179,7 +177,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleMeldezettelFailure(){
+  private handleMeldezettelFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'WKDURCHFUEHRUNG.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
@@ -195,7 +193,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleEinzelstatistikFailure(){
+  private handleEinzelstatistikFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'WETTKAEMPFE.EINZELSTATISTIK.NOTIFICATION.DOWNLOADFEHLER.TITLE',
@@ -211,7 +209,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleGesamtstatistikFailure(){
+  private handleGesamtstatistikFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'Download Fehlgeschlagen',
@@ -227,7 +225,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleTagesuebersichtFailure(){
+  private handleTagesuebersichtFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'Download Fehlgeschlagen',
