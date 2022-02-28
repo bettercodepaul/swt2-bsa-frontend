@@ -31,7 +31,7 @@ import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import { OnOfflineService } from '@shared/services';
-import { WettkampfOfflineSyncService } from '@wettkampf/services/wettkampf-offline-sync-service';
+import { WettkampfOfflineSyncService } from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
 
 
 
