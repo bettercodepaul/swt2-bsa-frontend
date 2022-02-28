@@ -1,6 +1,6 @@
 import { OfflineLigatabelle } from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
 import {VersionedDataTransferObject} from '@shared/data-provider';
-import {LigatabelleErgebnisDTO} from '@wettkampf/../types/datatransfer/ligatabelle-ergebnis-dto.class';
+import {LigatabelleErgebnisDTO} from '../types/datatransfer/ligatabelle-ergebnis-dto.class';
 import {LigatabelleErgebnisDO} from '../types/ligatabelle-ergebnis-do.class';
 
 export function toDO(ligatabelleErgebnisDTO: LigatabelleErgebnisDTO): LigatabelleErgebnisDO {
