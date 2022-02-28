@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonSize } from '@shared/components';
-import { TabletSessionDO } from '@sportjahresplan/types/tablet-session-do.class';
+import { TabletSessionDO } from '../../../wkdurchfuehrung/types/tablet-session-do.class';
 import { BogenligaResponse } from '@shared/data-provider';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TabletSessionProviderService } from '@sportjahresplan/services/tablet-session-provider.service';
+import { TabletSessionProviderService } from '../../../wkdurchfuehrung/services/tablet-session-provider.service';
 
 @Component({
   selector: 'bla-authentication',

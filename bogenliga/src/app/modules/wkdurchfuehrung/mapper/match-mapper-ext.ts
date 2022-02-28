@@ -2,7 +2,7 @@ import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
 import {MatchDOExt} from '../types/match-do-ext.class';
 import {PasseMapper} from './passe-mapper';
 import {VersionedDataTransferObject} from '@shared/data-provider';
-import {PasseDO} from '@sportjahresplan/types/passe-do.class';
+import {PasseDO} from '../types/passe-do.class';
 
 
 export function fromPayload(payload: VersionedDataTransferObject): MatchDTOExt {

@@ -32,7 +32,7 @@ describe('Footer', () => {
 
     // Wettkaempfe
 
-    // Sportjahresplan
+    // wkdurchfuehrung
 
     // Login
 

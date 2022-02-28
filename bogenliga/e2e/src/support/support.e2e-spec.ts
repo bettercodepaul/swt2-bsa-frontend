@@ -37,7 +37,7 @@ describe('Support', () => {
 
     // Wettkaempfe
 
-    // Sportjahresplan
+    // wkdurchfuehrung
 
     // Login
 

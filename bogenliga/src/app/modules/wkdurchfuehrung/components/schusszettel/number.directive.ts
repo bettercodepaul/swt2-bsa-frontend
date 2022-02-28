@@ -29,8 +29,8 @@ export class NumberOnlyDirective {
   public notificationMethod(event: KeyboardEvent) {
     this.notificationService.showNotification({
       id:          'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
-      title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.TITLE',
-      description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.DESCRIPTION',
+      title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.TITLE',
+      description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.EINGABEFEHLER.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,

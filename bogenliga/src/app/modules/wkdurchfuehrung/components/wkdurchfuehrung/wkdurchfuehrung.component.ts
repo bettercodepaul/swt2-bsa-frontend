@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
-import {MATCH_TABLE_CONFIG, SPORTJAHRESPLAN_CONFIG, WETTKAMPF_TABLE_CONFIG} from './sportjahresplan.config';
+import {MATCH_TABLE_CONFIG, WKDURCHFUEHRUNG_CONFIG, WETTKAMPF_TABLE_CONFIG} from './wkdurchfuehrung.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
@@ -21,8 +21,8 @@ import {
   NotificationUserAction
 } from '@shared/services/notification';
 import {environment} from '@environment';
-import {MatchDTOExt} from '@sportjahresplan/types/datatransfer/match-dto-ext.class';
-import {MatchDOExt} from '@sportjahresplan/types/match-do-ext.class';
+import {MatchDTOExt} from '../../types/datatransfer/match-dto-ext.class';
+import {MatchDOExt} from '../../types/match-do-ext.class';
 import {onMapService} from '@shared/functions/onMap-service';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
@@ -37,14 +37,14 @@ import { WettkampfOfflineSyncService } from '@wettkampf/services/wettkampf-offli
 
 
 @Component({
-  selector:    'bla-sportjahresplan',
-  templateUrl: './sportjahresplan.component.html',
-  styleUrls:   ['./sportjahresplan.component.scss']
+  selector:    'bla-wkdurchfuehrung',
+  templateUrl: './wkdurchfuehrung.component.html',
+  styleUrls:   ['./wkdurchfuehrung.component.scss']
 })
-export class SportjahresplanComponent extends CommonComponentDirective implements OnInit {
+export class WkdurchfuehrungComponent extends CommonComponentDirective implements OnInit {
 
 
-  public config = SPORTJAHRESPLAN_CONFIG;
+  public config = WKDURCHFUEHRUNG_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_table_match = MATCH_TABLE_CONFIG;
   public PLACEHOLDER_VAR = 'Veranstaltung auswählen...';
@@ -86,8 +86,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private wettkampfComponent: WettkampfComponent;
 
   public loadingYears = true;
-  public availableYears : SportjahrVeranstaltungDO[];
-  public selItemId : number;
+  public availableYears: SportjahrVeranstaltungDO[];
+  public selItemId: number;
 
 
 
@@ -261,10 +261,10 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       let verDOs : VeranstaltungDO[];
       verDOs = [this.veranstaltung];
 
-      //Auswahl des passenden Jahres
+      // Auswahl des passenden Jahres
       this.onSelectYear(year);
 
-      //Auswahl der richtigen Veranstaltung
+      // Auswahl der richtigen Veranstaltung
       this.onSelect(verDOs);
 
       // Auswahl des entsprechenden Wettkampfs in der Tabelle "Wettkampftage der Veranstaltung"
@@ -274,7 +274,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     }
   }
 
-  //Ermittelt die entsprechenden Veranstaltungen wenn ein Jahr aus dem Drop-Down Menü ausgewählt wird.
+  // Ermittelt die entsprechenden Veranstaltungen wenn ein Jahr aus dem Drop-Down Menü ausgewählt wird.
   public onSelectYear($event: SportjahrVeranstaltungDO): void {
       this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
           .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
@@ -313,7 +313,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
-      let wettkampfDO = <WettkampfDO>$event;
+      let wettkampfDO = $event as WettkampfDO;
       // is used to get the title for the currently selected Wettkampf @wettkampf.component.html
       document.getElementById('WettkampfTitle').innerText = this.currentVeranstaltungName +
         ' - ' + wettkampfDO.wettkampfTag + '. Wettkampftag';
@@ -367,14 +367,14 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
    * @param $event
    */
   public onMap($event: VersionedDataObject): void {
-    let wettkampfDO = <WettkampfDO>$event;
+    let wettkampfDO = $event as WettkampfDO;
     onMapService(wettkampfDO);
   }
 
   // when a Wettkampf gets selected from the list --> ID for Buttons
 
   public onButtonTabletClick(): void {
-    this.router.navigateByUrl('/sportjahresplan/tabletadmin/' + this.selectedWettkampf);
+    this.router.navigateByUrl('/wkdurchfuehrung/tabletadmin/' + this.selectedWettkampf);
 
   }
 
@@ -426,8 +426,8 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   private handleFailureGenerateMatches(): void {
     this.notificationService.showNotification({
       id:          'NOTIFICATION_GENERIERE_MATCHES',
-      title:       'SPORTJAHRESPLAN.GENERIERE_MATCHES.NOTIFICATION.TITLE',
-      description: 'SPORTJAHRESPLAN.GENERIERE_MATCHES.NOTIFICATION.DESCRIPTION',
+      title:       'WKDURCHFUEHRUNG.GENERIERE_MATCHES.NOTIFICATION.TITLE',
+      description: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES.NOTIFICATION.DESCRIPTION',
       severity:    NotificationSeverity.INFO,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,
@@ -439,7 +439,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
   // Ã¶ffnen wir in einem neuen Tab die Datenerfassung /Schusszettel fÃ¼r die Begegnung
 
   public onEdit($event: VersionedDataObject): void {
-    let matchDoExt = <MatchDOExt>$event;
+    let matchDoExt = $event as MatchDOExt;
     if ($event.id >= 0) {
       this.selectedMatchId = matchDoExt.id;
       this.matchProvider.pair(this.selectedMatchId)
@@ -454,7 +454,7 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
                .build();
                window.open(this.urlString, '_blank')
                */
-              this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
             }
           });
     }
@@ -561,16 +561,16 @@ export class SportjahresplanComponent extends CommonComponentDirective implement
       if ( a.sportjahr.valueOf() < b.sportjahr.valueOf()){
         return 1;
       }
-      if ( a.sportjahr.valueOf() > b.sportjahr.valueOf()){
+      if ( a.sportjahr.valueOf() > b.sportjahr.valueOf()) {
         return -1;
       }});
-      for(let sportjahr of this.availableYears){
+    for (let sportjahr of this.availableYears) {
         sportjahr.id = counter;
         counter++;
       }
     console.log('Bin in loadVeranstaltungenYearSuccess!');
-      if(!this.wettkampfIdEnthalten){
-        //Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde und setze die Id des vorausgewählten
+      if (!this.wettkampfIdEnthalten) {
+        // Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde und setze die Id des vorausgewählten
         // Jahres auf die id des neusten Jahres
         this.selItemId = this.availableYears[0].id;
         this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());

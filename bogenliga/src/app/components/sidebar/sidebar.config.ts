@@ -98,12 +98,12 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     datacy: 'sidebar-wettkampf-button'
   },
   {
-    label: 'SIDEBAR.SPORTJAHRESPLAN',
+    label: 'SIDEBAR.WKDURCHFUEHRUNG',
     icon: faCalendarAlt,
-    route: '/sportjahresplan',
+    route: '/wkdurchfuehrung',
     permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: [],
-    datacy: 'sidebar-sportjahresplan-button'
+    datacy: 'sidebar-wkdurchfuehrung-button'
   },
   {
     label: 'SIDEBAR.MANNSCHAFTEN',
