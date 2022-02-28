@@ -71,7 +71,7 @@ export class WettkampfDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfID).path(mannschaft1ID).path(mannschaft2ID).path("allowedContestants").build())
+      this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfID).path(mannschaft1ID).path(mannschaft2ID).path('allowedContestants').build())
           .then((data: number[]) => {
 
             resolve(data);
@@ -170,11 +170,11 @@ export class WettkampfDataProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    console.log("create Methode")
+    console.log('create Methode');
     return new Promise((resolve, reject) => {
       this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
           .then((data: VersionedDataTransferObject) => {
-            console.log("Then create");
+            console.log('Then create');
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
           }, (error: HttpErrorResponse) => {

@@ -219,7 +219,7 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.GET<VersionedDataTransferObject>(new UriBuilder()
-        .fromPath(this.getUrl()).path('findLastVeranstaltungBy/' +id).build())
+        .fromPath(this.getUrl()).path('findLastVeranstaltungBy/' + id).build())
           .then((data: VersionedDataTransferObject) => {
 
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});

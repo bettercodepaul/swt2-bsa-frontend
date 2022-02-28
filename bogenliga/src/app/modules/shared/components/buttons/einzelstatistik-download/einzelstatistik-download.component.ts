@@ -10,11 +10,11 @@ export class EinzelstatistikDownloadComponent implements OnInit {
 
   // Get the value of the attribute from the html tag
   @Input()
-  currentVeranstaltung : number;
+  currentVeranstaltung: number;
   @Input()
-  currentMannschaft : number;
+  currentMannschaft: number;
   @Input()
-  currentJahr : number;
+  currentJahr: number;
 
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;

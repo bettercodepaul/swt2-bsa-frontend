@@ -12,7 +12,7 @@ import { db } from '@shared/data-provider/offlinedb/offlinedb';
 import { OfflineLigatabelle } from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {fromPayloadLigatabelleErgebnisArray, fromOfflineLigatabelleArray} from '../mapper/ligatabelle-ergebnis-mapper';
-import {LigatabelleErgebnisDO} from '@wettkampf/types/wettkampf-ergebnis-do.class';
+import {LigatabelleErgebnisDO} from '../types/ligatabelle-ergebnis-do.class';
 
 @Injectable({
   providedIn: 'root'

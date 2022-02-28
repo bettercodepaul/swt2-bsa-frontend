@@ -111,7 +111,7 @@ export class KampfrichterProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("NotAssignedKampfrichter/"+id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('NotAssignedKampfrichter/' + id).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayExtended(data)});
           }, (error: HttpErrorResponse) => {
@@ -131,7 +131,7 @@ export class KampfrichterProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path("AssignedKampfrichter/"+id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('AssignedKampfrichter/' + id).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArrayExtended(data)});
           }, (error: HttpErrorResponse) => {

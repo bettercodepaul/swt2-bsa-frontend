@@ -4,7 +4,7 @@ export class kampfrichterExtendedDTO implements DataTransferObject {
   id: number;
   vorname: string;
   nachname: string;
-  email:string;
+  email: string;
   wettkampfID: number;
   leitend: boolean;
   version: number;

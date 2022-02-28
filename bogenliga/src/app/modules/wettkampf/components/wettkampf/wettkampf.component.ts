@@ -350,7 +350,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.veranstaltungsDataProvider.findAll()
       .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
       .catch(() => this.veranstaltungen = []);
-    
+
   }
 
 

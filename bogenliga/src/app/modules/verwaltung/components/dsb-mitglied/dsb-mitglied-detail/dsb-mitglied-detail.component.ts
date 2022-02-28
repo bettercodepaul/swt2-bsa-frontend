@@ -350,7 +350,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
           if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER)) {
             response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.id);
           }
-          //this.currentVerein = response.payload[0];
+          // this.currentVerein = response.payload[0];
           this.vereine = response.payload;
           this.loadingVereine = false; this.vereineLoaded = true; })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });

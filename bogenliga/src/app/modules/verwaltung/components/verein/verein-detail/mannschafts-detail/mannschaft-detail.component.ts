@@ -433,7 +433,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
       userAction:       NotificationUserAction.PENDING
     };
 
-    let noti = this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
+    const noti = this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {

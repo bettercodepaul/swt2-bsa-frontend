@@ -45,10 +45,10 @@ export class VereinDataProviderService extends DataProviderService {
   }
 
   public findBySearch(searchTerm: string): Promise<BogenligaResponse<VereinDO[]>> {
-    //return promise
-    //sign in success -> resolve promise
-    //sign in failure -> reject promise with result
-    return (searchTerm === "" || searchTerm === null)
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return (searchTerm === '' || searchTerm === null)
       ? this.findAll()
       : new Promise( (resolve, reject) => {
         this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('search/' + searchTerm).build())
