@@ -33,7 +33,7 @@ export class Sidebar {
     return this.getIcons().get(2);
   }
 
-  getIconSportjahresplan() {
+  getIconWkdurchfuehrung() {
     return this.getIcons().get(3);
   }
 
@@ -57,7 +57,7 @@ export class Sidebar {
     return this.getSidebarText().get(2).getText();
   }
 
-  getTextSportjahresplan() {
+  getTextwkdurchfuehrung() {
     return this.getSidebarText().get(3).getText();
   }
 

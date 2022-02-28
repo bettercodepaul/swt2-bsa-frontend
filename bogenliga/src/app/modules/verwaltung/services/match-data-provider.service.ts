@@ -23,7 +23,7 @@ import {log} from 'util';
 export class MatchDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/match';
-  wettkampfId : WettkampfDO;
+  wettkampfId: WettkampfDO;
 
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
@@ -107,8 +107,8 @@ export class MatchDataProviderService extends DataProviderService {
         });
     }
 
-  public generateDataForMatches(wetttkampfId: number): Promise<BogenligaResponse<MatchDO[]>>{
-    console.log("In Funktion generateDataForMatches");
+  public generateDataForMatches(wetttkampfId: number): Promise<BogenligaResponse<MatchDO[]>> {
+    console.log('In Funktion generateDataForMatches');
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('generate?wettkampfid=' + wetttkampfId).build())
           .then((data: VersionedDataTransferObject[]) => {
@@ -120,7 +120,7 @@ export class MatchDataProviderService extends DataProviderService {
               reject({result: RequestResult.FAILURE});
             }
           });
-    })
+    });
   }
 
   //

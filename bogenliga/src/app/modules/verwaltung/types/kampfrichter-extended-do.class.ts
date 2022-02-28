@@ -8,6 +8,6 @@ export class KampfrichterExtendedDO implements VersionedDataObject {
   version: number;
   vorname: string;
   nachname: string;
-  email:string;
-  vorNachName : string;
+  email: string;
+  vorNachName: string;
 }

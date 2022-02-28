@@ -12,7 +12,7 @@ export class QuicksearchComponent implements OnInit, OnChanges {
 
   @Input() id: string;
   @Input() visible = true;
-  @Input() sessionSearch = "";
+  @Input() sessionSearch = '';
   @Input() public placeholderTranslationKey = 'SELECTIONLIST.SEARCH_PLACEHOLDER';
 
   @Output() public onSearchEntry = new EventEmitter<string>();

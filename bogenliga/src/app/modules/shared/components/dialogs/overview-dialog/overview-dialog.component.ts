@@ -14,7 +14,7 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
 
   @Input() public config: OverviewDialogConfig;
   @Input() public rows: TableRow[];
-  @Input() public hidden: boolean = true;
+  @Input() public hidden = true;
   @Input() public searchTerm: string;
 
 

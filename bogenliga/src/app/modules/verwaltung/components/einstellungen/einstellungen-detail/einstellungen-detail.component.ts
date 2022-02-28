@@ -121,10 +121,10 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
     const tempEinstellung = this.neucurrentEinstellung.value;
 
-    if(this.currentEinstellung.regex != null){
+    if (this.currentEinstellung.regex != null) {
       const regex = new RegExp(this.currentEinstellung.regex);
       if (!regex.test(tempEinstellung)) {
-        switch (this.currentEinstellung.key){
+        switch (this.currentEinstellung.key) {
           case 'SMTPEmail':
             notificationUpdateError.description = 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EINSTELLUNGEN_ERROR.DESCRIPTION.EMAIL';
             break;

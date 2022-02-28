@@ -36,8 +36,9 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
   ngOnInit() {
     this.loading = true;
-    if (!localStorage.getItem(this.searchTerm))
+    if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {

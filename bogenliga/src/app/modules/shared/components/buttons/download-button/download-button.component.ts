@@ -55,21 +55,19 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleMeldezettelFailure()));
-    } else if(this.id == 'downloadEinzelstatistik') {
+    } else if (this.id == 'downloadEinzelstatistik') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch(() => this.handleEinzelstatistikFailure());
-    } else if(this.id == 'downloadGesamtstatistik') {
+    } else if (this.id == 'downloadGesamtstatistik') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch(() => this.handleGesamtstatistikFailure());
-    }
-    else if(this.id == 'downloadTagesuebersicht') {
+    } else if (this.id == 'downloadTagesuebersicht') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch(() => this.handleTagesuebersichtFailure());
-    }
-    else if (this.id === 'downloadSetzliste') {
+    } else if (this.id === 'downloadSetzliste') {
       this.downloadButtonResourceProvider.download(this.downloadUrl, this.fileName, this.aElementRef)
           .then((response) => this.handleWithoutNotification(response))
           .catch((() => this.handleSetzlisteFailure()));
@@ -134,8 +132,8 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
   private handleBogenkontrolllisteFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
-      title: 'SPORTJAHRESPLAN.BOGENKONTROLLLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
-      description: 'SPORTJAHRESPLAN.BOGENKONTROLLLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      title: 'WKDURCHFUEHRUNG.BOGENKONTROLLLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'WKDURCHFUEHRUNG.BOGENKONTROLLLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
@@ -147,11 +145,11 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleSetzlisteFailure(){
+  private handleSetzlisteFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
-      title: 'SPORTJAHRESPLAN.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
-      description: 'SPORTJAHRESPLAN.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      title: 'WKDURCHFUEHRUNG.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'WKDURCHFUEHRUNG.SETZLISTE.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
@@ -163,11 +161,11 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleSchusszettelFailure(){
+  private handleSchusszettelFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
-      title: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
-      description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      title: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
@@ -179,11 +177,11 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleMeldezettelFailure(){
+  private handleMeldezettelFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
-      title: 'SPORTJAHRESPLAN.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
-      description: 'SPORTJAHRESPLAN.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
+      title: 'WKDURCHFUEHRUNG.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.TITLE',
+      description: 'WKDURCHFUEHRUNG.MELDEZETTEL.NOTIFICATION.DOWNLOADFEHLER.DESCRIPTION',
       severity: NotificationSeverity.ERROR,
       origin: NotificationOrigin.USER,
       type: NotificationType.OK,
@@ -195,7 +193,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleEinzelstatistikFailure(){
+  private handleEinzelstatistikFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'WETTKAEMPFE.EINZELSTATISTIK.NOTIFICATION.DOWNLOADFEHLER.TITLE',
@@ -211,7 +209,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleGesamtstatistikFailure(){
+  private handleGesamtstatistikFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'Download Fehlgeschlagen',
@@ -227,7 +225,7 @@ export class DownloadButtonComponent extends ButtonComponent implements OnInit {
     this.notificationService.showNotification(notification);
   }
 
-  private handleTagesuebersichtFailure(){
+  private handleTagesuebersichtFailure() {
     const notification: Notification = {
       id: NOTIFICATION_DOWNLOAD_FAILURE,
       title: 'Download Fehlgeschlagen',

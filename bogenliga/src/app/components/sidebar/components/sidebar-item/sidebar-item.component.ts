@@ -22,7 +22,7 @@ export class SidebarItemComponent implements OnInit {
 
 
 
-  
+
   constructor(private store: Store<AppState>,  private currentUserService: CurrentUserService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
