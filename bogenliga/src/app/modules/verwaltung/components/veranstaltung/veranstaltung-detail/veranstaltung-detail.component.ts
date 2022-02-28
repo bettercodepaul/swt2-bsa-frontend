@@ -36,7 +36,7 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {WettkampfDataProviderService} from '../../../../wettkampf/services/wettkampf-data-provider.service';
+import {LigatabelleDataProviderService} from '../../../../ligatabelle/services/ligatabelle-data-provider.service';
 import {LigatabelleErgebnisDO} from '../../../../wettkampf/types/wettkampf-ergebnis-do.class';
 import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mannschaftSortierung-data-provider.service';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
@@ -122,7 +122,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private ligatabellenService: WettkampfDataProviderService,
+    private ligatabellenService: LigatabelleDataProviderService,
     private maSortierungService: MannschaftSortierungDataProviderService,
     private matchDataProvider: MatchDataProviderService) {
     super();
