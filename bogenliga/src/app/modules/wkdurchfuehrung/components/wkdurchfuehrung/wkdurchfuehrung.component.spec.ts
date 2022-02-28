@@ -8,12 +8,12 @@ import {ROUTES} from '../../../../app.routing';
 import {HomeModule} from '@home/home.module';
 import {APP_REDUCERS} from '@shared/redux-store';
 import {SharedModule} from '@shared/shared.module';
-import {SportjahresplanComponent} from './sportjahresplan.component';
+import {WkdurchfuehrungComponent} from './wkdurchfuehrung.component';
 import {LigatabelleComponent} from 'src/app/modules/ligatabelle/components/ligatabelle/ligatabelle.component';
 
-describe('SportjahresplanComponent', () => {
-  let component: SportjahresplanComponent;
-  let fixture: ComponentFixture<SportjahresplanComponent>;
+describe('WkdurchfuehrungComponent', () => {
+  let component: WkdurchfuehrungComponent;
+  let fixture: ComponentFixture<WkdurchfuehrungComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,7 +31,7 @@ describe('SportjahresplanComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SportjahresplanComponent);
+    fixture = TestBed.createComponent(WkdurchfuehrungComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

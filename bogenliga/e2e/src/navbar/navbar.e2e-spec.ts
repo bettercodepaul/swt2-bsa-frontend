@@ -46,7 +46,7 @@ describe('Navbar', () => {
 
     // Wettkaempfe
 
-    // Sportjahresplan
+    // wkdurchfuehrung
 
     // Login
 

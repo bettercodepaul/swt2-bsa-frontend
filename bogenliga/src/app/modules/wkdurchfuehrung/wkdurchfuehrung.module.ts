@@ -3,10 +3,10 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from '../shared/shared.module';
-import {SPORTJAHRESPLAN_ROUTES} from './sportjahresplan.routing';
+import {wkdurchfuehrung_ROUTES} from './wkdurchfuehrung.routing';
 
 import {
-  SportjahresplanComponent,
+  WkdurchfuehrungComponent,
   SchusszettelComponent,
   RingzahlTabIndexDirective,
   SchuetzenTabIndexDirective,
@@ -15,24 +15,24 @@ import {
   PfeilNumberOnlyDirective,
   SchuetzeNumberOnlyDirective,
   FehlerpunkteNumberOnlyDirective,
-} from '../sportjahresplan/components';
+} from '../wkdurchfuehrung/components';
 
 import {
-  SportjahresplanGuard,
+  WkdurchfuehrungGuard,
   SchusszettelGuard,
   TableteingabeGuard,
   TabletadminGuard
-} from '../sportjahresplan/guards';
+} from '../wkdurchfuehrung/guards';
 
 @NgModule({
   imports:      [
     CommonModule,
-    RouterModule.forChild(SPORTJAHRESPLAN_ROUTES),
+    RouterModule.forChild(wkdurchfuehrung_ROUTES),
     SharedModule.forChild(),
     FormsModule
   ],
   declarations: [
-    SportjahresplanComponent,
+    WkdurchfuehrungComponent,
     SchusszettelComponent,
     PfeilNumberOnlyDirective,
     SchuetzeNumberOnlyDirective,
@@ -43,7 +43,7 @@ import {
     TabletAdminComponent
   ],
   providers:    [
-    SportjahresplanGuard,
+    WkdurchfuehrungGuard,
     SchusszettelGuard,
     TableteingabeGuard,
     TabletadminGuard
@@ -51,12 +51,12 @@ import {
 })
 
 
-export class SportjahresplanModule {
+export class WkdurchfuehrungModule {
   static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       ngModule: SharedModule,
       providers: [
-        SportjahresplanGuard,
+        WkdurchfuehrungGuard,
         SchusszettelGuard,
         TableteingabeGuard,
         TabletadminGuard

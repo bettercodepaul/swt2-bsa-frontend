@@ -3,9 +3,9 @@ import {TableConfig} from '@shared/components/tables/types/table-config.interfac
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 
 
-export const SPORTJAHRESPLAN_CONFIG: NavigationDialogConfig = {
-  moduleTranslationKey:    'SPORTJAHRESPLAN',
-  pageTitleTranslationKey: 'SPORTJAHRESPLAN.SPORTJAHRESPLAN.TITLE',
+export const WKDURCHFUEHRUNG_CONFIG: NavigationDialogConfig = {
+  moduleTranslationKey:    'WKDURCHFUEHRUNG',
+  pageTitleTranslationKey: 'WKDURCHFUEHRUNG.WKDURCHFUEHRUNG.TITLE',
   navigationCardsConfig:   {
     navigationCards: []
   }
@@ -17,22 +17,22 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
 
   columns: [
     {
-      translationKey: 'SPORTJAHRESPLAN.WETTKAMPF.TABLE.CDAY',
+      translationKey: 'WKDURCHFUEHRUNG.WETTKAMPF.TABLE.CDAY',
       propertyName:   'wettkampfTag',
       width:          20,
     },
     {
-      translationKey: 'SPORTJAHRESPLAN.WETTKAMPF.TABLE.DATE',
+      translationKey: 'WKDURCHFUEHRUNG.WETTKAMPF.TABLE.DATE',
       propertyName:   'wettkampfDatum',
       width:          15,
     },
     {
-      translationKey: 'SPORTJAHRESPLAN.WETTKAMPF.TABLE.TIME',
+      translationKey: 'WKDURCHFUEHRUNG.WETTKAMPF.TABLE.TIME',
       propertyName:   'wettkampfBeginn',
       width:          15,
     },
     {
-      translationKey: 'SPORTJAHRESPLAN.WETTKAMPF.TABLE.PLACE',
+      translationKey: 'WKDURCHFUEHRUNG.WETTKAMPF.TABLE.PLACE',
       propertyName:   'wettkampfOrtsname',
       width:          40,
     },
@@ -50,34 +50,34 @@ export const MATCH_TABLE_CONFIG: TableConfig = {
 
   columns: [
     {
-      translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.NUMMER',
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.NUMMER',
       propertyName:   'nr',
       width:          5,
     },
     {
-      translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.SCHEIBE',
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.SCHEIBE',
       propertyName:   'scheibenNummer',
       width:          5,
     },
     {
-      translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.MANNSCHAFT',
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.MANNSCHAFT',
       propertyName:   'mannschaftName',
       width:          20,
     },
     {
-      translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.BEGEGNUNG',
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.BEGEGNUNG',
       propertyName:   'begegnung',
       width:          5
     },
     {
-      translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.MATCHPUNKTE',
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.MATCHPUNKTE',
       propertyName:   'matchpunkte',
       type:            5,
       currentSortOrder: 1,
       width:           5
     },
     {
-      translationKey: 'SPORTJAHRESPLAN.MATCH.TABLE.SATZPUNKTE',
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.SATZPUNKTE',
       propertyName:   'satzpunkte',
       width:          5,
     }

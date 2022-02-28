@@ -128,8 +128,8 @@ export class SchusszettelComponent implements OnInit {
         //Notification while preparing
         this.notificationService.showNotification({
           id:          'NOTIFICATION_SCHUSSZETTEL_LOADING',
-          title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.LADEN.TITLE',
-          description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.LADEN.DESCRIPTION',
+          title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.LADEN.TITLE',
+          description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.LADEN.DESCRIPTION',
           severity:    NotificationSeverity.INFO,
           origin:      NotificationOrigin.USER,
           userAction:  NotificationUserAction.PENDING
@@ -209,19 +209,19 @@ export class SchusszettelComponent implements OnInit {
               }
 
               this.wettkampfDataProvider.findAllowedMember(this.match1.wettkampfId, this.match1.mannschaftId, this.match2.mannschaftId).then((value) => {
-                this.allowedMitglieder1=value;
+                this.allowedMitglieder1 = value;
                 console.log('Allowed for match1: ', this.allowedMitglieder1);
-                if(this.match1.wettkampfId == this.match2.wettkampfId){
+                if (this.match1.wettkampfId === this.match2.wettkampfId) {
                   this.allowedMitglieder2 = this.allowedMitglieder1;
-                  //Close notification when ready
+                  // Close notification when ready
                   this.notificationService.discardNotification();
                 }
               });
-              if(this.match1.wettkampfId != this.match2.wettkampfId){
+              if (this.match1.wettkampfId !== this.match2.wettkampfId) {
                 this.wettkampfDataProvider.findAllowedMember(this.match2.wettkampfId, this.match1.mannschaftId, this.match2.mannschaftId).then((value)=>{
                   this.allowedMitglieder2 = value;
                   console.log('Allowed for match2: ', this.allowedMitglieder2);
-                  //Close notification when ready
+                  // Close notification when ready
                   this.notificationService.discardNotification();
                 });
               }
@@ -263,8 +263,8 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
-  async onSchuetzeChange(value: string, matchNr: number, rueckennummer: number){
-    const mannschaftId = matchNr == 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
+  async onSchuetzeChange(value: string, matchNr: number, rueckennummer: number) {
+    const mannschaftId = matchNr === 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
 
     let valid = true;
     let allowed = [];
@@ -272,15 +272,16 @@ export class SchusszettelComponent implements OnInit {
 
     try {
       mitglied = await this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value);
-    }catch (e){
+    } catch (e) {
       valid = false;
     }
 
-    if(mitglied != null && mitglied.result == RequestResult.SUCCESS) {
+    if (mitglied != null && mitglied.result === RequestResult.SUCCESS) {
       let dsbNummer = mitglied.payload.dsbMitgliedId;
       console.log('DsbNummer for Mannschaftsmitglied in Mannschaft ' +
-        mannschaftId + " and Rueckennummer " + value + " is " + dsbNummer);
+        mannschaftId + ' and Rueckennummer ' + value + ' is ' + dsbNummer);
 
+      // tslint:disable-next-line:triple-equals
       allowed = matchNr == 1 ? this.allowedMitglieder1 : this.allowedMitglieder2;
 
       if (!allowed.includes(dsbNummer)) {
@@ -288,11 +289,11 @@ export class SchusszettelComponent implements OnInit {
       }
     }
 
-    if(!valid){
+    if (!valid) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
@@ -370,8 +371,8 @@ export class SchusszettelComponent implements OnInit {
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.DESCRIPTION',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.DESCRIPTION',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
@@ -388,8 +389,8 @@ export class SchusszettelComponent implements OnInit {
       this.match2.schuetzen[2][0].rueckennummer == null) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
@@ -406,8 +407,8 @@ export class SchusszettelComponent implements OnInit {
       this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.DESCRIPTION',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.DESCRIPTION',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
@@ -416,8 +417,8 @@ export class SchusszettelComponent implements OnInit {
     } else {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SPEICHERN',
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
+        title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
+        description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
         severity:    NotificationSeverity.INFO,
         origin:      NotificationOrigin.USER,
         // type: NotificationType.OK, //--TO-DO Maximilian
@@ -446,13 +447,13 @@ export class SchusszettelComponent implements OnInit {
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
             this.match1 = data.payload[0];
             this.match2 = data.payload[1];
-            
+
             // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
             this.ngOnInit();
             this.notificationService.showNotification({
               id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-              title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
-              description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
+              title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
+              description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
               severity:    NotificationSeverity.ERROR,
               origin:      NotificationOrigin.SYSTEM,
               type:        NotificationType.OK,
@@ -462,8 +463,8 @@ export class SchusszettelComponent implements OnInit {
             console.error(error);
             this.notificationService.showNotification({
               id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-              title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
-              description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
+              title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
+              description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
               severity:    NotificationSeverity.ERROR,
               origin:      NotificationOrigin.SYSTEM,
               type:        NotificationType.OK,
@@ -475,7 +476,7 @@ export class SchusszettelComponent implements OnInit {
     }
   }
 
-  // zurueck zu Sportjahresplan
+  // zurueck zu wkdurchfuehrung
   back() {
 
     // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
@@ -483,8 +484,8 @@ export class SchusszettelComponent implements OnInit {
       // TODO Texte in json.de anlegen
       const notification: Notification = {
         id:          NOTIFICATION_ZURUECK,
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
+        title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
+        description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
         severity:    NotificationSeverity.QUESTION,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.YES_NO,
@@ -502,7 +503,7 @@ export class SchusszettelComponent implements OnInit {
               console.log('accepted');
               this.dirtyFlag = false;
               console.log('Wettkampftag', this.match1.wettkampfTag);
-              this.router.navigate(['/sportjahresplan' + '/' + this.match1.wettkampfId]);
+              this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
             }
             console.log('notification.userAction after: ' + notification.userAction);
           });
@@ -511,7 +512,7 @@ export class SchusszettelComponent implements OnInit {
 
       console.log('Keine Änderung');
       console.log('Wettkampftag', this.match1.wettkampfTag);
-      this.router.navigate(['/sportjahresplan' + '/' + this.match1.wettkampfId]);
+      this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
     }
   }
 
@@ -523,8 +524,8 @@ export class SchusszettelComponent implements OnInit {
       // TODO TExte in json.de anlegen
       const notification: Notification = {
         id:          NOTIFICATION_WEITER_SCHALTEN,
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
         severity:    NotificationSeverity.QUESTION,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.YES_NO,
@@ -538,7 +539,7 @@ export class SchusszettelComponent implements OnInit {
               this.matchProvider.pairToFollow(this.match2.id)
                   .then((data) => {
                     if (data.payload.length === 2) {
-                      this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                      this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
                     }
                   });
             }
@@ -550,7 +551,7 @@ export class SchusszettelComponent implements OnInit {
       this.matchProvider.pairToFollow(this.match2.id)
           .then((data) => {
             if (data.payload.length === 2) {
-              this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
             }
           });
     }
@@ -565,8 +566,8 @@ export class SchusszettelComponent implements OnInit {
       // TODO TExte in json.de anlegen
       const notification: Notification = {
         id:          NOTIFICATION_WEITER_SCHALTEN,
-        title:       'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
-        description: 'SPORTJAHRESPLAN.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
         severity:    NotificationSeverity.QUESTION,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.YES_NO,
@@ -580,7 +581,7 @@ export class SchusszettelComponent implements OnInit {
               this.matchProvider.previousPair(this.match1.id)
                   .then((data) => {
                     if (data.payload.length === 2) {
-                      this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                      this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
                     }
                   });
             }
@@ -592,7 +593,7 @@ export class SchusszettelComponent implements OnInit {
       this.matchProvider.previousPair(this.match1.id)
           .then((data) => {
             if (data.payload.length === 2) {
-              this.router.navigate(['/sportjahresplan/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
             }
           });
     }
