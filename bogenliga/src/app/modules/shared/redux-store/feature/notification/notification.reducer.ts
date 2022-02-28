@@ -22,7 +22,7 @@ export function notificationReducer(state = initialNavigationState, action: Acti
     case Actions.ACCEPT_NOTIFICATION: {
       const modifiedState = newState = {...state};
 
-      const noti : Notification = {
+      const noti: Notification = {
         id:               modifiedState.notification.id,
         title:             modifiedState.notification.title,
         description:       modifiedState.notification.description,
@@ -31,7 +31,7 @@ export function notificationReducer(state = initialNavigationState, action: Acti
         origin:            modifiedState.notification.origin,
         type:              modifiedState.notification.type,
         userAction:       NotificationUserAction.ACCEPTED
-      }
+      };
       modifiedState.notification = noti;
       modifiedState.showNotification = false;
 
@@ -43,7 +43,7 @@ export function notificationReducer(state = initialNavigationState, action: Acti
       // Zeile wird auskommentiert, da ein Fehler auftritt, der verhindert, dass Benachrichtigungen angezeigt werden.
       // Das Entfernen der Zeile hat allem Anschein nach keine weiteren Konsequenzen.
       // => BSAPP-752
-      const noti : Notification = {
+      const noti: Notification = {
         id:               modifiedState.notification.id,
         title:             modifiedState.notification.title,
         description:       modifiedState.notification.description,
@@ -52,7 +52,7 @@ export function notificationReducer(state = initialNavigationState, action: Acti
         origin:            modifiedState.notification.origin,
         type:              modifiedState.notification.type,
         userAction:       NotificationUserAction.DECLINED
-      }
+      };
       modifiedState.notification = noti;
       modifiedState.showNotification = false;
       break;

@@ -37,8 +37,9 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
 
   ngOnInit() {
     this.loading = true;
-    if (!localStorage.getItem(this.searchTerm))
+    if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
   }
 
 

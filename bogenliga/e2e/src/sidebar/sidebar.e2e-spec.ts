@@ -31,19 +31,19 @@ describe('Sidebar', () => {
     expect(sidebar.getTextHome()).toEqual('HOME');
     expect(sidebar.getTextVerwaltung()).toEqual('VERWALTUNG');
     expect(sidebar.getTextWettkaempfe()).toEqual('WETTKAEMPFE');
-    expect(sidebar.getTextSportjahresplan()).toEqual('WETTKAMPFDURCHFÜHRUNG');
+    expect(sidebar.getTextwkdurchfuehrung()).toEqual('WETTKAMPFDURCHFÜHRUNG');
   });
 
   it('should have icons before and after click', () => {
     expect(sidebar.getIcons()).toBeTruthy();
     expect(sidebar.getIconHome()).toBeTruthy();
-    expect(sidebar.getIconSportjahresplan()).toBeTruthy();
+    expect(sidebar.getIconWkdurchfuehrung()).toBeTruthy();
     expect(sidebar.getIconVerwaltung()).toBeTruthy();
     expect(sidebar.getIconWettkaempfe()).toBeTruthy();
     sidebar.clickButton();
     expect(sidebar.getIcons()).toBeTruthy();
     expect(sidebar.getIconHome()).toBeTruthy();
-    expect(sidebar.getIconSportjahresplan()).toBeTruthy();
+    expect(sidebar.getIconWkdurchfuehrung()).toBeTruthy();
     expect(sidebar.getIconVerwaltung()).toBeTruthy();
     expect(sidebar.getIconWettkaempfe()).toBeTruthy();
   });
@@ -57,7 +57,7 @@ describe('Sidebar', () => {
 
     // Wettkaempfe
 
-    // Sportjahresplan
+    // wkdurchfuehrung
 
     // Login
 

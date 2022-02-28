@@ -40,8 +40,9 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
 
   ngOnInit() {
     this.loading = true;
-    if (!localStorage.getItem(this.searchTerm))
+    if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
@@ -85,7 +86,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
 
   }
 
-  public findBySearch($event : string) {
+  public findBySearch($event: string) {
     this.dsbMitgliedDataProvider.findBySearch($event)
         .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));

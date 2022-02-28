@@ -33,7 +33,7 @@ export class MannschaftsmitgliedDTO implements DataTransferObject {
     } else {
       copy.dsbMitgliedEingesetzt = null;
     }
-    copy.rueckennummer = optional.rueckennummer
+    copy.rueckennummer = optional.rueckennummer;
 
     return copy;
   }

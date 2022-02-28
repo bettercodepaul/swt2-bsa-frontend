@@ -82,7 +82,7 @@ export class ErrorHandlingService {
       errorDto = {errorCode: 'BAD_REQUEST', errorMessage: null, param: null};
     } else if (statusCode === HTTP_NOT_FOUND) {
       errorDto = {errorCode: 'ENTITY_NOT_FOUND_ERROR', errorMessage: null, param: null};
-    }else if (statusCode === HTTP_NOT_ACCEPTABLE) {
+    } else if (statusCode === HTTP_NOT_ACCEPTABLE) {
       errorDto = {errorCode: 'HTTP_NOT_ACCEPTABLE_ERROR', errorMessage: null, param: null};
     }
 

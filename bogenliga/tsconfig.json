@@ -8,7 +8,7 @@
       "@environment": ["src/environments/environment"],
       "@home/*": ["src/app/modules/home/*"],
       "@settings/*": ["src/app/modules/settings/*"],
-      "@sportjahresplan/*": ["src/app/modules/sportjahresplan/*"],
+      "@wkdurchfuehrung/*": ["src/app/modules/wkdurchfuehrung/*"],
       "@user/*": ["src/app/modules/user/*"],
       "@verwaltung/*": ["src/app/modules/verwaltung/*"],
       "@wettkampf/*": ["src/app/modules/wettkampf/*"],

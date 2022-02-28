@@ -161,6 +161,7 @@ export class SharedModule {
         LocalDataProvider.LocalDataProviderService,
         LocalDataProvider.LocalStorageDataProvider,
         LocalDataProvider.SessionStorageDataProvider,
+        SharedService.OnOfflineService,
         RestClient
       ]
     };

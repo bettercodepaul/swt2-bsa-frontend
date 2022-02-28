@@ -27,8 +27,9 @@ export class WettkampfklasseOverviewComponent extends CommonComponentDirective i
 
   ngOnInit() {
     this.loading = true;
-    if (!localStorage.getItem(this.searchTerm))
+    if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
   }
 
 

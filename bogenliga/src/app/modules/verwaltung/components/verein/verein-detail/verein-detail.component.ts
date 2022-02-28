@@ -281,7 +281,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       userAction:       NotificationUserAction.PENDING
     };
 
-    let notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
+    const notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
         .subscribe((myNotification) => {
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
@@ -418,9 +418,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       userAction: NotificationUserAction.PENDING
     };
     this.notificationService.observeNotification(NOTIFICATION_NO_LICENSE)
-      .subscribe(myNotification => {
-        if (myNotification.userAction === NotificationUserAction.ACCEPTED)
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
           this.saveLoading = false;
+        }
       });
     this.notificationService.showNotification(noLicenseNotification);
   }

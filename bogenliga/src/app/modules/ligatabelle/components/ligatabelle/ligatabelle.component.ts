@@ -6,9 +6,9 @@ import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './ligatabelle.config
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {BogenligaResponse} from '@shared/data-provider';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {WettkampfDataProviderService} from '@wettkampf/services/wettkampf-data-provider.service';
+import {LigatabelleDataProviderService} from '../../services/ligatabelle-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {LigatabelleErgebnisDO} from '@wettkampf/types/wettkampf-ergebnis-do.class';
+import {LigatabelleErgebnisDO} from '../../types/ligatabelle-ergebnis-do.class';
 import {isUndefined} from '@shared/functions';
 import {NotificationService} from '@shared/services/notification';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
@@ -30,7 +30,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private ligatabelleDataProvider: WettkampfDataProviderService,
+    private ligatabelleDataProvider: LigatabelleDataProviderService,
   ) {
     super();
   }
@@ -97,7 +97,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.loadedYears = responseYear.payload;
 
       for (const year of responseYear.payload) {
-        const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportjahrDestinct(year.sportjahr)
+        const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportjahrDestinct(year.sportjahr);
 
         for (const veranstaltung of responseVeranstaltung.payload) {
           /*
@@ -108,7 +108,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
           this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung); // -> Ligatabelle
           this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);  // -> "Liga"
-          if(!this.availableYears.includes(year)){
+          if (!this.availableYears.includes(year)) {
             this.availableYears.push(year); // -> "Sportjahr"
           }
         }
@@ -118,11 +118,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.loadingLigatabelle = false;
       this.selectedYearId = this.availableYears[0].id;
 
-      if(this.availableYears.length > 0){
-        this.onSelectYear(this.availableYears); //automatische Auswahl nur bei vorhandenen Daten
+      if (this.availableYears.length > 0) {
+        this.onSelectYear(this.availableYears); // automatische Auswahl nur bei vorhandenen Daten
       }
-    }
-    catch (e) {
+    } catch (e) {
       this.loading = false;
       this.loadingLigatabelle = false;
       console.log(e);
@@ -144,7 +143,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   private handleLigatabelleSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
-    console.log('success')
+    console.log('success');
     this.rowsLigatabelle = []; // reset array to ensure change detection
     this.remainingLigatabelleRequests = response.payload.length;
     if (response.payload.length <= 0
@@ -171,8 +170,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     buttonVisibility.style.display = 'block';
     this.veranstaltungenForYear = [];
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
-    this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id
-    this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); //automatische Auswahl
+    this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id;
+    this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); // automatische Auswahl
   }
 
   public onSelectVeranstaltung($event: VeranstaltungDO[]) {
