@@ -783,12 +783,12 @@
           "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
         },
         "SAVE_FAILURE": {
-          "TITLE": "Fehler beim aktualisieren",
-          "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
+          "TITLE": "Fehler beim Aktualisieren",
+          "DESCRIPTION": "Sportleiter hat keine Berechtigung über den Ausgewählten Verein oder die Zielregion."
         },
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
-          "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
+          "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehrere Lizenzen nicht vorhanden sind."
         }
       }
     },
@@ -974,7 +974,7 @@
         },
         "OVERUSED": {
           "TITLE": "Fehler",
-          "DESCRIPTION": "Schütze kann dieser Mannschaft nicht hinzugefügt werden, da er schon in zuvielen Mannschaften eingesetzt wurde, bzw. in einer höheren Liga schon eingesetzt wurde."
+          "DESCRIPTION": "Schütze kann dieser Mannschaft nicht hinzugefügt werden, da er schon in zu vielen Mannschaften eingesetzt wurde, bzw. in einer höheren Liga schon eingesetzt wurde."
         },
         "NOWETTKAEMPFE": {
           "TITLE": "Lizenz konnte nicht geprüft werden.",
