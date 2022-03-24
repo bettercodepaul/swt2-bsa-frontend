@@ -174,7 +174,7 @@
         [id]="'downloadEinzelstatistik'"
         [loading]="loadingData"
         [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
-        [fileName]="'Einzelstatistik.pdf'"> Einzelstatistik als PDF
+        [fileName]="'Einzelstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.Einzel-als-PDF.LABEL'| translate}}
       </bla-download-button>
 
       <!-- Button - Gesamtstatistik Drucken -->
@@ -184,7 +184,7 @@
         [id]="'downloadGesamtstatistik'"
         [loading]="loadingData"
         [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
-        [fileName]="'Gesamtstatistik.pdf'"> Gesamtstatistik als PDF
+        [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.Gesamt-als-PDF.LABEL'| translate}}
       </bla-download-button>
 
     </div>
@@ -210,7 +210,7 @@
     <!-- Row Gesamtstatistik -->
     <div class="row print1">
       <div id="Table0" class="hidden">
-        <h3>{{"Gesamtstatistik pro Schütze"}}</h3>
+        <h3>{{'MANNSCHAFTEN.SCHUETZEN-STATISTIK.TITEL' | translate}}</h3>
         <bla-data-table id="row00"
                         [loading]="loadingData"
                         [config]="config_einzelGesamt_table"
@@ -221,11 +221,11 @@
     <!-- Row 1 -->
     <div class="row print1">
       <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]">
-        <h3>{{"Wettkampftag 1"}}</h3>
+        <h3>{{'WETTKAEMPFE.WETTKAEMPFE.Wettkampftageins' | translate}}</h3>
         <bla-download-button id = "TagesuebersichtButton"
                              [id]="'downloadTagesuebersicht'"
                              [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=1')"
-                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+                             [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.Tagesuebersicht-als-PDF'| translate }}
         </bla-download-button>
         <bla-data-table id="row0"
                         [loading]="loadingData"
@@ -246,7 +246,7 @@
         <bla-download-button id = "TagesuebersichtButton2"
                              [id]="'downloadTagesuebersicht'"
                              [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=2')"
-                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+                             [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.Tagesuebersicht-als-PDF'| translate }}
         </bla-download-button>
         <bla-data-table id="row1"
                         [loading]="loadingData"
@@ -267,7 +267,7 @@
         <bla-download-button id = "TagesuebersichtButton3"
                              [id]="'downloadTagesuebersicht'"
                              [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=3')"
-                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+                             [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.Tagesuebersicht-als-PDF'| translate }}
         </bla-download-button>
         <bla-data-table id="row2"
                         [loading]="loadingData"
@@ -288,7 +288,7 @@
         <bla-download-button id = "TagesuebersichtButton4"
                              [id]="'downloadTagesuebersicht'"
                              [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=4')"
-                             [fileName]="'Tagesuebersicht.pdf'"> Tagesübersicht als PDF
+                             [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.Tagesuebersicht-als-PDF'| translate }}
         </bla-download-button>
         <bla-data-table id="row3"
                         [loading]="loadingData"
