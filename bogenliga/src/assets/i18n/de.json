@@ -69,7 +69,8 @@
   },
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
-      "TITLE": "Liga-Tabelle"
+      "TITLE": "Liga-Tabelle",
+      "Wettkampftageins" : "Wettkampftag 1"
     },
     "TITEL": {
       "VERANSTALTUNG": "Ligen-Auswahl"
@@ -89,10 +90,22 @@
       }
     },
     "EINZELSTATISTIK": {
-      "NOTIFICATION" : {
+      "NOTIFICATION": {
         "DOWNLOADFEHLER": {
           "TITLE": "Fehler beim generieren der Einzelstatistik:",
           "DESCRIPTION": "Einzelstatistik konnte nicht generiert werden. Es wurden keine Schützen für die Auswahl gefunden"
+        }
+      }
+    },
+      "BUTTONS":{
+        "Einzel-als-PDF": {
+          "LABEL": "Einzelstatistik als PDF"
+        },
+        "Gesamt-als-PDF": {
+          "LABEL": "Gesamtstatistik als PDF"
+      },
+        "Tagesuebersicht-als-PDF": {
+          "LABEL": "Tagesübersicht als PDF"
         }
       }
     }
@@ -216,6 +229,9 @@
   "MANNSCHAFTEN": {
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle"
+    },
+    "SCHUETZEN-STATISTIK": {
+      "TITEL" : "Gesamtstatistik pro Schütze"
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
@@ -783,12 +799,12 @@
           "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
         },
         "SAVE_FAILURE": {
-          "TITLE": "Fehler beim Aktualisieren",
+          "TITLE": "Fehler beim aktualisieren",
           "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
         },
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
-          "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehrere Lizenzen nicht vorhanden sind."
+          "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
         }
       }
     },
@@ -974,7 +990,7 @@
         },
         "OVERUSED": {
           "TITLE": "Fehler",
-          "DESCRIPTION": "Schütze kann dieser Mannschaft nicht hinzugefügt werden, da er schon in zu vielen Mannschaften eingesetzt wurde, bzw. in einer höheren Liga schon eingesetzt wurde."
+          "DESCRIPTION": "Schütze kann dieser Mannschaft nicht hinzugefügt werden, da er schon in zuvielen Mannschaften eingesetzt wurde, bzw. in einer höheren Liga schon eingesetzt wurde."
         },
         "NOWETTKAEMPFE": {
           "TITLE": "Lizenz konnte nicht geprüft werden.",
