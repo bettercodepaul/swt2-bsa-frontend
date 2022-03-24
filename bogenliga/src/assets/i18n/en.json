@@ -67,7 +67,8 @@
   },
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
-      "TITLE": "League-Ranking"
+      "TITLE": "League-Ranking",
+      "Wettkampftageins" : "Competition day 1"
     },
     "TITEL": {
       "VERANSTALTUNG": "League-Selection"
@@ -92,6 +93,17 @@
           "TITLE": "Error creating Singlestatistic:",
           "DESCRIPTION": "Could not generate Singlestatistic. Could not find Archers for selection."
         }
+      }
+    },
+    "BUTTONS":{
+      "Einzel-als-PDF": {
+        "LABEL": "Individual statistics as PDF"
+      },
+      "Gesamt-als-PDF": {
+        "LABEL": "Overall statistics as PDF"
+      },
+      "Tagesuebersicht-als-PDF": {
+        "LABEL": "Daily overview as PDF"
       }
     }
   },
@@ -208,6 +220,9 @@
   "MANNSCHAFTEN": {
     "LIGATABELLE": {
       "TITLE": "Current League-ranking"
+    },
+    "SCHUETZEN-STATISTIK": {
+      "TITEL" : "Overall statistics per shooter"
     },
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
