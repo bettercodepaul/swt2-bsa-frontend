@@ -12,9 +12,31 @@
 }
 
 .tooltip-body {
-  background-color: #cecece;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
+
 .tooltip-card-header {
   text-align: center;
   height: 227px;
+}
+
+.tooltip-navigation-card {
+  position: relative;
+  background: rgba(0,0,0,.03);
+  height: 100%;
+}
+
+.tooltip-text {
+  font-size: 90%;
+  text-align: left;
+}
+
+.multi-lines-text {
+   white-space: pre-line;
+}
+
+.title {
+  font-weight: bolder;
 }
