@@ -1,13 +1,23 @@
-import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
-import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
+import {OverviewDialogConfig} from '@shared/components';
+import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {UserPermission} from '@shared/services';
 
 export const USER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
-  moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.USER.TITLE',
+  moduleTranslationKey:    'MANAGEMENT', //Macht Home/Verwaltung/Benutzer-Uebersicht (ganz oben)
+  pageTitleTranslationKey: 'MANAGEMENT.USER.TITLE', //Macht Benutzer - Uebersicht
 
   tableConfig: {
     columns: [
+      {
+        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.VORNAME',
+        propertyName:   'vorname',
+        width:          20,
+      },
+      {
+        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.NACHNAME',
+        propertyName:   'nachname',
+        width:          20,
+      },
       {
         translationKey: 'MANAGEMENT.USER.TABLE.HEADERS.EMAIL',
         propertyName:   'email',
