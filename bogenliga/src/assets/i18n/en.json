@@ -96,13 +96,13 @@
       }
     },
     "BUTTONS":{
-      "Einzel-als-PDF": {
+      "Einzel_als_PDF": {
         "LABEL": "Individual statistics as PDF"
       },
-      "Gesamt-als-PDF": {
+      "Gesamt_als_PDF": {
         "LABEL": "Overall statistics as PDF"
       },
-      "Tagesuebersicht-als-PDF": {
+      "Tagesuebersicht_als_PDF": {
         "LABEL": "Daily overview as PDF"
       }
     }
@@ -221,7 +221,7 @@
     "LIGATABELLE": {
       "TITLE": "Current League-ranking"
     },
-    "SCHUETZEN-STATISTIK": {
+    "SCHUETZEN_STATISTIK": {
       "TITEL" : "Overall statistics per shooter"
     },
     "MANNSCHAFTEN": {
