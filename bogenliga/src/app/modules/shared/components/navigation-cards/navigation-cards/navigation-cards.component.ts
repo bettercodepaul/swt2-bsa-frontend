@@ -54,26 +54,26 @@ export class NavigationCardsComponent extends CommonComponentDirective implement
     }
   }
 
-  /*
-  setting the card which is hovered */
+  /* setting the card which is hovered */
   public setActiveCard(card) {
     this.activeCard = card
   }
 
   /*
-  * resets the card which is hovered
-  * get's called with the mouseleave event
-  * of the button */
+  * - resetting the card which is hovered
+  * - called with the (mouseleave) event
+  *   of the button.
+  * */
   public resetActiveCard() {
     this.activeCard = null
   }
 
+  /* returns the title of the tooltip-config */
   public getTooltipTitle() {
     return this.activeCard.tooltipTitle
   }
 
-  /**
-   * @return Tooltiptext of the card */
+  /* returns the text of the tooltip-config */
   public getTooltipText() {
     return this.activeCard.tooltipText
   }

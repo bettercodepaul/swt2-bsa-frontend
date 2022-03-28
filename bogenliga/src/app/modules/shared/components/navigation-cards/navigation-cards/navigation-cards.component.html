@@ -19,22 +19,21 @@
             </button>
       </div>
       </div>
-
+      <!-- Tooltip div container called with ngIf conditions -->
       <div *ngIf="card === activeCard" class="tooltip-navigation-card">
         <div class="card-body tooltip-body">
           <p class="tooltip-text title">{{getTooltipTitle()}}</p>
           <p class="tooltip-text multi-lines-text">{{getTooltipText()}}</p>
           <div class="button-container">
             <button  class="btn btn-primary"
-                   (mouseenter)  ="setActiveCard(card)"
-                   (mouseleave)  ="resetActiveCard()"
-                   [routerLink]  ="getLink(card.route,card.detailType)"
-                   [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
+                   (mouseenter)   ="setActiveCard(card)"
+                   (mouseleave)   ="resetActiveCard()"
+                   [routerLink]   ="getLink(card.route,card.detailType)"
+                   [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }}
             </button>
           </div>
         </div>
       </div>
-
       </div>
   </ng-container>
 </bla-grid-layout>
