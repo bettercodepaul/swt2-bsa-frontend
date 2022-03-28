@@ -44,8 +44,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         detailType:     'Verein',
         permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN],
         datacy:         'verwaltung-vereine-button',
-        tooltipTitle:   '',
-        tooltipText:    'Bearbeiten, löschen oder erstellen von Vereinen.'
+        tooltipTitle:   'Verwaltung der Vereine',
+        tooltipText:    '● Anlegen neuer Vereine\n● Bearbeiten der Vereinslisten\n● Löschen von Vereinen'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
@@ -54,8 +54,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         route:          'liga',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
         datacy:         'verwaltung-liga-button',
-        tooltipTitle:   '',
-        tooltipText:    'Bearbeiten, löschen oder anlegen neuer Ligen.'
+        tooltipTitle:   'Verwaltung der Ligen',
+        tooltipText:    '● Anlegen neuer Ligen\n● Ligen bearbeiten\n● Löschen von Ligen'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.LABEL',
@@ -64,8 +64,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         route:          'regionen',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
         datacy:         'verwaltung-regionen-button',
-        tooltipTitle:   '',
-        tooltipText:    'Bearbeiten, löschen oder hinzufügen neuer Regionen'
+        tooltipTitle:   'Verwaltung der Regionen',
+        tooltipText:    '● Hinzufügen von neuen Regionen\n● Regionenlisten bearbeiten\n● Einträge Löschen'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
