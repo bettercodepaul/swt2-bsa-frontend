@@ -98,17 +98,16 @@
       }
     },
       "BUTTONS":{
-        "Einzel-als-PDF": {
+        "Einzel_als_PDF": {
           "LABEL": "Einzelstatistik als PDF"
         },
-        "Gesamt-als-PDF": {
+        "Gesamt_als_PDF": {
           "LABEL": "Gesamtstatistik als PDF"
       },
-        "Tagesuebersicht-als-PDF": {
+        "Tagesuebersicht_als_PDF": {
           "LABEL": "Tagesübersicht als PDF"
         }
       }
-    }
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -230,7 +229,7 @@
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle"
     },
-    "SCHUETZEN-STATISTIK": {
+    "SCHUETZEN_STATISTIK": {
       "TITEL" : "Gesamtstatistik pro Schütze"
     },
     "MANNSCHAFTEN": {
