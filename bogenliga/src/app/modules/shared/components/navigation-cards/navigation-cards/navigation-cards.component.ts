@@ -11,7 +11,7 @@ import {CurrentUserService, UserPermission} from '@shared/services';
 export class NavigationCardsComponent extends CommonComponentDirective implements OnInit {
 
   @Input() public config: NavigationCardsConfig = {navigationCards: []};
-
+  selectedCard: any = null;
   constructor(private currentUserService: CurrentUserService) {
     super();
   }
@@ -51,7 +51,17 @@ export class NavigationCardsComponent extends CommonComponentDirective implement
     } else {
       return route;
     }
-
   }
 
+  public setActiveCard(card) {
+    this.selectedCard = card
+  }
+
+  public resetActiveCard() {
+    this.selectedCard = null
+  }
+
+  public getTooltipText() {
+    return this.selectedCard.tooltipText
+  }
 }

@@ -8,4 +8,6 @@ export interface NavigationCard {
   permissions?: UserPermission[];
   detailType ?: string;
   datacy: string;
+  /*Tooltip text shown for help by hovering over the button */
+  tooltipText: string;
 }
