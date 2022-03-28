@@ -12,7 +12,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'users',
         route:          'dsbmitglieder',
         permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER],
-        datacy:         'verwaltung-dsb-mitglieder-button'
+        datacy:         'verwaltung-dsb-mitglieder-button',
+        tooltipText:    'Bearbeiten, löschen oder erstellen neuer DSB Mitglieder.'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.LABEL',
@@ -20,7 +21,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'address-card',
         route:          'user',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
-        datacy:         'verwaltung-user-button'
+        datacy:         'verwaltung-user-button',
+        tooltipText:    'Bearbeiten, löschen oder erstellen neuer Benutzeraccounts.'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
@@ -28,7 +30,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'wrench',
         route:          'klassen',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
-        datacy:         'verwaltung-klassen-button'
+        datacy:         'verwaltung-klassen-button',
+        tooltipText:    'Bearbeiten und erstellen von Klassen.'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
@@ -37,7 +40,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         route:          'vereine',
         detailType:     'Verein',
         permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN],
-        datacy:         'verwaltung-vereine-button'
+        datacy:         'verwaltung-vereine-button',
+        tooltipText:    'Bearbeiten, löschen oder erstellen von Vereinen.'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
@@ -45,7 +49,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'users',
         route:          'liga',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
-        datacy:         'verwaltung-liga-button'
+        datacy:         'verwaltung-liga-button',
+        tooltipText:    'Bearbeiten, löschen oder anlegen neuer Ligen.'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.LABEL',
@@ -53,7 +58,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'sitemap',
         route:          'regionen',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
-        datacy:         'verwaltung-regionen-button'
+        datacy:         'verwaltung-regionen-button',
+        tooltipText:    'Bearbeiten, löschen oder hinzufügen neuer Regionen'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
@@ -62,7 +68,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         route:          'veranstaltung',
         permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
         detailType:     'Veranstaltungen',
-        datacy:         'verwaltung-veranstaltung-button'
+        datacy:         'verwaltung-veranstaltung-button',
+        tooltipText:    'Hier können Veranstaltungen hinzugefügt und bearbeitet werden'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.LABEL',
@@ -70,7 +77,8 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'wrench',
         route:          'einstellungen',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN],
-        datacy:         'verwaltung-einstellungen-button'
+        datacy:         'verwaltung-einstellungen-button',
+        tooltipText:    'Einstellungen für autorefresh, Benutzer, Wettkampftage und SMTP'
       },
       // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
       // because the exactly function of t^he site "Sportjahre" is still unclear.
