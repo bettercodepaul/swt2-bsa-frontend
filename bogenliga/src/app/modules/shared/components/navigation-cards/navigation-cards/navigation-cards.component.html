@@ -1,23 +1,39 @@
 <bla-grid-layout>
   <ng-container *ngFor="let card of config.navigationCards">
-  <div *ngIf="hasUserPermissions(card.permissions)" class="card navigation-card"
-       >
-    <a class="card-header-link"
-       [routerLink]="getLink(card.route,card.detailType)">
-      <div class="card-header">
-        <fa-icon [icon]="card.icon"
-                 size="3x"></fa-icon>
+    <div *ngIf="hasUserPermissions(card.permissions)" class="card navigation-card">
+        <a class="card-header-link"
+          [routerLink]="getLink(card.route,card.detailType)">
+          <div class="card-header">
+            <fa-icon [icon]="card.icon" size="3x"></fa-icon>
+          </div>
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{ card.labelKey | translate }}</h5>
+          <p class="card-text">{{ card.descriptionKey | translate }}</p>
+          <bla-tooltip [value]="card.tooltipText">
+            <button  class="btn btn-primary"
+                     (mouseenter)  ="setActiveCard(card)"
+                     (mouseleave)  ="resetActiveCard()"
+                     [routerLink]  ="getLink(card.route,card.detailType)"
+                     [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
+            </button>
+          </bla-tooltip>
       </div>
-    </a>
 
-    <div class="card-body">
-      <h5 class="card-title">{{ card.labelKey | translate }}</h5>
-      <p class="card-text">{{ card.descriptionKey | translate }}</p>
-      <button class="btn btn-primary"
-              [routerLink]="getLink(card.route,card.detailType)"
-              [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
-      </button>
-    </div>
-  </div>
+      <!--
+      <div *ngIf="card === selectedCard" class="tooltip-body">
+          <div class="tooltip-card-header">
+            {{getTooltipText()}}
+          </div>
+            <button  class="btn btn-primary"
+                     (mouseenter)  ="setActiveCard(card)"
+                     (mouseleave)  ="resetActiveCard()"
+                     [routerLink]  ="getLink(card.route,card.detailType)"
+                     [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
+            </button>
+      </div>
+      -->
+
+      </div>
   </ng-container>
 </bla-grid-layout>
