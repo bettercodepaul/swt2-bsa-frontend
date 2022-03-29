@@ -24,7 +24,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
         datacy:         'verwaltung-user-button',
         tooltipTitle:   'Verwaltung der Benutzeraccounts',
-        tooltipText:    '● Anlegen neuer Benutzer\n● Benutzerliste bearbeiten\n● Benutzer Löschen'
+        tooltipText:    '● Anlegen neuer Benutzer\n● Benutzerliste bearbeiten\n● Benutzer löschen'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
@@ -34,7 +34,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
         datacy:         'verwaltung-klassen-button',
         tooltipTitle:   'Verwaltung der Klassen',
-        tooltipText:    '● Anlegen neuer Klassen\n● Klassenliste Bearbeiten'
+        tooltipText:    '● Anlegen neuer Klassen\n● Klassenliste bearbeiten'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VEREINE.LABEL',
@@ -45,7 +45,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN],
         datacy:         'verwaltung-vereine-button',
         tooltipTitle:   'Verwaltung der Vereine',
-        tooltipText:    '● Anlegen neuer Vereine\n● Bearbeiten der Vereinslisten\n● Löschen von Vereinen'
+        tooltipText:    '● Anlegen neuer Vereine\n● Bearbeiten der Vereinsliste\n● Löschen von Vereinen'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
@@ -65,7 +65,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
         datacy:         'verwaltung-regionen-button',
         tooltipTitle:   'Verwaltung der Regionen',
-        tooltipText:    '● Hinzufügen von neuen Regionen\n● Regionenlisten bearbeiten\n● Einträge Löschen'
+        tooltipText:    '● Hinzufügen von neuen Regionen\n● Regionenliste bearbeiten\n● Einträge löschen'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.LABEL',
@@ -76,7 +76,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         detailType:     'Veranstaltungen',
         datacy:         'verwaltung-veranstaltung-button',
         tooltipTitle:   'Verwaltung der Veranstaltungen',
-        tooltipText:    `\n● Übersicht Veranstaltungen\n● Erstellen einer neuen Veranstaltung\n● Verwaltung der Veranstaltungslisten`
+        tooltipText:    `● Übersicht Veranstaltungen\n● Erstellen einer neuen Veranstaltung\n● Verwaltung der Veranstaltungsliste`
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.LABEL',
@@ -86,7 +86,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN],
         datacy:         'verwaltung-einstellungen-button',
         tooltipTitle:   'Einstellungen bearbeiten',
-        tooltipText:    '● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP einstellungen'
+        tooltipText:    '● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen'
       },
       // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
       // because the exactly function of t^he site "Sportjahre" is still unclear.
