@@ -68,7 +68,10 @@
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
       "TITLE": "League-Ranking",
-      "Wettkampftageins" : "Competition day 1"
+      "Wettkampftageins" : "Competition day 1",
+      "WETTKAMPFTAGZWEI" : "Competition day 2",
+      "WETTKAMPFTAGDREI" : "Competition day 3",
+      "WETTKAMPFTAGVIER" : "Competition day 4"
     },
     "TITEL": {
       "VERANSTALTUNG": "League-Selection"
@@ -96,13 +99,13 @@
       }
     },
     "BUTTONS":{
-      "Einzel_als_PDF": {
+      "Einzel_ALS_PDF": {
         "LABEL": "Individual statistics as PDF"
       },
-      "Gesamt_als_PDF": {
+      "Gesamt_ALS_PDF": {
         "LABEL": "Overall statistics as PDF"
       },
-      "Tagesuebersicht_als_PDF": {
+      "TAGESUEBERSICHT_ALS_PDF": {
         "LABEL": "Daily overview as PDF"
       }
     }
@@ -241,13 +244,13 @@
         "ANZEIGENALL": {
           "LABEL": "Show all"
         },
-        "ANZEIGENEinzel": {
+        "ANZEIGENEINZEL": {
           "LABEL": "Show individual statistics"
         },
-        "ANZEIGENEinzelGesamt": {
+        "ANZEIGENEINZELGESAMT": {
           "LABEL": "Show over all statistics of individual"
         },
-        "ANZEIGENEinzelDrucken": {
+        "ANZEIGENEINZELGESAMTDRUCKEN": {
           "LABEL": "Print individual statistic"
         }
     },
