@@ -45,7 +45,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN],
         datacy:         'verwaltung-vereine-button',
         tooltipTitle:   'Verwaltung der Vereine',
-        tooltipText:    '● Anlegen neuer Vereine\n● Bearbeiten der Vereinsliste\n● Löschen von Vereinen'
+        tooltipText:    '● Anlegen neuer Vereine\n● Bearbeiten der Vereinsliste\n● Löschen von Vereinen\n● Mannschaftsübersicht'
       },
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.LABEL',
