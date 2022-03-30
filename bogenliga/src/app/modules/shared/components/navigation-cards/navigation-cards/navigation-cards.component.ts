@@ -11,13 +11,14 @@ import {CurrentUserService, UserPermission} from '@shared/services';
 export class NavigationCardsComponent extends CommonComponentDirective implements OnInit {
 
   @Input() public config: NavigationCardsConfig = {navigationCards: []};
-
+  activeCard: any = null;
   constructor(private currentUserService: CurrentUserService) {
     super();
   }
 
   ngOnInit() {
   }
+
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     if (userPermissions === undefined) {
       return true;
@@ -51,7 +52,29 @@ export class NavigationCardsComponent extends CommonComponentDirective implement
     } else {
       return route;
     }
-
   }
 
+  /* setting the card which is hovered */
+  public setActiveCard(card) {
+    this.activeCard = card
+  }
+
+  /*
+  * - resetting the card which is hovered
+  * - called with the (mouseleave) event
+  *   of the button.
+  * */
+  public resetActiveCard() {
+    this.activeCard = null
+  }
+
+  /* returns the title of the tooltip-config */
+  public getTooltipTitle() {
+    return this.activeCard.tooltipTitle
+  }
+
+  /* returns the text of the tooltip-config */
+  public getTooltipText() {
+    return this.activeCard.tooltipText
+  }
 }
