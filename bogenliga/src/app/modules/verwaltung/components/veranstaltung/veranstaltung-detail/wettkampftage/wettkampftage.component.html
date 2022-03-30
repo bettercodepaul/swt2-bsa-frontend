@@ -34,6 +34,7 @@
         selectionListHeight="3em"
         [disabled]="wettkampftageForm.dirty"
         [items]="selectedDTOs"
+        [selectedItemIds]="[selectedDTOs[0].id]"
         [optionFieldSelector]="'wettkampfTag'">
       </bla-selectionlist>
 
