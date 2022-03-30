@@ -99,10 +99,10 @@
       }
     },
     "BUTTONS":{
-      "Einzel_ALS_PDF": {
+      "EINZEL_ALS_PDF": {
         "LABEL": "Individual statistics as PDF"
       },
-      "Gesamt_ALS_PDF": {
+      "GESAMT_ALS_PDF": {
         "LABEL": "Overall statistics as PDF"
       },
       "TAGESUEBERSICHT_ALS_PDF": {
