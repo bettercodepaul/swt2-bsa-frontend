@@ -88,7 +88,9 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.loading = true;
 
     this.loadMannschaftById(Number.parseInt(this.route.snapshot.url[2].path, 10));
+
     this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path, 10));
+
     this.loadVereine();
 
     this.notificationService.discardNotification();
@@ -406,7 +408,8 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.members.forEach((member) => {
       if (member.vereinsId === null) {
         member.vereinsName = 'kein Verein';
-      } else {
+      }
+      else {
         const tmp = this.vereine.find((verein) => {
           return verein.id === member.vereinsId;
         });
@@ -432,7 +435,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
 
   private handleVereinSuccess(response: BogenligaResponse<VereinDTO>) {
     this.currentVerein = response.payload;
-    this.loading = false;
+      this.loading = false;
   }
 
   private handleVereinFailure(response: BogenligaResponse<VereinDTO>) {
