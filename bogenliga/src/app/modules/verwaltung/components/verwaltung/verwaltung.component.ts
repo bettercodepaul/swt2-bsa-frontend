@@ -6,8 +6,8 @@ import {VERWALTUNG_CONFIG} from './verwaltung.config';
   templateUrl: './verwaltung.component.html',
   styleUrls:   ['./verwaltung.component.scss']
 })
-export class VerwaltungComponent implements OnInit {
 
+export class VerwaltungComponent implements OnInit {
   public config = VERWALTUNG_CONFIG;
 
   constructor() {
@@ -15,6 +15,5 @@ export class VerwaltungComponent implements OnInit {
 
   ngOnInit() {
   }
-
 
 }
