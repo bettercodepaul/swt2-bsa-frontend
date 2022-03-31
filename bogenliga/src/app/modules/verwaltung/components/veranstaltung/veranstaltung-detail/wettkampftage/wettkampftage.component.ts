@@ -505,6 +505,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
 
+
   private handleOnSaveFailure(): void {
 
     const notification: Notification = {
