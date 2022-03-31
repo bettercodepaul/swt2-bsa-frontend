@@ -93,7 +93,9 @@
           </div>
         </bla-row-layout>
 
-        <bla-row-layout>
+
+        <!--- Nur wenn ein Name existiert wird es gerendert --->
+        <bla-row-layout *ngIf="currentRegionDO.regionUebergeordnetAsName">
           <!-- UEBERGEORDNETE REGION -->
           <div class="form-group row">
             <label for="regionUebergeordnet"
