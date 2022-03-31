@@ -173,8 +173,15 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id);
   }
 
+
+
   public onSaveWettkampfTag(wettkampfTagNumber: number, ignore: any): void {
-    this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichter(wettkampfTagNumber, wettkampfID));
+    this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => {
+      this.updateKampfrichter(wettkampfTagNumber, wettkampfID)
+      this.handleOnSaveSuccess();
+    }).catch(() => {
+      this.handleOnSaveFailure();
+    });
   }
 
   public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number> {
@@ -495,6 +502,37 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
     this.loading = false;
+  }
+
+
+  private handleOnSaveFailure(): void {
+
+    const notification: Notification = {
+      id:          NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleOnSaveSuccess(): void {
+
+    const notification: Notification = {
+      id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.showNotification(notification);
   }
 
   private handleConfigSuccess(response: BogenligaResponse<EinstellungenDO>) {
