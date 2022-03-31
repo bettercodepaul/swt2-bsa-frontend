@@ -421,6 +421,8 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.loading = false;
   }
 
+
+
   private handleTableRowFailure(response: BogenligaResponse<DsbMitgliedDTO[]>) {
     this.rows = [];
     this.loading = false;
