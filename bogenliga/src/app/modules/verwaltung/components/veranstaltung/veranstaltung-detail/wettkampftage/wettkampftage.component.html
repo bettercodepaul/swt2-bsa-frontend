@@ -212,20 +212,22 @@
 
       <!--KAMPFRICHTER-->
       <!--KAMPFRICHTER-->
-      <div class="col-sm-11">
-        <div class="col-sm-1"></div>
-        <div class="form-group row">
-          <label>
-            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
-            <span> </span>
-          </label>
-          <bla-double-selectionlist [(leftItems)]="notSelectedKampfrichter[selectedWettkampfTag]"
-                                    [(rightItems)]="selectedKampfrichter[selectedWettkampfTag]"
-                                    [fieldSelector]="'vorNachName'"
-                                    [idLeftList]="'left'"
-                                    [idRightList]="'right'"
-                                    style="height: 12em; width: 36em">
-          </bla-double-selectionlist>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label" >
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LABEL' | translate }}</span>
+          <span> </span>
+        </label>
+        <!-- Double SelectionList für Kampfrichter-->
+        <div class="col-sm-9">
+          <div class="form-group row">
+            <bla-double-selectionlist [(leftItems)]="notSelectedKampfrichter[selectedWettkampfTag]"
+                                      [(rightItems)]="selectedKampfrichter[selectedWettkampfTag]"
+                                      [fieldSelector]="'vorNachName'"
+                                      [idLeftList]="'left'"
+                                      [idRightList]="'right'"
+                                      style="height: 12em; width: 36em;  margin-left: 1em">
+            </bla-double-selectionlist>
+          </div>
         </div>
       </div>
 
