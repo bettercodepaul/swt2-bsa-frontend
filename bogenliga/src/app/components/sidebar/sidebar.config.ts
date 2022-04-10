@@ -134,7 +134,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   {
     label: 'SIDEBAR.HILFE',
     icon: faQuestion,
-    route: '/playground',
+    route: '/hilfe',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     datacy: 'sidebar-hilfe-button'
