@@ -1633,5 +1633,10 @@
       "INFO": "x x x x x x",
       "ERROR": "Fehlerhafte Eingabe"
     }
+  },
+  "HILFE": {
+    "HILFE": {
+      "TITLE": "Hilfestellungen"
+    }
   }
 }
