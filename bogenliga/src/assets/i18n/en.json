@@ -21,7 +21,8 @@
     "SETTINGS": "SETTINGS",
     "PLAYGROUND": "PLAYGROUND",
     "SPOTTING": "SPOTTING",
-    "COLLAPSE": "Collapse"
+    "COLLAPSE": "Collapse",
+    "HILFE": "HELP"
   },
   "APP": {
     "SUPPORT": "With support from:",
@@ -67,7 +68,11 @@
   },
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
-      "TITLE": "League-Ranking"
+      "TITLE": "League-Ranking",
+      "WETTKAMPFTAGEINS" : "Competition day 1",
+      "WETTKAMPFTAGZWEI" : "Competition day 2",
+      "WETTKAMPFTAGDREI" : "Competition day 3",
+      "WETTKAMPFTAGVIER" : "Competition day 4"
     },
     "TITEL": {
       "VERANSTALTUNG": "League-Selection"
@@ -92,6 +97,17 @@
           "TITLE": "Error creating Singlestatistic:",
           "DESCRIPTION": "Could not generate Singlestatistic. Could not find Archers for selection."
         }
+      }
+    },
+    "BUTTONS":{
+      "EINZEL_ALS_PDF": {
+        "LABEL": "Individual statistics as PDF"
+      },
+      "GESAMT_ALS_PDF": {
+        "LABEL": "Overall statistics as PDF"
+      },
+      "TAGESUEBERSICHT_ALS_PDF": {
+        "LABEL": "Daily overview as PDF"
       }
     }
   },
@@ -209,6 +225,9 @@
     "LIGATABELLE": {
       "TITLE": "Current League-ranking"
     },
+    "SCHUETZEN_STATISTIK": {
+      "TITEL" : "Overall statistics per shooter"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
       "POPUPTXT": {
@@ -226,13 +245,13 @@
         "ANZEIGENALL": {
           "LABEL": "Show all"
         },
-        "ANZEIGENEinzel": {
+        "ANZEIGENEINZEL": {
           "LABEL": "Show individual statistics"
         },
-        "ANZEIGENEinzelGesamt": {
+        "ANZEIGENEINZELGESAMT": {
           "LABEL": "Show over all statistics of individual"
         },
-        "ANZEIGENEinzelDrucken": {
+        "ANZEIGENEINZELGESAMTDRUCKEN": {
           "LABEL": "Print individual statistic"
         }
     },
