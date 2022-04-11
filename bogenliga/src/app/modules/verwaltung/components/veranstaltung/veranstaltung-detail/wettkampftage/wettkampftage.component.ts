@@ -176,13 +176,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
 
   public onSaveWettkampfTag(wettkampfTagNumber: number, ignore: any): void {
-    this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => {
-      this.updateKampfrichter(wettkampfTagNumber, wettkampfID)
-      this.handleOnSaveSuccess();
-    }).catch(() => {
-      this.handleOnSaveFailure();
-    });
-  }
+    this.saveWettkaempfe(wettkampfTagNumber).then(wettkampfID => this.updateKampfrichter(wettkampfTagNumber, wettkampfID))}
 
   public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number> {
     this.anzahl++;
@@ -317,21 +311,15 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
 
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.UPDATE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.UPDATE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+
 
             this.wettkampftagService();
-            this.notificationService.showNotification(notification);
+            this.handleOnSaveSuccess();
+            this.loadWettkampf();
           }
         }, (response: BogenligaResponse<WettkampfDO>) => {
           console.log('Failed');
+          this.handleOnSaveFailure();
           this.saveLoading = false;
         });
   }
@@ -510,8 +498,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     const notification: Notification = {
       id:          NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE_FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE_FAILURE.DESCRIPTION',
       severity:    NotificationSeverity.ERROR,
       origin:      NotificationOrigin.USER,
       type:        NotificationType.OK,

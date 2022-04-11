@@ -1205,6 +1205,10 @@
                 "TITLE": "Speichern erfolgreich",
                 "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
               },
+              "SAVE_FAILURE": {
+                "TITLE": "Fehler beim Speichern",
+                "DESCRIPTION": "Der Wettkampftag konnte nicht gespeichert werden"
+              },
               "UPDATE": {
                 "TITLE": "Update erfolgreich",
                 "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
