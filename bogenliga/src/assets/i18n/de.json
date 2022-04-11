@@ -21,7 +21,8 @@
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
     "SPOTTING": "SPOTTING",
-    "COLLAPSE": "Einklappen"
+    "COLLAPSE": "Einklappen",
+    "HILFE" :  "HILFE"
   },
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
@@ -69,7 +70,11 @@
   },
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
-      "TITLE": "Liga-Tabelle"
+      "TITLE": "Liga-Tabelle",
+      "WETTKAMPFTAGEINS" : "Wettkampftag 1",
+      "WETTKAMPFTAGZWEI" : "Wettkampftag 2",
+      "WETTKAMPFTAGDREI" : "Wettkampftag 3",
+      "WETTKAMPFTAGVIER" : "Wettkampftag 4"
     },
     "TITEL": {
       "VERANSTALTUNG": "Ligen-Auswahl"
@@ -89,13 +94,24 @@
       }
     },
     "EINZELSTATISTIK": {
-      "NOTIFICATION" : {
+      "NOTIFICATION": {
         "DOWNLOADFEHLER": {
           "TITLE": "Fehler beim generieren der Einzelstatistik:",
           "DESCRIPTION": "Einzelstatistik konnte nicht generiert werden. Es wurden keine Schützen für die Auswahl gefunden"
         }
       }
-    }
+    },
+      "BUTTONS":{
+        "EINZEL_ALS_PDF": {
+          "LABEL": "Einzelstatistik als PDF"
+        },
+        "GESAMT_ALS_PDF": {
+          "LABEL": "Gesamtstatistik als PDF"
+      },
+        "TAGESUEBERSICHT_ALS_PDF": {
+          "LABEL": "Tagesübersicht als PDF"
+        }
+      }
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -217,6 +233,9 @@
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle"
     },
+    "SCHUETZEN_STATISTIK": {
+      "TITEL" : "Gesamtstatistik pro Schütze"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
       "POPUPTXT": {
@@ -234,16 +253,16 @@
         "ANZEIGENALL": {
           "LABEL": "Alle Mannschaften anzeigen"
         },
-        "ANZEIGENEinzel": {
+        "ANZEIGENEINZEL": {
           "LABEL": "Einzelstatistik anzeigen"
         },
-        "ANZEIGENEinzelGesamt": {
+        "ANZEIGENEINZELGESAMT": {
           "LABEL": "Gesamtstatistik anzeigen"
         },
         "ANZEIGENEinzelDrucken": {
           "LABEL": "Einzelstatistik drucken"
         },
-        "ANZEIGENEinzelGesamtDrucken": {
+        "ANZEIGENEINZELGESAMTDRUCKEN": {
           "LABEL": "Gesamtstatistik drucken"
         }
       },
@@ -1057,8 +1076,8 @@
         "HEADERS": {
           "ID": "ID",
           "NAME": "Veranstaltung Name",
-          "WETTKAMPFTYPID": "Wetkampftyp Id",
-          "WETTKAMPFTYPNAME": "Wetkampftyp Name",
+          "WETTKAMPFTYPID": "Wettkampftyp Id",
+          "WETTKAMPFTYPNAME": "Wettkampftyp Name",
           "SPORTJAHR": "Sportjahr",
           "MELDEDEADLINE": "Meldedeadline",
           "LIGANAME": "Liganame",
@@ -1613,6 +1632,11 @@
       "BUTTON": "Zum Spotter-Interface",
       "INFO": "x x x x x x",
       "ERROR": "Fehlerhafte Eingabe"
+    }
+  },
+  "HILFE": {
+    "HILFE": {
+      "TITLE": "Hilfestellungen"
     }
   }
 }
