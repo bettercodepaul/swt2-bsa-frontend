@@ -801,7 +801,7 @@
           "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
         },
         "SAVE_FAILURE": {
-          "TITLE": "Fehler beim aktualisieren",
+          "TITLE": "Fehler beim Aktualisieren",
           "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
         },
         "NO_LICENSE": {
