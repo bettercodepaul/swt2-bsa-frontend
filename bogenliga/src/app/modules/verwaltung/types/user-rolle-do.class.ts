@@ -9,6 +9,8 @@ export class UserRolleDO implements VersionedDataObject {
   roleId: number;
   roleName: string;
   version: number;
+  dsbMitgliedNachname: string;
+  dsbMitgliedVorname: string;
 }
 
 

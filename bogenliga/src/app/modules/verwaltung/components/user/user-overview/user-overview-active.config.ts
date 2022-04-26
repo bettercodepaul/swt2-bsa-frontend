@@ -10,13 +10,13 @@ export const USER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
     columns: [
       {
         translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.VORNAME',
-        propertyName:   'vorname',
-        width:          20,
+        propertyName:   'dsbMitgliedVorname',
+        width:          10,
       },
       {
         translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.NACHNAME',
-        propertyName:   'nachname',
-        width:          20,
+        propertyName:   'dsbMitgliedNachname',
+        width:          15,
       },
       {
         translationKey: 'MANAGEMENT.USER.TABLE.HEADERS.EMAIL',
