@@ -31,6 +31,17 @@ $secondary-dark: #ff833a; // hover Links, Logo
   margin-left: 1.1em;
 }
 
+#navbar-offline {
+  position: absolute;
+  width: 100%;
+}
+
+#navbar-offline h3{
+
+  color: red;
+  text-align: center;
+}
+
 .navbar-dark {
   background-color: $primary;
   padding: 0;

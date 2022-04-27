@@ -17,6 +17,7 @@
                            [optionFieldSelector]="'sportjahr'"
                            [loading]="loadingYears"
                            [selectedItemId]='selItemId'
+                           [disabled]="isOfflineDisabled()"
                            style="width: 40%;">
         </bla-dropdown-menu>
 
@@ -36,6 +37,7 @@
                               [multipleSelections]="!multipleSelections"
                               [placeholderTranslationKey]="PLACEHOLDER_VAR"
                               [optionFieldSelector]="'name'"
+                              [disabled]="isOfflineDisabled()"
                               selectionListHeight="15em"
                               style="width: 40%; flex-grow: 0;">
         </bla-quicksearch-list>
