@@ -151,6 +151,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public onButtonGoOfflineClick(): void {
     console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
     this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
+    // TODO: Enable if the sync service endpoint is ready
+    // this.wettkampfOfflineSyncService.loadMatchOffline(this.wettkampfId);
     this.onOfflineService.goOffline();
   }
 
