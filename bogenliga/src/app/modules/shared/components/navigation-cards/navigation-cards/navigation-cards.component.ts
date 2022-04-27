@@ -12,6 +12,7 @@ export class NavigationCardsComponent extends CommonComponentDirective implement
 
   @Input() public config: NavigationCardsConfig = {navigationCards: []};
   activeCard: any = null;
+
   constructor(private currentUserService: CurrentUserService) {
     super();
   }
@@ -66,15 +67,5 @@ export class NavigationCardsComponent extends CommonComponentDirective implement
   * */
   public resetActiveCard() {
     this.activeCard = null
-  }
-
-  /* returns the title of the tooltip-config */
-  public getTooltipTitle() {
-    return this.activeCard.tooltipTitle
-  }
-
-  /* returns the text of the tooltip-config */
-  public getTooltipText() {
-    return this.activeCard.tooltipText
   }
 }
