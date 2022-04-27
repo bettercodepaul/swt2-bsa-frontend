@@ -22,8 +22,8 @@
       <!-- Tooltip div container called with ngIf conditions -->
       <div *ngIf="card === activeCard" class="tooltip-navigation-card">
         <div class="card-body tooltip-body">
-          <p class="tooltip-text title">{{getTooltipTitle()}}</p>
-          <p class="tooltip-text multi-lines-text">{{getTooltipText()}}</p>
+          <p class="tooltip-text title">{{card.descriptionKey | translate }}</p>
+          <p class="tooltip-text multi-lines-text">{{card.tooltipText | translate}}</p>
           <div class="button-container">
             <button  class="btn btn-primary"
                    (mouseenter)   ="setActiveCard(card)"
