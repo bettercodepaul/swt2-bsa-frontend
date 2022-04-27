@@ -110,7 +110,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
     this.route.params.subscribe((params) => {
 
-      if (!isUndefined(params['wettkampfId'])) {
+      if (!isUndefined(params['wettkampfId']) ) {
         // WettkampfId im Pfad enthalten -> Wettkampf soll automatisch ausgewaehlt werden
         this.wettkampfIdEnthalten = true;
         this.wettkampfId = parseInt(params['wettkampfId'], 10);
@@ -134,6 +134,19 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
         this.visible = false;
 
+      } else if(this.onOfflineService.isOffline()){
+        //falls offline, Veranstaltung aus id die im onOfflineService gespeichert ist laden
+        this.loadingWettkampfe = true;
+        this.wettkampfIdEnthalten = true;
+        this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
+        console.log('WettkampfID:', this.wettkampfId);
+
+        this.findAvailableYears();
+
+        this.LoadWettkampf();
+
+        this.visible = false;
+
       } else {
         // Pfad ohne WettkampfId
         // -> normaler Aufruf der Webseite (ohne Zusaetze)
@@ -149,9 +162,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   public onButtonGoOfflineClick(): void {
-    console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
-    this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
-    this.onOfflineService.goOffline();
+    if(this.onOfflineService.isOffline()){
+      this.onOfflineService.goOnline()
+    }
+    else {
+      console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
+      this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
+      this.onOfflineService.goOffline(this.selectedWettkampfId,this.selItemId);
+    }
   }
 
 
@@ -160,6 +178,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Ermitteln aller Wettkampftage
   private LoadWettkampf() {
+    this.loadingWettkampfe = true;
     this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfSuccess(response))
         .catch((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfFailure(response));
@@ -394,6 +413,18 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   return this.disabledOtherButtons;
   }
 
+  // macht buttons unklickbar wenn die Anwendung offline ist
+  public isOfflineDisabled(): boolean {
+    if(this.onOfflineService.isOffline()){
+      this.setOfflineVeranstaltung()
+    }
+    return this.onOfflineService.isOffline();
+  }
+
+  private setOfflineVeranstaltung(): void{
+    this.selItemId = this.onOfflineService.getOfflineJahr();
+    this.selectedVeranstaltungId = this.onOfflineService.getOfflineWettkampfID();
+  }
 
   // Funktion falls Matches existieren -> alle Buttons gehen an, generiere Matches aus
   private matchesExist() {
