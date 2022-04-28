@@ -1,18 +1,13 @@
 h3{font-weight: bold}
 
 .hilfeseite-container {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.hilfe-section-container {
+  display: flex;
+  flex-direction: row;
 }
 
 .hilfe-iframe-container {
-}
-
-.hilfe-button-container {
-  float: bottom;
+  width: 100%;
+  height: 100%;
 }
 
 #section-btn {
@@ -22,9 +17,8 @@ h3{font-weight: bold}
   background-color: white;
   font-size: 16pt;
   text-align: left;
-  margin: 1px 1px 1px 10px;
   padding: 1rem;
-  float: bottom;
+  margin-top: 1px;
 }
 #section-btn:active {
   background-color: #e0e0e0;
@@ -33,4 +27,11 @@ h3{font-weight: bold}
 #wiki-iframe {
   border: 5px #5e5e5e solid;
   border-radius: 10px;
+  margin: 0 10px 0 10px;
+}
+
+
+.demo {
+  float: left;
+  clear: none;
 }
