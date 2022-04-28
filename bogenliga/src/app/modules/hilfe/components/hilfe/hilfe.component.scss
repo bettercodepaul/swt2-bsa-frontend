@@ -1,6 +1,36 @@
 h3{font-weight: bold}
 
 .hilfeseite-container {
-  display: flex;
-  flex-direction: row;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.hilfe-section-container {
+}
+
+.hilfe-iframe-container {
+}
+
+.hilfe-button-container {
+  float: bottom;
+}
+
+#section-btn {
+  border: 1px #000000 solid;
+  width: 20rem;
+  height: 6rem;
+  background-color: white;
+  font-size: 16pt;
+  text-align: left;
+  margin: 1px 1px 1px 10px;
+  padding: 1rem;
+  float: bottom;
+}
+#section-btn:active {
+  background-color: #e0e0e0;
+}
+
+#wiki-iframe {
+  border: 5px #5e5e5e solid;
+  border-radius: 10px;
 }

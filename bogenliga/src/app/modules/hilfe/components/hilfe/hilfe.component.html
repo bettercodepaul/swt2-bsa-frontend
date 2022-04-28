@@ -1,9 +1,21 @@
 <bla-navigation-dialog [config]="config">
+
   <ng-container>
     <div class="hilfeseite-container">
-      <div class="hilfe-iframe-container">
+
+      <div class="hilfe-section-container" *ngFor="let sec of sections">
+        <div class="hilfe-button-container">
+          <button
+            id="section-btn"
+            (click)="setUrl(sec.url)">
+            {{sec.id}}
+          </button>
+        </div>
+      </div>
+
+      <div class="hilfe-iframe-container" *ngIf="sectionSelected">
         <iframe
-          [src]="getWikiUrl()"
+          [src]="getSecureUrl()"
           title="wiki-iframe"
           id="wiki-iframe"
           width="1100"
@@ -12,10 +24,12 @@
           <p>
             Ihr Browser kann leider keine eingebetteten Frames anzeigen:
             Sie können die eingebettete Seite über den folgenden Verweis aufrufen:
-            <a [href]="getWikiUrl()">SELFHTML</a>
+            <a [href]="">Link zur Wikiseite</a>
           </p>
         </iframe>
       </div>
+
     </div>
   </ng-container>
+
 </bla-navigation-dialog>
