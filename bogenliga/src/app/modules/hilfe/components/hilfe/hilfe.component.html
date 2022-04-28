@@ -2,12 +2,12 @@
   <ng-container>
     <div class="hilfeseite-container">
       <div class="hilfe-section-container">
-          <table *ngFor="let sec of sections">
-            <button
+          <table id="section-table" *ngFor="let sec of sections">
+            <div
               id="section-btn"
               (click)="setUrl(sec.url)">
               {{sec.id}}
-            </button>
+            </div>
           </table>
       </div>
       <div class="hilfe-iframe-container" *ngIf="sectionSelected">
@@ -15,7 +15,7 @@
           [src]="getSecureUrl()"
           title="wiki-iframe"
           id="wiki-iframe"
-          width="80%"
+          width="75%"
           height="600"
           name="Hilfeseite_eingebunden">
           <p>

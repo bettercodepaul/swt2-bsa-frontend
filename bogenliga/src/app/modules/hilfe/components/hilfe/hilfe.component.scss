@@ -3,6 +3,7 @@ h3{font-weight: bold}
 .hilfeseite-container {
   display: flex;
   flex-direction: row;
+  margin-top: 50px;
 }
 
 .hilfe-iframe-container {
@@ -11,23 +12,29 @@ h3{font-weight: bold}
 }
 
 #section-btn {
-  border: 1px #000000 solid;
   width: 20rem;
   height: 6rem;
   background-color: white;
   font-size: 16pt;
   text-align: left;
   padding: 1rem;
-  margin-top: 1px;
+}
+#section-btn:hover {
+  background-color: #eeeeee;
 }
 #section-btn:active {
   background-color: #e0e0e0;
 }
 
 #wiki-iframe {
-  border: 5px #5e5e5e solid;
+  border: 5px #7e7e7e solid;
   border-radius: 10px;
-  margin: 0 10px 0 10px;
+  margin-left: 30px;
+}
+
+#section-table {
+  padding: 10px;
+  border: 1px #000000 solid;
 }
 
 

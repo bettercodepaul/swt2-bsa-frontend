@@ -16,7 +16,7 @@ export class HilfeComponent implements OnInit {
   /* Hier können weitere Sektionen angelegt werden (schema beachten mit id und url)*/
   public sections:Array<any> = [
     {id: 'Startseite', url: 'https://wiki.bsapp.de/doku.php'},
-    {id: 'Neue Seiten Anlegen', url: 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware#neue-eintraege-anlegen'}
+    {id: 'Neue Seiten Anlegen', url: 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware#neue-eintraege-anlegen'},
   ]
   constructor(private sanitizer: DomSanitizer) { }
 
