@@ -1311,7 +1311,9 @@
         "HEADERS": {
           "EMAIL": "E-Mail",
           "ROLE": "Rolle",
-          "ACTIVE": "Aktiviert"
+          "ACTIVE": "Aktiviert",
+          "DSBMITGLIEDNACHNAME": "Nachname",
+          "DSBMITGLIEDVORNAME": "Vorname"
         }
       },
       "NOTIFICATION": {
