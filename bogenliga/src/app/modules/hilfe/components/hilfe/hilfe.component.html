@@ -2,12 +2,13 @@
   <ng-container>
     <div class="hilfeseite-container">
       <div class="hilfe-section-container">
-          <table id="section-table" *ngFor="let sec of sections">
-            <div
-              id="section-btn"
-              (click)="setUrl(sec.url)">
-              {{sec.id}}
-            </div>
+          <table id="section-table">
+            <tr id="hilfe-table-section" *ngFor="let sec of sections">
+              <div id="section-btn"
+                (click)="setUrl(sec.url)">
+                {{sec.id}}
+              </div>
+            </tr>
           </table>
       </div>
       <div class="hilfe-iframe-container" *ngIf="sectionSelected">
@@ -16,7 +17,7 @@
           title="wiki-iframe"
           id="wiki-iframe"
           width="75%"
-          height="600"
+          height="500"
           name="Hilfeseite_eingebunden">
           <p>
             Ihr Browser kann leider keine eingebetteten Frames anzeigen:
