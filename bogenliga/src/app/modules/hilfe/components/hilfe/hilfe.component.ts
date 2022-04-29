@@ -22,6 +22,10 @@ export class HilfeComponent implements OnInit {
     {
       id: 'Neue Seiten Anlegen',
       url: 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware#neue-eintraege-anlegen'
+    },
+    {
+      id: 'DSB Mitglied erstellen',
+      url: 'https://wiki.bsapp.de/doku.php?id=liga:neue-dsb-mitglieder-anlegen'
     }
   ]
   constructor(private sanitizer: DomSanitizer) { }
