@@ -19,6 +19,8 @@ import {fromOfflineMatchPayloadArray} from '@verwaltung/mapper/match-offline-map
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
 import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
+import {OfflineWettkampf} from "@shared/data-provider/offlinedb/types/offline-wettkampf.interface";
+import {fromOfflineWettkampfPayloadArray} from "@verwaltung/mapper/wettkampf-offline-mapper";
 
 @Injectable({
   providedIn: 'root'
@@ -31,13 +33,12 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   constructor(private restClient: RestClient) {
     super();
   }
-
+  // The following methods define the REST calls and how to convert the returned JSON payload to the known entity types
   public loadLigatabelleVeranstaltungOffline(id: string | number): void {
     this.loadLigatabelleVeranstaltung(id)
     .then((response: BogenligaResponse<OfflineLigatabelle[]>) => this.handleLoadLigatabelleVeranstaltungSuccess(response))
     .catch((response: BogenligaResponse<OfflineLigatabelle[]>) => this.handleLoadLigatabelleVeranstaltungFailure(response));
   }
-
   public loadMatchOffline(id: string | number): void {
     this.loadMatch(id)
     .then((response: BogenligaResponse<OfflineMatch[]>) => {
@@ -49,8 +50,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline match payload:', response.payload);
     });
   }
-
-
   public loadPasseOffline(id: string | number): void {
     this.loadPasse(id)
     .then((response: BogenligaResponse<OfflinePasse[]>) => {
@@ -62,11 +61,23 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline passe payload:', response.payload);
     });
   }
-
+  public loadWettkampfOffline(id: string | number): void {
+    this.loadWettkampf(id)
+    .then((response: BogenligaResponse<OfflineWettkampf[]>) => {
+      db.wettkampfTabelle.bulkAdd(response.payload).then((value) => {
+        console.log('Offline Wettkampf added to offlinedb', value);
+      });
+    })
+    .catch((response: BogenligaResponse<OfflineMatch[]>) => {
+      console.log('error loading offline wettkampf payload:', response.payload);
+    });
+  }
+  // The following methods are merely convenience methods for calling the
+  // generic load method for the corresponding REST service.
   private loadMatch(id: string | number): Promise<BogenligaResponse<OfflineMatch[]>> {
 
     // Call REST-API
-    const url = new UriBuilder().fromPath(this.getUrl()).path('wettkampf=' + id).build();
+    const url = new UriBuilder().fromPath(this.getUrl()).path('match=' + id).build();
     return new Promise<BogenligaResponse<OfflineMatch[]>>((resolve, reject) => {
       this.restClient.GET<OfflineMatch[]>(url)
       // Resolve the request and use the offline match mapper
@@ -91,9 +102,22 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
 
   }
+  private loadWettkampf(id: string | number): Promise<BogenligaResponse<OfflineWettkampf[]>> {
 
+    // Build url
+    const url = new UriBuilder().fromPath(this.getUrl()).path('wettkampf=' + id).build();
 
+    return new Promise<BogenligaResponse<OfflineWettkampf[]>>((resolve, reject) => {
+      // Call the builded url
+      this.restClient.GET<Array<VersionedDataTransferObject>>(url)
+      // Resolve the request and use the offline wettkampf mapper
+      .then((data: VersionedDataTransferObject[]) => {
+        // payload -> wettkampf array + id and version
+        resolve({result: RequestResult.SUCCESS, payload: fromOfflineWettkampfPayloadArray(data)});
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+    });
 
+  }
   private loadLigatabelleVeranstaltung(id: string | number): Promise<BogenligaResponse<OfflineLigatabelle[]>> {
     // return promise
     // sign in success -> resolve promise
@@ -108,6 +132,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
 
   private handleLoadLigatabelleVeranstaltungSuccess(offlineLigatabelle: BogenligaResponse<OfflineLigatabelle[]>): void {
+
     db.ligaTabelle.bulkAdd(offlineLigatabelle.payload)
     .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
     .catch((e) => console.error(e));
@@ -125,6 +150,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       reject({result: RequestResult.FAILURE});
     }
   }
+
 
 
 }
