@@ -137,9 +137,14 @@
 
         </div>
 
-        <div>
-          <bla-button (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Offline</bla-button>
+        <div id="offlineButton" *ngIf="(!isOffline()); else backOnline ">
+          <button class="btn btn-warning" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Offline gehen</button>
         </div>
+
+        <ng-template #backOnline id="onlineButton">
+          <button class="btn btn-success"(click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Online gehen</button>
+        </ng-template>
+
   </bla-col-layout>
 
 

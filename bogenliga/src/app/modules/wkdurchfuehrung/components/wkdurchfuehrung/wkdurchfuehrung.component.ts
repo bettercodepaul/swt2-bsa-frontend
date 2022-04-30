@@ -161,6 +161,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
+  public isOffline(): Boolean {
+    return this.onOfflineService.isOffline()
+  }
+
   public onButtonGoOfflineClick(): void {
     if(this.onOfflineService.isOffline()){
       this.onOfflineService.goOnline()
