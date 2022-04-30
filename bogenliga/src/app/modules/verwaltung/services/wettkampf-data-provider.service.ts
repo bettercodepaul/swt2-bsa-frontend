@@ -9,9 +9,11 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '@shared/services';
+import {db} from '@shared/data-provider/offlinedb/offlinedb'
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
+import {fromOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
 
 
 @Injectable({
@@ -22,7 +24,7 @@ export class WettkampfDataProviderService extends DataProviderService {
   serviceSubUrl = 'v1/wettkampf';
 
 
-  constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
+  constructor(private restClient: RestClient, private currentUserService: CurrentUserService, private onOfflineService: OnOfflineService) {
     super();
   }
 
@@ -46,24 +48,38 @@ export class WettkampfDataProviderService extends DataProviderService {
   }
 
   public findById(id: string | number): Promise<BogenligaResponse<WettkampfDTO>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then((data: VersionedDataTransferObject) => {
+    //offliendb for wkdurchfuehrung still needs to be created and OfflineWettkampftabelle needs to be created aswell
+    /*if(this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltung with id '+ id);
+      return new Promise((resolve, reject) => {
+        db.wettkampfTabelle.where('wettkampf_id').equals(id).toArrray()
+          .then((data: OfflineWettkampftabelle[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineWettkampftabelleArray(data)});
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+            });
+      });
+    } else {*/
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+            .then((data: VersionedDataTransferObject) => {
 
-          }, (error: HttpErrorResponse) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    //}
   }
 
   public findAllowedMember(wettkampfID: string | number, mannschaft1ID: string | number, mannschaft2ID: string | number): Promise<number[]> {
