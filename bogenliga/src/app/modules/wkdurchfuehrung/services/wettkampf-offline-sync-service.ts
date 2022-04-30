@@ -1,5 +1,4 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {BoundElementProperty} from '@angular/compiler';
 import {Injectable} from '@angular/core';
 import {
   BogenligaResponse,
@@ -16,8 +15,10 @@ import {
   fromPayloadOfflineLigatabelleArray
 } from '../../ligatabelle/mapper/ligatabelle-offline-mapper';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
-import {fromOfflineMatchPayloadArray} from "@verwaltung/mapper/match-offline-mapper";
-import {OfflineMatch} from "@shared/data-provider/offlinedb/types/offline-match.interface";
+import {fromOfflineMatchPayloadArray} from '@verwaltung/mapper/match-offline-mapper';
+import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
+import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
+import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,19 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
+
+  public loadPasseOffline(id: string | number): void {
+    this.loadPasse(id)
+    .then((response: BogenligaResponse<OfflinePasse[]>) => {
+      db.passeTabelle.bulkAdd(response.payload).then((value) => {
+        console.log('offline passe added to offlinedb', value);
+      });
+    })
+    .catch((response: BogenligaResponse<OfflinePasse[]>) => {
+      console.log('error loading offline passe payload:', response.payload);
+    });
+  }
+
   private loadMatch(id: string | number): Promise<BogenligaResponse<OfflineMatch[]>> {
 
     // Call REST-API
@@ -58,9 +72,27 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       // Resolve the request and use the offline match mapper
       .then((data: DataTransferObject[]) => {
         resolve({result: RequestResult.SUCCESS, payload: fromOfflineMatchPayloadArray(data)});
-      }, (error: HttpErrorResponse) => WettkampfOfflineSyncService.handleErrorResponse(error, reject));
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
   }
+  private loadPasse(id: string | number): Promise<BogenligaResponse<OfflinePasse[]>> {
+
+    // Build url
+    const url = new UriBuilder().fromPath(this.getUrl()).path('passe=' + id).build();
+
+    return new Promise<BogenligaResponse<OfflinePasse[]>>((resolve, reject) => {
+      // Call the builded url
+      this.restClient.GET<OfflinePasse[]>(url)
+      // Resolve the request and use the offline passe mapper
+      .then((data: DataTransferObject[]) => {
+        // payload -> passe array
+        resolve({result: RequestResult.SUCCESS, payload: fromOfflinePassePayloadArray(data)});
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+    });
+
+  }
+
+
 
   private loadLigatabelleVeranstaltung(id: string | number): Promise<BogenligaResponse<OfflineLigatabelle[]>> {
     // return promise
@@ -70,7 +102,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
       .then((data: VersionedDataTransferObject[]) => {
         resolve({result: RequestResult.SUCCESS, payload: fromPayloadOfflineLigatabelleArray(data)});
-      }, (error: HttpErrorResponse) => WettkampfOfflineSyncService.handleErrorResponse(error, reject));
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
   }
 
@@ -93,4 +125,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       reject({result: RequestResult.FAILURE});
     }
   }
+
+
 }

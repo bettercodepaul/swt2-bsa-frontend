@@ -6,7 +6,6 @@ import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.
 export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
   return {
     mannschaftId: matchOfflineSyncDTO.mannschaftId,
-    // TODO: Use mannschaftName from fetchted match instead of placeholder
     mannschaftName: matchOfflineSyncDTO.mannschaftName,
     matchIdGegner: matchOfflineSyncDTO.matchIdGegner,
     matchNr: matchOfflineSyncDTO.matchNr,
@@ -14,7 +13,6 @@ export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
     matchVersion: matchOfflineSyncDTO.matchVersion,
     naechsteMatchId: matchOfflineSyncDTO.naechsteMatchId,
     naechsteNaechsteMatchNrMatchId: matchOfflineSyncDTO.naechsteNaechsteMatchNrMatchId,
-    // TODO: Use real nameGegner from fetchted match instead of placeholder
     nameGegner: matchOfflineSyncDTO.nameGegner,
     scheibennummerGegner: matchOfflineSyncDTO.scheibennummerGegner,
     strafpunkteSatz1: matchOfflineSyncDTO.strafpunkteSatz1,
