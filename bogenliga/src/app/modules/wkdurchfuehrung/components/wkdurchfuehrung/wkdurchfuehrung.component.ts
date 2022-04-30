@@ -153,6 +153,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
     // TODO: Enable if the sync service endpoint is ready
     // this.wettkampfOfflineSyncService.loadMatchOffline(this.wettkampfId);
+    // this.wettkampfOfflineSyncService.loadWettkampfOffline( /* ID FOR SEARCH IDK */);
+    // this.wettkampfOfflineSyncService.loadPasseOffline(/* ID FOR SEARCH IDK */);
     this.onOfflineService.goOffline();
   }
 
@@ -187,12 +189,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Ermittle der wettkampfId entsprechendes WettkampfDO
   private findWettkampf(Wettkampf: WettkampfDO) {
-    console.log('Bin in findWettkampf');
 
     if (this.wettkampfId === Wettkampf.id) {
       // entsprechendes WettkampfDO wurde gefunden -> an this.wettkampf uebergeben
       this.wettkampf = Wettkampf;
-      console.log('Wettkampf gefunden:', this.wettkampf);
 
       // als nÃ¤chstes mÃ¼ssen alle Veranstaltungen fÃ¼r die Tabelle "Veranstaltung" und die aktuelle Veranstaltung fÃ¼r die Ausgabe darunter ermittelt werden
       this.loadVeranstaltungen();
@@ -221,7 +221,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Ermittlung der Veranstaltungen war erfolgreich
   private loadVeranstaltungenSuccess(response: BogenligaResponse<VeranstaltungDTO[]>): void {
-    console.log('Bin in loadVeranstaltungenSuccess');
     this.veranstaltungen = response.payload;
     this.loadingVeranstaltungen = false;
 
@@ -233,19 +232,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Ermittlung der Veranstaltungen war nicht erfolrgreich
   private loadVeranstaltungenFailure(response: BogenligaResponse<VeranstaltungDTO[]>): void {
-    console.log('Bin in loadVeranstaltungenFailure');
     this.veranstaltungen = response.payload;
   }
 
 
   // Ermittlung der Veranstaltung des Wettkampfs
   private findVeranstaltung(veranstaltung: VeranstaltungDO) {
-    console.log('Bin in findVeranstaltung');
 
     if (this.wettkampf.wettkampfVeranstaltungsId === veranstaltung.id) {
       // Veranstaltung von WettkampfDO wurde gefunden -> Ãœbergabe an this.veranstaltung
       this.veranstaltung = veranstaltung;
-      console.log('Veranstaltung gefunden:', this.veranstaltung);
 
       // fuer Ausgabe unter der Veranstaltung Tabelle muss this.currentVeranstaltungName gesetzt werden:
       // dieses besteht aus dem Namen und dem Sportjahr der Veranstaltung
@@ -311,7 +307,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // when a Ligatabelle gets selected from the list --> ID for Buttons
 
   public onView($event: VersionedDataObject): void {
-    console.log('DataOBJ', $event);
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
@@ -352,8 +347,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
                       // aktivere button generiere Mathces
                       this.disabledButton = false;
                     }// Falls erstes Match angefragt wird
-                  }).catch((response: BogenligaResponse<MatchDTOExt[]>) => {
-              });
+                  }).catch((reason) => {
+                    console.error('Error at findAllWettkampfMatchesAndNamesByID: ' + reason);
+                  });
             }
           }
           this.handleFindMatchSuccess(response);
@@ -415,7 +411,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public generateMatches() {
     this.matchDataProvider.generateDataForMatches(this.selectedWettkampfId)
         .then((response: BogenligaResponse<MatchDTO[]>) => {
-          console.log('Response von generateMatches(): ', response);
           this.showMatches();
         })
         // handleFailure -> Fehlermeldung muss aufgerufen werden
@@ -570,7 +565,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         sportjahr.id = counter;
         counter++;
       }
-    console.log('Bin in loadVeranstaltungenYearSuccess!');
     if (!this.wettkampfIdEnthalten) {
         // Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde und setze die Id des vorausgewählten
         // Jahres auf die id des neusten Jahres
@@ -583,7 +577,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
   private loadVeranstaltungenYearsFailure(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
     this.loadingYears = false;
-    console.log('Bin in loadVeranstaltungenYearFailure');
 
   }
 
