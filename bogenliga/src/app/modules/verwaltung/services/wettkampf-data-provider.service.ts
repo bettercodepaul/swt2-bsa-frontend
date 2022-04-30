@@ -14,6 +14,12 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {fromOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
+import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
+import {
+  fromOfflineWettkampfPayload,
+  fromOfflineWettkampfPayloadArray, toDTOFromOffline, toDTOFromOfflineArray
+} from '@verwaltung/mapper/wettkampf-offline-mapper';
+import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 
 
 @Injectable({
@@ -48,19 +54,19 @@ export class WettkampfDataProviderService extends DataProviderService {
   }
 
   public findById(id: string | number): Promise<BogenligaResponse<WettkampfDTO>> {
-    //offliendb for wkdurchfuehrung still needs to be created and OfflineWettkampftabelle needs to be created aswell
-    /*if(this.onOfflineService.isOffline()) {
-      console.log('Choosing offline way for Veranstaltung with id '+ id);
+    //TODO: test this
+    if(this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for wettkampf with id '+ id);
       return new Promise((resolve, reject) => {
-        db.wettkampfTabelle.where('wettkampf_id').equals(id).toArrray()
-          .then((data: OfflineWettkampftabelle[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromOfflineWettkampftabelleArray(data)});
+        db.wettkampfTabelle.where('wettkampf_id').equals(id).toArray()[0]
+          .then((data: OfflineWettkampf) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOffline(data)});
 
           }, () => {
             reject({result: RequestResult.FAILURE});
             });
       });
-    } else {*/
+    } else {
       // return promise
       // sign in success -> resolve promise
       // sign in failure -> reject promise with result
@@ -79,7 +85,7 @@ export class WettkampfDataProviderService extends DataProviderService {
               }
             });
       });
-    //}
+    }
   }
 
   public findAllowedMember(wettkampfID: string | number, mannschaft1ID: string | number, mannschaft2ID: string | number): Promise<number[]> {
