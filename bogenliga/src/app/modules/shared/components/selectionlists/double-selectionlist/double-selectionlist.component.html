@@ -1,13 +1,16 @@
 <bla-col-layout>
-  <bla-selectionlist (onFocus)="onLeftFocus($event)"
-                     (onSelect)="onLeftItemSelect($event)"
-                     [id]="idLeftList"
-                     [items]="leftItemList"
-                     [multipleSelections]="multipleSelections"
-                     [optionFieldSelector]="fieldSelector"
-                     style="width: 40%; height: 100%">
+  <div>
+    {{leftCaption}}
+    <bla-selectionlist (onFocus)="onLeftFocus($event)"
+                       (onSelect)="onLeftItemSelect($event)"
+                       [id]="idLeftList"
+                       [items]="leftItemList"
+                       [multipleSelections]="multipleSelections"
+                       [optionFieldSelector]="fieldSelector"
+                       style="width: 40%; height: 100%">
 
-  </bla-selectionlist>
+    </bla-selectionlist>
+  </div>
 
   <div class="shift-buttons">
     <div class="shift-button">
@@ -25,13 +28,15 @@
       </bla-button>
     </div>
   </div>
-
-  <bla-selectionlist (onFocus)="onRightFocus($event)"
-                     (onSelect)="onRightItemSelect($event)"
-                     [id]="idRightList"
-                     [items]="rightItemList"
-                     [multipleSelections]="multipleSelections"
-                     [optionFieldSelector]="fieldSelector"
-                     style="width: 40%; height: 100%">
-  </bla-selectionlist>
+  <div>
+    {{rightCaption}}
+    <bla-selectionlist (onFocus)="onRightFocus($event)"
+                       (onSelect)="onRightItemSelect($event)"
+                       [id]="idRightList"
+                       [items]="rightItemList"
+                       [multipleSelections]="multipleSelections"
+                       [optionFieldSelector]="fieldSelector"
+                       style="width: 40%; height: 100%">
+    </bla-selectionlist>
+  </div>
 </bla-col-layout>
