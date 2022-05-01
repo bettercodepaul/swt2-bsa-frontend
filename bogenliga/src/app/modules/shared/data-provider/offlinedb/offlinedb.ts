@@ -32,7 +32,7 @@ export class OfflineDB extends Dexie {
   wettkampfTabelle!: Table<OfflineWettkampf, number>;
   mannschaftTabelle!: Table<OfflineMannschaft, number>;
   mannschaftsmitgliedTabelle!: Table<OfflineMannschaftsmitglied, number>;
-  dsbMitgliederTabelle!: Table<OfflineDsbMitglied, number>;
+  dsbMitgliedTabelle!: Table<OfflineDsbMitglied, number>;
   veranstaltungTabelle!: Table<OfflineVeranstaltung, number>;
 
 
@@ -54,7 +54,7 @@ export class OfflineDB extends Dexie {
       wettkampfTabelle: 'id, version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
       mannschaftTabelle: 'id, version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
       mannschaftsmitgliedTabelle: 'id, version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
-      dsbMitgliederTabelle: 'id, version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
+      dsbMitgliedTabelle: 'id, version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
       veranstaltungTabelle: 'id, version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId'
 
 
