@@ -12,10 +12,20 @@ import {
 import {
   OfflineDsbMitglied
 } from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
+import {
+  OfflineVeranstaltung
+} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
 
+/**
+ * The OfflineDb class is a wrapper for the Dexie database.
+ *
+ */
 
 export class OfflineDB extends Dexie {
 
+  /**
+   *  Every table in the database is defined here.
+   */
   ligaTabelle!: Table<OfflineLigatabelle, number>;
   matchTabelle!: Table<OfflineMatch, number>;
   passeTabelle!: Table<OfflinePasse, number>;
@@ -23,7 +33,12 @@ export class OfflineDB extends Dexie {
   mannschaftTabelle!: Table<OfflineMannschaft, number>;
   mannschaftsmitgliedTabelle!: Table<OfflineMannschaftsmitglied, number>;
   dsbMitgliederTabelle!: Table<OfflineDsbMitglied, number>;
+  veranstaltungTabelle!: Table<OfflineVeranstaltung, number>;
 
+
+  /**
+   * Constructor for the OfflineDB class.
+   */
   constructor() {
     super('offlineBogenligaDb');
     this.version(2).stores({
@@ -39,7 +54,8 @@ export class OfflineDB extends Dexie {
       wettkampfTabelle: 'id, version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
       mannschaftTabelle: 'id, version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
       mannschaftsmitgliedTabelle: 'id, version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
-      dsbMitgliederTabelle: 'id, version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId'
+      dsbMitgliederTabelle: 'id, version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
+      veranstaltungTabelle: 'id, version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId'
 
 
     });

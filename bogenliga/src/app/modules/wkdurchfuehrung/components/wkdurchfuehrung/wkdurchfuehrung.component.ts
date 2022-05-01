@@ -176,9 +176,15 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
       // sonarlint ignore comments
       // this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
-      // this.wettkampfOfflineSyncService.loadWettkampfOffline( /* ID FOR SEARCH IDK */);
       // this.wettkampfOfflineSyncService.loadPasseOffline(/* ID FOR SEARCH IDK */);
+      // this.wettkampfOfflineSyncService.loadWettkampfOffline( /* ID FOR SEARCH IDK */);
+      // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
+      // this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(/* ID FOR SEARCH IDK */);
+      // this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(/* ID FOR SEARCH IDK */);
+      // this.wettkampfOfflineSyncService.loadVeranstaltungOffline(/* ID FOR SEARCH IDK */);
+
       this.onOfflineService.goOffline(this.selectedWettkampfId, this.selItemId);
+
     }
   }
 
@@ -594,7 +600,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
     this.loadingYears = false;
     let counter = 1;
-    if (response.payload != []) {
+    if (response.payload !== []) {
       for (const elem of response.payload) {
         const t = new SportjahrVeranstaltungDO();
         t.sportjahr = elem.sportjahr.valueOf();
