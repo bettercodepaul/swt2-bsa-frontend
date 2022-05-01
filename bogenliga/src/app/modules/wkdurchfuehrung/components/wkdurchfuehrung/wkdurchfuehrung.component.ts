@@ -200,7 +200,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   // Wettkampftage konnten nicht ermittelt werden -> Fehlermeldung in der Konsole
-  private handleLoadWettkampfFailure(): void {
+  private handleLoadWettkampfFailure(response: BogenligaResponse<WettkampfDO[]>): void {
     console.log('ERROR: Keine Wettkaempfe gefunden');
     // die Wettkampftage konnten nicht erfolgreich geladen werden -> Ermittlung der Veranstaltung wird auch nicht mÃ¶glich sein
     // somit sollen nur die Veranstaltungen fÃ¼r die Tabelle ermittelt werden, die Veranstaltung kann ja gar nicht mehr erfolgreich ermittelt werden
@@ -317,8 +317,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.veranstaltungen = response.payload;
       this.loadingVeranstaltungen = false;
     })
-    .catch(() => {
-      this.loadVeranstaltungenYearsFailure();
+    .catch((response: BogenligaResponse<VeranstaltungDTO[]> ) => {
+      this.loadVeranstaltungenYearsFailure(response);
     });
 
   }
@@ -590,13 +590,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
       this.loadVeranstaltungenYearsSuccess(response);
     })
-    .catch()
-  =>
-    {
-      this.loadVeranstaltungenYearsFailure();
-    }
-  )
-    ;
+    .catch((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => this.loadVeranstaltungenYearsFailure(response));
+
   }
 
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
@@ -634,7 +629,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
-  private loadVeranstaltungenYearsFailure(): void {
+  private loadVeranstaltungenYearsFailure(response: BogenligaResponse<SportjahrVeranstaltungDO[]> ): void {
     this.loadingYears = false;
 
   }
