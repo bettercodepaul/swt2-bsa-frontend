@@ -141,8 +141,11 @@
           <button class="btn btn-warning" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Offline gehen</button>
         </div>
 
+
         <ng-template #backOnline id="onlineButton">
+          <div>
           <button class="btn btn-success"(click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Online gehen</button>
+          </div>
         </ng-template>
 
   </bla-col-layout>
