@@ -317,8 +317,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.veranstaltungen = response.payload;
       this.loadingVeranstaltungen = false;
     })
-    .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-      this.loadVeranstaltungenYearsFailure(response);
+    .catch(() => {
+      this.loadVeranstaltungenYearsFailure();
     });
 
   }
@@ -393,7 +393,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       }
       this.handleFindMatchSuccess(response);
     })
-    .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure(response));
+    .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure());
   }
 
 
@@ -518,7 +518,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.wettkampfListe = response.payload;
       this.handleFindWettkampfSuccess(response);
     })
-    .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfFailure(response));
+    .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfFailure());
   }
 
 
@@ -590,9 +590,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
       this.loadVeranstaltungenYearsSuccess(response);
     })
-    .catch((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
-      this.loadVeranstaltungenYearsFailure(response);
-    });
+    .catch()
+  =>
+    {
+      this.loadVeranstaltungenYearsFailure();
+    }
+  )
+    ;
   }
 
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
