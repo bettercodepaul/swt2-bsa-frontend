@@ -168,7 +168,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     this.loadDsbMitglied(id)
     .then((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
       // bulk add to offline db with id as primary key
-      db.dsbMitgliederTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+      db.dsbMitgliedTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
         console.log('Offline DsbMitglied added to offlinedb', lastKey);
       });
     })
