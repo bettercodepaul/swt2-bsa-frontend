@@ -1,11 +1,12 @@
-import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 export interface OfflineLigatabelle {
   id?: number; // Primary Key autoincrement
   version?: number;
 
+  // Relations
   veranstaltungId: number; // technischer Schüssel der Veranstaltung (Liga im Jahr)
   veranstaltungName: string; // Bezeichnung der Veranstaltung
+  // Keys for wettkampf
   wettkampfId: number; // technischer Schlüssel des aktuellen Wettkampftages
   wettkampfTag: number; // Nummer des Wettkampftages i.d.R. <= 4
   mannschaftId: number; // Mannschaft der Liga
