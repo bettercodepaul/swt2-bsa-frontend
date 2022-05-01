@@ -1,4 +1,3 @@
-import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 export interface OfflineMatch {
   id?: number; // Primary Key autoincrement

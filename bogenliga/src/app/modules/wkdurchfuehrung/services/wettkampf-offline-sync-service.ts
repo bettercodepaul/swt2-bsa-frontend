@@ -21,6 +21,10 @@ import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.
 import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from "@shared/data-provider/offlinedb/types/offline-wettkampf.interface";
 import {fromOfflineWettkampfPayloadArray} from "@verwaltung/mapper/wettkampf-offline-mapper";
+import {
+  OfflineMannschaft
+} from "@shared/data-provider/offlinedb/types/offline-mannschaft.interface";
+import {fromOfflineMannschaftPayloadArray} from "@verwaltung/mapper/mannschaft-offline-mapper";
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +74,17 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     })
     .catch((response: BogenligaResponse<OfflineMatch[]>) => {
       console.log('error loading offline wettkampf payload:', response.payload);
+    });
+  }
+  public loadMannschaftOffline(id: string | number): void {
+    this.loadMannschaft(id)
+    .then((response: BogenligaResponse<OfflineMannschaft[]>) => {
+      db.mannschaftTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((value) => {
+        console.log('Offline Mannschaft added to offlinedb', value);
+      });
+    })
+    .catch((response: BogenligaResponse<OfflineMannschaft[]>) => {
+      console.log('error loading offline mannschaft payload:', response.payload);
     });
   }
   // The following methods are merely convenience methods for calling the
@@ -126,6 +141,17 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
       .then((data: VersionedDataTransferObject[]) => {
         resolve({result: RequestResult.SUCCESS, payload: fromPayloadOfflineLigatabelleArray(data)});
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+    });
+  }
+  private loadMannschaft(id: string | number): Promise<BogenligaResponse<OfflineMannschaft[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('mannschaft=' + id).build())
+      .then((data: VersionedDataTransferObject[]) => {
+        resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftPayloadArray(data)});
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
   }
