@@ -49,7 +49,6 @@ export class MannschaftOfflineSyncDto implements DataTransferObject {
       copy.sortierung = null;
     }
     copy.version = optional.version || null;
-    copy.nummer = optional.nummer || '';
 
     return copy;
   }

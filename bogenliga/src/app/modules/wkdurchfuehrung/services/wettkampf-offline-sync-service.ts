@@ -19,12 +19,22 @@ import {fromOfflineMatchPayloadArray} from '@verwaltung/mapper/match-offline-map
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
 import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
-import {OfflineWettkampf} from "@shared/data-provider/offlinedb/types/offline-wettkampf.interface";
-import {fromOfflineWettkampfPayloadArray} from "@verwaltung/mapper/wettkampf-offline-mapper";
+import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
+import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
 import {
   OfflineMannschaft
-} from "@shared/data-provider/offlinedb/types/offline-mannschaft.interface";
-import {fromOfflineMannschaftPayloadArray} from "@verwaltung/mapper/mannschaft-offline-mapper";
+} from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
+import {fromOfflineMannschaftPayloadArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
+import {
+  OfflineMannschaftsmitglied
+} from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
+import {
+   fromOfflineMannschaftsmitgliedPayloadArray
+} from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
+import {
+  OfflineDsbMitglied
+} from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
+import {fromOfflineDsbMitgliedPayloadArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -87,16 +97,41 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline mannschaft payload:', response.payload);
     });
   }
+  public loadMannschaftsmitgliedOffline(id: string| number): void {
+    this.loadMannschaftsmitglied(id)
+    .then((response: BogenligaResponse<OfflineMannschaftsmitglied[]>) => {
+      // bulk add to offline db with id as primary key
+      db.mannschaftsmitgliedTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+        console.log('Offline Mannschaftsmitglied added to offlinedb', lastKey);
+      });
+    })
+    .catch((response: BogenligaResponse<OfflineMannschaftsmitglied[]>) => {
+      console.log('error loading offline mannschaftsmitglied payload:', response.payload);
+    });
+  }
+  public loadDsbMitgliedOffline(id: string| number): void {
+    this.loadDsbMitglied(id)
+    .then((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
+      // bulk add to offline db with id as primary key
+      db.dsbMitgliederTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+        console.log('Offline DsbMitglied added to offlinedb', lastKey);
+      });
+    })
+    .catch((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
+      console.log('error loading offline dsbmitglied payload:', response.payload);
+    });
+  }
   // The following methods are merely convenience methods for calling the
   // generic load method for the corresponding REST service.
   private loadMatch(id: string | number): Promise<BogenligaResponse<OfflineMatch[]>> {
 
     // Call REST-API
-    const url = new UriBuilder().fromPath(this.getUrl()).path('match=' + id).build();
+    const url = new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfIdOffline/wettkampfid=' + id).build();
     return new Promise<BogenligaResponse<OfflineMatch[]>>((resolve, reject) => {
       this.restClient.GET<OfflineMatch[]>(url)
       // Resolve the request and use the offline match mapper
       .then((data: DataTransferObject[]) => {
+        console.log(`received ${data} from ${url}`);
         resolve({result: RequestResult.SUCCESS, payload: fromOfflineMatchPayloadArray(data)});
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
@@ -155,7 +190,26 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
   }
+  private loadMannschaftsmitglied(id: string | number): Promise<BogenligaResponse<OfflineMannschaftsmitglied[]>> {
 
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('mannschaftsmitglied=' + id).build())
+      .then((data: VersionedDataTransferObject[]) => {
+
+        resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedPayloadArray(data)});
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+    });
+  }
+  private loadDsbMitglied(id: string | number): Promise<BogenligaResponse<OfflineDsbMitglied[]>> {
+
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('dsbmitglied=' + id).build())
+      .then((data: VersionedDataTransferObject[]) => {
+
+        resolve({result: RequestResult.SUCCESS, payload: fromOfflineDsbMitgliedPayloadArray(data)});
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+    });
+  }
 
   private handleLoadLigatabelleVeranstaltungSuccess(offlineLigatabelle: BogenligaResponse<OfflineLigatabelle[]>): void {
 
