@@ -29,12 +29,18 @@ import {
   OfflineMannschaftsmitglied
 } from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
 import {
-   fromOfflineMannschaftsmitgliedPayloadArray
+  fromOfflineMannschaftsmitgliedPayloadArray
 } from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
 import {
   OfflineDsbMitglied
 } from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
 import {fromOfflineDsbMitgliedPayloadArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
+import {
+  OfflineVeranstaltung
+} from "@shared/data-provider/offlinedb/types/offline-veranstaltung.interface";
+import {
+  fromOfflineVeranstaltungPayloadArray
+} from "@verwaltung/mapper/veranstaltung-offline-mapper";
 
 @Injectable({
   providedIn: 'root'
@@ -47,12 +53,21 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   constructor(private restClient: RestClient) {
     super();
   }
+
   // The following methods define the REST calls and how to convert the returned JSON payload to the known entity types
   public loadLigatabelleVeranstaltungOffline(id: string | number): void {
     this.loadLigatabelleVeranstaltung(id)
     .then((response: BogenligaResponse<OfflineLigatabelle[]>) => this.handleLoadLigatabelleVeranstaltungSuccess(response))
     .catch((response: BogenligaResponse<OfflineLigatabelle[]>) => this.handleLoadLigatabelleVeranstaltungFailure(response));
   }
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id  wettkampfId to which the matches belongs
+   *
+   * @author Dennis Bär
+   */
   public loadMatchOffline(id: string | number): void {
     this.loadMatch(id)
     .then((response: BogenligaResponse<OfflineMatch[]>) => {
@@ -64,6 +79,14 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline match payload:', response.payload);
     });
   }
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id tbd
+   *
+   * @author Dennis Bär
+   */
   public loadPasseOffline(id: string | number): void {
     this.loadPasse(id)
     .then((response: BogenligaResponse<OfflinePasse[]>) => {
@@ -75,6 +98,14 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline passe payload:', response.payload);
     });
   }
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id tbd
+   *
+   * @author Dennis Bär
+   */
   public loadWettkampfOffline(id: string | number): void {
     this.loadWettkampf(id)
     .then((response: BogenligaResponse<OfflineWettkampf[]>) => {
@@ -86,6 +117,14 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline wettkampf payload:', response.payload);
     });
   }
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id tbd
+   *
+   * @author Dennis Bär
+   */
   public loadMannschaftOffline(id: string | number): void {
     this.loadMannschaft(id)
     .then((response: BogenligaResponse<OfflineMannschaft[]>) => {
@@ -97,7 +136,15 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline mannschaft payload:', response.payload);
     });
   }
-  public loadMannschaftsmitgliedOffline(id: string| number): void {
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id tbd
+   *
+   * @author Dennis Bär
+   */
+  public loadMannschaftsmitgliedOffline(id: string | number): void {
     this.loadMannschaftsmitglied(id)
     .then((response: BogenligaResponse<OfflineMannschaftsmitglied[]>) => {
       // bulk add to offline db with id as primary key
@@ -109,7 +156,15 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline mannschaftsmitglied payload:', response.payload);
     });
   }
-  public loadDsbMitgliedOffline(id: string| number): void {
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id tbd
+   *
+   * @author Dennis Bär
+   */
+  public loadDsbMitgliedOffline(id: string | number): void {
     this.loadDsbMitglied(id)
     .then((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
       // bulk add to offline db with id as primary key
@@ -121,8 +176,33 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       console.log('error loading offline dsbmitglied payload:', response.payload);
     });
   }
-  // The following methods are merely convenience methods for calling the
-  // generic load method for the corresponding REST service.
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id tbd
+   *
+   * @author Dennis Bär
+   */
+  public loadVeranstaltungOffline(id: string | number): void {
+    this.loadVeranstaltung(id)
+    .then((response: BogenligaResponse<OfflineVeranstaltung[]>) => {
+      // bulk add to offline db with id as primary key
+      db.veranstaltungTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+        console.log('Offline Veranstaltung added to offlinedb', lastKey);
+      });
+    })
+    .catch((response: BogenligaResponse<OfflineVeranstaltung[]>) => {
+      console.log('error loading offline veranstaltung payload:', response.payload);
+    });
+  }
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * @param {string} id - the wettkampf id
+   * @author Dennis Bär
+   */
+
   private loadMatch(id: string | number): Promise<BogenligaResponse<OfflineMatch[]>> {
 
     // Call REST-API
@@ -136,6 +216,8 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
   }
+
+
   private loadPasse(id: string | number): Promise<BogenligaResponse<OfflinePasse[]>> {
 
     // Build url
@@ -152,6 +234,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
 
   }
+
   private loadWettkampf(id: string | number): Promise<BogenligaResponse<OfflineWettkampf[]>> {
 
     // Build url
@@ -168,17 +251,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
 
   }
-  private loadLigatabelleVeranstaltung(id: string | number): Promise<BogenligaResponse<OfflineLigatabelle[]>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
-      .then((data: VersionedDataTransferObject[]) => {
-        resolve({result: RequestResult.SUCCESS, payload: fromPayloadOfflineLigatabelleArray(data)});
-      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
-    });
-  }
+
   private loadMannschaft(id: string | number): Promise<BogenligaResponse<OfflineMannschaft[]>> {
     // return promise
     // sign in success -> resolve promise
@@ -190,16 +263,21 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
   }
+
   private loadMannschaftsmitglied(id: string | number): Promise<BogenligaResponse<OfflineMannschaftsmitglied[]>> {
 
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('mannschaftsmitglied=' + id).build())
       .then((data: VersionedDataTransferObject[]) => {
 
-        resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedPayloadArray(data)});
+        resolve({
+          result: RequestResult.SUCCESS,
+          payload: fromOfflineMannschaftsmitgliedPayloadArray(data)
+        });
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
   }
+
   private loadDsbMitglied(id: string | number): Promise<BogenligaResponse<OfflineDsbMitglied[]>> {
 
     return new Promise((resolve, reject) => {
@@ -207,6 +285,34 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       .then((data: VersionedDataTransferObject[]) => {
 
         resolve({result: RequestResult.SUCCESS, payload: fromOfflineDsbMitgliedPayloadArray(data)});
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+    });
+  }
+
+  private loadVeranstaltung(id: string | number): Promise<BogenligaResponse<OfflineVeranstaltung[]>> {
+
+    return new Promise((resolve, reject) => {
+      // TODO: check if this is correct url to call
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
+      .then((data: VersionedDataTransferObject[]) => {
+
+        resolve({
+          result: RequestResult.SUCCESS,
+          payload: fromOfflineVeranstaltungPayloadArray(data)
+        });
+      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+    });
+  }
+
+
+  private loadLigatabelleVeranstaltung(id: string | number): Promise<BogenligaResponse<OfflineLigatabelle[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
+      .then((data: VersionedDataTransferObject[]) => {
+        resolve({result: RequestResult.SUCCESS, payload: fromPayloadOfflineLigatabelleArray(data)});
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
   }
@@ -230,7 +336,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       reject({result: RequestResult.FAILURE});
     }
   }
-
 
 
 }
