@@ -230,7 +230,9 @@
   },
   "MANNSCHAFTEN": {
     "LIGATABELLE": {
-      "TITLE": "Aktuelle Ligatabelle"
+      "TITLE": "Aktuelle Ligatabelle",
+      "LIGATABELLE_VORBEREITUNG": "Ligatabelle_Vorbereitung",
+      "TEXT": "Es muss ein Wettkampftag ausgewählt sein um die Buttons nutzen zu können"
     },
     "SCHUETZEN_STATISTIK": {
       "TITEL" : "Gesamtstatistik pro Schütze"
