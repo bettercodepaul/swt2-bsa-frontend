@@ -176,10 +176,11 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
       // sonarlint ignore comments
       this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
-      // this.wettkampfOfflineSyncService.loadPasseOffline(/* ID FOR SEARCH IDK */);
+      this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
+      this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
+
       // this.wettkampfOfflineSyncService.loadWettkampfOffline( /* ID FOR SEARCH IDK */);
       // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
-      // this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(/* ID FOR SEARCH IDK */);
       // this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(/* ID FOR SEARCH IDK */);
       // this.wettkampfOfflineSyncService.loadVeranstaltungOffline(/* ID FOR SEARCH IDK */);
 

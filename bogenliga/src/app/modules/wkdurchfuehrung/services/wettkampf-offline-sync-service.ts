@@ -221,7 +221,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadPasse(id: string | number): Promise<BogenligaResponse<OfflinePasse[]>> {
 
     // Build url
-    const url = new UriBuilder().fromPath(this.getUrl()).path('passe=' + id).build();
+    const url = new UriBuilder().fromPath(this.getUrl()).path('ligaPasseById/wettkampfid=' + id).build();
 
     return new Promise<BogenligaResponse<OfflinePasse[]>>((resolve, reject) => {
       // Call the builded url
@@ -267,7 +267,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadMannschaftsmitglied(id: string | number): Promise<BogenligaResponse<OfflineMannschaftsmitglied[]>> {
 
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('mannschaftsmitglied=' + id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('mannschaftsmitgliederById/wettkampfid=' + id).build())
       .then((data: VersionedDataTransferObject[]) => {
 
         resolve({
