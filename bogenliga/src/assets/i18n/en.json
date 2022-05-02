@@ -124,8 +124,10 @@
       "TITLE": "Dates overview"
     },
     "TITEL": {
+      "WKTAG": "Event competition days",
       "VERANSTALTUNG": "Events",
-      "WETTKAEMPFE": "competition days"
+      "WETTKAEMPFE": "competition days",
+      "LT_DURCHFUEHRUNG": "League table implementation"
     },
     "WETTKAMPF": {
       "TABLE": {
@@ -136,6 +138,15 @@
         "LIGA": "discipline",
         "PLACE": "event location"
       }
+    },
+    "BUTTON": {
+      "MATCHES": "generate matches",
+      "SETZLISTE": "set list",
+      "SCHUSSZETTEL": "shooting list",
+      "KONTROLLLISTE": "sheet control list",
+      "MELDEZETTEL": "report slip",
+      "TABLE_SETUP": "setup tablets",
+      "OFFLINE": "Offline"
     },
     "SETZLISTE" : {
       "NOTIFICATION" : {
@@ -1422,6 +1433,11 @@
       "YES": "Yes",
       "NO": "No"
     },
+    "INFO": {
+      "MEHR": "Show more information",
+      "WENIGER": "Show less information",
+      "ROHDATEN_OEFFNEN": "Open window with raw data"
+    },
     "ERROR": {
       "GENERIC_ERROR": {
         "TITLE": "Error"
@@ -1542,6 +1558,31 @@
       "BUTTON": "To the Spotter-Interface",
       "INFO": "x x x x x x",
       "ERROR": "Wrong input"
+    },
+    "COMPONENTS": {
+      "BUTTON": {
+        "BACK": "Back",
+        "SAVE": "Save",
+        "NEACHSTERSATZ": "Next set",
+        "BEENDEN": "End match"
+      },
+      "TEXT": {
+        "SATZPUNKTE": "Sentence points",
+        "MANNSCHAFT": "Team"
+      }
+
     }
-  }
+  },
+  "SHARED": {
+    "DOWNLOAD": {
+      "BUTTON": {
+        "BOGENKONTROLLISTE": "Download Sheet Control List",
+        "EINZELSTATISTIK": "Download individual statistics",
+        "GESAMTSTATISTIK": "Download overall statistics",
+        "MEDLEZETTEL" : "Download registration sheet",
+        "SCHUSSZETTEL": "Download shot sheet",
+        "SETZLISTE": "Download seeding list",
+        "TAG": "Download daily overview"
+      }
+    }
 }

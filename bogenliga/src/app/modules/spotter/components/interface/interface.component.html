@@ -54,7 +54,7 @@
       <div *ngIf="!spotting && !editing" class="col-12 col-lg-8 offset-lg-1 order-3 order-lg-2 text-center">
         <div class="row align-items-center h-25">
           <div class="col">
-            Satzpunkte
+            {{'SPOTTER.COMPONENTS.TEXT.SATZPUNKTE'| translate}}
           </div>
         </div>
         <div class="row align-items-center h-75">
@@ -66,7 +66,7 @@
       <div class="col-6 col-lg-2 order-2 order-lg-3 text-center">
         <div class="row align-items-center h-25">
           <div class="col">
-            Mannschaft
+            {{'SPOTTER.COMPONENTS.TEXT.MANNSCHAFT'| translate}}
           </div>
         </div>
         <div class="row align-items-center h-75">
@@ -126,7 +126,7 @@
     <!--FOOTER-->
     <div *ngIf="spotting || editing" class="row h-25 align-items-center" style="padding: 20px 0px;">
       <div class="col-4 text-center align-center">
-        <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onBack()">Back</button>
+        <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onBack()">{{'SPOTTER.COMPONENTS.BUTTON.BACK'| translate}}</button>
       </div>
       <div class="col-4 text-center align-center">
         <div *ngIf="!editing || editing && spotting" class="custom-control custom-checkbox checkbox-xl">
@@ -135,17 +135,16 @@
         </div>
       </div>
       <div class="col-4 text-center align-center">
-        <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onSave()">Save</button>
+        <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onSave()">{{'SPOTTER.COMPONENTS.BUTTON.SAVE'| translate}}</button>
       </div>
     </div>
     <div *ngIf="!spotting && !editing" class="row h-25 align-items-center" style="padding: 25px 0px;">
       <div class="col-6 p-0 text-center">
-        <button type="button" class="button-footer" (click)="onNextSet()" [disabled]="!match.set().canFinish()">Nächster
-          Satz</button>
+        <button type="button" class="button-footer" (click)="onNextSet()" [disabled]="!match.set().canFinish()">{{'SPOTTER.COMPONENTS.BUTTON.NEACHSTERSATZ'| translate}}</button>
       </div>
       <div class="col-6 p-0 text-center">
         <button type="button" class="button-footer" (click)="onFinishMatch()"
-          [disabled]="!match.set().canFinish()">Match Beenden</button>
+          [disabled]="!match.set().canFinish()">{{'SPOTTER.COMPONENTS.BUTTON.BEENDEN'| translate}}</button>
       </div>
     </div>
   </div>
