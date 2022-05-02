@@ -222,7 +222,9 @@
   },
   "MANNSCHAFTEN": {
     "LIGATABELLE": {
-      "TITLE": "Current League-ranking"
+      "TITLE": "Current League-ranking",
+      "LIGATABELLE_VORBEREITUNG": "Ligatabelle_Vorbereitung",
+      "TEXT": "A competition day must be selected in order to be able to use the buttons"
     },
     "SCHUETZEN_STATISTIK": {
       "TITEL" : "Overall statistics per shooter"
