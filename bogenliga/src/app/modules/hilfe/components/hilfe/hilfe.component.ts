@@ -20,16 +20,8 @@ export class HilfeComponent implements OnInit {
       url: 'https://wiki.bsapp.de/doku.php'
     },
     {
-      id: 'Neue Seiten Anlegen',
-      url: 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware#neue-eintraege-anlegen'
-    },
-    {
-      id: 'DSB Mitglied erstellen',
-      url: 'https://wiki.bsapp.de/doku.php?id=liga:neue-dsb-mitglieder-anlegen'
-    },
-    {
-      id:  'Neue Mannschaft erstellen',
-      url: 'https://wiki.bsapp.de/doku.php?id=liga:neue-dsb-mannschaft-anlegen'
+      id: 'Arbeitsablauf als Ligaleiter',
+      url: 'https://wiki.bsapp.de/doku.php?id=liga:arbeitsablauf'
     }
   ]
   constructor(private sanitizer: DomSanitizer) { }
