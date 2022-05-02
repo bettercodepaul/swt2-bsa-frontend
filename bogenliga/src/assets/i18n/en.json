@@ -149,28 +149,6 @@
       "CONFIGURE_PART1": "Please configure your device with help of the",
       "CONFIGURE_PART2": "tablet administration in the league table administration"
     },
-    "SCHUSSZETTEL": {
-      "MATCH": "match",
-      "GEGEN": "against",
-      "SATZ": "set",
-      "SUMME": "sum",
-      "FEHLERPUNKTE": "fault points",
-      "SCHUETZE": "archer",
-      "SATZ_PRO_PFEIL": "set / arrows",
-      "PFEIL": "arrow",
-      "UNTERSCHRIFT": "signature",
-      "ZURUECK": "back",
-      "SPEICHERN": "save",
-      "DRUCKEN": "print",
-      "VORHERIGES_MATCH": "previous match",
-      "NAECHSTES_MATCH": "next match",
-      "PRUEF_D_SCHUETZEN": "audit of archers",
-      "SELBER_TAG_PRUEFUNG1": "has already shot in this competition day",
-      "SELBER_TAG_PRUEFUNG2": "",
-      "ANDERER_TAG_PRUEFUNG1": "has already shot",
-      "ANDERER_TAG_PRUEFUNG2": "times in the",
-      "ANDERER_TAG_PRUEFUNG3": ""
-    },
     "WETTKAMPF": {
       "TABLE": {
         "CDAY": "competition day",
@@ -215,10 +193,26 @@
       }
     },
     "SCHUSSZETTEL": {
-      "DOWNLOADFEHLER": {
-        "TITLE": "Failure while creating the scorecard:",
-        "DESCRIPTION": "Scorecard could not be generated, because there are no matches in the competition."
-      },
+      "MATCH": "match",
+      "GEGEN": "against",
+      "SATZ": "set",
+      "SUMME": "sum",
+      "FEHLERPUNKTE": "fault points",
+      "SCHUETZE": "archer",
+      "SATZ_PRO_PFEIL": "set / arrows",
+      "PFEIL": "arrow",
+      "UNTERSCHRIFT": "signature",
+      "ZURUECK": "back",
+      "SPEICHERN": "save",
+      "DRUCKEN": "print",
+      "VORHERIGES_MATCH": "previous match",
+      "NAECHSTES_MATCH": "next match",
+      "PRUEF_D_SCHUETZEN": "audit of archers",
+      "SELBER_TAG_PRUEFUNG1": "has already shot in this competition day",
+      "SELBER_TAG_PRUEFUNG2": "",
+      "ANDERER_TAG_PRUEFUNG1": "has already shot",
+      "ANDERER_TAG_PRUEFUNG2": "times in the",
+      "ANDERER_TAG_PRUEFUNG3": "",
       "NOTIFICATION": {
         "LADEN": {
           "TITLE": "Load Shot-note",
