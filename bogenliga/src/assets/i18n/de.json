@@ -132,8 +132,10 @@
       }
     },
     "TITEL": {
+      "WKTAG": "Wettkampftage der Veranstaltung",
       "VERANSTALTUNG": "Veranstaltungen",
-      "WETTKAEMPFE": "Wettkampftage"
+      "WETTKAEMPFE": "Wettkampftage",
+      "LT_DURCHFUEHRUNG": "Ligatabelle Durchführung"
       },
     "WETTKAMPF": {
       "TABLE": {
@@ -144,6 +146,15 @@
         "LIGA": "Disziplin",
         "PLACE": "Veranstaltungsort"
       }
+    },
+    "BUTTON": {
+      "MATCHES": "generiere Matches",
+      "SETZLISTE": "Setzliste",
+      "SCHUSSZETTEL": "Schusszettel",
+      "KONTROLLLISTE": "Bogenkontrollliste",
+      "MELDEZETTEL": "Meldezettel",
+      "TABLE_SETUP": "Setup Tablets",
+      "OFFLINE": "Offline"
     },
     "SETZLISTE" : {
       "NOTIFICATION" : {
@@ -1509,6 +1520,12 @@
       "CANCEL": "Abbrechen",
       "YES": "Ja",
       "NO": "Nein"
+
+    },
+    "INFO": {
+      "MEHR": "Mehr Informationen anzeigen",
+      "WENIGER": "Weniger Informationen anzeigen",
+      "ROHDATEN_OEFFNEN": "Fenster mit Rohdaten öffnen"
     },
     "ERROR": {
       "GENERIC_ERROR": {
@@ -1633,6 +1650,32 @@
       "BUTTON": "Zum Spotter-Interface",
       "INFO": "x x x x x x",
       "ERROR": "Fehlerhafte Eingabe"
+    },
+    "COMPONENTS": {
+      "BUTTON": {
+        "BACK": "Zurück",
+        "SAVE": "Speichern",
+        "NEACHSTERSATZ": "Nächster Satz",
+        "BEENDEN": "Match Beenden"
+      },
+      "TEXT": {
+        "SATZPUNKTE": "Satzpunkte",
+        "MANNSCHAFT": "Mannschaft"
+      }
+
+    }
+  },
+  "SHARED": {
+    "DOWNLOAD": {
+      "BUTTON": {
+        "BOGENKONTROLLISTE": "Download Bogenkontrollliste",
+        "EINZELSTATISTIK": "Download Einzelstatistik",
+        "GESAMTSTATISTIK": "Download Gesamtstatistik",
+        "MEDLEZETTEL" : "Download Meldezettel",
+        "SCHUSSZETTEL": "Download Schusszettel",
+        "SETZLISTE": "Download Setzliste",
+        "TAG": "Download Tagesübersicht"
+      }
     }
   }
 }

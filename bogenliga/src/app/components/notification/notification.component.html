@@ -22,10 +22,10 @@
           aria-expanded="false"
           aria-controls="collapseErrorMessage">
           <div *ngIf="toggleOn; else elseBlock">
-            <i class="fas fa-caret-up"></i> Weniger Informationen anzeigen
+            <i class="fas fa-caret-up"></i> {{'NOTIFICATION.INFO.WENIGER'|translate}}
           </div>
           <ng-template #elseBlock>
-            <i class="fas fa-caret-down"></i> Mehr Informationen anzeigen
+            <i class="fas fa-caret-down"></i> {{'NOTIFICATION.INFO.MEHR'|translate}}
           </ng-template>
     </bla-button>
 
@@ -38,7 +38,7 @@
 
         <bla-button [buttonSize]="ButtonSize.SMALL"
                     (onClick)="showRaw()">
-          <i class="fas fa-file-export"></i> Fenster mit Rohdaten öffnen
+          <i class="fas fa-file-export"></i> {{'NOTIFICATION.INFO.ROHDATEN_OEFFNEN'|translate}}
         </bla-button>
       </div>
     </div>
