@@ -320,6 +320,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
   private handleLoadLigatabelleVeranstaltungSuccess(offlineLigatabelle: BogenligaResponse<OfflineLigatabelle[]>): void {
 
+    db.ligaTabelle.clear();
     db.ligaTabelle.bulkAdd(offlineLigatabelle.payload)
     .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
     .catch((e) => console.error(e));

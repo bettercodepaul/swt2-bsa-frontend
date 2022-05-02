@@ -5,6 +5,8 @@ import {AppState, GoOffline, GoOnline, OnOfflineState} from '../../redux-store';
 
 
 const ON_OFFLINE_STATE_KEY = 'on_offline_key';
+const SELECTED_YEAR_KEY = 'selected_year_key';
+const SELECTED_WETTKAMPF_KEY = 'selected_wettkampf_key';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,8 @@ const ON_OFFLINE_STATE_KEY = 'on_offline_key';
 export class OnOfflineService {
 
     private offline: boolean;
-    private selWettkampfID: number;
-    private selJahr: number;
 
     constructor(private store: Store<AppState>, private localDataProviderService: LocalDataProviderService) {
-        this.localDataProviderService.remove(ON_OFFLINE_STATE_KEY);
         this.observeOnOfflineState();
         this.loadCurrentOnOfflineState();
     }
@@ -29,8 +28,8 @@ export class OnOfflineService {
     public goOffline(wettkampfID:number, veranstaltungJahr:number): void {
         this.store.dispatch(new GoOffline());
         this.localDataProviderService.setPermanently(ON_OFFLINE_STATE_KEY, 'Offline');
-        this.selJahr = veranstaltungJahr;
-        this.selWettkampfID = wettkampfID;
+        this.localDataProviderService.setPermanently(SELECTED_YEAR_KEY, veranstaltungJahr.toString())
+        this.localDataProviderService.setPermanently(SELECTED_WETTKAMPF_KEY, wettkampfID.toString())
         console.log("Offlinestatus:" + this.isOffline());
     }
     public isOffline(): boolean {
@@ -55,11 +54,11 @@ export class OnOfflineService {
     }
 
     public getOfflineJahr(): number{
-      return this.selJahr;
+      return parseInt(this.localDataProviderService.get(SELECTED_YEAR_KEY));
     }
 
     public getOfflineWettkampfID(): number{
-      return this.selWettkampfID;
+      return parseInt(this.localDataProviderService.get(SELECTED_WETTKAMPF_KEY));
 }
 
 }
