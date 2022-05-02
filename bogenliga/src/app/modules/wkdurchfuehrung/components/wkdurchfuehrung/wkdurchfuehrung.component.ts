@@ -175,7 +175,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       console.warn('LoadMatchOffline is not working because of server!\n Enable it when the endpoint is ready!');
 
       // sonarlint ignore comments
-      // this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
+      this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
       // this.wettkampfOfflineSyncService.loadPasseOffline(/* ID FOR SEARCH IDK */);
       // this.wettkampfOfflineSyncService.loadWettkampfOffline( /* ID FOR SEARCH IDK */);
       // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
