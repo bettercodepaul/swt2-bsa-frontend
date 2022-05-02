@@ -12,6 +12,9 @@ import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray, fromPlayloadArraySp} from '../mapper/veranstaltung-mapper';
 import {VeranstaltungDO} from '../types/veranstaltung-do.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {OnOfflineService} from '@shared/services';
+import {db} from '@shared/data-provider/offlinedb/offlinedb';
+import {toDTOFromOfflineWettkampfArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +23,22 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
   serviceSubUrl = 'v1/veranstaltung';
 
 
-  constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
+  constructor(private restClient: RestClient, private currentUserService: CurrentUserService, private onOfflineService: OnOfflineService) {
     super();
   }
   public findAll(): Promise<BogenligaResponse<VeranstaltungDO[]>> {
+    //TODO: uncomment when offlinedb is fillable
+    /*if(this.onOfflineService.isOffline()){
+      console.log("Choosing offline way for Veranstaltungen findall")
+      return new Promise((resolve,reject) =>{
+        db.veranstaltungTabelle.toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineVeranstaltungPayload(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          })
+      })
+    } else {}*/
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
