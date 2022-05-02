@@ -20,7 +20,8 @@ import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
 import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from "@shared/data-provider/offlinedb/types/offline-wettkampf.interface";
-import {fromOfflineWettkampfPayloadArray} from "@verwaltung/mapper/wettkampf-offline-mapper";
+import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient) {
+  constructor(private restClient: RestClient, private wettkampfDataProvider: WettkampfDataProviderService) {
     super();
   }
   // The following methods define the REST calls and how to convert the returned JSON payload to the known entity types

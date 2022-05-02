@@ -3,16 +3,16 @@ import {
   WettkampfOfflineSyncDto
 } from '@verwaltung/types/datatransfer/wettkampf-offline-sync-dto.class';
 import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
-import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
-export function toDTOFromOfflineArray(wettkaempfe: OfflineWettkampf[]): WettkampfDTO[] {
+export function toDTOFromOfflineWettkampfArray(wettkaempfe: OfflineWettkampf[]): WettkampfDTO[] {
   let list: WettkampfDTO[];
-  wettkaempfe.map((it) =>  list.push(toDTOFromOffline(it)));
+  list = []
+  wettkaempfe.forEach((it) =>  list.push(toDTOFromOfflineWettkampf(it)));
   return list;
 }
 
-export function toDTOFromOffline(wettkampf: OfflineWettkampf): WettkampfDTO {
+export function toDTOFromOfflineWettkampf(wettkampf: OfflineWettkampf): WettkampfDTO {
   const wettkampfDO = new WettkampfDTO();
 
   wettkampfDO.wettkampfTag = parseInt(wettkampf.tag);
