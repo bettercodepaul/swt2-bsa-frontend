@@ -16,6 +16,7 @@ export class OnOfflineService {
     private selJahr: number;
 
     constructor(private store: Store<AppState>, private localDataProviderService: LocalDataProviderService) {
+        this.localDataProviderService.remove(ON_OFFLINE_STATE_KEY);
         this.observeOnOfflineState();
         this.loadCurrentOnOfflineState();
     }
@@ -30,14 +31,9 @@ export class OnOfflineService {
         this.localDataProviderService.setPermanently(ON_OFFLINE_STATE_KEY, 'Offline');
         this.selJahr = veranstaltungJahr;
         this.selWettkampfID = wettkampfID;
-        console.log("Offlinestatus:" + this.isOffline())
+        console.log("Offlinestatus:" + this.isOffline());
     }
-
-    //gibt den offline status der Anwendung zurück, falls keine Werte ausgewählt sind wird als failsafe false returned
     public isOffline(): boolean {
-        if(this.selWettkampfID == undefined || this.selJahr == undefined){
-          return false;
-        }
         return this.offline;
     }
 

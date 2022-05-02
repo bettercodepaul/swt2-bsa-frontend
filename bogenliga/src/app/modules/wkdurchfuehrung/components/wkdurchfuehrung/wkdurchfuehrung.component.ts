@@ -206,6 +206,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     // somit sollen nur die Veranstaltungen fÃ¼r die Tabelle ermittelt werden, die Veranstaltung kann ja gar nicht mehr erfolgreich ermittelt werden
     // -> this.wettkampfIdEnthalten auf false setzen, damit die Veranstaltungen wie sonst auch geladen werden kÃ¶nnen
     this.wettkampfIdEnthalten = false;
+    this.loadingWettkampfe = false;
     this.loadVeranstaltungen();
   }
 

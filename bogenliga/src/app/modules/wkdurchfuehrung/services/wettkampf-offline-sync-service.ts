@@ -41,6 +41,7 @@ import {
 import {
   fromOfflineVeranstaltungPayloadArray
 } from "@verwaltung/mapper/veranstaltung-offline-mapper";
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient) {
+  constructor(private restClient: RestClient, private wettkampfDataProvider: WettkampfDataProviderService) {
     super();
   }
 
