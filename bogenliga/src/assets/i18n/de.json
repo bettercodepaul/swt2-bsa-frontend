@@ -131,6 +131,48 @@
         "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden"
       }
     },
+    "TABLET_ADMIN": {
+      "VERWALTUNG": "Tabletverwaltung",
+      "SCHEIBE": "Scheibe",
+      "STATUS": "Status",
+      "AKTIONEN": "Aktionen",
+      "ACCESS_TOKEN": "Access Token"
+    },
+    "TABLET_INPUT": {
+      "SCHEIBE": "Scheibe",
+      "WETTKAMPFTAG": "Wettkampftag",
+      "MATCH": "Match",
+      "SCHUETZEN_NUMMERN": "Bitte geben Sie die Schützen-Nummern für dieses Match ein:",
+      "SCHUETZE": "Schütze",
+      "SAVE": "Speichern",
+      "SATZ": "Satz",
+      "NEXT_MATCH": "Nächstes Match",
+      "NEXT_SET": "Nächster Satz",
+      "CONFIGURE_PART1": "Bitte Konfigurieren Sie zunächst Ihr Gerät mit Hilfe der",
+      "CONFIGURE_PART2": "Tablet-Administration in der Ligatabelle-Verwaltung"
+    },
+    "SCHUSSZETTEL": {
+      "MATCH": "Match",
+      "GEGEN": "gegen",
+      "SATZ": "Satz",
+      "SUMME": "Summe",
+      "FEHLERPUNKTE": "Fehlerpunkte",
+      "SCHUETZE": "Schütze",
+      "SATZ_PRO_PFEIL": "Satz / Pfeile",
+      "PFEIL": "Pfeil",
+      "UNTERSCHRIFT": "Unterschrift",
+      "ZURUECK": "Zurück",
+      "SPEICHERN": "Speichern",
+      "DRUCKEN": "Drucken",
+      "VORHERIGES_MATCH": "Vorheriges Match",
+      "NAECHSTES_MATCH": "Nächstes Match",
+      "PRUEF_D_SCHUETZEN": "Prüfung der Schützen",
+      "SELBER_TAG_PRUEFUNG1": "hat bereits diesen Wettkampftag in der",
+      "SELBER_TAG_PRUEFUNG2": "geschossen",
+      "ANDERER_TAG_PRUEFUNG1": "hat bereits",
+      "ANDERER_TAG_PRUEFUNG2": "mal in der",
+      "ANDERER_TAG_PRUEFUNG3": "geschossen"
+    },
     "TITEL": {
       "WKTAG": "Wettkampftage der Veranstaltung",
       "VERANSTALTUNG": "Veranstaltungen",

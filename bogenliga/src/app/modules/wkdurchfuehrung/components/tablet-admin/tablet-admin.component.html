@@ -1,12 +1,12 @@
 <div class="container">
-  <h2 class="mb-4 mt-3">Tabletverwaltung</h2>
+  <h2 class="mb-4 mt-3">{{ 'WKDURCHFUEHRUNG.TABLET_ADMIN.VERWALTUNG' | translate }}</h2>
   <div class="table-responsive">
     <table class="table">
       <tr>
-        <th style="width: 25%">Scheibe</th>
-        <th style="width: 25%">Status</th>
-        <th style="width: 25%">Aktionen</th>
-        <th style="width: 25%">Access Token</th>
+        <th style="width: 25%">{{ 'WKDURCHFUEHRUNG.TABLET_ADMIN.SCHEIBE' | translate }}</th>
+        <th style="width: 25%">{{ 'WKDURCHFUEHRUNG.TABLET_ADMIN.STATUS' | translate }}</th>
+        <th style="width: 25%">{{ 'WKDURCHFUEHRUNG.TABLET_ADMIN.AKTIONEN' | translate }}</th>
+        <th style="width: 25%">{{ 'WKDURCHFUEHRUNG.TABLET_ADMIN.ACCESS_TOKEN' | translate }}</th>
       </tr>
 
       <tr *ngFor="let session of sessions">

@@ -3,13 +3,13 @@
     <ng-template [ngIf]="tabletSession">
 
       <div class="col-sm-12">
-        <h1 class="w-100 text-center my-3">Scheibe {{tabletSession.scheibenNr}}</h1>
+        <h1 class="w-100 text-center my-3">{{ 'WKDURCHFUEHRUNG.TABLET_INPUT.SCHEIBE' | translate }} {{tabletSession.scheibenNr}}</h1>
       </div>
 
       <div class="col-sm-12 tablet-eingabe-info-section">
-        <h3 class="text-center d-inline-block">Wettkampftag {{match1.wettkampfTag}}</h3>
+        <h3 class="text-center d-inline-block">{{ 'WKDURCHFUEHRUNG.TABLET_INPUT.WETTKAMPFTAG' | translate }} {{match1.wettkampfTag}}</h3>
         <span class="mx-3 separator">•</span>
-        <h3 class="text-center d-inline-block">Match {{match1.nr}}</h3>
+        <h3 class="text-center d-inline-block">{{ 'WKDURCHFUEHRUNG.TABLET_INPUT.MATCH' | translate }} {{match1.nr}}</h3>
         <span class="mx-3 separator">•</span>
         <h3 class="text-center d-inline-block">{{match1.mannschaftName}} vs. {{match2.mannschaftName}}</h3>
       </div>
@@ -20,7 +20,7 @@
 
       <ng-template [ngIf]="!hasSchuetzenNummern()">
         <div class="col-sm-12">
-          <h2 class="w-100 text-center d-inline-block">Bitte geben Sie die Schützen-Nummern für dieses Match ein:</h2>
+          <h2 class="w-100 text-center d-inline-block">{{ 'WKDURCHFUEHRUNG.TABLET_INPUT.SCHUETZEN_NUMMERN' | translate }}</h2>
         </div>
         <div class="offset-lg-3 col-lg-6 offset-xl-4 col-xl-4">
           <div class="pb-5 pt-3 w-100 flex-container justify-content-around">
@@ -30,7 +30,7 @@
                          ngFor>
               <div class="d-inline-flex align-items-center flex-column">
                 <label [for]="'schuetze' + i+1 + 'Nummer'"
-                       class="h4">{{i + 1}}. Schütze</label>
+                       class="h4">{{i + 1}}. {{ 'WKDURCHFUEHRUNG.TABLET_INPUT.SCHUETZE' | translate }}</label>
                 <input [(ngModel)]="schuetzen[i].schuetzeNr"
                        [id]="'schuetze' + i+1 + 'Nummer'"
                        [tabindex]="i+1"
@@ -47,7 +47,7 @@
             [disabled]="!hasValidSchuetzenNr()"
             class="btn btn-primary mb-5"
           >
-            Speichern
+            {{ 'WKDURCHFUEHRUNG.TABLET_INPUT.SAVE' | translate }}
           </button>
         </div>
       </ng-template>
@@ -56,7 +56,7 @@
         <div class="col-sm-12 tablet-eingabe-current">
           <h2>{{currentMatch.mannschaftName}}</h2>
           <span class="mx-3 separator">•</span>
-          <h2 class="mb-3">Satz {{tabletSession.satzNr}}</h2>
+          <h2 class="mb-3">{{ 'WKDURCHFUEHRUNG.TABLET_INPUT.SATZ' | translate }} {{tabletSession.satzNr}}</h2>
         </div>
 
         <ng-template [ngForOf]="schuetzen"
@@ -90,7 +90,7 @@
             (click)="nextMatch()"
             class="btn btn-primary mr-3 my-5"
           >
-            Nächstes Match <i class="fa fa-fw fa-chevron-right"></i>
+            {{ 'WKDURCHFUEHRUNG.TABLET_INPUT.NEXT_MATCH' | translate }} <i class="fa fa-fw fa-chevron-right"></i>
           </button>
 
           <button
@@ -98,7 +98,7 @@
             [disabled]="!allPasseFilled()"
             class="btn btn-primary mr-3 my-5"
           >
-            Nächster Satz <i class="fa fa-fw fa-chevron-right"></i>
+            {{ 'WKDURCHFUEHRUNG.TABLET_INPUT.NEXT_SET' | translate }} <i class="fa fa-fw fa-chevron-right"></i>
           </button>
         </div>
       </ng-template>
@@ -107,8 +107,8 @@
     <ng-template [ngIf]="!tabletSession">
       <div class="col-sm-12 justify-content-around">
         <div class="alert alert-warning m-3">
-          Bitte Konfigurieren Sie zunächst Ihr Gerät mit Hilfe der
-          <a routerLink="{{tabletAdminRoute}}">Tablet-Administration in der Ligatabelle-Verwaltung</a>.
+          {{ 'WKDURCHFUEHRUNG.TABLET_INPUT.CONFIGURE_PART1' | translate }}
+          <a routerLink="{{tabletAdminRoute}}">{{ 'WKDURCHFUEHRUNG.TABLET_INPUT.CONFIGURE_PART2' | translate }}</a>.
         </div>
       </div>
     </ng-template>
