@@ -15,6 +15,10 @@ import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltun
 import {OnOfflineService} from '@shared/services';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {toDTOFromOfflineWettkampfArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
+import {
+  fromOfflineVeranstaltungPayload,
+  toDOfromOfflineVeranstaltung, toDOfromOfflineVeranstaltungArray
+} from '@verwaltung/mapper/veranstaltung-offline-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -27,34 +31,35 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     super();
   }
   public findAll(): Promise<BogenligaResponse<VeranstaltungDO[]>> {
-    //TODO: uncomment when offlinedb is fillable
+    //TODO: uncomment when backend sends us some data
     /*if(this.onOfflineService.isOffline()){
       console.log("Choosing offline way for Veranstaltungen findall")
       return new Promise((resolve,reject) =>{
         db.veranstaltungTabelle.toArray()
           .then((data) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromOfflineVeranstaltungPayload(data)});
+            resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
           })
       })
-    } else {}*/
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
+    } else {*/
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    //}
   }
 
 
