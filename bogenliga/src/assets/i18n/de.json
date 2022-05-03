@@ -21,7 +21,8 @@
     "SETTINGS": "EINSTELLUNGEN",
     "PLAYGROUND": "PLAYGROUND",
     "SPOTTING": "SPOTTING",
-    "COLLAPSE": "Einklappen"
+    "COLLAPSE": "Einklappen",
+    "HILFE" :  "HILFE"
   },
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
@@ -439,43 +440,53 @@
       "NAVIGATION": {
         "DSBMITGLIEDER": {
           "LABEL": "DSB Mitglieder",
-          "DESCRIPTION": "Verwaltung der DSB Mitglieder"
+          "DESCRIPTION": "Verwaltung der DSB Mitglieder",
+          "TOOLTIP": "● Erstellen neuer DSB Mitglieder\n● DSB Mitglieder bearbeiten\n● DSB Mitglieder Löschen"
         },
         "USER": {
           "LABEL": "Benutzer",
-          "DESCRIPTION": "Verwaltung der Benutzer-Accounts"
+          "DESCRIPTION": "Verwaltung der Benutzer-Accounts",
+          "TOOLTIP": "● Anlegen neuer Benutzer\n● Benutzerliste bearbeiten\n● Benutzer löschen"
         },
         "KLASSEN": {
           "LABEL": "(Wettkampf-) Klassen",
-          "DESCRIPTION": "Verwaltung der Klassen"
+          "DESCRIPTION": "Verwaltung der Klassen",
+          "TOOLTIP": "● Anlegen neuer Klassen\n● Klassenliste bearbeiten"
         },
         "DSBMANNSCHAFTEN": {
           "LABEL": "Mannschaften",
-          "DESCRIPTION": "Verwaltung der Mannschaften"
+          "DESCRIPTION": "Verwaltung der Mannschaften",
+          "TOOLTIP": ""
         },
         "VEREINE": {
           "LABEL": "Vereine",
-          "DESCRIPTION": "Verwaltung der Vereine"
+          "DESCRIPTION": "Verwaltung der Vereine",
+          "TOOLTIP": "● Anlegen neuer Vereine\n● Bearbeiten der Vereinsliste\n● Löschen von Vereinen\n● Mannschaftsübersicht & bearbeiten"
         },
         "LIGA": {
           "LABEL": "Ligen",
-          "DESCRIPTION": "Verwaltung der Ligen"
+          "DESCRIPTION": "Verwaltung der Ligen",
+          "TOOLTIP": "● Anlegen neuer Ligen\n● Ligen bearbeiten\n● Löschen von Ligen"
         },
         "REGIONEN": {
           "LABEL": "Regionen",
-          "DESCRIPTION": "Verwaltung der Regionen"
+          "DESCRIPTION": "Verwaltung der Regionen",
+          "TOOLTIP": "● Hinzufügen von neuen Regionen\n● Regionenliste bearbeiten\n● Einträge löschen"
         },
         "SPORTJAHR": {
           "LABEL": "Sportjahre",
-          "DESCRIPTION": "Verwaltung der Sportjahre"
+          "DESCRIPTION": "Verwaltung der Sportjahre",
+          "TOOLTIP": ""
         },
         "VERANSTALTUNG": {
           "LABEL": "Veranstaltungen",
-          "DESCRIPTION": "Verwaltung der Veranstaltungen"
+          "DESCRIPTION": "Verwaltung der Veranstaltungen",
+          "TOOLTIP": "● Übersicht Veranstaltungen\n● Erstellen einer neuen Veranstaltung\n● Verwaltung der Veranstaltungsliste"
         },
         "EINSTELLUNGEN": {
           "LABEL": "Einstellungen",
-          "DESCRIPTION": "Einstellungen bearbeiten"
+          "DESCRIPTION": "Einstellungen bearbeiten",
+          "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
         }
       }
     },
@@ -801,7 +812,7 @@
           "DESCRIPTION": "Möchten sie die Mannschaft trotzdem hinzufügen?"
         },
         "SAVE_FAILURE": {
-          "TITLE": "Fehler beim aktualisieren",
+          "TITLE": "Fehler beim Aktualisieren",
           "DESCRIPTION": "Sportleiter hat keine Berechtigung über den ausgewählten Verein oder die Zielregion."
         },
         "NO_LICENSE": {
@@ -1240,7 +1251,9 @@
             }
           },
           "KAMPFRICHTERLISTE": {
-            "LABEL": "Kampfrichter"
+            "LABEL": "Kampfrichter",
+            "LEFTCAPTION":  "abgewählt",
+            "RIGHTCAPTION": "ausgewählt"
           },
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
@@ -1329,7 +1342,9 @@
         "HEADERS": {
           "EMAIL": "E-Mail",
           "ROLE": "Rolle",
-          "ACTIVE": "Aktiviert"
+          "ACTIVE": "Aktiviert",
+          "DSBMITGLIEDNACHNAME": "Nachname",
+          "DSBMITGLIEDVORNAME": "Vorname"
         }
       },
       "NOTIFICATION": {
@@ -1631,6 +1646,11 @@
       "BUTTON": "Zum Spotter-Interface",
       "INFO": "x x x x x x",
       "ERROR": "Fehlerhafte Eingabe"
+    }
+  },
+  "HILFE": {
+    "HILFE": {
+      "TITLE": "Hilfestellungen"
     }
   }
 }
