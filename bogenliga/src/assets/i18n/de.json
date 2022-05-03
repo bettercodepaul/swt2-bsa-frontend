@@ -1251,7 +1251,9 @@
             }
           },
           "KAMPFRICHTERLISTE": {
-            "LABEL": "Kampfrichter"
+            "LABEL": "Kampfrichter",
+            "LEFTCAPTION":  "abgewählt",
+            "RIGHTCAPTION": "ausgewählt"
           },
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",

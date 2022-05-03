@@ -1,6 +1,6 @@
 <bla-col-layout>
   <div>
-    {{leftCaption}}
+    {{'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LEFTCAPTION' | translate }}
     <bla-selectionlist (onFocus)="onLeftFocus($event)"
                        (onSelect)="onLeftItemSelect($event)"
                        [id]="idLeftList"
@@ -29,7 +29,7 @@
     </div>
   </div>
   <div>
-    {{rightCaption}}
+    {{'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.RIGHTCAPTION' | translate }}
     <bla-selectionlist (onFocus)="onRightFocus($event)"
                        (onSelect)="onRightItemSelect($event)"
                        [id]="idRightList"

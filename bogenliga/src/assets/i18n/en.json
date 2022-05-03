@@ -1209,7 +1209,9 @@
             }
           },
         "KAMPFRICHTERLISTE": {
-          "LABEL": "Referee"
+          "LABEL": "Referee",
+          "LEFTCAPTION": "deselected",
+          "RIGHTCAPTION": "selected"
         },
         "SAVE": "Save",
         "AUSRICHTER": "Organizer",
