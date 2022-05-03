@@ -9,17 +9,17 @@
 
 .card-header {
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .tooltip-body {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-.tooltip-card-header {
-  text-align: center;
-  height: 227px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  float: bottom;
 }
 
 .tooltip-navigation-card {
@@ -34,7 +34,7 @@
 }
 
 .multi-lines-text {
-   white-space: pre-line;
+  white-space: pre-line;
 }
 
 .title {

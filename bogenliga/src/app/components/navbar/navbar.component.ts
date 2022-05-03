@@ -4,7 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {ButtonType} from '@shared/components';
 import {TOGGLE_SIDEBAR} from '@shared/redux-store';
 import {UserState} from '@shared/redux-store';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {AppState, SidebarState} from '../../modules/shared/redux-store';
 
 @Component({
@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
   public isDefaultUserLoggedIn: boolean;
   public isUserDropdownVisible = false;
 
-  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService) {
+  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService, private onOfflineService: OnOfflineService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
     store.pipe(select((state) => state.userState))
@@ -52,6 +52,10 @@ export class NavbarComponent implements OnInit {
 
   public toggleUserDropdown(): void {
     this.isUserDropdownVisible = !this.isUserDropdownVisible;
+  }
+
+  public isOffline(): Boolean {
+    return this.onOfflineService.isOffline()
   }
 
 }

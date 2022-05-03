@@ -32,6 +32,7 @@ export class LigatabelleOfflineSyncDto implements DataTransferObject {
     tabellenplatz?: number,
   } = {}): LigatabelleOfflineSyncDto {
     const copy = new LigatabelleOfflineSyncDto();
+
     copy.veranstaltungId = optional.veranstaltungId ;
     copy.veranstaltungName = optional.veranstaltungName ;
     copy.wettkampfId = optional.wettkampfId;
