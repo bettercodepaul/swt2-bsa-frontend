@@ -21,7 +21,8 @@
     "SETTINGS": "SETTINGS",
     "PLAYGROUND": "PLAYGROUND",
     "SPOTTING": "SPOTTING",
-    "COLLAPSE": "Collapse"
+    "COLLAPSE": "Collapse",
+    "HILFE": "HELP"
   },
   "APP": {
     "SUPPORT": "With support from:",
@@ -481,44 +482,54 @@
       "NAVIGATION": {
         "DSBMITGLIEDER": {
           "LABEL": "DSB members",
-          "DESCRIPTION": "Management of DSB members"
+          "DESCRIPTION": "Management of DSB members",
+          "TOOLTIP": "● Create new DSB members\n● edit DSB members\n● Delete DSB members"
         },
         "BENUTZER": {
           "LABEL": "User",
-          "DESCRIPTION": "Management of user-accounts"
+          "DESCRIPTION": "Management of user-accounts",
+          "TOOLTIP": "● Create new user\n● Edit user list\n● Delete user"
         },
         "KLASSEN": {
           "LABEL": "(Competition-) Classes",
-          "DESCRIPTION": "Management of classes"
+          "DESCRIPTION": "Management of classes",
+          "TOOLTIP": "● Create new classes\n● Edit class list"
         },
         "DSBMANNSCHAFTEN": {
           "LABEL": "Teams",
-          "DESCRIPTION": "Management of teams"
+          "DESCRIPTION": "Management of teams",
+          "TOOLTIP": ""
         },
         "VEREINE": {
           "LABEL": "Clubs",
-          "DESCRIPTION": "Management of clubs"
+          "DESCRIPTION": "Management of clubs",
+          "TOOLTIP": "● Create new clubs\n● Edit the club list\n● delete clubs\n● team overview & edit"
         },
         "LIGA": {
           "LABEL": "Leagues",
-          "DESCRIPTION": "Management of leagues"
+          "DESCRIPTION": "Management of leagues",
+          "TOOLTIP": "● Create new leagues\n● Edit leagues\n● Delete leagues"
         },
         "REGIONEN": {
           "LABEL": "Regions",
-          "DESCRIPTION": "Management of regions"
+          "DESCRIPTION": "Management of regions",
+          "TOOLTIP": "● Adding new regions\n● Edit regions list\n● delete entries"
         },
         "SPORTJAHR": {
           "LABEL": "Sport years",
-          "DESCRIPTION": "Management of sport years"
+          "DESCRIPTION": "Management of sport years",
+          "TOOLTIP": ""
         },
         "VERANSTALTUNG": {
           "LABEL": "Events",
-          "DESCRIPTION": "Management of events"
+          "DESCRIPTION": "Management of events",
+          "TOOLTIP": "● Events overview\n● Create a new event\n● Event list management"
         },
 
       "EINSTELLUNG": {
         "LABEL": "einstellungen",
-        "DESCRIPTION": "Management of einstellungen"
+        "DESCRIPTION": "Management of einstellungen",
+        "TOOLTIP": "● autorefresh & interval\n● SMTP user & password\n● max. competition days\n● SMTP settings"
 
       }
     },
@@ -1291,7 +1302,9 @@
         "HEADERS": {
           "EMAIL": "E-Mail",
           "ROLE": "Role",
-          "ACTIVE": "Activated"
+          "ACTIVE": "Activated",
+          "DSBMITGLIEDNACHNAME": "Surname",
+          "DSBMITGLIEDVORNAME": "Forename"
         }
       },
       "NOTIFICATION": {
