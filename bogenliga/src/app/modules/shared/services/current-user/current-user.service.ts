@@ -195,6 +195,10 @@ export class CurrentUserService {
       filter((notification) => notification.id === 'NO_SESSION_ERROR'),
       filter((notification) => notification.userAction === NotificationUserAction.ACCEPTED)
     ).subscribe((notification: Notification) => {
+      //dont logout user if the application is in offlinemode
+      this.store.select(state => state.onOfflineState.isOffline).subscribe( offline => {
+        if(offline) return;
+      })
       console.log('ExpiredNotification');
       this.logout();
       this.router.navigateByUrl('user/login');
