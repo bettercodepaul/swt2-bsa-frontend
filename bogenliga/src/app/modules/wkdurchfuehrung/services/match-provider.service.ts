@@ -16,6 +16,7 @@ import {OnOfflineService} from '@shared/services';
 import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
 import {fromOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
+import {toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -95,22 +96,34 @@ export class MatchProviderService extends DataProviderService {
 
 
   public findAllWettkampfMatchesAndNamesById(id: number): Promise<BogenligaResponse<MatchDTOExt[]>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + id).build())
-        .then((data: VersionedDataTransferObject[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-        }, (error: HttpErrorResponse) => {
-
-          if (error.status === 0) {
-            reject({result: RequestResult.CONNECTION_PROBLEM});
-          } else {
+    /*if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findallmatches by wettkampfid ' + id)
+      return new Promise((resolve, reject) => {
+        db.matchTabelle.where('wettkampfId').equals(id).toArray()
+          .then((data: OfflineMatch[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data)});
+          }, () => {
             reject({result: RequestResult.FAILURE});
-          }
-        });
-    });
+          });
+      });
+    } else {*/
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + id).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    //}
   }
 
 
