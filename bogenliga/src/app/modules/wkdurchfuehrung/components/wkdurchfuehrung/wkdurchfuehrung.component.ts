@@ -135,11 +135,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         this.visible = false;
 
       } else if (this.onOfflineService.isOffline()) {
-        //falls offline, Veranstaltung aus id die im onOfflineService gespeichert ist laden
+        // falls offline, Veranstaltung aus id die im onOfflineService gespeichert ist laden
         this.loadingWettkampfe = true;
         this.wettkampfIdEnthalten = true;
         this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
-        console.log('WettkampfID:', this.wettkampfId);
+        console.log('WettkampfID used for loading offlinepage Wkdurchfuehrung:', this.wettkampfId);
+
 
         this.findAvailableYears();
 
@@ -162,7 +163,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   public isOffline(): boolean {
-    return this.onOfflineService.isOffline()
+    return this.onOfflineService.isOffline();
   }
 
   public onButtonGoOfflineClick(): void {
@@ -175,15 +176,18 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       console.warn('LoadMatchOffline is not working because of server!\n Enable it when the endpoint is ready!');
 
       // sonarlint ignore comments
-      // this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
-      // this.wettkampfOfflineSyncService.loadPasseOffline(/* ID FOR SEARCH IDK */);
-      // this.wettkampfOfflineSyncService.loadWettkampfOffline( /* ID FOR SEARCH IDK */);
-      // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
-      // this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(/* ID FOR SEARCH IDK */);
+      this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
+      this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
+      this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
+      this.wettkampfOfflineSyncService.loadWettkampfOffline( this.selectedWettkampfId);
+
+      // geplant für die zukunft:
       // this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(/* ID FOR SEARCH IDK */);
       // this.wettkampfOfflineSyncService.loadVeranstaltungOffline(/* ID FOR SEARCH IDK */);
-
-      this.onOfflineService.goOffline(this.selectedWettkampfId, this.selItemId);
+      // MANNSCHAFT WIRD ZUM JETZTIGEN STAND NICHT MEHR BENÖTIGT.
+      // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
+      // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
+      this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
 
     }
   }
@@ -196,16 +200,17 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.loadingWettkampfe = true;
     this.wettkampfDataProvider.findAll()
     .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfSuccess(response))
-    .catch((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfFailure(response));
+    .catch(() => this.handleLoadWettkampfFailure());
   }
 
   // Wettkampftage konnten nicht ermittelt werden -> Fehlermeldung in der Konsole
-  private handleLoadWettkampfFailure(response: BogenligaResponse<WettkampfDO[]>): void {
+  private handleLoadWettkampfFailure(): void {
     console.log('ERROR: Keine Wettkaempfe gefunden');
     // die Wettkampftage konnten nicht erfolgreich geladen werden -> Ermittlung der Veranstaltung wird auch nicht mÃ¶glich sein
     // somit sollen nur die Veranstaltungen fÃ¼r die Tabelle ermittelt werden, die Veranstaltung kann ja gar nicht mehr erfolgreich ermittelt werden
     // -> this.wettkampfIdEnthalten auf false setzen, damit die Veranstaltungen wie sonst auch geladen werden kÃ¶nnen
     this.wettkampfIdEnthalten = false;
+    this.loadingWettkampfe = false;
     this.loadVeranstaltungen();
   }
 
@@ -238,7 +243,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
       this.loadVeranstaltungenSuccess(response);
     })
-    .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+    .catch((response: BogenligaResponse<VeranstaltungDTO[]> ) => {
       this.loadVeranstaltungenFailure(response);
     });
   }
@@ -288,7 +293,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       let year: SportjahrVeranstaltungDO;
       // Suche nach dem passendem jahr und setze this.selItemId entsprechend.
       for (const sportjahr of this.availableYears) {
-        if (sportjahr.sportjahr == this.veranstaltung.sportjahr) {
+        if (sportjahr.sportjahr === this.veranstaltung.sportjahr) {
           this.selItemId = sportjahr.id;
           year = sportjahr;
         }
@@ -317,8 +322,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.veranstaltungen = response.payload;
       this.loadingVeranstaltungen = false;
     })
-    .catch((response: BogenligaResponse<VeranstaltungDTO[]> ) => {
-      this.loadVeranstaltungenYearsFailure(response);
+    .catch(() => {
+      this.loadVeranstaltungenYearsFailure();
     });
 
   }
@@ -393,7 +398,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       }
       this.handleFindMatchSuccess(response);
     })
-    .catch((response: BogenligaResponse<MatchDTOExt[]>) => this.handleFindMatchFailure());
+    .catch(() => this.handleFindMatchFailure());
   }
 
 
@@ -432,16 +437,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // macht buttons unklickbar wenn die Anwendung offline ist
   public isOfflineDisabled(): boolean {
-    if (this.onOfflineService.isOffline()) {
-      this.setOfflineVeranstaltung()
-    }
     return this.onOfflineService.isOffline();
   }
 
-  private setOfflineVeranstaltung(): void {
-    this.selItemId = this.onOfflineService.getOfflineJahr();
-    this.selectedVeranstaltungId = this.onOfflineService.getOfflineWettkampfID();
-  }
 
   // Funktion falls Matches existieren -> alle Buttons gehen an, generiere Matches aus
   private matchesExist() {
@@ -518,7 +516,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.wettkampfListe = response.payload;
       this.handleFindWettkampfSuccess(response);
     })
-    .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleFindWettkampfFailure());
+    .catch(() => this.handleFindWettkampfFailure());
   }
 
 
@@ -586,14 +584,38 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // Ermittlung der anzuzeigenden Jahre
   private findAvailableYears() {
     this.availableYears = [];
-    this.veranstaltungsDataProvider.findAllSportyearDestinct()
-    .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
-      this.loadVeranstaltungenYearsSuccess(response);
-    })
-    .catch((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => this.loadVeranstaltungenYearsFailure(response));
 
+    if(this.onOfflineService.isOffline()){
+      let year = this.onOfflineService.getOfflineJahr();
+      if(year){
+        this.loadOfflineVeranstaltungenYearsSuccess(year);
+      } else {
+       this.loadVeranstaltungenYearsFailure();
+      }
+
+    } else {
+      this.veranstaltungsDataProvider.findAllSportyearDestinct()
+          .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
+            this.loadVeranstaltungenYearsSuccess(response);
+          })
+          .catch(() => {
+            this.loadVeranstaltungenYearsFailure();
+          });
+    }
   }
 
+
+  private loadOfflineVeranstaltungenYearsSuccess(jahr: number): void {
+    this.loadingYears = false;
+    let veranstaltungenJahr: SportjahrVeranstaltungDO = {
+      id: 1,
+      version: 1,
+      sportjahr: jahr
+    }
+    this.availableYears.push(veranstaltungenJahr);
+    this.selItemId = this.availableYears[0].id;
+    this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+  }
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
   private loadVeranstaltungenYearsSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
 
@@ -629,7 +651,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der Jahre der Veranstaltungen war nicht erfolrgreich
-  private loadVeranstaltungenYearsFailure(response: BogenligaResponse<SportjahrVeranstaltungDO[]> ): void {
+  private loadVeranstaltungenYearsFailure(): void {
     this.loadingYears = false;
 
   }
