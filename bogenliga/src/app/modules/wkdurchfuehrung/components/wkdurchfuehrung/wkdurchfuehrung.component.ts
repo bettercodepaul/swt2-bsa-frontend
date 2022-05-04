@@ -177,13 +177,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
       // sonarlint ignore comments
       this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
-      // this.wettkampfOfflineSyncService.loadPasseOffline(/* ID FOR SEARCH IDK */);
-      // this.wettkampfOfflineSyncService.loadWettkampfOffline( /* ID FOR SEARCH IDK */);
-      // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
-      // this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(/* ID FOR SEARCH IDK */);
+      this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
+      this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
+      this.wettkampfOfflineSyncService.loadWettkampfOffline( this.selectedWettkampfId);
+
+      // geplant für die zukunft:
       // this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(/* ID FOR SEARCH IDK */);
       // this.wettkampfOfflineSyncService.loadVeranstaltungOffline(/* ID FOR SEARCH IDK */);
-
+      // MANNSCHAFT WIRD ZUM JETZTIGEN STAND NICHT MEHR BENÖTIGT.
+      // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
+      // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
       this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
 
     }
