@@ -37,10 +37,12 @@ import {
 import {fromOfflineDsbMitgliedPayloadArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
 import {
   OfflineVeranstaltung
-} from "@shared/data-provider/offlinedb/types/offline-veranstaltung.interface";
+} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
 import {
   fromOfflineVeranstaltungPayloadArray
-} from "@verwaltung/mapper/veranstaltung-offline-mapper";
+} from '@verwaltung/mapper/veranstaltung-offline-mapper';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +52,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient) {
+  constructor(private restClient: RestClient, private wettkampfDataProvider: WettkampfDataProviderService) {
     super();
   }
 
@@ -206,7 +208,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadMatch(id: string | number): Promise<BogenligaResponse<OfflineMatch[]>> {
 
     // Call REST-API
-    const url = new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfIdOffline/wettkampfid=' + id).build();
+    const url = new UriBuilder().fromPath(this.getUrl()).path('match/' + id).build();
     return new Promise<BogenligaResponse<OfflineMatch[]>>((resolve, reject) => {
       this.restClient.GET<OfflineMatch[]>(url)
       // Resolve the request and use the offline match mapper
@@ -221,7 +223,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadPasse(id: string | number): Promise<BogenligaResponse<OfflinePasse[]>> {
 
     // Build url
-    const url = new UriBuilder().fromPath(this.getUrl()).path('passe=' + id).build();
+    const url = new UriBuilder().fromPath(this.getUrl()).path('passe/' + id).build();
 
     return new Promise<BogenligaResponse<OfflinePasse[]>>((resolve, reject) => {
       // Call the builded url
@@ -238,7 +240,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadWettkampf(id: string | number): Promise<BogenligaResponse<OfflineWettkampf[]>> {
 
     // Build url
-    const url = new UriBuilder().fromPath(this.getUrl()).path('wettkampf=' + id).build();
+    const url = new UriBuilder().fromPath(this.getUrl()).path('wettkampf/' + id).build();
 
     return new Promise<BogenligaResponse<OfflineWettkampf[]>>((resolve, reject) => {
       // Call the builded url
@@ -267,7 +269,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadMannschaftsmitglied(id: string | number): Promise<BogenligaResponse<OfflineMannschaftsmitglied[]>> {
 
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('mannschaftsmitglied=' + id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('mannschaftsmitglieder/' + id).build())
       .then((data: VersionedDataTransferObject[]) => {
 
         resolve({
@@ -319,6 +321,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
   private handleLoadLigatabelleVeranstaltungSuccess(offlineLigatabelle: BogenligaResponse<OfflineLigatabelle[]>): void {
 
+    db.ligaTabelle.clear();
     db.ligaTabelle.bulkAdd(offlineLigatabelle.payload)
     .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
     .catch((e) => console.error(e));
