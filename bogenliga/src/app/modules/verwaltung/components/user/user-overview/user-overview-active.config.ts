@@ -16,7 +16,7 @@ export const USER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
       {
         translationKey: 'MANAGEMENT.USER.TABLE.HEADERS.DSBMITGLIEDNACHNAME',
         propertyName:   'dsbMitgliedNachname',
-        width:          15,
+        width:          10,
       },
       {
         translationKey: 'MANAGEMENT.USER.TABLE.HEADERS.EMAIL',
