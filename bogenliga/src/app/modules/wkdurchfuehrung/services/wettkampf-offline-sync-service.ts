@@ -41,6 +41,8 @@ import {
 import {
   fromOfflineVeranstaltungPayloadArray
 } from '@verwaltung/mapper/veranstaltung-offline-mapper';
+import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +52,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient) {
+  constructor(private restClient: RestClient, private wettkampfDataProvider: WettkampfDataProviderService) {
     super();
   }
 
@@ -319,6 +321,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
   private handleLoadLigatabelleVeranstaltungSuccess(offlineLigatabelle: BogenligaResponse<OfflineLigatabelle[]>): void {
 
+    db.ligaTabelle.clear();
     db.ligaTabelle.bulkAdd(offlineLigatabelle.payload)
     .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
     .catch((e) => console.error(e));
