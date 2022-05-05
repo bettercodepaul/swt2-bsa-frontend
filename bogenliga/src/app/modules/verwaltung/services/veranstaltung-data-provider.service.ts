@@ -89,7 +89,7 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('find/by/year/' + sportjahr).build())
           .then((data: VersionedDataTransferObject[]) => {
-            console.log(data.toString());
+            // console.log(data.toString());
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
 

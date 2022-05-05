@@ -213,7 +213,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       this.restClient.GET<OfflineMatch[]>(url)
       // Resolve the request and use the offline match mapper
       .then((data: DataTransferObject[]) => {
-        console.log(`received ${data} from ${url}`);
         resolve({result: RequestResult.SUCCESS, payload: fromOfflineMatchPayloadArray(data)});
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
     });
@@ -294,7 +293,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadVeranstaltung(id: string | number): Promise<BogenligaResponse<OfflineVeranstaltung[]>> {
 
     return new Promise((resolve, reject) => {
-      // TODO: check if this is correct url to call
+
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
       .then((data: VersionedDataTransferObject[]) => {
 
