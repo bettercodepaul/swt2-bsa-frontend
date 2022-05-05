@@ -39,6 +39,7 @@ import {OnOfflineService} from '@shared/services';
 import {
   WettkampfOfflineSyncService
 } from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
+import {db} from "@shared/data-provider/offlinedb/offlinedb";
 
 
 @Component({
@@ -171,21 +172,30 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.onOfflineService.goOnline();
     } else {
       console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
-      this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
+      // Die db wird erst gelöscht und dann wieder erzeugt damit die Datenbank leer ist und keine Doppelten einträge entstehen
+      db.delete().then(() => {
+        db.open().then(() => {
+          console.log('Database opened');
+          // Erst wenn die Db wieder geöffnet wurde, werden die Daten geladen.
+          this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
+          this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
+          this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
+          this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
 
-      // sonarlint ignore comments
-      this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
-      this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
-      this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
-      // this.wettkampfOfflineSyncService.loadWettkampfOffline( this.selectedWettkampfId);
 
-      // geplant für die zukunft:
-      // this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(/* ID FOR SEARCH IDK */);
-      // this.wettkampfOfflineSyncService.loadVeranstaltungOffline(/* ID FOR SEARCH IDK */);
-      // MANNSCHAFT WIRD ZUM JETZTIGEN STAND NICHT MEHR BENÖTIGT.
-      // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
-      // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
-      this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
+          // geplant für die zukunft:
+          // this.wettkampfOfflineSyncService.loadWettkampfOffline( this.selectedWettkampfId);
+          // this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(/* ID FOR SEARCH IDK */);
+          // this.wettkampfOfflineSyncService.loadVeranstaltungOffline(/* ID FOR SEARCH IDK */);
+          // MANNSCHAFT WIRD ZUM JETZTIGEN STAND NICHT MEHR BENÖTIGT.
+          // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
+          // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
+          this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
+        });
+      });
+
+
+
 
     }
   }
