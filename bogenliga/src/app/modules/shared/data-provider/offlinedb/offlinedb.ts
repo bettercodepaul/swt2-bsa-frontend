@@ -41,7 +41,7 @@ export class OfflineDB extends Dexie {
    */
   constructor() {
     super('offlineBogenligaDb');
-    this.version(3).stores({
+    this.version(4).stores({
       // Schema -> Every column name is the name of the attribute of the interface
       ligaTabelle: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
         'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
@@ -51,11 +51,11 @@ export class OfflineDB extends Dexie {
       passeTabelle: '++id, version, matchID, mannschaftID, wettkampfID, matchNr, lfdNr, dsbMitgliedID, ' +
         'ringzahlPfeil1, ringzahlPfeil2, ringzahlPfeil3, ringzahlPfeil4, ringzahlPfeil5, ringzahlPfeil6, rueckennummer',
       // Use the same id for the wettkampfTabelle that is already in .id
-      wettkampfTabelle: 'id, version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
+      wettkampfTabelle: ', version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
       // mannschaftTabelle: 'id, version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
-      mannschaftsmitgliedTabelle: 'id, version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
-      dsbMitgliedTabelle: 'id, version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
-      veranstaltungTabelle: 'id, version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId'
+      mannschaftsmitgliedTabelle: ', version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
+      dsbMitgliedTabelle: ', version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
+      veranstaltungTabelle: ', version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId'
 
 
     });
