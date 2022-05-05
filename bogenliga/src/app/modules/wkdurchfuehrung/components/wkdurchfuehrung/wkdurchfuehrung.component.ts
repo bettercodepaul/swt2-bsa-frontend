@@ -172,14 +172,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     } else {
       console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
       this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
-      // TODO: Enable if the sync service endpoint is ready
-      console.warn('LoadMatchOffline is not working because of server!\n Enable it when the endpoint is ready!');
 
       // sonarlint ignore comments
       this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
       this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
       this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
-      this.wettkampfOfflineSyncService.loadWettkampfOffline( this.selectedWettkampfId);
+      // this.wettkampfOfflineSyncService.loadWettkampfOffline( this.selectedWettkampfId);
 
       // geplant für die zukunft:
       // this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(/* ID FOR SEARCH IDK */);
