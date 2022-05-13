@@ -3,7 +3,7 @@
     <div *ngIf="hasUserPermissions(card.permissions)" class="card navigation-card">
       <div *ngIf="card !== activeCard">
         <a class="card-header-link"
-          [routerLink]="getLink(card.route,card.detailType)">
+           [routerLink]="getLink(card.route,card.detailType)">
           <div class="card-header">
             <fa-icon [icon]="card.icon" size="3x"></fa-icon>
           </div>
@@ -11,25 +11,27 @@
         <div class="card-body">
           <h5 class="card-title">{{ card.labelKey | translate }}</h5>
           <p class="card-text">{{ card.descriptionKey | translate }}</p>
-            <button  class="btn btn-primary"
-                     (mouseenter)  ="setActiveCard(card)"
-                     (mouseleave)  ="resetActiveCard()"
-                     [routerLink]  ="getLink(card.route,card.detailType)"
-                     [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
-            </button>
-      </div>
+          <bla-tooltip [value]="card.tooltipText | translate">
+          <button  class="btn btn-primary"
+                   (mouseenter)  ="setActiveCard(card)"
+                   (mouseleave)  ="resetActiveCard()"
+                   [routerLink]  ="getLink(card.route,card.detailType)"
+                   [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
+          </button>
+          </bla-tooltip>
+        </div>
       </div>
       <!-- Tooltip div container called with ngIf conditions -->
       <div *ngIf="card === activeCard" class="tooltip-navigation-card">
         <div class="card-body tooltip-body">
-          <p class="tooltip-text title">{{getTooltipTitle()}}</p>
-          <p class="tooltip-text multi-lines-text">{{getTooltipText()}}</p>
+          <p class="tooltip-text title">{{card.descriptionKey | translate }}</p>
+          <p class="tooltip-text multi-lines-text">{{card.tooltipText | translate}}</p>
           <div class="button-container">
             <button  class="btn btn-primary"
-                   (mouseenter)   ="setActiveCard(card)"
-                   (mouseleave)   ="resetActiveCard()"
-                   [routerLink]   ="getLink(card.route,card.detailType)"
-                   [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }}
+                     (mouseenter)   ="setActiveCard(card)"
+                     (mouseleave)   ="resetActiveCard()"
+                     [routerLink]   ="getLink(card.route,card.detailType)"
+                     [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }}
             </button>
           </div>
         </div>
@@ -37,3 +39,4 @@
     </div>
   </ng-container>
 </bla-grid-layout>
+

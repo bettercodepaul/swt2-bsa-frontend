@@ -13,7 +13,13 @@ export class DoubleSelectionlistComponent implements OnInit {
   public idLeftList: string;
 
   @Input()
+  public leftCaption: string;
+
+  @Input()
   public idRightList: string;
+
+  @Input()
+  public rightCaption: string;
 
   @Output()
   public rightItemsChange = new EventEmitter();
