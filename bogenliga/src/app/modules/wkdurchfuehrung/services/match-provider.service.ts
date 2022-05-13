@@ -95,7 +95,7 @@ export class MatchProviderService extends DataProviderService {
 
 
   public findAllWettkampfMatchesAndNamesById(id: number): Promise<BogenligaResponse<MatchDTOExt[]>> {
-    /*if (this.onOfflineService.isOffline()) {
+    if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for findallmatches by wettkampfid ' + id)
       return new Promise((resolve, reject) => {
         db.matchTabelle.where('wettkampfId').equals(id).toArray()
@@ -105,7 +105,7 @@ export class MatchProviderService extends DataProviderService {
             reject({result: RequestResult.FAILURE});
           });
       });
-    } else {*/
+    } else {
       // return promise
       // sign in success -> resolve promise
       // sign in failure -> reject promise with result
@@ -122,7 +122,7 @@ export class MatchProviderService extends DataProviderService {
               }
             });
       });
-    //}
+    }
   }
 
 

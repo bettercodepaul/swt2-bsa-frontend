@@ -169,24 +169,36 @@ export class WettkampfDataProviderService extends DataProviderService {
 
 
   public findAllByVeranstaltungId(id: string | number): Promise<BogenligaResponse<WettkampfDTO[]>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVeranstaltungId/' + id).build())
-          .then((data: VersionedDataTransferObject[]) => {
-            console.log('Veranstaltung raw data');
-            console.log(data);
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
+    /*if(this.onOfflineService.isOffline()){
+      console.log('Choosing offline way for wettkampf findallbyVeranstaltungID with ID '+ id);
+      return new Promise((resolve, reject) => {
+        db.wettkampfTabelle.where('veranstaltungId').equals(id).toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineWettkampfArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
           });
-    });
+      });
+    } else {*/
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVeranstaltungId/' + id).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              console.log('Veranstaltung raw data');
+              console.log(data);
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    //}
   }
 
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<WettkampfDTO>> {
