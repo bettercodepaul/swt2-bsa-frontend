@@ -10,7 +10,8 @@ import {
   faHome,
   faListOl,
   faSitemap,
-  faUsers
+  faUsers,
+  faQuestion
 } from '@fortawesome/free-solid-svg-icons';
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
@@ -129,5 +130,13 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     inProdVisible: false,
     datacy: 'sidebar-playground-button'
+  },
+  {
+    label: 'SIDEBAR.HILFE',
+    icon: faQuestion,
+    route: '/hilfe',
+    permissons: [UserPermission.CAN_READ_DEFAULT],
+    subitems: [],
+    datacy: 'sidebar-hilfe-button'
   }
 ];
