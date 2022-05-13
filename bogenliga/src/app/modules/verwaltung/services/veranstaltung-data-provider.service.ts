@@ -83,23 +83,35 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
   }
 
   public findBySportyear(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('find/by/year/' + sportjahr).build())
-          .then((data: VersionedDataTransferObject[]) => {
-            // console.log(data.toString());
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
+    /*if(this.onOfflineService.isOffline()){
+      console.log("Choosing offline way for Veranstaltungen findBySportyear with sportjahr:" + sportjahr)
+      return new Promise((resolve,reject) =>{
+        db.ligaTabelle.toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          })
+      })
+    } else {*/
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('find/by/year/' + sportjahr).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              // console.log(data.toString());
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    //}
   }
 
   public findBySportjahrDestinct(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {

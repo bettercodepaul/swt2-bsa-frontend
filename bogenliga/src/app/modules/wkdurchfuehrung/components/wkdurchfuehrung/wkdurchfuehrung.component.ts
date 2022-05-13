@@ -624,6 +624,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.selItemId = this.availableYears[0].id;
     this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
   }
+
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
   private loadVeranstaltungenYearsSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
 

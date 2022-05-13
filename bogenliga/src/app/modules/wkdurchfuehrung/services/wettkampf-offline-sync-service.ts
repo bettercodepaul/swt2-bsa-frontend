@@ -322,7 +322,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
     db.ligaTabelle.clear();
     db.ligaTabelle.bulkAdd(offlineLigatabelle.payload)
-    .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
+    .then((lastNumber) => console.log('Finished adding LigatabelleVeranstaltungen til index ' + lastNumber))
     .catch((e) => console.error(e));
   }
 
