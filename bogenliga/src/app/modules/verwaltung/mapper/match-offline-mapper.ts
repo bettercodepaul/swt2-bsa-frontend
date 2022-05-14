@@ -11,6 +11,7 @@ export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
     matchNr: matchOfflineSyncDTO.matchNr,
     matchScheibennummer: matchOfflineSyncDTO.matchScheibennummer,
     matchpkt: matchOfflineSyncDTO.matchpkt,
+    satzpunkte: matchOfflineSyncDTO.satzpunkte,
     matchVersion: matchOfflineSyncDTO.matchVersion,
     naechsteMatchId: matchOfflineSyncDTO.naechsteMatchId,
     naechsteNaechsteMatchNrMatchId: matchOfflineSyncDTO.naechsteNaechsteMatchNrMatchId,
