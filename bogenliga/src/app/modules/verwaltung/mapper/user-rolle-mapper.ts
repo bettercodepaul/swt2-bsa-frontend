@@ -24,6 +24,8 @@ export function fromPayloadUserRolle(payload: VersionedDataTransferObject): User
   userRolleDO.roleId = userRolleDTO.roleId;
   userRolleDO.roleName = userRolleDTO.roleName;
   userRolleDO.active = userRolleDTO.active;
+  userRolleDO.dsbMitgliedNachname = userRolleDTO.dsbMitgliedNachname;
+  userRolleDO.dsbMitgliedVorname = userRolleDTO.dsbMitgliedVorname;
 
   return userRolleDO;
 }

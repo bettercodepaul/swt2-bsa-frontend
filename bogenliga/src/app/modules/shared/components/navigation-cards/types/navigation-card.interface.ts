@@ -9,6 +9,5 @@ export interface NavigationCard {
   detailType ?: string;
   datacy: string;
   /*Tooltip text shown for help by hovering over the button */
-  tooltipTitle: string
   tooltipText: string;
 }

@@ -21,7 +21,8 @@
     "SETTINGS": "SETTINGS",
     "PLAYGROUND": "PLAYGROUND",
     "SPOTTING": "SPOTTING",
-    "COLLAPSE": "Collapse"
+    "COLLAPSE": "Collapse",
+    "HILFE": "HELP"
   },
   "APP": {
     "SUPPORT": "With support from:",
@@ -1240,7 +1241,9 @@
           }
         },
         "KAMPFRICHTERLISTE": {
-          "LABEL": "Referee"
+          "LABEL": "Referee",
+          "LEFTCAPTION": "deselected",
+          "RIGHTCAPTION": "selected"
         },
         "SAVE": "Save",
         "AUSRICHTER": "Organizer",
@@ -1333,7 +1336,9 @@
         "HEADERS": {
           "EMAIL": "E-Mail",
           "ROLE": "Role",
-          "ACTIVE": "Activated"
+          "ACTIVE": "Activated",
+          "DSBMITGLIEDNACHNAME": "Surname",
+          "DSBMITGLIEDVORNAME": "Forename"
         }
       },
       "NOTIFICATION": {
