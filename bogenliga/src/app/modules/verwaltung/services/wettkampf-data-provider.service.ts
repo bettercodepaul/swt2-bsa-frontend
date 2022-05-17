@@ -9,9 +9,12 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '@shared/services';
+import {db} from '@shared/data-provider/offlinedb/offlinedb'
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
+import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
+import { toDTOFromOfflineWettkampf, toDTOFromOfflineWettkampfArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
 
 
 @Injectable({
@@ -22,48 +25,75 @@ export class WettkampfDataProviderService extends DataProviderService {
   serviceSubUrl = 'v1/wettkampf';
 
 
-  constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
+  constructor(private restClient: RestClient, private currentUserService: CurrentUserService, private onOfflineService: OnOfflineService) {
     super();
   }
 
   public findAll(): Promise<BogenligaResponse<WettkampfDTO[]>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
-            console.log('wettkampf-data-provider', error);
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+    //TODO: uncomment when backend data is there
+    /*if(this.onOfflineService.isOffline()){
+      console.log("Choosing offline way for wettkampf findall")
+      return new Promise((resolve,reject) =>{
+        db.wettkampfTabelle.toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineWettkampfArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+            })
+      })
+    } else {*/
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+              console.log('wettkampf-data-provider', error);
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    //}
   }
 
   public findById(id: string | number): Promise<BogenligaResponse<WettkampfDTO>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then((data: VersionedDataTransferObject) => {
+    //TODO: uncomment when backend data is there
+    /*if(this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for wettkampf with id '+ id);
+      return new Promise((resolve, reject) => {
+        db.wettkampfTabelle.where('wettkampf_id').equals(id).toArray()[0]
+          .then((data: OfflineWettkampf) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineWettkampf(data)});
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+            });
+      });
+    } else {*/
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+            .then((data: VersionedDataTransferObject) => {
 
-          }, (error: HttpErrorResponse) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    //}
   }
 
   public findAllowedMember(wettkampfID: string | number, mannschaft1ID: string | number, mannschaft2ID: string | number): Promise<number[]> {
@@ -88,6 +118,18 @@ export class WettkampfDataProviderService extends DataProviderService {
   }
 
   public findByVeranstaltungId(veranstaltungId: number): Promise<BogenligaResponse<WettkampfDTO[]>> {
+    //TODO: uncomment when backend data is there
+    /*if(this.onOfflineService.isOffline()){
+      console.log('Choosing offline way for wettkampf with veranstaltungID '+ veranstaltungId);
+      return new Promise((resolve, reject) => {
+        db.wettkampfTabelle.where('veranstaltungId').equals(veranstaltungId).toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineWettkampfArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          });
+      });
+    } else {*/
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVeranstaltungId/' + veranstaltungId).build())
           .then((data: VersionedDataTransferObject[]) => {
@@ -100,6 +142,7 @@ export class WettkampfDataProviderService extends DataProviderService {
             }
           });
     });
+    //}
   }
 
   public findAllWettkaempfeByMannschaftsId(id: string | number): Promise<BogenligaResponse<WettkampfDTO[]>> {

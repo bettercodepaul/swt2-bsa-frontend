@@ -22,6 +22,11 @@
     <h3>{{'NAVBAR.TITLE' | translate }}</h3>
   </a>
 
+  <div *ngIf="(isOffline())"
+     id="navbar-offline">
+    <h3>OFFLINE</h3>
+  </div>
+
 
   <!-- Links -->
   <div id="navbar-right"

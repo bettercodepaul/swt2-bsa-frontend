@@ -681,6 +681,12 @@ export class SchusszettelComponent implements OnInit {
     for (const i of Object.keys(match.schuetzen)) {
       sum += match.schuetzen[i][satzNr].ringzahlPfeil1;
       sum += match.schuetzen[i][satzNr].ringzahlPfeil2;
+      if (sum > 0 && match.schuetzen[i][satzNr].ringzahlPfeil1 == null) {
+        match.schuetzen[i][satzNr].ringzahlPfeil1 = 0;
+      }
+      if (sum > 0 && match.schuetzen[i][satzNr].ringzahlPfeil2 == null) {
+        match.schuetzen[i][satzNr].ringzahlPfeil2 = 0;
+      }
     }
     sum -= match.fehlerpunkte[satzNr];
 

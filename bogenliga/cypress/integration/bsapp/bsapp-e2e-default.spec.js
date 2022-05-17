@@ -731,7 +731,7 @@ describe('Admin User tests', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.get('[data-cy="wettkampftage-button"]').click()
     cy.wait(1000)
-    cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select('0: 2000')
+    cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select(0)
   })
 
   /**

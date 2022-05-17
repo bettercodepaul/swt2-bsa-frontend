@@ -1,4 +1,3 @@
-import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 
 export interface OfflineMatch {
   id?: number; // Primary Key autoincrement
@@ -8,6 +7,8 @@ export interface OfflineMatch {
   wettkampfId: number;
   matchNr: number;
   matchScheibennummer: number;
+  matchpkt: number;
+  satzpunkte: number;
   mannschaftId: number;
   mannschaftName: string;
   nameGegner: string;
