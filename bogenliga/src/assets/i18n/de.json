@@ -132,9 +132,31 @@
         "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden"
       }
     },
+    "TABLET_ADMIN": {
+      "VERWALTUNG": "Tabletverwaltung",
+      "SCHEIBE": "Scheibe",
+      "STATUS": "Status",
+      "AKTIONEN": "Aktionen",
+      "ACCESS_TOKEN": "Access Token"
+    },
+    "TABLET_INPUT": {
+      "SCHEIBE": "Scheibe",
+      "WETTKAMPFTAG": "Wettkampftag",
+      "MATCH": "Match",
+      "SCHUETZEN_NUMMERN": "Bitte geben Sie die Schützen-Nummern für dieses Match ein:",
+      "SCHUETZE": "Schütze",
+      "SAVE": "Speichern",
+      "SATZ": "Satz",
+      "NEXT_MATCH": "Nächstes Match",
+      "NEXT_SET": "Nächster Satz",
+      "CONFIGURE_PART1": "Bitte Konfigurieren Sie zunächst Ihr Gerät mit Hilfe der",
+      "CONFIGURE_PART2": "Tablet-Administration in der Ligatabelle-Verwaltung"
+    },
     "TITEL": {
+      "WKTAG": "Wettkampftage der Veranstaltung",
       "VERANSTALTUNG": "Veranstaltungen",
-      "WETTKAEMPFE": "Wettkampftage"
+      "WETTKAEMPFE": "Wettkampftage",
+      "LT_DURCHFUEHRUNG": "Ligatabelle Durchführung"
       },
     "WETTKAMPF": {
       "TABLE": {
@@ -145,6 +167,15 @@
         "LIGA": "Disziplin",
         "PLACE": "Veranstaltungsort"
       }
+    },
+    "BUTTON": {
+      "MATCHES": "generiere Matches",
+      "SETZLISTE": "Setzliste",
+      "SCHUSSZETTEL": "Schusszettel",
+      "KONTROLLLISTE": "Bogenkontrollliste",
+      "MELDEZETTEL": "Meldezettel",
+      "TABLE_SETUP": "Setup Tablets",
+      "OFFLINE": "Offline"
     },
     "SETZLISTE" : {
       "NOTIFICATION" : {
@@ -171,6 +202,26 @@
       }
     },
     "SCHUSSZETTEL": {
+      "MATCH": "Match",
+      "GEGEN": "gegen",
+      "SATZ": "Satz",
+      "SUMME": "Summe",
+      "FEHLERPUNKTE": "Fehlerpunkte",
+      "SCHUETZE": "Schütze",
+      "SATZ_PRO_PFEIL": "Satz / Pfeile",
+      "PFEIL": "Pfeil",
+      "UNTERSCHRIFT": "Unterschrift",
+      "ZURUECK": "Zurück",
+      "SPEICHERN": "Speichern",
+      "DRUCKEN": "Drucken",
+      "VORHERIGES_MATCH": "Vorheriges Match",
+      "NAECHSTES_MATCH": "Nächstes Match",
+      "PRUEF_D_SCHUETZEN": "Prüfung der Schützen",
+      "SELBER_TAG_PRUEFUNG1": "hat bereits diesen Wettkampftag in der",
+      "SELBER_TAG_PRUEFUNG2": "geschossen",
+      "ANDERER_TAG_PRUEFUNG1": "hat bereits",
+      "ANDERER_TAG_PRUEFUNG2": "mal in der",
+      "ANDERER_TAG_PRUEFUNG3": "geschossen",
       "NOTIFICATION": {
         "LADEN": {
           "TITLE":"Schusszettel laden",
@@ -231,7 +282,9 @@
   },
   "MANNSCHAFTEN": {
     "LIGATABELLE": {
-      "TITLE": "Aktuelle Ligatabelle"
+      "TITLE": "Aktuelle Ligatabelle",
+      "LIGATABELLE_VORBEREITUNG": "Ligatabelle_Vorbereitung",
+      "TEXT": "Es muss ein Wettkampftag ausgewählt sein um die Buttons nutzen zu können"
     },
     "SCHUETZEN_STATISTIK": {
       "TITEL" : "Gesamtstatistik pro Schütze"
@@ -1522,6 +1575,12 @@
       "CANCEL": "Abbrechen",
       "YES": "Ja",
       "NO": "Nein"
+
+    },
+    "INFO": {
+      "MEHR": "Mehr Informationen anzeigen",
+      "WENIGER": "Weniger Informationen anzeigen",
+      "ROHDATEN_OEFFNEN": "Fenster mit Rohdaten öffnen"
     },
     "ERROR": {
       "GENERIC_ERROR": {
@@ -1646,6 +1705,32 @@
       "BUTTON": "Zum Spotter-Interface",
       "INFO": "x x x x x x",
       "ERROR": "Fehlerhafte Eingabe"
+    },
+    "COMPONENTS": {
+      "BUTTON": {
+        "BACK": "Zurück",
+        "SAVE": "Speichern",
+        "NEACHSTERSATZ": "Nächster Satz",
+        "BEENDEN": "Match Beenden"
+      },
+      "TEXT": {
+        "SATZPUNKTE": "Satzpunkte",
+        "MANNSCHAFT": "Mannschaft"
+      }
+
+    }
+  },
+  "SHARED": {
+    "DOWNLOAD": {
+      "BUTTON": {
+        "BOGENKONTROLLISTE": "Download Bogenkontrollliste",
+        "EINZELSTATISTIK": "Download Einzelstatistik",
+        "GESAMTSTATISTIK": "Download Gesamtstatistik",
+        "MEDLEZETTEL" : "Download Meldezettel",
+        "SCHUSSZETTEL": "Download Schusszettel",
+        "SETZLISTE": "Download Setzliste",
+        "TAG": "Download Tagesübersicht"
+      }
     }
   },
   "HILFE": {
