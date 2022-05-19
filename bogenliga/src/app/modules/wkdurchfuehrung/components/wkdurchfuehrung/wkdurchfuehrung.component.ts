@@ -664,5 +664,22 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
+  public updateLigatabelleVeranstaltung() {
 
+    const Ligatabelledaten = db.matchTabelle.toArray();
+    console.log(Ligatabelledaten)
+
+
+
+
+    /*   for i in MannschaftsID
+     Punkte Berechnen
+     db.ligaTabelle.where(select punkte der Mannschaft)
+     Punkte aus where mit den übergebenen addieren
+     db.ligatabelle.update(manschaftsid{Datensatz})
+
+     //Beispiel für Update funktion: db.friends.update(friendId, {"address.zipcode": 12345});
+     */
+
+  }
 }

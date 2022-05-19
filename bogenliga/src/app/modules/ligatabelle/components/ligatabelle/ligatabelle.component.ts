@@ -13,6 +13,8 @@ import {isUndefined} from '@shared/functions';
 import {NotificationService} from '@shared/services/notification';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
+import {fromPayloadLigatabelleErgebnisArray} from '../../mapper/ligatabelle-ergebnis-mapper';
+import {toDO} from '../../mapper/ligatabelle-offline-mapper';
 
 
 const ID_PATH_PARAM = 'id';
@@ -185,24 +187,5 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
     this.buttonForward = this.selectedVeranstaltung.id;
     this.loadLigaTableRows();
-  }
-
-  public updateLigatabelleVeranstaltung(){
-
-    const Ligatabelledaten = db.ligaTabelle.toArray();
-    console.log(Ligatabelledaten)
-
-    const ligatabelleErgebnisDO = new LigatabelleErgebnisDO();
-
-
-    /*   for i in MannschaftsID
-     Punkte Berechnen
-     db.ligaTabelle.where(select punkte der Mannschaft)
-     Punkte aus where mit den übergebenen addieren
-     db.ligatabelle.update(manschaftsid{Datensatz})
-
-     //Beispiel für Update funktion: db.friends.update(friendId, {"address.zipcode": 12345});
-     */
-
   }
 }

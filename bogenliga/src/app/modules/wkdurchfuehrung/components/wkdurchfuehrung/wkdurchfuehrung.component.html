@@ -142,6 +142,11 @@
         </div>
 
 
+        <div id="offlineButton3">
+          <button class="btn btn-warning" (click)="updateLigatabelleVeranstaltung()" [disabled]="isDisabled()">Test</button>
+        </div>
+
+
         <ng-template #backOnline id="onlineButton">
           <div>
           <button class="btn btn-success"(click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Online gehen</button>
