@@ -666,7 +666,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   public updateLigatabelleVeranstaltung() {
 
-    const Ligatabelledaten = db.matchTabelle.toArray();
+    const Ligatabelledaten = db.ligaTabelle.toArray();
     console.log(Ligatabelledaten)
 
 
