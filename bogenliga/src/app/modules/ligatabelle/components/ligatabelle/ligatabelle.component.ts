@@ -191,6 +191,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
     const Ligatabelledaten = db.ligaTabelle.toArray();
     console.log(Ligatabelledaten)
+
+    const ligatabelleErgebnisDO = new LigatabelleErgebnisDO();
+
+
     /*   for i in MannschaftsID
      Punkte Berechnen
      db.ligaTabelle.where(select punkte der Mannschaft)
