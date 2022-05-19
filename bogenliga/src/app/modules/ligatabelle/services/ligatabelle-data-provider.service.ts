@@ -89,7 +89,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
   }
 
   //TODO Update funktion hier her mit get arbeiten
-  public updateLigatabelleVeranstaltung(id: string | number){
+  public updateLigatabelleVeranstaltung(){
 
     const Ligatanelledaten = db.ligaTabelle.get({veranstaltungId :1 });
 
