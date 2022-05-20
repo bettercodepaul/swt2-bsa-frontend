@@ -200,6 +200,15 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           } catch (error) {
 
             console.log('Error while loading offline data');
+            this.notificationService.showNotification({
+              id: 'OFFLINE_MODE_OFF',
+              description: 'Die Daten konnten nicht für den Offline Modus vollständig geladen werden!',
+              title: 'Fehler beim Laden der Daten',
+              origin: NotificationOrigin.SYSTEM,
+              userAction: NotificationUserAction.PENDING,
+              type: NotificationType.OK,
+              severity: NotificationSeverity.ERROR
+            });
           }
           // Erst wenn die Db wieder geöffnet wurde, werden die Daten geladen.
 
