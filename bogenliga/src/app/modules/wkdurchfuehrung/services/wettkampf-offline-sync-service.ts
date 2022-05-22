@@ -405,5 +405,79 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     }
   }
 
+  public createDummyData() : void{
+   let offlineVer : OfflineVeranstaltung = {
+     id : 0,
+     ligaId : 2,
+     ligaleiterId : 2,
+     meldeDeadline : '2017-10-31',
+     name : 'DummyVeranstaltung',
+     wettkampfTypId : 1,
+     version : 1,
+     sportjahr: 2018,
+
+   }
+   let offlinePasseArray : OfflinePasse[] = [];
+   for(let i=0;i<=7; i++){
+   let offlinePasse : OfflinePasse = {
+     id : i,
+     wettkampfId : 1,
+     lfdNr : 0,
+     dsbMitgliedId: 0,
+     mannschaftId: 101 + i,
+     matchId:1018,
+     matchNr:1018,
+     ringzahlPfeil1: 3,
+     ringzahlPfeil2: 5,
+     version: 1,
+     ringzahlPfeil3: 0,
+     ringzahlPfeil4: 0,
+     ringzahlPfeil5: 0,
+     ringzahlPfeil6: 0,
+     rueckennummer: 1,
+
+
+    }
+
+    offlinePasseArray.push(offlinePasse);
+
+   }
+   let offlineWettkampfArray : OfflineWettkampf[] = [];
+    for(let i=0; i<4; i++) {
+      let offlineWettkampf: OfflineWettkampf = {
+        id: 30+i,
+        datum: '2017-12-30',
+        ausrichter: 'kfjsghkfdjg',
+        beginn: '12:54',
+        offlinetoken : 'dsfgsgffddfdfhfghfhfhfgdsaljfgkjdyfgfdkljbdfjhdfsklbhndsklghdfslgjhdyfklöhdfkljghdfsjghljkglhkjdsflhkdfshjkghjkldgkhjldgkhjldkjhlg',
+        disziplinId : 0,
+        plz : '72108',
+        version: 0,
+        ortsinfo: null,
+        tag: ''+(i+1),
+        ortsname : 'Ofterdingen',
+        strasse : 'Brunnenstraße',
+        wettkampftypId : 1,
+        veranstaltungId : 0,
+
+
+      }
+      offlineWettkampfArray.push(offlineWettkampf);
+    }
+
+    db.open();
+    db.veranstaltungTabelle.clear();
+    db.veranstaltungTabelle.put(offlineVer, 0);
+
+    db.wettkampfTabelle.clear();
+    db.wettkampfTabelle.bulkPut(offlineWettkampfArray, offlineWettkampfArray.map((item) =>item.id));
+
+    db.passeTabelle.clear();
+    db.passeTabelle.bulkPut(offlinePasseArray) ;
+
+    db.close();
+
+  }
+
 
 }
