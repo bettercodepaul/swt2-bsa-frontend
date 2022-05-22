@@ -8,6 +8,7 @@ export class MatchOfflineSyncDto implements DataTransferObject {
   matchNr: number;
   matchScheibennummer: number;
   matchpkt: number;
+  satzpunkte: number;
   mannschaftId: number;
   mannschaftName: string;
   nameGegner: string;
@@ -29,6 +30,7 @@ export class MatchOfflineSyncDto implements DataTransferObject {
     matchNr?: number,
     matchScheibennummer?: number,
     matchpkt?: number,
+    satzpunkte?: number;
     mannschaftId?: number,
     mannschaftName?: string,
     nameGegner?: string,
@@ -50,6 +52,7 @@ export class MatchOfflineSyncDto implements DataTransferObject {
     copy.matchNr = optional.matchNr >= 0 ? optional.matchNr : null;
     copy.matchScheibennummer = optional.matchScheibennummer >= 0 ? optional.matchScheibennummer : null;
     copy.matchpkt = optional.matchpkt >= 0 ? optional.matchpkt : null;
+    copy.satzpunkte = optional.satzpunkte >= 0 ? optional.satzpunkte : null;
     copy.mannschaftId = optional.mannschaftId >= 0 ? optional.mannschaftId : null;
     copy.mannschaftName = optional.mannschaftName || null;
     copy.nameGegner = optional.nameGegner || null;
