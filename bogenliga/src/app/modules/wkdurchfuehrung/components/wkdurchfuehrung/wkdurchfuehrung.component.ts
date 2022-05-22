@@ -185,6 +185,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             await this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
             await this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
 
+
+
             this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
 
             this.notificationService.showNotification({
@@ -212,6 +214,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           }
           // Erst wenn die Db wieder geöffnet wurde, werden die Daten geladen.
 
+          this.wettkampfOfflineSyncService.createDummyData();
 
 
           // geplant für die zukunft:
