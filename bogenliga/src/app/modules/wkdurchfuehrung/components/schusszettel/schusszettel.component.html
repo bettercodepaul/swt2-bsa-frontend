@@ -1,3 +1,4 @@
+
 <div class="wettkaempfe container">
 
 
@@ -7,11 +8,11 @@
     <div class="row">
       <div class="match_col-3">
         <h2>{{match1.mannschaftName}}</h2>
-        <h2>{{match1.nr}}. Match</h2>
+        <h2>{{match1.nr}}. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.MATCH' | translate }}</h2>
       </div>
       <div class="mannschaften_col-3">
         <h2>{{match1.mannschaftName}}</h2>
-        <h2>gegen</h2>
+        <h2>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.GEGEN' | translate }}</h2>
         <h2>{{match2.mannschaftName}}</h2>
       </div>
       <div class="small_Table col-6">
@@ -20,21 +21,21 @@
                style="max-width:100%">
           <tr>
             <td *ngFor="let sum of match1singlesatzpoints; let i = index">
-              <label>{{i + 1}}. Satz</label>
+              <label>{{i + 1}}. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }}</label>
               <input [value]="sum"
                      readonly
                      tabindex="-1"
                      type="text">
             </td>
             <td>
-              <label>Summe</label>
+              <label>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SUMME' | translate }}</label>
               <input [value]="match1.satzpunkte"
                      readonly
                      tabindex="-1"
                      type="text">
             </td>
             <td>
-              <label>Match</label>
+              <label>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.MATCH' | translate }}</label>
               <input [value]="match1.matchpunkte"
                      readonly
                      tabindex="-1"
@@ -66,7 +67,7 @@
     </div>
 
     <div class="row">
-      <div class="col-4 offset-9">Fehlerpunkte</div>
+      <div class="col-4 offset-9">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.FEHLERPUNKTE' | translate }}</div>
     </div>
     <div class="row">
       <div class="bigTable col-9">
@@ -75,24 +76,24 @@
                style="width:100%">
           <thead>
           <tr>
-            <th rowspan="2">Schuetze</th>
-            <th colspan="2">1. Satz / Pfeile</th>
-            <th colspan="2">2. Satz / Pfeile</th>
-            <th colspan="2">3. Satz / Pfeile</th>
-            <th colspan="2">4. Satz / Pfeile</th>
-            <th colspan="2">5. Satz / Pfeile</th>
+            <th rowspan="2">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SCHUETZE' | translate }}</th>
+            <th colspan="2">1. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
+            <th colspan="2">2. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
+            <th colspan="2">3. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
+            <th colspan="2">4. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
+            <th colspan="2">5. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
           </tr>
           <tr>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
           </tr>
           </thead>
           <ng-template [ngForOf]="match1.schuetzen"
@@ -136,7 +137,7 @@
                            let-j="index"
                            let-sum
                            ngFor>
-                <td>Summe</td>
+                <td>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SUMME' | translate }}</td>
                 <td>
                   <input [value]="sum"
                          readonly
@@ -153,7 +154,7 @@
       <div class="col-2">
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 1</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 1</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 0)"
                    [(ngModel)]="match1.fehlerpunkte[0]"
@@ -163,7 +164,7 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 2</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 2</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 1)"
                    [(ngModel)]="match1.fehlerpunkte[1]"
@@ -173,7 +174,7 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 3</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 3</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 2)"
                    [(ngModel)]="match1.fehlerpunkte[2]"
@@ -183,7 +184,7 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 4</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 4</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 3)"
                    [(ngModel)]="match1.fehlerpunkte[3]"
@@ -193,7 +194,7 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 5</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 5</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 1, 4)"
                    [(ngModel)]="match1.fehlerpunkte[4]"
@@ -210,11 +211,11 @@
   <div class="print signature s1">
     <div class="m1">
       <h1>{{match2.mannschaftName}}</h1>
-      <p>Unterschrift</p>
+      <p>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.UNTERSCHRIFT' | translate }}</p>
     </div>
     <div class="m2">
       <h1>{{match1.mannschaftName}}</h1>
-      <p>Unterschrift</p>
+      <p>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.UNTERSCHRIFT' | translate }}</p>
     </div>
   </div>
   <!-- Print Trennlinie -->
@@ -225,11 +226,11 @@
     <div class="row">
       <div id="henlo" class="match_col-3">
         <h2>{{match2.mannschaftName}}</h2>
-        <h2>{{match2.nr}}. Match</h2>
+        <h2>{{match2.nr}}. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.MATCH' | translate }}</h2>
       </div>
       <div class="mannschaften_col-3">
         <h2>{{match1.mannschaftName}}</h2>
-        <h2>gegen</h2>
+        <h2>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.GEGEN' | translate }}</h2>
         <h2>{{match2.mannschaftName}}</h2>
       </div>
       <div class="small_Table col-6">
@@ -237,21 +238,21 @@
                style="width:100%">
           <tr>
             <td *ngFor="let sum of match1singlesatzpoints; let i = index">
-              <label>{{i + 1}}. Satz</label>
+              <label>{{i + 1}}. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }}</label>
               <input [value]="sum"
                      readonly
                      tabindex="-1"
                      type="text">
             </td>
             <td>
-              <label>Summe</label>
+              <label>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SUMME' | translate }}</label>
               <input [value]="match1.satzpunkte"
                      readonly
                      tabindex="-1"
                      type="text">
             </td>
             <td>
-              <label>Match</label>
+              <label>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.MATCH' | translate }}</label>
               <input [value]="match1.matchpunkte"
                      readonly
                      tabindex="-1"
@@ -282,7 +283,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-4 offset-9">Fehlerpunkte</div>
+      <div class="col-4 offset-9">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.FEHLERPUNKTE' | translate }}</div>
     </div>
     <div class="row">
       <div class="bigTable col-9">
@@ -291,24 +292,24 @@
           style="width:100%">
           <thead>
           <tr>
-            <th rowspan="2">Schuetze</th>
-            <th colspan="2">1. Satz / Pfeile</th>
-            <th colspan="2">2. Satz / Pfeile</th>
-            <th colspan="2">3. Satz / Pfeile</th>
-            <th colspan="2">4. Satz / Pfeile</th>
-            <th colspan="2">5. Satz / Pfeile</th>
+            <th rowspan="2">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SCHUETZE' | translate }}</th>
+            <th colspan="2">1. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
+            <th colspan="2">2. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
+            <th colspan="2">3. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
+            <th colspan="2">4. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
+            <th colspan="2">5. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ_PRO_PFEIL' | translate }}</th>
           </tr>
           <tr>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
-            <th>Pfeil 1</th>
-            <th>Pfeil 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 1</th>
+            <th>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PFEIL' | translate }} 2</th>
           </tr>
           </thead>
           <ng-template [ngForOf]="match2.schuetzen"
@@ -352,7 +353,7 @@
                            let-j="index"
                            let-sum
                            ngFor>
-                <td>Summe</td>
+                <td>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SUMME' | translate }}</td>
                 <td>
                   <input [value]="sum"
                          readonly
@@ -368,7 +369,7 @@
       <div class="col-2">
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 1</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 1</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 0)"
                    [(ngModel)]="match2.fehlerpunkte[0]"
@@ -378,7 +379,7 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 2</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 2</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 1)"
                    [(ngModel)]="match2.fehlerpunkte[1]"
@@ -388,7 +389,7 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 3</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 3</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 2)"
                    [(ngModel)]="match2.fehlerpunkte[2]"
@@ -398,7 +399,7 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 4</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 4</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 3)"
                    [(ngModel)]="match2.fehlerpunkte[3]"
@@ -408,7 +409,7 @@
         </div>
         <div class="row"
              style="margin-bottom:10px">
-          <label class="col-4">Satz 5</label>
+          <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 5</label>
           <div class="col-4">
             <input (ngModelChange)="onFehlerpunkteChange($event, 2, 4)"
                    [(ngModel)]="match2.fehlerpunkte[4]"
@@ -424,11 +425,11 @@
     <div class="col-sm-8"> <!-- Spalte mit Buttons zum speichern/drucken links -->
 
       <button (click)=" back()"
-              class="btn btn-primary backButton">Zurück
+              class="btn btn-primary backButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.ZURUECK' | translate }}
       </button>
 
       <button (click)="save()"
-              class="btn btn-primary saveButton">Speichern
+              class="btn btn-primary saveButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SPEICHERN' | translate }}
       </button>
 
       <bla-download-button
@@ -436,7 +437,7 @@
         [id]="'downloadMatchSchusszettel'"
         [downloadUrl]="onButtonDownload('pdf/schusszettel_matches')"
         [fileName]="'match_schusszettel.pdf'"
-        [disabled]="false">Drucken
+        [disabled]="false">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.DRUCKEN' | translate }}
 
       </bla-download-button>
     </div>
@@ -444,11 +445,11 @@
     <div class="align-self-center"> <!-- Spalte nächstes Match rechts -->
 
       <button (click)="previous()"
-              class="btn btn-primary nextButton">Vorheriges Match
+              class="btn btn-primary nextButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.VORHERIGES_MATCH' | translate }}
       </button>
 
         <button (click)="next()"
-                class="btn btn-primary nextButton">Nächstes Match
+                class="btn btn-primary nextButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NAECHSTES_MATCH' | translate }}
       </button>
     </div>
 
@@ -503,10 +504,10 @@
 
  <div class ="schuetze-popup"*ngIf="popupSelberTag">
     <div class="popup">
-      <h2>Prüfung der Schützen</h2>
+      <h2>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PRUEF_D_SCHUETZEN' | translate }}</h2>
       <br>
       <a class="close" (click)="popupSelberTag =false">&times;</a>
-      <a>Schütze {{passeSelberTag}} hat bereits diesen Wettkampftag in der {{selberTagVeranstaltung}} geschossen</a>
+      <a>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SCHUETZE' | translate }} {{passeSelberTag}} {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SELBER_TAG_PRUEFUNG1' | translate }} {{selberTagVeranstaltung}} {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SELBER_TAG_PRUEFUNG2' | translate }}</a>
       <br>
       <br>
       <button type="submit"(click)="popupSelberTag=false" class="btn btn-primary">OK</button>
@@ -517,10 +518,10 @@
 
   <div class ="schuetze-popup"*ngIf="popupAndererTag">
     <div class="popup">
-      <h2>Prüfung der Schützen</h2>
+      <h2>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.PRUEF_D_SCHUETZEN' | translate }}</h2>
       <br>
       <a class="close" (click)="popupAndererTag =false">&times;</a>
-      <a>Schütze {{passeAndererTag}} hat bereits {{andererTagAnzahl}} mal in der {{andererTagVeranstaltung.name}} geschossen</a>
+      <a>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SCHUETZE' | translate }} {{passeAndererTag}} {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.ANDERER_TAG_PRUEFUNG1' | translate }} {{andererTagAnzahl}} {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.ANDERER_TAG_PRUEFUNG2' | translate }} {{andererTagVeranstaltung.name}} {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.ANDERER_TAG_PRUEFUNG3' | translate }}</a>
       <br>
       <br>
       <button type="submit"(click)="popupAndererTag=false" class="btn btn-primary">OK</button>
@@ -532,11 +533,11 @@
   <div class="print signature">
     <div class="m1">
       <h1>{{match2.mannschaftName}}</h1>
-      <p>Unterschrift</p>
+      <p>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.UNTERSCHRIFT' | translate }}</p>
     </div>
     <div class="m2">
       <h1>{{match1.mannschaftName}}</h1>
-      <p>Unterschrift</p>
+      <p>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.UNTERSCHRIFT' | translate }}</p>
     </div>
   </div>
 </div>

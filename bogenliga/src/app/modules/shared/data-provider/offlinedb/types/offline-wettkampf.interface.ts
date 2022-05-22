@@ -1,8 +1,8 @@
+
+
 export interface OfflineWettkampf {
-  id?: number; // Primary Key autoincrement
+  id?: number;
   version?: number;
-
-
   veranstaltungId: number;
   datum: string;
   beginn: string;
@@ -15,6 +15,6 @@ export interface OfflineWettkampf {
   ortsname: string;
   ortsinfo: string;
   offlinetoken: string;
-
-
 }
+
+

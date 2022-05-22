@@ -23,8 +23,6 @@ export function toDO(ligatabelleErgebnisDTO: LigatabelleErgebnisDTO): Ligatabell
   ligatabelleErgebnisDO.tabellenplatz = ligatabelleErgebnisDTO.tabellenplatz;
   ligatabelleErgebnisDO.sortierung = ligatabelleErgebnisDTO.sortierung;
 
-
-
   return ligatabelleErgebnisDO;
 }
 
