@@ -408,7 +408,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   public createDummyData() : void{
    let offlineVer : OfflineVeranstaltung = {
      id : 0,
-     ligaId : 2,
+     ligaId : 0,
      ligaleiterId : 2,
      meldeDeadline : '2017-10-31',
      name : 'DummyVeranstaltung',
@@ -448,7 +448,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         id: 30+i,
         datum: '2017-12-30',
         ausrichter: 'kfjsghkfdjg',
-        beginn: '12:54',
+        beginn: '12:5'+i,
         offlinetoken : 'dsfgsgffddfdfhfghfhfhfgdsaljfgkjdyfgfdkljbdfjhdfsklbhndsklghdfslgjhdyfklöhdfkljghdfsjghljkglhkjdsflhkdfshjkghjkldgkhjldgkhjldkjhlg',
         disziplinId : 0,
         plz : '72108',
@@ -475,7 +475,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     db.passeTabelle.clear();
     db.passeTabelle.bulkPut(offlinePasseArray) ;
 
-    db.close();
+    //db.close();
 
   }
 

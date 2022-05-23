@@ -625,17 +625,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Ermittlung der anzuzeigenden Jahre
   private findAvailableYears() {
-    this.availableYears = [];
+      this.availableYears = [];
 
-    if(this.onOfflineService.isOffline()){
-      let year = this.onOfflineService.getOfflineJahr();
-      if(year){
-        this.loadOfflineVeranstaltungenYearsSuccess(year);
-      } else {
-       this.loadVeranstaltungenYearsFailure();
-      }
-
-    } else {
       this.veranstaltungsDataProvider.findAllSportyearDestinct()
           .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
             this.loadVeranstaltungenYearsSuccess(response);
@@ -643,20 +634,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           .catch(() => {
             this.loadVeranstaltungenYearsFailure();
           });
-    }
-  }
-
-
-  private loadOfflineVeranstaltungenYearsSuccess(jahr: number): void {
-    this.loadingYears = false;
-    let veranstaltungenJahr: SportjahrVeranstaltungDO = {
-      id: 1,
-      version: 1,
-      sportjahr: jahr
-    }
-    this.availableYears.push(veranstaltungenJahr);
-    this.selItemId = this.availableYears[0].id;
-    this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
   }
 
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
