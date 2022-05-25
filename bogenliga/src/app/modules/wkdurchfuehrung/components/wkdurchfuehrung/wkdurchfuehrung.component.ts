@@ -185,6 +185,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             await this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
             await this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
 
+
+
             this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
 
             this.notificationService.showNotification({
@@ -212,6 +214,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           }
           // Erst wenn die Db wieder geöffnet wurde, werden die Daten geladen.
 
+          this.wettkampfOfflineSyncService.createDummyData();
 
 
           // geplant für die zukunft:
@@ -622,17 +625,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Ermittlung der anzuzeigenden Jahre
   private findAvailableYears() {
-    this.availableYears = [];
+      this.availableYears = [];
 
-    if(this.onOfflineService.isOffline()){
-      let year = this.onOfflineService.getOfflineJahr();
-      if(year){
-        this.loadOfflineVeranstaltungenYearsSuccess(year);
-      } else {
-       this.loadVeranstaltungenYearsFailure();
-      }
-
-    } else {
       this.veranstaltungsDataProvider.findAllSportyearDestinct()
           .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
             this.loadVeranstaltungenYearsSuccess(response);
@@ -640,21 +634,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           .catch(() => {
             this.loadVeranstaltungenYearsFailure();
           });
-    }
   }
 
-
-  private loadOfflineVeranstaltungenYearsSuccess(jahr: number): void {
-    this.loadingYears = false;
-    let veranstaltungenJahr: SportjahrVeranstaltungDO = {
-      id: 1,
-      version: 1,
-      sportjahr: jahr
-    }
-    this.availableYears.push(veranstaltungenJahr);
-    this.selItemId = this.availableYears[0].id;
-    this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
-  }
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
   private loadVeranstaltungenYearsSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
 

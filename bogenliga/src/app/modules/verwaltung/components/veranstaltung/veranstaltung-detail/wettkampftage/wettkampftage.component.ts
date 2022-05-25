@@ -485,12 +485,14 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => this.handleWettkampfResponseArrayFailure(response)).then(() => this.loadUsers());
   }
 
-  private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
+  private async handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
     this.loading = false;
     this.loadWettkampf();
+    await this.loadDistinctWettkampf();
+    this.selectedWettkampf = this.selectedDTOs[0];
+    this.loadKampfrichter();
     this.loadLizenzen();
-    this.loadDistinctWettkampf();
   }
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
@@ -647,9 +649,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   }
 
   // loads all existing Wettkampftage from Backend
-  private loadDistinctWettkampf(): void {
+  private async loadDistinctWettkampf(): Promise<void> {
     this.loadingWettkampf = true;
-    this.wettkampfDataProvider.findAll()
+    await this.wettkampfDataProvider.findAll()
         .then((newList: BogenligaResponse<WettkampfDO[]>) => this.handleLoadDistinctWettkampfSuccess(newList))
         .catch((newList: BogenligaResponse<WettkampfDTO[]>) => this.handleLoadDistinctWettkampfFailure(newList));
   }
