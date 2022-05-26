@@ -413,7 +413,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
      meldeDeadline : '2017-10-31',
      name : 'DummyVeranstaltung',
      wettkampfTypId : 1,
-     version : 1,
+     version : 5,
      sportjahr: 2018,
 
    }
@@ -429,7 +429,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
      matchNr:1018,
      ringzahlPfeil1: 3,
      ringzahlPfeil2: 5,
-     version: 1,
+     version: 5,
      ringzahlPfeil3: 0,
      ringzahlPfeil4: 0,
      ringzahlPfeil5: 0,
@@ -452,7 +452,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         offlinetoken : 'dsfgsgffddfdfhfghfhfhfgdsaljfgkjdyfgfdkljbdfjhdfsklbhndsklghdfslgjhdyfklöhdfkljghdfsjghljkglhkjdsflhkdfshjkghjkldgkhjldgkhjldkjhlg',
         disziplinId : 0,
         plz : '72108',
-        version: 0,
+        version: 5,
         ortsinfo: null,
         tag: ''+(i+1),
         ortsname : 'Ofterdingen',
