@@ -679,13 +679,24 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     });
   };
 
-  public updateLigatabelleVeranstaltung() {
+  public async updateLigatabelleVeranstaltung() {
 
-    const Ligatabelledaten = this.getLigatabellewk('Würtembergliga');
-    console.log(Ligatabelledaten)
+    const Daten = await this.getLigatabellewk('Würtembergliga');
+    let Ligatabelledaten=Daten.payload;
+    console.log(Ligatabelledaten);
 
+    const satzpunkte=[];
+    const mannschaft_id=[];
+    const matchpunkte=[];
 
+    for (let x=0; x<Ligatabelledaten.length; x++) {
 
+      satzpunkte.push(Ligatabelledaten[x].satzpunkte.split(" "))
+      mannschaft_id.push(Ligatabelledaten[x].mannschaft_id)
+      matchpunkte.push(Ligatabelledaten[x].matchpunkte.split(" "))
+
+      console.log(satzpunkte[x],matchpunkte[x],mannschaft_id[x]);
+    }
 
     /*   for i in MannschaftsID
      Punkte Berechnen
