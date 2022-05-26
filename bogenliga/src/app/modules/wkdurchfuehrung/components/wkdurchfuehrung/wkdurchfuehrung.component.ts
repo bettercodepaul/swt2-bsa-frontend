@@ -679,6 +679,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     });
   };
 
+  public updateMannschaftLT(mannschaft : string | number,satzpunkte:string, matchpunkte : string){
+    console.log('updateMannschaftLT wurde aufgerufen');
+
+      db.ligaTabelle.update( mannschaft , {'satzpunkte':satzpunkte,'matchpunkte':matchpunkte});
+  };
+
   public async updateLigatabelleVeranstaltung() {
 
     const Daten = await this.getLigatabellewk('Würtembergliga');
@@ -694,7 +700,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       satzpunkte.push(Ligatabelledaten[x].satzpunkte.split(" "))
       mannschaft_id.push(Ligatabelledaten[x].mannschaft_id)
       matchpunkte.push(Ligatabelledaten[x].matchpunkte.split(" "))
-
+      this.updateMannschaftLT(mannschaft_id[x],'10 : 30','10 : 30');
       console.log(satzpunkte[x],matchpunkte[x],mannschaft_id[x]);
     }
 
