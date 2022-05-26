@@ -189,6 +189,17 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
             this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
 
+            //temporäre Dummy Daten zum testen
+            this.wettkampfOfflineSyncService.createDummyData();
+            //lädt Inhalte der Tabelle neu mit Offlinedaten
+            this.loadingWettkampfe = true;
+            this.wettkampfIdEnthalten = true;
+            this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
+            this.findAvailableYears();
+            this.LoadWettkampf();
+            this.visible = false;
+
+
             this.notificationService.showNotification({
               id: 'OFFLINE_MODE_ON',
               description: 'Die Daten wurden erfolgreich offline gespeichert und der Offline-Modus wurde aktiviert.',
@@ -214,7 +225,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           }
           // Erst wenn die Db wieder geöffnet wurde, werden die Daten geladen.
 
-          this.wettkampfOfflineSyncService.createDummyData();
+
 
 
           // geplant für die zukunft:
@@ -385,7 +396,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       this.currentVeranstaltungName = response.payload.name
         + ' ' + response.payload.sportjahr;
     })
-    .catch(() => {
+    .catch((error) => {
+      console.log("error in onSelect wkdurchfuehrung")
+      console.log(error)
       this.currentVeranstaltungName = '';
     });
     this.rows = [];
