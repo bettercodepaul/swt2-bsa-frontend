@@ -13,22 +13,24 @@ export function toDTOFromOfflineWettkampfArray(wettkaempfe: OfflineWettkampf[]):
 }
 
 export function toDTOFromOfflineWettkampf(wettkampf: OfflineWettkampf): WettkampfDTO {
-  const wettkampfDO = new WettkampfDTO();
+  let wettkampfDTO: WettkampfDTO = {
 
-  wettkampfDO.wettkampfTag = parseInt(wettkampf.tag);
-  wettkampfDO.id = wettkampf.id;
-  wettkampfDO.version = wettkampf.version;
-  wettkampfDO.wettkampfAusrichter = parseInt(wettkampf.ausrichter);
-  wettkampfDO.wettkampfBeginn = wettkampf.beginn;
-  wettkampfDO.wettkampfDisziplinId = wettkampf.disziplinId;
-  wettkampfDO.wettkampfTypId = wettkampf.wettkampftypId;
-  wettkampfDO.wettkampfPlz = wettkampf.plz;
-  wettkampfDO.wettkampfOrtsname = wettkampf.ortsname;
-  wettkampfDO.wettkampfOrtsinfo = wettkampf.ortsinfo;
-  wettkampfDO.wettkampfStrasse = wettkampf.strasse;
-  wettkampfDO.wettkampfVeranstaltungsId = wettkampf.veranstaltungId;
+    wettkampfTag : parseInt(wettkampf.tag),
+    id : wettkampf.id,
+    version : wettkampf.version,
+    wettkampfAusrichter : parseInt(wettkampf.ausrichter),
+    wettkampfBeginn : wettkampf.beginn,
+    wettkampfDisziplinId : wettkampf.disziplinId,
+    wettkampfTypId : wettkampf.wettkampftypId,
+    wettkampfPlz : wettkampf.plz,
+    wettkampfOrtsname : wettkampf.ortsname,
+    wettkampfOrtsinfo : wettkampf.ortsinfo,
+    wettkampfStrasse : wettkampf.strasse,
+    wettkampfVeranstaltungsId : wettkampf.veranstaltungId,
+    wettkampfDatum : wettkampf.datum
+  }
 
-  return wettkampfDO;
+  return wettkampfDTO;
 }
 
 export function fromOfflineWettkampfPayload(payload: VersionedDataTransferObject): OfflineWettkampf {

@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {
   MATCH_TABLE_CONFIG,
-  WKDURCHFUEHRUNG_CONFIG,
-  WETTKAMPF_TABLE_CONFIG
+  WETTKAMPF_TABLE_CONFIG,
+  WKDURCHFUEHRUNG_CONFIG
 } from './wkdurchfuehrung.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
@@ -174,13 +174,47 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
       // Die db wird erst gelöscht und dann wieder erzeugt damit die Datenbank leer ist und keine Doppelten einträge entstehen
       db.delete().then(() => {
-        db.open().then(() => {
+        db.open().then(async () => {
           console.log('Database opened');
+          try {
+            // Wait for all the load functions to finish
+
+
+            await this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
+            await this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
+            await this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
+            await this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
+
+
+
+            this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
+
+            this.notificationService.showNotification({
+              id: 'OFFLINE_MODE_ON',
+              description: 'Die Daten wurden erfolgreich offline gespeichert und der Offline-Modus wurde aktiviert.',
+              title: 'Offline-Modus aktiviert',
+              origin: NotificationOrigin.SYSTEM,
+              userAction: NotificationUserAction.ACCEPTED,
+              type: NotificationType.OK,
+              severity: NotificationSeverity.INFO
+            });
+
+          } catch (error) {
+
+            console.log('Error while loading offline data');
+            this.notificationService.showNotification({
+              id: 'OFFLINE_MODE_OFF',
+              description: 'Die Daten konnten nicht für den Offline Modus vollständig geladen werden!',
+              title: 'Fehler beim Laden der Daten',
+              origin: NotificationOrigin.SYSTEM,
+              userAction: NotificationUserAction.PENDING,
+              type: NotificationType.OK,
+              severity: NotificationSeverity.ERROR
+            });
+          }
           // Erst wenn die Db wieder geöffnet wurde, werden die Daten geladen.
-          this.wettkampfOfflineSyncService.loadLigatabelleVeranstaltungOffline(this.selectedVeranstaltungId);
-          this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
-          this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
-          this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
+
+          this.wettkampfOfflineSyncService.createDummyData();
 
 
           // geplant für die zukunft:
@@ -190,7 +224,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           // MANNSCHAFT WIRD ZUM JETZTIGEN STAND NICHT MEHR BENÖTIGT.
           // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
           // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
-          this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
+
         });
       });
 
@@ -591,17 +625,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Ermittlung der anzuzeigenden Jahre
   private findAvailableYears() {
-    this.availableYears = [];
+      this.availableYears = [];
 
-    if(this.onOfflineService.isOffline()){
-      let year = this.onOfflineService.getOfflineJahr();
-      if(year){
-        this.loadOfflineVeranstaltungenYearsSuccess(year);
-      } else {
-       this.loadVeranstaltungenYearsFailure();
-      }
-
-    } else {
       this.veranstaltungsDataProvider.findAllSportyearDestinct()
           .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
             this.loadVeranstaltungenYearsSuccess(response);
@@ -609,21 +634,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           .catch(() => {
             this.loadVeranstaltungenYearsFailure();
           });
-    }
   }
 
-
-  private loadOfflineVeranstaltungenYearsSuccess(jahr: number): void {
-    this.loadingYears = false;
-    let veranstaltungenJahr: SportjahrVeranstaltungDO = {
-      id: 1,
-      version: 1,
-      sportjahr: jahr
-    }
-    this.availableYears.push(veranstaltungenJahr);
-    this.selItemId = this.availableYears[0].id;
-    this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
-  }
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
   private loadVeranstaltungenYearsSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
 
