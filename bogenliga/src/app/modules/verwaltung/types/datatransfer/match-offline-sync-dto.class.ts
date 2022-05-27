@@ -2,7 +2,8 @@ import {DataTransferObject} from '../../../shared/data-provider';
 
 export class MatchOfflineSyncDto implements DataTransferObject {
 
-
+  id: number;
+  version: number;
   matchVersion: number;
   wettkampfId: number;
   matchNr: number;
@@ -24,7 +25,8 @@ export class MatchOfflineSyncDto implements DataTransferObject {
 
 
   static copyFrom(optional: {
-
+    id?: number;
+    version?: number;
     matchVersion?: number,
     wettkampfId?: number,
     matchNr?: number,
@@ -48,6 +50,8 @@ export class MatchOfflineSyncDto implements DataTransferObject {
     const copy = new MatchOfflineSyncDto();
     // Offline interface data -> Looked at the db and saw that everything can be null
     // IDK why the normal match mapper has not the same data
+    copy.id = optional.id || null;
+    copy.version = optional.version || null;
     copy.wettkampfId = optional.wettkampfId >= 0 ? optional.wettkampfId : null;
     copy.matchNr = optional.matchNr >= 0 ? optional.matchNr : null;
     copy.matchScheibennummer = optional.matchScheibennummer >= 0 ? optional.matchScheibennummer : null;

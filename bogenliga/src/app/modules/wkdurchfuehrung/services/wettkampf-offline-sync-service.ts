@@ -87,7 +87,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.loadMatch(id)
       .then((response: BogenligaResponse<OfflineMatch[]>) => {
-        db.matchTabelle.bulkAdd(response.payload).then((value) => {
+        db.matchTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((value) => {
           console.log('offline match added to offlinedb', value);
           resolve();
 
