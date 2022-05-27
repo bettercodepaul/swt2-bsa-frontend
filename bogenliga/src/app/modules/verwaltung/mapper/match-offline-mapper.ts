@@ -6,6 +6,8 @@ import {MatchDTOExt} from '@wkdurchfuehrung/types/datatransfer/match-dto-ext.cla
 
 export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
   return {
+    id: matchOfflineSyncDTO.id,
+    version: matchOfflineSyncDTO.version,
     mannschaftId: matchOfflineSyncDTO.mannschaftId,
     mannschaftName: matchOfflineSyncDTO.mannschaftName,
     matchIdGegner: matchOfflineSyncDTO.matchIdGegner,
@@ -27,15 +29,15 @@ export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
   };
 }
 
-export function toDTOFromOfflineMatchArray(offlineMatches: OfflineMatch[]): MatchDTOExt[]{
-  let matches: MatchDTOExt[] = [];
-  offlineMatches.forEach((match) => matches.push(toDTOFromOfflineMatch(match)))
+export function toDTOFromOfflineMatchArray(offlineMatches: OfflineMatch[]): MatchDTOExt[] {
+  const matches: MatchDTOExt[] = [];
+  offlineMatches.forEach((match) => matches.push(toDTOFromOfflineMatch(match)));
   return matches;
 }
 
-export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch): MatchDTOExt{
+export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch): MatchDTOExt {
   //TODO: fehlende objekte ergänzen falls möglich/nötig
-  let match: MatchDTOExt = {
+  return {
     id: offlineMatch.id,
     version: offlineMatch.version,
     mannschaftId: offlineMatch.mannschaftId,
@@ -55,10 +57,9 @@ export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch): MatchDTOExt{
     wettkampfTag: 1,  //wird nicht an die OfflineDB übergeben
     wettkampfTyp: ''  //wird nicht an die OfflineDB übergeben
   };
-  return match;
 }
 
-export function fromOfflineMatchPayload(payload: DataTransferObject): MatchOfflineSyncDto {
+export function fromOfflineMatchPayload(payload: DataTransferObject): OfflineMatch {
   return toDO(MatchOfflineSyncDto.copyFrom(payload));
 }
 
