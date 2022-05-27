@@ -679,24 +679,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     });
   };
 
-  public getupdatedLT(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
-    console.log('getupdatedLT wurde aufgerufen');
-    return new Promise((resolve, reject) => {
-      db.ligaTabelle.where('veranstaltungName').equals(id).toArray()
-        .then((data: OfflineLigatabelle[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: fromOfflineLigatabelleArray(data)});
-        }, () => {
-          reject({result: RequestResult.FAILURE});
-        });
-    });
-  };
 
-  public async updateMannschaftLT(mannschaft_Id : number, satzpunkte:string, matchpunkte : string){
+  public async updateMannschaftLT(id : number, satzpunkte:number, satzpunkteGegner : number, matchpunkte : number, matchpunkteGegner : number){
     console.log('updateMannschaftLT wurde aufgerufen');
 
-    db.ligaTabelle.update(mannschaft_Id, {'satzpkt':satzpunkte,'matchpkt':matchpunkte});
+    db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
 
-    const Daten = await this.getupdatedLT('Würtembergliga');
+    const Daten = await this.getLigatabellewk('Würtembergliga');
     let Ligatabelledaten=Daten.payload;
     console.log(Ligatabelledaten);
   };
@@ -708,16 +697,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     console.log(Ligatabelledaten);
 
     const satzpunkte=[];
-    const mannschaft_id=[];
+    const id=[];
     const matchpunkte=[];
 
     for (let x=0; x<Ligatabelledaten.length; x++) {
 
       satzpunkte.push(Ligatabelledaten[x].satzpunkte.split(" "))
-      mannschaft_id.push(Ligatabelledaten[x].mannschaft_id)
+      id.push(Ligatabelledaten[x].id)
       matchpunkte.push(Ligatabelledaten[x].matchpunkte.split(" "))
-      this.updateMannschaftLT(mannschaft_id[x],'10 : 30','10 : 30');
-      console.log(satzpunkte[x],matchpunkte[x],mannschaft_id[x]);
+      await this.updateMannschaftLT(id[x], 100, 100, 100, 100);
+      console.log(satzpunkte[x],matchpunkte[x],id[x]);
     }
 
     /*   for i in MannschaftsID
