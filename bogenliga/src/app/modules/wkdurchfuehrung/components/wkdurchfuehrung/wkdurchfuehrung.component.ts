@@ -679,10 +679,26 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     });
   };
 
-  public updateMannschaftLT(mannschaft : string | number,satzpunkte:string, matchpunkte : string){
+  public getupdatedLT(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
+    console.log('getupdatedLT wurde aufgerufen');
+    return new Promise((resolve, reject) => {
+      db.ligaTabelle.where('veranstaltungName').equals(id).toArray()
+        .then((data: OfflineLigatabelle[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromOfflineLigatabelleArray(data)});
+        }, () => {
+          reject({result: RequestResult.FAILURE});
+        });
+    });
+  };
+
+  public async updateMannschaftLT(mannschaft_Id : number, satzpunkte:string, matchpunkte : string){
     console.log('updateMannschaftLT wurde aufgerufen');
 
-      db.ligaTabelle.update( mannschaft , {'satzpunkte':satzpunkte,'matchpunkte':matchpunkte});
+    db.ligaTabelle.update(mannschaft_Id, {'satzpkt':satzpunkte,'matchpkt':matchpunkte});
+
+    const Daten = await this.getupdatedLT('Würtembergliga');
+    let Ligatabelledaten=Daten.payload;
+    console.log(Ligatabelledaten);
   };
 
   public async updateLigatabelleVeranstaltung() {
