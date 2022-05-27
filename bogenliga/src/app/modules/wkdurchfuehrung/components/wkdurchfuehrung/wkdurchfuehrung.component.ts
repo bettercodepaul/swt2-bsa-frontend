@@ -667,7 +667,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
-  public getLigatabellewk(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
+  public getLigatabelleWK(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
     console.log('getLigatabelleDaten wurde aufgerufen');
     return new Promise((resolve, reject) => {
       db.ligaTabelle.where('veranstaltungName').equals(id).toArray()
@@ -679,21 +679,15 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     });
   };
 
-
-  public async updateMannschaftLT(id : number, satzpunkte:number, satzpunkteGegner : number, matchpunkte : number, matchpunkteGegner : number){
-    console.log('updateMannschaftLT wurde aufgerufen');
-
-    db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
-
-    const Daten = await this.getLigatabellewk('Würtembergliga');
-    let Ligatabelledaten=Daten.payload;
-    console.log(Ligatabelledaten);
+  public async updateMannschaftLT(id : number, satzpunkte:number, satzpunkteGegner : number, spd :number, matchpunkte : number, matchpunkteGegner : number){
+       db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
   };
 
   public async updateLigatabelleVeranstaltung() {
 
-    const Daten = await this.getLigatabellewk('Würtembergliga');
-    let Ligatabelledaten=Daten.payload;
+    //Ausgeben der LT
+    const Daten = await this.getLigatabelleWK('Würtembergliga');
+    const Ligatabelledaten=Daten.payload;
     console.log(Ligatabelledaten);
 
     const satzpunkte=[];
@@ -701,22 +695,27 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     const matchpunkte=[];
 
     for (let x=0; x<Ligatabelledaten.length; x++) {
-
+      //Daten aus dem Array lesen und zusammenaddieren
       satzpunkte.push(Ligatabelledaten[x].satzpunkte.split(" "))
       id.push(Ligatabelledaten[x].id)
       matchpunkte.push(Ligatabelledaten[x].matchpunkte.split(" "))
-      await this.updateMannschaftLT(id[x], 100, 100, 100, 100);
-      console.log(satzpunkte[x],matchpunkte[x],id[x]);
+
+      const sp=parseInt( satzpunkte[0])+3;
+      const spg=parseInt(satzpunkte[2])+30;
+      const spd=sp-spg;
+
+      const mp=parseInt( matchpunkte[0])+6;
+      const mpg=parseInt(matchpunkte[2])+60;
+
+      console.log(satzpunkte[x],matchpunkte[x],sp,spg, spd);
+      //Daten Updaten
+      await this.updateMannschaftLT(id[x], sp, spg, spd, mp, mpg);
+
     }
+    const Datenn = await this.getLigatabelleWK('Würtembergliga');
+    let Ligatabelledatenn=Datenn.payload;
+    console.log(Ligatabelledatenn);
 
-    /*   for i in MannschaftsID
-     Punkte Berechnen
-     db.ligaTabelle.where(select punkte der Mannschaft)
-     Punkte aus where mit den übergebenen addieren
-     db.ligatabelle.update(manschaftsid{Datensatz})
-
-     //Beispiel für Update funktion: db.friends.update(friendId, {"address.zipcode": 12345});
-     */
 
   }
 }
