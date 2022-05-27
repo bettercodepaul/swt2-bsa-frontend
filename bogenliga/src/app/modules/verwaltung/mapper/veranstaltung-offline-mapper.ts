@@ -45,7 +45,7 @@ export function toDOfromOfflineVeranstaltung(veranstaltung: OfflineVeranstaltung
     ligaleiterId: veranstaltung.ligaleiterId,
     ligaId: veranstaltung.ligaId,
     ligaleiterEmail: '',
-    ligaName: '',
+    ligaName: veranstaltung.name,
     wettkampftypName: ''
   }
   return veranstaltungDO
