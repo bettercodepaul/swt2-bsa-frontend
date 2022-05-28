@@ -13,10 +13,8 @@ import {MatchDOExt} from '../types/match-do-ext.class';
 import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
 import {fromPayloadArray} from '../mapper/match-mapper-ext';
 import {OnOfflineService} from '@shared/services';
-import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
-import {fromOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
-import {toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
+import {toDTOFromOfflineMatch, toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -30,13 +28,12 @@ export class MatchProviderService extends DataProviderService {
   }
 
   public get(matchId: string): Promise<BogenligaResponse<MatchDOExt>> {
-    //uncomment with next bear commit dings
     /*if(this.onOfflineService.isOffline()){
       console.log('Choosing offline way for match with id ' + matchId)
       return new Promise((resolve, reject) => {
-        db.matchTabelle.where('id').equals(matchId).toArray()
-          .then((data: OfflineMatch[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromOfflineMatchPayload(data)});
+        db.matchTabelle.get(Number(matchId))
+          .then((data: OfflineMatch) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatch(data,[])});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -100,7 +97,7 @@ export class MatchProviderService extends DataProviderService {
       return new Promise((resolve, reject) => {
         db.matchTabelle.where('wettkampfId').equals(id).toArray()
           .then((data: OfflineMatch[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data)});
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data,[])});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -142,48 +139,83 @@ export class MatchProviderService extends DataProviderService {
   }
 
   public pair(matchId: number): Promise<BogenligaResponse<Array<number>>> {
-    return new Promise(((resolve, reject) => {
-      this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('pair').build())
-        .then((data: Array<number>) => {
-          resolve({result: RequestResult.SUCCESS, payload: data});
-        }, (error: HttpErrorResponse) => {
-          if (error.status === 0) {
-            reject({result: RequestResult.CONNECTION_PROBLEM});
-          } else {
+    if(this.onOfflineService.isOffline()){
+      return new Promise((resolve, reject) => {
+        db.matchTabelle.get(matchId)
+          .then((data: OfflineMatch) => {
+            resolve({result: RequestResult.SUCCESS, payload: [data.id,data.matchIdGegner]});
+          }, () => {
             reject({result: RequestResult.FAILURE});
-          }
-        });
-    }));
-  }
-
-  public pairToFollow(matchId: number): Promise<BogenligaResponse<Array<number>>> {
-    return new Promise(((resolve, reject) => {
-      this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('pairToFollow').build())
-        .then((data: Array<number>) => {
-          resolve({result: RequestResult.SUCCESS, payload: data});
-        }, (error: HttpErrorResponse) => {
-          if (error.status === 0) {
-            reject({result: RequestResult.CONNECTION_PROBLEM});
-          } else {
-            reject({result: RequestResult.FAILURE});
-          }
-        });
-    }));
-  }
-
-  public previousPair(matchId: number): Promise<BogenligaResponse<Array<number>>> {
-    return new Promise(((resolve, reject) => {
-      this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('previousPair').build())
-          .then((data: Array<number>) => {
-            resolve({result: RequestResult.SUCCESS, payload: data});
-          }, (error: HttpErrorResponse) => {
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
           });
-    }));
+      });
+    } else {
+      return new Promise(((resolve, reject) => {
+        this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('pair').build())
+            .then((data: Array<number>) => {
+              resolve({result: RequestResult.SUCCESS, payload: data});
+            }, (error: HttpErrorResponse) => {
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      }));
+    }
   }
 
+  public async pairToFollow(matchId: number): Promise<BogenligaResponse<Array<number>>> {
+    if(this.onOfflineService.isOffline()){
+      let currentPair: number[]
+      await this.pair(matchId)
+                .then(data => currentPair = data.payload)
+                .catch(error => console.error(error))
+      let nextMatchId = 0;
+      await db.matchTabelle.get(Math.max(currentPair[0], currentPair[1]))
+        .then(data => nextMatchId = data.naechsteMatchId);
+      console.log(matchId + " to next match from offline" + nextMatchId)
+      return this.pair(nextMatchId);
+    } else {
+      return new Promise(((resolve, reject) => {
+        this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('pairToFollow').build())
+            .then((data: Array<number>) => {
+              resolve({result: RequestResult.SUCCESS, payload: data});
+            }, (error: HttpErrorResponse) => {
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      }));
+    }
+  }
+
+  public async previousPair(matchId: number): Promise<BogenligaResponse<Array<number>>> {
+    if (this.onOfflineService.isOffline()) {
+      let currentPair = []
+      await this.pair(matchId)
+        .then(data => currentPair = data.payload)
+        .catch(error => console.error(error))
+      let lastMatchId = 0;
+      await db.matchTabelle.where('naechsteMatchId').equals(Math.min(currentPair[0],currentPair[1])).first()
+        .then(data => lastMatchId = data.id)
+        .catch(error => console.error(error))
+      console.log(lastMatchId)
+      return this.pair(lastMatchId);
+    } else {
+      return new Promise(((resolve, reject) => {
+        this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(matchId).path('previousPair').build())
+            .then((data: Array<number>) => {
+              resolve({result: RequestResult.SUCCESS, payload: data});
+            }, (error: HttpErrorResponse) => {
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      }));
+    }
+  }
 }
