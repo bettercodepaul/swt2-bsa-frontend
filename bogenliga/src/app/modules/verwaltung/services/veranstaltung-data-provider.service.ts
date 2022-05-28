@@ -186,7 +186,7 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     if(this.onOfflineService.isOffline()){
       console.log("Choosing offline way for Veranstaltungen with Id: " + id)
       return new Promise((resolve,reject) =>{
-        db.veranstaltungTabelle.where('id').equals(id).toArray()[0]
+        db.veranstaltungTabelle.get(Number(id))
           .then((data: OfflineVeranstaltung) => {
             resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltung(data)});
           }, () => {

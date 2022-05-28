@@ -132,6 +132,18 @@
         "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden"
       }
     },
+    "OFFLINE": {
+      "NOTIFICATION": {
+        "SUCCESS": {
+          "TITLE": "Offline-Modus aktiviert",
+          "DESCRIPTION": "Die Daten wurden erfolgreich offline gespeichert und der Offline-Modus wurde aktiviert."
+        },
+        "FAILURE": {
+          "TITLE": "Fehler beim Laden der Daten",
+          "DESCRIPTION": "Die Daten konnten nicht für den Offline Modus vollständig geladen werden!"
+        }
+      }
+    },
     "TABLET_ADMIN": {
       "VERWALTUNG": "Tabletverwaltung",
       "SCHEIBE": "Scheibe",
