@@ -19,7 +19,7 @@ import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {fromOfflineMatchPayloadArray} from '@verwaltung/mapper/match-offline-mapper';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
-import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
+import {fromOfflinePassePayloadArray, offlinePasseFromDTOClassArray} from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
 import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
 import {
@@ -42,8 +42,9 @@ import {
 import {
   fromOfflineVeranstaltungPayloadArray
 } from '@verwaltung/mapper/veranstaltung-offline-mapper';
-import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {throwError} from "rxjs";
+import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
+
 
 
 @Injectable({
@@ -54,7 +55,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient, private wettkampfDataProvider: WettkampfDataProviderService) {
+  constructor(private restClient: RestClient, private passeDataProvider: PasseDataProviderService) {
     super();
   }
 
@@ -111,11 +112,19 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    *
    * @author Dennis Bär
    */
-  public loadPasseOffline(id: string | number): Promise<void> {
+  public async loadPasseOffline(id: string | number): Promise<void> {
+    let mitglieder: OfflineMannschaftsmitglied[] = []
+    await db.mannschaftsmitgliedTabelle.toArray()
+      .then(data => mitglieder = data)
+      .catch(error => console.error(error))
     return new Promise((resolve, reject) => {
       this.loadPasse(id)
       .then((response: BogenligaResponse<OfflinePasse[]>) => {
-        db.passeTabelle.bulkAdd(response.payload).then((value) => {
+        const passen = response.payload.map(passe => {
+          passe.rueckennummer = mitglieder.find(mitglied => mitglied.dsbMitgliedId === passe.dsbMitgliedId).rueckennummer;
+          return passe;
+        });
+        db.passeTabelle.bulkAdd(passen).then((value) => {
           console.log('offline passe added to offlinedb', value);
           resolve();
         }).catch((error) => {
@@ -405,44 +414,24 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     }
   }
 
-  public createDummyData() : void{
-   let offlineVer : OfflineVeranstaltung = {
-     id : 0,
-     ligaId : 0,
-     ligaleiterId : 2,
-     meldeDeadline : '2017-10-31',
-     name : 'DummyVeranstaltung',
-     wettkampfTypId : 1,
-     version : 5,
-     sportjahr: 2018,
-
-   }
-   let offlinePasseArray : OfflinePasse[] = [];
-   for(let i=0;i<=7; i++){
-   let offlinePasse : OfflinePasse = {
-     id : i,
-     wettkampfId : 1,
-     lfdNr : 0,
-     dsbMitgliedId: 0,
-     mannschaftId: 101 + i,
-     matchId:1018,
-     matchNr:1018,
-     ringzahlPfeil1: 3,
-     ringzahlPfeil2: 5,
-     version: 5,
-     ringzahlPfeil3: 0,
-     ringzahlPfeil4: 0,
-     ringzahlPfeil5: 0,
-     ringzahlPfeil6: 0,
-     rueckennummer: 1,
-
-
+  public async createVeranstaltungDummyData(): Promise<void>{
+    let offlineVer : OfflineVeranstaltung = {
+      id : 0,
+      ligaId : 0,
+      ligaleiterId : 2,
+      meldeDeadline : '2017-10-31',
+      name : 'DummyVeranstaltung',
+      wettkampfTypId : 1,
+      version : 5,
+      sportjahr: 2018,
     }
 
-    offlinePasseArray.push(offlinePasse);
+    db.veranstaltungTabelle.clear();
+    db.veranstaltungTabelle.put(offlineVer, 0);
+  }
 
-   }
-   let offlineWettkampfArray : OfflineWettkampf[] = [];
+  public async createWettkampfDummyData(): Promise<void>{
+    let offlineWettkampfArray : OfflineWettkampf[] = [];
     for(let i=0; i<4; i++) {
       let offlineWettkampf: OfflineWettkampf = {
         id: 30+i,
@@ -459,24 +448,27 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         strasse : 'Brunnenstraße',
         wettkampftypId : 1,
         veranstaltungId : 0,
-
-
       }
       offlineWettkampfArray.push(offlineWettkampf);
     }
-
-    db.open();
-    db.veranstaltungTabelle.clear();
-    db.veranstaltungTabelle.put(offlineVer, 0);
-
     db.wettkampfTabelle.clear();
     db.wettkampfTabelle.bulkPut(offlineWettkampfArray, offlineWettkampfArray.map((item) =>item.id));
+  }
 
+  public async createPasseDummyData(wettkampfId: number) : Promise<void>{
+   let offlinePasseArray : OfflinePasse[] = [];
+   let counter = 1
+   await this.passeDataProvider.findByWettkampfId(wettkampfId).then(r => {
+     offlinePasseArray = offlinePasseFromDTOClassArray(r.payload.map(item => {
+       item.schuetzeNr = counter
+       counter += 1
+       if(counter > 3)
+         counter = 1
+       return item
+     }))
+   });
     db.passeTabelle.clear();
-    db.passeTabelle.bulkPut(offlinePasseArray) ;
-
-    //db.close();
-
+    db.passeTabelle.bulkPut(offlinePasseArray);
   }
 
 
