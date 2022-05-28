@@ -130,6 +130,18 @@
       "WETTKAEMPFE": "competition days",
       "LT_DURCHFUEHRUNG": "League table implementation"
     },
+    "OFFLINE": {
+      "NOTIFICATION": {
+        "SUCCESS": {
+          "TITLE": "Offline-Mode enabled",
+          "DESCRIPTION": "The data was successfully stored offline and the offline mode was activated."
+        },
+        "FAILURE": {
+          "TITLE": "Failure while loading the data",
+          "DESCRIPTION": "The data wasn't successfully loaded for the offline mode!"
+        }
+      }
+    },
     "TABLET_ADMIN": {
       "VERWALTUNG": "Tablet Administration",
       "SCHEIBE": "disc",
