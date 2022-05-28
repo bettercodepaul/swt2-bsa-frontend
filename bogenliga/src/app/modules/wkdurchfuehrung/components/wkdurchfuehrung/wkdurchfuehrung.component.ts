@@ -202,8 +202,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
             this.notificationService.showNotification({
               id: 'OFFLINE_MODE_ON',
-              description: 'Die Daten wurden erfolgreich offline gespeichert und der Offline-Modus wurde aktiviert.',
-              title: 'Offline-Modus aktiviert',
+              description: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.SUCCESS.DESCRIPTION',
+              title: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.SUCCESS.TITLE',
               origin: NotificationOrigin.SYSTEM,
               userAction: NotificationUserAction.ACCEPTED,
               type: NotificationType.OK,
@@ -215,8 +215,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             console.log('Error while loading offline data');
             this.notificationService.showNotification({
               id: 'OFFLINE_MODE_OFF',
-              description: 'Die Daten konnten nicht für den Offline Modus vollständig geladen werden!',
-              title: 'Fehler beim Laden der Daten',
+              description: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.FAILURE.DESCRIPTION',
+              title: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.FAILURE.TITLE',
               origin: NotificationOrigin.SYSTEM,
               userAction: NotificationUserAction.PENDING,
               type: NotificationType.OK,
@@ -235,10 +235,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           // MANNSCHAFT WIRD ZUM JETZTIGEN STAND NICHT MEHR BENÖTIGT.
           // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
           // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
-
         });
       });
-
 
 
 
@@ -342,7 +340,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       // fuer Ausgabe unter der Veranstaltung Tabelle muss this.currentVeranstaltungName gesetzt werden:
       // dieses besteht aus dem Namen und dem Sportjahr der Veranstaltung
       this.currentVeranstaltungName = this.veranstaltung.name + ' ' + this.veranstaltung.sportjahr;
-
       let year: SportjahrVeranstaltungDO;
       // Suche nach dem passendem jahr und setze this.selItemId entsprechend.
       for (const sportjahr of this.availableYears) {

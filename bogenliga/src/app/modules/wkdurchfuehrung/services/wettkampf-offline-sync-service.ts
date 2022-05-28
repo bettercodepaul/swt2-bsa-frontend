@@ -447,7 +447,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       let offlineWettkampf: OfflineWettkampf = {
         id: 30+i,
         datum: '2017-12-30',
-        ausrichter: 'kfjsghkfdjg',
+        ausrichter: '2',
         beginn: '12:5'+i,
         offlinetoken : 'dsfgsgffddfdfhfghfhfhfgdsaljfgkjdyfgfdkljbdfjhdfsklbhndsklghdfslgjhdyfklöhdfkljghdfsjghljkglhkjdsflhkdfshjkghjkldgkhjldgkhjldkjhlg',
         disziplinId : 0,

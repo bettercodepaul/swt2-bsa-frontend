@@ -12,6 +12,7 @@ import {LigatabelleErgebnisDO} from '../../types/ligatabelle-ergebnis-do.class';
 import {isUndefined} from '@shared/functions';
 import {NotificationService} from '@shared/services/notification';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {OnOfflineService} from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
@@ -31,6 +32,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private notificationService: NotificationService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private ligatabelleDataProvider: LigatabelleDataProviderService,
+    private onOfflineService: OnOfflineService
   ) {
     super();
   }
@@ -93,6 +95,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.loadedVeranstaltungen = new Map();
     this.veranstaltungIdMap = new Map();
     try {
+      console.log(this.onOfflineService.isOffline())
       const responseYear = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
       this.loadedYears = responseYear.payload;
 
