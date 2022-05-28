@@ -18,6 +18,7 @@
                            [loading]="loadingYears"
                            [selectedItemId]='selItemId'
                            [disabled]="isOfflineDisabled()"
+                           data-cy="wkduchfuehrung-jahr-dropdown"
                            style="width: 40%;">
         </bla-dropdown-menu>
 
@@ -39,6 +40,7 @@
                               [optionFieldSelector]="'name'"
                               [disabled]="isOfflineDisabled()"
                               selectionListHeight="15em"
+                              data-cy="wkduchfuehrung-veranstaltung-list"
                               style="width: 40%; flex-grow: 0;">
         </bla-quicksearch-list>
 
@@ -58,6 +60,7 @@
         <bla-data-table [config]="config_table"
                         [rows]="rows"
                         [loading]="loadingWettkampfe"
+                        data-cy="wkdurchfuehrung-wettkampftage-list"
                         (onViewEntry)="onView($event)"
                         (onMapEntry)="onMap($event)" >
 
@@ -138,7 +141,7 @@
 
         </div>
         <div id="offlineButton" *ngIf="(!isOffline()); else backOnline ">
-          <button class="btn btn-warning" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Offline gehen</button>
+          <button class="btn btn-danger" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()" data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen</button>
         </div>
 
 
@@ -167,6 +170,7 @@
           <bla-data-table [config]="config_table_match"
                           [rows]="matchRows"
                           [loading]="loadingMatch"
+                          data-cy="wkdurchfuehrung-match-list"
                           (onEditEntry)="onEdit($event)">
 
           </bla-data-table>
