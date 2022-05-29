@@ -14,7 +14,7 @@ import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
 import {fromPayloadArray} from '../mapper/match-mapper-ext';
 import {OnOfflineService} from '@shared/services';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
-import {toDTOFromOfflineMatch, toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
+import { toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -143,7 +143,7 @@ export class MatchProviderService extends DataProviderService {
       return new Promise((resolve, reject) => {
         db.matchTabelle.get(matchId)
           .then((data: OfflineMatch) => {
-            resolve({result: RequestResult.SUCCESS, payload: [data.id,data.matchIdGegner]});
+            resolve({result: RequestResult.SUCCESS, payload: [Math.min(data.id,data.matchIdGegner), Math.max(data.id,data.matchIdGegner)]});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -171,7 +171,7 @@ export class MatchProviderService extends DataProviderService {
                 .then(data => currentPair = data.payload)
                 .catch(error => console.error(error))
       let nextMatchId = 0;
-      await db.matchTabelle.get(Math.max(currentPair[0], currentPair[1]))
+      await db.matchTabelle.get(currentPair[1])
         .then(data => nextMatchId = data.naechsteMatchId);
       console.log(matchId + " to next match from offline" + nextMatchId)
       return this.pair(nextMatchId);
@@ -198,7 +198,7 @@ export class MatchProviderService extends DataProviderService {
         .then(data => currentPair = data.payload)
         .catch(error => console.error(error))
       let lastMatchId = 0;
-      await db.matchTabelle.where('naechsteMatchId').equals(Math.min(currentPair[0],currentPair[1])).first()
+      await db.matchTabelle.where('naechsteMatchId').equals(currentPair[0]).first()
         .then(data => lastMatchId = data.id)
         .catch(error => console.error(error))
       console.log(lastMatchId)

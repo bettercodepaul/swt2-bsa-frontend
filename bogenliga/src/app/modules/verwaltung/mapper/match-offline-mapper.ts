@@ -42,13 +42,14 @@ export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch, offlinePassen:
     if(item.matchId === offlineMatch.id)
       passen.push(item)
   });
+  const begegnung = Math.ceil(offlineMatch.matchScheibennummer/2)
   return {
     id: offlineMatch.id,
     version: offlineMatch.version,
     mannschaftId: offlineMatch.mannschaftId,
     mannschaftName: offlineMatch.mannschaftName,
     nr: offlineMatch.matchNr,
-    begegnung: offlineMatch.matchIdGegner,
+    begegnung: begegnung,
     matchpunkte: offlineMatch.matchpkt,
     scheibenNummer: offlineMatch.matchScheibennummer,
     passen: passen,     //werden aus der passe tabelle geholt, damit sie nicht doppelt gespeichert/übergeben werden müssen
