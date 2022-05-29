@@ -13,7 +13,6 @@
           <p class="card-text">{{ card.descriptionKey | translate }}</p>
           <bla-tooltip [value]="card.tooltipText | translate">
           <button  class="btn btn-primary"
-                   attr.data-cy="{{card.descriptionKey}}"
                    (mouseenter)  ="setActiveCard(card)"
                    [routerLink]  ="getLink(card.route,card.detailType)"
                    [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
@@ -28,7 +27,6 @@
           <p class="tooltip-text multi-lines-text">{{card.tooltipText | translate}}</p>
           <div class="button-container">
             <button  class="btn btn-primary"
-                     attr.data-cy="{{card.descriptionKey}}"
                      (mouseleave)   ="resetActiveCard()"
                      [routerLink]   ="getLink(card.route,card.detailType)"
                      [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }}
