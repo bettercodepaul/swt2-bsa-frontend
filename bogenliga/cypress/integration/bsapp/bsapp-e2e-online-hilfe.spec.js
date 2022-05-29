@@ -1,6 +1,6 @@
 /**
  * This Cypress Test is used to test the online help functions including
- * hover effects in "Verwaltung" and the doku wiki page
+ * hover effects in "VERWALTUNG" and the doku wiki page including the IFRAME
  * */
 describe('Anonym User tests', function () {
 
@@ -64,7 +64,8 @@ describe('Anonym User tests', function () {
 describe('Admin User tests', function () {
 
   /**
-   * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
+   * This test tries to log in as an administrator and checks if the website has
+   * redirected successfully after logging in
    */
   it('Login erfolgreich', function() {
     cy.visit('http://localhost:4200/#/home')
@@ -75,7 +76,7 @@ describe('Admin User tests', function () {
   })
 
   /**
-   * This test opens the sidebar and clicks on the "HILFE" tab and checks if
+   * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if
    * the url has changed successfully
    */
   it('Verwaltung aufrufen', function () {
