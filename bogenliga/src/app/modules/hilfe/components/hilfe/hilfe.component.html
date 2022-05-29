@@ -2,19 +2,22 @@
   <ng-container>
     <div class="hilfeseite-container">
       <div class="hilfe-section-container">
-          <table id="section-table">
-            <tr id="hilfe-table-section" *ngFor="let sec of sections">
-              <div id="section-btn"
-                (click)="setUrl(sec.url)">
-                {{sec.id}}
-              </div>
-            </tr>
-          </table>
+        <table id="section-table">
+          <tr class="hilfe-table-section" *ngFor="let sec of sections">
+            <div class="section-btn"
+                 attr.data-cy="{{sec.cy_test}}"
+                 (click)="setUrl(sec.url)">
+              {{sec.id}}
+            </div>
+          </tr>
+        </table>
       </div>
-      <div class="hilfe-iframe-container" *ngIf="sectionSelected">
+      <div class="hilfe-iframe-container"
+           *ngIf="sectionSelected">
         <iframe
           [src]="getSecureUrl()"
           title="wiki-iframe"
+          data-cy="test-wiki-iframe"
           id="wiki-iframe"
           width="75%"
           height="500"

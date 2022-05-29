@@ -764,5 +764,6 @@ describe('Admin User tests', function() {
   //   cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
   // })
 
+
 })
 
