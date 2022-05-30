@@ -35,8 +35,8 @@ const NOTIFICATION_SAVE_USER = 'user_detail_save';
   providers: [TranslatePipe]
 })
 export class UserDetailComponent extends CommonComponentDirective implements OnInit {
-  @Input() public userRoleLeftCaptionTranslationKey = 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LEFTCAPTION';
-  @Input() public userRoleRightCaptionTranslationKey = 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.RIGHTCAPTION';
+  @Input() public userRoleLeftCaptionTranslationKey = 'MANAGEMENT.USER_DETAIL.FORM.ROLE_NEW.LEFTCAPTION';
+  @Input() public userRoleRightCaptionTranslationKey = 'MANAGEMENT.USER_DETAIL.FORM.ROLE_NEW.RIGHTCAPTION';
   @Output() public onAction = new EventEmitter<void>();
   public config = USER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
