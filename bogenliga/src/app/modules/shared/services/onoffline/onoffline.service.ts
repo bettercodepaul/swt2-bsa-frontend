@@ -5,6 +5,8 @@ import {AppState, GoOffline, GoOnline, OnOfflineState} from '../../redux-store';
 
 
 const ON_OFFLINE_STATE_KEY = 'on_offline_key';
+const SELECTED_YEAR_KEY = 'selected_year_key';
+const SELECTED_WETTKAMPF_KEY = 'selected_wettkampf_key';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,6 @@ const ON_OFFLINE_STATE_KEY = 'on_offline_key';
 export class OnOfflineService {
 
     private offline: boolean;
-    private selWettkampfID: number;
-    private selJahr: number;
 
     constructor(private store: Store<AppState>, private localDataProviderService: LocalDataProviderService) {
         this.observeOnOfflineState();
@@ -28,16 +28,11 @@ export class OnOfflineService {
     public goOffline(wettkampfID:number, veranstaltungJahr:number): void {
         this.store.dispatch(new GoOffline());
         this.localDataProviderService.setPermanently(ON_OFFLINE_STATE_KEY, 'Offline');
-        this.selJahr = veranstaltungJahr;
-        this.selWettkampfID = wettkampfID;
-        console.log("Offlinestatus:" + this.isOffline())
+        this.localDataProviderService.setPermanently(SELECTED_YEAR_KEY, veranstaltungJahr.toString())
+        this.localDataProviderService.setPermanently(SELECTED_WETTKAMPF_KEY, wettkampfID.toString())
+        console.log("Offlinestatus:" + this.isOffline());
     }
-
-    //gibt den offline status der Anwendung zurück, falls keine Werte ausgewählt sind wird als failsafe false returned
     public isOffline(): boolean {
-        if(this.selWettkampfID == undefined || this.selJahr == undefined){
-          return false;
-        }
         return this.offline;
     }
 
@@ -59,11 +54,11 @@ export class OnOfflineService {
     }
 
     public getOfflineJahr(): number{
-      return this.selJahr;
+      return parseInt(this.localDataProviderService.get(SELECTED_YEAR_KEY));
     }
 
     public getOfflineWettkampfID(): number{
-      return this.selWettkampfID;
+      return parseInt(this.localDataProviderService.get(SELECTED_WETTKAMPF_KEY));
 }
 
 }

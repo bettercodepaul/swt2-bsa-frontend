@@ -41,21 +41,22 @@ export class OfflineDB extends Dexie {
    */
   constructor() {
     super('offlineBogenligaDb');
-    this.version(2).stores({
+    this.version(6).stores({
       // Schema -> Every column name is the name of the attribute of the interface
       ligaTabelle: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
         'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
-      matchTabelle: '++id, version, matchVersion, wettkampfId, matchNr, matchScheibennummer, mannschaftId,   mannschaftName, ' +
+      matchTabelle: ', version, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
         'nameGegner, scheibennummerGegner, matchIdGegner, naechsteMatchId, naechsteNaechsteMatchNrMatchId,' +
         'strafpunkteSatz1, strafpunkteSatz2, strafpunkteSatz3, strafpunkteSatz4, strafpunkteSatz5',
       passeTabelle: '++id, version, matchID, mannschaftID, wettkampfID, matchNr, lfdNr, dsbMitgliedID, ' +
         'ringzahlPfeil1, ringzahlPfeil2, ringzahlPfeil3, ringzahlPfeil4, ringzahlPfeil5, ringzahlPfeil6, rueckennummer',
       // Use the same id for the wettkampfTabelle that is already in .id
-      wettkampfTabelle: 'id, version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
-      mannschaftTabelle: 'id, version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
-      mannschaftsmitgliedTabelle: 'id, version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
-      dsbMitgliedTabelle: 'id, version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
-      veranstaltungTabelle: 'id, version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId'
+      wettkampfTabelle: ', version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ' +
+        'ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
+      // mannschaftTabelle: 'id, version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
+      mannschaftsmitgliedTabelle: ', version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
+      dsbMitgliedTabelle: ', version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
+      veranstaltungTabelle: ', version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId'
 
 
     });

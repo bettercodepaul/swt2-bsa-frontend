@@ -7,6 +7,8 @@ export interface OfflineMatch {
   wettkampfId: number;
   matchNr: number;
   matchScheibennummer: number;
+  matchpkt: number;
+  satzpunkte: number;
   mannschaftId: number;
   mannschaftName: string;
   nameGegner: string;
