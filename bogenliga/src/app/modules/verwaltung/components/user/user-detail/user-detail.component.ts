@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
@@ -10,6 +10,7 @@ import {UserRolleDTO} from '../../../types/datatransfer/user-rolle-dto.class';
 import {RoleDTO} from '../../../types/datatransfer/role-dto.class';
 import {RoleDO} from '../../../types/role-do.class';
 import {USER_DETAIL_CONFIG} from './user-detail.config';
+import {TranslatePipe} from '@ngx-translate/core';
 
 import {
   Notification,
@@ -30,10 +31,12 @@ const NOTIFICATION_SAVE_USER = 'user_detail_save';
 @Component({
   selector:    'bla-user-detail',
   templateUrl: './user-detail.component.html',
-  styleUrls:   ['./user-detail.component.scss']
+  styleUrls:   ['./user-detail.component.scss'],
+  providers: [TranslatePipe]
 })
 export class UserDetailComponent extends CommonComponentDirective implements OnInit {
-
+  @Input() public userRoleLeftCaptionTranslationKey = 'MANAGEMENT.USER_DETAIL.FORM.ROLE_NEW.LEFTCAPTION';
+  @Input() public userRoleRightCaptionTranslationKey = 'MANAGEMENT.USER_DETAIL.FORM.ROLE_NEW.RIGHTCAPTION';
   @Output() public onAction = new EventEmitter<void>();
   public config = USER_DETAIL_CONFIG;
   public ButtonType = ButtonType;
@@ -63,7 +66,8 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
               private roleDataProvider: RoleDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private translate: TranslatePipe) {
     super();
   }
 
@@ -241,4 +245,7 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
 
   }
 
+  public getTranslation(key: string){
+    return this.translate.transform(key);
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, NgModule, OnInit} from '@angular/core';
+import {Component, Input, NgModule, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective} from '@shared/components';
 import {ButtonType} from '@shared/components';
@@ -34,7 +34,7 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-do.class';
-
+import {TranslatePipe} from '@ngx-translate/core';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
@@ -59,10 +59,14 @@ const wettkampfTagNotification: Notification = {
 @Component({
   selector:    'bla-wettkampftage',
   templateUrl: './wettkampftage.component.html',
-  styleUrls:   ['./wettkampftage.component.scss']
+  styleUrls:   ['./wettkampftage.component.scss'],
+  providers: [TranslatePipe]
 })
 
 export class WettkampftageComponent extends CommonComponentDirective implements OnInit {
+  @Input() public kampfrichterLeftCaptionTranslationKey = 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.LEFTCAPTION';
+  @Input() public kampfrichterRightCaptionTranslationKey = 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.KAMPFRICHTERLISTE.RIGHTCAPTION';
+
   public config = WETTKAMPFTAGE_CONFIG;
   public ButtonType = ButtonType;
 
@@ -111,7 +115,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     private router: Router,
     private route: ActivatedRoute,
     private einstellungenProvider: EinstellungenProviderService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private translate: TranslatePipe) {
     super();
   }
 
@@ -822,5 +827,9 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.notificationService.showNotification(notification);
     }
     return true;
+  }
+
+  public getTranslation(key: string){
+    return this.translate.transform(key);
   }
 }
