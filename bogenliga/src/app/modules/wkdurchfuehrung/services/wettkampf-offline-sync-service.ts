@@ -19,7 +19,7 @@ import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {fromOfflineMatchPayloadArray} from '@verwaltung/mapper/match-offline-mapper';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
-import {fromOfflinePassePayloadArray, offlinePasseFromDTOClassArray} from '@verwaltung/mapper/passe-offline-mapper';
+import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
 import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
 import {
@@ -43,8 +43,6 @@ import {
   fromOfflineVeranstaltungPayloadArray
 } from '@verwaltung/mapper/veranstaltung-offline-mapper';
 import {throwError} from "rxjs";
-import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.service';
-
 
 
 @Injectable({
@@ -55,7 +53,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient, private passeDataProvider: PasseDataProviderService) {
+  constructor(private restClient: RestClient) {
     super();
   }
 
@@ -88,14 +86,8 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     return new Promise((resolve, reject) => {
       this.loadMatch(id)
       .then((response: BogenligaResponse<OfflineMatch[]>) => {
-        db.matchTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((value) => {
-          console.log('offline match added to offlinedb', value);
-          resolve();
-
-        }).catch((error) => {
-          console.log('error adding offline match to offlinedb', error);
-          reject();
-        });
+        this.handleLoadMatchTabelleSuccess(response.payload);
+        resolve();
       })
       .catch((response: BogenligaResponse<OfflineMatch[]>) => {
         console.log('error loading offline match');
@@ -104,6 +96,76 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
+  public async handleLoadMatchTabelleSuccess(payload: OfflineMatch[]): Promise<void> {
+    await db.passeTabelle.toArray()
+      .then( passen => {
+        const matches = this.getOfflineMatchPunkte(payload, passen);
+        db.matchTabelle.bulkPut(matches, matches.map((item) => item.id)).then((value) => {
+          console.log('offline match added to offlinedb', value);
+
+        }).catch((error) => {
+          console.log('error adding offline match to offlinedb', error);
+        });
+      });
+  }
+
+  //eventuell wo anders hin bewegen später bspw. schusszettel data provider oder ähnliches
+  public getOfflineMatchPunkte(offlineMatches: OfflineMatch[], passen: OfflinePasse[]): OfflineMatch[]{
+    let matches: OfflineMatch[] = []
+    offlineMatches.forEach( (match1) => {
+      if(matches.find(m => m.id === match1.id))
+        return;
+
+      //zugehörige gegner match finden
+      let match2 = offlineMatches.find(m => m.id === match1.matchIdGegner);
+
+      //Satzpunkte aus den passen errechnen
+      const satzSumM1 = this.getOfflineMatchSatzSumme(match1.id, passen);
+      const satzSumM2 = this.getOfflineMatchSatzSumme(match2.id, passen);
+
+
+      //gewinner der Sätze ermitteln => satzpunkte gesamt errechnen
+      for(let i = 0; i<5; i++){
+        if(satzSumM1[i] > satzSumM2[i])
+          match1.satzpunkte += 2;
+        else if(satzSumM1[i] < satzSumM2[i])
+          match2.satzpunkte += 2;
+        else if(satzSumM1[i] === satzSumM2[i] && satzSumM1[i] != 0){
+          match1.satzpunkte += 1;
+          match2.satzpunkte += 1;
+        }
+      }
+
+      //matchpunkte errechnen
+      if(match1.satzpunkte >= 6) {
+        match1.matchpkt = 2;
+        match2.matchpkt = 0;
+      }
+      else if(match2.satzpunkte >= 6) {
+        match2.matchpkt = 2;
+        match1.matchpkt = 0;
+      }
+      else if(match1.satzpunkte === match2.satzpunkte && match1.satzpunkte >= 5){
+        match1.matchpkt = 1;
+        match2.matchpkt = 1;
+      } else if(match1.satzpunkte > 0 && match2.satzpunkte > 0) {
+        match1.matchpkt = 0;
+        match2.matchpkt = 0;
+      }
+      matches.push(match1, match2);
+    });
+    return matches;
+  }
+
+  public getOfflineMatchSatzSumme(matchID: number, passen: OfflinePasse[]): number[]{
+    const satzSum = [0,0,0,0,0];
+    passen.forEach(passe =>{
+      if(passe.matchID === matchID){
+        satzSum[passe.lfdNr-1] += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
+      }
+    });
+    return satzSum;
+  }
 
   /**
    * Calls the corresponding REST-API method and returns the result as Promise
@@ -453,22 +515,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     }
     db.wettkampfTabelle.clear();
     db.wettkampfTabelle.bulkPut(offlineWettkampfArray, offlineWettkampfArray.map((item) =>item.id));
-  }
-
-  public async createPasseDummyData(wettkampfId: number) : Promise<void>{
-   let offlinePasseArray : OfflinePasse[] = [];
-   let counter = 1
-   await this.passeDataProvider.findByWettkampfId(wettkampfId).then(r => {
-     offlinePasseArray = offlinePasseFromDTOClassArray(r.payload.map(item => {
-       item.schuetzeNr = counter
-       counter += 1
-       if(counter > 3)
-         counter = 1
-       return item
-     }))
-   });
-    db.passeTabelle.clear();
-    db.passeTabelle.bulkPut(offlinePasseArray);
   }
 
 
