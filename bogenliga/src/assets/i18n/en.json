@@ -1374,7 +1374,9 @@
         },
         "ROLENEW": {
           "LABEL": "Future role",
-          "PLACEHOLDER": "please select a role"
+          "PLACEHOLDER": "please select a role",
+          "LEFTCAPTION": "deselected",
+          "RIGHTCAPTION": "selected"
         },
         "UPDATE": "Refresh"
       },
