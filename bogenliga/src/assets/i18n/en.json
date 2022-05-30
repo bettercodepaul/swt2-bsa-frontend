@@ -51,7 +51,7 @@
     "REGIONEN": {
       "TITLE": "Regions",
       "DESCRIPTION": "To select a league, click on the corresponding region. For example for the Wuerttemberg-league on the Wuerttembergischer Schuetzenverband",
-      "CLOSE" : "To navigate back, click on the inner circle."
+      "CLOSE": "To navigate back, click on the inner circle."
     }
   },
   "VEREINE": {
@@ -69,17 +69,17 @@
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
       "TITLE": "League-Ranking",
-      "WETTKAMPFTAGEINS" : "Competition day 1",
-      "WETTKAMPFTAGZWEI" : "Competition day 2",
-      "WETTKAMPFTAGDREI" : "Competition day 3",
-      "WETTKAMPFTAGVIER" : "Competition day 4"
+      "WETTKAMPFTAGEINS": "Competition day 1",
+      "WETTKAMPFTAGZWEI": "Competition day 2",
+      "WETTKAMPFTAGDREI": "Competition day 3",
+      "WETTKAMPFTAGVIER": "Competition day 4"
     },
     "TITEL": {
       "VERANSTALTUNG": "League-Selection"
     },
     "LIGATABELLE": {
       "TITEL": "League-Ranking",
-      "LINKDESCRIPTION": "To the competition results of" ,
+      "LINKDESCRIPTION": "To the competition results of",
       "TABELLENPLATZ": "Rank",
       "MANNSCHAFTNAME": "Team",
       "MATCHPUNKTE": "Match-score",
@@ -92,14 +92,14 @@
       }
     },
     "EINZELSTATISTIK": {
-      "NOTIFICATION" : {
+      "NOTIFICATION": {
         "DOWNLOADFEHLER": {
           "TITLE": "Error creating Singlestatistic:",
           "DESCRIPTION": "Could not generate Singlestatistic. Could not find Archers for selection."
         }
       }
     },
-    "BUTTONS":{
+    "BUTTONS": {
       "EINZEL_ALS_PDF": {
         "LABEL": "Individual statistics as PDF"
       },
@@ -125,87 +125,146 @@
       "TITLE": "Dates overview"
     },
     "TITEL": {
+      "WKTAG": "Event competition days",
       "VERANSTALTUNG": "Events",
-      "WETTKAEMPFE": "competition days"
+      "WETTKAEMPFE": "competition days",
+      "LT_DURCHFUEHRUNG": "League table implementation"
+    },
+    "OFFLINE": {
+      "NOTIFICATION": {
+        "SUCCESS": {
+          "TITLE": "Offline-Mode enabled",
+          "DESCRIPTION": "The data was successfully stored offline and the offline mode was activated."
+        },
+        "FAILURE": {
+          "TITLE": "Failure while loading the data",
+          "DESCRIPTION": "The data wasn't successfully loaded for the offline mode!"
+        }
+      }
+    },
+    "TABLET_ADMIN": {
+      "VERWALTUNG": "Tablet Administration",
+      "SCHEIBE": "disc",
+      "STATUS": "status",
+      "AKTIONEN": "actions",
+      "ACCESS_TOKEN": "access Token"
+    },
+    "TABLET_INPUT": {
+      "SCHEIBE": "disc",
+      "WETTKAMPFTAG": "competition day",
+      "MATCH": "match",
+      "SCHUETZEN_NUMMERN": "Please enter the archer-numbers for this match:",
+      "SCHUETZE": "archer",
+      "SAVE": "save",
+      "SATZ": "set",
+      "NEXT_MATCH": "next match",
+      "NEXT_SET": "next set",
+      "CONFIGURE_PART1": "Please configure your device with help of the",
+      "CONFIGURE_PART2": "tablet administration in the league table administration"
     },
     "WETTKAMPF": {
       "TABLE": {
         "CDAY": "competition day",
-        "DAY":"weekday",
+        "DAY": "weekday",
         "DATE": "date",
         "TIME": "time",
         "LIGA": "discipline",
         "PLACE": "event location"
       }
     },
-    "SETZLISTE" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Failure while creating the seeding list:",
+    "BUTTON": {
+      "MATCHES": "generate matches",
+      "SETZLISTE": "set list",
+      "SCHUSSZETTEL": "shooting list",
+      "KONTROLLLISTE": "sheet control list",
+      "MELDEZETTEL": "report slip",
+      "TABLE_SETUP": "setup tablets",
+      "OFFLINE": "Offline"
+    },
+    "SETZLISTE": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Failure while creating the seeding list:",
           "DESCRIPTION": "Seeding list was not created successful because there is no data about the former competition day.."
         }
       }
     },
-    "BOGENKONTROLLLISTE" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Failure while creating the arch control list:",
+    "BOGENKONTROLLLISTE": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Failure while creating the arch control list:",
           "DESCRIPTION": "Arch control list was not created successful because there is no seeding list existing."
         }
       }
     },
-    "MELDEZETTEL" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Failure while creating the registration form:",
+    "MELDEZETTEL": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Failure while creating the registration form:",
           "DESCRIPTION": "Registration from was not created successful because there are no existing achers."
         }
       }
     },
     "SCHUSSZETTEL": {
-      "DOWNLOADFEHLER":{
-        "TITLE":"Failure while creating the scorecard:",
-        "DESCRIPTION": "Scorecard could not be generated, because there are no matches in the competition."
-      },
+      "MATCH": "match",
+      "GEGEN": "against",
+      "SATZ": "set",
+      "SUMME": "sum",
+      "FEHLERPUNKTE": "fault points",
+      "SCHUETZE": "archer",
+      "SATZ_PRO_PFEIL": "set / arrows",
+      "PFEIL": "arrow",
+      "UNTERSCHRIFT": "signature",
+      "ZURUECK": "back",
+      "SPEICHERN": "save",
+      "DRUCKEN": "print",
+      "VORHERIGES_MATCH": "previous match",
+      "NAECHSTES_MATCH": "next match",
+      "PRUEF_D_SCHUETZEN": "audit of archers",
+      "SELBER_TAG_PRUEFUNG1": "has already shot in this competition day",
+      "SELBER_TAG_PRUEFUNG2": "",
+      "ANDERER_TAG_PRUEFUNG1": "has already shot",
+      "ANDERER_TAG_PRUEFUNG2": "times in the",
+      "ANDERER_TAG_PRUEFUNG3": "",
       "NOTIFICATION": {
         "LADEN": {
-          "TITLE":"Load Shot-note",
+          "TITLE": "Load Shot-note",
           "DESCRIPTION": "Loading Shot-note..."
         },
-        "EINGABEFEHLER":{
-          "TITLE":"Input error",
+        "EINGABEFEHLER": {
+          "TITLE": "Input error",
           "DESCRIPTION": "Arrow value invalid..."
         },
-        "ENTSCHIEDEN":{
-          "TITLE":"Input error - saving canceled",
+        "ENTSCHIEDEN": {
+          "TITLE": "Input error - saving canceled",
           "DESCRIPTION": "Set-points > 7"
         },
-        "SCHUETZENNUMMER":{
-          "TITLE":"Input error - saving canceled",
+        "SCHUETZENNUMMER": {
+          "TITLE": "Input error - saving canceled",
           "DESCRIPTION": "Please enter all marksman numbers."
         },
-        "SCHUETZENEINDEUTIG":{
-          "TITLE":"Input error - saving canceled",
+        "SCHUETZENEINDEUTIG": {
+          "TITLE": "Input error - saving canceled",
           "DESCRIPTION": "Please enter three different marksman numbers."
         },
-        "SPEICHERN":{
-          "TITLE":"Save Shot-note",
+        "SPEICHERN": {
+          "TITLE": "Save Shot-note",
           "DESCRIPTION": "Saving Shot-note..."
         },
-        "GESPEICHERT":{
-          "TITLE":"Saved",
+        "GESPEICHERT": {
+          "TITLE": "Saved",
           "DESCRIPTION": "Save successful"
         },
-        "RUECKENNUMMERZUHOCH":{
-          "TITLE":"Save not successful",
+        "RUECKENNUMMERZUHOCH": {
+          "TITLE": "Save not successful",
           "DESCRIPTION": "Backnumber does not exist in this team"
         },
-        "WEITER":{
-          "TITLE":"There are unsaved changes",
+        "WEITER": {
+          "TITLE": "There are unsaved changes",
           "DESCRIPTION": "Are you sure you want to leave this dialog? All unsaved changes will be lost."
         },
         "ZURUECK": {
-          "TITLE":"There are unsaved changes",
+          "TITLE": "There are unsaved changes",
           "DESCRIPTION": "Are you sure you want to leave this dialog? All unsaved changes will be lost."
         }
       }
@@ -213,7 +272,7 @@
     "MATCH": {
       "TABLE": {
         "NUMMER": "Match",
-        "SCHEIBE":"Disc",
+        "SCHEIBE": "Disc",
         "MANNSCHAFT": "Team",
         "BEGEGNUNG": "Encounter",
         "MATCHPUNKTE": "Match-points",
@@ -223,10 +282,12 @@
   },
   "MANNSCHAFTEN": {
     "LIGATABELLE": {
-      "TITLE": "Current League-ranking"
+      "TITLE": "Current League-ranking",
+      "LIGATABELLE_VORBEREITUNG": "Ligatabelle_Vorbereitung",
+      "TEXT": "A competition day must be selected in order to be able to use the buttons"
     },
     "SCHUETZEN_STATISTIK": {
-      "TITEL" : "Overall statistics per shooter"
+      "TITEL": "Overall statistics per shooter"
     },
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
@@ -254,7 +315,7 @@
         "ANZEIGENEINZELGESAMTDRUCKEN": {
           "LABEL": "Print individual statistic"
         }
-    },
+      },
       "FORM": {
         "MANNSCHAFT_NAME": {
           "LABEL": "Team:"
@@ -265,10 +326,9 @@
         "VERANSTALTUNG_NAME": {
           "LABEL": "Events:"
         },
-        "SPORTJAHR":{
+        "SPORTJAHR": {
           "LABEL": "Sport year:"
         }
-
       },
       "TABLE": {
         "COLUMNS": {
@@ -443,7 +503,6 @@
         }
       }
     },
-
     "EINSTELLUNGEN_DETAIL": {
       "TITLE": "Setting - Detail",
       "FORM": {
@@ -477,60 +536,48 @@
       }
     }
   },
-    "VERWALTUNG": {
-      "TITLE": "Administration",
-      "NAVIGATION": {
-        "DSBMITGLIEDER": {
-          "LABEL": "DSB members",
-          "DESCRIPTION": "Management of DSB members",
-          "TOOLTIP": "● Create new DSB members\n● edit DSB members\n● Delete DSB members"
-        },
-        "BENUTZER": {
-          "LABEL": "User",
-          "DESCRIPTION": "Management of user-accounts",
-          "TOOLTIP": "● Create new user\n● Edit user list\n● Delete user"
-        },
-        "KLASSEN": {
-          "LABEL": "(Competition-) Classes",
-          "DESCRIPTION": "Management of classes",
-          "TOOLTIP": "● Create new classes\n● Edit class list"
-        },
-        "DSBMANNSCHAFTEN": {
-          "LABEL": "Teams",
-          "DESCRIPTION": "Management of teams",
-          "TOOLTIP": ""
-        },
-        "VEREINE": {
-          "LABEL": "Clubs",
-          "DESCRIPTION": "Management of clubs",
-          "TOOLTIP": "● Create new clubs\n● Edit the club list\n● delete clubs\n● team overview & edit"
-        },
-        "LIGA": {
-          "LABEL": "Leagues",
-          "DESCRIPTION": "Management of leagues",
-          "TOOLTIP": "● Create new leagues\n● Edit leagues\n● Delete leagues"
-        },
-        "REGIONEN": {
-          "LABEL": "Regions",
-          "DESCRIPTION": "Management of regions",
-          "TOOLTIP": "● Adding new regions\n● Edit regions list\n● delete entries"
-        },
-        "SPORTJAHR": {
-          "LABEL": "Sport years",
-          "DESCRIPTION": "Management of sport years",
-          "TOOLTIP": ""
-        },
-        "VERANSTALTUNG": {
-          "LABEL": "Events",
-          "DESCRIPTION": "Management of events",
-          "TOOLTIP": "● Events overview\n● Create a new event\n● Event list management"
-        },
-
+  "VERWALTUNG": {
+    "TITLE": "Administration",
+    "NAVIGATION": {
+      "DSBMITGLIEDER": {
+        "LABEL": "DSB members",
+        "DESCRIPTION": "Management of DSB members"
+      },
+      "BENUTZER": {
+        "LABEL": "User",
+        "DESCRIPTION": "Management of user-accounts"
+      },
+      "KLASSEN": {
+        "LABEL": "(Competition-) Classes",
+        "DESCRIPTION": "Management of classes"
+      },
+      "DSBMANNSCHAFTEN": {
+        "LABEL": "Teams",
+        "DESCRIPTION": "Management of teams"
+      },
+      "VEREINE": {
+        "LABEL": "Clubs",
+        "DESCRIPTION": "Management of clubs"
+      },
+      "LIGA": {
+        "LABEL": "Leagues",
+        "DESCRIPTION": "Management of leagues"
+      },
+      "REGIONEN": {
+        "LABEL": "Regions",
+        "DESCRIPTION": "Management of regions"
+      },
+      "SPORTJAHR": {
+        "LABEL": "Sport years",
+        "DESCRIPTION": "Management of sport years"
+      },
+      "VERANSTALTUNG": {
+        "LABEL": "Events",
+        "DESCRIPTION": "Management of events"
+      },
       "EINSTELLUNG": {
         "LABEL": "einstellungen",
-        "DESCRIPTION": "Management of einstellungen",
-        "TOOLTIP": "● autorefresh & interval\n● SMTP user & password\n● max. competition days\n● SMTP settings"
-
+        "DESCRIPTION": "Management of einstellungen"
       }
     },
     "SPORTJAHR": {
@@ -1128,13 +1175,11 @@
           "PLACEHOLDER": "Please enter a name for the event",
           "ERROR": "Please enter a valid name."
         },
-
         "SPORTJAHR": {
           "LABEL": "Sport year",
           "PLACEHOLDER": "Please enter a year",
           "ERROR": "Please enter a valid year."
         },
-
         "WETTKAMPFTYPID": {
           "LABEL": "Competition type",
           "PLACEHOLDER": "Please enter a competition type for the event",
@@ -1150,7 +1195,6 @@
           "PLACEHOLDER": "Please enter a registration deadline date",
           "ERROR": "Please enter a valid date (Format: YYYY-MM-DD)."
         },
-
         "LIGANAME": {
           "LABEL": "League name",
           "PLACEHOLDER": "Select a league",
@@ -1181,33 +1225,33 @@
               "ERROR": "Enter valid time (Format: HH:MM)."
             }
           },
-            "NOTIFICATION": {
-              "SAVE": {
-                "TITLE": "Success",
-                "DESCRIPTION": "Successfully saved competition day"
-              },
-              "UPDATE": {
-                "TITLE": "Success",
-                "DESCRIPTION": "Successfully updated competition day"
-              },
-              "DELETE": {
-                "TITLE": "Wettkampftag löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
-              },
-              "ADD": {
-                "TITLE": "Neu",
-                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
-              },
-              "DELETE_SUCCESS": {
-                "TITLE": "Erfolgreich",
-                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
-              },
-              "DELETE_FAILURE": {
-                "TITLE": "Fehler beim Löschen",
-                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
-              }
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Success",
+              "DESCRIPTION": "Successfully saved competition day"
+            },
+            "UPDATE": {
+              "TITLE": "Success",
+              "DESCRIPTION": "Successfully updated competition day"
+            },
+            "DELETE": {
+              "TITLE": "Wettkampftag löschen",
+              "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+            },
+            "ADD": {
+              "TITLE": "Neu",
+              "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+            },
+            "DELETE_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+            },
+            "DELETE_FAILURE": {
+              "TITLE": "Fehler beim Löschen",
+              "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
             }
-          },
+          }
+        },
         "KAMPFRICHTERLISTE": {
           "LABEL": "Referee",
           "LEFTCAPTION": "deselected",
@@ -1399,11 +1443,6 @@
           "PLACEHOLDER": "Please enter a number",
           "ERROR": "Please enter a valid number (max. 2 digits)."
         },
-
-
-
-
-
         "SAVE": "Save",
         "UPDATE": "Refresh",
         "DELETE": "Delete"
@@ -1434,6 +1473,11 @@
       "CANCEL": "Cancel",
       "YES": "Yes",
       "NO": "No"
+    },
+    "INFO": {
+      "MEHR": "Show more information",
+      "WENIGER": "Show less information",
+      "ROHDATEN_OEFFNEN": "Open window with raw data"
     },
     "ERROR": {
       "GENERIC_ERROR": {
@@ -1555,6 +1599,31 @@
       "BUTTON": "To the Spotter-Interface",
       "INFO": "x x x x x x",
       "ERROR": "Wrong input"
+    },
+    "COMPONENTS": {
+      "BUTTON": {
+        "BACK": "Back",
+        "SAVE": "Save",
+        "NEACHSTERSATZ": "Next set",
+        "BEENDEN": "End match"
+      },
+      "TEXT": {
+        "SATZPUNKTE": "Sentence points",
+        "MANNSCHAFT": "Team"
+      }
+    }
+  },
+  "SHARED": {
+    "DOWNLOAD": {
+      "BUTTON": {
+        "BOGENKONTROLLISTE": "Download Sheet Control List",
+        "EINZELSTATISTIK": "Download individual statistics",
+        "GESAMTSTATISTIK": "Download overall statistics",
+        "MEDLEZETTEL": "Download registration sheet",
+        "SCHUSSZETTEL": "Download shot sheet",
+        "SETZLISTE": "Download seeding list",
+        "TAG": "Download daily overview"
+      }
     }
   }
 }
