@@ -94,5 +94,26 @@ describe("offline-fähigkeit", {browser: "!firefox"}, () => {
       .find('[data-cy="TABLE.ACTIONS.EDIT"]').should('be.visible')
   })
 
+  it('Zu Offline Match Seite wechseln', function(){
+    cy.get('[data-cy="wkdurchfuehrung-match-list"]')
+      .find('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
+    cy.url().should('include', '#/wkdurchfuehrung/schusszettel')
+  })
+
+  let originalMatchID
+  it('Nächstes Match anzeigen', function(){
+    cy.url().then(url=>{
+      let oldUrl = url.toString().split('/')
+
+      originalMatchID = oldUrl[oldUrl.length-1]
+      cy.get('.nextButton:nth-child(2)').click();
+      cy.url().should('not.include', originalMatchID)
+    })
+  })
+
+  it('Vorheriges Match anzeigen', function(){
+    cy.get('.nextButton:nth-child(1)').click();
+    cy.url().should('include', originalMatchID)
+  })
 
 })
