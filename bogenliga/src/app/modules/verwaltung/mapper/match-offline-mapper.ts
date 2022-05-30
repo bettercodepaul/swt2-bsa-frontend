@@ -2,6 +2,7 @@ import {DataTransferObject} from '@shared/data-provider';
 import {MatchOfflineSyncDto} from '@verwaltung/types/datatransfer/match-offline-sync-dto.class';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
 import {MatchDTOExt} from '@wkdurchfuehrung/types/datatransfer/match-dto-ext.class';
+import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
 
 
 export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
@@ -29,25 +30,30 @@ export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
   };
 }
 
-export function toDTOFromOfflineMatchArray(offlineMatches: OfflineMatch[]): MatchDTOExt[] {
+export function toDTOFromOfflineMatchArray(offlineMatches: OfflineMatch[], offlinePassen: PasseDTO[]): MatchDTOExt[] {
   const matches: MatchDTOExt[] = [];
-  offlineMatches.forEach((match) => matches.push(toDTOFromOfflineMatch(match)));
+  offlineMatches.forEach((match) => matches.push(toDTOFromOfflineMatch(match, offlinePassen)));
   return matches;
 }
 
-export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch): MatchDTOExt {
-  //TODO: fehlende objekte ergänzen falls möglich/nötig
+export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch, offlinePassen: PasseDTO[]): MatchDTOExt {
+  const passen = []
+  offlinePassen.forEach(item => {
+    if(item.matchId === offlineMatch.id)
+      passen.push(item)
+  });
+  const begegnung = Math.ceil(offlineMatch.matchScheibennummer/2)
   return {
     id: offlineMatch.id,
     version: offlineMatch.version,
     mannschaftId: offlineMatch.mannschaftId,
     mannschaftName: offlineMatch.mannschaftName,
     nr: offlineMatch.matchNr,
-    begegnung: offlineMatch.matchIdGegner,
+    begegnung: begegnung,
     matchpunkte: offlineMatch.matchpkt,
     scheibenNummer: offlineMatch.matchScheibennummer,
-    passen: [],     //wird nicht an die OfflineDB übergeben
-    satzpunkte: 0,  //wird nicht an die OfflineDB übergeben
+    passen: passen,     //werden aus der passe tabelle geholt, damit sie nicht doppelt gespeichert/übergeben werden müssen
+    satzpunkte: offlineMatch.satzpunkte,
     strafPunkteSatz1: offlineMatch.strafpunkteSatz1,
     strafPunkteSatz2: offlineMatch.strafpunkteSatz2,
     strafPunkteSatz3: offlineMatch.strafpunkteSatz3,

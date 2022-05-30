@@ -3,7 +3,7 @@ export interface OfflinePasse {
   // passe_id
   id?: number;
   version?: number;
-  matchId: number;
+  matchID: number;
   mannschaftId: number;
   wettkampfId: number;
   matchNr: number;
