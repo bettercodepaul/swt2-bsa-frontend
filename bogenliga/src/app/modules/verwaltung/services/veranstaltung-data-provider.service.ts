@@ -93,8 +93,6 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
       });
     }
   }
-
-  public findBySportyear(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
     if(this.onOfflineService.isOffline()){
       console.log("Choosing offline way for Veranstaltungen findBySportyear with sportjahr:" + sportjahr)
       return new Promise((resolve,reject) =>{
@@ -115,7 +113,6 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
               // console.log(data.toString());
               resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
             }, (error: HttpErrorResponse) => {
-
               if (error.status === 0) {
                 reject({result: RequestResult.CONNECTION_PROBLEM});
               } else {
