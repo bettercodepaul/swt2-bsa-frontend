@@ -33,7 +33,9 @@ import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltu
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {environment} from '@environment';
 import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
+import { jsPDF } from "jspdf";
+import {db} from '@shared/data-provider/offlinedb/offlinedb';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
@@ -76,6 +78,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
               private veranstaltungsProvider: VeranstaltungDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
+              private onOfflineService: OnOfflineService,
               private notificationService: NotificationService) {
     super();
   }
@@ -299,15 +302,64 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   public onDownloadRueckennummer(versionedDataObject: VersionedDataObject): void {
-    const URL: string = new UriBuilder()
-      .fromPath(environment.backendBaseUrl)
-      .path('v1/download')
-      .path('pdf/rueckennummern')
-      .path('?mannschaftid=' + versionedDataObject.id)
-      .build();
-    this.downloadService.download(URL, 'rueckennummern.pdf', this.aElementRef)
-        .then((response: BogenligaResponse<string>) => console.log(response))
-        .catch((response: BogenligaResponse<string>) => console.log(response));
+    if(!this.onOfflineService.isOffline()) {
+      const URL: string = new UriBuilder()
+        .fromPath(environment.backendBaseUrl)
+        .path('v1/download')
+        .path('pdf/rueckennummern')
+        .path('?mannschaftid=' + versionedDataObject.id)
+        .build();
+      this.downloadService.download(URL, 'rueckennummern.pdf', this.aElementRef)
+          .then((response: BogenligaResponse<string>) => console.log(response))
+          .catch((response: BogenligaResponse<string>) => console.log(response));
+    } else {
+        console.log("offline");
+        this.returnMatch(versionedDataObject);
+      }
+
+  }
+
+  // Get match Info from offlineDB
+  public returnMatch (versionedDataObject: VersionedDataObject): void{
+    const doc = new jsPDF('p', 'mm', 'a4');
+    doc.setProperties({
+      title: 'Rueckennumer',
+    })
+    const width = doc.internal.pageSize.getWidth();
+    const height = doc.internal.pageSize.getHeight();
+    db.transaction('r',db.ligaTabelle, db.mannschaftsmitgliedTabelle, db.dsbMitgliedTabelle, async () => {
+      console.log((await db.ligaTabelle.where("mannschaftId").equals(versionedDataObject.id).toArray()));
+      const mannschaftId = await db.ligaTabelle.where("mannschaftId").equals(versionedDataObject.id).toArray();
+      const nums = await db.mannschaftsmitgliedTabelle.where("mannschaftId").equals(versionedDataObject.id).toArray();
+      const mannschaftsName = mannschaftId[0].mannschaftName;
+      const ligaName = mannschaftId[0].veranstaltungName;
+      for (let i = 0; i < nums.length; i++) {
+        console.log("rueckennummer: " + nums[0].rueckennummer  );
+        doc.setFontSize(10).setFont(undefined,"normal");
+        doc.text(ligaName, 20, 20,);
+        doc.text(mannschaftsName, 20, 28,)//.setFontSize(25).setFont(undefined, 'bold');
+
+          //Todo add Name Nachname to Rueckennumer if OnlineDatabase is filled
+          // doc.text('Spielername', width / 2, height / 2 - 95, {align: 'center'})
+
+           .setFontSize(100).setFont(undefined, "bold");
+        doc.text(nums[i].rueckennummer.toString(), width / 2, height / 2 - 50, {align: 'center'});
+        if (i + 1 < nums.length) {
+          console.log("i ist "+  i + " length ist " + nums.length)
+          doc.addPage();
+        }
+      }
+      //open in new tab
+      const string = doc.output('datauristring');
+      const embed = '<embed width=\'100%\' height=\'100%\' src=\'' + string + '\'/>'
+      const x = window.open();
+      x.document.open();
+      x.document.write(embed);
+      x.document.close();
+    })
+      .catch (function (error) {
+        console.error("Transaction aborted due to error: " + error);
+      })
   }
 
   public onDownloadLizenzen(versionedDataObject: VersionedDataObject): void {
