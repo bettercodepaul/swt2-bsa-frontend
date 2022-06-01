@@ -15,6 +15,7 @@ import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltun
 import {OnOfflineService} from '@shared/services';
 
 
+
 const ID_PATH_PARAM = 'id';
 
 
@@ -188,5 +189,4 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.buttonForward = this.selectedVeranstaltung.id;
     this.loadLigaTableRows();
   }
-
 }
