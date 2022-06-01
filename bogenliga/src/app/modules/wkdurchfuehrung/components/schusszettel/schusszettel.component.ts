@@ -26,6 +26,8 @@ import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
+import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
+
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
 const NOTIFICATION_WEITER_SCHALTEN = 'schusszettel_weiter';
@@ -91,7 +93,8 @@ export class SchusszettelComponent implements OnInit {
               private passeDataProvider: PasseDataProviderService,
               private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungDataProvider: VeranstaltungDataProviderService,
-              private mannschaftsMitgliedDataProvider: MannschaftsmitgliedDataProviderService
+              private mannschaftsMitgliedDataProvider: MannschaftsmitgliedDataProviderService,
+              private ligatabelleDataProviderService :LigatabelleDataProviderService
   ) {
   }
 
@@ -472,7 +475,10 @@ export class SchusszettelComponent implements OnInit {
             });
             this.notificationService.discardNotification();
           });
+      //Es muss noch der Liganame als Variable ersetzt werden.
+      // this.ligatabelleDataProviderService.updateLigatabelleVeranstaltung("Württembergliga", this.match1, this.match2);
       this.dirtyFlag = false; // Daten gespeichert
+
     }
   }
 
@@ -789,4 +795,5 @@ export class SchusszettelComponent implements OnInit {
       .path(this.match1.id + '/' + this.match2.id)
       .build();
   }
+
 }
