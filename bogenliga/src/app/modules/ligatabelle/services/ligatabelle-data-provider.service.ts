@@ -66,7 +66,6 @@ export class LigatabelleDataProviderService extends DataProviderService {
   }
 
 
-
   // ermittelt den Stand der Ligatabelle nach einem definierten Wettkampftag
   // so lässt sich auch am Ende die Saison noch ermitteln, welchen Platz ein Verein nach dem ersten Wettkampftag hatte
   public getLigatabelleWettkampf(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
@@ -88,4 +87,72 @@ export class LigatabelleDataProviderService extends DataProviderService {
     });
   }
 
+  public getLigatabelleWK(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
+    console.log('getLigatabelleDaten wurde aufgerufen');
+    return new Promise((resolve, reject) => {
+      db.ligaTabelle.where('veranstaltungName').equals(id).toArray()
+        .then((data: OfflineLigatabelle[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromOfflineLigatabelleArray(data)});
+        }, () => {
+          reject({result: RequestResult.FAILURE});
+        });
+    });
+  };
+
+  public async updateMannschaftLT(id : number, satzpunkte:number, satzpunkteGegner : number, spd :number, matchpunkte : number, matchpunkteGegner : number){
+    db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
+  };
+
+  public async updateLigatabelleVeranstaltung(liganame: string, match: string[] ){
+
+    /*Aufgabu von match:
+     match=[{ManschaftsID,{Satzpunkte,Satzpunktegegner},{Matchpunkte , Matchpunktepunkte},
+     {ManschaftsID,{Satzpunkte,Satzpunktegegner},{Matchpunkte , Matchpunktepunkte}]
+     */
+
+    //Ausgeben der LT
+    const Daten = await this.getLigatabelleWK(liganame);
+    const Ligatabelledaten=Daten.payload;
+    console.log(Ligatabelledaten);
+
+    let satzpunkte=[];
+    let id=0;
+    let matchpunkte=[];
+
+
+    for (let x=0; x<Ligatabelledaten.length; x++) {
+      //Daten aus dem Array lesen und zusammenaddieren
+      satzpunkte=Ligatabelledaten[x].satzpunkte.split(" ")
+      id=Ligatabelledaten[x].id
+      matchpunkte=Ligatabelledaten[x].matchpunkte.split(" ")
+
+      for (let i=0; x<Ligatabelledaten.length; i++){
+        if (Ligatabelledaten[x].mannschaft_id != parseInt(match[i][0])){
+
+          const sp = parseInt(satzpunkte[0]) + parseInt(match[i][1][0]);
+          const spg = parseInt(satzpunkte[2]) + parseInt(match[i][1][1]);
+          const spd = sp - spg;
+
+          const mp = parseInt(matchpunkte[0]) + parseInt(match[i][2][0]);
+          const mpg = parseInt(matchpunkte[2]) + parseInt(match[i][2][1]);
+          //console.log(satzpunkte,matchpunkte,sp,spg, spd);
+          //Daten Updaten
+          await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+
+          break;
+        }
+        else if(i-1==Ligatabelledaten.length)
+        {
+          console.log("Fehler beim Updaten der Mannschaft mit der ID "+match[i])
+        }
+      }
+
+    }
+
+    /*
+     const Datenn = await this.getLigatabelleWK('Würtembergliga');
+     let Ligatabelledatenn=Datenn.payload;
+     console.log(Ligatabelledatenn);
+     */
+  }
 }
