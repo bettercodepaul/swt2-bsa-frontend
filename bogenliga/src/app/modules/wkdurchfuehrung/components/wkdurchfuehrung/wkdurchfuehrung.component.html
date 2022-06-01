@@ -18,6 +18,7 @@
                            [loading]="loadingYears"
                            [selectedItemId]='selItemId'
                            [disabled]="isOfflineDisabled()"
+                           data-cy="wkduchfuehrung-jahr-dropdown"
                            style="width: 40%;">
         </bla-dropdown-menu>
 
@@ -39,6 +40,7 @@
                               [optionFieldSelector]="'name'"
                               [disabled]="isOfflineDisabled()"
                               selectionListHeight="15em"
+                              data-cy="wkduchfuehrung-veranstaltung-list"
                               style="width: 40%; flex-grow: 0;">
         </bla-quicksearch-list>
 
@@ -49,8 +51,7 @@
 
     <div>
     <h3>
-      Wettkampftage der Veranstaltung
-
+      {{ 'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}
     </h3>
 
     <div class="row">
@@ -59,6 +60,7 @@
         <bla-data-table [config]="config_table"
                         [rows]="rows"
                         [loading]="loadingWettkampfe"
+                        data-cy="wkdurchfuehrung-wettkampftage-list"
                         (onViewEntry)="onView($event)"
                         (onMapEntry)="onMap($event)" >
 
@@ -77,7 +79,9 @@
   </bla-col-layout>
 
   <bla-col-layout>
-      <h3><BR>Ligatabelle Vorbereitung <BR>&nbsp;</h3>
+    <div>
+      <BR><h3>{{'MANNSCHAFTEN.LIGATABELLE.LIGATABELLE_VORBEREITUNG'|translate}}</h3>
+        <p>{{'MANNSCHAFTEN.LIGATABELLE.TEXT'|translate}}</p></div>
   </bla-col-layout>
 
   <bla-col-layout>
@@ -87,7 +91,7 @@
         [id]="'generiereMatches'"
         [disabled]="isDisabledGMButton()"
         (onClick)="generateMatches()">
-        generiere Matches
+        {{ 'WKDURCHFUEHRUNG.BUTTON.MATCHES' | translate }}
       </bla-button>
     </div>
     <div>
@@ -95,7 +99,7 @@
             [id]="'downloadSetzliste'"
             [downloadUrl]="onButtonDownload('pdf/setzliste')"
             [fileName]="'setzliste.pdf'"
-            [disabled]="isDisabled()">Setzliste
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
 
           </bla-download-button>
         </div>
@@ -105,7 +109,7 @@
           [id]="'downloadSchusszettel'"
           [downloadUrl]="onButtonDownload('pdf/schusszettel')"
           [fileName]="'schusszettel.pdf'"
-          [disabled]="isDisabled()">Schusszettel
+          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
 
         </bla-download-button>
         </div>
@@ -115,7 +119,7 @@
             [id]="'downloadBogenkontrollliste'"
             [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
             [fileName]="'bogenkontrollliste.pdf'"
-            [disabled]="isDisabled()">Bogenkontrollliste
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
 
           </bla-download-button>
         </div>
@@ -125,20 +129,19 @@
             [id]="'downloadMeldezettel'"
             [downloadUrl]="onButtonDownload('pdf/meldezettel')"
             [fileName]="'meldezettel.pdf'"
-            [disabled]="isDisabled()">Meldezettel
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
 
           </bla-download-button>
         </div>
 
         <div>
           <bla-button   (click)="onButtonTabletClick()"
-                        [disabled]="isDisabled()">Setup Tablets
+                        [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
             ></bla-button>
 
         </div>
-
         <div id="offlineButton" *ngIf="(!isOffline()); else backOnline ">
-          <button class="btn btn-warning" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Offline gehen</button>
+          <button class="btn btn-danger" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()" data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen</button>
         </div>
 
 
@@ -153,7 +156,7 @@
 
   <bla-col-layout>
     <BR>
-    <h3><BR>Ligatabelle Durchführung <BR>&nbsp;</h3>
+    <h3><BR>{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }} <BR>&nbsp;</h3>
     <BR>
 
   </bla-col-layout>
@@ -167,6 +170,7 @@
           <bla-data-table [config]="config_table_match"
                           [rows]="matchRows"
                           [loading]="loadingMatch"
+                          data-cy="wkdurchfuehrung-match-list"
                           (onEditEntry)="onEdit($event)">
 
           </bla-data-table>
