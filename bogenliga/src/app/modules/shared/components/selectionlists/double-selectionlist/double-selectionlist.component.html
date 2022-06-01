@@ -1,13 +1,12 @@
 <bla-col-layout>
-  <div>
+  <div style="width: 40%; height: 100%">
     {{leftCaption}}
     <bla-selectionlist (onFocus)="onLeftFocus($event)"
                        (onSelect)="onLeftItemSelect($event)"
                        [id]="idLeftList"
                        [items]="leftItemList"
                        [multipleSelections]="multipleSelections"
-                       [optionFieldSelector]="fieldSelector"
-                       style="width: 40%; height: 100%">
+                       [optionFieldSelector]="fieldSelector">
 
     </bla-selectionlist>
   </div>
@@ -28,15 +27,14 @@
       </bla-button>
     </div>
   </div>
-  <div>
+  <div style="width: 40%; height: 100%">
     {{rightCaption}}
     <bla-selectionlist (onFocus)="onRightFocus($event)"
                        (onSelect)="onRightItemSelect($event)"
                        [id]="idRightList"
                        [items]="rightItemList"
                        [multipleSelections]="multipleSelections"
-                       [optionFieldSelector]="fieldSelector"
-                       style="width: 40%; height: 100%">
+                       [optionFieldSelector]="fieldSelector">
     </bla-selectionlist>
   </div>
 </bla-col-layout>
