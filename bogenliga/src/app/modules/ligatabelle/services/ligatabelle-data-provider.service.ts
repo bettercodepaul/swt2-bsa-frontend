@@ -14,6 +14,7 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {fromPayloadLigatabelleErgebnisArray, fromOfflineLigatabelleArray} from '../mapper/ligatabelle-ergebnis-mapper';
 import {LigatabelleErgebnisDO} from '../types/ligatabelle-ergebnis-do.class';
 import {map} from 'rxjs/operators';
+import {MatchDOExt} from '@wkdurchfuehrung/types/match-do-ext.class';
 
 @Injectable({
   providedIn: 'root'
@@ -88,7 +89,6 @@ export class LigatabelleDataProviderService extends DataProviderService {
   }
 
   public getLigatabelleWK(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
-    console.log('getLigatabelleDaten wurde aufgerufen');
     return new Promise((resolve, reject) => {
       db.ligaTabelle.where('veranstaltungName').equals(id).toArray()
         .then((data: OfflineLigatabelle[]) => {
@@ -103,12 +103,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
     db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
   };
 
-  public async updateLigatabelleVeranstaltung(liganame: string, match: string[] ){
-
-    /*Aufgabu von match:
-     match=[{ManschaftsID,{Satzpunkte,Satzpunktegegner},{Matchpunkte , Matchpunktepunkte},
-     {ManschaftsID,{Satzpunkte,Satzpunktegegner},{Matchpunkte , Matchpunktepunkte}]
-     */
+  public async updateLigatabelleVeranstaltung(liganame: string, mannschafteins: MatchDOExt, mannschaftzwei: MatchDOExt){
 
     //Ausgeben der LT
     const Daten = await this.getLigatabelleWK(liganame);
@@ -127,23 +122,35 @@ export class LigatabelleDataProviderService extends DataProviderService {
       matchpunkte=Ligatabelledaten[x].matchpunkte.split(" ")
 
       for (let i=0; x<Ligatabelledaten.length; i++){
-        if (Ligatabelledaten[x].mannschaft_id != parseInt(match[i][0])){
+        if (Ligatabelledaten[x].mannschaft_id != mannschafteins.mannschaftId){
 
-          const sp = parseInt(satzpunkte[0]) + parseInt(match[i][1][0]);
-          const spg = parseInt(satzpunkte[2]) + parseInt(match[i][1][1]);
+          const sp = parseInt(satzpunkte[0]) + mannschafteins.satzpunkte;
+          const spg = parseInt(satzpunkte[2]) + mannschaftzwei.satzpunkte;
           const spd = sp - spg;
 
-          const mp = parseInt(matchpunkte[0]) + parseInt(match[i][2][0]);
-          const mpg = parseInt(matchpunkte[2]) + parseInt(match[i][2][1]);
+          const mp = parseInt(matchpunkte[0]) + mannschafteins.matchpunkte;
+          const mpg = parseInt(matchpunkte[2]) + mannschaftzwei.matchpunkte;
           //console.log(satzpunkte,matchpunkte,sp,spg, spd);
           //Daten Updaten
           await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
 
-          break;
+        }
+        else if (Ligatabelledaten[x].mannschaft_id != mannschaftzwei.mannschaftId){
+
+          const sp = parseInt(satzpunkte[0]) + mannschaftzwei.satzpunkte;
+          const spg = parseInt(satzpunkte[2]) + mannschafteins.satzpunkte;
+          const spd = sp - spg;
+
+          const mp = parseInt(matchpunkte[0]) + mannschaftzwei.matchpunkte;
+          const mpg = parseInt(matchpunkte[2]) + mannschafteins.matchpunkte;
+          //console.log(satzpunkte,matchpunkte,sp,spg, spd);
+          //Daten Updaten
+          await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+
         }
         else if(i-1==Ligatabelledaten.length)
         {
-          console.log("Fehler beim Updaten der Mannschaft mit der ID "+match[i])
+          console.log("Fehler beim Updaten der Mannschaften mit der ID Mannschafteins:"+mannschafteins.mannschaftId+" Mannschaftzwei: "+mannschaftzwei.mannschaftId)
         }
       }
 
@@ -155,4 +162,5 @@ export class LigatabelleDataProviderService extends DataProviderService {
      console.log(Ligatabelledatenn);
      */
   }
+
 }
