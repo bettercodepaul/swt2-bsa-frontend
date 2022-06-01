@@ -3,9 +3,10 @@
     <div class="hilfeseite-container">
       <div class="hilfe-section-container">
           <table id="section-table">
-            <tr id="hilfe-table-section" *ngFor="let sec of sections">
-              <div id="section-btn"
-                (click)="setUrl(sec.url)">
+            <tr class="hilfe-table-section" *ngFor="let sec of sections">
+              <div class="section-btn"
+                   attr.data-cy="{{sec.cy_test}}"
+                   (click)="setUrl(sec.url)">
                 {{sec.id}}
               </div>
             </tr>
