@@ -154,7 +154,6 @@ describe('Anonyme User tests', function () {
     * **/
   it('Startseite auswählen', function () {
     cy.get('[data-cy=test-startseite]').click()
-    cy.wait(5000) /* wait a second that the iframe has enough time to load successfully */
     cy  /*check if the iframe invokes the correct URL */
       .get('iframe')
       .invoke('attr', 'src')
@@ -167,7 +166,6 @@ describe('Anonyme User tests', function () {
    * */
   it('Ablauf als Ligaleiter auswählen', function () {
     cy.get('[data-cy=test-ligaleiter]').click()
-    cy.wait(5000)
     cy  /*check if the iframe invokes the correct URL */
       .get('iframe')
       .invoke('attr', 'src')
@@ -180,7 +178,6 @@ describe('Anonyme User tests', function () {
    * */
   it('Wettkampfdurchführung auswählen', function () {
     cy.get('[data-cy=test-wkd]').click()
-    cy.wait(5000)
     cy  /*check if the iframe invokes the correct URL */
       .get('iframe')
       .invoke('attr', 'src')
