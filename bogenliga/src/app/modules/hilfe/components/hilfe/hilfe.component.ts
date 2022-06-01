@@ -17,15 +17,18 @@ export class HilfeComponent implements OnInit {
   public sections:Array<any> = [
     {
       id: 'Startseite',
-      url: 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware'
+      url: 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware',
+      cy_test: "test-startseite" // id for cypress tests
     },
     {
       id: 'Arbeitsablauf als Ligaleiter',
-      url: 'https://wiki.bsapp.de/doku.php?id=liga:arbeitsablauf'
+      url: 'https://wiki.bsapp.de/doku.php?id=liga:arbeitsablauf',
+      cy_test: "test-ligaleiter" // id for cypress tests
     },
     {
       id: 'Wettkampfdurchführung',
-      url: 'https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung'
+      url: 'https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung',
+      cy_test: "test-wkd" // id for cypress tests
     }
   ]
   constructor(private sanitizer: DomSanitizer) { }
