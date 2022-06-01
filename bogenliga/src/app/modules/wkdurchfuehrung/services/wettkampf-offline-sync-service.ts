@@ -122,7 +122,12 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       //Satzpunkte aus den passen errechnen
       const satzSumM1 = this.getOfflineMatchSatzSumme(match1.id, passen);
       const satzSumM2 = this.getOfflineMatchSatzSumme(match2.id, passen);
-
+      if(satzSumM1[0] > 0) {
+        match1.satzpunkte = 0;
+      }
+      if(satzSumM2[0] > 0) {
+        match2.satzpunkte = 0;
+      }
 
       //gewinner der Sätze ermitteln => satzpunkte gesamt errechnen
       for(let i = 0; i<5; i++){
