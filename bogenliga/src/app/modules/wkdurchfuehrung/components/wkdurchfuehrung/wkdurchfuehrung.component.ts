@@ -682,6 +682,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         // Jahres auf die id des neusten Jahres
         this.selItemId = this.availableYears[0].id;
         this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+      } else if(this.onOfflineService.isOffline()){
+        this.selItemId = this.availableYears[0].id;
       }
 
     }
