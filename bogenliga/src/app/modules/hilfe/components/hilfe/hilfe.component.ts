@@ -17,11 +17,15 @@ export class HilfeComponent implements OnInit {
   public sections:Array<any> = [
     {
       id: 'Startseite',
-      url: 'https://wiki.bsapp.de/doku.php'
+      url: 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware'
     },
     {
       id: 'Arbeitsablauf als Ligaleiter',
       url: 'https://wiki.bsapp.de/doku.php?id=liga:arbeitsablauf'
+    },
+    {
+      id: 'Wettkampfdurchführung',
+      url: 'https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung'
     }
   ]
   constructor(private sanitizer: DomSanitizer) { }

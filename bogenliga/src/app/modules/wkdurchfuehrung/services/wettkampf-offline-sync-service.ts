@@ -2,7 +2,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {
   BogenligaResponse,
-  DataProviderService, DataTransferObject,
+  DataProviderService,
+  DataTransferObject,
   RequestResult,
   RestClient,
   UriBuilder,
@@ -41,7 +42,7 @@ import {
 import {
   fromOfflineVeranstaltungPayloadArray
 } from '@verwaltung/mapper/veranstaltung-offline-mapper';
-import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
+import {throwError} from "rxjs";
 
 
 @Injectable({
@@ -52,15 +53,25 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient, private wettkampfDataProvider: WettkampfDataProviderService) {
+  constructor(private restClient: RestClient) {
     super();
   }
 
   // The following methods define the REST calls and how to convert the returned JSON payload to the known entity types
-  public loadLigatabelleVeranstaltungOffline(id: string | number): void {
-    this.loadLigatabelleVeranstaltung(id)
-    .then((response: BogenligaResponse<OfflineLigatabelle[]>) => this.handleLoadLigatabelleVeranstaltungSuccess(response))
-    .catch((response: BogenligaResponse<OfflineLigatabelle[]>) => this.handleLoadLigatabelleVeranstaltungFailure(response));
+  public loadLigatabelleVeranstaltungOffline(id: string | number): Promise<void> {
+
+    return new Promise((resolve, reject) => {
+      this.loadLigatabelleVeranstaltung(id)
+      .then((response: BogenligaResponse<OfflineLigatabelle[]>) => {
+        this.handleLoadLigatabelleVeranstaltungSuccess(response);
+        resolve();
+      })
+      .catch((response: BogenligaResponse<OfflineLigatabelle[]>) => {
+        console.log('error loading offline ligatabelle');
+        reject();
+      });
+    });
+
   }
 
   /**
@@ -70,15 +81,123 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    *
    * @author Dennis Bär
    */
-  public loadMatchOffline(id: string | number): void {
-    this.loadMatch(id)
-    .then((response: BogenligaResponse<OfflineMatch[]>) => {
-      db.matchTabelle.bulkAdd(response.payload).then((value) => {
-        console.log('offline match added to offlinedb', value);
+  public loadMatchOffline(id: string | number): Promise<void> {
+
+    return new Promise((resolve, reject) => {
+      this.loadMatch(id)
+      .then((response: BogenligaResponse<OfflineMatch[]>) => {
+        this.handleLoadMatchTabelleSuccess(response.payload);
+        resolve();
+      })
+      .catch((response: BogenligaResponse<OfflineMatch[]>) => {
+        console.log('error loading offline match');
+        reject();
       });
-    })
-    .catch((response: BogenligaResponse<OfflineMatch[]>) => {
-      console.log('error loading offline match payload:', response.payload);
+    });
+  }
+
+  public async handleLoadMatchTabelleSuccess(payload: OfflineMatch[]): Promise<void> {
+    await db.passeTabelle.toArray()
+      .then( passen => {
+        const matches = this.getOfflineMatchPunkte(payload, passen);
+        db.matchTabelle.bulkPut(matches, matches.map((item) => item.id)).then((value) => {
+          console.log('offline match added to offlinedb', value);
+
+        }).catch((error) => {
+          console.log('error adding offline match to offlinedb', error);
+        });
+      });
+  }
+
+  //eventuell wo anders hin bewegen später bspw. schusszettel data provider oder ähnliches
+  public getOfflineMatchPunkte(offlineMatches: OfflineMatch[], passen: OfflinePasse[]): OfflineMatch[]{
+    let matches: OfflineMatch[] = []
+    offlineMatches.forEach( (match1) => {
+      if(matches.find(m => m.id === match1.id))
+        return;
+
+      //zugehörige gegner match finden
+      let match2 = offlineMatches.find(m => m.id === match1.matchIdGegner);
+
+      //Satzpunkte aus den passen errechnen
+      const satzSumM1 = this.getOfflineMatchSatzSumme(match1.id, passen);
+      const satzSumM2 = this.getOfflineMatchSatzSumme(match2.id, passen);
+
+
+      //gewinner der Sätze ermitteln => satzpunkte gesamt errechnen
+      for(let i = 0; i<5; i++){
+        if(satzSumM1[i] > satzSumM2[i])
+          match1.satzpunkte += 2;
+        else if(satzSumM1[i] < satzSumM2[i])
+          match2.satzpunkte += 2;
+        else if(satzSumM1[i] === satzSumM2[i] && satzSumM1[i] != 0){
+          match1.satzpunkte += 1;
+          match2.satzpunkte += 1;
+        }
+      }
+
+      //matchpunkte errechnen
+      if(match1.satzpunkte >= 6) {
+        match1.matchpkt = 2;
+        match2.matchpkt = 0;
+      }
+      else if(match2.satzpunkte >= 6) {
+        match2.matchpkt = 2;
+        match1.matchpkt = 0;
+      }
+      else if(match1.satzpunkte === match2.satzpunkte && match1.satzpunkte >= 5){
+        match1.matchpkt = 1;
+        match2.matchpkt = 1;
+      } else if(match1.satzpunkte > 0 && match2.satzpunkte > 0) {
+        match1.matchpkt = 0;
+        match2.matchpkt = 0;
+      }
+      matches.push(match1, match2);
+    });
+    return matches;
+  }
+
+  public getOfflineMatchSatzSumme(matchID: number, passen: OfflinePasse[]): number[]{
+    const satzSum = [0,0,0,0,0];
+    passen.forEach(passe =>{
+      if(passe.matchID === matchID){
+        satzSum[passe.lfdNr-1] += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
+      }
+    });
+    return satzSum;
+  }
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id tbd
+   *
+   * @author Dennis Bär
+   */
+  public async loadPasseOffline(id: string | number): Promise<void> {
+    let mitglieder: OfflineMannschaftsmitglied[] = []
+    await db.mannschaftsmitgliedTabelle.toArray()
+      .then(data => mitglieder = data)
+      .catch(error => console.error(error))
+    return new Promise((resolve, reject) => {
+      this.loadPasse(id)
+      .then((response: BogenligaResponse<OfflinePasse[]>) => {
+        const passen = response.payload.map(passe => {
+          passe.rueckennummer = mitglieder.find(mitglied => mitglied.dsbMitgliedId === passe.dsbMitgliedId).rueckennummer;
+          return passe;
+        });
+        db.passeTabelle.bulkAdd(passen).then((value) => {
+          console.log('offline passe added to offlinedb', value);
+          resolve();
+        }).catch((error) => {
+          console.error('error adding offline passe to offlinedb', error);
+          reject();
+        });
+      })
+      .catch((response: BogenligaResponse<OfflinePasse[]>) => {
+        console.error('error loading offline passe payload:', response.payload);
+        reject();
+      });
     });
   }
 
@@ -89,15 +208,23 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    *
    * @author Dennis Bär
    */
-  public loadPasseOffline(id: string | number): void {
-    this.loadPasse(id)
-    .then((response: BogenligaResponse<OfflinePasse[]>) => {
-      db.passeTabelle.bulkAdd(response.payload).then((value) => {
-        console.log('offline passe added to offlinedb', value);
+  public loadWettkampfOffline(id: string | number): Promise<void> {
+
+    return new Promise((resolve, reject) => {
+      this.loadWettkampf(id)
+      .then((response: BogenligaResponse<OfflineWettkampf[]>) => {
+        db.wettkampfTabelle.bulkAdd(response.payload).then((value) => {
+          console.log('offline wettkampf added to offlinedb', value);
+          resolve();
+        }).catch((error) => {
+          console.error('error adding offline wettkampf to offlinedb', error);
+          reject();
+        });
+      })
+      .catch((response: BogenligaResponse<OfflineWettkampf[]>) => {
+        console.error('error loading offline wettkampf payload:', response.payload);
+        reject();
       });
-    })
-    .catch((response: BogenligaResponse<OfflinePasse[]>) => {
-      console.log('error loading offline passe payload:', response.payload);
     });
   }
 
@@ -108,15 +235,22 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    *
    * @author Dennis Bär
    */
-  public loadWettkampfOffline(id: string | number): void {
-    this.loadWettkampf(id)
-    .then((response: BogenligaResponse<OfflineWettkampf[]>) => {
-      db.wettkampfTabelle.bulkAdd(response.payload).then((value) => {
-        console.log('Offline Wettkampf added to offlinedb', value);
+  public loadMannschaftOffline(id: string | number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.loadMannschaft(id)
+      .then((response: BogenligaResponse<OfflineMannschaft[]>) => {
+        db.mannschaftTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((value) => {
+          console.log('offline mannschaft added to offlinedb', value);
+          resolve();
+        }).catch((error) => {
+          console.error('error adding offline mannschaft to offlinedb', error);
+          reject();
+        });
+      })
+      .catch((response: BogenligaResponse<OfflineMannschaft[]>) => {
+        console.error('error loading offline mannschaft payload:', response.payload);
+        reject();
       });
-    })
-    .catch((response: BogenligaResponse<OfflineMatch[]>) => {
-      console.log('error loading offline wettkampf payload:', response.payload);
     });
   }
 
@@ -127,15 +261,49 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    *
    * @author Dennis Bär
    */
-  public loadMannschaftOffline(id: string | number): void {
-    this.loadMannschaft(id)
-    .then((response: BogenligaResponse<OfflineMannschaft[]>) => {
-      db.mannschaftTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((value) => {
-        console.log('Offline Mannschaft added to offlinedb', value);
+  public loadMannschaftsmitgliedOffline(id: string | number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.loadMannschaftsmitglied(id)
+      .then((response: BogenligaResponse<OfflineMannschaftsmitglied[]>) => {
+        db.mannschaftsmitgliedTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+          console.log('offline mannschaftsmitglied added to offlinedb', lastKey);
+          resolve();
+        }).catch((error) => {
+          console.error('error adding offline mannschaftsmitglied to offlinedb', error);
+          reject();
+        });
+      })
+      .catch((response: BogenligaResponse<OfflineMannschaftsmitglied[]>) => {
+        console.error('error loading offline mannschaftsmitglied payload:', response.payload);
+        reject();
       });
-    })
-    .catch((response: BogenligaResponse<OfflineMannschaft[]>) => {
-      console.log('error loading offline mannschaft payload:', response.payload);
+    });
+
+  }
+
+  /**
+   * Calls the corresponding REST-API method and returns the result as Promise
+   * Doesn't return anything but fills the OfflineDb with the data!
+   * @param id tbd
+   *
+   * @author Dennis Bär
+   */
+  public loadDsbMitgliedOffline(id: string | number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.loadDsbMitglied(id)
+      .then((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
+        db.dsbMitgliedTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+          console.log('offline dsb mitglied added to offlinedb', lastKey);
+          resolve();
+        }).catch((error) => {
+          console.error('error adding offline dsb mitglied to offlinedb', error);
+          reject();
+        });
+      })
+      .catch((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
+        console.error('error loading offline dsb mitglied payload:', response.payload);
+        reject();
+      });
     });
   }
 
@@ -146,56 +314,22 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    *
    * @author Dennis Bär
    */
-  public loadMannschaftsmitgliedOffline(id: string | number): void {
-    this.loadMannschaftsmitglied(id)
-    .then((response: BogenligaResponse<OfflineMannschaftsmitglied[]>) => {
-      // bulk add to offline db with id as primary key
-      db.mannschaftsmitgliedTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
-        console.log('Offline Mannschaftsmitglied added to offlinedb', lastKey);
+  public loadVeranstaltungOffline(id: string | number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.loadVeranstaltung(id)
+      .then((response: BogenligaResponse<OfflineVeranstaltung[]>) => {
+        db.veranstaltungTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+          console.log('offline veranstaltung added to offlinedb', lastKey);
+          resolve();
+        }).catch((error) => {
+          console.error('error adding offline veranstaltung to offlinedb', error);
+          reject();
+        });
+      })
+      .catch((response: BogenligaResponse<OfflineVeranstaltung[]>) => {
+        console.error('error loading offline veranstaltung payload:', response.payload);
+        reject();
       });
-    })
-    .catch((response: BogenligaResponse<OfflineMannschaftsmitglied[]>) => {
-      console.log('error loading offline mannschaftsmitglied payload:', response.payload);
-    });
-  }
-
-  /**
-   * Calls the corresponding REST-API method and returns the result as Promise
-   * Doesn't return anything but fills the OfflineDb with the data!
-   * @param id tbd
-   *
-   * @author Dennis Bär
-   */
-  public loadDsbMitgliedOffline(id: string | number): void {
-    this.loadDsbMitglied(id)
-    .then((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
-      // bulk add to offline db with id as primary key
-      db.dsbMitgliedTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
-        console.log('Offline DsbMitglied added to offlinedb', lastKey);
-      });
-    })
-    .catch((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
-      console.log('error loading offline dsbmitglied payload:', response.payload);
-    });
-  }
-
-  /**
-   * Calls the corresponding REST-API method and returns the result as Promise
-   * Doesn't return anything but fills the OfflineDb with the data!
-   * @param id tbd
-   *
-   * @author Dennis Bär
-   */
-  public loadVeranstaltungOffline(id: string | number): void {
-    this.loadVeranstaltung(id)
-    .then((response: BogenligaResponse<OfflineVeranstaltung[]>) => {
-      // bulk add to offline db with id as primary key
-      db.veranstaltungTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
-        console.log('Offline Veranstaltung added to offlinedb', lastKey);
-      });
-    })
-    .catch((response: BogenligaResponse<OfflineVeranstaltung[]>) => {
-      console.log('error loading offline veranstaltung payload:', response.payload);
     });
   }
 
@@ -231,7 +365,10 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       .then((data: DataTransferObject[]) => {
         // payload -> passe array
         resolve({result: RequestResult.SUCCESS, payload: fromOfflinePassePayloadArray(data)});
-      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+      }, (error: HttpErrorResponse) => reject({
+        result: RequestResult.FAILURE,
+        payload: 'Fehler beim Laden der Pässe'
+      }));
     });
 
   }
@@ -323,7 +460,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     db.ligaTabelle.clear();
     db.ligaTabelle.bulkAdd(offlineLigatabelle.payload)
     .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
-    .catch((e) => console.error(e));
+    .catch((e) => throwError(e));
   }
 
   private handleLoadLigatabelleVeranstaltungFailure(_response: BogenligaResponse<OfflineLigatabelle[]>): void {
@@ -337,6 +474,47 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     } else {
       reject({result: RequestResult.FAILURE});
     }
+  }
+
+  public async createVeranstaltungDummyData(): Promise<void>{
+    let offlineVer : OfflineVeranstaltung = {
+      id : 0,
+      ligaId : 0,
+      ligaleiterId : 2,
+      meldeDeadline : '2017-10-31',
+      name : 'DummyVeranstaltung',
+      wettkampfTypId : 1,
+      version : 5,
+      sportjahr: 2018,
+    }
+
+    db.veranstaltungTabelle.clear();
+    db.veranstaltungTabelle.put(offlineVer, 0);
+  }
+
+  public async createWettkampfDummyData(): Promise<void>{
+    let offlineWettkampfArray : OfflineWettkampf[] = [];
+    for(let i=0; i<4; i++) {
+      let offlineWettkampf: OfflineWettkampf = {
+        id: 30+i,
+        datum: '2017-12-30',
+        ausrichter: '2',
+        beginn: '12:5'+i,
+        offlinetoken : 'dsfgsgffddfdfhfghfhfhfgdsaljfgkjdyfgfdkljbdfjhdfsklbhndsklghdfslgjhdyfklöhdfkljghdfsjghljkglhkjdsflhkdfshjkghjkldgkhjldgkhjldkjhlg',
+        disziplinId : 0,
+        plz : '72108',
+        version: 5,
+        ortsinfo: null,
+        tag: ''+(i+1),
+        ortsname : 'Ofterdingen',
+        strasse : 'Brunnenstraße',
+        wettkampftypId : 1,
+        veranstaltungId : 0,
+      }
+      offlineWettkampfArray.push(offlineWettkampf);
+    }
+    db.wettkampfTabelle.clear();
+    db.wettkampfTabelle.bulkPut(offlineWettkampfArray, offlineWettkampfArray.map((item) =>item.id));
   }
 
 
