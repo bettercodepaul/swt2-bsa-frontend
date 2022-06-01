@@ -725,29 +725,36 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     let id=0;
     let matchpunkte=[];
 
+
     for (let x=0; x<Ligatabelledaten.length; x++) {
       //Daten aus dem Array lesen und zusammenaddieren
       satzpunkte=Ligatabelledaten[x].satzpunkte.split(" ")
       id=Ligatabelledaten[x].id
       matchpunkte=Ligatabelledaten[x].matchpunkte.split(" ")
 
-      if (id != parseInt(match[x][0]))
-      {
-        const sp = parseInt(satzpunkte[0]) + parseInt(match[x][1][0]);
-        const spg = parseInt(satzpunkte[2]) + parseInt(match[x][1][1]);
-        const spd = sp - spg;
+      for (let i=0; x<Ligatabelledaten.length; i++){
+        if (Ligatabelledaten[x].mannschaft_id != parseInt(match[i][0])){
 
-        const mp = parseInt(matchpunkte[0]) + parseInt(match[x][2][0]);
-        const mpg = parseInt(matchpunkte[2]) + parseInt(match[x][2][1]);
-        //console.log(satzpunkte,matchpunkte,sp,spg, spd);
-        //Daten Updaten
-        await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+          const sp = parseInt(satzpunkte[0]) + parseInt(match[i][1][0]);
+          const spg = parseInt(satzpunkte[2]) + parseInt(match[i][1][1]);
+          const spd = sp - spg;
+
+          const mp = parseInt(matchpunkte[0]) + parseInt(match[i][2][0]);
+          const mpg = parseInt(matchpunkte[2]) + parseInt(match[i][2][1]);
+          //console.log(satzpunkte,matchpunkte,sp,spg, spd);
+          //Daten Updaten
+          await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+
+          break;
+        }
+        else if(i-1==Ligatabelledaten.length)
+        {
+          console.log("Fehler beim Updaten der Mannschaft mit der ID "+match[i])
+        }
       }
-      else
-      {
-        console.log("Fehler beim Updaten der Mannschaft mit der ID "+match[x])
-      }
+
     }
+
     /*
     const Datenn = await this.getLigatabelleWK('Würtembergliga');
     let Ligatabelledatenn=Datenn.payload;
