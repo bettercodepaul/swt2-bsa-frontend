@@ -40,9 +40,6 @@ import {
   WettkampfOfflineSyncService
 } from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
 import {db} from "@shared/data-provider/offlinedb/offlinedb";
-import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
-import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
-import {fromOfflineLigatabelleArray} from '../../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
 
 
 @Component({
