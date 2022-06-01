@@ -8,7 +8,7 @@ import {
 } from './wkdurchfuehrung.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
-import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
+import {BogenligaResponse, RequestResult, UriBuilder} from '@shared/data-provider';
 import {
   VeranstaltungDataProviderService
 } from '@verwaltung/services/veranstaltung-data-provider.service';
@@ -40,6 +40,9 @@ import {
   WettkampfOfflineSyncService
 } from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
 import {db} from "@shared/data-provider/offlinedb/offlinedb";
+import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
+import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
+import {fromOfflineLigatabelleArray} from '../../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
 
 
 @Component({
@@ -689,6 +692,4 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.loadingYears = false;
 
   }
-
-
 }
