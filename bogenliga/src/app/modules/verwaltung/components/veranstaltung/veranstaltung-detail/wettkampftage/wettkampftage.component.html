@@ -34,7 +34,7 @@
         selectionListHeight="3em"
         [disabled]="wettkampftageForm.dirty"
         [items]="selectedDTOs"
-        [selectedItemIds]="[selectedDTOs[0].id]"
+        [selectedItemIds]="[currentWettkampftagArray[1].id]"
         [optionFieldSelector]="'wettkampfTag'">
       </bla-selectionlist>
 
@@ -225,6 +225,8 @@
                                       [fieldSelector]="'vorNachName'"
                                       [idLeftList]="'left'"
                                       [idRightList]="'right'"
+                                      [leftCaption]=getTranslation(kampfrichterLeftCaptionTranslationKey)
+                                      [rightCaption]=getTranslation(kampfrichterRightCaptionTranslationKey)
                                       style="height: 12em; width: 36em;  margin-left: 1em">
             </bla-double-selectionlist>
           </div>
