@@ -683,38 +683,50 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
        db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
   };
 
-  public async updateLigatabelleVeranstaltung() {
+  public async updateLigatabelleVeranstaltung(liganame: string, match: string[] ){
+
+    /*Aufgabu von match:
+      match=[{ManschaftsID,{Satzpunkte,Satzpunktegegner},{Matchpunkte , Matchpunktepunkte},
+             {ManschaftsID,{Satzpunkte,Satzpunktegegner},{Matchpunkte , Matchpunktepunkte}]
+     */
 
     //Ausgeben der LT
-    const Daten = await this.getLigatabelleWK('Würtembergliga');
+    const Daten = await this.getLigatabelleWK(liganame);
     const Ligatabelledaten=Daten.payload;
     console.log(Ligatabelledaten);
 
-    const satzpunkte=[];
-    const id=[];
-    const matchpunkte=[];
+    let satzpunkte=[];
+    let id=0;
+    let matchpunkte=[];
 
     for (let x=0; x<Ligatabelledaten.length; x++) {
       //Daten aus dem Array lesen und zusammenaddieren
-      satzpunkte.push(Ligatabelledaten[x].satzpunkte.split(" "))
-      id.push(Ligatabelledaten[x].id)
-      matchpunkte.push(Ligatabelledaten[x].matchpunkte.split(" "))
+      satzpunkte=Ligatabelledaten[x].satzpunkte.split(" ")
+      id=Ligatabelledaten[x].id
+      matchpunkte=Ligatabelledaten[x].matchpunkte.split(" ")
 
-      const sp=parseInt( satzpunkte[0])+3;
-      const spg=parseInt(satzpunkte[2])+30;
-      const spd=sp-spg;
+      if (id != parseInt(match[x][0]))
+      {
+        const sp = parseInt(satzpunkte[0]) + parseInt(match[x][1][0]);
+        const spg = parseInt(satzpunkte[2]) + parseInt(match[x][1][1]);
+        const spd = sp - spg;
 
-      const mp=parseInt( matchpunkte[0])+6;
-      const mpg=parseInt(matchpunkte[2])+60;
-
-      console.log(satzpunkte[x],matchpunkte[x],sp,spg, spd);
-      //Daten Updaten
-      await this.updateMannschaftLT(id[x], sp, spg, spd, mp, mpg);
-
+        const mp = parseInt(matchpunkte[0]) + parseInt(match[x][2][0]);
+        const mpg = parseInt(matchpunkte[2]) + parseInt(match[x][2][1]);
+        //console.log(satzpunkte,matchpunkte,sp,spg, spd);
+        //Daten Updaten
+        await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+      }
+      else
+      {
+        console.log("Fehler beim Updaten der Mannschaft mit der ID "+match[x])
+      }
     }
+    /*
     const Datenn = await this.getLigatabelleWK('Würtembergliga');
     let Ligatabelledatenn=Datenn.payload;
     console.log(Ligatabelledatenn);
+     */
 
 
   }
