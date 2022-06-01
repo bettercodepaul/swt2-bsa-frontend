@@ -88,19 +88,4 @@ export class LigatabelleDataProviderService extends DataProviderService {
     });
   }
 
-  //TODO Update funktion hier her mit get arbeiten
-  /*public updateLigatabelleVeranstaltung(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>>{
-
-    Pseudocode
-    for i in MannschaftsID
-    * Punkte Berechnen
-     db.ligaTabelle.where(select punkte der Mannschaft)
-     Punkte aus where mit den übergebenen addieren
-     db.ligatabelle.update(manschaftsid{Datensatz})
-
-     //Beispiel für Update funktion: db.friends.update(friendId, {"address.zipcode": 12345});
-
-
-  }*/
-
 }

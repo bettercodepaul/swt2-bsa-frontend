@@ -8,7 +8,7 @@ import {
 } from './wkdurchfuehrung.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
-import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
+import {BogenligaResponse, RequestResult, UriBuilder} from '@shared/data-provider';
 import {
   VeranstaltungDataProviderService
 } from '@verwaltung/services/veranstaltung-data-provider.service';
@@ -40,6 +40,9 @@ import {
   WettkampfOfflineSyncService
 } from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
 import {db} from "@shared/data-provider/offlinedb/offlinedb";
+import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
+import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
+import {fromOfflineLigatabelleArray} from '../../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
 
 
 @Component({
@@ -690,5 +693,67 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
+  public getLigatabelleWK(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
+    console.log('getLigatabelleDaten wurde aufgerufen');
+    return new Promise((resolve, reject) => {
+      db.ligaTabelle.where('veranstaltungName').equals(id).toArray()
+        .then((data: OfflineLigatabelle[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromOfflineLigatabelleArray(data)});
+        }, () => {
+          reject({result: RequestResult.FAILURE});
+        });
+    });
+  };
 
+  public async updateMannschaftLT(id : number, satzpunkte:number, satzpunkteGegner : number, spd :number, matchpunkte : number, matchpunkteGegner : number){
+       db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
+  };
+
+  public async updateLigatabelleVeranstaltung(liganame: string, match: string[] ){
+
+    /*Aufgabu von match:
+      match=[{ManschaftsID,{Satzpunkte,Satzpunktegegner},{Matchpunkte , Matchpunktepunkte},
+             {ManschaftsID,{Satzpunkte,Satzpunktegegner},{Matchpunkte , Matchpunktepunkte}]
+     */
+
+    //Ausgeben der LT
+    const Daten = await this.getLigatabelleWK(liganame);
+    const Ligatabelledaten=Daten.payload;
+    console.log(Ligatabelledaten);
+
+    let satzpunkte=[];
+    let id=0;
+    let matchpunkte=[];
+
+    for (let x=0; x<Ligatabelledaten.length; x++) {
+      //Daten aus dem Array lesen und zusammenaddieren
+      satzpunkte=Ligatabelledaten[x].satzpunkte.split(" ")
+      id=Ligatabelledaten[x].id
+      matchpunkte=Ligatabelledaten[x].matchpunkte.split(" ")
+
+      if (id != parseInt(match[x][0]))
+      {
+        const sp = parseInt(satzpunkte[0]) + parseInt(match[x][1][0]);
+        const spg = parseInt(satzpunkte[2]) + parseInt(match[x][1][1]);
+        const spd = sp - spg;
+
+        const mp = parseInt(matchpunkte[0]) + parseInt(match[x][2][0]);
+        const mpg = parseInt(matchpunkte[2]) + parseInt(match[x][2][1]);
+        //console.log(satzpunkte,matchpunkte,sp,spg, spd);
+        //Daten Updaten
+        await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+      }
+      else
+      {
+        console.log("Fehler beim Updaten der Mannschaft mit der ID "+match[x])
+      }
+    }
+    /*
+    const Datenn = await this.getLigatabelleWK('Würtembergliga');
+    let Ligatabelledatenn=Datenn.payload;
+    console.log(Ligatabelledatenn);
+     */
+
+
+  }
 }
