@@ -12,7 +12,7 @@ export class HilfeComponent implements OnInit {
   public config = HILFE_CONFIG;
   public wikiUrl:any;
   public sectionSelected:any;
-
+  /* TEST commit */
   /* Hier können weitere Sektionen angelegt werden (schema beachten mit id und url)*/
   public sections:Array<any> = [
     {
