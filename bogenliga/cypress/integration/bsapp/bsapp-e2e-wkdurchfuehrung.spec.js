@@ -25,7 +25,8 @@ describe('Wkdurchfuehrung tests', function () {
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
     cy.wait(1000)
     cy.get('[data-cy=wkduchfuehrung-jahr-dropdown]').click()
-    cy.get('.dropdown-item:nth-child(1').click()
+    cy.get('.dropdown-item').contains('2018').click()
+    cy.wait(2000)
     cy.get('[data-cy=wkduchfuehrung-veranstaltung-list]')
     cy.get('option:nth-child(1)').should('be.visible')
   })
@@ -35,10 +36,13 @@ describe('Wkdurchfuehrung tests', function () {
    */
   it('Anzeige Wettkampftage in wkdurchfuehrung', function () {
     cy.get('[data-cy=wkduchfuehrung-veranstaltung-list]')
-    cy.get('[data-cy=bla-selection-list]').select('1: 0')
-    cy.get('[data-cy=wkdurchfuehrung-wettkampftage-list]')
-    cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').should('be.visible')
-
+    cy.get('[data-cy=bla-selection-list]').contains(' Würtembergliga ')
+      .then(el => {
+        const element = el.get()
+        cy.get('[data-cy=bla-selection-list]').select(element[0].getAttribute('value'))
+        cy.get('[data-cy=wkdurchfuehrung-wettkampftage-list]')
+        cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').should('be.visible')
+      })
   })
 
   /**
