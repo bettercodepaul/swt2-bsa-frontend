@@ -188,18 +188,19 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
 
-            this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
+            this.onOfflineService.goOffline(this.selectedWettkampfId, this.selectedDTOs[0].sportjahr);
 
 
             //lädt Inhalte der Tabelle neu mit Offlinedaten
             this.loadingWettkampfe = true;
+            //this.loadingYears = true;
             this.wettkampfIdEnthalten = true;
             this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
             //temporäre Dummy Daten zum testen
             await this.wettkampfOfflineSyncService.createWettkampfDummyData();
             await this.wettkampfOfflineSyncService.createVeranstaltungDummyData();
 
-            this.findAvailableYears();
+            //this.findAvailableYears();
             this.LoadWettkampf();
             this.visible = false;
 
