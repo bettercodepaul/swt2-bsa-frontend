@@ -200,8 +200,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             await this.wettkampfOfflineSyncService.createWettkampfDummyData();
             await this.wettkampfOfflineSyncService.createVeranstaltungDummyData();
 
-            //this.findAvailableYears();
-            this.LoadWettkampf();
+            //await this.findAvailableYears();
+            await this.LoadWettkampf();
             this.visible = false;
 
 
@@ -252,7 +252,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // WettkampfId im Pfad enthalten -> Ermittlung des WettkampfDO:
 
   // Ermitteln aller Wettkampftage
-  private LoadWettkampf() {
+  private async LoadWettkampf() {
     this.loadingWettkampfe = true;
     this.wettkampfDataProvider.findAll()
     .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfSuccess(response))
@@ -639,7 +639,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der anzuzeigenden Jahre
-  private findAvailableYears() {
+  private async findAvailableYears() {
       this.availableYears = [];
 
       this.veranstaltungsDataProvider.findAllSportyearDestinct()
