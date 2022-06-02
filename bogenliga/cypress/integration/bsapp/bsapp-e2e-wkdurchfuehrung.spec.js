@@ -36,10 +36,13 @@ describe('Wkdurchfuehrung tests', function () {
    */
   it('Anzeige Wettkampftage in wkdurchfuehrung', function () {
     cy.get('[data-cy=wkduchfuehrung-veranstaltung-list]')
-    cy.get('[data-cy=bla-selection-list]').select('2: 0')
-    cy.get('[data-cy=wkdurchfuehrung-wettkampftage-list]')
-    cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').should('be.visible')
-
+    cy.get('[data-cy=bla-selection-list]').contains(' Würtembergliga ')
+      .then(el => {
+        const element = el.get()
+        cy.get('[data-cy=bla-selection-list]').select(element[0].getAttribute('value'))
+        cy.get('[data-cy=wkdurchfuehrung-wettkampftage-list]')
+        cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').should('be.visible')
+      })
   })
 
   /**
