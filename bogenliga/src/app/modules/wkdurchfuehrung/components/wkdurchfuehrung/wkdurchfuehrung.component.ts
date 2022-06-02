@@ -188,19 +188,20 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
 
-            this.onOfflineService.goOffline(this.selectedWettkampfId, this.availableYears.find((sportjahr) => sportjahr.id == this.selItemId).sportjahr);
+            this.onOfflineService.goOffline(this.selectedWettkampfId, this.selectedDTOs[0].sportjahr);
 
 
             //lädt Inhalte der Tabelle neu mit Offlinedaten
             this.loadingWettkampfe = true;
+            //this.loadingYears = true;
             this.wettkampfIdEnthalten = true;
             this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
             //temporäre Dummy Daten zum testen
             await this.wettkampfOfflineSyncService.createWettkampfDummyData();
             await this.wettkampfOfflineSyncService.createVeranstaltungDummyData();
 
-            this.findAvailableYears();
-            this.LoadWettkampf();
+            //await this.findAvailableYears();
+            await this.LoadWettkampf();
             this.visible = false;
 
 
@@ -251,7 +252,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // WettkampfId im Pfad enthalten -> Ermittlung des WettkampfDO:
 
   // Ermitteln aller Wettkampftage
-  private LoadWettkampf() {
+  private async LoadWettkampf() {
     this.loadingWettkampfe = true;
     this.wettkampfDataProvider.findAll()
     .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkampfSuccess(response))
@@ -638,7 +639,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der anzuzeigenden Jahre
-  private findAvailableYears() {
+  private async findAvailableYears() {
       this.availableYears = [];
 
       this.veranstaltungsDataProvider.findAllSportyearDestinct()
