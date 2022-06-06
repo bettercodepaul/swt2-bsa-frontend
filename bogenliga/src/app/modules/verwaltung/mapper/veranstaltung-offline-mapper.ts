@@ -57,3 +57,15 @@ export function toDOfromOfflineVeranstaltungArray(veranstaltungArray: OfflineVer
   return list;
 }
 
+export function toOfflineFromVeranstaltungDO(veranstaltung: VeranstaltungDO): OfflineVeranstaltung {
+  return {
+    id: veranstaltung.id,
+    ligaId: veranstaltung.ligaId,
+    ligaleiterId: veranstaltung.ligaleiterId,
+    meldeDeadline: veranstaltung.meldeDeadline,
+    name: veranstaltung.name,
+    sportjahr: veranstaltung.sportjahr,
+    version: 1,
+    wettkampfTypId: veranstaltung.wettkampfTypId
+  }
+}
