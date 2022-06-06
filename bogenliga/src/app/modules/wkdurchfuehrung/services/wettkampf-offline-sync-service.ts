@@ -17,7 +17,6 @@ import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
 import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
-import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
 import {OfflineMannschaft} from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
 import {fromOfflineMannschaftPayloadArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
 import {OfflineMannschaftsmitglied} from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
@@ -27,10 +26,8 @@ import {fromOfflineDsbMitgliedPayloadArray} from '@verwaltung/mapper/dsb-mitglie
 import {OfflineVeranstaltung} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
 import {throwError} from 'rxjs';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {
-  fromOfflineVeranstaltungPayload,
-  toOfflineFromVeranstaltungDO
-} from '@verwaltung/mapper/veranstaltung-offline-mapper';
+import {toOfflineFromVeranstaltungDO} from '@verwaltung/mapper/veranstaltung-offline-mapper';
+import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
 
 
 @Injectable({
@@ -475,21 +472,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     }
   }
 
-  public async createVeranstaltungDummyData(): Promise<void>{
-    let offlineVer : OfflineVeranstaltung = {
-      id : 0,
-      ligaId : 0,
-      ligaleiterId : 2,
-      meldeDeadline : '2017-10-31',
-      name : 'DummyVeranstaltung',
-      wettkampfTypId : 1,
-      version : 5,
-      sportjahr: 2018,
-    }
-
-    db.veranstaltungTabelle.clear();
-    db.veranstaltungTabelle.put(offlineVer, 0);
-  }
 
   public async createWettkampfDummyData(): Promise<void>{
     let offlineWettkampfArray : OfflineWettkampf[] = [];
