@@ -172,8 +172,14 @@ export class MatchProviderService extends DataProviderService {
                 .catch(error => console.error(error))
       let nextMatchId = 0;
       await db.matchTabelle.get(currentPair[1])
-        .then(data => nextMatchId = data.naechsteMatchId);
-      console.log(matchId + " to next match from offline" + nextMatchId)
+        .then(data => {
+          if(data.naechsteMatchId <= matchId){
+            nextMatchId = data.naechsteNaechsteMatchNrMatchId;
+          } else {
+            nextMatchId = data.naechsteMatchId;
+          }
+        });
+
       return this.pair(nextMatchId);
     } else {
       return new Promise(((resolve, reject) => {
@@ -197,11 +203,19 @@ export class MatchProviderService extends DataProviderService {
       await this.pair(matchId)
         .then(data => currentPair = data.payload)
         .catch(error => console.error(error))
-      let lastMatchId = 0;
+      let lastMatchId = null;
       await db.matchTabelle.where('naechsteMatchId').equals(currentPair[0]).first()
         .then(data => lastMatchId = data.id)
         .catch(error => console.error(error))
-      console.log(lastMatchId)
+
+      if(lastMatchId === null){
+        await db.matchTabelle.where('naechsteNaechsteMatchNrMatchId').equals(currentPair[0]).last()
+          .then(data => lastMatchId = data.id)
+          .catch(error => console.error(error))
+      }
+      if(!lastMatchId){
+        lastMatchId = matchId;
+      }
       return this.pair(lastMatchId);
     } else {
       return new Promise(((resolve, reject) => {
