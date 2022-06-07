@@ -107,7 +107,6 @@ export class SchusszettelProviderService extends DataProviderService {
           ringzahlPfeil5: passe.ringzahl[4],
           ringzahlPfeil6: 0,
           rueckennummer:  passe.rueckennummer,
-          version:        2,
           wettkampfId:    passe.wettkampfId
         })
           .catch(err => console.error(err))
@@ -146,6 +145,12 @@ export class SchusszettelProviderService extends DataProviderService {
 
           this.offlineAddPassen(match2DTO);
 
+          db.passeTabelle.where('matchID').equals(match1DTO.id).or('matchID').equals(match2DTO.id).modify(passe => {
+            if(passe.version)
+              passe.version += 1;
+            else
+              passe.version = 2;
+          });
         })
           .then(() => {
             this.findMatches(match1DTO.id.toString(), match2DTO.id.toString())
