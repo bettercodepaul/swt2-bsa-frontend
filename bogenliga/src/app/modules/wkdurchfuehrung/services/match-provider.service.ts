@@ -213,7 +213,9 @@ export class MatchProviderService extends DataProviderService {
           .then(data => lastMatchId = data.id)
           .catch(error => console.error(error))
       }
-      console.log(lastMatchId)
+      if(!lastMatchId){
+        lastMatchId = matchId;
+      }
       return this.pair(lastMatchId);
     } else {
       return new Promise(((resolve, reject) => {
