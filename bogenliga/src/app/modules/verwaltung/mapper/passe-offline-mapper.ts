@@ -45,7 +45,7 @@ export function offlinePasseFromDTOClassArray(payload: PasseDTOClass[]): Offline
 export function offlinePasseFromDTOClass(payload: PasseDTOClass): OfflinePasse {
   return {
     id:             payload.id,
-    version:        5,
+    version:        payload.version,
     lfdNr:          payload.lfdNr,
     dsbMitgliedId:  payload.dsbMitgliedId,
     mannschaftId:   payload.mannschaftId,
