@@ -184,7 +184,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             await this.wettkampfOfflineSyncService.loadMannschaftsmitgliedOffline(this.selectedWettkampfId);
             await this.wettkampfOfflineSyncService.loadPasseOffline(this.selectedWettkampfId);
             await this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
-
+            await this.wettkampfOfflineSyncService.loadVeranstaltungOffline(this.selectedVeranstaltungId);
+            //await this.wettkampfOfflineSyncService.loadWettkampfOffline( id );
 
 
 
@@ -192,16 +193,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
             //lädt Inhalte der Tabelle neu mit Offlinedaten
-            this.loadingWettkampfe = true;
-            //this.loadingYears = true;
+            this.loadingVeranstaltungen = true;
             this.wettkampfIdEnthalten = true;
             this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
-            //temporäre Dummy Daten zum testen
-            await this.wettkampfOfflineSyncService.createWettkampfDummyData();
-            await this.wettkampfOfflineSyncService.createVeranstaltungDummyData();
 
-            //await this.findAvailableYears();
-            await this.LoadWettkampf();
+            //temporäre Dummy Daten
+            await this.wettkampfOfflineSyncService.createWettkampfDummyData();
+
+            await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr())
             this.visible = false;
 
 
@@ -236,7 +235,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           // geplant für die zukunft:
           // this.wettkampfOfflineSyncService.loadWettkampfOffline( this.selectedWettkampfId);
           // this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(/* ID FOR SEARCH IDK */);
-          // this.wettkampfOfflineSyncService.loadVeranstaltungOffline(/* ID FOR SEARCH IDK */);
           // MANNSCHAFT WIRD ZUM JETZTIGEN STAND NICHT MEHR BENÖTIGT.
           // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
           // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
@@ -291,7 +289,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
 // backend-call um eine Liste der Veranstaltungen eines bestimmten Jahres zu ermitteln
-  private loadVeranstaltungenByYear(year: number): void {
+  private async loadVeranstaltungenByYear(year: number): Promise<void> {
     this.veranstaltungen = [];
     this.selectedWettkampf = '';
     this.selectedWettkampfId = null;
