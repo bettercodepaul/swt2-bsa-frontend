@@ -9,40 +9,25 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '@shared/data-provider';
-import {
-  OfflineLigatabelle
-} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
-import {
-  fromPayloadOfflineLigatabelleArray
-} from '../../ligatabelle/mapper/ligatabelle-offline-mapper';
+import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
+import {fromPayloadOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligatabelle-offline-mapper';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {fromOfflineMatchPayloadArray} from '@verwaltung/mapper/match-offline-mapper';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
 import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
-import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
-import {
-  OfflineMannschaft
-} from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
+import {OfflineMannschaft} from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
 import {fromOfflineMannschaftPayloadArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
-import {
-  OfflineMannschaftsmitglied
-} from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
-import {
-  fromOfflineMannschaftsmitgliedPayloadArray
-} from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
-import {
-  OfflineDsbMitglied
-} from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
+import {OfflineMannschaftsmitglied} from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
+import {fromOfflineMannschaftsmitgliedPayloadArray} from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
+import {OfflineDsbMitglied} from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
 import {fromOfflineDsbMitgliedPayloadArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
-import {
-  OfflineVeranstaltung
-} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
-import {
-  fromOfflineVeranstaltungPayloadArray
-} from '@verwaltung/mapper/veranstaltung-offline-mapper';
-import {throwError} from "rxjs";
+import {OfflineVeranstaltung} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
+import {throwError} from 'rxjs';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {toOfflineFromVeranstaltungDO} from '@verwaltung/mapper/veranstaltung-offline-mapper';
+import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
 
 
 @Injectable({
@@ -53,7 +38,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient) {
+  constructor(private restClient: RestClient, private veranstaltungDataProvider: VeranstaltungDataProviderService) {
     super();
   }
 
@@ -435,16 +420,22 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadVeranstaltung(id: string | number): Promise<BogenligaResponse<OfflineVeranstaltung[]>> {
 
     return new Promise((resolve, reject) => {
+        this.veranstaltungDataProvider.findById(id)
+            .then((data) => {
 
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
-      .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: [toOfflineFromVeranstaltungDO(data.payload)]});
+            })
+          .catch(error => console.error(error))
+        /*
+         this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
+         .then((data: VersionedDataTransferObject[]) => {
 
-        resolve({
-          result: RequestResult.SUCCESS,
-          payload: fromOfflineVeranstaltungPayloadArray(data)
-        });
-      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
-    });
+         resolve({
+         result: RequestResult.SUCCESS,
+         payload: fromOfflineVeranstaltungPayloadArray(data)
+         });
+         }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));*/
+      });
   }
 
 
@@ -481,21 +472,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     }
   }
 
-  public async createVeranstaltungDummyData(): Promise<void>{
-    let offlineVer : OfflineVeranstaltung = {
-      id : 0,
-      ligaId : 0,
-      ligaleiterId : 2,
-      meldeDeadline : '2017-10-31',
-      name : 'DummyVeranstaltung',
-      wettkampfTypId : 1,
-      version : 5,
-      sportjahr: 2018,
-    }
-
-    db.veranstaltungTabelle.clear();
-    db.veranstaltungTabelle.put(offlineVer, 0);
-  }
 
   public async createWettkampfDummyData(): Promise<void>{
     let offlineWettkampfArray : OfflineWettkampf[] = [];
