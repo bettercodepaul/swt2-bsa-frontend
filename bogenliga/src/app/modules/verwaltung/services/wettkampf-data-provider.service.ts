@@ -95,24 +95,36 @@ export class WettkampfDataProviderService extends DataProviderService {
   }
 
   public findAllowedMember(wettkampfID: string | number, mannschaft1ID: string | number, mannschaft2ID: string | number): Promise<number[]> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfID).path(mannschaft1ID).path(mannschaft2ID).path('allowedContestants').build())
-          .then((data: number[]) => {
-
-            resolve(data);
-
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
+    if(this.onOfflineService.isOffline()){
+      console.log('Choosing offline way for findAllowedMember ');
+      return new Promise((resolve, reject) => {
+        db.mannschaftsmitgliedTabelle.toArray()
+          .then((data) => {
+            resolve(data.map(mitglied => mitglied.dsbMitgliedId));
+          }, () => {
+            reject({result: RequestResult.FAILURE});
           });
-    });
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<number[]>(new UriBuilder().fromPath(this.getUrl()).path(wettkampfID).path(mannschaft1ID).path(mannschaft2ID).path('allowedContestants').build())
+            .then((data: number[]) => {
+
+              resolve(data);
+
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
   }
 
   public findByVeranstaltungId(veranstaltungId: number): Promise<BogenligaResponse<WettkampfDTO[]>> {
