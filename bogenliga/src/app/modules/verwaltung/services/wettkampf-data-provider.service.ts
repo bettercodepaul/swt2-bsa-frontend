@@ -96,9 +96,9 @@ export class WettkampfDataProviderService extends DataProviderService {
 
   public findAllowedMember(wettkampfID: string | number, mannschaft1ID: string | number, mannschaft2ID: string | number): Promise<number[]> {
     if(this.onOfflineService.isOffline()){
-      console.log('Choosing offline way for findAllowedMember ');
+      console.log('Choosing offline way for findAllowedMember with MannschaftIDs: ' + mannschaft1ID + ", " + mannschaft2ID);
       return new Promise((resolve, reject) => {
-        db.mannschaftsmitgliedTabelle.toArray()
+        db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(mannschaft1ID).or('mannschaftId').equals(mannschaft2ID).toArray()
           .then((data) => {
             resolve(data.map(mitglied => mitglied.dsbMitgliedId));
           }, () => {

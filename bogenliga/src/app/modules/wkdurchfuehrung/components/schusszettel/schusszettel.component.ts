@@ -228,7 +228,8 @@ export class SchusszettelComponent implements OnInit {
                   this.notificationService.discardNotification();
                 });
               }
-            }, (error) => {
+            })
+            .catch((error) => {
               console.error(error);
             });
 
