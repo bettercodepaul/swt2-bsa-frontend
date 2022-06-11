@@ -40,6 +40,7 @@ import {
   WettkampfOfflineSyncService
 } from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
 import {db} from "@shared/data-provider/offlinedb/offlinedb";
+import {initialSidebarState} from '@shared/redux-store';
 
 
 @Component({
@@ -163,6 +164,11 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
+
+  refresh(): void {
+    window.location.reload();
+  }
+
   public isOffline(): boolean {
     return this.onOfflineService.isOffline();
   }
@@ -204,6 +210,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             this.visible = false;
 
 
+
             this.notificationService.showNotification({
               id: 'OFFLINE_MODE_ON',
               description: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.SUCCESS.DESCRIPTION',
@@ -213,6 +220,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               type: NotificationType.OK,
               severity: NotificationSeverity.INFO
             });
+
+
+
+
+
+
+
 
           } catch (error) {
 
@@ -239,11 +253,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
           // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
         });
+
       });
 
 
 
     }
+
   }
 
 
