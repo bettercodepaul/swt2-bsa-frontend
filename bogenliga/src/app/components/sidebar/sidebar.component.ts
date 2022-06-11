@@ -35,6 +35,7 @@ export class SidebarComponent implements OnInit {
 
 
 
+
   faCaretDown = faCaretDown;
 
   constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private onOfflineService : OnOfflineService) {
@@ -42,17 +43,22 @@ export class SidebarComponent implements OnInit {
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
+
   ngOnInit() {
+    this.offlineSetter();
   }
   public offlineSetter() : void{
     if(this.onOfflineService.isOffline() == true){
       this.CONFIG = SIDE_BAR_CONFIG_OFFLINE;
-      console.log("true");
+
+
     }else{
-      console.log("false");
       this.CONFIG = SIDE_BAR_CONFIG;
+
     }
+
   }
+
 
   /**
    * tells store that sidebar button was used -> Sidebar needs to change
