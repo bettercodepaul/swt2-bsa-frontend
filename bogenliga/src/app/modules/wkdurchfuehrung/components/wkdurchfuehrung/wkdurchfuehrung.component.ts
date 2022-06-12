@@ -172,10 +172,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public isOffline(): boolean {
     return this.onOfflineService.isOffline();
   }
+  sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
 
   public onButtonGoOfflineClick(): void {
     if (this.onOfflineService.isOffline()) {
       this.onOfflineService.goOnline();
+      this.refresh();
     } else {
       console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
       // Die db wird erst gelöscht und dann wieder erzeugt damit die Datenbank leer ist und keine Doppelten einträge entstehen
@@ -220,13 +226,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               type: NotificationType.OK,
               severity: NotificationSeverity.INFO
             });
-
-
-
-
-
-
-
+            this.refresh();
 
           } catch (error) {
 
@@ -253,13 +253,11 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           // Der Aufruf bleibt aber erhalten falls es in der Zukunft benötigt wird.
           // this.wettkampfOfflineSyncService.loadMannschaftOffline( /* ID FOR SEARCH IDK */);
         });
-
       });
 
 
 
     }
-
   }
 
 

@@ -44,13 +44,14 @@ export class SidebarComponent implements OnInit {
   }
 
 
+
+
   ngOnInit() {
     this.offlineSetter();
   }
   public offlineSetter() : void{
     if(this.onOfflineService.isOffline() == true){
       this.CONFIG = SIDE_BAR_CONFIG_OFFLINE;
-
 
     }else{
       this.CONFIG = SIDE_BAR_CONFIG;
