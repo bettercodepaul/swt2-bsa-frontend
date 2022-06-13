@@ -22,13 +22,13 @@ import {fromOfflineMannschaftPayloadArray} from '@verwaltung/mapper/mannschaft-o
 import {OfflineMannschaftsmitglied} from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
 import {fromOfflineMannschaftsmitgliedPayloadArray} from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
 import {OfflineDsbMitglied} from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
-import {fromOfflineDsbMitgliedPayloadArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
 import {OfflineVeranstaltung} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
 import {throwError} from 'rxjs';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {toOfflineFromVeranstaltungDO} from '@verwaltung/mapper/veranstaltung-offline-mapper';
 import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
-
+import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
+import {fromDOtoOfflineDsbMitgliederArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +38,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient, private veranstaltungDataProvider: VeranstaltungDataProviderService) {
+  constructor(private restClient: RestClient, private veranstaltungDataProvider: VeranstaltungDataProviderService, private dsbMitgliedDataProvider: DsbMitgliedDataProviderService) {
     super();
   }
 
@@ -409,11 +409,18 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   private loadDsbMitglied(id: string | number): Promise<BogenligaResponse<OfflineDsbMitglied[]>> {
 
     return new Promise((resolve, reject) => {
+      this.dsbMitgliedDataProvider.findAll()
+        .then((data) =>{
+          resolve({result: RequestResult.SUCCESS, payload: fromDOtoOfflineDsbMitgliederArray(data.payload)})
+        })
+        .catch(error => console.error(error))
+      /*
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('dsbmitglied=' + id).build())
       .then((data: VersionedDataTransferObject[]) => {
 
         resolve({result: RequestResult.SUCCESS, payload: fromOfflineDsbMitgliedPayloadArray(data)});
       }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+       */
     });
   }
 
