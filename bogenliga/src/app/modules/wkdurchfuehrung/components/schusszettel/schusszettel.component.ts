@@ -12,7 +12,7 @@ import {
   NotificationService,
   NotificationSeverity,
   NotificationType,
-  NotificationUserAction
+  NotificationUserAction, OnOfflineService
 } from '../../../shared/services';
 import {environment} from '@environment';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
@@ -94,7 +94,7 @@ export class SchusszettelComponent implements OnInit {
               private wettkampfDataProvider: WettkampfDataProviderService,
               private veranstaltungDataProvider: VeranstaltungDataProviderService,
               private mannschaftsMitgliedDataProvider: MannschaftsmitgliedDataProviderService,
-              private ligatabelleDataProviderService :LigatabelleDataProviderService
+              private onOfflineService: OnOfflineService
   ) {
   }
 
@@ -227,6 +227,9 @@ export class SchusszettelComponent implements OnInit {
                   // Close notification when ready
                   this.notificationService.discardNotification();
                 });
+              }
+              if(this.onOfflineService.isOffline()){
+                this.notificationService.discardNotification();
               }
             })
             .catch((error) => {
