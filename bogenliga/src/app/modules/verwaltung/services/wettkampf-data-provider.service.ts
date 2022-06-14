@@ -96,6 +96,8 @@ export class WettkampfDataProviderService extends DataProviderService {
 
   public findAllowedMember(wettkampfID: string | number, mannschaft1ID: string | number, mannschaft2ID: string | number): Promise<number[]> {
     if(this.onOfflineService.isOffline()){
+      //This function is essentially useless in offlineMode, the proper check is done when you go online again
+      //its still there because otherwise you'd have to put offlineChecks in the schusszettelComponent
       console.log('Choosing offline way for findAllowedMember with MannschaftIDs: ' + mannschaft1ID + ", " + mannschaft2ID);
       return new Promise((resolve, reject) => {
         db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(mannschaft1ID).or('mannschaftId').equals(mannschaft2ID).toArray()
