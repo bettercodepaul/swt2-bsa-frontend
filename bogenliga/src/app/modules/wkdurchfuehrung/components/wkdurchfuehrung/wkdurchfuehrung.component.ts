@@ -186,6 +186,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             await this.wettkampfOfflineSyncService.loadMatchOffline(this.selectedWettkampfId);
             await this.wettkampfOfflineSyncService.loadVeranstaltungOffline(this.selectedVeranstaltungId);
             await this.wettkampfOfflineSyncService.loadDsbMitgliedOffline(this.selectedVeranstaltungId);
+            await this.wettkampfOfflineSyncService.loadVereineOffline();
+            await this.wettkampfOfflineSyncService.loadManschaftenOffline();
             //await this.wettkampfOfflineSyncService.loadWettkampfOffline( id );
 
 

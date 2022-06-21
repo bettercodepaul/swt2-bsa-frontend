@@ -6,6 +6,7 @@ import {
 import {
   OfflineMannschaft
 } from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 
 export function toDO(offlineSyncDto: MannschaftOfflineSyncDto): OfflineMannschaft {
   return {
@@ -26,4 +27,21 @@ export function fromOfflineMannschaftPayload(payload: VersionedDataTransferObjec
 
 export function fromOfflineMannschaftPayloadArray(payload: VersionedDataTransferObject[]): OfflineMannschaft[] {
   return payload.map((d) => fromOfflineMannschaftPayload(d));
+}
+
+export function offlineMannschaftFromDsbMannschaftDOArray(mannschaften: DsbMannschaftDO[]): OfflineMannschaft[]{
+  return mannschaften.map(mannschaft => offlineMannschaftFromDsbMannschaftDO(mannschaft));
+}
+
+export function offlineMannschaftFromDsbMannschaftDO(mannschaft: DsbMannschaftDO): OfflineMannschaft{
+  return {
+    benutzerId: mannschaft.benutzerId,
+    id: mannschaft.id,
+    nummer: parseInt(mannschaft.nummer),
+    sortierung: mannschaft.sortierung,
+    veranstaltungId: mannschaft.veranstaltungId,
+    vereinId: mannschaft.vereinId,
+    version: 1
+
+  }
 }
