@@ -43,7 +43,7 @@ export class OfflineDB extends Dexie {
    */
   constructor() {
     super('offlineBogenligaDb');
-    this.version(7).stores({
+    this.version(8).stores({
       // Schema -> Every column name is the name of the attribute of the interface
       ligaTabelle: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
         'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
@@ -55,7 +55,7 @@ export class OfflineDB extends Dexie {
       // Use the same id for the wettkampfTabelle that is already in .id
       wettkampfTabelle: ', version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ' +
         'ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
-      mannschaftTabelle: 'id, version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
+      mannschaftTabelle: ', version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
       mannschaftsmitgliedTabelle: ', version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
       dsbMitgliedTabelle: ', version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
       veranstaltungTabelle: ', version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId',
