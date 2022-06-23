@@ -1,11 +1,15 @@
-<button
-  style="
+<a [href]="href"
+   target="_blank">
+  <button
+    style="
     border-radius: 100%;
     border: none;
     min-width: 50px;
-    min-height: 50px"
-  class="btn btn-primary"
-  [id]="id"
-  [name]="wikiUrl">
-  <fa-icon [icon]="faQuestion"></fa-icon>
-</button>
+    min-height: 50px;
+    float: right;
+    margin: 10px"
+    class="btn btn-primary"
+    [id]="id">
+    <fa-icon [icon]="faQuestion"></fa-icon>
+  </button>
+</a>
