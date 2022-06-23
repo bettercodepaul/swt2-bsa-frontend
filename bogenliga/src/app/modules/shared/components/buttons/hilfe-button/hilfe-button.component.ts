@@ -10,7 +10,7 @@ import {faQuestion} from '@fortawesome/free-solid-svg-icons';
 export class HilfeButtonComponent implements OnInit {
   faQuestion = faQuestion;
   @Input() public id : string;
-  @Input() public wikiUrl : string;
+  @Input() public href : string;
 
   ngOnInit(): void {
   }
