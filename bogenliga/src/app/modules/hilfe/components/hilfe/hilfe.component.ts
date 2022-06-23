@@ -21,7 +21,7 @@ export class HilfeComponent implements OnInit {
       cy_test: "test-startseite" // id for cypress tests
     },
     {
-      id: 'Arbeitsablauf als Ligaleiter',
+      id: 'Ablauf Ligaleiter',
       url: 'https://wiki.bsapp.de/doku.php?id=liga:arbeitsablauf',
       cy_test: "test-ligaleiter" // id for cypress tests
     },
