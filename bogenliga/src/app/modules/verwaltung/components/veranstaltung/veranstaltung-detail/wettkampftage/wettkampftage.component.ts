@@ -178,9 +178,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id);
   }
 
+
+
   public onSaveWettkampfTag(wettkampfTagNumber: number, ignore: any): void {
-    this.saveWettkaempfe(wettkampfTagNumber).then((wettkampfID) => this.updateKampfrichter(wettkampfTagNumber, wettkampfID));
-  }
+    this.saveWettkaempfe(wettkampfTagNumber).then(wettkampfID => this.updateKampfrichter(wettkampfTagNumber, wettkampfID))}
 
   public async saveWettkaempfe(wettkampfTagNumber: number): Promise<number> {
     this.anzahl++;
@@ -315,21 +316,15 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
 
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.UPDATE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.UPDATE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+
 
             this.wettkampftagService();
-            this.notificationService.showNotification(notification);
+            this.handleOnSaveSuccess();
+            this.loadWettkampf();
           }
         }, (response: BogenligaResponse<WettkampfDO>) => {
           console.log('Failed');
+          this.handleOnSaveFailure();
           this.saveLoading = false;
         });
   }
@@ -502,6 +497,38 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
   private handleFailure(response: BogenligaResponse<VeranstaltungDO>) {
     this.loading = false;
+  }
+
+
+
+  private handleOnSaveFailure(): void {
+
+    const notification: Notification = {
+      id:          NOTIFICATION_DELETE_WETTKAMPFTAG_FAILURE,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE_FAILURE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE_FAILURE.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.showNotification(notification);
+  }
+
+  private handleOnSaveSuccess(): void {
+
+    const notification: Notification = {
+      id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.SAVE.DESCRIPTION',
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
+    };
+
+    this.notificationService.showNotification(notification);
   }
 
   private handleConfigSuccess(response: BogenligaResponse<EinstellungenDO>) {
