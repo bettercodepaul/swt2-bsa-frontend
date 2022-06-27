@@ -8,6 +8,7 @@ export interface OfflineVerein {
   regionId: number,
   regionName: string,
   website?: string,
+  description?: string,
   icon?: string
 }
 

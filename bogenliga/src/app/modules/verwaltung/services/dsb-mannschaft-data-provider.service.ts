@@ -9,10 +9,13 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/dsb-mannschaft-mapper';
 import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
 import {VereinDO} from '../types/verein-do.class';
+import {db} from '@shared/data-provider/offlinedb/offlinedb';
+import {toDOfromOfflineVereinArray} from '@verwaltung/mapper/verein-offline-mapper';
+import {mannschaftDOfromOfflineArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
 
 /**
  * TODO check usage
@@ -24,7 +27,7 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/dsbmannschaft';
 
-  constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
+  constructor(private restClient: RestClient, private currentUserService: CurrentUserService, private onOfflineService: OnOfflineService) {
     super();
   }
 
@@ -105,24 +108,36 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
   }
 
   public findAllByVereinsId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVereinsID/' + id).build())
-          .then((data: VersionedDataTransferObject[]) => {
+    if(this.onOfflineService.isOffline()){
+      console.log("Choosing offline way for findall mannschaften by vereinsid")
+      return new Promise((resolve,reject) =>{
+        db.mannschaftTabelle.where('vereinId').equals(id).toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: mannschaftDOfromOfflineArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          })
+      })
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byVereinsID/' + id).build())
+            .then((data: VersionedDataTransferObject[]) => {
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
 
-          }, (error: HttpErrorResponse) => {
+            }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
   }
 
 
