@@ -285,9 +285,9 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    *
    * @author Dennis Bär
    */
-  public loadDsbMitgliedOffline(id: string | number): Promise<void> {
+  public loadDsbMitgliedOffline(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.loadDsbMitglied(id)
+      this.loadDsbMitglieder()
       .then((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
         db.dsbMitgliedTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
           console.log('offline dsb mitglied added to offlinedb', lastKey);
@@ -470,7 +470,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
-  private loadDsbMitglied(id: string | number): Promise<BogenligaResponse<OfflineDsbMitglied[]>> {
+  private loadDsbMitglieder(): Promise<BogenligaResponse<OfflineDsbMitglied[]>> {
 
     return new Promise((resolve, reject) => {
       this.dsbMitgliedDataProvider.findAll()
@@ -478,13 +478,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
           resolve({result: RequestResult.SUCCESS, payload: fromDOtoOfflineDsbMitgliederArray(data.payload)})
         })
         .catch(error => console.error(error))
-      /*
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('dsbmitglied=' + id).build())
-      .then((data: VersionedDataTransferObject[]) => {
-
-        resolve({result: RequestResult.SUCCESS, payload: fromOfflineDsbMitgliedPayloadArray(data)});
-      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
-       */
     });
   }
 
@@ -497,15 +490,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
               resolve({result: RequestResult.SUCCESS, payload: [toOfflineFromVeranstaltungDO(data.payload)]});
             })
           .catch(error => console.error(error))
-        /*
-         this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
-         .then((data: VersionedDataTransferObject[]) => {
-
-         resolve({
-         result: RequestResult.SUCCESS,
-         payload: fromOfflineVeranstaltungPayloadArray(data)
-         });
-         }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));*/
       });
   }
 

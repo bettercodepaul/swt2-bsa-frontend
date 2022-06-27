@@ -45,3 +45,21 @@ export function offlineMannschaftFromDsbMannschaftDO(mannschaft: DsbMannschaftDO
 
   }
 }
+
+export function mannschaftDOfromOfflineArray(mannschaften: OfflineMannschaft[]): DsbMannschaftDO[]{
+  return mannschaften.map(mannschaft => mannschaftDOfromOffline(mannschaft));
+}
+
+export function mannschaftDOfromOffline(m: OfflineMannschaft): DsbMannschaftDO{
+  return {
+    benutzerId:        m.benutzerId,
+    id:                m.id,
+    name:              '',
+    nummer:            m.nummer.toString(),
+    sortierung:        m.sortierung,
+    veranstaltungId:   m.veranstaltungId,
+    veranstaltungName: '',
+    vereinId:          m.vereinId,
+    version:           m.version
+  }
+}
