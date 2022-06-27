@@ -11,6 +11,8 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/region-mapper';
 import {RegionDO} from '../types/region-do.class';
+import {db} from '@shared/data-provider/offlinedb/offlinedb';
+import {OnOfflineService} from '@shared/services';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,7 @@ export class RegionDataProviderService extends DataProviderService {
   serviceSubUrl = 'v1/regionen';
 
 
-  constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
+  constructor(private restClient: RestClient, private currentUserService: CurrentUserService, private onOfflineService: OnOfflineService) {
     super();
   }
 
@@ -62,22 +64,45 @@ export class RegionDataProviderService extends DataProviderService {
   }
 
   public findAllByType(type: string): Promise<BogenligaResponse<RegionDO[]>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path(type).build())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
+    if(this.onOfflineService.isOffline()){
+      console.log("Choosing offline way for findall regionen by type")
+      return new Promise((resolve, reject) => {
+        db.vereinTabelle.toArray()
+          .then((data) => {
+            let fakeregionen : RegionDO[] = [];
+            data.forEach( verein =>{
+              fakeregionen.push({
+                id: verein.regionId,
+                regionName: verein.regionName,
+                regionKuerzel: '',
+                regionTyp: '',
+                regionUebergeordnet: 0,
+                regionUebergeordnetAsName: '',
+                version: 1
+              })
+            });
+            resolve({result: RequestResult.SUCCESS, payload: fakeregionen})
+          })
+          .catch(e => reject(e))
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path(type).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
   }
 
 
