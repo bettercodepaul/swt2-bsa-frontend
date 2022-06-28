@@ -18,17 +18,24 @@ import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.
 import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
 import {OfflineMannschaft} from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
-import {fromOfflineMannschaftPayloadArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
+import {
+  fromOfflineMannschaftPayloadArray,
+  offlineMannschaftFromDsbMannschaftDOArray
+} from '@verwaltung/mapper/mannschaft-offline-mapper';
 import {OfflineMannschaftsmitglied} from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
 import {fromOfflineMannschaftsmitgliedPayloadArray} from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
 import {OfflineDsbMitglied} from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
-import {fromOfflineDsbMitgliedPayloadArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
 import {OfflineVeranstaltung} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
 import {throwError} from 'rxjs';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {toOfflineFromVeranstaltungDO} from '@verwaltung/mapper/veranstaltung-offline-mapper';
 import {fromOfflineWettkampfPayloadArray} from '@verwaltung/mapper/wettkampf-offline-mapper';
-
+import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
+import {fromDOtoOfflineDsbMitgliederArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
+import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
+import {OfflineVerein} from '@shared/data-provider/offlinedb/types/offline-verein.interface';
+import {offlineVereinFromVereinDOArray} from '@verwaltung/mapper/verein-offline-mapper';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +45,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient, private veranstaltungDataProvider: VeranstaltungDataProviderService) {
+  constructor(private restClient: RestClient,private mannschaftDataProvider: DsbMannschaftDataProviderService ,private vereinDataProvider: VereinDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService, private dsbMitgliedDataProvider: DsbMitgliedDataProviderService) {
     super();
   }
 
@@ -278,9 +285,9 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    *
    * @author Dennis Bär
    */
-  public loadDsbMitgliedOffline(id: string | number): Promise<void> {
+  public loadDsbMitgliedOffline(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.loadDsbMitglied(id)
+      this.loadDsbMitglieder()
       .then((response: BogenligaResponse<OfflineDsbMitglied[]>) => {
         db.dsbMitgliedTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
           console.log('offline dsb mitglied added to offlinedb', lastKey);
@@ -294,6 +301,44 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         console.error('error loading offline dsb mitglied payload:', response.payload);
         reject();
       });
+    });
+  }
+
+  public loadVereineOffline(){
+    return new Promise((resolve, reject) => {
+      this.loadVereine()
+          .then((response: BogenligaResponse<OfflineVerein[]>) => {
+            db.vereinTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+              console.log('offline vereine added to offlinedb', lastKey);
+              resolve();
+            }).catch((error) => {
+              console.error('error adding offline vereine to offlinedb', error);
+              reject();
+            });
+          })
+          .catch((response: BogenligaResponse<OfflineVerein[]>) => {
+            console.error('error loading offline verein payload:', response.payload);
+            reject();
+          });
+    });
+  }
+
+  public loadManschaftenOffline(){
+    return new Promise((resolve, reject) => {
+      this.loadMannschaften()
+          .then((response: BogenligaResponse<OfflineMannschaft[]>) => {
+            db.mannschaftTabelle.bulkPut(response.payload, response.payload.map((item) => item.id)).then((lastKey) => {
+              console.log('offline mannschaften added to offlinedb', lastKey);
+              resolve();
+            }).catch((error) => {
+              console.error('error adding offline mannschaften to offlinedb', error);
+              reject();
+            });
+          })
+          .catch((response: BogenligaResponse<OfflineMannschaft[]>) => {
+            console.error('error loading offline manschaften payload:', response.payload);
+            reject();
+          });
     });
   }
 
@@ -342,6 +387,25 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
+  private loadVereine(): Promise<BogenligaResponse<OfflineVerein[]>>{
+    return new Promise((resolve, reject) => {
+      this.vereinDataProvider.findAll()
+          .then((data) =>{
+            resolve({result: RequestResult.SUCCESS, payload: offlineVereinFromVereinDOArray(data.payload)})
+          })
+          .catch(error => console.error(error))
+    });
+  }
+
+  private loadMannschaften(): Promise<BogenligaResponse<OfflineMannschaft[]>>{
+    return new Promise((resolve, reject) => {
+      this.mannschaftDataProvider.findAll()
+          .then((data) =>{
+            resolve({result: RequestResult.SUCCESS, payload: offlineMannschaftFromDsbMannschaftDOArray(data.payload)})
+          })
+          .catch(error => console.error(error))
+    });
+  }
 
   private loadPasse(id: string | number): Promise<BogenligaResponse<OfflinePasse[]>> {
 
@@ -406,14 +470,14 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
-  private loadDsbMitglied(id: string | number): Promise<BogenligaResponse<OfflineDsbMitglied[]>> {
+  private loadDsbMitglieder(): Promise<BogenligaResponse<OfflineDsbMitglied[]>> {
 
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('dsbmitglied=' + id).build())
-      .then((data: VersionedDataTransferObject[]) => {
-
-        resolve({result: RequestResult.SUCCESS, payload: fromOfflineDsbMitgliedPayloadArray(data)});
-      }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));
+      this.dsbMitgliedDataProvider.findAll()
+        .then((data) =>{
+          resolve({result: RequestResult.SUCCESS, payload: fromDOtoOfflineDsbMitgliederArray(data.payload)})
+        })
+        .catch(error => console.error(error))
     });
   }
 
@@ -426,15 +490,6 @@ export class WettkampfOfflineSyncService extends DataProviderService {
               resolve({result: RequestResult.SUCCESS, payload: [toOfflineFromVeranstaltungDO(data.payload)]});
             })
           .catch(error => console.error(error))
-        /*
-         this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('veranstaltung=' + id).build())
-         .then((data: VersionedDataTransferObject[]) => {
-
-         resolve({
-         result: RequestResult.SUCCESS,
-         payload: fromOfflineVeranstaltungPayloadArray(data)
-         });
-         }, (error: HttpErrorResponse) => this.handleErrorResponse(error, reject));*/
       });
   }
 
