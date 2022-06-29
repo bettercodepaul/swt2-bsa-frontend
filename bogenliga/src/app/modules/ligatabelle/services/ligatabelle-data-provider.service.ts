@@ -39,7 +39,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
     if (this.onOfflineSerivce.isOffline()) {
       console.log('Choosing offline way for Veranstaltung with id ' + id);
       return new Promise((resolve, reject) => {
-        db.ligaTabelle.where('veranstaltungId').equals(id).toArray()
+        db.ligaTabelleV2.where('veranstaltungId').equals(id).toArray()
           .then((data: OfflineLigatabelle[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromOfflineLigatabelleArray(data)});
           }, () => {
@@ -100,7 +100,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
   };
 
   public async updateMannschaftLT(id : number, satzpunkte:number, satzpunkteGegner : number, spd :number, matchpunkte : number, matchpunkteGegner : number){
-    db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
+    db.ligaTabelleV2.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
   };
 
   public async updateLigatabelleVeranstaltung(liganame: string, mannschafteins: MatchDOExt, mannschaftzwei: MatchDOExt){
