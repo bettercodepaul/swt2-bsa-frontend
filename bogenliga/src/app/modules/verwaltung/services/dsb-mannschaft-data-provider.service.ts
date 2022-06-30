@@ -15,7 +15,7 @@ import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
 import {VereinDO} from '../types/verein-do.class';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {toDOfromOfflineVereinArray} from '@verwaltung/mapper/verein-offline-mapper';
-import {mannschaftDOfromOfflineArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
+import {mannschaftDOfromOffline, mannschaftDOfromOfflineArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
 
 /**
  * TODO check usage
@@ -164,24 +164,42 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
 
 
   public findById(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then((data: VersionedDataTransferObject) => {
+    if(this.onOfflineService.isOffline()){
+      console.log("Choosing offline way for find mannschaft by id")
+      let mannschaftID: number;
+      if (typeof id === 'string') {
+        mannschaftID = parseInt(id);
+      } else{
+        mannschaftID = id;
+      }
+      return new Promise((resolve,reject) =>{
+        db.mannschaftTabelle.get(mannschaftID)
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: mannschaftDOfromOffline(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          })
+      })
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+            .then((data: VersionedDataTransferObject) => {
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+              resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
-          }, (error: HttpErrorResponse) => {
+            }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
   }
 
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<DsbMannschaftDO>> {
