@@ -9,9 +9,11 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/mannschaftsmitglied-mapper';
 import {MannschaftsMitgliedDO} from '../types/mannschaftsmitglied-do.class';
+import {db} from '@shared/data-provider/offlinedb/offlinedb';
+import {fromOfflineMannschaftsmitgliedToDO} from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
 
 
 /**
@@ -24,7 +26,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
 
   serviceSubUrl = 'v1/mannschaftsmitglied';
 
-  constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
+  constructor(private restClient: RestClient, private currentUserService: CurrentUserService, private onOfflineService: OnOfflineService) {
     super();
   }
 
@@ -160,24 +162,46 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
   public findByMemberAndTeamId(memberId: string | number, teamId: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> resolve promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(memberId).path(teamId).build())
-          .then((data: VersionedDataTransferObject) => {
-
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
-
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
+    if(this.onOfflineService.isOffline()){
+      console.log('Choosing offline way for findbyMemberAndTeamId: ' + memberId + ", " + teamId);
+      return new Promise((resolve, reject) => {
+        let ID: number;
+        if (typeof memberId === 'string') {
+          ID = parseInt(memberId);
+        } else {
+          ID = memberId;
+        }
+        db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(teamId).toArray()
+          .then((data) => {
+            data.forEach(mitglied => {
+              if(mitglied.id === ID){
+                resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDO(mitglied)})
+              }
+            })
+          }, () => {
+            reject({result: RequestResult.FAILURE});
           });
-    });
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> resolve promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(memberId).path(teamId).build())
+            .then((data: VersionedDataTransferObject) => {
+
+              resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
   }
 
   public findByTeamIdAndRueckennummer(teamId: string | number, rueckennummer: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
