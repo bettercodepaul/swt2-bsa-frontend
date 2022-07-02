@@ -36,6 +36,9 @@ import {VereinDataProviderService} from '@verwaltung/services/verein-data-provid
 import {OfflineVerein} from '@shared/data-provider/offlinedb/types/offline-verein.interface';
 import {offlineVereinFromVereinDOArray} from '@verwaltung/mapper/verein-offline-mapper';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {
+  OfflinetokenSync
+} from "@shared/data-provider/offlinedb/types/offline-offlinetokensync.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -304,7 +307,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
-  public loadVereineOffline(){
+  public loadVereineOffline() {
     return new Promise((resolve, reject) => {
       this.loadVereine()
           .then((response: BogenligaResponse<OfflineVerein[]>) => {
@@ -554,4 +557,25 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   }
 
 
+  public async goOnlineSync(wettkampfID: number ): Promise<void> {
+
+    return new Promise(async (resolve, reject) => {
+
+
+      const offlineToken = await db.wettkampfTabelle.get(wettkampfID).then((item) => item.offlinetoken);
+      let matchArray: OfflineMatch[] = [];
+      matchArray = await db.matchTabelle.where('version').above(1).toArray();
+
+      let payload: OfflinetokenSync;
+     /* payload = {
+        offlineToken,
+        match: matchArray,
+      };
+      */
+      // fill the payload
+
+      this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).path('goOnlineSync').build(), null);
+
+    });
+  }
 }

@@ -188,23 +188,26 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             await this.wettkampfOfflineSyncService.loadDsbMitgliedOffline();
             await this.wettkampfOfflineSyncService.loadVereineOffline();
             await this.wettkampfOfflineSyncService.loadManschaftenOffline();
-            //await this.wettkampfOfflineSyncService.loadWettkampfOffline( id );
+            // await this.wettkampfOfflineSyncService.loadWettkampfOffline( id );
 
 
 
             this.onOfflineService.goOffline(this.selectedWettkampfId, this.selectedDTOs[0].sportjahr);
 
 
-            //lädt Inhalte der Tabelle neu mit Offlinedaten
+            // lädt Inhalte der Tabelle neu mit Offlinedaten
             this.loadingVeranstaltungen = true;
             this.wettkampfIdEnthalten = true;
             this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
 
-            //temporäre Dummy Daten
+            // temporäre Dummy Daten
             await this.wettkampfOfflineSyncService.createWettkampfDummyData();
 
-            await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr())
+            await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr());
             this.visible = false;
+
+
+
 
 
             this.notificationService.showNotification({
@@ -217,9 +220,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               severity: NotificationSeverity.INFO
             });
 
+
           } catch (error) {
 
-            console.log('Error while loading offline data');
+
+
+
             this.notificationService.showNotification({
               id: 'OFFLINE_MODE_OFF',
               description: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.FAILURE.DESCRIPTION',
@@ -640,7 +646,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der anzuzeigenden Jahre
-  private async findAvailableYears() {
+  private findAvailableYears() {
       this.availableYears = [];
 
       this.veranstaltungsDataProvider.findAllSportyearDestinct()
