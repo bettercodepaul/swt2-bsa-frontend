@@ -167,8 +167,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     return this.onOfflineService.isOffline();
   }
 
-  public onButtonGoOfflineClick(): void {
+  public async onButtonGoOfflineClick(): Promise<void> {
     if (this.onOfflineService.isOffline()) {
+
+      await this.wettkampfOfflineSyncService.goOnlineSync(this.onOfflineService.getOfflineWettkampfID());
       this.onOfflineService.goOnline();
     } else {
       console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);

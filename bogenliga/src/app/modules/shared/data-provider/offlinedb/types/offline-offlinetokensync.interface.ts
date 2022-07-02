@@ -15,8 +15,6 @@ export interface OfflinetokenSync {
   offlineToken: string;
   match: OfflineMatch[];
   passe: OfflinePasse[];
-  mannschaft: OfflineMannschaft[];
   mannschaftsmitglied: OfflineMannschaftsmitglied[];
-  dsbMitglied: OfflineDsbMitglied[];
 
 }

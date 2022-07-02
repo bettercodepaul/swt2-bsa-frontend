@@ -562,38 +562,47 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
 
   public async goOnlineSync(wettkampfID: number ): Promise<void> {
+    console.clear();
 
     return new Promise(async (resolve, reject) => {
 
       try {
-
-
       const offlineToken = await db.wettkampfTabelle.get(wettkampfID).then((item) => item.offlinetoken);
       let matchs: OfflineMatch[] = [];
       matchs = await db.matchTabelle.where('version').above(1).toArray();
       let passes: OfflinePasse[] = [];
       passes = await db.passeTabelle.where('version').above(1).toArray();
-
-      const mannschaften =  await db.mannschaftTabelle.where('version').above(1).toArray();
       const mannschaftsmitglied = await db.mannschaftsmitgliedTabelle.where('version').above(1).toArray();
-      const dsbMitglied = await db.dsbMitgliedTabelle.where('version').above(1).toArray();
+
+      const allowedMitglieder = await this.restClient.GET<Array<number>>(new UriBuilder().fromPath(this.baseUrl).path(`v1/wettkampf/${wettkampfID}/allowedContestants`).build());
+
+      console.log('Allowed Mitglieder: ', allowedMitglieder);
+
+      // filter the mannschaftsmitglieder to only the allowed ones
+      const filterd = mannschaftsmitglied.filter((mitglied) => {
+        if (allowedMitglieder.includes(mitglied.id)) {
+          return mitglied;
+        }
+      });
+
       let payload: OfflinetokenSync;
       payload = {
         wettkampfId: wettkampfID,
         offlineToken,
         match: matchs,
         passe : passes,
-        mannschaft: mannschaften,
-        mannschaftsmitglied,
-        dsbMitglied,
+        mannschaftsmitglied: filterd,
       };
       // fill the payload
 
-      this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).path('goOnlineSync').build(), payload);
+      console.log('Sync Payload: ',payload);
+
+      await this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).path('').build(), payload);
       } catch (error) {
         console.error(error);
         reject(error);
       }
+      resolve();
     });
 
   }
