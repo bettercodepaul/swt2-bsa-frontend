@@ -11,6 +11,8 @@ import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
 export function toDO(passeOfflineSyncDTO: PasseOfflineSyncDtoClass): OfflinePasse {
   // Creates a new instance of the OfflinePasse interface
   return {
+    id: passeOfflineSyncDTO.id,
+    version: passeOfflineSyncDTO.version,
     matchID:        passeOfflineSyncDTO.matchId,
     mannschaftId:   passeOfflineSyncDTO.mannschaftId,
     wettkampfId:    passeOfflineSyncDTO.wettkampfId,

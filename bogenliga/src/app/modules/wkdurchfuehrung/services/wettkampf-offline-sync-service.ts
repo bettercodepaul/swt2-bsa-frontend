@@ -186,13 +186,18 @@ export class WettkampfOfflineSyncService extends DataProviderService {
           passe.rueckennummer = mitglieder.find(mitglied => mitglied.dsbMitgliedId === passe.dsbMitgliedId).rueckennummer;
           return passe;
         });
-        db.passeTabelle.bulkAdd(passen).then((value) => {
+        db.passeTabelle.bulkPut(passen, passen.map((passe) => passe.id)).then((value) => {
           console.log('offline passe added to offlinedb', value);
           resolve();
         }).catch((error) => {
           console.error('error adding offline passe to offlinedb', error);
           reject();
         });
+
+
+
+
+
       })
       .catch((response: BogenligaResponse<OfflinePasse[]>) => {
         console.error('error loading offline passe payload:', response.payload);
