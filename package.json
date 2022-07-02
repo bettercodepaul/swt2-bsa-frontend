@@ -1,0 +1,20 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "[![Deploy to GitHub Pages](https://github.com/bettercodepaul/swt2-bsa-frontend/actions/workflows/build.yml/badge.svg)](https://github.com/bettercodepaul/swt2-bsa-frontend/actions/workflows/build.yml)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bettercodepaul/swt2-bsa-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bettercodepaul/swt2-bsa-frontend/issues"
+  },
+  "homepage": "https://github.com/bettercodepaul/swt2-bsa-frontend#readme"
+}
