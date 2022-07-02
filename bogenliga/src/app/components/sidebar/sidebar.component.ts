@@ -10,7 +10,8 @@ import {SIDE_BAR_CONFIG} from './sidebar.config';
 import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
 import {SIDE_BAR_CONFIG_OFFLINE} from './sidebar.config';
 import {OnOfflineService} from '@shared/services';
-import {SideBarNavigationItem} from './types/sidebar-navigation-item.interface';
+
+
 
 
 
@@ -41,21 +42,18 @@ export class SidebarComponent implements OnInit {
   constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private onOfflineService : OnOfflineService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
+
   }
 
-
-
-
-  ngOnInit() {
+ ngOnInit() {
     this.offlineSetter();
   }
+//Um im Offlinemodus die Sidebar entsprechend anzupassen.
   public offlineSetter() : void{
     if(this.onOfflineService.isOffline() == true){
       this.CONFIG = SIDE_BAR_CONFIG_OFFLINE;
-
     }else{
       this.CONFIG = SIDE_BAR_CONFIG;
-
     }
 
   }
