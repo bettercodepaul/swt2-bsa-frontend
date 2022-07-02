@@ -11,6 +11,7 @@ import {
 } from "@shared/data-provider/offlinedb/types/offline-mannschaft.interface";
 
 export interface OfflinetokenSync {
+  wettkampfId: number;
   offlineToken: string;
   match: OfflineMatch[];
   passe: OfflinePasse[];
