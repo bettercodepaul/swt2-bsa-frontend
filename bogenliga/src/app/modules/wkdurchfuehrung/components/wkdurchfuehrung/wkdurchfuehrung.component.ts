@@ -1,17 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
-import {
-  MATCH_TABLE_CONFIG,
-  WETTKAMPF_TABLE_CONFIG,
-  WKDURCHFUEHRUNG_CONFIG
-} from './wkdurchfuehrung.config';
+import {MATCH_TABLE_CONFIG, WETTKAMPF_TABLE_CONFIG, WKDURCHFUEHRUNG_CONFIG} from './wkdurchfuehrung.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
-import {BogenligaResponse, RequestResult, UriBuilder} from '@shared/data-provider';
-import {
-  VeranstaltungDataProviderService
-} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
 import {MatchProviderService} from '../../services/match-provider.service';
@@ -36,10 +30,10 @@ import {WettkampfComponent} from '@wettkampf/components';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {OnOfflineService} from '@shared/services';
-import {
-  WettkampfOfflineSyncService
-} from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
-import {db} from "@shared/data-provider/offlinedb/offlinedb";
+import {WettkampfOfflineSyncService} from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
+import {db} from '@shared/data-provider/offlinedb/offlinedb';
+import {SidebarComponent} from '../../../../components/sidebar/sidebar.component';
+
 
 
 @Component({
@@ -163,9 +157,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
-  public isOffline(): boolean {
+
+
+
+
+public isOffline(): boolean {
     return this.onOfflineService.isOffline();
   }
+
 
   public onButtonGoOfflineClick(): void {
     if (this.onOfflineService.isOffline()) {
@@ -212,12 +211,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               description: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.SUCCESS.DESCRIPTION',
               title: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.SUCCESS.TITLE',
               origin: NotificationOrigin.SYSTEM,
-              userAction: NotificationUserAction.ACCEPTED,
+              userAction: NotificationUserAction.PENDING,
               type: NotificationType.OK,
               severity: NotificationSeverity.INFO
-            });
 
-          } catch (error) {
+          });
+            //Hier sollte statt einem refresh irgendwann das sidebarcomponent neu geladen werden
+        } catch (error) {
 
             console.log('Error while loading offline data');
             this.notificationService.showNotification({
@@ -227,7 +227,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               origin: NotificationOrigin.SYSTEM,
               userAction: NotificationUserAction.PENDING,
               type: NotificationType.OK,
-              severity: NotificationSeverity.ERROR
+              severity: NotificationSeverity.ERROR,
             });
           }
           // Erst wenn die Db wieder geöffnet wurde, werden die Daten geladen.

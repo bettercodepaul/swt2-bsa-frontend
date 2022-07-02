@@ -134,12 +134,23 @@
           </bla-download-button>
         </div>
 
-        <div>
+        <div id="setupTable" *ngIf="(!isOffline()); else onlineSetupTables">
           <bla-button   (click)="onButtonTabletClick()"
                         [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
             ></bla-button>
-
         </div>
+
+    <ng-template #onlineSetupTables id="onlineSetupTables">
+      <div>
+        <bla-button   (click)="onButtonTabletClick()"
+                      [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+          ></bla-button>
+      </div>
+    </ng-template>
+
+
+
+
         <div id="offlineButton" *ngIf="(!isOffline()); else backOnline ">
           <button class="btn btn-danger" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()" data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen</button>
         </div>
