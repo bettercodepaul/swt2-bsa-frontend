@@ -374,6 +374,7 @@ export class SchusszettelComponent implements OnInit {
     this.popupAndererTag = true;
   }
 
+  //Hier muss die Update funktion aufgreufen werden.
   save() {
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({

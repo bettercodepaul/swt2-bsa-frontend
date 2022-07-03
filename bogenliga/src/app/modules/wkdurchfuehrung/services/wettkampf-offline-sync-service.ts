@@ -512,7 +512,13 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     db.ligaTabelle.bulkAdd(offlineLigatabelle.payload)
     .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
     .catch((e) => throwError(e));
-    db.ligaTabelleV2=db.ligaTabelle; //Testen ob es moeglich ist hier die Daten von Ligatabelle vor dem ersten Aufruf in LT V2 zu schreiben.
+
+    //Daten in die ligaTabelleV2 schreiben
+    db.ligaTabelleV2.clear();
+    db.ligaTabelleV2.bulkAdd(offlineLigatabelle.payload)
+      .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
+      .catch((e) => throwError(e));
+
   }
 
   private handleLoadLigatabelleVeranstaltungFailure(_response: BogenligaResponse<OfflineLigatabelle[]>): void {
