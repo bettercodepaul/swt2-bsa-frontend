@@ -30,6 +30,17 @@ export function fromOfflineMannschaftsmitgliedToDO(payload: OfflineMannschaftsmi
   }
 }
 
+export function fromDOToOfflineMannschaftsmitglied(payload: MannschaftsMitgliedDO, id: number): OfflineMannschaftsmitglied{
+  return {
+    dsbMitgliedEingesetzt: payload.dsbMitgliedEingesetzt,
+    dsbMitgliedId: payload.dsbMitgliedId,
+    id: id,
+    mannschaftId: payload.mannschaftsId,
+    rueckennummer: payload.rueckennummer,
+    version: 2
+  }
+}
+
 export function fromOfflineMannschaftsmitgliedPayload(payload: VersionedDataTransferObject): OfflineMannschaftsmitglied {
   return toDO(MannschaftsmitgliedOfflineSyncDto.copyFrom(payload));
 }

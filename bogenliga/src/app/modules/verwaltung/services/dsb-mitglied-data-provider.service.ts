@@ -15,7 +15,10 @@ import {DsbMitgliedDO} from '../types/dsb-mitglied-do.class';
 import {OnOfflineService} from '@shared/services';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {OfflineDsbMitglied} from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
-import {fromOfflineToDsbMitgliedDOArray} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
+import {
+  fromOfflineToDsbMitgliedDO,
+  fromOfflineToDsbMitgliedDOArray
+} from '@verwaltung/mapper/dsb-mitglied-offline.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -159,24 +162,41 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
 
 
   public findById(id: string | number): Promise<BogenligaResponse<DsbMitgliedDO>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
-          .then((data: VersionedDataTransferObject) => {
+    if(this.onOfflineService.isOffline()){
+      console.log("Choosing offline way for findby dsbmitgliedid")
+      return new Promise((resolve,reject) =>{
+        let dsbId: number
+        if (typeof id === 'number') {
+          dsbId = id;
+        } else {
+          dsbId = parseInt(id)
+        }
+        db.dsbMitgliedTabelle.get(dsbId)
+          .then((dsbMitglied) =>{
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineToDsbMitgliedDO(dsbMitglied)})
+          })
+          .catch(err => reject(err));
+      })
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+            .then((data: VersionedDataTransferObject) => {
 
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+              resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
-          }, (error: HttpErrorResponse) => {
+            }, (error: HttpErrorResponse) => {
 
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
   }
 
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<DsbMitgliedDO>> {
