@@ -83,8 +83,11 @@ export class SchusszettelComponent implements OnInit {
   allowedMitglieder2: number[];
 
 
+
+
   constructor(private router: Router,
               private schusszettelService: SchusszettelProviderService,
+              private ligatabelleService: LigatabelleDataProviderService,
               private matchProvider: MatchProviderService,
               private route: ActivatedRoute,
               private notificationService: NotificationService,
@@ -451,6 +454,7 @@ export class SchusszettelComponent implements OnInit {
           this.match2.schuetzen[i][j].rueckennummer = this.match2.schuetzen[i][0].rueckennummer;
         }
       }
+
       this.schusszettelService.create(this.match1, this.match2)
           .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
             this.match1 = data.payload[0];
@@ -480,8 +484,11 @@ export class SchusszettelComponent implements OnInit {
             });
             this.notificationService.discardNotification();
           });
-      //Es muss noch der Liganame als Variable ersetzt werden.
-      // this.ligatabelleDataProviderService.updateLigatabelleVeranstaltung("Württembergliga", this.match1, this.match2);
+
+
+
+      this.ligatabelleService.updateLigatabelleVeranstaltung(this.match1, this.match2);
+
       this.dirtyFlag = false; // Daten gespeichert
 
     }
@@ -489,7 +496,6 @@ export class SchusszettelComponent implements OnInit {
 
   // zurueck zu wkdurchfuehrung
   back() {
-
     // falls es ungespeichert Änderungen gibt - dann erst fragen ob sie verworfen werden sollen
     if (this.dirtyFlag === true) {
       // TODO Texte in json.de anlegen
