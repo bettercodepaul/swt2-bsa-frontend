@@ -34,6 +34,7 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import {RegionDO} from '@verwaltung/types/region-do.class';
+import {OnOfflineService} from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
@@ -80,6 +81,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
               private wettkampfProvider: WettkampfDataProviderService,
               private router: Router,
               private route: ActivatedRoute,
+              private onOfflineService: OnOfflineService,
               private notificationService: NotificationService) {
     super();
   }
@@ -174,7 +176,10 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
   }
 
   private createLizenzForMember(memberId: number): void {
-
+    if(this.onOfflineService.isOffline()){
+      this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
+      return;
+    }
     // get Lizenzen of this member
     this.lizenzProvider.findByDsbMitgliedId(memberId)
         .then((lizenzResponse: BogenligaResponse<LizenzDO[]>) => {
