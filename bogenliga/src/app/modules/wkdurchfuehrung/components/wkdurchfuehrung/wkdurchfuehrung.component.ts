@@ -1,17 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
-import {
-  MATCH_TABLE_CONFIG,
-  WETTKAMPF_TABLE_CONFIG,
-  WKDURCHFUEHRUNG_CONFIG
-} from './wkdurchfuehrung.config';
+import {MATCH_TABLE_CONFIG, WETTKAMPF_TABLE_CONFIG, WKDURCHFUEHRUNG_CONFIG} from './wkdurchfuehrung.config';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
-import {BogenligaResponse, RequestResult, UriBuilder} from '@shared/data-provider';
-import {
-  VeranstaltungDataProviderService
-} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
 import {MatchProviderService} from '../../services/match-provider.service';
@@ -36,10 +30,9 @@ import {WettkampfComponent} from '@wettkampf/components';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {OnOfflineService} from '@shared/services';
-import {
-  WettkampfOfflineSyncService
-} from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
+import {WettkampfOfflineSyncService} from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
+import {SidebarComponent} from '../../../../components/sidebar/sidebar.component';
 
 
 @Component({
@@ -218,26 +211,23 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             await this.wettkampfOfflineSyncService.loadDsbMitgliedOffline();
             await this.wettkampfOfflineSyncService.loadVereineOffline();
             await this.wettkampfOfflineSyncService.loadManschaftenOffline();
-            // await this.wettkampfOfflineSyncService.loadWettkampfOffline( id );
+            //await this.wettkampfOfflineSyncService.loadWettkampfOffline( id );
 
 
 
             this.onOfflineService.goOffline(this.selectedWettkampfId, this.selectedDTOs[0].sportjahr);
 
 
-            // lädt Inhalte der Tabelle neu mit Offlinedaten
+            //lädt Inhalte der Tabelle neu mit Offlinedaten
             this.loadingVeranstaltungen = true;
             this.wettkampfIdEnthalten = true;
             this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
 
-            // temporäre Dummy Daten
+            //temporäre Dummy Daten
             await this.wettkampfOfflineSyncService.createWettkampfDummyData();
 
-            await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr());
+            await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr())
             this.visible = false;
-
-
-
 
 
             this.notificationService.showNotification({
@@ -248,14 +238,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               userAction: NotificationUserAction.ACCEPTED,
               type: NotificationType.OK,
               severity: NotificationSeverity.INFO
-            });
 
+          });
+            //Hier sollte statt einem refresh irgendwann das sidebarcomponent neu geladen werden
+        } catch (error) {
 
-          } catch (error) {
-
-
-
-
+            console.error('Error while loading offline data');
             this.notificationService.showNotification({
               id: 'OFFLINE_MODE_OFF',
               description: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.FAILURE.DESCRIPTION',
@@ -263,7 +251,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               origin: NotificationOrigin.SYSTEM,
               userAction: NotificationUserAction.PENDING,
               type: NotificationType.OK,
-              severity: NotificationSeverity.ERROR
+              severity: NotificationSeverity.ERROR,
             });
           }
           // Erst wenn die Db wieder geöffnet wurde, werden die Daten geladen.
@@ -676,7 +664,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   // Ermittlung der anzuzeigenden Jahre
-  private findAvailableYears() {
+  private async findAvailableYears() {
       this.availableYears = [];
 
       this.veranstaltungsDataProvider.findAllSportyearDestinct()
@@ -717,7 +705,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         // Jahres auf die id des neusten Jahres
         this.selItemId = this.availableYears[0].id;
         this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
-      } else if (this.onOfflineService.isOffline()) {
+      } else if(this.onOfflineService.isOffline()){
         this.selItemId = this.availableYears[0].id;
       }
 
