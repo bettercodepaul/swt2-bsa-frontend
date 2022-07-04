@@ -1,6 +1,8 @@
 import {DataTransferObject} from '@shared/data-provider';
 
 export class PasseOfflineSyncDtoClass implements DataTransferObject {
+  id: number;
+  version: number;
   matchId: number;
   mannschaftId: number;
   wettkampfId: number;
@@ -12,6 +14,8 @@ export class PasseOfflineSyncDtoClass implements DataTransferObject {
   rueckennummer: number;
 
   static copyFrom(optional: {
+    id?: number,
+    version?: number,
     matchId?: number,
     mannschaftId?: number,
     wettkampfId?: number,
@@ -23,6 +27,8 @@ export class PasseOfflineSyncDtoClass implements DataTransferObject {
     rueckennummer?: number,
   } = {}): PasseOfflineSyncDtoClass {
     const copy = new PasseOfflineSyncDtoClass();
+    copy.id = optional.id ? optional.id : null;
+    copy.version = optional.version ? optional.version : 1;
     copy.matchId = optional.matchId ? optional.matchId : null;
     copy.mannschaftId = optional.mannschaftId ? optional.mannschaftId : null;
     copy.wettkampfId = optional.wettkampfId ? optional.wettkampfId : null;
