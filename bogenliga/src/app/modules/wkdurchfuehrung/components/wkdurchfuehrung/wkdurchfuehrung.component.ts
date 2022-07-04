@@ -39,7 +39,7 @@ import {OnOfflineService} from '@shared/services';
 import {
   WettkampfOfflineSyncService
 } from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
-import {db} from "@shared/data-provider/offlinedb/offlinedb";
+import {db} from '@shared/data-provider/offlinedb/offlinedb';
 
 
 @Component({
@@ -170,8 +170,36 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public async onButtonGoOfflineClick(): Promise<void> {
     if (this.onOfflineService.isOffline()) {
 
-      await this.wettkampfOfflineSyncService.goOnlineSync(this.onOfflineService.getOfflineWettkampfID());
-      this.onOfflineService.goOnline();
+      try {
+        await this.wettkampfOfflineSyncService.goOnlineSync(this.onOfflineService.getOfflineWettkampfID());
+        this.onOfflineService.goOnline();
+
+        this.notificationService.showNotification({
+          id: 'GO_ONLINE_ERROR',
+          description: 'WKDURCHFUEHRUNG.ONLINE.NOTIFICATION.SUCCESS.DESCRIPTION',
+          title: 'WKDURCHFUEHRUNG.ONLINE.NOTIFICATION.SUCCESS.TITLE',
+          origin: NotificationOrigin.SYSTEM,
+          userAction: NotificationUserAction.ACCEPTED,
+          type: NotificationType.OK,
+          severity: NotificationSeverity.INFO
+        });
+
+
+      } catch (e) {
+        console.error(e);
+        this.notificationService.discardNotification();
+
+        this.notificationService.showNotification({
+          id: 'GO_ONLINE_ERROR',
+          description: 'WKDURCHFUEHRUNG.ONLINE.NOTIFICATION.FAILURE.DESCRIPTION',
+          title: 'WKDURCHFUEHRUNG.ONLINE.NOTIFICATION.FAILURE.TITLE',
+          origin: NotificationOrigin.SYSTEM,
+          userAction: NotificationUserAction.ACCEPTED,
+          type: NotificationType.OK,
+          severity: NotificationSeverity.ERROR
+        });
+      }
+
     } else {
       console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
       // Die db wird erst gelöscht und dann wieder erzeugt damit die Datenbank leer ist und keine Doppelten einträge entstehen
@@ -408,8 +436,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         + ' ' + response.payload.sportjahr;
     })
     .catch((error) => {
-      console.log("error in onSelect wkdurchfuehrung")
-      console.log(error)
+      console.log('error in onSelect wkdurchfuehrung');
+      console.log(error);
       this.currentVeranstaltungName = '';
     });
     this.rows = [];
@@ -689,7 +717,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         // Jahres auf die id des neusten Jahres
         this.selItemId = this.availableYears[0].id;
         this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
-      } else if(this.onOfflineService.isOffline()){
+      } else if (this.onOfflineService.isOffline()) {
         this.selItemId = this.availableYears[0].id;
       }
 
