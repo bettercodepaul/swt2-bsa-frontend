@@ -152,7 +152,7 @@
         },
         "FAILURE": {
           "TITLE": "Fehler beim Rücksynchronisieren der Daten",
-          "DESCRIPTION": "Die Daten konnten nicht für den Online Modus vollständig geladen werden!"
+          "DESCRIPTION": "Die Daten konnten nicht für den Online Modus vollständig synchronisiert werden!"
         }
       }
     },
