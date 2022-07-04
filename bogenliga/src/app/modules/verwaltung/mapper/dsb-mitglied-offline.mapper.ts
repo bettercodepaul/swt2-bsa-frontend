@@ -21,6 +21,27 @@ export function toDO(dsbMitgliedDTO: DsbMitgliedOfflineSyncDto): OfflineDsbMitgl
   };
 }
 
+export function fromOfflineToDsbMitgliedDOArray(payload: OfflineDsbMitglied[]): DsbMitgliedDO[]{
+  return payload.map(mitglied => fromOfflineToDsbMitgliedDO(mitglied));
+}
+
+export function fromOfflineToDsbMitgliedDO(payload: OfflineDsbMitglied): DsbMitgliedDO{
+  return {
+    geburtsdatum:    payload.geburtsdatum,
+    id:              payload.id,
+    kampfrichter:    false,
+    mitgliedsnummer: payload.mitgliedsnummer,
+    nachname:        payload.nachname,
+    nationalitaet:   payload.nationalitaet,
+    userId:          payload.benutzerId,
+    vereinsId:       payload.vereinId,
+    vereinsName:     "",
+    version:         payload.version,
+    vorname:         payload.vorname
+
+  }
+}
+
 export function fromDOtoOfflineDsbMitgliederArray(payload: DsbMitgliedDO[]): OfflineDsbMitglied[]{
   return payload.map(mitglied => fromDOtoOfflineDsbMitglied(mitglied));
 }

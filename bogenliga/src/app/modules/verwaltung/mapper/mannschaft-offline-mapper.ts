@@ -7,6 +7,7 @@ import {
   OfflineMannschaft
 } from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
+import {OfflineVerein} from '@shared/data-provider/offlinedb/types/offline-verein.interface';
 
 export function toDO(offlineSyncDto: MannschaftOfflineSyncDto): OfflineMannschaft {
   return {
@@ -46,15 +47,21 @@ export function offlineMannschaftFromDsbMannschaftDO(mannschaft: DsbMannschaftDO
   }
 }
 
-export function mannschaftDOfromOfflineArray(mannschaften: OfflineMannschaft[]): DsbMannschaftDO[]{
-  return mannschaften.map(mannschaft => mannschaftDOfromOffline(mannschaft));
+export function mannschaftDOfromOfflineArray(mannschaften: OfflineMannschaft[], vereine: OfflineVerein[]): DsbMannschaftDO[]{
+  return mannschaften.map(mannschaft => mannschaftDOfromOffline(mannschaft, vereine));
 }
 
-export function mannschaftDOfromOffline(m: OfflineMannschaft): DsbMannschaftDO{
+export function mannschaftDOfromOffline(m: OfflineMannschaft, vereine: OfflineVerein[]): DsbMannschaftDO{
+  let vereinName = ''
+  vereine.forEach(v =>{
+    if(v.id === m.vereinId){
+      vereinName = v.name
+    }
+  })
   return {
     benutzerId:        m.benutzerId,
     id:                m.id,
-    name:              '',
+    name:              vereinName + ' ' + m.nummer,
     nummer:            m.nummer.toString(),
     sortierung:        m.sortierung,
     veranstaltungId:   m.veranstaltungId,
