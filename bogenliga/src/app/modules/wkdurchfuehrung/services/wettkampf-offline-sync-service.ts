@@ -595,9 +595,9 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       };
       // fill the payload
 
-      console.log('Sync Payload: ',payload);
+      console.log('Sync Payload: ', payload);
 
-      await this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).path('').build(), payload);
+      await this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).path('syncSchusszettel').build(), payload);
       } catch (error) {
         console.error(error);
         reject(error);

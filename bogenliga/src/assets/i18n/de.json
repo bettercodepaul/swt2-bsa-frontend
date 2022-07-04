@@ -144,6 +144,18 @@
         }
       }
     },
+    "ONLINE": {
+      "NOTIFICATION": {
+        "SUCCESS": {
+          "TITLE": "Die Daten wurden erfolgreich gespesichert",
+          "DESCRIPTION": "Die Daten wurden erfolgreich online gespeichert und der Online-Modus wurde wieder aktiviert."
+        },
+        "FAILURE": {
+          "TITLE": "Fehler beim Rücksynchronisieren der Daten",
+          "DESCRIPTION": "Die Daten konnten nicht für den Online Modus vollständig geladen werden!"
+        }
+      }
+    },
     "TABLET_ADMIN": {
       "VERWALTUNG": "Tabletverwaltung",
       "SCHEIBE": "Scheibe",
