@@ -51,7 +51,7 @@ export class MatchOfflineSyncDto implements DataTransferObject {
     // Offline interface data -> Looked at the db and saw that everything can be null
     // IDK why the normal match mapper has not the same data
     copy.id = optional.id || null;
-    copy.version = optional.version || null;
+    copy.version = optional.version ?? 1;
     copy.wettkampfId = optional.wettkampfId >= 0 ? optional.wettkampfId : null;
     copy.matchNr = optional.matchNr >= 0 ? optional.matchNr : null;
     copy.matchScheibennummer = optional.matchScheibennummer >= 0 ? optional.matchScheibennummer : null;

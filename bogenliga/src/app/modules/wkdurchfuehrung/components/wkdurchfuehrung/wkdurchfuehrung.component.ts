@@ -35,7 +35,6 @@ import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {SidebarComponent} from '../../../../components/sidebar/sidebar.component';
 
 
-
 @Component({
   selector: 'bla-wkdurchfuehrung',
   templateUrl: './wkdurchfuehrung.component.html',
@@ -157,18 +156,43 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
-
-
-
-
-public isOffline(): boolean {
+  public isOffline(): boolean {
     return this.onOfflineService.isOffline();
   }
 
-
-  public onButtonGoOfflineClick(): void {
+  public async onButtonGoOfflineClick(): Promise<void> {
     if (this.onOfflineService.isOffline()) {
-      this.onOfflineService.goOnline();
+
+      try {
+        await this.wettkampfOfflineSyncService.goOnlineSync(this.onOfflineService.getOfflineWettkampfID());
+        this.onOfflineService.goOnline();
+
+        this.notificationService.showNotification({
+          id: 'GO_ONLINE_ERROR',
+          description: 'WKDURCHFUEHRUNG.ONLINE.NOTIFICATION.SUCCESS.DESCRIPTION',
+          title: 'WKDURCHFUEHRUNG.ONLINE.NOTIFICATION.SUCCESS.TITLE',
+          origin: NotificationOrigin.SYSTEM,
+          userAction: NotificationUserAction.ACCEPTED,
+          type: NotificationType.OK,
+          severity: NotificationSeverity.INFO
+        });
+
+
+      } catch (e) {
+        console.error(e);
+        this.notificationService.discardNotification();
+
+        this.notificationService.showNotification({
+          id: 'GO_ONLINE_ERROR',
+          description: 'WKDURCHFUEHRUNG.ONLINE.NOTIFICATION.FAILURE.DESCRIPTION',
+          title: 'WKDURCHFUEHRUNG.ONLINE.NOTIFICATION.FAILURE.TITLE',
+          origin: NotificationOrigin.SYSTEM,
+          userAction: NotificationUserAction.ACCEPTED,
+          type: NotificationType.OK,
+          severity: NotificationSeverity.ERROR
+        });
+      }
+
     } else {
       console.log('Going offline for Veranstaltung ' + this.selectedVeranstaltungId);
       // Die db wird erst gelöscht und dann wieder erzeugt damit die Datenbank leer ist und keine Doppelten einträge entstehen
@@ -211,7 +235,7 @@ public isOffline(): boolean {
               description: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.SUCCESS.DESCRIPTION',
               title: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.SUCCESS.TITLE',
               origin: NotificationOrigin.SYSTEM,
-              userAction: NotificationUserAction.PENDING,
+              userAction: NotificationUserAction.ACCEPTED,
               type: NotificationType.OK,
               severity: NotificationSeverity.INFO
 
@@ -219,7 +243,7 @@ public isOffline(): boolean {
             //Hier sollte statt einem refresh irgendwann das sidebarcomponent neu geladen werden
         } catch (error) {
 
-            console.log('Error while loading offline data');
+            console.error('Error while loading offline data');
             this.notificationService.showNotification({
               id: 'OFFLINE_MODE_OFF',
               description: 'WKDURCHFUEHRUNG.OFFLINE.NOTIFICATION.FAILURE.DESCRIPTION',
@@ -400,8 +424,8 @@ public isOffline(): boolean {
         + ' ' + response.payload.sportjahr;
     })
     .catch((error) => {
-      console.log("error in onSelect wkdurchfuehrung")
-      console.log(error)
+      console.log('error in onSelect wkdurchfuehrung');
+      console.log(error);
       this.currentVeranstaltungName = '';
     });
     this.rows = [];
