@@ -17,11 +17,11 @@ export class HilfeComponent implements OnInit {
   public sections:Array<any> = [
     {
       id: 'Startseite',
-      url: 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware',
+      url: 'https://wiki.bsapp.de/doku.php?id=liga:startseite',
       cy_test: "test-startseite" // id for cypress tests
     },
     {
-      id: 'Arbeitsablauf als Ligaleiter',
+      id: 'Ablauf Ligaleiter',
       url: 'https://wiki.bsapp.de/doku.php?id=liga:arbeitsablauf',
       cy_test: "test-ligaleiter" // id for cypress tests
     },
@@ -34,6 +34,7 @@ export class HilfeComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    this.setUrl(this.sections[0].url);
   }
 
   setUrl(url) {

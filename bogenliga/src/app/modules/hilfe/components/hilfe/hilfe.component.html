@@ -4,11 +4,11 @@
       <div class="hilfe-section-container">
           <table id="section-table">
             <tr class="hilfe-table-section" *ngFor="let sec of sections">
-              <div class="section-btn"
+              <button class="btn btn-primary section-btn"
                    attr.data-cy="{{sec.cy_test}}"
                    (click)="setUrl(sec.url)">
                 {{sec.id}}
-              </div>
+              </button>
             </tr>
           </table>
       </div>

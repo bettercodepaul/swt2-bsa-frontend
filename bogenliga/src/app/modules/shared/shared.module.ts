@@ -52,6 +52,7 @@ import {StorageServiceModule} from 'ngx-webstorage-service';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
+import {HilfeButtonComponent} from '@shared/components/buttons/hilfe-button/hilfe-button.component';
 
 @NgModule({
   imports: [
@@ -106,6 +107,7 @@ import {fab} from '@fortawesome/free-brands-svg-icons';
     EinzelstatistikDownloadComponent,
     GesamtstatistikDownloadComponent,
     TagesuebersichtDownloadComponent,
+    HilfeButtonComponent
   ],
   declarations: [
     ButtonComponent,
@@ -143,6 +145,7 @@ import {fab} from '@fortawesome/free-brands-svg-icons';
     EinzelstatistikDownloadComponent,
     GesamtstatistikDownloadComponent,
     TagesuebersichtDownloadComponent,
+    HilfeButtonComponent
   ]
 })
 export class SharedModule {
