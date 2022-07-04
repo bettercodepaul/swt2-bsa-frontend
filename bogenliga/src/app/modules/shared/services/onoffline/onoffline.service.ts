@@ -21,6 +21,9 @@ export class OnOfflineService {
     }
 
     public goOnline(): void {
+
+
+
         this.store.dispatch(new GoOnline());
         this.localDataProviderService.remove(ON_OFFLINE_STATE_KEY);
     }

@@ -6,6 +6,7 @@ import {
 import {
   OfflineMannschaftsmitglied
 } from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
+import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 
 export function toDO(offlineSyncDto: MannschaftsmitgliedOfflineSyncDto): OfflineMannschaftsmitglied {
   return {
@@ -19,6 +20,26 @@ export function toDO(offlineSyncDto: MannschaftsmitgliedOfflineSyncDto): Offline
   };
 }
 
+export function fromOfflineMannschaftsmitgliedToDOArray(payload: OfflineMannschaftsmitglied[]): MannschaftsMitgliedDO[]{
+  return payload.map(mitglied => fromOfflineMannschaftsmitgliedToDO(mitglied));
+}
+
+export function fromOfflineMannschaftsmitgliedToDO(payload: OfflineMannschaftsmitglied): MannschaftsMitgliedDO{
+  return {
+    dsbMitgliedEingesetzt: payload.dsbMitgliedEingesetzt, dsbMitgliedId: payload.dsbMitgliedId, id: payload.id, mannschaftsId: payload.mannschaftId, rueckennummer: payload.rueckennummer, version: payload.rueckennummer
+  }
+}
+
+export function fromDOToOfflineMannschaftsmitglied(payload: MannschaftsMitgliedDO, id: number): OfflineMannschaftsmitglied{
+  return {
+    dsbMitgliedEingesetzt: payload.dsbMitgliedEingesetzt,
+    dsbMitgliedId: payload.dsbMitgliedId,
+    id: id,
+    mannschaftId: payload.mannschaftsId,
+    rueckennummer: payload.rueckennummer,
+    version: 2
+  }
+}
 
 export function fromOfflineMannschaftsmitgliedPayload(payload: VersionedDataTransferObject): OfflineMannschaftsmitglied {
   return toDO(MannschaftsmitgliedOfflineSyncDto.copyFrom(payload));

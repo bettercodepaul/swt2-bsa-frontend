@@ -8,6 +8,11 @@ import {AppState, SidebarState, TOGGLE_SIDEBAR} from '../../modules/shared/redux
 import {CurrentUserService, UserPermission} from '../../modules/shared/services/current-user';
 import {SIDE_BAR_CONFIG} from './sidebar.config';
 import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
+import {SIDE_BAR_CONFIG_OFFLINE} from './sidebar.config';
+import {OnOfflineService} from '@shared/services';
+
+
+
 
 
 @Component({
@@ -18,21 +23,41 @@ import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.inter
     './../../app.component.scss'
   ]
 })
+
+
 export class SidebarComponent implements OnInit {
 
+
+
+
   public isActive: boolean; // for class and css to know if sidebar is wide or small
-  public CONFIG = SIDE_BAR_CONFIG;
   public inProd = environment.production;
+  public CONFIG;
+
+
+
 
   faCaretDown = faCaretDown;
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router) {
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private onOfflineService : OnOfflineService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
+
   }
 
-  ngOnInit() {
+ ngOnInit() {
+    this.offlineSetter();
   }
+//Um im Offlinemodus die Sidebar entsprechend anzupassen.
+  public offlineSetter() : void{
+    if(this.onOfflineService.isOffline() == true){
+      this.CONFIG = SIDE_BAR_CONFIG_OFFLINE;
+    }else{
+      this.CONFIG = SIDE_BAR_CONFIG;
+    }
+
+  }
+
 
   /**
    * tells store that sidebar button was used -> Sidebar needs to change

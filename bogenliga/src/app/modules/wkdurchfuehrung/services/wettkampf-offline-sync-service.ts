@@ -36,6 +36,9 @@ import {VereinDataProviderService} from '@verwaltung/services/verein-data-provid
 import {OfflineVerein} from '@shared/data-provider/offlinedb/types/offline-verein.interface';
 import {offlineVereinFromVereinDOArray} from '@verwaltung/mapper/verein-offline-mapper';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {
+  OfflinetokenSync
+} from '@shared/data-provider/offlinedb/types/offline-offlinetokensync.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +48,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient,private mannschaftDataProvider: DsbMannschaftDataProviderService ,private vereinDataProvider: VereinDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService, private dsbMitgliedDataProvider: DsbMitgliedDataProviderService) {
+  constructor(private restClient: RestClient, private mannschaftDataProvider: DsbMannschaftDataProviderService , private vereinDataProvider: VereinDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService, private dsbMitgliedDataProvider: DsbMitgliedDataProviderService) {
     super();
   }
 
@@ -90,7 +93,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
   public async handleLoadMatchTabelleSuccess(payload: OfflineMatch[]): Promise<void> {
     await db.passeTabelle.toArray()
-      .then( passen => {
+      .then( (passen) => {
         const matches = this.getOfflineMatchPunkte(payload, passen);
         db.matchTabelle.bulkPut(matches, matches.map((item) => item.id)).then((value) => {
           console.log('offline match added to offlinedb', value);
@@ -101,51 +104,50 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       });
   }
 
-  //eventuell wo anders hin bewegen später bspw. schusszettel data provider oder ähnliches
-  public getOfflineMatchPunkte(offlineMatches: OfflineMatch[], passen: OfflinePasse[]): OfflineMatch[]{
-    let matches: OfflineMatch[] = []
+  // eventuell wo anders hin bewegen später bspw. schusszettel data provider oder ähnliches
+  public getOfflineMatchPunkte(offlineMatches: OfflineMatch[], passen: OfflinePasse[]): OfflineMatch[] {
+    const matches: OfflineMatch[] = [];
     offlineMatches.forEach( (match1) => {
-      if(matches.find(m => m.id === match1.id))
+      if (matches.find((m) => m.id === match1.id)) {
         return;
+      }
 
-      //zugehörige gegner match finden
-      let match2 = offlineMatches.find(m => m.id === match1.matchIdGegner);
+      // zugehörige gegner match finden
+      const match2 = offlineMatches.find((m) => m.id === match1.matchIdGegner);
 
-      //Satzpunkte aus den passen errechnen
+      // Satzpunkte aus den passen errechnen
       const satzSumM1 = this.getOfflineMatchSatzSumme(match1.id, passen);
       const satzSumM2 = this.getOfflineMatchSatzSumme(match2.id, passen);
-      if(satzSumM1[0] > 0) {
+      if (satzSumM1[0] > 0) {
         match1.satzpunkte = 0;
       }
-      if(satzSumM2[0] > 0) {
+      if (satzSumM2[0] > 0) {
         match2.satzpunkte = 0;
       }
 
-      //gewinner der Sätze ermitteln => satzpunkte gesamt errechnen
-      for(let i = 0; i<5; i++){
-        if(satzSumM1[i] > satzSumM2[i])
+      // gewinner der Sätze ermitteln => satzpunkte gesamt errechnen
+      for (let i = 0; i < 5; i++) {
+        if (satzSumM1[i] > satzSumM2[i]) {
           match1.satzpunkte += 2;
-        else if(satzSumM1[i] < satzSumM2[i])
+        } else if (satzSumM1[i] < satzSumM2[i]) {
           match2.satzpunkte += 2;
-        else if(satzSumM1[i] === satzSumM2[i] && satzSumM1[i] != 0){
+ } else if (satzSumM1[i] === satzSumM2[i] && satzSumM1[i] != 0) {
           match1.satzpunkte += 1;
           match2.satzpunkte += 1;
         }
       }
 
-      //matchpunkte errechnen
-      if(match1.satzpunkte >= 6) {
+      // matchpunkte errechnen
+      if (match1.satzpunkte >= 6) {
         match1.matchpkt = 2;
         match2.matchpkt = 0;
-      }
-      else if(match2.satzpunkte >= 6) {
+      } else if (match2.satzpunkte >= 6) {
         match2.matchpkt = 2;
         match1.matchpkt = 0;
-      }
-      else if(match1.satzpunkte === match2.satzpunkte && match1.satzpunkte >= 5){
+      } else if (match1.satzpunkte === match2.satzpunkte && match1.satzpunkte >= 5) {
         match1.matchpkt = 1;
         match2.matchpkt = 1;
-      } else if(match1.satzpunkte > 0 && match2.satzpunkte > 0) {
+      } else if (match1.satzpunkte > 0 && match2.satzpunkte > 0) {
         match1.matchpkt = 0;
         match2.matchpkt = 0;
       }
@@ -154,11 +156,11 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     return matches;
   }
 
-  public getOfflineMatchSatzSumme(matchID: number, passen: OfflinePasse[]): number[]{
-    const satzSum = [0,0,0,0,0];
-    passen.forEach(passe =>{
-      if(passe.matchID === matchID){
-        satzSum[passe.lfdNr-1] += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
+  public getOfflineMatchSatzSumme(matchID: number, passen: OfflinePasse[]): number[] {
+    const satzSum = [0, 0, 0, 0, 0];
+    passen.forEach((passe) => {
+      if (passe.matchID === matchID) {
+        satzSum[passe.lfdNr - 1] += passe.ringzahlPfeil1 + passe.ringzahlPfeil2;
       }
     });
     return satzSum;
@@ -172,24 +174,29 @@ export class WettkampfOfflineSyncService extends DataProviderService {
    * @author Dennis Bär
    */
   public async loadPasseOffline(id: string | number): Promise<void> {
-    let mitglieder: OfflineMannschaftsmitglied[] = []
+    let mitglieder: OfflineMannschaftsmitglied[] = [];
     await db.mannschaftsmitgliedTabelle.toArray()
-      .then(data => mitglieder = data)
-      .catch(error => console.error(error))
+      .then((data) => mitglieder = data)
+      .catch((error) => console.error(error));
     return new Promise((resolve, reject) => {
       this.loadPasse(id)
       .then((response: BogenligaResponse<OfflinePasse[]>) => {
-        const passen = response.payload.map(passe => {
-          passe.rueckennummer = mitglieder.find(mitglied => mitglied.dsbMitgliedId === passe.dsbMitgliedId).rueckennummer;
+        const passen = response.payload.map((passe) => {
+          passe.rueckennummer = mitglieder.find((mitglied) => mitglied.dsbMitgliedId === passe.dsbMitgliedId).rueckennummer;
           return passe;
         });
-        db.passeTabelle.bulkAdd(passen).then((value) => {
+        db.passeTabelle.bulkPut(passen, passen.map((passe) => passe.id)).then((value) => {
           console.log('offline passe added to offlinedb', value);
           resolve();
         }).catch((error) => {
           console.error('error adding offline passe to offlinedb', error);
           reject();
         });
+
+
+
+
+
       })
       .catch((response: BogenligaResponse<OfflinePasse[]>) => {
         console.error('error loading offline passe payload:', response.payload);
@@ -304,7 +311,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
-  public loadVereineOffline(){
+  public loadVereineOffline() {
     return new Promise((resolve, reject) => {
       this.loadVereine()
           .then((response: BogenligaResponse<OfflineVerein[]>) => {
@@ -323,7 +330,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
-  public loadManschaftenOffline(){
+  public loadManschaftenOffline() {
     return new Promise((resolve, reject) => {
       this.loadMannschaften()
           .then((response: BogenligaResponse<OfflineMannschaft[]>) => {
@@ -387,23 +394,23 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
   }
 
-  private loadVereine(): Promise<BogenligaResponse<OfflineVerein[]>>{
+  private loadVereine(): Promise<BogenligaResponse<OfflineVerein[]>> {
     return new Promise((resolve, reject) => {
       this.vereinDataProvider.findAll()
-          .then((data) =>{
-            resolve({result: RequestResult.SUCCESS, payload: offlineVereinFromVereinDOArray(data.payload)})
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: offlineVereinFromVereinDOArray(data.payload)});
           })
-          .catch(error => console.error(error))
+          .catch((error) => console.error(error));
     });
   }
 
-  private loadMannschaften(): Promise<BogenligaResponse<OfflineMannschaft[]>>{
+  private loadMannschaften(): Promise<BogenligaResponse<OfflineMannschaft[]>> {
     return new Promise((resolve, reject) => {
       this.mannschaftDataProvider.findAll()
-          .then((data) =>{
-            resolve({result: RequestResult.SUCCESS, payload: offlineMannschaftFromDsbMannschaftDOArray(data.payload)})
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: offlineMannschaftFromDsbMannschaftDOArray(data.payload)});
           })
-          .catch(error => console.error(error))
+          .catch((error) => console.error(error));
     });
   }
 
@@ -474,10 +481,10 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
     return new Promise((resolve, reject) => {
       this.dsbMitgliedDataProvider.findAll()
-        .then((data) =>{
-          resolve({result: RequestResult.SUCCESS, payload: fromDOtoOfflineDsbMitgliederArray(data.payload)})
+        .then((data) => {
+          resolve({result: RequestResult.SUCCESS, payload: fromDOtoOfflineDsbMitgliederArray(data.payload)});
         })
-        .catch(error => console.error(error))
+        .catch((error) => console.error(error));
     });
   }
 
@@ -489,7 +496,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
 
               resolve({result: RequestResult.SUCCESS, payload: [toOfflineFromVeranstaltungDO(data.payload)]});
             })
-          .catch(error => console.error(error))
+          .catch((error) => console.error(error));
       });
   }
 
@@ -528,30 +535,75 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   }
 
 
-  public async createWettkampfDummyData(): Promise<void>{
-    let offlineWettkampfArray : OfflineWettkampf[] = [];
-    for(let i=0; i<4; i++) {
-      let offlineWettkampf: OfflineWettkampf = {
-        id: 30+i,
+  public async createWettkampfDummyData(): Promise<void> {
+    const offlineWettkampfArray: OfflineWettkampf[] = [];
+    for (let i = 0; i < 4; i++) {
+      const offlineWettkampf: OfflineWettkampf = {
+        id: 30 + i,
         datum: '2017-12-30',
         ausrichter: '2',
-        beginn: '12:5'+i,
+        beginn: '12:5' + i,
         offlinetoken : 'dsfgsgffddfdfhfghfhfhfgdsaljfgkjdyfgfdkljbdfjhdfsklbhndsklghdfslgjhdyfklöhdfkljghdfsjghljkglhkjdsflhkdfshjkghjkldgkhjldgkhjldkjhlg',
         disziplinId : 0,
         plz : '72108',
         version: 5,
         ortsinfo: null,
-        tag: ''+(i+1),
+        tag: '' + (i + 1),
         ortsname : 'Ofterdingen',
         strasse : 'Brunnenstraße',
         wettkampftypId : 1,
         veranstaltungId : 0,
-      }
+      };
       offlineWettkampfArray.push(offlineWettkampf);
     }
     db.wettkampfTabelle.clear();
-    db.wettkampfTabelle.bulkPut(offlineWettkampfArray, offlineWettkampfArray.map((item) =>item.id));
+    db.wettkampfTabelle.bulkPut(offlineWettkampfArray, offlineWettkampfArray.map((item) => item.id));
   }
 
 
+  public async goOnlineSync(wettkampfID: number ): Promise<void> {
+    console.clear();
+
+    return new Promise(async (resolve, reject) => {
+
+      try {
+      const offlineToken = await db.wettkampfTabelle.get(wettkampfID).then((item) => item.offlinetoken);
+      let matchs: OfflineMatch[] = [];
+      matchs = await db.matchTabelle.where('version').above(1).toArray();
+      let passes: OfflinePasse[] = [];
+      passes = await db.passeTabelle.where('version').above(1).toArray();
+      const mannschaftsmitglied = await db.mannschaftsmitgliedTabelle.where('version').above(1).toArray();
+
+      const allowedMitglieder = await this.restClient.GET<Array<number>>(new UriBuilder().fromPath(this.baseUrl).path(`v1/wettkampf/${wettkampfID}/allowedContestants`).build());
+
+      console.log('Allowed Mitglieder: ', allowedMitglieder);
+
+      // filter the mannschaftsmitglieder to only the allowed ones
+      const filterd = mannschaftsmitglied.filter((mitglied) => {
+        if (allowedMitglieder.includes(mitglied.id)) {
+          return mitglied;
+        }
+      });
+
+      let payload: OfflinetokenSync;
+      payload = {
+        wettkampfId: wettkampfID,
+        offlineToken,
+        match: matchs,
+        passe : passes,
+        mannschaftsmitglied: filterd,
+      };
+      // fill the payload
+
+      console.log('Sync Payload: ', payload);
+
+      await this.restClient.POST(new UriBuilder().fromPath(this.getUrl()).path('syncSchusszettel').build(), payload);
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+      resolve();
+    });
+
+  }
 }
