@@ -105,7 +105,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
 
   };
 
-  public  async updateLigatabelleVeranstaltung( mannschafteins: MatchDOExt, mannschaftzwei: MatchDOExt){
+  public async updateLigatabelleVeranstaltung( mannschafteins: MatchDOExt, mannschaftzwei: MatchDOExt){
 
     let satzpunkte=[];
     let id=0;

@@ -29,9 +29,9 @@ export class MatchProviderService extends DataProviderService {
   constructor(private restClient: RestClient, private onOfflineService: OnOfflineService) {
     super();
   }
-  public getmatchoffline(id: number,manid :number): Promise<BogenligaResponse<MatchDTOExt[]>> {
+  public getmatchoffline(id: number): Promise<BogenligaResponse<MatchDTOExt[]>> {
     return new Promise((resolve, reject) => {
-      db.matchTabelle.where(['matchNr','mannschaftId']).equals([id,manid]).toArray()
+      db.matchTabelle.where('id').equals(id).toArray()
         .then((data: OfflineMatch[]) => {
           resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data,[])});
         }, () => {
