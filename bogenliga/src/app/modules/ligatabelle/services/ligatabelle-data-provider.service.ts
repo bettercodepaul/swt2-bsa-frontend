@@ -88,9 +88,9 @@ export class LigatabelleDataProviderService extends DataProviderService {
     });
   }
 
-  public getLigatabelleWK(id: number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
+  public getLigatabelleWK(index :string, key: number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
     return new Promise((resolve, reject) => {
-      db.ligaTabelle.where('mannschaftId').equals(id).toArray()
+      db.ligaTabelle.where(index).equals(key).toArray()
         .then((data: OfflineLigatabelle[]) => {
           resolve({result: RequestResult.SUCCESS, payload: fromOfflineLigatabelleArray(data)});
         }, () => {
@@ -104,50 +104,97 @@ export class LigatabelleDataProviderService extends DataProviderService {
     db.ligaTabelleV2.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
 
   };
+  public async updatePlatzLT(id : number, platz : number){
+    db.ligaTabelleV2.update(id, {'tabellenplatz':platz});
+  };
 
-  public async updateLigatabelleVeranstaltung( mannschafteins: MatchDOExt, mannschaftzwei: MatchDOExt){
+  public async tabelleberechnen(wettkampfId:number){
+    let datenliga = await this.getLigatabelleWK('wettkampfId',wettkampfId);
+    let liga=datenliga.payload;
+    let ligaid=liga[0].veranstaltung_id;
+    let ligatabelle= await this.getLigatabelleWK('veranstaltungId',ligaid);
+    let tabelle= ligatabelle.payload;
+
+    let temp;
+    for (let i = 0; i < tabelle.length-1; i++) {
+      datenliga = await this.getLigatabelleWK('wettkampfId',wettkampfId);
+      liga=datenliga.payload;
+      ligaid=liga[0].veranstaltung_id;
+       ligatabelle= await this.getLigatabelleWK('veranstaltungId',ligaid);
+      tabelle= ligatabelle.payload;
+      temp=tabelle[i];
+      console.log(tabelle[i].tabellenplatz,tabelle[i].mannschaft_name,tabelle[i].matchpunkte.split(" ")[0]);
+      if ((tabelle[i].matchpunkte.split(" ")[0] ) >  tabelle[i+1].matchpunkte.split(" ")[0]){
+        tabelle[i]=tabelle[i+1];
+        tabelle[i+1]=temp;
+        temp=tabelle[i].tabellenplatz;
+        tabelle[i].tabellenplatz=tabelle[i+1].tabellenplatz;
+        tabelle[i+1].tabellenplatz=temp;
+        console.log(tabelle);
+        await this.updatePlatzLT(tabelle[i].id,tabelle[i].tabellenplatz);
+        await this.updatePlatzLT(tabelle[i + 1].id, tabelle[i + 1].tabellenplatz);
+
+      }
+      //console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+      //console.log(tabelle);
+
+    }
+  }
+
+
+  public async updateLigatabelleVeranstaltung( match1: MatchDOExt,alt_match1 :MatchDOExt, match2: MatchDOExt, alt_match2 :MatchDOExt){
+
+    //Fall es aendert sich nichts
+    if(
+      match1.satzpunkte!=alt_match1.satzpunkte &&
+      match2.satzpunkte!=alt_match2.satzpunkte
+    ){
 
     let satzpunkte=[];
     let id=0;
     let matchpunkte=[];
 
-    let Daten = await this.getLigatabelleWK(mannschafteins.mannschaftId);
-    let LT_mannschafteins=Daten.payload;
-    Daten = await this.getLigatabelleWK(mannschaftzwei.mannschaftId);
-    let LT_mannschaftzwei=Daten.payload;
+    let Daten = await this.getLigatabelleWK('mannschaftId',match1.mannschaftId);
+    let LT_match1=Daten.payload;
+    Daten = await this.getLigatabelleWK('mannschaftId',match2.mannschaftId);
+    let LT_match2=Daten.payload;
+
+
 
     // Manschafteins
-    satzpunkte=LT_mannschafteins[0].satzpunkte.split(" ");
-    id=LT_mannschafteins[0].id;
-    matchpunkte=LT_mannschafteins[0].matchpunkte.split(" ");
+    satzpunkte=LT_match1[0].satzpunkte.split(" ");
+    id=LT_match1[0].id;
+    matchpunkte=LT_match1[0].matchpunkte.split(" ");
 
-    let sp = parseInt(satzpunkte[0]) + mannschafteins.satzpunkte;
-    let spg = parseInt(satzpunkte[2]) + mannschaftzwei.satzpunkte;
+    let sp = parseInt(satzpunkte[0])- alt_match1.satzpunkte + match1.satzpunkte;
+    let spg = parseInt(satzpunkte[2])- alt_match2.satzpunkte + match2.satzpunkte;
     let spd = sp - spg;
 
-    let mp = parseInt(matchpunkte[0]) + mannschafteins.matchpunkte;
-    let mpg = parseInt(matchpunkte[2]) + mannschaftzwei.matchpunkte;
-    console.log(satzpunkte,matchpunkte,sp,spg, spd,mannschafteins.mannschaftName.toString());
+    let mp = parseInt(matchpunkte[0])-alt_match1.matchpunkte + match1.matchpunkte;
+    let mpg = parseInt(matchpunkte[2])-alt_match2.matchpunkte + match2.matchpunkte;
+
+    console.log(satzpunkte,matchpunkte,sp,spg, spd,match1.mannschaftName.toString());
     //Daten Updaten
     await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
     console.log(id, sp, spg, spd, mp, mpg)
 
     //Mannschaftzwei
-    satzpunkte=LT_mannschaftzwei[0].satzpunkte.split(" ");
-    id=LT_mannschaftzwei[0].id;
-    matchpunkte=LT_mannschaftzwei[0].matchpunkte.split(" ");
+    satzpunkte=LT_match2[0].satzpunkte.split(" ");
+    id=LT_match2[0].id;
+    matchpunkte=LT_match2[0].matchpunkte.split(" ");
 
-    sp = parseInt(satzpunkte[0]) + mannschafteins.satzpunkte;
-    spg = parseInt(satzpunkte[2]) + mannschaftzwei.satzpunkte;
+    sp = parseInt(satzpunkte[0])- alt_match1.satzpunkte + match1.satzpunkte;
+    spg = parseInt(satzpunkte[2])- alt_match2.satzpunkte + match2.satzpunkte;
     spd = sp - spg;
 
-    mp = parseInt(matchpunkte[0]) + mannschafteins.matchpunkte;
-    mpg = parseInt(matchpunkte[2]) + mannschaftzwei.matchpunkte;
-    console.log(satzpunkte,matchpunkte,sp,spg, spd, mannschaftzwei.mannschaftName.toString());
+    mp = parseInt(matchpunkte[0])- alt_match1.matchpunkte  + match1.matchpunkte;
+    mpg = parseInt(matchpunkte[2])- alt_match2.matchpunkte + match2.matchpunkte;
+    console.log(satzpunkte,matchpunkte,sp,spg, spd, match2.mannschaftName.toString());
     //Daten Updaten
     await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
 
-
+     // this.tabelleberechnen(match1.wettkampfId); Funkioniert noch nicht ganz
   }
 
+  }
 }

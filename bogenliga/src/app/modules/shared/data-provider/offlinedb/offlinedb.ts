@@ -50,7 +50,7 @@ export class OfflineDB extends Dexie {
         'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
       ligaTabelleV2: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
                      'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
-      matchTabelle: '++id, version, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
+      matchTabelle: ', version, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
         'nameGegner, scheibennummerGegner, matchIdGegner, naechsteMatchId, naechsteNaechsteMatchNrMatchId,' +
         'strafpunkteSatz1, strafpunkteSatz2, strafpunkteSatz3, strafpunkteSatz4, strafpunkteSatz5',
       passeTabelle: '++id, version, matchID, mannschaftID, wettkampfID, matchNr, lfdNr, dsbMitgliedID, ' +
