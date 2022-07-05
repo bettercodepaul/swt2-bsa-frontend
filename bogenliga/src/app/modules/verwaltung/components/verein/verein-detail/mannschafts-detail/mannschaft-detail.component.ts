@@ -39,7 +39,7 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {PasseDTOClass} from '@verwaltung/types/datatransfer/passe-dto.class';
-import {CurrentUserService, UserPermission} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
@@ -101,6 +101,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
               private router: Router,
               private route: ActivatedRoute,
               private notificationService: NotificationService,
+              private onOfflineService: OnOfflineService,
               private currentUserService: CurrentUserService) {
     super();
   }
@@ -325,7 +326,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   private handleVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.ligen = [];
     this.ligen = response.payload;
-    if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT) &&
+    if (!this.onOfflineService.isOffline() && this.currentUserService.hasPermission(UserPermission.CAN_CREATE_MANNSCHAFT) &&
       !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)) {
       this.ligen = this.ligen.filter((entry) => {
         return this.currentUserService.hasVeranstaltung(entry.id);
