@@ -31,7 +31,7 @@ export class MatchProviderService extends DataProviderService {
   }
   public getmatchoffline(id: number): Promise<BogenligaResponse<MatchDTOExt[]>> {
     return new Promise((resolve, reject) => {
-      db.matchTabelle.where('id').equals(id).toArray()
+      db.matchTabelle.where('matchNr').equals(id).toArray()
         .then((data: OfflineMatch[]) => {
           resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data,[])});
         }, () => {
@@ -40,6 +40,7 @@ export class MatchProviderService extends DataProviderService {
 
     });
   };
+
 
   public get(matchId: string): Promise<BogenligaResponse<MatchDOExt>> {
     /*if(this.onOfflineService.isOffline()){

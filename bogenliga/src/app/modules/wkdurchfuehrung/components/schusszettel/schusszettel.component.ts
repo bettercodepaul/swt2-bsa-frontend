@@ -379,25 +379,20 @@ export class SchusszettelComponent implements OnInit {
 
   //Hier muss die Update funktion aufgreufen werden.
  async save() {
-    /*Daten holen
-    let m1id=this.match1.id
-    where m1id
-    if punkte == null | 0
 
-      else punkte >0<this
-        array[ppunktedaTEN]
-    */
-   console.log(this.match1.id);
-    let a_match1= await this.matchProvider.getmatchoffline(this.match1.id);
-    let alt_match1=a_match1.payload;
-    let a_match2= await this.matchProvider.getmatchoffline(this.match2.id);
-    let alt_match2=a_match2.payload;
-    console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-    console.log(alt_match1,alt_match2);
-
-    if((alt_match1[0].matchpunkte || alt_match1[0].satzpunkte) == (null|| 0)){
-
+    let matchd=await this.matchProvider.getmatchoffline(this.match1.nr);
+    let matchdaten = matchd.payload;
+   let alt_match1;
+   let alt_match2;
+    for ( let x=0; x<matchdaten.length; x++ ){
+      if (matchdaten[x].mannschaftId == this.match1.mannschaftId){
+        alt_match1=matchdaten[x];
+      }
+      else if (matchdaten[x].mannschaftId == this.match2.mannschaftId){
+        alt_match2=matchdaten[x];
+      }
     }
+
 
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
@@ -507,7 +502,7 @@ export class SchusszettelComponent implements OnInit {
 
 
 
-      this.ligatabelleService.updateLigatabelleVeranstaltung(this.match1, this.match2);
+      await this.ligatabelleService.updateLigatabelleVeranstaltung(this.match1, alt_match1 , this.match2, alt_match2);
 
       this.dirtyFlag = false; // Daten gespeichert
 
