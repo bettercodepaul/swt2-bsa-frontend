@@ -378,7 +378,23 @@ export class SchusszettelComponent implements OnInit {
   }
 
   //Hier muss die Update funktion aufgreufen werden.
-  save() {
+ async save() {
+    /*Daten holen
+    let m1id=this.match1.id
+    where m1id
+    if punkte == null | 0
+
+      else punkte >0<this
+        array[ppunktedaTEN]
+    */
+   console.log(this.match1.id);
+    let a_match1= await this.matchProvider.getmatchoffline(this.match1.nr, this.match1.mannschaftId);
+    let alt_match1=a_match1.payload;
+    let a_match2= await this.matchProvider.getmatchoffline(this.match2.nr,this.match2.mannschaftId);
+    let alt_match2=a_match2.payload;
+    console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+    console.log(alt_match1,alt_match2);
+
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',

@@ -14,7 +14,10 @@ import {MatchDTOExt} from '../types/datatransfer/match-dto-ext.class';
 import {fromPayloadArray} from '../mapper/match-mapper-ext';
 import {OnOfflineService} from '@shared/services';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
-import { toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
+import {toDTOFromOfflineMatch, toDTOFromOfflineMatchArray} from '@verwaltung/mapper/match-offline-mapper';
+import {LigatabelleErgebnisDO} from '../../ligatabelle/types/ligatabelle-ergebnis-do.class';
+import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
+import {fromOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +29,17 @@ export class MatchProviderService extends DataProviderService {
   constructor(private restClient: RestClient, private onOfflineService: OnOfflineService) {
     super();
   }
+  public getmatchoffline(id: number,manid :number): Promise<BogenligaResponse<MatchDTOExt[]>> {
+    return new Promise((resolve, reject) => {
+      db.matchTabelle.where(['matchNr','mannschaftId']).equals([id,manid]).toArray()
+        .then((data: OfflineMatch[]) => {
+          resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data,[])});
+        }, () => {
+          reject({result: RequestResult.FAILURE});
+        });
+
+    });
+  };
 
   public get(matchId: string): Promise<BogenligaResponse<MatchDOExt>> {
     /*if(this.onOfflineService.isOffline()){
@@ -55,6 +69,7 @@ export class MatchProviderService extends DataProviderService {
       });
     //}
   }
+
 
   public create(matchDO: MatchDOExt): Promise<BogenligaResponse<MatchDOExt>> {
     const matchDTO = MatchMapperExt.matchToDTO(matchDO);
