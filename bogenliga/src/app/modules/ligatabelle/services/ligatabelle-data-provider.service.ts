@@ -33,7 +33,6 @@ export class LigatabelleDataProviderService extends DataProviderService {
   }
 
 
-
   // ermittelt den aktuellen Tabellenstand gem. den gesamten vorliegen Daten
   public getLigatabelleVeranstaltung(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
     if (this.onOfflineSerivce.isOffline()) {
@@ -88,6 +87,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
     });
   }
 
+  //Gibt die Daten zurück, die in der Ligatabelle sind. Dazu wird ein Inex und Key benötigt
   public getLigatabelledaten(index :string, key: number): Promise<BogenligaResponse<OfflineLigatabelle[]>> {
     return new Promise((resolve, reject) => {
       db.ligaTabelle.where(index).equals(key).toArray()
@@ -99,60 +99,77 @@ export class LigatabelleDataProviderService extends DataProviderService {
     });
   };
 
-
+//Updaten der Mannschaftswerte
   public async updateMannschaftLT(id : number, satzpunkte:number, satzpunkteGegner : number, spd :number, matchpunkte : number, matchpunkteGegner : number){
     db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
 
   };
 
+  //Platz in der DB ändern
   public async updatePlatz(id : number, platz: number){
     db.ligaTabelle.update(id, {'tabellenplatz':platz
     });
   };
 
 
-  public async tabelleberechnen(wettkampfId:number){
+  public async tabellesortieren(wettkampfId:number){
+    //Daten holen
     let datenliga = await this.getLigatabelledaten('wettkampfId',wettkampfId);
     let liga=datenliga.payload;
     let ligaid=liga[0].veranstaltungId;
     let ligatabelle= await this.getLigatabelledaten('veranstaltungId',ligaid);
     let tabelle= ligatabelle.payload;
 
-    console.log(tabelle);
-
+    //Sortierfunkion, erst nach Matchpunkten dann nach Satzpunktdifferenz
     tabelle.sort(function (manschafteins, manschaftzwei){
 
     if(manschafteins.matchpkt > manschaftzwei.matchpkt){
       return -1;
 
     }
-    else if (manschafteins.matchpkt == manschaftzwei.matchpkt && manschafteins.satzpktDifferenz> manschaftzwei.satzpktDifferenz){
+    else if (manschafteins.matchpkt == manschaftzwei.matchpkt &&
+              manschafteins.matchpktGegen < manschaftzwei.matchpktGegen){
+      return -1;
+    }
+    else if (manschafteins.matchpkt == manschaftzwei.matchpkt &&
+            manschafteins.matchpktGegen == manschaftzwei.matchpktGegen &&
+            manschafteins.satzpktDifferenz > manschaftzwei.satzpktDifferenz){
       return -1;
     }
     return  1;
 
     })
+
+    //tabelle in der DB aktualiesieren
     for (let x=0; x<tabelle.length;x++){
-      tabelle[x].tabellenplatz=x+1;
-      await this.updatePlatz(tabelle[x].id,tabelle[x].tabellenplatz);
+
+      await this.updatePlatz(tabelle[x].id,x+1);
     }
 
   }
 
+
   public async updateLigatabelleVeranstaltung( match1: MatchDOExt,alt_match1 :MatchDOExt, match2: MatchDOExt, alt_match2 :MatchDOExt){
 
-    //Fall es aendert sich nichts
+
+    //Wenn sich nichts ändert, wird auch nichts gemacht.
     if(
       match1.satzpunkte!=alt_match1.satzpunkte &&
       match2.satzpunkte!=alt_match2.satzpunkte
     ){
 
+    //Daten aus der DB holen
     let Daten = await this.getLigatabelledaten('mannschaftId',match1.mannschaftId);
     let LT_match1=Daten.payload;
     Daten = await this.getLigatabelledaten('mannschaftId',match2.mannschaftId);
     let LT_match2=Daten.payload;
     let id, sp, spg, spd, mp, mpg;
-    // Manschafteins
+
+
+    // Manschafteins berechnungen
+
+      id=LT_match1[0].id;
+
     if (alt_match1 ==null || alt_match2 ==null){
       sp = LT_match1[0].satzpkt + match1.satzpunkte;
       spg = LT_match1[0].satzpktGegen + match2.satzpunkte;
@@ -175,7 +192,9 @@ export class LigatabelleDataProviderService extends DataProviderService {
     //Daten Updaten
     await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
 
-    //Mannschaftzwei
+    //Mannschaftzwei berechnungen
+
+      id=LT_match2[0].id;
 
     if (alt_match1 == null || alt_match2 == null){
       sp = LT_match2[0].satzpkt + match2.satzpunkte;
@@ -197,7 +216,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
     //Daten Updaten
     await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
 
-    await this.tabelleberechnen(match1.wettkampfId);// Funkioniert noch nicht ganz
+    await this.tabellesortieren(match1.wettkampfId);
   }
 
   }
