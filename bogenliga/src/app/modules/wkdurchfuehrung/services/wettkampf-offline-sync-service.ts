@@ -97,8 +97,8 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   public async handleLoadMatchTabelleSuccess(payload: OfflineMatch[]): Promise<void> {
     await db.passeTabelle.toArray()
       .then( (passen) => {
-        //const matches = this.getOfflineMatchPunkte(payload, passen);
-        db.matchTabelle.bulkPut(payload, payload.map((item) => item.id)).then((value) => {
+        const matches = this.getOfflineMatchPunkte(payload, passen);
+        db.matchTabelle.bulkPut(matches, matches.map((item) => item.id)).then((value) => {
           console.log('offline match added to offlinedb', value);
 
         }).catch((error) => {
@@ -598,7 +598,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         offlineToken,
         match: matchs,
         passe : passes,
-        mannschaftsMitglieder: mitglieder,
+        mannschaftsmitglied: mitglieder,
       };
       // fill the payload
 
