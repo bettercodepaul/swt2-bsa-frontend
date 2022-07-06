@@ -381,18 +381,22 @@ export class SchusszettelComponent implements OnInit {
   //Hier muss die Update funktion aufgreufen werden.
  async save() {
 
-    let matchd=await this.matchProvider.getmatchoffline(this.match1.nr);
-    let matchdaten = matchd.payload;
-    let alt_match1;
-    let alt_match2;
-    for ( let x=0; x<matchdaten.length; x++ ){
-      if (matchdaten[x].mannschaftId == this.match1.mannschaftId){
-        alt_match1=matchdaten[x];
+
+   let alt_match1;
+   let alt_match2;
+   if (this.onOfflineService.isOffline()) {
+      let matchd=await this.matchProvider.getmatchoffline(this.match1.nr);
+      let matchdaten = matchd.payload;
+
+      for ( let x=0; x<matchdaten.length; x++ ){
+        if (matchdaten[x].mannschaftId == this.match1.mannschaftId){
+          alt_match1=matchdaten[x];
+        }
+        else if (matchdaten[x].mannschaftId == this.match2.mannschaftId){
+          alt_match2=matchdaten[x];
+        }
       }
-      else if (matchdaten[x].mannschaftId == this.match2.mannschaftId){
-        alt_match2=matchdaten[x];
-      }
-    }
+   }
 
 
     if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
@@ -502,9 +506,9 @@ export class SchusszettelComponent implements OnInit {
           });
 
 
-
-      await this.ligatabelleService.updateLigatabelleVeranstaltung(this.match1, alt_match1 , this.match2, alt_match2);
-
+      if (this.onOfflineService.isOffline()) {
+        await this.ligatabelleService.updateLigatabelleVeranstaltung(this.match1, alt_match1, this.match2, alt_match2);
+      }
       this.dirtyFlag = false; // Daten gespeichert
 
     }
