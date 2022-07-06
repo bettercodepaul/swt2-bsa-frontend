@@ -73,7 +73,7 @@ export class SchusszettelProviderService extends DataProviderService {
     });
   }
 
-  private offlineAddPassen(match: MatchDTOExt){
+  private async offlineAddPassen(match: MatchDTOExt){
     db.transaction('rw',db.passeTabelle, async tx => {
       let id: number = 0
       await db.passeTabelle.toArray()
@@ -89,6 +89,7 @@ export class SchusszettelProviderService extends DataProviderService {
         if (passe.id === null) {
 
           db.passeTabelle.put({
+            id: id,
             dsbMitgliedId:  passe.dsbMitgliedId,
             lfdNr:          passe.lfdNr,
             mannschaftId:   passe.mannschaftId,
@@ -134,8 +135,8 @@ export class SchusszettelProviderService extends DataProviderService {
     const match2DTO = MatchMapperExt.matchToDTO(match2);
     if(this.onOfflineService.isOffline()){
       return new Promise((resolve, reject) => {
-        db.transaction('rw', db.matchTabelle, db.passeTabelle, tx => {
-          db.matchTabelle.update(match1DTO.id, {
+        db.transaction('rw', db.matchTabelle, db.passeTabelle, async tx => {
+          await db.matchTabelle.update(match1DTO.id, {
             matchpkt:         match1DTO.matchpunkte,
             satzpunkte:       match1DTO.satzpunkte,
             strafpunkteSatz1: match1DTO.strafPunkteSatz1,
@@ -145,7 +146,7 @@ export class SchusszettelProviderService extends DataProviderService {
             strafpunkteSatz5: match1DTO.strafPunkteSatz5,
             version:          match1DTO.version++,
           });
-          db.matchTabelle.update(match2DTO.id, {
+          await db.matchTabelle.update(match2DTO.id, {
             matchpkt:         match2DTO.matchpunkte,
             satzpunkte:       match2DTO.satzpunkte,
             strafpunkteSatz1: match2DTO.strafPunkteSatz1,
@@ -156,9 +157,9 @@ export class SchusszettelProviderService extends DataProviderService {
             version:          match2DTO.version++,
           });
 
-          this.offlineAddPassen(match1DTO);
+          await this.offlineAddPassen(match1DTO);
 
-          this.offlineAddPassen(match2DTO);
+          await this.offlineAddPassen(match2DTO);
 
           db.passeTabelle.where('matchID').equals(match1DTO.id).or('matchID').equals(match2DTO.id).modify(passe => {
             if(passe.version)
