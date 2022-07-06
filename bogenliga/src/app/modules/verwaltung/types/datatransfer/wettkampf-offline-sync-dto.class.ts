@@ -21,12 +21,12 @@ export class WettkampfOfflineSyncDto implements DataTransferObject {
   static copyFrom(optional: {
     id?: number;
     version?: number;
-    veranstaltungId?: number;
+    veranstaltungsId?: number;
     datum?: string;
     beginn?: string;
     tag?: string;
     disziplinId?: number;
-    wettkampftypId?: number;
+    wettkampfTypId?: number;
     ausrichter?: string;
     strasse?: string;
     plz?: string;
@@ -41,12 +41,12 @@ export class WettkampfOfflineSyncDto implements DataTransferObject {
       console.error('ID expected but not set for Wettkampf-Offline-Sync-Dto!');
     }
     copy.version = optional.version || null;
-    copy.veranstaltungId = optional.veranstaltungId || null;
+    copy.veranstaltungId = optional.veranstaltungsId;
     copy.datum = optional.datum || null;
     copy.beginn = optional.beginn || null;
     copy.tag = optional.tag || null;
     copy.disziplinId = optional.disziplinId || null;
-    copy.wettkampftypId = optional.wettkampftypId || null;
+    copy.wettkampftypId = optional.wettkampfTypId || null;
     copy.ausrichter = optional.ausrichter || null;
     copy.strasse = optional.strasse || null;
     copy.plz = optional.plz || null;
