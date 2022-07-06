@@ -32,7 +32,7 @@ export class WettkampfOfflineSyncDto implements DataTransferObject {
     plz?: string;
     ortsname?: string;
     ortsinfo?: string;
-    offlinetoken?: string;
+    offlineToken?: string;
   } = {}): WettkampfOfflineSyncDto {
     const copy = new WettkampfOfflineSyncDto();
 
@@ -52,7 +52,7 @@ export class WettkampfOfflineSyncDto implements DataTransferObject {
     copy.plz = optional.plz || null;
     copy.ortsname = optional.ortsname || null;
     copy.ortsinfo = optional.ortsinfo || null;
-    copy.offlinetoken = optional.offlinetoken || null;
+    copy.offlinetoken = optional.offlineToken || null;
 
 
     return copy;
