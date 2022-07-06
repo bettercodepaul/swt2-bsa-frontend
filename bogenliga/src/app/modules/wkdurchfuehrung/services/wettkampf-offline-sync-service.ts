@@ -525,6 +525,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     db.ligaTabelle.bulkAdd(offlineLigatabelle.payload)
     .then((lastNumber) => console.log('Finished adding numbers til ' + lastNumber))
     .catch((e) => throwError(e));
+
   }
 
   private handleLoadLigatabelleVeranstaltungFailure(_response: BogenligaResponse<OfflineLigatabelle[]>): void {
