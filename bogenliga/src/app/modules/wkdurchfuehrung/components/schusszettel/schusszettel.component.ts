@@ -27,6 +27,7 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
+import {tryCatch} from 'rxjs/internal-compatibility';
 
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
@@ -382,8 +383,8 @@ export class SchusszettelComponent implements OnInit {
 
     let matchd=await this.matchProvider.getmatchoffline(this.match1.nr);
     let matchdaten = matchd.payload;
-   let alt_match1;
-   let alt_match2;
+    let alt_match1;
+    let alt_match2;
     for ( let x=0; x<matchdaten.length; x++ ){
       if (matchdaten[x].mannschaftId == this.match1.mannschaftId){
         alt_match1=matchdaten[x];

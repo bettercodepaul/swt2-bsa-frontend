@@ -28,7 +28,6 @@ export class OfflineDB extends Dexie {
    *  Every table in the database is defined here.
    */
   ligaTabelle!: Table<OfflineLigatabelle, number>;
-  ligaTabelleV2!: Table<OfflineLigatabelle, number>;
   matchTabelle!: Table<OfflineMatch, number>;
   passeTabelle!: Table<OfflinePasse, number>;
   wettkampfTabelle!: Table<OfflineWettkampf, number>;
@@ -44,12 +43,10 @@ export class OfflineDB extends Dexie {
    */
   constructor() {
     super('offlineBogenligaDb');
-    this.version(10).stores({
+    this.version(9).stores({
       // Schema -> Every column name is the name of the attribute of the interface
       ligaTabelle: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
         'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
-      ligaTabelleV2: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
-                     'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
       matchTabelle: ', version, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
         'nameGegner, scheibennummerGegner, matchIdGegner, naechsteMatchId, naechsteNaechsteMatchNrMatchId,' +
         'strafpunkteSatz1, strafpunkteSatz2, strafpunkteSatz3, strafpunkteSatz4, strafpunkteSatz5',
