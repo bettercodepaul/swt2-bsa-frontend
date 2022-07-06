@@ -94,8 +94,8 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   public async handleLoadMatchTabelleSuccess(payload: OfflineMatch[]): Promise<void> {
     await db.passeTabelle.toArray()
       .then( (passen) => {
-        const matches = this.getOfflineMatchPunkte(payload, passen);
-        db.matchTabelle.bulkPut(matches, matches.map((item) => item.id)).then((value) => {
+        //const matches = this.getOfflineMatchPunkte(payload, passen);
+        db.matchTabelle.bulkPut(payload, payload.map((item) => item.id)).then((value) => {
           console.log('offline match added to offlinedb', value);
 
         }).catch((error) => {
@@ -574,6 +574,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       passes = await db.passeTabelle.where('version').above(1).toArray();
       const mannschaftsmitglied = await db.mannschaftsmitgliedTabelle.where('version').above(1).toArray();
 
+      /* Backend braucht zulange/ timed out ka
       const allowedMitglieder = await this.restClient.GET<Array<number>>(new UriBuilder().fromPath(this.baseUrl).path(`v1/wettkampf/${wettkampfID}/allowedContestants`).build());
 
       console.log('Allowed Mitglieder: ', allowedMitglieder);
@@ -583,7 +584,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         if (allowedMitglieder.includes(mitglied.id)) {
           return mitglied;
         }
-      });
+      });*/
 
       let payload: OfflinetokenSync;
       payload = {
@@ -591,7 +592,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         offlineToken,
         match: matchs,
         passe : passes,
-        mannschaftsmitglied: filterd,
+        mannschaftsmitglied: mannschaftsmitglied,
       };
       // fill the payload
 
