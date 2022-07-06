@@ -33,13 +33,12 @@ export class LigatabelleDataProviderService extends DataProviderService {
   }
 
 
-
   // ermittelt den aktuellen Tabellenstand gem. den gesamten vorliegen Daten
   public getLigatabelleVeranstaltung(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
     if (this.onOfflineSerivce.isOffline()) {
       console.log('Choosing offline way for Veranstaltung with id ' + id);
       return new Promise((resolve, reject) => {
-        db.ligaTabelle.where('veranstaltungId').equals(id).toArray()
+        db.ligaTabelle.where('veranstaltungId').equals(id).sortBy('tabellenplatz')
           .then((data: OfflineLigatabelle[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromOfflineLigatabelleArray(data)});
           }, () => {
@@ -88,79 +87,137 @@ export class LigatabelleDataProviderService extends DataProviderService {
     });
   }
 
-  public getLigatabelleWK(id: string | number): Promise<BogenligaResponse<LigatabelleErgebnisDO[]>> {
+  //Gibt die Daten zurück, die in der Ligatabelle sind. Dazu wird ein Inex und Key benötigt
+  public getLigatabelledaten(index :string, key: number): Promise<BogenligaResponse<OfflineLigatabelle[]>> {
     return new Promise((resolve, reject) => {
-      db.ligaTabelle.where('veranstaltungName').equals(id).toArray()
+      db.ligaTabelle.where(index).equals(key).toArray()
         .then((data: OfflineLigatabelle[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: fromOfflineLigatabelleArray(data)});
+          resolve({result: RequestResult.SUCCESS, payload: data});
         }, () => {
           reject({result: RequestResult.FAILURE});
         });
     });
   };
 
+//Updaten der Mannschaftswerte
   public async updateMannschaftLT(id : number, satzpunkte:number, satzpunkteGegner : number, spd :number, matchpunkte : number, matchpunkteGegner : number){
     db.ligaTabelle.update(id, {'satzpkt':satzpunkte, 'satzpktGegen':satzpunkteGegner, 'satzpktDifferenz':spd,'matchpkt':matchpunkte, 'matchpktGegen': matchpunkteGegner});
+
   };
 
-  public async updateLigatabelleVeranstaltung(liganame: string, mannschafteins: MatchDOExt, mannschaftzwei: MatchDOExt){
-
-    //Ausgeben der LT
-    const Daten = await this.getLigatabelleWK(liganame);
-    const Ligatabelledaten=Daten.payload;
-    console.log(Ligatabelledaten);
-
-    let satzpunkte=[];
-    let id=0;
-    let matchpunkte=[];
+  //Platz in der DB ändern
+  public async updatePlatz(id : number, platz: number){
+    db.ligaTabelle.update(id, {'tabellenplatz':platz
+    });
+  };
 
 
-    for (let x=0; x<Ligatabelledaten.length; x++) {
-      //Daten aus dem Array lesen und zusammenaddieren
-      satzpunkte=Ligatabelledaten[x].satzpunkte.split(" ")
-      id=Ligatabelledaten[x].id
-      matchpunkte=Ligatabelledaten[x].matchpunkte.split(" ")
+  public async tabellesortieren(wettkampfId:number){
+    //Daten holen
+    let datenliga = await this.getLigatabelledaten('wettkampfId',wettkampfId);
+    let liga=datenliga.payload;
+    let ligaid=liga[0].veranstaltungId;
+    let ligatabelle= await this.getLigatabelledaten('veranstaltungId',ligaid);
+    let tabelle= ligatabelle.payload;
 
-      for (let i=0; x<Ligatabelledaten.length; i++){
-        if (Ligatabelledaten[x].mannschaft_id != mannschafteins.mannschaftId){
+    //Sortierfunkion, erst nach Matchpunkten dann nach Satzpunktdifferenz
+    tabelle.sort(function (manschafteins, manschaftzwei){
 
-          const sp = parseInt(satzpunkte[0]) + mannschafteins.satzpunkte;
-          const spg = parseInt(satzpunkte[2]) + mannschaftzwei.satzpunkte;
-          const spd = sp - spg;
-
-          const mp = parseInt(matchpunkte[0]) + mannschafteins.matchpunkte;
-          const mpg = parseInt(matchpunkte[2]) + mannschaftzwei.matchpunkte;
-          //console.log(satzpunkte,matchpunkte,sp,spg, spd);
-          //Daten Updaten
-          await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
-
-        }
-        else if (Ligatabelledaten[x].mannschaft_id != mannschaftzwei.mannschaftId){
-
-          const sp = parseInt(satzpunkte[0]) + mannschaftzwei.satzpunkte;
-          const spg = parseInt(satzpunkte[2]) + mannschafteins.satzpunkte;
-          const spd = sp - spg;
-
-          const mp = parseInt(matchpunkte[0]) + mannschaftzwei.matchpunkte;
-          const mpg = parseInt(matchpunkte[2]) + mannschafteins.matchpunkte;
-          //console.log(satzpunkte,matchpunkte,sp,spg, spd);
-          //Daten Updaten
-          await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
-
-        }
-        else if(i-1==Ligatabelledaten.length)
-        {
-          console.log("Fehler beim Updaten der Mannschaften mit der ID Mannschafteins:"+mannschafteins.mannschaftId+" Mannschaftzwei: "+mannschaftzwei.mannschaftId)
-        }
-      }
+    if(manschafteins.matchpkt > manschaftzwei.matchpkt){
+      return -1;
 
     }
+    else if (manschafteins.matchpkt == manschaftzwei.matchpkt &&
+              manschafteins.matchpktGegen < manschaftzwei.matchpktGegen){
+      return -1;
+    }
+    else if (manschafteins.matchpkt == manschaftzwei.matchpkt &&
+            manschafteins.matchpktGegen == manschaftzwei.matchpktGegen &&
+            manschafteins.satzpktDifferenz > manschaftzwei.satzpktDifferenz){
+      return -1;
+    }
+    return  1;
 
-    /*
-     const Datenn = await this.getLigatabelleWK('Würtembergliga');
-     let Ligatabelledatenn=Datenn.payload;
-     console.log(Ligatabelledatenn);
-     */
+    })
+
+    //tabelle in der DB aktualiesieren
+    for (let x=0; x<tabelle.length;x++){
+
+      await this.updatePlatz(tabelle[x].id,x+1);
+    }
+
   }
 
+
+  public async updateLigatabelleVeranstaltung( match1: MatchDOExt,alt_match1 :MatchDOExt, match2: MatchDOExt, alt_match2 :MatchDOExt){
+
+
+    //Wenn sich nichts ändert, wird auch nichts gemacht.
+    if(
+      match1.satzpunkte!=alt_match1.satzpunkte &&
+      match2.satzpunkte!=alt_match2.satzpunkte
+    ){
+
+    //Daten aus der DB holen
+    let Daten = await this.getLigatabelledaten('mannschaftId',match1.mannschaftId);
+    let LT_match1=Daten.payload;
+    Daten = await this.getLigatabelledaten('mannschaftId',match2.mannschaftId);
+    let LT_match2=Daten.payload;
+    let id, sp, spg, spd, mp, mpg;
+
+
+    // Manschafteins berechnungen
+
+      id=LT_match1[0].id;
+
+    if (alt_match1 ==null || alt_match2 ==null){
+      sp = LT_match1[0].satzpkt + match1.satzpunkte;
+      spg = LT_match1[0].satzpktGegen + match2.satzpunkte;
+      spd = sp - spg;
+
+      mp = LT_match1[0].matchpkt + match1.matchpunkte;
+      mpg = LT_match1[0].matchpktGegen + match2.matchpunkte;
+
+    }
+    else {
+      sp = LT_match1[0].satzpkt - alt_match1.satzpunkte + match1.satzpunkte;
+      spg = LT_match1[0].satzpktGegen - alt_match2.satzpunkte + match2.satzpunkte;
+      spd = sp - spg;
+
+      mp = LT_match1[0].matchpkt - alt_match1.matchpunkte + match1.matchpunkte;
+      mpg = LT_match1[0].matchpktGegen - alt_match2.matchpunkte + match2.matchpunkte;
+
+    }
+    //console.log("SP:",satzpunkte,"MP:",matchpunkte,sp,spg, spd,match1.mannschaftName.toString());
+    //Daten Updaten
+    await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+
+    //Mannschaftzwei berechnungen
+
+      id=LT_match2[0].id;
+
+    if (alt_match1 == null || alt_match2 == null){
+      sp = LT_match2[0].satzpkt + match2.satzpunkte;
+      spg = LT_match2[0].satzpktGegen + match1.satzpunkte;
+      spd = sp - spg;
+
+      mp = LT_match2[0].matchpkt + match2.matchpunkte;
+      mpg = LT_match2[0].matchpktGegen + match1.matchpunkte;
+    }
+    else {
+      sp = LT_match2[0].satzpkt- alt_match2.satzpunkte + match2.satzpunkte;
+      spg = LT_match2[0].satzpktGegen - alt_match1.satzpunkte + match1.satzpunkte;
+      spd = sp - spg;
+
+      mp = LT_match2[0].matchpkt - alt_match2.matchpunkte + match2.matchpunkte;
+      mpg = LT_match2[0].matchpktGegen - alt_match1.matchpunkte + match1.matchpunkte;
+
+  }
+    //Daten Updaten
+    await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+
+    await this.tabellesortieren(match1.wettkampfId);
+  }
+
+  }
 }

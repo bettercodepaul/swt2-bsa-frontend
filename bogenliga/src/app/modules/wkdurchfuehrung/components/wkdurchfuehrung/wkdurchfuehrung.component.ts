@@ -211,7 +211,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             await this.wettkampfOfflineSyncService.loadDsbMitgliedOffline();
             await this.wettkampfOfflineSyncService.loadVereineOffline();
             await this.wettkampfOfflineSyncService.loadManschaftenOffline();
-            //await this.wettkampfOfflineSyncService.loadWettkampfOffline( id );
+            await this.wettkampfOfflineSyncService.loadWettkampfOffline(this.selectedWettkampfId);
 
 
 
@@ -224,7 +224,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
 
             //temporäre Dummy Daten
-            await this.wettkampfOfflineSyncService.createWettkampfDummyData();
+            //await this.wettkampfOfflineSyncService.createWettkampfDummyData();
 
             await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr())
             this.visible = false;
