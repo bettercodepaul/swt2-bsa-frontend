@@ -165,7 +165,32 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
   public async resetWettkampfToken(id: number): Promise<void> {
-    await this.wettkampfOfflineSyncService.resetWettkampfToken(id);
+
+    try{
+      await this.wettkampfOfflineSyncService.resetWettkampfToken(id);
+      this.notificationService.showNotification({
+        id: 'Offlinetoken gelöscht',
+        description: 'Der Offlinetoken wurde erfolgreich gelöscht und somit der Wettkampf entsperrt.',
+        title: 'Offlinetoken gelöscht',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.ACCEPTED,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO
+      });
+
+    } catch (e) {
+
+      this.notificationService.showNotification({
+        id: 'Offlinetoken gelöscht Fehler',
+        description: 'Ein fehler ist aufgetreten und der Offlinetoken wurde nicht gelöscht.',
+        title: 'Fehler beim Löschen des Offlinetokens',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.ACCEPTED,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO
+      });
+
+    }
   }
 
   public async onButtonGoOfflineClick(): Promise<void> {
