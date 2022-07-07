@@ -160,6 +160,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     return this.onOfflineService.isOffline();
   }
 
+
+
+  public async resetWettkampfToken(id: number): Promise<void> {
+    await this.wettkampfOfflineSyncService.resetWettkampfToken(id);
+  }
+
   public async onButtonGoOfflineClick(): Promise<void> {
     if (this.onOfflineService.isOffline()) {
 
@@ -168,6 +174,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
         this.onOfflineService.goOnline();
         this.disabledOtherButtons = true;
+
 
 
 
