@@ -29,10 +29,9 @@ import {PasseDataProviderService} from '@wettkampf/services/passe-data-provider.
 import {WettkampfComponent} from '@wettkampf/components';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
-import {OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {WettkampfOfflineSyncService} from '@wkdurchfuehrung/services/wettkampf-offline-sync-service';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
-import {SidebarComponent} from '../../../../components/sidebar/sidebar.component';
 
 
 @Component({
@@ -97,6 +96,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private passeDataProviderService: PasseDataProviderService,
               private matchProvider: MatchProviderService,
               private onOfflineService: OnOfflineService,
+              private currentUserService: CurrentUserService,
               private wettkampfOfflineSyncService: WettkampfOfflineSyncService) {
     super();
   }
@@ -160,6 +160,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     return this.onOfflineService.isOffline();
   }
 
+  public isAdmin(): boolean {
+    return this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN);
+  }
+
+  public async resetWettkampfToken(id: number): Promise<void> {
+    await this.wettkampfOfflineSyncService.resetWettkampfToken(id);
+  }
+
   public async onButtonGoOfflineClick(): Promise<void> {
     if (this.onOfflineService.isOffline()) {
 
@@ -168,6 +176,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
         this.onOfflineService.goOnline();
         this.disabledOtherButtons = true;
+
 
 
 
