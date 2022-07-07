@@ -614,4 +614,19 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     });
 
   }
+
+  public async resetWettkampfToken(id: number) {
+
+    return new Promise(async (resolve, reject) => {
+      try {
+        await this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path(`wettkampf/${id}/reset`).build());
+        console.log('Wettkampf Token reseted');
+      } catch (error) {
+        console.error(error);
+        reject(error);
+      }
+      resolve();
+    });
+
+  }
 }
