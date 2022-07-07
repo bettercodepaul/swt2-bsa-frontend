@@ -83,13 +83,16 @@ export class SchusszettelProviderService extends DataProviderService {
                     id = passe.id;
                   }
                 });
+
+
               });
       match.passen.filter(v => v).forEach(passe => {
-        id = id + 1;
-        if (passe.id === null) {
 
+        if (passe.id === null) {
+          id = id + 1;
+        }
           db.passeTabelle.put({
-            id: id,
+            id: passe.id ?? id,
             dsbMitgliedId:  passe.dsbMitgliedId,
             lfdNr:          passe.lfdNr,
             mannschaftId:   passe.mannschaftId,
@@ -104,28 +107,9 @@ export class SchusszettelProviderService extends DataProviderService {
             rueckennummer:  passe.rueckennummer,
             version:        2,
             wettkampfId:    passe.wettkampfId
-          }, id)
+          }, passe.id ?? id)
                   .then(n => console.log(n + " passe offline hinzugefügt"))
                   .catch(err => console.error(err))
-        } else {
-          db.passeTabelle.update(passe.id, {
-            dsbMitgliedId:  passe.dsbMitgliedId,
-            lfdNr:          passe.lfdNr,
-            mannschaftId:   passe.mannschaftId,
-            matchID:        passe.matchId,
-            matchNr:        passe.matchNr,
-            ringzahlPfeil1: passe.ringzahl[0],
-            ringzahlPfeil2: passe.ringzahl[1],
-            ringzahlPfeil3: passe.ringzahl[2],
-            ringzahlPfeil4: passe.ringzahl[3],
-            ringzahlPfeil5: passe.ringzahl[4],
-            ringzahlPfeil6: 0,
-            rueckennummer:  passe.rueckennummer,
-            wettkampfId:    passe.wettkampfId
-          })
-            .then(n => console.log(n + " passe offline hinzugefügt"))
-            .catch(err => console.error(err))
-        }
       })
     })
   }
