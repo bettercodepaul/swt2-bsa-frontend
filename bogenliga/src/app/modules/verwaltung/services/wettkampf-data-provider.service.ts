@@ -273,4 +273,6 @@ export class WettkampfDataProviderService extends DataProviderService {
           });
     });
   }
+
+
 }

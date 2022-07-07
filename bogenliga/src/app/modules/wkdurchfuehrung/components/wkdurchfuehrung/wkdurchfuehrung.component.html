@@ -161,6 +161,10 @@
           </div>
         </ng-template>
 
+      <div id="adminOfflineResetButton" *ngIf="(isAdmin())">
+        <button class="btn btn-danger" (click)="resetWettkampfToken(this.selectedWettkampfId)" [disabled]="isDisabled()">Offlinetoken löschen</button>
+      </div>
+
   </bla-col-layout>
 
 
