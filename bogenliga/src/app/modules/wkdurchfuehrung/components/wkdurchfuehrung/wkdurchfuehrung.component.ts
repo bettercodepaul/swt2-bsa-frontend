@@ -165,7 +165,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
       try {
         await this.wettkampfOfflineSyncService.goOnlineSync(this.onOfflineService.getOfflineWettkampfID());
+
         this.onOfflineService.goOnline();
+        this.disabledOtherButtons = true;
+
+
+
 
         this.notificationService.showNotification({
           id: 'GO_ONLINE_ERROR',
@@ -226,7 +231,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             //temporäre Dummy Daten
             //await this.wettkampfOfflineSyncService.createWettkampfDummyData();
 
-            await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr())
+            await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr());
             this.visible = false;
 
 
