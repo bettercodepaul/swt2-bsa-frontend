@@ -87,7 +87,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
     });
   }
 
-  //Gibt die Daten zurück, die in der Ligatabelle sind. Dazu wird ein Inex und Key benötigt
+  //Gibt die Daten zurück, die in der Ligatabelle sind. Dazu wird ein Index und Key benötigt
   public getLigatabelledaten(index :string, key: number): Promise<BogenligaResponse<OfflineLigatabelle[]>> {
     return new Promise((resolve, reject) => {
       db.ligaTabelle.where(index).equals(key).toArray()

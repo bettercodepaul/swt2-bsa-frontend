@@ -382,8 +382,8 @@ export class SchusszettelComponent implements OnInit {
  async save() {
 
 
-   let alt_match1;
-   let alt_match2;
+   let alt_match1 = null;
+   let alt_match2 = null;
    if (this.onOfflineService.isOffline()) {
       let matchd=await this.matchProvider.getmatchoffline(this.match1.nr);
       let matchdaten = matchd.payload;
