@@ -28,6 +28,11 @@ describe('Anonyme User tests', function () {
     cy.url().should('include', '#/regionen')
   })
 
+  /*Test hilfeicon */
+  it('test hilfeicon', function() {
+      cy.get('bla-common-dialog > .dialog-content > bla-hilfe-button > a > #undefined').click()
+    })
+
   /**
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
    */
