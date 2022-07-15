@@ -47,7 +47,7 @@ export class OfflineDB extends Dexie {
       // Schema -> Every column name is the name of the attribute of the interface
       ligaTabelle: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
         'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
-      matchTabelle: ', version, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
+      matchTabelle: ', offlineVersion, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
         'nameGegner, scheibennummerGegner, matchIdGegner, naechsteMatchId, naechsteNaechsteMatchNrMatchId,' +
         'strafpunkteSatz1, strafpunkteSatz2, strafpunkteSatz3, strafpunkteSatz4, strafpunkteSatz5',
       passeTabelle: ', version, matchID, mannschaftID, wettkampfID, matchNr, lfdNr, dsbMitgliedID, ' +

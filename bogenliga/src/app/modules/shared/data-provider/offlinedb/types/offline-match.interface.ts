@@ -1,9 +1,9 @@
 
 export interface OfflineMatch {
-  id?: number; // Primary Key autoincrement
   offlineVersion?: number;
-
-  matchVersion: number; // backend dataset version
+// backend data below
+  matchId: number;
+  matchVersion: number;
   wettkampfId: number;
   matchNr: number;
   matchScheibennummer: number;
