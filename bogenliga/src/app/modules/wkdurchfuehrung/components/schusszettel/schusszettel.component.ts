@@ -232,7 +232,7 @@ export class SchusszettelComponent implements OnInit {
                   this.notificationService.discardNotification();
                 });
               }
-              if(this.onOfflineService.isOffline()){
+              if (this.onOfflineService.isOffline()) {
                 this.notificationService.discardNotification();
               }
             })
@@ -378,28 +378,27 @@ export class SchusszettelComponent implements OnInit {
     this.popupAndererTag = true;
   }
 
-  //Hier muss die Update funktion aufgreufen werden.
+  // Hier muss die Update funktion aufgreufen werden.
  async save() {
 
 
    let alt_match1 = null;
    let alt_match2 = null;
    if (this.onOfflineService.isOffline()) {
-      let matchd=await this.matchProvider.getmatchoffline(this.match1.nr);
-      let matchdaten = matchd.payload;
+      const matchd = await this.matchProvider.getmatchoffline(this.match1.nr);
+      const matchdaten = matchd.payload;
 
-      for ( let x=0; x<matchdaten.length; x++ ){
-        if (matchdaten[x].mannschaftId == this.match1.mannschaftId){
-          alt_match1=matchdaten[x];
-        }
-        else if (matchdaten[x].mannschaftId == this.match2.mannschaftId){
-          alt_match2=matchdaten[x];
+      for ( let x = 0; x < matchdaten.length; x++ ) {
+        if (matchdaten[x].mannschaftId == this.match1.mannschaftId) {
+          alt_match1 = matchdaten[x];
+        } else if (matchdaten[x].mannschaftId == this.match2.mannschaftId) {
+          alt_match2 = matchdaten[x];
         }
       }
    }
 
 
-    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',

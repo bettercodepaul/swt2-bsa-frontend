@@ -1,6 +1,8 @@
 export interface OfflineVeranstaltung {
-  id?: number;
+  offlineVersion: number;
+  // backend data below
   version?: number;
+  id?: number;
   wettkampfTypId: number;
   name: string;
   sportjahr: number;

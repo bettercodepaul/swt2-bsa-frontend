@@ -41,7 +41,7 @@ export function fromOfflinePassePayloadArray(payload: DataTransferObject[]): Off
 }
 
 export function offlinePasseFromDTOClassArray(payload: PasseDTOClass[]): OfflinePasse[] {
-  return payload.map(item => offlinePasseFromDTOClass(item))
+  return payload.map((item) => offlinePasseFromDTOClass(item));
 }
 
 export function offlinePasseFromDTOClass(payload: PasseDTOClass): OfflinePasse {
@@ -61,14 +61,14 @@ export function offlinePasseFromDTOClass(payload: PasseDTOClass): OfflinePasse {
     ringzahlPfeil6: 0,
     rueckennummer:  payload.schuetzeNr,
     wettkampfId:    payload.wettkampfId
-  }
+  };
 }
 
-export function toPasseDTOClassFromOfflineArray(payload: OfflinePasse[]): PasseDTOClass[]{
-  return payload.map(item => toPasseDTOClassFromOffline(item));
+export function toPasseDTOClassFromOfflineArray(payload: OfflinePasse[]): PasseDTOClass[] {
+  return payload.map((item) => toPasseDTOClassFromOffline(item));
 }
 
-export function toPasseDTOClassFromOffline(payload: OfflinePasse): PasseDTOClass{
+export function toPasseDTOClassFromOffline(payload: OfflinePasse): PasseDTOClass {
   return {
     dsbMitgliedId: payload.dsbMitgliedId,
     id:            payload.id,
@@ -76,18 +76,18 @@ export function toPasseDTOClassFromOffline(payload: OfflinePasse): PasseDTOClass
     mannschaftId:  payload.mannschaftId,
     matchId:       payload.matchID,
     matchNr:       payload.matchNr,
-    ringzahl:      [payload.ringzahlPfeil1,payload.ringzahlPfeil2,0,0,0,0],
+    ringzahl:      [payload.ringzahlPfeil1, payload.ringzahlPfeil2, 0, 0, 0, 0],
     schuetzeNr:    payload.rueckennummer,
     version:       payload.version,
     wettkampfId:   payload.wettkampfId
   };
 }
 
-export function toPasseDTOFromDoClassArray(payload: PasseDoClass[]): PasseDTO[]{
-  return payload.map(item => toPasseDTOFromDoClass(item))
+export function toPasseDTOFromDoClassArray(payload: PasseDoClass[]): PasseDTO[] {
+  return payload.map((item) => toPasseDTOFromDoClass(item));
 }
 
-export function toPasseDTOFromDoClass(payload: PasseDoClass): PasseDTO{
+export function toPasseDTOFromDoClass(payload: PasseDoClass): PasseDTO {
   return {
     dsbMitgliedId:  payload.dsbMitgliedId,
     id:             payload.id,
@@ -98,5 +98,5 @@ export function toPasseDTOFromDoClass(payload: PasseDoClass): PasseDTO{
     ringzahl: payload.ringzahl,
     rueckennummer:  payload.schuetzeNr,
     wettkampfId:    payload.wettkampfId
-  }
+  };
 }

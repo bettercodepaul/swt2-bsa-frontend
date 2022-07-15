@@ -76,15 +76,15 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
 
 
   public findAll(): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for findall dsbmitglieder")
-      return new Promise((resolve,reject) =>{
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findall dsbmitglieder');
+      return new Promise((resolve, reject) => {
         db.dsbMitgliedTabelle.toArray()
-          .then((dsbMitglieder) =>{
-            resolve({result: RequestResult.SUCCESS, payload: fromOfflineToDsbMitgliedDOArray(dsbMitglieder)})
+          .then((dsbMitglieder) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineToDsbMitgliedDOArray(dsbMitglieder)});
           })
-          .catch(err => reject(err));
-      })
+          .catch((err) => reject(err));
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -108,24 +108,24 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
   }
 
   public findAllByTeamId(id: string | number): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for find dsbmitglieder by teamID")
-      return new Promise((resolve,reject) =>{
-        let dsbMitglieder: OfflineDsbMitglied[] = []
-        db.transaction('rw', db.dsbMitgliedTabelle, db.mannschaftsmitgliedTabelle, tx => {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for find dsbmitglieder by teamID');
+      return new Promise((resolve, reject) => {
+        const dsbMitglieder: OfflineDsbMitglied[] = [];
+        db.transaction('rw', db.dsbMitgliedTabelle, db.mannschaftsmitgliedTabelle, (tx) => {
           db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(id).toArray()
-            .then(mitglieder => {
-              mitglieder.forEach(mitglied =>{
+            .then((mitglieder) => {
+              mitglieder.forEach((mitglied) => {
                 db.dsbMitgliedTabelle.get(mitglied.dsbMitgliedId)
-                  .then(result => dsbMitglieder.push(result))
-              })
-            })
+                  .then((result) => dsbMitglieder.push(result));
+              });
+            });
         })
-          .then(() =>{
-            resolve({result: RequestResult.SUCCESS, payload: fromOfflineToDsbMitgliedDOArray(dsbMitglieder)})
+          .then(() => {
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineToDsbMitgliedDOArray(dsbMitglieder)});
           })
-          .catch(err => reject(err));
-      })
+          .catch((err) => reject(err));
+      });
     } else {
       return new Promise((resolve, reject) => {
         this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('team/' + id).build())
@@ -162,21 +162,21 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
 
 
   public findById(id: string | number): Promise<BogenligaResponse<DsbMitgliedDO>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for findby dsbmitgliedid")
-      return new Promise((resolve,reject) =>{
-        let dsbId: number
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findby dsbmitgliedid');
+      return new Promise((resolve, reject) => {
+        let dsbId: number;
         if (typeof id === 'number') {
           dsbId = id;
         } else {
-          dsbId = parseInt(id)
+          dsbId = parseInt(id);
         }
         db.dsbMitgliedTabelle.get(dsbId)
-          .then((dsbMitglied) =>{
-            resolve({result: RequestResult.SUCCESS, payload: fromOfflineToDsbMitgliedDO(dsbMitglied)})
+          .then((dsbMitglied) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineToDsbMitgliedDO(dsbMitglied)});
           })
-          .catch(err => reject(err));
-      })
+          .catch((err) => reject(err));
+      });
     } else {
       // return promise
       // sign in success -> resolve promise

@@ -30,19 +30,19 @@ export class SchusszettelProviderService extends DataProviderService {
   }
 
   public findMatches(match1Id: string, match2Id: string): Promise<BogenligaResponse<Array<MatchDOExt>>> {
-    if(this.onOfflineService.isOffline()){
-      let passen = []
-      //holt Passen für beide matches aus der offlinedb um dann daraus Matchobjekte mit passen darin zu machen
+    if (this.onOfflineService.isOffline()) {
+      let passen = [];
+      // holt Passen für beide matches aus der offlinedb um dann daraus Matchobjekte mit passen darin zu machen
       return new Promise((resolve, reject) => {
-        this.passeDataProvider.findOfflineByMatchIds(Number(match1Id),Number(match2Id))
-            .then(item => {
-              passen = toPasseDTOFromDoClassArray(item.payload)
-              this.offlineFindMatches(Number(match1Id),Number(match2Id),passen)
-                  .then(matches => {
-                    resolve({result: RequestResult.SUCCESS, payload: matches.payload})
+        this.passeDataProvider.findOfflineByMatchIds(Number(match1Id), Number(match2Id))
+            .then((item) => {
+              passen = toPasseDTOFromDoClassArray(item.payload);
+              this.offlineFindMatches(Number(match1Id), Number(match2Id), passen)
+                  .then((matches) => {
+                    resolve({result: RequestResult.SUCCESS, payload: matches.payload});
                   });
             })
-          .catch(err => console.error(err))
+          .catch((err) => console.error(err));
       });
     } else {
       return new Promise((resolve, reject) => {
@@ -63,22 +63,22 @@ export class SchusszettelProviderService extends DataProviderService {
   }
 
   private offlineFindMatches(match1Id: number, match2Id: number, passen: PasseDTO[]): Promise<BogenligaResponse<Array<MatchDOExt>>> {
-    return new Promise((resolve, reject) =>{
-      db.matchTabelle.bulkGet([match1Id,match2Id])
+    return new Promise((resolve, reject) => {
+      db.matchTabelle.bulkGet([match1Id, match2Id])
         .then((data: OfflineMatch[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: [MatchMapperExt.matchToDO(toDTOFromOfflineMatch(data[0],passen)),MatchMapperExt.matchToDO(toDTOFromOfflineMatch(data[1],passen))]});
+          resolve({result: RequestResult.SUCCESS, payload: [MatchMapperExt.matchToDO(toDTOFromOfflineMatch(data[0], passen)), MatchMapperExt.matchToDO(toDTOFromOfflineMatch(data[1], passen))]});
         }, () => {
           reject({result: RequestResult.FAILURE});
         });
     });
   }
 
-  private async offlineAddPassen(match: MatchDTOExt){
-    db.transaction('rw',db.passeTabelle, async tx => {
-      let id: number = 0
+  private async offlineAddPassen(match: MatchDTOExt) {
+    db.transaction('rw', db.passeTabelle, async (tx) => {
+      let id = 0;
       await db.passeTabelle.toArray()
-              .then(passen => {
-                passen.forEach(passe => {
+              .then((passen) => {
+                passen.forEach((passe) => {
                   if (passe.id >= id) {
                     id = passe.id;
                   }
@@ -86,12 +86,12 @@ export class SchusszettelProviderService extends DataProviderService {
 
 
               });
-      match.passen.filter(v => v).forEach(passe => {
+      match.passen.filter((v) => v).forEach((passe) => {
 
         if (passe.id === null) {
           id = id + 1;
         }
-          db.passeTabelle.put({
+        db.passeTabelle.put({
             id: passe.id ?? id,
             dsbMitgliedId:  passe.dsbMitgliedId,
             lfdNr:          passe.lfdNr,
@@ -108,18 +108,18 @@ export class SchusszettelProviderService extends DataProviderService {
             version:        2,
             wettkampfId:    passe.wettkampfId
           }, passe.id ?? id)
-                  .then(n => console.log(n + " passe offline hinzugefügt"))
-                  .catch(err => console.error(err))
-      })
-    })
+                  .then((n) => console.log(n + ' passe offline hinzugefügt'))
+                  .catch((err) => console.error(err));
+      });
+    });
   }
 
   public create(match1: MatchDOExt, match2: MatchDOExt): Promise<BogenligaResponse<Array<MatchDOExt>>> {
     const match1DTO = MatchMapperExt.matchToDTO(match1);
     const match2DTO = MatchMapperExt.matchToDTO(match2);
-    if(this.onOfflineService.isOffline()){
+    if (this.onOfflineService.isOffline()) {
       return new Promise((resolve, reject) => {
-        db.transaction('rw', db.matchTabelle, db.passeTabelle, async tx => {
+        db.transaction('rw', db.matchTabelle, db.passeTabelle, async (tx) => {
           await db.matchTabelle.update(match1DTO.id, {
             matchpkt:         match1DTO.matchpunkte,
             satzpunkte:       match1DTO.satzpunkte,
@@ -145,18 +145,19 @@ export class SchusszettelProviderService extends DataProviderService {
 
           await this.offlineAddPassen(match2DTO);
 
-          db.passeTabelle.where('matchID').equals(match1DTO.id).or('matchID').equals(match2DTO.id).modify(passe => {
-            if(passe.version)
+          db.passeTabelle.where('matchID').equals(match1DTO.id).or('matchID').equals(match2DTO.id).modify((passe) => {
+            if (passe.version) {
               passe.version += 1;
-            else
+            } else {
               passe.version = 2;
+            }
           });
         })
           .then(() => {
             this.findMatches(match1DTO.id.toString(), match2DTO.id.toString())
-              .then(matches => resolve({result: RequestResult.SUCCESS, payload: matches.payload}))
+              .then((matches) => resolve({result: RequestResult.SUCCESS, payload: matches.payload}));
           })
-          .catch(err => reject(err))
+          .catch((err) => reject(err));
       });
     } else {
       return new Promise(((resolve, reject) => {

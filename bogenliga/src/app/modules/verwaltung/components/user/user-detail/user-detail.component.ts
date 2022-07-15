@@ -245,7 +245,7 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
 
   }
 
-  public getTranslation(key: string){
+  public getTranslation(key: string) {
     return this.translate.transform(key);
   }
 }

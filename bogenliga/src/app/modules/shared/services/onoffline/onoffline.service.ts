@@ -28,12 +28,12 @@ export class OnOfflineService {
         this.localDataProviderService.remove(ON_OFFLINE_STATE_KEY);
     }
 
-    public goOffline(wettkampfID:number, veranstaltungJahr:number): void {
+    public goOffline(wettkampfID: number, veranstaltungJahr: number): void {
         this.store.dispatch(new GoOffline());
         this.localDataProviderService.setPermanently(ON_OFFLINE_STATE_KEY, 'Offline');
-        this.localDataProviderService.setPermanently(SELECTED_YEAR_KEY, veranstaltungJahr.toString())
-        this.localDataProviderService.setPermanently(SELECTED_WETTKAMPF_KEY, wettkampfID.toString())
-        console.log("Offlinestatus:" + this.isOffline());
+        this.localDataProviderService.setPermanently(SELECTED_YEAR_KEY, veranstaltungJahr.toString());
+        this.localDataProviderService.setPermanently(SELECTED_WETTKAMPF_KEY, wettkampfID.toString());
+        console.log('Offlinestatus:' + this.isOffline());
     }
     public isOffline(): boolean {
         return this.offline;
@@ -56,11 +56,11 @@ export class OnOfflineService {
         }
     }
 
-    public getOfflineJahr(): number{
+    public getOfflineJahr(): number {
       return parseInt(this.localDataProviderService.get(SELECTED_YEAR_KEY));
     }
 
-    public getOfflineWettkampfID(): number{
+    public getOfflineWettkampfID(): number {
       return parseInt(this.localDataProviderService.get(SELECTED_WETTKAMPF_KEY));
 }
 

@@ -9,7 +9,7 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {db} from '@shared/data-provider/offlinedb/offlinedb'
+import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {fromPayload, fromPayloadArray} from '../mapper/wettkampf-mapper';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
@@ -30,16 +30,16 @@ export class WettkampfDataProviderService extends DataProviderService {
   }
 
   public findAll(): Promise<BogenligaResponse<WettkampfDTO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for wettkampf findall")
-      return new Promise((resolve,reject) =>{
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for wettkampf findall');
+      return new Promise((resolve, reject) => {
         db.wettkampfTabelle.toArray()
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineWettkampfArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
-            })
-      })
+            });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -61,8 +61,8 @@ export class WettkampfDataProviderService extends DataProviderService {
   }
 
   public findById(id: string | number): Promise<BogenligaResponse<WettkampfDTO>> {
-    if(this.onOfflineService.isOffline()) {
-      console.log('Choosing offline way for wettkampf with id '+ id);
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for wettkampf with id ' + id);
       return new Promise((resolve, reject) => {
         db.wettkampfTabelle.where('wettkampf_id').equals(id).toArray()[0]
           .then((data: OfflineWettkampf) => {
@@ -95,14 +95,14 @@ export class WettkampfDataProviderService extends DataProviderService {
   }
 
   public findAllowedMember(wettkampfID: string | number, mannschaft1ID: string | number, mannschaft2ID: string | number): Promise<number[]> {
-    if(this.onOfflineService.isOffline()){
-      //This function is essentially useless in offlineMode, the proper check is done when you go online again
-      //its still there because otherwise you'd have to put offlineChecks in the schusszettelComponent
-      console.log('Choosing offline way for findAllowedMember with MannschaftIDs: ' + mannschaft1ID + ", " + mannschaft2ID);
+    if (this.onOfflineService.isOffline()) {
+      // This function is essentially useless in offlineMode, the proper check is done when you go online again
+      // its still there because otherwise you'd have to put offlineChecks in the schusszettelComponent
+      console.log('Choosing offline way for findAllowedMember with MannschaftIDs: ' + mannschaft1ID + ', ' + mannschaft2ID);
       return new Promise((resolve, reject) => {
         db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(mannschaft1ID).or('mannschaftId').equals(mannschaft2ID).toArray()
           .then((data) => {
-            resolve(data.map(mitglied => mitglied.dsbMitgliedId));
+            resolve(data.map((mitglied) => mitglied.dsbMitgliedId));
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -130,8 +130,8 @@ export class WettkampfDataProviderService extends DataProviderService {
   }
 
   public findByVeranstaltungId(veranstaltungId: number): Promise<BogenligaResponse<WettkampfDTO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log('Choosing offline way for wettkampf with veranstaltungID '+ veranstaltungId);
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for wettkampf with veranstaltungID ' + veranstaltungId);
       return new Promise((resolve, reject) => {
         db.wettkampfTabelle.where('veranstaltungId').equals(veranstaltungId).toArray()
           .then((data) => {
@@ -180,8 +180,8 @@ export class WettkampfDataProviderService extends DataProviderService {
 
 
   public findAllByVeranstaltungId(id: string | number): Promise<BogenligaResponse<WettkampfDTO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log('Choosing offline way for wettkampf findallbyVeranstaltungID with ID '+ id);
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for wettkampf findallbyVeranstaltungID with ID ' + id);
       return new Promise((resolve, reject) => {
         db.wettkampfTabelle.where('veranstaltungId').equals(id).toArray()
           .then((data) => {

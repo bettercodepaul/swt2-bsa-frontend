@@ -30,11 +30,11 @@ export function fromOfflineMannschaftPayloadArray(payload: VersionedDataTransfer
   return payload.map((d) => fromOfflineMannschaftPayload(d));
 }
 
-export function offlineMannschaftFromDsbMannschaftDOArray(mannschaften: DsbMannschaftDO[]): OfflineMannschaft[]{
-  return mannschaften.map(mannschaft => offlineMannschaftFromDsbMannschaftDO(mannschaft));
+export function offlineMannschaftFromDsbMannschaftDOArray(mannschaften: DsbMannschaftDO[]): OfflineMannschaft[] {
+  return mannschaften.map((mannschaft) => offlineMannschaftFromDsbMannschaftDO(mannschaft));
 }
 
-export function offlineMannschaftFromDsbMannschaftDO(mannschaft: DsbMannschaftDO): OfflineMannschaft{
+export function offlineMannschaftFromDsbMannschaftDO(mannschaft: DsbMannschaftDO): OfflineMannschaft {
   return {
     benutzerId: mannschaft.benutzerId,
     id: mannschaft.id,
@@ -44,20 +44,20 @@ export function offlineMannschaftFromDsbMannschaftDO(mannschaft: DsbMannschaftDO
     vereinId: mannschaft.vereinId,
     version: 1
 
-  }
+  };
 }
 
-export function mannschaftDOfromOfflineArray(mannschaften: OfflineMannschaft[], vereine: OfflineVerein[]): DsbMannschaftDO[]{
-  return mannschaften.map(mannschaft => mannschaftDOfromOffline(mannschaft, vereine));
+export function mannschaftDOfromOfflineArray(mannschaften: OfflineMannschaft[], vereine: OfflineVerein[]): DsbMannschaftDO[] {
+  return mannschaften.map((mannschaft) => mannschaftDOfromOffline(mannschaft, vereine));
 }
 
-export function mannschaftDOfromOffline(m: OfflineMannschaft, vereine: OfflineVerein[]): DsbMannschaftDO{
-  let vereinName = ''
-  vereine.forEach(v =>{
-    if(v.id === m.vereinId){
-      vereinName = v.name
+export function mannschaftDOfromOffline(m: OfflineMannschaft, vereine: OfflineVerein[]): DsbMannschaftDO {
+  let vereinName = '';
+  vereine.forEach((v) => {
+    if (v.id === m.vereinId) {
+      vereinName = v.name;
     }
-  })
+  });
   return {
     benutzerId:        m.benutzerId,
     id:                m.id,
@@ -68,5 +68,5 @@ export function mannschaftDOfromOffline(m: OfflineMannschaft, vereine: OfflineVe
     veranstaltungName: '',
     vereinId:          m.vereinId,
     version:           m.version
-  }
+  };
 }

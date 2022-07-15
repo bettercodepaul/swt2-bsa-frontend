@@ -3,8 +3,8 @@ import {TableActionType} from '@shared/components/tables/types/table-action-type
 import {UserPermission} from '@shared/services';
 
 export const USER_OVERVIEW_CONFIG_ACTIVE: OverviewDialogConfig = {
-  moduleTranslationKey:    'MANAGEMENT', //Macht Home/Verwaltung/Benutzer-Uebersicht (ganz oben)
-  pageTitleTranslationKey: 'MANAGEMENT.USER.TITLE', //Macht Benutzer - Uebersicht
+  moduleTranslationKey:    'MANAGEMENT', // Macht Home/Verwaltung/Benutzer-Uebersicht (ganz oben)
+  pageTitleTranslationKey: 'MANAGEMENT.USER.TITLE', // Macht Benutzer - Uebersicht
 
   tableConfig: {
     columns: [

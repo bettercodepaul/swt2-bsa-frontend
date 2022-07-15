@@ -32,16 +32,16 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     super();
   }
   public findAll(): Promise<BogenligaResponse<VeranstaltungDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for Veranstaltungen findall")
-      return new Promise((resolve,reject) =>{
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen findall');
+      return new Promise((resolve, reject) => {
         db.veranstaltungTabelle.toArray()
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
-          })
-      })
+          });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -64,16 +64,15 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
 
 
   public findAllSportyearDestinct(): Promise<BogenligaResponse<SportjahrVeranstaltungDO[]>> {
-    if(this.onOfflineService.isOffline()){
+    if (this.onOfflineService.isOffline()) {
       return new Promise((resolve, reject) => {
-        let year = this.onOfflineService.getOfflineJahr()
-        if(year){
+        const year = this.onOfflineService.getOfflineJahr();
+        if (year) {
           resolve({result: RequestResult.SUCCESS, payload: fromOfflineSportjahr(year)});
+        } else {
+          reject({result: RequestResult.FAILURE});
         }
-        else {
-          reject({result: RequestResult.FAILURE})
-        }
-      })
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -95,16 +94,16 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
   }
 
   public findBySportyear(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for Veranstaltungen findBySportyear with sportjahr:" + sportjahr)
-      return new Promise((resolve,reject) =>{
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen findBySportyear with sportjahr:' + sportjahr);
+      return new Promise((resolve, reject) => {
         db.veranstaltungTabelle.where('sportjahr').equals(sportjahr).toArray()
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
-          })
-      })
+          });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -127,20 +126,20 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
   }
 
   public findBySportjahrDestinct(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for Veranstaltungen findBySportjahrDestinct with sportjahr:" + sportjahr)
-      return new Promise((resolve,reject) =>{
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen findBySportjahrDestinct with sportjahr:' + sportjahr);
+      return new Promise((resolve, reject) => {
         db.veranstaltungTabelle.where('sportjahr').equals(sportjahr).toArray()
           .catch((error) => {
-            console.error("Failed to find VeranstaltungBySportjahrDestinct: " + error)
-            return Promise.reject(error)
+            console.error('Failed to find VeranstaltungBySportjahrDestinct: ' + error);
+            return Promise.reject(error);
           })
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
-          })
-      })
+          });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -183,16 +182,16 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
 
 
   public findById(id: string | number): Promise<BogenligaResponse<VeranstaltungDO>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for Veranstaltungen with Id: " + id)
-      return new Promise((resolve,reject) =>{
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen with Id: ' + id);
+      return new Promise((resolve, reject) => {
         db.veranstaltungTabelle.get(Number(id))
           .then((data: OfflineVeranstaltung) => {
             resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltung(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
-          })
-      })
+          });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -259,16 +258,16 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
 
 
   public findByLigaId(ligaID: string | number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for Veranstaltungen findByLigaID with ligaId: " + ligaID)
-      return new Promise((resolve,reject) =>{
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen findByLigaID with ligaId: ' + ligaID);
+      return new Promise((resolve, reject) => {
         db.veranstaltungTabelle.where('ligaId').equals(ligaID).toArray()
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
-          })
-      })
+          });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise

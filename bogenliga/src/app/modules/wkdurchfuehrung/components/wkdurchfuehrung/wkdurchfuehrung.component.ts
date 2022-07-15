@@ -166,7 +166,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   public async resetWettkampfToken(id: number): Promise<void> {
 
-    try{
+    try {
       await this.wettkampfOfflineSyncService.resetWettkampfToken(id);
       this.notificationService.showNotification({
         id: 'Offlinetoken gelöscht',
@@ -257,13 +257,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             this.onOfflineService.goOffline(this.selectedWettkampfId, this.selectedDTOs[0].sportjahr);
 
 
-            //lädt Inhalte der Tabelle neu mit Offlinedaten
+            // lädt Inhalte der Tabelle neu mit Offlinedaten
             this.loadingVeranstaltungen = true;
             this.wettkampfIdEnthalten = true;
             this.wettkampfId = this.onOfflineService.getOfflineWettkampfID();
 
-            //temporäre Dummy Daten
-            //await this.wettkampfOfflineSyncService.createWettkampfDummyData();
+            // temporäre Dummy Daten
+            // await this.wettkampfOfflineSyncService.createWettkampfDummyData();
 
             await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr());
             this.visible = false;
@@ -279,7 +279,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               severity: NotificationSeverity.INFO
 
           });
-            //Hier sollte statt einem refresh irgendwann das sidebarcomponent neu geladen werden
+            // Hier sollte statt einem refresh irgendwann das sidebarcomponent neu geladen werden
         } catch (error) {
 
             console.error('Error while loading offline data');
@@ -744,7 +744,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         // Jahres auf die id des neusten Jahres
         this.selItemId = this.availableYears[0].id;
         this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
-      } else if(this.onOfflineService.isOffline()){
+      } else if (this.onOfflineService.isOffline()) {
         this.selItemId = this.availableYears[0].id;
       }
 

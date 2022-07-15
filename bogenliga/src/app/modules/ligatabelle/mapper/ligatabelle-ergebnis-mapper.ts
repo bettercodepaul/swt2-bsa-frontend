@@ -30,7 +30,7 @@ export function toDOFromOffline(ligatabelle: OfflineLigatabelle): LigatabelleErg
   const ligatabelleErgebnisDO = new LigatabelleErgebnisDO();
 
   ligatabelleErgebnisDO.id = ligatabelle.id;
-  ligatabelleErgebnisDO.version = ligatabelle.version;
+  ligatabelleErgebnisDO.version = ligatabelle.offlineVersion;
 
   ligatabelleErgebnisDO.veranstaltung_id = ligatabelle.veranstaltungId;
   ligatabelleErgebnisDO.veranstaltung_name = ligatabelle.veranstaltungName;
