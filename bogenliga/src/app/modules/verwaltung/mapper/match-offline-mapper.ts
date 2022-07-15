@@ -7,8 +7,10 @@ import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
 
 export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
   return {
-    id: matchOfflineSyncDTO.id,
-    offlineVersion: matchOfflineSyncDTO.version,
+    offlineVersion: 1,
+
+    matchId: matchOfflineSyncDTO.id,
+    matchVersion: matchOfflineSyncDTO.version,
     mannschaftId: matchOfflineSyncDTO.mannschaftId,
     mannschaftName: matchOfflineSyncDTO.mannschaftName,
     matchIdGegner: matchOfflineSyncDTO.matchIdGegner,
@@ -16,7 +18,6 @@ export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
     matchScheibennummer: matchOfflineSyncDTO.matchScheibennummer,
     matchpkt: matchOfflineSyncDTO.matchpkt,
     satzpunkte: matchOfflineSyncDTO.satzpunkte,
-    matchVersion: matchOfflineSyncDTO.matchVersion,
     naechsteMatchId: matchOfflineSyncDTO.naechsteMatchId,
     naechsteNaechsteMatchNrMatchId: matchOfflineSyncDTO.naechsteNaechsteMatchNrMatchId,
     nameGegner: matchOfflineSyncDTO.nameGegner,
@@ -39,14 +40,14 @@ export function toDTOFromOfflineMatchArray(offlineMatches: OfflineMatch[], offli
 export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch, offlinePassen: PasseDTO[]): MatchDTOExt {
   const passen = [];
   offlinePassen.forEach((item) => {
-    if (item.matchId === offlineMatch.id) {
+    if (item.matchId === offlineMatch.matchId) {
       passen.push(item);
     }
   });
   const begegnung = Math.ceil(offlineMatch.matchScheibennummer / 2);
   return {
-    id: offlineMatch.id,
-    version: offlineMatch.offlineVersion,
+    id: offlineMatch.matchId,
+    version: offlineMatch.matchVersion,
     mannschaftId: offlineMatch.mannschaftId,
     mannschaftName: offlineMatch.mannschaftName,
     nr: offlineMatch.matchNr,
@@ -61,8 +62,8 @@ export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch, offlinePassen:
     strafPunkteSatz4: offlineMatch.strafpunkteSatz4,
     strafPunkteSatz5: offlineMatch.strafpunkteSatz5,
     wettkampfId: offlineMatch.wettkampfId,
-    wettkampfTag: 1,  // wird nicht an die OfflineDB übergeben
-    wettkampfTyp: ''  // wird nicht an die OfflineDB übergeben
+    wettkampfTag: null,  // wird nicht an die OfflineDB übergeben - wird im Backend aus wettkampfID ermittelt und überschrieben
+    wettkampfTyp: ''  // wird nicht an die OfflineDB übergeben - wird im Backend aus wettkampfID ermittelt und überschrieben
   };
 }
 
