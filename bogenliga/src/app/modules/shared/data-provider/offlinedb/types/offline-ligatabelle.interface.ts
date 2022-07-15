@@ -1,7 +1,7 @@
 
 export interface OfflineLigatabelle {
   id?: number; // Primary Key autoincrement
-  version?: number;
+  offlineVersion?: number;
 
   // Relations
   veranstaltungId: number; // technischer Schüssel der Veranstaltung (Liga im Jahr)

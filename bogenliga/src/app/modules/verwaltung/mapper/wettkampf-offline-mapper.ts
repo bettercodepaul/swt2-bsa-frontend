@@ -7,13 +7,13 @@ import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 
 export function toDTOFromOfflineWettkampfArray(wettkaempfe: OfflineWettkampf[]): WettkampfDTO[] {
   let list: WettkampfDTO[];
-  list = []
+  list = [];
   wettkaempfe.forEach((it) =>  list.push(toDTOFromOfflineWettkampf(it)));
   return list;
 }
 
 export function toDTOFromOfflineWettkampf(wettkampf: OfflineWettkampf): WettkampfDTO {
-  let wettkampfDTO: WettkampfDTO = {
+  const wettkampfDTO: WettkampfDTO = {
 
     wettkampfTag : parseInt(wettkampf.tag),
     id : wettkampf.id,
@@ -28,7 +28,7 @@ export function toDTOFromOfflineWettkampf(wettkampf: OfflineWettkampf): Wettkamp
     wettkampfStrasse : wettkampf.strasse,
     wettkampfVeranstaltungsId : wettkampf.veranstaltungId,
     wettkampfDatum : wettkampf.datum
-  }
+  };
 
   return wettkampfDTO;
 }

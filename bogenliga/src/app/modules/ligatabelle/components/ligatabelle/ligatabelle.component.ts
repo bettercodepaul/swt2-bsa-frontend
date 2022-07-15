@@ -96,7 +96,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.loadedVeranstaltungen = new Map();
     this.veranstaltungIdMap = new Map();
     try {
-      console.log(this.onOfflineService.isOffline())
+      console.log(this.onOfflineService.isOffline());
       const responseYear = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
       this.loadedYears = responseYear.payload;
 

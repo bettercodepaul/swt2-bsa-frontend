@@ -33,13 +33,13 @@ export class MatchProviderService extends DataProviderService {
     return new Promise((resolve, reject) => {
       db.matchTabelle.where('matchNr').equals(id).toArray()
         .then((data: OfflineMatch[]) => {
-          resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data,[])});
+          resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data, [])});
         }, () => {
           reject({result: RequestResult.FAILURE});
         });
 
     });
-  };
+  }
 
 
   public get(matchId: string): Promise<BogenligaResponse<MatchDOExt>> {
@@ -68,7 +68,7 @@ export class MatchProviderService extends DataProviderService {
               }
             });
       });
-    //}
+    // }
   }
 
 
@@ -109,11 +109,11 @@ export class MatchProviderService extends DataProviderService {
 
   public findAllWettkampfMatchesAndNamesById(id: number): Promise<BogenligaResponse<MatchDTOExt[]>> {
     if (this.onOfflineService.isOffline()) {
-      console.log('Choosing offline way for findallmatches by wettkampfid ' + id)
+      console.log('Choosing offline way for findallmatches by wettkampfid ' + id);
       return new Promise((resolve, reject) => {
         db.matchTabelle.where('wettkampfId').equals(id).toArray()
           .then((data: OfflineMatch[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data,[])});
+            resolve({result: RequestResult.SUCCESS, payload: toDTOFromOfflineMatchArray(data, [])});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -155,11 +155,11 @@ export class MatchProviderService extends DataProviderService {
   }
 
   public pair(matchId: number): Promise<BogenligaResponse<Array<number>>> {
-    if(this.onOfflineService.isOffline()){
+    if (this.onOfflineService.isOffline()) {
       return new Promise((resolve, reject) => {
         db.matchTabelle.get(matchId)
           .then((data: OfflineMatch) => {
-            resolve({result: RequestResult.SUCCESS, payload: [Math.min(data.id,data.matchIdGegner), Math.max(data.id,data.matchIdGegner)]});
+            resolve({result: RequestResult.SUCCESS, payload: [Math.min(data.id, data.matchIdGegner), Math.max(data.id, data.matchIdGegner)]});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -181,15 +181,15 @@ export class MatchProviderService extends DataProviderService {
   }
 
   public async pairToFollow(matchId: number): Promise<BogenligaResponse<Array<number>>> {
-    if(this.onOfflineService.isOffline()){
-      let currentPair: number[]
+    if (this.onOfflineService.isOffline()) {
+      let currentPair: number[];
       await this.pair(matchId)
-                .then(data => currentPair = data.payload)
-                .catch(error => console.error(error))
+                .then((data) => currentPair = data.payload)
+                .catch((error) => console.error(error));
       let nextMatchId = 0;
       await db.matchTabelle.get(currentPair[1])
-        .then(data => {
-          if(data.naechsteMatchId <= matchId){
+        .then((data) => {
+          if (data.naechsteMatchId <= matchId) {
             nextMatchId = data.naechsteNaechsteMatchNrMatchId;
           } else {
             nextMatchId = data.naechsteMatchId;
@@ -215,21 +215,21 @@ export class MatchProviderService extends DataProviderService {
 
   public async previousPair(matchId: number): Promise<BogenligaResponse<Array<number>>> {
     if (this.onOfflineService.isOffline()) {
-      let currentPair = []
+      let currentPair = [];
       await this.pair(matchId)
-        .then(data => currentPair = data.payload)
-        .catch(error => console.error(error))
+        .then((data) => currentPair = data.payload)
+        .catch((error) => console.error(error));
       let lastMatchId = null;
       await db.matchTabelle.where('naechsteMatchId').equals(currentPair[0]).first()
-        .then(data => lastMatchId = data.id)
-        .catch(error => console.error(error))
+        .then((data) => lastMatchId = data.id)
+        .catch((error) => console.error(error));
 
-      if(lastMatchId === null){
+      if (lastMatchId === null) {
         await db.matchTabelle.where('naechsteNaechsteMatchNrMatchId').equals(currentPair[0]).last()
-          .then(data => lastMatchId = data.id)
-          .catch(error => console.error(error))
+          .then((data) => lastMatchId = data.id)
+          .catch((error) => console.error(error));
       }
-      if(!lastMatchId){
+      if (!lastMatchId) {
         lastMatchId = matchId;
       }
       return this.pair(lastMatchId);

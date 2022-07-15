@@ -51,10 +51,10 @@ export class PasseDataProviderService extends DataProviderService {
               }
             });
       });
-    //}
+    // }
   }
 
-  public findOfflineByMatchIds(match1Id: number, match2Id: number): Promise<BogenligaResponse<PasseDTOClass[]>>{
+  public findOfflineByMatchIds(match1Id: number, match2Id: number): Promise<BogenligaResponse<PasseDTOClass[]>> {
     return new Promise((resolve, reject) => {
       db.passeTabelle.where('matchID').equals(match1Id).or('matchID').equals(match2Id).toArray()
         .then((data: OfflinePasse[]) => {

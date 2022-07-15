@@ -58,7 +58,7 @@ export class OfflineDB extends Dexie {
       mannschaftTabelle: ', version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
       mannschaftsmitgliedTabelle: ', version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
       dsbMitgliedTabelle: ', version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
-      veranstaltungTabelle: ', version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId',
+      veranstaltungTabelle: ', offline_version, id, version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId',
       vereinTabelle: ', version, name, identifier, regionId, regionName, website, description, icon'
 
 

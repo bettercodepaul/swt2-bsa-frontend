@@ -147,7 +147,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     datacy: 'sidebar-hilfe-button'
   }
 ];
-//sidebar for offlinemode
+// sidebar for offlinemode
 export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
   {
     label: 'SIDEBAR.HOME',

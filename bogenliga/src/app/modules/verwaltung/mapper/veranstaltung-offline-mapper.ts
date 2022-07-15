@@ -14,8 +14,9 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 
 export function toDO(offlineSyncDto: VeranstaltungOfflineSyncDto): OfflineVeranstaltung {
   return {
-    id: offlineSyncDto.id,
+    offlineVersion: 1,
     version: offlineSyncDto.version,
+    id: offlineSyncDto.id,
     wettkampfTypId: offlineSyncDto.wettkampfTypId,
     name: offlineSyncDto.name,
     sportjahr: offlineSyncDto.sportjahr,
@@ -34,8 +35,8 @@ export function fromOfflineVeranstaltungPayloadArray(payload: VersionedDataTrans
   return payload.map(fromOfflineVeranstaltungPayload);
 }
 
-export function toDOfromOfflineVeranstaltung(veranstaltung: OfflineVeranstaltung): VeranstaltungDO{
-  let veranstaltungDO: VeranstaltungDO = {
+export function toDOfromOfflineVeranstaltung(veranstaltung: OfflineVeranstaltung): VeranstaltungDO {
+  const veranstaltungDO: VeranstaltungDO = {
     id: veranstaltung.id,
     version: veranstaltung.version,
     wettkampfTypId: veranstaltung.wettkampfTypId,
@@ -47,8 +48,8 @@ export function toDOfromOfflineVeranstaltung(veranstaltung: OfflineVeranstaltung
     ligaleiterEmail: '',
     ligaName: veranstaltung.name,
     wettkampftypName: ''
-  }
-  return veranstaltungDO
+  };
+  return veranstaltungDO;
 }
 
 export function toDOfromOfflineVeranstaltungArray(veranstaltungArray: OfflineVeranstaltung[]): VeranstaltungDO[] {
@@ -59,13 +60,14 @@ export function toDOfromOfflineVeranstaltungArray(veranstaltungArray: OfflineVer
 
 export function toOfflineFromVeranstaltungDO(veranstaltung: VeranstaltungDO): OfflineVeranstaltung {
   return {
+    offlineVersion: 1,
     id: veranstaltung.id,
     ligaId: veranstaltung.ligaId,
     ligaleiterId: veranstaltung.ligaleiterId,
     meldeDeadline: veranstaltung.meldeDeadline,
     name: veranstaltung.name,
     sportjahr: veranstaltung.sportjahr,
-    version: 1,
+    version: veranstaltung.version,
     wettkampfTypId: veranstaltung.wettkampfTypId
-  }
+  };
 }

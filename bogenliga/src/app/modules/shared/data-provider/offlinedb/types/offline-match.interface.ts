@@ -1,7 +1,7 @@
 
 export interface OfflineMatch {
   id?: number; // Primary Key autoincrement
-  version?: number;
+  offlineVersion?: number;
 
   matchVersion: number; // backend dataset version
   wettkampfId: number;

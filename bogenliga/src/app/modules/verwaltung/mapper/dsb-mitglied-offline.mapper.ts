@@ -21,11 +21,11 @@ export function toDO(dsbMitgliedDTO: DsbMitgliedOfflineSyncDto): OfflineDsbMitgl
   };
 }
 
-export function fromOfflineToDsbMitgliedDOArray(payload: OfflineDsbMitglied[]): DsbMitgliedDO[]{
-  return payload.map(mitglied => fromOfflineToDsbMitgliedDO(mitglied));
+export function fromOfflineToDsbMitgliedDOArray(payload: OfflineDsbMitglied[]): DsbMitgliedDO[] {
+  return payload.map((mitglied) => fromOfflineToDsbMitgliedDO(mitglied));
 }
 
-export function fromOfflineToDsbMitgliedDO(payload: OfflineDsbMitglied): DsbMitgliedDO{
+export function fromOfflineToDsbMitgliedDO(payload: OfflineDsbMitglied): DsbMitgliedDO {
   return {
     geburtsdatum:    payload.geburtsdatum,
     id:              payload.id,
@@ -35,18 +35,18 @@ export function fromOfflineToDsbMitgliedDO(payload: OfflineDsbMitglied): DsbMitg
     nationalitaet:   payload.nationalitaet,
     userId:          payload.benutzerId,
     vereinsId:       payload.vereinId,
-    vereinsName:     "",
+    vereinsName:     '',
     version:         payload.version,
     vorname:         payload.vorname
 
-  }
+  };
 }
 
-export function fromDOtoOfflineDsbMitgliederArray(payload: DsbMitgliedDO[]): OfflineDsbMitglied[]{
-  return payload.map(mitglied => fromDOtoOfflineDsbMitglied(mitglied));
+export function fromDOtoOfflineDsbMitgliederArray(payload: DsbMitgliedDO[]): OfflineDsbMitglied[] {
+  return payload.map((mitglied) => fromDOtoOfflineDsbMitglied(mitglied));
 }
 
-export function fromDOtoOfflineDsbMitglied(payload: DsbMitgliedDO): OfflineDsbMitglied{
+export function fromDOtoOfflineDsbMitglied(payload: DsbMitgliedDO): OfflineDsbMitglied {
   return{
     benutzerId:      payload.userId,
     geburtsdatum:    payload.geburtsdatum,
@@ -58,7 +58,7 @@ export function fromDOtoOfflineDsbMitglied(payload: DsbMitgliedDO): OfflineDsbMi
     version:         1,
     vorname:         payload.vorname
 
-  }
+  };
 }
 
 export function fromOfflineDsbMitgliedPayload(payload: VersionedDataTransferObject): OfflineDsbMitglied {

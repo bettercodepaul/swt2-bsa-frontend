@@ -176,7 +176,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
   }
 
   private createLizenzForMember(memberId: number): void {
-    if(this.onOfflineService.isOffline()){
+    if (this.onOfflineService.isOffline()) {
       this.sendSaveRequest('MANAGEMENT.SCHUETZE_HINZUFUEGEN.NOTIFICATION.SAVE', null);
       return;
     }
@@ -413,8 +413,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.members.forEach((member) => {
       if (member.vereinsId === null) {
         member.vereinsName = 'kein Verein';
-      }
-      else {
+      } else {
         const tmp = this.vereine.find((verein) => {
           return verein.id === member.vereinsId;
         });
@@ -440,7 +439,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
 
   private handleVereinSuccess(response: BogenligaResponse<VereinDTO>) {
     this.currentVerein = response.payload;
-      this.loading = false;
+    this.loading = false;
   }
 
   private handleVereinFailure(response: BogenligaResponse<VereinDTO>) {

@@ -24,21 +24,21 @@ export class VereinDataProviderService extends DataProviderService {
   serviceSubUrl = 'v1/vereine';
 
 
-  constructor(private restClient: RestClient,private onOfflineService: OnOfflineService , private currentUserService: CurrentUserService) {
+  constructor(private restClient: RestClient, private onOfflineService: OnOfflineService , private currentUserService: CurrentUserService) {
     super();
   }
 
   public findAll(): Promise<BogenligaResponse<VereinDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for Verein findall")
-      return new Promise((resolve,reject) =>{
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Verein findall');
+      return new Promise((resolve, reject) => {
         db.vereinTabelle.toArray()
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVereinArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
-          })
-      })
+          });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -98,22 +98,22 @@ export class VereinDataProviderService extends DataProviderService {
   }
 
   public findById(id: string | number): Promise<BogenligaResponse<VereinDO>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for findVerein by id")
-      return new Promise((resolve,reject) =>{
-        let vereinid: number
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findVerein by id');
+      return new Promise((resolve, reject) => {
+        let vereinid: number;
         if (typeof id === 'string') {
-          vereinid = parseInt(id)
+          vereinid = parseInt(id);
         } else {
-          vereinid = id
+          vereinid = id;
         }
         db.vereinTabelle.get(vereinid)
           .then((data) => {
             resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVerein(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
-          })
-      })
+          });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise

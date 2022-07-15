@@ -8,7 +8,7 @@ import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
 export function toDO(matchOfflineSyncDTO: MatchOfflineSyncDto): OfflineMatch {
   return {
     id: matchOfflineSyncDTO.id,
-    version: matchOfflineSyncDTO.version,
+    offlineVersion: matchOfflineSyncDTO.version,
     mannschaftId: matchOfflineSyncDTO.mannschaftId,
     mannschaftName: matchOfflineSyncDTO.mannschaftName,
     matchIdGegner: matchOfflineSyncDTO.matchIdGegner,
@@ -37,22 +37,23 @@ export function toDTOFromOfflineMatchArray(offlineMatches: OfflineMatch[], offli
 }
 
 export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch, offlinePassen: PasseDTO[]): MatchDTOExt {
-  const passen = []
-  offlinePassen.forEach(item => {
-    if(item.matchId === offlineMatch.id)
-      passen.push(item)
+  const passen = [];
+  offlinePassen.forEach((item) => {
+    if (item.matchId === offlineMatch.id) {
+      passen.push(item);
+    }
   });
-  const begegnung = Math.ceil(offlineMatch.matchScheibennummer/2)
+  const begegnung = Math.ceil(offlineMatch.matchScheibennummer / 2);
   return {
     id: offlineMatch.id,
-    version: offlineMatch.version,
+    version: offlineMatch.offlineVersion,
     mannschaftId: offlineMatch.mannschaftId,
     mannschaftName: offlineMatch.mannschaftName,
     nr: offlineMatch.matchNr,
-    begegnung: begegnung,
+    begegnung,
     matchpunkte: offlineMatch.matchpkt,
     scheibenNummer: offlineMatch.matchScheibennummer,
-    passen: passen,     //werden aus der passe tabelle geholt, damit sie nicht doppelt gespeichert/übergeben werden müssen
+    passen,     // werden aus der passe tabelle geholt, damit sie nicht doppelt gespeichert/übergeben werden müssen
     satzpunkte: offlineMatch.satzpunkte,
     strafPunkteSatz1: offlineMatch.strafpunkteSatz1,
     strafPunkteSatz2: offlineMatch.strafpunkteSatz2,
@@ -60,8 +61,8 @@ export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch, offlinePassen:
     strafPunkteSatz4: offlineMatch.strafpunkteSatz4,
     strafPunkteSatz5: offlineMatch.strafpunkteSatz5,
     wettkampfId: offlineMatch.wettkampfId,
-    wettkampfTag: 1,  //wird nicht an die OfflineDB übergeben
-    wettkampfTyp: ''  //wird nicht an die OfflineDB übergeben
+    wettkampfTag: 1,  // wird nicht an die OfflineDB übergeben
+    wettkampfTyp: ''  // wird nicht an die OfflineDB übergeben
   };
 }
 

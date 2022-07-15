@@ -36,29 +36,29 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
   public create(payload: MannschaftsMitgliedDO): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
-    if(this.onOfflineService.isOffline()){
+    if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for create Mannschaftsmitglied');
       console.log(payload);
       return new Promise((resolve, reject) => {
-        db.transaction('rw', db.mannschaftsmitgliedTabelle, async tx =>{
-          let key: number = 1
+        db.transaction('rw', db.mannschaftsmitgliedTabelle, async (tx) => {
+          let key = 1;
           await db.mannschaftsmitgliedTabelle.toArray()
-            .then(mitglieder => {
-              mitglieder.forEach(mitglied =>{
-                if(mitglied.id >= key){
-                  key = mitglied.id+1;
+            .then((mitglieder) => {
+              mitglieder.forEach((mitglied) => {
+                if (mitglied.id >= key) {
+                  key = mitglied.id + 1;
                 }
-              })
-              console.log(key)
-            })
+              });
+              console.log(key);
+            });
           await db.mannschaftsmitgliedTabelle.put(fromDOToOfflineMannschaftsmitglied(payload, key), key);
 
           return db.mannschaftsmitgliedTabelle.get(key);
         })
           .then((data) => {
-            resolve({result:RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDO(data)})
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDO(data)});
           }, (error) => {
-            console.error(error)
+            console.error(error);
             reject({result: RequestResult.FAILURE});
           });
       });
@@ -110,29 +110,30 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   // param teamId: mannschaftsmitglied_mannschaft_id
   // param memberId: mannschaftsmitglied_dsb_mitglied_id
   public deleteByMannschaftIdAndDsbMitgliedId(teamId: number, memberId: number): Promise<BogenligaResponse<void>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for deleteByMannschaftIdAndDsbMitgliedId")
-      return new Promise((resolve,reject) =>{
-        db.transaction('rw',db.mannschaftsmitgliedTabelle, async tx =>{
-          let id: number
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for deleteByMannschaftIdAndDsbMitgliedId');
+      return new Promise((resolve, reject) => {
+        db.transaction('rw', db.mannschaftsmitgliedTabelle, async (tx) => {
+          let id: number;
           await db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(teamId).toArray()
-                  .then(mitglieder => {
-                    mitglieder.forEach(mitglied =>{
-                      if(mitglied.dsbMitgliedId === memberId)
+                  .then((mitglieder) => {
+                    mitglieder.forEach((mitglied) => {
+                      if (mitglied.dsbMitgliedId === memberId) {
                         id = mitglied.id;
-                    })
-                  })
-          db.mannschaftsmitgliedTabelle.delete(id)
+                      }
+                    });
+                  });
+          db.mannschaftsmitgliedTabelle.delete(id);
         })
-          .then((deleted) =>{
-            console.log(deleted + " Mitglieder gelöscht")
-            resolve({result: RequestResult.SUCCESS})
+          .then((deleted) => {
+            console.log(deleted + ' Mitglieder gelöscht');
+            resolve({result: RequestResult.SUCCESS});
           })
-          .catch(err => {
-            console.log(err)
-            reject(err)
+          .catch((err) => {
+            console.log(err);
+            reject(err);
           });
-      })
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -199,12 +200,12 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
   public findByMemberId(id: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO[]>> {
-    if(this.onOfflineService.isOffline()){
+    if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for findByMemberId');
       return new Promise((resolve, reject) => {
         db.mannschaftsmitgliedTabelle.where('dsbMitgliedId').equals(id).toArray()
           .then((data) => {
-            resolve({result:RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDOArray(data)})
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDOArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -232,8 +233,8 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
   public findByMemberAndTeamId(memberId: string | number, teamId: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
-    if(this.onOfflineService.isOffline()){
-      console.log('Choosing offline way for findbyMemberAndTeamId: ' + memberId + ", " + teamId);
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findbyMemberAndTeamId: ' + memberId + ', ' + teamId);
       return new Promise((resolve, reject) => {
         let ID: number;
         if (typeof memberId === 'string') {
@@ -243,11 +244,11 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
         }
         db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(teamId).toArray()
           .then((data) => {
-            data.forEach(mitglied => {
-              if(mitglied.id === ID){
-                resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDO(mitglied)})
+            data.forEach((mitglied) => {
+              if (mitglied.id === ID) {
+                resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDO(mitglied)});
               }
-            })
+            });
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -297,12 +298,12 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   }
 
   public findAllByTeamId(id: string | number): Promise<BogenligaResponse<MannschaftsMitgliedDO[]>> {
-    if(this.onOfflineService.isOffline()){
+    if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for findAllByTeamId');
       return new Promise((resolve, reject) => {
         db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(id).toArray()
           .then((data) => {
-            resolve({result:RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDOArray(data)})
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDOArray(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -329,16 +330,16 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
     }
   }
   public save(payload: MannschaftsMitgliedDO): Promise<BogenligaResponse<MannschaftsMitgliedDO>> {
-    if(this.onOfflineService.isOffline()){
+    if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for findAllByTeamId');
       return new Promise((resolve, reject) => {
-        db.transaction('rw', db.mannschaftsmitgliedTabelle, async tx => {
-          await db.mannschaftsmitgliedTabelle.put(fromDOToOfflineMannschaftsmitglied(payload, payload.id),payload.id)
+        db.transaction('rw', db.mannschaftsmitgliedTabelle, async (tx) => {
+          await db.mannschaftsmitgliedTabelle.put(fromDOToOfflineMannschaftsmitglied(payload, payload.id), payload.id);
 
-          return db.mannschaftsmitgliedTabelle.get(payload.id)
+          return db.mannschaftsmitgliedTabelle.get(payload.id);
         })
           .then((data) => {
-            resolve({result:RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDO(data)})
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineMannschaftsmitgliedToDO(data)});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });

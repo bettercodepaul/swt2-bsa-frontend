@@ -39,7 +39,7 @@ export class SidebarComponent implements OnInit {
 
   faCaretDown = faCaretDown;
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private onOfflineService : OnOfflineService) {
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private onOfflineService: OnOfflineService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
 
@@ -48,11 +48,11 @@ export class SidebarComponent implements OnInit {
  ngOnInit() {
     this.offlineSetter();
   }
-//Um im Offlinemodus die Sidebar entsprechend anzupassen.
-  public offlineSetter() : void{
-    if(this.onOfflineService.isOffline() == true){
+// Um im Offlinemodus die Sidebar entsprechend anzupassen.
+  public offlineSetter(): void {
+    if (this.onOfflineService.isOffline() == true) {
       this.CONFIG = SIDE_BAR_CONFIG_OFFLINE;
-    }else{
+    } else {
       this.CONFIG = SIDE_BAR_CONFIG;
     }
 

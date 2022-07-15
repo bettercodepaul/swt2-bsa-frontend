@@ -64,13 +64,13 @@ export class RegionDataProviderService extends DataProviderService {
   }
 
   public findAllByType(type: string): Promise<BogenligaResponse<RegionDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for findall regionen by type")
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findall regionen by type');
       return new Promise((resolve, reject) => {
         db.vereinTabelle.toArray()
           .then((data) => {
-            let fakeregionen : RegionDO[] = [];
-            data.forEach( verein =>{
+            const fakeregionen: RegionDO[] = [];
+            data.forEach( (verein) => {
               fakeregionen.push({
                 id: verein.regionId,
                 regionName: verein.regionName,
@@ -79,11 +79,11 @@ export class RegionDataProviderService extends DataProviderService {
                 regionUebergeordnet: 0,
                 regionUebergeordnetAsName: '',
                 version: 1
-              })
+              });
             });
-            resolve({result: RequestResult.SUCCESS, payload: fakeregionen})
+            resolve({result: RequestResult.SUCCESS, payload: fakeregionen});
           })
-          .catch(e => reject(e))
+          .catch((e) => reject(e));
       });
     } else {
       // return promise

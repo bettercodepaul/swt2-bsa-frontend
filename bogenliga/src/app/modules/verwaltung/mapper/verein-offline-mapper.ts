@@ -1,11 +1,11 @@
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {OfflineVerein} from '@shared/data-provider/offlinedb/types/offline-verein.interface';
 
-export function offlineVereinFromVereinDOArray(vereine: VereinDO[]): OfflineVerein[]{
-  return vereine.map(verein => offlineVereinFromVereinDO(verein));
+export function offlineVereinFromVereinDOArray(vereine: VereinDO[]): OfflineVerein[] {
+  return vereine.map((verein) => offlineVereinFromVereinDO(verein));
 }
 
-export function offlineVereinFromVereinDO(verein: VereinDO): OfflineVerein{
+export function offlineVereinFromVereinDO(verein: VereinDO): OfflineVerein {
   return {
     icon: verein.icon,
     id: verein.id,
@@ -17,14 +17,14 @@ export function offlineVereinFromVereinDO(verein: VereinDO): OfflineVerein{
     website: verein.website,
     description: verein.description
 
-  }
+  };
 }
 
-export function toDOfromOfflineVereinArray(vereine: OfflineVerein[]): VereinDO[]{
-  return vereine.map(verein => toDOfromOfflineVerein(verein));
+export function toDOfromOfflineVereinArray(vereine: OfflineVerein[]): VereinDO[] {
+  return vereine.map((verein) => toDOfromOfflineVerein(verein));
 }
 
-export function toDOfromOfflineVerein(verein: OfflineVerein): VereinDO{
+export function toDOfromOfflineVerein(verein: OfflineVerein): VereinDO {
   return {
     description: verein.description,
     icon: verein.icon,
@@ -36,5 +36,5 @@ export function toDOfromOfflineVerein(verein: OfflineVerein): VereinDO{
     version: verein.version,
     website: verein.website
 
-  }
+  };
 }

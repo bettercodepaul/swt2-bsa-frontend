@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public isOffline(): Boolean {
-    return this.onOfflineService.isOffline()
+    return this.onOfflineService.isOffline();
   }
 
 }

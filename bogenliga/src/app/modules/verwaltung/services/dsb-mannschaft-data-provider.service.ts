@@ -108,24 +108,24 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
   }
 
   public findAllByVereinsId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for findall mannschaften by vereinsid")
-      let dsbMannschaften: DsbMannschaftDO[]
-      return new Promise((resolve,reject) =>{
-        db.transaction('rw', db.mannschaftTabelle, db.vereinTabelle, tx =>{
-          let vereine: OfflineVerein[]
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findall mannschaften by vereinsid');
+      let dsbMannschaften: DsbMannschaftDO[];
+      return new Promise((resolve, reject) => {
+        db.transaction('rw', db.mannschaftTabelle, db.vereinTabelle, (tx) => {
+          let vereine: OfflineVerein[];
           db.vereinTabelle.toArray()
-            .then(v => {vereine = v})
+            .then((v) => {vereine = v; });
           db.mannschaftTabelle.where('vereinId').equals(id).toArray()
             .then((data) => {
-              dsbMannschaften = mannschaftDOfromOfflineArray(data, vereine)
-            })
+              dsbMannschaften = mannschaftDOfromOfflineArray(data, vereine);
+            });
         })
           .then( () => {
-            resolve({result: RequestResult.SUCCESS, payload: dsbMannschaften})
-        }, () => reject({result: RequestResult.FAILURE}))
+            resolve({result: RequestResult.SUCCESS, payload: dsbMannschaften});
+        }, () => reject({result: RequestResult.FAILURE}));
 
-      })
+      });
     } else {
       // return promise
       // sign in success -> resolve promise
@@ -172,32 +172,32 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
 
 
   public findById(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO>> {
-    if(this.onOfflineService.isOffline()){
-      console.log("Choosing offline way for find mannschaft by id")
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for find mannschaft by id');
       let mannschaftID: number;
       if (typeof id === 'string') {
         mannschaftID = parseInt(id);
-      } else{
+      } else {
         mannschaftID = id;
       }
-      return new Promise((resolve,reject) =>{
-        let dsbMannschaft: DsbMannschaftDO
-        db.transaction('r', db.mannschaftTabelle, db.vereinTabelle, tx => {
-          let vereine: OfflineVerein[]
+      return new Promise((resolve, reject) => {
+        let dsbMannschaft: DsbMannschaftDO;
+        db.transaction('r', db.mannschaftTabelle, db.vereinTabelle, (tx) => {
+          let vereine: OfflineVerein[];
           db.vereinTabelle.toArray()
-            .then(v => {vereine = v})
+            .then((v) => {vereine = v; });
 
           db.mannschaftTabelle.get(mannschaftID)
-            .then(data => {
-              dsbMannschaft = mannschaftDOfromOffline(data, vereine)
-            })
+            .then((data) => {
+              dsbMannschaft = mannschaftDOfromOffline(data, vereine);
+            });
         })
           .then(() => {
             resolve({result: RequestResult.SUCCESS, payload: dsbMannschaft});
           }, () => {
             reject({result: RequestResult.FAILURE});
-          })
-      })
+          });
+      });
     } else {
       // return promise
       // sign in success -> resolve promise

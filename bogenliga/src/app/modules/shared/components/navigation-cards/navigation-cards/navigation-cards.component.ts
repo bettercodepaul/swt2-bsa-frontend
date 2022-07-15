@@ -57,7 +57,7 @@ export class NavigationCardsComponent extends CommonComponentDirective implement
 
   /* setting the card which is hovered */
   public setActiveCard(card) {
-    this.activeCard = card
+    this.activeCard = card;
   }
 
   /*
@@ -66,6 +66,6 @@ export class NavigationCardsComponent extends CommonComponentDirective implement
   *   of the button.
   * */
   public resetActiveCard() {
-    this.activeCard = null
+    this.activeCard = null;
   }
 }
