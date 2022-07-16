@@ -1,7 +1,10 @@
 
 export interface OfflinePasse {
-  // passe_id
   id?: number;
+  offlineVersion: number;
+
+  // BackendData
+  passeId?: number;
   version?: number;
   matchID: number;
   mannschaftId: number;

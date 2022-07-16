@@ -12,10 +12,18 @@ import {
 import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
 import {fromPayloadOfflineLigatabelleArray} from '../../ligatabelle/mapper/ligatabelle-offline-mapper';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
-import {fromOfflineMatchPayloadArray} from '@verwaltung/mapper/match-offline-mapper';
+import {
+  fromOfflineMatchPayloadArray,
+  toDTOFromOfflineMatch,
+  toDTOFromOfflineMatchArray
+} from '@verwaltung/mapper/match-offline-mapper';
 import {OfflineMatch} from '@shared/data-provider/offlinedb/types/offline-match.interface';
 import {OfflinePasse} from '@shared/data-provider/offlinedb/types/offline-passe.interface';
-import {fromOfflinePassePayloadArray} from '@verwaltung/mapper/passe-offline-mapper';
+import {
+  fromOfflinePassePayloadArray,
+  toPasseDTOClassFromOfflineArray,
+  toPasseDTOFromOfflineArray
+} from '@verwaltung/mapper/passe-offline-mapper';
 import {OfflineWettkampf} from '@shared/data-provider/offlinedb/types/offline-wettkampf.interface';
 import {OfflineMannschaft} from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
 import {
@@ -23,7 +31,10 @@ import {
   offlineMannschaftFromDsbMannschaftDOArray
 } from '@verwaltung/mapper/mannschaft-offline-mapper';
 import {OfflineMannschaftsmitglied} from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
-import {fromOfflineMannschaftsmitgliedPayloadArray} from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
+import {
+  fromOfflineMannschaftsmitgliedPayloadArray,
+  fromOfflineMannschaftsmitgliedToDTOArray
+} from '@verwaltung/mapper/mannschaftsmitglied-offline-mapper';
 import {OfflineDsbMitglied} from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
 import {OfflineVeranstaltung} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
 import {throwError} from 'rxjs';
@@ -42,6 +53,10 @@ import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannsch
 import {
   OfflinetokenSync
 } from '@shared/data-provider/offlinedb/types/offline-offlinetokensync.interface';
+import {match} from 'cypress/types/minimatch';
+import {MatchDTOExt} from '@wkdurchfuehrung/types/datatransfer/match-dto-ext.class';
+import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
+import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +66,10 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   serviceSubUrl = 'v1/sync';
 
 
-  constructor(private restClient: RestClient, private mannschaftDataProvider: DsbMannschaftDataProviderService , private vereinDataProvider: VereinDataProviderService, private veranstaltungDataProvider: VeranstaltungDataProviderService, private dsbMitgliedDataProvider: DsbMitgliedDataProviderService) {
+  constructor(private restClient: RestClient, private mannschaftDataProvider: DsbMannschaftDataProviderService ,
+              private vereinDataProvider: VereinDataProviderService,
+              private veranstaltungDataProvider: VeranstaltungDataProviderService,
+              private dsbMitgliedDataProvider: DsbMitgliedDataProviderService) {
     super();
   }
 
@@ -98,7 +116,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
     await db.passeTabelle.toArray()
       .then( (passen) => {
         const matches = this.getOfflineMatchPunkte(payload, passen);
-        db.matchTabelle.bulkPut(matches, matches.map((item) => item.id)).then((value) => {
+        db.matchTabelle.bulkPut(matches, matches.map((item) => item.matchId)).then((value) => {
           console.log('offline match added to offlinedb', value);
 
         }).catch((error) => {
@@ -111,16 +129,16 @@ export class WettkampfOfflineSyncService extends DataProviderService {
   public getOfflineMatchPunkte(offlineMatches: OfflineMatch[], passen: OfflinePasse[]): OfflineMatch[] {
     const matches: OfflineMatch[] = [];
     offlineMatches.forEach( (match1) => {
-      if (matches.find((m) => m.id === match1.id)) {
+      if (matches.find((m) => m.matchId === match1.matchId)) {
         return;
       }
 
       // zugehörige gegner match finden
-      const match2 = offlineMatches.find((m) => m.id === match1.matchIdGegner);
+      const match2 = offlineMatches.find((m) => m.matchId === match1.matchIdGegner);
 
       // Satzpunkte aus den passen errechnen
-      const satzSumM1 = this.getOfflineMatchSatzSumme(match1.id, passen);
-      const satzSumM2 = this.getOfflineMatchSatzSumme(match2.id, passen);
+      const satzSumM1 = this.getOfflineMatchSatzSumme(match1.matchId, passen);
+      const satzSumM2 = this.getOfflineMatchSatzSumme(match2.matchId, passen);
       if (satzSumM1[0] > 0) {
         match1.satzpunkte = 0;
       }
@@ -134,7 +152,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
           match1.satzpunkte += 2;
         } else if (satzSumM1[i] < satzSumM2[i]) {
           match2.satzpunkte += 2;
- } else if (satzSumM1[i] === satzSumM2[i] && satzSumM1[i] != 0) {
+ } else if (satzSumM1[i] === satzSumM2[i] && satzSumM1[i] !== 0) {
           match1.satzpunkte += 1;
           match2.satzpunkte += 1;
         }
@@ -576,9 +594,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       try {
       const offlineToken = await db.wettkampfTabelle.get(wettkampfID).then((item) => item.offlinetoken);
       let matchs: OfflineMatch[] = [];
-      matchs = await db.matchTabelle.where('version').above(1).toArray();
-      let passes: OfflinePasse[] = [];
-      passes = await db.passeTabelle.where('version').above(1).toArray();
+      matchs = await db.matchTabelle.where('offlineVersion').above(1).toArray();
       const mitglieder = await db.mannschaftsmitgliedTabelle.where('version').above(1).toArray();
 
       /* Backend braucht zulange/ timed out ka
@@ -591,15 +607,31 @@ export class WettkampfOfflineSyncService extends DataProviderService {
         if (allowedMitglieder.includes(mitglied.id)) {
           return mitglied;
         }
-      });*/
+      });
+      */
+      // Passen zum geänderten Match laden - alle geänderten Matches werden inkl. Passedaten übermittelt
+      const matchesDTO: MatchDTOExt[] = [];
+      for (const match1 of matchs) {
+          let passes: OfflinePasse[] = [];
+          passes = await db.passeTabelle.where('matchID').equals(match1.matchId).toArray();
+          const passesDTO: PasseDTO[] = toPasseDTOFromOfflineArray(passes);
+          matchesDTO.push(toDTOFromOfflineMatch(match1, passesDTO ));
+        }
+
+        // Übernehmen der neunen Mannschaftsmitglider und setzen der ID zu null - da im Backend neu anzulegen
+      let mannschaftsmitgliederDTO: MannschaftsmitgliedDTO[] = [];
+      mannschaftsmitgliederDTO = fromOfflineMannschaftsmitgliedToDTOArray(mitglieder);
+      mannschaftsmitgliederDTO.forEach( (mitglied) => {
+        mitglied.id = null;
+      });
 
       let payload: OfflinetokenSync;
+
       payload = {
         wettkampfId: wettkampfID,
         offlineToken,
-        match: matchs,
-        passe : passes,
-        mannschaftsmitglied: mitglieder,
+        matchesDTO,
+        mannschaftsmitgliederDTO,
       };
       // fill the payload
 
