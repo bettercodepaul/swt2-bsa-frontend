@@ -128,7 +128,7 @@ export class SchusszettelProviderService extends DataProviderService {
             strafpunkteSatz3: match1DTO.strafPunkteSatz3,
             strafpunkteSatz4: match1DTO.strafPunkteSatz4,
             strafpunkteSatz5: match1DTO.strafPunkteSatz5,
-            version:          match1DTO.version++,
+            offlineVersion:   2,
           });
           await db.matchTabelle.update(match2DTO.id, {
             matchpkt:         match2DTO.matchpunkte,
@@ -138,7 +138,7 @@ export class SchusszettelProviderService extends DataProviderService {
             strafpunkteSatz3: match2DTO.strafPunkteSatz3,
             strafpunkteSatz4: match2DTO.strafPunkteSatz4,
             strafpunkteSatz5: match2DTO.strafPunkteSatz5,
-            version:          match2DTO.version++,
+            offlineVersion:   2,
           });
 
           await this.offlineAddPassen(match1DTO);

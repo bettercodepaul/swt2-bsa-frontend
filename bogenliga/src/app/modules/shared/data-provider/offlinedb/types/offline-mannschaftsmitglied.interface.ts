@@ -1,7 +1,7 @@
 export interface OfflineMannschaftsmitglied {
 
   id?: number;
-  version?: number;
+  offlineVersion?: number;
   mannschaftId: number;
   dsbMitgliedId: number;
   dsbMitgliedEingesetzt: number;

@@ -9,12 +9,13 @@ import {
 import {
   OfflineMannschaft
 } from '@shared/data-provider/offlinedb/types/offline-mannschaft.interface';
+import {MatchDTOExt} from '@wkdurchfuehrung/types/datatransfer/match-dto-ext.class';
+import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
 
 export interface OfflinetokenSync {
   wettkampfId: number;
   offlineToken: string;
-  match: OfflineMatch[];
-  passe: OfflinePasse[];
-  mannschaftsmitglied: OfflineMannschaftsmitglied[];
+  matchesDTO: MatchDTOExt[];
+  mannschaftsmitgliederDTO: MannschaftsmitgliedDTO[];
 
 }

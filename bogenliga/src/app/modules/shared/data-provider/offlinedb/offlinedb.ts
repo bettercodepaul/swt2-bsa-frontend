@@ -47,16 +47,16 @@ export class OfflineDB extends Dexie {
       // Schema -> Every column name is the name of the attribute of the interface
       ligaTabelle: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
         'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
-      matchTabelle: ', offlineVersion, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
+      matchTabelle: ', offlineVersion, matchId, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
         'nameGegner, scheibennummerGegner, matchIdGegner, naechsteMatchId, naechsteNaechsteMatchNrMatchId,' +
         'strafpunkteSatz1, strafpunkteSatz2, strafpunkteSatz3, strafpunkteSatz4, strafpunkteSatz5',
-      passeTabelle: ', version, matchID, mannschaftID, wettkampfID, matchNr, lfdNr, dsbMitgliedID, ' +
+      passeTabelle: ', offlineVersion, passeId, version, matchID, mannschaftID, wettkampfID, matchNr, lfdNr, dsbMitgliedID, ' +
         'ringzahlPfeil1, ringzahlPfeil2, ringzahlPfeil3, ringzahlPfeil4, ringzahlPfeil5, ringzahlPfeil6, rueckennummer',
       // Use the same id for the wettkampfTabelle that is already in .id
       wettkampfTabelle: ', version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ' +
         'ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
       mannschaftTabelle: ', version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
-      mannschaftsmitgliedTabelle: ', version, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
+      mannschaftsmitgliedTabelle: ', offlineVersion, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
       dsbMitgliedTabelle: ', version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
       veranstaltungTabelle: ', offline_version, id, version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId',
       vereinTabelle: ', version, name, identifier, regionId, regionName, website, description, icon'

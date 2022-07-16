@@ -11,7 +11,9 @@ import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
 export function toDO(passeOfflineSyncDTO: PasseOfflineSyncDtoClass): OfflinePasse {
   // Creates a new instance of the OfflinePasse interface
   return {
-    id: passeOfflineSyncDTO.id,
+    id: passeOfflineSyncDTO.id, // dies ist die lokale "Offline ID" -nicht zum Backend übermitteln
+    offlineVersion: 1,
+    passeId: passeOfflineSyncDTO.id,
     version: passeOfflineSyncDTO.version,
     matchID:        passeOfflineSyncDTO.matchId,
     mannschaftId:   passeOfflineSyncDTO.mannschaftId,
@@ -47,6 +49,8 @@ export function offlinePasseFromDTOClassArray(payload: PasseDTOClass[]): Offline
 export function offlinePasseFromDTOClass(payload: PasseDTOClass): OfflinePasse {
   return {
     id:             payload.id,
+    offlineVersion: 1,
+    passeId:        payload.id,
     version:        payload.version,
     lfdNr:          payload.lfdNr,
     dsbMitgliedId:  payload.dsbMitgliedId,
@@ -58,7 +62,7 @@ export function offlinePasseFromDTOClass(payload: PasseDTOClass): OfflinePasse {
     ringzahlPfeil3: payload.ringzahl[2],
     ringzahlPfeil4: payload.ringzahl[3],
     ringzahlPfeil5: payload.ringzahl[4],
-    ringzahlPfeil6: 0,
+    ringzahlPfeil6: payload.ringzahl[5],
     rueckennummer:  payload.schuetzeNr,
     wettkampfId:    payload.wettkampfId
   };
@@ -76,7 +80,9 @@ export function toPasseDTOClassFromOffline(payload: OfflinePasse): PasseDTOClass
     mannschaftId:  payload.mannschaftId,
     matchId:       payload.matchID,
     matchNr:       payload.matchNr,
-    ringzahl:      [payload.ringzahlPfeil1, payload.ringzahlPfeil2, 0, 0, 0, 0],
+    ringzahl:      [payload.ringzahlPfeil1, payload.ringzahlPfeil2,
+                    payload.ringzahlPfeil3,  payload.ringzahlPfeil4,
+                     payload.ringzahlPfeil5,  payload.ringzahlPfeil6],
     schuetzeNr:    payload.rueckennummer,
     version:       payload.version,
     wettkampfId:   payload.wettkampfId
@@ -100,3 +106,25 @@ export function toPasseDTOFromDoClass(payload: PasseDoClass): PasseDTO {
     wettkampfId:    payload.wettkampfId
   };
 }
+
+export function toPasseDTOFromOfflineArray(payload: OfflinePasse[]): PasseDTO[] {
+    return payload.map((item) => toPasseDTOFromOffline(item));
+  }
+
+export function toPasseDTOFromOffline(payload: OfflinePasse): PasseDTO {
+    return {
+      id:            payload.passeId,
+      matchId:       payload.matchID,
+      mannschaftId:  payload.mannschaftId,
+      wettkampfId:   payload.wettkampfId,
+      matchNr:       payload.matchNr,
+      lfdNr:         payload.lfdNr,
+      dsbMitgliedId: payload.dsbMitgliedId,
+      ringzahl:      [payload.ringzahlPfeil1, payload.ringzahlPfeil2,
+        payload.ringzahlPfeil3,  payload.ringzahlPfeil4,
+        payload.ringzahlPfeil5,  payload.ringzahlPfeil6],
+      rueckennummer:    payload.rueckennummer,
+    };
+  }
+
+

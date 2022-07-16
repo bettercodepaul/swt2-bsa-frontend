@@ -159,7 +159,7 @@ export class MatchProviderService extends DataProviderService {
       return new Promise((resolve, reject) => {
         db.matchTabelle.get(matchId)
           .then((data: OfflineMatch) => {
-            resolve({result: RequestResult.SUCCESS, payload: [Math.min(data.id, data.matchIdGegner), Math.max(data.id, data.matchIdGegner)]});
+            resolve({result: RequestResult.SUCCESS, payload: [Math.min(data.matchId, data.matchIdGegner), Math.max(data.matchId, data.matchIdGegner)]});
           }, () => {
             reject({result: RequestResult.FAILURE});
           });
@@ -221,12 +221,12 @@ export class MatchProviderService extends DataProviderService {
         .catch((error) => console.error(error));
       let lastMatchId = null;
       await db.matchTabelle.where('naechsteMatchId').equals(currentPair[0]).first()
-        .then((data) => lastMatchId = data.id)
+        .then((data) => lastMatchId = data.matchId)
         .catch((error) => console.error(error));
 
       if (lastMatchId === null) {
         await db.matchTabelle.where('naechsteNaechsteMatchNrMatchId').equals(currentPair[0]).last()
-          .then((data) => lastMatchId = data.id)
+          .then((data) => lastMatchId = data.matchId)
           .catch((error) => console.error(error));
       }
       if (!lastMatchId) {
