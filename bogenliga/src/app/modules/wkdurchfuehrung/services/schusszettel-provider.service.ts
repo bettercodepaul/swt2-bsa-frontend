@@ -92,6 +92,7 @@ export class SchusszettelProviderService extends DataProviderService {
           id = id + 1;
         }
         db.passeTabelle.put({
+            offlineVersion: 2,
             id: passe.id ?? id,
             dsbMitgliedId:  passe.dsbMitgliedId,
             lfdNr:          passe.lfdNr,

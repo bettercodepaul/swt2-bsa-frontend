@@ -11,8 +11,8 @@ import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
 export function toDO(passeOfflineSyncDTO: PasseOfflineSyncDtoClass): OfflinePasse {
   // Creates a new instance of the OfflinePasse interface
   return {
-    id: passeOfflineSyncDTO.id, // dies ist die lokale "Offline ID" -nicht zum Backend übermitteln
     offlineVersion: 1,
+    id: passeOfflineSyncDTO.id, // dies ist die lokale "Offline ID" -nicht zum Backend übermitteln
     passeId: passeOfflineSyncDTO.id,
     version: passeOfflineSyncDTO.version,
     matchID:        passeOfflineSyncDTO.matchId,
@@ -48,8 +48,8 @@ export function offlinePasseFromDTOClassArray(payload: PasseDTOClass[]): Offline
 
 export function offlinePasseFromDTOClass(payload: PasseDTOClass): OfflinePasse {
   return {
-    id:             payload.id,
     offlineVersion: 1,
+    id:             payload.id,
     passeId:        payload.id,
     version:        payload.version,
     lfdNr:          payload.lfdNr,

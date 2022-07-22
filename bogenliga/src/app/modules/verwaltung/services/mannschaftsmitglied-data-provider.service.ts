@@ -51,7 +51,9 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
               });
               console.log(key);
             });
-          await db.mannschaftsmitgliedTabelle.put(fromDOToOfflineMannschaftsmitglied(payload, key), key);
+          const  neuesMannschaftsmitglied = fromDOToOfflineMannschaftsmitglied(payload, key);
+          neuesMannschaftsmitglied.offlineVersion = 2;
+          await db.mannschaftsmitgliedTabelle.put(neuesMannschaftsmitglied, key);
 
           return db.mannschaftsmitgliedTabelle.get(key);
         })
@@ -110,6 +112,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   // param teamId: mannschaftsmitglied_mannschaft_id
   // param memberId: mannschaftsmitglied_dsb_mitglied_id
   public deleteByMannschaftIdAndDsbMitgliedId(teamId: number, memberId: number): Promise<BogenligaResponse<void>> {
+// TODO: Offlineunterstützung ausbauen - Löschen nur Online!
     if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for deleteByMannschaftIdAndDsbMitgliedId');
       return new Promise((resolve, reject) => {
@@ -123,7 +126,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
                       }
                     });
                   });
-          db.mannschaftsmitgliedTabelle.delete(id);
+//          db.mannschaftsmitgliedTabelle.delete(id);
         })
           .then((deleted) => {
             console.log(deleted + ' Mitglieder gelöscht');
@@ -238,6 +241,7 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
       return new Promise((resolve, reject) => {
         let ID: number;
         if (typeof memberId === 'string') {
+          // tslint:disable-next-line:radix
           ID = parseInt(memberId);
         } else {
           ID = memberId;

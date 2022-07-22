@@ -595,7 +595,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       const offlineToken = await db.wettkampfTabelle.get(wettkampfID).then((item) => item.offlinetoken);
       let matchs: OfflineMatch[] = [];
       matchs = await db.matchTabelle.where('offlineVersion').above(1).toArray();
-      const mitglieder = await db.mannschaftsmitgliedTabelle.where('version').above(1).toArray();
+      const mitglieder = await db.mannschaftsmitgliedTabelle.where('offlineVersion').above(1).toArray();
 
       /* Backend braucht zulange/ timed out ka
       const allowedMitglieder = await this.restClient.GET<Array<number>>(new UriBuilder().fromPath(this.baseUrl).path(`v1/wettkampf/${wettkampfID}/allowedContestants`).build());
@@ -615,15 +615,17 @@ export class WettkampfOfflineSyncService extends DataProviderService {
           let passes: OfflinePasse[] = [];
           passes = await db.passeTabelle.where('matchID').equals(match1.matchId).toArray();
           const passesDTO: PasseDTO[] = toPasseDTOFromOfflineArray(passes);
+          // in der OfflineDB fehlen in den PAsse Einträge die Match-Nr.
+          // da sie im Backend vorausgesetzt werden, schreiben wir sie jetzt in die DTOs der Passe
+          for (const passe of passesDTO) {
+            passe.matchNr = match1.matchNr;
+          }
           matchesDTO.push(toDTOFromOfflineMatch(match1, passesDTO ));
         }
 
-        // Übernehmen der neunen Mannschaftsmitglider und setzen der ID zu null - da im Backend neu anzulegen
+      // Übernehmen der geänderten udn neuen Mannschaftsmitglider
       let mannschaftsmitgliederDTO: MannschaftsmitgliedDTO[] = [];
       mannschaftsmitgliederDTO = fromOfflineMannschaftsmitgliedToDTOArray(mitglieder);
-      mannschaftsmitgliederDTO.forEach( (mitglied) => {
-        mitglied.id = null;
-      });
 
       let payload: OfflinetokenSync;
 
