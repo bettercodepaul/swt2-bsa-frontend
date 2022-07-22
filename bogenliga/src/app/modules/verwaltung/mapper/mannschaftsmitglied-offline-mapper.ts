@@ -7,15 +7,17 @@ import {
   OfflineMannschaftsmitglied
 } from '@shared/data-provider/offlinedb/types/offline-mannschaftsmitglied.interface';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
-import {MannschaftsmitgliedDTO} from "@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class";
+import {MannschaftsmitgliedDTO} from '@verwaltung/types/datatransfer/mannschaftsmitglied-dto.class';
 
 export function toDO(offlineSyncDto: MannschaftsmitgliedOfflineSyncDto): OfflineMannschaftsmitglied {
   return {
+    key: null,
+    offlineVersion: 1,
     id: offlineSyncDto.id,
-    offlineVersion: offlineSyncDto.version,
+    version: offlineSyncDto.version,
     mannschaftId: offlineSyncDto.mannschaftId,
-    dsbMitgliedEingesetzt: offlineSyncDto.dsbMitgliedEingesetzt,
     dsbMitgliedId: offlineSyncDto.dsbMitgliedId,
+    dsbMitgliedEingesetzt: offlineSyncDto.dsbMitgliedEingesetzt,
     rueckennummer: offlineSyncDto.rueckennummer,
 
   };
@@ -34,12 +36,14 @@ export function fromOfflineMannschaftsmitgliedToDO(payload: OfflineMannschaftsmi
 
 export function fromDOToOfflineMannschaftsmitglied(payload: MannschaftsMitgliedDO, id: number): OfflineMannschaftsmitglied {
   return {
-    dsbMitgliedEingesetzt: payload.dsbMitgliedEingesetzt,
-    dsbMitgliedId: payload.dsbMitgliedId,
-    id, // id wird im Backend vergeben, deshalb ist darauf zu achten, dass bei neuen Offline Datensätze (offlineVersion =2) eine <null> als ID zurückgegeben wird.
-    mannschaftId: payload.mannschaftsId,
-    rueckennummer: payload.rueckennummer,
+    key: null,
     offlineVersion: 1,
+    id: payload.id,
+    version: payload.version,
+    mannschaftId: payload.mannschaftsId,
+    dsbMitgliedId: payload.dsbMitgliedId,
+    dsbMitgliedEingesetzt: payload.dsbMitgliedEingesetzt,
+    rueckennummer: payload.rueckennummer,
   };
 }
 
