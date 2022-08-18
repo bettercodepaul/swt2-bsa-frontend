@@ -264,6 +264,8 @@ export class SchusszettelComponent implements OnInit {
    * @param pfeilNr
    */
   onChange(value: string, matchNr: number, rueckennummer: number, satzNr: number, pfeilNr: number) {
+
+
     const match = this['match' + matchNr];
     const satz = match.schuetzen[rueckennummer][satzNr];
     let realValue = parseInt(value, 10); // value ist string, ringzahlen sollen number sein -> value in number umwandeln
@@ -388,13 +390,13 @@ export class SchusszettelComponent implements OnInit {
       const matchd = await this.matchProvider.getmatchoffline(this.match1.nr);
       const matchdaten = matchd.payload;
 
-      for ( let x = 0; x < matchdaten.length; x++ ) {
-        if (matchdaten[x].mannschaftId == this.match1.mannschaftId) {
-          alt_match1 = matchdaten[x];
-        } else if (matchdaten[x].mannschaftId == this.match2.mannschaftId) {
-          alt_match2 = matchdaten[x];
+      matchdaten.forEach((match) => {
+        if (match.mannschaftId === this.match1.mannschaftId) {
+          alt_match1 = match;
+        } else if (match.mannschaftId === this.match2.mannschaftId) {
+          alt_match2 = match;
         }
-      }
+      });
    }
 
 
