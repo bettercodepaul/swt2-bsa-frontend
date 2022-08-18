@@ -108,12 +108,13 @@ export function toPasseDTOFromDoClass(payload: PasseDoClass): PasseDTO {
 }
 
 export function toPasseDTOFromOfflineArray(payload: OfflinePasse[]): PasseDTO[] {
+
     return payload.map((item) => toPasseDTOFromOffline(item));
   }
 
 export function toPasseDTOFromOffline(payload: OfflinePasse): PasseDTO {
     return {
-      id:            payload.passeId,
+      id:            payload.id,
       matchId:       payload.matchID,
       mannschaftId:  payload.mannschaftId,
       wettkampfId:   payload.wettkampfId,
