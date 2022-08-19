@@ -114,7 +114,7 @@ export function toPasseDTOFromOfflineArray(payload: OfflinePasse[]): PasseDTO[] 
 
 export function toPasseDTOFromOffline(payload: OfflinePasse): PasseDTO {
     return {
-      id:            payload.id,
+      id:            payload.passeId,
       matchId:       payload.matchID,
       mannschaftId:  payload.mannschaftId,
       wettkampfId:   payload.wettkampfId,
