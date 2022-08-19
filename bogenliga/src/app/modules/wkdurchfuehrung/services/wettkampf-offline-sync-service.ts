@@ -614,6 +614,7 @@ export class WettkampfOfflineSyncService extends DataProviderService {
       for (const match1 of matchs) {
           let passes: OfflinePasse[] = [];
           passes = await db.passeTabelle.where('matchID').equals(match1.matchId).toArray();
+
           const passesDTO: PasseDTO[] = toPasseDTOFromOfflineArray(passes);
           // in der OfflineDB fehlen in den PAsse Einträge die Match-Nr.
           // da sie im Backend vorausgesetzt werden, schreiben wir sie jetzt in die DTOs der Passe
