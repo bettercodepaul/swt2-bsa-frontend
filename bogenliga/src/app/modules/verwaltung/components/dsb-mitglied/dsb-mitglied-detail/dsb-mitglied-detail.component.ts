@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
@@ -19,6 +19,7 @@ import {VereinDataProviderService} from '@verwaltung/services/verein-data-provid
 import {HttpClient} from '@angular/common/http';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {CurrentUserService, UserPermission} from '@shared/services';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
@@ -35,11 +36,12 @@ const NOTIFICATION_DUPLICATE_DSB_MITGLIED = 'dsb_mitglied_detail_duplicate';
 })
 export class DsbMitgliedDetailComponent extends CommonComponentDirective implements OnInit {
 
+  public isPopUp: boolean;
   public config = DSB_MITGLIED_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
   public currentVerein: VereinDO = new VereinDO();
- // public vereine: Array<VereinDO> = [new VereinDO()];
+  // public vereine: Array<VereinDO> = [new VereinDO()];
   public vereine: VereinDO[];
   // public currentVerein: VereinDO;
 
@@ -48,8 +50,8 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
   public vereineLoaded;
 
-  public  nationen: Array<string> = [];
-  public  nationenKuerzel: Array<string> = [];
+  public nationen: Array<string> = [];
+  public nationenKuerzel: Array<string> = [];
   public currentMitgliedNat: string;
   public deleteLoading = false;
   public saveLoading = false;
@@ -60,8 +62,10 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
               private vereinDataProvider: VereinDataProviderService,
               private httpService: HttpClient,
               private notificationService: NotificationService,
-              private currentUserService: CurrentUserService) {
+              private currentUserService: CurrentUserService,
+              @Inject(MAT_DIALOG_DATA) public data) {
     super();
+    this.isPopUp = data.isPopUp;
   }
 
   async ngOnInit() {
@@ -71,14 +75,14 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
     this.httpService.get('./assets/i18n/Nationalitaeten.json').subscribe(
       (data) => {
-      const json = JSON.parse(JSON.stringify(data));
-      json['NATIONEN'].forEach( (t) => {
-        this.nationen.push(t['name']);
-      });
+        const json = JSON.parse(JSON.stringify(data));
+        json['NATIONEN'].forEach((t) => {
+          this.nationen.push(t['name']);
+        });
 
-      json['NATIONEN'].forEach( (t) => {
-        this.nationenKuerzel.push(t['code']);
-       });
+        json['NATIONEN'].forEach((t) => {
+          this.nationenKuerzel.push(t['code']);
+        });
       }
     );
 
@@ -96,6 +100,16 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
         }
       }
     });
+
+    // Wenn das Fenster ein PopUp ist, wird von einem Hinzufügen ausgegangen
+    if (this.isPopUp) {
+      this.currentMitglied = new DsbMitgliedDO();
+      this.loading = false;
+      this.deleteLoading = false;
+      this.saveLoading = false;
+      this.currentMitgliedNat = 'Germany';
+    }
+
   }
 
   public onSave(ignore: any): void {
@@ -115,55 +129,58 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
     // persist
     this.dsbMitgliedDataProvider.create(this.currentMitglied)
-        .then((response: BogenligaResponse<DsbMitgliedDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
+      .then((response: BogenligaResponse<DsbMitgliedDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)
+          && !isNullOrUndefined(response.payload.id)) {
+          console.log('Saved with id: ' + response.payload.id);
 
-            const notification: Notification = {
-              id: NOTIFICATION_SAVE_DSB_MITGLIED,
-              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity: NotificationSeverity.INFO,
-              origin: NotificationOrigin.USER,
-              type: NotificationType.OK,
-              userAction: NotificationUserAction.ACCEPTED
-            };
+          const notification: Notification = {
+            id: NOTIFICATION_SAVE_DSB_MITGLIED,
+            title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
+            description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+            severity: NotificationSeverity.INFO,
+            origin: NotificationOrigin.USER,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.ACCEPTED
+          };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_DSB_MITGLIED)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/dsbmitglieder');
-                  }
-                });
+          this.notificationService.observeNotification(NOTIFICATION_SAVE_DSB_MITGLIED)
+            .subscribe((myNotification) => {
+              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                this.saveLoading = false;
+                if (!this.isPopUp) {
+                  this.router.navigateByUrl('/verwaltung/dsbmitglieder');
+                }
 
-            this.notificationService.showNotification(notification);
-          }
-        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
-          console.log('Failed');
-          if (response.result === RequestResult.DUPLICATE_DETECTED) {
-            const notification: Notification = {
-              id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
-              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
-              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
-              severity: NotificationSeverity.INFO,
-              origin: NotificationOrigin.USER,
-              type: NotificationType.OK,
-              userAction: NotificationUserAction.PENDING
-            };
+              }
+            });
 
-            this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_DSB_MITGLIED)
-                .subscribe((myNotification) => {
-                });
+          this.notificationService.showNotification(notification);
+        }
+      }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+        console.log('Failed');
+        if (response.result === RequestResult.DUPLICATE_DETECTED) {
+          const notification: Notification = {
+            id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
+            title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+            description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+            severity: NotificationSeverity.INFO,
+            origin: NotificationOrigin.USER,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.PENDING
+          };
 
-            this.notificationService.showNotification(notification);
-          }
-          this.saveLoading = false;
+          this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_DSB_MITGLIED)
+            .subscribe((myNotification) => {
+            });
+
+          this.notificationService.showNotification(notification);
+        }
+        this.saveLoading = false;
 
 
-        });
+      });
     // show response message
   }
 
@@ -181,56 +198,56 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
     // persist
     this.dsbMitgliedDataProvider.update(this.currentMitglied)
-        .then((response: BogenligaResponse<DsbMitgliedDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
+      .then((response: BogenligaResponse<DsbMitgliedDO>) => {
+        if (!isNullOrUndefined(response)
+          && !isNullOrUndefined(response.payload)
+          && !isNullOrUndefined(response.payload.id)) {
 
-            const id = this.currentMitglied.id;
+          const id = this.currentMitglied.id;
 
-            const notification: Notification = {
-              id: NOTIFICATION_UPDATE_DSB_MITGLIED + id,
-              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity: NotificationSeverity.INFO,
-              origin: NotificationOrigin.USER,
-              type: NotificationType.OK,
-              userAction: NotificationUserAction.ACCEPTED
-            };
+          const notification: Notification = {
+            id: NOTIFICATION_UPDATE_DSB_MITGLIED + id,
+            title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.TITLE',
+            description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+            severity: NotificationSeverity.INFO,
+            origin: NotificationOrigin.USER,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.ACCEPTED
+          };
 
-            this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSB_MITGLIED + id)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/dsbmitglieder');
-                  }
-                });
+          this.notificationService.observeNotification(NOTIFICATION_UPDATE_DSB_MITGLIED + id)
+            .subscribe((myNotification) => {
+              if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                this.saveLoading = false;
+                this.router.navigateByUrl('/verwaltung/dsbmitglieder');
+              }
+            });
 
-            this.notificationService.showNotification(notification);
-          }
-        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
-          console.log('Failed');
+          this.notificationService.showNotification(notification);
+        }
+      }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+        console.log('Failed');
+        this.saveLoading = false;
+        if (response.result === RequestResult.DUPLICATE_DETECTED) {
+          const notification: Notification = {
+            id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
+            title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
+            description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
+            severity: NotificationSeverity.INFO,
+            origin: NotificationOrigin.USER,
+            type: NotificationType.OK,
+            userAction: NotificationUserAction.PENDING
+          };
+
+          this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_DSB_MITGLIED)
+            .subscribe((myNotification) => {
+            });
+
+          this.notificationService.showNotification(notification);
           this.saveLoading = false;
-          if (response.result === RequestResult.DUPLICATE_DETECTED) {
-            const notification: Notification = {
-              id: NOTIFICATION_DUPLICATE_DSB_MITGLIED,
-              title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.TITLE',
-              description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DUPLICATE.DESCRIPTION',
-              severity: NotificationSeverity.INFO,
-              origin: NotificationOrigin.USER,
-              type: NotificationType.OK,
-              userAction: NotificationUserAction.PENDING
-            };
-
-            this.notificationService.observeNotification(NOTIFICATION_DUPLICATE_DSB_MITGLIED)
-                .subscribe((myNotification) => {
-                });
-
-            this.notificationService.showNotification(notification);
-            this.saveLoading = false;
-          }
-          this.saveLoading = false;
-        });
+        }
+        this.saveLoading = false;
+      });
     (document.getElementById('dsbMitgliedSaveButton') as HTMLInputElement).disabled = true;
     // show response message
   }
@@ -253,16 +270,16 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
-        .subscribe((myNotification) => {
+      .subscribe((myNotification) => {
 
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.dsbMitgliedDataProvider.deleteById(id)
-                .then((response) => this.handleDeleteSuccess(response))
-                .catch((response) => this.handleDeleteFailure(response));
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.deleteLoading = false;
-          }
-        });
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.dsbMitgliedDataProvider.deleteById(id)
+            .then((response) => this.handleDeleteSuccess(response))
+            .catch((response) => this.handleDeleteFailure(response));
+        } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+          this.deleteLoading = false;
+        }
+      });
 
     this.notificationService.showNotification(notification);
   }
@@ -273,8 +290,8 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
   private loadById(id: number) {
     this.dsbMitgliedDataProvider.findById(id)
-        .then((response: BogenligaResponse<DsbMitgliedDO>) => this.handleSuccess(response))
-        .catch((response: BogenligaResponse<DsbMitgliedDO>) => this.handleFailure(response));
+      .then((response: BogenligaResponse<DsbMitgliedDO>) => this.handleSuccess(response))
+      .catch((response: BogenligaResponse<DsbMitgliedDO>) => this.handleFailure(response));
   }
 
   private handleSuccess(response: BogenligaResponse<DsbMitgliedDO>) {
@@ -312,12 +329,12 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_SUCCESS)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/dsbmitglieder');
-            this.deleteLoading = false;
-          }
-        });
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.router.navigateByUrl('/verwaltung/dsbmitglieder');
+          this.deleteLoading = false;
+        }
+      });
 
     this.notificationService.showNotification(notification);
   }
@@ -335,24 +352,29 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
     };
 
     this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED_FAILURE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
-          }
-        });
+      .subscribe((myNotification) => {
+        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+          this.deleteLoading = false;
+        }
+      });
 
     this.notificationService.showNotification(notification);
   }
+
   private loadVereine(): Promise<void> {
     this.vereine = [];
     return this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDTO[]>) => {
-          if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER)) {
-            response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.id);
-          }
-          // this.currentVerein = response.payload[0];
-          this.vereine = response.payload;
-          this.loadingVereine = false; this.vereineLoaded = true; })
-        .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
+      .then((response: BogenligaResponse<VereinDTO[]>) => {
+        if (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER)) {
+          response.payload = response.payload.filter((entry) => this.currentUserService.getVerein() === entry.id);
+        }
+        // this.currentVerein = response.payload[0];
+        this.vereine = response.payload;
+        this.loadingVereine = false;
+        this.vereineLoaded = true;
+      })
+      .catch((response: BogenligaResponse<VereinDTO[]>) => {
+        this.vereine = response.payload;
+      });
   }
 }

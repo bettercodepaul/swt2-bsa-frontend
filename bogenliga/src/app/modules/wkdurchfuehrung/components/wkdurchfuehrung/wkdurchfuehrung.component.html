@@ -1,181 +1,195 @@
 <bla-common-dialog [config]="config">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung" target="_blank"></bla-hilfe-button>
-<div class="layout-elements">
+  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung"
+                    target="_blank"></bla-hilfe-button>
+  <div class="layout-elements">
 
 
+    <bla-col-layout>
 
-  <bla-col-layout>
+      <div class="flexChild">
+        <h3><a class="blackLink"
+               routerLink="/wkdurchfuehrung">{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}</a></h3>
 
-  <div class="flexChild">
-      <h3><a class="blackLink"
-             routerLink="/wkdurchfuehrung">{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}</a></h3>
+        <div id="dropDownMenuYear" style="width: 80%; margin-bottom: 2%;">
+          <bla-dropdown-menu (onSelect)="onSelectYear($event)"
+                             [id]="'Veranstaltungen-dropdown-menu'"
+                             [items]="availableYears"
+                             [optionFieldSelector]="'sportjahr'"
+                             [loading]="loadingYears"
+                             [selectedItemId]='selItemId'
+                             [disabled]="isOfflineDisabled()"
+                             data-cy="wkduchfuehrung-jahr-dropdown"
+                             style="width: 40%;">
+          </bla-dropdown-menu>
 
-      <div id = "dropDownMenuYear"style="width: 80%; margin-bottom: 2%;">
-        <bla-dropdown-menu (onSelect)="onSelectYear($event)"
-                           [id]="'Veranstaltungen-dropdown-menu'"
-                           [items]="availableYears"
-                           [optionFieldSelector]="'sportjahr'"
-                           [loading]="loadingYears"
-                           [selectedItemId]='selItemId'
-                           [disabled]="isOfflineDisabled()"
-                           data-cy="wkduchfuehrung-jahr-dropdown"
-                           style="width: 40%;">
-        </bla-dropdown-menu>
+        </div>
+
+        <table id="example"
+               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+               style="width:80%">
+          <!-- headlines -->
+
+
+          <bla-quicksearch-list (onSelect)="onSelect($event)"
+                                [items]="veranstaltungen"
+                                [loading]="loadingVeranstaltungen"
+                                [multipleSelections]="!multipleSelections"
+                                [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                                [optionFieldSelector]="'name'"
+                                [disabled]="isOfflineDisabled()"
+                                selectionListHeight="15em"
+                                data-cy="wkduchfuehrung-veranstaltung-list"
+                                style="width: 40%; flex-grow: 0;">
+          </bla-quicksearch-list>
+
+        </table>
 
       </div>
 
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:80%">
-        <!-- headlines -->
+
+      <div>
+        <h3>
+          {{ 'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}
+        </h3>
+
+        <div class="row">
+          <section class="overview-dialog-content">
+
+            <bla-data-table [config]="config_table"
+                            [rows]="rows"
+                            [loading]="loadingWettkampfe"
+                            data-cy="wkdurchfuehrung-wettkampftage-list"
+                            (onViewEntry)="onView($event)"
+                            (onMapEntry)="onMap($event)">
+
+            </bla-data-table>
+          </section>
 
 
+          <!-- Dies ist die Liste der Wettkampftage zur Veranstaltung  -->
 
-
-        <bla-quicksearch-list (onSelect)="onSelect($event)"
-                              [items]="veranstaltungen"
-                              [loading]="loadingVeranstaltungen"
-                              [multipleSelections]="!multipleSelections"
-                              [placeholderTranslationKey]="PLACEHOLDER_VAR"
-                              [optionFieldSelector]="'name'"
-                              [disabled]="isOfflineDisabled()"
-                              selectionListHeight="15em"
-                              data-cy="wkduchfuehrung-veranstaltung-list"
-                              style="width: 40%; flex-grow: 0;">
-        </bla-quicksearch-list>
-
-      </table>
-
-    </div>
-
-
-    <div>
-    <h3>
-      {{ 'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}
-    </h3>
-
-    <div class="row">
-      <section class="overview-dialog-content">
-
-        <bla-data-table [config]="config_table"
-                        [rows]="rows"
-                        [loading]="loadingWettkampfe"
-                        data-cy="wkdurchfuehrung-wettkampftage-list"
-                        (onViewEntry)="onView($event)"
-                        (onMapEntry)="onMap($event)" >
-
-        </bla-data-table>
-      </section>
-
-
-    <!-- Dies ist die Liste der Wettkampftage zur Veranstaltung  -->
-
-     </div>
-    </div>
-  </bla-col-layout>
-
-  <bla-col-layout>
-    <h3 id="WettkampfTitle"></h3>
-  </bla-col-layout>
-
-  <bla-col-layout>
-    <div>
-      <BR><h3>{{'MANNSCHAFTEN.LIGATABELLE.LIGATABELLE_VORBEREITUNG'|translate}}</h3>
-        <p>{{'MANNSCHAFTEN.LIGATABELLE.TEXT'|translate}}</p></div>
-  </bla-col-layout>
-
-  <bla-col-layout>
-
-    <div>
-      <bla-button
-        [id]="'generiereMatches'"
-        [disabled]="isDisabledGMButton()"
-        (onClick)="generateMatches()">
-        {{ 'WKDURCHFUEHRUNG.BUTTON.MATCHES' | translate }}
-      </bla-button>
-    </div>
-    <div>
-          <bla-download-button
-            [id]="'downloadSetzliste'"
-            [downloadUrl]="onButtonDownload('pdf/setzliste')"
-            [fileName]="'setzliste.pdf'"
-            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
-
-          </bla-download-button>
         </div>
+      </div>
+    </bla-col-layout>
 
-        <div>
-         <bla-download-button
+    <bla-col-layout>
+      <h3 id="WettkampfTitle"></h3>
+    </bla-col-layout>
+
+    <bla-col-layout>
+      <div>
+        <BR>
+        <h3>{{'MANNSCHAFTEN.LIGATABELLE.LIGATABELLE_VORBEREITUNG'|translate}}</h3>
+        <p>{{'MANNSCHAFTEN.LIGATABELLE.TEXT'|translate}}</p></div>
+    </bla-col-layout>
+
+    <bla-col-layout>
+
+      <div>
+        <bla-button
+          [id]="'generiereMatches'"
+          [disabled]="isDisabledGMButton()"
+          (onClick)="generateMatches()">
+          {{ 'WKDURCHFUEHRUNG.BUTTON.MATCHES' | translate }}
+        </bla-button>
+      </div>
+
+
+      <div>
+        <bla-download-button
+          [id]="'downloadSetzliste'"
+          [downloadUrl]="onButtonDownload('pdf/setzliste')"
+          [fileName]="'setzliste.pdf'"
+          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
+
+        </bla-download-button>
+      </div>
+
+      <div>
+        <bla-download-button
           [id]="'downloadSchusszettel'"
           [downloadUrl]="onButtonDownload('pdf/schusszettel')"
           [fileName]="'schusszettel.pdf'"
           [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
 
         </bla-download-button>
-        </div>
-
-        <div>
-          <bla-download-button
-            [id]="'downloadBogenkontrollliste'"
-            [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
-            [fileName]="'bogenkontrollliste.pdf'"
-            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
-
-          </bla-download-button>
-        </div>
-
-        <div>
-          <bla-download-button
-            [id]="'downloadMeldezettel'"
-            [downloadUrl]="onButtonDownload('pdf/meldezettel')"
-            [fileName]="'meldezettel.pdf'"
-            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
-
-          </bla-download-button>
-        </div>
-
-        <div id="setupTable" *ngIf="(!isOffline()); else onlineSetupTables">
-          <bla-button   (click)="onButtonTabletClick()"
-                        [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-            ></bla-button>
-        </div>
-
-    <ng-template #onlineSetupTables id="onlineSetupTables">
-      <div>
-        <bla-button   (click)="onButtonTabletClick()"
-                      [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-          ></bla-button>
       </div>
-    </ng-template>
 
+      <div>
+        <bla-download-button
+          [id]="'downloadBogenkontrollliste'"
+          [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
+          [fileName]="'bogenkontrollliste.pdf'"
+          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
 
+        </bla-download-button>
+      </div>
 
+      <div>
+        <bla-download-button
+          [id]="'downloadMeldezettel'"
+          [downloadUrl]="onButtonDownload('pdf/meldezettel')"
+          [fileName]="'meldezettel.pdf'"
+          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
 
-        <div id="offlineButton" *ngIf="(!isOffline()); else backOnline ">
-          <button class="btn btn-danger" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()" data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen</button>
+        </bla-download-button>
+      </div>
+
+      <div id="setupTable" *ngIf="(!isOffline()); else onlineSetupTables">
+        <bla-button (click)="onButtonTabletClick()"
+                    [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+          >
+        </bla-button>
+      </div>
+
+      <div>
+        <bla-button
+          [id]="'DSB-Mitglied anlegen'"
+          (onClick)="addDSBMitglied()">
+          DSB-Mitglied anlegen
+        </bla-button>
+      </div>
+
+      <ng-template #onlineSetupTables id="onlineSetupTables">
+        <div>
+          <bla-button (click)="onButtonTabletClick()"
+                      [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+            >
+          </bla-button>
         </div>
+      </ng-template>
 
-        <ng-template #backOnline id="onlineButton">
-          <div>
-          <button class="btn btn-success"(click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Online gehen</button>
-          </div>
-        </ng-template>
+
+      <div id="offlineButton" *ngIf="(!isOffline()); else backOnline ">
+        <button class="btn btn-danger" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()"
+                data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
+        </button>
+      </div>
+
+      <ng-template #backOnline id="onlineButton">
+        <div>
+          <button class="btn btn-success" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Online gehen
+          </button>
+        </div>
+      </ng-template>
 
       <div id="adminOfflineResetButton" *ngIf="(isAdmin())">
-        <button class="btn btn-danger" (click)="resetWettkampfToken(this.selectedWettkampfId)" [disabled]="isDisabled()">Offlinetoken löschen</button>
+        <button class="btn btn-danger" (click)="resetWettkampfToken(this.selectedWettkampfId)"
+                [disabled]="isDisabled()">Offlinetoken löschen
+        </button>
       </div>
 
-  </bla-col-layout>
+    </bla-col-layout>
 
 
-  <bla-col-layout>
-    <BR>
-    <h3><BR>{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }} <BR>&nbsp;</h3>
-    <BR>
+    <bla-col-layout>
+      <BR>
+      <h3><BR>{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }} <BR>&nbsp;</h3>
+      <BR>
 
-  </bla-col-layout>
+    </bla-col-layout>
 
-  <bla-col-layout>
+    <bla-col-layout>
 
 
       <div class="row">
@@ -192,14 +206,11 @@
 
       </div>
 
-  </bla-col-layout>
+    </bla-col-layout>
 
 
+    <router-outlet></router-outlet>
 
-
-
-  <router-outlet></router-outlet>
-
-</div>
+  </div>
 
 </bla-common-dialog>

@@ -23,6 +23,11 @@ import {ErrorInterceptor, JwtInterceptor, SharedModule} from './modules/shared';
 import {APP_REDUCERS} from '@shared/redux-store';
 import {VerwaltungModule} from '@verwaltung/verwaltung.module';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import {MatDialogModule} from '@angular/material/dialog';
+
+
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -41,7 +46,9 @@ export function createTranslateLoader(http: HttpClient) {
   imports:      [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     FormsModule,
+    MatDialogModule,
     TranslateModule.forRoot({
       loader: {
         provide:    TranslateLoader,
