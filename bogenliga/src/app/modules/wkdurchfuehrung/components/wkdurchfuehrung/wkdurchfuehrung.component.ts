@@ -37,6 +37,7 @@ import {WettkampfOfflineSyncService} from '@wkdurchfuehrung/services/wettkampf-o
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 
 import {MatDialog} from '@angular/material/dialog';
+import {DsbMitgliedDetailPopUpComponent} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 
 
 @Component({
@@ -760,11 +761,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   addDSBMitglied(): void {
 
-    const dialogRef = this.dialog.open(DsbMitgliedDetailComponent, {
-        data: {
-          isPopUp: true
-        }
-      }
+    const dialogRef = this.dialog.open(DsbMitgliedDetailPopUpComponent
     );
 
   }

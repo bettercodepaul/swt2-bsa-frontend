@@ -19,7 +19,6 @@ import {VereinDataProviderService} from '@verwaltung/services/verein-data-provid
 import {HttpClient} from '@angular/common/http';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {CurrentUserService, UserPermission} from '@shared/services';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
@@ -36,7 +35,10 @@ const NOTIFICATION_DUPLICATE_DSB_MITGLIED = 'dsb_mitglied_detail_duplicate';
 })
 export class DsbMitgliedDetailComponent extends CommonComponentDirective implements OnInit {
 
-  public isPopUp: boolean;
+
+  @Input() isPopUp: boolean;
+  @Input() dialogRef;
+
   public config = DSB_MITGLIED_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
@@ -63,9 +65,8 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
               private httpService: HttpClient,
               private notificationService: NotificationService,
               private currentUserService: CurrentUserService,
-              @Inject(MAT_DIALOG_DATA) public data) {
+              ) {
     super();
-    this.isPopUp = data.isPopUp;
   }
 
   async ngOnInit() {
@@ -149,9 +150,10 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
             .subscribe((myNotification) => {
               if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                 this.saveLoading = false;
+                // Rerouting wird nur ausgeführt falls die Componente nicht als Popup geladen wird
                 if (!this.isPopUp) {
                   this.router.navigateByUrl('/verwaltung/dsbmitglieder');
-                }
+                } else {this.dialogRef.close(); }
 
               }
             });
