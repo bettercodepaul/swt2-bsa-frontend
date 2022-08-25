@@ -26,6 +26,7 @@ import {
   TableteingabeGuard,
   TabletadminGuard
 } from '../wkdurchfuehrung/guards';
+import { TeilnemendeManschaftenTabelleComponent } from './components/teilnemende-manschaften-tabelle/teilnemende-manschaften-tabelle.component';
 
 @NgModule({
   imports:      [
@@ -43,7 +44,8 @@ import {
     RingzahlTabIndexDirective,
     SchuetzenTabIndexDirective,
     TabletEingabeComponent,
-    TabletAdminComponent
+    TabletAdminComponent,
+    TeilnemendeManschaftenTabelleComponent
   ],
   providers:    [
     WkdurchfuehrungGuard,
