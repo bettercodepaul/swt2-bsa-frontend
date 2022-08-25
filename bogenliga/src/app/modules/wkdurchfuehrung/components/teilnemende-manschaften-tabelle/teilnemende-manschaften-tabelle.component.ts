@@ -7,9 +7,13 @@ import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannsch
 import {toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
+import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 
 
-@Component({
+@Component
+({
   selector: 'bla-teilnemende-manschaften-tabelle',
   templateUrl: './teilnemende-manschaften-tabelle.component.html',
   styleUrls: ['./teilnemende-manschaften-tabelle.component.scss']
@@ -21,7 +25,7 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
   public config_table = VEREIN_DETAIL_TABLE_CONFIG;
   public rows: TableRow[];
 
-  constructor(private mannschaftsdataprovider: DsbMannschaftDataProviderService) {
+  constructor(private mannschaftsdataprovider: DsbMannschaftDataProviderService, private veranstaltungsProvider: VeranstaltungDataProviderService) {
   }
 
   ngOnInit(): void {
@@ -33,6 +37,8 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
 
     if (this.veranstaltungsId) {
       this.mannschaftsdataprovider.findAllByVeranstaltungsId(this.veranstaltungsId).then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
+
+        response = this.addTableAttributes(response);
         this.rows = [];
         this.rows = toTableRows(response.payload);
       });
@@ -40,6 +46,17 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
     } else {
       this.rows = [];
     }
+  }
+
+  private addTableAttributes(mannschaften: BogenligaResponse<DsbMannschaftDTO[]>) {
+
+    let name: string;
+    mannschaften.payload.forEach((mannschaft) => {
+      name = mannschaft.name.substring(0, mannschaft.name.length - 1);
+      mannschaft.name = name + ' ' + mannschaft.nummer + '.Mannschaft';
+    });
+    return mannschaften;
+
   }
 
 }
