@@ -57,10 +57,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public pdf = new Blob();
 
 
-  private selectedVeranstaltungId: number;
+  public selectedVeranstaltungId: number;
   public selectedDTOs: VeranstaltungDO[];
   private selectedWettkampf: string;
-  public selectedWettkampfId: number;
+  private selectedWettkampfId: number;
 
   private selectedMatchId: number;
   private navurl: string;
