@@ -36,7 +36,8 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
 
     console.log('VeranstaltungsID------------:' + this.veranstaltungsId);
 
-    if (this.veranstaltungsId) {
+    if (this.veranstaltungsId || this.veranstaltungsId === 0) {
+
       this.loading = true;
       this.mannschaftsdataprovider.findAllByVeranstaltungsId(this.veranstaltungsId).then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
         response = this.addTableAttributes(response);

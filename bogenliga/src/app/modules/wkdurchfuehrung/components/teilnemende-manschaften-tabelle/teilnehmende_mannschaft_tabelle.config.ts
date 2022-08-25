@@ -19,7 +19,7 @@ export const TEILNEHMENDE_MANNSCHAFT_CONFIG: TableConfig = {
     },
   ],
   actions: {
-    actionTypes: [TableActionType.DELETE],
+    actionTypes: [TableActionType.DELETE, TableActionType.EDIT,],
     width:       6
   },
   deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
