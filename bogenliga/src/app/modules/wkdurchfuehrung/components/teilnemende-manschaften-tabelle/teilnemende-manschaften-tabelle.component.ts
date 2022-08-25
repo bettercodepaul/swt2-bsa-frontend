@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {VEREIN_DETAIL_TABLE_CONFIG} from '@verwaltung/components/verein/verein-detail/verein-detail.config';
+import {TEILNEHMENDE_MANNSCHAFT_CONFIG} from '@wkdurchfuehrung/components/teilnemende-manschaften-tabelle/teilnehmende_mannschaft_tabelle.config';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
@@ -22,8 +22,9 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
 
   @Input() veranstaltungsId: number;
 
-  public config_table = VEREIN_DETAIL_TABLE_CONFIG;
+  public config_table = TEILNEHMENDE_MANNSCHAFT_CONFIG;
   public rows: TableRow[];
+  public loading = false;
 
   constructor(private mannschaftsdataprovider: DsbMannschaftDataProviderService, private veranstaltungsProvider: VeranstaltungDataProviderService) {
   }
@@ -36,11 +37,17 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
     console.log('VeranstaltungsID------------:' + this.veranstaltungsId);
 
     if (this.veranstaltungsId) {
+      this.loading = true;
       this.mannschaftsdataprovider.findAllByVeranstaltungsId(this.veranstaltungsId).then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
-
         response = this.addTableAttributes(response);
         this.rows = [];
         this.rows = toTableRows(response.payload);
+        this.loading = false;
+      }).catch(() => {
+        // TODO Error handling mit angemessener User-benachrichtigung
+        console.log('Error Loading Mannschaften');
+        this.loading = false;
+
       });
 
     } else {
@@ -49,7 +56,6 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
   }
 
   private addTableAttributes(mannschaften: BogenligaResponse<DsbMannschaftDTO[]>) {
-
     let name: string;
     mannschaften.payload.forEach((mannschaft) => {
       name = mannschaft.name.substring(0, mannschaft.name.length - 1);
