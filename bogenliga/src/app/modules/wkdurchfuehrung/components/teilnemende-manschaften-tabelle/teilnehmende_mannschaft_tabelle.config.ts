@@ -11,18 +11,7 @@ export const TEILNEHMENDE_MANNSCHAFT_CONFIG: TableConfig = {
       translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.MANNSCHAFTSNAME',
       propertyName:   'name',
       width:          20,
-    },
-    {
-      translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.LIGA',
-      propertyName:   'veranstaltungName',
-      width:          20,
-    },
-  ],
-  actions: {
-    actionTypes: [TableActionType.DELETE, TableActionType.EDIT,],
-    width:       6
-  },
-  deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
-  editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN]
+    }
+  ]
 
 };

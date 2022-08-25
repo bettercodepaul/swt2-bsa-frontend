@@ -34,7 +34,6 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
 
   ngOnChanges(changes: SimpleChanges) {
 
-    console.log('VeranstaltungsID------------:' + this.veranstaltungsId);
 
     if (this.veranstaltungsId || this.veranstaltungsId === 0) {
 
@@ -61,7 +60,9 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
     mannschaften.payload.forEach((mannschaft) => {
       name = mannschaft.name.substring(0, mannschaft.name.length - 1);
       mannschaft.name = name + ' ' + mannschaft.nummer + '.Mannschaft';
+
     });
+
     return mannschaften;
 
   }
