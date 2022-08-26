@@ -12,6 +12,12 @@ export const TEILNEHMENDE_MANNSCHAFT_CONFIG: TableConfig = {
       propertyName:   'name',
       width:          20,
     }
-  ]
+  ],
+  actions: {
+    actionTypes: [TableActionType.ADD],
+    width:       6
+  },
+  deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
+  editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN]
 
 };
