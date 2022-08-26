@@ -439,7 +439,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
-                .then((response) => {
+                .then(() => {
                   // const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
                   // console.log("MemberIdTest",test);
                   // const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
@@ -464,7 +464,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
                       .catch((mannschaftMitgliedResponse: void) => console.log('this is catch thingy, are there mannschaftsMitglieder?'));
                   this.loadTableRows();
                 })
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
+                .catch(() => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
 
 
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {

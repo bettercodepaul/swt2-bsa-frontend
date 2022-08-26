@@ -55,6 +55,8 @@ import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail
 import {SchuetzenComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
 import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
 import { DsbMitgliedDetailPopUpComponent } from './components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
+import {SchuetzenPopUpComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen-pop-up/schuetzen-pop-up.component';
+
 
 @NgModule({
   imports:      [
@@ -85,7 +87,8 @@ import { DsbMitgliedDetailPopUpComponent } from './components/dsb-mitglied/dsb-m
     WettkampftageComponent,
     EinstellungenDetailComponent,
     EinstellungenOverviewComponent,
-    DsbMitgliedDetailPopUpComponent
+    DsbMitgliedDetailPopUpComponent,
+    SchuetzenPopUpComponent
   ]
 })
 export class VerwaltungModule {

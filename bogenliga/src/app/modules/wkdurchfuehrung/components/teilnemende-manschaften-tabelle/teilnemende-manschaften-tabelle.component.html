@@ -3,9 +3,9 @@
   <bla-data-table [config]="config_table"
                   [rows]="rows"
                   [loading]="loading"
+                  (onAddEntry)= "onAdd($event)"
   >
   </bla-data-table>
-  <bla-button> +Mannschaft hinzufügen</bla-button>
 </div>
 
 
