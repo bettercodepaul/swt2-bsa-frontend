@@ -112,31 +112,11 @@ export class MannschaftsmitgliedDataProviderService extends DataProviderService 
   // param teamId: mannschaftsmitglied_mannschaft_id
   // param memberId: mannschaftsmitglied_dsb_mitglied_id
   public deleteByMannschaftIdAndDsbMitgliedId(teamId: number, memberId: number): Promise<BogenligaResponse<void>> {
-// TODO: Offlineunterstützung ausbauen - Löschen nur Online!
     if (this.onOfflineService.isOffline()) {
-      console.log('Choosing offline way for deleteByMannschaftIdAndDsbMitgliedId');
-      return new Promise((resolve, reject) => {
-        db.transaction('rw', db.mannschaftsmitgliedTabelle, async (tx) => {
-          let id: number;
-          await db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(teamId).toArray()
-                  .then((mitglieder) => {
-                    mitglieder.forEach((mitglied) => {
-                      if (mitglied.dsbMitgliedId === memberId) {
-                        id = mitglied.id;
-                      }
-                    });
-                  });
-//          db.mannschaftsmitgliedTabelle.delete(id);
-        })
-          .then((deleted) => {
-            console.log(deleted + ' Mitglieder gelöscht');
-            resolve({result: RequestResult.SUCCESS});
-          })
-          .catch((err) => {
-            console.log(err);
-            reject(err);
-          });
-      });
+      console.log('delete by MannschaftId and DsbMitgliedId not possible in offline-mode');
+      return new Promise((reject) => {
+        reject({result: RequestResult.FAILURE})
+      })
     } else {
       // return promise
       // sign in success -> resolve promise
