@@ -99,7 +99,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
     });
   }
 
-// Updaten der Mannschaftswerte
+// Updaten der Mannschaftswerte in der Ligatabelle
   public async updateMannschaftLT(id: number, satzpunkte: number, satzpunkteGegner: number, spd: number, matchpunkte: number, matchpunkteGegner: number) {
     db.ligaTabelle.update(id, {'satzpkt': satzpunkte, 'satzpktGegen': satzpunkteGegner, 'satzpktDifferenz': spd, 'matchpkt': matchpunkte, 'matchpktGegen': matchpunkteGegner});
 
@@ -161,62 +161,67 @@ export class LigatabelleDataProviderService extends DataProviderService {
     const LT_match1 = Daten.payload;
     Daten = await this.getLigatabelledaten('mannschaftId', match2.mannschaftId);
     const LT_match2 = Daten.payload;
-    // TODO: sprechende Namen und Text zur Erläuterung
-    let id;
-    let sp;
-    let spg;
-    let spd;
-    let mp;
-    let mpg;
+
+    let mannschaftsid;
+    let satzpunkte;
+    let satzpunktegegner;
+    let satzpunktedifferenz;
+    let matchpunkte;
+    let matchpunktegegner;
 
 
-    // Manschafteins berechnungen
+    // Berechnung der Satzpunkte, Matchpunkte und Satzpunktedifferenz fuer Mannschaft 1
 
-    id = LT_match1[0].id;
+    mannschaftsid = LT_match1[0].id;
 
+    // Berechnung im Online-Modus -> alt_matches sind null.
     if (alt_match1 == null || alt_match2 == null) {
-      sp = LT_match1[0].satzpkt + match1.satzpunkte;
-      spg = LT_match1[0].satzpktGegen + match2.satzpunkte;
-      spd = sp - spg;
+      satzpunkte = LT_match1[0].satzpkt + match1.satzpunkte;
+      satzpunktegegner = LT_match1[0].satzpktGegen + match2.satzpunkte;
+      satzpunktedifferenz = satzpunkte - satzpunktegegner;
 
-      mp = LT_match1[0].matchpkt + match1.matchpunkte;
-      mpg = LT_match1[0].matchpktGegen + match2.matchpunkte;
+      matchpunkte = LT_match1[0].matchpkt + match1.matchpunkte;
+      matchpunktegegner = LT_match1[0].matchpktGegen + match2.matchpunkte;
 
+    // Berechnung durch Offline-Modus -> alt_matches not null
     } else {
-      sp = LT_match1[0].satzpkt - alt_match1.satzpunkte + match1.satzpunkte;
-      spg = LT_match1[0].satzpktGegen - alt_match2.satzpunkte + match2.satzpunkte;
-      spd = sp - spg;
+      satzpunkte = LT_match1[0].satzpkt - alt_match1.satzpunkte + match1.satzpunkte;
+      satzpunktegegner = LT_match1[0].satzpktGegen - alt_match2.satzpunkte + match2.satzpunkte;
+      satzpunktedifferenz = satzpunkte - satzpunktegegner;
 
-      mp = LT_match1[0].matchpkt - alt_match1.matchpunkte + match1.matchpunkte;
-      mpg = LT_match1[0].matchpktGegen - alt_match2.matchpunkte + match2.matchpunkte;
+      matchpunkte = LT_match1[0].matchpkt - alt_match1.matchpunkte + match1.matchpunkte;
+      matchpunktegegner = LT_match1[0].matchpktGegen - alt_match2.matchpunkte + match2.matchpunkte;
 
     }
-    // console.log("SP:",satzpunkte,"MP:",matchpunkte,sp,spg, spd,match1.mannschaftName.toString());
+    // console.log("SP:",satzpunkte,"MP:",matchpunkte,satzpunkte,satzpunktegegner, satzpunktedifferenz,match1.mannschaftName.toString());
     // Daten Updaten
-    await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+    await this.updateMannschaftLT(mannschaftsid, satzpunkte, satzpunktegegner, satzpunktedifferenz, matchpunkte, matchpunktegegner);
 
-    // Mannschaftzwei berechnungen
+    // Berechnung der Satzpunkte, Matchpunkte und Satzpunktedifferenz fuer Mannschaft 2
 
-    id = LT_match2[0].id;
+    mannschaftsid = LT_match2[0].id;
 
+    // Berechnung im Online-Modus -> alt_matches sind null
     if (alt_match1 == null || alt_match2 == null) {
-      sp = LT_match2[0].satzpkt + match2.satzpunkte;
-      spg = LT_match2[0].satzpktGegen + match1.satzpunkte;
-      spd = sp - spg;
+      satzpunkte = LT_match2[0].satzpkt + match2.satzpunkte;
+      satzpunktegegner = LT_match2[0].satzpktGegen + match1.satzpunkte;
+      satzpunktedifferenz = satzpunkte - satzpunktegegner;
 
-      mp = LT_match2[0].matchpkt + match2.matchpunkte;
-      mpg = LT_match2[0].matchpktGegen + match1.matchpunkte;
+      matchpunkte = LT_match2[0].matchpkt + match2.matchpunkte;
+      matchpunktegegner = LT_match2[0].matchpktGegen + match1.matchpunkte;
+
+    // Berechnung durch Offline-Modus -> alt_matches sind null
     } else {
-      sp = LT_match2[0].satzpkt - alt_match2.satzpunkte + match2.satzpunkte;
-      spg = LT_match2[0].satzpktGegen - alt_match1.satzpunkte + match1.satzpunkte;
-      spd = sp - spg;
+      satzpunkte = LT_match2[0].satzpkt - alt_match2.satzpunkte + match2.satzpunkte;
+      satzpunktegegner = LT_match2[0].satzpktGegen - alt_match1.satzpunkte + match1.satzpunkte;
+      satzpunktedifferenz = satzpunkte - satzpunktegegner;
 
-      mp = LT_match2[0].matchpkt - alt_match2.matchpunkte + match2.matchpunkte;
-      mpg = LT_match2[0].matchpktGegen - alt_match1.matchpunkte + match1.matchpunkte;
+      matchpunkte = LT_match2[0].matchpkt - alt_match2.matchpunkte + match2.matchpunkte;
+      matchpunktegegner = LT_match2[0].matchpktGegen - alt_match1.matchpunkte + match1.matchpunkte;
 
   }
     // Daten Updaten
-    await this.updateMannschaftLT(id, sp, spg, spd, mp, mpg);
+    await this.updateMannschaftLT(mannschaftsid, satzpunkte, satzpunktegegner, satzpunktedifferenz, matchpunkte, matchpunktegegner);
 
     await this.tabellesortieren(match1.wettkampfId);
   }
