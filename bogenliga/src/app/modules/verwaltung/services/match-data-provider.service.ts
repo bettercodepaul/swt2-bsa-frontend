@@ -22,7 +22,7 @@ import {log} from 'util';
 })
 export class MatchDataProviderService extends DataProviderService {
 
-  serviceSubUrl = 'v1/match';
+  serviceSubUrl = 'v1';
   wettkampfId: WettkampfDO;
 
 
@@ -35,7 +35,7 @@ export class MatchDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byMannschaftsId/' + id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('match/byMannschaftsId/' + id).build())
         .then((data: VersionedDataTransferObject[]) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
         }, (error: HttpErrorResponse) => {
@@ -55,7 +55,7 @@ export class MatchDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + id).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('match/findByWettkampfId/wettkampfid=' + id).build())
         .then((data: VersionedDataTransferObject[]) => {
           resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
         }, (error: HttpErrorResponse) => {
@@ -72,7 +72,7 @@ export class MatchDataProviderService extends DataProviderService {
 
   public findAll(): Promise<BogenligaResponse<MatchDO[]>> {
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl() + '/')
+      this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl() + 'match/')
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -92,7 +92,7 @@ export class MatchDataProviderService extends DataProviderService {
       // sign in success -> resolve promise
       // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-          this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('WT0').build(), payload)
+          this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('match/WT0').build(), payload)
             .then((data: VersionedDataTransferObject) => {
               resolve({result: RequestResult.SUCCESS, payload: fromVeranstaltungsPayload(data)});
 
@@ -110,7 +110,7 @@ export class MatchDataProviderService extends DataProviderService {
   public generateDataForMatches(wetttkampfId: number): Promise<BogenligaResponse<MatchDO[]>> {
     console.log('In Funktion generateDataForMatches');
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('generate?wettkampfid=' + wetttkampfId).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('setzliste/generate?wettkampfid=' + wetttkampfId).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
