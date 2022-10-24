@@ -44,17 +44,7 @@ import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/serv
 const ID_PATH_PARAM = 'id';
 
 
-const test3: VeranstaltungDO = new VeranstaltungDO();
-test3.id = 3;
-test3.ligaId=4;
-test3.wettkampftypName = "string";
-test3.wettkampfTypId=2;
-test3.meldeDeadline="string";
-test3.ligaleiterId=2;
-test3.version=2;
-test3.ligaleiterEmail="string";
-test3.ligaName="string";
-test3.name="string";
+
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_SAVE_MANNSCHAFT = 'mannschaft_detail_save';
@@ -155,7 +145,6 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     };
 
     console.log('subscribe notification');
-
     this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
                                      .subscribe((myNotification) => {
                                        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
@@ -279,7 +268,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.currentMannschaft = response.payload;
     console.log(this.currentMannschaft.id);
 
-    // Klappliste im Dialog mit dem korrekten Wert (aktuell Veranstalung, in der die Mannschaft gemeldet ist) vorbelegen
+    // Klappliste im Dialog mit dem korrekten Wert (aktuelle Veranstalung, in der die Mannschaft gemeldet ist) vorbelegen
     this.currentVeranstaltung = this.ligen.filter((liga) => liga.id === this.currentMannschaft.veranstaltungId)[0];
 
     this.loadTableRows();
