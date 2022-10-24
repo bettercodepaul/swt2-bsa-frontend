@@ -60,9 +60,8 @@
         <span> *</span>
       </label>
 
-
       <div class="loading" *ngIf="loadingVeranstaltungen" >
-        <tr *ngIf="visible">
+        <tr>
           <td style="text-align: center; "
               [colSpan]="colspan">
             <div style="display: flex; flex-direction: column; align-items: center">
@@ -74,6 +73,7 @@
           </td>
         </tr>
       </div>
+
 
       <div class="col-sm-9" *ngIf="!loadingVeranstaltungen">
         <select class="form-control"
@@ -89,6 +89,7 @@
           {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.ERROR' | translate }}
         </div>
       </div>
+
     </div>
 
     <div class="form-group row">
