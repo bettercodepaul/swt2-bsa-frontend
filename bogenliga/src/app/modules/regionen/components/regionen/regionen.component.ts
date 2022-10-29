@@ -16,6 +16,7 @@ import {RoleVersionedDataObject} from '@verwaltung/services/models/roles-version
 import {Router} from '@angular/router';
 // import {LigatabelleComponent} from '../../../ligatabelle/components/ligatabelle/ligatabelle.component';
 // import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {SessionHandling} from '@shared/event-handling';
 
 const chartDetailsSizeMultiplikator = 0.5;
 
@@ -45,18 +46,23 @@ export class RegionenComponent implements OnInit {
   private myChart = Sunburst(); // initializes sunburst-diagramm
 
 
-  @ViewChild('chart', { static: true }) myDiv: ElementRef;
+  @ViewChild('chart', {static: true}) myDiv: ElementRef;
+  private sessionHandling: SessionHandling = new SessionHandling;
 
   constructor(private regionDataProviderService: RegionDataProviderService,
-              private vereinDataProviderService: VereinDataProviderService,
-              private ligaDataProviderService: LigaDataProviderService,
-              private router: Router) {
+    private vereinDataProviderService: VereinDataProviderService,
+    private ligaDataProviderService: LigaDataProviderService,
+    private router: Router) {
+
+    window.addEventListener('focus', this.sessionHandling.onFocus);
   }
+
 
   ngOnInit() {
     this.getDataAndShowSunburst();
     this.currentRegionDO = new RegionDO();
     this.loadRegionen();
+
   }
 
   convertDataToTree(currentRegion: RegionDO, allRegions: RegionDO[]): ChartNode {
