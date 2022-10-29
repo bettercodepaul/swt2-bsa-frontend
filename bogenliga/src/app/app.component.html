@@ -8,12 +8,16 @@
   <bla-sidebar *ngIf="!fullscreen"></bla-sidebar>
 
   <!-- Page Content -->
-  <div style="height: 100%;" [ngClass]="{'content': !fullscreen, 'inactive': isActive && !fullscreen}">
+  <div (focus)="onFocus($event)"
+       [ngClass]="{'content': !fullscreen, 'inactive': isActive && !fullscreen}"
+       style="height: 100%;">
 
-    <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)"></router-outlet>
+    <router-outlet (activate)="onActivate($event)"
+                   (deactivate)="onDeactivate($event)"></router-outlet>
 
     <!-- Footer -->
-    <footer *ngIf="!fullscreen" id="support">
+    <footer *ngIf="!fullscreen"
+            id="support">
       <div class="jumbotron jumbotron-fluid footer-copyright text-center py-3">
         <p>{{ 'APP.SUPPORT' | translate }}</p>
         <a href="https://www.bcxp.de/"
