@@ -1,20 +1,20 @@
-import { InterfaceComponent } from './modules/spotter/components/interface/interface.component';
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../environments/environment';
-import { AppState, SidebarState } from './modules/shared/redux-store';
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {InterfaceComponent} from './modules/spotter/components/interface/interface.component';
+import {Component, Injectable, OnInit} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {select, Store} from '@ngrx/store';
+import {TranslateService} from '@ngx-translate/core';
+import {environment} from '../environments/environment';
+import {AppState, SidebarState} from './modules/shared/redux-store';
+import {HttpHeaders} from '@angular/common/http';
 import {FeedbackProviderService} from '@verwaltung/services/feedback-data-provider.service';
+import {SessionHandling} from './modules/shared/event-handling';
 
 @Injectable({
   providedIn: 'root'
 })
 
 @Component({
-  selector: 'bla-root',
+  selector:    'bla-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
   public emailTextArea: string;
   public feedbackAndEmail: string;
 
+  private sessionHandling: SessionHandling = new SessionHandling;
 
   constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router, private feedbackDataProvider: FeedbackProviderService) {
     translate.setDefaultLang('de');
@@ -44,12 +45,16 @@ export class AppComponent implements OnInit {
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
 
-
+  public onFocus(event: FocusEvent): void {
+    console.log('OnFocus wird aufgerufen');
+    this.sessionHandling.onFocus();
+  }
 
 
   public showLabel(): boolean {
     return environment.showLabel;
   }
+
   public getEnvironment(): string {
     return environment.label;
   }

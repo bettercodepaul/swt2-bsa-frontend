@@ -53,8 +53,6 @@ export class RegionenComponent implements OnInit {
     private vereinDataProviderService: VereinDataProviderService,
     private ligaDataProviderService: LigaDataProviderService,
     private router: Router) {
-
-    window.addEventListener('focus', this.sessionHandling.onFocus);
   }
 
 
