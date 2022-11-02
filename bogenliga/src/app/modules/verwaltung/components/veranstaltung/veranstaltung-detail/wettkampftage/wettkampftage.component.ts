@@ -705,7 +705,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     if (this.anzahl < Number(this.maxWettkampftageEinstellungenDO.value)) {
       this.anzahl++;
       const temp: WettkampfDO = new WettkampfDO(
-        num,
+        this.anzahl,
         this.currentVeranstaltung.id,
         '2021-01-01',
         '',
