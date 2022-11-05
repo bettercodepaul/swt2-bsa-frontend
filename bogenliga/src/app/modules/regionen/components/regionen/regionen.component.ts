@@ -17,6 +17,7 @@ import {Router} from '@angular/router';
 // import {LigatabelleComponent} from '../../../ligatabelle/components/ligatabelle/ligatabelle.component';
 // import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService} from '@shared/services';
 
 const chartDetailsSizeMultiplikator = 0.5;
 
@@ -47,12 +48,26 @@ export class RegionenComponent implements OnInit {
 
 
   @ViewChild('chart', {static: true}) myDiv: ElementRef;
-  private sessionHandling: SessionHandling = new SessionHandling;
+  private sessionHandling: SessionHandling;
+
+  //private currentUserService: CurrentUserService;
 
   constructor(private regionDataProviderService: RegionDataProviderService,
     private vereinDataProviderService: VereinDataProviderService,
     private ligaDataProviderService: LigaDataProviderService,
+    private currentUserService: CurrentUserService,
     private router: Router) {
+    this.sessionHandling = new SessionHandling(this.currentUserService);
+    //window.addEventListener('focus', this.sessionHandling.onFocus());
+    /*angular.element(document).find('form').on('focus', function() {
+     this.sessionHandling.onFocus();
+     })*/
+    //document.body.addEventListener('focus', () => this.sessionHandling.onFocus());
+  }
+
+  public onFocus(event: any) {
+    console.log('test onFocus regionen');
+    this.sessionHandling.onFocus();
   }
 
 
