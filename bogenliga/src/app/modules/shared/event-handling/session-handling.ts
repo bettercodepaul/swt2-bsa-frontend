@@ -2,10 +2,11 @@ import {CurrentUserService} from '@shared/services/current-user';
 
 
 export class SessionHandling {
-
-  private currentUserService: CurrentUserService;
+  constructor(private currentUserService: CurrentUserService) {
+  }
 
   public onFocus(): void {
-    this.currentUserService.getUserId();
+    console.log('test onFOcus sessionHandling');
+    this.currentUserService.isLoggedIn();
   }
 }

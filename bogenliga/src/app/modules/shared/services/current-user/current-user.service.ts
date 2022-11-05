@@ -85,7 +85,6 @@ export class CurrentUserService {
 
   public getUserId(): number {
     return this.getCurrentUser().id;
-
   }
 
   public getJsonWebToken(): string {
@@ -188,6 +187,7 @@ export class CurrentUserService {
   }
 
   private observeSessionExpiredNotifications() {
+    console.log('test user servie ');
     this.store.pipe(
       select((state) => state.notificationState),
       filter((notificationState) => !isNullOrUndefined(notificationState.notification)),
@@ -196,12 +196,14 @@ export class CurrentUserService {
       filter((notification) => notification.userAction === NotificationUserAction.ACCEPTED)
     ).subscribe((notification: Notification) => {
       // dont logout user if the application is in offlinemode
-      this.store.select((state) => state.onOfflineState.isOffline).subscribe( (offline) => {
-        if (offline) { return; }
+      this.store.select((state) => state.onOfflineState.isOffline).subscribe((offline) => {
+        if (offline) {
+          return;
+        }
       });
       console.log('ExpiredNotification');
       this.logout();
-      this.router.navigateByUrl('user/login');
+      this.router.navigateByUrl('/user/login');
     });
   }
 
