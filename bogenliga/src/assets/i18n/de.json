@@ -1015,6 +1015,11 @@
           "TITLE": "Schütze aus Mannschaft löschen",
           "DESCRIPTION": "Wollen Sie den Schützen %s wirklich aus der Mannschaft entfernen?"
         },
+        "DELETE_MITGLIED_OFFLINEMODE": {
+          "TITLE": "Mitglied aus Mannschaft löschen",
+          "DESCRIPTION": "Im Offlinemodus können Mitglieder nicht gelöscht werden."
+        },
+
         "DELETE_MITGLIED_SUCCESS": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
