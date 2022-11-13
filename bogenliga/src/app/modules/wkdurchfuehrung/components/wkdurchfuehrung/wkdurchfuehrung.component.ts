@@ -725,11 +725,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.loadingYears = false;
     let counter = 1;
     let indexofselectedyear = 0;
-    // lese aktives Sportjahr aus Datenbank aus
-    this.einstellungenDataProvider.findById('9')
-        .then((response: BogenligaResponse<EinstellungenDO>) => {
-          this.aktivesSportjahr = response.payload;
-        });
 
     if (response.payload !== []) {
       for (const elem of response.payload) {
@@ -746,11 +741,22 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           return -1;
         }
       });
+
+      // lese aktives Sportjahr aus Datenbank aus
+      this.einstellungenDataProvider.findById('9')
+          .then((response: BogenligaResponse<EinstellungenDO>) => {
+            this.aktivesSportjahr = response.payload;
+          })
+          .catch((error) => {
+            console.log('error in wkdruchfuehrung loadVeranstaltungenYearSuccess');
+            console.log(error);
+            this.aktivesSportjahr = 0;
+          });
       for (const sportjahr of this.availableYears) {
-        // weise die id für jedes jahr zu
+        // weise die id für jedes jahr in availableYears zu
         sportjahr.id = counter;
-        // finde Index von aktivem Sportjahr (id = 9), sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
-        if (sportjahr.sportjahr == parseInt(this.aktivesSportjahr)) {
+        // finde Index von aktivem Sportjahr, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
+        if (sportjahr.sportjahr === this.aktivesSportjahr.value) {
           indexofselectedyear = counter - 1;
         }
         counter++;
