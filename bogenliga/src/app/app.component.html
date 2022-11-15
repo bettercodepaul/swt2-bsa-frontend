@@ -8,8 +8,7 @@
   <bla-sidebar *ngIf="!fullscreen"></bla-sidebar>
 
   <!-- Page Content -->
-  <div (focus)="onFocus($event)"
-       [ngClass]="{'content': !fullscreen, 'inactive': isActive && !fullscreen}"
+  <div [ngClass]="{'content': !fullscreen, 'inactive': isActive && !fullscreen}"
        style="height: 100%;">
 
     <router-outlet (activate)="onActivate($event)"
