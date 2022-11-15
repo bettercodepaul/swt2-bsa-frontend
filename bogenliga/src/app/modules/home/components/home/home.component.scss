@@ -1,10 +1,16 @@
 /* Farbkonzept Website */
-$primary: #02bdd5; // Links, Navbar
-$primary-light: #b4ffff; // Sidebar-Background
-$primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107; // hover Tables
-$secondary-light: #fff350;
-$secondary-dark: #ff833a; // hover Links, Logo
+$hero-blue: #487AF5; // H2, Hervorhebungen
+$primary-black: #2A2A2A; // H1, H3 body text, primäre buttons
+$primary-white: #FCFCFC; // Seitenhintergrund
+$primary-darkgrey: #888888; // Subtitle, Labels, inaktive Buttons text
+$primary-lightgrey: #EAEAEF; //Hover Hintergrund in Tabellen, inaktive Buttons Hintergrund
+$accent-gold: #FFCC34; // Hilfe, besondere Hinweise
+$accent-red: #F40E0E; //Löschen und andere "gefährliche" Aktionen
+
+
+h1{
+  font-size: 2.8em;
+}
 
 // basic css of content
 .homeContent {
@@ -21,15 +27,21 @@ $secondary-dark: #ff833a; // hover Links, Logo
 // container for pictures and text
 .flexChild {
   flex: 1 0 45%; // 45% -> two in one row
-  margin: 20px;
-  margin-top: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  min-height: 60vh;
+
+}
+
+.news-container{
+  display: flex;
 }
 
 // css for Images of containers
 .mosaikImg {
-  width: 90%;
+  width: 80%;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: $secondary;
+  background-color: $primary-lightgrey;
 }

@@ -1,20 +1,20 @@
 // text color of bootstrap
 
 /* Farbkonzept Website */
-$primary: #02bdd5; // Links, Navbar
-$primary-light: #b4ffff; // Sidebar-Background
-$primary-dark: #007c91; // Sidebar-Font
+$primary: #ffffff; // Links, Navbar
+$primary-light: #2A2A2A; // Sidebar-Background
+$primary-dark: #ffffff; // Sidebar-Font
 $secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
 #navbar {
-  height: 4em;
-  border-bottom: 1px solid rgba(0, 0, 0, .125);
+  height: 3.2em;
+
 }
 
 #navbar a {
-  color: #007c91;
+  color: #2A2A2A;
   text-decoration: none;
 }
 
