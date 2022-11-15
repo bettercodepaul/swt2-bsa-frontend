@@ -7,7 +7,6 @@ import {environment} from '../environments/environment';
 import {AppState, SidebarState} from './modules/shared/redux-store';
 import {HttpHeaders} from '@angular/common/http';
 import {FeedbackProviderService} from '@verwaltung/services/feedback-data-provider.service';
-import {SessionHandling} from './modules/shared/event-handling';
 
 @Injectable({
   providedIn: 'root'
@@ -36,20 +35,12 @@ export class AppComponent implements OnInit {
   public emailTextArea: string;
   public feedbackAndEmail: string;
 
-  private sessionHandling: SessionHandling = new SessionHandling;
-
   constructor(private translate: TranslateService, private store: Store<AppState>, private router: Router, private feedbackDataProvider: FeedbackProviderService) {
     translate.setDefaultLang('de');
     translate.use('de');
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
-
-  public onFocus(event: FocusEvent): void {
-    console.log('OnFocus wird aufgerufen');
-    this.sessionHandling.onFocus();
-  }
-
 
   public showLabel(): boolean {
     return environment.showLabel;
