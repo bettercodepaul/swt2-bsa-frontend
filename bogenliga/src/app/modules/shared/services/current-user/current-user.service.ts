@@ -187,7 +187,6 @@ export class CurrentUserService {
   }
 
   private observeSessionExpiredNotifications() {
-    console.log('test user servie ');
     this.store.pipe(
       select((state) => state.notificationState),
       filter((notificationState) => !isNullOrUndefined(notificationState.notification)),
