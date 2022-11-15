@@ -19,13 +19,18 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 
 @font-face {
-  font-family: Poppins;
-  src: url("/assets/fonts/Poppins") format("truetype");
+  font-family: Poppins-regular;
+  src: url("/assets/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: Bitter;
-  src: url("/assets/fonts/Bitter ") format("truetype");
+  font-family: Poppins-bold;
+  src: url("/assets/fonts/Poppins/Poppins-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Bitter-regular;
+  src: url("/assets/fonts/Bitter/Bitter-Regular.ttf ") format("truetype");
 }
 
 
@@ -49,10 +54,10 @@ body {
 /* GLOBAL TYPOGRAPHY */
 
 //Use for: Page title
-h1{
+h1 {
   color: $primary-black;
   font-size: 2em;
-  font-weight: bold;
+  font-family: "Poppins-bold";
 }
 
 //Use for: Section title
@@ -74,14 +79,14 @@ h4{
   color: $dark-gray;
   font-size: 1.2em;
   font-weight: normal;
-  font-family: Bitter;
+  font-family: "Bitter-regular";
 }
 
 // Use for: Erklärender subtitle unter H1 Page title
 .subtitle {
   color: $dark-gray;
   font-size: 1.3em;
-  font-family: Bitter;
+  font-family: Bitter-regular;
 }
 
 // ======================

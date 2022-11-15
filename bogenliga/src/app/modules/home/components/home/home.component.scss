@@ -45,3 +45,13 @@ h1{
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: $primary-lightgrey;
 }
+
+// workaround for breadcrumbs/pageTitle
+// TODO: Change size to accommodate other pages layout ( ... height )
+.home-page-wrapper {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
