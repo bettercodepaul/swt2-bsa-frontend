@@ -710,6 +710,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private async findAvailableYears() {
     this.availableYears = [];
 
+    // lese aktives Sportjahr aus Datenbank aus
+    this.einstellungenDataProvider.findAll()
+        .then((response: BogenligaResponse<EinstellungenDO[]>) => {
+          console.log(response);
+          this.aktivesSportjahr = response.payload[8].value;
+          console.log(this.aktivesSportjahr);
+        });
+
     this.veranstaltungsDataProvider.findAllSportyearDestinct()
       .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
         this.loadVeranstaltungenYearsSuccess(response);
@@ -742,34 +750,22 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         }
       });
 
-      // lese aktives Sportjahr aus Datenbank aus
-      this.einstellungenDataProvider.findById('9')
-          .then((response: BogenligaResponse<EinstellungenDO>) => {
-            this.aktivesSportjahr = response.payload;
-          })
-          .catch((error) => {
-            console.log('error in wkdruchfuehrung loadVeranstaltungenYearSuccess');
-            console.log(error);
-            this.aktivesSportjahr = 0;
-          });
       for (const sportjahr of this.availableYears) {
         // weise die id für jedes jahr in availableYears zu
         sportjahr.id = counter;
-        // finde Index von aktivem Sportjahr, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
-        if (sportjahr.sportjahr === this.aktivesSportjahr.value) {
+        // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
+        if (sportjahr.sportjahr === parseInt(this.aktivesSportjahr)) {
           indexofselectedyear = counter - 1;
         }
         counter++;
       }
       if (!this.wettkampfIdEnthalten) {
-        // Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde und setze die Id des vorausgewählten
-        // Jahres auf die id des neusten Jahres
+        // Lade die Veranstaltungen des aktiven Sportjahres oder auf die des neusten Jahres
         this.selItemId = this.availableYears[indexofselectedyear].id;
         this.loadVeranstaltungenByYear(this.availableYears[indexofselectedyear].sportjahr.valueOf());
       } else if (this.onOfflineService.isOffline()) {
         this.selItemId = this.availableYears[indexofselectedyear].id;
       }
-
     }
   }
 
