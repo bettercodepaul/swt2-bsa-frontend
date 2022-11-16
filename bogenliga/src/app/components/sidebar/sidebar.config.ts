@@ -16,7 +16,12 @@ import {
   faListOl,
   faSitemap,
   faUsers,
-  faQuestion
+  faQuestion,
+
+  faTrophy, //Wettkämpfe
+  faCalendar, //Wettkampfdurchführung
+  faCogs //Verwaltung
+
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -46,9 +51,10 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-vereine-button'
   },
+
   {
     label: 'SIDEBAR.VERWALTUNG',
-    icon: faArchive,
+    icon: faCogs,
     route: '/verwaltung',
     permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
     datacy: 'sidebar-verwaltung-button',
@@ -103,22 +109,27 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       }
     ]
   },
+
+
   {
     label: 'SIDEBAR.WETTKAMPF',
-    icon: faSitemap,
+    icon: faTrophy,
     route: '/wettkaempfe',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     datacy: 'sidebar-wettkampf-button'
   },
+
   {
     label: 'SIDEBAR.WKDURCHFUEHRUNG',
-    icon: faCalendarAlt,
+    icon: faCalendar,
     route: '/wkdurchfuehrung',
     permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: [],
     datacy: 'sidebar-wkdurchfuehrung-button'
   },
+
+
   {
     label: 'SIDEBAR.MANNSCHAFTEN',
     icon: faListOl,
@@ -135,6 +146,8 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-spotting-button'
   },
+
+
   {
     label: 'SIDEBAR.PLAYGROUND',
     icon: faFootballBall,
@@ -155,6 +168,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
 ];
 // sidebar for offlinemode
 export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
+
   {
     label: 'SIDEBAR.HOME',
     icon: faHome,
@@ -163,6 +177,7 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-home-button'
   },
+
 
   {
     label: 'SIDEBAR.VERWALTUNG',

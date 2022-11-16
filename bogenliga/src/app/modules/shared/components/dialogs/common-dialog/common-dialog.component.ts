@@ -6,6 +6,7 @@ import {CommonComponentDirective} from '../../common';
   selector:    'bla-common-dialog',
   templateUrl: './common-dialog.component.html',
   styleUrls:   ['./common-dialog.component.scss']
+
 })
 export class CommonDialogComponent extends CommonComponentDirective implements OnInit {
 
