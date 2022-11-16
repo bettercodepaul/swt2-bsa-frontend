@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CommonComponentDirective} from '../../../../shared/components/common';
 import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
@@ -20,10 +20,8 @@ import {VERANSTALTUNG_OVERVIEW_TABLE_CONFIG} from './veranstaltung-overview.conf
 import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components/liga/liga-overview/liga-overview.component';
 import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
-import {PlaygroundVersionedDataObject} from '../../../../playground/components/playground/types/playground-versioned-data-object.class';
-import {of} from 'rxjs';
-import {delay} from 'rxjs/operators';
 import {CurrentUserService, UserPermission} from '@shared/services';
+import {SessionHandling} from '@shared/event-handling';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
 
@@ -45,18 +43,33 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   public selectedDTOs: SportjahrVeranstaltungDO[];
   public multipleSelections = true;
 
+  private sessionHandling: SessionHandling;
+
   constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
-              private router: Router, private notificationService: NotificationService,
-              private currentUserService: CurrentUserService) {
+    private router: Router, private notificationService: NotificationService,
+    private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
-   // this.loadTableRows();
+    // this.loadTableRows();
 
     this.loadBySportjahr();
     this.loadDistinctSporjahr();
 
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   private getCurrentYear(): number {

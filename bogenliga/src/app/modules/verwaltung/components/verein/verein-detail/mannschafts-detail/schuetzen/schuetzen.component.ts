@@ -1,11 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-  ButtonType,
-  CommonComponentDirective, hideLoadingIndicator,
-  showDeleteLoadingIndicatorIcon,
-  toTableRows
-} from '../../../../../../shared/components';
+import {ButtonType, CommonComponentDirective, toTableRows} from '../../../../../../shared/components';
 import {BogenligaResponse} from '../../../../../../shared/data-provider';
 import {
   Notification,
@@ -34,7 +29,8 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import {RegionDO} from '@verwaltung/types/region-do.class';
-import {OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {SessionHandling} from '@shared/event-handling';
 
 
 const ID_PATH_PARAM = 'id';
@@ -78,6 +74,8 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
   public deleteLoading = false;
   public saveLoading = false;
 
+  private sessionHandling: SessionHandling;
+
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
     private dsbMitgliedProvider: DsbMitgliedDataProviderService,
     private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
@@ -88,8 +86,10 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     private router: Router,
     private route: ActivatedRoute,
     private onOfflineService: OnOfflineService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
@@ -105,6 +105,18 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.loadVereine();
 
     this.notificationService.discardNotification();
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public onSave(member: VersionedDataObject): void {

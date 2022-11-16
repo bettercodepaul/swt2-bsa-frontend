@@ -16,13 +16,15 @@ import {
 import {VereinDataProviderService} from '../../../services/verein-data-provider.service';
 import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
 import {VEREIN_OVERVIEW_CONFIG} from './verein-overview.config';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService} from '@shared/services';
 
 export const NOTIFICATION_DELETE_VEREINE = 'vereine_overview_delete';
 
 @Component({
-  selector: 'bla-verein-overview',
+  selector:    'bla-verein-overview',
   templateUrl: './verein-overview.component.html',
-  styleUrls: ['./verein-overview.component.scss']
+  styleUrls:   ['./verein-overview.component.scss']
 })
 export class VereinOverviewComponent extends CommonComponentDirective implements OnInit {
 
@@ -30,14 +32,29 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
   public rows: TableRow[];
   public searchTerm = 'searchTermVereine';
 
-  constructor(private vereinDataProvider: VereinDataProviderService, private router: Router, private notificationService: NotificationService) {
+  private sessionHandling: SessionHandling;
+
+  constructor(private vereinDataProvider: VereinDataProviderService, private router: Router, private notificationService: NotificationService, private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
     this.loading = true;
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
     }
   }
 
