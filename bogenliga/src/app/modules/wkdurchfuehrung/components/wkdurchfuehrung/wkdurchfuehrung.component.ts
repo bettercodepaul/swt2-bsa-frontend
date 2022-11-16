@@ -5,6 +5,7 @@ import {MATCH_TABLE_CONFIG, WETTKAMPF_TABLE_CONFIG, WKDURCHFUEHRUNG_CONFIG} from
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
+import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
@@ -13,7 +14,6 @@ import {isUndefined} from '@shared/functions';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
-
 
 import {DsbMitgliedDetailComponent} from '@verwaltung/components';
 import {
@@ -38,6 +38,8 @@ import {db} from '@shared/data-provider/offlinedb/offlinedb';
 
 import {MatDialog} from '@angular/material/dialog';
 import {DsbMitgliedDetailPopUpComponent} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
+import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
+import {getActiveSportYear} from '@shared/functions/active-sportyear';
 
 
 @Component({
@@ -82,6 +84,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private disabledOtherButtons = true;
   wettkampfIdEnthalten: boolean;
   public wettkampfListe;
+  private aktivesSportjahr: number;
   wettkampf: WettkampfDO;
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
   veranstaltung: VeranstaltungDO;
@@ -97,6 +100,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private route: ActivatedRoute,
               private notificationService: NotificationService,
               private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+              private einstellungenDataProvider: EinstellungenProviderService,
               private wettkampfDataProvider: WettkampfDataProviderService,
               private matchDataProvider: MatchDataProviderService,
               private passeDataProviderService: PasseDataProviderService,
@@ -130,6 +134,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         // die Funktionen dazu werden nach der erfolgreichen Ermittlung des Wettkampfs aufgerufen
         // im Anschluss wird der Wettkampf automatisch aufgerufen
         // im Falle einer nicht erfolgreichen Ermittlung werden nur alle Veranstaltungen ermittelt, damit diese in der Tabelle "Veranstaltung" angezeigt werden kÃ¶nnen
+
+
+
         this.findAvailableYears();
 
         this.LoadWettkampf();
@@ -707,6 +714,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private async findAvailableYears() {
     this.availableYears = [];
 
+    // lese aktives Sportjahr aus Datenbank aus
+    this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
+
     this.veranstaltungsDataProvider.findAllSportyearDestinct()
       .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
         this.loadVeranstaltungenYearsSuccess(response);
@@ -714,6 +724,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       .catch(() => {
         this.loadVeranstaltungenYearsFailure();
       });
+
   }
 
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
@@ -721,6 +732,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
     this.loadingYears = false;
     let counter = 1;
+    let indexofselectedyear = 0;
+
     if (response.payload !== []) {
       for (const elem of response.payload) {
         const t = new SportjahrVeranstaltungDO();
@@ -736,19 +749,23 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           return -1;
         }
       });
+
       for (const sportjahr of this.availableYears) {
+        // weise die id für jedes jahr in availableYears zu
         sportjahr.id = counter;
+        // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
+        if (sportjahr.sportjahr === this.aktivesSportjahr) {
+          indexofselectedyear = counter - 1;
+        }
         counter++;
       }
       if (!this.wettkampfIdEnthalten) {
-        // Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde und setze die Id des vorausgewählten
-        // Jahres auf die id des neusten Jahres
-        this.selItemId = this.availableYears[0].id;
-        this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+        // Lade die Veranstaltungen des aktiven Sportjahres oder auf die des neusten Jahres
+        this.selItemId = this.availableYears[indexofselectedyear].id;
+        this.loadVeranstaltungenByYear(this.availableYears[indexofselectedyear].sportjahr.valueOf());
       } else if (this.onOfflineService.isOffline()) {
-        this.selItemId = this.availableYears[0].id;
+        this.selItemId = this.availableYears[indexofselectedyear].id;
       }
-
     }
   }
 
