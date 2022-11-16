@@ -5,6 +5,7 @@ import {MATCH_TABLE_CONFIG, WETTKAMPF_TABLE_CONFIG, WKDURCHFUEHRUNG_CONFIG} from
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
+import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
@@ -13,6 +14,8 @@ import {isUndefined} from '@shared/functions';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
+
+import {DsbMitgliedDetailComponent} from '@verwaltung/components';
 import {
   NotificationOrigin,
   NotificationService,
@@ -34,16 +37,15 @@ import {WettkampfOfflineSyncService} from '@wkdurchfuehrung/services/wettkampf-o
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 
 import {MatDialog} from '@angular/material/dialog';
-import {
-  DsbMitgliedDetailPopUpComponent
-} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
-import {SessionHandling} from '@shared/event-handling';
+import {DsbMitgliedDetailPopUpComponent} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
+import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
+import {getActiveSportYear} from '@shared/functions/active-sportyear';
 
 
 @Component({
-  selector:    'bla-wkdurchfuehrung',
+  selector: 'bla-wkdurchfuehrung',
   templateUrl: './wkdurchfuehrung.component.html',
-  styleUrls:   ['./wkdurchfuehrung.component.scss']
+  styleUrls: ['./wkdurchfuehrung.component.scss']
 })
 export class WkdurchfuehrungComponent extends CommonComponentDirective implements OnInit {
 
@@ -82,6 +84,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private disabledOtherButtons = true;
   wettkampfIdEnthalten: boolean;
   public wettkampfListe;
+  private aktivesSportjahr: number;
   wettkampf: WettkampfDO;
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
   veranstaltung: VeranstaltungDO;
@@ -92,24 +95,22 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public availableYears: SportjahrVeranstaltungDO[];
   public selItemId: number;
 
-  private sessionHandling: SessionHandling;
-
 
   constructor(private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
-    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private wettkampfDataProvider: WettkampfDataProviderService,
-    private matchDataProvider: MatchDataProviderService,
-    private passeDataProviderService: PasseDataProviderService,
-    private matchProvider: MatchProviderService,
-    private onOfflineService: OnOfflineService,
-    private currentUserService: CurrentUserService,
-    private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
-    private dialog: MatDialog
+              private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+              private einstellungenDataProvider: EinstellungenProviderService,
+              private wettkampfDataProvider: WettkampfDataProviderService,
+              private matchDataProvider: MatchDataProviderService,
+              private passeDataProviderService: PasseDataProviderService,
+              private matchProvider: MatchProviderService,
+              private onOfflineService: OnOfflineService,
+              private currentUserService: CurrentUserService,
+              private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
+              private dialog: MatDialog
   ) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
@@ -133,6 +134,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         // die Funktionen dazu werden nach der erfolgreichen Ermittlung des Wettkampfs aufgerufen
         // im Anschluss wird der Wettkampf automatisch aufgerufen
         // im Falle einer nicht erfolgreichen Ermittlung werden nur alle Veranstaltungen ermittelt, damit diese in der Tabelle "Veranstaltung" angezeigt werden kÃ¶nnen
+
+
+
         this.findAvailableYears();
 
         this.LoadWettkampf();
@@ -165,18 +169,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       }
     });
 
-  }
-
-  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
-   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
-   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
-   *  be logged out automatically.
-   */
-  public onMouseOver(event: any) {
-    const isExpired = this.sessionHandling.checkSessionExpired();
-    if (isExpired) {
-      window.location.reload();
-    }
   }
 
   public isOffline(): boolean {
@@ -722,6 +714,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private async findAvailableYears() {
     this.availableYears = [];
 
+    // lese aktives Sportjahr aus Datenbank aus
+    this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
+
     this.veranstaltungsDataProvider.findAllSportyearDestinct()
       .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
         this.loadVeranstaltungenYearsSuccess(response);
@@ -729,6 +724,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       .catch(() => {
         this.loadVeranstaltungenYearsFailure();
       });
+
   }
 
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
@@ -736,6 +732,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
     this.loadingYears = false;
     let counter = 1;
+    let indexofselectedyear = 0;
+
     if (response.payload !== []) {
       for (const elem of response.payload) {
         const t = new SportjahrVeranstaltungDO();
@@ -751,19 +749,23 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           return -1;
         }
       });
+
       for (const sportjahr of this.availableYears) {
+        // weise die id für jedes jahr in availableYears zu
         sportjahr.id = counter;
+        // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
+        if (sportjahr.sportjahr === this.aktivesSportjahr) {
+          indexofselectedyear = counter - 1;
+        }
         counter++;
       }
       if (!this.wettkampfIdEnthalten) {
-        // Lade die Veranstaltungen des neusten Jahres wenn keine id übergeben wurde und setze die Id des vorausgewählten
-        // Jahres auf die id des neusten Jahres
-        this.selItemId = this.availableYears[0].id;
-        this.loadVeranstaltungenByYear(this.availableYears[0].sportjahr.valueOf());
+        // Lade die Veranstaltungen des aktiven Sportjahres oder auf die des neusten Jahres
+        this.selItemId = this.availableYears[indexofselectedyear].id;
+        this.loadVeranstaltungenByYear(this.availableYears[indexofselectedyear].sportjahr.valueOf());
       } else if (this.onOfflineService.isOffline()) {
-        this.selItemId = this.availableYears[0].id;
+        this.selItemId = this.availableYears[indexofselectedyear].id;
       }
-
     }
   }
 
