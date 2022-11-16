@@ -332,6 +332,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
 
+            // Update the Wettkampftag after it has been changed. (BSAPP-1196)
+            this.loadWettkampf();
+            this.loadDistinctWettkampf();
+            this.loadKampfrichter();
+
             const notification: Notification = {
               id:          NOTIFICATION_SAVE_VERANSTALTUNG,
               title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.UPDATE.TITLE',
