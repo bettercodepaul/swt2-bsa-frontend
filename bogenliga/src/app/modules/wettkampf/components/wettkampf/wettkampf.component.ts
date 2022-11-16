@@ -5,7 +5,9 @@ import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
 import {WETTKAMPF_TABLE_EINZEL_CONFIG} from './wettkampergebnis/tabelle.einzel.config';
-import {WETTKAMPF_TABLE_EINZELGESAMT_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzelGesamt.config';
+import {
+  WETTKAMPF_TABLE_EINZELGESAMT_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzelGesamt.config';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
@@ -22,13 +24,14 @@ import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
-import {NotificationService} from '@shared/services';
+import {CurrentUserService, NotificationService} from '@shared/services';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {environment} from '@environment';
 import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
+import {SessionHandling} from '@shared/event-handling';
 
 
 const ID_PATH_PARAM = 'id';
@@ -66,7 +69,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   private passen: Array<PasseDoClass[]> = [];
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public dsbMitglieder: Array<DsbMitgliedDO> = [];
-
+  private sessionHandling: SessionHandling;
 
   popup: boolean;
   gesamt = false;
@@ -75,19 +78,21 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   isTableFilled: Array<boolean> = [false, false, false, false];
 
   constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-              private vereinDataProvider: VereinDataProviderService,
-              private wettkampfDataProviderService: WettkampfDataProviderService,
-              private matchDataProviderService: MatchDataProviderService,
-              private passeDataProviderService: PasseDataProviderService,
-              private wettkampfErgebnisService: WettkampfErgebnisService,
-              private mannschaftDataProvider: DsbMannschaftDataProviderService,
-              private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
-              private mannschaftsmitgliedDataProvider: MannschaftsmitgliedDataProviderService,
-              private schuetzenstatistikDataProvider: SchuetzenstatistikDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+    private vereinDataProvider: VereinDataProviderService,
+    private wettkampfDataProviderService: WettkampfDataProviderService,
+    private matchDataProviderService: MatchDataProviderService,
+    private passeDataProviderService: PasseDataProviderService,
+    private wettkampfErgebnisService: WettkampfErgebnisService,
+    private mannschaftDataProvider: DsbMannschaftDataProviderService,
+    private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
+    private mannschaftsmitgliedDataProvider: MannschaftsmitgliedDataProviderService,
+    private schuetzenstatistikDataProvider: SchuetzenstatistikDataProviderService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   /**
@@ -109,14 +114,26 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadVeranstaltungen();
   }
 
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
+  }
+
   /**
    * Loads the currently selected verein
    * @param vereinId | loads the verein with this Id
    */
   public async loadVerein(vereinId: number) {
     await this.vereinDataProvider.findById(vereinId)
-      .then((response: BogenligaResponse<VereinDO>) => this.handleLoadVerein(response))
-      .catch(() => this.handleLoadVerein(null));
+              .then((response: BogenligaResponse<VereinDO>) => this.handleLoadVerein(response))
+              .catch(() => this.handleLoadVerein(null));
     document.getElementById('vereinsinformationen').classList.remove('hidden');
   }
 

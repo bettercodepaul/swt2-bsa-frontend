@@ -1,14 +1,16 @@
-<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:benutzerdetails" target="_blank"></bla-hilfe-button>
-<bla-common-dialog [config]="config"
+<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:benutzerdetails"
+                  target="_blank"></bla-hilfe-button>
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config"
                    [loading]="loading">
 
   <a name="bla-selectionlist"></a>
 
   <form id="userForm"
         class="horizontal-form half-page"
-        #benutzerForm="ngForm" >
+        #benutzerForm="ngForm">
 
-      <!-- Email / Username -->
+    <!-- Email / Username -->
     <div class="form-group row">
       <label for="userEmail"
              class="col-sm-3 col-form-label">

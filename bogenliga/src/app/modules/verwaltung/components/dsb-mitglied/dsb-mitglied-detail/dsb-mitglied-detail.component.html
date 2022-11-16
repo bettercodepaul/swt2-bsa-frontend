@@ -1,4 +1,5 @@
-<bla-common-dialog [config]="config"
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config"
                    [loading]="loading">
 
   <form id="dsbMitgliedForm"
