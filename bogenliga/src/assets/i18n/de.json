@@ -1336,6 +1336,10 @@
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen",
+        "FINISH": {
+          "TITLE": "Abschließen",
+          "DESCRIPTION": "Wollen Sie die Veranstaltung wirklich abschließen?"
+        },
         "WETTKAMPFTAGE": "Wettkampftage",
         "MANNSCHAFT": "Mannschaften aus Vorjahr kopieren",
         "BACK": "Zurück"
