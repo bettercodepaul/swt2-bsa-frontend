@@ -39,6 +39,7 @@ import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {MatDialog} from '@angular/material/dialog';
 import {DsbMitgliedDetailPopUpComponent} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
+import {getActiveSportYear} from '@shared/functions/active-sportyear';
 
 
 @Component({
@@ -83,7 +84,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private disabledOtherButtons = true;
   wettkampfIdEnthalten: boolean;
   public wettkampfListe;
-  private aktivesSportjahr;
+  private aktivesSportjahr: number;
   wettkampf: WettkampfDO;
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
   veranstaltung: VeranstaltungDO;
@@ -133,6 +134,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         // die Funktionen dazu werden nach der erfolgreichen Ermittlung des Wettkampfs aufgerufen
         // im Anschluss wird der Wettkampf automatisch aufgerufen
         // im Falle einer nicht erfolgreichen Ermittlung werden nur alle Veranstaltungen ermittelt, damit diese in der Tabelle "Veranstaltung" angezeigt werden kÃ¶nnen
+
+
+
         this.findAvailableYears();
 
         this.LoadWettkampf();
@@ -710,13 +714,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private async findAvailableYears() {
     this.availableYears = [];
 
+
+
+
     // lese aktives Sportjahr aus Datenbank aus
-    this.einstellungenDataProvider.findAll()
-        .then((response: BogenligaResponse<EinstellungenDO[]>) => {
-          console.log(response);
-          this.aktivesSportjahr = response.payload[8].value;
-          console.log(this.aktivesSportjahr);
-        });
+
+    this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
+
+
 
     this.veranstaltungsDataProvider.findAllSportyearDestinct()
       .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
@@ -725,6 +730,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       .catch(() => {
         this.loadVeranstaltungenYearsFailure();
       });
+
+
   }
 
   // Ermittlung der Jahre der Veranstaltungen war erfolgreich und fülle availableYears
@@ -754,7 +761,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         // weise die id für jedes jahr in availableYears zu
         sportjahr.id = counter;
         // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
-        if (sportjahr.sportjahr === parseInt(this.aktivesSportjahr)) {
+        if (sportjahr.sportjahr === this.aktivesSportjahr) {
           indexofselectedyear = counter - 1;
         }
         counter++;
