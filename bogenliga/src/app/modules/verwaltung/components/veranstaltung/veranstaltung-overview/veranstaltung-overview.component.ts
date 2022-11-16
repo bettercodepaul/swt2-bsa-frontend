@@ -103,9 +103,10 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    // Check if User is a Ligaleit if so filter the payload to only show Veranstaltungen of the user
     if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG) &&
     !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)) {
-      response.payload = response.payload.filter((entry) => this.currentUserService.hasVeranstaltung(entry.id));
+      response.payload = response.payload.filter((entry) => this.currentUserService.getCurrentUserID() === entry.ligaleiterId);
       console.log('detected');
     }
     this.rows = []; // reset array to ensure change detection
