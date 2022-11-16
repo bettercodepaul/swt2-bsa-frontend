@@ -56,7 +56,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'DSB Mitglieder',
         route: '/verwaltung/dsbmitglieder',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+        permissons: [UserPermission.CAN_READ_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER],
         datacy: 'sidebar-verwaltung-mitglieder-button'
       },
       {
@@ -74,7 +74,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Vereine',
         route: '/verwaltung/vereine',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+        permissons: [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN],
         datacy: 'sidebar-verwaltung-vereine-button'
       },
       {
@@ -92,8 +92,14 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Veranstaltungen',
         route: '/verwaltung/veranstaltung',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG, UserPermission.CAN_MODIFY_STAMMDATEN],
         datacy: 'sidebar-verwaltung-veranstaltungen-button'
+      },
+      {
+        label: 'Einstellungen',
+        route: '/verwaltung/einstellungen',
+        permissons: [UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        datacy: 'sidebar-verwaltung-einstellungen-button'
       }
     ]
   },

@@ -74,7 +74,6 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     });
   }
 
-
   public findAll(): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
     if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for findall dsbmitglieder');
@@ -91,6 +90,42 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
       // sign in failure -> reject promise with result
       return new Promise((resolve, reject) => {
         this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
+            .then((data: VersionedDataTransferObject[]) => {
+
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
+  }
+
+  public findAllNotInTeam(id: number, vereinid: number): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findAllNotInTeam dsbmitglieder');
+      return new Promise((resolve, reject) => {
+        db.mannschaftsmitgliedTabelle.where('mannschaftId').equals(id).toArray().then((members) => {
+          db.dsbMitgliedTabelle.where('dsbMitgliedId').noneOf(members.map((mitglied) => mitglied.dsbMitgliedId)).toArray()
+            .then((dsbMitglieder) => {
+              resolve({
+                result:  RequestResult.SUCCESS,
+                payload: fromOfflineToDsbMitgliedDOArray(dsbMitglieder.filter((mitglied) => mitglied.vereinId === vereinid))
+              });
+            }).catch((err) => reject(err));
+        });
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('team').path(vereinid).path('not').path(id).build())
             .then((data: VersionedDataTransferObject[]) => {
 
               resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
@@ -148,16 +183,16 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     return (searchTerm === '' || searchTerm === null)
       ? this.findAll()
-      : new Promise( (resolve, reject) => {
-          this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('search/' + searchTerm).build())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
-            (error.status === 0)
-              ? reject({result: RequestResult.CONNECTION_PROBLEM})
-              : reject({result: RequestResult.FAILURE});
-          });
-    });
+      : new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('search/' + searchTerm).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+              (error.status === 0)
+                ? reject({result: RequestResult.CONNECTION_PROBLEM})
+                : reject({result: RequestResult.FAILURE});
+            });
+      });
   }
 
 
