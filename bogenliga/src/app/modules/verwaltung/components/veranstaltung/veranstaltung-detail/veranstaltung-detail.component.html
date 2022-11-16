@@ -156,11 +156,13 @@
                 name="ligaleiter"
                 #ligaleiter="ngModel"
                 [(ngModel)]="currentUser"
-                data-cy="veranstaltung-detail-ligaleiter-email">
+                data-cy="veranstaltung-detail-ligaleiter-email"
+                required placeholder="">
+          <option hidden [value]="">beispiel@email.de </option>
           <option [ngValue]="ligaleiter"
                   *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
 
-          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.PLACEHOLDER' | translate }}">
+
         </select>
 
 
