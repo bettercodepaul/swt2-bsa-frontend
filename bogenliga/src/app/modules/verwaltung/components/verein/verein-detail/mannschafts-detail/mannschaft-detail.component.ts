@@ -34,12 +34,15 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {environment} from '@environment';
-import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
+import {
+  DownloadButtonResourceProviderService
+} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {PasseDataProviderService} from '@verwaltung/services/passe-data-provider-service';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {PasseDTOClass} from '@verwaltung/types/datatransfer/passe-dto.class';
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
+import {SessionHandling} from '@shared/event-handling';
 
 const ID_PATH_PARAM = 'id';
 
@@ -88,6 +91,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
 
+  private sessionHandling: SessionHandling;
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -107,6 +111,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
               private onOfflineService: OnOfflineService,
               private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
@@ -156,8 +161,17 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
                                      });
   }
 
-
-
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
+  }
 
 
   ngOnDestroy() {

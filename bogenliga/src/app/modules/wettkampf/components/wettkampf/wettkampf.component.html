@@ -1,11 +1,15 @@
-<bla-common-dialog [config]="config" >
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkaempfe" target="_blank"></bla-hilfe-button>
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config">
+  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkaempfe"
+                    target="_blank"></bla-hilfe-button>
   <p class="subtitle">{{'VEREINE.VEREINE.DESCRIPTION' | translate}}</p>
   <form id="regionenForm"
         class="horizontal-form half-page">
     <div>
       <h2 style="display: inline">Gewählte Veranstaltung: </h2>
-      <h3 style="display: inline" class="print1" id="titel">{{currentVeranstaltung.name}}</h3>
+      <h3 class="print1"
+          id="titel"
+          style="display: inline">{{currentVeranstaltung.name}}</h3>
     </div>
     <div>
       <h2 style="display: inline">Gewählte Mannschaft: </h2>
