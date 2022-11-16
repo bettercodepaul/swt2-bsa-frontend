@@ -1,12 +1,14 @@
-<bla-navigation-dialog [config]="config">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereine" target="_blank"></bla-hilfe-button>
+<bla-navigation-dialog (mouseover)="onMouseOver($event)"
+                       [config]="config">
+  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereine"
+                    target="_blank"></bla-hilfe-button>
   <div class="row">
     <bla-col-layout>
 
       <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
 
       <bla-quicksearch-list (onSelect)="onSelect($event)"
-                            [selectedItemIds]= [selectedVereinsId]
+                            [selectedItemIds]=[selectedVereinsId]
                             [items]="vereine"
                             [loading]="loadingVereine"
                             [multipleSelections]="!multipleSelections"

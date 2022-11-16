@@ -1,7 +1,6 @@
-import {Component, Input, NgModule, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponentDirective} from '@shared/components';
-import {ButtonType} from '@shared/components';
+import {ButtonType, CommonComponentDirective} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -35,6 +34,8 @@ import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-d
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-do.class';
 import {TranslatePipe} from '@ngx-translate/core';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
@@ -104,6 +105,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public maxWettkampftageID = 8;
   public selectedWettkampf: WettkampfDO;
 
+  private sessionHandling: SessionHandling;
+
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampfDataProvider: WettkampfDataProviderService,
@@ -116,8 +119,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     private route: ActivatedRoute,
     private einstellungenProvider: EinstellungenProviderService,
     private notificationService: NotificationService,
-    private translate: TranslatePipe) {
+    private translate: TranslatePipe,
+    private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
@@ -146,6 +151,18 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         }
       }
     });
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public onVeranstaltungDetail(ignore: any): void {

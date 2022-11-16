@@ -14,6 +14,8 @@ import {
 import {WettkampfklassenDataProviderService} from '../../../services/wettkampfklassen-data-provider.service';
 import {WettkampfKlasseDO} from '../../../types/wettkampfklasse-do.class';
 import {WETTKAMPFKLASSE_DETAIL_CONFIG} from './wettkampfklasse-detail.config';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
@@ -23,9 +25,9 @@ const NOTIFICATION_SAVE_DSB_MITGLIED = 'dsb_mitglied_detail_save';
 const NOTIFICATION_UPDATE_DSB_MITGLIED = 'dsb_mitglied_detail_update';
 
 @Component({
-  selector: 'bla-wettkampfklasse-detail',
+  selector:    'bla-wettkampfklasse-detail',
   templateUrl: './wettkampfklasse-detail.component.html',
-  styleUrls: ['./wettkampfklasse-detail.component.scss']
+  styleUrls:   ['./wettkampfklasse-detail.component.scss']
 })
 export class WettkampfklasseDetailComponent extends CommonComponentDirective implements OnInit {
   public config = WETTKAMPFKLASSE_DETAIL_CONFIG;
@@ -35,11 +37,15 @@ export class WettkampfklasseDetailComponent extends CommonComponentDirective imp
   public deleteLoading = false;
   public saveLoading = false;
 
+  private sessionHandling: SessionHandling;
+
   constructor(private wettkampfklasseDataProvider: WettkampfklassenDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
@@ -60,6 +66,18 @@ export class WettkampfklasseDetailComponent extends CommonComponentDirective imp
         }
       }
     });
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public onSave(ignore: any): void {

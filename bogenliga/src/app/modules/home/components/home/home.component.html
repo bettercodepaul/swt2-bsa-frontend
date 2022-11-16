@@ -1,4 +1,5 @@
-<bla-common-dialog [config]="config">
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config">
 
   <div id="homePage">
     <h2 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h2>
