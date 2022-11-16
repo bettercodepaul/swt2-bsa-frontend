@@ -221,5 +221,7 @@ export class CurrentUserService {
   public hasVeranstaltung(input: number): boolean {
       return this.getVeranstaltungen().includes(input);
   }
-
+  public getCurrentUserID(): number {
+    return this.currentUser.id;
+  }
 }
