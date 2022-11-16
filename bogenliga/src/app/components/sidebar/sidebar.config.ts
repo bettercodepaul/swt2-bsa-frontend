@@ -26,14 +26,14 @@ import {
 
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
- /* {
+  {
     label: 'SIDEBAR.HOME',
     icon: faHome,
     route: '/home',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     datacy: 'sidebar-home-button'
-  },*/
+  },
 
   {
     label: 'SIDEBAR.REGIONEN',
@@ -50,42 +50,6 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     datacy: 'sidebar-vereine-button'
-  },
-
-  {
-    label: 'SIDEBAR.WETTKAMPF',
-    icon: faTrophy,
-    route: '/wettkaempfe',
-    permissons: [UserPermission.CAN_READ_DEFAULT],
-    subitems: [],
-    datacy: 'sidebar-wettkampf-button'
-  },
-
-  {
-    label: 'SIDEBAR.WKDURCHFUEHRUNG',
-    icon: faCalendar,
-    route: '/wkdurchfuehrung',
-    permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
-    subitems: [],
-    datacy: 'sidebar-wkdurchfuehrung-button'
-  },
-
-
-  {
-    label: 'SIDEBAR.MANNSCHAFTEN',
-    icon: faListOl,
-    route: '/ligatabelle',
-    permissons: [UserPermission.CAN_READ_DEFAULT],
-    subitems: [],
-    datacy: 'sidebar-ligatabelle-button'
-  },
-  {
-    label: 'SIDEBAR.SPOTTING',
-    icon: faBinoculars,
-    route: '/spotter',
-    permissons: [UserPermission.CAN_OPERATE_SPOTTING],
-    subitems: [],
-    datacy: 'sidebar-spotting-button'
   },
 
   {
@@ -139,6 +103,44 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       }
     ]
   },
+
+
+  {
+    label: 'SIDEBAR.WETTKAMPF',
+    icon: faTrophy,
+    route: '/wettkaempfe',
+    permissons: [UserPermission.CAN_READ_DEFAULT],
+    subitems: [],
+    datacy: 'sidebar-wettkampf-button'
+  },
+
+  {
+    label: 'SIDEBAR.WKDURCHFUEHRUNG',
+    icon: faCalendar,
+    route: '/wkdurchfuehrung',
+    permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
+    subitems: [],
+    datacy: 'sidebar-wkdurchfuehrung-button'
+  },
+
+
+  {
+    label: 'SIDEBAR.MANNSCHAFTEN',
+    icon: faListOl,
+    route: '/ligatabelle',
+    permissons: [UserPermission.CAN_READ_DEFAULT],
+    subitems: [],
+    datacy: 'sidebar-ligatabelle-button'
+  },
+  {
+    label: 'SIDEBAR.SPOTTING',
+    icon: faBinoculars,
+    route: '/spotter',
+    permissons: [UserPermission.CAN_OPERATE_SPOTTING],
+    subitems: [],
+    datacy: 'sidebar-spotting-button'
+  },
+
 
   {
     label: 'SIDEBAR.PLAYGROUND',

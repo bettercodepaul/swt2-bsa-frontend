@@ -11,12 +11,13 @@ $accent-gold: #FFCC34; //Help, Tooltip, Link to Help
 $accent-red: #F40E0E; //Destructive Actions, Delete Buttons
 $true-white: #ffffff; //Navbar & Header Background
 
+/*
 $primary-light: #b4ffff; // Sidebar-Background
 $primary-dark: #007c91; // Sidebar-Font
 $secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
-
+*/
 
 @font-face {
   font-family: Poppins-regular;
@@ -26,6 +27,11 @@ $secondary-dark: #ff833a; // hover Links, Logo
 @font-face {
   font-family: Poppins-bold;
   src: url("/assets/fonts/Poppins/Poppins-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Poppins-thin;
+  src: url("/assets/fonts/Poppins/Poppins-Thin.ttf") format("truetype");
 }
 
 @font-face {
@@ -49,6 +55,8 @@ body {
   height: 100%;
   position: relative;
   background-color: $primary-white;
+  font-family: Poppins-regular;
+  color: $primary-black;
 }
 // ==================
 /* GLOBAL TYPOGRAPHY */
@@ -63,21 +71,21 @@ h1 {
 //Use for: Section title
 h2{
   color: $hero-blue;
-  font-size: 1.8em;
-  font-weight: bolder;
+  font-size: 1.5em;
+  font-family: Poppins-bold;
 }
 
 //Use for: Component title
 h3{
   color: $primary-black;
-  font-size: 1.5em;
-  font-weight: bold;
+  font-size: 1.2em;
+  font-family: Poppins-bold;
 }
 
 //Use for: Label (e.g. date lable)
 h4{
   color: $dark-gray;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: normal;
   font-family: "Bitter-regular";
 }
@@ -85,8 +93,9 @@ h4{
 // Use for: Erklärender subtitle unter H1 Page title
 .subtitle {
   color: $dark-gray;
-  font-size: 1.3em;
+  font-size: 1.1em;
   font-family: Bitter-regular;
+  padding-bottom: 1em;
 }
 
 // ======================
