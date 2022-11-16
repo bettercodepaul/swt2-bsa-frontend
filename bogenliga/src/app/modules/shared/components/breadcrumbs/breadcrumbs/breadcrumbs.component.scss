@@ -1,15 +1,18 @@
 .breadcrumb {
   border-radius: 0;
-  height: 3rem;
+  height: 1rem;
+  background-color: #FCFCFC;
 }
 
 .breadcrumb-item a, .breadcrumb-item a:visited {
-  color: #02bdd5;
+  color: #2A2A2A;
+  font-weight: bolder;
   text-decoration: none;
 }
 
 .breadcrumb-item a:hover {
-  color: #ff833a;
+  color: #487AF5;
+  font-weight: bold;
 }
 
 

@@ -11,7 +11,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.DESCRIPTION',
         icon:           'users',
         route:          'dsbmitglieder',
-        permissions:    [UserPermission.CAN_MODIFY_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER],
+        permissions:    [UserPermission.CAN_READ_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER],
         datacy:         'verwaltung-dsb-mitglieder-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.DSBMITGLIEDER.TOOLTIP'
       },
@@ -20,7 +20,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.DESCRIPTION',
         icon:           'address-card',
         route:          'user',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
         datacy:         'verwaltung-user-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.USER.TOOLTIP'
       },
@@ -29,7 +29,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
         icon:           'wrench',
         route:          'klassen',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
         datacy:         'verwaltung-klassen-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.TOOLTIP'
       },
@@ -48,7 +48,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.DESCRIPTION',
         icon:           'users',
         route:          'liga',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
+        permissions:    [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
         datacy:         'verwaltung-liga-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.LIGA.TOOLTIP'
       },
@@ -57,7 +57,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.DESCRIPTION',
         icon:           'sitemap',
         route:          'regionen',
-        permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER],
+        permissions:    [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
         datacy:         'verwaltung-regionen-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.REGIONEN.TOOLTIP'
       },
@@ -66,7 +66,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.DESCRIPTION',
         icon:           'calendar-alt',
         route:          'veranstaltung',
-        permissions:    [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG],
+        permissions:    [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG, UserPermission.CAN_MODIFY_STAMMDATEN],
         detailType:     'Veranstaltungen',
         datacy:         'verwaltung-veranstaltung-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.VERANSTALTUNG.TOOLTIP'
@@ -80,18 +80,6 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         datacy:         'verwaltung-einstellungen-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.TOOLTIP'
       },
-      // When editing Bug: BSAPP-498 it was decided to comment out the site or the button related to "Sportjahre",
-      // because the exactly function of t^he site "Sportjahre" is still unclear.
-      // If the button is needed again, just delete the uncommenting below.
-      /*
-      {
-        labelKey:       'Sportjahre',
-        descriptionKey: 'Verwaltung der Sportjahre',
-        icon:           'campground',
-        route:          'sportjahr',
-       permissions:     [UserPermission.CAN_READ_MY_VERANSTALTUNG, UserPermission.CAN_READ_SPORTJAHR]
-      }
-      */
       ]
   }
 };
