@@ -87,9 +87,10 @@ export class OverviewSelectionDialogComponent extends CommonSecuredDirective imp
 
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    // Check if User is a Ligaleiter, if so filter the incoming payload
     if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG) &&
       !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)) {
-      response.payload = response.payload.filter((entry) => this.currentUserService.hasVeranstaltung(entry.id));
+      response.payload = response.payload.filter((entry) => this.currentUserService.getCurrentUserID() === entry.ligaleiterId);
       console.log('detected');
     }
     this.rows = []; // reset array to ensure change detection
