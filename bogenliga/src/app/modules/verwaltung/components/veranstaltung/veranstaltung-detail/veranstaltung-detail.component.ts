@@ -170,7 +170,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
   }
 
-
+  // Falls Veranstaltungen erzeugt werden werden die Veranstaltungsattribute gesetzt
+  // Anschließend schickt er die Veranstaltung mittels eines Post Request an das Backend
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
