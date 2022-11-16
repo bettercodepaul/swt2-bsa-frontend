@@ -46,11 +46,10 @@ export class RegionenComponent implements OnInit {
   private vereine: VereinDTO[];
   private myChart = Sunburst(); // initializes sunburst-diagramm
 
-
-  @ViewChild('chart', {static: true}) myDiv: ElementRef;
   private sessionHandling: SessionHandling;
 
-  //private currentUserService: CurrentUserService;
+  @ViewChild('chart', {static: true}) myDiv: ElementRef;
+
 
   constructor(private regionDataProviderService: RegionDataProviderService,
     private vereinDataProviderService: VereinDataProviderService,
@@ -58,24 +57,24 @@ export class RegionenComponent implements OnInit {
     private currentUserService: CurrentUserService,
     private router: Router) {
     this.sessionHandling = new SessionHandling(this.currentUserService);
-    //window.addEventListener('focus', this.sessionHandling.onFocus());
-    /*angular.element(document).find('form').on('focus', function() {
-     this.sessionHandling.onFocus();
-     })*/
-    //document.body.addEventListener('focus', () => this.sessionHandling.onFocus());
   }
 
-  public onFocus(event: any) {
-    console.log('test onFocus regionen');
-    this.sessionHandling.onFocus();
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
-
 
   ngOnInit() {
     this.getDataAndShowSunburst();
     this.currentRegionDO = new RegionDO();
     this.loadRegionen();
-
   }
 
   convertDataToTree(currentRegion: RegionDO, allRegions: RegionDO[]): ChartNode {
