@@ -398,7 +398,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.notificationService.discardNotification();
 
     const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
-    this.updateNumbersDelete();
+
 
     const currentDate = new Date();
     const deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
@@ -433,6 +433,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.notificationService.showNotification(notification_expired);
 
     } else {
+      this.updateNumbersDelete();
       this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG + id)
           .subscribe((myNotification) => {
 
@@ -705,7 +706,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     if (this.anzahl < Number(this.maxWettkampftageEinstellungenDO.value)) {
       this.anzahl++;
       const temp: WettkampfDO = new WettkampfDO(
-        this.anzahl,
+        num,
         this.currentVeranstaltung.id,
         '2021-01-01',
         '',
