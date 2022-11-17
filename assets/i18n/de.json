@@ -11,18 +11,18 @@
   "SIDEBAR": {
     "TITLE": "Bogenliga",
     "TITLESHORT": "BL",
-    "HOME": "HOME",
-    "VERWALTUNG": "VERWALTUNG",
-    "WETTKAMPF": "WETTKAEMPFE",
-    "REGIONEN": "REGIONEN",
-    "VEREINE": "VEREINE",
-    "WKDURCHFUEHRUNG": "WETTKAMPFDURCHFÜHRUNG",
-    "MANNSCHAFTEN": "LIGATABELLE",
-    "SETTINGS": "EINSTELLUNGEN",
-    "PLAYGROUND": "PLAYGROUND",
-    "SPOTTING": "SPOTTING",
+    "HOME": "Home",
+    "VERWALTUNG": "Verwaltung",
+    "WETTKAMPF": "Wettkämpfe",
+    "REGIONEN": "Regionen",
+    "VEREINE": "Vereine",
+    "WKDURCHFUEHRUNG": "Wettkampfdurchführung",
+    "MANNSCHAFTEN": "Ligatabelle",
+    "SETTINGS": "Einstellungen",
+    "PLAYGROUND": "Playground",
+    "SPOTTING": "Spotting",
     "COLLAPSE": "Einklappen",
-    "HILFE" :  "HILFE"
+    "HILFE" :  "Hilfe"
   },
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
@@ -36,13 +36,14 @@
   "HOME": {
     "HOME": {
       "TITLE": "Home",
-      "WELCOME": "Herzlich Willkommen",
+      "WELCOME": "Willkommen",
       "WETTKAEMPFE": "Unsere nächsten Wettkämpfe",
       "WETTKAMPFERSATZ": "Derzeit sind keine Wettkämpfe geplant",
 
-      "FURTHER": "weitere Infos",
-      "CONTENT": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschafts Bogensport ziehen.",
-      "BOX1HEADING": "SCHÜLER- UND JUGEND- CUP 2018",
+      "FURTHER": "Weitere Infos",
+      "CONTENT": "Hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschaftsbogensport ziehen.",
+      "BOX1HEADING": "Schüler- und Jugend- Cup 2018",
+      "BOX1DATE": "2. Mai 2018",
       "BOX1CONTENT": "Seid dabei, wenn wir am 20. & 21. Oktober 2018 im WSV- Schulungszentrum in Ruit gemeinsam ein tolles Wochenende rund um das Sport- und Bogenschießen erleben und jede Menge Spaß haben werden.Beim Schüler- und Jugend- Cup können Jungschützen mit dem Bogen, dem Luftgewehr sowie der Luftpistole und dem Lichtgewehr sowie der Lichtpistole ihr Können in spannenden Wettkämpfen, Geschicklichkeits- und Konzentrationsübungen unter Beweis stellen.Detaillierte Informationen zu den Altersklassen und den Disziplinen, sowie den Meldebogen findet Ihr hier. Wir freuen uns auf euch!"
     },
     "IMPRESSUM": {
@@ -52,13 +53,14 @@
   "REGIONEN": {
     "REGIONEN": {
       "TITLE": "Regionen",
-      "DESCRIPTION": "Um eine Liga auszuwählen klicken Sie bitte auf die entsprechende Region, beispielsweise für die Württembergliga auf den Württembergischer Schützenverband.",
+      "DESCRIPTION": "Eine Übersicht über alle Regionen. Ein Klick auf die entsprechende Region in der Grafik oder in der Tabelle darunter öffnet die Detailansicht mit den dazugehörigen Ligen und Vereinen.",
       "CLOSE" : "Um zurück zu navigieren, auf den innersten Kreis klicken."
     }
   },
   "VEREINE": {
     "VEREINE": {
       "TITLE": "Vereine",
+      "DESCRIPTION": "Eine Übersicht aller Vereine. Ein Klick auf einen Verein aus der Tabelle gibt Auskunft über die aktuellen Wettkämpfe und Mannschaften dieses Vereins.",
       "TABLE": {
         "HEADERS": {
           "WETTKAMPF": "Wettkampf",
@@ -81,6 +83,7 @@
     },
     "LIGATABELLE": {
       "TITEL": "Liga-Tabelle",
+      "DESCRIPTION": "Alle Ligen und die jeweiligen Ligatabellen des ausgewählten Jahres",
       "LINKDESCRIPTION": "Zu den Wettkampfergebnissen der" ,
       "TABELLENPLATZ": "Tabellenplatz",
       "MANNSCHAFTNAME": "Mannschaft",
@@ -96,7 +99,7 @@
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
         "DOWNLOADFEHLER": {
-          "TITLE": "Fehler beim generieren der Einzelstatistik:",
+          "TITLE": "Fehler beim Generieren der Einzelstatistik:",
           "DESCRIPTION": "Einzelstatistik konnte nicht generiert werden. Es wurden keine Schützen für die Auswahl gefunden"
         }
       }
@@ -124,7 +127,8 @@
   },
   "WKDURCHFUEHRUNG": {
     "WKDURCHFUEHRUNG": {
-      "TITLE": "Terminübersicht"
+      "TITLE": "Terminübersicht",
+      "DESCRIPTION": "Alle vergangenen und anstehenden Veranstaltungen. Bei Auswahl einer Veranstaltung werden dazugehörige Details angezeigt."
     },
     "GENERIERE_MATCHES": {
       "NOTIFICATION": {
@@ -141,6 +145,18 @@
         "FAILURE": {
           "TITLE": "Fehler beim Laden der Daten",
           "DESCRIPTION": "Die Daten konnten nicht für den Offline Modus vollständig geladen werden!"
+        }
+      }
+    },
+    "ONLINE": {
+      "NOTIFICATION": {
+        "SUCCESS": {
+          "TITLE": "Die Daten wurden erfolgreich gespesichert",
+          "DESCRIPTION": "Die Daten wurden erfolgreich online gespeichert und der Online-Modus wurde wieder aktiviert."
+        },
+        "FAILURE": {
+          "TITLE": "Fehler beim Rücksynchronisieren der Daten",
+          "DESCRIPTION": "Die Daten konnten nicht für den Online Modus vollständig synchronisiert werden!"
         }
       }
     },
@@ -295,7 +311,7 @@
   "MANNSCHAFTEN": {
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle",
-      "LIGATABELLE_VORBEREITUNG": "Ligatabelle_Vorbereitung",
+      "LIGATABELLE_VORBEREITUNG": "Ligatabelle Vorbereitung",
       "TEXT": "Es muss ein Wettkampftag ausgewählt sein um die Buttons nutzen zu können"
     },
     "SCHUETZEN_STATISTIK": {
@@ -502,6 +518,7 @@
   "MANAGEMENT": {
     "VERWALTUNG": {
       "TITLE": "Verwaltung",
+      "DESCRIPTION": "Die zentrale Verwaltung aller Bogenliga Details. Bearbeite Mannschaften, Mitglieder und Vereine. Lege neue Veranstaltungen an und bearbeite existierende.",
       "NAVIGATION": {
         "DSBMITGLIEDER": {
           "LABEL": "DSB Mitglieder",
