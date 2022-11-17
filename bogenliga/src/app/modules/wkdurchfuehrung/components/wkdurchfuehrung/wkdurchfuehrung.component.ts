@@ -14,8 +14,6 @@ import {isUndefined} from '@shared/functions';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
-
-import {DsbMitgliedDetailComponent} from '@verwaltung/components';
 import {
   NotificationOrigin,
   NotificationService,
@@ -37,9 +35,11 @@ import {WettkampfOfflineSyncService} from '@wkdurchfuehrung/services/wettkampf-o
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 
 import {MatDialog} from '@angular/material/dialog';
-import {DsbMitgliedDetailPopUpComponent} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
-import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
+import {
+  DsbMitgliedDetailPopUpComponent
+} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
+import {SessionHandling} from '@shared/event-handling';
 
 
 @Component({
@@ -95,6 +95,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public availableYears: SportjahrVeranstaltungDO[];
   public selItemId: number;
 
+  private sessionHandling: SessionHandling;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -111,6 +112,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private dialog: MatDialog
   ) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
@@ -169,6 +171,18 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       }
     });
 
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public isOffline(): boolean {
