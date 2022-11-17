@@ -1,4 +1,5 @@
-<bla-common-dialog [config]="config"
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config"
                    [loading]="loading">
 
   <form id="veranstaltungForm"
@@ -175,10 +176,15 @@
     </div>
 
 
-    <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE BUTTON -->
+    <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE/ABSCHLIEßEN BUTTON -->
     <div class="form-group row">
       <div class="col-sm-12 button-box">
-
+        <bla-button *ngIf="entityExists()"
+                    [buttonType]="ButtonType.SUCCESS"
+                    [id]="'veranstaltungAbschließen'"
+                    [loading]="saveLoading">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH.TITLE' | translate }}
+        </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'veranstaltungInitialeLigatabelle'"
                     [disabled]="this.checkForExistingLigatabelle()"

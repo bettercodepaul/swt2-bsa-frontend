@@ -7,15 +7,14 @@ import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from 
 import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
 import {BogenligaResponse} from '../../../../shared/data-provider';
 import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {Notification, NotificationService, NotificationType,} from '../../../../shared/services/notification';
 import {
-  Notification,
-  NotificationService,
-  NotificationType,
-} from '../../../../shared/services/notification';
-import {EINSTELLUNGEN_OVERVIEW_CONFIG} from '@verwaltung/components/einstellungen/einstellungen-overview/einstellungen-overview.config';
+  EINSTELLUNGEN_OVERVIEW_CONFIG
+} from '@verwaltung/components/einstellungen/einstellungen-overview/einstellungen-overview.config';
 import {CurrentUserService} from '@shared/services';
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
+import {SessionHandling} from '@shared/event-handling';
 
 
 const NOTIFICATION_DELETE_EINSTELLUNG = 'einstellung_detail_delete';
@@ -35,15 +34,30 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
   public saveLoading = false;
   visible_: boolean;
 
+  private sessionHandling: SessionHandling;
+
   constructor(private einstellungenDataProvider: EinstellungenProviderService,
-              private router: Router,
-              private currentUserService: CurrentUserService,
-              private notificationService: NotificationService) {
-              super();
+    private router: Router,
+    private currentUserService: CurrentUserService,
+    private notificationService: NotificationService) {
+    super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
     this.loadTableRows();
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
 
