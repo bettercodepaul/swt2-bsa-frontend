@@ -1273,6 +1273,10 @@
         "AUSRICHTER": "Organizer",
         "UPDATE": "Refresh",
         "DELETE": "Delete",
+        "FINISH": {
+          "TITLE": "Finish",
+          "DESCRIPTION": "Are you sure, you want to finish the event?"
+        },
         "WETTKAMPFTAGE": "Competition days",
         "MANNSCHAFT": "Copy teams from previous year",
         "BACK": "Back"
