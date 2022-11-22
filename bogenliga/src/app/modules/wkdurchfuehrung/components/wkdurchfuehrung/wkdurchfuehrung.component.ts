@@ -728,8 +728,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private async findAvailableYears() {
     this.availableYears = [];
 
-    // lese aktives Sportjahr aus Datenbank aus
-    this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
+    // lese aktives Sportjahr aus Datenbank aus aus im Online-Modus
+    if(!this.onOfflineService.isOffline()) {
+      this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
+    }
 
     this.veranstaltungsDataProvider.findAllSportyearDestinct()
       .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
