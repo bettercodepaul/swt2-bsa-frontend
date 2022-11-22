@@ -14,6 +14,8 @@ import {NotificationService} from '@shared/services/notification';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
+import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
+import {getActiveSportYear} from '@shared/functions/active-sportyear';
 
 
 const ID_PATH_PARAM = 'id';
@@ -56,6 +58,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   public selectedVeranstaltungId: number;
   public selectedYearId: number;
+  private aktivesSportjahr: number;
 
   constructor(
     private router: Router,
@@ -65,6 +68,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private ligatabelleDataProvider: LigatabelleDataProviderService,
     private onOfflineService: OnOfflineService,
     private currentUserService: CurrentUserService,
+    private einstellungenDataProvider: EinstellungenProviderService,
   ) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService);
@@ -111,6 +115,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.availableYears = [];
     this.loadedVeranstaltungen = new Map();
     this.veranstaltungIdMap = new Map();
+    let indexOfSelectedYear = 0;
+    let counter = 0;
+
     try {
       console.log(this.onOfflineService.isOffline());
       const responseYear = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
@@ -134,9 +141,21 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         }
       }
 
+      // lese aktives Sportjahr aus Datenbank aus aus im Online-Modus
+      if(!this.onOfflineService.isOffline()) {
+        this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
+      }
+      // Prüfe ob das aktive Sportjahr in der Liste der verfügbaren Jahre ist
+      for (const sportjahr of this.availableYears) {
+        // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
+        if (sportjahr.sportjahr === this.aktivesSportjahr) {
+          indexOfSelectedYear = counter;
+        }
+        counter++;
+      }
       this.loading = false;
       this.loadingLigatabelle = false;
-      this.selectedYearId = this.availableYears[0].id;
+      this.selectedYearId = this.availableYears[indexOfSelectedYear].id;
 
       if (this.availableYears.length > 0) {
         this.onSelectYear(this.availableYears); // automatische Auswahl nur bei vorhandenen Daten
