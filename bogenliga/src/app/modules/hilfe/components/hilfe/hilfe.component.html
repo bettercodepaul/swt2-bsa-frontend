@@ -1,16 +1,18 @@
-<bla-navigation-dialog [config]="config">
+<bla-navigation-dialog (mouseover)="onMouseOver($event)"
+                       [config]="config">
   <ng-container>
     <div class="hilfeseite-container">
       <div class="hilfe-section-container">
-          <table id="section-table">
-            <tr class="hilfe-table-section" *ngFor="let sec of sections">
-              <button class="btn btn-primary section-btn"
-                   attr.data-cy="{{sec.cy_test}}"
-                   (click)="setUrl(sec.url)">
-                {{sec.id}}
-              </button>
-            </tr>
-          </table>
+        <table id="section-table">
+          <tr *ngFor="let sec of sections"
+              class="hilfe-table-section">
+            <button (click)="setUrl(sec.url)"
+                    attr.data-cy="{{sec.cy_test}}"
+                    class="btn btn-primary section-btn">
+              {{sec.id}}
+            </button>
+          </tr>
+        </table>
       </div>
       <div class="hilfe-iframe-container" *ngIf="sectionSelected">
         <iframe

@@ -3,7 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {
   AlertType,
   ButtonType,
-  CommonComponentDirective, hideLoadingIndicator,
+  CommonComponentDirective,
+  hideLoadingIndicator,
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '@shared/components';
@@ -23,7 +24,6 @@ import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.clas
 import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
-import {VeranstaltungDTO} from '../../../types/datatransfer/veranstaltung-dto.class';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_DETAIL_CONFIG, VERANSTALTUNG_DETAIL_TABLE_Config} from './veranstaltung-detail.config';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
@@ -33,7 +33,6 @@ import {WettkampftypDataProviderService} from '../../../services/wettkampftyp-da
 import {WettkampftypDO} from '../../../../verwaltung/types/wettkampftyp-do.class';
 import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkampftyp-dto.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
-import {DsbMannschaftDTO} from '@verwaltung/types/datatransfer/dsb-mannschaft-dto.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {LigatabelleDataProviderService} from '../../../../ligatabelle/services/ligatabelle-data-provider.service';
@@ -42,10 +41,11 @@ import {MannschaftSortierungDataProviderService} from '@verwaltung/services/mann
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {MannschaftSortierungDO} from '@verwaltung/types/mannschaftSortierung-do.class';
 import {MatchDataProviderService} from '@verwaltung/services/match-data-provider.service';
-import {WettkampfKlasseDO} from '@verwaltung/types/wettkampfklasse-do.class';
 import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService} from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
@@ -110,6 +110,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public currentLigatabelle: Array<LigatabelleErgebnisDO>;
 
+  private sessionHandling: SessionHandling;
+
 
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
@@ -124,8 +126,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     private notificationService: NotificationService,
     private ligatabellenService: LigatabelleDataProviderService,
     private maSortierungService: MannschaftSortierungDataProviderService,
-    private matchDataProvider: MatchDataProviderService) {
+    private matchDataProvider: MatchDataProviderService,
+    private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
 
@@ -160,6 +164,18 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     });
   }
 
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
+  }
+
 
   public onWettkampftag(ignore: any): void {
     this.navigateToWettkampftage(this.currentVeranstaltung);
@@ -170,7 +186,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
   }
 
-
+  // Falls Veranstaltungen erzeugt werden werden die Veranstaltungsattribute gesetzt
+  // Anschließend schickt er die Veranstaltung mittels eines Post Request an das Backend
   public onSave(ignore: any): void {
     this.saveLoading = true;
 

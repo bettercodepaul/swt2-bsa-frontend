@@ -14,7 +14,7 @@ export class LigaOverviewGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     // CAN_READ_SYSTEMDATEN required to activate Liga Overview
-    return this.currentUserService.hasPermission(
-      UserPermission.CAN_READ_SYSTEMDATEN);
+    return this.currentUserService.hasAnyPermisson(
+      [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN]);
   }
 }

@@ -9,12 +9,12 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
-import {formatDate} from '@angular/common';
-import {registerLocaleData} from '@angular/common';
+import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
 import {CurrentUserService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
+import {SessionHandling} from '@shared/event-handling';
 
 @Component({
   selector:    'bla-home',
@@ -33,20 +33,32 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public currentDate: number =  Date.now();
   public dateHelper: string;
 
-
+  private sessionHandling: SessionHandling;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
-              private veranstaltungDataProvider: VeranstaltungDataProviderService,
-              private logindataprovider: LoginDataProviderService,
-              private currentUserService: CurrentUserService) {
+    private veranstaltungDataProvider: VeranstaltungDataProviderService,
+    private logindataprovider: LoginDataProviderService,
+    private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
+  }
 
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
       this.logindataprovider.signInDefaultUser()
-            .then(() => this.handleSuccessfulLogin());
+          .then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
     }
