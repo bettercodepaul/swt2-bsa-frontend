@@ -1,16 +1,28 @@
+/* Farbkonzept Website */
+$hero-blue: #487AF5; //Title H2, visual accent elements
+$primary-black: #2A2A2A; // Most Texts, Primary Buttons
+$primary-white: #FCFCFC; //Background
+$dark-gray: #888888; // Subtitle, Inactive Buttons
+$light-gray: #EAEAEF; //Secondary Buttons
+$accent-gold: #FFCC34; //Help, Tooltip, Link to Help
+$accent-red: #F40E0E; //Destructive Actions, Delete Buttons
+$true-white: #ffffff; //Navbar & Header Background
+
 .navigation-card {
   width: 18rem;
-  margin: 1em 1em 0 0;
+  min-height: 16rem;
+  margin: 1.2em 1.2em 0 0;
 }
 
 .card-header-link, .card-header-link:hover, .card-header-link:visited, .card-header-link:active {
-  color: #000;
+  color: $primary-black;
 }
 
 .card-header {
   text-align: center;
   display: flex;
   justify-content: center;
+  background-color: $light-gray;
 }
 
 .tooltip-body {
@@ -18,13 +30,13 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 227px;
+  min-height: 16rem;
   float: bottom;
 }
 
 .tooltip-navigation-card {
   position: relative;
-  background: rgba(0,0,0,.03);
+  background: $light-gray;
 }
 
 .tooltip-text {
@@ -36,6 +48,3 @@
   white-space: pre-line;
 }
 
-.title {
-  font-weight: bolder;
-}
