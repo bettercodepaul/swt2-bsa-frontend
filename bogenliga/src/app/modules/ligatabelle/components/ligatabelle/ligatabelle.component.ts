@@ -115,8 +115,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.availableYears = [];
     this.loadedVeranstaltungen = new Map();
     this.veranstaltungIdMap = new Map();
-    let indexOfSelectedYear = 0;
+    let indexOfSelectedYearInAvailableYears = 0;
     let counter = 0;
+    let selectedYear: SportjahrVeranstaltungDO[] = [];
 
     try {
       console.log(this.onOfflineService.isOffline());
@@ -149,16 +150,18 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       for (const sportjahr of this.availableYears) {
         // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
         if (sportjahr.sportjahr === this.aktivesSportjahr) {
-          indexOfSelectedYear = counter;
+          indexOfSelectedYearInAvailableYears = counter;
         }
         counter++;
       }
       this.loading = false;
       this.loadingLigatabelle = false;
-      this.selectedYearId = this.availableYears[indexOfSelectedYear].id;
+      this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id;
 
       if (this.availableYears.length > 0) {
-        this.onSelectYear(this.availableYears); // automatische Auswahl nur bei vorhandenen Daten
+        // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (IndexOfSelectedYearInAvailableYears = 0)
+        selectedYear.push(this.availableYears[indexOfSelectedYearInAvailableYears]);
+        this.onSelectYear(selectedYear); // automatische Auswahl nur bei vorhandenen Daten
       }
     } catch (e) {
       this.loading = false;
