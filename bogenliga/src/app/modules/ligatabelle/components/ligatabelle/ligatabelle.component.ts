@@ -12,8 +12,8 @@ import {LigatabelleErgebnisDO} from '../../types/ligatabelle-ergebnis-do.class';
 import {isUndefined} from '@shared/functions';
 import {NotificationService} from '@shared/services/notification';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
-import {OnOfflineService} from '@shared/services';
-
+import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {SessionHandling} from '@shared/event-handling';
 
 
 const ID_PATH_PARAM = 'id';
@@ -27,16 +27,7 @@ const ID_PATH_PARAM = 'id';
 export class LigatabelleComponent extends CommonComponentDirective implements OnInit {
 
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
-    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
-    private ligatabelleDataProvider: LigatabelleDataProviderService,
-    private onOfflineService: OnOfflineService
-  ) {
-    super();
-  }
+  private sessionHandling: SessionHandling;
 
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
@@ -66,6 +57,19 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedVeranstaltungId: number;
   public selectedYearId: number;
 
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+    private ligatabelleDataProvider: LigatabelleDataProviderService,
+    private onOfflineService: OnOfflineService,
+    private currentUserService: CurrentUserService,
+  ) {
+    super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
+  }
+
   ngOnInit() {
     console.log('Bin im Liga');
     this.loadTableData();
@@ -82,6 +86,18 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         console.log('no params');
       }
     });
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   private async loadTableData() {
