@@ -16,28 +16,44 @@ import {
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {REGION_OVERVIEW_CONFIG} from './region-overview.config';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService} from '@shared/services';
 
 export const NOTIFICATION_DELETE_REGIONEN = 'region_overview_delete';
 
 @Component({
-  selector: 'bla-region-overview',
+  selector:    'bla-region-overview',
   templateUrl: './region-overview.component.html',
-  styleUrls: ['./region-overview.component.scss']
+  styleUrls:   ['./region-overview.component.scss']
 })
 export class RegionOverviewComponent extends CommonComponentDirective implements OnInit {
 
   public config = REGION_OVERVIEW_CONFIG;
   public rows: TableRow[];
   public searchTerm = 'searchTermRegion';
+  private sessionHandling: SessionHandling;
 
-  constructor(private regionDataProvider: RegionDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private regionDataProvider: RegionDataProviderService, private router: Router, private notificationService: NotificationService, private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
     this.loading = true;
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
     }
   }
 

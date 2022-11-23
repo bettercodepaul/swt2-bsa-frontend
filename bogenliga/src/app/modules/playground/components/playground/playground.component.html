@@ -1,4 +1,6 @@
-<bla-common-dialog [config]="config" *ngIf="!(inProd === true)">
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   *ngIf="!(inProd === true)"
+                   [config]="config">
 
   <p>Auf dieser Seite können neue Komponenten ausprobiert werden. Falls ihr noch eine passende Komponente für eure
      Dialoge sucht, könnt ihr hier stöbern.</p>

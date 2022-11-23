@@ -1,13 +1,15 @@
-<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_mitglieder-uebersicht" target="_blank"></bla-hilfe-button>
-<bla-overview-dialog  [hidden]=false
-                       [config]="config"
-                       [rows]="rows"
-                       [loading]="loading"
-                       [searchTerm]="searchTerm"
-                       (onViewClicked)="onView($event)"
-                       (onEditClicked)="onEdit($event)"
-                       (onDeleteClicked)="onDelete($event)"
-                       (onSearchClicked)="findBySearch($event)" >
+<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_mitglieder-uebersicht"
+                  target="_blank"></bla-hilfe-button>
+<bla-overview-dialog (mouseover)="onMouseOver($event)"
+                     (onDeleteClicked)="onDelete($event)"
+                     (onEditClicked)="onEdit($event)"
+                     (onSearchClicked)="findBySearch($event)"
+                     (onViewClicked)="onView($event)"
+                     [config]="config"
+                     [hidden]=false
+                     [loading]="loading"
+                     [rows]="rows"
+                     [searchTerm]="searchTerm">
 
-  </bla-overview-dialog>
+</bla-overview-dialog>
 

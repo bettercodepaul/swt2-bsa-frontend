@@ -16,13 +16,15 @@ import {
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
 import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
 import {LIGA_OVERVIEW_CONFIG} from './liga-overview.config';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService} from '@shared/services';
 
 export const NOTIFICATION_DELETE_LIGA = 'liga_overview_delete';
 
 @Component({
-  selector: 'bla-liga-overview',
+  selector:    'bla-liga-overview',
   templateUrl: './liga-overview.component.html',
-  styleUrls: ['./liga-overview.component.scss']
+  styleUrls:   ['./liga-overview.component.scss']
 })
 export class LigaOverviewComponent extends CommonComponentDirective implements OnInit {
 
@@ -30,15 +32,29 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
   public rows: TableRow[];
   public searchTerm = 'searchTermLiga';
 
+  private sessionHandling: SessionHandling;
 
-  constructor(private ligaDataProvider: LigaDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private ligaDataProvider: LigaDataProviderService, private router: Router, private notificationService: NotificationService, private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
     this.loading = true;
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
     }
   }
 

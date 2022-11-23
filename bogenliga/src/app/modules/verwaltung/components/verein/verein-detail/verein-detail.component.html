@@ -1,6 +1,8 @@
-<bla-common-dialog [config]="config"
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config"
                    [loading]="loading">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereindetails" target="_blank"></bla-hilfe-button>
+  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereindetails"
+                    target="_blank"></bla-hilfe-button>
 
   <form id="vereineForm"
         class="horizontal-form half-page"
@@ -17,7 +19,7 @@
         <input type="text"
                class="form-control"
                required
-               pattern="(?=.*[A-Za-z])[A-Za-z0-9\ \-\.]{1,50}$"
+               pattern="(?=.*[A-Za-zäÄüÜöÖß])[A-Za-zäÄüÜöÖß0-9\ \-\.]{1,50}$"
                id="vereinName"
                name="vereinName"
                #vereinName="ngModel"

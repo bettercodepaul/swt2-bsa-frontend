@@ -4,17 +4,19 @@ import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
 import {EINSTELLUNGEN_DETAIL_CONFIG} from './einstellungen-detail.config';
 import {
-
-  Notification, NotificationOrigin,
+  CurrentUserService,
+  Notification,
+  NotificationOrigin,
   NotificationService,
-  NotificationSeverity, NotificationType,
-
+  NotificationSeverity,
+  NotificationType,
 } from '@shared/services';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {SessionHandling} from '@shared/event-handling';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_UPDATE_EINSTELLUNG = 'einstellung_detail_update';
@@ -39,13 +41,29 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   public id;
   public test = 'app.bogenliga.frontend.autorefresh.active';
 
+  private sessionHandling: SessionHandling;
+
 
   constructor(private einstellungenDataProvider: EinstellungenProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService,
-              private einstellungenProviderService: EinstellungenProviderService) {
-              super();
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private einstellungenProviderService: EinstellungenProviderService,
+    private currentUserService: CurrentUserService) {
+    super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public entityExists(): boolean {
