@@ -1,4 +1,5 @@
-<bla-common-dialog [config]="config"
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config"
                    [loading]="loading">
 
   <form id="wettkampfKlasseForm"
@@ -42,7 +43,7 @@
         <input type="text"
                class="form-control"
                required
-               pattern="(?=.*[A-Za-z])[A-Za-z\.\-\ ]{1,50}$"
+               pattern="(?=.*[A-Za-zäÄüÜöÖß])[A-Za-zäÄüÜöÖß\.\-\ ]{1,50}$"
                id="wettkampfKlasseName"
                name="wettkampfKlasseName"
                #wettkampfKlasseName="ngModel"

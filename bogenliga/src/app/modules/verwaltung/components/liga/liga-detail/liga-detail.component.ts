@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponentDirective} from '@shared/components';
-import {ButtonType} from '@shared/components';
+import {ButtonType, CommonComponentDirective} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -22,6 +21,8 @@ import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {LigaDO} from '../../../types/liga-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {LIGA_DETAIL_CONFIG} from './liga-detail.config';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';
@@ -31,9 +32,9 @@ const NOTIFICATION_SAVE_LIGA = 'liga_detail_save';
 const NOTIFICATION_UPDATE_LIGA = 'liga_detail_update';
 
 @Component({
-  selector: 'bla-liga-detail',
+  selector:    'bla-liga-detail',
   templateUrl: './liga-detail.component.html',
-  styleUrls: ['./liga-detail.component.scss']
+  styleUrls:   ['./liga-detail.component.scss']
 })
 export class LigaDetailComponent extends CommonComponentDirective implements OnInit {
   public config = LIGA_DETAIL_CONFIG;
@@ -53,14 +54,17 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public saveLoading = false;
 
   public id;
+  private sessionHandling: SessionHandling;
 
   constructor(private ligaDataProvider: LigaDataProviderService,
-              private regionProvider: RegionDataProviderService,
-              private userProvider: UserProfileDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService) {
+    private regionProvider: RegionDataProviderService,
+    private userProvider: UserProfileDataProviderService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
@@ -85,6 +89,18 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         }
       }
     });
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public onSave(ignore: any): void {

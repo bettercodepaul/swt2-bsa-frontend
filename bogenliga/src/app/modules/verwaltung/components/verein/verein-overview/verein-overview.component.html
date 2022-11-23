@@ -1,4 +1,5 @@
-<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereine-uebersicht" target="_blank"></bla-hilfe-button>
+<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereine-uebersicht"
+                  target="_blank"></bla-hilfe-button>
 <bla-overview-dialog [hidden]=false
                      [config]="config"
                      [rows]="rows"
@@ -7,6 +8,7 @@
                      (onViewClicked)="onView($event)"
                      (onEditClicked)="onEdit($event)"
                      (onDeleteClicked)="onDelete($event)"
+                     (mouseover)="onMouseOver($event)"
                      (onSearchClicked)="findBySearch($event)">
 
 </bla-overview-dialog>

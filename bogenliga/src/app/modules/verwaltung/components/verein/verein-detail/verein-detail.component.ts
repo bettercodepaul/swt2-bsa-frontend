@@ -32,10 +32,13 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
 import {environment} from '@environment';
-import {DownloadButtonResourceProviderService} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
+import {
+  DownloadButtonResourceProviderService
+} from '@shared/components/buttons/download-button/services/download-button-resource-provider.service';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
-import { jsPDF } from 'jspdf';
+import {jsPDF} from 'jspdf';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
+import {SessionHandling} from '@shared/event-handling';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
@@ -67,6 +70,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   public deleteLoading = false;
   public saveLoading = false;
 
+  private sessionHandling: SessionHandling;
 
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
@@ -81,12 +85,25 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
               private onOfflineService: OnOfflineService,
               private notificationService: NotificationService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService);
   }
 
   ngOnInit() {
     this.loading = true;
     this.notificationService.discardNotification();
     this.loadRegions(this.regionType); // Request all regions from the backend
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   private loadVerein(): void {

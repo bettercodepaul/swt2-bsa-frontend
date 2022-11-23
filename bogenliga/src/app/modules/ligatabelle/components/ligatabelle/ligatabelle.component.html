@@ -1,5 +1,8 @@
-<bla-common-dialog [config]="config">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:ligatabelle" target="_blank"></bla-hilfe-button>
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config">
+  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:ligatabelle"
+                    target="_blank"></bla-hilfe-button>
+  <p class="subtitle">{{'WETTKAEMPFE.LIGATABELLE.DESCRIPTION' | translate}}</p>
   <div class="layout-elements">
 
     <bla-row-layout>

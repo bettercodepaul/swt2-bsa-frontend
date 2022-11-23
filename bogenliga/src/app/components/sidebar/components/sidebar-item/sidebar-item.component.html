@@ -1,8 +1,12 @@
 <div class="sidebar-link"
      [class.inactive]="isActive">
 
-  <fa-icon [icon]="icon"
-           size="lg"></fa-icon>
+    <div>
+    <fa-icon [icon]="icon"
+             size="lg"></fa-icon>
+    </div>
+
+
   <span *ngIf="!isActive"
         class="sidebar-text"
         [class.inactive]="isActive">{{ label }}

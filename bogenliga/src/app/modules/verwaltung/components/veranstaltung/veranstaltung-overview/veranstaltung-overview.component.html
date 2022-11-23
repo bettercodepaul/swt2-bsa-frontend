@@ -3,13 +3,14 @@
 <bla-row-layout>
 
 <bla-selection-overview-dialog [config]="table_config"
-                                 [rows]="rows"
-                                 [loading]="loading"
-                                 (onViewClicked)="onView($event)"
-                                 (onEditClicked)="onEdit($event)"
-                                 (onDeleteClicked)="onDelete($event)"
+                               (mouseover)="onMouseOver($event)"
+                               (onDeleteClicked)="onDelete($event)"
+                               (onEditClicked)="onEdit($event)"
+                               (onViewClicked)="onView($event)"
+                               [loading]="loading"
                                [items]="selectedDTOs"
                                [multipleSelections]="!multipleSelections"
+                               [rows]="rows"
                                [optionFieldSelector]="'sportjahr'">
 
 </bla-selection-overview-dialog>

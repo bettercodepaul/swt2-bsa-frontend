@@ -1,6 +1,8 @@
-<bla-common-dialog [config]="config"
+<bla-common-dialog (mouseover)="onMouseOver($event)"
+                   [config]="config"
                    [loading]="loading">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:dsbmannschaftdetails" target="_blank"></bla-hilfe-button>
+  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:dsbmannschaftdetails"
+                    target="_blank"></bla-hilfe-button>
   <form id="mannschaftForm"
         class="horizontal-form half-page"
         #mannschaftForm="ngForm">
@@ -59,7 +61,23 @@
         <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.LABEL' | translate }}</span>
         <span> *</span>
       </label>
-      <div class="col-sm-9">
+
+      <div class="loading" *ngIf="loadingVeranstaltungen" >
+        <tr>
+          <td style="text-align: center; "
+              [colSpan]="colspan">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <fa-icon icon="sync" [spin]="'true'" size="4x"
+                       style="margin-top: 2em; margin-bottom: 2em;">
+              </fa-icon>
+              <p>{{'TABLE.LOADING' | translate}}</p>
+            </div>
+          </td>
+        </tr>
+      </div>
+
+
+      <div class="col-sm-9" *ngIf="!loadingVeranstaltungen">
         <select class="form-control"
                 required
                 id="mannschaftVeranstaltung"
@@ -73,6 +91,7 @@
           {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.ERROR' | translate }}
         </div>
       </div>
+
     </div>
 
     <div class="form-group row">
