@@ -1,6 +1,6 @@
 <bla-grid-layout>
   <ng-container *ngFor="let card of config.navigationCards">
-    <div *ngIf="hasUserPermissions(card.permissions)" class="card navigation-card">
+    <div *ngIf="hasUserPermissions(card.permissions)" class="navigation-card soft-shadow">
       <div *ngIf="card !== activeCard">
         <a class="card-header-link"
            [routerLink]="getLink(card.route,card.detailType)">
@@ -9,10 +9,10 @@
           </div>
         </a>
         <div class="card-body">
-          <h5 class="card-title">{{ card.labelKey | translate }}</h5>
+          <h3 class="card-title">{{ card.labelKey | translate }}</h3>
           <p class="card-text">{{ card.descriptionKey | translate }}</p>
           <bla-tooltip [value]="card.tooltipText | translate">
-          <button  class="btn btn-primary"
+          <button style="align-self: flex-end" class="btn btn-primary"
                    (mouseenter)  ="setActiveCard(card)"
                    [routerLink]  ="getLink(card.route,card.detailType)"
                    [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
@@ -23,7 +23,7 @@
       <!-- Tooltip div container called with ngIf conditions -->
       <div *ngIf="card === activeCard" class="tooltip-navigation-card">
         <div class="card-body tooltip-body">
-          <p class="tooltip-text title">{{card.descriptionKey | translate }}</p>
+          <h3>{{card.descriptionKey | translate }}</h3>
           <p class="tooltip-text multi-lines-text">{{card.tooltipText | translate}}</p>
           <div class="button-container">
             <button  class="btn btn-primary"
