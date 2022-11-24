@@ -15,7 +15,7 @@
           <button style="align-self: flex-end" class="btn btn-primary"
                    (mouseenter)  ="setActiveCard(card)"
                    [routerLink]  ="getLink(card.route,card.detailType)"
-                   [attr.data-cy]="card.datacy">{{ card.labelKey | translate }}
+                   [attr.data-cy]="card.datacy">{{ card.labelKey | translate }} verwalten
           </button>
           </bla-tooltip>
         </div>
@@ -29,7 +29,7 @@
             <button  class="btn btn-primary"
                      (mouseleave)   ="resetActiveCard()"
                      [routerLink]   ="getLink(card.route,card.detailType)"
-                     [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }}
+                     [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }} verwalten
             </button>
           </div>
         </div>
