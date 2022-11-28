@@ -15,7 +15,7 @@ import {WettkampfklassenDataProviderService} from '../../../services/wettkampfkl
 import {WettkampfKlasseDO} from '../../../types/wettkampfklasse-do.class';
 import {WETTKAMPFKLASSE_DETAIL_CONFIG} from './wettkampfklasse-detail.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
@@ -43,9 +43,10 @@ export class WettkampfklasseDetailComponent extends CommonComponentDirective imp
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
