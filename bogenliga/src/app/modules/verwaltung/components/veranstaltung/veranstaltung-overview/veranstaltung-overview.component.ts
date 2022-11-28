@@ -20,7 +20,7 @@ import {VERANSTALTUNG_OVERVIEW_TABLE_CONFIG} from './veranstaltung-overview.conf
 import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components/liga/liga-overview/liga-overview.component';
 import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjahr-veranstaltung-dto';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
-import {CurrentUserService, UserPermission} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
@@ -47,9 +47,10 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
 
   constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private router: Router, private notificationService: NotificationService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

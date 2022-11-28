@@ -112,7 +112,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private dialog: MatDialog
   ) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

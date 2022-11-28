@@ -22,7 +22,7 @@ import {NotificationService} from '@shared/services/notification';
 import {TableColumnConfig} from '@shared/components/tables/types/table-column-config.interface';
 import {onMapService} from '@shared/functions/onMap-service';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
@@ -64,9 +64,10 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private vereinDataProvider: VereinDataProviderService,
     private mannschaftsDataProvider: DsbMannschaftDataProviderService,
-    private currentUserService: CurrentUserService,) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   // Otherwise the data of the selected Verein is displayed.

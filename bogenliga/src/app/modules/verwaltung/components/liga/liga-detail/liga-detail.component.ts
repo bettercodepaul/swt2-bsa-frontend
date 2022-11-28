@@ -22,7 +22,7 @@ import {LigaDO} from '../../../types/liga-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {LIGA_DETAIL_CONFIG} from './liga-detail.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';
@@ -62,9 +62,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
