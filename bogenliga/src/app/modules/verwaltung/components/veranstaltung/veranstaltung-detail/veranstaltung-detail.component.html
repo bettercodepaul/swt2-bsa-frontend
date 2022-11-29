@@ -182,8 +182,9 @@
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.SUCCESS"
                     [id]="'veranstaltungAbschließen'"
-                    [loading]="saveLoading">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH.TITLE' | translate }}
+                    [loading]="saveLoading"
+                    (onClick)="onFinish($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'veranstaltungInitialeLigatabelle'"
