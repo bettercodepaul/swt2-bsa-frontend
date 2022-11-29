@@ -20,7 +20,7 @@ import {
   NotificationUserAction
 } from '../../../../shared/services/notification';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_USER = 'user_neu_save';
@@ -52,9 +52,10 @@ export class UserNeuComponent extends CommonComponentDirective implements OnInit
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

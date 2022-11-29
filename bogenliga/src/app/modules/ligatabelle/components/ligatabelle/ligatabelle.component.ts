@@ -67,7 +67,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private currentUserService: CurrentUserService,
   ) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

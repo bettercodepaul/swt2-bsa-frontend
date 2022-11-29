@@ -17,7 +17,7 @@ import {VereinDataProviderService} from '../../../services/verein-data-provider.
 import {VereinDTO} from '../../../types/datatransfer/verein-dto.class';
 import {VEREIN_OVERVIEW_CONFIG} from './verein-overview.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 export const NOTIFICATION_DELETE_VEREINE = 'vereine_overview_delete';
 
@@ -34,9 +34,13 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
   private sessionHandling: SessionHandling;
 
-  constructor(private vereinDataProvider: VereinDataProviderService, private router: Router, private notificationService: NotificationService, private currentUserService: CurrentUserService) {
+  constructor(private vereinDataProvider: VereinDataProviderService,
+    private router: Router,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
