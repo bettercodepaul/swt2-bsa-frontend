@@ -35,7 +35,7 @@ import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-do.class';
 import {TranslatePipe} from '@ngx-translate/core';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
@@ -120,9 +120,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     private einstellungenProvider: EinstellungenProviderService,
     private notificationService: NotificationService,
     private translate: TranslatePipe,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

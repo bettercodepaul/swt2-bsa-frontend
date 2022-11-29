@@ -12,7 +12,7 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
 
@@ -38,9 +38,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private logindataprovider: LoginDataProviderService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.

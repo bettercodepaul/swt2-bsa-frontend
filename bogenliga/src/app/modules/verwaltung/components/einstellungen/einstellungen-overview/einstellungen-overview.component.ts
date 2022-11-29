@@ -11,7 +11,7 @@ import {Notification, NotificationService, NotificationType,} from '../../../../
 import {
   EINSTELLUNGEN_OVERVIEW_CONFIG
 } from '@verwaltung/components/einstellungen/einstellungen-overview/einstellungen-overview.config';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {SessionHandling} from '@shared/event-handling';
@@ -39,9 +39,10 @@ export class EinstellungenOverviewComponent extends CommonComponentDirective imp
   constructor(private einstellungenDataProvider: EinstellungenProviderService,
     private router: Router,
     private currentUserService: CurrentUserService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

@@ -10,6 +10,7 @@ import {
   NotificationService,
   NotificationSeverity,
   NotificationType,
+  OnOfflineService,
 } from '@shared/services';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
@@ -49,9 +50,10 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private einstellungenProviderService: EinstellungenProviderService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.

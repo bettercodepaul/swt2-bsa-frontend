@@ -5,7 +5,7 @@ import {ChangeCredentialsDO} from '../../types/changecredentials-do.class';
 import {LoginResult} from '../../types/login-result.enum';
 import {USER_PWD_CONFIG} from './user-pwd.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 @Component({
   selector:    'bla-user-pwd',
@@ -24,8 +24,10 @@ export class UserPwdComponent implements OnInit {
 
 //  public loading = false;
 
-  constructor(private userPwdDataProvider: UserPwdDataProviderService, private currentUserService: CurrentUserService) {
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+  constructor(private userPwdDataProvider: UserPwdDataProviderService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
 
