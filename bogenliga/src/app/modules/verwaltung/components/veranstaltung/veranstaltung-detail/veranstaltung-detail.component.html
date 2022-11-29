@@ -158,11 +158,13 @@
                 name="ligaleiter"
                 #ligaleiter="ngModel"
                 [(ngModel)]="currentUser"
-                data-cy="veranstaltung-detail-ligaleiter-email">
+                data-cy="veranstaltung-detail-ligaleiter-email"
+                required placeholder="">
+          <option hidden [value]="">beispiel@email.de </option>
           <option [ngValue]="ligaleiter"
                   *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
 
-          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.PLACEHOLDER' | translate }}">
+
         </select>
 
 
@@ -180,8 +182,9 @@
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.SUCCESS"
                     [id]="'veranstaltungAbschließen'"
-                    [loading]="saveLoading">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH.TITLE' | translate }}
+                    [loading]="saveLoading"
+                    (onClick)="onFinish($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'veranstaltungInitialeLigatabelle'"

@@ -116,9 +116,10 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+    // Überprüft ob der User ein Ligaleiter ist, ist dass der Fall filtered er die Payload so das nur noch seine Veranstaltungen zu sehen sind
     if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG) &&
     !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)) {
-      response.payload = response.payload.filter((entry) => this.currentUserService.hasVeranstaltung(entry.id));
+      response.payload = response.payload.filter((entry) => this.currentUserService.getCurrentUserID() === entry.ligaleiterId);
       console.log('detected');
     }
     this.rows = []; // reset array to ensure change detection
@@ -131,7 +132,7 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   }
 
 // Diese Methode lädt Veranstaltungen aus dem Backend anhand ihres Sportjahres
-
+// Listet sie anschlie0end in der Übersicht Reiehnweise auf
   private loadBySportjahr(): void {
     this.loadingSearch = true;
     this.veranstaltungDataProvider.findBySportyear(this.selecetedYear)
@@ -145,7 +146,7 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
     this.loadingSearch = false;
   }
 
-  // Diese Methode lädt alle Sportjahr von Veranstaltungen Distinct
+  // Holt sich alle Sportjahre aus dem Backend und lädt sie anschließend in das Auswahlfenster
 
   private loadDistinctSporjahr(): void {
     this.loadingYear = true;
