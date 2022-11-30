@@ -31,8 +31,18 @@ $secondary-dark: #ff833a; // hover Links, Logo
 }
 
 @font-face {
-  font-family: Poppins-thin;
-  src: url("/assets/fonts/Poppins/Poppins-Thin.ttf") format("truetype");
+  font-family: Poppins-semibold;
+  src: url("/assets/fonts/Poppins/Poppins-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Poppins-light;
+  src: url("/assets/fonts/Poppins/Poppins-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Poppins-medium;
+  src: url("/assets/fonts/Poppins/Poppins-Medium.ttf") format("truetype");
 }
 
 @font-face {
@@ -56,7 +66,7 @@ body {
   height: 100%;
   position: relative;
   background-color: $primary-white;
-  font-family: Poppins-regular, Roboto, "Helvetica Neue", sans-serif;
+  font-family: Poppins-light, Roboto, "Helvetica Neue", sans-serif;
   color: $primary-black;
 }
 // ==================
@@ -66,21 +76,21 @@ body {
 h1 {
   color: $primary-black;
   font-size: 2em;
-  font-family: "Poppins-bold", Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Poppins-semibold", Roboto, "Helvetica Neue", sans-serif;
 }
 
 //Use for: Section title
 h2{
   color: $hero-blue;
   font-size: 1.3em;
-  font-family: Poppins-bold, Roboto, "Helvetica Neue", sans-serif;
+  font-family: Poppins-Medium, Roboto, "Helvetica Neue", sans-serif;
 }
 
 //Use for: Component title
 h3{
   color: $primary-black;
   font-size: 1em;
-  font-family: Poppins-bold, Roboto, "Helvetica Neue", sans-serif;
+  font-family: Poppins-Medium, Roboto, "Helvetica Neue", sans-serif;
 }
 
 //Use for: Label (e.g. date lable)

@@ -12,7 +12,7 @@
           <h3 class="card-title">{{ card.labelKey | translate }}</h3>
           <p class="card-text">{{ card.descriptionKey | translate }}</p>
           <bla-tooltip [value]="card.tooltipText | translate">
-          <button style="align-self: flex-end" class="btn btn-primary"
+          <button class="btn btn-primary"
                    (mouseenter)  ="setActiveCard(card)"
                    [routerLink]  ="getLink(card.route,card.detailType)"
                    [attr.data-cy]="card.datacy">{{ card.labelKey | translate }} verwalten
@@ -26,7 +26,7 @@
           <h3>{{card.descriptionKey | translate }}</h3>
           <p class="tooltip-text multi-lines-text">{{card.tooltipText | translate}}</p>
           <div class="button-container">
-            <button  class="btn btn-primary"
+            <button  class="btn btn-primary" style="align-self: flex-end"
                      (mouseleave)   ="resetActiveCard()"
                      [routerLink]   ="getLink(card.route,card.detailType)"
                      [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }} verwalten
