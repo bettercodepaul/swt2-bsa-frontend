@@ -9,13 +9,6 @@ $accent-red: #F40E0E; //Destructive Actions, Delete Buttons
 $true-white: #ffffff; //Navbar & Header Background
 
 
-$primary: #02bdd5; // Links, Navbar
-$primary-light: #ffffff; // Sidebar-Background
-$primary-dark: #2A2A2A; // Sidebar-Font
-$secondary: #ffc107; // hover Tables, Button
-$secondary-light: #fff350;
-$secondary-dark: #ff833a; // hover Links, Logo
-
 $navbar-height: 3.2em;
 $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 
@@ -25,8 +18,8 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   min-height: calc(100vh - 3.2em); //full view - Navbar on top
   max-height: calc(100vh - 3.2em); //max-height needed to support scrollabilty
   margin-top: $navbar-height; //height of NavBar
-  background: $primary-light; //#343a40;
-  color: $primary-dark;
+  background: $true-white; //#343a40;
+  color: $primary-black;
   transition: all 0.3s;
   display: flex;
   flex-direction: column;
@@ -37,7 +30,6 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   -ms-overflow-style: none; // scrollbar wont be displayed on firefox
   scrollbar-width: none;
   border-radius: 0px 0px 50px 0px;
-  box-shadow: $light-gray 0px 7px 20px 5px;
 }
 
 // basic sidebar inactive css
@@ -49,7 +41,7 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 
 // basic css list and paragraph
 #sidebar ul p {
-  color: $primary-dark;
+  color: $primary-black;
   padding: 10px;
 }
 
@@ -75,7 +67,7 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 
 // Sidebar Header Titleshort
 #sidebar.inactive .sidebar-header p {
-  color: $primary-dark;
+  color: $primary-black;
 }
 
 #sidebar ul.components {
@@ -88,8 +80,8 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 }
 
 #sidebar ul li.inactive > a, a[aria-expanded="true"] {
-  color: $primary-dark;
-  background: $primary-light;
+  color: $primary-black;
+  background: $true-white;
 }
 
 #sidebarFooter {
@@ -117,12 +109,11 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 
 // Button to change small to wide / wide to small
 #sidebarCollapseBottom {
-  background: $primary-light;
+  background: $true-white;
   display: flex;
   flex-basis: 100%;
   cursor: pointer;
-  color: $primary-dark;
-  //border: 1px solid #343a40;
+  color: $hero-blue;
 }
 
 // rows in button
@@ -130,7 +121,7 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   width: 80%;
   height: 2px;
   display: block;
-  background: $primary-light;
+  background: $true-white;
   transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
   opacity: 1;
 }
@@ -145,49 +136,49 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   flex-direction: row;
 }
 
-.sidbar-dropdown-toggle {
-  color: $primary-dark;
+.sidebar-dropdown-toggle {
+  color: $primary-black;
   outline: none;
 }
 
 .sidebar-text-toggle {
-  color: $primary-dark;
+  color: $primary-black;
   height: 3rem;
 
-  .sidbar-dropdown-toggle {
-    color: $primary-dark;
+  .sidebar-dropdown-toggle {
+    color: $primary-black;
   }
 
   .navbar-text {
-    color: $primary-dark;
+    color: $primary-black;
   }
 }
 
 .nav-link {
-  color: $primary-dark;
+  color: $primary-black;
 }
 
 .nav-link:hover {
-  color: $primary-light;
-  background: $primary-dark;
+  color: $true-white;
+  background: $primary-black;
 }
 
 // hover over complete element -> text and toggle need to change
 .sidebar-text-toggle:hover {
-  color: $primary-light;
-  background: $primary-dark;
+  color: $true-white;
+  background: $primary-black;
 
-  .sidbar-dropdown-toggle {
-    color: $primary-light;
+  .sidebar-dropdown-toggle {
+    color: $true-white;
   }
 
   .navbar-text {
-    color: $primary-light;
+    color: $true-white;
   }
 }
 
 .selected {
-  border-left: 8px solid $primary-dark;
+  border-left: 8px solid $primary-black;
 }
 
 .subselected {

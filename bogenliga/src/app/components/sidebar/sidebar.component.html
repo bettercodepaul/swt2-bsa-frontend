@@ -1,4 +1,4 @@
-<nav id="sidebar"
+<nav id="sidebar" class="soft-shadow"
      [class.inactive]="isActive">
   <div style="flex-grow: 1">
 
@@ -23,7 +23,7 @@
             </a>
 
             <!-- Button for Dropdown -->
-            <button *ngIf="existSubitems(item.subitems) && isActive == false" class="navbar-toggler sidbar-dropdown-toggle" [class.flexChild]="!isActive" [class.inactive]="isActive" type="button" data-toggle="collapse" attr.data-target="#collapsibleNavbar{{ label }}">
+            <button *ngIf="existSubitems(item.subitems) && isActive == false" class="navbar-toggler sidebar-dropdown-toggle" [class.flexChild]="!isActive" [class.inactive]="isActive" type="button" data-toggle="collapse" attr.data-target="#collapsibleNavbar{{ label }}">
               <fa-icon class="navbar-toggler-icon" [icon]="faCaretDown" size="lg"></fa-icon>
             </button>
           </div>

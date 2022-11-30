@@ -1,20 +1,19 @@
-// text color of bootstrap
-
 /* Farbkonzept Website */
-$primary: #ffffff; // Links, Navbar
-$primary-light: #2A2A2A; // Sidebar-Background
-$primary-dark: #ffffff; // Sidebar-Font
-$secondary: #ffc107; // hover Tables, Button
-$secondary-light: #fff350;
-$secondary-dark: #ff833a; // hover Links, Logo
+$hero-blue: #487AF5; //Title H2, visual accent elements
+$primary-black: #2A2A2A; // Most Texts, Primary Buttons
+$primary-white: #FCFCFC; //Background
+$dark-gray: #888888; // Subtitle, Inactive Buttons
+$light-gray: #EAEAEF; //Secondary Buttons
+$accent-gold: #FFCC34; //Help, Tooltip, Link to Help
+$accent-red: #F40E0E; //Destructive Actions, Delete Buttons
+$true-white: #ffffff; //Navbar & Header Background
 
 #navbar {
   height: 3.2em;
-
 }
 
 #navbar a {
-  color: #2A2A2A;
+  color: $primary-black;
   text-decoration: none;
 }
 
@@ -38,12 +37,12 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 #navbar-offline h3{
 
-  color: red;
+  color: $accent-red;
   text-align: center;
 }
 
 .navbar-dark {
-  background-color: $primary;
+  background-color: $true-white;
   padding: 0;
 }
 
@@ -79,8 +78,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
     width: 80%;
     height: 2px;
     display: block;
-    //background: #02bdd5; //#555;
-    background: black;
+    background: $primary-black;
     transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
     opacity: 1;
     margin: 5px auto;
