@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CommonComponentDirective} from '../../common';
 import {NavigationCardsConfig} from '../types/navigation-cards-config.interface';
 import {CurrentUserService, UserPermission} from '@shared/services';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector:    'bla-navigation-cards',
@@ -12,6 +13,7 @@ export class NavigationCardsComponent extends CommonComponentDirective implement
 
   @Input() public config: NavigationCardsConfig = {navigationCards: []};
   activeCard: any = null;
+
 
   constructor(private currentUserService: CurrentUserService) {
     super();
