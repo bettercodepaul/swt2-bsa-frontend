@@ -7,7 +7,7 @@ import {UserProfileDataProviderService} from '../../services/user-profile-data-p
 import {UserProfileDO} from '../../types/user-profile-do.class';
 import {USER_PROFILE_CONFIG} from './user-profile.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 @Component({
   selector:    'bla-user-profile',
@@ -26,9 +26,10 @@ export class UserProfileComponent extends CommonComponentDirective implements On
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

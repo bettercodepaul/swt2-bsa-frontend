@@ -45,7 +45,7 @@ import {TableActionType} from '@shared/components/tables/types/table-action-type
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
@@ -60,6 +60,7 @@ const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
 const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
 const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failure';
 const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
+const NOTIFICATION_FINISH_VERANSTALTUNG = 'veranstaltung_detail_finish';
 
 
 @Component({
@@ -127,9 +128,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     private ligatabellenService: LigatabelleDataProviderService,
     private maSortierungService: MannschaftSortierungDataProviderService,
     private matchDataProvider: MatchDataProviderService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
 
@@ -380,6 +382,20 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.notificationService.showNotification(notification);
   }
 
+  public onFinish(ignore: any): void{
+    const id = this.currentVeranstaltung.id;
+    const notification: Notification = {
+      id: NOTIFICATION_FINISH_VERANSTALTUNG + id,
+      title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.TITLE',
+      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.DESCRIPTION',
+      descriptionParam: '' + id,
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.PENDING
+    }
+    this.notificationService.showNotification(notification);
+  }
 
   public entityExists(): boolean {
     return this.currentVeranstaltung.id >= 0;
