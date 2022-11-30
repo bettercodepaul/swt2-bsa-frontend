@@ -85,7 +85,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
               private onOfflineService: OnOfflineService,
               private notificationService: NotificationService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

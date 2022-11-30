@@ -17,7 +17,7 @@ import {Router} from '@angular/router';
 // import {LigatabelleComponent} from '../../../ligatabelle/components/ligatabelle/ligatabelle.component';
 // import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const chartDetailsSizeMultiplikator = 0.5;
 
@@ -55,8 +55,9 @@ export class RegionenComponent implements OnInit {
     private vereinDataProviderService: VereinDataProviderService,
     private ligaDataProviderService: LigaDataProviderService,
     private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService,
     private router: Router) {
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
