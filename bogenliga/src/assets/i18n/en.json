@@ -1133,6 +1133,7 @@
           "WETTKAMPFTYPNAME": "Competition type name",
           "SPORTJAHR": "Sport year",
           "MELDEDEADLINE": "Registration deadline",
+          "PHASE" : "Phase",
           "LIGANAME": "League name",
           "LIGALEITERID": "League leader ID",
           "LIGALEITERMAIL": "League leader E-Mail"
