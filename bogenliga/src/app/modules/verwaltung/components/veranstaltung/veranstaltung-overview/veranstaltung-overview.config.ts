@@ -12,28 +12,33 @@ export const VERANSTALTUNG_OVERVIEW_TABLE_CONFIG: OverviewDialogConfig = {
       {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.NAME',
         propertyName:   'name',
-        width:          20,
+        width:          15,
       },
       {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.LIGANAME',
         propertyName:   'ligaName',
-        width:          20,
+        width:          15,
       },
       {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.WETTKAMPFTYPNAME',
         propertyName:   'wettkampftypName',
-        width:          20,
+        width:          15,
       },
       {
         translationKey:   'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.SPORTJAHR',
         propertyName:     'sportjahr',
-        width:            20,
+        width:            15,
         currentSortOrder: TableColumnSortOrder.DESCENDING
       },
       {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.MELDEDEADLINE',
         propertyName:   'meldeDeadline',
-        width:          20,
+        width:          15,
+      },
+      {
+        translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.PHASE',
+        propertyName:   'phase',
+        width:          10,
       },
       {
         translationKey: 'MANAGEMENT.VERANSTALTUNG.TABLE.HEADERS.LIGALEITERMAIL',
