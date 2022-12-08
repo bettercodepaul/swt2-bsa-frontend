@@ -23,6 +23,7 @@ export function toDO(offlineSyncDto: VeranstaltungOfflineSyncDto): OfflineVerans
     meldeDeadline: offlineSyncDto.meldeDeadline,
     ligaleiterId: offlineSyncDto.ligaleiterId,
     ligaId: offlineSyncDto.ligaId,
+    phase: offlineSyncDto.phase,
   };
 }
 
@@ -47,7 +48,8 @@ export function toDOfromOfflineVeranstaltung(veranstaltung: OfflineVeranstaltung
     ligaId: veranstaltung.ligaId,
     ligaleiterEmail: '',
     ligaName: veranstaltung.name,
-    wettkampftypName: ''
+    wettkampftypName: '',
+    phase: ''
   };
   return veranstaltungDO;
 }
@@ -68,6 +70,7 @@ export function toOfflineFromVeranstaltungDO(veranstaltung: VeranstaltungDO): Of
     name: veranstaltung.name,
     sportjahr: veranstaltung.sportjahr,
     version: veranstaltung.version,
-    wettkampfTypId: veranstaltung.wettkampfTypId
+    wettkampfTypId: veranstaltung.wettkampfTypId,
+    phase: veranstaltung.phase
   };
 }
