@@ -6,11 +6,7 @@ $secondary: #ffc107; // hover Tables
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
-ul ul a {
-  font-size: 0.9em !important;
-  padding-left: 30px !important;
-  background: $primary;
-}
+@import 'src/styles.scss';
 
 
 // wrapper
@@ -23,7 +19,7 @@ ul ul a {
 
 // content side
 .content {
-  padding-top: 4em; //for the NavBar
+  padding-top: 3em; //for the NavBar
   padding-left: 250px; //for the Sidebar
   width: 100%;
   display: flex;
@@ -36,18 +32,19 @@ ul ul a {
 
 #footer { // footer with Logos
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 5px;
-  background-color: #DCDCDC !important;
+  background-color: $true-white;
 }
 
 // bootstrap changes
 .jumbotron {
   margin-bottom: 0px;
-  background-color: #E8E8E8;
+  background-color: $light-gray;
   padding: 0px;
+
 }
 
 // covers the footer Containers of the footer
@@ -61,22 +58,26 @@ ul ul a {
 .footerContainer {
   width: 500px;
   padding: 15px;
+  justify-content: space-around;
 }
 
 // Logo CSS
 .logoItSolutions {
   height: 40px;
-  margin: 10px;
+  margin-right: 40px;
+  margin-left: 40px;
 }
 
 .logoExxcellent {
-  height: 30px;
-  margin: 10px;
+  height: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 .logoHR {
-  height: 40px;
-  margin: 10px;
+  height: 30px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 
@@ -135,7 +136,7 @@ ul ul a {
   padding: 20px;
   background: #fff;
   border-radius: 5px;
-  width: 30%;
+  min-width: 40%;
   height: auto;
   position: relative;
   transition: all 5s ease-in-out;
