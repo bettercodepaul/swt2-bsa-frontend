@@ -1172,6 +1172,7 @@
           "WETTKAMPFTYPNAME": "Wettkampftyp Name",
           "SPORTJAHR": "Sportjahr",
           "MELDEDEADLINE": "Meldedeadline",
+          "PHASE": "Phase",
           "LIGANAME": "Liganame",
           "LIGALEITERID": "Ligaleiter ID",
           "LIGALEITERMAIL": "Ligaleiter Mail"
