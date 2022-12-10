@@ -71,7 +71,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private einstellungenDataProvider: EinstellungenProviderService,
   ) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

@@ -24,7 +24,7 @@ import {RoleVersionedDataObject} from '../../../services/models/roles-versioned-
 import {RoleDataProviderService} from '../../../services/role-data-provider.service';
 import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_USER = 'user_detail_save';
@@ -72,9 +72,10 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private translate: TranslatePipe,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   /*

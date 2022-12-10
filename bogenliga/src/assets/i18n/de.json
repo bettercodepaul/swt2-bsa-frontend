@@ -1341,10 +1341,7 @@
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen",
-        "FINISH": {
-          "TITLE": "Abschließen",
-          "DESCRIPTION": "Wollen Sie die Veranstaltung wirklich abschließen?"
-        },
+        "FINISH": "Abschließen",
         "WETTKAMPFTAGE": "Wettkampftage",
         "MANNSCHAFT": "Mannschaften aus Vorjahr kopieren",
         "BACK": "Zurück"
@@ -1361,6 +1358,10 @@
         "DELETE_FAILURE": {
           "TITLE": "Löschen fehlgeschlagen",
           "DESCRIPTION": "Veranstaltung konnte nicht gelöscht werden"
+        },
+        "FINISH" : {
+          "TITLE" : "Veranstaltung abschließen",
+          "DESCRIPTION" : "Wollen Sie die Veranstaltung mit der ID=%s wirklich abschließen?"
         },
         "SAVE": {
           "TITLE": "Veranstaltung angelegt",

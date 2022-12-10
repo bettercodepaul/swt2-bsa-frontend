@@ -16,7 +16,7 @@ import {
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {DsbMitgliedDTO} from '../../../types/datatransfer/dsb-mitglied-dto.class';
 import {DSB_MITGLIED_OVERVIEW_CONFIG} from './dsb-mitglied-overview.config';
-import {CurrentUserService, UserPermission} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
 
 export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
@@ -34,11 +34,12 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
   private sessionHandling: SessionHandling;
 
   constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
-              private router: Router,
-              private notificationService: NotificationService,
-              private currentUserService: CurrentUserService) {
+    private router: Router,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

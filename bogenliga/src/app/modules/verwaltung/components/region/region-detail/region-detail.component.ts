@@ -18,7 +18,7 @@ import {RegionDO} from '../../../types/region-do.class';
 import {REGION_DETAIL_CONFIG} from './region-detail.config';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
@@ -59,9 +59,10 @@ export class RegionDetailComponent extends CommonComponentDirective implements O
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

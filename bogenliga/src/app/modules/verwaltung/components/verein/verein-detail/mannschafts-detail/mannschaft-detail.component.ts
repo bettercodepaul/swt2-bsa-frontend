@@ -111,7 +111,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
               private onOfflineService: OnOfflineService,
               private currentUserService: CurrentUserService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

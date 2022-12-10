@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {environment} from '../../../../../environments/environment';
 import {PLAYGROUND_CONFIG} from './playground.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 @Component({
   selector:    'bla-playground',
@@ -16,8 +16,9 @@ export class PlaygroundComponent implements OnInit {
 
   private sessionHandling: SessionHandling;
 
-  constructor(private currentUserService: CurrentUserService) {
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+  constructor(private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService,) {
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
