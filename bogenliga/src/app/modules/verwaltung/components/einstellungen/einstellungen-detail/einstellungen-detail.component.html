@@ -1,28 +1,27 @@
-<bla-common-dialog (mouseover)="onMouseOver($event)"
-                   [config]="config"
+<bla-common-dialog [config]="config"
                    [loading]="loading">
 
-
-  <form id="einstellungenForm"
-        class="horizontal-form half-page"
-        #einstellungenForm="ngForm">
-
-
-    <div>
+  <div (mouseover)="onMouseOver($event)">
+    <form #einstellungenForm="ngForm"
+          class="horizontal-form half-page"
+          id="einstellungenForm">
 
 
-      <!-- KEY -->
-      <div class="form-group row">
-        <label for="einstellungenKey"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
+      <div>
 
 
-          <input type="text"
-                 class="form-control"
+        <!-- KEY -->
+        <div class="form-group row">
+          <label for="einstellungenKey"
+                 class="col-sm-3 col-form-label">
+            <span>{{ 'MANAGEMENT.EINSTELLUNGEN_DETAIL.FORM.KEY.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+          <div class="col-sm-9">
+
+
+            <input type="text"
+                   class="form-control"
                  required
                  id="einstellungenKey"
                  name="einstellungenKey"
@@ -108,20 +107,20 @@
       </div>
 
 
-      <bla-button style="float: right"
-                  *ngIf="currentEinstellung.id == null"
-                  (click)="createEinstellung($event)">Speichern
-      </bla-button>
-      <bla-button style="float: right"
-                  *ngIf="currentEinstellung.id != null"
-                  (click)="changevalue($event)">Ändern
-      </bla-button>
+        <bla-button style="float: right"
+                    *ngIf="currentEinstellung.id == null"
+                    (click)="createEinstellung($event)">Speichern
+        </bla-button>
+        <bla-button style="float: right"
+                    *ngIf="currentEinstellung.id != null"
+                    (click)="changevalue($event)">Ändern
+        </bla-button>
 
-      <br>
-      <br>
-    </div>
+        <br>
+        <br>
+      </div>
 
 
-  </form>
-
+    </form>
+  </div>
 </bla-common-dialog>
