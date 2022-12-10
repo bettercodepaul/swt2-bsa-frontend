@@ -89,7 +89,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     private notificationService: NotificationService,
     private currentUserService: CurrentUserService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

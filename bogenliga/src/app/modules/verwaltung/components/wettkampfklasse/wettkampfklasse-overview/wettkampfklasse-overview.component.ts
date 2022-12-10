@@ -10,7 +10,7 @@ import {WettkampfklassenDataProviderService} from '../../../services/wettkampfkl
 import {WettkampfKlasseDTO} from '../../../types/datatransfer/wettkampfklasse-dto.class';
 import {WETTKAMPFKLASE_OVERVIEW_CONFIG} from './wettkampfklasse-overview.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 @Component({
   selector:    'bla-wettkampfklasse-overview',
@@ -25,9 +25,13 @@ export class WettkampfklasseOverviewComponent extends CommonComponentDirective i
 
   private sessionHandling: SessionHandling;
 
-  constructor(private wettkampfklassenDataProvider: WettkampfklassenDataProviderService, private router: Router, private notificationService: NotificationService, private currentUserService: CurrentUserService) {
+  constructor(private wettkampfklassenDataProvider: WettkampfklassenDataProviderService,
+    private router: Router,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
