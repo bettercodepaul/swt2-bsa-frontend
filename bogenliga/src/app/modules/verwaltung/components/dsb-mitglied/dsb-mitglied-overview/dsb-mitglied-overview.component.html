@@ -1,7 +1,6 @@
 <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_mitglieder-uebersicht"
                   target="_blank"></bla-hilfe-button>
-<bla-overview-dialog (mouseover)="onMouseOver($event)"
-                     (onDeleteClicked)="onDelete($event)"
+<bla-overview-dialog (onDeleteClicked)="onDelete($event)"
                      (onEditClicked)="onEdit($event)"
                      (onSearchClicked)="findBySearch($event)"
                      (onViewClicked)="onView($event)"
@@ -10,6 +9,6 @@
                      [loading]="loading"
                      [rows]="rows"
                      [searchTerm]="searchTerm">
-
+  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
 

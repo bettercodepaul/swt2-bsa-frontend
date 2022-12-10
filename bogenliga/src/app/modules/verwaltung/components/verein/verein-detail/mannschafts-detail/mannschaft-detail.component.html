@@ -1,160 +1,167 @@
-<bla-common-dialog (mouseover)="onMouseOver($event)"
-                   [config]="config"
+<bla-common-dialog [config]="config"
                    [loading]="loading">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:dsbmannschaftdetails"
-                    target="_blank"></bla-hilfe-button>
-  <form id="mannschaftForm"
-        class="horizontal-form half-page"
-        #mannschaftForm="ngForm">
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:dsbmannschaftdetails"
+                      target="_blank"></bla-hilfe-button>
+    <form #mannschaftForm="ngForm"
+          class="horizontal-form half-page"
+          id="mannschaftForm">
 
-    <!-- ID -->
-    <div class="form-group row">
-      <label for="mannschaftName"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               disabled
-               id="mannschaftName"
-               name="mannschaftName"
-               #mannschaftName="ngModel"
-               [(ngModel)]="currentMannschaft.name"
-               value="{{currentVerein.name}} {{currentMannschaft.nummer}}"
-               placeholder="{{'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NAME.PLACEHOLDER' | translate }}">
-      </div>
-    </div>
-
-    <!-- ID -->
-    <div class="form-group row">
-      <label for="mannschaftNummer"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               maxlength="2"
-               id="mannschaftNummer"
-               name="mannschaftNummer"
-               #mannschaftNummer="ngModel"
-               [(ngModel)]="currentMannschaft.nummer"
-               [class.is-invalid]="mannschaftNummer.invalid && !mannschaftNummer.untouched"
-               placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.PLACEHOLDER' | translate }}"
-               data-cy="vereine-mannschaft-detail-mannschaftsnummer">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-    <!-- liga -->
-    <div class="form-group row">
-      <label for="mannschaftVeranstaltung"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-
-      <div class="loading" *ngIf="loadingVeranstaltungen" >
-        <tr>
-          <td style="text-align: center; "
-              [colSpan]="colspan">
-            <div style="display: flex; flex-direction: column; align-items: center">
-              <fa-icon icon="sync" [spin]="'true'" size="4x"
-                       style="margin-top: 2em; margin-bottom: 2em;">
-              </fa-icon>
-              <p>{{'TABLE.LOADING' | translate}}</p>
-            </div>
-          </td>
-        </tr>
-      </div>
-
-
-      <div class="col-sm-9" *ngIf="!loadingVeranstaltungen">
-        <select class="form-control"
-                required
-                id="mannschaftVeranstaltung"
-                name="mannschaftVeranstaltung"
-                #mannschaftVeranstaltung="ngModel"
-                [(ngModel)]="currentVeranstaltung"
-                data-cy="vereine-mannschaft-detail-mannschaftsveranstaltung">
-          <option [ngValue]="liga" *ngFor="let liga of ligen"> {{liga.name}}</option>
-        </select>
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.ERROR' | translate }}
+      <!-- ID -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="mannschaftName">
+          <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input #mannschaftName="ngModel"
+                 [(ngModel)]="currentMannschaft.name"
+                 class="form-control"
+                 disabled
+                 id="mannschaftName"
+                 name="mannschaftName"
+                 placeholder="{{'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NAME.PLACEHOLDER' | translate }}"
+                 required
+                 type="text"
+                 value="{{currentVerein.name}} {{currentMannschaft.nummer}}">
         </div>
       </div>
 
-    </div>
+      <!-- ID -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="mannschaftNummer">
+          <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input #mannschaftNummer="ngModel"
+                 [(ngModel)]="currentMannschaft.nummer"
+                 [class.is-invalid]="mannschaftNummer.invalid && !mannschaftNummer.untouched"
+                 class="form-control"
+                 data-cy="vereine-mannschaft-detail-mannschaftsnummer"
+                 id="mannschaftNummer"
+                 maxlength="2"
+                 name="mannschaftNummer"
+                 placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.PLACEHOLDER' | translate }}"
+                 required
+                 type="text">
 
-    <div class="form-group row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-9 button-box">
-
-
-        <bla-button *ngIf="!entityExists()"
-                    [id]="'mannschaftSaveButton'"
-                    [disabled]="!mannschaftForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onSave($event)"
-                    data-cy="vereine-mannschaft-detail-save-button">
-          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
-        </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'mannschaftUpdateButton'"
-                    [disabled]="!mannschaftForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)"
-                    data-cy="vereine-mannschaft-detail-update-button">
-          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
-        </bla-button>
-
-        <!--When editing Bug: BSAPP-684 it was decided to comment out the Button below ("Löschen")-->
-        <!--Because there is already a Button for the same Funktion and this one is also not working and also caused some trouble with Deleting-Funktion -->
-        <!--
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.DANGER"
-                    [loading]="deleteLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.DELETE' | translate }}
-        </bla-button>
-        -->
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_NUMMER.ERROR' | translate }}
+          </div>
+        </div>
       </div>
+
+      <!-- liga -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="mannschaftVeranstaltung">
+          <span>{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+
+        <div *ngIf="loadingVeranstaltungen"
+             class="loading">
+          <tr>
+            <td [colSpan]="colspan"
+                style="text-align: center; ">
+              <div style="display: flex; flex-direction: column; align-items: center">
+                <fa-icon [spin]="'true'"
+                         icon="sync"
+                         size="4x"
+                         style="margin-top: 2em; margin-bottom: 2em;">
+                </fa-icon>
+                <p>{{'TABLE.LOADING' | translate}}</p>
+              </div>
+            </td>
+          </tr>
+        </div>
+
+
+        <div *ngIf="!loadingVeranstaltungen"
+             class="col-sm-9">
+          <select #mannschaftVeranstaltung="ngModel"
+                  [(ngModel)]="currentVeranstaltung"
+                  class="form-control"
+                  data-cy="vereine-mannschaft-detail-mannschaftsveranstaltung"
+                  id="mannschaftVeranstaltung"
+                  name="mannschaftVeranstaltung"
+                  required>
+            <option *ngFor="let liga of ligen"
+                    [ngValue]="liga"> {{liga.name}}</option>
+          </select>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.ERROR' | translate }}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9 button-box">
+
+
+          <bla-button (onClick)="onSave($event)"
+                      *ngIf="!entityExists()"
+                      [disabled]="!mannschaftForm.valid"
+                      [id]="'mannschaftSaveButton'"
+                      [loading]="saveLoading"
+                      data-cy="vereine-mannschaft-detail-save-button">
+            {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
+          </bla-button>
+          <bla-button (onClick)="onUpdate($event)"
+                      *ngIf="entityExists()"
+                      [disabled]="!mannschaftForm.valid"
+                      [id]="'mannschaftUpdateButton'"
+                      [loading]="saveLoading"
+                      data-cy="vereine-mannschaft-detail-update-button">
+            {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
+          </bla-button>
+
+          <!--When editing Bug: BSAPP-684 it was decided to comment out the Button below ("Löschen")-->
+          <!--Because there is already a Button for the same Funktion and this one is also not working and also caused some trouble with Deleting-Funktion -->
+          <!--
+          <bla-button *ngIf="entityExists()"
+                      [buttonType]="ButtonType.DANGER"
+                      [loading]="deleteLoading"
+                      (onClick)="onDelete($event)">
+            {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.DELETE' | translate }}
+          </bla-button>
+          -->
+        </div>
+      </div>
+    </form>
+    <div *ngIf="entityExists()">
+      <h5> Mitglieder-Übersicht</h5>
+      <div class="overview-dialog-add">
+        <button class="btn btn-success"
+                routerLink="add">
+          <fa-icon icon="plus"></fa-icon>
+          <span> Neu</span>
+        </button>
+        <button (click)="onDownloadLizenzen()"
+                class="btn btn-success button-margin"
+                style="margin-left: 5px;">
+          <fa-icon icon="file-download"></fa-icon>
+          <span> Alle Lizenzen drucken</span>
+          <router-outlet name="onDownloadLizenzen"></router-outlet>
+        </button>
+      </div>
+      <bla-data-table (onDeleteEntry)="onDeleteMitglied($event)"
+                      (onDownloadEntry)="onDownload($event)"
+                      (onDownloadRueckennummerEntry)="onDownloadRueckennummer($event)"
+                      (onEditEntry)="onEdit($event)"
+                      (onViewEntry)="onView($event)"
+                      [config]="config_table"
+                      [loading]="loading"
+                      [rows]="rows">
+      </bla-data-table>
+      <a #downloadLink></a>
     </div>
-  </form>
-  <div *ngIf="entityExists()">
-    <h5> Mitglieder-Übersicht</h5>
-    <div class="overview-dialog-add">
-      <button class="btn btn-success"
-              routerLink="add">
-        <fa-icon icon="plus"></fa-icon>
-        <span> Neu</span>
-      </button>
-      <button class="btn btn-success button-margin" style="margin-left: 5px;" (click)="onDownloadLizenzen()">
-        <fa-icon icon="file-download"></fa-icon>
-        <span> Alle Lizenzen drucken</span>
-        <router-outlet name="onDownloadLizenzen"></router-outlet>
-      </button>
-    </div>
-    <bla-data-table [config]="config_table"
-                    [rows]="rows"
-                    [loading]="loading"
-                    (onViewEntry)="onView($event)"
-                    (onEditEntry)="onEdit($event)"
-                    (onDeleteEntry)="onDeleteMitglied($event)"
-                    (onDownloadRueckennummerEntry)= "onDownloadRueckennummer($event)"
-                    (onDownloadEntry) = "onDownload($event)">
-    </bla-data-table>
-    <a #downloadLink></a>
+
   </div>
-
-
 
 </bla-common-dialog>
