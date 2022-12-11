@@ -1280,25 +1280,13 @@
         "BACK": "Back"
       },
       "NOTIFICATION": {
-        "DELETE": {
-          "TITLE": "Delete event",
-          "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
-        },
         "ADD": {
           "TITLE": "Add competition day",
           "DESCRIPTION": "Do you want to add another competition day?"
         },
-        "DELETE_SUCCESS": {
-          "TITLE": "Event deleted",
-          "DESCRIPTION": "Successfully deleted event."
-        },
-        "DELETE_FAILURE": {
-          "TITLE": "Error while deleting event",
-          "DESCRIPTION": "Could not delete event."
-        },
         "FINISH" : {
           "TITLE" : "Finish event",
-          "DESCRIPTION" : "Are you sure, you want to finish the event with ID=%s?"
+          "DESCRIPTION" : "Are you sure, you want to finish the event '%s'?"
         },
         "SAVE": {
           "TITLE": "Event created",
