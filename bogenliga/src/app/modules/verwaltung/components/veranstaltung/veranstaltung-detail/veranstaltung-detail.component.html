@@ -228,12 +228,6 @@
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.DANGER"
-                    [loading]="deleteLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DELETE' | translate }}
-        </bla-button>
       </div>
     </div>
 
