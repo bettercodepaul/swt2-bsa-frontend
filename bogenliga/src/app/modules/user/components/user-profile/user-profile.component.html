@@ -1,27 +1,26 @@
-<bla-common-dialog (mouseover)="onMouseOver($event)"
-                   [config]="config"
+<bla-common-dialog [config]="config"
                    [loading]="loading">
+  <div (mouseover)="onMouseOver($event)">
+    <form #userProfileForm="ngForm"
+          class="horizontal-form half-page"
+          id="userProfileForm">
 
-  <form id="userProfileForm"
-        class="horizontal-form half-page"
-        #userProfileForm="ngForm">
-
-    <!-- VORNAME -->
-    <div class="form-group row">
-      <label for="userProfileVorname"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'USER.PROFILE.FORM.VORNAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               readonly
-               class="form-control-plaintext"
-               id="userProfileVorname"
-               name="userProfileVorname"
-               #userProfileVorname="ngModel"
-               [(ngModel)]="currentUserProfile.vorname"
-               [class.is-invalid]="userProfileVorname.invalid && !userProfileVorname.untouched"
+      <!-- VORNAME -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="userProfileVorname">
+          <span>{{ 'USER.PROFILE.FORM.VORNAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="text"
+                 readonly
+                 class="form-control-plaintext"
+                 id="userProfileVorname"
+                 name="userProfileVorname"
+                 #userProfileVorname="ngModel"
+                 [(ngModel)]="currentUserProfile.vorname"
+                 [class.is-invalid]="userProfileVorname.invalid && !userProfileVorname.untouched"
                placeholder="{{ 'USER.PROFILE.FORM.VORNAME.PLACEHOLDER' | translate }}">
 
         <div class="invalid-feedback">
@@ -176,6 +175,6 @@
         </div>
       </div>
     </div>
-  </form>
-
+    </form>
+  </div>
 </bla-common-dialog>

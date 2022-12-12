@@ -1,27 +1,26 @@
-<bla-common-dialog (mouseover)="onMouseOver($event)"
-                   [config]="config"
+<bla-common-dialog [config]="config"
                    [loading]="loading">
+  <div (mouseover)="onMouseOver($event)">
+    <form #dsbMitgliedForm="ngForm"
+          class="horizontal-form half-page"
+          id="dsbMitgliedForm">
 
-  <form id="dsbMitgliedForm"
-        class="horizontal-form half-page"
-        #dsbMitgliedForm="ngForm">
-
-    <!-- VORNAME -->
-    <div class="form-group row">
-      <label for="dsbMitgliedVorname"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               pattern="(?=.*[A-Za-zöÖüÜäÄß])[A-Za-zäÄüÜöÖß\-\ \(\)]{1,50}$"
-               id="dsbMitgliedVorname"
-               name="dsbMitgliedVorname"
-               #dsbMitgliedVorname="ngModel"
-               [(ngModel)]="currentMitglied.vorname"
+      <!-- VORNAME -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="dsbMitgliedVorname">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 required
+                 pattern="(?=.*[A-Za-zöÖüÜäÄß])[A-Za-zäÄüÜöÖß\-\ \(\)]{1,50}$"
+                 id="dsbMitgliedVorname"
+                 name="dsbMitgliedVorname"
+                 #dsbMitgliedVorname="ngModel"
+                 [(ngModel)]="currentMitglied.vorname"
                [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
                placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}"
                data-cy="detail-vorname-feld">
@@ -205,6 +204,6 @@
          </bla-button>
        </div>
      </div>
-   </form>
-
+    </form>
+  </div>
  </bla-common-dialog>
