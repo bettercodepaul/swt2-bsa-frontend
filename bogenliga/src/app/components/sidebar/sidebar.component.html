@@ -15,9 +15,10 @@
         <li *ngIf="hasUserPermissions(item.permissons) && !(inProd === true && item.inProdVisible === false)" [class.selected]="isSelected(item.route)">
 
           <!-- Item of Navigation (with Button for Dropdown) -->
-          <div class="sidebar-text-toggle" [class.flexBox]="!isActive" >
+          <div class="sidebar-text-toggle" data-toggle="tooltip" data-placement="right"  [class.flexBox]="!isActive" >
             <a routerLink="{{getRoute(item.route,item.detailType)}}"  class="navbar-text" [class.flexChild]="!isActive" [attr.data-cy]="item.datacy">
               <bla-sidebar-item label="{{ item.label | translate }}"
+                                title="{{ item.label | translate }}"
                                 [icon]="item.icon"
                                 [subitems]="item.subitems"></bla-sidebar-item>
             </a>
