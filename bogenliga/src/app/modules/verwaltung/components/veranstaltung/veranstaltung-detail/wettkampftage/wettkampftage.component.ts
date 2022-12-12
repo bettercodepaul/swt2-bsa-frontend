@@ -395,6 +395,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     }
   }
 
+
   private deleteKampfrichterArray(kampfrichterArray: Array<KampfrichterDO>): void {
     for (const iter of Object.keys(kampfrichterArray)) {
       this.kampfrichterProvider.delete(kampfrichterArray[iter].id, kampfrichterArray[iter].wettkampfID)
@@ -691,6 +692,16 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedDTOs = response.payload.filter((element) => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
     this.anzahl = this.selectedDTOs.length;
 
+
+    //sort selectedDTOs by date and assign the corrosponding WettkampfTag
+    this.selectedDTOs = this.selectedDTOs.sort((objectA, objectB) => Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum));
+    for (let i = 0; i < this.selectedDTOs.length; i++) {
+      this.selectedDTOs[i].wettkampfTag = i + 1;
+      //window.alert(this.selectedDTOs[i].wettkampfTag);
+      //window.alert(this.selectedDTOs[i].wettkampfDatum);
+    }
+
+
     // when there are no Wettkampftage for this Veranstaltung yet
     if (this.selectedDTOs.length === 0) {
       this.selectedDTOs.push(new WettkampfDO());
@@ -716,7 +727,10 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.loadWettkampf();
     this.loadDistinctWettkampf();
     this.loadKampfrichter();
+
+
   }
+
 
   // create an empty Wettkampftag
   public async createInitWettkampfTag(num: number): Promise<boolean> {
@@ -754,6 +768,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.wettkampftagService();
       this.notificationService.showNotification(notification);
     }
+
     return true;
   }
 
