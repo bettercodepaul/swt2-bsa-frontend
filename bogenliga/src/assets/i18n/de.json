@@ -1226,7 +1226,7 @@
 
         "SPORTJAHR": {
           "LABEL": "Sportjahr",
-          "PLACEHOLDER": "Bitte geben Sie ein Jahr für das Sportjahr ein",
+          "PLACEHOLDER": "YYYY",
           "ERROR": "Bitte geben Sie ein gültiges Jahr ein"
         },
 
