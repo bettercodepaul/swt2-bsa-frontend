@@ -16,14 +16,46 @@ $secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
-$navbar-height: 3.2em;
+$navbar-height: 5.2em;
 $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
+
+// SIDEBAR Element Shadow Variables
+$outer-shadow:8px 11px 8px -10px $light-gray, 8px -11px 8px -10px $light-gray;
+$inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $light-gray;
+
+.navbar-nav{
+  background-color: $primary-white;
+}
+
+
+// template class for Sidebar-Slider
+.sidebarSliderClass {
+  border-inline-start: 8px;
+  border-inline-start-color: transparent;
+  border-inline-start-style: solid;
+}
+.sidebarTransparentBorderClass {
+  border-inline-end: 8px;
+  border-inline-end-color: transparent;
+  border-inline-end-style: hidden;
+}
+// template class for Sidebar Element Shadow
+.outerShadow{
+  -webkit-box-shadow:8px 11px 8px -10px $light-gray, 8px -11px 8px -10px $light-gray;
+  box-shadow:8px 11px 8px -10px $light-gray, 8px -11px 8px -10px $light-gray;
+}
+// templete class for Sidebar Element inner Shadow
+.innerShadow{
+  -webkit-box-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $light-gray;
+  box-shadow: inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $light-gray;
+
+}
 
 #sidebar {
   min-width: 300px;
   max-width: 300px;
-  min-height: calc(100vh - 3.2em); //full view - Navbar on top
-  max-height: calc(100vh - 3.2em); //max-height needed to support scrollabilty
+  min-height: calc(100vh - 5.2em); //full view - Navbar on top
+  max-height: calc(100vh - 5.2em); //max-height needed to support scrollabilty
   margin-top: $navbar-height; //height of NavBar
   background: $primary-light; //#343a40;
   color: $primary-dark;
@@ -32,19 +64,28 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   flex-direction: column;
   position: fixed; // stays fixed on the side while scrolling
   z-index: 12; // layers of the rest of the page
+
   border-right: $sidebar-border-style;
+
+
+  -webkit-box-shadow: 2px 8px 8px 0px $light-gray;
+  box-shadow: 2px 8px 8px 0px $light-gray;
+
   overflow-y: scroll; // overflow in y direction is scrollable
   -ms-overflow-style: none; // scrollbar wont be displayed on firefox
-  scrollbar-width: none;
-  border-radius: 0px 0px 50px 0px;
-  box-shadow: $light-gray 0px 7px 20px 5px;
+  scrollbar-width:none;
+  //border-radius: 0px 0px 50px 0px;
+
+}
+#sidebar::-webkit-scrollbar { // no scrollbar in Safari, Chrome, Opera
+  display: none;
 }
 
 // basic sidebar inactive css
 #sidebar.inactive {
   min-width: 80px;
   max-width: 80px;
-  text-align: center;
+
 }
 
 // basic css list and paragraph
@@ -81,6 +122,7 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 #sidebar ul.components {
   padding: 20px 0;
   border-bottom: $sidebar-border-style;
+
 }
 
 #sidebar.inactive ul li a {
@@ -90,6 +132,7 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 #sidebar ul li.inactive > a, a[aria-expanded="true"] {
   color: $primary-dark;
   background: $primary-light;
+
 }
 
 #sidebarFooter {
@@ -100,7 +143,7 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 
 /* Same dropdown links padding*/
 #sidebar.active ul ul a {
-  padding: 10px !important;
+  padding: 10px;
 }
 
 /* Changing the arrow position to bottom center position,
@@ -110,9 +153,12 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   top: auto;
   bottom: 10px;
   right: 50%;
+
   -webkit-transform: translateX(50%);
   -ms-transform: translateX(50%);
   transform: translateX(50%);
+
+
 }
 
 // Button to change small to wide / wide to small
@@ -150,9 +196,18 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   outline: none;
 }
 
+
+div.sidebar-text-toggle.flexBox{
+  padding-inline-start: 10px !important;
+}
+
+
+
 .sidebar-text-toggle {
   color: $primary-dark;
   height: 3rem;
+  padding-inline-end: 5px;
+  @extend .sidebarSliderClass;
 
   .sidbar-dropdown-toggle {
     color: $primary-dark;
@@ -160,39 +215,58 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 
   .navbar-text {
     color: $primary-dark;
+
   }
+
 }
 
+.nav-item:hover{
+  @extend .outerShadow;
+}
 .nav-link {
   color: $primary-dark;
 }
 
 .nav-link:hover {
-  color: $primary-light;
-  background: $primary-dark;
+  color: $hero-blue;
+  background-color: $primary-light;
 }
+
 
 // hover over complete element -> text and toggle need to change
 .sidebar-text-toggle:hover {
   color: $primary-light;
-  background: $primary-dark;
+  //background: $light-gray;
+  border-inline-start-color: $hero-blue !important;
+
+  @extend .outerShadow;
 
   .sidbar-dropdown-toggle {
-    color: $primary-light;
+    color: $hero-blue;
   }
 
   .navbar-text {
-    color: $primary-light;
+    color: $hero-blue;
   }
 }
 
-.selected {
-  border-left: 8px solid $primary-dark;
+
+.selected .sidebar-text-toggle{
+  //border-left: 8px solid $primary-dark;
+  //margin-right: -8 px;
+  border-inline-start-color: $hero-blue !important;
+  background-color:$primary-white;
+  @extend .innerShadow;
+
+}
+.selected .sidebar-text-toggle a{
+  color:$hero-blue;
 }
 
-.subselected {
-  font-weight: 800;
+.subselected a{
+  color:$hero-blue;
 }
+
 
 // for small devices
 @media (max-width: 768px) {
@@ -214,6 +288,8 @@ $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
   #sidebarFooter {
     display: none;
   }
+
+
 
   // show sidebar backdrop on mobile devices
   #sidebar-backdrop {

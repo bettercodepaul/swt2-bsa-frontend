@@ -9,13 +9,15 @@ $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
 #navbar {
-  height: 3.2em;
+  height: 5.2em;
 
 }
 
 #navbar a {
   color: #2A2A2A;
   text-decoration: none;
+}
+#navbar h1{
 }
 
 // Toggle hidden while Webview
@@ -24,17 +26,18 @@ $secondary-dark: #ff833a; // hover Links, Logo
 }
 
 #navbar-header {
-  padding-left: 2em;
+  margin-top: 0.5em;
 }
 
 #navbar-brand {
-  margin-left: 1.1em;
+  margin-left: 0.0em;
 }
 
 #navbar-offline {
   position: absolute;
   width: 100%;
 }
+
 
 #navbar-offline h3{
 
@@ -76,7 +79,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
   // Toggle style of rows
   #sidebarCollapseNavBar span {
-    width: 80%;
+    width: 100%;
     height: 2px;
     display: block;
     //background: #02bdd5; //#555;
