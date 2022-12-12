@@ -23,7 +23,7 @@ ul ul a {
 
 // content side
 .content {
-  padding-top: 4em; //for the NavBar
+  padding-top: 5.2em; //for the NavBar
   padding-left: 300px; //for the Sidebar
   width: 100%;
   display: flex;
@@ -87,7 +87,7 @@ ul ul a {
 // for small devices
 @media (max-width: 768px) {
   .content.inactive {
-    padding-top: 68px; //for the NavBar
+    padding-top: 5.2em; //for the NavBar
     padding-left: 0px;
     width: 100%;
   }
