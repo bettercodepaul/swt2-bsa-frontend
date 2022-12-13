@@ -1228,6 +1228,10 @@
           "ERROR": "Bitte geben Sie einen gültigen Namen ein"
         },
 
+        "DISZIPLIN": {
+          "LABEL": "Disziplin"
+        },
+
         "SPORTJAHR": {
           "LABEL": "Sportjahr",
           "PLACEHOLDER": "YYYY",
