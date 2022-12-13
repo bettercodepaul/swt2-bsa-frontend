@@ -519,11 +519,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
    * If not button which uses checkVeranstaltungPhase will be greyed out
    */
   public checkVeranstaltungPhase(){
-    let geplant = false;
-    if ( this.currentVeranstaltung.phase === 'Geplant') {
-      geplant = true;
+    let laufend = false;
+    if ( this.currentVeranstaltung.phase === 'Laufend') {
+      laufend = true;
     }
-    return geplant;
+    return laufend;
   }
 
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
