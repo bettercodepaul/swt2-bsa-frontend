@@ -182,6 +182,7 @@
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.SUCCESS"
                     [id]="'veranstaltungAbschließen'"
+                    [disabled] = "!this.checkVeranstaltungPhase()"
                     [loading]="saveLoading"
                     (onClick)="onFinish($event)">
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH' | translate }}

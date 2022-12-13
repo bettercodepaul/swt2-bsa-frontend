@@ -514,6 +514,17 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.notificationService.showNotification(notification);
   }
 
+  /**
+   * Checks if current Veranstaltung is on Phase 'Geplant'
+   * If not button which uses checkVeranstaltungPhase will be greyed out
+   */
+  public checkVeranstaltungPhase(){
+    let geplant = false;
+    if ( this.currentVeranstaltung.phase === 'Geplant') {
+      geplant = true;
+    }
+    return geplant;
+  }
 
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allLiga = [];
