@@ -515,7 +515,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
   /**
-   * Checks if current Veranstaltung is on Phase 'Geplant'
+   * Checks if current Veranstaltung is on Phase 'Laufend'
    * If not button which uses checkVeranstaltungPhase will be greyed out
    */
   public checkVeranstaltungPhase(){
