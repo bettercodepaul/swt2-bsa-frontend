@@ -88,8 +88,18 @@ $secondary-dark: #ff833a; // hover Links, Logo
     opacity: 1;
     margin: 5px auto;
   }
+  #logo{
 
-  #navbar-brand, #navbar-header {
+  }
+  // add Logo margin for mobile devices
+  #navbar-brand{
+    margin-left: 0.7em;
+  }
+
+}
+// Hide header text for really small devices
+@media (max-width:460px) {
+  #navbar-header h1 {
     display: none;
   }
 }
