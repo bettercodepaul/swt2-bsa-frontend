@@ -96,10 +96,10 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="text"
+        <input type="number"
                class="form-control"
                required
-               pattern="[0-9]{4,4}"
+               pattern=^(19|20)\d{2}$
                id="sportjahr"
                name="sportjahr"
                #sportjahr="ngModel"
@@ -228,12 +228,6 @@
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.DANGER"
-                    [loading]="deleteLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DELETE' | translate }}
-        </bla-button>
       </div>
     </div>
 

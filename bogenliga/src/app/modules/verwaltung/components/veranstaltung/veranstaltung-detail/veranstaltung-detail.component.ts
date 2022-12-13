@@ -348,47 +348,14 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
-  /**
-   * Deletes all Wettkampftag entries of the provided VeranstaltungID
-   */
-  public onDelete(ignore: any): void {
-    this.deleteLoading = true;
-    this.notificationService.discardNotification();
-
-    const id = this.currentVeranstaltung.id;
-
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_VERANSTALTUNG + id,
-      title:            'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG + id)
-        .subscribe((myNotification) => {
-
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.veranstaltungDataProvider.deleteById(id)
-                .then((response) => this.handleDeleteSuccess(response))
-                .catch((response) => this.handleDeleteFailure(response));
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.deleteLoading = false;
-          }
-        });
-    this.notificationService.showNotification(notification);
-  }
-
   public onFinish(ignore: any): void{
+    const name = this.currentVeranstaltung.name;
     const id = this.currentVeranstaltung.id;
     const notification: Notification = {
       id: NOTIFICATION_FINISH_VERANSTALTUNG + id,
       title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.TITLE',
       description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.DESCRIPTION',
-      descriptionParam: '' + id,
+      descriptionParam: '' + name,
       severity: NotificationSeverity.QUESTION,
       origin: NotificationOrigin.USER,
       type: NotificationType.YES_NO,
@@ -468,52 +435,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
     this.loadMannschaftsTable();
   }
-
-
-  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
-    const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
-    };
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/veranstaltung');
-            this.deleteLoading = false;
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-  }
-
-
-  private handleDeleteFailure(response: BogenligaResponse<void>): void {
-    const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
-      severity:    NotificationSeverity.ERROR,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
-    };
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-  }
-
 
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allLiga = [];
