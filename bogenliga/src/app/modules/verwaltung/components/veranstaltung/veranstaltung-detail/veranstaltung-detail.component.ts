@@ -436,52 +436,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.loadMannschaftsTable();
   }
 
-
-  private handleDeleteSuccess(response: BogenligaResponse<void>): void {
-    const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_SUCCESS.DESCRIPTION',
-      severity:    NotificationSeverity.INFO,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
-    };
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_SUCCESS)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.router.navigateByUrl('/verwaltung/veranstaltung');
-            this.deleteLoading = false;
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-  }
-
-
-  private handleDeleteFailure(response: BogenligaResponse<void>): void {
-    const notification: Notification = {
-      id:          NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE,
-      title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.DELETE_FAILURE.DESCRIPTION',
-      severity:    NotificationSeverity.ERROR,
-      origin:      NotificationOrigin.USER,
-      type:        NotificationType.OK,
-      userAction:  NotificationUserAction.PENDING
-    };
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.deleteLoading = false;
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-  }
-
-
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allLiga = [];
     this.allLiga = response.payload;
