@@ -692,13 +692,12 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedDTOs = response.payload.filter((element) => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
     this.anzahl = this.selectedDTOs.length;
 
-
+    //let requiredKeys = ['wettkampfTag', 'wettkampfUhrzeit', 'wettkampfStrasse', 'wettkampfPlz', 'wettkampfOrtsname'
     //sort selectedDTOs by date and assign the corrosponding WettkampfTag
-    this.selectedDTOs = this.selectedDTOs.sort((objectA, objectB) => Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum));
+    this.selectedDTOs = this.selectedDTOs.sort((objectA, objectB) => Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum)); //sort DTOs by date
     for (let i = 0; i < this.selectedDTOs.length; i++) {
-      this.selectedDTOs[i].wettkampfTag = i + 1;
-      //window.alert(this.selectedDTOs[i].wettkampfTag);
-      //window.alert(this.selectedDTOs[i].wettkampfDatum);
+      this.selectedDTOs[i].wettkampfTag = i + 1; //assign correct Wettkampftag to sorted selectedDTOs
+      await this.wettkampfDataProvider.update(this.selectedDTOs[i]); //save selectedDTOs with updated Wettkampftag
     }
 
 
