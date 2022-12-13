@@ -691,7 +691,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedDTOs = response.payload.filter((element) => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
     this.anzahl = this.selectedDTOs.length;
 
-
     // when there are no Wettkampftage for this Veranstaltung yet
     if (this.selectedDTOs.length === 0) {
       this.selectedDTOs.push(new WettkampfDO());
