@@ -136,7 +136,7 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
 // Listet sie anschlie0end in der Übersicht Reiehnweise auf
   private loadBySportjahr(): void {
     this.loadingSearch = true;
-    this.veranstaltungDataProvider.findBySportyear(this.selecetedYear)
+    this.veranstaltungDataProvider.findBySportyearGeplantLaufend(this.selecetedYear)
         .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(newList))
         .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
 
