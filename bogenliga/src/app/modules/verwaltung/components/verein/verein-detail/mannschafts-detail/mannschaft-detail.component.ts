@@ -409,6 +409,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   // deletes the selected member in the team
   public onDeleteMitglied(versionedDataObject: VersionedDataObject): void {
     this.notificationService.discardNotification();
+    //If Liga is not loaded Notification will be thrown
     if (this.currentVeranstaltung == undefined) {
       const notification: Notification = {
         id:          NOTIFICATION_LIGA_NOT_LOADED,
