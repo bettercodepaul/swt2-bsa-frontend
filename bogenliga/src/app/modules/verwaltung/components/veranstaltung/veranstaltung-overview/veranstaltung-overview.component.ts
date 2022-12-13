@@ -64,12 +64,14 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
       getActiveSportYear(this.einstellungenDataProvider)
         .then(value => {
           this.aktivesSportjahr = value;
-          this.loadBySportjahr(this.aktivesSportjahr);
           this.loadDistinctSporjahr();
+          this.loadBySportjahr(this.aktivesSportjahr);
+
         });
     } else {
-      this.loadBySportjahr(this.selectedYear);
       this.loadDistinctSporjahr();
+      this.loadBySportjahr(this.selectedYear);
+
     }
   }
 
