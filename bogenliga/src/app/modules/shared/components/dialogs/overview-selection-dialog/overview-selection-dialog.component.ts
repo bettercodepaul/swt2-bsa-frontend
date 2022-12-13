@@ -71,7 +71,6 @@ export class OverviewSelectionDialogComponent extends CommonSecuredDirective imp
     return this.selectedYear;
   }
   public onSelect($event: SportjahrVeranstaltungDO[]): void {
-    this.selectedYear = null;
     this.selectedYear = $event[0].sportjahr;
     console.log('onSelect Dialog: ' + this.selectedYear);
     this.loadBySportjahr();
@@ -101,6 +100,13 @@ export class OverviewSelectionDialogComponent extends CommonSecuredDirective imp
   private loadBySportjahr(): void {
     this.loading = true;
     this.veranstaltungDataProvider.findBySportyear(this.selectedYear)
+        .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(newList))
+        .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
+  }
+
+  private loadBySportjahrDefault(): void{
+    this.loading = true;
+    this.veranstaltungDataProvider.findBySportyear(2018)
         .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(newList))
         .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
   }
