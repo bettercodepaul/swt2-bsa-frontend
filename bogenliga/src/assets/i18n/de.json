@@ -1039,6 +1039,10 @@
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Es konnte keine Lizenz heruntergeladen werden, da keine Lizenz von diesem Schützen vorhanden ist."
+        },
+        "LIGA_NOT_LOADED": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Bitte warten Sie, bis die Ligen vollständig geladen sind."
         }
       }
     },
