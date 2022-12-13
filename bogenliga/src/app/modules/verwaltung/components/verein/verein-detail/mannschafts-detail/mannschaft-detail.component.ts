@@ -272,7 +272,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   }
 
   private loadVeranstaltungen() {
-    this.veranstaltungProvider.findAll()
+    this.veranstaltungProvider.findAllGeplantLaufend()
         .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleVeranstaltungSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleVeranstaltungFailure(response));
   }
