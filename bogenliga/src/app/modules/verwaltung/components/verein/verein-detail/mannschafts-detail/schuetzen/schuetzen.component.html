@@ -1,84 +1,84 @@
-<bla-common-dialog (mouseover)="onMouseOver($event)"
-                   [config]="config"
+<bla-common-dialog [config]="config"
                    [loading]="loading">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:schuetzemannschafthinzufuegen"
-                    target="_blank"></bla-hilfe-button>
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:schuetzemannschafthinzufuegen"
+                      target="_blank"></bla-hilfe-button>
 
-  <form id="schützeForm"
-        class="horizontal-form half-page"
-        #schützeForm="ngForm">
+    <form #schützeForm="ngForm"
+          class="horizontal-form half-page"
+          id="schützeForm">
 
-    <!-- Vorname -->
-    <div class="form-group row">
-      <label for="memberVorname"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VORNAME.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               id="memberVorname"
-               name="memberVorname"
-               #memberVorname="ngModel"
-               [(ngModel)]="filterVorname"
-               (input) = "onSearch()"
-               placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VORNAME.PLACEHOLDER' | translate }}">
+      <!-- Vorname -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="memberVorname">
+          <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VORNAME.LABEL' | translate }}</span>
+        </label>
+        <div class="col-sm-9">
+          <input #memberVorname="ngModel"
+                 (input)="onSearch()"
+                 [(ngModel)]="filterVorname"
+                 class="form-control"
+                 id="memberVorname"
+                 name="memberVorname"
+                 placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.VORNAME.PLACEHOLDER' | translate }}"
+                 type="text">
+        </div>
       </div>
-    </div>
 
-    <!-- Nachname -->
-    <div class="form-group row">
-      <label for="memberNachname"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.NACHNAME.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               id="memberNachname"
-               name="memberNachname"
-               #memberNachname="ngModel"
-               [(ngModel)]="filterNachname"
-               (input) = "onSearch()"
-               placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.NACHNAME.PLACEHOLDER' | translate }}">
+      <!-- Nachname -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="memberNachname">
+          <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.NACHNAME.LABEL' | translate }}</span>
+        </label>
+        <div class="col-sm-9">
+          <input #memberNachname="ngModel"
+                 (input)="onSearch()"
+                 [(ngModel)]="filterNachname"
+                 class="form-control"
+                 id="memberNachname"
+                 name="memberNachname"
+                 placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.NACHNAME.PLACEHOLDER' | translate }}"
+                 type="text">
+        </div>
       </div>
-    </div>
 
       <!-- Mitgliedsnummer -->
-    <div class="form-group row">
-    <label for="memberVorname"
-           class="col-sm-3 col-form-label">
-      <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.MITGLIEDSNUMMER.LABEL' | translate }}</span>
-    </label>
-    <div class="col-sm-9">
-      <input type="text"
-             class="form-control"
-             id="memberNummer"
-             name="memberNummer"
-             #memberNummer="ngModel"
-             [(ngModel)]="filterMitgliedsnummer"
-             (input) = "onSearch()"
-             placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}">
-    </div>
-  </div>
-
-    <!-- Vereine -->
-    <!-- Filter zurücksetzen -->
-    <div class="form-group row">
-      <div class="col-sm-auto button-box">
-       <bla-button (onClick)="deleteFilter()"
-                   [buttonType]="ButtonType.DANGER">
-         {{'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.RESET_FILTER' | translate }}
-       </bla-button>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="memberVorname">
+          <span>{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.MITGLIEDSNUMMER.LABEL' | translate }}</span>
+        </label>
+        <div class="col-sm-9">
+          <input #memberNummer="ngModel"
+                 (input)="onSearch()"
+                 [(ngModel)]="filterMitgliedsnummer"
+                 class="form-control"
+                 id="memberNummer"
+                 name="memberNummer"
+                 placeholder="{{ 'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}"
+                 type="text">
+        </div>
       </div>
-    </div>
-  </form>
 
-  <h3> Gefundene Schützen: </h3>
-  <bla-data-table [config]="table_config"
-                  [rows]="rows"
-                  [loading]="loading"
-                  (onAddEntry)="onSave($event)">
-  </bla-data-table>
+      <!-- Vereine -->
+      <!-- Filter zurücksetzen -->
+      <div class="form-group row">
+        <div class="col-sm-auto button-box">
+          <bla-button (onClick)="deleteFilter()"
+                      [buttonType]="ButtonType.DANGER">
+            {{'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.RESET_FILTER' | translate }}
+          </bla-button>
+        </div>
+      </div>
+    </form>
 
+    <h3> Gefundene Schützen: </h3>
+    <bla-data-table (onAddEntry)="onSave($event)"
+                    [config]="table_config"
+                    [loading]="loading"
+                    [rows]="rows">
+    </bla-data-table>
+  </div>
 </bla-common-dialog>

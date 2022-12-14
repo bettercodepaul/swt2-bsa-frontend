@@ -112,7 +112,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private dialog: MatDialog
   ) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
@@ -748,7 +748,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
     this.loadingYears = false;
     let counter = 1;
-    let indexofselectedyear = 0;
+    let indexOfSelectedYear = 0;
 
     if (response.payload !== []) {
       for (const elem of response.payload) {
@@ -771,16 +771,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         sportjahr.id = counter;
         // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
         if (sportjahr.sportjahr === this.aktivesSportjahr) {
-          indexofselectedyear = counter - 1;
+          indexOfSelectedYear = counter - 1;
         }
         counter++;
       }
       if (!this.wettkampfIdEnthalten) {
-        // Lade die Veranstaltungen des aktiven Sportjahres oder auf die des neusten Jahres
-        this.selItemId = this.availableYears[indexofselectedyear].id;
-        this.loadVeranstaltungenByYear(this.availableYears[indexofselectedyear].sportjahr.valueOf());
+        // Lade die Veranstaltungen des aktiven Sportjahres oder die des neusten Jahres
+        this.selItemId = this.availableYears[indexOfSelectedYear].id;
+        this.loadVeranstaltungenByYear(this.availableYears[indexOfSelectedYear].sportjahr.valueOf());
       } else if (this.onOfflineService.isOffline()) {
-        this.selItemId = this.availableYears[indexofselectedyear].id;
+        this.selItemId = this.availableYears[indexOfSelectedYear].id;
       }
     }
   }
