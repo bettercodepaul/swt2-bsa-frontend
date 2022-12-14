@@ -46,6 +46,9 @@ import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {DisziplinDO} from '@verwaltung/types/disziplin-do.class';
+import {DisziplinDataProviderService} from '@verwaltung/services/disziplin-data-provider-service';
+import {DisziplinDTO} from '@verwaltung/types/datatransfer/disziplin-dto.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -84,6 +87,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public currentLiga: LigaDO = new LigaDO();
   public allLiga: Array<LigaDO> = [new LigaDO()];
 
+  public currentDisziplin: DisziplinDO;
+  public allDisziplin: Array<DisziplinDO> = [new DisziplinDO()];
+
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
 
@@ -114,9 +120,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private sessionHandling: SessionHandling;
 
 
+
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampftypDataProvider: WettkampftypDataProviderService,
+    private disziplinDataProvider: DisziplinDataProviderService,
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private userDataProvider: UserDataProviderService,
@@ -146,12 +154,14 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.currentVeranstaltung = new VeranstaltungDO();
           this.currentWettkampftyp = new WettkampftypDO();
           this.currentLiga = new LigaDO();
+          this.currentDisziplin = new DisziplinDO();
 
 
           this.loadUsers();
           this.loadLigaleiter();
           this.loadWettkampftyp();
           this.loadLiga();
+          this.loadDisziplin();
 
 
           this.loading = false;
@@ -416,6 +426,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         .catch((response: BogenligaResponse<WettkampftypDTO[]>) => this.handleWettkampftypResponseArrayFailure(response));
   }
 
+  private loadDisziplin() {
+    this.disziplinDataProvider.findAll()
+        .then((response: BogenligaResponse<DisziplinDO[]>) => this.handleDisziplinResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<DisziplinDTO[]>) => this.handleDisziplinResponseArrayFailure(response));
+  }
+
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
@@ -496,6 +512,24 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleLigaResponseArrayFailure(response: BogenligaResponse<LigaDTO[]>): void {
     this.allLiga = [];
+    this.loading = false;
+  }
+
+
+  private handleDisziplinResponseArraySuccess(response: BogenligaResponse<DisziplinDO[]>): void {
+    this.allDisziplin = [];
+    this.allDisziplin = response.payload;
+    /*if (this.id === 'add') {
+      this.currentDisziplin = this.allDisziplin[0];
+    } else {
+      this.currentDisziplin = this.allDisziplin.filter((disziplin) => disziplin.disziplinId === this.currentVeranstaltung.)[0];
+    }*/
+    this.loading = false;
+  }
+
+
+  private handleDisziplinResponseArrayFailure(response: BogenligaResponse<DisziplinDTO[]>): void {
+    this.allDisziplin = [];
     this.loading = false;
   }
 
@@ -750,4 +784,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
     this.notificationService.showNotification(notification);
   }
+
+
 }
