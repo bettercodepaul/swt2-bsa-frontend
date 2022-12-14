@@ -90,19 +90,19 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   public saveLoading = false;
 
   constructor(private mannschaftProvider: DsbMannschaftDataProviderService,
-              private vereinProvider: VereinDataProviderService,
-              private veranstaltungProvider: VeranstaltungDataProviderService,
-              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
-              private dsbMitgliedProvider: DsbMitgliedDataProviderService,
-              private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
-              private downloadService: DownloadButtonResourceProviderService,
-              private wettkampfService: WettkampfDataProviderService,
-              private passeService: PasseDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService,
-              private onOfflineService: OnOfflineService,
-              private currentUserService: CurrentUserService) {
+    private vereinProvider: VereinDataProviderService,
+    private veranstaltungProvider: VeranstaltungDataProviderService,
+    private mannschaftsDataProvider: DsbMannschaftDataProviderService,
+    private dsbMitgliedProvider: DsbMitgliedDataProviderService,
+    private mannschaftMitgliedProvider: MannschaftsmitgliedDataProviderService,
+    private downloadService: DownloadButtonResourceProviderService,
+    private wettkampfService: WettkampfDataProviderService,
+    private passeService: PasseDataProviderService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private onOfflineService: OnOfflineService,
+    private currentUserService: CurrentUserService) {
     super();
   }
 
@@ -152,9 +152,6 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
                                        }
                                      });
   }
-
-
-
 
 
   ngOnDestroy() {
@@ -270,6 +267,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
     this.loadTableRows();
   }
+
   /*
    const id = this.currentMannschaft.id;
    private handleSuccess(bogenligaResponse: BogenligaResponse<DsbMannschaftDO>) {
@@ -361,7 +359,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   private handleLoadTableRowsSuccess(response: BogenligaResponse<DsbMitgliedDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
-    response.payload.forEach( (member) => this.addMember(member));
+    response.payload.forEach((member) => this.addMember(member));
     this.loading = false;
   }
 
@@ -377,7 +375,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
             this.currentMannschaftsMitglied.id = response.payload.id;
             this.currentMannschaftsMitglied.mannschaftsId = response.payload.mannschaftsId;
             this.currentMannschaftsMitglied.version = response.payload.version;
-            this.currentMannschaftsMitglied.rueckennummer =  5;
+            this.currentMannschaftsMitglied.rueckennummer = 5;
             /*this.mannschaftMitgliedProvider.save(this.currentMannschaftsMitglied);
              this.members.set(response.payload.dsbMitgliedId, this.currentMannschaftsMitglied);*/
             console.log('members:');
@@ -430,7 +428,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
         id:               NOTIFICATION_DELETE_MITGLIED + memberId,
         title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_OFFLINEMODE.TITLE',
         description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_OFFLINEMODE.DESCRIPTION',
-        descriptionParam:  '',
+        descriptionParam: '',
         severity:         NotificationSeverity.INFO,
         origin:           NotificationOrigin.USER,
         type:             NotificationType.OK,
@@ -526,13 +524,13 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
   private showExistingResultsNotification(dsbMitgliedId: number) {
     const existingresultsNotification: Notification = {
-      id:               NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE,
-      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_EXISTING_RESULTS_FAILURE.TITLE',
-      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_EXISTING_RESULTS_FAILURE.DESCRIPTION',
-      severity:         NotificationSeverity.ERROR,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.OK,
-      userAction:       NotificationUserAction.PENDING
+      id:          NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE,
+      title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_EXISTING_RESULTS_FAILURE.TITLE',
+      description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_EXISTING_RESULTS_FAILURE.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
     };
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE)
         .subscribe((myNotification) => {
@@ -546,13 +544,13 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
   private showDeadlineReachedNoitification(dsbMitgliedId: number) {
     const deadlineNotification: Notification = {
-      id:               NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE,
-      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_DEADLINE_FAILURE.TITLE',
-      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_DEADLINE_FAILURE.DESCRIPTION',
-      severity:         NotificationSeverity.ERROR,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.OK,
-      userAction:       NotificationUserAction.PENDING
+      id:          NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE,
+      title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_DEADLINE_FAILURE.TITLE',
+      description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_DEADLINE_FAILURE.DESCRIPTION',
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
     };
     this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE)
         .subscribe((myNotification) => {
@@ -637,7 +635,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   private existsMannschaftsNummer(mannschaftsnummer: string): boolean {
 
     for (const mannschaft of this.mannschaften) {
-      if (parseInt(mannschaft.nummer , 10) === parseInt(mannschaftsnummer, 10)) {
+      if (parseInt(mannschaft.nummer, 10) === parseInt(mannschaftsnummer, 10)) {
         this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
         this.mannschaften = [];
         return true;
@@ -746,3 +744,4 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.notificationService.showNotification(noLicenseNotification);
   }
 }
+
