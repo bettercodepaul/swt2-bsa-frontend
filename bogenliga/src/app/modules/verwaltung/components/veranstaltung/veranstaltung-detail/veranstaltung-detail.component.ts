@@ -348,21 +348,46 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
-  public onFinish(ignore: any): void{
+  public onFinish(ignore: any): void {
     const name = this.currentVeranstaltung.name;
     const id = this.currentVeranstaltung.id;
     const notification: Notification = {
-      id: NOTIFICATION_FINISH_VERANSTALTUNG + id,
-      title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.DESCRIPTION',
+      id:               NOTIFICATION_FINISH_VERANSTALTUNG + id,
+      title:            'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.TITLE',
+      description:      'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.DESCRIPTION',
       descriptionParam: '' + name,
-      severity: NotificationSeverity.QUESTION,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.YES_NO,
-      userAction: NotificationUserAction.PENDING
-    }
+      severity:         NotificationSeverity.QUESTION,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.YES_NO,
+      userAction:       NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_FINISH_VERANSTALTUNG + id)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.currentVeranstaltung.phase = 'Abgeschlossen';
+            // persist
+            this.veranstaltungDataProvider.update(this.currentVeranstaltung)
+                .then((response: BogenligaResponse<VeranstaltungDO>) => {
+                  if (!isNullOrUndefined(response)
+                    && !isNullOrUndefined(response.payload)
+                    && !isNullOrUndefined(response.payload.id)) {
+                    this.saveLoading = false;
+                    this.router.navigateByUrl('/verwaltung/veranstaltung');
+                  }
+                }, (response: BogenligaResponse<VeranstaltungDO>) => {
+                  console.log('Failed');
+                  this.saveLoading = false;
+                });
+
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.rows = hideLoadingIndicator(this.rows, id);
+          }
+        });
     this.notificationService.showNotification(notification);
+
+
   }
+
 
   public entityExists(): boolean {
     return this.currentVeranstaltung.id >= 0;
