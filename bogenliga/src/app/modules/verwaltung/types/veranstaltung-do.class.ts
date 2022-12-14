@@ -13,6 +13,7 @@ export class VeranstaltungDO implements VersionedDataObject {
   ligaleiterEmail: string;
   wettkampftypName: string;
   ligaName: string;
+  phase: string;
 
 
 
