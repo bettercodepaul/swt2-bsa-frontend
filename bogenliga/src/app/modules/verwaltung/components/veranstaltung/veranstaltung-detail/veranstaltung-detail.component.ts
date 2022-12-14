@@ -347,13 +347,15 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         });
   }
 
+
   public onFinish(ignore: any): void{
+    const name = this.currentVeranstaltung.name;
     const id = this.currentVeranstaltung.id;
     const notification: Notification = {
       id: NOTIFICATION_FINISH_VERANSTALTUNG + id,
       title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.TITLE',
       description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.DESCRIPTION',
-      descriptionParam: '' + id,
+      descriptionParam: '' + name,
       severity: NotificationSeverity.QUESTION,
       origin: NotificationOrigin.USER,
       type: NotificationType.YES_NO,
@@ -433,7 +435,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
     this.loadMannschaftsTable();
   }
-  
+
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allLiga = [];
     this.allLiga = response.payload;
