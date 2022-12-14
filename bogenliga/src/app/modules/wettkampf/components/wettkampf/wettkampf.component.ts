@@ -365,9 +365,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   // backend-calls to get data from DB
   public async loadVeranstaltungen() {
     this.loadingData = true;
-    await this.veranstaltungsDataProvider.findAll()
-      .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
-      .catch(() => this.veranstaltungen = []);
+    await this.veranstaltungsDataProvider.findAllLaufendAbgeschlossen()
+              .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
+              .catch(() => this.veranstaltungen = []);
 
   }
 
