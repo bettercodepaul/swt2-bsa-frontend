@@ -472,6 +472,19 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
+  /**
+   * Checks if current Veranstaltung is on Phase 'Laufend'
+   * If not button which uses checkVeranstaltungPhase will be greyed out
+   */
+  public checkVeranstaltungPhase(){
+    let laufend = false;
+    if ( this.currentVeranstaltung.phase === 'Laufend') {
+      laufend = true;
+    }
+    return laufend;
+  }
+
+
   private handleUserResponseArraySuccess(response: BogenligaResponse<UserProfileDO[]>): void {
     this.allUsers = [];
     this.allUsers = response.payload;
