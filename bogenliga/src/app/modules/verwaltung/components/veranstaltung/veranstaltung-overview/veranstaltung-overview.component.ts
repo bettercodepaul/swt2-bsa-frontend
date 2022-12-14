@@ -187,7 +187,6 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
 
   //Mehtode wird leider nie verwendet. Der onSelect kommt von der overview-selection-dialog-component.
   public onSelect($event: SportjahrVeranstaltungDO[]): void {
-    this.selectedYear = null;
     this.selectedYear = $event[0].sportjahr;
     this.loadBySportjahr(this.selectedYear);
   }
