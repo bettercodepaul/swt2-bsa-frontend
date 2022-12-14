@@ -74,7 +74,7 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
   overflow-y: scroll; // overflow in y direction is scrollable
   -ms-overflow-style: none; // scrollbar wont be displayed on firefox
   scrollbar-width:none;
-  border-radius: 0px 0px 50px 0px;
+  //border-radius: 0px 0px 50px 0px; // runde ecke am menü
 
 }
 #sidebar::-webkit-scrollbar { // no scrollbar in Safari, Chrome, Opera
