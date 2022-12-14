@@ -57,6 +57,7 @@ const NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE = 'mannschaft_mitglied_delet
 const NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE = 'mannschaft_mitglied_delete_existing_results_failure';
 const NOTIFICATION_WARING_MANNSCHAFT = 'duplicate_mannschaft';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
+const NOTIFICATION_LIGA_NOT_LOADED = 'liga_not_loaded';
 
 @Component({
   selector:    'bla-mannschaft-detail',
@@ -408,31 +409,44 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   // deletes the selected member in the team
   public onDeleteMitglied(versionedDataObject: VersionedDataObject): void {
     this.notificationService.discardNotification();
-
-    this.rows = showDeleteLoadingIndicatorIcon(this.rows, versionedDataObject.id);
-
-    // deadline: YYYY-MM-DD
-    const deadline = this.currentVeranstaltung.meldeDeadline.split('-');
-    const deadlineYear = Number(deadline[0]);
-    const deadlineMonth = Number(deadline[1]);
-    const deadlineDay = Number(deadline[2]);
-    const currentDate = new Date();
-
-    // checks if the current date is before the deadline
-    // deadline here: "Meldedeadline"
-    if (deadlineYear > currentDate.getFullYear() ||
-      (deadlineYear === currentDate.getFullYear() && deadlineMonth > currentDate.getMonth()) ||
-      (deadlineYear === currentDate.getFullYear() && deadlineMonth === currentDate.getMonth() && deadlineDay > currentDate.getDay())) {
-//      if (this.checkExistingResults(versionedDataObject.id)) {
-      const teamMemberId = versionedDataObject.id; // this.members.get(versionedDataObject.id).id;
-
-      this.deleteMitglied(this.currentMannschaft.id, teamMemberId);
-
+    //If Liga is not loaded Notification will be thrown
+    if (this.currentVeranstaltung == undefined) {
+      const notification: Notification = {
+        id:          NOTIFICATION_LIGA_NOT_LOADED,
+        title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.LIGA_NOT_LOADED.TITLE',
+        description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.LIGA_NOT_LOADED.DESCRIPTION',
+        severity:    NotificationSeverity.INFO,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+      this.notificationService.showNotification(notification);
     } else {
-      this.showDeadlineReachedNoitification(versionedDataObject.id);
-    }
-  }
+      this.rows = showDeleteLoadingIndicatorIcon(this.rows, versionedDataObject.id);
 
+      // deadline: YYYY-MM-DD
+      const deadline = this.currentVeranstaltung.meldeDeadline.split('-');
+      const deadlineYear = Number(deadline[0]);
+      const deadlineMonth = Number(deadline[1]);
+      const deadlineDay = Number(deadline[2]);
+      const currentDate = new Date();
+
+      // checks if the current date is before the deadline
+      // deadline here: "Meldedeadline"
+      if (deadlineYear > currentDate.getFullYear() ||
+        (deadlineYear === currentDate.getFullYear() && deadlineMonth > currentDate.getMonth()) ||
+        (deadlineYear === currentDate.getFullYear() && deadlineMonth === currentDate.getMonth() && deadlineDay > currentDate.getDay())) {
+//      if (this.checkExistingResults(versionedDataObject.id)) {
+        const teamMemberId = versionedDataObject.id; // this.members.get(versionedDataObject.id).id;
+
+        this.deleteMitglied(this.currentMannschaft.id, teamMemberId);
+
+      } else {
+        this.showDeadlineReachedNoitification(versionedDataObject.id);
+      }
+    }
+
+  }
   // @param memberId: MannschaftsId of Mannschaft of Member to delete
   // @param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
   private async deleteMitglied(memberId: number, dsbMitgliedId: number) {

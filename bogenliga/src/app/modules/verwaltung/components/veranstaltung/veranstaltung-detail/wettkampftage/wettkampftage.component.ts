@@ -691,6 +691,39 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedDTOs = response.payload.filter((element) => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
     this.anzahl = this.selectedDTOs.length;
 
+    //check if WettkampfDO Obeject contains all values
+    for (let i = 0; i < this.selectedDTOs.length; i++) {
+      let counter = 0;
+      if (this.selectedDTOs[i].wettkampfTag === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfBeginn === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfOrtsname === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfPlz === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfStrasse === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfDatum === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].id === null) {
+        counter +=1;
+      }
+      //sort selectedDTOs by date and assign the corrosponding WettkampfTag
+      if (counter === 0) {
+        this.selectedDTOs = this.selectedDTOs.sort((objectA, objectB) => Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum)); //sort DTOs by date
+        this.selectedDTOs[i].wettkampfTag = i + 1; //assign correct Wettkampftag to sorted selectedDTOs
+        await this.wettkampfDataProvider.update(this.selectedDTOs[i]); //save selectedDTOs with updated Wettkampftag
+      }
+
+    }
+
     // when there are no Wettkampftage for this Veranstaltung yet
     if (this.selectedDTOs.length === 0) {
       this.selectedDTOs.push(new WettkampfDO());

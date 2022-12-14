@@ -58,6 +58,33 @@
       </div>
     </div>
 
+    <!-- Disziplinname -->
+    <div class="form-group row">
+      <label for="disziplinName"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DISZIPLIN.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select type="text"
+                class="form-control"
+                required
+                id="disziplinName"
+                name="disziplinName"
+                #disziplinName="ngModel"
+                [(ngModel)]="currentDisziplin"
+                data-cy="veranstaltung-detail-disziplinname">
+          <option [ngValue]="disziplinName"
+                  *ngFor="let disziplinName of allDisziplin"> {{disziplinName.disziplinName}}</option>
+
+          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
 
     <!-- WettkampftypName -->
     <div class="form-group row">
