@@ -11,7 +11,7 @@ import {
   faBinoculars,
   faBullseye,
   faCalendarAlt,
-  faFootballBall,
+  faCode, //faFootballBall,
   faHome,
   faListOl,
   faSitemap,
@@ -20,7 +20,7 @@ import {
 
   faTrophy, //Wettkämpfe
   faCalendar, //Wettkampfdurchführung
-  faCogs //Verwaltung
+  faCogs, //Verwaltung
 
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -150,7 +150,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
 
   {
     label: 'SIDEBAR.PLAYGROUND',
-    icon: faFootballBall,
+    icon: faCode,
     route: '/playground',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
@@ -264,7 +264,7 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
   },
   {
     label: 'SIDEBAR.PLAYGROUND',
-    icon: faFootballBall,
+    icon: faCode,
     route: '/playground',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
