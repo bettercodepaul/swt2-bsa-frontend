@@ -11,16 +11,16 @@ import {
   faBinoculars,
   faBullseye,
   faCalendarAlt,
-  faCode, //faFootballBall,
+  faCode, // faFootballBall,
   faHome,
   faListOl,
   faSitemap,
   faUsers,
   faQuestion,
 
-  faTrophy, //Wettkämpfe
-  faCalendar, //Wettkampfdurchführung
-  faCogs, //Verwaltung
+  faTrophy, // Wettkämpfe
+  faCalendar, // Wettkampfdurchführung
+  faCogs, // Verwaltung
 
 } from '@fortawesome/free-solid-svg-icons';
 
