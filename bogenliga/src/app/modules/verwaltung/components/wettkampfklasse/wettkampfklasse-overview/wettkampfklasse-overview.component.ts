@@ -9,11 +9,13 @@ import {NotificationService} from '../../../../shared/services/notification';
 import {WettkampfklassenDataProviderService} from '../../../services/wettkampfklassen-data-provider.service';
 import {WettkampfKlasseDTO} from '../../../types/datatransfer/wettkampfklasse-dto.class';
 import {WETTKAMPFKLASE_OVERVIEW_CONFIG} from './wettkampfklasse-overview.config';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 @Component({
-  selector: 'bla-wettkampfklasse-overview',
+  selector:    'bla-wettkampfklasse-overview',
   templateUrl: './wettkampfklasse-overview.component.html',
-  styleUrls: ['./wettkampfklasse-overview.component.scss']
+  styleUrls:   ['./wettkampfklasse-overview.component.scss']
 })
 export class WettkampfklasseOverviewComponent extends CommonComponentDirective implements OnInit {
 
@@ -21,14 +23,33 @@ export class WettkampfklasseOverviewComponent extends CommonComponentDirective i
   public rows: TableRow[];
   public searchTerm = 'searchTermWettkampf';
 
-  constructor(private wettkampfklassenDataProvider: WettkampfklassenDataProviderService, private router: Router, private notificationService: NotificationService) {
+  private sessionHandling: SessionHandling;
+
+  constructor(private wettkampfklassenDataProvider: WettkampfklassenDataProviderService,
+    private router: Router,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
     this.loading = true;
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
     }
   }
 

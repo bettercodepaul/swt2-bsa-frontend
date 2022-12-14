@@ -16,7 +16,12 @@ import {
   faListOl,
   faSitemap,
   faUsers,
-  faQuestion
+  faQuestion,
+
+  faTrophy, //Wettkämpfe
+  faCalendar, //Wettkampfdurchführung
+  faCogs //Verwaltung
+
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -46,9 +51,10 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-vereine-button'
   },
+
   {
     label: 'SIDEBAR.VERWALTUNG',
-    icon: faArchive,
+    icon: faCogs,
     route: '/verwaltung',
     permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
     datacy: 'sidebar-verwaltung-button',
@@ -56,7 +62,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'DSB Mitglieder',
         route: '/verwaltung/dsbmitglieder',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+        permissons: [UserPermission.CAN_READ_DSBMITGLIEDER, UserPermission.CAN_MODIFY_VEREIN_DSBMITGLIEDER],
         datacy: 'sidebar-verwaltung-mitglieder-button'
       },
       {
@@ -74,7 +80,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Vereine',
         route: '/verwaltung/vereine',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+        permissons: [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_READ_MY_VEREIN],
         datacy: 'sidebar-verwaltung-vereine-button'
       },
       {
@@ -92,27 +98,38 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
       {
         label: 'Veranstaltungen',
         route: '/verwaltung/veranstaltung',
-        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN],
+        permissons: [UserPermission.CAN_READ_STAMMDATEN, UserPermission.CAN_MODIFY_MY_VERANSTALTUNG, UserPermission.CAN_MODIFY_STAMMDATEN],
         datacy: 'sidebar-verwaltung-veranstaltungen-button'
+      },
+      {
+        label: 'Einstellungen',
+        route: '/verwaltung/einstellungen',
+        permissons: [UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        datacy: 'sidebar-verwaltung-einstellungen-button'
       }
     ]
   },
+
+
   {
     label: 'SIDEBAR.WETTKAMPF',
-    icon: faSitemap,
+    icon: faTrophy,
     route: '/wettkaempfe',
     permissons: [UserPermission.CAN_READ_DEFAULT],
     subitems: [],
     datacy: 'sidebar-wettkampf-button'
   },
+
   {
     label: 'SIDEBAR.WKDURCHFUEHRUNG',
-    icon: faCalendarAlt,
+    icon: faCalendar,
     route: '/wkdurchfuehrung',
     permissons: [UserPermission.CAN_READ_WETTKAMPF, UserPermission.CAN_MODIFY_WETTKAMPF],
     subitems: [],
     datacy: 'sidebar-wkdurchfuehrung-button'
   },
+
+
   {
     label: 'SIDEBAR.MANNSCHAFTEN',
     icon: faListOl,
@@ -129,6 +146,8 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-spotting-button'
   },
+
+
   {
     label: 'SIDEBAR.PLAYGROUND',
     icon: faFootballBall,
@@ -149,6 +168,7 @@ export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
 ];
 // sidebar for offlinemode
 export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
+
   {
     label: 'SIDEBAR.HOME',
     icon: faHome,
@@ -157,6 +177,7 @@ export const SIDE_BAR_CONFIG_OFFLINE: SideBarNavigationItem[] = [
     subitems: [],
     datacy: 'sidebar-home-button'
   },
+
 
   {
     label: 'SIDEBAR.VERWALTUNG',

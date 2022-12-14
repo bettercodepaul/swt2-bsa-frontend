@@ -3,15 +3,15 @@
 <bla-row-layout>
 
 <bla-selection-overview-dialog [config]="table_config"
-                                 [rows]="rows"
-                                 [loading]="loading"
-                                 (onViewClicked)="onView($event)"
-                                 (onEditClicked)="onEdit($event)"
-                                 (onDeleteClicked)="onDelete($event)"
+                               (onDeleteClicked)="onDelete($event)"
+                               (onEditClicked)="onEdit($event)"
+                               (onViewClicked)="onView($event)"
+                               [loading]="loading"
                                [items]="selectedDTOs"
                                [multipleSelections]="!multipleSelections"
+                               [rows]="rows"
                                [optionFieldSelector]="'sportjahr'">
-
+  <div (mouseover)="onMouseOver($event)"></div>
 </bla-selection-overview-dialog>
 
 </bla-row-layout>

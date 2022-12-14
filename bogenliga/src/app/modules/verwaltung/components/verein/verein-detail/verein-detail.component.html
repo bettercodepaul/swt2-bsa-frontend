@@ -1,115 +1,117 @@
 <bla-common-dialog [config]="config"
                    [loading]="loading">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereindetails" target="_blank"></bla-hilfe-button>
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereindetails"
+                      target="_blank"></bla-hilfe-button>
 
-  <form id="vereineForm"
-        class="horizontal-form half-page"
-        #vereineForm="ngForm">
+    <form #vereineForm="ngForm"
+          class="horizontal-form half-page"
+          id="vereineForm">
 
-    <!-- textfield "Vereinsname *" -->
-    <div class="form-group row">
-      <label for="vereinName"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               pattern="(?=.*[A-Za-z])[A-Za-z0-9\ \-\.]{1,50}$"
-               id="vereinName"
-               name="vereinName"
-               #vereinName="ngModel"
-               [(ngModel)]="currentVerein.name"
-               [class.is-invalid]="vereinName.invalid && !vereinName.untouched"
-               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.PLACEHOLDER' | translate }}"
-               data-cy="vereine-vereinsname">
+      <!-- textfield "Vereinsname *" -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="vereinName">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input #vereinName="ngModel"
+                 [(ngModel)]="currentVerein.name"
+                 [class.is-invalid]="vereinName.invalid && !vereinName.untouched"
+                 class="form-control"
+                 data-cy="vereine-vereinsname"
+                 id="vereinName"
+                 name="vereinName"
+                 pattern="(?=.*[A-Za-zäÄüÜöÖß])[A-Za-zäÄüÜöÖß0-9\ \-\.]{1,50}$"
+                 placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.PLACEHOLDER' | translate }}"
+                 required
+                 type="text">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- textfield "Vereinsnummer *" -->
-    <div class="form-group row">
-      <label for="vereinIdentifier"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               pattern="(?=.*[0-9])[A-Z0-9]{8,20}$"
-               id="vereinIdentifier"
-               name="vereinIdentifier"
-               #vereinIdentifier="ngModel"
-               [(ngModel)]="currentVerein.identifier"
-               [class.is-invalid]="vereinIdentifier.invalid && !vereinIdentifier.untouched"
-               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.PLACEHOLDER' | translate }}"
-               data-cy="vereine-vereinsnummer">
+      <!-- textfield "Vereinsnummer *" -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="vereinIdentifier">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input #vereinIdentifier="ngModel"
+                 [(ngModel)]="currentVerein.identifier"
+                 [class.is-invalid]="vereinIdentifier.invalid && !vereinIdentifier.untouched"
+                 class="form-control"
+                 data-cy="vereine-vereinsnummer"
+                 id="vereinIdentifier"
+                 name="vereinIdentifier"
+                 pattern="(?=.*[0-9])[A-Z0-9]{8,20}$"
+                 placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.PLACEHOLDER' | translate }}"
+                 required
+                 type="text">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_IDENTIFIER.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- dropdown Region -->
-    <div class="form-group row">
-      <label for="vereinRegion"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <select class="form-control"
-                id="vereinRegion"
-                name="vereinRegion"
-                #vereinRegion="ngModel"
-                [(ngModel)]="currentRegion">
-          <option [ngValue]="region"
-                  *ngFor="let region of regionen"> {{region.regionName}}</option>
-        </select>
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.ERROR' | translate }}
+      <!-- dropdown Region -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="vereinRegion">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <select #vereinRegion="ngModel"
+                  [(ngModel)]="currentRegion"
+                  class="form-control"
+                  id="vereinRegion"
+                  name="vereinRegion">
+            <option *ngFor="let region of regionen"
+                    [ngValue]="region"> {{region.regionName}}</option>
+          </select>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- textfield "Webseite" -->
-    <div class="form-group row">
-      <label for="vereinWebsite"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="url"
-               class="form-control"
-               id="vereinWebsite"
-               name="vereinWebsite"
-               #vereinWebsite="ngModel"
-               [(ngModel)]="currentVerein.website"
-               [class.is-invalid]="vereinWebsite.invalid && !vereinWebsite.untouched"
-               placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.PLACEHOLDER' | translate }}"
-               data-cy="vereine-vereinswebsite">
+      <!-- textfield "Webseite" -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="vereinWebsite">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}</span>
+        </label>
+        <div class="col-sm-9">
+          <input #vereinWebsite="ngModel"
+                 [(ngModel)]="currentVerein.website"
+                 [class.is-invalid]="vereinWebsite.invalid && !vereinWebsite.untouched"
+                 class="form-control"
+                 data-cy="vereine-vereinswebsite"
+                 id="vereinWebsite"
+                 name="vereinWebsite"
+                 placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.PLACEHOLDER' | translate }}"
+                 type="url">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- textfield "Freitext" -->
-    <div class="form-group row">
-      <label for="vereinDescription"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-9">
+      <!-- textfield "Freitext" -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="vereinDescription">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}</span>
+        </label>
+        <div class="col-sm-9">
         <textarea maxlength="300"
                   class="form-control"
                   id="vereinDescription"
@@ -121,111 +123,110 @@
                   data-cy="vereine-vereinsbeschreibung">
         </textarea>
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- box for club icon
-    <div class="form-group row">
-      <label for="vereinIcon"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-9">
-        <div class="file_upload">
-          <input
-            type="file"
-            name="myLogo"
-            class="form-control"
-            id="vereinIcon"
-            accept="image/*"
-            (change)="convertIconToBase64($event)"
-            #vereinIcon="ngModel"
-            [(ngModel)]="currentVerein.icon"
-            [class.is-invalid]="vereinIcon.invalid && !vereinIcon.untouched"
-            placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.PLACEHOLDER' | translate }}">
+      <!-- box for club icon
+      <div class="form-group row">
+        <label for="vereinIcon"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}</span>
+        </label>
+        <div class="col-sm-9">
+          <div class="file_upload">
+            <input
+              type="file"
+              name="myLogo"
+              class="form-control"
+              id="vereinIcon"
+              accept="image/*"
+              (change)="convertIconToBase64($event)"
+              #vereinIcon="ngModel"
+              [(ngModel)]="currentVerein.icon"
+              [class.is-invalid]="vereinIcon.invalid && !vereinIcon.untouched"
+              placeholder="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.PLACEHOLDER' | translate }}">
+          </div>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.ERROR' | translate }}
+          </div>
         </div>
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.ERROR' | translate }}
+      </div>-->
+
+
+      <!-- box for club icon -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="vereinIcon">
+          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}</span>
+        </label>
+        <div class="col-sm-9">
+          <div class="file_upload">
+            <input
+              (change)="convertIconToBase64($event)"
+              accept="image/*"
+              class="form-control"
+              id="vereinIcon"
+              name="myLogo"
+              type="file">
+          </div>
         </div>
       </div>
-    </div>-->
+
+      <div class="form-group row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9 button-box">
 
 
+          <bla-button (onClick)="onSave($event)"
+                      *ngIf="!entityExists()"
+                      [disabled]="!vereineForm.valid"
+                      [id]="'vereinSaveButton'"
+                      [loading]="saveLoading"
+                      data-cy="vereine-add-button">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.SAVE' | translate }}
+          </bla-button>
+          <bla-button (onClick)="onUpdate($event)"
+                      *ngIf="entityExists()"
+                      [disabled]="!vereineForm.valid"
+                      [id]="'vereinUpdateButton'"
+                      [loading]="saveLoading"
+                      data-cy="vereine-update-button">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.UPDATE' | translate }}
+          </bla-button>
 
-    <!-- box for club icon -->
-    <div class="form-group row">
-      <label for="vereinIcon"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-9">
-        <div class="file_upload">
-          <input
-            type="file"
-            name="myLogo"
-            class="form-control"
-            id="vereinIcon"
-            accept="image/*"
-            (change)="convertIconToBase64($event)">
+          <bla-button (onClick)="onDelete($event)"
+                      *ngIf="entityExists()"
+                      [buttonType]="ButtonType.DANGER"
+                      [loading]="deleteLoading">
+            {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.DELETE' | translate }}
+          </bla-button>
         </div>
       </div>
-    </div>
+    </form>
 
-    <div class="form-group row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-9 button-box">
-
-
-        <bla-button *ngIf="!entityExists()"
-                    [id]="'vereinSaveButton'"
-                    [disabled]="!vereineForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onSave($event)"
-                    data-cy="vereine-add-button">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.SAVE' | translate }}
-        </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'vereinUpdateButton'"
-                    [disabled]="!vereineForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)"
-                    data-cy="vereine-update-button">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.UPDATE' | translate }}
-        </bla-button>
-
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.DANGER"
-                    [loading]="deleteLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.DELETE' | translate }}
-        </bla-button>
+    <div *ngIf="entityExists()">
+      <h5> Mannschaftsübersicht</h5>
+      <div class="overview-dialog-add">
+        <button class="btn btn-success"
+                data-cy="vereine-details-add-mannschaft-button"
+                routerLink="add">
+          <fa-icon icon="plus"></fa-icon>
+          <span> Neu</span>
+        </button>
       </div>
+      <bla-data-table (onDeleteEntry)="onDeleteMannschaft($event)"
+                      (onDownloadLizenzenEntry)="onDownloadLizenzen($event)"
+                      (onDownloadRueckennummerEntry)="onDownloadRueckennummer($event)"
+                      (onEditEntry)="onEdit($event)"
+                      (onViewEntry)="onView($event)"
+                      [config]="config_table"
+                      [loading]="loading"
+                      [rows]="rows">
+      </bla-data-table>
+      <a #downloadLink></a>
     </div>
-  </form>
-
-  <div *ngIf="entityExists()">
-    <h5> Mannschaftsübersicht</h5>
-    <div class="overview-dialog-add">
-      <button class="btn btn-success"
-              routerLink="add"
-              data-cy="vereine-details-add-mannschaft-button">
-        <fa-icon icon="plus"></fa-icon>
-        <span> Neu</span>
-      </button>
-    </div>
-    <bla-data-table [config]="config_table"
-                    [rows]="rows"
-                    [loading]="loading"
-                    (onViewEntry)="onView($event)"
-                    (onEditEntry)="onEdit($event)"
-                    (onDownloadLizenzenEntry)="onDownloadLizenzen($event)"
-                    (onDownloadRueckennummerEntry)="onDownloadRueckennummer($event)"
-                    (onDeleteEntry)="onDeleteMannschaft($event)">
-    </bla-data-table>
-    <a #downloadLink></a>
   </div>
-
 </bla-common-dialog>

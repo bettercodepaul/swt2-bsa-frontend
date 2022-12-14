@@ -23,6 +23,8 @@ import {
 import {RoleVersionedDataObject} from '../../../services/models/roles-versioned-data-object.class';
 import {RoleDataProviderService} from '../../../services/role-data-provider.service';
 import {CredentialsDTO} from '@user/types/model/credentials-dto.class';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_USER = 'user_detail_save';
@@ -32,7 +34,7 @@ const NOTIFICATION_SAVE_USER = 'user_detail_save';
   selector:    'bla-user-detail',
   templateUrl: './user-detail.component.html',
   styleUrls:   ['./user-detail.component.scss'],
-  providers: [TranslatePipe]
+  providers:   [TranslatePipe]
 })
 export class UserDetailComponent extends CommonComponentDirective implements OnInit {
   @Input() public userRoleLeftCaptionTranslationKey = 'MANAGEMENT.USER_DETAIL.FORM.ROLE_NEW.LEFTCAPTION';
@@ -52,6 +54,8 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
   public rightList: RoleDTO[] = []; // Objekt zur Anzeige der zukünftigen Rollen auf der Applikation
   public leftList: RoleDTO[] = []; // Objekt zur Anzeige der aller übrigen Rollen auf der Applikation
 
+  private sessionHandling: SessionHandling;
+
   private notification: Notification = {
     id:          NOTIFICATION_SAVE_USER,
     title:       'MANAGEMENT.USER_DETAIL.NOTIFICATION.UPDATE.TITLE',
@@ -63,12 +67,15 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
   };
 
   constructor(private userDataProvider: UserDataProviderService,
-              private roleDataProvider: RoleDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService,
-              private translate: TranslatePipe) {
+    private roleDataProvider: RoleDataProviderService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private translate: TranslatePipe,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   /*
@@ -117,25 +124,37 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
 
   }
 
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
+  }
+
   /*
-  resetPW
-  ändert Passworteintrag für ausgewählten User
+   resetPW
+   ändert Passworteintrag für ausgewählten User
    */
   public resetPW(ignore: any): void {
     this.savePW = true;
     this.resetCredentials.username = this.currentUserRolleDO[0].email;
     this.userDataProvider.resetPW(this.resetCredentials)
-      .then((response: BogenligaResponse<Array<UserDO>>) => {
-        if (!isNullOrUndefined(response)) {
-          this.notificationService.observeNotification(NOTIFICATION_SAVE_USER)
-              .subscribe((myNotification) => {
-                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                  this.savePW = false;
-                  this.router.navigateByUrl('/verwaltung/user');
-                }
-              });
-          this.notificationService.showNotification(this.notification);
-        }
+        .then((response: BogenligaResponse<Array<UserDO>>) => {
+          if (!isNullOrUndefined(response)) {
+            this.notificationService.observeNotification(NOTIFICATION_SAVE_USER)
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.savePW = false;
+                    this.router.navigateByUrl('/verwaltung/user');
+                  }
+                });
+            this.notificationService.showNotification(this.notification);
+          }
         }, (response: BogenligaResponse<UserDO>) => {
         console.log('Failed');
         this.savePW = false;

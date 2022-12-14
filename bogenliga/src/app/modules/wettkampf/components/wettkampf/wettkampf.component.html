@@ -1,13 +1,27 @@
-<bla-common-dialog [config]="config" >
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkaempfe" target="_blank"></bla-hilfe-button>
-  <form id="regionenForm"
-        class="horizontal-form half-page">
-    <h3 class="print1" id="titel">{{currentVeranstaltung.name}}</h3>
-    <h2 class="print1" id="titel2">{{getTitle()}}</h2>
+<bla-common-dialog [config]="config">
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkaempfe"
+                      target="_blank"></bla-hilfe-button>
+    <p class="subtitle">{{'VEREINE.VEREINE.DESCRIPTION' | translate}}</p>
+    <form class="horizontal-form half-page"
+          id="regionenForm">
+      <div>
+        <h2 style="display: inline">Gewählte Veranstaltung: </h2>
+        <h3 class="print1"
+            id="titel"
+            style="display: inline">{{currentVeranstaltung.name}}</h3>
+      </div>
+      <div>
+        <h2 style="display: inline">Gewählte Mannschaft: </h2>
+        <h3 style="display: inline"
+            class="print1"
+            id="titel2"> {{getTitle()}}</h3>
+      </div>
 
-    <!-- Die Texte werden in der de.json Datei gesetzt-->
-    <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
-    gesetzt wird es in styles.scss-->
+
+      <!-- Die Texte werden in der de.json Datei gesetzt-->
+      <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
+      gesetzt wird es in styles.scss-->
 
     <!-- Veranstaltung -->
     <div id="selectVereink">
@@ -296,7 +310,8 @@
                         [config]="config_table"
                         [rows]="rows[3]">
         </bla-data-table>
-        <bla-data-table id="row31" class="hidden"
+        <bla-data-table id="row31"
+                        class="hidden"
                         [loading]="loadingData"
                         [config]="config_einzel_table"
                         [rows]="rows[3]">
@@ -304,12 +319,13 @@
       </div>
     </div>
 
-    <div class="form-group row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-9 button-box">
+      <div class="form-group row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9 button-box">
 
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </bla-common-dialog>
 

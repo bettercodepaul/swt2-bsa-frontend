@@ -2,12 +2,44 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 /* Farbkonzept Website */
-$primary: #02bdd5; // Links, Navbar
+$hero-blue: #487AF5; //Title H2, visual accent elements
+$primary-black: #2A2A2A; // Most Texts, Primary Buttons
+$primary-white: #FCFCFC; //Background
+$dark-gray: #888888; // Subtitle, Inactive Buttons
+$light-gray: #EAEAEF; //Secondary Buttons
+$accent-gold: #FFCC34; //Help, Tooltip, Link to Help
+$accent-red: #F40E0E; //Destructive Actions, Delete Buttons
+$true-white: #ffffff; //Navbar & Header Background
+
+/*
 $primary-light: #b4ffff; // Sidebar-Background
 $primary-dark: #007c91; // Sidebar-Font
 $secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
+*/
+
+@font-face {
+  font-family: Poppins-regular;
+  src: url("/assets/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Poppins-bold;
+  src: url("/assets/fonts/Poppins/Poppins-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Poppins-thin;
+  src: url("/assets/fonts/Poppins/Poppins-Thin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Bitter-regular;
+  src: url("/assets/fonts/Bitter/Bitter-Regular.ttf ") format("truetype");
+}
+
+
 
 * {
   box-sizing: border-box;
@@ -22,32 +54,79 @@ html,
 body {
   height: 100%;
   position: relative;
+  background-color: $primary-white;
+  font-family: Poppins-regular;
+  color: $primary-black;
+}
+// ==================
+/* GLOBAL TYPOGRAPHY */
+
+//Use for: Page title
+h1 {
+  color: $primary-black;
+  font-size: 2em;
+  font-family: "Poppins-bold";
 }
 
-/*
- * global Typography
- */
+//Use for: Section title
+h2{
+  color: $hero-blue;
+  font-size: 1.5em;
+  font-family: Poppins-bold;
+}
 
-// body, paragraph and link style
-a, a:visited {
-  color: $primary;
+//Use for: Component title
+h3{
+  color: $primary-black;
+  font-size: 1.2em;
+  font-family: Poppins-bold;
+}
+
+//Use for: Label (e.g. date lable)
+h4{
+  color: $dark-gray;
+  font-size: 1em;
+  font-weight: normal;
+  font-family: "Bitter-regular";
+}
+
+// Use for: Erklärender subtitle unter H1 Page title
+.subtitle {
+  color: $dark-gray;
+  font-size: 1.1em;
+  font-family: Bitter-regular;
+  padding-bottom: 1em;
+}
+
+// ======================
+/* COMMON STYLE ELEMENTS */
+
+// Use for: Navbar, content cards, boxes
+.soft-shadow {
+  box-shadow: $light-gray 0px 7px 20px 10px;
+}
+
+// Use for: normal text, normal links
+p, a, a:visited {
+  color: $primary-black;
   text-decoration: none;
 }
 
+// Hover styles
 a:hover, a:focus {
-  color: $secondary-dark;
+  color: $dark-gray;
   transition: ease-in-out 0.3s;
   text-decoration: none;
 }
 
+//Remove?
 .color-black, a.color-black, a:visited.color-black {
-  color: #000;
+  color: $primary-black;
   text-decoration: none;
 }
 
-/*
- * global animations
- */
+// =================
+/* GLOBAL ANIMATIONS */
 
 .animation.fade-in {
   -webkit-animation: fadein 0.3s;

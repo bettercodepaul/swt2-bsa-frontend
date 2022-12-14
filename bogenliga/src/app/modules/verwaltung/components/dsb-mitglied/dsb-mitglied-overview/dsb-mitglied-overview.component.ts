@@ -16,7 +16,8 @@ import {
 import {DsbMitgliedDataProviderService} from '../../../services/dsb-mitglied-data-provider.service';
 import {DsbMitgliedDTO} from '../../../types/datatransfer/dsb-mitglied-dto.class';
 import {DSB_MITGLIED_OVERVIEW_CONFIG} from './dsb-mitglied-overview.config';
-import {CurrentUserService, UserPermission} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
+import {SessionHandling} from '@shared/event-handling';
 
 export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
 
@@ -30,18 +31,33 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
   public config = DSB_MITGLIED_OVERVIEW_CONFIG;
   public rows: TableRow[];
   public searchTerm = 'searchTermMitglied';
+  private sessionHandling: SessionHandling;
 
   constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
-              private router: Router,
-              private notificationService: NotificationService,
-              private currentUserService: CurrentUserService) {
+    private router: Router,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
     this.loading = true;
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
     }
   }
 
