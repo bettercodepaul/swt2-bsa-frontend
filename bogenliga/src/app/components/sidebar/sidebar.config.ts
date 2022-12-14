@@ -1,11 +1,6 @@
 import {UserPermission} from '@shared/services';
 import {SideBarNavigationItem} from './types/sidebar-navigation-item.interface';
 
-
-
-
-
-
 import {
   faArchive,
   faBinoculars,
@@ -23,7 +18,6 @@ import {
   faCogs //Verwaltung
 
 } from '@fortawesome/free-solid-svg-icons';
-
 
 export const SIDE_BAR_CONFIG: SideBarNavigationItem[] = [
   {
