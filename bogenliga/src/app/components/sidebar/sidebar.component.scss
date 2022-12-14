@@ -1,13 +1,5 @@
 /* Farbkonzept Website */
-$hero-blue: #487AF5; //Title H2, visual accent elements
-$primary-black: #2A2A2A; // Most Texts, Primary Buttons
-$primary-white: #FCFCFC; //Background
-$dark-gray: #888888; // Subtitle, Inactive Buttons
-$light-gray: #EAEAEF; //Secondary Buttons
-$accent-gold: #FFCC34; //Help, Tooltip, Link to Help
-$accent-red: #F40E0E; //Destructive Actions, Delete Buttons
-$true-white: #ffffff; //Navbar & Header Background
-
+@import 'src/styles.scss';
 
 $primary: #02bdd5; // Links, Navbar
 $primary-light: #ffffff; // Sidebar-Background
@@ -78,6 +70,10 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
 
 }
 #sidebar::-webkit-scrollbar { // no scrollbar in Safari, Chrome, Opera
+  display: none;
+}
+
+#sidebar::-webkit-scrollbar {
   display: none;
 }
 
