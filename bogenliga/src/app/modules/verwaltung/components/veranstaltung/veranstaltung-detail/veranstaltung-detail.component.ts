@@ -46,9 +46,12 @@ import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+
+import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components';
 import {DisziplinDO} from '@verwaltung/types/disziplin-do.class';
 import {DisziplinDataProviderService} from '@verwaltung/services/disziplin-data-provider-service';
 import {DisziplinDTO} from '@verwaltung/types/datatransfer/disziplin-dto.class';
+
 
 
 const ID_PATH_PARAM = 'id';
@@ -71,7 +74,6 @@ const NOTIFICATION_FINISH_VERANSTALTUNG = 'veranstaltung_detail_finish';
   templateUrl: './veranstaltung-detail.component.html',
   styleUrls:   ['./veranstaltung-detail.component.scss']
 })
-
 
 
 export class VeranstaltungDetailComponent extends CommonComponentDirective implements OnInit {
@@ -225,32 +227,32 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     // persist
     this.veranstaltungDataProvider.create(this.currentVeranstaltung)
         .then((response: BogenligaResponse<VeranstaltungDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
+            if (!isNullOrUndefined(response)
+              && !isNullOrUndefined(response.payload)
+              && !isNullOrUndefined(response.payload.id)) {
+              console.log('Saved with id: ' + response.payload.id);
 
-            const notification: Notification = {
-              id:          NOTIFICATION_SAVE_VERANSTALTUNG,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+              const notification: Notification = {
+                id:          NOTIFICATION_SAVE_VERANSTALTUNG,
+                title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.TITLE',
+                description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+                severity:    NotificationSeverity.INFO,
+                origin:      NotificationOrigin.USER,
+                type:        NotificationType.OK,
+                userAction:  NotificationUserAction.PENDING
+              };
 
-            this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + response.payload.id);
-                  }
-                });
+              this.notificationService.observeNotification(NOTIFICATION_SAVE_VERANSTALTUNG)
+                  .subscribe((myNotification) => {
+                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                      this.saveLoading = false;
+                      this.router.navigateByUrl('/verwaltung/veranstaltung/' + response.payload.id);
+                    }
+                  });
 
-            this.notificationService.showNotification(notification);
+              this.notificationService.showNotification(notification);
+            }
           }
-        }
         )
         .catch((response) => {
           console.log('Veranstaltung existiert bereits in diesem Sportjahr');
@@ -282,15 +284,15 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.saveLoading = true;
     this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
         .then((response) => {
-          this.lastVeranstaltung = response.payload;
-          console.log(this.lastVeranstaltung.id);
-          console.log('Mannschaften werden kopiert');
-          this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
-              .then((response) => this.handleCopyFromVeranstaltungSuccess(response)
-              , (response: BogenligaResponse<VeranstaltungDO>) => {
-                  console.log('Failed');
-                  this.saveLoading = false;
-                });
+            this.lastVeranstaltung = response.payload;
+            console.log(this.lastVeranstaltung.id);
+            console.log('Mannschaften werden kopiert');
+            this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
+                .then((response) => this.handleCopyFromVeranstaltungSuccess(response)
+                  , (response: BogenligaResponse<VeranstaltungDO>) => {
+                    console.log('Failed');
+                    this.saveLoading = false;
+                  });
           }
         )
         .catch((response) => {
@@ -358,21 +360,46 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
-  public onFinish(ignore: any): void{
+  public onFinish(ignore: any): void {
     const name = this.currentVeranstaltung.name;
     const id = this.currentVeranstaltung.id;
     const notification: Notification = {
-      id: NOTIFICATION_FINISH_VERANSTALTUNG + id,
-      title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.TITLE',
-      description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.DESCRIPTION',
+      id:               NOTIFICATION_FINISH_VERANSTALTUNG + id,
+      title:            'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.TITLE',
+      description:      'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.FINISH.DESCRIPTION',
       descriptionParam: '' + name,
-      severity: NotificationSeverity.QUESTION,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.YES_NO,
-      userAction: NotificationUserAction.PENDING
-    }
+      severity:         NotificationSeverity.QUESTION,
+      origin:           NotificationOrigin.USER,
+      type:             NotificationType.YES_NO,
+      userAction:       NotificationUserAction.PENDING
+    };
+    this.notificationService.observeNotification(NOTIFICATION_FINISH_VERANSTALTUNG + id)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.currentVeranstaltung.phase = 'Abgeschlossen';
+            // persist
+            this.veranstaltungDataProvider.update(this.currentVeranstaltung)
+                .then((response: BogenligaResponse<VeranstaltungDO>) => {
+                  if (!isNullOrUndefined(response)
+                    && !isNullOrUndefined(response.payload)
+                    && !isNullOrUndefined(response.payload.id)) {
+                    this.saveLoading = false;
+                    this.router.navigateByUrl('/verwaltung/veranstaltung');
+                  }
+                }, (response: BogenligaResponse<VeranstaltungDO>) => {
+                  console.log('Failed');
+                  this.saveLoading = false;
+                });
+
+          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            this.rows = hideLoadingIndicator(this.rows, id);
+          }
+        });
     this.notificationService.showNotification(notification);
+
+
   }
+
 
   public entityExists(): boolean {
     return this.currentVeranstaltung.id >= 0;
@@ -510,9 +537,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
    * Checks if current Veranstaltung is on Phase 'Laufend'
    * If not button which uses checkVeranstaltungPhase will be greyed out
    */
-  public checkVeranstaltungPhase(){
+  public checkVeranstaltungPhase() {
     let laufend = false;
-    if ( this.currentVeranstaltung.phase === 'Laufend') {
+    if (this.currentVeranstaltung.phase === 'Laufend') {
       laufend = true;
     }
     return laufend;
@@ -566,8 +593,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private loadMannschaftsTable() {
     this.mannschaftDataProvider.findAllByVeranstaltungsId(this.id)
-      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadMannschaftsTableSuccess(response.payload))
-      .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
+        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleLoadMannschaftsTableSuccess(response.payload))
+        .catch((response: BogenligaResponse<DsbMannschaftDO[]>) => this.rows = []);
   }
 
 
@@ -596,18 +623,18 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     };
 
     const notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
-                                .subscribe((myNotification) => {
+                                  .subscribe((myNotification) => {
 
-                                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                                    this.mannschaftDataProvider.deleteById(id)
-                                        .then((response) => this.loadMannschaftsTable())
-                                        .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
-                                  } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-                                    this.rows = hideLoadingIndicator(this.rows, id);
-                                    notificationEvent.unsubscribe();
-                                  }
+                                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                                      this.mannschaftDataProvider.deleteById(id)
+                                          .then((response) => this.loadMannschaftsTable())
+                                          .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+                                    } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+                                      this.rows = hideLoadingIndicator(this.rows, id);
+                                      notificationEvent.unsubscribe();
+                                    }
 
-                                });
+                                  });
 
     this.notificationService.showNotification(notification);
   }
@@ -621,7 +648,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
-  public onTableEditCancel( event: any) {
+  public onTableEditCancel(event: any) {
     this.selectedMannschaft.sortierung = this.oldSortierung;
     this.showPopup = false;
   }
@@ -631,8 +658,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     const maSortierung = new MannschaftSortierungDO(
       this.selectedMannschaft.id, this.selectedMannschaft.sortierung);
     this.maSortierungService.update(maSortierung)
-      .then(() => this.handleTableSaveSuccess())
-      .catch(() => this.handleTableSaveFailure());
+        .then(() => this.handleTableSaveSuccess())
+        .catch(() => this.handleTableSaveFailure());
     this.showPopup = false;
     this.loading = false;
   }
@@ -650,12 +677,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     };
 
     this.notificationService.observeNotification(NOTIFICATION_SAVE_SORTIERUNG)
-      .subscribe((myNotification) => {
-        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-          this.saveLoading = false;
-          this.loadMannschaftsTable();
-        }
-      });
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+            this.loadMannschaftsTable();
+          }
+        });
 
     this.notificationService.showNotification(notification);
   }
@@ -700,11 +727,32 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     }
   }
 
+  public setVeranstaltungsPhaseLaufend() {
+    this.currentVeranstaltung.phase = 'Laufend';
+    this.saveLoading = true;
+    this.veranstaltungDataProvider.update(this.currentVeranstaltung)
+        .then((response: BogenligaResponse<VeranstaltungDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+
+            console.log('Success');
+            this.saveLoading = false;
+          }
+        }, (response: BogenligaResponse<VeranstaltungDO>) => {
+          console.log('Failed');
+          this.saveLoading = false;
+        });
+  }
 
   public createMatchesWT0(event: any) {
+
     this.matchDataProvider.createInitialMatchesWT0(this.currentVeranstaltung)
-      .then(() => this.handleCreateMatchesWT0Success())
-      .catch(() => this.handleCreateMatchesWT0Failure());
+        .then(() => {
+          this.handleCreateMatchesWT0Success();
+          this.setVeranstaltungsPhaseLaufend();
+        })
+        .catch(() => this.handleCreateMatchesWT0Failure());
   }
 
 
@@ -720,11 +768,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     };
 
     this.notificationService.observeNotification(NOTIFICATION_INIT_LIGATABELLE_SUC)
-      .subscribe((myNotification) => {
-        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-          this.saveLoading = false;
-        }
-      });
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+          }
+        });
 
     this.notificationService.showNotification(notification);
     this.loadLigaTabelleExists();
@@ -743,11 +791,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     };
 
     this.notificationService.observeNotification(NOTIFICATION_INIT_LIGATABELLE_FAIL)
-      .subscribe((myNotification) => {
-        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-          this.saveLoading = false;
-        }
-      });
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+          }
+        });
 
     this.notificationService.showNotification(notification);
   }
