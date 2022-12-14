@@ -22,6 +22,8 @@ import {SportjahrVeranstaltungDTO} from '@verwaltung/types/datatransfer/sportjah
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
+import {getActiveSportYear} from '@shared/functions/active-sportyear';
+import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
 
@@ -39,26 +41,38 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   public loading = true;
   public loadingYear = true;
   public loadingSearch = true;
-  public selecetedYear = this.getCurrentYear();
+  public selectedYear = this.getCurrentYear();
   public selectedDTOs: SportjahrVeranstaltungDO[];
   public multipleSelections = true;
-
+  private aktivesSportjahr: number;
   private sessionHandling: SessionHandling;
 
   constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private router: Router, private notificationService: NotificationService,
     private currentUserService: CurrentUserService,
+    private einstellungenDataProvider: EinstellungenProviderService,
     private onOfflineService: OnOfflineService) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
-    // this.loadTableRows();
 
-    this.loadBySportjahr();
-    this.loadDistinctSporjahr();
+    //aktives Sportjahr wird nur im Online Modus ausgelesen und setzt die Default Filterung
+    //auf das aktive Sportjahr
+    if(!this.onOfflineService.isOffline()) {
+      getActiveSportYear(this.einstellungenDataProvider)
+        .then(value => {
+          this.aktivesSportjahr = value;
+          this.loadDistinctSporjahr();
+          this.loadBySportjahr(this.aktivesSportjahr);
 
+        });
+    } else {
+      this.loadDistinctSporjahr();
+      this.loadBySportjahr(this.selectedYear);
+
+    }
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -74,8 +88,8 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   }
 
   private getCurrentYear(): number {
-    this.selecetedYear = new Date().getFullYear();
-    return this.selecetedYear;
+    this.selectedYear = new Date().getFullYear();
+    return this.selectedYear;
   }
 
 
@@ -107,7 +121,7 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.veranstaltungDataProvider.deleteById(id)
-                .then((response) => this.loadBySportjahr())
+                .then((response) => this.loadBySportjahr(this.selectedYear))
                 .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
           } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
             this.rows = hideLoadingIndicator(this.rows, id);
@@ -134,9 +148,9 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
 
 // Diese Methode lädt Veranstaltungen aus dem Backend anhand ihres Sportjahres
 // Listet sie anschlie0end in der Übersicht Reiehnweise auf
-  private loadBySportjahr(): void {
+  private loadBySportjahr(choosenyear: number): void {
     this.loadingSearch = true;
-    this.veranstaltungDataProvider.findBySportyearGeplantLaufend(this.selecetedYear)
+    this.veranstaltungDataProvider.findBySportyearGeplantLaufend(choosenyear)
         .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(newList))
         .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
 
@@ -152,12 +166,12 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   private loadDistinctSporjahr(): void {
     this.loadingYear = true;
     this.veranstaltungDataProvider.findAllSportyearDestinct()
-        .then((newList: BogenligaResponse<SportjahrVeranstaltungDO[]>) => this.handleLoadDistinctSportjahrSecess(newList))
+        .then((newList: BogenligaResponse<SportjahrVeranstaltungDO[]>) => this.handleLoadDistinctSportjahrSuccess(newList))
         .catch((newList: BogenligaResponse<SportjahrVeranstaltungDTO[]>) => this.handleLoadDistinctSportjahrFailure(newList));
   }
 
 
-  private handleLoadDistinctSportjahrSecess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
+  private handleLoadDistinctSportjahrSuccess(response: BogenligaResponse<SportjahrVeranstaltungDO[]>): void {
     this.selectedDTOs = [];
     this.selectedDTOs = response.payload;
     this.loadingYear = false;
@@ -170,10 +184,12 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
     this.loadingYear = false;
   }
 
+  //Mehtode wird leider nie verwendet. Der onSelect kommt von der overview-selection-dialog-component.
   public onSelect($event: SportjahrVeranstaltungDO[]): void {
-    this.selecetedYear = null;
-    this.selecetedYear = $event[0].sportjahr;
-    this.loadBySportjahr();
+    this.selectedYear = null;
+    this.selectedYear = $event[0].sportjahr;
+    this.loadBySportjahr(this.selectedYear);
   }
+
 
 }
