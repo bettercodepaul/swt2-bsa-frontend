@@ -347,8 +347,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         });
   }
 
-
-
   public onFinish(ignore: any): void{
     const id = this.currentVeranstaltung.id;
     const notification: Notification = {
@@ -435,20 +433,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleCopyFromVeranstaltungSuccess(response: BogenligaResponse<void>) {
     this.loadMannschaftsTable();
   }
-
-
-  /**
-   * Checks if current Veranstaltung is on Phase 'Laufend'
-   * If not button which uses checkVeranstaltungPhase will be greyed out
-   */
-  public checkVeranstaltungPhase(){
-    let laufend = false;
-    if ( this.currentVeranstaltung.phase === 'Laufend') {
-      laufend = true;
-    }
-    return laufend;
-  }
-
+  
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allLiga = [];
     this.allLiga = response.payload;
