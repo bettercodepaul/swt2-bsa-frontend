@@ -35,10 +35,12 @@ export class OverviewSelectionDialogComponent extends CommonSecuredDirective imp
   @Input() loading = false;
   @Input() multipleSelections = true;
 
+  @Input() findOnlyGeplantLaufend = false;
+
   public selectedYear = this.getCurrentYear();
 
   constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
-              private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService) {
     super(currentUserService);
   }
 
@@ -100,9 +102,15 @@ export class OverviewSelectionDialogComponent extends CommonSecuredDirective imp
 
   private loadBySportjahr(): void {
     this.loading = true;
-    this.veranstaltungDataProvider.findBySportyear(this.selectedYear)
-        .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(newList))
-        .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
+    if (this.findOnlyGeplantLaufend) {
+      this.veranstaltungDataProvider.findBySportyearGeplantLaufend(this.selectedYear)
+          .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(newList))
+          .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
+    } else {
+      this.veranstaltungDataProvider.findBySportyear(this.selectedYear)
+          .then((newList: BogenligaResponse<VeranstaltungDO[]>) => this.handleLoadTableRowsSuccess(newList))
+          .catch((newList: BogenligaResponse<VeranstaltungDTO[]>) => this.handleLoadBySportjahrfailure(newList));
+    }
   }
 
 
