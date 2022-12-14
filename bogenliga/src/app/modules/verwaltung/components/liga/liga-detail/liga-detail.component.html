@@ -1,26 +1,27 @@
-<bla-common-dialog [config]="config"
-                   [loading]="loading">
+<bla-common-dialog
+  [config]="config"
+  [loading]="loading">
+  <div (mouseover)="onMouseOver($event)">
+    <form #dsbMitgliedForm="ngForm"
+          class="horizontal-form half-page"
+          id="ligaForm">
 
-  <form id="ligaForm"
-        class="horizontal-form half-page"
-        #dsbMitgliedForm="ngForm">
-
-    <!-- VORNAME -->
-    <div class="form-group row">
-      <label for="ligaName"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               id="ligaName"
-               name="ligaName"
-               #ligaName="ngModel"
-               [(ngModel)]="currentLiga.name"
-               [class.is-invalid]="ligaName.invalid && !ligaName.untouched"
+      <!-- VORNAME -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="ligaName">
+          <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 required
+                 id="ligaName"
+                 name="ligaName"
+                 #ligaName="ngModel"
+                 [(ngModel)]="currentLiga.name"
+                 [class.is-invalid]="ligaName.invalid && !ligaName.untouched"
                placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
                data-cy="liga-detail-name">
 
@@ -145,6 +146,6 @@
         </bla-button>
       </div>
     </div>
-  </form>
-
+    </form>
+  </div>
 </bla-common-dialog>

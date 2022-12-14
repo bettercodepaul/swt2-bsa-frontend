@@ -16,7 +16,8 @@ import {
 import {UserDataProviderService} from '../../../services/user-data-provider.service';
 import {UserRolleDO} from '../../../types/user-rolle-do.class';
 import {USER_OVERVIEW_CONFIG_ACTIVE} from '@verwaltung/components/user/user-overview/user-overview-active.config';
-import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 export const NOTIFICATION_DELETE_USER = 'user_overview_delete';
 
@@ -31,15 +32,33 @@ export class UserOverviewComponent extends CommonComponentDirective implements O
   public rowsActive: TableRow[];
   public displayRoles: TableRow[];
   public searchTerm = 'searchTermUser';
+  private sessionHandling: SessionHandling;
 
-  constructor(private userDataProvider: UserDataProviderService, private router: Router, private notificationService: NotificationService) {
+  constructor(private userDataProvider: UserDataProviderService,
+    private router: Router,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
     this.loading = true;
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
+    }
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
     }
   }
 

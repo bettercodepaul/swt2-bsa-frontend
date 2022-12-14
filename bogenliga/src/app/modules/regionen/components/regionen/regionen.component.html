@@ -1,20 +1,25 @@
 <bla-navigation-dialog [config]="config">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:regionen" target="_blank"></bla-hilfe-button>
-  <bla-col-layout>
-    <div id="searchWrapper">
-      <div id="descriptionWrapper" style="display: none;">
-        <p>{{'REGIONEN.REGIONEN.DESCRIPTION' | translate}}</p>
-      </div>
-      <div id="descriptionWrapperClose" style="display: none;">
-        <p>{{'REGIONEN.REGIONEN.CLOSE' | translate}}</p>
-      </div>
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:regionen"
+                      target="_blank"></bla-hilfe-button>
+    <bla-col-layout>
+      <div id="searchWrapper">
+        <div id="descriptionWrapper"
+             style="display: none; max-width: 80%; color: #888888">
+          <p class="subtitle">{{'REGIONEN.REGIONEN.DESCRIPTION' | translate}}</p>
+        </div>
+        <div id="descriptionWrapperClose"
+             style="display: none;">
+          <p class="subtitle">{{'REGIONEN.REGIONEN.CLOSE' | translate}}</p>
+        </div>
 
-      <div #chart style="max-width: 100%"></div>
+        <div #chart
+             style="max-width: 100%"></div>
 
-      <div class="row">
-        <bla-quicksearch-list (onSelect)="onSelect($event)"
-                              [items]="regionen"
-                              [loading]="loadingRegionen"
+        <div class="row">
+          <bla-quicksearch-list (onSelect)="onSelect($event)"
+                                [items]="regionen"
+                                [loading]="loadingRegionen"
                               [multipleSelections]="!multipleSelections"
                               [placeholderTranslationKey]="NO_REGION_SELECTED"
                               [optionFieldSelector]="'regionName'"
@@ -141,7 +146,7 @@
         </bla-col-layout>
       </div>
     </div>
-  </bla-col-layout>
+    </bla-col-layout>
 
-
+  </div>
 </bla-navigation-dialog>

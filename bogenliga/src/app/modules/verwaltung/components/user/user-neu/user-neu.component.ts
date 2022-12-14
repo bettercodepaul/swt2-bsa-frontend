@@ -19,8 +19,8 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../../shared/services/notification';
-import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
-import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto.class';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_SAVE_USER = 'user_neu_save';
@@ -45,13 +45,17 @@ export class UserNeuComponent extends CommonComponentDirective implements OnInit
   public selectedDTOs: DsbMitgliedDTO[];
   public selectedDsbMitgliedId: number;
   public multipleSelections = true;
+  private sessionHandling: SessionHandling;
 
   constructor(private userDataProvider: UserDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private notificationService: NotificationService,
-              private dsbMitgliedDataProvider: DsbMitgliedDataProviderService) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private notificationService: NotificationService,
+    private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
@@ -66,6 +70,18 @@ export class UserNeuComponent extends CommonComponentDirective implements OnInit
     });
     this.loading = false;
 
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public onSave(ignore: any): void {

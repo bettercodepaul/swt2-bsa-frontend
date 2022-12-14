@@ -16,6 +16,8 @@ import {RoleVersionedDataObject} from '@verwaltung/services/models/roles-version
 import {Router} from '@angular/router';
 // import {LigatabelleComponent} from '../../../ligatabelle/components/ligatabelle/ligatabelle.component';
 // import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const chartDetailsSizeMultiplikator = 0.5;
 
@@ -44,13 +46,30 @@ export class RegionenComponent implements OnInit {
   private vereine: VereinDTO[];
   private myChart = Sunburst(); // initializes sunburst-diagramm
 
+  private sessionHandling: SessionHandling;
 
-  @ViewChild('chart', { static: true }) myDiv: ElementRef;
+  @ViewChild('chart', {static: true}) myDiv: ElementRef;
+
 
   constructor(private regionDataProviderService: RegionDataProviderService,
-              private vereinDataProviderService: VereinDataProviderService,
-              private ligaDataProviderService: LigaDataProviderService,
-              private router: Router) {
+    private vereinDataProviderService: VereinDataProviderService,
+    private ligaDataProviderService: LigaDataProviderService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService,
+    private router: Router) {
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   ngOnInit() {

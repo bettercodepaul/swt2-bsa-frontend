@@ -1,33 +1,38 @@
 <bla-navigation-dialog [config]="config">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereine" target="_blank"></bla-hilfe-button>
-  <div class="row">
-    <bla-col-layout>
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:vereine"
+                      target="_blank"></bla-hilfe-button>
+    <p class="subtitle">{{'VEREINE.VEREINE.DESCRIPTION' | translate}}</p>
+    <div class="row">
+      <div>
+        <h2 style="display: inline">Gewählter Verein: </h2>
+        <h3 style="display: inline">{{ getSelectedDTO() }}</h3>
+      </div>
 
-      <h2>Vereinsauswahl:  {{ getSelectedDTO() }}</h2>
+      <bla-col-layout>
+        <bla-quicksearch-list (onSelect)="onSelect($event)"
+                              [selectedItemIds]=[selectedVereinsId]
+                              [items]="vereine"
+                              [loading]="loadingVereine"
+                              [multipleSelections]="!multipleSelections"
+                              [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                              [optionFieldSelector]="'name'"
+                              selectionListHeight="15em"
+                              style="width: 50%; flex-grow: 0;">
 
-      <bla-quicksearch-list (onSelect)="onSelect($event)"
-                            [selectedItemIds]= [selectedVereinsId]
-                            [items]="vereine"
-                            [loading]="loadingVereine"
-                            [multipleSelections]="!multipleSelections"
-                            [placeholderTranslationKey]="PLACEHOLDER_VAR"
-                            [optionFieldSelector]="'name'"
-                            selectionListHeight="15em"
-                            style="width: 50%; flex-grow: 0;">
-
-      </bla-quicksearch-list>
+        </bla-quicksearch-list>
     </bla-col-layout>
   </div>
 
   <div class="row">
     <bla-data-table
-                    [config]="config_table"
-                    [loading]="loadingTable"
-                    [rows]="rows"
+      (onColumnEntry)="getSelectedColumn($event)"
+      (onMapEntry)="onMap($event)"
+      (onRowEntry)="getSelectedRow($event)"
 
-                    (onColumnEntry)="getSelectedColumn($event)"
-                    (onRowEntry)="getSelectedRow($event)"
-                    (onMapEntry)="onMap($event)">
+      [config]="config_table"
+      [loading]="loadingTable"
+      [rows]="rows">
       <!-- Is currently not in use/implemented
                     (onDeleteClicked)="onDelete($event)"
                     (onEditClicked)="onEdit($event)"
@@ -36,5 +41,5 @@
 
     </bla-data-table>
   </div>
-
+  </div>
 </bla-navigation-dialog>

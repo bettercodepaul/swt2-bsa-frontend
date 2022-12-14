@@ -1,27 +1,28 @@
-<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:benutzerdetails" target="_blank"></bla-hilfe-button>
+<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:benutzerdetails"
+                  target="_blank"></bla-hilfe-button>
 <bla-common-dialog [config]="config"
                    [loading]="loading">
+  <div (mouseover)="onMouseOver($event)">
+    <a name="bla-selectionlist"></a>
 
-  <a name="bla-selectionlist"></a>
-
-  <form id="userForm"
-        class="horizontal-form half-page"
-        #benutzerForm="ngForm" >
+    <form #benutzerForm="ngForm"
+          class="horizontal-form half-page"
+          id="userForm">
 
       <!-- Email / Username -->
-    <div class="form-group row">
-      <label for="userEmail"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="email"
-               class="form-control"
-               [disabled]=true
-               id="userEmail"
-               name="userEmail"
-               #benutzerEmail="ngModel"
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="userEmail">
+          <span>{{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="email"
+                 class="form-control"
+                 [disabled]=true
+                 id="userEmail"
+                 name="userEmail"
+                 #benutzerEmail="ngModel"
                [(ngModel)]="currentUserRolleDO[0].email"
                placeholder="{{ 'MANAGEMENT.USER_DETAIL.FORM.EMAIL.PLACEHOLDER' | translate }}">
 
@@ -132,4 +133,5 @@
       </div>
     </div>
   </form>
+  </div>
 </bla-common-dialog>

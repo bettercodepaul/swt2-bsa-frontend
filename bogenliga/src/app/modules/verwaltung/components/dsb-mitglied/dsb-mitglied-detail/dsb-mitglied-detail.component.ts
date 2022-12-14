@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {ButtonType, CommonComponentDirective} from '../../../../shared/components';
@@ -18,7 +18,8 @@ import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
-import {CurrentUserService, UserPermission} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
+import {SessionHandling} from '@shared/event-handling';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
@@ -58,15 +59,19 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
   public deleteLoading = false;
   public saveLoading = false;
 
+  private sessionHandling: SessionHandling;
+
   constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private vereinDataProvider: VereinDataProviderService,
-              private httpService: HttpClient,
-              private notificationService: NotificationService,
-              private currentUserService: CurrentUserService,
-              ) {
+    private router: Router,
+    private route: ActivatedRoute,
+    private vereinDataProvider: VereinDataProviderService,
+    private httpService: HttpClient,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService
+  ) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   async ngOnInit() {
@@ -111,6 +116,18 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
       this.currentMitgliedNat = 'Germany';
     }
 
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public onSave(ignore: any): void {

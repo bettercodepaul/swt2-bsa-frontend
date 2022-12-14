@@ -1,7 +1,6 @@
-import {Component, Input, NgModule, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CommonComponentDirective} from '@shared/components';
-import {ButtonType} from '@shared/components';
+import {ButtonType, CommonComponentDirective} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
 import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
@@ -35,6 +34,8 @@ import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-d
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-do.class';
 import {TranslatePipe} from '@ngx-translate/core';
+import {SessionHandling} from '@shared/event-handling';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
@@ -104,6 +105,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public maxWettkampftageID = 8;
   public selectedWettkampf: WettkampfDO;
 
+  private sessionHandling: SessionHandling;
+
   constructor(
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampfDataProvider: WettkampfDataProviderService,
@@ -116,8 +119,11 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     private route: ActivatedRoute,
     private einstellungenProvider: EinstellungenProviderService,
     private notificationService: NotificationService,
-    private translate: TranslatePipe) {
+    private translate: TranslatePipe,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
@@ -146,6 +152,18 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         }
       }
     });
+  }
+
+  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
+   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
+   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
+   *  be logged out automatically.
+   */
+  public onMouseOver(event: any) {
+    const isExpired = this.sessionHandling.checkSessionExpired();
+    if (isExpired) {
+      window.location.reload();
+    }
   }
 
   public onVeranstaltungDetail(ignore: any): void {
@@ -398,7 +416,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.notificationService.discardNotification();
 
     const id = this.currentWettkampftagArray[wettkampfTagNumber].id;
-    this.updateNumbersDelete();
+
 
     const currentDate = new Date();
     const deadlineDate = new Date(this.currentVeranstaltung.meldeDeadline);
@@ -433,6 +451,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
       this.notificationService.showNotification(notification_expired);
 
     } else {
+      this.updateNumbersDelete();
       this.notificationService.observeNotification(NOTIFICATION_DELETE_WETTKAMPFTAG + id)
           .subscribe((myNotification) => {
 
@@ -671,6 +690,39 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedDTOs = [];
     this.selectedDTOs = response.payload.filter((element) => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
     this.anzahl = this.selectedDTOs.length;
+
+    //check if WettkampfDO Obeject contains all values
+    for (let i = 0; i < this.selectedDTOs.length; i++) {
+      let counter = 0;
+      if (this.selectedDTOs[i].wettkampfTag === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfBeginn === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfOrtsname === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfPlz === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfStrasse === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].wettkampfDatum === null) {
+        counter +=1;
+      }
+      if (this.selectedDTOs[i].id === null) {
+        counter +=1;
+      }
+      //sort selectedDTOs by date and assign the corrosponding WettkampfTag
+      if (counter === 0) {
+        this.selectedDTOs = this.selectedDTOs.sort((objectA, objectB) => Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum)); //sort DTOs by date
+        this.selectedDTOs[i].wettkampfTag = i + 1; //assign correct Wettkampftag to sorted selectedDTOs
+        await this.wettkampfDataProvider.update(this.selectedDTOs[i]); //save selectedDTOs with updated Wettkampftag
+      }
+
+    }
 
     // when there are no Wettkampftage for this Veranstaltung yet
     if (this.selectedDTOs.length === 0) {

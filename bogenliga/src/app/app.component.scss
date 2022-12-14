@@ -12,6 +12,7 @@ ul ul a {
   background: $primary;
 }
 
+
 // wrapper
 .wrapper {
   display: flex;
@@ -92,13 +93,9 @@ ul ul a {
   }
 
   .content {
-    padding-top: 68px; //for the NavBar
+    padding-top: 60px; //for the NavBar
     padding-left: 0px; //for the Sidebar
     width: 100%;
-  }
-
-  h1 {
-    font-size: 2em;
   }
 
   h3 {

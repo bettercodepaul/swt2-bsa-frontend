@@ -1,32 +1,36 @@
 <bla-navigation-dialog [config]="config">
-  <ng-container>
-    <div class="hilfeseite-container">
-      <div class="hilfe-section-container">
+  <div (mouseover)="onMouseOver($event)">
+    <ng-container>
+      <div class="hilfeseite-container">
+        <div class="hilfe-section-container">
           <table id="section-table">
-            <tr class="hilfe-table-section" *ngFor="let sec of sections">
-              <button class="btn btn-primary section-btn"
-                   attr.data-cy="{{sec.cy_test}}"
-                   (click)="setUrl(sec.url)">
+            <tr *ngFor="let sec of sections"
+                class="hilfe-table-section">
+              <button (click)="setUrl(sec.url)"
+                      attr.data-cy="{{sec.cy_test}}"
+                      class="btn btn-primary section-btn">
                 {{sec.id}}
               </button>
             </tr>
           </table>
+        </div>
+        <div class="hilfe-iframe-container"
+             *ngIf="sectionSelected">
+          <iframe
+            [src]="getSecureUrl()"
+            title="wiki-iframe"
+            id="wiki-iframe"
+            width="75%"
+            height="500"
+            name="Hilfeseite_eingebunden">
+            <p>
+              Ihr Browser kann leider keine eingebetteten Frames anzeigen:
+              Sie können die eingebettete Seite über den folgenden Verweis aufrufen:
+              <a [href]="getSecureUrl()">Link zur Wikiseite</a>
+            </p>
+          </iframe>
+        </div>
       </div>
-      <div class="hilfe-iframe-container" *ngIf="sectionSelected">
-        <iframe
-          [src]="getSecureUrl()"
-          title="wiki-iframe"
-          id="wiki-iframe"
-          width="75%"
-          height="500"
-          name="Hilfeseite_eingebunden">
-          <p>
-            Ihr Browser kann leider keine eingebetteten Frames anzeigen:
-            Sie können die eingebettete Seite über den folgenden Verweis aufrufen:
-            <a [href]="getSecureUrl()">Link zur Wikiseite</a>
-          </p>
-        </iframe>
-      </div>
-    </div>
-  </ng-container>
+    </ng-container>
+  </div>
 </bla-navigation-dialog>

@@ -1,24 +1,26 @@
 <bla-common-dialog [config]="config">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung"
-                    target="_blank"></bla-hilfe-button>
-  <div class="layout-elements">
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung"
+                      target="_blank"></bla-hilfe-button>
 
+    <p class="subtitle">{{'WKDURCHFUEHRUNG.WKDURCHFUEHRUNG.DESCRIPTION' | translate}}</p>
+    <div class="layout-elements">
+      <bla-col-layout>
 
-    <bla-col-layout>
+        <div class="flexChild">
+          <h2><a class="blackLink"
+                 routerLink="/wkdurchfuehrung">{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}</a></h2>
 
-      <div class="flexChild">
-        <h3><a class="blackLink"
-               routerLink="/wkdurchfuehrung">{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}</a></h3>
-
-        <div id="dropDownMenuYear" style="width: 80%; margin-bottom: 2%;">
-          <bla-dropdown-menu (onSelect)="onSelectYear($event)"
-                             [id]="'Veranstaltungen-dropdown-menu'"
-                             [items]="availableYears"
-                             [optionFieldSelector]="'sportjahr'"
-                             [loading]="loadingYears"
-                             [selectedItemId]='selItemId'
-                             [disabled]="isOfflineDisabled()"
-                             data-cy="wkduchfuehrung-jahr-dropdown"
+          <div id="dropDownMenuYear"
+               style="width: 80%; margin-bottom: 2%;">
+            <bla-dropdown-menu (onSelect)="onSelectYear($event)"
+                               [id]="'Veranstaltungen-dropdown-menu'"
+                               [items]="availableYears"
+                               [optionFieldSelector]="'sportjahr'"
+                               [loading]="loadingYears"
+                               [selectedItemId]='selItemId'
+                               [disabled]="isOfflineDisabled()"
+                               data-cy="wkduchfuehrung-jahr-dropdown"
                              style="width: 40%;">
           </bla-dropdown-menu>
 
@@ -48,9 +50,9 @@
 
 
       <div>
-        <h3>
+        <h2>
           {{ 'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}
-        </h3>
+        </h2>
 
         <div class="row">
           <section class="overview-dialog-content">
@@ -76,13 +78,13 @@
     </bla-col-layout>
 
     <bla-col-layout>
-      <h3 id="WettkampfTitle"></h3>
+      <h2 id="WettkampfTitle"></h2>
     </bla-col-layout>
 
     <bla-col-layout>
       <div>
         <BR>
-        <h3>{{'MANNSCHAFTEN.LIGATABELLE.LIGATABELLE_VORBEREITUNG'|translate}}</h3>
+        <h2>{{'MANNSCHAFTEN.LIGATABELLE.LIGATABELLE_VORBEREITUNG'|translate}}</h2>
         <p>{{'MANNSCHAFTEN.LIGATABELLE.TEXT'|translate}}</p></div>
     </bla-col-layout>
 
@@ -187,7 +189,7 @@
 
     <bla-col-layout>
       <BR>
-      <h3><BR>{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }} <BR>&nbsp;</h3>
+      <h2><BR>{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }} <BR>&nbsp;</h2>
       <BR>
 
     </bla-col-layout>
@@ -212,8 +214,8 @@
     </bla-col-layout>
 
 
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
 
+    </div>
   </div>
-
 </bla-common-dialog>
