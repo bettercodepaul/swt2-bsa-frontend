@@ -75,21 +75,21 @@ body {
 //Use for: Page title
 h1 {
   color: $primary-black;
-  font-size: 2em;
+  font-size: 1.8em;
   font-family: "Poppins-semibold", Roboto, "Helvetica Neue", sans-serif;
 }
 
 //Use for: Section title
 h2{
   color: $hero-blue;
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-family: Poppins-Medium, Roboto, "Helvetica Neue", sans-serif;
 }
 
 //Use for: Component title
 h3{
   color: $primary-black;
-  font-size: 1em;
+  font-size: 0.9em;
   font-family: Poppins-Medium, Roboto, "Helvetica Neue", sans-serif;
 }
 
@@ -307,9 +307,9 @@ a:hover, a:focus {
   text-align: center;
   line-height: 50px;
   letter-spacing: 1px;
-  color: #f0f0f0;
-  background: #cc2232;
-  border: 2px solid #f0f0f0;
+  color: $primary-white;
+  background: $accent-red;
+  border: 2px solid $true-white;
   box-shadow: 0 0 3px rgba(0,0,0,.3);
   position: fixed;
 }

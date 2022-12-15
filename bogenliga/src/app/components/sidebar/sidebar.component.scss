@@ -8,7 +8,7 @@ $secondary: #ffc107; // hover Tables, Button
 $secondary-light: #fff350;
 $secondary-dark: #ff833a; // hover Links, Logo
 
-$navbar-height: 5.2em;
+$navbar-height: 4.2em;
 $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 
 // SIDEBAR Element Shadow Variables
@@ -46,8 +46,8 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
 #sidebar {
   min-width: 300px;
   max-width: 300px;
-  min-height: calc(100vh - 5.2em); //full view - Navbar on top
-  max-height: calc(100vh - 5.2em); //max-height needed to support scrollabilty
+  min-height: calc(100vh - 4.2em); //full view - Navbar on top
+  max-height: calc(100vh - 4.2em); //max-height needed to support scrollabilty
   margin-top: $navbar-height; //height of NavBar
   background: $true-white; //#343a40;
   color: $primary-black;
