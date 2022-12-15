@@ -1,10 +1,6 @@
 /* Farbkonzept Website */
-$primary: #02bdd5; // Links, Navbar
-$primary-light: #b4ffff; // Sidebar-Background
-$primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107; // hover Tables
-$secondary-light: #fff350;
-$secondary-dark: #ff833a; // hover Links, Logo
+
+
 
 @import 'src/styles.scss';
 
@@ -19,7 +15,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 // content side
 .content {
-  padding-top: 5.2em; //for the NavBar
+  padding-top: 4.2em; //for the NavBar
   padding-left: 300px; //for the Sidebar
   width: 100%;
   display: flex;
@@ -82,13 +78,13 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: $secondary;
+  background-color: $accent-gold;
 }
 
 // for small devices
 @media (max-width: 768px) {
   .content.inactive {
-    padding-top: 5.2em; //for the NavBar
+    padding-top: 4.2em; //for the NavBar
     padding-left: 0px;
     width: 100%;
   }
@@ -100,11 +96,11 @@ $secondary-dark: #ff833a; // hover Links, Logo
   }
 
   h3 {
-    font-size: 1.5em;
+    font-size: 0.9em;
   }
 
   p {
-    font-size: 1.1em;
+    font-size: 0.9em;
   }
   a, a:hover, a:focus {
     color: inherit;
@@ -114,7 +110,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
   ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: $primary;
+    background: $light-gray;
   }
 }
 
@@ -134,7 +130,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
 .popup {
   margin: 70px auto;
   padding: 20px;
-  background: #fff;
+  background: $true-white;
   border-radius: 5px;
   min-width: 40%;
   height: auto;
@@ -145,7 +141,6 @@ $secondary-dark: #ff833a; // hover Links, Logo
 .popup h2 {
   margin-top: 0;
   color: #333;
-  font-family: Tahoma, Arial, sans-serif;
 }
 /* Symbol zum schliessen des Popup Fensters (oben rechts) */
 .popup .close {
@@ -159,7 +154,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
   color: #333;
 }
 .popup .close:hover {
-  color: $primary;
+  color: $hero-blue;
   cursor: pointer;
 }
 /* Gibt die max. laenge des Popup Fensters an */
@@ -196,7 +191,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: #eee;
+  background-color: $primary-white;
 }
 
 /* On mouse-over, add a grey background color */
@@ -206,7 +201,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: $hero-blue;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -273,7 +268,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
   color: #333;
 }
 .popup .close:hover {
-  color: $primary;
+  color: $hero-blue;
   cursor: pointer;
 }
 .popup .content_popup {
@@ -323,7 +318,7 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: $hero-blue;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
