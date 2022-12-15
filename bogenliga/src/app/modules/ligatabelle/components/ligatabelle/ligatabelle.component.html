@@ -51,11 +51,11 @@
         <h5><a class="blackLink"
         >{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
 
-        <div class="row">
+        <div class="row" style="margin-left: 5px">
 
 
           <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
-          <h5>
+
             <bla-data-table
               [config]="config_table"
               [rows]="rowsLigatabelle"
@@ -63,7 +63,7 @@
               (onRowEntry)="ligatabelleLinking();"
             >
             </bla-data-table>
-          </h5>
+
         </div>
       </div>
 

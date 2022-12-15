@@ -1,20 +1,18 @@
+@import 'src/styles.scss';
 .breadcrumb {
   border-radius: 0;
-  height: 1rem;
-  background-color: #FCFCFC;
+  background-color: $primary-white;
 }
 
 .breadcrumb-item a, .breadcrumb-item a:visited {
-  color: #2A2A2A;
   font-weight: bolder;
   text-decoration: none;
 }
 
 .breadcrumb-item a:hover {
-  color: #487AF5;
+  color: $hero-blue;
   font-weight: bold;
 }
-
 
 // for small devices
 @media (max-width: 768px) {

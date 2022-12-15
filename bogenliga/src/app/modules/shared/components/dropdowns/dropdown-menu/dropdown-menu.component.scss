@@ -1,10 +1,12 @@
+@import 'src/styles.scss';
+
 .dropdown-item {
   cursor: pointer
 }
 
 .dropdown-item:active {
-  color: #007c91;
-  background-color: #02bdd5;
+  color: $hero-blue;
+  background-color: $light-gray;
 }
 
 .bla-dropdown-menu {
