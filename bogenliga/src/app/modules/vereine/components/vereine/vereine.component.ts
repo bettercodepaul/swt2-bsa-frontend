@@ -181,8 +181,8 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
    * Gets all Veranstaltungen through a backend call
    */
   public getAllVeranstaltungen(): void {
-    this.veranstaltungsDataProvider.findAll()
-      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+    this.veranstaltungsDataProvider.findAllGeplantLaufend()
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
         this.veranstaltungen = response.payload;
       });
   }

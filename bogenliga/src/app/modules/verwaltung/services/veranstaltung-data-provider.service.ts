@@ -31,6 +31,7 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService, private onOfflineService: OnOfflineService) {
     super();
   }
+
   public findAll(): Promise<BogenligaResponse<VeranstaltungDO[]>> {
     if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for Veranstaltungen findall');
@@ -48,6 +49,68 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
       // sign in failure -> reject promise with result
       return new Promise((resolve, reject) => {
         this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
+  }
+
+  public findAllGeplantLaufend(): Promise<BogenligaResponse<VeranstaltungDO[]>> {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen findall');
+      return new Promise((resolve, reject) => {
+        db.veranstaltungTabelle.toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          });
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('GeplantLaufend').build())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
+  }
+
+  public findAllLaufendAbgeschlossen(): Promise<BogenligaResponse<VeranstaltungDO[]>> {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen findall');
+      return new Promise((resolve, reject) => {
+        db.veranstaltungTabelle.toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          });
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('LaufendAbgeschlossen').build())
             .then((data: VersionedDataTransferObject[]) => {
               resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
             }, (error: HttpErrorResponse) => {
@@ -110,6 +173,70 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
       // sign in failure -> reject promise with result
       return new Promise((resolve, reject) => {
         this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('find/by/year/' + sportjahr).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              // console.log(data.toString());
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
+  }
+
+  public findBySportyearLaufend(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen findBySportyear with sportjahr:' + sportjahr);
+      return new Promise((resolve, reject) => {
+        db.veranstaltungTabelle.where('sportjahr').equals(sportjahr).toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          });
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('find/by/year/' + sportjahr + '/Laufend').build())
+            .then((data: VersionedDataTransferObject[]) => {
+              // console.log(data.toString());
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
+  }
+
+  public findBySportyearGeplantLaufend(sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO[]>> {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for Veranstaltungen findBySportyear with sportjahr:' + sportjahr);
+      return new Promise((resolve, reject) => {
+        db.veranstaltungTabelle.where('sportjahr').equals(sportjahr).toArray()
+          .then((data) => {
+            resolve({result: RequestResult.SUCCESS, payload: toDOfromOfflineVeranstaltungArray(data)});
+          }, () => {
+            reject({result: RequestResult.FAILURE});
+          });
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('find/by/year/' + sportjahr + '/GeplantLaufend').build())
             .then((data: VersionedDataTransferObject[]) => {
               // console.log(data.toString());
               resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
