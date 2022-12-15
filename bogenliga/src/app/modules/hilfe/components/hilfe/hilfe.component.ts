@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HILFE_CONFIG} from './hilfe.config';
 import {DomSanitizer} from '@angular/platform-browser';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 @Component({
   selector:    'bla-components',
@@ -35,8 +35,9 @@ export class HilfeComponent implements OnInit {
   private sessionHandling: SessionHandling;
 
   constructor(private sanitizer: DomSanitizer,
-    private currentUserService: CurrentUserService) {
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit(): void {

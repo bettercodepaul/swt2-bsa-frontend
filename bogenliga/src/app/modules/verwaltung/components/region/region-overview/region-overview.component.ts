@@ -17,7 +17,7 @@ import {RegionDataProviderService} from '../../../services/region-data-provider.
 import {RegionDTO} from '../../../types/datatransfer/region-dto.class';
 import {REGION_OVERVIEW_CONFIG} from './region-overview.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 export const NOTIFICATION_DELETE_REGIONEN = 'region_overview_delete';
 
@@ -33,9 +33,13 @@ export class RegionOverviewComponent extends CommonComponentDirective implements
   public searchTerm = 'searchTermRegion';
   private sessionHandling: SessionHandling;
 
-  constructor(private regionDataProvider: RegionDataProviderService, private router: Router, private notificationService: NotificationService, private currentUserService: CurrentUserService) {
+  constructor(private regionDataProvider: RegionDataProviderService,
+    private router: Router,
+    private notificationService: NotificationService,
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

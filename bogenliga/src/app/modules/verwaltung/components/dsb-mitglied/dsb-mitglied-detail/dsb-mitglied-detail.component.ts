@@ -18,7 +18,7 @@ import {VereinDTO} from '@verwaltung/types/datatransfer/verein-dto.class';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
 import {HttpClient} from '@angular/common/http';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
-import {CurrentUserService, UserPermission} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
 
 const ID_PATH_PARAM = 'id';
@@ -68,9 +68,10 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
     private httpService: HttpClient,
     private notificationService: NotificationService,
     private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService
   ) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   async ngOnInit() {

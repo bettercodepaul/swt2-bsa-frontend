@@ -112,7 +112,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private dialog: MatDialog
   ) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
@@ -141,7 +141,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
         this.findAvailableYears();
 
-        this.LoadWettkampf();
+        //this.LoadWettkampf();
 
         this.visible = false;
 
@@ -155,7 +155,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
         this.findAvailableYears();
 
-        this.LoadWettkampf();
+        //this.LoadWettkampf();
 
         this.visible = false;
 
@@ -371,23 +371,23 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       // entsprechendes WettkampfDO wurde gefunden -> an this.wettkampf uebergeben
       this.wettkampf = Wettkampf;
 
-      // als nÃ¤chstes mÃ¼ssen alle Veranstaltungen fÃ¼r die Tabelle "Veranstaltung" und die aktuelle Veranstaltung fÃ¼r die Ausgabe darunter ermittelt werden
+      // als nÃ¤chstes mÃ¼ssen alle Veranstaltungen fÃ¼r die Tabelle "Veranstaltung" und die aktuelle Veranstaltung
+      // fÃ¼r die Ausgabe darunter ermittelt werden
       this.loadVeranstaltungen();
     }
   }
 
-// backend-call um eine Liste der Veranstaltungen eines bestimmten Jahres zu ermitteln
-  private async loadVeranstaltungenByYear(year: number): Promise<void> {
-    this.veranstaltungen = [];
-    this.selectedWettkampf = '';
-    this.selectedWettkampfId = null;
-    this.veranstaltungsDataProvider.findBySportyear(year)
-      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-        this.loadVeranstaltungenSuccess(response);
-      })
-      .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-        this.loadVeranstaltungenFailure(response);
-      });
+  // Ermittelt die entsprechenden Veranstaltungen wenn ein Jahr aus dem Drop-Down Menü ausgewählt wird.
+  public onSelectYear($event: SportjahrVeranstaltungDO): void {
+    this.veranstaltungsDataProvider.findBySportyearLaufend($event.sportjahr)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          this.veranstaltungen = response.payload;
+          this.loadingVeranstaltungen = false;
+        })
+        .catch(() => {
+          this.loadVeranstaltungenYearsFailure();
+        });
+
   }
 
   // backend-call to get the list of veranstaltungen
@@ -456,17 +456,18 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     }
   }
 
-  // Ermittelt die entsprechenden Veranstaltungen wenn ein Jahr aus dem Drop-Down Menü ausgewählt wird.
-  public onSelectYear($event: SportjahrVeranstaltungDO): void {
-    this.veranstaltungsDataProvider.findBySportyear($event.sportjahr)
-      .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-        this.veranstaltungen = response.payload;
-        this.loadingVeranstaltungen = false;
-      })
-      .catch(() => {
-        this.loadVeranstaltungenYearsFailure();
-      });
-
+// backend-call um eine Liste der Veranstaltungen eines bestimmten Jahres zu ermitteln
+  private async loadVeranstaltungenByYear(year: number): Promise<void> {
+    this.veranstaltungen = [];
+    this.selectedWettkampf = '';
+    this.selectedWettkampfId = null;
+    this.veranstaltungsDataProvider.findBySportyearLaufend(year)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          this.loadVeranstaltungenSuccess(response);
+        })
+        .catch((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          this.loadVeranstaltungenFailure(response);
+        });
   }
 
 
@@ -748,7 +749,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
     this.loadingYears = false;
     let counter = 1;
-    let indexofselectedyear = 0;
+    let indexOfSelectedYear = 0;
 
     if (response.payload !== []) {
       for (const elem of response.payload) {
@@ -771,16 +772,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         sportjahr.id = counter;
         // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
         if (sportjahr.sportjahr === this.aktivesSportjahr) {
-          indexofselectedyear = counter - 1;
+          indexOfSelectedYear = counter - 1;
         }
         counter++;
       }
       if (!this.wettkampfIdEnthalten) {
-        // Lade die Veranstaltungen des aktiven Sportjahres oder auf die des neusten Jahres
-        this.selItemId = this.availableYears[indexofselectedyear].id;
-        this.loadVeranstaltungenByYear(this.availableYears[indexofselectedyear].sportjahr.valueOf());
+        // Lade die Veranstaltungen des aktiven Sportjahres oder die des neusten Jahres
+        this.selItemId = this.availableYears[indexOfSelectedYear].id;
+        this.loadVeranstaltungenByYear(this.availableYears[indexOfSelectedYear].sportjahr.valueOf());
       } else if (this.onOfflineService.isOffline()) {
-        this.selItemId = this.availableYears[indexofselectedyear].id;
+        this.selItemId = this.availableYears[indexOfSelectedYear].id;
       }
     }
   }
