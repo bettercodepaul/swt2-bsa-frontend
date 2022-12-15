@@ -27,7 +27,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
       {
         labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.LABEL',
         descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.KLASSEN.DESCRIPTION',
-        icon:           'restroom',
+        icon:           'people-arrows',
         route:          'klassen',
         permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
         datacy:         'verwaltung-klassen-button',
