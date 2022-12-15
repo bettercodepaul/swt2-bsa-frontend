@@ -1,16 +1,8 @@
 /* Farbkonzept Website */
-$primary: #02bdd5; // Links, Navbar
-$primary-light: #b4ffff; // Sidebar-Background
-$primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107; // hover Tables
-$secondary-light: #fff350;
-$secondary-dark: #ff833a; // hover Links, Logo
 
-ul ul a {
-  font-size: 0.9em !important;
-  padding-left: 30px !important;
-  background: $primary;
-}
+
+
+@import 'src/styles.scss';
 
 
 // wrapper
@@ -23,8 +15,8 @@ ul ul a {
 
 // content side
 .content {
-  padding-top: 4em; //for the NavBar
-  padding-left: 250px; //for the Sidebar
+  padding-top: 4.2em; //for the NavBar
+  padding-left: 300px; //for the Sidebar
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -36,18 +28,19 @@ ul ul a {
 
 #footer { // footer with Logos
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 5px;
-  background-color: #DCDCDC !important;
+  background-color: $true-white;
 }
 
 // bootstrap changes
 .jumbotron {
   margin-bottom: 0px;
-  background-color: #E8E8E8;
+  background-color: $light-gray;
   padding: 0px;
+
 }
 
 // covers the footer Containers of the footer
@@ -61,33 +54,37 @@ ul ul a {
 .footerContainer {
   width: 500px;
   padding: 15px;
+  justify-content: space-around;
 }
 
 // Logo CSS
 .logoItSolutions {
   height: 40px;
-  margin: 10px;
+  margin-right: 40px;
+  margin-left: 40px;
 }
 
 .logoExxcellent {
-  height: 30px;
-  margin: 10px;
+  height: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 .logoHR {
-  height: 40px;
-  margin: 10px;
+  height: 30px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: $secondary;
+  background-color: $accent-gold;
 }
 
 // for small devices
 @media (max-width: 768px) {
   .content.inactive {
-    padding-top: 68px; //for the NavBar
+    padding-top: 4.2em; //for the NavBar
     padding-left: 0px;
     width: 100%;
   }
@@ -99,11 +96,11 @@ ul ul a {
   }
 
   h3 {
-    font-size: 1.5em;
+    font-size: 0.9em;
   }
 
   p {
-    font-size: 1.1em;
+    font-size: 0.9em;
   }
   a, a:hover, a:focus {
     color: inherit;
@@ -113,7 +110,7 @@ ul ul a {
   ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: $primary;
+    background: $light-gray;
   }
 }
 
@@ -133,9 +130,9 @@ ul ul a {
 .popup {
   margin: 70px auto;
   padding: 20px;
-  background: #fff;
+  background: $true-white;
   border-radius: 5px;
-  width: 30%;
+  min-width: 40%;
   height: auto;
   position: relative;
   transition: all 5s ease-in-out;
@@ -144,7 +141,6 @@ ul ul a {
 .popup h2 {
   margin-top: 0;
   color: #333;
-  font-family: Tahoma, Arial, sans-serif;
 }
 /* Symbol zum schliessen des Popup Fensters (oben rechts) */
 .popup .close {
@@ -158,7 +154,7 @@ ul ul a {
   color: #333;
 }
 .popup .close:hover {
-  color: $primary;
+  color: $hero-blue;
   cursor: pointer;
 }
 /* Gibt die max. laenge des Popup Fensters an */
@@ -195,7 +191,7 @@ ul ul a {
   left: 0;
   height: 20px;
   width: 20px;
-  background-color: #eee;
+  background-color: $primary-white;
 }
 
 /* On mouse-over, add a grey background color */
@@ -205,7 +201,7 @@ ul ul a {
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: $hero-blue;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -272,7 +268,7 @@ ul ul a {
   color: #333;
 }
 .popup .close:hover {
-  color: $primary;
+  color: $hero-blue;
   cursor: pointer;
 }
 .popup .content_popup {
@@ -322,7 +318,7 @@ ul ul a {
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #2196F3;
+  background-color: $hero-blue;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
