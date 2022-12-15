@@ -1,11 +1,8 @@
-// text color of bootstrap
-
 /* Farbkonzept Website */
-
 @import 'src/styles.scss';
 
 #navbar {
-  height: 5.2em;
+  height: 4.2em;
 
 }
 
@@ -34,7 +31,6 @@
 
 
 #navbar-offline h3{
-
   color: $accent-red;
   text-align: center;
 }

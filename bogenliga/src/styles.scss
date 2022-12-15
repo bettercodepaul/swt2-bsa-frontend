@@ -116,10 +116,11 @@ p{
 // ======================
 /* COMMON STYLE ELEMENTS */
 
-// Use for: Navbar, content cards, boxes
+// Use for: content cards, boxes
 .soft-shadow {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
+
 
 // Use for: normal text, normal links
 p, a, a:visited {
@@ -307,9 +308,9 @@ a:hover, a:focus {
   text-align: center;
   line-height: 50px;
   letter-spacing: 1px;
-  color: #f0f0f0;
-  background: #cc2232;
-  border: 2px solid #f0f0f0;
+  color: $primary-white;
+  background: $accent-red;
+  border: 2px solid $true-white;
   box-shadow: 0 0 3px rgba(0,0,0,.3);
   position: fixed;
 }
