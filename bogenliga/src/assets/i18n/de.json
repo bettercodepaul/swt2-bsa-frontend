@@ -1039,6 +1039,10 @@
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Es konnte keine Lizenz heruntergeladen werden, da keine Lizenz von diesem Schützen vorhanden ist."
+        },
+        "LIGA_NOT_LOADED": {
+          "TITLE": "Fehler beim Löschen",
+          "DESCRIPTION": "Bitte warten Sie, bis die Ligen vollständig geladen sind."
         }
       }
     },
@@ -1172,6 +1176,7 @@
           "WETTKAMPFTYPNAME": "Wettkampftyp Name",
           "SPORTJAHR": "Sportjahr",
           "MELDEDEADLINE": "Meldedeadline",
+          "PHASE": "Phase",
           "LIGANAME": "Liganame",
           "LIGALEITERID": "Ligaleiter ID",
           "LIGALEITERMAIL": "Ligaleiter Mail"
@@ -1223,9 +1228,13 @@
           "ERROR": "Bitte geben Sie einen gültigen Namen ein"
         },
 
+        "DISZIPLIN": {
+          "LABEL": "Disziplin"
+        },
+
         "SPORTJAHR": {
           "LABEL": "Sportjahr",
-          "PLACEHOLDER": "Bitte geben Sie ein Jahr für das Sportjahr ein",
+          "PLACEHOLDER": "YYYY",
           "ERROR": "Bitte geben Sie ein gültiges Jahr ein"
         },
 
@@ -1340,27 +1349,15 @@
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen",
-        "FINISH": {
-          "TITLE": "Abschließen",
-          "DESCRIPTION": "Wollen Sie die Veranstaltung wirklich abschließen?"
-        },
+        "FINISH": "Abschließen",
         "WETTKAMPFTAGE": "Wettkampftage",
         "MANNSCHAFT": "Mannschaften aus Vorjahr kopieren",
         "BACK": "Zurück"
       },
       "NOTIFICATION": {
-        "DELETE": {
-          "TITLE": "Veranstaltung löschen",
-          "DESCRIPTION": "Wollen Sie die Veranstaltung mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
-        },
-        "DELETE_SUCCESS": {
-          "TITLE": "Veranstaltung gelöscht",
-          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich gelöscht"
-        },
-        "DELETE_FAILURE": {
-          "TITLE": "Löschen fehlgeschlagen",
-          "DESCRIPTION": "Veranstaltung konnte nicht gelöscht werden"
+        "FINISH" : {
+          "TITLE" : "Veranstaltung abschließen",
+          "DESCRIPTION" : "Wollen Sie die Veranstaltung '%s' wirklich abschließen?"
         },
         "SAVE": {
           "TITLE": "Veranstaltung angelegt",

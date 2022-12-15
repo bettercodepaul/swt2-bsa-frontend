@@ -1,27 +1,26 @@
-<bla-common-dialog (mouseover)="onMouseOver($event)"
-                   [config]="config"
+<bla-common-dialog [config]="config"
                    [loading]="loading">
+  <div (mouseover)="onMouseOver($event)">
+    <form #dsbMitgliedForm="ngForm"
+          class="horizontal-form half-page"
+          id="veranstaltungForm">
 
-  <form id="veranstaltungForm"
-        class="horizontal-form half-page"
-        #dsbMitgliedForm="ngForm">
-
-    <!-- VERANSTALTUNG -->
-    <div class="form-group row">
-      <label for="veranstaltung_name"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="text"
-               class="form-control"
-               required
-               id="veranstaltung_name"
-               name="veranstaltung_name"
-               #veranstaltung_name="ngModel"
-               [(ngModel)]="currentVeranstaltung.name"
-               [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
+      <!-- VERANSTALTUNG -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="veranstaltung_name">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 required
+                 id="veranstaltung_name"
+                 name="veranstaltung_name"
+                 #veranstaltung_name="ngModel"
+                 [(ngModel)]="currentVeranstaltung.name"
+                 [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
                placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
                data-cy="veranstaltung-detail-name">
 
@@ -50,6 +49,33 @@
                 data-cy="veranstaltung-detail-liganame">
           <option [ngValue]="ligaName"
                   *ngFor="let ligaName of allLiga"> {{ligaName.name}}</option>
+
+          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+        </select>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Disziplinname -->
+    <div class="form-group row">
+      <label for="disziplinName"
+             class="col-sm-3 col-form-label">
+        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DISZIPLIN.LABEL' | translate }}</span>
+        <span> *</span>
+      </label>
+      <div class="col-sm-9">
+        <select type="text"
+                class="form-control"
+                required
+                id="disziplinName"
+                name="disziplinName"
+                #disziplinName="ngModel"
+                [(ngModel)]="currentDisziplin"
+                data-cy="veranstaltung-detail-disziplinname">
+          <option [ngValue]="disziplinName"
+                  *ngFor="let disziplinName of allDisziplin"> {{disziplinName.disziplinName}}</option>
 
           placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
         </select>
@@ -97,10 +123,10 @@
         <span> *</span>
       </label>
       <div class="col-sm-9">
-        <input type="text"
+        <input type="number"
                class="form-control"
                required
-               pattern="[0-9]{4,4}"
+               pattern=^(19|20)\d{2}$
                id="sportjahr"
                name="sportjahr"
                #sportjahr="ngModel"
@@ -182,8 +208,10 @@
         <bla-button *ngIf="entityExists()"
                     [buttonType]="ButtonType.SUCCESS"
                     [id]="'veranstaltungAbschließen'"
-                    [loading]="saveLoading">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH.TITLE' | translate }}
+                    [disabled] = "!this.checkVeranstaltungPhase()"
+                    [loading]="saveLoading"
+                    (onClick)="onFinish($event)">
+          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH' | translate }}
         </bla-button>
         <bla-button *ngIf="entityExists()"
                     [id]="'veranstaltungInitialeLigatabelle'"
@@ -228,12 +256,6 @@
           {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
         </bla-button>
 
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.DANGER"
-                    [loading]="deleteLoading"
-                    (onClick)="onDelete($event)">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DELETE' | translate }}
-        </bla-button>
       </div>
     </div>
 
@@ -308,5 +330,5 @@
       </div>
     </div>
   </div>
-
+  </div>
 </bla-common-dialog>

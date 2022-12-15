@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {VERWALTUNG_CONFIG} from './verwaltung.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 @Component({
   selector:    'bla-verwaltung',
@@ -13,8 +13,9 @@ export class VerwaltungComponent implements OnInit {
   public config = VERWALTUNG_CONFIG;
   private sessionHandling: SessionHandling;
 
-  constructor(private currentUserService: CurrentUserService) {
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+  constructor(private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {

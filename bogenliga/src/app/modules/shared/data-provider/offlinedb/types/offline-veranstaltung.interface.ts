@@ -9,4 +9,5 @@ export interface OfflineVeranstaltung {
   meldeDeadline: string;
   ligaleiterId: number;
   ligaId: number;
+  phase: string;
 }

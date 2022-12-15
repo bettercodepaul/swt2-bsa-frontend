@@ -24,7 +24,7 @@ import {PasseDoClass} from '@verwaltung/types/passe-do-class';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
-import {CurrentUserService, NotificationService} from '@shared/services';
+import {CurrentUserService, NotificationService, OnOfflineService} from '@shared/services';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
@@ -90,9 +90,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private onOfflineService: OnOfflineService) {
     super();
-    this.sessionHandling = new SessionHandling(this.currentUserService);
+    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   /**
@@ -364,9 +365,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   // backend-calls to get data from DB
   public async loadVeranstaltungen() {
     this.loadingData = true;
-    await this.veranstaltungsDataProvider.findAll()
-      .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
-      .catch(() => this.veranstaltungen = []);
+    await this.veranstaltungsDataProvider.findAllLaufendAbgeschlossen()
+              .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
+              .catch(() => this.veranstaltungen = []);
 
   }
 
