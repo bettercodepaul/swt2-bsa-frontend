@@ -151,7 +151,7 @@
     "ONLINE": {
       "NOTIFICATION": {
         "SUCCESS": {
-          "TITLE": "Die Daten wurden erfolgreich gespesichert",
+          "TITLE": "Die Daten wurden erfolgreich gesichert",
           "DESCRIPTION": "Die Daten wurden erfolgreich online gespeichert und der Online-Modus wurde wieder aktiviert."
         },
         "FAILURE": {
@@ -197,7 +197,7 @@
       }
     },
     "BUTTON": {
-      "MATCHES": "generiere Matches",
+      "MATCHES": "Matches generieren",
       "SETZLISTE": "Setzliste",
       "SCHUSSZETTEL": "Schusszettel",
       "KONTROLLLISTE": "Bogenkontrollliste",
@@ -1443,7 +1443,7 @@
         "EMAIL": {
           "LABEL": "E-Mail",
           "PLACEHOLDER": "Bitte eine E-Mail Adresse als Usernamen eingeben",
-          "ERROR": "Bitte eine gültige Email eingeben."
+          "ERROR": "Bitte eine gültige Email eingeben"
         },
         "ROLE_OLD": {
           "LABEL": "Aktuelle Rolle",
@@ -1452,8 +1452,8 @@
         "ROLE_NEW": {
           "LABEL": "Zukünftige Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen",
-          "LEFTCAPTION":  "ausgewählt",
-          "RIGHTCAPTION":  "abgewählt"
+          "LEFTCAPTION":  "Ausgewählt",
+          "RIGHTCAPTION":  "Abgewählt"
         },
         "PASSWORD_NEW": {
           "LABEL": "Neues Passwort",
@@ -1471,7 +1471,8 @@
       }
     },
     "USER_NEU": {
-      "TITLE": "BENUTZER - Neuanlage",
+      "TITLE": "Neuen Benutzer anlegen",
+      "DESCRIPTION": "Testing",
       "FORM": {
         "DSBMITGLIED": {
           "LABEL": "Vorhandenes DSB-Mitglied",
@@ -1488,14 +1489,14 @@
           "ERROR": "Mindestlänge 8 Zeichen, Groß- und Kleinbuchstaben und min. eine Zahl. Erlaubte Sonderzeichen: #$^+=!*()@%&?"
         },
         "VERIFYPASSWORD": {
-          "LABEL": "Verifikation neues Passwort",
+          "LABEL": "Passwort wiederholen",
           "PLACEHOLDER": "Bitte Passwort wiederholen",
-          "ERROR": "Passwort nicht identisch zum neuen Password"
+          "ERROR": "Das Passwort ist nicht identisch zum neuen Password"
         },
         "2FA": {
           "LABEL": "Zwei-Faktor-Authentifizierung aktivieren?"
         },
-        "SAVE": "Speichern"
+        "SAVE": "Neuen Benutzer speichern"
       },
       "NOTIFICATION": {
         "SAVE": {

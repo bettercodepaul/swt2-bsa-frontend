@@ -4,10 +4,18 @@
     <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:benutzerneuanlage"
                       target="_blank"></bla-hilfe-button>
 
+    <!--<p>
+    {{ 'MANAGEMENT.USER_NEU.FORM.DSBMITGLIED.DESCRIPTION' | translate }}
+    </p>>-->
+
+    <p class="subtitle">
+      Einrichten eines Benutzeraccounts in der Bogenliga App für bereits vorhandene DSB Mitglieder
+    </p>
+
     <a name="bla-selectionlist"></a>
 
     <form #userNeuForm="ngForm"
-          class="horizontal-form half-page"
+          class="horizontal-form"
           id="userNeuForm">
 
       <!-- Basis für einen Account ist ein bestehender Eintrag eines DSB-Mitglieds -->
@@ -24,7 +32,7 @@
                                 [optionFieldSelector]="'nachname'"
                                 id="userDsbMitglied"
                                 name="userDsbMitglied"
-                                selectionListHeight="15em"
+                                selectionListHeight="12em"
                                 style="width: 50%;">
 
           </bla-quicksearch-list>
@@ -106,7 +114,7 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-sm-6 col-form-label"
+        <label class="col-sm-3 col-form-label"
                for="user2FA">
           {{ 'MANAGEMENT.USER_NEU.FORM.2FA.LABEL' | translate }}
         </label>
@@ -122,8 +130,7 @@
       </div>
       <div id="qr">
         <p>
-          Scan this Barcode using Google Authenticator app on your phone
-          to use it later in login
+          Scannen Sie diesen QR Code mit der Google Authenticator App auf Ihrem Smartphone, um sich später anzumelden.
         </p>
         <img [src]="qrCode"
         />

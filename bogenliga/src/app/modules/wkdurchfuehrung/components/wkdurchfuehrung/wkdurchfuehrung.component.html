@@ -30,8 +30,6 @@
                class="table table-hover table-sm table-responsive-sm thead-light table-striped"
                style="width:80%">
           <!-- headlines -->
-
-
           <bla-quicksearch-list (onSelect)="onSelect($event)"
                                 [items]="veranstaltungen"
                                 [loading]="loadingVeranstaltungen"
@@ -90,7 +88,18 @@
 
     <bla-col-layout>
 
-      <div>
+
+      <div style="flex-wrap: wrap">
+        <h4>Erstellen</h4>
+        <div class="button-space">
+          <bla-button
+            [id]="'DSB-Mitglied anlegen'"
+            (onClick)="addDSBMitglied()">
+            DSB-Mitglied anlegen
+          </bla-button>
+        </div>
+
+        <div class="button-space">
         <bla-button
           [id]="'generiereMatches'"
           [disabled]="isDisabledGMButton()"
@@ -99,72 +108,68 @@
         </bla-button>
       </div>
 
-
-      <div>
-        <bla-download-button
-          [id]="'downloadSetzliste'"
-          [downloadUrl]="onButtonDownload('pdf/setzliste')"
-          [fileName]="'setzliste.pdf'"
-          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
-
-        </bla-download-button>
       </div>
 
-      <div>
-        <bla-download-button
-          [id]="'downloadSchusszettel'"
-          [downloadUrl]="onButtonDownload('pdf/schusszettel')"
-          [fileName]="'schusszettel.pdf'"
-          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
+      <div style="flex-wrap: wrap">
+        <h4>Herunterladen</h4>
 
-        </bla-download-button>
-      </div>
+        <div class="button-space">
+          <bla-download-button
+            [id]="'downloadSetzliste'"
+            [downloadUrl]="onButtonDownload('pdf/setzliste')"
+            [fileName]="'setzliste.pdf'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
+          </bla-download-button>
+        </div>
 
-      <div>
-        <bla-download-button
-          [id]="'downloadBogenkontrollliste'"
-          [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
-          [fileName]="'bogenkontrollliste.pdf'"
-          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
 
-        </bla-download-button>
-      </div>
+        <div class="button-space">
+          <bla-download-button
+            [id]="'downloadSchusszettel'"
+            [downloadUrl]="onButtonDownload('pdf/schusszettel')"
+            [fileName]="'schusszettel.pdf'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
+          </bla-download-button>
+        </div>
 
-      <div>
-        <bla-download-button
-          [id]="'downloadMeldezettel'"
-          [downloadUrl]="onButtonDownload('pdf/meldezettel')"
-          [fileName]="'meldezettel.pdf'"
-          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
+        <div class="button-space">
+          <bla-download-button
+            [id]="'downloadBogenkontrollliste'"
+            [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
+            [fileName]="'bogenkontrollliste.pdf'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+          </bla-download-button>
+        </div>
 
-        </bla-download-button>
-      </div>
+        <div class="button-space">
+          <bla-download-button
+            [id]="'downloadMeldezettel'"
+            [downloadUrl]="onButtonDownload('pdf/meldezettel')"
+            [fileName]="'meldezettel.pdf'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
+          </bla-download-button>
+        </div>
 
-      <div id="setupTable" *ngIf="(!isOffline()); else onlineSetupTables">
-        <bla-button (click)="onButtonTabletClick()"
-                    [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-          >
-        </bla-button>
-      </div>
 
-      <div>
-        <bla-button
-          [id]="'DSB-Mitglied anlegen'"
-          (onClick)="addDSBMitglied()">
-          DSB-Mitglied anlegen
-        </bla-button>
-      </div>
-
-      <ng-template #onlineSetupTables id="onlineSetupTables">
-        <div>
+        <div class="button-space" id="setupTable" *ngIf="(!isOffline()); else onlineSetupTables">
           <bla-button (click)="onButtonTabletClick()"
-                      [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-            >
+                      [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}>
           </bla-button>
         </div>
-      </ng-template>
+
+        <ng-template #onlineSetupTables id="onlineSetupTables">
+          <div class="button-space">
+            <bla-button (click)="onButtonTabletClick()"
+                        [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}>
+            </bla-button>
+          </div>
+        </ng-template>
+
+      </div>
 
 
+      <div class="button-space">
+      <h4>Offline Funktionalität</h4>
       <div id="offlineButton" *ngIf="(!isOffline()); else backOnline ">
         <button class="btn btn-danger" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()"
                 data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
@@ -172,16 +177,18 @@
       </div>
 
       <ng-template #backOnline id="onlineButton">
-        <div>
+        <div class="button-space">
           <button class="btn btn-success" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Online gehen
           </button>
         </div>
       </ng-template>
 
-      <div id="adminOfflineResetButton" *ngIf="(isAdmin())">
+      <div class="button-space" id="adminOfflineResetButton" *ngIf="(isAdmin())">
         <button class="btn btn-danger" (click)="resetWettkampfToken(this.selectedWettkampfId)"
                 [disabled]="isDisabled()">Offlinetoken löschen
         </button>
+      </div>
+
       </div>
 
     </bla-col-layout>
