@@ -312,16 +312,17 @@
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle",
       "LIGATABELLE_VORBEREITUNG": "Ligatabelle Vorbereitung",
-      "TEXT": "Es muss ein Wettkampftag ausgewählt sein um die Buttons nutzen zu können"
+      "TEXT": "Wählen Sie zunächst einen Wettkampftag, um die Buttons nutzen zu können"
     },
     "SCHUETZEN_STATISTIK": {
       "TITEL" : "Gesamtstatistik pro Schütze"
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
+      "DESCRIPTION": "Wählen Sie eine Verantstaltung und eine Mannschaft, um die entsprechenden Wettkampfergebnisse und Statistiken zu sehen. ",
       "POPUPTXT": {
         "POPUPÜBERSCHRIFT": {
-          "LABEL": "Mannschaft nicht ausgewählt!"
+          "LABEL": "Keine Mannschaft ausgewählt"
         },
         "POPUPINHALT": {
           "LABEL": "Bitte wähle zuerst eine Mannschaft aus, um die Wettkampfdaten der Mannschaft anzuzeigen."

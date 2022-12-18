@@ -6,6 +6,7 @@
 
   <section class="overview-dialog-header">
     <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
+    <p class="subtitle">Wählen Sie das gewünschte Element aus der Tabelle und klicken Sie auf den "Editieren" Button, um die Details anzusehen.</p>
     <bla-quicksearch  (onSearchEntry)="onSearch($event)"
                       [hidden]="hidden"
                       [sessionSearch]="searchTerm">
