@@ -1,13 +1,6 @@
 /* Farbkonzept Website */
 @import 'src/styles.scss';
 
-$primary: #02bdd5; // Links, Navbar
-$primary-light: #ffffff; // Sidebar-Background
-$primary-dark: #2A2A2A; // Sidebar-Font
-$secondary: #ffc107; // hover Tables, Button
-$secondary-light: #fff350;
-$secondary-dark: #ff833a; // hover Links, Logo
-
 $navbar-height: 4.2em;
 $sidebar-border-style: 1px solid rgba(0, 0, 0, .125);
 
@@ -36,7 +29,7 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
   -webkit-box-shadow:8px 11px 8px -10px $light-gray, 8px -11px 8px -10px $light-gray;
   box-shadow:8px 11px 8px -10px $light-gray, 8px -11px 8px -10px $light-gray;
 }
-// templete class for Sidebar Element inner Shadow
+// template class for Sidebar Element inner Shadow
 .innerShadow{
   -webkit-box-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $light-gray;
   box-shadow: inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $light-gray;
@@ -56,26 +49,35 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
   flex-direction: column;
   position: fixed; // stays fixed on the side while scrolling
   z-index: 12; // layers of the rest of the page
-
   border-right: $sidebar-border-style;
-
 
   -webkit-box-shadow: 2px 8px 8px 0px $light-gray;
   box-shadow: 2px 8px 8px 0px $light-gray;
 
   overflow-y: scroll; // overflow in y direction is scrollable
-  -ms-overflow-style: none; // scrollbar wont be displayed on firefox
-  scrollbar-width:none;
-  //border-radius: 0px 0px 50px 0px; // runde ecke am menü
+ // -ms-overflow-style: none; // scrollbar wont be displayed on firefox
+  scrollbar-width: thin;
+  scrollbar-color: $hero-blue $true-white
 
 }
-#sidebar::-webkit-scrollbar { // no scrollbar in Safari, Chrome, Opera
-  display: none;
-}
-
+//Scrollbar styling
+/* width */
 #sidebar::-webkit-scrollbar {
-  display: none;
+  width: 8px;
 }
+
+
+/* Handle */
+#sidebar::-webkit-scrollbar-thumb {
+  background: $hero-blue;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+#sidebar::-webkit-scrollbar-thumb:hover {
+  background: $hero-blue;
+}
+
 
 // basic sidebar inactive css
 #sidebar.inactive {
@@ -96,14 +98,7 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
   font-size: 1.1em;
   display: block;
   text-align: left;
-  //color: $primary-dark;
 }
-
-//// basic css list and link with hover
-//#sidebar a:hover {
-//  color: $primary-light;
-//  background: $primary-dark;
-//}
 
 // Sidebar Header
 #sidebar .sidebar-header {
@@ -223,7 +218,7 @@ div.sidebar-text-toggle.flexBox{
 
 // hover over complete element -> text and toggle need to change
 .sidebar-text-toggle:hover {
-  color: $primary-light;
+  color: $dark-gray;
   //background: $light-gray;
   border-inline-start-color: $hero-blue !important;
 

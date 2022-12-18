@@ -8,6 +8,28 @@
   align-items: stretch;
   height: 100%;
   overflow: auto;
+  scrollbar-color: $hero-blue $light-gray; //scrollbar styling for Firefox
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 12px;
+}
+//Scrollbar styling
+/* Track */
+.wrapper::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px $light-gray;
+  background-color: $light-gray;
+}
+
+/* Handle */
+.wrapper::-webkit-scrollbar-thumb {
+  background: $hero-blue;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.wrapper::-webkit-scrollbar-thumb:hover {
+  background: $hero-blue;
 }
 
 // content side
