@@ -3,11 +3,8 @@
 h1{
   font-size: 2.8em;
 }
-
 // basic css of content
 .homeContent {
-  margin: 5px;
-  padding: 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -16,34 +13,140 @@ h1{
   flex-wrap: wrap;
 }
 
-// container for pictures and text
-.flexChild {
-  flex: 1 0 45%; // 45% -> two in one row
-  margin-top: 10px;
-  margin-bottom: 20px;
-  min-height: 60vh;
-
+.simple-section{
+  min-height: 40vh;
+  padding: 20px 0 20px 0;
 }
 
-.news-container{
+.quicklink-wrapper{
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 800px;
 }
 
-// css for Images of containers
-.mosaikImg {
-  width: 80%;
+.quicklink-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  margin: 20px;
+  transition: 0.3s;
+}
+
+.quicklink-container:hover{
+  cursor: pointer;
+  .quicklink{
+    background-color: $hero-blue;
+    border-color: $light-gray;
+  }
+  h3{
+    color: $hero-blue;
+  }
+}
+
+.quicklink{
+  height: 80px;
+  width: 80px;
+  background-color: $true-white;
+  border-color: $light-gray;
+  border-radius: 50%;
+  margin: 10px;
+  transition: 0.6s;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: $light-gray;
 }
 
-// workaround for breadcrumbs/pageTitle
-// TODO: Change size to accommodate other pages layout ( ... height )
-.home-page-wrapper {
-  padding: 1em;
+
+
+/*BLOG STYLES*/
+.blog-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  box-shadow: 0 3px 7px -1px rgba(#000, .1);
+  margin-bottom: 1.6%;
+  margin-top: 1.6%;
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 0;
+  min-height: 250px;
+
+  .photo-wrapper {
+    position: relative;
+    z-index: 0;
+    height: 200px;
+  }
+  .photo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .description {
+    padding: 1rem;
+    background: $true-white;
+    position: relative;
+    z-index: 1;
+  }
+  p {
+    position: relative;
+    margin: 1rem 0 0;
+    &:first-of-type {
+      margin-top: 1.25rem;
+      &:before { //blue divider
+        content: "";
+        position: absolute;
+        height: 4px;
+        background: $hero-blue;
+        width: 80px;
+        top: -0.75rem;
+        border-radius: 3px;
+      }
+    }
+  }
+
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    max-width: 100%;
+    .photo-wrapper {
+      flex-basis: 40%;
+      height: auto;
+    }
+    .description {
+      flex-basis: 60%;
+      &:before {
+        transform: skewX(-3deg);
+        content: "";
+        background: $true-white;
+        width: 30px;
+        position: absolute;
+        left: -10px;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+      }
+    }
+    &.alt {
+      flex-direction: row-reverse;
+      .description {
+        &:before {
+          left: inherit;
+          right: -10px;
+          transform: skew(3deg)
+        }
+      }
+    }
+  }
 }
+
+
 

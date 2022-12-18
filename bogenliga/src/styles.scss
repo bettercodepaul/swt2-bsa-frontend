@@ -12,14 +12,6 @@ $accent-red: #F40E0E; //Destructive Actions, Delete Buttons
 $true-white: #ffffff; //Navbar & Header Background
 
 
-/* OLD
-$primary-light: #b4ffff; // Sidebar-Background
-$primary-dark: #007c91; // Sidebar-Font
-$secondary: #ffc107; // hover Tables, Button
-$secondary-light: #fff350;
-$secondary-dark: #ff833a; // hover Links, Logo
-*/
-
 @font-face {
   font-family: Poppins-regular;
   src: url("/assets/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
@@ -71,7 +63,6 @@ body {
 }
 // ==================
 /* GLOBAL TYPOGRAPHY */
-
 //Use for: Page title
 h1 {
   color: $primary-black;
@@ -118,17 +109,23 @@ p{
 
 // Use for: Navbar, content cards, boxes
 .soft-shadow {
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 .default-padding{
-
+  padding:10px 30px 20px 20px
 }
 
 // Use for: normal text, normal links
 p, a, a:visited {
   color: $primary-black;
   text-decoration: none;
+}
+
+a {
+  color: $primary-black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 // Hover styles
@@ -326,3 +323,7 @@ a:hover, a:focus {
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
 }
+
+
+
+

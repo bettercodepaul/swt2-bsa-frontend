@@ -26,7 +26,7 @@
           <h3>{{card.descriptionKey | translate }}</h3>
           <p class="tooltip-text multi-lines-text">{{card.tooltipText | translate}}</p>
           <div class="button-container">
-            <button  class="btn btn-primary" style="align-self: flex-end"
+            <button  class="btn btn-primary"
                      (mouseleave)   ="resetActiveCard()"
                      [routerLink]   ="getLink(card.route,card.detailType)"
                      [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }} verwalten

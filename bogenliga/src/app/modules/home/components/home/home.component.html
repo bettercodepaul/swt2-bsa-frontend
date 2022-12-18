@@ -1,100 +1,74 @@
-
-
-  <div id="homePage">
-    <div style="max-width: 75%; margin: 15px; padding: 5px">
+<div class="default-padding">
       <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
       <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
+
+  <!-- Quicklinks -->
+  <div class="simple-section">
+    <div class="quicklink-wrapper">
+    <div class="quicklink-container">
+      <div class="quicklink soft-shadow"></div>
+      <h3>{{'REGIONEN.REGIONEN.TITLE' | translate}}</h3>
     </div>
 
-
-    <!-- Row 1 -->
-    <div style="margin-left: 20px; min-height: 40vh">
-      <h2>Unsere nächsten Wettkämpfe</h2>
-      <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:100%; margin-left: 15px;">
-        <div class="row">
-          <bla-data-table [config]="config_table"
-                          [rows]="rows"
-                          [loading]="loadingTable"
-                          [hidden]="checkIfTableIsEmpty()"
-                          (onMapEntry)="onMap($event)">
-
-            <!--
-      <h3> <a class="blackLink"
-             routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
--->
-            <!-- headlines -->
-            <!-- <thead>
-             <tr>
-               -- These are taken out of the JSON File ->
-               <th>{{ 'TABLE.DATE' | translate }}</th>
-               <th>{{ 'TABLE.TIME' | translate }}</th>
-               <th>{{ 'TABLE.LIGA' | translate }}</th>
-               <th>{{ 'TABLE.PLACE' | translate }}</th>
-             </tr>
-             </thead>-->
-            <!-- Rows -->
-            <!--
-                      <tbody>
-                      <tr>
-                        <td>03.11.2018</td>
-                        <td>14:00</td>
-                        <td>2. Bundesliga</td>
-                        <td>Welzheim</td>
-                      </tr>
-
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>14:00</td>
-                        <td>Landesliga Nord Recurve</td>
-                        <td>Welzheim</td>
-                      </tr>
-
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>10:00</td>
-                        <td>Landesliga A Compound</td>
-                        <td>Hochdorf o. Essendorf</td>
-
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>14:00</td>
-                        <td>Württembergliga Compound</td>
-                        <td>Hochdorf o. Essendorf</td>
-                      </tr>
-
-                      <tr>
-                        <td>18.11.2018</td>
-                        <td>10:00</td>
-                        <td>Landesliga Süd Recurve</td>
-                        <td>Hochdorf o. Essendorf</td>
-                      </tr>
-                      </tbody>
-                      -->
-
-          </bla-data-table>
-        </div>
-      </table>
+    <div class="quicklink-container">
+      <div class="quicklink soft-shadow"></div>
+      <h3>{{'MANNSCHAFTEN.MANNSCHAFTEN.TITLE' | translate}}</h3>
     </div>
 
-    <div class="homeContent">
-      <!-- Row 2 -->
-      <div class="flexChild">
-        <h2>Neues aus dem Bogensport</h2>
-        <div class="news-container">
+    <div class="quicklink-container">
+      <div class="quicklink soft-shadow"></div>
+      <h3>{{'VEREINE.VEREINE.TITLE' | translate}}</h3>
+    </div>
+  </div>
+  </div>
 
-          <div class="flexChild">
-            <img class="mosaikImg"
-                 src="assets/img/home_halle.png" alt="Bogenliga Halle">
-          </div>
 
-          <div class="flexChild">
-            <h3>{{ 'HOME.HOME.BOX1HEADING' | translate }}</h3>
-            <p style="margin-top: 20px">{{ 'HOME.HOME.BOX1CONTENT' | translate }}</p>
-          </div>
-        </div>
+  <mat-divider></mat-divider>
+
+  <!-- Anstehende Wettkämpfe -->
+  <div class="simple-section">
+    <h2>{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</h2>
+    <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
+    <table class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+           style="width:100%; margin-left: 15px;">
+      <div class="row">
+        <bla-data-table [config]="config_table"
+                        [rows]="rows"
+                        [loading]="loadingTable"
+                        [hidden]="checkIfTableIsEmpty()"
+                        (onMapEntry)="onMap($event)">
+        </bla-data-table>
+      </div>
+    </table>
+  </div>
+
+  <mat-divider></mat-divider>
+
+
+  <!-- Neues aus dem Bogensport -->
+  <div class="simple-section">
+    <h2>{{ 'HOME.HOME.NEWS' | translate }}</h2>
+    <!-- Eintrag 1 -->
+    <div class="blog-card">
+      <div class="photo-wrapper">
+        <div class="photo" style="background-image: url('assets/img/home_halle.png')"></div>
+      </div>
+      <div class="description">
+        <h3>{{ 'HOME.HOME.BOX1HEADING' | translate }}</h3>
+        <p>{{ 'HOME.HOME.BOX1CONTENT' | translate }}</p>
       </div>
     </div>
+
+    <!-- Eintrag 2 -->
+    <div class="blog-card alt">
+      <div class="photo-wrapper">
+        <div class="photo" style="background-image: url('assets/img/home_group.png')"></div>
+      </div>
+      <div class="description">
+        <h3>{{ 'HOME.HOME.BOX1HEADING' | translate }}</h3>
+        <p>{{ 'HOME.HOME.BOX1CONTENT' | translate }}</p>
+      </div>
+    </div>
+  </div>
+
   </div>

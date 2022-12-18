@@ -56,9 +56,9 @@
 
 // bootstrap changes
 .jumbotron {
-  margin-bottom: 0px;
+  margin-bottom: 0;
   background-color: $light-gray;
-  padding: 0px;
+  padding: 0;
 
 }
 
@@ -71,7 +71,7 @@
 }
 
 .footerContainer {
-  width: 500px;
+  width: 100%;
   padding: 15px;
   justify-content: space-around;
 }
@@ -104,13 +104,13 @@
 @media (max-width: 768px) {
   .content.inactive {
     padding-top: 4.2em; //for the NavBar
-    padding-left: 0px;
+    padding-left: 0;
     width: 100%;
   }
 
   .content {
     padding-top: 60px; //for the NavBar
-    padding-left: 0px; //for the Sidebar
+    padding-left: 0; //for the Sidebar
     width: 100%;
   }
 
@@ -159,7 +159,7 @@
 /* erste Überschrift im Popup Fenster*/
 .popup h2 {
   margin-top: 0;
-  color: #333;
+  color: $primary-black;
 }
 /* Symbol zum schliessen des Popup Fensters (oben rechts) */
 .popup .close {
@@ -170,7 +170,7 @@
   font-size: 30px;
   font-weight: bold;
   text-decoration: none;
-  color: #333;
+  color: $primary-black;
 }
 .popup .close:hover {
   color: $hero-blue;
@@ -274,7 +274,6 @@
 .popup h2 {
   margin-top: 0;
   color: #333;
-  font-family: Tahoma, Arial, sans-serif;
 }
 .popup .close {
   position: absolute;
