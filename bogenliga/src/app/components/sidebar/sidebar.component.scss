@@ -44,7 +44,7 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
   margin-top: $navbar-height; //height of NavBar
   background: $true-white; //#343a40;
   color: $primary-black;
-  transition: all 0.3s;
+  transition: all 0.5s;
   display: flex;
   flex-direction: column;
   position: fixed; // stays fixed on the side while scrolling
@@ -57,7 +57,7 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
   overflow-y: scroll; // overflow in y direction is scrollable
  // -ms-overflow-style: none; // scrollbar wont be displayed on firefox
   scrollbar-width: thin;
-  scrollbar-color: $hero-blue $true-white
+  scrollbar-color: $light-gray $true-white
 
 }
 //Scrollbar styling
@@ -69,7 +69,7 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
 
 /* Handle */
 #sidebar::-webkit-scrollbar-thumb {
-  background: $hero-blue;
+  background: $light-gray;
   border-radius: 10px;
 }
 

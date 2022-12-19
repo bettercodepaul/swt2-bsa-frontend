@@ -155,6 +155,7 @@
   height: auto;
   position: relative;
   transition: all 5s ease-in-out;
+  z-index: 100;
 }
 /* erste Überschrift im Popup Fenster*/
 .popup h2 {
