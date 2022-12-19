@@ -65,7 +65,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private selectedWettkampfId: number;
 
   private selectedMatchId: number;
-  private navurl: string;
   public multipleSelections = true;
   public veranstaltungen: VeranstaltungDO[];
   public loadingVeranstaltungen = true;
@@ -77,7 +76,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   private tableContentMatch: Array<MatchDOExt> = [];
   private remainingWettkampfRequests: number;
   private remainingMatchRequests: number;
-  private urlString: string;
   private currentVeranstaltungName;
   private wettkampfId;
   private disabledButton = true;
@@ -89,7 +87,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
   veranstaltung: VeranstaltungDO;
   public matches: Array<MatchDO[]> = [];
-  private wettkampfComponent: WettkampfComponent;
 
   public loadingYears = true;
   public availableYears: SportjahrVeranstaltungDO[];
@@ -140,9 +137,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
         this.findAvailableYears();
-
-        //this.LoadWettkampf();
-
         this.visible = false;
 
       } else if (this.onOfflineService.isOffline()) {
@@ -154,9 +148,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
         this.findAvailableYears();
-
-        //this.LoadWettkampf();
-
         this.visible = false;
 
       } else {
@@ -526,12 +517,14 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         } else {
           this.matchesNotExist();
           // prüfe ob es sich um den ersten wettkampftag handelt
-          if (this.selectedWettkampfId - 1 < this.wettkampfListe[0].id) {
+          if (this.selItemId  === 1) {
             // aktiviere Button
             this.disabledButton = false;
           } else {
-            // abfrage für vorherigen Matchtag
-            this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId - 1)
+            // Abfrage für vorherigen Wettkampftag
+            // selItemid ist 1 für den ersten Eintrag d.h. in der wettkampfListe ist es Eintrag 0
+            // daher Selektion für den vorherigen Wettkampftag: selItemId-2
+            this.matchProvider.findAllWettkampfMatchesAndNamesById(this.wettkampfListe[this.selItemId - 2].id)
               .then((response1: BogenligaResponse<MatchDTOExt[]>) => {
                 // wenn es keine Matches gibt
                 this.disabledButton = response1.payload.length === 0; // Falls erstes Match angefragt wird
@@ -730,7 +723,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.availableYears = [];
 
     // lese aktives Sportjahr aus Datenbank aus aus im Online-Modus
-    if(!this.onOfflineService.isOffline()) {
+    if (!this.onOfflineService.isOffline()) {
       this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
     }
 
