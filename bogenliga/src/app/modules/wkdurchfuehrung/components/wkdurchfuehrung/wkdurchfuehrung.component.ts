@@ -87,7 +87,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   wettkaempfe: Array<WettkampfDO> = [new WettkampfDO()];
   veranstaltung: VeranstaltungDO;
   public matches: Array<MatchDO[]> = [];
-
+  private wettkampfComponent: WettkampfComponent;
   public loadingYears = true;
   public availableYears: SportjahrVeranstaltungDO[];
   public selItemId: number;
