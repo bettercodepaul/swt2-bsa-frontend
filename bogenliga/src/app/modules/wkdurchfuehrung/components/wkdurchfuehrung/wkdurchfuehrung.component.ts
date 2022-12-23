@@ -513,8 +513,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
-  private findWettkampfIndex(Wettkampf: WettkampfDO) {
-
   // Zeigt Matches an
   public showMatches() {
     this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
