@@ -63,6 +63,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public selectedDTOs: VeranstaltungDO[];
   private selectedWettkampf: string;
   private selectedWettkampfId: number;
+  private selectedWettkampfListeIndex: number;
 
   private selectedMatchId: number;
   public multipleSelections = true;
@@ -494,6 +495,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     if ($event.id >= 0) {
       this.selectedWettkampfId = $event.id;
       this.selectedWettkampf = $event.id.toString();
+      this.selectedWettkampfListeIndex = 0;
+      for (let index = 0; index < this.wettkampfListe.length; index++) {
+        if (this.wettkampfListe[index].id === this.selectedWettkampfId) {
+          this.selectedWettkampfListeIndex = index;
+        }
+      }
       const wettkampfDO = $event as WettkampfDO;
       // is used to get the title for the currently selected Wettkampf @wettkampf.component.html
       document.getElementById('WettkampfTitle').innerText = this.currentVeranstaltungName +
@@ -506,6 +513,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
+  private findWettkampfIndex(Wettkampf: WettkampfDO) {
 
   // Zeigt Matches an
   public showMatches() {
@@ -516,15 +524,15 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
           this.matchesExist();
         } else {
           this.matchesNotExist();
-          // prüfe ob es sich um den ersten wettkampftag handelt
-          if (this.selItemId  === 1) {
+          // prüfe, ob es sich um den ersten wettkampftag handelt
+          if (this.selectedWettkampfListeIndex  === 0) {
             // aktiviere Button
             this.disabledButton = false;
           } else {
             // Abfrage für vorherigen Wettkampftag
             // selItemid ist 1 für den ersten Eintrag d.h. in der wettkampfListe ist es Eintrag 0
             // daher Selektion für den vorherigen Wettkampftag: selItemId-2
-            this.matchProvider.findAllWettkampfMatchesAndNamesById(this.wettkampfListe[this.selItemId - 2].id)
+            this.matchProvider.findAllWettkampfMatchesAndNamesById(this.wettkampfListe[this.selectedWettkampfListeIndex - 1].id)
               .then((response1: BogenligaResponse<MatchDTOExt[]>) => {
                 // wenn es keine Matches gibt
                 this.disabledButton = response1.payload.length === 0; // Falls erstes Match angefragt wird
