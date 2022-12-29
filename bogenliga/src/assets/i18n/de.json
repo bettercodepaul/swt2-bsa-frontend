@@ -84,7 +84,7 @@
     "LIGATABELLE": {
       "TITEL": "Liga-Tabelle",
       "DESCRIPTION": "Alle Ligen und die jeweiligen Ligatabellen des ausgewählten Jahres",
-      "LINKDESCRIPTION": "Zu den Wettkampfergebnissen der" ,
+      "LINKDESCRIPTION": "Zu den Wettkampfergebnissen" ,
       "TABELLENPLATZ": "Tabellenplatz",
       "MANNSCHAFTNAME": "Mannschaft",
       "MATCHPUNKTE": "Matchpunkte",
@@ -518,42 +518,42 @@
   "MANAGEMENT": {
     "VERWALTUNG": {
       "TITLE": "Verwaltung",
-      "DESCRIPTION": "Die zentrale Verwaltung aller Bogenliga Details. Bearbeite Mannschaften, Mitglieder und Vereine. Lege neue Veranstaltungen an und bearbeite existierende.",
+      "DESCRIPTION": "Die zentrale Verwaltung aller Bestandteile des Bogenligabetriebs und der Bogenliga App. Bearbeite die Details existierender Bestandteile, lösche Bestandteile oder lege neue an.",
       "NAVIGATION": {
         "DSBMITGLIEDER": {
           "LABEL": "DSB Mitglieder",
-          "DESCRIPTION": "Verwaltung der DSB Mitglieder",
-          "TOOLTIP": "● Erstellen neuer DSB Mitglieder\n● DSB Mitglieder bearbeiten\n● DSB Mitglieder Löschen"
+          "DESCRIPTION": "Registrierte Mitglieder des Deutschen Schützenbunds",
+          "TOOLTIP": "● Neue DSB Mitglieder erstellen\n● DSB Mitglieder bearbeiten\n● DSB Mitglieder löschen"
         },
         "USER": {
           "LABEL": "Benutzer",
-          "DESCRIPTION": "Verwaltung der Benutzer-Accounts",
-          "TOOLTIP": "● Anlegen neuer Benutzer\n● Benutzerliste bearbeiten\n● Benutzer löschen"
+          "DESCRIPTION": "DSB Mitglieder mit Account in der Bogenliga App",
+          "TOOLTIP": "● Neue Benutzer anlegen\n● Benutzerliste bearbeiten\n● Benutzer löschen"
         },
         "KLASSEN": {
-          "LABEL": "(Wettkampf-) Klassen",
-          "DESCRIPTION": "Verwaltung der Klassen",
-          "TOOLTIP": "● Anlegen neuer Klassen\n● Klassenliste bearbeiten"
+          "LABEL": "Klassen",
+          "DESCRIPTION": "Alle Wettkampfklassen und ihre Jahrgänge",
+          "TOOLTIP": "● Neue Klassen anlegen\n● Klassenliste bearbeiten"
         },
         "DSBMANNSCHAFTEN": {
           "LABEL": "Mannschaften",
-          "DESCRIPTION": "Verwaltung der Mannschaften",
+          "DESCRIPTION": "Verwaltung der Mannschaften der Vereine",
           "TOOLTIP": ""
         },
         "VEREINE": {
           "LABEL": "Vereine",
-          "DESCRIPTION": "Verwaltung der Vereine",
+          "DESCRIPTION": "Alle Vereine und ihre Mannschaften",
           "TOOLTIP": "● Anlegen neuer Vereine\n● Bearbeiten der Vereinsliste\n● Löschen von Vereinen\n● Mannschaftsübersicht & bearbeiten"
         },
         "LIGA": {
           "LABEL": "Ligen",
-          "DESCRIPTION": "Verwaltung der Ligen",
-          "TOOLTIP": "● Anlegen neuer Ligen\n● Ligen bearbeiten\n● Löschen von Ligen"
+          "DESCRIPTION": "Alle Ligen und ihre Verantwortlichen",
+          "TOOLTIP": "● Neue Ligen anlegen\n● Ligen bearbeiten\n● Löschen von Ligen"
         },
         "REGIONEN": {
           "LABEL": "Regionen",
-          "DESCRIPTION": "Verwaltung der Regionen",
-          "TOOLTIP": "● Hinzufügen von neuen Regionen\n● Regionenliste bearbeiten\n● Einträge löschen"
+          "DESCRIPTION": "Liste aller Regionen und Regiontypen",
+          "TOOLTIP": "● Neue Regionen hinzufügen\n● Regionenliste bearbeiten\n● Einträge löschen"
         },
         "SPORTJAHR": {
           "LABEL": "Sportjahre",
@@ -562,12 +562,12 @@
         },
         "VERANSTALTUNG": {
           "LABEL": "Veranstaltungen",
-          "DESCRIPTION": "Verwaltung der Veranstaltungen",
+          "DESCRIPTION": "Details bestehender und kommender Veranstaltungen",
           "TOOLTIP": "● Übersicht Veranstaltungen\n● Erstellen einer neuen Veranstaltung\n● Verwaltung der Veranstaltungsliste"
         },
         "EINSTELLUNGEN": {
           "LABEL": "Einstellungen",
-          "DESCRIPTION": "Einstellungen bearbeiten",
+          "DESCRIPTION": "Einstellungen der DSB Details, sowie der Bogenliaga App ",
           "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
         }
       }
