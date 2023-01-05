@@ -35,7 +35,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                      // of course for the system itself the currentUser should be logged out
                      if (error.status === 0) {
                        console.log('Exipred Token', error);
-                       this.router.navigateByUrl('user/login');
+                       this.router.navigateByUrl('/user/login');
                        this.currentUserService.logout();
                        return this.errorHandlingService.handleHttpError(error);
                        // caught and handle the error
