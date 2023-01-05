@@ -12,7 +12,8 @@ import {
   NotificationService,
   NotificationSeverity,
   NotificationType,
-  NotificationUserAction, OnOfflineService
+  NotificationUserAction,
+  OnOfflineService
 } from '../../../shared/services';
 import {environment} from '@environment';
 import {VereinDataProviderService} from '@verwaltung/services/verein-data-provider.service';
@@ -27,7 +28,6 @@ import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-provider.service';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
-import {tryCatch} from 'rxjs/internal-compatibility';
 
 
 const NOTIFICATION_ZURUECK = 'schusszettel-weiter';
@@ -355,12 +355,21 @@ export class SchusszettelComponent implements OnInit {
         });
   }
 
-  private getAllVeranstaltungen(): void {
-    this.veranstaltungDataProvider.findAll()
-        .then((response: BogenligaResponse<VeranstaltungDO[]>) => {
-          this.allVeranstaltungen = response.payload;
-        });
-  }
+  /**
+   * Diese Methode wurde überprüft und wird momentan nicht verwendet. Daher wurde hier die Methode findAll() nicht
+   * geändert bzw. angepasst.
+   * @private
+   */
+
+  /*
+   private getAllVeranstaltungen(): void {
+   this.veranstaltungDataProvider.findAll()
+   .then((response: BogenligaResponse<VeranstaltungDO[]>) => {
+   this.allVeranstaltungen = response.payload;
+   });
+   }
+   */
+
 
   private maxMannschaftsId(): number {
     let maxMid = this.mannschaften[0].id;

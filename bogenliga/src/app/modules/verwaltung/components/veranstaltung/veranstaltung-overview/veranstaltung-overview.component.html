@@ -3,7 +3,6 @@
 <bla-row-layout>
 
 <bla-selection-overview-dialog [config]="table_config"
-                               (mouseover)="onMouseOver($event)"
                                (onDeleteClicked)="onDelete($event)"
                                (onEditClicked)="onEdit($event)"
                                (onViewClicked)="onView($event)"
@@ -11,8 +10,9 @@
                                [items]="selectedDTOs"
                                [multipleSelections]="!multipleSelections"
                                [rows]="rows"
+                               [findOnlyGeplantLaufend]=true
                                [optionFieldSelector]="'sportjahr'">
-
+  <div (mouseover)="onMouseOver($event)"></div>
 </bla-selection-overview-dialog>
 
 </bla-row-layout>

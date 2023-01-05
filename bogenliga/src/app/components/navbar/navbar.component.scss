@@ -1,20 +1,16 @@
 // text color of bootstrap
 
 /* Farbkonzept Website */
-$primary: #ffffff; // Links, Navbar
-$primary-light: #2A2A2A; // Sidebar-Background
-$primary-dark: #ffffff; // Sidebar-Font
-$secondary: #ffc107; // hover Tables, Button
-$secondary-light: #fff350;
-$secondary-dark: #ff833a; // hover Links, Logo
+
+@import 'src/styles.scss';
 
 #navbar {
-  height: 3.2em;
+  height: 4.2em;
 
 }
 
 #navbar a {
-  color: #2A2A2A;
+  color: $primary-black;
   text-decoration: none;
 }
 
@@ -24,11 +20,11 @@ $secondary-dark: #ff833a; // hover Links, Logo
 }
 
 #navbar-header {
-  padding-left: 2em;
+  margin-top: 0.5em;
 }
 
 #navbar-brand {
-  margin-left: 1.1em;
+  margin-left: 0.0em;
 }
 
 #navbar-offline {
@@ -36,14 +32,15 @@ $secondary-dark: #ff833a; // hover Links, Logo
   width: 100%;
 }
 
+
 #navbar-offline h3{
 
-  color: red;
+  color: $accent-red;
   text-align: center;
 }
 
 .navbar-dark {
-  background-color: $primary;
+  background-color: $true-white;
   padding: 0;
 }
 
@@ -76,17 +73,25 @@ $secondary-dark: #ff833a; // hover Links, Logo
 
   // Toggle style of rows
   #sidebarCollapseNavBar span {
-    width: 80%;
+    width: 100%;
     height: 2px;
     display: block;
-    //background: #02bdd5; //#555;
-    background: black;
+    background: $primary-black;
     transition: all 0.8s cubic-bezier(0.810, -0.330, 0.345, 1.375);
     opacity: 1;
     margin: 5px auto;
   }
 
-  #navbar-brand, #navbar-header {
+
+  // add Logo margin for mobile devices
+  #navbar-brand{
+    margin-left: 0.7em;
+  }
+
+}
+// Hide header text for really small devices
+@media (max-width:460px) {
+  #navbar-header h1 {
     display: none;
   }
 }

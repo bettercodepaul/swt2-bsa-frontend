@@ -10,6 +10,7 @@ export class VeranstaltungOfflineSyncDto implements DataTransferObject {
   meldeDeadline: string;
   ligaleiterId: number;
   ligaId: number;
+  phase: string;
 
   static copyFrom(optional: {
     id?: number,
@@ -21,6 +22,7 @@ export class VeranstaltungOfflineSyncDto implements DataTransferObject {
     meldeDeadline?: string,
     ligaleiterId?: number,
     ligaId?: number,
+    phase?: string,
 
   } = {}): VeranstaltungOfflineSyncDto {
     const copy = new VeranstaltungOfflineSyncDto();
@@ -36,6 +38,7 @@ export class VeranstaltungOfflineSyncDto implements DataTransferObject {
     copy.version = optional.version >= 0 ? optional.version : null;
     copy.name = optional.name || '';
     copy.meldeDeadline = optional.meldeDeadline || '';
+    copy.phase = optional.phase || '';
 
 
     return copy;

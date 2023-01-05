@@ -1,24 +1,26 @@
-<bla-common-dialog (mouseover)="onMouseOver($event)"
-                   [config]="config">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung"
-                    target="_blank"></bla-hilfe-button>
-  <p class="subtitle">{{'WKDURCHFUEHRUNG.WKDURCHFUEHRUNG.DESCRIPTION' | translate}}</p>
-  <div class="layout-elements">
-    <bla-col-layout>
+<bla-common-dialog [config]="config">
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:wettkampfdurchfuehrung"
+                      target="_blank"></bla-hilfe-button>
 
-      <div class="flexChild">
-        <h2><a class="blackLink"
-               routerLink="/wkdurchfuehrung">{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}</a></h2>
+    <p class="subtitle">{{'WKDURCHFUEHRUNG.WKDURCHFUEHRUNG.DESCRIPTION' | translate}}</p>
+    <div class="layout-elements">
+      <bla-col-layout>
 
-        <div id="dropDownMenuYear" style="width: 80%; margin-bottom: 2%;">
-          <bla-dropdown-menu (onSelect)="onSelectYear($event)"
-                             [id]="'Veranstaltungen-dropdown-menu'"
-                             [items]="availableYears"
-                             [optionFieldSelector]="'sportjahr'"
-                             [loading]="loadingYears"
-                             [selectedItemId]='selItemId'
-                             [disabled]="isOfflineDisabled()"
-                             data-cy="wkduchfuehrung-jahr-dropdown"
+        <div class="flexChild">
+          <h2><a class="blackLink"
+                 routerLink="/wkdurchfuehrung">{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}</a></h2>
+
+          <div id="dropDownMenuYear"
+               style="width: 80%; margin-bottom: 2%;">
+            <bla-dropdown-menu (onSelect)="onSelectYear($event)"
+                               [id]="'Veranstaltungen-dropdown-menu'"
+                               [items]="availableYears"
+                               [optionFieldSelector]="'sportjahr'"
+                               [loading]="loadingYears"
+                               [selectedItemId]='selItemId'
+                               [disabled]="isOfflineDisabled()"
+                               data-cy="wkduchfuehrung-jahr-dropdown"
                              style="width: 40%;">
           </bla-dropdown-menu>
 
@@ -49,7 +51,7 @@
 
       <div>
         <h2>
-          {{ 'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}
+          {{'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}
         </h2>
 
         <div class="row">
@@ -195,7 +197,7 @@
     <bla-col-layout>
 
 
-      <div class="row">
+      <div class="row" style="margin-left: 5px">
         <section class="overview-dialog-content">
 
           <bla-data-table [config]="config_table_match"
@@ -212,8 +214,8 @@
     </bla-col-layout>
 
 
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
 
+    </div>
   </div>
-
 </bla-common-dialog>
