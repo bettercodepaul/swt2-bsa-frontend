@@ -1,3 +1,4 @@
+@import 'src/styles.scss';
 #Button{
   margin-top: 20px;
 }
@@ -15,7 +16,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   transition: opacity 500ms;
   visibility: visible;
   opacity: 1;
@@ -24,7 +25,7 @@
 .popup {
   margin: 70px auto;
   padding: 20px;
-  background: #fff;
+  background: $primary-white;
   border-radius: 5px;
   width: 40%;
   height: auto;
@@ -40,7 +41,8 @@
   font-size: 30px;
   font-weight: bold;
   text-decoration: none;
-  color: #333;
+  color: $primary-black;
+  cursor: pointer;
 }
 
 .hidden {
@@ -48,5 +50,10 @@
 }
 
 textarea[readonly]{
-  background-color: white;
+  background-color: $true-white;
+}
+
+.form-label-box{
+  margin-left:20px;
+  min-width: 150px;
 }

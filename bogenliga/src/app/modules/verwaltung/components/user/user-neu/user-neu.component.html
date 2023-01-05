@@ -1,147 +1,147 @@
-<bla-common-dialog (mouseover)="onMouseOver($event)"
-                   [config]="config"
+<bla-common-dialog [config]="config"
                    [loading]="loading">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:benutzerneuanlage"
-                    target="_blank"></bla-hilfe-button>
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:benutzerneuanlage"
+                      target="_blank"></bla-hilfe-button>
 
-  <a name="bla-selectionlist"></a>
+    <a name="bla-selectionlist"></a>
 
-  <form id="userNeuForm"
-        class="horizontal-form half-page"
-        #userNeuForm="ngForm">
+    <form #userNeuForm="ngForm"
+          class="horizontal-form half-page"
+          id="userNeuForm">
 
-    <!-- Basis für einen Account ist ein bestehender Eintrag eines DSB-Mitglieds -->
-    <div class="form-group row">
-      <label for="userDsbMitglied"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.USER_NEU.FORM.DSBMITGLIED.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <bla-quicksearch-list id="userDsbMitglied"
-                              name="userDsbMitglied"
-                              [items]="getVersionedDataObjects()"
-                              [optionFieldSelector]="'nachname'"
-                              (onSelect)="onSelect($event)"
-                              [multipleSelections]="!multipleSelections"
-                              selectionListHeight="15em"
-                              style="width: 50%;">
+      <!-- Basis für einen Account ist ein bestehender Eintrag eines DSB-Mitglieds -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="userDsbMitglied">
+          <span>{{ 'MANAGEMENT.USER_NEU.FORM.DSBMITGLIED.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <bla-quicksearch-list (onSelect)="onSelect($event)"
+                                [items]="getVersionedDataObjects()"
+                                [multipleSelections]="!multipleSelections"
+                                [optionFieldSelector]="'nachname'"
+                                id="userDsbMitglied"
+                                name="userDsbMitglied"
+                                selectionListHeight="15em"
+                                style="width: 50%;">
 
-        </bla-quicksearch-list>
-      </div>
-    </div>
-
-    <!-- username / email -->
-    <div class="form-group row">
-      <label for="userUsername"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="email"
-               class="form-control"
-               id="userUsername"
-               name="userUsername"
-               #userUsername="ngModel"
-               [(ngModel)]="currentCredentials.username"
-               [class.is-invalid]="userUsername.invalid && !userUsername.untouched"
-               pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
-               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}"
-               data-cy="username-input">
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.ERROR' | translate }}
+          </bla-quicksearch-list>
         </div>
       </div>
-    </div>
 
-    <!-- Passwort -->
-    <div class="form-group row">
-      <label for="userPassword"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="password"
-               class="form-control"
-               required
-               minlength="8"
-               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d#\$\^+=!\*()@%&?]{8,}$"
-               id="userPassword"
-               name="userPassword"
-               #userPassword="ngModel"
-               [(ngModel)]="currentCredentials.password"
-               [class.is-invalid]="userPassword.invalid  && !userPassword.untouched"
-               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.PLACEHOLDER' | translate }}"
-               data-cy="password-input">
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.ERROR' | translate }}
+      <!-- username / email -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="userUsername">
+          <span>{{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input #userUsername="ngModel"
+                 [(ngModel)]="currentCredentials.username"
+                 [class.is-invalid]="userUsername.invalid && !userUsername.untouched"
+                 class="form-control"
+                 data-cy="username-input"
+                 id="userUsername"
+                 name="userUsername"
+                 pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$"
+                 placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.PLACEHOLDER' | translate }}"
+                 type="email">
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.USER_NEU.FORM.EMAIL.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Verifikation Passwort -->
-    <div class="form-group row">
-      <label for="userVerifyPassword"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="password"
-               class="form-control"
-               required
-               id="userVerifyPassword"
-               name="userVerifyPassword"
-               #userVerifyPassword="ngModel"
-               [(ngModel)]="verifyCredentials.password"
-               [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
-               placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}"
-               data-cy="verify-password-input">
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.ERROR' | translate }}
+      <!-- Passwort -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="userPassword">
+          <span>{{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input #userPassword="ngModel"
+                 [(ngModel)]="currentCredentials.password"
+                 [class.is-invalid]="userPassword.invalid  && !userPassword.untouched"
+                 class="form-control"
+                 data-cy="password-input"
+                 id="userPassword"
+                 minlength="8"
+                 name="userPassword"
+                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d#\$\^+=!\*()@%&?]{8,}$"
+                 placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.PLACEHOLDER' | translate }}"
+                 required
+                 type="password">
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.USER_NEU.FORM.PASSWORD.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group row">
-      <label for="user2FA"
-             class="col-sm-6 col-form-label">
-        {{ 'MANAGEMENT.USER_NEU.FORM.2FA.LABEL' | translate }}
-      </label>
-      <div class="col-sm-1">
-        <input type="checkbox"
-               class="form-control"
-               id="user2FA"
-               name="user2FA"
-               #user2FA="ngModel"
-               [(ngModel)]="currentCredentials.using2FA"
-               [class.is-invalid]="user2FA.invalid">
+      <!-- Verifikation Passwort -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="userVerifyPassword">
+          <span>{{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input #userVerifyPassword="ngModel"
+                 [(ngModel)]="verifyCredentials.password"
+                 [class.is-invalid]="currentCredentials.password !=  verifyCredentials.password"
+                 class="form-control"
+                 data-cy="verify-password-input"
+                 id="userVerifyPassword"
+                 name="userVerifyPassword"
+                 placeholder="{{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}"
+                 required
+                 type="password">
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.USER_NEU.FORM.VERIFYPASSWORD.ERROR' | translate }}
+          </div>
+        </div>
       </div>
-    </div>
-    <div id="qr">
-      <p>
-        Scan this Barcode using Google Authenticator app on your phone
-        to use it later in login
-      </p>
-      <img [src]="qrCode"
-      />
-    </div>
 
-    <div class="form-group row">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-9 button-box">
-        <bla-button
-          [id]="'userSaveButton'"
-          [disabled]="!userNeuForm.valid"
-          [loading]="saveLoading"
-          (onClick)="onSave($event)"
-          data-cy="user-submit-button">
-          {{ 'MANAGEMENT.USER_NEU.FORM.SAVE' | translate }}
-        </bla-button>
+      <div class="form-group row">
+        <label class="col-sm-6 col-form-label"
+               for="user2FA">
+          {{ 'MANAGEMENT.USER_NEU.FORM.2FA.LABEL' | translate }}
+        </label>
+        <div class="col-sm-1">
+          <input #user2FA="ngModel"
+                 [(ngModel)]="currentCredentials.using2FA"
+                 [class.is-invalid]="user2FA.invalid"
+                 class="form-control"
+                 id="user2FA"
+                 name="user2FA"
+                 type="checkbox">
+        </div>
       </div>
-    </div>
-  </form>
+      <div id="qr">
+        <p>
+          Scan this Barcode using Google Authenticator app on your phone
+          to use it later in login
+        </p>
+        <img [src]="qrCode"
+        />
+      </div>
 
+      <div class="form-group row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-9 button-box">
+          <bla-button
+            (onClick)="onSave($event)"
+            [disabled]="!userNeuForm.valid"
+            [id]="'userSaveButton'"
+            [loading]="saveLoading"
+            data-cy="user-submit-button">
+            {{ 'MANAGEMENT.USER_NEU.FORM.SAVE' | translate }}
+          </bla-button>
+        </div>
+      </div>
+    </form>
+  </div>
 </bla-common-dialog>

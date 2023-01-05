@@ -17,7 +17,7 @@
     <!-- Footer -->
     <footer *ngIf="!fullscreen"
             id="support">
-      <div class="jumbotron jumbotron-fluid footer-copyright text-center py-3">
+      <div class="jumbotron footer-copyright text-center py-3">
         <p>{{ 'APP.SUPPORT' | translate }}</p>
         <a href="https://www.bcxp.de/"
            target="_blank"><img alt="BettercallPaul Logo"
@@ -35,37 +35,40 @@
 
       <!-- Impressum  -->
       <div id="footer"
-           style="flex-grow: 0"
-           class="navbar navbar-expand-sm bg-light justify-content-center">
-        <ul class="nav" style="width: 25%">
-          <li class="nav-item">
-            <a class="color-black"
+           style="flex-grow: 0;"
+           class="navbar navbar-expand-sm">
+        <ul class="nav" style="justify-content: space-around ">
+          <li>
+            <a
                routerLink="/impressum">{{ 'APP.IMPRESSUM' | translate }}
             </a>
-
-            <!-- Feedback -->
           </li>
-          <a style="padding-left: 10%" class="color-black" href="#" (click)="popup=true">{{ 'APP.FEEDBACK' | translate }}
+          <div style="width: 50px"> </div>
+
+          <!-- Feedback -->
+          <li>
+          <a href="#" (click)="popup=true"> {{ 'APP.FEEDBACK' | translate }}
           </a>
+          </li>
+
           <!-- Popup  -->
           <div class="overlay" *ngIf="popup">
             <div class="popup">
-              <h2>Feedback geben</h2>
+              <h2>Feedback</h2>
               <a class="close" (click)="popup = false">&times;</a>
               <div class="content_popup">
-                <p>Gebe einen Text für dein Feedback ein!
-                </p>
+                <p>Wir freuen uns über Dein Feedback. Teile hier deine Eindrücke und Verbesserungsvorschläge mit uns.</p>
                 <div class="md-form">
                   <textarea style="resize: none;height: auto" type="text" id="form7" maxlength="200" [(ngModel)]="feedbackTextArea" class="md-textarea form-control" mdbInput></textarea>
                 </div>
                 <p></p>
+                <input [disabled]="isAnonymous" type="email" class="form-control"  id="exampleInputEmail1" aria-describedby="emailHelp" placeholder= "Bitte E-Mail eingeben" [(ngModel)]="emailTextArea">
+                <p></p>
                 <label class="container">
                   <input type="checkbox" (change)="isAnonymous = !isAnonymous" [checked]="isAnonymous" data-md-icheck/>
-                  Feedback Anonym abschicken
+                  Feedback anonym abschicken
                   <span class="checkmark"></span>
                 </label>
-                <p></p>
-                <input [disabled]="isAnonymous" type="email" class="form-control"  id="exampleInputEmail1" aria-describedby="emailHelp" placeholder= "Bitte E-Mail eingeben" [(ngModel)]="emailTextArea">
                 <p></p>
                 <button type="submit" (click)="sendFeedback()" class="btn btn-primary">Absenden</button>
               </div>

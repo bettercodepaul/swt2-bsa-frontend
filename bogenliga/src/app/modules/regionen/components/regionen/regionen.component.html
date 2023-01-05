@@ -1,30 +1,30 @@
-<bla-navigation-dialog (mouseover)="onMouseOver($event)"
-                       [config]="config">
-  <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:regionen"
-                    target="_blank"></bla-hilfe-button>
-  <bla-col-layout>
-    <div id="searchWrapper">
-      <div id="descriptionWrapper"
-           style="display: none; max-width: 80%; color: #888888">
-        <p class="subtitle">{{'REGIONEN.REGIONEN.DESCRIPTION' | translate}}</p>
-      </div>
-      <div id="descriptionWrapperClose"
-           style="display: none;">
-        <p class="subtitle">{{'REGIONEN.REGIONEN.CLOSE' | translate}}</p>
-      </div>
+<bla-navigation-dialog [config]="config">
+  <div (mouseover)="onMouseOver($event)">
+    <bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:regionen"
+                      target="_blank"></bla-hilfe-button>
+    <bla-col-layout>
+      <div id="searchWrapper">
+        <div id="descriptionWrapper"
+             style="display: none; max-width: 80%; color: #888888">
+          <p class="subtitle">{{'REGIONEN.REGIONEN.DESCRIPTION' | translate}}</p>
+        </div>
+        <div id="descriptionWrapperClose"
+             style="display: none;">
+          <p class="subtitle">{{'REGIONEN.REGIONEN.CLOSE' | translate}}</p>
+        </div>
 
-      <div #chart
-           style="max-width: 100%"></div>
+        <div #chart
+             style="max-width: 100%"></div>
 
-      <div class="row">
-        <bla-quicksearch-list (onSelect)="onSelect($event)"
-                              [items]="regionen"
-                              [loading]="loadingRegionen"
+        <div class="row">
+          <bla-quicksearch-list (onSelect)="onSelect($event)"
+                                [items]="regionen"
+                                [loading]="loadingRegionen"
                               [multipleSelections]="!multipleSelections"
                               [placeholderTranslationKey]="NO_REGION_SELECTED"
                               [optionFieldSelector]="'regionName'"
                               selectionListHeight="15em"
-                              style="width: 50%; flex-grow: 0;">
+                              style="flex-grow: 0;">
 
         </bla-quicksearch-list>
       </div>
@@ -40,12 +40,10 @@
         <bla-row-layout>
           <!-- Region Name -->
           <div class="form-group row">
-            <label for="regionName"
-                   class="col-sm-3 col-form-label">
-              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.LABEL' | translate }}</span>
-              <span>:</span>
+            <label for="regionName">
+              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_NAME.LABEL' | translate }}: </span>
             </label>
-            <div class="col-sm-9">
+            <div>
               <input type="name"
                      class="form-control"
                      [disabled]=true
@@ -61,12 +59,10 @@
         <bla-row-layout>
           <!-- KÜRZEL -->
           <div class="form-group row">
-            <label for="regionKuerzel"
-                   class="col-sm-3 col-form-label">
-              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.LABEL' | translate }}</span>
-              <span>:</span>
+            <label for="regionKuerzel">
+              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_CONTRACTION.LABEL' | translate }}: </span>
             </label>
-            <div class="col-sm-9">
+            <div>
               <input type="name"
                      class="form-control"
                      [disabled]=true
@@ -81,12 +77,10 @@
         <bla-row-layout>
           <!-- TYP -->
           <div class="form-group row">
-            <label for="regionTyp"
-                   class="col-sm-3 col-form-label">
-              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.LABEL' | translate }}</span>
-              <span>:</span>
+            <label for="regionTyp">
+              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.LABEL' | translate }}: </span>
             </label>
-            <div class="col-sm-9">
+            <div>
               <input type="name"
                      class="form-control"
                      [disabled]=true
@@ -103,12 +97,10 @@
         <bla-row-layout *ngIf="currentRegionDO.regionUebergeordnetAsName">
           <!-- UEBERGEORDNETE REGION -->
           <div class="form-group row">
-            <label for="regionUebergeordnet"
-                   class="col-sm-3 col-form-label">
-              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.LABEL' | translate }}</span>
-              <span>:</span>
+            <label for="regionUebergeordnet">
+              <span>{{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_SUPERORDINATE.LABEL' | translate }}: </span>
             </label>
-            <div class="col-sm-9">
+            <div>
               <input type="name"
                      class="form-control"
                      [disabled]=true
@@ -146,7 +138,7 @@
         </bla-col-layout>
       </div>
     </div>
-  </bla-col-layout>
+    </bla-col-layout>
 
-
+  </div>
 </bla-navigation-dialog>

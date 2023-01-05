@@ -1,12 +1,4 @@
-/* Farbkonzept Website */
-$hero-blue: #487AF5; // H2, Hervorhebungen
-$primary-black: #2A2A2A; // H1, H3 body text, primäre buttons
-$primary-white: #FCFCFC; // Seitenhintergrund
-$primary-darkgrey: #888888; // Subtitle, Labels, inaktive Buttons text
-$primary-lightgrey: #EAEAEF; //Hover Hintergrund in Tabellen, inaktive Buttons Hintergrund
-$accent-gold: #FFCC34; // Hilfe, besondere Hinweise
-$accent-red: #F40E0E; //Löschen und andere "gefährliche" Aktionen
-
+@import 'src/styles.scss';
 
 h1{
   font-size: 2.8em;
@@ -43,7 +35,7 @@ h1{
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: $primary-lightgrey;
+  background-color: $light-gray;
 }
 
 // workaround for breadcrumbs/pageTitle
