@@ -1638,6 +1638,10 @@
         "TITLE": "Sitzung abgelaufen",
         "DESCRIPTION": "Ihre Sitzung ist abgelaufen. Sie werden auf die Login-Seite weitergeleitet. Bitte melden Sie sich dort erneut an."
       },
+      "NO_SERVER_AVAILABLE": {
+        "TITLE": "Server nicht erreichbar",
+        "DESCRIPTION": "Der Server ist nicht erreichbar."
+      },
       "BAD_REQUEST": {
         "TITLE": "Ungültige Anfrage",
         "DESCRIPTION": "Ihre Anfrage wurde vom Server abgewiesen."

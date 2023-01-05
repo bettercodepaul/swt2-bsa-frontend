@@ -35,7 +35,6 @@ export class ErrorHandlingService {
   // handle http errors
   public handleHttpError(httpError: any): Observable<any> {
     const errorDto: ErrorDTO = httpError.error;
-
     const statusCode = httpError.status;
     const errorCategory: number = Math.round(statusCode / 100);
     console.log('Number for Category', statusCode);
@@ -87,21 +86,32 @@ export class ErrorHandlingService {
     }
 
 
-
     console.warn(
       `body was: ${JSON.stringify(errorDto)}`);
+    let notification: Notification;
 
-
-    const notification: Notification = {
-      id: errorDto.errorCode,
-      title: 'NOTIFICATION.ERROR.' + errorDto.errorCode + '.TITLE',
-      description: 'NOTIFICATION.ERROR.' + errorDto.errorCode + '.DESCRIPTION',
-      details: errorDto.errorMessage,
-      severity: NotificationSeverity.ERROR,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.OK,
-      userAction: NotificationUserAction.PENDING
-    };
+    if (errorDto.errorCode == 'undefined') {
+      notification = {
+        id:          'NOTIFICATION_NO_SERVER_AVAILABLE',
+        title:       'NOTIFICATION.ERROR.NO_SERVER_AVAILABLE.TITLE',
+        description: 'NOTIFICATION.ERROR.NO_SERVER_AVAILABLE.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.ACCEPTED
+      };
+    } else {
+      notification = {
+        id:          errorDto.errorCode,
+        title:       'NOTIFICATION.ERROR.' + errorDto.errorCode + '.TITLE',
+        description: 'NOTIFICATION.ERROR.' + errorDto.errorCode + '.DESCRIPTION',
+        details:     errorDto.errorMessage,
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+    }
 
     this.notificationService.showNotification(notification);
   }
