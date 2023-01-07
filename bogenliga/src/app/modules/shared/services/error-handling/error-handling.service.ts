@@ -90,7 +90,7 @@ export class ErrorHandlingService {
       `body was: ${JSON.stringify(errorDto)}`);
     let notification: Notification;
 
-    if (errorDto.errorCode == 'undefined') {
+    if (errorDto.errorCode == undefined) {
       notification = {
         id:          'NOTIFICATION_NO_SERVER_AVAILABLE',
         title:       'NOTIFICATION.ERROR.NO_SERVER_AVAILABLE.TITLE',
