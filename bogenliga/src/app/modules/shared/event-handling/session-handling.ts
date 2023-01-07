@@ -6,11 +6,13 @@ export class SessionHandling {
 
   private isExpired: boolean;
   private expiredOnceTime: number;
+  private jsonWebToken: string;
 
   constructor(private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService) {
     this.isExpired = false;
     this.expiredOnceTime = Math.floor((new Date).getTime() / 1000);
+    this.jsonWebToken = this.currentUserService.getJsonWebToken();
   }
 
   /** This method gets the current Time in number and gets the Time, when the session is about to expire, by using
@@ -24,8 +26,7 @@ export class SessionHandling {
    **/
   public checkSessionExpired(): boolean {
     let currentTime = Math.floor((new Date).getTime() / 1000);
-    const jsonWebToken = this.currentUserService.getJsonWebToken();
-    const expireTime = (JSON.parse(atob(jsonWebToken.split('.')[1]))).exp;
+    const expireTime = (JSON.parse(atob(this.jsonWebToken.split('.')[1]))).exp;
     if (currentTime >= expireTime && this.expiredOnceTime < expireTime && !this.onOfflineService.isOffline()) {
       this.isExpired = true;
       this.expiredOnceTime = currentTime;
