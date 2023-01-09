@@ -30,7 +30,7 @@ describe('Anonyme User tests', function () {
 
   /*Test hilfeicon */
   it('test hilfeicon', function() {
-      cy.get('bla-common-dialog > .dialog-content > bla-hilfe-button > a > #undefined').click()
+      cy.get('bla-common-dialog > .dialog-content > div > bla-hilfe-button > a > #undefined').click()
     })
 
   /**
