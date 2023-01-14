@@ -694,29 +694,29 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     //check if WettkampfDO Obeject contains all values
     for (let i = 0; i < this.selectedDTOs.length; i++) {
       let counter = 0;
-      if (this.selectedDTOs[i].wettkampfTag === null) {
+      if (this.selectedDTOs[i].wettkampfTag == null) {
         counter +=1;
       }
-      if (this.selectedDTOs[i].wettkampfBeginn === null) {
+      if (this.selectedDTOs[i].wettkampfBeginn == null) {
         counter +=1;
       }
-      if (this.selectedDTOs[i].wettkampfOrtsname === null) {
+      if (this.selectedDTOs[i].wettkampfOrtsname == null) {
         counter +=1;
       }
-      if (this.selectedDTOs[i].wettkampfPlz === null) {
+      if (this.selectedDTOs[i].wettkampfPlz == null) {
         counter +=1;
       }
-      if (this.selectedDTOs[i].wettkampfStrasse === null) {
+      if (this.selectedDTOs[i].wettkampfStrasse == null) {
         counter +=1;
       }
-      if (this.selectedDTOs[i].wettkampfDatum === null) {
+      if (this.selectedDTOs[i].wettkampfDatum == null) {
         counter +=1;
       }
-      if (this.selectedDTOs[i].id === null) {
+      if (this.selectedDTOs[i].id == null) {
         counter +=1;
       }
       //sort selectedDTOs by date and assign the corrosponding WettkampfTag
-      if (counter === 0) {
+      if (counter == 0) {
         this.selectedDTOs = this.selectedDTOs.sort((objectA, objectB) => Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum)); //sort DTOs by date
         this.selectedDTOs[i].wettkampfTag = i + 1; //assign correct Wettkampftag to sorted selectedDTOs
         await this.wettkampfDataProvider.update(this.selectedDTOs[i]); //save selectedDTOs with updated Wettkampftag
