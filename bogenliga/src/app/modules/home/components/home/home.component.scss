@@ -18,6 +18,8 @@ h1{
   padding: 20px 0 20px 0;
 }
 
+
+//QUICKLINK STYLES
 .quicklink-wrapper{
   display: flex;
   flex-direction: row;
@@ -48,8 +50,8 @@ h1{
 }
 
 .quicklink{
-  height: 80px;
-  width: 80px;
+  height: 100px;
+  width: 100px;
   background-color: $true-white;
   border-color: $light-gray;
   border-radius: 50%;
@@ -115,7 +117,7 @@ h1{
 
   @media (min-width: 640px) {
     flex-direction: row;
-    max-width: 100%;
+    max-width: 1200px;
     .photo-wrapper {
       flex-basis: 40%;
       height: auto;
