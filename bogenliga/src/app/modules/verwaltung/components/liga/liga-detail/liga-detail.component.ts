@@ -47,7 +47,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public currentUbergeordneteLiga: LigaDO = new LigaDO();
   public allUebergeordnete: Array<LigaDO> = [new LigaDO()];
 
-  public currentDisziplin: DisziplinDO;
+  public currentDisziplin: DisziplinDO = new DisziplinDO();
   public allDisziplin: Array<DisziplinDO> = [new DisziplinDO()];
 
   public currentRegion: RegionDO = new RegionDO();
@@ -84,7 +84,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
           this.currentLiga = new LigaDO();
-          this.currentDisziplin = new DisziplinDO();
+          //this.currentDisziplin = new DisziplinDO();
 
           this.loadDisziplin();
           this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
@@ -123,11 +123,21 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
     }
 
+    console.log(this.currentRegion.regionName);
     if (typeof this.currentRegion  === 'undefined') {
       this.currentLiga.regionId = null;
     } else {
       this.currentLiga.regionId = this.currentRegion.id;
     }
+
+
+    if (typeof this.currentDisziplin  === 'undefined') {
+      this.currentLiga.disziplinId = null;
+    } else {
+      this.currentLiga.disziplinId = this.currentDisziplin.disziplinId;
+    }
+
+
 
     if (typeof this.currentUser  === 'undefined') {
       this.currentLiga.ligaVerantwortlichId = null;
