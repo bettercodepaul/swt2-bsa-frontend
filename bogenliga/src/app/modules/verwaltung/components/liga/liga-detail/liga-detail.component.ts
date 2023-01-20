@@ -352,6 +352,13 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   private handleDisziplinResponseArraySuccess(response: BogenligaResponse<DisziplinDO[]>): void {
     this.allDisziplin = [];
     this.allDisziplin = response.payload;
+    console.log(response.payload);
+    if (this.id === 'add') {
+      this.currentDisziplin = this.allDisziplin[0];
+    } else {
+      console.log(this.allDisziplin);
+      this.currentDisziplin = this.allDisziplin.filter((disziplin) => disziplin.disziplinId === this.currentLiga.disziplinId)[0];
+    }
     this.loading = false;
   }
 
