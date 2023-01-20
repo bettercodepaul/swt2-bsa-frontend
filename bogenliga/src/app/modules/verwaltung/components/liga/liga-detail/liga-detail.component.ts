@@ -84,7 +84,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
           this.currentLiga = new LigaDO();
-          //this.currentDisziplin = new DisziplinDO();
 
           this.loadDisziplin();
           this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
@@ -294,6 +293,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.currentLiga = response.payload;
     this.loading = false;
 
+    this.loadDisziplin();
     this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
     this.loadRegions(); // Request all regions from backend
     this.loadUsers();
