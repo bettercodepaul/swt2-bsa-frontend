@@ -5,7 +5,7 @@ export class DisziplinDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  disziplinId: number;
+  //disziplinId: number;
   disziplinName: string;
 
 }

@@ -5,7 +5,7 @@ export class DisziplinDTO implements DataTransferObject {
 
   id: number;
   version: number;
-  disziplinId: number;
+  //disziplinId: number;
   disziplinName: string;
 
 
@@ -19,9 +19,13 @@ export class DisziplinDTO implements DataTransferObject {
 
   } = {}): DisziplinDTO {
     const copy = new DisziplinDTO();
-    copy.id = optional.id || null;
+    if (optional.disziplinId >= 0) {
+      copy.id = optional.disziplinId;
+    } else {
+      copy.id = null;
+    }
     copy.version = optional.version || null;
-    copy.disziplinId = optional.disziplinId || null;
+    //copy.disziplinId = optional.disziplinId || null;
     copy.disziplinName = optional.disziplinName || '';
 
     return copy;
