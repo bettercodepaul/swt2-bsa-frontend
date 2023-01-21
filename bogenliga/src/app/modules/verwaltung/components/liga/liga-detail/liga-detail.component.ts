@@ -292,6 +292,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
   private handleSuccess(response: BogenligaResponse<LigaDO>) {
+    if (this.id !== 'add' && response.payload.disziplinId !== 0) {
+      var indexOfDisziplinStart = response.payload.name.lastIndexOf(" ");
+      response.payload.name = response.payload.name.substring(0,indexOfDisziplinStart);
+    }
     this.currentLiga = response.payload;
     this.loading = false;
 
@@ -354,11 +358,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   private handleDisziplinResponseArraySuccess(response: BogenligaResponse<DisziplinDO[]>): void {
     this.allDisziplin = [];
     this.allDisziplin = response.payload;
-    console.log(response.payload);
+    console.log(this.allDisziplin);
     if (this.id === 'add') {
       this.currentDisziplin = this.allDisziplin[0];
     } else {
-      console.log(this.allDisziplin);
       this.currentDisziplin = this.allDisziplin.filter((disziplin) => disziplin.id === this.currentLiga.disziplinId)[0];
     }
     this.loading = false;
@@ -373,12 +376,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
     this.regionen = [];
     this.regionen = response.payload;
-    console.log(response.payload);
     if (this.id === 'add') {
       this.currentRegion = this.regionen[0];
     } else {
       this.currentRegion = this.regionen.filter((region) => region.id === this.currentLiga.regionId)[0];
-      console.log(this.currentRegion);
     }
     this.loading = false;
   }
