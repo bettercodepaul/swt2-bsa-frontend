@@ -5,7 +5,7 @@ export class DisziplinDTO implements DataTransferObject {
 
   id: number;
   version: number;
-  //disziplinId: number;
+
   disziplinName: string;
 
 
