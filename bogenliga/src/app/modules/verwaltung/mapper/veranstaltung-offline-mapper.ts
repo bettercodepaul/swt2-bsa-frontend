@@ -1,24 +1,17 @@
 import {VersionedDataTransferObject} from '@shared/data-provider';
 
-import {
-  VeranstaltungOfflineSyncDto
-} from '@verwaltung/types/datatransfer/veranstaltung-offline-sync-dto.class';
-import {
-  OfflineVeranstaltung
-} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
-import {OfflineLigatabelle} from '@shared/data-provider/offlinedb/types/offline-ligatabelle.interface';
-import {LigatabelleErgebnisDO} from '../../ligatabelle/types/ligatabelle-ergebnis-do.class';
-import {toDOFromOffline} from '../../ligatabelle/mapper/ligatabelle-ergebnis-mapper';
+import {VeranstaltungOfflineSyncDto} from '@verwaltung/types/datatransfer/veranstaltung-offline-sync-dto.class';
+import {OfflineVeranstaltung} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 
 
 export function toDO(offlineSyncDto: VeranstaltungOfflineSyncDto): OfflineVeranstaltung {
   return {
     offlineVersion: 1,
-    version: offlineSyncDto.version,
-    id: offlineSyncDto.id,
+    version:        offlineSyncDto.version,
+    id:             offlineSyncDto.id,
     wettkampfTypId: offlineSyncDto.wettkampfTypId,
-    name: offlineSyncDto.name,
+    name:           offlineSyncDto.name,
     sportjahr: offlineSyncDto.sportjahr,
     meldeDeadline: offlineSyncDto.meldeDeadline,
     ligaleiterId: offlineSyncDto.ligaleiterId,
@@ -49,7 +42,7 @@ export function toDOfromOfflineVeranstaltung(veranstaltung: OfflineVeranstaltung
     ligaleiterEmail: '',
     ligaName: veranstaltung.name,
     wettkampftypName: '',
-    phase: ''
+    phase: veranstaltung.phase
   };
   return veranstaltungDO;
 }
