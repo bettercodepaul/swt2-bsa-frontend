@@ -10,9 +10,9 @@
         </a>
         <div class="card-body">
           <h3 class="card-title">{{ card.labelKey | translate }}</h3>
-          <p class="card-text">{{ card.descriptionKey | translate }}</p>
+          <p class="card-text multi-lines-text " >{{ card.descriptionKey | translate }}</p>
           <bla-tooltip [value]="card.tooltipText | translate">
-          <button class="btn btn-primary"
+          <button class="btn btn-primary" style="align-self: end"
                    (mouseenter)  ="setActiveCard(card)"
                    [routerLink]  ="getLink(card.route,card.detailType)"
                    [attr.data-cy]="card.datacy">{{ card.labelKey | translate }} verwalten
@@ -22,11 +22,13 @@
       </div>
       <!-- Tooltip div container called with ngIf conditions -->
       <div *ngIf="card === activeCard" class="tooltip-navigation-card">
+
         <div class="card-body tooltip-body">
           <h3>{{card.descriptionKey | translate }}</h3>
-          <p class="tooltip-text multi-lines-text">{{card.tooltipText | translate}}</p>
+          <p class="tooltip-text multi-lines-text" >{{card.tooltipText | translate}} </p>
+
           <div class="button-container">
-            <button  class="btn btn-primary" style="align-self: flex-end"
+            <button  class="btn btn-primary" style="align-self: end"
                      (mouseleave)   ="resetActiveCard()"
                      [routerLink]   ="getLink(card.route,card.detailType)"
                      [attr.data-cy] ="card.datacy">{{ card.labelKey | translate }} verwalten
