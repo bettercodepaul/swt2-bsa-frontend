@@ -273,7 +273,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
             this.onOfflineService.goOffline(this.selectedWettkampfId, this.selectedDTOs[0].sportjahr);
 
-
             // lädt Inhalte der Tabelle neu mit Offlinedaten
             this.loadingVeranstaltungen = true;
             this.wettkampfIdEnthalten = true;
@@ -282,7 +281,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             // temporäre Dummy Daten
             // await this.wettkampfOfflineSyncService.createWettkampfDummyData();
 
-            await this.loadVeranstaltungenByYear(this.onOfflineService.getOfflineJahr());
+            await this.LoadWettkampf();
             this.visible = false;
 
 
@@ -781,6 +780,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         this.loadVeranstaltungenByYear(this.availableYears[indexOfSelectedYear].sportjahr.valueOf());
       } else if (this.onOfflineService.isOffline()) {
         this.selItemId = this.availableYears[indexOfSelectedYear].id;
+        this.LoadWettkampf();
       }
     }
   }
