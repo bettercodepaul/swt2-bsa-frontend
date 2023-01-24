@@ -107,6 +107,7 @@ export class MatchProviderService extends DataProviderService {
   }
 
 
+
   public findAllWettkampfMatchesAndNamesById(id: number): Promise<BogenligaResponse<MatchDTOExt[]>> {
     if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for findallmatches by wettkampfid ' + id);
