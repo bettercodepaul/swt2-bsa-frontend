@@ -600,6 +600,34 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     return this.disabledButton;
   }
 
+  /*public PasseDTO loadDsbMitglied() {
+    this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
+        .then((response: BogenligaResponse<MatchDTOExt[]>) => {
+          for(let match in response.payload) {
+            for (let obj in response.payload[match].passen) {
+              let test = response.payload[match].passen[obj];
+
+              window.alert(test.dsbMitgliedId);
+              if (test.dsbMitgliedId == null) {
+                this.notificationService.showNotification({
+                  id:          'NOTIFICATION_GENERIERE_MATCHES_MITGLIED_FEHLT',
+                  title:       'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.TITLE',
+                  description: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.DESCRIPTION',
+                  severity:    NotificationSeverity.INFO,
+                  origin:      NotificationOrigin.USER,
+                  type:        NotificationType.OK,
+                  userAction:  NotificationUserAction.ACCEPTED
+                });
+              }
+              return test
+            }
+          }
+
+        })
+
+  }*/
+
+
   public generateMatches() {
     this.matchDataProvider.generateDataForMatches(this.selectedWettkampfId)
       .then(() => {
@@ -607,9 +635,25 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       })
       // handleFailure -> Fehlermeldung muss aufgerufen werden
       .catch(() => {
-        this.handleFailureGenerateMatches();
-        this.showMatches();
+        if (this.matchDataProvider.check(this.selectedWettkampfId)){
+          this.handleFailureGenerateMatchesMissing();
+        }
+        else {
+          this.handleFailureGenerateMatches();
+          this.showMatches();
+        }
       });
+  }
+  private handleFailureGenerateMatchesMissing(): void {
+    this.notificationService.showNotification({
+      id: 'NOTIFICATION_GENERIERE_MATCHES_MITGLIED_FEHLT',
+      title: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.TITLE',
+      description: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.DESCRIPTION',
+      severity: NotificationSeverity.INFO,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.ACCEPTED
+    });
   }
 
   private handleFailureGenerateMatches(): void {

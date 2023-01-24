@@ -16,6 +16,7 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {log} from 'util';
+import {MatchDTOExt} from '@wkdurchfuehrung/types/datatransfer/match-dto-ext.class';
 
 @Injectable({
   providedIn: 'root'
@@ -107,8 +108,33 @@ export class MatchDataProviderService extends DataProviderService {
         });
     }
 
+  public check(id: number): boolean{
+    let hasDsbMitgliedId = false;
+    window.alert(id);
+    this.restClient.GET<Array<MatchDTOExt>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + id).build())
+        .then((data: MatchDTOExt[]) => {
+          const matchArray = data;
+          matchArray.forEach((match: MatchDTOExt) => {
+            if (match.hasDsbMitgliedIdInPassen()) {
+              hasDsbMitgliedId = true;
+            }
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          return false;
+        });
+    return hasDsbMitgliedId;
+  }
+
+
+
+
+
+
   public generateDataForMatches(wetttkampfId: number): Promise<BogenligaResponse<MatchDO[]>> {
     console.log('In Funktion generateDataForMatches');
+
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('setzliste/generate?wettkampfid=' + wetttkampfId).build())
           .then((data: VersionedDataTransferObject[]) => {
