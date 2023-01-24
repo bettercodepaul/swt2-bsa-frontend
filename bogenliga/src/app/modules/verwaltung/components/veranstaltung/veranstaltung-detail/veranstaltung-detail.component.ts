@@ -727,30 +727,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     }
   }
 
-  public setVeranstaltungsPhaseLaufend() {
-    this.currentVeranstaltung.phase = 'Laufend';
-    this.saveLoading = true;
-    this.veranstaltungDataProvider.update(this.currentVeranstaltung)
-        .then((response: BogenligaResponse<VeranstaltungDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-
-            console.log('Success');
-            this.saveLoading = false;
-          }
-        }, (response: BogenligaResponse<VeranstaltungDO>) => {
-          console.log('Failed');
-          this.saveLoading = false;
-        });
-  }
-
+  // Creates Matches for a Veranstaltung
   public createMatchesWT0(event: any) {
 
     this.matchDataProvider.createInitialMatchesWT0(this.currentVeranstaltung)
         .then(() => {
           this.handleCreateMatchesWT0Success();
-          this.setVeranstaltungsPhaseLaufend();
         })
         .catch(() => this.handleCreateMatchesWT0Failure());
   }
