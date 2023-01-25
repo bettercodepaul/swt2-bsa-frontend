@@ -1020,6 +1020,11 @@
           "TITLE": "Schütze aus Mannschaft löschen",
           "DESCRIPTION": "Wollen Sie den Schützen %s wirklich aus der Mannschaft entfernen?"
         },
+        "DELETE_MITGLIED_OFFLINEMODE": {
+          "TITLE": "Mitglied aus Mannschaft löschen",
+          "DESCRIPTION": "Im Offlinemodus können Mitglieder nicht gelöscht werden."
+        },
+
         "DELETE_MITGLIED_SUCCESS": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
@@ -1637,6 +1642,10 @@
       "NO_SESSION_ERROR": {
         "TITLE": "Sitzung abgelaufen",
         "DESCRIPTION": "Ihre Sitzung ist abgelaufen. Sie werden auf die Login-Seite weitergeleitet. Bitte melden Sie sich dort erneut an."
+      },
+      "NO_SERVER_AVAILABLE": {
+        "TITLE": "Server nicht erreichbar",
+        "DESCRIPTION": "Der Server ist nicht erreichbar."
       },
       "BAD_REQUEST": {
         "TITLE": "Ungültige Anfrage",

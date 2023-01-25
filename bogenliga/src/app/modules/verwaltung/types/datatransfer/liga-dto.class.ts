@@ -5,6 +5,7 @@ export class LigaDTO implements DataTransferObject {
   id: number;
   name: string;
   regionId: number;
+  disziplinId: number;
   regionName: string;
   ligaUebergeordnetId: number;
   ligaUebergeordnetName: string;
@@ -16,6 +17,7 @@ export class LigaDTO implements DataTransferObject {
     id?: number,
     name?: string,
     regionId?: number,
+    disziplinId?: number;
     regionName?: string,
     ligaUebergeordnetId?: number,
     ligaUebergeordnetName?: string,
@@ -48,6 +50,12 @@ export class LigaDTO implements DataTransferObject {
       copy.ligaVerantwortlichId = optional.ligaVerantwortlichId;
     } else {
       copy.ligaVerantwortlichId = null;
+    }
+
+    if (optional.disziplinId >= 0) {
+      copy.disziplinId = optional.disziplinId;
+    } else {
+      copy.disziplinId = null;
     }
 
     copy.name = optional.name || '';

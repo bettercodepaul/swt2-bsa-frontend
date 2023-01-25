@@ -1514,6 +1514,10 @@
         "TITLE": "No Session Error",
         "DESCRIPTION": "Your session has expired. You will be redirected to the login page."
       },
+      "NO_SERVER_AVAILABLE": {
+        "TITLE": "NO Server Available",
+        "DESCRIPTION": "The server is not available."
+      },
       "BAD_REQUEST": {
         "TITLE": "Bad Request",
         "DESCRIPTION": "Your request was rejected by the server."
