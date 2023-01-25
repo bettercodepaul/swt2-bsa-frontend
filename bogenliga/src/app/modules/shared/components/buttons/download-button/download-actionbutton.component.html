@@ -1,0 +1,16 @@
+<button [id]="id"
+        [name]="id"
+        *ngIf="visible"
+        (click)="onFileDownload()"
+        [disabled]="isDisabled()"
+        type="button"
+        class="action-btn"
+        [ngClass]="getColorClass()"
+        [style.min-width]="minWidth">
+        <span class="action-btn-circle">
+          <fa-icon [icon]="iconClass"></fa-icon>
+        </span>
+  <ng-content></ng-content>
+</button>
+
+<a #downloadLink></a>

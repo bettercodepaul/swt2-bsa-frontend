@@ -104,22 +104,26 @@
         <div class="col-sm-9 button-box">
 
 
-          <bla-button (onClick)="onSave($event)"
-                      *ngIf="!entityExists()"
-                      [disabled]="!mannschaftForm.valid"
-                      [id]="'mannschaftSaveButton'"
-                      [loading]="saveLoading"
-                      data-cy="vereine-mannschaft-detail-save-button">
+          <bla-actionbutton (onClick)="onSave($event)"
+                            *ngIf="!entityExists()"
+                            [disabled]="!mannschaftForm.valid"
+                            [id]="'mannschaftSaveButton'"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'save'"
+                            data-cy="vereine-mannschaft-detail-save-button">
             {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
-          </bla-button>
-          <bla-button (onClick)="onUpdate($event)"
-                      *ngIf="entityExists()"
-                      [disabled]="!mannschaftForm.valid"
-                      [id]="'mannschaftUpdateButton'"
-                      [loading]="saveLoading"
-                      data-cy="vereine-mannschaft-detail-update-button">
+          </bla-actionbutton>
+          <bla-actionbutton (onClick)="onUpdate($event)"
+                            *ngIf="entityExists()"
+                            [disabled]="!mannschaftForm.valid"
+                            [id]="'mannschaftUpdateButton'"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'save'"
+                            data-cy="vereine-mannschaft-detail-update-button">
             {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
-          </bla-button>
+          </bla-actionbutton>
 
           <!--When editing Bug: BSAPP-684 it was decided to comment out the Button below ("Löschen")-->
           <!--Because there is already a Button for the same Funktion and this one is also not working and also caused some trouble with Deleting-Funktion -->
@@ -137,11 +141,14 @@
     <div *ngIf="entityExists()">
       <h5> Mitglieder-Übersicht</h5>
       <div class="overview-dialog-add">
-        <button class="btn btn-success"
+        <bla-actionbuttonbutton
+          [colorClass]="'success'"
+          [iconClass]="'plus'"
+          class="btn btn-success"
                 routerLink="add">
           <fa-icon icon="plus"></fa-icon>
           <span> Neu</span>
-        </button>
+        </bla-actionbuttonbutton>
         <button (click)="onDownloadLizenzen()"
                 class="btn btn-success button-margin"
                 style="margin-left: 5px;">

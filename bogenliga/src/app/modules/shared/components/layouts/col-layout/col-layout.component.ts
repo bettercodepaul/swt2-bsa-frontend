@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector:    'bla-col-layout',
@@ -6,6 +6,8 @@ import {Component, OnInit} from '@angular/core';
   styleUrls:   ['./col-layout.component.scss']
 })
 export class ColLayoutComponent implements OnInit {
+
+  @Input() public style: string = null;
 
   constructor() {
   }
