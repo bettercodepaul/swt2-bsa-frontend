@@ -62,9 +62,12 @@ export class SidebarComponent implements OnInit {
   /**
    * tells store that sidebar button was used -> Sidebar needs to change
    */
+
   public toggleSidebar() {
     this.store.dispatch({type: TOGGLE_SIDEBAR});
+
   }
+
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     return this.currentUserService.hasAnyPermisson(userPermissions);

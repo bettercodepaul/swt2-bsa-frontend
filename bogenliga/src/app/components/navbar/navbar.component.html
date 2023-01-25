@@ -6,7 +6,7 @@
   <a id="sidebarCollapseNavBar"
      (click)="toggleNavbar()">
     <fa-icon [icon]="isActive ? 'bars' : 'times'"
-             size="2x"></fa-icon>
+             class = "fa-fw" size="2x"></fa-icon>
   </a>
 
   <!-- Logo and Titel -->
@@ -47,7 +47,7 @@
        class="dropdown nav-link dropdown-toggle"
        (click)="toggleUserDropdown()">
       <fa-icon icon="user-circle"
-               size="2x"></fa-icon>
+               class = "fa-fw" size="2x"></fa-icon>
     </a>
 
     <bla-user-dropdown *ngIf="isUserDropdownVisible"

@@ -279,7 +279,8 @@ div.sidebar-text-toggle.flexBox{
     transition-duration: 0.4s;
     transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
     transition-property: background-color, visibility;
-    top: 52px;
+    top: 4.3em;
+    padding-top: 10px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -289,7 +290,7 @@ div.sidebar-text-toggle.flexBox{
   }
 
   .backdrop-visible {
-    background-color: rgba(0, 0, 0, 0.6);
+    //background-color: rgba(0, 0, 0, 0.6);
     visibility: visible;
   }
 
