@@ -692,33 +692,33 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.anzahl = this.selectedDTOs.length;
     let counter = 0;
     //check if WettkampfDO Obeject contains all values
-    for (let i = 0; i < this.selectedDTOs.length; i++) {
+    for (const element of this.selectedDTOs) {
 
-      if (this.selectedDTOs[i].wettkampfTag == null) {
+      if (element.wettkampfTag == null) {
+        counter += 1;
+      }
+      if (element.wettkampfBeginn == null) {
+        counter += 1;
+      }
+      if (element.wettkampfOrtsname == null) {
+        counter += 1;
+      }
+      if (element.wettkampfPlz == null) {
+        counter += 1;
+      }
+      if (element.wettkampfStrasse == null) {
+        counter += 1;
+      }
+      if (element.wettkampfDatum == null) {
+        counter += 1;
+      }
+      if (element.id == null) {
         counter +=1;
       }
-      if (this.selectedDTOs[i].wettkampfBeginn == null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].wettkampfOrtsname == null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].wettkampfPlz == null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].wettkampfStrasse == null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].wettkampfDatum == null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].id == null) {
-        counter +=1;
-      }
-      //sort selectedDTOs by date and assign the corrosponding WettkampfTag
+
 
     }
-    //window.alert("counter: "+ counter);
+    //sort selectedDTOs by date and assign the corrosponding WettkampfTag
     for(let i = 0; i <this.selectedDTOs.length;i++) {
       if (counter == 0 && this.selectedDTOs.length > 1) {
 
@@ -727,7 +727,6 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         for (let index in this.selectedDTOs) {
           this.selectedDTOs[index].wettkampfDatum = this.selectedDTOs[index].wettkampfDatum.toString();
         }
-        //window.alert("Update");
         await this.wettkampfDataProvider.update(this.selectedDTOs[i]); //save selectedDTOs with updated Wettkampftag
       }
     }
