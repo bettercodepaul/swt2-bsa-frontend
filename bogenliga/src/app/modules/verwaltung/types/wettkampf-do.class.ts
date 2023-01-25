@@ -52,5 +52,23 @@ export class WettkampfDO implements VersionedDataObject {
     this.wettkampfAusrichter = !!wettkampfAusrichter ? wettkampfAusrichter : null;
   }
 
+  isComplete(): boolean {
+    return (
+      this.id !== null &&
+      this.wettkampfVeranstaltungsId !== null &&
+      this.wettkampfDatum !== null &&
+      this.wettkampfStrasse !== null &&
+      this.wettkampfPlz !== null &&
+      this.wettkampfOrtsname !== null &&
+      this.wettkampfOrtsinfo !== null &&
+      this.wettkampfBeginn !== null &&
+      this.wettkampfTag !== null &&
+      this.wettkampfDisziplinId !== null &&
+      this.wettkampfTypId !== null &&
+      this.version !== null &&
+      this.wettkampfAusrichter !== null
+    );
+  }
+
 
 }
