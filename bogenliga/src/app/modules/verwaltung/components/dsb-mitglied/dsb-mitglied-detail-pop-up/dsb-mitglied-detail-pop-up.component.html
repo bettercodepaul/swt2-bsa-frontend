@@ -1,3 +1,5 @@
 <bla-dsb-mitglied-detail [isPopUp]="true" [dialogRef]="dialogRef"></bla-dsb-mitglied-detail>
-<bla-button (onClick)="dialogRef.close()">Zurück</bla-button>
+<bla-actionbutton (onClick)="dialogRef.close()"
+                  [colorClass]="'secondary'"
+                  [iconClass]="'arrow-left'">Zurück</bla-actionbutton>
 

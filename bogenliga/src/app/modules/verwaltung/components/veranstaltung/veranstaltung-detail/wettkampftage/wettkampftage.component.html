@@ -240,39 +240,46 @@
           <div class="col-sm-12"></div>
 
           <!--LÖSCHEN -->
-          <bla-button (onClick)="onDelete(selectedWettkampfTag, $event)"
-                      *ngIf="entityExists()"
-                      [buttonType]="ButtonType.DANGER"
-                      [loading]="deleteLoading">
+          <bla-actionbutton (onClick)="onDelete(selectedWettkampfTag, $event)"
+                            *ngIf="entityExists()"
+                            [buttonType]="ButtonType.DANGER"
+                            [colorClass]="'danger'"
+                            [iconClass]="'minus'"
+                            [loading]="deleteLoading">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
-          </bla-button>
+          </bla-actionbutton>
 
           <!-- NEU: WETTKAMPFTAG HINZUFÜGEN -->
-          <bla-button (onClick)="onAddWettkampfTag($event)"
-                      *ngIf="entityExists()"
-                      [buttonType]="ButtonType.SUCCESS"
-                      [disabled]="wettkampftageForm.dirty"
-                      [loading]="saveLoading">
+          <bla-actionbutton (onClick)="onAddWettkampfTag($event)"
+                            *ngIf="entityExists()"
+                            [disabled]="wettkampftageForm.dirty"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'save'">
             <fa-icon icon="plus"></fa-icon>
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
-          </bla-button>
+          </bla-actionbutton>
 
           <!-- WETTKAMPFTAG KOPIEREN -->
-          <bla-button *ngIf="entityExists()"
-                      [disabled]="wettkampftageForm.dirty"
-                      [loading]="saveLoading"
-                      (onClick)="onCopyWettkampfTag($event)">
+          <bla-actionbutton *ngIf="entityExists()"
+                            [disabled]="wettkampftageForm.dirty"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'copy'"
+                            (onClick)="onCopyWettkampfTag($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.COPY.TITLE' | translate }}
-          </bla-button>
+          </bla-actionbutton>
 
           <!-- SPEICHERN -->
-          <bla-button (onClick)="onSaveWettkampfTag(selectedWettkampfTag, $event); wettkampftageForm.form.markAsPristine();"
-                      [disabled]="(wettkampftageStrasse.invalid || wettkampftagePLZ.invalid || wettkampftageOrt.invalid  || wettkampftageBeginn.invalid || wettkampftageDatum.invalid)"
-                      [id]="'wettkampftagSaveButton'"
-                      [loading]="saveLoading"
-                      data-cy="wettkampftage-update-button">
+          <bla-actionbutton (onClick)="onSaveWettkampfTag(selectedWettkampfTag, $event); wettkampftageForm.form.markAsPristine();"
+                            [disabled]="(wettkampftageStrasse.invalid || wettkampftagePLZ.invalid || wettkampftageOrt.invalid  || wettkampftageBeginn.invalid || wettkampftageDatum.invalid)"
+                            [id]="'wettkampftagSaveButton'"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'save'"
+                            data-cy="wettkampftage-update-button">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
-          </bla-button>
+          </bla-actionbutton>
 
 
         </div>
@@ -283,14 +290,16 @@
           <div class="col-sm-1 button-box">
 
             <!-- ZURÜCK -->
-            <bla-button (onClick)="onVeranstaltungDetail($event)"
-                        *ngIf="entityExists()"
-                        [disabled]="false"
-                        [id]="'wettkampfSaveButton'"
-                        [loading]="saveLoading"
-                        data-cy="wettkampftage-zurueck">
+            <bla-actionbutton (onClick)="onVeranstaltungDetail($event)"
+                              *ngIf="entityExists()"
+                              [disabled]="false"
+                              [id]="'wettkampfSaveButton'"
+                              [colorClass]="'secondary'"
+                              [iconClass]="'arrow-left'"
+                              [loading]="saveLoading"
+                              data-cy="wettkampftage-zurueck">
               {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.BACK' | translate }}
-            </bla-button>
+            </bla-actionbutton>
           </div>
         </div>
       </form>

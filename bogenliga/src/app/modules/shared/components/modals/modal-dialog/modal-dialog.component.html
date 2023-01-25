@@ -27,39 +27,44 @@
 
       <div class="modal-footer modal-dialog-ok"
            *ngSwitchCase="ModalDialogOption.OK">
-        <bla-button [buttonType]="ButtonType.PRIMARY"
-                    [minWidth]="minOptionButtonWidth"
-                    (onClick)="closeDialog(ModalDialogResult.OK)">
+        <bla-actionbutton [colorClass]="'primary'"
+                          [iconClass]="'check'"
+                          [margin]="'unset'"
+                          (onClick)="closeDialog(ModalDialogResult.OK)">
           {{ 'NOTIFICATION.BUTTON.OK' | translate }}
-        </bla-button>
+        </bla-actionbutton>
       </div>
 
       <div class="modal-footer modal-dialog-ok-cancel"
            *ngSwitchCase="ModalDialogOption.OK_CANCEL">
-        <bla-button [buttonType]="ButtonType.SECONDARY"
-                    [minWidth]="minOptionButtonWidth"
-                    (onClick)="closeDialog(ModalDialogResult.CANCEL)">
+        <bla-actionbutton [colorClass]="'secondary'"
+                          [iconClass]="'undo'"
+                          [margin]="'0 18% 0 0'"
+                          (onClick)="closeDialog(ModalDialogResult.CANCEL)">
           {{ 'NOTIFICATION.BUTTON.CANCEL' | translate }}
-        </bla-button>
-        <bla-button [buttonType]="ButtonType.PRIMARY"
-                    [minWidth]="minOptionButtonWidth"
-                    (onClick)="closeDialog(ModalDialogResult.OK)">
+        </bla-actionbutton>
+        <bla-actionbutton [colorClass]="'primary'"
+                          [iconClass]="'check'"
+                          [margin]="'0 0 0 18%'"
+                          (onClick)="closeDialog(ModalDialogResult.OK)">
           {{ 'NOTIFICATION.BUTTON.OK' | translate }}
-        </bla-button>
+        </bla-actionbutton>
       </div>
       <div class="modal-footer modal-dialog-yes-no"
            *ngSwitchCase="ModalDialogOption.YES_NO">
 
-        <bla-button [buttonType]="ButtonType.SECONDARY"
-                    [minWidth]="minOptionButtonWidth"
+        <bla-actionbutton [colorClass]="'secondary'"
+                    [iconClass]="'times'"
+                    [margin]="'0 18% 0 0'"
                     (onClick)="closeDialog(ModalDialogResult.NO)">
           {{ 'NOTIFICATION.BUTTON.NO' | translate }}
-        </bla-button>
-        <bla-button [buttonType]="ButtonType.PRIMARY"
-                    [minWidth]="minOptionButtonWidth"
+        </bla-actionbutton>
+        <bla-actionbutton [colorClass]="'primary'"
+                    [iconClass]="'check'"
+                    [margin]="'0 0 0 18%'"
                     (onClick)="closeDialog(ModalDialogResult.YES)">
           {{ 'NOTIFICATION.BUTTON.YES' | translate }}
-        </bla-button>
+        </bla-actionbutton>
 
       </div>
 

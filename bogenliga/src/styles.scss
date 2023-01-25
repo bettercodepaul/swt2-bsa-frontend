@@ -11,6 +11,9 @@ $accent-gold: #FFCC34; //Help, Tooltip, Link to Help
 $accent-red: #F40E0E; //Destructive Actions, Delete Buttons
 $true-white: #ffffff; //Navbar & Header Background
 
+:root {
+  --accent-gold: #{$accent-gold}
+}
 
 /* OLD
 $primary-light: #b4ffff; // Sidebar-Background
@@ -50,8 +53,6 @@ $secondary-dark: #ff833a; // hover Links, Logo
   src: url("/assets/fonts/Bitter/Bitter-Regular.ttf ") format("truetype");
 }
 
-
-
 * {
   box-sizing: border-box;
 }
@@ -69,6 +70,7 @@ body {
   font-family: Poppins-light, Roboto, "Helvetica Neue", sans-serif;
   color: $primary-black;
 }
+
 // ==================
 /* GLOBAL TYPOGRAPHY */
 
@@ -80,28 +82,28 @@ h1 {
 }
 
 //Use for: Section title
-h2{
+h2 {
   color: $hero-blue;
   font-size: 1.2em;
   font-family: Poppins-Medium, Roboto, "Helvetica Neue", sans-serif;
 }
 
 //Use for: Component title
-h3{
+h3 {
   color: $primary-black;
   font-size: 0.9em;
   font-family: Poppins-Medium, Roboto, "Helvetica Neue", sans-serif;
 }
 
 //Use for: Label (e.g. date lable)
-h4{
+h4 {
   color: $dark-gray;
   font-size: 1em;
   font-weight: normal;
   font-family: "Bitter-regular", Roboto, "Helvetica Neue", sans-serif;
 }
 
-p{
+p {
   font-size: 0.9em;
 }
 
@@ -271,33 +273,47 @@ a:hover, a:focus {
     visibility: hidden;
     height: auto;
   }
-  .print{
+  .print {
     visibility: visible;
   }
-  @page{
+  @page {
     margin: 1cm;
     height: auto;
   }
-  body{
+  body {
     visibility: visible;
   }
   table, figure {
     page-break-inside: avoid;
   }
-  *{
-    overflow: visible!important;
+  * {
+    overflow: visible !important;
     visibility: visible;
     margin: auto;
     page-break-inside: avoid;
-    table { page-break-inside:avoid}
-    tr    { page-break-inside:avoid; page-break-after:auto }
+
+    table {
+      page-break-inside: avoid
+    }
+
+    tr {
+      page-break-inside: avoid;
+      page-break-after: auto
+    }
   }
-  .print1{
+  .print1 {
     margin: auto;
     visibility: visible;
     page-break-inside: avoid;
-    table { page-break-inside:avoid}
-    tr    { page-break-inside:avoid; page-break-after:auto }
+
+    table {
+      page-break-inside: avoid
+    }
+
+    tr {
+      page-break-inside: avoid;
+      page-break-after: auto
+    }
   }
 }
 
@@ -310,7 +326,7 @@ a:hover, a:focus {
   color: $primary-white;
   background: $accent-red;
   border: 2px solid $true-white;
-  box-shadow: 0 0 3px rgba(0,0,0,.3);
+  box-shadow: 0 0 3px rgba(0, 0, 0, .3);
   position: fixed;
 }
 
@@ -321,4 +337,72 @@ a:hover, a:focus {
   left: auto;
   transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
+}
+
+.action-btn-primary {
+  --button-color: var(--primary);
+}
+
+.action-btn-secondary {
+  --button-color: var(--secondary);
+}
+
+.action-btn-success {
+  --button-color: var(--success);
+}
+
+.action-btn-danger {
+  --button-color: var(--danger);
+}
+
+.action-btn {
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  max-height: 30px;
+  white-space: nowrap;
+  padding: 8px 15px 8px 35px;
+  color: #fff;
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 30px;
+  font-size: 12px;
+  text-decoration: none;
+  position: relative;
+}
+
+.action-btn:disabled {
+  opacity: 0.75;
+}
+
+.action-btn .action-btn-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  border: 2px solid var(--button-color);
+  border-radius: 50%;
+  position: absolute;
+  left: -16px;
+  background-color: var(--button-color);
+  box-shadow: inset 0 0 0 4px white;
+}
+
+.action-anchor {
+  margin: .2em;
+  padding: .2em;
+  font-size: .5em;
+  width: 1.2rem;
+  height: 1.2rem;
+  border: .2em solid #000;
+  border-radius: 50%;
+  background-color: #000;
+  box-shadow: inset 0 0 0 .2em white;
+  color: #fff;
+}
+
+.action-anchor:hover {
+  color: #fff;
 }

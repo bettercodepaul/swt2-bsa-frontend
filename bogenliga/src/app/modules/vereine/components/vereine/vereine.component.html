@@ -21,25 +21,25 @@
                               style="width: 50%; flex-grow: 0;">
 
         </bla-quicksearch-list>
-    </bla-col-layout>
-  </div>
+      </bla-col-layout>
+    </div>
 
-  <div class="row">
-    <bla-data-table
-      (onColumnEntry)="getSelectedColumn($event)"
-      (onMapEntry)="onMap($event)"
-      (onRowEntry)="getSelectedRow($event)"
+    <div class="row">
+      <bla-data-table
+        (onColumnEntry)="getSelectedColumn($event)"
+        (onMapEntry)="onMap($event)"
+        (onRowEntry)="getSelectedRow($event)"
 
-      [config]="config_table"
-      [loading]="loadingTable"
-      [rows]="rows">
-      <!-- Is currently not in use/implemented
-                    (onDeleteClicked)="onDelete($event)"
-                    (onEditClicked)="onEdit($event)"
-                    (onViewClicked)="onView($event)"
-      -->
+        [config]="config_table"
+        [loading]="loadingTable"
+        [rows]="rows">
+        <!-- Is currently not in use/implemented
+                      (onDeleteClicked)="onDelete($event)"
+                      (onEditClicked)="onEdit($event)"
+                      (onViewClicked)="onView($event)"
+        -->
 
-    </bla-data-table>
-  </div>
+      </bla-data-table>
+    </div>
   </div>
 </bla-navigation-dialog>
