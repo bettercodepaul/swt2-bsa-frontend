@@ -23,6 +23,9 @@ import {RegionDO} from '../../../types/region-do.class';
 import {LIGA_DETAIL_CONFIG} from './liga-detail.config';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {DisziplinDO} from '@verwaltung/types/disziplin-do.class';
+import {DisziplinDTO} from '@verwaltung/types/datatransfer/disziplin-dto.class';
+import {DisziplinDataProviderService} from '@verwaltung/services/disziplin-data-provider-service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';
@@ -44,6 +47,9 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public currentUbergeordneteLiga: LigaDO = new LigaDO();
   public allUebergeordnete: Array<LigaDO> = [new LigaDO()];
 
+  public currentDisziplin: DisziplinDO = new DisziplinDO();
+  public allDisziplin: Array<DisziplinDO> = [new DisziplinDO()];
+
   public currentRegion: RegionDO = new RegionDO();
   public regionen: Array<RegionDO> = [new RegionDO()];
 
@@ -59,6 +65,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   constructor(private ligaDataProvider: LigaDataProviderService,
     private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,
+    private disziplinDataProvider: DisziplinDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
@@ -78,6 +85,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         if (this.id === 'add') {
           this.currentLiga = new LigaDO();
 
+          this.loadDisziplin();
           this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
           this.loadRegions(); // Request all regions from backend
           this.loadUsers();
@@ -114,11 +122,21 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
     }
 
+    console.log(this.currentRegion.regionName);
     if (typeof this.currentRegion  === 'undefined') {
       this.currentLiga.regionId = null;
     } else {
       this.currentLiga.regionId = this.currentRegion.id;
     }
+
+
+    if (typeof this.currentDisziplin  === 'undefined') {
+      this.currentLiga.disziplinId = null;
+    } else {
+      this.currentLiga.disziplinId = this.currentDisziplin.id;
+    }
+
+
 
     if (typeof this.currentUser  === 'undefined') {
       this.currentLiga.ligaVerantwortlichId = null;
@@ -166,6 +184,8 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public onUpdate(ignore: any): void {
     this.saveLoading = true;
     this.currentLiga.regionId = this.currentRegion.id;
+    this.currentLiga.disziplinId = this.currentDisziplin.id;
+    console.log(this.currentDisziplin.id);
     this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
     this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
     // persist
@@ -246,6 +266,12 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         .catch((response: BogenligaResponse<LigaDO>) => this.handleFailure(response));
   }
 
+  private loadDisziplin() {
+    this.disziplinDataProvider.findAll()
+        .then((response: BogenligaResponse<DisziplinDO[]>) => this.handleDisziplinResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<DisziplinDTO[]>) => this.handleDisziplinResponseArrayFailure(response));
+  }
+
   private loadRegions() {
     this.regionProvider.findAll()
       .then((response: BogenligaResponse<RegionDO[]>) => this.handleResponseArraySuccess(response))
@@ -266,9 +292,14 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
   private handleSuccess(response: BogenligaResponse<LigaDO>) {
+    if (this.id !== 'add' && response.payload.disziplinId !== 0) {
+      var indexOfDisziplinStart = response.payload.name.lastIndexOf(" ");
+      response.payload.name = response.payload.name.substring(0,indexOfDisziplinStart);
+    }
     this.currentLiga = response.payload;
     this.loading = false;
 
+    this.loadDisziplin();
     this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
     this.loadRegions(); // Request all regions from backend
     this.loadUsers();
@@ -322,6 +353,24 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         });
 
     this.notificationService.showNotification(notification);
+  }
+
+  private handleDisziplinResponseArraySuccess(response: BogenligaResponse<DisziplinDO[]>): void {
+    this.allDisziplin = [];
+    this.allDisziplin = response.payload;
+    console.log(this.allDisziplin);
+    if (this.id === 'add') {
+      this.currentDisziplin = this.allDisziplin[0];
+    } else {
+      this.currentDisziplin = this.allDisziplin.filter((disziplin) => disziplin.id === this.currentLiga.disziplinId)[0];
+    }
+    this.loading = false;
+  }
+
+
+  private handleDisziplinResponseArrayFailure(response: BogenligaResponse<DisziplinDTO[]>): void {
+    this.allDisziplin = [];
+    this.loading = false;
   }
 
   private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {

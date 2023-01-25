@@ -451,60 +451,78 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   // @param dsbMitgliedId: dsbMitgliedId of Member of Mannschaft
   private async deleteMitglied(memberId: number, dsbMitgliedId: number) {
 
-    const response = await this.dsbMitgliedProvider.findById(dsbMitgliedId);
-    this.dsbmitglied = response.payload;
+    if (this.onOfflineService.isOffline()) {
+      console.log("Es konnte kein Member gelöscht werden im Offlinemodus")
+      this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_MITGLIED + memberId,
+        title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_OFFLINEMODE.TITLE',
+        description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED_OFFLINEMODE.DESCRIPTION',
+        descriptionParam: '',
+        severity:         NotificationSeverity.INFO,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.OK,
+        userAction:       NotificationUserAction.ACCEPTED
+      };
+      this.notificationService.showNotification(notification)
 
-    this.rows = showDeleteLoadingIndicatorIcon(this.rows, dsbMitgliedId);
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_MITGLIED + memberId,
-      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.TITLE',
-      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.DESCRIPTION',
-      descriptionParam: '' + this.dsbmitglied.vorname + ' ' + this.dsbmitglied.nachname,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
+    } else {
 
-    const noti = this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
-        .subscribe((myNotification) => {
+      const response = await this.dsbMitgliedProvider.findById(dsbMitgliedId);
+      this.dsbmitglied = response.payload;
 
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
-                .then(() => {
-                  // const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
-                  // console.log("MemberIdTest",test);
-                  // const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
-                  // console.log("TeamIdTest", test2);
-                  this.mannschaftMitgliedProvider.findAllByTeamId(memberId)
-                      .then((mannschaftMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
+      this.rows = showDeleteLoadingIndicatorIcon(this.rows, dsbMitgliedId);
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_MITGLIED + memberId,
+        title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.TITLE',
+        description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE_MITGLIED.DESCRIPTION',
+        descriptionParam: '' + this.dsbmitglied.vorname + ' ' + this.dsbmitglied.nachname,
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
 
-                        for (let i = 0; i < mannschaftMitgliedResponse.payload.length; i++) {
+      const noti = this.notificationService.observeNotification(NOTIFICATION_DELETE_MITGLIED + memberId)
+                       .subscribe((myNotification) => {
 
-                          // workaround because update method does not work due to "Vorname" bzw. "Nachname" Attributes
-                          // not existing consistently in backend/frontend objects.
-                          this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(
-                            mannschaftMitgliedResponse.payload[i].mannschaftsId,
-                            mannschaftMitgliedResponse.payload[i].dsbMitgliedId);
+                         if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                           this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(memberId, dsbMitgliedId)
+                               .then(() => {
+                                 // const test = this.mannschaftMitgliedProvider.findByMemberId(memberId);
+                                 // console.log("MemberIdTest",test);
+                                 // const test2 = this.mannschaftMitgliedProvider.findAllByTeamId(memberId);
+                                 // console.log("TeamIdTest", test2);
+                                 this.mannschaftMitgliedProvider.findAllByTeamId(memberId)
+                                     .then((mannschaftMitgliedResponse: BogenligaResponse<MannschaftsMitgliedDO[]>) => {
 
-                          mannschaftMitgliedResponse.payload[i].rueckennummer = i + 1;
-                          this.mannschaftMitgliedProvider.save(mannschaftMitgliedResponse.payload[i]);
+                                       for (let i = 0; i < mannschaftMitgliedResponse.payload.length; i++) {
 
+                                         // workaround because update method does not work due to "Vorname" bzw. "Nachname" Attributes
+                                         // not existing consistently in backend/frontend objects.
+                                         this.mannschaftMitgliedProvider.deleteByMannschaftIdAndDsbMitgliedId(
+                                           mannschaftMitgliedResponse.payload[i].mannschaftsId,
+                                           mannschaftMitgliedResponse.payload[i].dsbMitgliedId);
 
-                        }
-                      })
-                      .catch((mannschaftMitgliedResponse: void) => console.log('this is catch thingy, are there mannschaftsMitglieder?'));
-                  this.loadTableRows();
-                })
-                .catch(() => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
+                                         mannschaftMitgliedResponse.payload[i].rueckennummer = i + 1;
+                                         this.mannschaftMitgliedProvider.save(mannschaftMitgliedResponse.payload[i]);
 
 
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
-            noti.unsubscribe();
-          }
-        });
-    this.notificationService.showNotification(notification);
+                                       }
+                                     })
+                                     .catch((mannschaftMitgliedResponse: void) => console.log('this is catch thingy, are there mannschaftsMitglieder?'));
+                                 this.loadTableRows();
+                               })
+                               .catch(() => this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId));
+
+
+                         } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+                           this.rows = hideLoadingIndicator(this.rows, dsbMitgliedId);
+                           noti.unsubscribe();
+                         }
+                       });
+      this.notificationService.showNotification(notification);
+    }
   }
 
   private checkExistingResults(dsbMitgliedId: number): boolean {
