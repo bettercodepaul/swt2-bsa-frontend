@@ -21,197 +21,213 @@
                                [selectedItemId]='selItemId'
                                [disabled]="isOfflineDisabled()"
                                data-cy="wkduchfuehrung-jahr-dropdown"
-                             style="width: 40%;">
-          </bla-dropdown-menu>
+                               style="width: 40%;">
+            </bla-dropdown-menu>
+
+          </div>
+
+          <table id="example"
+                 class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+                 style="width:80%">
+            <!-- headlines -->
+
+
+            <bla-quicksearch-list (onSelect)="onSelect($event)"
+                                  [items]="veranstaltungen"
+                                  [loading]="loadingVeranstaltungen"
+                                  [multipleSelections]="!multipleSelections"
+                                  [placeholderTranslationKey]="PLACEHOLDER_VAR"
+                                  [optionFieldSelector]="'name'"
+                                  [disabled]="isOfflineDisabled()"
+                                  selectionListHeight="15em"
+                                  data-cy="wkduchfuehrung-veranstaltung-list"
+                                  style="width: 40%; flex-grow: 0;">
+            </bla-quicksearch-list>
+
+          </table>
 
         </div>
 
-        <table id="example"
-               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-               style="width:80%">
-          <!-- headlines -->
+
+        <div>
+          <h2>
+            {{'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}
+          </h2>
+
+          <div class="row">
+            <section class="overview-dialog-content">
+
+              <bla-data-table [config]="config_table"
+                              [rows]="rows"
+                              [loading]="loadingWettkampfe"
+                              data-cy="wkdurchfuehrung-wettkampftage-list"
+                              (onViewEntry)="onView($event)"
+                              (onMapEntry)="onMap($event)">
+
+              </bla-data-table>
+
+              <bla-teilnemende-manschaften-tabelle [veranstaltungsId]="selectedVeranstaltungId">
+              </bla-teilnemende-manschaften-tabelle>
+            </section>
 
 
-          <bla-quicksearch-list (onSelect)="onSelect($event)"
-                                [items]="veranstaltungen"
-                                [loading]="loadingVeranstaltungen"
-                                [multipleSelections]="!multipleSelections"
-                                [placeholderTranslationKey]="PLACEHOLDER_VAR"
-                                [optionFieldSelector]="'name'"
-                                [disabled]="isOfflineDisabled()"
-                                selectionListHeight="15em"
-                                data-cy="wkduchfuehrung-veranstaltung-list"
-                                style="width: 40%; flex-grow: 0;">
-          </bla-quicksearch-list>
+            <!-- Dies ist die Liste der Wettkampftage zur Veranstaltung  -->
 
-        </table>
-
-      </div>
-
-
-      <div>
-        <h2>
-          {{'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}
-        </h2>
-
-        <div class="row">
-          <section class="overview-dialog-content">
-
-            <bla-data-table [config]="config_table"
-                            [rows]="rows"
-                            [loading]="loadingWettkampfe"
-                            data-cy="wkdurchfuehrung-wettkampftage-list"
-                            (onViewEntry)="onView($event)"
-                            (onMapEntry)="onMap($event)">
-
-            </bla-data-table>
-
-            <bla-teilnemende-manschaften-tabelle [veranstaltungsId]="selectedVeranstaltungId">
-            </bla-teilnemende-manschaften-tabelle>
-          </section>
-
-
-          <!-- Dies ist die Liste der Wettkampftage zur Veranstaltung  -->
-
+          </div>
         </div>
-      </div>
-    </bla-col-layout>
+      </bla-col-layout>
 
-    <bla-col-layout>
-      <h2 id="WettkampfTitle"></h2>
-    </bla-col-layout>
+      <bla-col-layout>
+        <h2 id="WettkampfTitle"></h2>
+      </bla-col-layout>
 
-    <bla-col-layout>
-      <div>
-        <BR>
-        <h2>{{'MANNSCHAFTEN.LIGATABELLE.LIGATABELLE_VORBEREITUNG'|translate}}</h2>
-        <p>{{'MANNSCHAFTEN.LIGATABELLE.TEXT'|translate}}</p></div>
-    </bla-col-layout>
+      <bla-col-layout>
+        <div>
+          <BR>
+          <h2>{{'MANNSCHAFTEN.LIGATABELLE.LIGATABELLE_VORBEREITUNG'|translate}}</h2>
+          <p>{{'MANNSCHAFTEN.LIGATABELLE.TEXT'|translate}}</p></div>
+      </bla-col-layout>
 
-    <bla-col-layout>
+      <bla-col-layout [style]="'flex-wrap: wrap'">
 
-      <div>
-        <bla-button
+        <bla-actionbutton
           [id]="'generiereMatches'"
           [disabled]="isDisabledGMButton()"
+          [colorClass]="'primary'"
+          [iconClass]="'cogs'"
           (onClick)="generateMatches()">
           {{ 'WKDURCHFUEHRUNG.BUTTON.MATCHES' | translate }}
-        </bla-button>
-      </div>
+        </bla-actionbutton>
 
 
-      <div>
-        <bla-download-button
-          [id]="'downloadSetzliste'"
-          [downloadUrl]="onButtonDownload('pdf/setzliste')"
-          [fileName]="'setzliste.pdf'"
-          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
+          <bla-download-actionbutton
+            [id]="'downloadSetzliste'"
+            [downloadUrl]="onButtonDownload('pdf/setzliste')"
+            [fileName]="'setzliste.pdf'"
+            [colorClass]="'primary'"
+            [iconClass]="'file-download'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
 
-        </bla-download-button>
-      </div>
+          </bla-download-actionbutton>
 
-      <div>
-        <bla-download-button
-          [id]="'downloadSchusszettel'"
-          [downloadUrl]="onButtonDownload('pdf/schusszettel')"
-          [fileName]="'schusszettel.pdf'"
-          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
+          <bla-download-actionbutton
+            [id]="'downloadSchusszettel'"
+            [downloadUrl]="onButtonDownload('pdf/schusszettel')"
+            [fileName]="'schusszettel.pdf'"
+            [colorClass]="'primary'"
+            [iconClass]="'file-download'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
 
-        </bla-download-button>
-      </div>
+          </bla-download-actionbutton>
 
-      <div>
-        <bla-download-button
-          [id]="'downloadBogenkontrollliste'"
-          [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
-          [fileName]="'bogenkontrollliste.pdf'"
-          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+          <bla-download-actionbutton
+            [id]="'downloadBogenkontrollliste'"
+            [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
+            [fileName]="'bogenkontrollliste.pdf'"
+            [disabled]="isDisabled()"
+            [colorClass]="'primary'"
+            [iconClass]="'file-download'">
+            {{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+          </bla-download-actionbutton>
 
-        </bla-download-button>
-      </div>
+          <bla-download-actionbutton
+            [id]="'downloadMeldezettel'"
+            [downloadUrl]="onButtonDownload('pdf/meldezettel')"
+            [fileName]="'meldezettel.pdf'"
+            [colorClass]="'primary'"
+            [iconClass]="'file-download'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
 
-      <div>
-        <bla-download-button
-          [id]="'downloadMeldezettel'"
-          [downloadUrl]="onButtonDownload('pdf/meldezettel')"
-          [fileName]="'meldezettel.pdf'"
-          [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
+          </bla-download-actionbutton>
 
-        </bla-download-button>
-      </div>
-
-      <div id="setupTable" *ngIf="(!isOffline()); else onlineSetupTables">
-        <bla-button (click)="onButtonTabletClick()"
-                    [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-          >
-        </bla-button>
-      </div>
-
-      <div>
-        <bla-button
-          [id]="'DSB-Mitglied anlegen'"
-          (onClick)="addDSBMitglied()">
-          DSB-Mitglied anlegen
-        </bla-button>
-      </div>
-
-      <ng-template #onlineSetupTables id="onlineSetupTables">
-        <div>
-          <bla-button (click)="onButtonTabletClick()"
-                      [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-            >
-          </bla-button>
+        <div id="setupTable"
+             *ngIf="(!isOffline()); else onlineSetupTables">
+          <bla-actionbutton (click)="onButtonTabletClick()"
+                            [colorClass]="'primary'"
+                            [iconClass]="'table'"
+                            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+          </bla-actionbutton>
         </div>
-      </ng-template>
+
+          <bla-actionbutton
+            [id]="'DSB-Mitglied anlegen'"
+            [colorClass]="'primary'"
+            [iconClass]="'user-plus'"
+            (onClick)="addDSBMitglied()">
+            DSB-Mitglied anlegen
+          </bla-actionbutton>
+
+        <ng-template #onlineSetupTables
+                     id="onlineSetupTables">
+          <div>
+            <bla-actionbutton (click)="onButtonTabletClick()"
+                              [colorClass]="'primary'"
+                              [iconClass]="'table'"
+                              [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+            </bla-actionbutton>
+          </div>
+        </ng-template>
 
 
-      <div id="offlineButton" *ngIf="(!isOffline()); else backOnline ">
-        <button class="btn btn-danger" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()"
-                data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
-        </button>
-      </div>
-
-      <ng-template #backOnline id="onlineButton">
-        <div>
-          <button class="btn btn-success" (click)="onButtonGoOfflineClick()" [disabled]="isDisabled()">Online gehen
-          </button>
+        <div id="offlineButton"
+             *ngIf="(!isOffline()); else backOnline ">
+          <bla-actionbutton (click)="onButtonGoOfflineClick()"
+                            [colorClass]="'danger'"
+                            [iconClass]="'power-off'"
+                            [disabled]="isDisabled()"
+                            data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
+          </bla-actionbutton>
         </div>
-      </ng-template>
 
-      <div id="adminOfflineResetButton" *ngIf="(isAdmin())">
-        <button class="btn btn-danger" (click)="resetWettkampfToken(this.selectedWettkampfId)"
-                [disabled]="isDisabled()">Offlinetoken löschen
-        </button>
-      </div>
+        <ng-template #backOnline
+                     id="onlineButton">
+          <div>
+            <bla-actionbutton (click)="onButtonGoOfflineClick()"
+                              [colorClass]="'success'"
+                              [iconClass]="'cloud'"
+                              [disabled]="isDisabled()">Online gehen
+            </bla-actionbutton>
+          </div>
+        </ng-template>
 
-    </bla-col-layout>
+        <div id="adminOfflineResetButton"
+             *ngIf="(isAdmin())">
+          <bla-actionbutton (click)="resetWettkampfToken(this.selectedWettkampfId)"
+                            [colorClass]="'danger'"
+                            [iconClass]="'trash'"
+                            [disabled]="isDisabled()">Offlinetoken löschen
+          </bla-actionbutton>
+        </div>
+
+      </bla-col-layout>
 
 
-    <bla-col-layout>
-      <BR>
-      <h2><BR>{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }} <BR>&nbsp;</h2>
-      <BR>
+      <bla-col-layout>
+        <BR>
+        <h2><BR>{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }} <BR>&nbsp;</h2>
+        <BR>
 
-    </bla-col-layout>
+      </bla-col-layout>
 
-    <bla-col-layout>
+      <bla-col-layout>
 
 
-      <div class="row" style="margin-left: 5px">
-        <section class="overview-dialog-content">
+        <div class="row"
+             style="margin-left: 5px">
+          <section class="overview-dialog-content">
 
-          <bla-data-table [config]="config_table_match"
-                          [rows]="matchRows"
-                          [loading]="loadingMatch"
-                          data-cy="wkdurchfuehrung-match-list"
-                          (onEditEntry)="onEdit($event)">
+            <bla-data-table [config]="config_table_match"
+                            [rows]="matchRows"
+                            [loading]="loadingMatch"
+                            data-cy="wkdurchfuehrung-match-list"
+                            (onEditEntry)="onEdit($event)">
 
-          </bla-data-table>
-        </section>
+            </bla-data-table>
+          </section>
 
-      </div>
+        </div>
 
-    </bla-col-layout>
+      </bla-col-layout>
 
 
       <router-outlet></router-outlet>

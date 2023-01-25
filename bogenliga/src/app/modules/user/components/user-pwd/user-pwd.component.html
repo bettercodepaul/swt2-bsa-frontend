@@ -18,89 +18,91 @@
         <bla-alert [visible]="(loginResult === LoginResult.CONNECTION_PROBLEM)"
                    header="{{ 'USER.PWD.NOTIFICATION.PWD_CONNECTION_PROBLEM.HEADER' | translate }}"
                    [alertType]="AlertType.WARNING">
-        {{ 'USER.PWD.NOTIFICATION.PWD_CONNECTION_PROBLEM.TEXT' | translate }}
-      </bla-alert>
+          {{ 'USER.PWD.NOTIFICATION.PWD_CONNECTION_PROBLEM.TEXT' | translate }}
+        </bla-alert>
 
-      <div class="card mb-4 shadow-sm">
-        <div class="card-body userPwd-dialog">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body userPwd-dialog">
 
-          <form id="userPwdForm"
-                #userPwdForm="ngForm">
+            <form id="userPwdForm"
+                  #userPwdForm="ngForm">
 
-            <!-- Logo -->
-            <div class="imgcontainer">
-              <img src="../assets/img/logo.png"
-                   alt="Logo"
-                   class="avatar">
-
-            </div>
-
-            <!-- Input -->
-            <div class="container">
-              <div class="form-group">
-                <label for="userPwdFormPassword">{{ 'USER.PWD.FORM.PASSWORD.LABEL' | translate }}</label>
-                <input type="password"
-                       class="form-control"
-                       id="userPwdFormPassword"
-                       name="userPwdFormPassword"
-                       #userPwdFormPassword="ngModel"
-                       [(ngModel)]="changeCredentials.password"
-                       required
-                       [class.is-invalid]="(userPwdFormPassword.invalid && !userPwdFormPassword.untouched)"
-                       placeholder="{{ 'USER.PWD.FORM.PASSWORD.PLACEHOLDER' | translate }}">
-
-                <div class="invalid-feedback">
-                  {{ 'USER.PWD.FORM.PASSWORD.ERROR' | translate }}
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="userPwdFormNewPwd">{{ 'USER.PWD.FORM.NEWPASSWORD.LABEL' | translate }}</label>
-                <input type="password"
-                       class="form-control"
-                       required
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d#$^+=!*()@%&?]{8,}$"
-                       id="userPwdFormNewPwd"
-                       name="userPwdFormNewPwd"
-                       #userPwdFormNewPwd="ngModel"
-                       [(ngModel)]="changeCredentials.newPassword"
-                       [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
-                       placeholder="{{ 'USER.PWD.FORM.NEWPASSWORD.PLACEHOLDER' | translate }}">
-
-                <div class="invalid-feedback">
-                  {{ 'USER.PWD.FORM.NEWPASSWORD.ERROR' | translate }}
-                </div>
+              <!-- Logo -->
+              <div class="imgcontainer">
+                <img src="assets/img/Bow_and_error_Logo/BL_Logo/PNG/PNG_Bogenliga_Logo_Color.png"
+                     alt="Logo"
+                     class="avatar">
               </div>
 
-              <div class="form-group">
-                <label for="userPwdFormVerifyPwd">{{ 'USER.PWD.FORM.VERIFYPASSWORD.LABEL' | translate }}</label>
-                <input type="password"
-                       class="form-control"
-                       id="userPwdFormVerifyPwd"
-                       name="userPwdFormVerifyPwd"
-                       #userPwdFormVerifyPwd="ngModel"
-                       [(ngModel)]="changeCredentials.verifyPassword"
-                       required
-                       minlength="8"
-                       [class.is-invalid]="userPwdFormVerifyPwd.value != userPwdFormNewPwd.value"
-                       placeholder="{{ 'USER.PWD.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+              <!-- Input -->
+              <div class="container">
+                <div class="form-group">
+                  <label for="userPwdFormPassword">{{ 'USER.PWD.FORM.PASSWORD.LABEL' | translate }}</label>
+                  <input type="password"
+                         class="form-control"
+                         id="userPwdFormPassword"
+                         name="userPwdFormPassword"
+                         #userPwdFormPassword="ngModel"
+                         [(ngModel)]="changeCredentials.password"
+                         required
+                         [class.is-invalid]="(userPwdFormPassword.invalid && !userPwdFormPassword.untouched)"
+                         placeholder="{{ 'USER.PWD.FORM.PASSWORD.PLACEHOLDER' | translate }}">
 
-                <div class="invalid-feedback">
-                  {{ 'USER.PWD.FORM.VERIFYPASSWORD.ERROR' | translate }}
+                  <div class="invalid-feedback">
+                    {{ 'USER.PWD.FORM.PASSWORD.ERROR' | translate }}
+                  </div>
                 </div>
+                <div class="form-group">
+                  <label for="userPwdFormNewPwd">{{ 'USER.PWD.FORM.NEWPASSWORD.LABEL' | translate }}</label>
+                  <input type="password"
+                         class="form-control"
+                         required
+                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d#$^+=!*()@%&?]{8,}$"
+                         id="userPwdFormNewPwd"
+                         name="userPwdFormNewPwd"
+                         #userPwdFormNewPwd="ngModel"
+                         [(ngModel)]="changeCredentials.newPassword"
+                         [class.is-invalid]="(userPwdFormNewPwd.invalid && !userPwdFormNewPwd.untouched)"
+                         placeholder="{{ 'USER.PWD.FORM.NEWPASSWORD.PLACEHOLDER' | translate }}">
+
+                  <div class="invalid-feedback">
+                    {{ 'USER.PWD.FORM.NEWPASSWORD.ERROR' | translate }}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="userPwdFormVerifyPwd">{{ 'USER.PWD.FORM.VERIFYPASSWORD.LABEL' | translate }}</label>
+                  <input type="password"
+                         class="form-control"
+                         id="userPwdFormVerifyPwd"
+                         name="userPwdFormVerifyPwd"
+                         #userPwdFormVerifyPwd="ngModel"
+                         [(ngModel)]="changeCredentials.verifyPassword"
+                         required
+                         minlength="8"
+                         [class.is-invalid]="userPwdFormVerifyPwd.value != userPwdFormNewPwd.value"
+                         placeholder="{{ 'USER.PWD.FORM.VERIFYPASSWORD.PLACEHOLDER' | translate }}">
+
+                  <div class="invalid-feedback">
+                    {{ 'USER.PWD.FORM.VERIFYPASSWORD.ERROR' | translate }}
+                  </div>
+                </div>
+
+                <bla-actionbutton
+                  [id]="'userPwdUpdateButton'"
+                  [disabled]="!userPwdForm.valid"
+                  (onClick)="onUpdate($event)"
+                  [colorClass]="'primary'"
+                  [iconClass]="'key'"
+                >{{ 'USER.PWD.FORM.UPDATE' | translate }}
+                </bla-actionbutton>
+
               </div>
+            </form>
 
-              <bla-button
-                [id]="'userPwdUpdateButton'"
-                [disabled]="!userPwdForm.valid"
-                (onClick)="onUpdate($event)">{{ 'USER.PWD.FORM.UPDATE' | translate }}
-              </bla-button>
-
-            </div>
-          </form>
+          </div>
 
         </div>
-
-      </div>
 
       </div>
 

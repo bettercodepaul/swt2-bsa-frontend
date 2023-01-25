@@ -1,88 +1,103 @@
 <div class="table-responsive">
-<table class="table table-hover table-sm table-responsive-sm thead-light"
-       [id]="id"
-       *ngIf="visible">
-  <!-- Table Head with Headings and sort buttons -->
-  <thead>
+  <table class="table table-hover table-sm table-responsive-sm thead-light"
+         [id]="id"
+         *ngIf="visible">
+    <!-- Table Head with Headings and sort buttons -->
+    <thead>
 
-  <tr>
-    <th *ngFor="let column of config.columns"
-        [style.width]="getColumnWidth(column.width)">
+    <tr>
+      <th *ngFor="let column of config.columns"
+          [style.width]="getColumnWidth(column.width)">
 
-      <!-- sortable columns -->
-      <div style="white-space: nowrap;">
-        {{ column.translationKey | translate}}
-        <span id="{{column.translationKey.toLowerCase()}}Sorted"
-              (click)="sortColumn(column)">
-            <fa-icon [icon]="getSortingIcon(column)" *ngIf="isSortable(column)"></fa-icon>
+        <!-- sortable columns -->
+        <div style="white-space: nowrap;">
+          {{ column.translationKey | translate}}
+          <span id="{{column.translationKey.toLowerCase()}}Sorted"
+                (click)="sortColumn(column)">
+            <fa-icon [icon]="getSortingIcon(column)"
+                     *ngIf="isSortable(column)"></fa-icon>
         </span>
-      </div>
-    </th>
+        </div>
+      </th>
 
-    <!-- action column should not be sortable -->
-    <th [style.width]="getColumnWidth(config.actions.width)"
-        *ngIf="hasActions()">
-      <div>
-        {{ config.actions.localizationKeys.actionColum | translate}}
-      </div>
-    </th>
+      <!-- action column should not be sortable -->
+      <th [style.width]="getColumnWidth(config.actions.width)"
+          *ngIf="hasActions()">
+        <div>
+          {{ config.actions.localizationKeys.actionColum | translate}}
+        </div>
+      </th>
 
-  </tr>
+    </tr>
 
-  </thead>
+    </thead>
 
 
-  <tbody *ngIf="!isLoading() && !isEmptyTable()">
-  <tr *ngFor="let row of rows"
-      [id]="getRowId(row)"
-      (click)="hasActions() == true && onRowClicked(row.payload)"
-      [style.cursor]="!hasActions() ? 'pointer' : 'default'"
-      [class.disabled]="hasLoadingActions(row)"
-      > <!-- Click event is only active if table has no action items -->
+    <tbody *ngIf="!isLoading() && !isEmptyTable()">
+    <tr *ngFor="let row of rows"
+        [id]="getRowId(row)"
+        (click)="hasActions() == true && onRowClicked(row.payload)"
+        [style.cursor]="!hasActions() ? 'pointer' : 'default'"
+        [class.disabled]="hasLoadingActions(row)"
+    > <!-- Click event is only active if table has no action items -->
 
-    <!-- data columns -->
-    <td *ngFor="let column of config.columns"
-        [id]="getCellId(row, column)"
-        (click)="onColumnClicked(column)"
-        [style.cursor]="'pointer'"
-        [ngSwitch]="column.type"
-        [class]="getStyleClass(row, column)">
+      <!-- data columns -->
+      <td *ngFor="let column of config.columns"
+          [id]="getCellId(row, column)"
+          (click)="onColumnClicked(column)"
+          [style.cursor]="'pointer'"
+          [ngSwitch]="column.type"
+          [class]="getStyleClass(row, column)">
 
        <span *ngSwitchCase="TableColumnType.NUMBER">
              {{formatNumber(row, column)}}
            </span>
 
-      <span *ngSwitchCase="TableColumnType.TEXT">
+        <span *ngSwitchCase="TableColumnType.TEXT">
              {{formatText(row, column)}}
           </span>
 
-       <span *ngSwitchCase="TableColumnType.DATE">
+        <span *ngSwitchCase="TableColumnType.DATE">
              {{ row.getText(column) | date: 'dd.MM.yyyy' }}
 
-             <!--{{formatDate(row, column)}}-->
+          <!--{{formatDate(row, column)}}-->
 
           </span>
 
-      <span *ngSwitchCase="TableColumnType.TRANSLATION_KEY">
+        <span *ngSwitchCase="TableColumnType.TRANSLATION_KEY">
            {{getLocalizedText(row, column)}}
           </span>
 
-      <span *ngSwitchCase="TableColumnType.CUSTOM_MAPPING">
+        <span *ngSwitchCase="TableColumnType.CUSTOM_MAPPING">
            {{getMappedText(row, column)}}
           </span>
 
-      <span *ngSwitchDefault>
+        <span *ngSwitchDefault>
             {{formatText(row, column)}}
           </span>
-    </td>
+      </td>
 
-    <!-- action column -->
-    <td id="{{id + 'Actions'}}"
-        *ngIf="hasActions()">
+      <!-- action column -->
+      <td id="{{id + 'Actions'}}"
+          *ngIf="hasActions()">
         <span *ngFor="let action of config.actions.actionTypes" class="action_icon">
-          <a (click)="onIconClicked(row, action)"
+          <!--<a href="#"
+             (click)="onIconClicked(row, action)"
              [attr.data-cy]="determineTitle(row, action)"
-             [title]="determineTitle(row, action) | translate" *ngIf="hasActionPermission(action)">
+             [title]="determineTitle(row, action) | translate"
+             *ngIf="hasActionPermission(action)"
+             class="action-anchor">
+            <fa-icon *ngIf="isActionVisible(row, action)"
+                     [icon]="determineIcon(row, action)"
+                     [spin]="determineIcon(row, action) === 'sync'"
+                     class="">
+             </fa-icon>
+          </a>-->
+          <a (click)="onIconClicked(row, action)"
+             data-toggle="tooltip" data-placement="top"
+             [attr.data-cy]="determineTitle(row, action)"
+             [title]="determineTitle(row, action) | translate"
+             *ngIf="hasActionPermission(action)">
              <fa-icon *ngIf="isActionVisible(row, action)"
                       [icon]="determineIcon(row, action)"
                       [spin]="determineIcon(row, action) === 'sync'"
@@ -90,28 +105,27 @@
              </fa-icon>
           </a>
 
-
         </span>
-    </td>
+      </td>
 
-  </tr>
-  </tbody>
+    </tr>
+    </tbody>
 
-  <!-- placeholder for empty tables -->
-  <tbody bla-table-empty-placeholder
-         [visible]="!isLoading() && isEmptyTable()"
-         [colspan]="getNumberOfColumns()">
-  </tbody>
+    <!-- placeholder for empty tables -->
+    <tbody bla-table-empty-placeholder
+           [visible]="!isLoading() && isEmptyTable()"
+           [colspan]="getNumberOfColumns()">
+    </tbody>
 
-  <!-- placeholder for loading tables -->
-  <tbody bla-table-loading-placeholder
-         [visible]="isLoading()"
-         [colspan]="getNumberOfColumns()">
-  </tbody>
+    <!-- placeholder for loading tables -->
+    <tbody bla-table-loading-placeholder
+           [visible]="isLoading()"
+           [colspan]="getNumberOfColumns()">
+    </tbody>
 
-  <tfoot>
+    <tfoot>
 
-  </tfoot>
+    </tfoot>
 
-</table>
+  </table>
 </div>
