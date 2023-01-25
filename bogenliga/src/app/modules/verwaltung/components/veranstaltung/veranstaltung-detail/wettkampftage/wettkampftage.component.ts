@@ -733,7 +733,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
 
     // when there are no Wettkampftage for this Veranstaltung yet
     if (this.selectedDTOs.length === 0) {
-      await this.selectedDTOs.push(new WettkampfDO());
+      this.selectedDTOs.push(new WettkampfDO());
       await this.createInitWettkampfTag(1);
       await this.loadDistinctWettkampf();
     }
