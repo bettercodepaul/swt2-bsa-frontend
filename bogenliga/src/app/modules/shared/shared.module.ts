@@ -53,6 +53,10 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {HilfeButtonComponent} from '@shared/components/buttons/hilfe-button/hilfe-button.component';
+import {ActionButtonComponent} from '@shared/components/buttons/button/actionbutton.component';
+import {
+  DownloadActionButtonComponent
+} from '@shared/components/buttons/download-button/download-actionbutton.component';
 
 @NgModule({
   imports: [
@@ -107,7 +111,9 @@ import {HilfeButtonComponent} from '@shared/components/buttons/hilfe-button/hilf
     EinzelstatistikDownloadComponent,
     GesamtstatistikDownloadComponent,
     TagesuebersichtDownloadComponent,
-    HilfeButtonComponent
+    HilfeButtonComponent,
+    ActionButtonComponent,
+    DownloadActionButtonComponent
   ],
   declarations: [
     ButtonComponent,
@@ -145,7 +151,9 @@ import {HilfeButtonComponent} from '@shared/components/buttons/hilfe-button/hilf
     EinzelstatistikDownloadComponent,
     GesamtstatistikDownloadComponent,
     TagesuebersichtDownloadComponent,
-    HilfeButtonComponent
+    HilfeButtonComponent,
+    ActionButtonComponent,
+    DownloadActionButtonComponent
   ]
 })
 export class SharedModule {

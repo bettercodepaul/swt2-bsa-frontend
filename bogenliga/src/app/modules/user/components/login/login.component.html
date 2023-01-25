@@ -102,7 +102,6 @@
                 <label class="form-check-label"
                        for="loginRememberMe">{{ 'USER.LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
               </div>
-
               <bla-button [id]="'loginButton'"
                           [buttonSize]="ButtonSize.LARGE_BLOCK"
                           [disabled]="!loginForm.valid"
@@ -114,6 +113,7 @@
                           [disabled]="!isSpotterAuthenticationEnabled"
                           [visible]= "isSpotterAuthenticationEnabled"
                           (onClick)="onSpotterLogin(testModeratorUser)">
+
                           {{ 'SPOTTER.LINK.TEXT' | translate }}
               </bla-button>
             </div>

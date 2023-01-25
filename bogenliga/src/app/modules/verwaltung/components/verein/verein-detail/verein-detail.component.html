@@ -180,29 +180,35 @@
         <div class="col-sm-9 button-box">
 
 
-          <bla-button (onClick)="onSave($event)"
-                      *ngIf="!entityExists()"
-                      [disabled]="!vereineForm.valid"
-                      [id]="'vereinSaveButton'"
-                      [loading]="saveLoading"
-                      data-cy="vereine-add-button">
+          <bla-actionbutton (onClick)="onSave($event)"
+                            *ngIf="!entityExists()"
+                            [disabled]="!vereineForm.valid"
+                            [id]="'vereinSaveButton'"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'plus'"
+                            data-cy="vereine-add-button">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.SAVE' | translate }}
-          </bla-button>
-          <bla-button (onClick)="onUpdate($event)"
-                      *ngIf="entityExists()"
-                      [disabled]="!vereineForm.valid"
-                      [id]="'vereinUpdateButton'"
-                      [loading]="saveLoading"
-                      data-cy="vereine-update-button">
+          </bla-actionbutton>
+          <bla-actionbutton (onClick)="onUpdate($event)"
+                            *ngIf="entityExists()"
+                            [disabled]="!vereineForm.valid"
+                            [id]="'vereinUpdateButton'"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'plus'"
+                            data-cy="vereine-update-button">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.UPDATE' | translate }}
-          </bla-button>
+          </bla-actionbutton>
 
-          <bla-button (onClick)="onDelete($event)"
-                      *ngIf="entityExists()"
-                      [buttonType]="ButtonType.DANGER"
-                      [loading]="deleteLoading">
+          <bla-actionbutton (onClick)="onDelete($event)"
+                            *ngIf="entityExists()"
+                            [buttonType]="ButtonType.DANGER"
+                            [loading]="deleteLoading"
+                            [colorClass]="'danger'"
+                            [iconClass]="'plus'">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.DELETE' | translate }}
-          </bla-button>
+          </bla-actionbutton>
         </div>
       </div>
     </form>
@@ -210,12 +216,13 @@
     <div *ngIf="entityExists()">
       <h5> Mannschaftsübersicht</h5>
       <div class="overview-dialog-add">
-        <button class="btn btn-success"
-                data-cy="vereine-details-add-mannschaft-button"
-                routerLink="add">
-          <fa-icon icon="plus"></fa-icon>
+        <bla-actionbutton
+          [colorClass]="'success'"
+          [iconClass]="'plus'"
+          data-cy="vereine-details-add-mannschaft-button"
+          routerLink="add">
           <span> Neu</span>
-        </button>
+        </bla-actionbutton>
       </div>
       <bla-data-table (onDeleteEntry)="onDeleteMannschaft($event)"
                       (onDownloadLizenzenEntry)="onDownloadLizenzen($event)"
