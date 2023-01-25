@@ -40,6 +40,7 @@ import {
 } from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {SessionHandling} from '@shared/event-handling';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 
 
 @Component({
@@ -635,15 +636,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       })
       // handleFailure -> Fehlermeldung muss aufgerufen werden
       .catch(() => {
-        if (this.matchDataProvider.check(this.selectedWettkampfId)){
-          this.handleFailureGenerateMatchesMissing();
-        }
-        else {
-          this.handleFailureGenerateMatches();
-          this.showMatches();
-        }
-      });
+
+        this.handleFailureGenerateMatches();
+        this.showMatches();
+      })
   }
+
   private handleFailureGenerateMatchesMissing(): void {
     this.notificationService.showNotification({
       id: 'NOTIFICATION_GENERIERE_MATCHES_MITGLIED_FEHLT',

@@ -176,17 +176,5 @@ export class MatchDTOExt implements DataTransferObject {
     return copy;
   }
 
-  public hasDsbMitgliedIdInPassen(): boolean {
-    if (!this.passen) {
-      return false;
-    }
-    for (const passe of this.passen) {
-      if (!passe.dsbMitgliedId) {
-        return false;
-      }
-    }
-    return true;
-  }
-
 
 }
