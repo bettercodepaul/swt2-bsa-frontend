@@ -108,28 +108,6 @@ export class MatchDataProviderService extends DataProviderService {
         });
     }
 
-  public check(id: number): boolean{
-    let hasDsbMitgliedId = false;
-    window.alert(id);
-    this.restClient.GET<Array<MatchDTOExt>>(new UriBuilder().fromPath(this.getUrl()).path('findByWettkampfId/wettkampfid=' + id).build())
-        .then((data: MatchDTOExt[]) => {
-          const matchArray = data;
-          matchArray.forEach((match: MatchDTOExt) => {
-            if (match.hasDsbMitgliedIdInPassen()) {
-              hasDsbMitgliedId = true;
-            }
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          return false;
-        });
-    return hasDsbMitgliedId;
-  }
-
-
-
-
 
 
   public generateDataForMatches(wetttkampfId: number): Promise<BogenligaResponse<MatchDO[]>> {
