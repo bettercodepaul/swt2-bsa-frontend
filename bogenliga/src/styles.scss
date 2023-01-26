@@ -406,3 +406,9 @@ a:hover, a:focus {
 .action-anchor:hover {
   color: #fff;
 }
+.action-btn:focus,*:hover{
+  outline:none;
+}
+.action-btn-circle:focus{
+  outline:none;
+}
