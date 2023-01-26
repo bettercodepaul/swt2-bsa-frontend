@@ -695,22 +695,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     }
   }
 
-  // Sets the Veranstaltung to Laufend and updates new Veranstaltung via veranstaltungsDataProvider
-  currentDisziplin: any;
-  allDisziplin: any;
-  public setVeranstaltungsPhaseLaufend() {
-    this.currentVeranstaltung.phase = 'Laufend';
-    this.saveLoading = true;
-    this.veranstaltungDataProvider.update(this.currentVeranstaltung)
-        .then((response: BogenligaResponse<VeranstaltungDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
 
-
-
-  // Creates Matches for a Veranstaltung
-
+  // Creates Initial Matches for a Veranstaltung
   public createMatchesWT0(event: any) {
 
     this.matchDataProvider.createInitialMatchesWT0(this.currentVeranstaltung)
