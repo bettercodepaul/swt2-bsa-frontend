@@ -2,7 +2,7 @@
 
 .navigation-card {
   width: 18rem;
-  min-height: 16rem;
+  height: 16rem;
   margin: 1.2em 1.2em 0 0;
 }
 
@@ -12,17 +12,23 @@
 
 .card-header {
   text-align: center;
-  display: flex;
+  display: grid;
   justify-content: center;
   background-color: $light-gray;
 }
 
-.tooltip-body {
-  position: relative;
-  display: flex;
+.card-body {
+  position: static;
+  display: grid;
   flex-direction: column;
-  justify-content: flex-end;
-  min-height: 16rem;
+  height: 12rem;
+}
+
+.tooltip-body {
+  position: static;
+  display: grid;
+  flex-direction: column;
+  height: 16rem;
   float: bottom;
 }
 
@@ -32,7 +38,14 @@
 }
 
 .tooltip-text {
-  font-size: 90%;
+  font-size: 100%;
+  height: 8rem;
+  text-align: left;
+
+}
+.card-text {
+  font-size: 100%;
+  height: 4rem;
   text-align: left;
 }
 

@@ -231,17 +231,17 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   // Method adds new Wettkampftag -> called by "+Neu"-Button
   public async onAddWettkampfTag(ignore: any): Promise<void> {
     this.currentWettkampftagArray.push(new WettkampfDO());
-    this.loadDistinctWettkampf();
+    await this.loadDistinctWettkampf();
     await this.createInitWettkampfTag((this.anzahl) + 1);
-    this.loadDistinctWettkampf();
+    await this.loadDistinctWettkampf();
   }
 
   // Method copys current Wettkampftag -> called by "Kopieren"-Button
   public async onCopyWettkampfTag(ignore: any): Promise<void> {
     this.currentWettkampftagArray.push(new WettkampfDO());
-    this.loadDistinctWettkampf();
+    await this.loadDistinctWettkampf();
     await this.copyCurrentWettkampfTag((this.anzahl) + 1);
-    this.loadDistinctWettkampf();
+    await this.loadDistinctWettkampf();
   }
 
   public updateKampfrichter(wettkampfTagNumber: number, wettkampfID: number): void {
@@ -690,45 +690,52 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedDTOs = [];
     this.selectedDTOs = response.payload.filter((element) => element.wettkampfVeranstaltungsId === this.currentVeranstaltung.id);
     this.anzahl = this.selectedDTOs.length;
-
+    let counter = 0;
     //check if WettkampfDO Obeject contains all values
-    for (let i = 0; i < this.selectedDTOs.length; i++) {
-      let counter = 0;
-      if (this.selectedDTOs[i].wettkampfTag === null) {
+    for (const element of this.selectedDTOs) {
+
+      if (element.wettkampfTag == null) {
+        counter += 1;
+      }
+      if (element.wettkampfBeginn == null) {
+        counter += 1;
+      }
+      if (element.wettkampfOrtsname == null) {
+        counter += 1;
+      }
+      if (element.wettkampfPlz == null) {
+        counter += 1;
+      }
+      if (element.wettkampfStrasse == null) {
+        counter += 1;
+      }
+      if (element.wettkampfDatum == null) {
+        counter += 1;
+      }
+      if (element.id == null) {
         counter +=1;
       }
-      if (this.selectedDTOs[i].wettkampfBeginn === null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].wettkampfOrtsname === null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].wettkampfPlz === null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].wettkampfStrasse === null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].wettkampfDatum === null) {
-        counter +=1;
-      }
-      if (this.selectedDTOs[i].id === null) {
-        counter +=1;
-      }
-      //sort selectedDTOs by date and assign the corrosponding WettkampfTag
-      if (counter === 0) {
+
+
+    }
+    //sort selectedDTOs by date and assign the corrosponding WettkampfTag
+    for(let i = 0; i <this.selectedDTOs.length;i++) {
+      if (counter == 0 && this.selectedDTOs.length > 1) {
+
         this.selectedDTOs = this.selectedDTOs.sort((objectA, objectB) => Date.parse(objectA.wettkampfDatum) - Date.parse(objectB.wettkampfDatum)); //sort DTOs by date
         this.selectedDTOs[i].wettkampfTag = i + 1; //assign correct Wettkampftag to sorted selectedDTOs
+        for (let index in this.selectedDTOs) {
+          this.selectedDTOs[index].wettkampfDatum = this.selectedDTOs[index].wettkampfDatum.toString();
+        }
         await this.wettkampfDataProvider.update(this.selectedDTOs[i]); //save selectedDTOs with updated Wettkampftag
       }
-
     }
 
     // when there are no Wettkampftage for this Veranstaltung yet
     if (this.selectedDTOs.length === 0) {
       this.selectedDTOs.push(new WettkampfDO());
       await this.createInitWettkampfTag(1);
-      this.loadDistinctWettkampf();
+      await this.loadDistinctWettkampf();
     }
     this.loadingWettkampf = false;
   }
@@ -747,7 +754,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     this.selectedWettkampf = $event[0];
     console.log('onSelect Dialog: ' + this.selectedWettkampfTag);
     this.loadWettkampf();
-    this.loadDistinctWettkampf();
+    this.loadDistinctWettkampf().then(()=> {});
     this.loadKampfrichter();
   }
 
@@ -795,7 +802,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
     // TODO Alle existierende Wettkampftage müssen komplett ausgefüllt und abgespeichert sein, Wenn ein Attribut fehlt, funktioniert die Updatefunktion nicht
 
     this.loadWettkampf();
-    this.loadDistinctWettkampf();
+    await this.loadDistinctWettkampf();
 
     if (this.selectedWettkampfTag != this.currentWettkampftagArray.length) {    // Wenn letzter Wettkampftag gelöscht werden soll, muss Nummerierung nicht angepasst werden
       for (let i = this.selectedWettkampfTag + 1; i < this.currentWettkampftagArray.length; i++) {   // Man beginnt im Array, ein Tag weiter als der aktuelle (Welcher gelöscht werden soll)
@@ -813,7 +820,7 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
         }
       }
     }
-    this.loadDistinctWettkampf();
+    await this.loadDistinctWettkampf();
     return true;
   }
 
