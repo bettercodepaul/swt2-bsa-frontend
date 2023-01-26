@@ -695,6 +695,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     }
   }
   // Sets the Veranstaltung to Laufend and updates new Veranstaltung via veranstaltungsDataProvider
+  currentDisziplin: any;
+  allDisziplin: any;
   public setVeranstaltungsPhaseLaufend() {
     this.currentVeranstaltung.phase = 'Laufend';
     this.saveLoading = true;
