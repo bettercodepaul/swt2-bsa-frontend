@@ -635,14 +635,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         this.showMatches();
       })
       // handleFailure -> Fehlermeldung muss aufgerufen werden
-      .catch(() => {
+      .catch((error) => {
+        console.log("______________")
+        console.log(error);
 
         this.handleFailureGenerateMatches();
         this.showMatches();
       })
   }
 
-  private handleFailureGenerateMatchesMissing(): void {
+  private handleFailureGenerateMatchesMissingMitglied(): void {
     this.notificationService.showNotification({
       id: 'NOTIFICATION_GENERIERE_MATCHES_MITGLIED_FEHLT',
       title: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.TITLE',
