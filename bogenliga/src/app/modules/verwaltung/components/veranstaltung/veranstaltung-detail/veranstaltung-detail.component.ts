@@ -359,7 +359,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         });
   }
 
-
+  // This method is called when the abschließen Button is pressed
   public onFinish(ignore: any): void {
     const name = this.currentVeranstaltung.name;
     const id = this.currentVeranstaltung.id;
@@ -373,8 +373,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       type:             NotificationType.YES_NO,
       userAction:       NotificationUserAction.PENDING
     };
+    // Detect notification
     this.notificationService.observeNotification(NOTIFICATION_FINISH_VERANSTALTUNG + id)
         .subscribe((myNotification) => {
+          // If abschließen is confirmed via notifcation update the Veranstaltung
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.currentVeranstaltung.phase = 'Abgeschlossen';
             // persist
@@ -391,8 +393,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
                   this.saveLoading = false;
                 });
 
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.rows = hideLoadingIndicator(this.rows, id);
           }
         });
     this.notificationService.showNotification(notification);
@@ -727,7 +727,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     }
   }
 
+
   // Creates Matches for a Veranstaltung
+
   public createMatchesWT0(event: any) {
 
     this.matchDataProvider.createInitialMatchesWT0(this.currentVeranstaltung)
