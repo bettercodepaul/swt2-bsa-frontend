@@ -17,7 +17,14 @@ import {Router} from '@angular/router';
 // import {LigatabelleComponent} from '../../../ligatabelle/components/ligatabelle/ligatabelle.component';
 // import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {
+  CurrentUserService,
+  Notification,
+  NotificationOrigin,
+  NotificationService,
+  NotificationSeverity, NotificationType, NotificationUserAction,
+  OnOfflineService
+} from '@shared/services';
 
 const chartDetailsSizeMultiplikator = 0.5;
 
@@ -48,6 +55,12 @@ export class RegionenComponent implements OnInit {
 
   private sessionHandling: SessionHandling;
 
+  private title = 'Wechseln zu Vereinen';
+  private description = 'Wollen sie zur Vereinsseite wechseln?';
+
+  private title_liga = 'Wechseln zur Ligatabelle';
+  private description_liga = 'Wollen sie zur Ligatabelle wechseln?';
+
   @ViewChild('chart', {static: true}) myDiv: ElementRef;
 
 
@@ -56,6 +69,7 @@ export class RegionenComponent implements OnInit {
     private ligaDataProviderService: LigaDataProviderService,
     private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService,
+    private notificationService: NotificationService,
     private router: Router) {
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -287,17 +301,52 @@ export class RegionenComponent implements OnInit {
   }
 
   public onSelectVerein(event: VereinDO): void {
-    this.selectedVereinDO = event[0];
-    console.log(this.selectedVereinDO);
-    this.router.navigateByUrl('/vereine/' + this.selectedVereinDO.id);
+    const notification: Notification = {
+      id: null,
+      title: this.title,
+      description: this.description,
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(null)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.selectedVereinDO = event[0];
+            this.router.navigateByUrl('/vereine/' + this.selectedVereinDO.id);
+          }
+        });
+
+    this.notificationService.showNotification(notification);
   }
 
   public onSelectLiga(event: LigaDO): void {
-    this.selectedLigaDO = event[0];
-    console.log(this.selectedLigaDO);
-    console.log('regionen selectedid: ' + this.selectedLigaDO.id);
-    this.router.navigateByUrl('/ligatabelle/' + this.selectedLigaDO.id);
-    // this.router.navigateByUrl('/ligatabelle');
+    const notification: Notification = {
+      id: null,
+      title: this.title_liga,
+      description: this.description_liga,
+      severity: NotificationSeverity.QUESTION,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.YES_NO,
+      userAction: NotificationUserAction.PENDING
+    };
+
+    this.notificationService.observeNotification(null)
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.selectedLigaDO = event[0];
+
+            console.log(this.selectedLigaDO);
+            console.log('regionen selectedid: ' + this.selectedLigaDO.id);
+
+            this.router.navigateByUrl('/ligatabelle/'+ this.selectedLigaDO.id);
+          }
+        });
+
+    this.notificationService.showNotification(notification);
+
   }
 
   public getEmptyList(): RoleVersionedDataObject[] {
