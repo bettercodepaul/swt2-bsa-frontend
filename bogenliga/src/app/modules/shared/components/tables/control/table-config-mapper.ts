@@ -44,8 +44,8 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
       inactive: 'download'
     },
     map: {
-      active: 'map-marker',
-      inactive: 'map-marker'
+      active: 'map-marked',
+      inactive: 'map-marked'
     }
 
 

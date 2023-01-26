@@ -13,9 +13,10 @@
 
   <div class="shift-buttons">
     <div class="shift-button">
-      <bla-button (onClick)="onLeftToRight()"
-                  [disabled]="!isLeftSelected()"
-                  [id]="getButtonId(idLeftList)">
+      <bla-button
+        (onClick)="onLeftToRight()"
+        [disabled]="!isLeftSelected()"
+        [id]="getButtonId(idLeftList)">
         <fa-icon icon="angle-right"></fa-icon>
       </bla-button>
     </div>

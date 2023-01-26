@@ -21,288 +21,334 @@
                  #veranstaltung_name="ngModel"
                  [(ngModel)]="currentVeranstaltung.name"
                  [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
-               data-cy="veranstaltung-detail-name">
+                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
+                 data-cy="veranstaltung-detail-name">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Liganame -->
-    <div class="form-group row">
-      <label for="ligaName"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <select type="text"
-                class="form-control"
-                required
-                id="ligaName"
-                name="ligaName"
-                #ligaName="ngModel"
-                [(ngModel)]="currentLiga"
-                data-cy="veranstaltung-detail-liganame">
-          <option [ngValue]="ligaName"
-                  *ngFor="let ligaName of allLiga"> {{ligaName.name}}</option>
-
-          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
-        </select>
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-
-
-    <!-- WettkampftypName -->
-    <div class="form-group row">
-      <label for="wettkampftyp"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <select class="form-control"
-                required
-                id="wettkampftyp"
-                name="wettkampftyp"
-                #wettkampftyp="ngModel"
-                [(ngModel)]="currentWettkampftyp"
-                data-cy="veranstaltung-detail-wettkampftyp">
-          <option [ngValue]="wettkampftyp"
-                  *ngFor="let wettkampftyp of allWettkampftyp"> {{wettkampftyp.name}}</option>
-
-          placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.PLACEHOLDER' | translate }}">
-        </select>
-
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Sportjahr -->
-    <div class="form-group row">
-      <label for="sportjahr"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="number"
-               class="form-control"
-               required
-               pattern=^(19|20)\d{2}$
-               id="sportjahr"
-               name="sportjahr"
-               #sportjahr="ngModel"
-               [(ngModel)]="currentVeranstaltung.sportjahr"
-               [class.is-invalid]="sportjahr.invalid && ! sportjahr.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.PLACEHOLDER' | translate }}"
-               data-cy="veranstaltung-detail-sportjahr">
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-    <!-- Deadline -->
-    <div class="form-group row">
-      <label for="deadline"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-9">
-        <input type="date"
-               class="form-control"
-               required
-               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-               id="deadline"
-               name="deadline"
-               #deadline="ngModel"
-               [(ngModel)]="currentVeranstaltung.meldeDeadline"
-               [class.is-invalid]="deadline.invalid && ! deadline.untouched"
-               placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.PLACEHOLDER' | translate }}"
-               data-cy="veranstaltung-detail-deadline">
-
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
-
-
-    <!-- LigaleiterEmail -->
-    <div class="form-group row">
-      <label for="ligaleiter"
-             class="col-sm-3 col-form-label">
-        <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-
-      <div class="col-sm-9">
-        <select class="form-control"
-                required
-                id="ligaleiter"
-                name="ligaleiter"
-                #ligaleiter="ngModel"
-                [(ngModel)]="currentUser"
-                data-cy="veranstaltung-detail-ligaleiter-email"
-                required placeholder="">
-          <option hidden [value]="">beispiel@email.de </option>
-          <option [ngValue]="ligaleiter"
-                  *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
-
-
-        </select>
-
-
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
+          </div>
         </div>
       </div>
 
-    </div>
 
+      <!-- Liganame -->
+      <div class="form-group row">
+        <label for="ligaName"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <select type="text"
+                  class="form-control"
+                  required
+                  id="ligaName"
+                  name="ligaName"
+                  #ligaName="ngModel"
+                  [(ngModel)]="currentLiga"
+                  data-cy="veranstaltung-detail-liganame">
+            <option [ngValue]="ligaName"
+                    *ngFor="let ligaName of allLiga"> {{ligaName.name}}</option>
 
-    <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE/ABSCHLIEßEN BUTTON -->
-    <div class="form-group row">
-      <div class="col-sm-12 button-box">
-        <bla-button *ngIf="entityExists()"
-                    [buttonType]="ButtonType.SUCCESS"
-                    [id]="'veranstaltungAbschließen'"
-                    [disabled] = "!this.checkVeranstaltungPhase()"
-                    [loading]="saveLoading"
-                    (onClick)="onFinish($event)">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH' | translate }}
-        </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'veranstaltungInitialeLigatabelle'"
-                    [disabled]="this.checkForExistingLigatabelle()"
-                    [loading]="saveLoading"
-                    (onClick)="this.createMatchesWT0($event)">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.BUTTON' | translate }}
-        </bla-button>
-
-        <bla-button *ngIf="!mannschaftExists()"
-                    [id]="'veranstaltungMannschaftSaveButton'"
-                    [disabled]="!this.checkMannschaftsTableEmpty()"
-                    [loading]="saveLoading"
-                    (onClick)="onCopyMannschaft($event)">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
-        </bla-button>
-
-
-        <bla-button *ngIf="!entityExists()"
-                    [id]="'veranstaltungSaveButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onSave($event)"
-                    data-cy="veranstaltung-detail-save-button">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
-        </bla-button>
-
-        <bla-button *ngIf="entityExists()"
-                    [id]="'veranstaltungSaveButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onWettkampftag($event)"
-                    data-cy="wettkampftage-button">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAGE' | translate }}
-        </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'veranstaltungUpdateButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)"
-                    data-cy="veranstaltung-detail-update-button">
-          {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
-        </bla-button>
-
-      </div>
-    </div>
-
-  </form>
-
-  <!-- Tags for the Mannschaft-table and the editing of it-->
-  <div *ngIf="showTable" class="row">
-    <div class="col-sm-12">
-      <div class="row">
-        <div class="col-sm-12">
-          <h4>{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.TITLE' | translate}}</h4>
+            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+          </select>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
+          </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <!-- Popup for the editing of the Sortierung-->
-          <bla-alert [visible]="(showPopup)"
-                     header="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.TITLE' | translate }}"
-                     [alertType]="AlertType.QUESTION">
-            <div class="row">
-              <div class="col-sm-9">
-                {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.DESCRIPTION1' | translate }}
-              </div>
+      <!-- Disziplinname -->
+      <div class="form-group row">
+        <label for="disziplinName"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DISZIPLIN.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <select type="text"
+                  class="form-control"
+                  required
+                  id="disziplinName"
+                  name="disziplinName"
+                  #disziplinName="ngModel"
+                  [(ngModel)]="currentDisziplin"
+                  data-cy="veranstaltung-detail-disziplinname">
+            <option [ngValue]="disziplinName"
+                    *ngFor="let disziplinName of allDisziplin"> {{disziplinName.disziplinName}}</option>
 
-              <div class="col-sm-3">
-                <b style="font-size: 2.5vh">{{this.selectedMannschaft.name}}</b>
-              </div>
-            </div>
+            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+          </select>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
 
-            <div class="row">
-              <div class="col-sm-7">
-                <p></p>
-                <select class="form-control"
-                        required
-                        id="sortierung"
-                        name="sortierung"
-                        #sortierung="ngModel"
-                        [(ngModel)]="this.selectedMannschaft.sortierung">
-                  <option *ngFor="let tbPlatz of possibleTabellenplatz"> {{tbPlatz}}</option>
-                </select>
-              </div>
 
-              <div class="col-sm-5">
-                <div class="row">
-                  <p></p>
+      <!-- WettkampftypName -->
+      <div class="form-group row">
+        <label for="wettkampftyp"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <select class="form-control"
+                  required
+                  id="wettkampftyp"
+                  name="wettkampftyp"
+                  #wettkampftyp="ngModel"
+                  [(ngModel)]="currentWettkampftyp"
+                  data-cy="veranstaltung-detail-wettkampftyp">
+            <option [ngValue]="wettkampftyp"
+                    *ngFor="let wettkampftyp of allWettkampftyp"> {{wettkampftyp.name}}</option>
+
+            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.PLACEHOLDER' | translate }}">
+          </select>
+
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTYPNAME.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Sportjahr -->
+      <div class="form-group row">
+        <label for="sportjahr"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="number"
+                 class="form-control"
+                 required
+                 pattern=^(19|20)\d{2}$
+                 id="sportjahr"
+                 name="sportjahr"
+                 #sportjahr="ngModel"
+                 [(ngModel)]="currentVeranstaltung.sportjahr"
+                 [class.is-invalid]="sportjahr.invalid && ! sportjahr.untouched"
+                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.PLACEHOLDER' | translate }}"
+                 data-cy="veranstaltung-detail-sportjahr">
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SPORTJAHR.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Deadline -->
+      <div class="form-group row">
+        <label for="deadline"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="date"
+                 class="form-control"
+                 required
+                 pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                 id="deadline"
+                 name="deadline"
+                 #deadline="ngModel"
+                 [(ngModel)]="currentVeranstaltung.meldeDeadline"
+                 [class.is-invalid]="deadline.invalid && ! deadline.untouched"
+                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.PLACEHOLDER' | translate }}"
+                 data-cy="veranstaltung-detail-deadline">
+
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MELDEDEADLINE.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
+
+      <!-- LigaleiterEmail -->
+      <div class="form-group row">
+        <label for="ligaleiter"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+
+        <div class="col-sm-9">
+          <select class="form-control"
+                  required
+                  id="ligaleiter"
+                  name="ligaleiter"
+                  #ligaleiter="ngModel"
+                  [(ngModel)]="currentUser"
+                  data-cy="veranstaltung-detail-ligaleiter-email"
+                  required
+                  placeholder="">
+            <option hidden
+                    [value]="">beispiel@email.de
+            </option>
+            <option [ngValue]="ligaleiter"
+                    *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
+
+
+          </select>
+
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.ERROR' | translate }}
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE/ABSCHLIEßEN BUTTON -->
+      <div class="form-group row">
+        <div class="col-sm-12 button-box">
+          <bla-actionbutton *ngIf="entityExists()"
+                            [buttonType]="ButtonType.SUCCESS"
+                            [id]="'veranstaltungAbschließen'"
+                            [disabled]="!this.checkVeranstaltungPhase()"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'plus'"
+                            (onClick)="onFinish($event)">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH' | translate }}
+          </bla-actionbutton>
+          <bla-actionbutton *ngIf="entityExists()"
+                            [id]="'veranstaltungInitialeLigatabelle'"
+                            [disabled]="this.checkForExistingLigatabelle()"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'plus'"
+                            (onClick)="this.createMatchesWT0($event)">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.BUTTON' | translate }}
+          </bla-actionbutton>
+
+          <bla-actionbutton *ngIf="!mannschaftExists()"
+                            [id]="'veranstaltungMannschaftSaveButton'"
+                            [disabled]="!this.checkMannschaftsTableEmpty()"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'plus'"
+                            (onClick)="onCopyMannschaft($event)">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
+          </bla-actionbutton>
+
+
+          <bla-actionbutton *ngIf="!entityExists()"
+                            [id]="'veranstaltungSaveButton'"
+                            [disabled]="!dsbMitgliedForm.valid"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'save'"
+                            (onClick)="onSave($event)"
+                            data-cy="veranstaltung-detail-save-button">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
+          </bla-actionbutton>
+
+          <bla-actionbutton *ngIf="entityExists()"
+                            [id]="'veranstaltungSaveButton'"
+                            [disabled]="!dsbMitgliedForm.valid"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'plus'"
+                            (onClick)="onWettkampftag($event)"
+                            data-cy="wettkampftage-button">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAGE' | translate }}
+          </bla-actionbutton>
+          <bla-actionbutton *ngIf="entityExists()"
+                            [id]="'veranstaltungUpdateButton'"
+                            [disabled]="!dsbMitgliedForm.valid"
+                            [loading]="saveLoading"
+                            [colorClass]="'success'"
+                            [iconClass]="'save'"
+                            (onClick)="onUpdate($event)"
+                            data-cy="veranstaltung-detail-update-button">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
+          </bla-actionbutton>
+
+        </div>
+      </div>
+
+    </form>
+
+    <!-- Tags for the Mannschaft-table and the editing of it-->
+    <div *ngIf="showTable"
+         class="row">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-12">
+            <h4>{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.TITLE' | translate}}</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- Popup for the editing of the Sortierung-->
+            <bla-alert [visible]="(showPopup)"
+                       header="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.TITLE' | translate }}"
+                       [alertType]="AlertType.QUESTION">
+              <div class="row">
+                <div class="col-sm-9">
+                  {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.DESCRIPTION1' | translate }}
                 </div>
-                <div class="row">
-                  <div class="col-sm-5"></div>
-                  <div class="col-sm-7 button-box">
-                    <bla-button
-                      (onClick)="onTableEditCancel($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.CANCEL' | translate}}</bla-button>
-                    <bla-button
-                      (onClick)="onTableEditSave($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.SAVE' | translate}}</bla-button>
+
+                <div class="col-sm-3">
+                  <b style="font-size: 2.5vh">{{this.selectedMannschaft.name}}</b>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-7">
+                  <p></p>
+                  <select class="form-control"
+                          required
+                          id="sortierung"
+                          name="sortierung"
+                          #sortierung="ngModel"
+                          [(ngModel)]="this.selectedMannschaft.sortierung">
+                    <option *ngFor="let tbPlatz of possibleTabellenplatz"> {{tbPlatz}}</option>
+                  </select>
+                </div>
+
+                <div class="col-sm-5">
+                  <div class="row">
+                    <p></p>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-5"></div>
+                    <div class="col-sm-7 button-box">
+                      <bla-actionbutton
+                        [colorClass]="'secondary'"
+                        [iconClass]="'arrow-left'"
+                        (onClick)="onTableEditCancel($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.CANCEL' | translate}}</bla-actionbutton>
+                      <bla-actionbutton
+                        [colorClass]="'success'"
+                        [iconClass]="'save'"
+                        (onClick)="onTableEditSave($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.SAVE' | translate}}</bla-actionbutton>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </bla-alert>
+            </bla-alert>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-12">
-          <bla-data-table [config]="tableConfig"
-                          [rows]="rows"
-                          [loading]="loading"
-                          (onEditEntry)="onEdit($event)"
-                          (onDeleteEntry)="onDeleteMannschaft($event)">
-          </bla-data-table>
+        <div class="row">
+          <div class="col-sm-12">
+            <bla-data-table [config]="tableConfig"
+                            [rows]="rows"
+                            [loading]="loading"
+                            (onEditEntry)="onEdit($event)"
+                            (onDeleteEntry)="onDeleteMannschaft($event)">
+            </bla-data-table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 </bla-common-dialog>
