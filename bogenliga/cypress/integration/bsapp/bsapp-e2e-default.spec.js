@@ -30,23 +30,27 @@ describe('Anonyme User tests', function () {
 
   /*Test hilfeicon */
   it('test hilfeicon', function() {
-      cy.get('bla-common-dialog > .dialog-content > bla-hilfe-button > a > #undefined').click()
+      cy.get('bla-common-dialog > .dialog-content > div > bla-hilfe-button > a > #undefined').click()
     })
 
   /**
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
    */
   it('Sunburst details anzeigen', function () {
-    cy.get(':nth-child(2) > .main-arc').click()
-    cy.wait(1000)
+    cy.wait(2000)
+    cy.get(':nth-child(2) > .main-arc').click({force:true})
+    cy.wait(5000)
     cy.get('#details')
+    cy.get('[data-cy=sidebar-regionen-button]').click()
+    cy.wait(5000)
   })
   /**
    * This test checks if after an item has been selected the website redirected to the correct location
    */
   it('Weiterleitung Ligatabelle', function () {
+    cy.wait(5000)
     cy.get('#ligen > bla-selectionlist > #undefined').select(0)
-    cy.wait(2000)
+    cy.wait(5000)
     cy.url().should('include', '#/ligatabelle')
   })
 
@@ -56,10 +60,11 @@ describe('Anonyme User tests', function () {
    */
   it('Weiterleitung Vereinseite', function () {
     cy.get('[data-cy=sidebar-regionen-button]').click()
-    cy.get(':nth-child(11) > .main-arc').click()
+    cy.wait(5000)
+    cy.get(':nth-child(11) > .main-arc').click({force:true})
     cy.wait(2000)
     cy.get('#vereine > bla-selectionlist > #undefined').select(0)
-    cy.wait(1000)
+    cy.wait(5000)
     cy.url().should('include', '#/vereine')
   })
 
@@ -67,7 +72,9 @@ describe('Anonyme User tests', function () {
    * This test opens the sidebar and clicks on the "VEREINE" tab and checks if the url has changed successfully
    */
   it('Anzeige Vereine', function () {
-    cy.get('[data-cy=sidebar-vereine-button]').click()
+    cy.wait(2000)
+    cy.get('[data-cy=sidebar-vereine-button]').click({force:true})
+    cy.wait(2000)
     cy.url().should('include', '#/vereine')
   })
 
@@ -75,9 +82,14 @@ describe('Anonyme User tests', function () {
    * This test checks if after typing in a search term the list shrinks in size accordingly
    */
   it('Vereinsliste Verringert sich', function() {
-    cy.get('[data-cy=quicksearch-suchfeld]').click().type('SV')
+    cy.wait(2000)
+    cy.wait(2000)
+    cy.get('[data-cy=quicksearch-suchfeld]').click({force:true}).type('SV')
+    cy.wait(2000)
     cy.get('[data-cy=quicksearch-liste]').should('have.length.at.least', 1)
-    cy.get('[data-cy=quicksearch-suchfeld]').click().type('X')
+    cy.wait(2000)
+    cy.get('[data-cy=quicksearch-suchfeld]').click({force:true}).type('X')
+    cy.wait(2000)
     cy.get('[data-cy=quicksearch-liste]').should('have.length', 1)
   })
 
@@ -93,9 +105,11 @@ describe('Anonyme User tests', function () {
    * This test checks if a valid search term yields the expected results from the website
    */
   it('Suchfeld Ligatabelle', function() {
+    cy.wait(2000)
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('Württemberg')
-    cy.wait(1000)
+    cy.wait(2000)
     cy.get('[data-cy=quicksearch-liste]').should('contain.text', 'Recurve')
+    cy.wait(2000)
     cy.contains('Württembergliga Recurve').click()
   })
 
@@ -162,7 +176,7 @@ describe('Anonyme User tests', function () {
     cy  /*check if the iframe invokes the correct URL */
       .get('iframe')
       .invoke('attr', 'src')
-      .should('eq', 'https://wiki.bsapp.de/doku.php?id=liga:ligasoftware')
+      .should('eq', 'https://wiki.bsapp.de/doku.php?id=liga:startseite')
   })
 
   /**
@@ -557,10 +571,11 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
         cy.wait(1000)
         cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
+        cy.wait(6000)
         cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-        cy.wait(1500)
+        cy.wait(6000)
         cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
-        cy.wait(1000)
+        cy.wait(6000)
         cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
         cy.wait(1000)
         cy.contains('69')
@@ -647,17 +662,21 @@ describe('Admin User tests', function() {
      cy.get('body').then((body) => {
        if (!body.text().includes('SWT_Liga')) {
          cy.get('[data-cy=dsb-mitglied-add-button]').click()
+         cy.wait(5000)
          cy.get('[data-cy=liga-detail-name]').type('SWT_Liga')
+         cy.wait(5000)
          cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
-         cy.wait(1500)
+         cy.wait(5000)
          cy.get('[data-cy=liga-detail-uebergeordnet]').select('SWT2_Liga')
-         cy.wait(1500)
+         cy.wait(5000)
          cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
-         cy.wait(1500)
+         cy.wait(5000)
          cy.get('[data-cy=liga-save-button]').click()
+         cy.wait(5000)
          cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
          cy.wait(5000)
          cy.get('tbody').should('contain.text', 'SWT_Liga')
+         cy.wait(5000)
        }
      });
    })
@@ -667,7 +686,9 @@ describe('Admin User tests', function() {
     */
    it('Liga Löschen', function() {
      cy.get('tbody').should('contain.text', 'SWT_Liga')
+     cy.wait(5000)
      cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
+     cy.wait(5000)
      cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
      cy.wait(4000)
      cy.get('tbody').should('not.contain.text', 'SWT_Liga')

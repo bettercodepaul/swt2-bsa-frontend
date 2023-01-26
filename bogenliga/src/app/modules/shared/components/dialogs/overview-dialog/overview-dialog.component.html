@@ -12,12 +12,19 @@
 
     </bla-quicksearch>
     <div class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
-      <button class="btn btn-success"
+      <!--<button class="btn btn-success"
               routerLink="add"
               data-cy="dsb-mitglied-add-button">
         <fa-icon icon="plus"></fa-icon>
         <span> Neu</span>
-      </button>
+      </button>-->
+      <bla-actionbutton
+        routerLink="add"
+        data-cy="dsb-mitglied-add-button"
+        [colorClass]="'success'"
+        [iconClass]="'plus'">
+        Neu
+      </bla-actionbutton>
     </div>
   </section>
 

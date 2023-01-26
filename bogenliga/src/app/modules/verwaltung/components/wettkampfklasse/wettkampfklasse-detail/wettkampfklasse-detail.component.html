@@ -21,120 +21,124 @@
                  name="wettkampfKlasseNr"
                  #wettkampfKlasseNr="ngModel"
                  [(ngModel)]="currentWettkampfklasse.klasseNr"
-               [class.is-invalid]="wettkampfKlasseNr.invalid && !wettkampfKlasseNr.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.PLACEHOLDER' | translate }}"
-               data-cy="wettkampfklasse-nummer">
+                 [class.is-invalid]="wettkampfKlasseNr.invalid && !wettkampfKlasseNr.untouched"
+                 placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.PLACEHOLDER' | translate }}"
+                 data-cy="wettkampfklasse-nummer">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_NR.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Name der Wettkampfklasse -->
-    <div class="form-group row">
-      <label for="wettkampfKlasseName"
-             class="col-sm-4 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-8">
-        <input type="text"
-               class="form-control"
-               required
-               pattern="(?=.*[A-Za-zäÄüÜöÖß])[A-Za-zäÄüÜöÖß\.\-\ ]{1,50}$"
-               id="wettkampfKlasseName"
-               name="wettkampfKlasseName"
-               #wettkampfKlasseName="ngModel"
-               [(ngModel)]="currentWettkampfklasse.klasseName"
-               [class.is-invalid]="wettkampfKlasseName.invalid && !wettkampfKlasseName.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.PLACEHOLDER' | translate }}"
-               data-cy="wettkampfklasse-name">
+      <!-- Name der Wettkampfklasse -->
+      <div class="form-group row">
+        <label for="wettkampfKlasseName"
+               class="col-sm-4 col-form-label">
+          <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-8">
+          <input type="text"
+                 class="form-control"
+                 required
+                 pattern="(?=.*[A-Za-zäÄüÜöÖß])[A-Za-zäÄüÜöÖß\.\-\ ]{1,50}$"
+                 id="wettkampfKlasseName"
+                 name="wettkampfKlasseName"
+                 #wettkampfKlasseName="ngModel"
+                 [(ngModel)]="currentWettkampfklasse.klasseName"
+                 [class.is-invalid]="wettkampfKlasseName.invalid && !wettkampfKlasseName.untouched"
+                 placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.PLACEHOLDER' | translate }}"
+                 data-cy="wettkampfklasse-name">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPFNAME.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
 
-    <!-- Wettkampf Jahrgang von -->
-    <div class="form-group row">
-      <label for="wettkampfKlasseJahrgangMin"
-             class="col-sm-4 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-8">
-        <input type="text"
-               class="form-control"
-               required
-               pattern="[0-9]{4,4}"
-               maxlength="4"
-               id="wettkampfKlasseJahrgangMin"
-               name="wettkampfKlasseJahrgangMin"
-               #wettkampfKlasseJahrgangMin="ngModel"
-               [(ngModel)]="currentWettkampfklasse.klasseJahrgangMin"
-               [class.is-invalid]="wettkampfKlasseJahrgangMin.invalid && !wettkampfKlasseJahrgangMin.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.PLACEHOLDER' | translate }}"
-               data-cy="wettkampfklassen-jahrgang-von-button">
+      <!-- Wettkampf Jahrgang von -->
+      <div class="form-group row">
+        <label for="wettkampfKlasseJahrgangMin"
+               class="col-sm-4 col-form-label">
+          <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-8">
+          <input type="text"
+                 class="form-control"
+                 required
+                 pattern="[0-9]{4,4}"
+                 maxlength="4"
+                 id="wettkampfKlasseJahrgangMin"
+                 name="wettkampfKlasseJahrgangMin"
+                 #wettkampfKlasseJahrgangMin="ngModel"
+                 [(ngModel)]="currentWettkampfklasse.klasseJahrgangMin"
+                 [class.is-invalid]="wettkampfKlasseJahrgangMin.invalid && !wettkampfKlasseJahrgangMin.untouched"
+                 placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.PLACEHOLDER' | translate }}"
+                 data-cy="wettkampfklassen-jahrgang-von-button">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MIN.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Wettkampf Jahrgang bis -->
-    <div class="form-group row">
-      <label for="wettkampfKlasseJahrgangMax"
-             class="col-sm-4 col-form-label">
-        <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.LABEL' | translate }}</span>
-        <span> *</span>
-      </label>
-      <div class="col-sm-8">
-        <input type="text"
-               class="form-control"
-               required
-               pattern="[0-9]{4,4}"
-               maxlength="4"
-               id="wettkampfKlasseJahrgangMax"
-               name="wettkampfKlasseJahrgangMax"
-               #wettkampfKlasseJahrgangMax="ngModel"
-               [(ngModel)]="currentWettkampfklasse.klasseJahrgangMax"
-               [class.is-invalid]="wettkampfKlasseJahrgangMax.invalid && !wettkampfKlasseJahrgangMax.untouched"
-               placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.PLACEHOLDER' | translate }}"
-               data-cy="wettkampfklassen-jahrgang-bis-button">
+      <!-- Wettkampf Jahrgang bis -->
+      <div class="form-group row">
+        <label for="wettkampfKlasseJahrgangMax"
+               class="col-sm-4 col-form-label">
+          <span>{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-8">
+          <input type="text"
+                 class="form-control"
+                 required
+                 pattern="[0-9]{4,4}"
+                 maxlength="4"
+                 id="wettkampfKlasseJahrgangMax"
+                 name="wettkampfKlasseJahrgangMax"
+                 #wettkampfKlasseJahrgangMax="ngModel"
+                 [(ngModel)]="currentWettkampfklasse.klasseJahrgangMax"
+                 [class.is-invalid]="wettkampfKlasseJahrgangMax.invalid && !wettkampfKlasseJahrgangMax.untouched"
+                 placeholder="{{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.PLACEHOLDER' | translate }}"
+                 data-cy="wettkampfklassen-jahrgang-bis-button">
 
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.ERROR' | translate }}
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.WETTKAMPF_JAHRGANG_MAX.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group row">
-      <div class="col-sm-4"></div>
-      <div class="col-sm-8 button-box">
+      <div class="form-group row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-8 button-box">
 
 
-        <bla-button *ngIf="!entityExists()"
-                    [id]="'wettkampfKlasseSaveButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onSave($event)"
-                    [attr.data-cy]="'wettkampfklassen-save-button'">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.SAVE' | translate }}
-        </bla-button>
-        <bla-button *ngIf="entityExists()"
-                    [id]="'wettkampfKlasseUpdateButton'"
-                    [disabled]="!dsbMitgliedForm.valid"
-                    [loading]="saveLoading"
-                    (onClick)="onUpdate($event)"
-                    [attr.data-cy]="'wettkampfklassen-update-button'">
-          {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.UPDATE' | translate }}
-        </bla-button>
+          <bla-actionbutton *ngIf="!entityExists()"
+                            [id]="'wettkampfKlasseSaveButton'"
+                            [disabled]="!dsbMitgliedForm.valid"
+                            [loading]="saveLoading"
+                            (onClick)="onSave($event)"
+                            [colorClass]="'success'"
+                            [iconClass]="'plus'"
+                            [attr.data-cy]="'wettkampfklassen-save-button'">
+            {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.SAVE' | translate }}
+          </bla-actionbutton>
+          <bla-actionbutton *ngIf="entityExists()"
+                            [id]="'wettkampfKlasseUpdateButton'"
+                            [disabled]="!dsbMitgliedForm.valid"
+                            [loading]="saveLoading"
+                            (onClick)="onUpdate($event)"
+                            [colorClass]="'success'"
+                            [iconClass]="'plus'"
+                            [attr.data-cy]="'wettkampfklassen-update-button'">
+            {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.UPDATE' | translate }}
+          </bla-actionbutton>
+        </div>
       </div>
-    </div>
     </form>
   </div>
- </bla-common-dialog>
+</bla-common-dialog>

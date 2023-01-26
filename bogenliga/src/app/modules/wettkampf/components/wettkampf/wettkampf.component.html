@@ -145,42 +145,50 @@
     </div>
 
     <!-- Button -->
-    <div id="Button">
+    <bla-col-layout id="Button">
       <!-- Button - Alle Mannschaften anzeigen -->
-      <bla-button
+      <bla-actionbutton
         [id]="'showResultsButton'"
         [loading]="loadingData"
+        [colorClass]="'primary'"
+        [iconClass]="'poll'"
         (onClick)="loadAllErgebnisse(undefined);"
         data-cy="alle-mannschaften-anzeigen-button">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
 
-      </bla-button>
+      </bla-actionbutton>
       &nbsp;
       <!-- Button - Aktuelle Mannschaft anzeigen -->
-      <bla-button
+      <bla-actionbutton
         [id]="'showResultsButton'"
         [loading]="loadingData"
+        [colorClass]="'primary'"
+        [iconClass]="'poll'"
         (onClick)="gesamt = false; loadErgebnisForMannschaft(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
-      </bla-button>
+      </bla-actionbutton>
       &nbsp;
       <!-- Button - Einzelstatistik anzeigen -->
-      <bla-button
+      <bla-actionbutton
         [id]="'showResultsButton'"
         [loading]="loadingData"
+        [colorClass]="'primary'"
+        [iconClass]="'poll'"
         (onClick)="gesamt = false; this.loadEinzelstatistik(this.currentMannschaft);"
         data-cy="einzelstatistik-anzeigen-button">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEINZEL.LABEL' | translate }}
-      </bla-button>
+      </bla-actionbutton>
       &nbsp;
       <!-- Button - Einzelstatistik Gesamt anzeigen -->
-      <bla-button
+      <bla-actionbutton
         [id]="'showResultsButton'"
         [loading]="loadingData"
+        [colorClass]="'primary'"
+        [iconClass]="'poll'"
         (onClick)="gesamt = true; this.loadGesamtstatistik(this.currentMannschaft);"
         data-cy="einzelstatistik-gesamt-anzeigen-button">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEINZELGESAMT.LABEL' | translate }}
-      </bla-button>
+      </bla-actionbutton>
       &nbsp;
       <!-- Button - Einzelstatistik als PDF -->
       <bla-download-button
@@ -202,7 +210,7 @@
         [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
       </bla-download-button>
 
-    </div>
+    </bla-col-layout>
 <!-- popup -->
     <div class="overlay" *ngIf="popup">
       <div class="popup">

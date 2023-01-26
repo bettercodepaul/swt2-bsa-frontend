@@ -6,6 +6,7 @@ export class LigaDO implements VersionedDataObject {
   version: number;
   name: string;
   regionId: number;
+  disziplinId: number;
   regionName: string;
   ligaUebergeordnetId: number;
   ligaUebergeordnetName: string;
