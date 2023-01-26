@@ -57,7 +57,7 @@ $inner-shadow:inset 0px 11px 8px -10px $light-gray, inset 0px -11px 8px -10px $l
   overflow-y: scroll; // overflow in y direction is scrollable
  // -ms-overflow-style: none; // scrollbar wont be displayed on firefox
   scrollbar-width: thin;
-  scrollbar-color: $light-gray $true-white
+  scrollbar-color: $light-gray $true-white;
 
 }
 //Scrollbar styling
@@ -279,8 +279,7 @@ div.sidebar-text-toggle.flexBox{
     transition-duration: 0.4s;
     transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
     transition-property: background-color, visibility;
-    top: 4.3em;
-    padding-top: 10px;
+    top: 52px;
     left: 0;
     right: 0;
     bottom: 0;
