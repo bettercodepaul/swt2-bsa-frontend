@@ -47,9 +47,6 @@ import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class'
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 
-import {NOTIFICATION_DELETE_LIGA} from '@verwaltung/components';
-
-
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_detail_delete';
@@ -695,6 +692,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     }
   }
 
+  currentDisziplin: any;
+  allDisziplin: any;
 
   // Creates Initial Matches for a Veranstaltung
   public createMatchesWT0(event: any) {
