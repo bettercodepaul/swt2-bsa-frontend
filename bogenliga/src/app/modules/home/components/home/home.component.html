@@ -1,30 +1,30 @@
 <div class="default-padding">
-      <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
-      <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
+  <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
+  <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
 
 
-  <!-- Quicklinks
+
+
+  <!-- Quicklinks-->
   <div class="simple-section">
-    <div class="quicklink-wrapper
-    <div class="quicklink-container">
-      <div class="quicklink soft-shadow"></div>
-      <h3>{{'REGIONEN.REGIONEN.TITLE' | translate}}</h3>
-    </div>
+    <div class="quicklink-wrapper">
+      <div class="quicklink-container">
+        <div class="quicklink soft-shadow"></div>
+        <h3>Materialien zum Drucken</h3>
+      </div>
 
-    <div class="quicklink-container">
-      <div class="quicklink soft-shadow"></div>
-      <h3>{{'MANNSCHAFTEN.MANNSCHAFTEN.TITLE' | translate}}</h3>
-    </div>
+      <div class="quicklink-container">
+        <div class="quicklink soft-shadow"></div>
+        <h3>{{'MANNSCHAFTEN.MANNSCHAFTEN.TITLE' | translate}}</h3>
+      </div>
 
-    <div class="quicklink-container">
-      <div class="quicklink soft-shadow"></div>
-      <h3>{{'VEREINE.VEREINE.TITLE' | translate}}</h3>
-    </div>
+      <div class="quicklink-container">
+        <div class="quicklink soft-shadow"></div>
+        <h3>Neues DSB Mitglied</h3>
+      </div>
   </div>
-  </div>
+</div>
 
-  <mat-divider></mat-divider>
--->
 
   <!-- Anstehende Wettkämpfe -->
   <div class="simple-section">
@@ -72,4 +72,52 @@
     </div>
   </div>
 
+  <mat-divider></mat-divider>
+
+  <!-- FAQs -->
+  <div class="simple-section">
+    <h2>{{ 'HOME.HOME.FAQ.TITLE' | translate }}</h2>
+    <mat-accordion displayMode="flat" multi>
+
+      <!-- FAQ 1 -->
+      <mat-expansion-panel >
+        <mat-expansion-panel-header class="faq-panel">
+          <mat-panel-title class="panel-header">
+            {{ 'HOME.HOME.FAQ.FAQ1.TITLE' | translate }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="faq-text">{{ 'HOME.HOME.FAQ.FAQ1.CONTENT' | translate }}</p>
+        <mat-action-row>
+          <bla-button>Neue Veranstaltung anlegen</bla-button>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <!-- FAQ 2 -->
+      <mat-expansion-panel >
+        <mat-expansion-panel-header class="faq-panel">
+          <mat-panel-title class="panel-header">
+            {{ 'HOME.HOME.FAQ.FAQ2.TITLE' | translate }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p class="faq-text">{{ 'HOME.HOME.FAQ.FAQ2.CONTENT' | translate }}</p>
+      </mat-expansion-panel>
+
+      <!-- FAQ 3 -->
+      <mat-expansion-panel >
+        <mat-expansion-panel-header class="faq-panel">
+          <mat-panel-title class="panel-header">
+            {{ 'HOME.HOME.FAQ.FAQ3.TITLE' | translate }}
+          </mat-panel-title>
+          <mat-panel-description class="subtitle">
+            {{ 'HOME.HOME.FAQ.FAQ3.DESCRIPTION' | translate }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p class="faq-text">{{ 'HOME.HOME.FAQ.FAQ3.CONTENT' | translate }}</p>
+      </mat-expansion-panel>
+
+
+    </mat-accordion>
   </div>
+
+
+</div>

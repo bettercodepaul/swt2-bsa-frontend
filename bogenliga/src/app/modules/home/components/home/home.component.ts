@@ -16,12 +16,15 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
 
+
 @Component({
   selector:    'bla-home',
   templateUrl: './home.component.html',
   styleUrls:   ['./home.component.scss']
 })
 export class HomeComponent extends CommonComponentDirective implements OnInit {
+
+
 
   public config = HOME_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;

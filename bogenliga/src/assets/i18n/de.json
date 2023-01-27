@@ -45,7 +45,29 @@
       "NEWS": "Neues aus dem Bogensport",
       "BOX1HEADING": "Schüler- und Jugend- Cup 2018",
       "BOX1DATE": "2. Mai 2018",
-      "BOX1CONTENT": "Seid dabei, wenn wir am 20. & 21. Oktober 2018 im WSV- Schulungszentrum in Ruit gemeinsam ein tolles Wochenende rund um das Sport- und Bogenschießen erleben und jede Menge Spaß haben werden.Beim Schüler- und Jugend- Cup können Jungschützen mit dem Bogen, dem Luftgewehr sowie der Luftpistole und dem Lichtgewehr sowie der Lichtpistole ihr Können in spannenden Wettkämpfen, Geschicklichkeits- und Konzentrationsübungen unter Beweis stellen.Detaillierte Informationen zu den Altersklassen und den Disziplinen, sowie den Meldebogen findet Ihr hier. Wir freuen uns auf euch!"
+      "BOX1CONTENT": "Seid dabei, wenn wir am 20. & 21. Oktober 2018 im WSV- Schulungszentrum in Ruit gemeinsam ein tolles Wochenende rund um das Sport- und Bogenschießen erleben und jede Menge Spaß haben werden.Beim Schüler- und Jugend- Cup können Jungschützen mit dem Bogen, dem Luftgewehr sowie der Luftpistole und dem Lichtgewehr sowie der Lichtpistole ihr Können in spannenden Wettkämpfen, Geschicklichkeits- und Konzentrationsübungen unter Beweis stellen.Detaillierte Informationen zu den Altersklassen und den Disziplinen, sowie den Meldebogen findet Ihr hier. Wir freuen uns auf euch!",
+
+      "FAQ": {
+        "TITLE": "FAQ",
+        "FAQ1": {
+          "TITLE": "Wie erstelle ich eine neue Wettkampfveranstaltung?",
+          "DESCRIPTION": "Anlegen und Durchführen neuer Veranstaltungen",
+          "CONTENT": "Lorem"
+        },
+
+        "FAQ2": {
+          "TITLE": "Die Mitglieder einer Mannschaft haben sich geändert. Wie trage ich das ein?",
+          "DESCRIPTION": "Bearbeiten existierender Mannschaften",
+          "CONTENT": "Wähle zunächst den Verein, zu dem die Mannschaft gehört: Klicke hierzu unter Verwaltung auf die Vereine Karte und wähle den gewünschten Verein aus der Tabelle. Klicke nun auf das Editieren-Symbol. Aus der Auflistung der Mannschaften des Vereins, klicke auf das entsprechende Editieren Symbol. Du siehst nun die Mitglieder dieser Mannschaft. Mit einem Klick auf das Löschen-Symbol, kannst Du Mitglieder entfernen und mit dem Neu-Button neue Mitglieder hinzufügen."
+
+        },
+
+        "FAQ3": {
+          "TITLE": "Wo finde ich Dokumente zum Ausdrucken für den Wettkampftag?",
+          "DESCRIPTION": "Schusszettel, Setzliste, Bogenkontrollliste & Co.",
+          "CONTENT": "Unter Wettkampfdurchführung (nach Auswahl des Wettkampftages) findest Du folgende Dokumente als PDF zum Ausdrucken: Setzliste, Schusszettel, Bogenkontrollliste, Meldezettel. Hier findest Du Lizensen für Mannschaften. Hier findest Du Rückennummern für Schützen."
+        }
+      }
     },
     "IMPRESSUM": {
       "TITLE": "Impressum"

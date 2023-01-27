@@ -8,6 +8,7 @@ import {ImpressumComponent} from './components/impressum/impressum.component';
 import {HomeGuard} from './guards/home.guard';
 import {HOME_ROUTES} from './home.routing';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MatDividerModule} from '@angular/material/divider';
     RouterModule.forChild(HOME_ROUTES),
     SharedModule.forChild(),
     FormsModule,
-    MatDividerModule
+    MatDividerModule,
+    MatExpansionModule
   ],
   declarations: [HomeComponent, ImpressumComponent],
   providers:    [HomeGuard] // provide Guards here

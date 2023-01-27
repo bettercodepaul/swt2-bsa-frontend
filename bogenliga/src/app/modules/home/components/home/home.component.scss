@@ -43,6 +43,8 @@ h1{
   .quicklink{
     background-color: $hero-blue;
     border-color: $light-gray;
+    display: flex;
+    align-items: center;
   }
   h3{
     color: $hero-blue;
@@ -61,6 +63,15 @@ h1{
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: $light-gray;
+}
+
+/*FAQ STYLES*/
+
+.panel-header{
+  font-weight: bold;
+}
+.faq-text{
+  color: $dark-gray;
 }
 
 
