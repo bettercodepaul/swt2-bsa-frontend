@@ -98,7 +98,7 @@ export class ErrorHandlingService {
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
-        userAction:  NotificationUserAction.PENDING
+        userAction:  NotificationUserAction.ACCEPTED
       };
     } else {
       notification = {
