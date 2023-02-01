@@ -49,7 +49,6 @@ export class CurrentUserService {
   }
 
   public loadCurrentUser(): void {
-    this.observeSessionExpiredNotifications();
     this.currentUserPermissions = [];
     console.log('Load current user from storage');
     const currentUserValue = this.localDataProviderService.get(CURRENT_USER_KEY);
@@ -88,8 +87,6 @@ export class CurrentUserService {
   }
 
   public getJsonWebToken(): string {
-    this.observeSessionExpiredNotifications();
-
     return this.getCurrentUser().jwt;
 
   }
@@ -145,7 +142,6 @@ export class CurrentUserService {
   }
 
   public isLoggedIn(): boolean {
-    this.observeSessionExpiredNotifications();
     return this.isUserLoggedIn;
   }
 
@@ -175,7 +171,6 @@ export class CurrentUserService {
   private observeUserState() {
     this.store.pipe(select((state) => state.userState))
         .subscribe((state: UserState) => {
-          // this.observeSessionExpiredNotifications();
           this.isUserLoggedIn = state.isLoggedIn;
           this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
           if (this.currentUser.email === DEFAULT_USERNAME) {
@@ -207,7 +202,6 @@ export class CurrentUserService {
   }
 
   private getCurrentUser(): UserSignInDTO {
-    this.observeSessionExpiredNotifications();
     return this.currentUser;
   }
 
