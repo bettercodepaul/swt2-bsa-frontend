@@ -175,7 +175,7 @@ export class CurrentUserService {
   private observeUserState() {
     this.store.pipe(select((state) => state.userState))
         .subscribe((state: UserState) => {
-          this.observeSessionExpiredNotifications();
+          // this.observeSessionExpiredNotifications();
           this.isUserLoggedIn = state.isLoggedIn;
           this.currentUser = isNullOrUndefined(state.user) ? new UserSignInDTO() : state.user;
           if (this.currentUser.email === DEFAULT_USERNAME) {
