@@ -37,7 +37,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                        console.log('Exipred Token', error);
                        this.router.navigateByUrl('/user/login');
                        this.currentUserService.logout();
-                       error.errorCode = 'SESSION_EXPIRED';
+                       error.errorCode = 'NO_SESSION_ERROR';
                        error.errorMessage = 'Your Session Token was expired pleas login again';
                        return this.errorHandlingService.handleHttpError(error);
                        // caught and handle the error
