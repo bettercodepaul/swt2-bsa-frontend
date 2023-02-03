@@ -33,10 +33,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                      // if it is a connection error, it could be a masked error indicated by an expired session token
                      // this is very likely, so the user should be routed to the login-site again and
                      // of course for the system itself the currentUser should be logged out
-                     if (error.status === 401) {
+                     if (error.statusCode === 401) {
                        console.log('Exipred Token', error);
                        this.router.navigateByUrl('/user/login');
                        this.currentUserService.logout();
+                       error.errorCode = 'SESSION_EXPIRED';
+                       error.errorMessage = 'Your Session Token was expired pleas login again';
                        return this.errorHandlingService.handleHttpError(error);
                        // caught and handle the error
                        // return of(error);
