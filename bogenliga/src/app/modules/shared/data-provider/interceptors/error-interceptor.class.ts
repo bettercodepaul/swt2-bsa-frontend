@@ -5,6 +5,7 @@ import {catchError, retry} from 'rxjs/operators';
 import {ErrorHandlingService} from '../../services/error-handling';
 import {Router} from '@angular/router';
 import {CurrentUserService} from '@shared/services';
+import {isNullOrUndefined} from "@shared/functions";
 
 const MAX_RETRIES = 2;
 
@@ -42,6 +43,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                      //TODO More research is needed to why the server return different status codes
                      if (error.status === 0 || error.status === 401) {
                        console.log('Exipred Token', error);
+                       if (isNullOrUndefined(error.error)) {
+                         error.error = {};
+                       }
                        error.error.errorCode = 'NO_SESSION_ERROR';
                        error.error.errorMessage = 'Your Session Token is expired pleas login again';
                        error.status = 401;
