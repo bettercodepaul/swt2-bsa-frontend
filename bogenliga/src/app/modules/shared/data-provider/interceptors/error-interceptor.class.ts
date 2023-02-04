@@ -33,12 +33,18 @@ export class ErrorInterceptor implements HttpInterceptor {
                      // if it is a connection error, it could be a masked error indicated by an expired session token
                      // this is very likely, so the user should be routed to the login-site again and
                      // of course for the system itself the currentUser should be logged out
-                     if (error.statusCode === 401) {
+
+                     //The backend is not able to send custom messages due to security aspects in the spring filter configurations
+                     //Therefore is a special handling needed to provide the user with the correct error message
+                     //for an expired jwt token
+
+                     //TODO Locally the backend returns 0 as status code and on the DEV-Environment it returns 401
+                     //TODO More research is needed to why the server return different status codes
+                     if (error.status === 0 || error.status === 401) {
                        console.log('Exipred Token', error);
-                       this.router.navigateByUrl('/user/login');
-                       this.currentUserService.logout();
-                       error.errorCode = 'NO_SESSION_ERROR';
-                       error.errorMessage = 'Your Session Token was expired pleas login again';
+                       error.error.errorCode = 'NO_SESSION_ERROR';
+                       error.error.errorMessage = 'Your Session Token is expired pleas login again';
+                       error.status = 401;
                        return this.errorHandlingService.handleHttpError(error);
                        // caught and handle the error
                        // return of(error);
