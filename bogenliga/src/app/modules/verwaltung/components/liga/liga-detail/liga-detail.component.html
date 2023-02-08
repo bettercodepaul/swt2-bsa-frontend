@@ -146,34 +146,31 @@
         <div class="col-sm-9 button-box">
 
 
-          <bla-actionbutton *ngIf="!entityExists()"
+          <bla-actionbutton-success *ngIf="!entityExists()"
                             [id]="'ligaSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
                             [iconClass]="'save'"
                             (onClick)="onSave($event)"
                             data-cy="liga-save-button">
             {{ 'MANAGEMENT.LIGA_DETAIL.FORM.SAVE' | translate }}
-          </bla-actionbutton>
-          <bla-actionbutton *ngIf="entityExists()"
+          </bla-actionbutton-success>
+          <bla-actionbutton-success *ngIf="entityExists()"
                             [id]="'ligaUpdateButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
                             [iconClass]="'save'"
                             (onClick)="onUpdate($event)"
                             data-cy="liga-update-button">
             {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UPDATE' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-success>
 
-          <bla-actionbutton *ngIf="entityExists()"
+          <bla-actionbutton-danger *ngIf="entityExists()"
                       [loading]="deleteLoading"
-                            [colorClass]="'danger'"
                             [iconClass]="'calendar-minus'"
                       (onClick)="onDelete($event)">
             {{ 'MANAGEMENT.LIGA_DETAIL.FORM.DELETE' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-danger>
         </div>
       </div>
     </form>

@@ -102,12 +102,12 @@
                 <label class="form-check-label"
                        for="loginRememberMe">{{ 'USER.LOGIN.REMEMBER_ME.LABEL' | translate }}</label>
               </div>
-              <bla-button [id]="'loginButton'"
-                          [buttonSize]="ButtonSize.LARGE_BLOCK"
+              <bla-actionbutton-primary [id]="'loginButton'"
                           [disabled]="!loginForm.valid"
                           [loading]="loading"
+                          [iconClass]="'key'"
                           (onClick)="onLogin($event)">{{ 'USER.LOGIN.BUTTON.LOGIN' | translate }}
-              </bla-button>
+              </bla-actionbutton-primary>
               <br>
               <bla-button [buttonSize]="ButtonSize.SMALL"
                           [disabled]="!isSpotterAuthenticationEnabled"

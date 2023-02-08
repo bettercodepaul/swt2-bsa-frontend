@@ -180,7 +180,7 @@
         <div class="col-sm-9 button-box">
 
 
-          <bla-actionbutton (onClick)="onSave($event)"
+          <bla-actionbutton-success (onClick)="onSave($event)"
                             *ngIf="!entityExists()"
                             [disabled]="!vereineForm.valid"
                             [id]="'vereinSaveButton'"
@@ -189,8 +189,8 @@
                             [iconClass]="'plus'"
                             data-cy="vereine-add-button">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.SAVE' | translate }}
-          </bla-actionbutton>
-          <bla-actionbutton (onClick)="onUpdate($event)"
+          </bla-actionbutton-success>
+          <bla-actionbutton-success (onClick)="onUpdate($event)"
                             *ngIf="entityExists()"
                             [disabled]="!vereineForm.valid"
                             [id]="'vereinUpdateButton'"
@@ -199,16 +199,16 @@
                             [iconClass]="'plus'"
                             data-cy="vereine-update-button">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.UPDATE' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-success>
 
-          <bla-actionbutton (onClick)="onDelete($event)"
+          <bla-actionbutton-danger (onClick)="onDelete($event)"
                             *ngIf="entityExists()"
                             [buttonType]="ButtonType.DANGER"
                             [loading]="deleteLoading"
                             [colorClass]="'danger'"
-                            [iconClass]="'plus'">
+                            [iconClass]="'minus'">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.DELETE' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-danger>
         </div>
       </div>
     </form>
@@ -216,13 +216,13 @@
     <div *ngIf="entityExists()">
       <h5> Mannschaftsübersicht</h5>
       <div class="overview-dialog-add">
-        <bla-actionbutton
+        <bla-actionbutton-success
           [colorClass]="'success'"
           [iconClass]="'plus'"
           data-cy="vereine-details-add-mannschaft-button"
           routerLink="add">
           <span> Neu</span>
-        </bla-actionbutton>
+        </bla-actionbutton-success>
       </div>
       <bla-data-table (onDeleteEntry)="onDeleteMannschaft($event)"
                       (onDownloadLizenzenEntry)="onDownloadLizenzen($event)"

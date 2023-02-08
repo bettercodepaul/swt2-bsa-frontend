@@ -117,34 +117,31 @@
       <div class="col-sm-9 button-box">
 
 
-        <bla-actionbutton *ngIf="!entityExists()"
+        <bla-actionbutton-success *ngIf="!entityExists()"
                     [id]="'regionSaveButton'"
                     [disabled]="!regionenForm.valid || !isContractionUnique()"
                     [loading]="saveLoading"
-                          [colorClass]="'success'"
                           [iconClass]="'save'"
                     (onClick)="onSave($event)"
                     data-cy="region-save-button">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.SAVE' | translate }}
-        </bla-actionbutton>
-        <bla-actionbutton *ngIf="entityExists()"
+        </bla-actionbutton-success>
+        <bla-actionbutton-success *ngIf="entityExists()"
                     [id]="'regionUpdateButton'"
                     [disabled]="!regionenForm.valid"
                     [loading]="saveLoading"
-                    [colorClass]="'success'"
                     [iconClass]="'save'"
                     (onClick)="onUpdate($event)"
                     data-cy="region-update-button">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.UPDATE' | translate }}
-        </bla-actionbutton>
+        </bla-actionbutton-success>
 
-        <bla-actionbutton *ngIf="entityExists()"
+        <bla-actionbutton-danger *ngIf="entityExists()"
                     [loading]="deleteLoading"
-                    [colorClass]="'danger'"
                     [iconClass]="'minus'"
                     (onClick)="onDelete($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.DELETE' | translate }}
-        </bla-actionbutton>
+        </bla-actionbutton-danger>
       </div>
     </div>
     </form>

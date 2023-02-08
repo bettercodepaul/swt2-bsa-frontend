@@ -47,17 +47,18 @@ import {OverviewSelectionDialogComponent} from '@shared/components/dialogs/overv
 import {EinzelstatistikDownloadComponent} from '@shared/components/buttons/einzelstatistik-download/einzelstatistik-download.component';
 import {GesamtstatistikDownloadComponent} from '@shared/components/buttons/gesamtstatistik-download/gesamtstatistik-download.component';
 import {TagesuebersichtDownloadComponent} from '@shared/components/buttons/tagesuebersicht-download/tagesuebersicht-download-component';
-
 import {StorageServiceModule} from 'ngx-webstorage-service';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
+import {fas} from '@fortawesome/free-solid-svg-icons';
+import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
+
 import {HilfeButtonComponent} from '@shared/components/buttons/hilfe-button/hilfe-button.component';
 import {ActionButtonComponent} from '@shared/components/buttons/button/actionbutton.component';
-import {
-  DownloadActionButtonComponent
-} from '@shared/components/buttons/download-button/download-actionbutton.component';
-
+import {DownloadActionButtonComponent} from '@shared/components/buttons/download-button/download-actionbutton.component';
+import {ActionButtonPrimaryComponent} from '@shared/components/buttons/button/actionbuttonprimary.component';
+import {ActionButtonSecondaryComponent} from '@shared/components/buttons/button/actionbuttonsecondary.component';
+import {ActionButtonDangerComponent} from '@shared/components/buttons/button/actionbuttondanger.component';
+import {ActionButtonSuccessComponent} from '@shared/components/buttons/button/actionbuttonsuccess.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -113,7 +114,12 @@ import {
     TagesuebersichtDownloadComponent,
     HilfeButtonComponent,
     ActionButtonComponent,
-    DownloadActionButtonComponent
+    DownloadActionButtonComponent,
+    ActionButtonPrimaryComponent,
+    ActionButtonSecondaryComponent,
+    ActionButtonDangerComponent,
+    ActionButtonSuccessComponent,
+
   ],
   declarations: [
     ButtonComponent,
@@ -153,7 +159,11 @@ import {
     TagesuebersichtDownloadComponent,
     HilfeButtonComponent,
     ActionButtonComponent,
-    DownloadActionButtonComponent
+    DownloadActionButtonComponent,
+    ActionButtonPrimaryComponent,
+    ActionButtonSecondaryComponent,
+    ActionButtonDangerComponent,
+    ActionButtonSuccessComponent,
   ]
 })
 export class SharedModule {

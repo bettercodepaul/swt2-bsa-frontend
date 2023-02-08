@@ -208,68 +208,62 @@
       <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE/ABSCHLIEßEN BUTTON -->
       <div class="form-group row">
         <div class="col-sm-12 button-box">
-          <bla-actionbutton *ngIf="entityExists()"
+          <bla-actionbutton-success *ngIf="entityExists()"
 
                             [id]="'veranstaltungAbschließen'"
                             [disabled]="!this.checkVeranstaltungPhase()"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
                             [iconClass]="'plus'"
                             (onClick)="onFinish($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH' | translate }}
-          </bla-actionbutton>
-          <bla-actionbutton *ngIf="entityExists()"
+          </bla-actionbutton-success>
+          <bla-actionbutton-success *ngIf="entityExists()"
                             [id]="'veranstaltungInitialeLigatabelle'"
                             [disabled]="this.checkForExistingLigatabelle()"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
                             [iconClass]="'plus'"
                             (onClick)="this.createMatchesWT0($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.BUTTON' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-success>
 
-          <bla-actionbutton *ngIf="!mannschaftExists()"
+          <bla-actionbutton-success *ngIf="!mannschaftExists()"
                             [id]="'veranstaltungMannschaftSaveButton'"
                             [disabled]="!this.checkMannschaftsTableEmpty()"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
                             [iconClass]="'plus'"
                             (onClick)="onCopyMannschaft($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-success>
 
 
-          <bla-actionbutton *ngIf="!entityExists()"
+          <bla-actionbutton-success *ngIf="!entityExists()"
                             [id]="'veranstaltungSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
                             [iconClass]="'save'"
                             (onClick)="onSave($event)"
                             data-cy="veranstaltung-detail-save-button">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-success>
 
-          <bla-actionbutton *ngIf="entityExists()"
+          <bla-actionbutton-success *ngIf="entityExists()"
                             [id]="'veranstaltungSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
                             [iconClass]="'plus'"
                             (onClick)="onWettkampftag($event)"
                             data-cy="wettkampftage-button">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAGE' | translate }}
-          </bla-actionbutton>
-          <bla-actionbutton *ngIf="entityExists()"
+          </bla-actionbutton-success>
+          <bla-actionbutton-success *ngIf="entityExists()"
                             [id]="'veranstaltungUpdateButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
                             [iconClass]="'save'"
                             (onClick)="onUpdate($event)"
                             data-cy="veranstaltung-detail-update-button">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.UPDATE' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-success>
 
         </div>
       </div>
@@ -322,14 +316,12 @@
                   <div class="row">
                     <div class="col-sm-5"></div>
                     <div class="col-sm-7 button-box">
-                      <bla-actionbutton
-                        [colorClass]="'secondary'"
+                      <bla-actionbutton-secondary
                         [iconClass]="'arrow-left'"
-                        (onClick)="onTableEditCancel($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.CANCEL' | translate}}</bla-actionbutton>
-                      <bla-actionbutton
-                        [colorClass]="'success'"
+                        (onClick)="onTableEditCancel($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.CANCEL' | translate}}</bla-actionbutton-secondary>
+                      <bla-actionbutton-primary
                         [iconClass]="'save'"
-                        (onClick)="onTableEditSave($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.SAVE' | translate}}</bla-actionbutton>
+                        (onClick)="onTableEditSave($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.SAVE' | translate}}</bla-actionbutton-primary>
                     </div>
                   </div>
                 </div>

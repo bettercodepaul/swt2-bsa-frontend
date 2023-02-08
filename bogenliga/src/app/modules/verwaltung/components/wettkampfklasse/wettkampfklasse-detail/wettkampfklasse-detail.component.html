@@ -117,26 +117,24 @@
         <div class="col-sm-8 button-box">
 
 
-          <bla-actionbutton *ngIf="!entityExists()"
+          <bla-actionbutton-success *ngIf="!entityExists()"
                             [id]="'wettkampfKlasseSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
                             (onClick)="onSave($event)"
-                            [colorClass]="'success'"
                             [iconClass]="'plus'"
                             [attr.data-cy]="'wettkampfklassen-save-button'">
             {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.SAVE' | translate }}
-          </bla-actionbutton>
-          <bla-actionbutton *ngIf="entityExists()"
+          </bla-actionbutton-success>
+          <bla-actionbutton-success *ngIf="entityExists()"
                             [id]="'wettkampfKlasseUpdateButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
                             (onClick)="onUpdate($event)"
-                            [colorClass]="'success'"
                             [iconClass]="'plus'"
                             [attr.data-cy]="'wettkampfklassen-update-button'">
             {{ 'MANAGEMENT.WETTKAMPFKLASSE_DETAIL.FORM.UPDATE' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-success>
         </div>
       </div>
     </form>

@@ -11,10 +11,6 @@ $accent-gold: #FFCC34; //Help, Tooltip, Link to Help
 $accent-red: #F40E0E; //Destructive Actions, Delete Buttons
 $true-white: #ffffff; //Navbar & Header Background
 
-:root {
-  --accent-gold: #{$accent-gold}
-}
-
 /* OLD
 $primary-light: #b4ffff; // Sidebar-Background
 $primary-dark: #007c91; // Sidebar-Font
@@ -339,20 +335,188 @@ a:hover, a:focus {
   -webkit-transform: rotate(-45deg);
 }
 
-.action-btn-primary {
-  --button-color: var(--primary);
+
+/* Buttons */
+
+
+.action-btn-primary{
+  background-color: $hero-blue;
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  max-height: 30px;
+  white-space: nowrap;
+  padding: 8px 15px 8px 35px;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 12px;
+  text-decoration: none;
+  position: relative;
 }
 
-.action-btn-secondary {
-  --button-color: var(--secondary);
+.action-btn-primary > .action-btn-circle{
+  background-color: $hero-blue;
+  border: 2px solid $hero-blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  border-radius: 50%;
+  position: absolute;
+  left: -16px;
+  box-shadow: inset 0 0 0 4px white;
+}
+
+.action-btn-primary:hover {
+  filter:brightness(0.8); /* Reduzierung der Helligkeit um 30 % */
+  transition: filter 0.3s; /* Animierte Änderung der angewendeten Filter */
+}
+
+.action-btn-primary:disabled {
+  opacity: 0.75;
+}
+
+.action-btn-primary:focus,*:hover{
+  outline:none;
+}
+
+.action-btn-secondary{
+  background-color: $dark-gray;
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  max-height: 30px;
+  white-space: nowrap;
+  padding: 8px 15px 8px 35px;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 12px;
+  text-decoration: none;
+  position: relative;
+}
+
+.action-btn-secondary > .action-btn-circle{
+  background-color: $dark-gray;
+  border: 2px solid $dark-gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  border-radius: 50%;
+  position: absolute;
+  left: -16px;
+  box-shadow: inset 0 0 0 4px white;
+}
+
+.action-btn-secondary:hover {
+  filter:brightness(0.8); /* Reduzierung der Helligkeit um 30 % */
+  transition: filter 0.3s; /* Animierte Änderung der angewendeten Filter */
+}
+
+.action-btn-secondary:disabled {
+  opacity: 0.75;
+}
+
+.action-btn-secondary:focus,*:hover{
+  outline:none;
 }
 
 .action-btn-success {
-  --button-color: var(--success);
+  background-color: $true-white;
+  outline-color: $hero-blue;
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  max-height: 30px;
+  white-space: nowrap;
+  padding: 8px 15px 8px 35px;
+  color: $hero-blue;
+  border: 3px solid $hero-blue;
+  border-radius: 30px;
+  font-size: 12px;
+  text-decoration: none;
+  position: relative;
+  font-weight: bold;
+}
+
+.action-btn-success > .action-btn-circle{
+  background-color: $hero-blue;
+  outline-color: $hero-blue;
+  border: 3px solid $hero-blue;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  border-radius: 50%;
+  position: absolute;
+  left: -16px;
+  box-shadow: inset 0 0 0 4px white;
+}
+
+.action-btn-success:hover {
+  filter:brightness(0.8); /* Reduzierung der Helligkeit um 30 % */
+  transition: filter 0.3s; /* Animierte Änderung der angewendeten Filter */
+}
+
+.action-btn-success:disabled {
+  opacity: 0.75;
+}
+
+.action-btn-success:focus,*:hover{
+  outline:none;
 }
 
 .action-btn-danger {
-  --button-color: var(--danger);
+  background-color: $accent-red;
+  margin: 1rem;
+  display: flex;
+  align-items: center;
+  max-height: 30px;
+  white-space: nowrap;
+  padding: 8px 15px 8px 35px;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 12px;
+  text-decoration: none;
+  position: relative;
+}
+
+.action-btn-danger > .action-btn-circle{
+  background-color: $accent-red;
+  border: 2px solid $accent-red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  border-radius: 50%;
+  position: absolute;
+  left: -16px;
+  box-shadow: inset 0 0 0 4px white;
+}
+
+.action-btn-danger:hover {
+  filter:brightness(0.8); /* Reduzierung der Helligkeit um 30 % */
+  transition: filter 0.3s; /* Animierte Änderung der angewendeten Filter */
+}
+
+.action-btn-danger:disabled {
+  opacity: 0.75;
+}
+
+.action-btn-danger:focus,*:hover{
+  outline:none;
 }
 
 .action-btn {
@@ -363,7 +527,6 @@ a:hover, a:focus {
   white-space: nowrap;
   padding: 8px 15px 8px 35px;
   color: #fff;
-  background-color: var(--button-color);
   border: none;
   border-radius: 30px;
   font-size: 12px;
@@ -382,33 +545,21 @@ a:hover, a:focus {
   width: 40px;
   height: 40px;
   margin-right: 8px;
-  border: 2px solid var(--button-color);
   border-radius: 50%;
   position: absolute;
   left: -16px;
-  background-color: var(--button-color);
   box-shadow: inset 0 0 0 4px white;
 }
 
-.action-anchor {
-  margin: .2em;
-  padding: .2em;
-  font-size: .5em;
-  width: 1.2rem;
-  height: 1.2rem;
-  border: .2em solid #000;
-  border-radius: 50%;
-  background-color: #000;
-  box-shadow: inset 0 0 0 .2em white;
-  color: #fff;
-}
-
-.action-anchor:hover {
-  color: #fff;
-}
 .action-btn:focus,*:hover{
   outline:none;
 }
+
 .action-btn-circle:focus{
   outline:none;
+}
+
+.action-btn:hover {
+  filter:brightness(0.8); /* Reduzierung der Helligkeit um 30 % */
+  transition: filter 0.3s; /* Animierte Änderung der angewendeten Filter */
 }

@@ -66,10 +66,11 @@
       <!-- Filter zurücksetzen -->
       <div class="form-group row">
         <div class="col-sm-auto button-box">
-          <bla-button (onClick)="deleteFilter()"
-                      [buttonType]="ButtonType.DANGER">
+          <bla-actionbutton-danger
+            (onClick)="deleteFilter()"
+            [iconClass]="'minus'">
             {{'MANAGEMENT.SCHUETZE_HINZUFUEGEN.FORM.RESET_FILTER' | translate }}
-          </bla-button>
+          </bla-actionbutton-danger>
         </div>
       </div>
     </form>

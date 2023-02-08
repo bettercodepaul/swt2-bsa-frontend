@@ -104,7 +104,7 @@
         <div class="col-sm-9 button-box">
 
 
-          <bla-actionbutton (onClick)="onSave($event)"
+          <bla-actionbutton-success (onClick)="onSave($event)"
                             *ngIf="!entityExists()"
                             [disabled]="!mannschaftForm.valid"
                             [id]="'mannschaftSaveButton'"
@@ -113,8 +113,8 @@
                             [iconClass]="'save'"
                             data-cy="vereine-mannschaft-detail-save-button">
             {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
-          </bla-actionbutton>
-          <bla-actionbutton (onClick)="onUpdate($event)"
+          </bla-actionbutton-success>
+          <bla-actionbutton-success (onClick)="onUpdate($event)"
                             *ngIf="entityExists()"
                             [disabled]="!mannschaftForm.valid"
                             [id]="'mannschaftUpdateButton'"
@@ -123,7 +123,7 @@
                             [iconClass]="'save'"
                             data-cy="vereine-mannschaft-detail-update-button">
             {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
-          </bla-actionbutton>
+          </bla-actionbutton-success>
 
           <!--When editing Bug: BSAPP-684 it was decided to comment out the Button below ("Löschen")-->
           <!--Because there is already a Button for the same Funktion and this one is also not working and also caused some trouble with Deleting-Funktion -->
@@ -141,14 +141,14 @@
     <div *ngIf="entityExists()">
       <h5> Mitglieder-Übersicht</h5>
       <div class="overview-dialog-add">
-        <bla-actionbuttonbutton
+        <bla-actionbutton-success
           [colorClass]="'success'"
           [iconClass]="'plus'"
           class="btn btn-success"
                 routerLink="add">
           <fa-icon icon="plus"></fa-icon>
           <span> Neu</span>
-        </bla-actionbuttonbutton>
+        </bla-actionbutton-success>
         <button (click)="onDownloadLizenzen()"
                 class="btn btn-success button-margin"
                 style="margin-left: 5px;">

@@ -1,0 +1,14 @@
+<button [id]="id"
+        [name]="id"
+        *ngIf="visible"
+        (click)="onButtonClick()"
+        [disabled]="isDisabled()"
+        type="button"
+        class="action-btn action-btn-danger"
+        [style.margin]="margin"
+        [style.min-width]="minWidth">
+        <span class="action-btn-circle">
+          <fa-icon [icon]="loading ? 'sync' : iconClass" [spin]="loading"></fa-icon>
+        </span>
+  <ng-content></ng-content>
+</button>

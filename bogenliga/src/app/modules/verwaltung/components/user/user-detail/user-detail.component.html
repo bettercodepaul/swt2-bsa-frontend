@@ -84,14 +84,13 @@
       <div class="form-group row">
       <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
-        <bla-actionbutton
+        <bla-actionbutton-success
           [id]="'userUpdateButton'"
           [loading]="saveLoading"
-          [colorClass]="'success'"
           [iconClass]="'user-cog'"
           (onClick)="resetRole($event)">
           {{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_UPDATE' | translate }}
-        </bla-actionbutton>
+        </bla-actionbutton-success>
       </div>
     </div>
   </form>
@@ -125,15 +124,14 @@
     <div class="form-group row">
     <div class="col-sm-3"></div>
       <div class="col-sm-9 button-box">
-        <bla-actionbutton
+        <bla-actionbutton-success
           [id]="'passwordUpdateButton'"
           [disabled]="!passwordForm.valid"
           [loading]="savePW"
-          [colorClass]="'success'"
           [iconClass]="'save'"
           (onClick)="resetPW($event)">
           {{ 'MANAGEMENT.USER_DETAIL.FORM.PW_UPDATE' | translate }}
-        </bla-actionbutton>
+        </bla-actionbutton-success>
       </div>
     </div>
   </form>

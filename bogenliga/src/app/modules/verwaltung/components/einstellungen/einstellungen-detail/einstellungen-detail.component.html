@@ -106,18 +106,18 @@
 
         </div>
 
-        <bla-actionbutton style="float: right"
+        <bla-actionbutton-success style="float: right"
                     *ngIf="currentEinstellung.id == null"
                           [colorClass]="'success'"
                           [iconClass]="'save'"
                     (click)="createEinstellung($event)">Speichern
-        </bla-actionbutton>
-        <bla-actionbutton style="float: right"
+        </bla-actionbutton-success>
+        <bla-actionbutton-success style="float: right"
                           *ngIf="currentEinstellung.id != null"
                           [colorClass]="'success'"
                           [iconClass]="'save'"
                           (click)="changevalue($event)">Ändern
-        </bla-actionbutton>
+        </bla-actionbutton-success>
 
         <br>
         <br>

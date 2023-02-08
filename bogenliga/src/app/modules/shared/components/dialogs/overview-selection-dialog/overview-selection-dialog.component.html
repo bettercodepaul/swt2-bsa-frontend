@@ -14,13 +14,14 @@
       </bla-selectionlist>
 
     </div>
-    <div style="margin-top: 3%" class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
-      <button class="btn btn-success"
+    <div style="/margin-top: 3%" class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
+      <bla-actionbutton-primary
               routerLink="add"
+              [iconClass]="'plus'"
               data-cy="veranstaltung-add-button">
-        <fa-icon icon="plus"></fa-icon>
+
         <span> Neu</span>
-      </button>
+      </bla-actionbutton-primary>
     </div>
   </section>
 
