@@ -16,6 +16,7 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {MatchDTO} from '@verwaltung/types/datatransfer/match-dto.class';
 import {WettkampfDO} from '@verwaltung/types/wettkampf-do.class';
 import {log} from 'util';
+import {MatchDTOExt} from '@wkdurchfuehrung/types/datatransfer/match-dto-ext.class';
 
 @Injectable({
   providedIn: 'root'
@@ -107,8 +108,11 @@ export class MatchDataProviderService extends DataProviderService {
         });
     }
 
+
+
   public generateDataForMatches(wetttkampfId: number): Promise<BogenligaResponse<MatchDO[]>> {
     console.log('In Funktion generateDataForMatches');
+
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('setzliste/generate?wettkampfid=' + wetttkampfId).build())
           .then((data: VersionedDataTransferObject[]) => {

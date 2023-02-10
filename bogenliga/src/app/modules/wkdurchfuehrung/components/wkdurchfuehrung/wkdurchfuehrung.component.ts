@@ -40,6 +40,10 @@ import {
 } from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {SessionHandling} from '@shared/event-handling';
+import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+
+
+
 
 
 @Component({
@@ -107,7 +111,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private onOfflineService: OnOfflineService,
               private currentUserService: CurrentUserService,
               private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private dsbMannschaftDataProviderService: DsbMannschaftDataProviderService
+
+
   ) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -465,6 +472,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // when a Veranstaltung gets selected from the list
   // load LigaTabelle
   public onSelect($event: VeranstaltungDO[]): void {
+    this.disabledButton = true;
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
@@ -512,15 +520,28 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
+
+  public checkMannschaften() {
+    this.dsbMannschaftDataProviderService.findAllByVeranstaltungsId(this.selectedVeranstaltungId).then(r => {
+      if (r.payload.length > 0) {
+        this.disabledButton = false;
+      } else {
+        this.disabledButton = true;
+      }
+    });
+  }
+
+
   // Zeigt Matches an
   public showMatches() {
+    this.disabledButton = true;
     this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
       .then((response: BogenligaResponse<MatchDTOExt[]>) => {
         // Prüfe ob Matches schon existieren
         if (response.payload.length !== 0) {
-          this.matchesExist();
+          this.checkMannschaften();
         } else {
-          this.matchesNotExist();
+          this.checkMannschaften();
           // prüfe, ob es sich um den ersten wettkampftag handelt
           if (this.selectedWettkampfListeIndex  === 0) {
             // aktiviere Button
@@ -583,21 +604,38 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
 
-  // Funktion falls Matches existieren -> alle Buttons gehen an, generiere Matches aus
-  private matchesExist() {
-    this.disabledOtherButtons = false;
-    this.disabledButton = true;
-  }
-
-  // Funktion wenn Matches nicht existieren -> generiere Matches Button geht aus, alle weiteren an
-  private matchesNotExist() {
-    this.disabledOtherButtons = true;
-    this.disabledButton = false;
-  }
 
   public isDisabledGMButton(): boolean {
     return this.disabledButton;
   }
+
+  /*public PasseDTO loadDsbMitglied() {
+    this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
+        .then((response: BogenligaResponse<MatchDTOExt[]>) => {
+          for(let match in response.payload) {
+            for (let obj in response.payload[match].passen) {
+              let test = response.payload[match].passen[obj];
+
+              window.alert(test.dsbMitgliedId);
+              if (test.dsbMitgliedId == null) {
+                this.notificationService.showNotification({
+                  id:          'NOTIFICATION_GENERIERE_MATCHES_MITGLIED_FEHLT',
+                  title:       'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.TITLE',
+                  description: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.DESCRIPTION',
+                  severity:    NotificationSeverity.INFO,
+                  origin:      NotificationOrigin.USER,
+                  type:        NotificationType.OK,
+                  userAction:  NotificationUserAction.ACCEPTED
+                });
+              }
+              return test
+            }
+          }
+
+        })
+
+  }*/
+
 
   public generateMatches() {
     this.matchDataProvider.generateDataForMatches(this.selectedWettkampfId)
@@ -605,10 +643,23 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         this.showMatches();
       })
       // handleFailure -> Fehlermeldung muss aufgerufen werden
-      .catch(() => {
-        this.handleFailureGenerateMatches();
+      .catch((error) => {
+
+        this.handleFailureGenerateMatchesMissingMitglied();
         this.showMatches();
-      });
+      })
+  }
+
+  private handleFailureGenerateMatchesMissingMitglied(): void {
+    this.notificationService.showNotification({
+      id: 'NOTIFICATION_GENERIERE_MATCHES_MITGLIED_FEHLT',
+      title: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.TITLE',
+      description: 'WKDURCHFUEHRUNG.GENERIERE_MATCHES_MITGLIED_FEHLT.NOTIFICATION.DESCRIPTION',
+      severity: NotificationSeverity.INFO,
+      origin: NotificationOrigin.USER,
+      type: NotificationType.OK,
+      userAction: NotificationUserAction.ACCEPTED
+    });
   }
 
   private handleFailureGenerateMatches(): void {
