@@ -43,6 +43,9 @@ import {SessionHandling} from '@shared/event-handling';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 
 
+
+
+
 @Component({
   selector: 'bla-wkdurchfuehrung',
   templateUrl: './wkdurchfuehrung.component.html',
@@ -108,7 +111,10 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
               private onOfflineService: OnOfflineService,
               private currentUserService: CurrentUserService,
               private wettkampfOfflineSyncService: WettkampfOfflineSyncService,
-              private dialog: MatDialog
+              private dialog: MatDialog,
+              private dsbMannschaftDataProviderService: DsbMannschaftDataProviderService
+
+
   ) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -467,6 +473,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // when a Veranstaltung gets selected from the list
   // load LigaTabelle
   public onSelect($event: VeranstaltungDO[]): void {
+    this.disabledButton = true;
     this.selectedDTOs = [];
     this.selectedDTOs = $event;
     if (!!this.selectedDTOs && this.selectedDTOs.length > 0) {
@@ -514,15 +521,28 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     }
 // TODO URL-Sprung bei TabletButtonClick
   }
+
+  public checkMannschaften() {
+    this.dsbMannschaftDataProviderService.findAllByVeranstaltungsId(this.selectedVeranstaltungId).then(r => {
+      if (r.payload.length > 0) {
+        this.disabledButton = false;
+      } else {
+        this.disabledButton = true;
+      }
+    });
+  }
+
+
   // Zeigt Matches an
   public showMatches() {
+    this.disabledButton = true;
     this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
       .then((response: BogenligaResponse<MatchDTOExt[]>) => {
         // Prüfe ob Matches schon existieren
         if (response.payload.length !== 0) {
-          this.matchesExist();
+          this.checkMannschaften();
         } else {
-          this.matchesNotExist();
+          this.checkMannschaften();
           // prüfe, ob es sich um den ersten wettkampftag handelt
           if (this.selectedWettkampfListeIndex  === 0) {
             // aktiviere Button
@@ -585,17 +605,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   }
 
 
-  // Funktion falls Matches existieren -> alle Buttons gehen an, generiere Matches aus
-  private matchesExist() {
-    this.disabledOtherButtons = false;
-    this.disabledButton = true;
-  }
-
-  // Funktion wenn Matches nicht existieren -> generiere Matches Button geht aus, alle weiteren an
-  private matchesNotExist() {
-    this.disabledOtherButtons = true;
-    this.disabledButton = false;
-  }
 
   public isDisabledGMButton(): boolean {
     return this.disabledButton;
@@ -636,10 +645,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       })
       // handleFailure -> Fehlermeldung muss aufgerufen werden
       .catch((error) => {
-        console.log("______________")
-        console.log(error);
 
-        this.handleFailureGenerateMatches();
+        this.handleFailureGenerateMatchesMissingMitglied();
         this.showMatches();
       })
   }
