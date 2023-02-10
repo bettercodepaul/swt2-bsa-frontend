@@ -136,6 +136,12 @@
         "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden"
       }
     },
+    "GENERIERE_MATCHES_MITGLIED_FEHLT": {
+      "NOTIFICATION": {
+        "TITLE": "Es existieren keine Schützen in einer der Mannschaften",
+        "DESCRIPTION": "Es müssen erst Schützen zu allen Mannschaften hinzugefügt werden"
+      }
+    },
     "OFFLINE": {
       "NOTIFICATION": {
         "SUCCESS": {
