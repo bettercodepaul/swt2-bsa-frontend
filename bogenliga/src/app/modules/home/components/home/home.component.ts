@@ -15,6 +15,7 @@ import {LoginDataProviderService} from '@user/services/login-data-provider.servi
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
+import {faCog} from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({

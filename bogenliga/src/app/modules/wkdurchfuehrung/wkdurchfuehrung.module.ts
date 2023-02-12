@@ -27,13 +27,15 @@ import {
   TabletadminGuard
 } from '../wkdurchfuehrung/guards';
 import { TeilnemendeManschaftenTabelleComponent } from './components/teilnemende-manschaften-tabelle/teilnemende-manschaften-tabelle.component';
+import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     RouterModule.forChild(wkdurchfuehrung_ROUTES),
     SharedModule.forChild(),
-    FormsModule
+    FormsModule,
+    MatDividerModule
   ],
   declarations: [
     WkdurchfuehrungComponent,
