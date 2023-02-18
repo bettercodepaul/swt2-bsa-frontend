@@ -272,31 +272,80 @@ describe('Admin User tests', function() {
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
   it('Neues DSB-Mitglied', function() {
-    cy.get('body').then((body) => {
-      if (!body.text().includes('MitgliedVorname')) {
-        cy.get('[data-cy=dsb-mitglied-add-button]').click()
-        cy.get('[data-cy=detail-vorname-feld]').type('MitgliedVorname')
-        cy.get('[data-cy=detail-nachname-feld]').type('MitgliedNachname')
-        cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
-        cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('12354321')
-        cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
-        cy.wait(1500)
-        cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
-        cy.wait(1500)
-        cy.get('[data-cy=detail-save-button]').click()
-        cy.wait(1500)
-        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
-      }
+    //cy.get('body').then((body) => {
+      //if (!body.text().includes('MitgliedVorname')) {
+        cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').click()
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').type('vorname')
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedNachname').click()
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedNachname').type('nachname')
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').click()
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('1996-02-01')
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').click()
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').type('1234567')
+        cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').select('BSC Stuttgart')
+        cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedSaveButton').click()
+        cy.wait(3000)
+        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
+        cy.wait(3000)
     });
-  })
 
+  /*
+  describe('test_name', function() {
+
+ it('what_it_does', function() {
+
+    cy.viewport(1259, 896)
+
+    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder')
+
+    cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').click()
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').type('vorname')
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedNachname').click()
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedNachname').type('nachname')
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').click()
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0001-02-01')
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0019-02-01')
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0199-02-01')
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('1996-02-01')
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').click()
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').type('1234567')
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').click()
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').select('13: Object')
+
+    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').click()
+
+    cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedSaveButton').click()
+
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
+
+ })
+
+})
+
+   */
 
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
    */
   it('Edit DSBMitglied', function() {
     cy.wait(1000)
-    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
+    //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
+    cy.get('#payload-id-28 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').click()
     cy.get('[data-cy=detail-vorname-feld]').click()
     cy.get('[data-cy=detail-vorname-feld]').focus().clear().type('SWTZweiTestLocalBitte')
     cy.get('[data-cy=detail-update-button]').click()
@@ -307,8 +356,12 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=detail-vorname-feld]').click()
     cy.get('[data-cy=detail-vorname-feld]').focus().clear().type('SWTZweiTestLocal')
     cy.get('[data-cy=detail-update-button]').click()
-    cy.wait(1000)
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    cy.wait(2000)
+    //cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button > #undefined').click()
+    //cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedUpdateButton').click()
+    //cy.get('bla-actionbutton > #undefined > .action-btn-circle > .ng-fa-icon > .fa-check').click()
+    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
+    cy.wait(2000)
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
   })
 
