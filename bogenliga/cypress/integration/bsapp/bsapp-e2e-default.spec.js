@@ -194,7 +194,7 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=detail-save-button]').click()
         cy.get('#OKBtn1').click()
         //cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
-        //cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+        //cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
       }}
     );
   })
@@ -272,7 +272,7 @@ describe('Admin User tests', function() {
 
       //löschen von Nicholas Corle - Moderator
       cy.get('#payload-id-4 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').click()
-      cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+      cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     })
   */
 
@@ -430,8 +430,9 @@ describe('Admin User tests', function() {
       if (!body.text().includes('69')) {
         cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
         cy.wait(1000)
-        cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
-        cy.wait(6000)
+        //cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
+        cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
+        cy.wait(9000)
         cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
         cy.wait(6000)
         //cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
@@ -456,15 +457,15 @@ describe('Admin User tests', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(500)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
-    cy.wait(500)
+    cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().clear().type('76')
-    cy.wait(500)
+    cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-    cy.wait(500)
+    cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-update-button]').click()
-    cy.wait(500)
+    cy.wait(9000)
     cy.get('#OKBtn1').click()
-    cy.wait(500)
+    cy.wait(5000)
     cy.contains('76')
   })
 
@@ -481,7 +482,7 @@ describe('Admin User tests', function() {
     cy.wait(500)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.wait(500)
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.wait(500)
     cy.get('tbody').should('not.contain.text', '76')
   })
@@ -499,10 +500,11 @@ describe('Admin User tests', function() {
     cy.wait(200)
     cy.get('tbody').should('contain.text', '1111111111')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.get('tbody').should('not.contain.text', 'CypressTest')
     cy.wait(200)
     cy.get('tbody').should('not.contain.text', '1111111111')
+    //cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
   })
 
   /**
@@ -535,7 +537,7 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=liga-save-button]').click()
         cy.wait(5000)
         cy.get('#OKBtn1').click()
-        cy.wait(5000)
+        cy.wait(15000)
         cy.get('tbody').should('contain.text', 'SWT_Liga')
         cy.wait(5000)
       }
@@ -550,7 +552,7 @@ describe('Admin User tests', function() {
     cy.wait(5000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.wait(5000)
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.wait(4000)
     cy.get('tbody').should('not.contain.text', 'SWT_Liga')
   })
@@ -606,7 +608,7 @@ describe('Admin User tests', function() {
   it('Region Löschen', function() {
     cy.get('tbody').should('contain.text', 'SWT3_Region')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.wait(4000)
     cy.get('tbody').should('not.contain.text', 'SWT3_Region')
   })
@@ -679,7 +681,7 @@ describe('Admin User tests', function() {
   it('Veranstaltung Löschen', function() {
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.get('[data-cy=bla-selection-list]').select('1: 22')
     cy.wait(5000)
     cy.get('[data-cy=bla-selection-list]').select('0: 0')
@@ -1117,7 +1119,7 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=detail-save-button]').click()
         cy.get('#OKBtn1').click()
         cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
-        cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+        cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
       }}
     );
   })
@@ -1128,7 +1130,7 @@ describe('Admin User tests', function() {
   it('Löschen DSBMitglied', function() {
     cy.wait(1000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
   })
 
@@ -1195,7 +1197,7 @@ describe('Admin User tests', function() {
 
       //löschen von Nicholas Corle - Moderator
       cy.get('#payload-id-4 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').click()
-      cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+      cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     })
   */
 
@@ -1403,7 +1405,7 @@ describe('Admin User tests', function() {
     cy.wait(500)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.wait(500)
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.wait(500)
     cy.get('tbody').should('not.contain.text', '76')
   })
@@ -1421,7 +1423,7 @@ describe('Admin User tests', function() {
     cy.wait(200)
     cy.get('tbody').should('contain.text', '1111111111')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.get('tbody').should('not.contain.text', 'CypressTest')
     cy.wait(200)
     cy.get('tbody').should('not.contain.text', '1111111111')
@@ -1472,7 +1474,7 @@ describe('Admin User tests', function() {
      cy.wait(5000)
      cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
      cy.wait(5000)
-     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+     cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
      cy.wait(4000)
      cy.get('tbody').should('not.contain.text', 'SWT_Liga')
    })
@@ -1528,7 +1530,7 @@ describe('Admin User tests', function() {
    it('Region Löschen', function() {
      cy.get('tbody').should('contain.text', 'SWT3_Region')
      cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+     cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
      cy.wait(4000)
      cy.get('tbody').should('not.contain.text', 'SWT3_Region')
    })
@@ -1601,7 +1603,7 @@ describe('Admin User tests', function() {
   it('Veranstaltung Löschen', function() {
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-button:nth-child(2) > #undefined').click()
+    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.get('[data-cy=bla-selection-list]').select('1: 22')
     cy.wait(5000)
     cy.get('[data-cy=bla-selection-list]').select('0: 0')
