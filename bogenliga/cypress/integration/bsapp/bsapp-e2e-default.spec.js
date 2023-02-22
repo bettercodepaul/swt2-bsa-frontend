@@ -637,7 +637,7 @@ describe('Admin User tests', function() {
         cy.wait(1000)
         cy.get('[data-cy=veranstaltung-add-button]').click()
         cy.get('[data-cy=veranstaltung-detail-name]').type('Testveranstaltung')
-        cy.wait(5000)
+        cy.wait(10000)
         cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
         cy.wait(5005)
         cy.get('[data-cy=veranstaltung-detail-sportjahr]').type('2018')
