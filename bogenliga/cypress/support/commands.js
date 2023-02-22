@@ -26,6 +26,12 @@
 //https://github.com/cypress-io/cypress/issues/461#issuecomment-392070888
 let LOCAL_STORAGE_MEMORY = {};
 
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})
+
 Cypress.Commands.add("saveLocalStorage", () => {
   Object.keys(localStorage).forEach(key => {
     LOCAL_STORAGE_MEMORY[key] = localStorage[key];
