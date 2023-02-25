@@ -834,7 +834,7 @@ describe('Admin User tests', function() {
    * This test adds a "Veranstaltung" and checks if it gets added
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-/*
+
   it('Veranstaltungen hinzufügen', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('Testveranstaltung')) {
@@ -865,7 +865,7 @@ describe('Admin User tests', function() {
   /**
    * This test edits a "Veranstaltung" and checks if it was changed
    */
-/*
+
   it('Veranstaltungen bearbeiten', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
@@ -886,7 +886,7 @@ describe('Admin User tests', function() {
   /**
    * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
    */
-/*
+
   it('Veranstaltung Löschen', function() {
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
