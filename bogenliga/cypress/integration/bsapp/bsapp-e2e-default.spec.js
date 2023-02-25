@@ -129,7 +129,7 @@ describe('Anonyme User tests', function () {
    */
   it('Ergebnis anzeigen', function() {
     cy.wait(10000)
-    cy.contains('SWT2')
+    cy.contains('Würtembergliga')
     cy.wait(15000)
     cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
     cy.contains('Wettkampftag 1')
@@ -798,22 +798,24 @@ describe('Admin User tests', function() {
    */
   it('Region Ändern', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+    cy.wait(5000)
+    cy.get('div > #regionenForm > .form-group > .col-sm-9 > #regionName').type('17')
     cy.get('[data-cy=region-detail-kuerzel]').type('1')
     cy.get('[data-cy=region-update-button]').click()
     cy.get('#OKBtn1').click()
     cy.wait(10000)
-    cy.get('tbody').should('contain.text', 'SWT_R1')
+    cy.get('tbody').should('contain.text', 'SWT3_Region17')
   })
 
   /**
    * This test deletes a Region and checks if its deleted in the table.
    */
   it('Region Löschen', function() {
-    cy.get('tbody').should('contain.text', 'SWT3_Region')
+    cy.get('tbody').should('contain.text', 'SWT3_Region17')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.wait(11000)
-    cy.get('tbody').should('not.contain.text', 'SWT3_Region')
+    cy.get('tbody').should('not.contain.text', 'SWT3_Region17')
   })
 
   /**
@@ -832,6 +834,7 @@ describe('Admin User tests', function() {
    * This test adds a "Veranstaltung" and checks if it gets added
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
+
   it('Veranstaltungen hinzufügen', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('Testveranstaltung')) {
@@ -848,7 +851,7 @@ describe('Admin User tests', function() {
         cy.wait(5000)
         cy.get('[data-cy=veranstaltung-detail-save-button]').click()
         cy.wait(5000)
-        cy.get('#OKBtn1').click({force: true}) //Disable as soon as Buttons work
+        cy.get('#OKBtn1').click()
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
         cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
         cy.wait(5000)
@@ -862,6 +865,7 @@ describe('Admin User tests', function() {
   /**
    * This test edits a "Veranstaltung" and checks if it was changed
    */
+
   it('Veranstaltungen bearbeiten', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
@@ -882,6 +886,7 @@ describe('Admin User tests', function() {
   /**
    * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
    */
+
   it('Veranstaltung Löschen', function() {
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
@@ -897,9 +902,11 @@ describe('Admin User tests', function() {
    * This test checks if "Wettkampftage" has entries.
    */
   it('Wettkampftage anzeigen', function() {
+    cy.wait(11000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
+    cy.wait(5000)
     cy.get('[data-cy="wettkampftage-button"]').click()
-    cy.wait(1000)
+    cy.wait(10000)
     cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select(0)
   })
 
