@@ -10,6 +10,8 @@ import {UserDO} from '../../../types/user-do.class';
 import {USER_NEU_CONFIG} from './user-neu.config';
 import {DsbMitgliedDTO} from '@verwaltung/types/datatransfer/dsb-mitglied-dto.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 import {
   Notification,
@@ -45,6 +47,7 @@ export class UserNeuComponent extends CommonComponentDirective implements OnInit
   public selectedDTOs: DsbMitgliedDTO[];
   public selectedDsbMitgliedId: number;
   public multipleSelections = true;
+  public ActionButtonColors = ActionButtonColors;
   private sessionHandling: SessionHandling;
 
   constructor(private userDataProvider: UserDataProviderService,

@@ -46,6 +46,8 @@ import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 
 const ID_PATH_PARAM = 'id';
@@ -109,6 +111,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public oldSortierung: number;
 
   public currentLigatabelle: Array<LigatabelleErgebnisDO>;
+
+  public ActionButtonColors = ActionButtonColors;
+
 
   private sessionHandling: SessionHandling;
 

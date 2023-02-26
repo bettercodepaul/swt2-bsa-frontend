@@ -187,7 +187,7 @@
                             [id]="'dsbMitgliedSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'user-plus'"
                             (onClick)="onSave($event)"
                             data-cy="detail-save-button">
@@ -197,7 +197,7 @@
                             [id]="'dsbMitgliedUpdateButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'"
                             (onClick)="onUpdate($event)"
                             data-cy="detail-update-button">
@@ -207,7 +207,7 @@
           <bla-actionbutton *ngIf="entityExists()"
                       [buttonType]="ButtonType.DANGER"
                       [loading]="deleteLoading"
-                      [colorClass]="'danger'"
+                      [color]="ActionButtonColors.DANGER"
                       [iconClass]="'user-minus'"
                       (onClick)="onDelete($event)">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.DELETE' | translate }}

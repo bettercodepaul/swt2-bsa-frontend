@@ -36,6 +36,8 @@ import {KampfrichterExtendedDO} from '@verwaltung/types/kampfrichter-extended-do
 import {TranslatePipe} from '@ngx-translate/core';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_WETTKAMPFTAG = 'wettkampftag_delete';
@@ -104,6 +106,8 @@ export class WettkampftageComponent extends CommonComponentDirective implements 
   public maxWettkampftageEinstellungenDO: EinstellungenDO = new EinstellungenDO();
   public maxWettkampftageID = 8;
   public selectedWettkampf: WettkampfDO;
+
+  public ActionButtonColors = ActionButtonColors;
 
   private sessionHandling: SessionHandling;
 

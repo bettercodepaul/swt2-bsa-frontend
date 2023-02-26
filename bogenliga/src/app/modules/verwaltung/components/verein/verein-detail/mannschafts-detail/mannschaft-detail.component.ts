@@ -43,6 +43,8 @@ import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
 import {PasseDTOClass} from '@verwaltung/types/datatransfer/passe-dto.class';
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 const ID_PATH_PARAM = 'id';
 
@@ -78,6 +80,8 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   public ligen: Array<VeranstaltungDO> = [];
   public loadingVeranstaltungen = true;
   public mannschaften: Array<DsbMannschaftDO> = [];
+  public ActionButtonColors = ActionButtonColors;
+
 
   // maps the MannschaftsMitgliedDO with the DSBMitgliedId
   private currentMannschaftsMitglied: MannschaftsMitgliedDO = new MannschaftsMitgliedDO();

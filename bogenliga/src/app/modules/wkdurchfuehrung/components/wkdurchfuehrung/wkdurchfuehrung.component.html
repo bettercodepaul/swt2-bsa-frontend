@@ -93,7 +93,7 @@
         <bla-actionbutton
           [id]="'generiereMatches'"
           [disabled]="isDisabledGMButton()"
-          [colorClass]="'primary'"
+          [color]="ActionButtonColors.PRIMARY"
           [iconClass]="'cogs'"
           (onClick)="generateMatches()">
           {{ 'WKDURCHFUEHRUNG.BUTTON.MATCHES' | translate }}
@@ -104,7 +104,7 @@
             [id]="'downloadSetzliste'"
             [downloadUrl]="onButtonDownload('pdf/setzliste')"
             [fileName]="'setzliste.pdf'"
-            [colorClass]="'primary'"
+            [color]="ActionButtonColors.PRIMARY"
             [iconClass]="'file-download'"
             [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
 
@@ -114,7 +114,7 @@
             [id]="'downloadSchusszettel'"
             [downloadUrl]="onButtonDownload('pdf/schusszettel')"
             [fileName]="'schusszettel.pdf'"
-            [colorClass]="'primary'"
+            [color]="ActionButtonColors.PRIMARY"
             [iconClass]="'file-download'"
             [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
 
@@ -125,7 +125,7 @@
             [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
             [fileName]="'bogenkontrollliste.pdf'"
             [disabled]="isDisabled()"
-            [colorClass]="'primary'"
+            [color]="ActionButtonColors.PRIMARY"
             [iconClass]="'file-download'">
             {{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
           </bla-download-actionbutton>
@@ -134,7 +134,7 @@
             [id]="'downloadMeldezettel'"
             [downloadUrl]="onButtonDownload('pdf/meldezettel')"
             [fileName]="'meldezettel.pdf'"
-            [colorClass]="'primary'"
+            [color]="ActionButtonColors.PRIMARY"
             [iconClass]="'file-download'"
             [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
 
@@ -143,7 +143,7 @@
         <div id="setupTable"
              *ngIf="(!isOffline()); else onlineSetupTables">
           <bla-actionbutton (click)="onButtonTabletClick()"
-                            [colorClass]="'primary'"
+                            [color]="ActionButtonColors.PRIMARY"
                             [iconClass]="'table'"
                             [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
           </bla-actionbutton>
@@ -151,7 +151,7 @@
 
           <bla-actionbutton
             [id]="'DSB-Mitglied anlegen'"
-            [colorClass]="'primary'"
+            [color]="ActionButtonColors.PRIMARY"
             [iconClass]="'user-plus'"
             (onClick)="addDSBMitglied()">
             DSB-Mitglied anlegen
@@ -161,7 +161,7 @@
                      id="onlineSetupTables">
           <div>
             <bla-actionbutton (click)="onButtonTabletClick()"
-                              [colorClass]="'primary'"
+                              [color]="ActionButtonColors.PRIMARY"
                               [iconClass]="'table'"
                               [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
             </bla-actionbutton>
@@ -172,7 +172,7 @@
         <div id="offlineButton"
              *ngIf="(!isOffline()); else backOnline ">
           <bla-actionbutton (click)="onButtonGoOfflineClick()"
-                            [colorClass]="'danger'"
+                            [color]="ActionButtonColors.DANGER"
                             [iconClass]="'power-off'"
                             [disabled]="isDisabled()"
                             data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
@@ -183,7 +183,7 @@
                      id="onlineButton">
           <div>
             <bla-actionbutton (click)="onButtonGoOfflineClick()"
-                              [colorClass]="'success'"
+                              [color]="ActionButtonColors.SUCCESS"
                               [iconClass]="'cloud'"
                               [disabled]="isDisabled()">Online gehen
             </bla-actionbutton>
@@ -193,7 +193,7 @@
         <div id="adminOfflineResetButton"
              *ngIf="(isAdmin())">
           <bla-actionbutton (click)="resetWettkampfToken(this.selectedWettkampfId)"
-                            [colorClass]="'danger'"
+                            [color]="ActionButtonColors.DANGER"
                             [iconClass]="'trash'"
                             [disabled]="isDisabled()">Offlinetoken löschen
           </bla-actionbutton>
