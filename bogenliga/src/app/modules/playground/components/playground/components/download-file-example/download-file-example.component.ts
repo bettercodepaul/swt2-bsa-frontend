@@ -10,6 +10,8 @@ import {
   NotificationUserAction
 } from '../../../../../shared/services/notification/types';
 import {HelloResourceProviderService} from '../../../../services/hello-resource-provider.service';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 const NOTIFICATION_DOWNLOAD_SUCCESS = 'download_example_success';
 const NOTIFICATION_DOWNLOAD_FAILURE = 'download_example_failure';
@@ -20,6 +22,8 @@ const NOTIFICATION_DOWNLOAD_FAILURE = 'download_example_failure';
   templateUrl: './download-file-example.component.html'
 })
 export class DownloadFileExampleComponent implements OnInit {
+
+  public ActionButtonColors = ActionButtonColors;
 
   public downloadingFile = false;
 

@@ -41,6 +41,8 @@ import {
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {SessionHandling} from '@shared/event-handling';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 
 
@@ -53,7 +55,7 @@ import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannsch
 })
 export class WkdurchfuehrungComponent extends CommonComponentDirective implements OnInit {
 
-
+  public ActionButtonColors = ActionButtonColors;
   public config = WKDURCHFUEHRUNG_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_table_match = MATCH_TABLE_CONFIG;
@@ -96,6 +98,8 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public loadingYears = true;
   public availableYears: SportjahrVeranstaltungDO[];
   public selItemId: number;
+
+
 
   private sessionHandling: SessionHandling;
 

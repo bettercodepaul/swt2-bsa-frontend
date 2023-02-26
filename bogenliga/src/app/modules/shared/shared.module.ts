@@ -113,7 +113,7 @@ import {
     TagesuebersichtDownloadComponent,
     HilfeButtonComponent,
     ActionButtonComponent,
-    DownloadActionButtonComponent
+    DownloadActionButtonComponent,
   ],
   declarations: [
     ButtonComponent,

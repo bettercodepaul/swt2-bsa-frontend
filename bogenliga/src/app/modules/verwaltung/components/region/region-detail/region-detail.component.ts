@@ -19,6 +19,8 @@ import {REGION_DETAIL_CONFIG} from './region-detail.config';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 
 const ID_PATH_PARAM = 'id';
@@ -53,6 +55,9 @@ export class RegionDetailComponent extends CommonComponentDirective implements O
   public id;
 
   private sessionHandling: SessionHandling;
+
+  public ActionButtonColors = ActionButtonColors;
+
 
   constructor(private regionProvider: RegionDataProviderService,
     private userProvider: UserProfileDataProviderService,

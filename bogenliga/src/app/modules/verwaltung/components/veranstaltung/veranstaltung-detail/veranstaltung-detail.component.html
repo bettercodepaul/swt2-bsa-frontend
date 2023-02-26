@@ -213,7 +213,7 @@
                             [id]="'veranstaltungAbschließen'"
                             [disabled]="!this.checkVeranstaltungPhase()"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'plus'"
                             (onClick)="onFinish($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.FINISH' | translate }}
@@ -222,7 +222,7 @@
                             [id]="'veranstaltungInitialeLigatabelle'"
                             [disabled]="this.checkForExistingLigatabelle()"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'plus'"
                             (onClick)="this.createMatchesWT0($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.BUTTON' | translate }}
@@ -232,7 +232,7 @@
                             [id]="'veranstaltungMannschaftSaveButton'"
                             [disabled]="!this.checkMannschaftsTableEmpty()"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'plus'"
                             (onClick)="onCopyMannschaft($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
@@ -243,7 +243,7 @@
                             [id]="'veranstaltungSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'"
                             (onClick)="onSave($event)"
                             data-cy="veranstaltung-detail-save-button">
@@ -254,7 +254,7 @@
                             [id]="'veranstaltungSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.PRIMARY"
                             [iconClass]="'plus'"
                             (onClick)="onWettkampftag($event)"
                             data-cy="wettkampftage-button">
@@ -264,7 +264,7 @@
                             [id]="'veranstaltungUpdateButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'"
                             (onClick)="onUpdate($event)"
                             data-cy="veranstaltung-detail-update-button">
@@ -323,11 +323,11 @@
                     <div class="col-sm-5"></div>
                     <div class="col-sm-7 button-box">
                       <bla-actionbutton
-                        [colorClass]="'secondary'"
+                        [color]="ActionButtonColors.SECONDARY"
                         [iconClass]="'arrow-left'"
                         (onClick)="onTableEditCancel($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.CANCEL' | translate}}</bla-actionbutton>
                       <bla-actionbutton
-                        [colorClass]="'success'"
+                        [color]="ActionButtonColors.SUCCESS"
                         [iconClass]="'save'"
                         (onClick)="onTableEditSave($event)">{{'MANAGEMENT.VERANSTALTUNG_DETAIL.TABLE.EDIT.BUTTONS.SAVE' | translate}}</bla-actionbutton>
                     </div>

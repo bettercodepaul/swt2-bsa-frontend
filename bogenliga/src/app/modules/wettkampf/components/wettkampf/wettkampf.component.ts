@@ -32,6 +32,8 @@ import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/manns
 import {environment} from '@environment';
 import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
 import {SessionHandling} from '@shared/event-handling';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 
 const ID_PATH_PARAM = 'id';
@@ -69,6 +71,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   private passen: Array<PasseDoClass[]> = [];
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public dsbMitglieder: Array<DsbMitgliedDO> = [];
+  public ActionButtonColors = ActionButtonColors;
+
   private sessionHandling: SessionHandling;
 
   popup: boolean;

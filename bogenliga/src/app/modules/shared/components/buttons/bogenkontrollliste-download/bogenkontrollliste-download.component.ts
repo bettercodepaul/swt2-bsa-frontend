@@ -1,12 +1,16 @@
 import {Component, ElementRef, OnInit, ViewChild, Input} from '@angular/core';
 import {environment} from '@environment';
 import {UriBuilder} from '../../../data-provider';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 @Component({
   selector: 'bla-bogenkontrollliste-download',
   templateUrl: './bogenkontrollliste-download.component.html'
 })
 export class BogenkontrolllisteDownloadComponent implements OnInit {
+
+  public ActionButtonColors = ActionButtonColors;
 
   // Get the value of the attribute from the html tag
   @Input()

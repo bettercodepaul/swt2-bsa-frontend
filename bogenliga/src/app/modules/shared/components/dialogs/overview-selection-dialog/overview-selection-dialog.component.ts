@@ -10,6 +10,7 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {toTableRows} from '@shared/components';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 @Component({
   selector:    'bla-selection-overview-dialog',
@@ -17,7 +18,7 @@ import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltu
   styleUrls:   ['./overview-selection-dialog.component.scss']
 })
 export class OverviewSelectionDialogComponent extends CommonSecuredDirective implements OnInit {
-
+  public ActionButtonColors = ActionButtonColors;
   @Input() public config: OverviewDialogConfig;
   @Input() public rows: TableRow[];
 

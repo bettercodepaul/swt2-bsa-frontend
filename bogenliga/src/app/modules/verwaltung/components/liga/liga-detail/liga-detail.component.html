@@ -150,7 +150,7 @@
                             [id]="'ligaSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'"
                             (onClick)="onSave($event)"
                             data-cy="liga-save-button">
@@ -160,7 +160,7 @@
                             [id]="'ligaUpdateButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'"
                             (onClick)="onUpdate($event)"
                             data-cy="liga-update-button">
@@ -169,7 +169,7 @@
 
           <bla-actionbutton *ngIf="entityExists()"
                       [loading]="deleteLoading"
-                            [colorClass]="'danger'"
+                            [color]="ActionButtonColors.DANGER"
                             [iconClass]="'calendar-minus'"
                       (onClick)="onDelete($event)">
             {{ 'MANAGEMENT.LIGA_DETAIL.FORM.DELETE' | translate }}

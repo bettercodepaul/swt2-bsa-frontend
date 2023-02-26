@@ -39,6 +39,8 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {jsPDF} from 'jspdf';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {SessionHandling} from '@shared/event-handling';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_VEREIN = 'verein_detail_delete';
@@ -69,6 +71,8 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
   public deleteLoading = false;
   public saveLoading = false;
+  public ActionButtonColors = ActionButtonColors;
+
 
   private sessionHandling: SessionHandling;
 
