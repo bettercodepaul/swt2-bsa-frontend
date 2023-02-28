@@ -185,7 +185,7 @@
                             [disabled]="!vereineForm.valid"
                             [id]="'vereinSaveButton'"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'plus'"
                             data-cy="vereine-add-button">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.SAVE' | translate }}
@@ -195,7 +195,7 @@
                             [disabled]="!vereineForm.valid"
                             [id]="'vereinUpdateButton'"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'plus'"
                             data-cy="vereine-update-button">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.UPDATE' | translate }}
@@ -205,8 +205,8 @@
                             *ngIf="entityExists()"
                             [buttonType]="ButtonType.DANGER"
                             [loading]="deleteLoading"
-                            [colorClass]="'danger'"
-                            [iconClass]="'plus'">
+                            [color]="ActionButtonColors.DANGER"
+                            [iconClass]="'minus'">
             {{ 'MANAGEMENT.VEREIN_DETAIL.FORM.DELETE' | translate }}
           </bla-actionbutton>
         </div>
@@ -217,7 +217,7 @@
       <h5> Mannschaftsübersicht</h5>
       <div class="overview-dialog-add">
         <bla-actionbutton
-          [colorClass]="'success'"
+          [color]="ActionButtonColors.SUCCESS"
           [iconClass]="'plus'"
           data-cy="vereine-details-add-mannschaft-button"
           routerLink="add">

@@ -15,12 +15,13 @@
 
     </div>
     <div style="margin-top: 3%" class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
-      <button class="btn btn-success"
+      <bla-actionbutton
+        [iconClass]="'plus'"
+        [color]="ActionButtonColors.SUCCESS"
               routerLink="add"
               data-cy="veranstaltung-add-button">
-        <fa-icon icon="plus"></fa-icon>
         <span> Neu</span>
-      </button>
+      </bla-actionbutton>
     </div>
   </section>
 

@@ -11,6 +11,8 @@ import {RoleDTO} from '../../../types/datatransfer/role-dto.class';
 import {RoleDO} from '../../../types/role-do.class';
 import {USER_DETAIL_CONFIG} from './user-detail.config';
 import {TranslatePipe} from '@ngx-translate/core';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 import {
   Notification,
@@ -53,6 +55,8 @@ export class UserDetailComponent extends CommonComponentDirective implements OnI
   public enableButton = false;
   public rightList: RoleDTO[] = []; // Objekt zur Anzeige der zukünftigen Rollen auf der Applikation
   public leftList: RoleDTO[] = []; // Objekt zur Anzeige der aller übrigen Rollen auf der Applikation
+  public ActionButtonColors = ActionButtonColors;
+
 
   private sessionHandling: SessionHandling;
 

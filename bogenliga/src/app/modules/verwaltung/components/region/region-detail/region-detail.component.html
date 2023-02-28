@@ -121,7 +121,7 @@
                     [id]="'regionSaveButton'"
                     [disabled]="!regionenForm.valid || !isContractionUnique()"
                     [loading]="saveLoading"
-                          [colorClass]="'success'"
+                          [color]="ActionButtonColors.SUCCESS"
                           [iconClass]="'save'"
                     (onClick)="onSave($event)"
                     data-cy="region-save-button">
@@ -131,7 +131,7 @@
                     [id]="'regionUpdateButton'"
                     [disabled]="!regionenForm.valid"
                     [loading]="saveLoading"
-                    [colorClass]="'success'"
+                    [color]="ActionButtonColors.SUCCESS"
                     [iconClass]="'save'"
                     (onClick)="onUpdate($event)"
                     data-cy="region-update-button">
@@ -140,7 +140,7 @@
 
         <bla-actionbutton *ngIf="entityExists()"
                     [loading]="deleteLoading"
-                    [colorClass]="'danger'"
+                    [color]="ActionButtonColors.DANGER"
                     [iconClass]="'minus'"
                     (onClick)="onDelete($event)">
           {{ 'MANAGEMENT.REGION_DETAIL.FORM.DELETE' | translate }}

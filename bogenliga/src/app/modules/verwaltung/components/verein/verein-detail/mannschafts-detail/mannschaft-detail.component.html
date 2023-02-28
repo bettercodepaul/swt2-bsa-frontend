@@ -109,7 +109,7 @@
                             [disabled]="!mannschaftForm.valid"
                             [id]="'mannschaftSaveButton'"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'"
                             data-cy="vereine-mannschaft-detail-save-button">
             {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.SAVE' | translate }}
@@ -119,7 +119,7 @@
                             [disabled]="!mannschaftForm.valid"
                             [id]="'mannschaftUpdateButton'"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'"
                             data-cy="vereine-mannschaft-detail-update-button">
             {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.UPDATE' | translate }}
@@ -141,21 +141,19 @@
     <div *ngIf="entityExists()">
       <h5> Mitglieder-Übersicht</h5>
       <div class="overview-dialog-add">
-        <bla-actionbuttonbutton
-          [colorClass]="'success'"
+        <bla-actionbutton
+          [color]="ActionButtonColors.SUCCESS"
           [iconClass]="'plus'"
-          class="btn btn-success"
-                routerLink="add">
-          <fa-icon icon="plus"></fa-icon>
+          routerLink="add">
           <span> Neu</span>
-        </bla-actionbuttonbutton>
-        <button (click)="onDownloadLizenzen()"
-                class="btn btn-success button-margin"
-                style="margin-left: 5px;">
-          <fa-icon icon="file-download"></fa-icon>
+        </bla-actionbutton>
+        <bla-download-actionbutton
+          (click)="onDownloadLizenzen()"
+          [color]="ActionButtonColors.SUCCESS"
+          [iconClass]="'file-download'">
           <span> Alle Lizenzen drucken</span>
           <router-outlet name="onDownloadLizenzen"></router-outlet>
-        </button>
+        </bla-download-actionbutton>
       </div>
       <bla-data-table (onDeleteEntry)="onDeleteMitglied($event)"
                       (onDownloadEntry)="onDownload($event)"

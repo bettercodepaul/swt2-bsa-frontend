@@ -27,7 +27,7 @@
 
       <div class="modal-footer modal-dialog-ok"
            *ngSwitchCase="ModalDialogOption.OK">
-        <bla-actionbutton [colorClass]="'primary'"
+        <bla-actionbutton [color]="ActionButtonColors.PRIMARY"
                           [iconClass]="'check'"
                           [margin]="'unset'"
                           (onClick)="closeDialog(ModalDialogResult.OK)" id="OKBtn1">
@@ -37,13 +37,13 @@
 
       <div class="modal-footer modal-dialog-ok-cancel"
            *ngSwitchCase="ModalDialogOption.OK_CANCEL">
-        <bla-actionbutton [colorClass]="'secondary'"
+        <bla-actionbutton [color]="ActionButtonColors.SECONDARY"
                           [iconClass]="'undo'"
                           [margin]="'0 18% 0 0'"
                           (onClick)="closeDialog(ModalDialogResult.CANCEL)">
           {{ 'NOTIFICATION.BUTTON.CANCEL' | translate }}
         </bla-actionbutton>
-        <bla-actionbutton [colorClass]="'primary'"
+        <bla-actionbutton [color]="ActionButtonColors.PRIMARY"
                           [iconClass]="'check'"
                           [margin]="'0 0 0 18%'"
                           (onClick)="closeDialog(ModalDialogResult.OK)" id="OKBtn2">
@@ -53,13 +53,13 @@
       <div class="modal-footer modal-dialog-yes-no"
            *ngSwitchCase="ModalDialogOption.YES_NO">
 
-        <bla-actionbutton [colorClass]="'secondary'"
+        <bla-actionbutton [color]="ActionButtonColors.SECONDARY"
                     [iconClass]="'times'"
                     [margin]="'0 18% 0 0'"
                     (onClick)="closeDialog(ModalDialogResult.NO)">
           {{ 'NOTIFICATION.BUTTON.NO' | translate }}
         </bla-actionbutton>
-        <bla-actionbutton [colorClass]="'primary'"
+        <bla-actionbutton [color]="ActionButtonColors.PRIMARY"
                     [iconClass]="'check'"
                     [margin]="'0 0 0 18%'"
                     (onClick)="closeDialog(ModalDialogResult.YES)">

@@ -3,6 +3,8 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {ButtonType} from '../../buttons';
 import {ModalDialogOption} from '../types/modal-dialog-option.enum';
 import {ModalDialogResult} from '../types/modal-dialog-result.enum';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 @Component({
   selector:    'bla-modal-dialog',
@@ -17,6 +19,7 @@ export class ModalDialogComponent implements OnInit {
   @Input() public disabled = false;
   @Input() public modalDialogOption: ModalDialogOption = ModalDialogOption.OK;
   @Input() public header: string; // use [header] attribute or <h5> inside the element
+  public ActionButtonColors = ActionButtonColors;
 
   @Output() public onClose = new EventEmitter<ModalDialogResult>();
 
