@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 @Component({
   selector:    'bla-actionbutton',
@@ -14,7 +15,8 @@ export class ActionButtonComponent implements OnInit {
   @Input() public minWidth: string;
   @Input() public margin: string;
   @Input() public iconClass: IconProp;
-  @Input() public colorClass: string = 'primary';
+  @Input() public color: ActionButtonColors = ActionButtonColors.PRIMARY;
+
 
   /**
    * The value is send via the event emitter to the parent component
@@ -52,7 +54,7 @@ export class ActionButtonComponent implements OnInit {
     }
   }
 
-  getColorClass() {
-    return 'action-btn-' + this.colorClass;
+  public getColorClass() {
+    return this.color;
   }
 }

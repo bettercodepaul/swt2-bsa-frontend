@@ -6,6 +6,8 @@ import {LoginResult} from '../../types/login-result.enum';
 import {USER_PWD_CONFIG} from './user-pwd.config';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 @Component({
   selector:    'bla-user-pwd',
@@ -19,6 +21,8 @@ export class UserPwdComponent implements OnInit {
   public loginResult: LoginResult = LoginResult.PENDING;
   public LoginResult = LoginResult;
   public AlertType = AlertType;
+  public ActionButtonColors = ActionButtonColors;
+
 
   private sessionHandling: SessionHandling;
 

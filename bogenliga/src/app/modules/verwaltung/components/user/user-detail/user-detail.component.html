@@ -87,7 +87,7 @@
         <bla-actionbutton
           [id]="'userUpdateButton'"
           [loading]="saveLoading"
-          [colorClass]="'success'"
+          [color]="ActionButtonColors.SUCCESS"
           [iconClass]="'user-cog'"
           (onClick)="resetRole($event)">
           {{ 'MANAGEMENT.USER_DETAIL.FORM.ROLE_UPDATE' | translate }}
@@ -129,7 +129,7 @@
           [id]="'passwordUpdateButton'"
           [disabled]="!passwordForm.valid"
           [loading]="savePW"
-          [colorClass]="'success'"
+          [color]="ActionButtonColors.SUCCESS"
           [iconClass]="'save'"
           (onClick)="resetPW($event)">
           {{ 'MANAGEMENT.USER_DETAIL.FORM.PW_UPDATE' | translate }}

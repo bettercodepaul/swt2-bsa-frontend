@@ -243,7 +243,7 @@
           <bla-actionbutton (onClick)="onDelete(selectedWettkampfTag, $event)"
                             *ngIf="entityExists()"
                             [buttonType]="ButtonType.DANGER"
-                            [colorClass]="'danger'"
+                            [color]="ActionButtonColors.DANGER"
                             [iconClass]="'minus'"
                             [loading]="deleteLoading">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.DELETE.TITLE' | translate }}
@@ -254,7 +254,7 @@
                             *ngIf="entityExists()"
                             [disabled]="wettkampftageForm.dirty"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'">
             <fa-icon icon="plus"></fa-icon>
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.ADD.TITLE' | translate }}
@@ -264,7 +264,7 @@
           <bla-actionbutton *ngIf="entityExists()"
                             [disabled]="wettkampftageForm.dirty"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'copy'"
                             (onClick)="onCopyWettkampfTag($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.WETTKAMPFTAG.NOTIFICATION.COPY.TITLE' | translate }}
@@ -275,7 +275,7 @@
                             [disabled]="(wettkampftageStrasse.invalid || wettkampftagePLZ.invalid || wettkampftageOrt.invalid  || wettkampftageBeginn.invalid || wettkampftageDatum.invalid)"
                             [id]="'wettkampftagSaveButton'"
                             [loading]="saveLoading"
-                            [colorClass]="'success'"
+                            [color]="ActionButtonColors.SUCCESS"
                             [iconClass]="'save'"
                             data-cy="wettkampftage-update-button">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.SAVE' | translate }}
@@ -294,7 +294,7 @@
                               *ngIf="entityExists()"
                               [disabled]="false"
                               [id]="'wettkampfSaveButton'"
-                              [colorClass]="'secondary'"
+                              [color]="ActionButtonColors.SECONDARY"
                               [iconClass]="'arrow-left'"
                               [loading]="saveLoading"
                               data-cy="wettkampftage-zurueck">

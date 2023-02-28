@@ -20,6 +20,8 @@ import {HttpClient} from '@angular/common/http';
 import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_detail_delete';
@@ -40,6 +42,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
   @Input() isPopUp: boolean;
   @Input() dialogRef;
 
+
   public config = DSB_MITGLIED_DETAIL_CONFIG;
   public ButtonType = ButtonType;
   public currentMitglied: DsbMitgliedDO = new DsbMitgliedDO();
@@ -58,6 +61,8 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
   public currentMitgliedNat: string;
   public deleteLoading = false;
   public saveLoading = false;
+  public ActionButtonColors = ActionButtonColors;
+
 
   private sessionHandling: SessionHandling;
 

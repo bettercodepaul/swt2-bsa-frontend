@@ -18,6 +18,8 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {EinstellungenDTO} from '@verwaltung/types/datatransfer/einstellungen-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {SessionHandling} from '@shared/event-handling';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_UPDATE_EINSTELLUNG = 'einstellung_detail_update';
@@ -41,6 +43,8 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
   public rows: TableRow[];
   public id;
   public test = 'app.bogenliga.frontend.autorefresh.active';
+  public ActionButtonColors = ActionButtonColors;
+
 
   private sessionHandling: SessionHandling;
 

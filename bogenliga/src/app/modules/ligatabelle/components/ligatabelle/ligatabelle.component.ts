@@ -16,6 +16,7 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 
 const ID_PATH_PARAM = 'id';
@@ -28,7 +29,6 @@ const ID_PATH_PARAM = 'id';
 })
 export class LigatabelleComponent extends CommonComponentDirective implements OnInit {
 
-
   private sessionHandling: SessionHandling;
 
   public config = WETTKAEMPFE_CONFIG;
@@ -38,6 +38,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
   public buttonForward: number;
   public selectedVeranstaltungName: string;
+  public ActionButtonColors = ActionButtonColors;
 
 
   public loading = true;

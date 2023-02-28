@@ -4,6 +4,7 @@ import {CurrentUserService, UserPermission} from '../../../services/current-user
 import {CommonSecuredDirective} from '../../common/common-secured-component.class';
 import {TableRow} from '../../tables/types/table-row.class';
 import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 @Component({
   selector:    'bla-overview-dialog',
@@ -17,7 +18,7 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public hidden = true;
   @Input() public searchTerm: string;
 
-
+  public ActionButtonColors = ActionButtonColors;
 
   @Output() public onEditClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onViewClicked = new EventEmitter<VersionedDataObject>();
