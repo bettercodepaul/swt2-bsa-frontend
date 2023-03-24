@@ -73,6 +73,8 @@
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
       "TITLE": "Liga-Tabelle",
+      "GEWAEHLTE_VERANSTALTUNG": "Gewählte Veranstaltung: ",
+      "GEWAEHLTE_MANNSCHAFT": "Gewählte Mannschaft: ",
       "WETTKAMPFTAGEINS" : "Wettkampftag 1",
       "WETTKAMPFTAGZWEI" : "Wettkampftag 2",
       "WETTKAMPFTAGDREI" : "Wettkampftag 3",
@@ -208,8 +210,12 @@
       "SCHUSSZETTEL": "Schusszettel",
       "KONTROLLLISTE": "Bogenkontrollliste",
       "MELDEZETTEL": "Meldezettel",
+      "MITGLIED_ANLEGEN": "DSB-Mitglied anlegen",
       "TABLE_SETUP": "Setup Tablets",
-      "OFFLINE": "Offline"
+      "OFFLINE": "Offline",
+      "OFFLINE_GEHEN": "Offline gehen",
+      "ONLINE_GEHEN": "Online gehen",
+      "OFFLINE_TOKEN": "Offlinetoken löschen"
     },
     "SETZLISTE" : {
       "NOTIFICATION" : {
