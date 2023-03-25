@@ -249,6 +249,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           }
         )
         .catch((response) => {
+          /*If a Veranstaltung already exists, a notification is created at this point which is displayed on the GUI.
+          Ticket BSAPP-686 requires a meaningful text output for the user on this notification which has been implemented.
+          Regarding the architecture, this is the right place in the code, because it is responsible for the GUI.  */
           console.log('Veranstaltung existiert bereits in diesem Sportjahr');
           const notification: Notification = {
             id:          NOTIFICATION_SAVE_VERANSTALTUNG_FAILURE,
