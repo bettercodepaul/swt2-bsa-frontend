@@ -154,7 +154,7 @@
             [color]="ActionButtonColors.PRIMARY"
             [iconClass]="'user-plus'"
             (onClick)="addDSBMitglied()">
-            DSB-Mitglied anlegen
+            {{ 'WKDURCHFUEHRUNG.BUTTON.MITGLIED_ANLEGEN' | translate }}
           </bla-actionbutton>
 
         <ng-template #onlineSetupTables
@@ -175,7 +175,7 @@
                             [color]="ActionButtonColors.DANGER"
                             [iconClass]="'power-off'"
                             [disabled]="isDisabled()"
-                            data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
+                            data-cy="wkdurchfuehrung-btn-offlinegehen">{{ 'WKDURCHFUEHRUNG.BUTTON.OFFLINE_GEHEN' | translate }}
           </bla-actionbutton>
         </div>
 
@@ -185,7 +185,7 @@
             <bla-actionbutton (click)="onButtonGoOfflineClick()"
                               [color]="ActionButtonColors.SUCCESS"
                               [iconClass]="'cloud'"
-                              [disabled]="isDisabled()">Online gehen
+                              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.ONLINE_GEHEN' | translate }}
             </bla-actionbutton>
           </div>
         </ng-template>
@@ -195,7 +195,7 @@
           <bla-actionbutton (click)="resetWettkampfToken(this.selectedWettkampfId)"
                             [color]="ActionButtonColors.DANGER"
                             [iconClass]="'trash'"
-                            [disabled]="isDisabled()">Offlinetoken löschen
+                            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.OFFLINE_TOKEN' | translate }}
           </bla-actionbutton>
         </div>
 
