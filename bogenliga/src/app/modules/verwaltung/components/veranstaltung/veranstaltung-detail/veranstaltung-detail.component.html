@@ -179,7 +179,8 @@
 
         <div class="col-sm-9">
           <select class="form-control"
-                  required
+
+                  [disabled] = checkModifyEmail()
                   id="ligaleiter"
                   name="ligaleiter"
                   #ligaleiter="ngModel"
@@ -188,7 +189,7 @@
                   required
                   placeholder="">
             <option hidden
-                    [value]="">beispiel@email.de
+                    [value]="">{{currentUserService.getEmail()}}
             </option>
             <option [ngValue]="ligaleiter"
                     *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>

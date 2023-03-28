@@ -45,7 +45,7 @@ import {TableActionType} from '@shared/components/tables/types/table-action-type
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 
@@ -758,5 +758,13 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.notificationService.showNotification(notification);
   }
 
+  public checkModifyEmail(): boolean {
+    let ableToChange = false;
+    if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG) &&
+      !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)) {
+      ableToChange = true;
+    }
+    return ableToChange;
+  }
 
 }
