@@ -757,7 +757,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
     this.notificationService.showNotification(notification);
   }
-
+//checks if User is allowed to change the email address of the Veranstaltung
   public checkModifyEmail(): boolean {
     let ableToChange = false;
     if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG) &&
