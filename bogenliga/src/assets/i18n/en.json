@@ -69,6 +69,8 @@
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
       "TITLE": "League-Ranking",
+      "GEWAEHLTE_VERANSTALTUNG": "Selected League: ",
+      "GEWAEHLTE_MANNSCHAFT": "Selected Team: ",
       "WETTKAMPFTAGEINS": "Competition day 1",
       "WETTKAMPFTAGZWEI": "Competition day 2",
       "WETTKAMPFTAGDREI": "Competition day 3",
@@ -190,8 +192,12 @@
       "SCHUSSZETTEL": "shooting list",
       "KONTROLLLISTE": "sheet control list",
       "MELDEZETTEL": "report slip",
+      "MITGLIED_ANLEGEN": "create new member",
       "TABLE_SETUP": "setup tablets",
-      "OFFLINE": "Offline"
+      "OFFLINE": "Offline",
+      "OFFLINE_GEHEN": "Go offline",
+      "ONLINE_GEHEN": "Go online",
+      "OFFLINE_TOKEN": "Delete offline token"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
