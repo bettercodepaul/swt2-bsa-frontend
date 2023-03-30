@@ -189,7 +189,7 @@
                   required
                   placeholder="">
             <option hidden
-                    [value]="">{{currentUserService.getEmail()}}
+                    [value]="">{{getCurrentUserEmail()}}
             </option>
             <option [ngValue]="ligaleiter"
                     *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>

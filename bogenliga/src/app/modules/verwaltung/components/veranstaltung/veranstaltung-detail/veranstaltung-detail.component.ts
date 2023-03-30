@@ -766,5 +766,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     }
     return ableToChange;
   }
+  //returns the email of the logged in user
+  public getCurrentUserEmail(): string{
+    return this.currentUserService.getEmail();
+  }
 
 }
