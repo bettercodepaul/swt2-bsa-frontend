@@ -523,7 +523,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.allUsers = [];
     this.allUsers = response.payload;
     if (this.id === 'add') {
-      this.currentUser = this.allUsers[0];
+      this.currentUser = this.allUsers.filter((user) => user.id === this.currentUserService.getCurrentUserID())[0];
     } else {
       this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaleiterId)[0];
     }
@@ -757,18 +757,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
     this.notificationService.showNotification(notification);
   }
-//checks if User is allowed to change the email address of the Veranstaltung
-  public checkModifyEmail(): boolean {
-    let ableToChange = false;
-    if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG) &&
-      !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)) {
-      ableToChange = true;
-    }
-    return ableToChange;
-  }
-  //returns the email of the logged in user
-  public getCurrentUserEmail(): string{
-    return this.currentUserService.getEmail();
+
+  public hasCurrentUserAdminPermissions(): boolean {
+    return this.currentUserService.hasPermission(UserPermission.CAN_CREATE_SYSTEMDATEN);
   }
 
 }
