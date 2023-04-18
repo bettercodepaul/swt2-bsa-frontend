@@ -7,79 +7,89 @@
     </div>
 
 
-    <!-- Row 1 -->
-    <div style="margin-left: 20px; min-height: 40vh">
-      <h2>Unsere nächsten Wettkämpfe</h2>
-      <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:100%; margin-left: 15px;">
-        <div class="row">
-          <bla-data-table [config]="config_table"
-                          [rows]="rows"
-                          [loading]="loadingTable"
-                          [hidden]="checkIfTableIsEmpty()"
-                          (onMapEntry)="onMap($event)">
+    <div class="container">
+      <div class="div1" style="margin-left: 20px; min-height: 40vh">
+        <h2>Unsere nächsten Wettkämpfe</h2>
+        <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
+        <table id="example"
+               class="table table-hover table-sm table-responsive-sm thead-light table-striped"
+               style="width:100%; margin-left: 15px;">
+          <div class="row">
+            <bla-data-table [config]="config_table"
+                            [rows]="rows"
+                            [loading]="loadingTable"
+                            [hidden]="checkIfTableIsEmpty()"
+                            (onMapEntry)="onMap($event)">
 
-            <!--
-      <h3> <a class="blackLink"
-             routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
--->
-            <!-- headlines -->
-            <!-- <thead>
-             <tr>
-               -- These are taken out of the JSON File ->
-               <th>{{ 'TABLE.DATE' | translate }}</th>
-               <th>{{ 'TABLE.TIME' | translate }}</th>
-               <th>{{ 'TABLE.LIGA' | translate }}</th>
-               <th>{{ 'TABLE.PLACE' | translate }}</th>
-             </tr>
-             </thead>-->
-            <!-- Rows -->
-            <!--
-                      <tbody>
-                      <tr>
-                        <td>03.11.2018</td>
-                        <td>14:00</td>
-                        <td>2. Bundesliga</td>
-                        <td>Welzheim</td>
-                      </tr>
+              <!--
+        <h3> <a class="blackLink"
+               routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
+  -->
+              <!-- headlines -->
+              <!-- <thead>
+               <tr>
+                 -- These are taken out of the JSON File ->
+                 <th>{{ 'TABLE.DATE' | translate }}</th>
+                 <th>{{ 'TABLE.TIME' | translate }}</th>
+                 <th>{{ 'TABLE.LIGA' | translate }}</th>
+                 <th>{{ 'TABLE.PLACE' | translate }}</th>
+               </tr>
+               </thead>-->
+              <!-- Rows -->
+              <!--
+                        <tbody>
+                        <tr>
+                          <td>03.11.2018</td>
+                          <td>14:00</td>
+                          <td>2. Bundesliga</td>
+                          <td>Welzheim</td>
+                        </tr>
 
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>14:00</td>
-                        <td>Landesliga Nord Recurve</td>
-                        <td>Welzheim</td>
-                      </tr>
+                        <tr>
+                          <td>17.11.2018</td>
+                          <td>14:00</td>
+                          <td>Landesliga Nord Recurve</td>
+                          <td>Welzheim</td>
+                        </tr>
 
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>10:00</td>
-                        <td>Landesliga A Compound</td>
-                        <td>Hochdorf o. Essendorf</td>
+                        <tr>
+                          <td>17.11.2018</td>
+                          <td>10:00</td>
+                          <td>Landesliga A Compound</td>
+                          <td>Hochdorf o. Essendorf</td>
 
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>14:00</td>
-                        <td>Württembergliga Compound</td>
-                        <td>Hochdorf o. Essendorf</td>
-                      </tr>
+                        <tr>
+                          <td>17.11.2018</td>
+                          <td>14:00</td>
+                          <td>Württembergliga Compound</td>
+                          <td>Hochdorf o. Essendorf</td>
+                        </tr>
 
-                      <tr>
-                        <td>18.11.2018</td>
-                        <td>10:00</td>
-                        <td>Landesliga Süd Recurve</td>
-                        <td>Hochdorf o. Essendorf</td>
-                      </tr>
-                      </tbody>
-                      -->
+                        <tr>
+                          <td>18.11.2018</td>
+                          <td>10:00</td>
+                          <td>Landesliga Süd Recurve</td>
+                          <td>Hochdorf o. Essendorf</td>
+                        </tr>
+                        </tbody>
+                        -->
 
-          </bla-data-table>
-        </div>
-      </table>
+            </bla-data-table>
+          </div>
+        </table>
+      </div>
+
+      <div class="div2" style="margin-left: 20px; min-height: 40vh">
+        <Button>Test</Button>
+      </div>
+
+
     </div>
 
-    <div class="homeContent">
+    <!-- Row 1 -->
+
+
+    <div class="div3" style="margin-left: 20px; min-height: 40vh">
       <!-- Row 2 -->
       <div class="flexChild">
         <h2>Neues aus dem Bogensport</h2>
