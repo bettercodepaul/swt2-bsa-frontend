@@ -11,6 +11,7 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/liga-mapper';
 import {LigaDO} from '../types/liga-do.class';
+import {ConsoleLogger} from '@angular/compiler-cli/ngcc';
 
 @Injectable({
   providedIn: 'root'

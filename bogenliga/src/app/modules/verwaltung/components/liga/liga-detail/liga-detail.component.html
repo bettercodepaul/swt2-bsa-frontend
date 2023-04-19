@@ -139,6 +139,31 @@
         </div>
       </div>
 
+      <!-- Liga Details -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="ligaName">
+          <span>Ligadetails</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="text"
+                 class="form-control"
+                 required
+                 id="ligaDetail"
+                 name="ligaDetail"
+                 #ligaDetail="ngModel"
+                 [(ngModel)]="currentLigaDetail"
+                 [class.is-invalid]="ligaDetail.invalid && !ligaDetail.untouched"
+                 placeholder="platzhalter für alte details"
+                 data-cy="liga-detail-detail">
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
 
       <!-- SAVE/UPDATE/DELETE BUTTON -->
       <div class="form-group row">
@@ -176,6 +201,9 @@
           </bla-actionbutton>
         </div>
       </div>
+
+
+
     </form>
   </div>
 </bla-common-dialog>
