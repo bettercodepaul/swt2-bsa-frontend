@@ -11,6 +11,8 @@ export class LigaDTO implements DataTransferObject {
   ligaUebergeordnetName: string;
   ligaVerantwortlichId: number;
   ligaVerantwortlichMail: string;
+  ligaDetailId: number;
+  ligaDetail: string;
   version: number;
 
   static copyFrom(optional: {
@@ -23,6 +25,8 @@ export class LigaDTO implements DataTransferObject {
     ligaUebergeordnetName?: string,
     ligaVerantwortlichId?: number,
     ligaVerantwortlichMail?: string,
+    ligaDetailId?: number;
+    ligaDetail?: string;
     version?: number
   } = {}): LigaDTO {
     const copy = new LigaDTO();
@@ -58,10 +62,20 @@ export class LigaDTO implements DataTransferObject {
       copy.disziplinId = null;
     }
 
+    if (optional.ligaDetailId >= 0 || optional.ligaDetailId == null) {
+      // copy.ligaDetailId = optional.ligaDetailId;
+      copy.ligaDetailId = 123;
+    } else {
+      copy.ligaDetailId = 321;
+    }
+
+
+
     copy.name = optional.name || '';
     copy.regionName = optional.regionName || '';
     copy.ligaUebergeordnetName = optional.ligaUebergeordnetName || '';
     copy.ligaVerantwortlichMail = optional.ligaVerantwortlichMail || '';
+    copy.ligaDetail = optional.ligaDetail || null;
 
     return copy;
   }
