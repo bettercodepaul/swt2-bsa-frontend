@@ -86,14 +86,14 @@ h1{
   }
 }
 
-.Ligaleister{
+.Vorlage{
 
 }
 
 .Button{
   width: 3em;
   height: 3em;
-  font-size: 1.25em;
+  font-size: 1.50em;
   background: #487AF5;
   border: thin solid #7e7e7e;
   margin: 1em;
@@ -104,6 +104,21 @@ h1{
   background: #483AF9;
 }
 
+.sportleiter_manschaftsführer{
+  display: none;
+}
+
+.ligaleiter{
+  display: none;
+}
+
+.kampfrichter{
+  display: none;
+}
+
+.ausrichter{
+  display: none;
+}
 
 
 
