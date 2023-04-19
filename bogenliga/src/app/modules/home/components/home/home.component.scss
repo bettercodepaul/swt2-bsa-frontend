@@ -45,15 +45,15 @@ h1{
   align-items: flex-start;
 
 
-  .div1 {
+  .calendar {
     order: 1;
   }
 
-  .div2 {
+  .shortcuts {
     order: 2;
   }
 
-  .div3 {
+  .news {
     order: 3;
 
     /*
@@ -73,15 +73,15 @@ h1{
     flex-direction: row;
   }
 
-  .div1 {
+  .calendar {
     order: 1;
   }
 
-  .div2 {
+  .shortcuts {
     order: 3;
   }
 
-  .div3 {
+  .news {
     order: 2;
   }
 }
@@ -104,21 +104,6 @@ h1{
   background: #483AF9;
 }
 
-.sportleiter_manschaftsführer{
-  display: none;
-}
-
-.ligaleiter{
-  display: none;
-}
-
-.kampfrichter{
-  display: none;
-}
-
-.ausrichter{
-  display: none;
-}
 
 
 
