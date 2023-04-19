@@ -56,22 +56,23 @@ h1{
   .div3 {
     order: 3;
 
-/*
-    position: absolute;
-    text-align: left;
-    margin: 5px;
-    padding: 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    align-content: space-around;
-    flex-wrap: wrap;*/
+    /*
+        position: absolute;
+        text-align: left;
+        margin: 5px;
+        padding: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        align-content: space-around;
+        flex-wrap: wrap;*/
   }
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
   }
+
   .div1 {
     order: 1;
   }
@@ -79,9 +80,31 @@ h1{
   .div2 {
     order: 3;
   }
-  .div3{
+
+  .div3 {
     order: 2;
   }
 }
+
+.Ligaleister{
+
+}
+
+.Button{
+  width: 3em;
+  height: 3em;
+  font-size: 1.25em;
+  background: #487AF5;
+  border: thin solid #7e7e7e;
+  margin: 1em;
+  border-radius: 50%;
+}
+
+.Button:hover{
+  background: #483AF9;
+}
+
+
+
 
 
