@@ -10,6 +10,24 @@
     <!-- Row 1 -->
     <div style="margin-left: 20px; min-height: 40vh">
       <h2>Unsere nächsten Wettkämpfe</h2>
+      <div id = "competitionList">
+        <button class = "competitionListElement soft-shadow">
+          <div class = "competitionListElementDate">
+            <p>DEZ</p>
+            <h1>16</h1>
+          </div>
+          <p class = "competitionListElementHeading">Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift</p>
+          <p>Link</p>
+        </button>
+        <button class = "competitionListElement soft-shadow">
+          <div class = "competitionListElementDate">
+            <p>DEZ</p>
+            <h1>16</h1>
+          </div>
+          <p class = "competitionListElementHeading">Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift</p>
+          <p>Link</p>
+        </button>
+      </div>
       <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
       <table id="example"
              class="table table-hover table-sm table-responsive-sm thead-light table-striped"
