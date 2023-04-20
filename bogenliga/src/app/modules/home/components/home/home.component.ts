@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HOME_CONFIG} from './home.config';
 import {BogenligaResponse} from '@shared/data-provider';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
@@ -12,7 +12,7 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
 
@@ -55,7 +55,56 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
       window.location.reload();
     }
   }
+  @ViewChild('ligaleiter') ligaleiter: ElementRef;
+  @ViewChild('ausrichter') ausrichter: ElementRef;
+  @ViewChild('kampfrichter') kampfrichter: ElementRef;
+  @ViewChild('sportleiter') sportleiter: ElementRef;
 
+  ngAfterViewInit() {
+    // Here you can access the HTML elements using the nativeElement property
+
+    /* 1 get all containers from html Ligaleiter, Kampfrichter, Sportleiter-Mannschaftsführer, Ausrichter */
+    const sectionLigaleiter = this.ligaleiter.nativeElement.style.display ="none";
+    const sectionAusrichter = this.ausrichter.nativeElement.style.display ="none";
+    const sectionKampfrichter = this.kampfrichter.nativeElement.style.display ="none";
+    const sectionSportleiter = this.sportleiter.nativeElement.style.display ="none";
+
+    // 2 if condition which enable visibility to true based on the permissions array
+    // const currentPermisisons = this.currentUserService.getPermissions();
+
+    //   {}
+    // .style.display = "none";
+
+    // Ligaleiter
+    if(
+      this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VEREIN) &&
+      this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MANNSCHAFT) &&
+      this.currentUserService.hasPermission(UserPermission.CAN_CREATE_STAMMDATEN))  {
+      const sectionLigaleiter = this.ligaleiter.nativeElement.style.display ="block";
+    }
+
+    // Ausrichter
+    if
+    (this.currentUserService.hasPermission(UserPermission.CAN_READ_STAMMDATEN)
+    ) {
+      const sectionAusrichter = this.ausrichter.nativeElement.style.display ="block";
+    }
+
+    // Kampfrichter
+    if
+    (this.currentUserService.hasPermission(UserPermission.CAN_READ_STAMMDATEN)
+    ) {
+      const sectionKampfrichter = this.kampfrichter.nativeElement.style.display ="block";
+    }
+
+    // Sportleiter-Manschaftsführer
+    if
+    (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER) &&
+      this.currentUserService.hasPermission(UserPermission.CAN_CREATE_DSBMITGLIEDER)
+    ) {
+      const sectionSportleiter = this.sportleiter.nativeElement.style.display ="block";
+    }
+  }
   ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
       this.logindataprovider.signInDefaultUser()

@@ -81,26 +81,29 @@
 
       <div class="shortcuts" style="margin-left: 20px; min-height: 40vh">
         <h2>Vorschläge für dich</h2>
-        <div class="Ligaleiter">
+        <div class="Ligaleiter" #ligaleiter>
           <button class="Button" id="Terminübersicht" onclick="window.location.href = 'http://localhost:4200/#/wkdurchfuehrung';">2</button>
           <button class="Button" id="ManschaftAnlegen" onclick="window.location.href = 'http://localhost:4200/#/verwaltung/vereine/0/add';">4</button>
           <button class="Button" id="VeranstaltungAnlegen" onclick="window.location.href = 'http://localhost:4200/#/verwaltung/veranstaltung/add';">5</button>
         </div>
-        <div class="Ausrichter">
+
+        <div class="Ausrichter" #ausrichter>
           <button class="Button" id="VorauswahlVeranstaltung" onclick="window.location.href = 'http://localhost:4200/#/verwaltung/veranstaltung';">3</button>
           <button class="Button" id="Terminübersicht" onclick="window.location.href = 'http://localhost:4200/#/wkdurchfuehrung';">2</button>
         </div>
-        <div class="Kampfrichter">
+
+        <div class="Kampfrichter" #kampfrichter>
           <button class="Button" id="Terminübersicht" onclick="window.location.href = 'http://localhost:4200/#/wkdurchfuehrung';">2</button>
         </div>
-        <div class="Sportleiter_Mannschaftsführer">
+
+        <div class="Sportleiter_Mannschaftsführer" #sportleiter>
           <button class="Button" id="DSBMitgliedAnlegen" onclick="window.location.href = 'http://localhost:4200/#/verwaltung/dsbmitglieder/add';"><img src="../home/Buttons/DSBMitgliedAnlegen.svg" class="image"></button>
           <button class="Button" id="AddManschaftsmitglied" onclick="window.location.href = 'http://localhost:4200/#/verwaltung/vereine/0/101/add';">1</button>
         </div>
+
+
+
       </div>
-
-
-    </div>
 
     <!-- Row 1 -->
 
