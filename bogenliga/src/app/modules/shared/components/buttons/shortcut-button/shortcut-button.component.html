@@ -1,7 +1,9 @@
-<button
-  [id]="id"
-  type="button"
-  class="shortcut-btn"
->
-
-  icon</button>
+<div>
+  <button *ngFor="let button of config.shortcutButtons"
+          [id]="button.title"
+          type="button"
+          class="shortcut-btn">
+    {{ button.icon }}
+    {{ button.title }}
+  </button>
+</div>

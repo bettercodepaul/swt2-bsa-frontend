@@ -15,7 +15,11 @@ import {LoginDataProviderService} from '@user/services/login-data-provider.servi
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
-
+import {
+  ShortcutButtonsConfig
+} from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
+import {VERWALTUNG_CONFIG} from '@verwaltung/components/verwaltung/verwaltung.config';
+import {HOME_SHORTCUT_BUTTON_CONFIG} from './home.config';
 @Component({
   selector:    'bla-home',
   templateUrl: './home.component.html',
@@ -24,6 +28,9 @@ import {SessionHandling} from '@shared/event-handling';
 export class HomeComponent extends CommonComponentDirective implements OnInit {
 
   public config = HOME_CONFIG;
+
+  public config_shortcut = HOME_SHORTCUT_BUTTON_CONFIG;
+
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public wettkaempfeDTO: WettkampfDTO[];
   public wettkaempfeDO: WettkampfDO[];
@@ -60,51 +67,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   @ViewChild('kampfrichter') kampfrichter: ElementRef;
   @ViewChild('sportleiter') sportleiter: ElementRef;
 
-  ngAfterViewInit() {
-    // Here you can access the HTML elements using the nativeElement property
-
-    /* 1 get all containers from html Ligaleiter, Kampfrichter, Sportleiter-Mannschaftsführer, Ausrichter */
-    const sectionLigaleiter = this.ligaleiter.nativeElement.style.display ="none";
-    const sectionAusrichter = this.ausrichter.nativeElement.style.display ="none";
-    const sectionKampfrichter = this.kampfrichter.nativeElement.style.display ="none";
-    const sectionSportleiter = this.sportleiter.nativeElement.style.display ="none";
-
-    // 2 if condition which enable visibility to true based on the permissions array
-    // const currentPermisisons = this.currentUserService.getPermissions();
-
-    //   {}
-    // .style.display = "none";
-
-    // Ligaleiter
-    if(
-      this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VEREIN) &&
-      this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MANNSCHAFT) &&
-      this.currentUserService.hasPermission(UserPermission.CAN_CREATE_STAMMDATEN))  {
-      const sectionLigaleiter = this.ligaleiter.nativeElement.style.display ="block";
-    }
-
-    // Ausrichter
-    if
-    (this.currentUserService.hasPermission(UserPermission.CAN_READ_STAMMDATEN)
-    ) {
-      const sectionAusrichter = this.ausrichter.nativeElement.style.display ="block";
-    }
-
-    // Kampfrichter
-    if
-    (this.currentUserService.hasPermission(UserPermission.CAN_READ_STAMMDATEN)
-    ) {
-      const sectionKampfrichter = this.kampfrichter.nativeElement.style.display ="block";
-    }
-
-    // Sportleiter-Manschaftsführer
-    if
-    (this.currentUserService.hasPermission(UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER) &&
-      this.currentUserService.hasPermission(UserPermission.CAN_CREATE_DSBMITGLIEDER)
-    ) {
-      const sectionSportleiter = this.sportleiter.nativeElement.style.display ="block";
-    }
-  }
   ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
       this.logindataprovider.signInDefaultUser()

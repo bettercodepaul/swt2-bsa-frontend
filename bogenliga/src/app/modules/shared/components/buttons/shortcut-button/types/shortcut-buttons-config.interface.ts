@@ -1,7 +1,6 @@
-import {ShortcutButton} from '@shared/components/buttons/shortcut-button/shortcut-button.component';
+import {ShortcutButtonInterface} from '@shared/components/buttons/shortcut-button/types/shortcut-button.interface';
 
+export interface ShortcutButtonsConfig {
 
-export interface ShortcutButtonsConfigInterface {
-
-  shortcutButtons:  ShortcutButton[];
+  shortcutButtons:  ShortcutButtonInterface[];
 }
