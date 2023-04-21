@@ -1,10 +1,9 @@
 import {CommonDialogConfig} from '../../../shared/components/dialogs';
-import {TableConfig} from '@shared/components/tables/types/table-config.interface';
-import {TableActionType} from '@shared/components/tables/types/table-action-type.enum';
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
 import {UserPermission} from '@shared/services';
+
 export const HOME_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'HOME',
   pageTitleTranslationKey: 'HOME.HOME.TITLE',
@@ -13,22 +12,40 @@ export const HOME_CONFIG: CommonDialogConfig = {
 export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
   shortcutButtons: [
     {
-      title: 'test1',
+      title: 'Mannnschaftsmitglieder hinzufügen ',
       icon: '',
       route: '#',
-      permissions: [UserPermission.CAN_READ_DSBMITGLIEDER]
+      permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN]
     },
     {
-      title: 'test2',
+      title: 'Terminübersicht',
       icon: '',
       route: '#',
-      permissions: [UserPermission.CAN_CREATE_MANNSCHAFT]
+      permissions: [UserPermission.CAN_READ_WETTKAMPF]
     },
     {
-      title: 'test3',
+      title: 'Veranstaltungen',
       icon: '',
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN]
-    }
+    },
+    {
+      title: 'Mannschaften anlegen',
+      icon: '',
+      route: '#',
+      permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN]
+    },
+    {
+      title: 'Veranstaltung anlegen',
+      icon: '',
+      route: '#',
+      permissions: [UserPermission.CAN_READ_STAMMDATEN]
+    },
+    {
+      title: 'Wettkampfdurchführung',
+      icon: '',
+      route: '#',
+      permissions: [UserPermission.CAN_READ_STAMMDATEN]
+    },
   ]
 };
