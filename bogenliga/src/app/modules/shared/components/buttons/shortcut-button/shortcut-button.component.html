@@ -1,5 +1,5 @@
-<div>
-  <button *ngFor="let button of config.shortcutButtons"
+<div *ngFor="let button of config.shortcutButtons">
+  <button *ngIf="hasUserPermissions(button.permissions)"
           [id]="button.title"
           type="button"
           class="shortcut-btn">
