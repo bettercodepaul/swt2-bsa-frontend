@@ -15,6 +15,10 @@ import {LoginDataProviderService} from '@user/services/login-data-provider.servi
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
+import {ActivatedRoute, Router, ParamMap} from '@angular/router';
+import {isUndefined} from '@shared/functions';
+
+const ID_PATH_PARAM = 'id';
 
 @Component({
   selector:    'bla-home',
@@ -32,16 +36,22 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public rows: TableRow[] = [];
   public currentDate: number =  Date.now();
   public dateHelper: string;
+  public providedID: number;
+  private hasID: boolean;
 
   private sessionHandling: SessionHandling;
 
-  constructor(private wettkampfDataProvider: WettkampfDataProviderService,
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private wettkampfDataProvider: WettkampfDataProviderService,
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private logindataprovider: LoginDataProviderService,
     private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
+
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -63,6 +73,17 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
     }
+
+    this.route.params.subscribe((params) => {
+      if (!isUndefined(params[ID_PATH_PARAM])) {
+        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
+        console.log('Provided Id ', this.providedID);
+        this.hasID = true;
+
+      } else {
+        console.log('no params');
+      }
+    });
   }
 
       /**
