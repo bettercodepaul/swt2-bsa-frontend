@@ -81,7 +81,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
         this.hasID = true;
 
       } else {
-        console.log('no params');
+        console.log('no params at home');
       }
     });
   }

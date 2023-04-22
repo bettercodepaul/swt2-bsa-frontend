@@ -84,11 +84,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        console.log('Provided Id ', this.providedID);
+        console.log('Provided Id AT LIGATABELLE', this.providedID);
         this.hasID = true;
 
       } else {
-        console.log('no params');
+        console.log('no params at ligatabelle');
       }
     });
   }
