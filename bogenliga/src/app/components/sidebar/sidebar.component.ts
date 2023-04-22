@@ -45,48 +45,11 @@ export class SidebarComponent implements OnInit {
   constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
-
   }
 
  ngOnInit() {
     this.offlineSetter();
-    console.log("ONINIT");
-
-    /*
-
-   this.route.params.subscribe((params) => {
-     if (1 == 1/!*!isUndefined(params[ID_PATH_PARAM])*!/) {
-
-       console.log(params[ID_PATH_PARAM]);
-       this.ligaID2 = parseInt(params[ID_PATH_PARAM], 10);
-       this.ligaID2 = 99
-       console.log('Provided Id = = =  ', this.ligaID2);
-       this.hasLigaID = true;
-     } else {
-       console.log('no params On INIT sidebar');
-     }
-   });*/
-
-   /*this.ligaID2 = 99;*/
-
-   console.log("ONINIT with ID = = =" + this.ligaID2);
-
   }
-
-/*  onLinkClick($event: MouseEvent) {
-    console.log("Click logged");
-    //auslesen von id
-    this.testHref = this.router.url;
-    console.log(this.router.url);
-
-    if(this.testHref.startsWith("/ligatabelle")){
-      const lastSlashIndex = this.testHref.lastIndexOf('/');
-      this.ligaID2 = parseInt(this.testHref.substring(lastSlashIndex + 1));
-
-      console.log("---------result liga id: " + this.ligaID2);
-    }
-  }*/
-
 
 // Um im Offlinemodus die Sidebar entsprechend anzupassen.
   public offlineSetter(): void {

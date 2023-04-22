@@ -227,5 +227,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
     this.buttonForward = this.selectedVeranstaltung.id;
     this.loadLigaTableRows();
+
   }
 }
