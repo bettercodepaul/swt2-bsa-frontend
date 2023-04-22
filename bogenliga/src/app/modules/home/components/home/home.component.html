@@ -1,9 +1,14 @@
 
 
   <div id="homePage">
-    <div style="max-width: 75%; margin: 15px; padding: 5px">
+    <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasID">
       <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
       <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
+    </div>
+
+    <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID">  <!--TODO: Check ID is valid -->
+      <h1 class="homeHeading">Liga XYZ </h1> <!--TODO: Backend call Liga name to ID -->
+      <p class="subtitle">ID: {{ providedID }} </p>
     </div>
 
 
@@ -81,7 +86,8 @@
 
     <div class="homeContent">
       <!-- Row 2 -->
-      <div class="flexChild">
+
+      <div class="flexChild" *ngIf="!hasID">
         <h2>Neues aus dem Bogensport</h2>
         <div class="news-container">
 
@@ -96,5 +102,26 @@
           </div>
         </div>
       </div>
+
+      <div class="flexChild" *ngIf="hasID"> <!--TODO: Check ID is valid -->
+        <h2>Ligadetails</h2>
+        <div class="news-container">
+
+          <div class="flexChild">
+            <h3> LigaID: {{ providedID }}</h3>  <!--TODO: Backend call to Ligadetails -->
+            <p style="margin-top: 20px">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+                                        molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+                                        numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+                                        optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
+                                        obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
+                                        nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
+                                        tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
+                                        quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos
+                                        sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
+                                        recusandae alias error harum maxime adipisci amet laborum.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
