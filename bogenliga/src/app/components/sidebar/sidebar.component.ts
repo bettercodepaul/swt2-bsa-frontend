@@ -36,6 +36,8 @@ export class SidebarComponent implements OnInit {
   public hasLigaID: boolean;
   public ligaID2: number;
 
+  public testHref: string;
+
 
 
   faCaretDown = faCaretDown;
@@ -49,22 +51,43 @@ export class SidebarComponent implements OnInit {
  ngOnInit() {
     this.offlineSetter();
     console.log("ONINIT");
-    this.ligaID2 = undefined;
+
+    /*
+
    this.route.params.subscribe((params) => {
-     if (!isUndefined(params[ID_PATH_PARAM])) {
+     if (1 == 1/!*!isUndefined(params[ID_PATH_PARAM])*!/) {
+
+       console.log(params[ID_PATH_PARAM]);
        this.ligaID2 = parseInt(params[ID_PATH_PARAM], 10);
+       this.ligaID2 = 99
        console.log('Provided Id = = =  ', this.ligaID2);
        this.hasLigaID = true;
      } else {
-       console.log('no params');
+       console.log('no params On INIT sidebar');
      }
-   });
+   });*/
 
    /*this.ligaID2 = 99;*/
 
    console.log("ONINIT with ID = = =" + this.ligaID2);
 
   }
+
+/*  onLinkClick($event: MouseEvent) {
+    console.log("Click logged");
+    //auslesen von id
+    this.testHref = this.router.url;
+    console.log(this.router.url);
+
+    if(this.testHref.startsWith("/ligatabelle")){
+      const lastSlashIndex = this.testHref.lastIndexOf('/');
+      this.ligaID2 = parseInt(this.testHref.substring(lastSlashIndex + 1));
+
+      console.log("---------result liga id: " + this.ligaID2);
+    }
+  }*/
+
+
 // Um im Offlinemodus die Sidebar entsprechend anzupassen.
   public offlineSetter(): void {
     if (this.onOfflineService.isOffline() == true) {
@@ -74,45 +97,6 @@ export class SidebarComponent implements OnInit {
     }
 
   }
-/*  onLinkClick(event : Event){
-    console.log("Click logged");
-
-    this.route.params.subscribe((params) => {
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.ligaID2 = parseInt(params[ID_PATH_PARAM], 10);
-        console.log('Provided Id ', this.ligaID2);
-        this.hasLigaID = true;
-
-      } else {
-        console.log('no params');
-      }
-    });
-
-    this.ligaID2 = 99;
-
-    console.log("CLICKED ID =====" + this.ligaID2);
-
-    /!*this.ligaID2 = parseInt(this.route.snapshot.paramMap.get('id'));*!/
-
-    /!*    const urlParts = this.route.snapshot.url;
-     console.log(urlParts);
-     if (urlParts.length > 0) {
-     const ligaIDString = urlParts[urlParts.length - 1].path;
-     this.ligaID2 = parseInt(ligaIDString);
-     }*!/
-
-/!*    this.route.params.subscribe((params) => {
-      if (!isUndefined(params["id"])) {
-        this.ligaID2 = parseInt(params["id"], 10);
-        console.log('Provided Id ::::::::::', this.ligaID2);
-        this.hasLigaID = true;
-      }else{
-
-      }
-    });*!/
-
-  }*/
-
 
   /**
    * tells store that sidebar button was used -> Sidebar needs to change
@@ -126,6 +110,26 @@ export class SidebarComponent implements OnInit {
   }
   public getRoute(route: string, detailType: string): string {
     let result: string = route;
+
+      this.testHref = this.router.url;
+      /*console.log(this.router.url);    IGNORE THIS*/
+      if (this.testHref.startsWith("/ligatabelle") ||this.testHref.startsWith("/home") ) {
+        const lastSlashIndex = this.testHref.lastIndexOf('/');
+        switch(lastSlashIndex){
+          case 0:
+            this.ligaID2 = undefined;
+            break;
+          case 12:
+            this.ligaID2 = parseInt(this.testHref.substring(lastSlashIndex + 1));
+            break;
+          case 5:
+            this.ligaID2 = parseInt(this.testHref.substring(lastSlashIndex + 1));
+            break;
+        }
+      }
+
+
+
     if (detailType === 'undefined') {
      return(route);
     } else {
@@ -134,19 +138,12 @@ export class SidebarComponent implements OnInit {
           result = result + '/' + this.currentUserService.getVerein();
           break;
         default:
-          if(this.ligaID2 != undefined && route.startsWith("/home")){
-/*            this.route.params.subscribe((params) => {
-              if (!isUndefined(params["id"])) {
-                this.ligaID2 = parseInt(params["id"], 10);
-                console.log('Provided Id ', this.ligaID2);
-                this.hasLigaID = true;
-              }else{
-
-              }
-            });*/
-            //result =  result + '/'+ this.testid.toString();  //this.ligaID2
-            result =  result + '/'+ this.ligaID2.toString();
-          } else {
+            if (this.ligaID2 != undefined && route.startsWith("/home")){
+              result =  result + '/'+ this.ligaID2.toString();
+          } else if(this.ligaID2 != undefined && route.startsWith("/ligatabelle")){
+              result =  result + '/'+ this.ligaID2.toString();
+            }
+            else{
             result = result;
           }
 
@@ -156,6 +153,9 @@ export class SidebarComponent implements OnInit {
       return result;
     }
   }
+
+
+
   public getSidebarCollapseIcon(): string {
     return this.isActive ? 'angle-double-right' : 'angle-double-left';
   }
