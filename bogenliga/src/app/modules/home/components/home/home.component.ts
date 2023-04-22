@@ -15,7 +15,7 @@ import {LoginDataProviderService} from '@user/services/login-data-provider.servi
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
-import {ActivatedRoute, Router, ParamMap} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 
 const ID_PATH_PARAM = 'id';
@@ -37,7 +37,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public currentDate: number =  Date.now();
   public dateHelper: string;
   public providedID: number;
-  private hasID: boolean;
+  public hasID: boolean;
 
   private sessionHandling: SessionHandling;
 
