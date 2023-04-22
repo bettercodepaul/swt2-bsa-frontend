@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute,Router, ParamMap} from '@angular/router';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {select, Store} from '@ngrx/store';
-import {isNullOrUndefined} from '@shared/functions';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {environment} from '../../../environments/environment';
 import {AppState, SidebarState, TOGGLE_SIDEBAR} from '../../modules/shared/redux-store';
 import {CurrentUserService, UserPermission} from '../../modules/shared/services/current-user';
@@ -12,7 +12,7 @@ import {SIDE_BAR_CONFIG_OFFLINE} from './sidebar.config';
 import {OnOfflineService} from '@shared/services';
 
 
-
+const ID_PATH_PARAM = 'id';
 
 
 @Component({
@@ -33,13 +33,14 @@ export class SidebarComponent implements OnInit {
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public inProd = environment.production;
   public CONFIG;
-
+  public hasLigaID: boolean;
+  public ligaID2: number;
 
 
 
   faCaretDown = faCaretDown;
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private onOfflineService: OnOfflineService) {
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
 
@@ -47,6 +48,22 @@ export class SidebarComponent implements OnInit {
 
  ngOnInit() {
     this.offlineSetter();
+    console.log("ONINIT");
+    this.ligaID2 = undefined;
+   this.route.params.subscribe((params) => {
+     if (!isUndefined(params[ID_PATH_PARAM])) {
+       this.ligaID2 = parseInt(params[ID_PATH_PARAM], 10);
+       console.log('Provided Id = = =  ', this.ligaID2);
+       this.hasLigaID = true;
+     } else {
+       console.log('no params');
+     }
+   });
+
+   /*this.ligaID2 = 99;*/
+
+   console.log("ONINIT with ID = = =" + this.ligaID2);
+
   }
 // Um im Offlinemodus die Sidebar entsprechend anzupassen.
   public offlineSetter(): void {
@@ -57,6 +74,44 @@ export class SidebarComponent implements OnInit {
     }
 
   }
+/*  onLinkClick(event : Event){
+    console.log("Click logged");
+
+    this.route.params.subscribe((params) => {
+      if (!isUndefined(params[ID_PATH_PARAM])) {
+        this.ligaID2 = parseInt(params[ID_PATH_PARAM], 10);
+        console.log('Provided Id ', this.ligaID2);
+        this.hasLigaID = true;
+
+      } else {
+        console.log('no params');
+      }
+    });
+
+    this.ligaID2 = 99;
+
+    console.log("CLICKED ID =====" + this.ligaID2);
+
+    /!*this.ligaID2 = parseInt(this.route.snapshot.paramMap.get('id'));*!/
+
+    /!*    const urlParts = this.route.snapshot.url;
+     console.log(urlParts);
+     if (urlParts.length > 0) {
+     const ligaIDString = urlParts[urlParts.length - 1].path;
+     this.ligaID2 = parseInt(ligaIDString);
+     }*!/
+
+/!*    this.route.params.subscribe((params) => {
+      if (!isUndefined(params["id"])) {
+        this.ligaID2 = parseInt(params["id"], 10);
+        console.log('Provided Id ::::::::::', this.ligaID2);
+        this.hasLigaID = true;
+      }else{
+
+      }
+    });*!/
+
+  }*/
 
 
   /**
@@ -79,8 +134,24 @@ export class SidebarComponent implements OnInit {
           result = result + '/' + this.currentUserService.getVerein();
           break;
         default:
-          result = result;
+          if(this.ligaID2 != undefined && route.startsWith("/home")){
+/*            this.route.params.subscribe((params) => {
+              if (!isUndefined(params["id"])) {
+                this.ligaID2 = parseInt(params["id"], 10);
+                console.log('Provided Id ', this.ligaID2);
+                this.hasLigaID = true;
+              }else{
+
+              }
+            });*/
+            //result =  result + '/'+ this.testid.toString();  //this.ligaID2
+            result =  result + '/'+ this.ligaID2.toString();
+          } else {
+            result = result;
+          }
+
           break;
+
       }
       return result;
     }
