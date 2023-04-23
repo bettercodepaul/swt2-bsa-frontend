@@ -17,6 +17,7 @@ import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 const ID_PATH_PARAM = 'id';
 
@@ -29,6 +30,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
 
   public config = HOME_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
+
+  public ActionButtonColors = ActionButtonColors;
   public wettkaempfeDTO: WettkampfDTO[];
   public wettkaempfeDO: WettkampfDO[];
   public loadingWettkampf = true;
@@ -191,6 +194,12 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
       }
     }
   }
+
+  public ligatabelleLinking() {
+    const link = '/wettkaempfe/' + this.providedID;
+    this.router.navigateByUrl(link);
+  }
+
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();
   }
