@@ -35,8 +35,7 @@ export class SidebarComponent implements OnInit {
   public CONFIG;
   public hasLigaID: boolean;
   public ligaID2: number;
-
-  public testHref: string;
+  public URLRoute: string;
 
 
 
@@ -73,49 +72,37 @@ export class SidebarComponent implements OnInit {
   }
   public getRoute(route: string, detailType: string): string {
     let result: string = route;
-
-      this.testHref = this.router.url;
-      /*console.log(this.router.url);    IGNORE THIS*/
-      if (this.testHref.startsWith("/ligatabelle") ||this.testHref.startsWith("/home") ) {
-        const lastSlashIndex = this.testHref.lastIndexOf('/');
-        switch(lastSlashIndex){
-          case 0:
-            this.ligaID2 = undefined;
-            break;
-          case 12:
-            this.ligaID2 = parseInt(this.testHref.substring(lastSlashIndex + 1));
-            break;
-          case 5:
-            this.ligaID2 = parseInt(this.testHref.substring(lastSlashIndex + 1));
-            break;
+    this.URLRoute = this.router.url;
+    if (this.URLRoute.startsWith("/ligatabelle") ||this.URLRoute.startsWith("/home") ) {
+      const lastSlashIndex = this.URLRoute.lastIndexOf('/');
+      switch(lastSlashIndex){
+        case 0:
+          //forget liga ID if no liga ID is part of the URL-route
+          this.ligaID2 = undefined;
+          break;
+        case result.length:
+          this.ligaID2 = parseInt(this.URLRoute.substring(lastSlashIndex + 1));
+          break;
         }
       }
 
-
-
     if (detailType === 'undefined') {
      return(route);
-    } else {
-      switch (detailType) {
-        case 'verein':
+    } else if (detailType === 'verein'){
           result = result + '/' + this.currentUserService.getVerein();
-          break;
-        default:
-            if (this.ligaID2 != undefined && route.startsWith("/home")){
-              result =  result + '/'+ this.ligaID2.toString();
-          } else if(this.ligaID2 != undefined && route.startsWith("/ligatabelle")){
-              result =  result + '/'+ this.ligaID2.toString();
-            }
-            else{
-            result = result;
-          }
+      } else {
+      result = result;
+    }
 
-          break;
+    if (this.ligaID2 != undefined && route.startsWith("/home")){
+      result =  result + '/'+ this.ligaID2.toString();
+    } else if(this.ligaID2 != undefined && route.startsWith("/ligatabelle")){
+      result =  result + '/'+ this.ligaID2.toString();
+    }
 
-      }
       return result;
     }
-  }
+
 
 
 
