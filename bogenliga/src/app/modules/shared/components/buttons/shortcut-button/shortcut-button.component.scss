@@ -1,18 +1,18 @@
 .shortcut-btn{
   width: 3em;
   height: 3em;
-  font-size: 1.50em;
-  background: #487AF5;
+  font-size: 1.5em;
+  background: white;
   border:  solid 1px #7e7e7e;
   margin: 1em;
   border-radius: 50%;
   transition: 200ms;
-  color: #fff;
+  color: black;
+  box-shadow: 3px 4.5px 1px grey;
 
   &:hover{
     background: #483AF9;
-
+    box-shadow: none;
   }
 
 }
-
