@@ -5,6 +5,6 @@ export class LigadetailDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  ligaDetails: string;
+  ligaDetail: string;
 
 }
