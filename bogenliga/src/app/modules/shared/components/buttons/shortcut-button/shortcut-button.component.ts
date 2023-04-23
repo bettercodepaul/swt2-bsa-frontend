@@ -20,6 +20,7 @@ export class ShortcutButton implements OnInit {
   @Input() public config: ShortcutButtonsConfig = {shortcutButtons: []};
 
   ngOnInit(): void {
+
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {

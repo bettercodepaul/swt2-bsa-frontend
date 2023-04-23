@@ -3,7 +3,8 @@
           [id]="button.title"
           type="button"
           class="shortcut-btn">
+    {{button.title}}
     {{ button.icon }}
-    {{ button.title }}
   </button>
+  <p *ngIf="hasUserPermissions(button.permissions)">{{button.title}}</p>
 </div>
