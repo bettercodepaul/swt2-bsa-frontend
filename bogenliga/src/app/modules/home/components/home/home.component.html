@@ -120,6 +120,21 @@
                                         sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam
                                         recusandae alias error harum maxime adipisci amet laborum.</p>
           </div>
+
+        </div>
+                                            <!-- Button -->
+        <div id="Button">
+          <bla-actionbutton
+            [id]="'regionSaveButton'"
+            [color]= "ActionButtonColors.SUCCESS"
+            [iconClass]="'th-list'"
+            (onClick)="ligatabelleLinking()">
+            {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
+            <!--{{ selectedVeranstaltungName}}
+            name of the currently selected Liga displayed in button-->
+
+            {{this.providedID}}
+          </bla-actionbutton>
         </div>
       </div>
 
