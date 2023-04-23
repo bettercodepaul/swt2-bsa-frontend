@@ -11,34 +11,6 @@ function generateLigaID() {
   return Math.floor(Math.random() * 20);
 }
 
-//START
-describe('Ligadetailseite', function(){
-  const randomID = generateLigaID().toString();
-  it('Von Home ID gemerkt auf Ligatabelle ID', function() {
-    cy.visit('http://localhost:4200/#/home/' + randomID)
-    cy.get('[data-cy=sidebar-ligatabelle-button]').click()
-    cy.url().should('include', '#/ligatabelle/' + randomID)
-  })
-  it('Von Ligatabelle ID gemerkt auf Home ID', function() {
-
-    //cy.visit('http://localhost:4200/#/ligatabelle')
-    //cy.wait(3000)
-    cy.get('[data-cy=sidebar-ligatabelle-button]').click()
-    cy.get('[data-cy=sidebar-home-button]').click()
-    //.should('be.visible')
-    cy.url().should('include', '#/home/' + randomID)
-  })
-  it('Auf Ligadetailseite Klick auf "Wettbewerbe anzeigen"-Button', function() {
-    cy.get('[id*=ligadetailRegionSaveButton]').click()
-    cy.url().should('include', '#/wettkaempfe/' + randomID)
-  })
-  it('LigaID wird deselektiert, man kommt wieder auf Homeseite', function() {
-    cy.get('[id*=navbar-header]').click()
-    cy.url().should('not.include', '#/home/' + randomID)
-  })
-})
-
-
 describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
@@ -974,4 +946,34 @@ describe('Admin User tests', function() {
   //   cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
   // })
 
+})
+
+
+/**
+ * This test checks if the URL of Ligadetailseite is correct depending on the selected Liga ID
+ */
+describe('Ligadetailseite', function(){
+  const randomID = generateLigaID().toString();
+
+  it('Von Home ID gemerkt auf Ligatabelle ID', function() {
+    cy.visit('http://localhost:4200/#/home/' + randomID)
+    cy.get('[data-cy=sidebar-ligatabelle-button]').click()
+    cy.url().should('include', '#/ligatabelle/' + randomID)
+  })
+
+  it('Von Ligatabelle ID gemerkt auf Home ID', function() {
+    cy.get('[data-cy=sidebar-ligatabelle-button]').click()
+    cy.get('[data-cy=sidebar-home-button]').click()
+    cy.url().should('include', '#/home/' + randomID)
+  })
+
+  it('"Wettbewerbe anzeigen" Button', function() {
+    cy.get('[id*=ligadetailRegionSaveButton]').click()
+    cy.url().should('include', '#/wettkaempfe/' + randomID)
+  })
+
+  it('Deselektieren der LigaID', function() {
+    cy.get('[id*=navbar-header]').click()
+    cy.url().should('not.include', '#/home/' + randomID)
+  })
 })
