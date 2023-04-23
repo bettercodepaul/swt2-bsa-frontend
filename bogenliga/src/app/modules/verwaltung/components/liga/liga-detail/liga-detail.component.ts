@@ -70,16 +70,15 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   private sessionHandling: SessionHandling;
 
   constructor(private ligaDataProvider: LigaDataProviderService,
-    private regionProvider: RegionDataProviderService,
-    private userProvider: UserProfileDataProviderService,
-    private disziplinDataProvider: DisziplinDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
-    private currentUserService: CurrentUserService,
-    private onOfflineService: OnOfflineService) {
-    super();
-    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
+              private regionProvider: RegionDataProviderService,
+              private userProvider: UserProfileDataProviderService,
+              private disziplinDataProvider: DisziplinDataProviderService,
+              private router: Router, private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private currentUserService: CurrentUserService,
+              private onOfflineService: OnOfflineService) {
+              super();
+              this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
@@ -196,6 +195,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
     this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
     this.currentLiga.ligaDetailId = this.currentLigaDetail.id;
+    this.currentLiga.ligaDetail = this.currentLigaDetail.ligaDetail;
     // persist
     this.ligaDataProvider.update(this.currentLiga)
         .then((response: BogenligaResponse<LigaDO>) => {

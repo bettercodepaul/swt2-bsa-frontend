@@ -108,7 +108,9 @@ export class LigaDataProviderService  extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+      const temp = new UriBuilder().fromPath(this.getUrl()).build();
+      console.log(temp);
+      this.restClient.PUT<VersionedDataTransferObject>(temp, payload)
           .then((data: VersionedDataTransferObject) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
