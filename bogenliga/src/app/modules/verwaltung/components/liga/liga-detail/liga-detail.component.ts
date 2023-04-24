@@ -196,6 +196,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
     this.currentLiga.ligaDetailId = this.currentLigaDetail.id;
     this.currentLiga.ligaDetail = this.currentLigaDetail.ligaDetail;
+    console.log(this.currentLigaDetail.ligaDetail)
     // persist
     this.ligaDataProvider.update(this.currentLiga)
         .then((response: BogenligaResponse<LigaDO>) => {
