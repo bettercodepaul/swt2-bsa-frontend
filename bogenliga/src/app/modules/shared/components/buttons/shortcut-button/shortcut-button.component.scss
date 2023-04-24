@@ -4,19 +4,32 @@
   font-size: 1.5em;
   background: white;
   border:  solid 1px #7e7e7e;
-  margin: 1em;
+  margin-bottom: 1em;
   border-radius: 50%;
   transition: 200ms;
   color: black;
-  box-shadow: 3px 4.5px 1px grey;
+  box-shadow: 1px 2.5px 0.5px grey;
+  margin-left: 30px;
+  margin-top: 10px;
 
   &:hover{
     background: #483AF9;
     box-shadow: none;
   }
-
 }
 
+.Buttoncontainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.buttonwrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin: 1em;
+}
 .Button_Titel{
-  text-align: center;
 }
+
