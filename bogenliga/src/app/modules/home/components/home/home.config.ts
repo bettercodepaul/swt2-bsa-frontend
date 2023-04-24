@@ -3,6 +3,8 @@ import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
 import {UserPermission} from '@shared/services';
+// @ts-ignore
+import AddManschaftsmitglied from '../home/Buttons/AddManschaftsmitglied.svg';
 
 export const HOME_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'HOME',
@@ -12,8 +14,8 @@ export const HOME_CONFIG: CommonDialogConfig = {
 export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
   shortcutButtons: [
     {
-      title: 'Mannnschaftsmitglieder hinzufügen ',
-      icon: '',
+      title: 'Manschaftsmitglied hinzufügen',
+      icon: AddManschaftsmitglied,
       route: '#',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN]
     },

@@ -19,6 +19,8 @@ export class ShortcutButton implements OnInit {
 
   @Input() public config: ShortcutButtonsConfig = {shortcutButtons: []};
 
+
+
   ngOnInit(): void {
 
   }
