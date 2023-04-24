@@ -155,15 +155,16 @@
                  #ligaDetail="ngModel"
                  [(ngModel)]="currentLigaDetail.ligaDetail"
                  [class.is-invalid]="ligaDetail.invalid && !ligaDetail.untouched"
-                 placeholder="platzhalter für alte details"
+                 value="{{ currentLiga.ligaDetail }}"
                  data-cy="liga-detail-detail">
 
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.ERROR' | translate }}
           </div>
         </div>
-      </div>
 
+
+      </div>
 
       <!-- SAVE/UPDATE/DELETE BUTTON -->
       <div class="form-group row">
