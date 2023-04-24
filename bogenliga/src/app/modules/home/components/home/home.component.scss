@@ -18,6 +18,7 @@ h1{
 
 .news-container{
   display: flex;
+
 }
 
 // css for Images of containers
@@ -39,22 +40,25 @@ h1{
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
 
+}
 
   .calendar {
-    order: 1;
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
   }
 
   .shortcuts {
-    order: 2;
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
   }
 
   .news {
-    order: 3;
+    width: 100%;
+    display: block;
+    clear: left;
 
     /*
         position: absolute;
@@ -69,22 +73,7 @@ h1{
         flex-wrap: wrap;*/
   }
 
-  @media screen and (min-width: 768px) {
-    flex-direction: row;
-  }
 
-  .calendar {
-    order: 1;
-  }
-
-  .shortcuts {
-    order: 3;
-  }
-
-  .news {
-    order: 2;
-  }
-}
 
 
 
