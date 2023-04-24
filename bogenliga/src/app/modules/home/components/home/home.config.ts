@@ -15,7 +15,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
   shortcutButtons: [
     {
       title: 'Manschaftsmitglied hinzufügen',
-      icon: AddManschaftsmitglied,
+      icon: '',
       route: '#',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN]
     },
@@ -44,7 +44,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       permissions: [UserPermission.CAN_READ_STAMMDATEN]
     },
     {
-      title: 'Wettkampfdurchführung',
+      title: 'Wettkampf- durchführung',
       icon: '',
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN]

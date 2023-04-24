@@ -1,10 +1,13 @@
-<div *ngFor="let button of config.shortcutButtons">
-  <button *ngIf="hasUserPermissions(button.permissions)" type="button" class="shortcut-btn">
-    {{ button.icon }}
-  </button>
-  <ng-container *ngIf="hasUserPermissions(button.permissions)">
-    <p class="Button_Titel">
-      <span *ngFor="let word of button.title.split(' ')">{{ word }}<br/></span>
-    </p>
-  </ng-container>
+<div class="Buttoncontainer">
+  <div class="butonwrapper" *ngFor="let button of config.shortcutButtons">
+    <button *ngIf="hasUserPermissions(button.permissions)" type="button" class="shortcut-btn">
+      {{ button.icon }}
+    </button>
+    <ng-container *ngIf="hasUserPermissions(button.permissions)">
+      <p class="Button_Titel">
+        <span *ngFor="let word of button.title.split(' ')">{{ word }}<br/></span>
+      </p>
+    </ng-container>
+  </div>
 </div>
+
