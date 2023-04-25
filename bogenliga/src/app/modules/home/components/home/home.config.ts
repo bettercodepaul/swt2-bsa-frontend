@@ -1,5 +1,4 @@
 import {CommonDialogConfig} from '../../../shared/components/dialogs';
-import { Router } from '@angular/router';
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
@@ -16,8 +15,6 @@ import Terminübersicht from '../home/Buttons/Terminübersicht.svg';
 import VeranstaltungAnlegen from '../home/Buttons/VeranstaltungAnlegen.svg';
 // @ts-ignore
 import VorauswahlVeranstaltung from '../home/Buttons/VorauswahlVeranstaltung.svg';
-
-
 
 
 export const HOME_CONFIG: CommonDialogConfig = {
@@ -62,7 +59,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       title: 'DSB-Mitglied Anlegen',
       icon: DSBMitgliedAnlegen,
       route: '#',
-      permissions: [UserPermission.CAN_READ_STAMMDATEN]
+      permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER]
     },
   ]
 };
