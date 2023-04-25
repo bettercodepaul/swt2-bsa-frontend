@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="checkPermissions()">
   <h2>Was möchtest du tun?</h2>
   <div class="Buttoncontainer">
     <div class="butonwrapper" *ngFor="let button of config.shortcutButtons">
