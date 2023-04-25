@@ -22,7 +22,7 @@
     "PLAYGROUND": "Playground",
     "SPOTTING": "Spotting",
     "COLLAPSE": "Einklappen",
-    "HILFE" :  "Hilfe"
+    "HILFE": "Hilfe"
   },
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
@@ -39,7 +39,6 @@
       "WELCOME": "Willkommen",
       "WETTKAEMPFE": "Unsere nächsten Wettkämpfe",
       "WETTKAMPFERSATZ": "Derzeit sind keine Wettkämpfe geplant",
-
       "FURTHER": "Weitere Infos",
       "CONTENT": "Hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschaftsbogensports ziehen.",
       "BOX1HEADING": "Schüler- und Jugend- Cup 2018",
@@ -106,17 +105,17 @@
         }
       }
     },
-      "BUTTONS":{
-        "EINZEL_ALS_PDF": {
-          "LABEL": "Einzelstatistik als PDF"
-        },
-        "GESAMT_ALS_PDF": {
-          "LABEL": "Gesamtstatistik als PDF"
+    "BUTTONS": {
+      "EINZEL_ALS_PDF": {
+        "LABEL": "Einzelstatistik als PDF"
       },
-        "TAGESUEBERSICHT_ALS_PDF": {
-          "LABEL": "Tagesübersicht als PDF"
-        }
+      "GESAMT_ALS_PDF": {
+        "LABEL": "Gesamtstatistik als PDF"
+      },
+      "TAGESUEBERSICHT_ALS_PDF": {
+        "LABEL": "Tagesübersicht als PDF"
       }
+    }
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -606,7 +605,8 @@
       "TABLE": {
         "HEADERS": {
           "KEY": "KEY",
-          "VALUE": "VALUE"
+          "VALUE": "VALUE",
+          "ISHIDDEN": "Versteckt"
         }
       },
       "NOTIFICATION": {
@@ -1569,6 +1569,9 @@
           "LABEL": "Neuer Value",
           "PLACEHOLDER": "Bitte einen neuen Value eingeben",
           "ERROR": "Bitte einen gültigen Value eingeben."
+        },
+        "ISHIDDEN": {
+          "LABEL": "Versteckte Einstellungen"
         },
         "SAVE": "Speichern"
       }
