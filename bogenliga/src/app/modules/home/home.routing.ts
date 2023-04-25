@@ -9,3 +9,7 @@ export const HOME_ROUTES: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [HomeGuard]},
   {path: 'impressum', component: ImpressumComponent, canActivate: [HomeGuard]},
 ];
+
+export const BUTTON_ROUTES: Routes = [
+  {path: 'Manschaftsmitglied hinzüfügen', }
+]
