@@ -27,9 +27,9 @@ const NOTIFICATION_SAVE_EINSTELLUNG = 'einstellung_detail_save';
 const NOTIFICATION_CREATE_EINSTELLUNG = 'einstellung_detail_save';
 
 @Component({
-  selector: 'bla-einstellungen-detail',
+  selector:    'bla-einstellungen-detail',
   templateUrl: './einstellungen-detail.component.html',
-  styleUrls: ['./einstellungen-detail.component.scss']
+  styleUrls:   ['./einstellungen-detail.component.scss']
 })
 export class EinstellungenDetailComponent extends CommonComponentDirective implements OnInit {
   public config = EINSTELLUNGEN_DETAIL_CONFIG;
@@ -166,41 +166,42 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
     }
 
     if (notificationUpdateError.description !== '') {
-        this.notificationService.showNotification(notificationUpdateError);
-      } else {
-        this.currentEinstellung.value = this.neucurrentEinstellung.value;
-        this.einstellungenProviderService.update(this.currentEinstellung)
-            .then((response: BogenligaResponse<EinstellungenDO>) => {
-              const notificationUpdate: Notification = {
+      this.notificationService.showNotification(notificationUpdateError);
+    } else {
+      this.currentEinstellung.value = this.neucurrentEinstellung.value;
+      this.currentEinstellung.isHidden = this.neucurrentEinstellung.isHidden;
+      this.einstellungenProviderService.update(this.currentEinstellung)
+          .then((response: BogenligaResponse<EinstellungenDO>) => {
+            const notificationUpdate: Notification = {
 
-                id:          NOTIFICATION_UPDATE_EINSTELLUNG,
-                title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.TITLE',
-                description: 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.DESCRIPTION',
-                severity:    NotificationSeverity.INFO,
-                origin:      NotificationOrigin.USER,
-                type:        NotificationType.OK,
+              id:          NOTIFICATION_UPDATE_EINSTELLUNG,
+              title:       'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.TITLE',
+              description: 'MANAGEMENT.EINSTELLUNG_DETAIL.NOTIFICATION.EDIT.DESCRIPTION',
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
 
-              };
+            };
 
-              this.notificationService.showNotification(notificationUpdate);
+            this.notificationService.showNotification(notificationUpdate);
 
-              const id = this.currentEinstellung.id;
+            const id = this.currentEinstellung.id;
 
-              this.navigateToDetailDialog();
+            this.navigateToDetailDialog();
 
-            }, (response: BogenligaResponse<EinstellungenDO>) => {
+          }, (response: BogenligaResponse<EinstellungenDO>) => {
 
-              this.saveLoading = false;
-            });
-      }
+            this.saveLoading = false;
+          });
+    }
   }
 
- // Aufruf der Funktion wo ein neuer Eintrag erstellt wird
+  // Aufruf der Funktion wo ein neuer Eintrag erstellt wird
   createEinstellung($event: MouseEvent) {
     this.saveLoading = true;
 
     this.einstellungenProviderService.findAll()
-        .then((response: BogenligaResponse<EinstellungenDTO[]> ) => this.currentEinstellung.id = response.payload.length + 1);
+        .then((response: BogenligaResponse<EinstellungenDTO[]>) => this.currentEinstellung.id = response.payload.length + 1);
 
     this.einstellungenProviderService.create(this.currentEinstellung)
         .then((response: BogenligaResponse<EinstellungenDO>) => {
@@ -222,7 +223,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
           }
           this.navigateToDetailDialog();
-        }, (response: BogenligaResponse<EinstellungenDO> ) => {
+        }, (response: BogenligaResponse<EinstellungenDO>) => {
           this.saveLoading = false;
         });
 
