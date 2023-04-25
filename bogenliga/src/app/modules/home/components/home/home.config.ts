@@ -15,8 +15,8 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
   shortcutButtons: [
     {
       title: 'Manschaftsmitglied hinzufügen',
-      icon: '',
-      route: '#',
+      icon: AddManschaftsmitglied,
+      route: '',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN]
     },
     {
