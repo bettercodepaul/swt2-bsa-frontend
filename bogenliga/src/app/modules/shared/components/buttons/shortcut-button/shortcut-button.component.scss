@@ -1,9 +1,9 @@
 .shortcut-btn{
-  width: 2em;
-  height: 2em;
+  width: 2.5em;
+  height: 2.5em;
   font-size: 1.5em;
   background: white;
-  border:  solid 1px #7e7e7e;
+  border:  none;
   margin-bottom: 1em;
   border-radius: 50%;
   transition: 200ms;
@@ -13,7 +13,7 @@
   margin-top: 10px;
 
   &:hover{
-    background: #483AF9;
+    background: #D7D7D7;
     box-shadow: none;
   }
 }
@@ -30,6 +30,9 @@
   align-content: center;
   margin: 1em;
 }
-.Button_Titel{
+.buttonlogo{
+  width: 75%;
+  height: 75%;
+
 }
 

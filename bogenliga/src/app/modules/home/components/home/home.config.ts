@@ -5,6 +5,16 @@ import {
 import {UserPermission} from '@shared/services';
 // @ts-ignore
 import AddManschaftsmitglied from '../home/Buttons/AddManschaftsmitglied.svg';
+// @ts-ignore
+import DSBMitgliedAnlegen from '../home/Buttons/DSBMitgliedAnlegen.svg';
+// @ts-ignore
+import ManschaftAnlegen from '../home/Buttons/ManschaftAnlegen.svg';
+// @ts-ignore
+import Terminübersicht from '../home/Buttons/Terminübersicht.svg';
+// @ts-ignore
+import VeranstaltungAnlegen from '../home/Buttons/VeranstaltungAnlegen.svg';
+// @ts-ignore
+import VorauswahlVeranstaltung from '../home/Buttons/VorauswahlVeranstaltung.svg';
 
 export const HOME_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'HOME',
@@ -21,31 +31,31 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     },
     {
       title: 'Terminübersicht',
-      icon: '',
+      icon: Terminübersicht,
       route: '#',
       permissions: [UserPermission.CAN_READ_WETTKAMPF]
     },
     {
-      title: 'Veranstaltungen',
-      icon: '',
+      title: 'Vorauswahl Veranstaltungen',
+      icon: VorauswahlVeranstaltung,
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN]
     },
     {
       title: 'Mannschaften anlegen',
-      icon: '',
+      icon: ManschaftAnlegen,
       route: '#',
       permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN]
     },
     {
       title: 'Veranstaltung anlegen',
-      icon: '',
+      icon: VeranstaltungAnlegen,
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN]
     },
     {
-      title: 'Wettkampf- durchführung',
-      icon: '',
+      title: 'DSB-Mitglied Anlegen',
+      icon: DSBMitgliedAnlegen,
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN]
     },
