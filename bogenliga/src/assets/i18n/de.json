@@ -22,7 +22,7 @@
     "PLAYGROUND": "Playground",
     "SPOTTING": "Spotting",
     "COLLAPSE": "Einklappen",
-    "HILFE" :  "Hilfe"
+    "HILFE": "Hilfe"
   },
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
@@ -39,7 +39,6 @@
       "WELCOME": "Willkommen",
       "WETTKAEMPFE": "Unsere nächsten Wettkämpfe",
       "WETTKAMPFERSATZ": "Derzeit sind keine Wettkämpfe geplant",
-
       "FURTHER": "Weitere Infos",
       "CONTENT": "Hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschaftsbogensport ziehen.",
       "BOX1HEADING": "Schüler- und Jugend- Cup 2018",
@@ -54,7 +53,7 @@
     "REGIONEN": {
       "TITLE": "Regionen",
       "DESCRIPTION": "Eine Übersicht über alle Regionen. Ein Klick auf die entsprechende Region in der Grafik oder in der Tabelle darunter öffnet die Detailansicht mit den dazugehörigen Ligen und Vereinen.",
-      "CLOSE" : "Um zurück zu navigieren, auf den innersten Kreis klicken."
+      "CLOSE": "Um zurück zu navigieren, auf den innersten Kreis klicken."
     }
   },
   "VEREINE": {
@@ -73,10 +72,12 @@
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
       "TITLE": "Liga-Tabelle",
-      "WETTKAMPFTAGEINS" : "Wettkampftag 1",
-      "WETTKAMPFTAGZWEI" : "Wettkampftag 2",
-      "WETTKAMPFTAGDREI" : "Wettkampftag 3",
-      "WETTKAMPFTAGVIER" : "Wettkampftag 4"
+      "GEWAEHLTE_VERANSTALTUNG": "Gewählte Veranstaltung: ",
+      "GEWAEHLTE_MANNSCHAFT": "Gewählte Mannschaft: ",
+      "WETTKAMPFTAGEINS": "Wettkampftag 1",
+      "WETTKAMPFTAGZWEI": "Wettkampftag 2",
+      "WETTKAMPFTAGDREI": "Wettkampftag 3",
+      "WETTKAMPFTAGVIER": "Wettkampftag 4"
     },
     "TITEL": {
       "VERANSTALTUNG": "Ligen-Auswahl"
@@ -84,7 +85,7 @@
     "LIGATABELLE": {
       "TITEL": "Liga-Tabelle",
       "DESCRIPTION": "Alle Ligen und die jeweiligen Ligatabellen des ausgewählten Jahres",
-      "LINKDESCRIPTION": "Zu den Wettkampfergebnissen" ,
+      "LINKDESCRIPTION": "Zu den Wettkampfergebnissen",
       "TABELLENPLATZ": "Tabellenplatz",
       "MANNSCHAFTNAME": "Mannschaft",
       "MATCHPUNKTE": "Matchpunkte",
@@ -104,17 +105,17 @@
         }
       }
     },
-      "BUTTONS":{
-        "EINZEL_ALS_PDF": {
-          "LABEL": "Einzelstatistik als PDF"
-        },
-        "GESAMT_ALS_PDF": {
-          "LABEL": "Gesamtstatistik als PDF"
+    "BUTTONS": {
+      "EINZEL_ALS_PDF": {
+        "LABEL": "Einzelstatistik als PDF"
       },
-        "TAGESUEBERSICHT_ALS_PDF": {
-          "LABEL": "Tagesübersicht als PDF"
-        }
+      "GESAMT_ALS_PDF": {
+        "LABEL": "Gesamtstatistik als PDF"
+      },
+      "TAGESUEBERSICHT_ALS_PDF": {
+        "LABEL": "Tagesübersicht als PDF"
       }
+    }
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -191,11 +192,11 @@
       "VERANSTALTUNG": "Veranstaltungen",
       "WETTKAEMPFE": "Wettkampftage",
       "LT_DURCHFUEHRUNG": "Ligatabelle Durchführung"
-      },
+    },
     "WETTKAMPF": {
       "TABLE": {
         "CDAY": "Wettkampftag",
-        "DAY":"Wochentag",
+        "DAY": "Wochentag",
         "DATE": "Datum",
         "TIME": "Uhrzeit",
         "LIGA": "Disziplin",
@@ -208,29 +209,33 @@
       "SCHUSSZETTEL": "Schusszettel",
       "KONTROLLLISTE": "Bogenkontrollliste",
       "MELDEZETTEL": "Meldezettel",
+      "MITGLIED_ANLEGEN": "DSB-Mitglied anlegen",
       "TABLE_SETUP": "Setup Tablets",
-      "OFFLINE": "Offline"
+      "OFFLINE": "Offline",
+      "OFFLINE_GEHEN": "Offline gehen",
+      "ONLINE_GEHEN": "Online gehen",
+      "OFFLINE_TOKEN": "Offlinetoken löschen"
     },
-    "SETZLISTE" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Fehler beim generieren der Setzliste:",
+    "SETZLISTE": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren der Setzliste:",
           "DESCRIPTION": "Setzliste konnte nicht generiert werden, da keine Daten zum vorherigen Wettkampftag vorhanden sind."
         }
       }
     },
-    "BOGENKONTROLLLISTE" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Fehler beim generieren der Bogenkontrollliste:",
+    "BOGENKONTROLLLISTE": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren der Bogenkontrollliste:",
           "DESCRIPTION": "Bogenkontrollliste konnte nicht generiert werden, da keine Setzliste vorhanden ist."
         }
       }
     },
-    "MELDEZETTEL" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Fehler beim generieren des Meldezettels:",
+    "MELDEZETTEL": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren des Meldezettels:",
           "DESCRIPTION": "Meldezettel konnte nicht generiert werden, da keine Schützen vorhanden sind."
         }
       }
@@ -258,47 +263,47 @@
       "ANDERER_TAG_PRUEFUNG3": "geschossen",
       "NOTIFICATION": {
         "LADEN": {
-          "TITLE":"Schusszettel laden",
+          "TITLE": "Schusszettel laden",
           "DESCRIPTION": "Schusszettel wird geladen..."
         },
-        "DOWNLOADFEHLER":{
-          "TITLE":"Fehler beim generieren des Schusszettels:",
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren des Schusszettels:",
           "DESCRIPTION": "Schusszettel konnte nicht genertiert werden, da keine Matches für den Wettkampf vorhanden sind."
         },
-        "EINGABEFEHLER":{
-          "TITLE":"Eingabefehler",
+        "EINGABEFEHLER": {
+          "TITLE": "Eingabefehler",
           "DESCRIPTION": "Pfeilwert ungültig..."
         },
-        "ENTSCHIEDEN":{
-          "TITLE":"Eingabefehler - Speichern abgebrochen",
+        "ENTSCHIEDEN": {
+          "TITLE": "Eingabefehler - Speichern abgebrochen",
           "DESCRIPTION": "Satzpunkte >7"
         },
-        "SCHUETZENNUMMER":{
-          "TITLE":"Eingabefehler - Speichern abgebrochen",
+        "SCHUETZENNUMMER": {
+          "TITLE": "Eingabefehler - Speichern abgebrochen",
           "DESCRIPTION": "Bitte geben sie unter Schuetze alle Schuetzennummern ein."
         },
-        "SCHUETZENEINDEUTIG":{
-          "TITLE":"Eingabefehler - Speichern abgebrochen",
+        "SCHUETZENEINDEUTIG": {
+          "TITLE": "Eingabefehler - Speichern abgebrochen",
           "DESCRIPTION": "Bitte geben sie drei unterschiedliche Schuetzenummern an."
         },
-        "SPEICHERN":{
-          "TITLE":"Schusszettel speichern",
+        "SPEICHERN": {
+          "TITLE": "Schusszettel speichern",
           "DESCRIPTION": "Schusszettel wird gespeichert..."
         },
-        "GESPEICHERT":{
-          "TITLE":"Schusszettel gespeichert",
+        "GESPEICHERT": {
+          "TITLE": "Schusszettel gespeichert",
           "DESCRIPTION": "Schusszettel wurde erfolgreich gespeichert"
         },
-        "RUECKENNUMMERZUHOCH":{
-          "TITLE":"Eingabefehler - Speichern abgebrochen",
+        "RUECKENNUMMERZUHOCH": {
+          "TITLE": "Eingabefehler - Speichern abgebrochen",
           "DESCRIPTION": "Eingegebene Rueckennummer existiert nicht in dieser Mannschaft"
         },
-        "WEITER":{
-          "TITLE":"Es gibt ungespeicherte Änderungen",
+        "WEITER": {
+          "TITLE": "Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
         },
         "ZURUECK": {
-          "TITLE":"Es gibt ungespeicherte Änderungen",
+          "TITLE": "Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
         }
       }
@@ -306,7 +311,7 @@
     "MATCH": {
       "TABLE": {
         "NUMMER": "Match",
-        "SCHEIBE":"Scheibe",
+        "SCHEIBE": "Scheibe",
         "MANNSCHAFT": "Mannschaft",
         "BEGEGNUNG": "Begegnung",
         "MATCHPUNKTE": "Matchpunkte",
@@ -321,7 +326,7 @@
       "TEXT": "Es muss ein Wettkampftag ausgewählt sein um die Buttons nutzen zu können"
     },
     "SCHUETZEN_STATISTIK": {
-      "TITEL" : "Gesamtstatistik pro Schütze"
+      "TITEL": "Gesamtstatistik pro Schütze"
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
@@ -363,10 +368,9 @@
         "VERANSTALTUNG_NAME": {
           "LABEL": "Veranstaltungen:"
         },
-        "SPORTJAHR":{
-        "LABEL": "Sportjahr:"
+        "SPORTJAHR": {
+          "LABEL": "Sportjahr:"
         }
-
       },
       "TABLE": {
         "COLUMNS": {
@@ -600,7 +604,8 @@
       "TABLE": {
         "HEADERS": {
           "KEY": "KEY",
-          "VALUE": "VALUE"
+          "VALUE": "VALUE",
+          "ISHIDDEN": "Versteckt"
         }
       },
       "NOTIFICATION": {
@@ -619,17 +624,14 @@
         }
       },
       "NOTIFICATION": {
-        "SAVE":{
+        "SAVE": {
           "TITLE": "Einstellung speichern",
           "DESCRIPTION": "Einstellung wurde gespeichert "
-
         },
-        "EDIT":{
+        "EDIT": {
           "TITLE": "Einstellung bearbeiten",
           "DESCRIPTION": "Neue Value wurde gesetzt "
-
         },
-
         "DELETE": {
           "TITLE": "Einstellung löschen",
           "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht"
@@ -645,9 +647,6 @@
         }
       }
     },
-
-
-
     "SPORTJAHR_OVERVIEW": {
       "TITLE": "Veranstaltungen",
       "TABLE": {
@@ -921,7 +920,6 @@
           "REGION_SUPERORDINATE": "Übergeordnete Region"
         }
       },
-
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Region löschen",
@@ -1030,7 +1028,6 @@
           "TITLE": "Mitglied aus Mannschaft löschen",
           "DESCRIPTION": "Im Offlinemodus können Mitglieder nicht gelöscht werden."
         },
-
         "DELETE_MITGLIED_SUCCESS": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
@@ -1238,17 +1235,14 @@
           "PLACEHOLDER": "Bitte geben Sie einen Namen für die Veranstaltung ein",
           "ERROR": "Bitte geben Sie einen gültigen Namen ein"
         },
-
         "DISZIPLIN": {
           "LABEL": "Disziplin"
         },
-
         "SPORTJAHR": {
           "LABEL": "Sportjahr",
           "PLACEHOLDER": "YYYY",
           "ERROR": "Bitte geben Sie ein gültiges Jahr ein"
         },
-
         "WETTKAMPFTYPID": {
           "LABEL": "Wettkampftyp",
           "PLACEHOLDER": "Bitte geben Sie einen Wettkampftyp für die Veranstaltung ein",
@@ -1264,7 +1258,6 @@
           "PLACEHOLDER": "Bitte geben Sie ein Datum für die Meldedeadline ein",
           "ERROR": "Bitte geben Sie ein gültiges Datum ein (Format: JJJJ-MM-TT)."
         },
-
         "LIGANAME": {
           "LABEL": "Liganame",
           "PLACEHOLDER": "Wählen Sie eine Liga",
@@ -1313,50 +1306,50 @@
               "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
             }
           },
-            "NOTIFICATION": {
-              "SAVE": {
-                "TITLE": "Speichern erfolgreich",
-                "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
-              },
-              "UPDATE": {
-                "TITLE": "Update erfolgreich",
-                "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
-              },
-              "DELETE": {
-                "TITLE": "Löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
-              },
-              "ADD": {
-                "TITLE": "Neu",
-                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
-              },
-              "COPY": {
-                "TITLE": "Kopieren",
-                "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
-              },
-              "DELETE_SUCCESS": {
-                "TITLE": "Erfolgreich",
-                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
-              },
-              "DELETE_FAILURE": {
-                "TITLE": "Fehler beim Löschen",
-                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
-              },
-              "DEADLINE_EXPIRED": {
-                "TITLE": "Meldedeadline abgelaufen",
-                "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
-              },
-              "TOO_MANY": {
-                "TITLE": "Zu viele Wettkampftage",
-                "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
-              }
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Speichern erfolgreich",
+              "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Update erfolgreich",
+              "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
+            },
+            "DELETE": {
+              "TITLE": "Löschen",
+              "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+            },
+            "ADD": {
+              "TITLE": "Neu",
+              "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+            },
+            "COPY": {
+              "TITLE": "Kopieren",
+              "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
+            },
+            "DELETE_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+            },
+            "DELETE_FAILURE": {
+              "TITLE": "Fehler beim Löschen",
+              "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+            },
+            "DEADLINE_EXPIRED": {
+              "TITLE": "Meldedeadline abgelaufen",
+              "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
+            },
+            "TOO_MANY": {
+              "TITLE": "Zu viele Wettkampftage",
+              "DESCRIPTION": "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
             }
-          },
-          "KAMPFRICHTERLISTE": {
-            "LABEL": "Kampfrichter",
-            "LEFTCAPTION":  "abgewählt",
-            "RIGHTCAPTION": "ausgewählt"
-          },
+          }
+        },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Kampfrichter",
+          "LEFTCAPTION": "abgewählt",
+          "RIGHTCAPTION": "ausgewählt"
+        },
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
@@ -1366,9 +1359,9 @@
         "BACK": "Zurück"
       },
       "NOTIFICATION": {
-        "FINISH" : {
-          "TITLE" : "Veranstaltung abschließen",
-          "DESCRIPTION" : "Wollen Sie die Veranstaltung '%s' wirklich abschließen?"
+        "FINISH": {
+          "TITLE": "Veranstaltung abschließen",
+          "DESCRIPTION": "Wollen Sie die Veranstaltung '%s' wirklich abschließen?"
         },
         "SAVE": {
           "TITLE": "Veranstaltung angelegt",
@@ -1386,8 +1379,8 @@
           "TITLE": "Aktualisieren erfolgreich",
           "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
         }
-    }
-  },
+      }
+    },
     "VERANSTALTUNG_NEU": {
       "TITLE": "VERANSTALTUNG - Neuanlage",
       "FORM": {
@@ -1463,8 +1456,8 @@
         "ROLE_NEW": {
           "LABEL": "Zukünftige Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen",
-          "LEFTCAPTION":  "ausgewählt",
-          "RIGHTCAPTION":  "abgewählt"
+          "LEFTCAPTION": "ausgewählt",
+          "RIGHTCAPTION": "abgewählt"
         },
         "PASSWORD_NEW": {
           "LABEL": "Neues Passwort",
@@ -1515,7 +1508,6 @@
         }
       }
     },
-
     "EINSTELLUNGEN": {
       "TITLE": "Einstellungen - Übersicht",
       "FORM": {
@@ -1536,7 +1528,6 @@
         }
       }
     },
-
     "EINSTELLUNGEN_DETAIL": {
       "TITLE": "Einstellungen - Detail",
       "FORM": {
@@ -1555,11 +1546,12 @@
           "PLACEHOLDER": "Bitte einen neuen Value eingeben",
           "ERROR": "Bitte einen gültigen Value eingeben."
         },
+        "ISHIDDEN": {
+          "LABEL": "Versteckte Einstellungen"
+        },
         "SAVE": "Speichern"
       }
     },
-
-
     "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
@@ -1618,7 +1610,6 @@
       "CANCEL": "Abbrechen",
       "YES": "Ja",
       "NO": "Nein"
-
     },
     "INFO": {
       "MEHR": "Mehr Informationen anzeigen",
@@ -1764,7 +1755,6 @@
         "SATZPUNKTE": "Satzpunkte",
         "MANNSCHAFT": "Mannschaft"
       }
-
     }
   },
   "SHARED": {
@@ -1773,7 +1763,7 @@
         "BOGENKONTROLLISTE": "Download Bogenkontrollliste",
         "EINZELSTATISTIK": "Download Einzelstatistik",
         "GESAMTSTATISTIK": "Download Gesamtstatistik",
-        "MEDLEZETTEL" : "Download Meldezettel",
+        "MEDLEZETTEL": "Download Meldezettel",
         "SCHUSSZETTEL": "Download Schusszettel",
         "SETZLISTE": "Download Setzliste",
         "TAG": "Download Tagesübersicht"
