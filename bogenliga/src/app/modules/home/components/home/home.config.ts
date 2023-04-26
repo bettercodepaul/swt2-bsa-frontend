@@ -55,13 +55,6 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       roles:[""]
     },
     {
-      title: 'Mannschaften anlegen',
-      icon: ManschaftAnlegen,
-      route: '#',
-      permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
-      roles:[""]
-    },
-    {
       title: 'Veranstaltung anlegen',
       icon: VeranstaltungAnlegen,
       route: '#',
@@ -74,6 +67,13 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       route: '#',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
       roles:["Sportleiter", ""]
+    },
+    {
+      title: 'Mannschaften anlegen',
+      icon: ManschaftAnlegen,
+      route: '#',
+      permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
+      roles:[""]
     },
   ]
 };
