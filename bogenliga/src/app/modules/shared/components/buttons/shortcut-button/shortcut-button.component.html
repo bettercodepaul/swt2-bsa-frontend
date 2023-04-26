@@ -2,6 +2,7 @@
   <h2>Was möchtest du tun?</h2>
   <div class="Buttoncontainer">
     <div class="butonwrapper" *ngFor="let button of config.shortcutButtons">
+      <div class="Button">
       <button *ngIf="hasUserPermissions(button.permissions)" type="button" class="shortcut-btn" [routerLink]="button.route" routerLinkActive="active">
         <img class="buttonlogo" *ngIf="button.icon" [src]="button.icon" alt="{{ button.title }}" />
       </button>
@@ -10,6 +11,7 @@
           <span *ngFor="let word of button.title.split(' ')">{{ word }}<br/></span>
         </p>
       </ng-container>
+      </div>
     </div>
   </div>
 </div>

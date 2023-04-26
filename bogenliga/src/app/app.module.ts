@@ -26,6 +26,7 @@ import {VerwaltungModule} from '@verwaltung/verwaltung.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatDialogModule} from '@angular/material/dialog';
+import {HomeConfig} from '@home/components/home/home.config';
 
 
 // AoT requires an exported function for factories
