@@ -147,20 +147,21 @@
           <span> *</span>
         </label>
         <div class="col-sm-9">
-          <input type="text"
-                 class="form-control"
-                 required
-                 id="ligaDetail"
-                 name="ligaDetail"
-                 #ligaDetail="ngModel"
-                 [(ngModel)]="currentLigaDetail.ligaDetail"
-                 [class.is-invalid]="ligaDetail.invalid && !ligaDetail.untouched"
-                 value="{{ currentLiga.ligaDetail }}"
-                 data-cy="liga-detail-detail">
-
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.ERROR' | translate }}
-          </div>
+          <editor
+            [init]="{
+            base_url: '/tinymce',
+            suffix: '.min',
+            height: 500,
+            menubar: false,
+            plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table paste code help wordcount'
+           ],
+           toolbar:
+            'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+         }"
+          ></editor>
         </div>
 
 

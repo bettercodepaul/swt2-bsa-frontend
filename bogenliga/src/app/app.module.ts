@@ -23,7 +23,7 @@ import {ErrorInterceptor, JwtInterceptor, SharedModule} from './modules/shared';
 import {APP_REDUCERS} from '@shared/redux-store';
 import {VerwaltungModule} from '@verwaltung/verwaltung.module';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {MatDialogModule} from '@angular/material/dialog';
 

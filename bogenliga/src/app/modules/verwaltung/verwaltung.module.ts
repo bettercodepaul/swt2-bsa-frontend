@@ -56,14 +56,16 @@ import {SchuetzenComponent} from '@verwaltung/components/verein/verein-detail/ma
 import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
 import { DsbMitgliedDetailPopUpComponent } from './components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 import {SchuetzenPopUpComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen-pop-up/schuetzen-pop-up.component';
+import {EditorComponent} from '@tinymce/tinymce-angular';
 
 
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
     SharedModule.forChild(),
-    FormsModule
+    FormsModule,
+    EditorComponent
   ],
   declarations: [
     VerwaltungComponent,
