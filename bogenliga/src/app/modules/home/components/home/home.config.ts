@@ -41,13 +41,6 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       roles:[""]
     },
     {
-      title: 'Manschaftsmitglied hinzufügen',
-      icon: AddManschaftsmitglied,
-      route: '/Verwaltung',
-      permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
-      roles: ['']
-    },
-    {
       title: 'Vorauswahl Veranstaltungen',
       icon: VorauswahlVeranstaltung,
       route: '#',
@@ -60,6 +53,13 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
       roles: [""]
+    },
+    {
+      title: 'Manschaftsmitglied hinzufügen',
+      icon: AddManschaftsmitglied,
+      route: '/Verwaltung',
+      permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
+      roles: ['']
     },
     {
       title: 'DSB-Mitglied Anlegen',
