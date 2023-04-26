@@ -29,37 +29,43 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       title: 'Manschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
       route: '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component',
-      permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN]
+      permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
+      roles: ['']
     },
     {
       title: 'Terminübersicht',
       icon: Terminübersicht,
       route: '#',
-      permissions: [UserPermission.CAN_READ_WETTKAMPF]
+      permissions: [UserPermission.CAN_READ_WETTKAMPF],
+      roles:[""]
     },
     {
       title: 'Vorauswahl Veranstaltungen',
       icon: VorauswahlVeranstaltung,
       route: '#',
-      permissions: [UserPermission.CAN_READ_STAMMDATEN]
+      permissions: [UserPermission.CAN_READ_STAMMDATEN],
+      roles:[""]
     },
     {
       title: 'Mannschaften anlegen',
       icon: ManschaftAnlegen,
       route: '#',
-      permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN]
+      permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
+      roles:[""]
     },
     {
       title: 'Veranstaltung anlegen',
       icon: VeranstaltungAnlegen,
       route: '#',
-      permissions: [UserPermission.CAN_READ_STAMMDATEN]
+      permissions: [UserPermission.CAN_READ_STAMMDATEN],
+      roles: [""]
     },
     {
       title: 'DSB-Mitglied Anlegen',
       icon: DSBMitgliedAnlegen,
       route: '#',
-      permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER]
+      permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
+      roles:["Sportleiter", ""]
     },
   ]
 };

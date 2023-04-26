@@ -6,5 +6,6 @@ export interface ShortcutButtonInterface {
   icon: string;
   route: string;
   permissions?: UserPermission[];
+  roles: string[];
 
 }

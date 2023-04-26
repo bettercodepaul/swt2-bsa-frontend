@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NavigationCardsConfig} from '@shared/components/navigation-cards';
 import {CurrentUserService, UserPermission} from '@shared/services';
+import {RoleDataProviderService} from '@verwaltung/services/role-data-provider.service';
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
