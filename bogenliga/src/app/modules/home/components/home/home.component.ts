@@ -15,6 +15,7 @@ import {LoginDataProviderService} from '@user/services/login-data-provider.servi
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
+
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
