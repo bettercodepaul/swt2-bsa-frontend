@@ -5,6 +5,12 @@ function generateID() {
   return Math.floor(100000 + Math.random() * 900000);
 }
 
+function generateLigaID() {
+  //generates a number between 1 and the amount of ligas that exist
+  //this is an example if only 20 liga exist
+  return Math.floor(Math.random() * 20);
+}
+
 describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
@@ -940,4 +946,34 @@ describe('Admin User tests', function() {
   //   cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
   // })
 
+})
+
+
+/**
+ * This test checks if the URL of Ligadetailseite is correct depending on the selected Liga ID
+ */
+describe('Ligadetailseite', function(){
+  const randomID = generateLigaID().toString();
+
+  it('Von Home ID gemerkt auf Ligatabelle ID', function() {
+    cy.visit('http://localhost:4200/#/home/' + randomID)
+    cy.get('[data-cy=sidebar-ligatabelle-button]').click()
+    cy.url().should('include', '#/ligatabelle/' + randomID)
+  })
+
+  it('Von Ligatabelle ID gemerkt auf Home ID', function() {
+    cy.get('[data-cy=sidebar-ligatabelle-button]').click()
+    cy.get('[data-cy=sidebar-home-button]').click()
+    cy.url().should('include', '#/home/' + randomID)
+  })
+
+  it('"Wettbewerbe anzeigen" Button', function() {
+    cy.get('[id*=ligadetailRegionSaveButton]').click()
+    cy.url().should('include', '#/wettkaempfe/' + randomID)
+  })
+
+  it('Deselektieren der LigaID', function() {
+    cy.get('[id*=navbar-header]').click()
+    cy.url().should('not.include', '#/home/' + randomID)
+  })
 })
