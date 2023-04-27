@@ -35,13 +35,6 @@ const routes: Routes = [
 export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
   shortcutButtons: [
     {
-      title: 'Terminübersicht',
-      icon: Terminübersicht,
-      route: '#',
-      permissions: [UserPermission.CAN_READ_WETTKAMPF],
-      roles: [UserRoleEnum.ADMIN_ROLE_ID, /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
-    },
-    {
       title: 'Vorauswahl Veranstaltungen',
       icon: VorauswahlVeranstaltung,
       route: '#',
@@ -68,6 +61,13 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       route: '#',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
       roles:[UserRoleEnum.SPORTLEITER_ROLE_ID, UserRoleEnum.ADMIN_ROLE_ID]
+    },
+    {
+      title: 'Terminübersicht',
+      icon: Terminübersicht,
+      route: '#',
+      permissions: [UserPermission.CAN_READ_WETTKAMPF],
+      roles: [UserRoleEnum.ADMIN_ROLE_ID, /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
     },
     {
       title: 'Mannschaften anlegen',
