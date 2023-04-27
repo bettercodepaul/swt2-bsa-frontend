@@ -6,8 +6,7 @@ import {SharedModule} from '../shared';
 import {HomeComponent} from './components/home/home.component';
 import {ImpressumComponent} from './components/impressum/impressum.component';
 import {HomeGuard} from './guards/home.guard';
-import {HOME_ROUTES} from './home.routing';
-import {BUTTON_ROUTES} from './home.routing';
+import {BUTTON_ROUTES, HOME_ROUTES} from './home.routing';
 
 
 
