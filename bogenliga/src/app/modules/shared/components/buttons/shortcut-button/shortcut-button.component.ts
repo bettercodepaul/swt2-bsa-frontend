@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CurrentUserService, UserPermission} from '@shared/services';
+import {UserRoleEnum} from '@shared/services/current-user/types/user-role.enum';
 import {RoleDataProviderService} from '@verwaltung/services/role-data-provider.service';
 import {
   ShortcutButtonsConfig
@@ -11,16 +12,14 @@ import {RoleDTO} from '@verwaltung/types/datatransfer/role-dto.class';
   templateUrl: './shortcut-button.component.html',
   styleUrls: ['./shortcut-button.component.scss']
 })
+
+
 export class ShortcutButton implements OnInit {
 
   @Input()
   public id: string;
   public  currentUserId = this.currentUserService.getCurrentUserID();
-  public  currentRole:string = "";
-  constructor(private currentUserService: CurrentUserService, private currentUserRole: RoleDataProviderService) {
-
-
-  }
+  constructor(private currentUserService: CurrentUserService) {}
 
   @Input() public config: ShortcutButtonsConfig = {shortcutButtons: []};
 
@@ -28,42 +27,18 @@ export class ShortcutButton implements OnInit {
 
 
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-
-
-  }
-
-  public async getCurrentRole (): Promise<string> {
-
-    let rolesObj = await  this.currentUserRole.findAll();
-    let roles: RoleDTO[] = rolesObj.payload;
-    let currentRole: string = "";
-    for (const role of roles) {
-      if (role.id === this.currentUserId) {
-        console.log('id: ' + role.id + ' currentUserId:' + this.currentUserId, " rolename: ", role.roleName);
-        currentRole = role.roleName;
+  public hasUserRole(userRoles: UserRoleEnum[]): boolean {
+    let roleAvailable = false;
+    console.log("CurrUserID: " + this.currentUserId + "userRolesEnum: " + userRoles);
+    for (let role of userRoles) {
+      if (this.currentUserId === role) {
+        roleAvailable = true;
       }
     }
-    console.log('currentrrole: ', currentRole)
-    return  currentRole;
-
+    return roleAvailable;
   }
-  public hasUserRole(userRoles: string[]): boolean {
-
-    // compare roles
-    for (const userRole of userRoles) {
-
-      if (userRole === this.currentRole) {
-        console.log('display button', userRole);
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     if (userPermissions === undefined) {
       return true;
