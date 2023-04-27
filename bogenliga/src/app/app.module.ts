@@ -45,6 +45,7 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   imports:      [
     BrowserModule,
+    EditorModule,
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
