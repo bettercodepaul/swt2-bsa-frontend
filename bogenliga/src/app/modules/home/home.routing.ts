@@ -3,6 +3,9 @@ import {HomeComponent} from './components/home/home.component';
 import {ImpressumComponent} from './components/impressum/impressum.component';
 import {HomeGuard} from './guards/home.guard';
 
+import {VereinDetailComponent} from '@verwaltung/components';
+
+
 
 export const HOME_ROUTES: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -11,5 +14,5 @@ export const HOME_ROUTES: Routes = [
 ];
 
 export const BUTTON_ROUTES: Routes = [
-  {path: 'Manschaftsmitglied hinzüfügen', }
+  {path: 'Vereindetails', component: VereinDetailComponent}
 ]
