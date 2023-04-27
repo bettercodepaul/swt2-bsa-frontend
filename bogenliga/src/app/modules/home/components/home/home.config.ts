@@ -16,9 +16,6 @@ import VeranstaltungAnlegen from '../home/Buttons/VeranstaltungAnlegen.svg';
 // @ts-ignore
 import VorauswahlVeranstaltung from '../home/Buttons/VorauswahlVeranstaltung.svg';
 
-import {Routes, RouterModule } from '@angular/router';
-import {DsbMitgliedDetailComponent, LigaDetailComponent, VerwaltungComponent} from '@verwaltung/components';
-import {NgModule} from '@angular/core';
 
 
 export const HOME_CONFIG: CommonDialogConfig = {
@@ -26,9 +23,6 @@ export const HOME_CONFIG: CommonDialogConfig = {
   pageTitleTranslationKey: 'HOME.HOME.TITLE',
 };
 
-const routes: Routes = [
-  { path: 'Verwaltung', component: LigaDetailComponent}
-];
 
 // @ts-ignore
 export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
@@ -57,7 +51,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     {
       title: 'Manschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
-      route: '/Verwaltung',
+      route: '',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
       roles: ['']
     },
@@ -77,9 +71,3 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     },
   ]
 };
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class HomeConfig {}
