@@ -3,7 +3,13 @@ import {HomeComponent} from './components/home/home.component';
 import {ImpressumComponent} from './components/impressum/impressum.component';
 import {HomeGuard} from './guards/home.guard';
 
-import {VereinDetailComponent} from '@verwaltung/components';
+import {
+  DsbMitgliedDetailComponent,
+  DsbMitgliedOverviewComponent,
+  UserNeuComponent,
+  VereinDetailComponent
+} from '@verwaltung/components';
+import {VereinOverviewGuard} from '@verwaltung/guards';
 
 
 
@@ -14,5 +20,6 @@ export const HOME_ROUTES: Routes = [
 ];
 
 export const BUTTON_ROUTES: Routes = [
-  {path: 'Vereindetails', component: VereinDetailComponent}
-]
+  {path: 'Vereindetails', component: VereinDetailComponent, canActivate: [VereinOverviewGuard]},
+  {path: 'adddsbmitglieder', component: UserNeuComponent}
+];

@@ -65,7 +65,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     {
       title: 'Terminübersicht',
       icon: Terminübersicht,
-      route: '#',
+      route: '/adddsbmitglieder',
       permissions: [UserPermission.CAN_READ_WETTKAMPF],
       roles: [UserRoleEnum.ADMIN_ROLE_ID, /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
     },
@@ -79,8 +79,3 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
   ]
 };
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class HomeConfig {}
