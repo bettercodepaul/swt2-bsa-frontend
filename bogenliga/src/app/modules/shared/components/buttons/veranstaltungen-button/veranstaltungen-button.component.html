@@ -1,8 +1,8 @@
 <button class = "competitionListElement soft-shadow">
   <div class = "competitionListElementDate">
-    <p>DEZ</p>
-    <h1>16</h1>
+    <ng-content select = "[date-month]"></ng-content>
+    <ng-content select = "[date-day]"></ng-content>
   </div>
-  <p class = "competitionListElementHeading">Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift Wettkampf Überschrift</p>
+  <ng-content select = "[heading]" class = "competitionListElementHeading"></ng-content>
   <p>Link</p>
 </button>
