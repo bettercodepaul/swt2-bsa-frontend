@@ -26,7 +26,7 @@ import {VerwaltungModule} from '@verwaltung/verwaltung.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -70,8 +70,8 @@ export function createTranslateLoader(http: HttpClient) {
   /* HTTP INTERCEPTORS */
   providers:    [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
-
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
   bootstrap:    [AppComponent]
 })
