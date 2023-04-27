@@ -82,7 +82,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
   ngOnInit() {
-
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
@@ -194,7 +193,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     console.log(this.currentDisziplin.id);
     this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
     this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
-    this.currentLiga.ligaDetail = this.currentLigaDetail.ligaDetail;
+    this.currentLigaDetail.ligaDetail = this.currentLiga.ligaDetail;
     console.log(this.currentLigaDetail.ligaDetail)
     // persist
     this.ligaDataProvider.update(this.currentLiga)
