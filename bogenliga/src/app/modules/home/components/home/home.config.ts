@@ -32,42 +32,42 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       icon: Terminübersicht,
       route: '#',
       permissions: [UserPermission.CAN_READ_WETTKAMPF],
-      roles:[""]
+      roles:["KAMPFRICHTER" , "LIGALEITER", "AUSRICHTER", "ADMIN"]
     },
     {
       title: 'Vorauswahl Veranstaltungen',
       icon: VorauswahlVeranstaltung,
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
-      roles:[""]
+      roles:["AUSRICHTER", "ADMIN"]
     },
     {
       title: 'Veranstaltung anlegen',
       icon: VeranstaltungAnlegen,
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
-      roles: [""]
+      roles: ["LIGALEITER", "ADMIN"]
     },
     {
       title: 'Manschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
       route: '',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
-      roles: ['']
+      roles: ['ADMIN', "SPORTLEITER"]
     },
     {
       title: 'DSB-Mitglied Anlegen',
       icon: DSBMitgliedAnlegen,
       route: '#',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
-      roles:["Sportleiter", ""]
+      roles:["Sportleiter", "ADMIN"]
     },
     {
       title: 'Mannschaften anlegen',
       icon: ManschaftAnlegen,
       route: '#',
       permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
-      roles:[""]
+      roles:["ADMIN", "LIGALEITER"]
     },
   ]
 };
