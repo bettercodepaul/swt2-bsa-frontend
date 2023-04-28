@@ -27,7 +27,6 @@ import {
   MannschaftDetailComponent
 } from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
-import {WkdurchfuehrungGuard} from '@wkdurchfuehrung/guards';
 
 
 
