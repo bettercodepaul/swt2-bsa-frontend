@@ -44,7 +44,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     {
       title: 'Veranstaltung anlegen',
       icon: VeranstaltungAnlegen,
-      route: '#',
+      route: '/vereine',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
       roles: [UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.ADMIN_ROLE_ID]
     },
@@ -58,21 +58,21 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     {
       title: 'DSB-Mitglied Anlegen',
       icon: DSBMitgliedAnlegen,
-      route: '#',
+      route: '/dsbmitglieder/add',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
       roles:[UserRoleEnum.SPORTLEITER_ROLE_ID, UserRoleEnum.ADMIN_ROLE_ID]
     },
     {
       title: 'Terminübersicht',
       icon: Terminübersicht,
-      route: '/adddsbmitglieder',
+      route: '/wkdurchfuehrung',
       permissions: [UserPermission.CAN_READ_WETTKAMPF],
       roles: [UserRoleEnum.ADMIN_ROLE_ID, /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
     },
     {
       title: 'Mannschaften anlegen',
       icon: ManschaftAnlegen,
-      route: '#',
+      route: '/vereine/:id',
       permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
       roles:[UserRoleEnum.ADMIN_ROLE_ID, UserRoleEnum.LIGALEITER_ROLE_ID]
     },
