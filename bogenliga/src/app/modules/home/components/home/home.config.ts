@@ -37,42 +37,42 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     {
       title: 'Vorauswahl Veranstaltungen',
       icon: VorauswahlVeranstaltung,
-      route: '#',
+      route: '/verwaltung/veranstaltung',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
       roles: [UserRoleEnum.AUSRICHTER_ROLE_ID]
     },
     {
       title: 'Veranstaltung anlegen',
       icon: VeranstaltungAnlegen,
-      route: '#',
+      route: '/verwaltung/veranstaltung/add',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
       roles: [UserRoleEnum.LIGALEITER_ROLE_ID]
     },
     {
       title: 'Manschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
-      route: '/Verwaltung',
+      route: '',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
       roles: [ UserRoleEnum.SPORTLEITER_ROLE_ID]
     },
     {
       title: 'DSB-Mitglied Anlegen',
       icon: DSBMitgliedAnlegen,
-      route: '/adddsbmitglieder',
+      route: '/verwaltung/dsbmitglieder/add',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
       roles:[UserRoleEnum.SPORTLEITER_ROLE_ID]
     },
     {
       title: 'Terminübersicht',
       icon: Terminübersicht,
-      route: '#',
+      route: '/wkdurchfuehrung',
       permissions: [UserPermission.CAN_READ_WETTKAMPF],
       roles: [ /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
     },
     {
       title: 'Mannschaften anlegen',
       icon: ManschaftAnlegen,
-      route: '#',
+      route: '',
       permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
       roles:[ UserRoleEnum.LIGALEITER_ROLE_ID]
     },
