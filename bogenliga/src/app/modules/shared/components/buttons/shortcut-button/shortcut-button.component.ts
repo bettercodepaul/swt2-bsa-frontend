@@ -50,7 +50,7 @@ export class ShortcutButton implements OnInit {
   public checkPermissions(){
     let permissionAvailable = false;
     for(let button of this.config.shortcutButtons){
-      if(this.hasUserPermissions(button.permissions)){
+      if(this.hasUserPermissions(button.permissions) && this.hasUserRole(button.roles)){
         permissionAvailable = true;
       }
     }
