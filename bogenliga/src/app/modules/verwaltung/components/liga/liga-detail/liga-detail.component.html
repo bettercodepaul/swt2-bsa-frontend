@@ -156,17 +156,17 @@
             [(ngModel)]="currentLiga.ligaDetail"
             [init]="{
             base_url: '/tinymce',
-    suffix: '.min',
-     height: 500,
-     menubar: false,
-     plugins: ['advlist autolink lists link image charmap print preview anchor','searchreplace visualblocks code fullscreen','insertdatetime media table paste code help wordcount'],
-     toolbar:'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
-}"
-          >
+            suffix: '.min',
+            height: 500,
+            menubar: false,
+            plugins: ['wordcount',
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen','insertdatetime media table paste code help wordcount'],
+            toolbar:'wordcount | undo redo | formatselect | bold italic backcolor | '+
+            'alignleft aligncenter alignright alignjustify | ' +
+            'bullist numlist outdent indent | removeformat | help'}">
           </editor>
         </div>
-
-
       </div>
 
       <!-- SAVE/UPDATE/DELETE BUTTON -->
