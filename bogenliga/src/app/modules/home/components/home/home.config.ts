@@ -39,42 +39,42 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       icon: VorauswahlVeranstaltung,
       route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
-      roles: [UserRoleEnum.AUSRICHTER_ROLE_ID, UserRoleEnum.ADMIN_ROLE_ID]
+      roles: [UserRoleEnum.AUSRICHTER_ROLE_ID]
     },
     {
       title: 'Veranstaltung anlegen',
       icon: VeranstaltungAnlegen,
-      route: '/vereine',
+      route: '#',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
-      roles: [UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.ADMIN_ROLE_ID]
+      roles: [UserRoleEnum.LIGALEITER_ROLE_ID]
     },
     {
       title: 'Manschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
       route: '/Verwaltung',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
-      roles: [UserRoleEnum.ADMIN_ROLE_ID, UserRoleEnum.SPORTLEITER_ROLE_ID]
+      roles: [ UserRoleEnum.SPORTLEITER_ROLE_ID]
     },
     {
       title: 'DSB-Mitglied Anlegen',
       icon: DSBMitgliedAnlegen,
-      route: '/dsbmitglieder/add',
+      route: '/adddsbmitglieder',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
-      roles:[UserRoleEnum.SPORTLEITER_ROLE_ID, UserRoleEnum.ADMIN_ROLE_ID]
+      roles:[UserRoleEnum.SPORTLEITER_ROLE_ID]
     },
     {
       title: 'Terminübersicht',
       icon: Terminübersicht,
-      route: '/wkdurchfuehrung',
+      route: '#',
       permissions: [UserPermission.CAN_READ_WETTKAMPF],
-      roles: [UserRoleEnum.ADMIN_ROLE_ID, /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
+      roles: [ /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
     },
     {
       title: 'Mannschaften anlegen',
       icon: ManschaftAnlegen,
-      route: '/vereine/:id',
+      route: '#',
       permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
-      roles:[UserRoleEnum.ADMIN_ROLE_ID, UserRoleEnum.LIGALEITER_ROLE_ID]
+      roles:[ UserRoleEnum.LIGALEITER_ROLE_ID]
     },
   ]
 };
