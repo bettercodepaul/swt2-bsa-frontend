@@ -17,19 +17,10 @@ import VeranstaltungAnlegen from '../home/Buttons/VeranstaltungAnlegen.svg';
 // @ts-ignore
 import VorauswahlVeranstaltung from '../home/Buttons/VorauswahlVeranstaltung.svg';
 
-import {RouterModule, Routes} from '@angular/router';
-import {LigaDetailComponent} from '@verwaltung/components';
-import {NgModule} from '@angular/core';
-
-
 export const HOME_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'HOME',
   pageTitleTranslationKey: 'HOME.HOME.TITLE',
 };
-
-const routes: Routes = [
-  { path: 'Verwaltung', component: LigaDetailComponent}
-];
 
 // @ts-ignore
 export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
@@ -49,9 +40,9 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       roles: [UserRoleEnum.LIGALEITER_ROLE_ID]
     },
     {
-      title: 'Manschaftsmitglied hinzufügen',
+      title: 'Mannschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
-      route: '',
+      route: '/verwaltung/vereine/0/101/add',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
       roles: [ UserRoleEnum.SPORTLEITER_ROLE_ID]
     },
@@ -70,9 +61,9 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       roles: [ /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
     },
     {
-      title: 'Mannschaften anlegen',
+      title: 'Vereinsübersicht',
       icon: ManschaftAnlegen,
-      route: '',
+      route: '/verwaltung/vereine',
       permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
       roles:[ UserRoleEnum.LIGALEITER_ROLE_ID]
     },
