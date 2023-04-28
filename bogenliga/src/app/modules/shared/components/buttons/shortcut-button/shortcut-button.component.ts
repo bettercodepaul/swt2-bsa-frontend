@@ -29,9 +29,14 @@ export class ShortcutButton implements OnInit {
 
   ngOnInit(): void {}
 
+  /**
+   * Checks if the current user has any of the provided user roles.
+   *
+   * @param userRoles An array of UserRoleEnum values representing the roles to check for.
+   * @returns `true` if the current user has any of the provided roles, `false` otherwise.
+   */
   public hasUserRole(userRoles: UserRoleEnum[]): boolean {
     let roleAvailable = false;
-    console.log("CurrUserID: " + this.currentUserId + "userRolesEnum: " + userRoles);
     for (let role of userRoles) {
       if (this.currentUserId === role) {
         roleAvailable = true;
@@ -39,6 +44,13 @@ export class ShortcutButton implements OnInit {
     }
     return roleAvailable;
   }
+
+  /**
+   * Checks if the current user has any of the provided user permissions.
+   *
+   * @param userPermissions An array of UserPermission objects representing the permissions to check for.
+   * @returns `true` if the current user has any of the provided permissions, `false` otherwise. Returns `true` if `userPermissions` is `undefined`.
+   */
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     if (userPermissions === undefined) {
       return true;
@@ -47,10 +59,15 @@ export class ShortcutButton implements OnInit {
     }
   }
 
-  public checkPermissions(){
+  /**
+   * Checks if the current user has the necessary permissions and roles to access the shortcut buttons specified in the configuration.
+   *
+   * @returns `true` if the current user has the necessary permissions and roles to access any of the shortcut buttons, `false` otherwise.
+   */
+  public checkPermissions(): boolean {
     let permissionAvailable = false;
-    for(let button of this.config.shortcutButtons){
-      if(this.hasUserPermissions(button.permissions) && this.hasUserRole(button.roles)){
+    for (let button of this.config.shortcutButtons) {
+      if (this.hasUserPermissions(button.permissions) && this.hasUserRole(button.roles)) {
         permissionAvailable = true;
       }
     }
