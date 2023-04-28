@@ -6,13 +6,18 @@ import {HomeGuard} from './guards/home.guard';
 import {
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
-  UserNeuComponent,
-  VereinDetailComponent, VereinOverviewComponent, WettkampfklasseDetailComponent, WettkampfklasseOverviewComponent
+  UserNeuComponent, VeranstaltungDetailComponent,
+  VeranstaltungOverviewComponent,
+  VereinDetailComponent,
+  VereinOverviewComponent,
+  VerwaltungComponent,
+  WettkampfklasseDetailComponent,
+  WettkampfklasseOverviewComponent
 } from '@verwaltung/components';
 import {
   DsbMitgliedDetailGuard,
-  DsbMitgliedOverviewGuard, VereinDetailGuard,
-  VereinOverviewGuard,
+  DsbMitgliedOverviewGuard, VeranstaltungDetailGuard, VeranstaltungOverviewGuard, VereinDetailGuard,
+  VereinOverviewGuard, VerwaltungGuard,
   WettkampfklasseOverviewGuard
 } from '@verwaltung/guards';
 import {
@@ -46,5 +51,8 @@ export const BUTTON_ROUTES: Routes = [
   {path: 'vereine', component: VereinOverviewComponent, pathMatch: 'full', canActivate: [VereinOverviewGuard]},
   {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
   {path: 'vereine/:id/:id', component: MannschaftDetailComponent, canActivate: [DsbMannschaftDetailGuard]},
-  {path: 'vereine/:id/:id/:id', component: SchuetzenComponent, canActivate: [SchuetzenNeuGuard]}
+  {path: 'vereine/:id/:id/:id', component: SchuetzenComponent, canActivate: [SchuetzenNeuGuard]},
+  {path: 'verwaltung', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
+  {path: 'veranstaltung', component: VeranstaltungOverviewComponent, canActivate: [VeranstaltungOverviewGuard]},
+  {path: 'veranstaltung/add', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]}
 ];
