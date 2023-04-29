@@ -7,8 +7,9 @@
     </div>
 
     <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID">  <!--TODO: Check ID is valid -->
-      <h1 class="homeHeading">Liga XYZ </h1> <!--TODO: Backend call Liga name to ID -->
-      <p class="subtitle">ID: {{ providedID }} </p>
+      <h1 class="homeHeading" [innerHTML]="selectedLigaName"></h1> <!--TODO: Backend call Liga name to ID -->
+      <p class="subtitle" [innerHTML]="selectedLigaID"> </p>
+      <div [innerHTML]="selectedLigaDetails"></div>
     </div>
 
 
