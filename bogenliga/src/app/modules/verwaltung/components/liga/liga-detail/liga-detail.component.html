@@ -135,7 +135,7 @@
 
 
           <div class="invalid-feedback">
-            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.ERROR' | translate }}
+            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.LIGA_DETAIL.LABEL' | translate }}
           </div>
         </div>
       </div>
@@ -144,8 +144,8 @@
       <div class="form-group row">
         <label class="col-sm-3 col-form-label"
                for="ligaName">
-          <span>Ligadetails</span>
-          <span> *</span>
+          <span> {{ 'MANAGEMENT.LIGA_DETAIL.FORM.LIGA_DETAIL.LABEL' | translate }}*
+            <br> {{ 'MANAGEMENT.LIGA_DETAIL.FORM.LIGA_DETAIL.MAX_WORDS_WARNING' | translate }}</span>
         </label>
         <div class="col-sm-9">
           <editor
@@ -156,17 +156,17 @@
             [(ngModel)]="currentLiga.ligaDetail"
             [init]="{
             base_url: '/tinymce',
-    suffix: '.min',
-     height: 500,
-     menubar: false,
-     plugins: ['advlist autolink lists link image charmap print preview anchor','searchreplace visualblocks code fullscreen','insertdatetime media table paste code help wordcount'],
-     toolbar:'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
-}"
-          >
+            suffix: '.min',
+            height: 500,
+            menubar: false,
+            plugins: ['wordcount',
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen','insertdatetime media table paste code help wordcount'],
+            toolbar:'wordcount | undo redo | formatselect | bold italic backcolor | '+
+            'alignleft aligncenter alignright alignjustify | ' +
+            'bullist numlist outdent indent | removeformat | help'}">
           </editor>
         </div>
-
-
       </div>
 
       <!-- SAVE/UPDATE/DELETE BUTTON -->
