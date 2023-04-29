@@ -2,7 +2,7 @@ import {CommonDialogConfig} from '../../../shared/components/dialogs';
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
-import {UserPermission} from '@shared/services';
+import {CurrentUserService, UserPermission} from '@shared/services';
 import {UserRoleEnum} from '@shared/services/current-user/types/user-role.enum';
 // @ts-ignore
 import AddManschaftsmitglied from '../home/Buttons/AddManschaftsmitglied.svg';
@@ -16,8 +16,7 @@ import Terminübersicht from '../home/Buttons/Terminübersicht.svg';
 import VeranstaltungAnlegen from '../home/Buttons/VeranstaltungAnlegen.svg';
 // @ts-ignore
 import VorauswahlVeranstaltung from '../home/Buttons/VorauswahlVeranstaltung.svg';
-import {HomeComponent} from '@home/components/home/home.component';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+
 
 export const HOME_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'HOME',
@@ -46,7 +45,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     {
       title: 'Mannschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
-      route: '/verwaltung/vereine/',
+      route: '/verwaltung/vereine/0',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
       roles: [ UserRoleEnum.SPORTLEITER_ROLE_ID]
     },
@@ -73,6 +72,4 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     },
   ]
 };
-
-
 
