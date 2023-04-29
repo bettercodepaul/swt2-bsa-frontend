@@ -21,6 +21,7 @@ import {
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
 import {VERWALTUNG_CONFIG} from '@verwaltung/components/verwaltung/verwaltung.config';
 import {HOME_SHORTCUT_BUTTON_CONFIG} from './home.config';
+import {db, OfflineDB} from '@shared/data-provider/offlinedb/offlinedb';
 @Component({
   selector:    'bla-home',
   templateUrl: './home.component.html',
@@ -186,5 +187,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     this.loadWettkaempfe();
   }
 
+  private getCorrectID() {
+  let verein = this.currentUserService.getVerein();
+    console.log("TEST");
+  console.log(verein);
+
+  }
 }
 
