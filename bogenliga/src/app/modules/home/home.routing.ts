@@ -27,6 +27,7 @@ import {
   MannschaftDetailComponent
 } from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
+import {VereineComponent} from '@vereine/components';
 
 
 
@@ -40,7 +41,7 @@ export const BUTTON_ROUTES: Routes = [
   {path: 'dsbmitglieder', component: DsbMitgliedOverviewComponent, canActivate: [DsbMitgliedOverviewGuard]},
   {path: 'dsbmitglieder/add', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
   {path: 'vereine', component: VereinOverviewComponent, canActivate: [VereinOverviewGuard]},
-  {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
+  {path: 'vereine/id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
   {path: 'vereine/:id/:id', component: MannschaftDetailComponent, canActivate: [DsbMannschaftDetailGuard]},
   {path: 'vereine/:id/:id/:id', component: SchuetzenComponent, canActivate: [SchuetzenNeuGuard]},
   {path: 'verwaltung', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},

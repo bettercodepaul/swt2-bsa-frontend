@@ -42,6 +42,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public currentDate: number =  Date.now();
   public dateHelper: string;
 
+  public VereinsID: number;
+
   private sessionHandling: SessionHandling;
 
   constructor(private wettkampfDataProvider: WettkampfDataProviderService,
@@ -76,6 +78,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
     }
+    this.setCorrectID();
   }
 
       /**
@@ -187,11 +190,13 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     this.loadWettkaempfe();
   }
 
-  private getCorrectID() {
-  let verein = this.currentUserService.getVerein();
-    console.log("TEST");
-  console.log(verein);
-
+  public setCorrectID() {
+    const verein = this.currentUserService.getVerein();
+    this.VereinsID = verein;
   }
+  public getCorrectID(): number {
+    return this.VereinsID;
+  }
+
 }
 
