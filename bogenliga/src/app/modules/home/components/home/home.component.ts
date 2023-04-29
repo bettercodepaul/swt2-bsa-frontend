@@ -18,6 +18,9 @@ import {SessionHandling} from '@shared/event-handling';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
+import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
 
 const ID_PATH_PARAM = 'id';
 
@@ -34,6 +37,20 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public ActionButtonColors = ActionButtonColors;
   public wettkaempfeDTO: WettkampfDTO[];
   public wettkaempfeDO: WettkampfDO[];
+
+
+  /*for backend-call*/
+  public ligaDTO: BogenligaResponse<LigaDTO>;
+  public ligaDO: BogenligaResponse<LigaDO[]>;
+
+  /**Storing the information about the current selected Liga
+   * that should be displayed depending on the url
+   */
+  private selectedLigaName: string;
+  private selectedLigaID: number;
+  private selectedLigaDetails: string;
+
+
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[] = [];
@@ -49,6 +66,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     private route: ActivatedRoute,
     private wettkampfDataProvider: WettkampfDataProviderService,
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
+    private ligaDataProvider: LigaDataProviderService,
     private logindataprovider: LoginDataProviderService,
     private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService) {
@@ -87,6 +105,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
         console.log('no params at home');
       }
     });
+
+    this.loadLiga(2);
   }
 
       /**
@@ -99,6 +119,68 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
         .then((response: BogenligaResponse<WettkampfDTO[]>) => { this.handleSuccessLoadWettkaempfe(response.payload); })
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => {this.wettkaempfeDTO = response.payload; });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /**
+   * Backend call to get Liga from the Parameter in the URL (LigaID)
+   * to display LigaDetailSeite
+   * */
+
+  private loadLiga(urlLigaID : number){
+    //TODO: 1. Schritt: URL ID checken 2. Schritt
+    this.ligaDataProvider.findById(urlLigaID)
+        .then((response: BogenligaResponse<LigaDTO>) => this.handleFindLigaSuccess(response))
+        .catch((response: BogenligaResponse<LigaDTO>) => this.handleFindLigaFailure(response));
+  }
+
+
+  /**Handling a successfull backendcall to get Liga by LigaIDa*/
+  private handleFindLigaSuccess(response: BogenligaResponse<LigaDTO>) : void {
+    this.selectedLigaName=response.payload.name;
+    this.selectedLigaID=response.payload.id;
+    this.selectedLigaDetails=response.payload.ligaDetail;
+
+    console.log("\n\n\n\n" + this.selectedLigaName);
+  }
+
+  /**Handling a failed backendcall to get Liga by LigaID*/
+  public handleFindLigaFailure(response: BogenligaResponse<LigaDTO>) : void {
+    //routing back to home URL
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
     this.wettkaempfeDTO = payload;
