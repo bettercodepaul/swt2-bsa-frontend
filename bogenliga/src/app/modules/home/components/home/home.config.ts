@@ -16,11 +16,15 @@ import Terminübersicht from '../home/Buttons/Terminübersicht.svg';
 import VeranstaltungAnlegen from '../home/Buttons/VeranstaltungAnlegen.svg';
 // @ts-ignore
 import VorauswahlVeranstaltung from '../home/Buttons/VorauswahlVeranstaltung.svg';
+import {HomeComponent} from '@home/components/home/home.component';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 
 export const HOME_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'HOME',
   pageTitleTranslationKey: 'HOME.HOME.TITLE',
 };
+
+
 
 // @ts-ignore
 export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
@@ -42,7 +46,7 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     {
       title: 'Mannschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
-      route: '/verwaltung/vereine/0/101/add',
+      route: '/verwaltung/vereine/',
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
       roles: [ UserRoleEnum.SPORTLEITER_ROLE_ID]
     },
@@ -69,4 +73,6 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
     },
   ]
 };
+
+
 
