@@ -110,10 +110,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     });
 
     //check if valid ID read from url
-    this.checkIsValidID(this.providedID);
-    if(this.isValidUrlID){
+    // this.checkIsValidID(this.providedID);
+    // if(this.isValidUrlID){
       this.loadLiga(this.providedID);
-    }
+    // }
 
   }
 
@@ -150,43 +150,43 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   private loadLiga(urlLigaID : number){
     //TODO: check if DTO oder DO
     this.ligaDataProvider.findById(urlLigaID)
-        .then((response: BogenligaResponse<LigaDTO>) => this.handleFindLigaSuccess(response))
-        .catch((response: BogenligaResponse<LigaDTO>) => this.handleFindLigaFailure(response));
+        .then((response: BogenligaResponse<LigaDO>) => this.handleFindLigaSuccess(response))
+        .catch((response: BogenligaResponse<LigaDO>) => this.handleFindLigaFailure(response));
   }
 
 
   /**Handling a successfull backendcall to get Liga by LigaIDa*/
-  private handleFindLigaSuccess(response: BogenligaResponse<LigaDTO>) : void {
+  private handleFindLigaSuccess(response: BogenligaResponse<LigaDO>) : void {
     this.selectedLigaName=response.payload.name;
     this.selectedLigaID=response.payload.id;
     this.selectedLigaDetails=response.payload.ligaDetail;
 
-    console.log("\n\n\n\n" + this.selectedLigaName);
+    console.log("\n\n\n\n" + this.selectedLigaDetails);
   }
 
   /**Handling a failed backendcall to get Liga by LigaID*/
-  public handleFindLigaFailure(response: BogenligaResponse<LigaDTO>) : void {
+  public handleFindLigaFailure(response: BogenligaResponse<LigaDO>) : void {
     //routing back to home URL
   }
 
-  private checkIsValidID(id:number) {
-    let allLigen: LigaDTO[]; //liste aller ligen
-
-    //backend-call
-    this.ligaDataProvider.findAll()
-        .then((response: BogenligaResponse<LigaDTO[]>) => {
-          allLigen=response.payload;
-          //vergleiche id mit denen aus der Liste
-          allLigen.find(item=>{
-            //if vorhanden -> this.isValidUrlID=true;
-            if(item.id===id){
-              this.isValidUrlID=true;
-            }
-          })
-        })
-        .catch((response: BogenligaResponse<LigaDTO[]>) => {});
-    console.log("\n\n\nValide ID: "+this.isValidUrlID);
-  }
+  // private checkIsValidID(id:number) {
+  //   let allLigen: LigaDTO[]; //liste aller ligen
+  //
+  //   //backend-call
+  //   this.ligaDataProvider.findAll()
+  //       .then((response: BogenligaResponse<LigaDTO[]>) => {
+  //         allLigen=response.payload;
+  //         //vergleiche id mit denen aus der Liste
+  //         allLigen.find(item=>{
+  //           //if vorhanden -> this.isValidUrlID=true;
+  //           if(item.id===id){
+  //             this.isValidUrlID=true;
+  //           }
+  //         })
+  //       })
+  //       .catch((response: BogenligaResponse<LigaDTO[]>) => {});
+  //   console.log("\n\n\nValide ID: "+this.isValidUrlID);
+  // }
 
 
 
