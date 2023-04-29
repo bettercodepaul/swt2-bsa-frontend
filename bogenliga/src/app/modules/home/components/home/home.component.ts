@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HOME_CONFIG} from './home.config';
 import {BogenligaResponse} from '@shared/data-provider';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
@@ -15,18 +15,23 @@ import {LoginDataProviderService} from '@user/services/login-data-provider.servi
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
+import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
+import { Subscription } from 'rxjs';
 
 const ID_PATH_PARAM = 'id';
+
 
 @Component({
   selector:    'bla-home',
   templateUrl: './home.component.html',
   styleUrls:   ['./home.component.scss']
 })
-export class HomeComponent extends CommonComponentDirective implements OnInit {
+export class HomeComponent extends CommonComponentDirective implements OnInit, OnDestroy {
 
   public config = HOME_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
@@ -34,6 +39,14 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public ActionButtonColors = ActionButtonColors;
   public wettkaempfeDTO: WettkampfDTO[];
   public wettkaempfeDO: WettkampfDO[];
+
+  /**Storing the information about the current selected Liga
+   * that should be displayed depending on the url
+   */
+  private selectedLigaName: string;
+  private selectedLigaID: number;
+  private selectedLigaDetails: string;
+
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[] = [];
@@ -43,12 +56,16 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public hasID: boolean;
 
   private sessionHandling: SessionHandling;
+  private routeSubscription: Subscription;
+  private loadedLigaData: boolean;
+
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private wettkampfDataProvider: WettkampfDataProviderService,
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
+    private ligaDataProvider: LigaDataProviderService,
     private logindataprovider: LoginDataProviderService,
     private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService) {
@@ -69,9 +86,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     }
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+
     if (this.currentUserService.isLoggedIn() === false) {
-      this.logindataprovider.signInDefaultUser()
+      await this.logindataprovider.signInDefaultUser()
           .then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
@@ -87,17 +105,78 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
         console.log('no params at home');
       }
     });
+
+
+    /**
+     * On URL change
+     * check if there is an ID in the URL,
+     * check if it is valid and load Liga
+     * */
+
+    this.checkingAndLoadingLiga();
+
+    this.routeSubscription = this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        console.log("\n\n\n\nURL HAS CHWNGED!!!");
+        this.checkingAndLoadingLiga();
+      }
+    });
   }
 
-      /**
-       * backend call to get list
-       */
+
+  /**unsubscribe to avoid memory leaks*/
+  ngOnDestroy() {
+    this.routeSubscription.unsubscribe();
+  }
+
+  /**Check if LigaID of URL exists and load the corresponding page*/
+  private checkingAndLoadingLiga(){
+    this.hasID ? this.loadLiga(this.providedID) : null;
+  }
+
+
+  /**
+   * backend call to get list
+  */
   private loadWettkaempfe(): void {
       this.wettkaempfeDTO = [];
       this.wettkaempfeDO = [];
       this.wettkampfDataProvider.findAll()
         .then((response: BogenligaResponse<WettkampfDTO[]>) => { this.handleSuccessLoadWettkaempfe(response.payload); })
         .catch((response: BogenligaResponse<WettkampfDTO[]>) => {this.wettkaempfeDTO = response.payload; });
+  }
+
+
+  /**
+   * Backend call to get Liga from the Parameter in the URL (LigaID)
+   * to display LigaDetailSeite
+   * */
+
+   private async loadLiga(urlLigaID : number){
+    //TODO: check if DTO oder DO
+    await this.ligaDataProvider.findById(urlLigaID)
+        .then((response: BogenligaResponse<LigaDO>) => this.handleFindLigaSuccess(response))
+        .catch((response: BogenligaResponse<LigaDO>) => this.handleFindLigaFailure(response));
+  }
+
+
+  /**Handling a successfull backendcall to get Liga by LigaIDa*/
+  private handleFindLigaSuccess(response: BogenligaResponse<LigaDO>) : void {
+    this.selectedLigaName=response.payload.name;
+    this.selectedLigaID=response.payload.id;
+    this.selectedLigaDetails=response.payload.ligaDetail;
+    this.loadedLigaData=true;
+
+    console.log("\n\n\n\n" + this.selectedLigaDetails);
+  }
+
+  /**Handling a failed backendcall to get Liga by LigaID
+   * if LigaID not present in DB, then route to home
+   * */
+  public handleFindLigaFailure(response: BogenligaResponse<LigaDO>) : void {
+    //routing back to home URL
+    const link = '/home';
+    this.router.navigateByUrl(link);
   }
 
   private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
