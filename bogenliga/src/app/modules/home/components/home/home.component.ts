@@ -50,6 +50,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   private selectedLigaID: number;
   private selectedLigaDetails: string;
 
+  private isValidUrlID: boolean = false;
+
 
   public loadingWettkampf = true;
   public loadingTable = false;
@@ -60,6 +62,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public hasID: boolean;
 
   private sessionHandling: SessionHandling;
+
 
   constructor(
     private router: Router,
@@ -106,7 +109,12 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
       }
     });
 
-    this.loadLiga(2);
+    //check if valid ID read from url
+    this.checkIsValidID(this.providedID);
+    if(this.isValidUrlID){
+      this.loadLiga(this.providedID);
+    }
+
   }
 
       /**
@@ -140,7 +148,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
    * */
 
   private loadLiga(urlLigaID : number){
-    //TODO: 1. Schritt: URL ID checken 2. Schritt
+    //TODO: check if DTO oder DO
     this.ligaDataProvider.findById(urlLigaID)
         .then((response: BogenligaResponse<LigaDTO>) => this.handleFindLigaSuccess(response))
         .catch((response: BogenligaResponse<LigaDTO>) => this.handleFindLigaFailure(response));
@@ -159,10 +167,26 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   /**Handling a failed backendcall to get Liga by LigaID*/
   public handleFindLigaFailure(response: BogenligaResponse<LigaDTO>) : void {
     //routing back to home URL
-
   }
 
+  private checkIsValidID(id:number) {
+    let allLigen: LigaDTO[]; //liste aller ligen
 
+    //backend-call
+    this.ligaDataProvider.findAll()
+        .then((response: BogenligaResponse<LigaDTO[]>) => {
+          allLigen=response.payload;
+          //vergleiche id mit denen aus der Liste
+          allLigen.find(item=>{
+            //if vorhanden -> this.isValidUrlID=true;
+            if(item.id===id){
+              this.isValidUrlID=true;
+            }
+          })
+        })
+        .catch((response: BogenligaResponse<LigaDTO[]>) => {});
+    console.log("\n\n\nValide ID: "+this.isValidUrlID);
+  }
 
 
 
@@ -285,6 +309,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();
   }
+
 
 }
 
