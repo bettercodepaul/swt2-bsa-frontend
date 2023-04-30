@@ -7,8 +7,8 @@ function generateID() {
 
 function generateLigaID() {
   //generates a number between 1 and the amount of ligas that exist
-  //this is an example if only 20 liga exist
-  return Math.floor(Math.random() * 20);
+  //this is an example if only 19 liga exist
+  return Math.floor(Math.random() * 18 + 1);
 }
 
 describe('Anonyme User tests', function () {
