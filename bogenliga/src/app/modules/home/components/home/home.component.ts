@@ -98,14 +98,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        console.log('Provided Id ', this.providedID);
         this.hasID = true;
-
       } else {
-        console.log('no params at home');
+        this.hasID = false;
       }
     });
-
 
     /**
      * On URL change
@@ -114,10 +111,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
      * */
 
     this.checkingAndLoadingLiga();
-
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        console.log("\n\n\n\nURL HAS CHWNGED!!!");
         this.checkingAndLoadingLiga();
       }
     });
@@ -126,7 +121,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   /**unsubscribe to avoid memory leaks*/
   ngOnDestroy() {
-    this.routeSubscription.unsubscribe();
+    this.hasID ? this.routeSubscription.unsubscribe() : null;
   }
 
   /**Check if LigaID of URL exists and load the corresponding page*/
