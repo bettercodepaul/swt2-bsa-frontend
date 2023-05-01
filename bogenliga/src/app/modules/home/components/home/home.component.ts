@@ -198,5 +198,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     return this.VereinsID;
   }
 
+
 }
+
+
 
