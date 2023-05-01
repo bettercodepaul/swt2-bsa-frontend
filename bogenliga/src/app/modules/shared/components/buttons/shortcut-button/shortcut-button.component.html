@@ -2,7 +2,7 @@
   <h2>Was möchtest du tun?</h2>
   <div class="Buttoncontainer">
     <ng-container *ngFor="let button of config.shortcutButtons">
-      <div *ngIf="hasUserPermissions(button.permissions) && hasUserRole(button.roles)" class="buttonwrapper">
+      <div *ngIf="hasUserPermissions(button.permissions)" class="buttonwrapper">
         <div class="Button">
           <button type="button" class="shortcut-btn" [routerLink]="button.route" routerLinkActive="active">
             <img class="buttonlogo" *ngIf="button.icon" [src]="button.icon" alt="{{ button.title }}" />

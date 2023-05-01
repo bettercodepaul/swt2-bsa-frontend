@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CurrentUserService, UserPermission} from '@shared/services';
-import {UserRoleEnum} from '@shared/services/current-user/types/user-role.enum';
 import {RoleDataProviderService} from '@verwaltung/services/role-data-provider.service';
+import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
@@ -19,7 +19,7 @@ export class ShortcutButton implements OnInit {
   @Input()
   public id: string;
   public  currentUserId = this.currentUserService.getCurrentUserID();
-  constructor(private currentUserService: CurrentUserService) {}
+  constructor(private currentUserService: CurrentUserService, private userDataProviderService: UserDataProviderService) {}
 
   @Input() public config: ShortcutButtonsConfig = {shortcutButtons: []};
 
@@ -27,22 +27,15 @@ export class ShortcutButton implements OnInit {
 
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userDataProviderService.findUserRoleById(this.currentUserId).then(
+      (value ) => console.log("FindUserRoleByID", value)
+    )
+  }
 
-  /**
-   * Checks if the current user has any of the provided user roles.
-   *
-   * @param userRoles An array of UserRoleEnum values representing the roles to check for.
-   * @returns `true` if the current user has any of the provided roles, `false` otherwise.
-   */
-  public hasUserRole(userRoles: UserRoleEnum[]): boolean {
-    let roleAvailable = false;
-    for (let role of userRoles) {
-      if (this.currentUserId === role) {
-        roleAvailable = true;
-      }
-    }
-    return roleAvailable;
+
+  public hasUserRole(): boolean {
+    return true;
   }
 
   /**
@@ -67,7 +60,7 @@ export class ShortcutButton implements OnInit {
   public checkPermissions(): boolean {
     let permissionAvailable = false;
     for (let button of this.config.shortcutButtons) {
-      if (this.hasUserPermissions(button.permissions) && this.hasUserRole(button.roles)) {
+      if (this.hasUserPermissions(button.permissions) && this.hasUserRole()) {
         permissionAvailable = true;
       }
     }
