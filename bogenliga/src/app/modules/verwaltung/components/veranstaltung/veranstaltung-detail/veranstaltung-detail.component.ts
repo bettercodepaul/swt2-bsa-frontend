@@ -85,6 +85,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public currentLiga: LigaDO = new LigaDO();
   public allLiga: Array<LigaDO> = [new LigaDO()];
 
+
+  public allTeamAmount: Array<number> = [4, 6, 8];
+  public currentTeamAmount: number = 4;
+
+
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
 
