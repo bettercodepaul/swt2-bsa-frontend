@@ -71,14 +71,23 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   @ViewChild('kampfrichter') kampfrichter: ElementRef;
   @ViewChild('sportleiter') sportleiter: ElementRef;
 
+
+  public setCorrectID() {
+    const verein = this.currentUserService.getVerein();
+    this.VereinsID = verein;
+  }
+  public getCorrectID(): number {
+    return this.VereinsID;
+  }
   ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
       this.logindataprovider.signInDefaultUser()
           .then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
+      this.setCorrectID();
     }
-    this.setCorrectID();
+
   }
 
       /**
@@ -190,13 +199,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     this.loadWettkaempfe();
   }
 
-  public setCorrectID() {
-    const verein = this.currentUserService.getVerein();
-    this.VereinsID = verein;
-  }
-  public getCorrectID(): number {
-    return this.VereinsID;
-  }
+
 
 
 }
