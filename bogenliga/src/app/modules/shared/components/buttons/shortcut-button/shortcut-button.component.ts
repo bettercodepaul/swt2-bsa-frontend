@@ -19,6 +19,9 @@ export class ShortcutButton implements OnInit {
   @Input()
   public id: string;
   public  currentUserId = this.currentUserService.getCurrentUserID();
+  public currentUserRole = this.userDataProviderService.findUserRoleById(this.currentUserId);
+
+  public  currentRolename: string;
   constructor(private currentUserService: CurrentUserService, private userDataProviderService: UserDataProviderService) {}
 
   @Input() public config: ShortcutButtonsConfig = {shortcutButtons: []};
@@ -29,23 +32,43 @@ export class ShortcutButton implements OnInit {
 
   ngOnInit(): void {
 
+    const userRoleDo =  this.userDataProviderService.findUserRoleById(this.currentUserId);
+
+    userRoleDo.then((value) => {
+
+       this.currentRolename = value.payload[0].roleName;
+
+    })
   }
 
 
-  async hasUserRole(roles: string[]): Promise<boolean> {
-   const userRoleDo = await  this.userDataProviderService.findUserRoleById(this.currentUserId);
+  async getCurrentUserRole(){
+    const userRoleDo = await  this.userDataProviderService.findUserRoleById(this.currentUserId);
 
     const currentRolename = userRoleDo.payload[0].roleName;
+
+    return currentRolename;
+
+  }
+
+  /**
+   * Checks if the current user has any of the specified roles.
+   *
+   * @param roles An array of strings representing the roles to check for.
+   * @returns `true` if the current user has any of the specified roles, `false` otherwise.
+   */
+  public hasUserRole(roles: string[]): boolean {
     let result: boolean = false;
 
-    if (currentRolename === undefined) {
+    // Check if the current role is undefined
+    if (this.currentRolename === undefined) {
       result;
     } else {
-       result =  this.currentUserService.hasAnyRole(roles, currentRolename);
+      // Check if the current user has any of the specified roles
+      result = this.currentUserService.hasAnyRole(roles, this.currentRolename);
     }
 
     return result;
-
   }
 
   /**
@@ -70,11 +93,11 @@ export class ShortcutButton implements OnInit {
    * @returns `true` if the current user has the necessary permissions and roles to access any of the shortcut buttons,
    *   `false` otherwise.
    */
-  async checkPermissions(): Promise<boolean> {
+  checkPermissions(): boolean {
 
     let permissionAvailable = false;
     for (let button of this.config.shortcutButtons) {
-      if (this.hasUserPermissions(button.permissions)) {
+      if (this.hasUserPermissions(button.permissions) && this.hasUserRole(button.roles)) {
         permissionAvailable = true;
       }
     }
