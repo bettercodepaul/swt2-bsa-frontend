@@ -27,7 +27,7 @@ export const EINSTELLUNGEN_OVERVIEW_CONFIG: OverviewDialogConfig = {
       },
       {
         translationKey: 'MANAGEMENT.EINSTELLUNG.TABLE.HEADERS.ISHIDDEN',
-        propertyName: 'isHidden',
+        propertyName: 'hidden',
         width: 10,
       },
 
