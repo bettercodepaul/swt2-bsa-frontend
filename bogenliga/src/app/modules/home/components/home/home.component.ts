@@ -22,6 +22,7 @@ import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.s
 import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 
 const ID_PATH_PARAM = 'id';
 
@@ -148,7 +149,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * */
 
    private async loadLiga(urlLigaID : number){
-    //TODO: check if DTO oder DO
     await this.ligaDataProvider.findById(urlLigaID)
         .then((response: BogenligaResponse<LigaDO>) => this.handleFindLigaSuccess(response))
         .catch((response: BogenligaResponse<LigaDO>) => this.handleFindLigaFailure(response));
@@ -272,7 +272,22 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public ligatabelleLinking() {
     const link = '/wettkaempfe/' + this.providedID;
     this.router.navigateByUrl(link);
+
+    this.getVeranstaltungen(2); //TODO:hardcode ändern
   }
+
+  private getVeranstaltungen(ligaId: number){
+    var veranstaltungsListe = [];
+    this.veranstaltungDataProvider.findByLigaId(ligaId)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          //hier abspeichern
+          veranstaltungsListe=response.payload.
+        })
+        .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
+          //error
+        });
+  }
+
 
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();
