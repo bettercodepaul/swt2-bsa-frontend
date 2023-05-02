@@ -22,7 +22,11 @@ export const HOME_CONFIG: CommonDialogConfig = {
   pageTitleTranslationKey: 'HOME.HOME.TITLE',
 };
 
-const vereinsID = '0';
+let vereinsID;
+
+export const ID = (vID : number) => {
+  this.vereinsID = vID;
+}
 
 // @ts-ignore
 export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {

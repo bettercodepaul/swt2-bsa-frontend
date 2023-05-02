@@ -15,6 +15,7 @@ import {LoginDataProviderService} from '@user/services/login-data-provider.servi
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
+import {ID} from '../home/home.config';
 
 import {
   ShortcutButtonsConfig
@@ -72,7 +73,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   @ViewChild('sportleiter') sportleiter: ElementRef;
 
 
-  public setCorrectID() {
+  public setCorrectID(){
     const verein = this.currentUserService.getVerein();
     this.VereinsID = verein;
   }
@@ -86,6 +87,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
       this.setCorrectID();
+      ID(this.VereinsID);
+
     }
 
   }
