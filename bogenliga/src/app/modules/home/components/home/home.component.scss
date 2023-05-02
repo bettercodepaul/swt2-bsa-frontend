@@ -1,7 +1,7 @@
 @import 'src/styles.scss';
 
 #homePage {
-  max-width: 92%;
+  max-width: 89%;
 }
 
 h1{
@@ -40,7 +40,7 @@ h1{
 
 .container {
   display: grid;
-  max-width:95%;
+  max-width:100%;
   margin: 0 auto;
   grid-template-columns: 50% 50%;
   grid-template-areas:
