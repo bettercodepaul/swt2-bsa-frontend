@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CurrentUserService, UserPermission} from '@shared/services';
-import {UserRoleEnum} from '@shared/services/current-user/types/user-role.enum';
 import {RoleDataProviderService} from '@verwaltung/services/role-data-provider.service';
+import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
@@ -19,7 +19,10 @@ export class ShortcutButton implements OnInit {
   @Input()
   public id: string;
   public  currentUserId = this.currentUserService.getCurrentUserID();
-  constructor(private currentUserService: CurrentUserService) {}
+  public currentUserRole = this.userDataProviderService.findUserRoleById(this.currentUserId);
+
+  public  currentRolename: string;
+  constructor(private currentUserService: CurrentUserService, private userDataProviderService: UserDataProviderService) {}
 
   @Input() public config: ShortcutButtonsConfig = {shortcutButtons: []};
 
@@ -27,29 +30,53 @@ export class ShortcutButton implements OnInit {
 
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    const userRoleDo =  this.userDataProviderService.findUserRoleById(this.currentUserId);
+
+    userRoleDo.then((value) => {
+
+       this.currentRolename = value.payload[0].roleName;
+
+    })
+  }
+
+
+  async getCurrentUserRole(){
+    const userRoleDo = await  this.userDataProviderService.findUserRoleById(this.currentUserId);
+
+    const currentRolename = userRoleDo.payload[0].roleName;
+
+    return currentRolename;
+
+  }
 
   /**
-   * Checks if the current user has any of the provided user roles.
+   * Checks if the current user has any of the specified roles.
    *
-   * @param userRoles An array of UserRoleEnum values representing the roles to check for.
-   * @returns `true` if the current user has any of the provided roles, `false` otherwise.
+   * @param roles An array of strings representing the roles to check for.
+   * @returns `true` if the current user has any of the specified roles, `false` otherwise.
    */
-  public hasUserRole(userRoles: UserRoleEnum[]): boolean {
-    let roleAvailable = false;
-    for (let role of userRoles) {
-      if (this.currentUserId === role) {
-        roleAvailable = true;
-      }
+  public hasUserRole(roles: string[]): boolean {
+    let result: boolean = false;
+
+    // Check if the current role is undefined
+    if (this.currentRolename === undefined) {
+      result;
+    } else {
+      // Check if the current user has any of the specified roles
+      result = this.currentUserService.hasAnyRole(roles, this.currentRolename);
     }
-    return roleAvailable;
+
+    return result;
   }
 
   /**
    * Checks if the current user has any of the provided user permissions.
    *
    * @param userPermissions An array of UserPermission objects representing the permissions to check for.
-   * @returns `true` if the current user has any of the provided permissions, `false` otherwise. Returns `true` if `userPermissions` is `undefined`.
+   * @returns `true` if the current user has any of the provided permissions, `false` otherwise. Returns `true` if
+   *   `userPermissions` is `undefined`.
    */
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     if (userPermissions === undefined) {
@@ -60,11 +87,14 @@ export class ShortcutButton implements OnInit {
   }
 
   /**
-   * Checks if the current user has the necessary permissions and roles to access the shortcut buttons specified in the configuration.
+   * Checks if the current user has the necessary permissions and roles to access the shortcut buttons specified in the
+   * configuration.
    *
-   * @returns `true` if the current user has the necessary permissions and roles to access any of the shortcut buttons, `false` otherwise.
+   * @returns `true` if the current user has the necessary permissions and roles to access any of the shortcut buttons,
+   *   `false` otherwise.
    */
-  public checkPermissions(): boolean {
+  checkPermissions(): boolean {
+
     let permissionAvailable = false;
     for (let button of this.config.shortcutButtons) {
       if (this.hasUserPermissions(button.permissions) && this.hasUserRole(button.roles)) {
