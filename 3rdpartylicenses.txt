@@ -306,6 +306,9 @@ MIT
 @ngx-translate/http-loader
 MIT
 
+@tinymce/tinymce-angular
+Apache-2.0
+
 accessor-fn
 MIT
 MIT License
