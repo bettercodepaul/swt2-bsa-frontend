@@ -3,7 +3,6 @@ import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
 import {CurrentUserService, UserPermission} from '@shared/services';
-import {UserRoleEnum} from '@shared/services/current-user/types/user-role.enum';
 // @ts-ignore
 import AddManschaftsmitglied from '../home/Buttons/AddManschaftsmitglied.svg';
 // @ts-ignore
@@ -36,42 +35,42 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       icon: VorauswahlVeranstaltung,
       route: '/verwaltung/veranstaltung',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
-      roles: [UserRoleEnum.AUSRICHTER_ROLE_ID]
+      roles: ["AUSRICHTER"]
     },
     {
       title: 'Veranstaltung anlegen',
       icon: VeranstaltungAnlegen,
       route: '/verwaltung/veranstaltung/add',
       permissions: [UserPermission.CAN_READ_STAMMDATEN],
-      roles: [UserRoleEnum.LIGALEITER_ROLE_ID]
+      roles: ["LIGALEITER"]
     },
     {
       title: 'Mannschaftsmitglied hinzufügen',
       icon: AddManschaftsmitglied,
       route: `/verwaltung/vereine/${vereinsID}`,
       permissions: [UserPermission.CAN_MODIFY_MANNSCHAFT, UserPermission.CAN_MODIFY_MY_VEREIN],
-      roles: [ UserRoleEnum.SPORTLEITER_ROLE_ID]
+      roles: ["SPORTLEITER"]
     },
     {
       title: 'DSB-Mitglied Anlegen',
       icon: DSBMitgliedAnlegen,
       route: '/verwaltung/dsbmitglieder/add',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
-      roles:[UserRoleEnum.SPORTLEITER_ROLE_ID]
+      roles:["SPORTLEITER"]
     },
     {
       title: 'Terminübersicht',
       icon: Terminübersicht,
       route: '/wkdurchfuehrung',
       permissions: [UserPermission.CAN_READ_WETTKAMPF],
-      roles: [ /*UserRoleEnum.KAMPFRICHTER_ROLE_ID,*/ UserRoleEnum.LIGALEITER_ROLE_ID, UserRoleEnum.AUSRICHTER_ROLE_ID]
+      roles: ["KAMPFRICHTER","LIGALEITER","AUSRICHTER"]
     },
     {
       title: 'Vereinsübersicht',
       icon: ManschaftAnlegen,
       route: '/verwaltung/vereine',
       permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
-      roles:[ UserRoleEnum.LIGALEITER_ROLE_ID]
+      roles:["LIGALEITER"]
     },
   ]
 };
