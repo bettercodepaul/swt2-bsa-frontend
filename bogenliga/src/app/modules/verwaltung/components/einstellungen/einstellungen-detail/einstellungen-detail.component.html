@@ -106,7 +106,7 @@
 
         </div>
         <div class="form-group row">
-          <label for="einstellungenIsHidden"
+          <label for="einstellungenHidden"
 
                  *ngIf="currentEinstellung.id  != null"
                  class="col-sm-3 col-form-label">
@@ -119,11 +119,11 @@
 
                    class="form-control"
                    required
-                   id="einstellungenIsHidden"
-                   name="einstellungenIsHidden"
-                   #einstellungenIsHidden="ngModel"
-                   [(ngModel)]="neucurrentEinstellung.isHidden"
-                   [class.is-invalid]="einstellungenIsHidden.invalid && einstellungenIsHidden.untouched">
+                   id="einstellungenHidden"
+                   name="einstellungenHidden"
+                   #einstellungenHidden="ngModel"
+                   [(ngModel)]="neucurrentEinstellung.hidden"
+                   [class.is-invalid]="einstellungenHidden.invalid && einstellungenHidden.untouched">
           </div>
         </div>
 

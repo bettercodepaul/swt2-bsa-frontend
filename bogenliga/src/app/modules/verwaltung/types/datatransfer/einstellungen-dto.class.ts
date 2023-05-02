@@ -9,7 +9,7 @@ export class EinstellungenDTO implements DataTransferObject {
   value: string;
   regex: string;
 
-  isHidden: boolean;
+  hidden: boolean;
 
 
   static copyFrom(optional: {
@@ -18,7 +18,7 @@ export class EinstellungenDTO implements DataTransferObject {
     key?: string;
     value?: string;
     regex?: string;
-    isHidden?: boolean;
+    hidden?: boolean;
 
 
   } = {}): EinstellungenDTO {
@@ -28,7 +28,7 @@ export class EinstellungenDTO implements DataTransferObject {
     copy.key = optional.key || '';
     copy.value = optional.value || '';
     copy.regex = optional.regex || null;
-    copy.isHidden = optional.isHidden || false;
+    copy.hidden = optional.hidden || false;
     return copy;
   }
 
