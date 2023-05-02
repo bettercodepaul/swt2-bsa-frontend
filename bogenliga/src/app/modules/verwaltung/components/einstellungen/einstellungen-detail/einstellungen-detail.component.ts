@@ -169,7 +169,7 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
       this.notificationService.showNotification(notificationUpdateError);
     } else {
       this.currentEinstellung.value = this.neucurrentEinstellung.value;
-      this.currentEinstellung.isHidden = this.neucurrentEinstellung.isHidden;
+      this.currentEinstellung.hidden = this.neucurrentEinstellung.hidden;
       this.einstellungenProviderService.update(this.currentEinstellung)
           .then((response: BogenligaResponse<EinstellungenDO>) => {
             const notificationUpdate: Notification = {
