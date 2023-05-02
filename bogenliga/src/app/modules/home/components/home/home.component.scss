@@ -1,9 +1,12 @@
 @import 'src/styles.scss';
 
+#homePage {
+  max-width: 92%;
+}
+
 h1{
   font-size: 2.8em;
 }
-
 
 // container for pictures and text
 .flexChild {
@@ -37,7 +40,8 @@ h1{
 
 .container {
   display: grid;
-  width: 100%;
+  max-width:95%;
+  margin: 0 auto;
   grid-template-columns: 50% 50%;
   grid-template-areas:
     "calendar shortcuts"
