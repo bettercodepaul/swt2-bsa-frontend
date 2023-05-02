@@ -10,18 +10,6 @@
     <!-- Row 1 -->
     <div style="margin-left: 20px; min-height: 40vh">
       <h2>Unsere nächsten Wettkämpfe</h2>
-      <div id = "competitionList">
-        <bla-veranstaltungen-button routerLink="/wkdurchfuehrung">
-          <p heading>Hallo Überschrift</p>
-          <p date-month>DEZ</p>
-          <h1 date-day>16</h1>
-        </bla-veranstaltungen-button>
-        <bla-veranstaltungen-button routerLink="/wkdurchfuehrung">
-          <p heading>Hallo Überschrift Nr. 2</p>
-          <p date-month>JAN</p>
-          <h1 date-day>30</h1>
-        </bla-veranstaltungen-button>
-      </div>
       <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
       <table id="example"
              class="table table-hover table-sm table-responsive-sm thead-light table-striped"
