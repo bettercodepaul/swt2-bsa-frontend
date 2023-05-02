@@ -796,6 +796,10 @@
           "PLACEHOLDER": "Wählen Sie einen Ligaverantwortlichen",
           "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
         },
+        "LIGA_DETAIL" : {
+          "LABEL": "Ligadetails",
+          "MAX_WORDS_WARNING": "(max. 300 Wörter)"
+        },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"

@@ -61,6 +61,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedYearId: number;
   private aktivesSportjahr: number;
 
+  private isDefaultSelect: boolean = true;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -84,11 +86,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        console.log('Provided Id ', this.providedID);
+        console.log('Provided Id AT LIGATABELLE', this.providedID);
         this.hasID = true;
 
       } else {
-        console.log('no params');
+        console.log('no params at ligatabelle');
       }
     });
   }
@@ -162,6 +164,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       if (this.availableYears.length > 0) {
         // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (IndexOfSelectedYearInAvailableYears = 0)
         selectedYear.push(this.availableYears[indexOfSelectedYearInAvailableYears]);
+
         this.onSelectYear(selectedYear); // automatische Auswahl nur bei vorhandenen Daten
       }
     } catch (e) {
@@ -208,13 +211,14 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
      onSelectYear wird einmal zu Beginn für eine automatische Auswahl aufgerufen und jedes mal wenn das Jahr geändert wird.
      Dabei werden die Ligen für das ausgewählte Jahr aufgerufen und angezeigt.
      */
-
+    this.isDefaultSelect = true;
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button');
     buttonVisibility.style.display = 'block';
     this.veranstaltungenForYear = [];
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
     this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id;
     this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); // automatische Auswahl
+
   }
 
   public onSelectVeranstaltung($event: VeranstaltungDO[]) {
@@ -227,5 +231,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
     this.buttonForward = this.selectedVeranstaltung.id;
     this.loadLigaTableRows();
+    //this.providedID = this.selectedVeranstaltung.ligaId;
+    const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
+    !this.isDefaultSelect ? this.router.navigateByUrl(link) : null;
+    this.selectedVeranstaltungId === this.veranstaltungenForYear[0].id ? this.isDefaultSelect = false : null;
   }
 }
