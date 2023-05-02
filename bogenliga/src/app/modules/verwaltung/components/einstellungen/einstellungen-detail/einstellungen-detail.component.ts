@@ -125,6 +125,9 @@ export class EinstellungenDetailComponent extends CommonComponentDirective imple
 
   private handleSuccess(response: BogenligaResponse<EinstellungenDO>) {
     this.currentEinstellung = response.payload;
+    // This will default hidden settings to be the prior configuration when editing options
+    // This is in order to avoid accidentally leaking confidential configuration values
+    this.neucurrentEinstellung.hidden = this.currentEinstellung.hidden;
     this.loading = false;
 
   }
