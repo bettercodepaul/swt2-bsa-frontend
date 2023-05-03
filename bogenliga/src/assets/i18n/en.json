@@ -27,7 +27,7 @@
   "APP": {
     "SUPPORT": "With support from:",
     "TITLE": "Archery League",
-    "ABOUT": "On this Website of the german Archery League you can find all the important Information. Let it inspire you.",
+    "ABOUT": "On the page of Bogenliga DE, here you will find all the information of the German leagues in archery. Browse through the leagues and let yourself be drawn into the fascination of team archery.",
     "KONTAKT": "Contact",
     "IMPRESSUM": "Copyright and Data Protection",
     "COPYRIGHT": "Copyright: 2018",
@@ -39,7 +39,7 @@
       "WELCOME": "Welcome",
       "WETTKAEMPFE": "Our next competitions",
       "FURTHER": "further information",
-      "CONTENT": "to the website of Archery League GER. Here you can find all the important information about archery. Let it inspire you.",
+      "CONTENT": "On the page of Bogenliga DE, here you will find all the information of the German leagues in archery. Browse through the leagues and let yourself be drawn into the fascination of team archery.",
       "BOX1HEADING": "STUDENT CUP 2018",
       "BOX1CONTENT": "Be there..."
     },
@@ -94,8 +94,8 @@
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
         "DOWNLOADFEHLER": {
-          "TITLE": "Error creating Singlestatistic:",
-          "DESCRIPTION": "Could not generate Singlestatistic. Could not find Archers for selection."
+          "TITLE": "Error creating Individual statistic:",
+          "DESCRIPTION": "Could not generate Individual statistic. Could not find Archers for selection."
         }
       }
     },
@@ -213,7 +213,7 @@
       "NOTIFICATION": {
         "DOWNLOADFEHLER": {
           "TITLE": "Failure while creating the registration form:",
-          "DESCRIPTION": "Registration from was not created successful because there are no existing achers."
+          "DESCRIPTION": "Registration form was not created successfully because there are no existing archers."
         }
       }
     },
@@ -269,7 +269,7 @@
         },
         "RUECKENNUMMERZUHOCH": {
           "TITLE": "Save not successful",
-          "DESCRIPTION": "Backnumber does not exist in this team"
+          "DESCRIPTION": "Back number does not exist in this team"
         },
         "WEITER": {
           "TITLE": "There are unsaved changes",
@@ -588,8 +588,8 @@
         "DESCRIPTION": "Management of events"
       },
       "EINSTELLUNG": {
-        "LABEL": "einstellungen",
-        "DESCRIPTION": "Management of einstellungen"
+        "LABEL": "settings",
+        "DESCRIPTION": "Management of settings"
       }
     },
     "SPORTJAHR": {
@@ -1095,7 +1095,7 @@
           "LABEL": "Referee license"
         },
         "NO_USER": "Member has no User-Account. Please create one first. If you already created a User-Account then click on update.",
-        "REGISTRATION": "Userregistration",
+        "REGISTRATION": "User registration",
         "SAVE": "Save",
         "UPDATE": "Refresh",
         "DELETE": "Delete"
@@ -1251,20 +1251,20 @@
               "DESCRIPTION": "Successfully updated competition day"
             },
             "DELETE": {
-              "TITLE": "Wettkampftag löschen",
-              "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!\""
+              "TITLE": "delete competition day",
+              "DESCRIPTION": "Do you really want to delete the competition day with ID=%s? ATTENTION! If you delete this competition day, all records referring to it will be deleted as well!"
             },
             "ADD": {
-              "TITLE": "Neu",
-              "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+              "TITLE": "new",
+              "DESCRIPTION": "Do you want to add another competition day?"
             },
             "DELETE_SUCCESS": {
-              "TITLE": "Erfolgreich",
-              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+              "TITLE": "success",
+              "DESCRIPTION": "the competition day has been successfully deleted."
             },
             "DELETE_FAILURE": {
-              "TITLE": "Fehler beim Löschen",
-              "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+              "TITLE": "Error while deleting",
+              "DESCRIPTION": "The competition day could not be deleted."
             }
           }
         },
