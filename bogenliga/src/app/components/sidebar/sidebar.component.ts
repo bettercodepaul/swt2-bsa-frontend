@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute,Router, ParamMap} from '@angular/router';
 import {faCaretDown} from '@fortawesome/free-solid-svg-icons';
 import {select, Store} from '@ngrx/store';
-import {isNullOrUndefined} from '@shared/functions';
+import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {environment} from '../../../environments/environment';
 import {AppState, SidebarState, TOGGLE_SIDEBAR} from '../../modules/shared/redux-store';
 import {CurrentUserService, UserPermission} from '../../modules/shared/services/current-user';
@@ -12,7 +12,7 @@ import {SIDE_BAR_CONFIG_OFFLINE} from './sidebar.config';
 import {OnOfflineService} from '@shared/services';
 
 
-
+const ID_PATH_PARAM = 'id';
 
 
 @Component({
@@ -33,21 +33,23 @@ export class SidebarComponent implements OnInit {
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public inProd = environment.production;
   public CONFIG;
-
+  public hasLigaID: boolean;
+  public ligaID2: number;
+  public URLRoute: string;
 
 
 
   faCaretDown = faCaretDown;
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private onOfflineService: OnOfflineService) {
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
-
   }
 
  ngOnInit() {
     this.offlineSetter();
   }
+
 // Um im Offlinemodus die Sidebar entsprechend anzupassen.
   public offlineSetter(): void {
     if (this.onOfflineService.isOffline() == true) {
@@ -57,7 +59,6 @@ export class SidebarComponent implements OnInit {
     }
 
   }
-
 
   /**
    * tells store that sidebar button was used -> Sidebar needs to change
@@ -71,20 +72,40 @@ export class SidebarComponent implements OnInit {
   }
   public getRoute(route: string, detailType: string): string {
     let result: string = route;
+    this.URLRoute = this.router.url;
+    if (this.URLRoute.startsWith("/ligatabelle") ||this.URLRoute.startsWith("/home") ) {
+      const lastSlashIndex = this.URLRoute.lastIndexOf('/');
+      switch(lastSlashIndex){
+        case 0:
+          //forget liga ID if no liga ID is part of the URL-route
+          this.ligaID2 = undefined;
+          break;
+        case result.length:
+          this.ligaID2 = parseInt(this.URLRoute.substring(lastSlashIndex + 1));
+          break;
+        }
+      }
+
     if (detailType === 'undefined') {
      return(route);
-    } else {
-      switch (detailType) {
-        case 'verein':
+    } else if (detailType === 'verein'){
           result = result + '/' + this.currentUserService.getVerein();
-          break;
-        default:
-          result = result;
-          break;
-      }
+      } else {
+      result = result;
+    }
+
+    if (this.ligaID2 != undefined && route.startsWith("/home")){
+      result =  result + '/'+ this.ligaID2.toString();
+    } else if(this.ligaID2 != undefined && route.startsWith("/ligatabelle")){
+      result =  result + '/'+ this.ligaID2.toString();
+    }
+
       return result;
     }
-  }
+
+
+
+
   public getSidebarCollapseIcon(): string {
     return this.isActive ? 'angle-double-right' : 'angle-double-left';
   }

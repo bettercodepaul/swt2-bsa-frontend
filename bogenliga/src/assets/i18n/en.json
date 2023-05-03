@@ -756,6 +756,10 @@
           "PLACEHOLDER": "Please select a league responsible",
           "ERROR": "Please enter a valid E-Mail"
         },
+        "LIGA_DETAIL" : {
+          "LABEL": "League details",
+          "MAX_WORDS_WARNING": "(max. 300 words)"
+        },
         "SAVE": "Save",
         "UPDATE": "Refresh",
         "DELETE": "Delete"

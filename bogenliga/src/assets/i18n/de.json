@@ -796,6 +796,10 @@
           "PLACEHOLDER": "Wählen Sie einen Ligaverantwortlichen",
           "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
         },
+        "LIGA_DETAIL" : {
+          "LABEL": "Ligadetails",
+          "MAX_WORDS_WARNING": "(max. 300 Wörter)"
+        },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
@@ -1253,6 +1257,11 @@
           "LABEL": "Sportjahr",
           "PLACEHOLDER": "YYYY",
           "ERROR": "Bitte geben Sie ein gültiges Jahr ein"
+        },
+        "TEILNEHMER": {
+          "LABEL": "Team Anzahl",
+          "PLACEHOLDER": "Bitte geben Sie an wieviele Teams bei der Veranstaltung teilnehmen dürfen",
+          "ERROR": "Bitte geben Sie eine Anzahl an Teilnehmenden Teams an"
         },
 
         "WETTKAMPFTYPID": {

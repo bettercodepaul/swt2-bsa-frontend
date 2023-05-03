@@ -17,3 +17,4 @@ Zum Starten der Anwendung führe folgede Befehle aus:
 
 `ng serve -o` zum Öffnen der Anwendung
 
+[mvnw.cmd](..%2Fbackend%2Fbogenliga%2Fmvnw.cmd)
