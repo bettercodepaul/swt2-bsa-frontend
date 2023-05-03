@@ -74,7 +74,7 @@ label {
 }
 
 .btn {
-  margin: 0px 15px 20px 20px;
+  margin: 10px 0px 0px 20px;
 }
 
 .signature, hr {
@@ -91,12 +91,13 @@ label {
 
 .mannschaften_col-3 h1 {
   font-size: 1vw;
+
 }
 
 .mannschaften_col-3 {
-  max-width: 16em;
-  min-width: 8em;
-  margin-left: 1em;
+  width: 183px;
+  margin-left: 4em;
+  margin-top: 3em;
 }
 
 .henlo.match_col-3 h2 {
@@ -104,9 +105,9 @@ label {
 }
 
 .match_col-3 {
-  max-width: 17em;
-  min-width: 8em;
-  margin-left: 1.5em;
+  width: 180px;
+  margin-left: 4em;
+  margin-top: 3em
 }
 
 @media print {
@@ -218,4 +219,25 @@ label {
 .popup .close:hover {
   color: $primary;
   cursor: pointer;
+}
+
+.schusstabelle{
+  margin-left: 60px;
+}
+.fehlerpunktetabelle{
+  margin-left: 100px
+}
+.col-4{
+  margin-right: 8px
+}
+.offset-9{
+  margin-left: 80.5%;
+}
+.tabelle{
+  margin-left: 100px;
+}
+
+#buttonContainer{
+  margin-left: 15%;
+  align-items: center;
 }
