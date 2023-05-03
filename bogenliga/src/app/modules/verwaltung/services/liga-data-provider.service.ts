@@ -11,6 +11,7 @@ import {
 import {CurrentUserService} from '../../shared/services/current-user';
 import {fromPayload, fromPayloadArray} from '../mapper/liga-mapper';
 import {LigaDO} from '../types/liga-do.class';
+import {ConsoleLogger} from '@angular/compiler-cli/ngcc';
 
 @Injectable({
   providedIn: 'root'
@@ -107,7 +108,9 @@ export class LigaDataProviderService  extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+      const temp = new UriBuilder().fromPath(this.getUrl()).build();
+      console.log(temp);
+      this.restClient.PUT<VersionedDataTransferObject>(temp, payload)
           .then((data: VersionedDataTransferObject) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
