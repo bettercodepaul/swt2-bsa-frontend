@@ -185,7 +185,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
 
      await this.veranstaltungDataProvider.findBySportyear(sportJahr).then((response: BogenligaResponse<VeranstaltungDO[]>) => {
         response.payload.forEach((element) => {
-          console.log(element);
           this.veranstaltungDO.push(element);
         })
       }).catch((response: BogenligaResponse<VeranstaltungDO>) => {
@@ -194,8 +193,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
      this.veranstaltungDO.forEach((element)=>{
        this.wettkampfDataProvider.findByVeranstaltungId(element.id).then((response: BogenligaResponse<WettkampfDO[]>) => {
          response.payload.forEach((elementWettkampf)=>{
-           console.log(elementWettkampf);
-           console.log(element)
            let veranstaltungWettkaempfeDOLocal: VeranstaltungWettkaempfe = {
              wettkaempfeDO : elementWettkampf,
              veranstaltungDO: element,
@@ -205,7 +202,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
 
            };
            this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
-           console.log(veranstaltungWettkaempfeDOLocal)
          })
        })
      })
