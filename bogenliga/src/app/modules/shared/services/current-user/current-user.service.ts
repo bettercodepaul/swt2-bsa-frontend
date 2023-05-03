@@ -141,6 +141,18 @@ export class CurrentUserService {
     return false;
   }
 
+  public hasAnyRole(roles :string [], currentRolename: string): boolean{
+    let userAvailable = false;
+    for (let role of roles) {
+      if (role ===currentRolename) {
+        userAvailable = true;
+      }
+    }
+
+    return  userAvailable;
+
+  }
+
   public isLoggedIn(): boolean {
     return this.isUserLoggedIn;
   }
@@ -220,3 +232,5 @@ export class CurrentUserService {
     return this.currentUser.id;
   }
 }
+
+

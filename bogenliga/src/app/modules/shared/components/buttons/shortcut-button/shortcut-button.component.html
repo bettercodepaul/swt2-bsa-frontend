@@ -1,0 +1,19 @@
+<div *ngIf="checkPermissions()">
+  <h2>Was möchtest du tun?</h2>
+  <div class="Buttoncontainer">
+    <ng-container *ngFor="let button of config.shortcutButtons">
+      <div *ngIf="hasUserPermissions(button.permissions) && hasUserRole(button.roles)" class="buttonwrapper">
+        <div class="Button">
+          <button type="button" class="shortcut-btn" [routerLink]="button.route" routerLinkActive="active">
+            <img class="buttonlogo" *ngIf="button.icon" [src]="button.icon" alt="{{ button.title }}" />
+          </button>
+          <ng-container>
+            <p class="Button_Titel">
+              <span *ngFor="let word of button.title.split(' ')">{{ word }}<br/></span>
+            </p>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
