@@ -9,15 +9,6 @@
     <div class="container">
       <div class="calendar">
         <h2>Unsere nächsten Wettkämpfe</h2>
-        <bla-veranstaltungen-button routerLink="/wkdurchfuehrung">
-          <p heading>Hallo Überschrift</p>
-          <p date-month>DEZ</p>
-          <h1 date-day>16</h1>
-        </bla-veranstaltungen-button>
-
-    <!-- Row 1 -->
-    <div style="margin-left: 20px; min-height: 40vh">
-      <h2>Unsere nächsten Wettkämpfe</h2>
       <div id = "competitionList">
         <bla-veranstaltungen-button routerLink="/wkdurchfuehrung" *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
           <p heading>{{veranstaltung.veranstaltungDO.name}}</p>
