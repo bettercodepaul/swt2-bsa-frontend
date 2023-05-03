@@ -432,7 +432,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
   private loadTableRows() {
     this.loading = true;
 
-    this.dsbMitgliedProvider.findAllNotInTeam(this.currentMannschaft.id, this.currentMannschaft.vereinId)
+    this.dsbMitgliedProvider.findAllNotInTeam(Number(this.currentMannschaft.id), Number(this.currentMannschaft.vereinId))
         .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleTableRowSuccess(response))
         .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleTableRowFailure(response));
   }
