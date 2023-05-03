@@ -1,0 +1,49 @@
+.shortcut-btn{
+  width: 2.5em;
+  height: 2.5em;
+  font-size: 1.5em;
+  background: #F5F5F5;
+  border: none;
+  margin-bottom: 1em;
+  border-radius: 50%;
+  transition: 200ms;
+  color: black;
+  box-shadow: 1px 2.5px 0.5px grey;
+
+  &:hover{
+    background: #D7D7D7;
+    box-shadow: none;
+  }
+}
+
+.Button {
+  width: 140px;
+  height: 140px;
+  text-align: center;
+
+}
+
+.Buttoncontainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 3%;
+
+}
+
+.buttonwrapper {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin: 1em;
+}
+
+.buttonlogo{
+  width: 78%;
+  height: 78%;
+  margin-bottom: 4px;
+}
+
+.Button_Titel{
+  text-align: center;
+}
+

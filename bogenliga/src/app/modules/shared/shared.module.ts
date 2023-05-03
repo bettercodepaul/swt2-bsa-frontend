@@ -57,6 +57,7 @@ import {ActionButtonComponent} from '@shared/components/buttons/button/actionbut
 import {
   DownloadActionButtonComponent
 } from '@shared/components/buttons/download-button/download-actionbutton.component';
+import { ShortcutButton } from './components/buttons/shortcut-button/shortcut-button.component';
 import {
   VeranstaltungenButtonComponent
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
@@ -117,6 +118,7 @@ import {
     HilfeButtonComponent,
     ActionButtonComponent,
     DownloadActionButtonComponent,
+    ShortcutButton,
     VeranstaltungenButtonComponent,
   ],
   declarations: [
@@ -158,6 +160,7 @@ import {
     HilfeButtonComponent,
     ActionButtonComponent,
     DownloadActionButtonComponent,
+    ShortcutButton,
     VeranstaltungenButtonComponent
   ]
 })
