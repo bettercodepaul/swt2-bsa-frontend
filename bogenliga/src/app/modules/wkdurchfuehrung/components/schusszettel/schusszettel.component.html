@@ -15,10 +15,10 @@
         <h2>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.GEGEN' | translate }}</h2>
         <h2>{{match2.mannschaftName}}</h2>
       </div>
-      <div class="small_Table col-6">
+      <div class="small_Table col-6" class="tabelle">
         <table class="table table-responsive thead-light table-striped"
                id="punktetabelle"
-               style="max-width:100%">
+               style="width:100%">
           <tr>
             <td *ngFor="let sum of match1singlesatzpoints; let i = index">
               <label>{{i + 1}}. {{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }}</label>
@@ -72,7 +72,7 @@
     <div class="row">
       <div class="bigTable col-9">
         <table class="table table-hover table-responsive thead-light table-striped"
-               id="schusstabelle"
+               class="schusstabelle"
                style="width:100%">
           <thead>
           <tr>
@@ -151,7 +151,7 @@
         </table>
       </div>
       <!-- Fehlerpunkte Mannschaft1 -->
-      <div class="col-2">
+      <div class="col-2" class="fehlerpunktetabelle">
         <div class="row"
              style="margin-bottom:10px">
           <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 1</label>
@@ -233,8 +233,9 @@
         <h2>{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.GEGEN' | translate }}</h2>
         <h2>{{match2.mannschaftName}}</h2>
       </div>
-      <div class="small_Table col-6">
+      <div class="small_Table col-6" class="tabelle">
         <table class="table table-responsive thead-light table-striped"
+               id="punktetabelle2"
                style="width:100%">
           <tr>
             <td *ngFor="let sum of match1singlesatzpoints; let i = index">
@@ -289,6 +290,7 @@
       <div class="bigTable col-9">
         <table
           class="table table-hover table-responsive thead-light table-striped"
+          class="schusstabelle"
           style="width:100%">
           <thead>
           <tr>
@@ -366,7 +368,7 @@
         </table>
       </div>
       <!-- Fehlerpunkte Mannschaft2 -->
-      <div class="col-2">
+      <div class="col-2" class="fehlerpunktetabelle">
         <div class="row"
              style="margin-bottom:10px">
           <label class="col-4">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SATZ' | translate }} 1</label>
@@ -421,11 +423,19 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-8"> <!-- Spalte mit Buttons zum speichern/drucken links -->
+  <div >
+    <div id="buttonContainer"> <!-- Spalte mit Buttons zum speichern/drucken links -->
+
+      <button (click)="previous()"
+              style="margin-right: 10px; width: 170px"
+              class="btn btn-primary nextButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.VORHERIGES_MATCH' | translate }}
+      </button>
+
 
       <button (click)=" back()"
-              class="btn btn-primary backButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.ZURUECK' | translate }}
+              style="margin-right: 10px"
+              class="btn btn-primary backButton"
+      >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.ZURUECK' | translate }}
       </button>
 
       <button (click)="save()"
@@ -439,19 +449,15 @@
         [fileName]="'match_schusszettel.pdf'"
         [disabled]="false">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.DRUCKEN' | translate }}
       </bla-download-button>
-    </div>
 
-    <div class="align-self-center"> <!-- Spalte nächstes Match rechts -->
+      <!--        style="width: 100px; height: 40px; margin-left: 20px; margin-top: 3px" --->
 
-      <button (click)="previous()"
-              class="btn btn-primary nextButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.VORHERIGES_MATCH' | translate }}
+      <button (click)="next()"
+              style="width: 170px"
+              class="btn btn-primary nextButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NAECHSTES_MATCH' | translate }}
       </button>
 
-        <button (click)="next()"
-                class="btn btn-primary nextButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NAECHSTES_MATCH' | translate }}
-      </button>
     </div>
-
 
   </div>
 
