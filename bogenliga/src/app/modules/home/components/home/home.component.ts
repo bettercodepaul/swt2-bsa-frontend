@@ -134,7 +134,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
       this.setCorrectID();
-      ID(this.VereinsID);
+      // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
     }
 
 
@@ -196,7 +196,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * */
 
    private async loadLiga(urlLigaID : number){
-    //TODO: check if DTO oder DO
     await this.ligaDataProvider.findById(urlLigaID)
         .then((response: BogenligaResponse<LigaDO>) => this.handleFindLigaSuccess(response))
         .catch((response: BogenligaResponse<LigaDO>) => this.handleFindLigaFailure(response));
@@ -209,8 +208,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.selectedLigaID=response.payload.id;
     this.selectedLigaDetails=response.payload.ligaDetail;
     this.loadedLigaData=true;
-
-    console.log("\n\n\n\n" + this.selectedLigaDetails);
   }
 
   /**Handling a failed backendcall to get Liga by LigaID
