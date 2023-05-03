@@ -586,7 +586,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
-  public onButtonDownload(path: string): string {
+ public onButtonDownload(path: string): string {
     return new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
@@ -599,7 +599,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // da die Ligatabelle-ID als Parameter weiter gegeben wird.
 
   public isDisabled(): boolean {
-    return this.disabledOtherButtons;
+    return !this.selectedWettkampfId; // prüft, ob ein Wettkampf ausgewählt wurde
   }
 
   // macht buttons unklickbar wenn die Anwendung offline ist
@@ -610,7 +610,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
   public isDisabledGMButton(): boolean {
-    return this.disabledButton;
+    return !this.selectedWettkampfId || this.disabledButton; //prüft ob der disabledButton-Wert auf true gesetzt ist & ob ein Wettkampf ausgwählt wurde
   }
 
   /*public PasseDTO loadDsbMitglied() {
@@ -642,17 +642,19 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
   public generateMatches() {
+    this.disabledButton = true; //verhindern, dass der Button mehrmals geklickt wird
     this.matchDataProvider.generateDataForMatches(this.selectedWettkampfId)
-      .then(() => {
-        this.showMatches();
-      })
-      // handleFailure -> Fehlermeldung muss aufgerufen werden
-      .catch((error) => {
-
-        this.handleFailureGenerateMatchesMissingMitglied();
-        this.showMatches();
-      })
+        .then(() => {
+          this.showMatches();
+          this.disabledButton = false;
+        })
+        .catch((error) => {
+          this.disabledButton = false;
+          this.handleFailureGenerateMatchesMissingMitglied();
+          this.showMatches();
+        });
   }
+
 
   private handleFailureGenerateMatchesMissingMitglied(): void {
     this.notificationService.showNotification({
