@@ -586,7 +586,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   }
 
-  public onButtonDownload(path: string): string {
+ public onButtonDownload(path: string): string {
     return new UriBuilder()
       .fromPath(environment.backendBaseUrl)
       .path('v1/download')
