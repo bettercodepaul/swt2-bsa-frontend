@@ -27,7 +27,7 @@
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
     "TITLE": "Bogenliga",
-    "ABOUT": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschafts Bogensport ziehen.",
+    "ABOUT": "Auf der Seite von Bogenliga DE, hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschaftsbogensports ziehen.",
     "KONTAKT": "Kontakt",
     "IMPRESSUM": "Impressum und Datenschutz",
     "COPYRIGHT": "Copyright: 2018",
@@ -41,10 +41,10 @@
       "WETTKAMPFERSATZ": "Derzeit sind keine Wettkämpfe geplant",
 
       "FURTHER": "Weitere Infos",
-      "CONTENT": "Hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschaftsbogensport ziehen.",
+      "CONTENT": "Hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschaftsbogensports ziehen.",
       "BOX1HEADING": "Schüler- und Jugend- Cup 2018",
       "BOX1DATE": "2. Mai 2018",
-      "BOX1CONTENT": "Seid dabei, wenn wir am 20. & 21. Oktober 2018 im WSV- Schulungszentrum in Ruit gemeinsam ein tolles Wochenende rund um das Sport- und Bogenschießen erleben und jede Menge Spaß haben werden.Beim Schüler- und Jugend- Cup können Jungschützen mit dem Bogen, dem Luftgewehr sowie der Luftpistole und dem Lichtgewehr sowie der Lichtpistole ihr Können in spannenden Wettkämpfen, Geschicklichkeits- und Konzentrationsübungen unter Beweis stellen.Detaillierte Informationen zu den Altersklassen und den Disziplinen, sowie den Meldebogen findet Ihr hier. Wir freuen uns auf euch!"
+      "BOX1CONTENT": "Seid dabei, wenn wir am 20. & 21. Oktober 2018 im WSV- Schulungszentrum in Ruit gemeinsam ein tolles Wochenende Rund um das Sport- und Bogenschießen erleben und jede Menge Spaß haben werden.Beim Schüler- und Jugend- Cup können Jungschützen mit dem Bogen, dem Luftgewehr sowie der Luftpistole und dem Lichtgewehr sowie der Lichtpistole ihr Können in spannenden Wettkämpfen, Geschicklichkeits- und Konzentrationsübungen unter Beweis stellen.Detaillierte Informationen zu den Altersklassen und den Disziplinen, sowie den Meldebogen findet Ihr hier. Wir freuen uns auf euch!"
     },
     "IMPRESSUM": {
       "TITLE": "Impressum"
@@ -102,7 +102,7 @@
       "NOTIFICATION": {
         "DOWNLOADFEHLER": {
           "TITLE": "Fehler beim Generieren der Einzelstatistik:",
-          "DESCRIPTION": "Einzelstatistik konnte nicht generiert werden. Es wurden keine Schützen für die Auswahl gefunden"
+          "DESCRIPTION": "Einzelstatistik konnte nicht generiert werden. Es wurden keine Schützen für die Auswahl gefunden."
         }
       }
     },
@@ -129,19 +129,19 @@
   },
   "WKDURCHFUEHRUNG": {
     "WKDURCHFUEHRUNG": {
-      "TITLE": "Terminübersicht",
+      "TITLE": "Wettkampfdurchführung",
       "DESCRIPTION": "Alle vergangenen und anstehenden Veranstaltungen. Bei Auswahl einer Veranstaltung werden dazugehörige Details angezeigt."
     },
     "GENERIERE_MATCHES": {
       "NOTIFICATION": {
-        "TITLE": "Es existieren keine Mannschaften für den Tag",
-        "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden"
+        "TITLE": "Es existieren keine Mannschaften für den Tag.",
+        "DESCRIPTION": "Es müssen erst Mannschaften für den Wettkampftag erzeugt werden."
       }
     },
     "GENERIERE_MATCHES_MITGLIED_FEHLT": {
       "NOTIFICATION": {
-        "TITLE": "Es existieren keine Schützen in einer der Mannschaften",
-        "DESCRIPTION": "Es müssen erst Schützen zu allen Mannschaften hinzugefügt werden"
+        "TITLE": "Es existieren keine Schützen in einer der Mannschaften.",
+        "DESCRIPTION": "Es müssen erst Schützen zu allen Mannschaften hinzugefügt werden."
       }
     },
     "OFFLINE": {
@@ -159,7 +159,7 @@
     "ONLINE": {
       "NOTIFICATION": {
         "SUCCESS": {
-          "TITLE": "Die Daten wurden erfolgreich gespesichert",
+          "TITLE": "Die Daten wurden erfolgreich gespeichert.",
           "DESCRIPTION": "Die Daten wurden erfolgreich online gespeichert und der Online-Modus wurde wieder aktiviert."
         },
         "FAILURE": {
@@ -185,7 +185,7 @@
       "SATZ": "Satz",
       "NEXT_MATCH": "Nächstes Match",
       "NEXT_SET": "Nächster Satz",
-      "CONFIGURE_PART1": "Bitte Konfigurieren Sie zunächst Ihr Gerät mit Hilfe der",
+      "CONFIGURE_PART1": "Bitte konfigurieren Sie zunächst Ihr Gerät mithilfe der",
       "CONFIGURE_PART2": "Tablet-Administration in der Ligatabelle-Verwaltung"
     },
     "TITEL": {
@@ -269,7 +269,7 @@
         },
         "DOWNLOADFEHLER":{
           "TITLE":"Fehler beim generieren des Schusszettels:",
-          "DESCRIPTION": "Schusszettel konnte nicht genertiert werden, da keine Matches für den Wettkampf vorhanden sind."
+          "DESCRIPTION": "Schusszettel konnte nicht generiert werden, da keine Matches für den Wettkampf vorhanden sind."
         },
         "EINGABEFEHLER":{
           "TITLE":"Eingabefehler",
@@ -281,11 +281,11 @@
         },
         "SCHUETZENNUMMER":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
-          "DESCRIPTION": "Bitte geben sie unter Schuetze alle Schuetzennummern ein."
+          "DESCRIPTION": "Bitte geben sie unter Schütze alle Schützennummern ein."
         },
         "SCHUETZENEINDEUTIG":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
-          "DESCRIPTION": "Bitte geben sie drei unterschiedliche Schuetzenummern an."
+          "DESCRIPTION": "Bitte geben sie drei unterschiedliche Schützenummern an."
         },
         "SPEICHERN":{
           "TITLE":"Schusszettel speichern",
@@ -747,7 +747,7 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Klasselöschen",
+          "TITLE": "Klasse löschen",
           "DESCRIPTION": "Wollen Sie die Klasse mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
