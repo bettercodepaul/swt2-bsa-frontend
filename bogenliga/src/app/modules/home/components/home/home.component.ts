@@ -1,4 +1,4 @@
-import { OnInit, OnDestro, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {OnDestroy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HOME_CONFIG} from './home.config';
 import {BogenligaResponse} from '@shared/data-provider';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
