@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HOME_CONFIG} from './home.config';
 import {BogenligaResponse} from '@shared/data-provider';
 import {WettkampfDTO} from '@verwaltung/types/datatransfer/wettkampf-dto.class';
@@ -12,7 +12,7 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
 import {ConsoleLogger} from '@angular/compiler-cli/ngcc';
@@ -20,6 +20,13 @@ import {element} from 'protractor';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
+import {ID} from '../home/home.config';
+import {
+  ShortcutButtonsConfig
+} from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
+import {VERWALTUNG_CONFIG} from '@verwaltung/components/verwaltung/verwaltung.config';
+import {HOME_SHORTCUT_BUTTON_CONFIG} from './home.config';
+import {db, OfflineDB} from '@shared/data-provider/offlinedb/offlinedb';
 import {
   VeranstaltungenButtonComponent
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
@@ -31,7 +38,6 @@ class VeranstaltungWettkaempfe {
   public day: number;
   public month: string;
 }
-
 @Component({
   selector:    'bla-home',
   templateUrl: './home.component.html',
@@ -41,6 +47,9 @@ class VeranstaltungWettkaempfe {
 export class HomeComponent extends CommonComponentDirective implements OnInit {
 
   public config = HOME_CONFIG;
+
+  public config_shortcut = HOME_SHORTCUT_BUTTON_CONFIG;
+
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public wettkaempfeDTO: WettkampfDTO[];
   public wettkaempfeDO: WettkampfDO[];
@@ -52,6 +61,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
   public currentDate: number = Date.now();
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
+
+  public VereinsID: number;
 
   private sessionHandling: SessionHandling;
 
@@ -76,7 +87,19 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
       window.location.reload();
     }
   }
+  @ViewChild('ligaleiter') ligaleiter: ElementRef;
+  @ViewChild('ausrichter') ausrichter: ElementRef;
+  @ViewChild('kampfrichter') kampfrichter: ElementRef;
+  @ViewChild('sportleiter') sportleiter: ElementRef;
 
+
+  public setCorrectID(){
+    const verein = this.currentUserService.getVerein();
+    this.VereinsID = verein;
+  }
+  public getCorrectID(): number {
+    return this.VereinsID;
+  }
   ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
       this.logindataprovider.signInDefaultUser()
@@ -84,7 +107,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
+      this.setCorrectID();
+      ID(this.VereinsID);
     }
+
   }
 
   /**
@@ -287,5 +313,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
     this.buildVeranstaltungskalender();
   }
 
+
+
+
 }
+
+
 
