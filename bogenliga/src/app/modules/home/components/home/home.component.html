@@ -109,7 +109,7 @@
 
           <div class="flexChild">
             <h3> Liga ID: {{ providedID }}</h3>
-            <h3> Veranstaltungs ID: {{ veranstaltungID}}</h3>
+            <h3> Veranstaltungs ID: {{ veranstaltung.name}}</h3>
             <div [innerHTML]="selectedLigaDetails"></div>
           </div>
 
@@ -125,7 +125,7 @@
             <!--{{ selectedVeranstaltungName}}
             name of the currently selected Liga displayed in button-->
 
-            {{this.veranstaltungID}}
+            {{this.veranstaltung.name}}
           </bla-actionbutton>
         </div>
       </div>
