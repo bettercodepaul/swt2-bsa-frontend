@@ -27,7 +27,6 @@ import {DisziplinDO} from '@verwaltung/types/disziplin-do.class';
 import {DisziplinDTO} from '@verwaltung/types/datatransfer/disziplin-dto.class';
 import {DisziplinDataProviderService} from '@verwaltung/services/disziplin-data-provider-service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
-import {LigadetailDO} from '@verwaltung/types/ligadetail-do';
 
 
 const ID_PATH_PARAM = 'id';
@@ -61,7 +60,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
 
-  public currentLigaDetail: LigadetailDO = new LigadetailDO();
+
 
   public deleteLoading = false;
   public saveLoading = false;
@@ -193,8 +192,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     console.log(this.currentDisziplin.id);
     this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
     this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
-    this.currentLigaDetail.ligaDetail = this.currentLiga.ligaDetail;
-    console.log(this.currentLigaDetail.ligaDetail)
     // persist
     this.ligaDataProvider.update(this.currentLiga)
         .then((response: BogenligaResponse<LigaDO>) => {

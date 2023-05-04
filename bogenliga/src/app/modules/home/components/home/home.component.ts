@@ -22,6 +22,7 @@ import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.s
 import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
+import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 
 const ID_PATH_PARAM = 'id';
 
@@ -54,6 +55,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public dateHelper: string;
   public providedID: number;
   public hasID: boolean;
+
+  public veranstaltungID: number;
 
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
@@ -99,6 +102,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         this.hasID = true;
+
       } else {
         this.hasID = false;
       }
@@ -114,8 +118,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();
+
       }
+
     });
+    this.getVeranstaltungen(this.providedID);
   }
 
 
@@ -148,7 +155,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * */
 
    private async loadLiga(urlLigaID : number){
-    //TODO: check if DTO oder DO
     await this.ligaDataProvider.findById(urlLigaID)
         .then((response: BogenligaResponse<LigaDO>) => this.handleFindLigaSuccess(response))
         .catch((response: BogenligaResponse<LigaDO>) => this.handleFindLigaFailure(response));
@@ -270,9 +276,34 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-    const link = '/wettkaempfe/' + this.providedID;
+
+    console.log("Id der veranstaltung " + this.veranstaltungID)
+    const link = '/wettkaempfe/' + this.veranstaltungID;
     this.router.navigateByUrl(link);
   }
+
+
+  //BSAPP-1384
+  private getVeranstaltungen(ligaId: number) {
+    var veranstaltungsListe = [];
+
+    let verID = this.veranstaltungDataProvider.findByLigaId(ligaId)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+          
+          veranstaltungsListe=response.payload
+          if (veranstaltungsListe.length == 1) {
+            this.veranstaltungID = veranstaltungsListe[0].id
+          } else {
+            this.veranstaltungID = veranstaltungsListe.reduce((prev, current) => {
+              return (prev.sportjahr > current.sportjahr) ? prev.id : current.id;
+            })
+          }
+        })
+        .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
+          //error
+        });
+  }
+
 
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();
