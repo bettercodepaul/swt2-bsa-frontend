@@ -56,6 +56,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public providedID: number;
   public hasID: boolean;
 
+  public veranstaltungID: number;
+
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
@@ -100,6 +102,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         this.hasID = true;
+
       } else {
         this.hasID = false;
       }
@@ -117,6 +120,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.checkingAndLoadingLiga();
       }
     });
+    this.getVeranstaltungen(this.providedID);
   }
 
 
@@ -270,18 +274,26 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-    const link = '/wettkaempfe/' + this.providedID;
+    console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+    //this.veranstaltungID = this.getVeranstaltungen(this.providedID); //TODO:hardcode ändern
+    console.log("Die id ist "+ this.veranstaltungID + "!!!")
+    const link = '/wettkaempfe/' + this.veranstaltungID;
     this.router.navigateByUrl(link);
-
-    this.getVeranstaltungen(2); //TODO:hardcode ändern
   }
 
-  private getVeranstaltungen(ligaId: number){
+
+  //BSAPP-1384
+  private getVeranstaltungen(ligaId: number) {
     var veranstaltungsListe = [];
-    this.veranstaltungDataProvider.findByLigaId(ligaId)
+
+    let verID = this.veranstaltungDataProvider.findByLigaId(ligaId)
         .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
           //hier abspeichern
-          veranstaltungsListe=response.payload.
+          veranstaltungsListe=response.payload
+          console.log("1111111111111111111111111111111111111111111111")
+          this.veranstaltungID = veranstaltungsListe.reduce((prev, current) => {
+            return (prev.sportjahr > current.sportjahr) ? prev.id : current.id;
+          })
         })
         .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
           //error
