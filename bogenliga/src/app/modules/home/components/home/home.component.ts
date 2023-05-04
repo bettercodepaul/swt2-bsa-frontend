@@ -118,9 +118,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();
+        this.getVeranstaltungen(this.providedID);
       }
     });
-    this.getVeranstaltungen(this.providedID);
+
   }
 
 
@@ -274,9 +275,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-    console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
     //this.veranstaltungID = this.getVeranstaltungen(this.providedID); //TODO:hardcode ändern
-    console.log("Die id ist "+ this.veranstaltungID + "!!!")
+    console.log("Id der veranstaltung " + this.veranstaltungID)
     const link = '/wettkaempfe/' + this.veranstaltungID;
     this.router.navigateByUrl(link);
   }
@@ -290,10 +290,13 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
           //hier abspeichern
           veranstaltungsListe=response.payload
-          console.log("1111111111111111111111111111111111111111111111")
-          this.veranstaltungID = veranstaltungsListe.reduce((prev, current) => {
-            return (prev.sportjahr > current.sportjahr) ? prev.id : current.id;
-          })
+          if (veranstaltungsListe.length == 1) {
+            this.veranstaltungID = veranstaltungsListe[0].id
+          } else {
+            this.veranstaltungID = veranstaltungsListe.reduce((prev, current) => {
+              return (prev.sportjahr > current.sportjahr) ? prev.id : current.id;
+            })
+          }
         })
         .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
           //error
