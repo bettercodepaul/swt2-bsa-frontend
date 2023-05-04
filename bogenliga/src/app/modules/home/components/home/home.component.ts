@@ -118,10 +118,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();
-        this.getVeranstaltungen(this.providedID);
-      }
-    });
 
+      }
+
+    });
+    this.getVeranstaltungen(this.providedID);
   }
 
 
@@ -275,7 +276,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-    //this.veranstaltungID = this.getVeranstaltungen(this.providedID); //TODO:hardcode ändern
+
     console.log("Id der veranstaltung " + this.veranstaltungID)
     const link = '/wettkaempfe/' + this.veranstaltungID;
     this.router.navigateByUrl(link);
@@ -288,7 +289,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
     let verID = this.veranstaltungDataProvider.findByLigaId(ligaId)
         .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-          //hier abspeichern
+          
           veranstaltungsListe=response.payload
           if (veranstaltungsListe.length == 1) {
             this.veranstaltungID = veranstaltungsListe[0].id
