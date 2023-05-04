@@ -56,7 +56,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public providedID: number;
   public hasID: boolean;
 
-  public veranstaltungID: number;
+  public veranstaltung: VeranstaltungDTO;
 
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
@@ -277,8 +277,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   public ligatabelleLinking() {
 
-    console.log("Id der veranstaltung " + this.veranstaltungID)
-    const link = '/wettkaempfe/' + this.veranstaltungID;
+    console.log("Id der veranstaltung " + this.veranstaltung.id)
+    const link = '/wettkaempfe/' + this.veranstaltung.id;
     this.router.navigateByUrl(link);
   }
 
@@ -287,15 +287,15 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private getVeranstaltungen(ligaId: number) {
     var veranstaltungsListe = [];
 
-    let verID = this.veranstaltungDataProvider.findByLigaId(ligaId)
+    this.veranstaltungDataProvider.findByLigaId(ligaId)
         .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
-          
+
           veranstaltungsListe=response.payload
           if (veranstaltungsListe.length == 1) {
-            this.veranstaltungID = veranstaltungsListe[0].id
+            this.veranstaltung = veranstaltungsListe[0]
           } else {
-            this.veranstaltungID = veranstaltungsListe.reduce((prev, current) => {
-              return (prev.sportjahr > current.sportjahr) ? prev.id : current.id;
+            this.veranstaltung = veranstaltungsListe.reduce((prev, current) => {
+              return (prev.sportjahr > current.sportjahr) ? prev : current;
             })
           }
         })
