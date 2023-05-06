@@ -102,7 +102,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
       this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path, 10));
     }
 
-    this.loadVereine();
+    //this.loadVereine();
 
     this.notificationService.discardNotification();
   }
@@ -432,6 +432,9 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
   private loadTableRows() {
     this.loading = true;
 
+    console.log(this.currentMannschaft.id)
+    console.log(Number(this.currentMannschaft.id))
+
     this.dsbMitgliedProvider.findAllNotInTeam(Number(this.currentMannschaft.id), Number(this.currentMannschaft.vereinId))
         .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleTableRowSuccess(response))
         .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleTableRowFailure(response));
@@ -477,6 +480,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.loading = false;
   }
 
+
   private loadVereine() {
     this.loading = true;
     this.emptyVerein.name = 'Kein Verein';
@@ -493,18 +497,20 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.loading = false;
   }
 
+  // Findet gewählte Mannschaft und Verein
+  // Return: Promise mit ausgewähltem Verein und Mannschaft
   private loadMannschaftenUndVereinByMannschaftsId(selectedMannschaftId: number) {
     this.mannschaftProvider.findById(selectedMannschaftId)
-        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
-          this.handleMannschaftSuccess(response);
-          this.vereineProvider.findById(response.payload.vereinId)
-              .then((vereins_response: BogenligaResponse<VereinDTO>) => {
-                this.handleVereinSuccess(vereins_response);
-                this.onSearch();
-              })
-              .catch((vereins_response: BogenligaResponse<VereinDTO>) => this.handleVereinFailure(vereins_response));
-        })
-        .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleMannschaftFailure(response));
+                    .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+                      this.handleMannschaftSuccess(response);
+                      this.vereineProvider.findById(response.payload.vereinId)
+                          .then((vereins_response: BogenligaResponse<VereinDTO>) => {
+                            this.handleVereinSuccess(vereins_response);
+                            this.loadVereine();
+                          })
+                          .catch((vereins_response: BogenligaResponse<VereinDTO>) => this.handleVereinFailure(vereins_response));
+                    })
+                    .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleMannschaftFailure(response));
   }
 }
 
