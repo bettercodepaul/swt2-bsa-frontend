@@ -9,7 +9,7 @@ import {
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
-import {CurrentUserService} from '../../shared/services/current-user';
+import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
 import {CredentialsDTO} from '../../user/types/model/credentials-dto.class';
 import {fromPayload, fromPayloadArray} from '../mapper/user-mapper';
 import {fromPayloadArrayUserRolle, fromPayloadUserRolle} from '../mapper/user-rolle-mapper';
@@ -23,6 +23,8 @@ import {UserRolleDTO} from '../types/datatransfer/user-rolle-dto.class';
 export class UserDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/user';
+
+
 
   constructor(private restClient: RestClient, private currentUserService: CurrentUserService) {
     super();
