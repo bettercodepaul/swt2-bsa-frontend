@@ -69,9 +69,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   /**Storing the information about the current selected Liga
    * that should be displayed depending on the url
    */
-  private selectedLigaName: string;
-  private selectedLigaID: number;
-  private selectedLigaDetails: string;
+  public selectedLigaName: string;
+  public selectedLigaID: number;
+  public selectedLigaDetails: string;
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[] = [];
@@ -134,7 +134,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
       this.setCorrectID();
-      // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
+      // ID(this.VereinsID); //TODO: beheben von Fehler bei diesem Code
     }
 
 
