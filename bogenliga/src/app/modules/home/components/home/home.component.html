@@ -9,7 +9,6 @@
 
     <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID" >
       <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
-      <p class="subtitle" [innerHTML]="selectedLigaID"> </p>
     </div>
 
 
@@ -118,12 +117,11 @@
         </div>
       </div>
 
-      <div class="flexChild" *ngIf="hasID"> <!--TODO: Check ID is valid -->
+      <div class="flexChild" *ngIf="hasID">
         <h2>Ligadetails</h2>
         <div class="news-container">
 
           <div class="flexChild">
-            <h3> Liga ID: {{ providedID }}</h3>
             <div [innerHTML]="selectedLigaDetails"></div>
           </div>
 
