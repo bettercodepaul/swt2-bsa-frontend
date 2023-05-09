@@ -20,7 +20,6 @@ import {element} from 'protractor';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
-import {ID} from '../home/home.config';
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
@@ -116,25 +115,40 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   @ViewChild('kampfrichter') kampfrichter: ElementRef;
   @ViewChild('sportleiter') sportleiter: ElementRef;
 
+  public updateLink(){
+    const linkToUpdate = '/verwaltung/vereine/nase'; // das zu aktualisierende Feld
+    const updatedLink = '/verwaltung/vereine/' + this.VereinsID; // der neue Link-Wert
+
+    // das JSON-Array durchlaufen und nach dem Feld suchen, das aktualisiert werden soll
+    // @ts-ignore
+    for (const element of this.config_shortcut) {
+      const shortcut = element;
+      if (shortcut.link === linkToUpdate) {
+        // das Feld aktualisieren
+        shortcut.link = updatedLink;
+        break;
+      }
+    }
+  }
 
   public setCorrectID(){
     const verein = this.currentUserService.getVerein();
     this.VereinsID = verein;
   }
+
   public getCorrectID(): number {
     return this.VereinsID;
   }
 
   async ngOnInit() {
-
+    this.setCorrectID();
+    this.updateLink();
     if (this.currentUserService.isLoggedIn() === false) {
       await this.logindataprovider.signInDefaultUser()
           .then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
-      this.setCorrectID();
-      // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
     }
 
 
