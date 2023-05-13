@@ -15,14 +15,14 @@ import Terminübersicht from '../home/Buttons/Terminübersicht.svg';
 import VeranstaltungAnlegen from '../home/Buttons/VeranstaltungAnlegen.svg';
 // @ts-ignore
 import VorauswahlVeranstaltung from '../home/Buttons/VorauswahlVeranstaltung.svg';
+// @ts-ignore
+import VereinsmitgliederVerwalten from '../home/Buttons/VereinsmitgliederVerwalten.svg';
 
-import {HomeComponent} from '@home/components/home/home.component';
 
 export const HOME_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'HOME',
   pageTitleTranslationKey: 'HOME.HOME.TITLE',
 };
-
 
 
 
@@ -51,14 +51,21 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       roles: ["SPORTLEITER"]
     },
     {
-      title: 'DSB-Mitglied Anlegen',
+      title: 'Vereinsmitglied anlegen',
       icon: DSBMitgliedAnlegen,
       route: '/verwaltung/dsbmitglieder/add',
       permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
       roles:["SPORTLEITER"]
     },
     {
-      title: 'Terminübersicht',
+      title: 'Vereinsmitglieder verwalten',
+      icon: VereinsmitgliederVerwalten,
+      route: '/verwaltung/dsbmitglieder',
+      permissions: [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER],
+      roles:["SPORTLEITER"]
+    },
+    {
+      title: 'Wettkampfdurchführung',
       icon: Terminübersicht,
       route: '/wkdurchfuehrung',
       permissions: [UserPermission.CAN_READ_WETTKAMPF],
