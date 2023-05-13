@@ -12,28 +12,17 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
+import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
-import {ConsoleLogger} from '@angular/compiler-cli/ngcc';
-import {element} from 'protractor';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
-import {
-  ShortcutButtonsConfig
-} from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
-import {VERWALTUNG_CONFIG} from '@verwaltung/components/verwaltung/verwaltung.config';
 import {HOME_SHORTCUT_BUTTON_CONFIG} from './home.config';
-import {db, OfflineDB} from '@shared/data-provider/offlinedb/offlinedb';
-import {
-  VeranstaltungenButtonComponent
-} from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
 import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
-import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
 
@@ -77,7 +66,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public currentDate: number = Date.now();
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
-  public VereinsID: number;
   public providedID: number;
   public hasID: boolean;
   private sessionHandling: SessionHandling;
@@ -115,34 +103,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   @ViewChild('kampfrichter') kampfrichter: ElementRef;
   @ViewChild('sportleiter') sportleiter: ElementRef;
 
-  public updateLink(){
-    const linkToUpdate = '/verwaltung/vereine/nase'; // das zu aktualisierende Feld
-    const updatedLink = '/verwaltung/vereine/' + this.VereinsID; // der neue Link-Wert
-
-    // das JSON-Array durchlaufen und nach dem Feld suchen, das aktualisiert werden soll
-    // @ts-ignore
-    for (const element of this.config_shortcut) {
-      const shortcut = element;
-      if (shortcut.link === linkToUpdate) {
-        // das Feld aktualisieren
-        shortcut.link = updatedLink;
-        break;
-      }
-    }
-  }
-
-  public setCorrectID(){
-    const verein = this.currentUserService.getVerein();
-    this.VereinsID = verein;
-  }
-
-  public getCorrectID(): number {
-    return this.VereinsID;
-  }
-
   async ngOnInit() {
-    this.setCorrectID();
-    this.updateLink();
     if (this.currentUserService.isLoggedIn() === false) {
       await this.logindataprovider.signInDefaultUser()
           .then(() => this.handleSuccessfulLogin());
