@@ -4,5 +4,17 @@ describe('Shortcuts appear on login', function() {
     cy.get('button#OKBtn1.action-btn-primary').click();
 
     cy.contains('button.btn.btn-primary.btn-sm', 'Login für Team Ligaleiter').click();
+
+    // Klicken Sie auf den Button zum Anlegen einer Veranstaltung
+    cy.get('div.Button button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/veranstaltung/add"]').click();
+
+    // Überprüfen, ob der Klick erfolgreich war und zur vorherigen Seite zurückkehren
+    cy.go('back');
+
+    // Klicken Sie auf den Button für die Terminübersicht
+    cy.get('div.Button button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/wkdurchfuehrung"]').click();
+
+    // Überprüfen, ob der Klick erfolgreich war und zur vorherigen Seite zurückkehren
+    cy.go('back');
   });
 });
