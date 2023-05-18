@@ -1,26 +1,29 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonComponentDirective} from '../../../../shared/components/common';
-import {hideLoadingIndicator, showDeleteLoadingIndicatorIcon, toTableRows} from '../../../../shared/components/tables';
-import {TableRow} from '../../../../shared/components/tables/types/table-row.class';
-import {BogenligaResponse} from '../../../../shared/data-provider';
-import {VersionedDataObject} from '../../../../shared/data-provider/models/versioned-data-object.interface';
+import {
+  CommonComponentDirective,
+  hideLoadingIndicator,
+  showDeleteLoadingIndicatorIcon,
+  toTableRows
+} from '@shared/components';
+import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {BogenligaResponse} from '@shared/data-provider';
+import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {
   Notification,
   NotificationOrigin,
   NotificationService,
   NotificationSeverity,
   NotificationType,
-  NotificationUserAction
-} from '../../../../shared/services/notification';
-import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
-import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
+  NotificationUserAction,
+  CurrentUserService,
+  OnOfflineService
+} from '@shared/services';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
+import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {LIGA_OVERVIEW_CONFIG} from './liga-overview.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
-import {LocalDataProviderService} from '@shared/local-data-provider';
 import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
-import {UserDO} from '@verwaltung/types/user-do.class';
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 
 export const NOTIFICATION_DELETE_LIGA = 'liga_overview_delete';
