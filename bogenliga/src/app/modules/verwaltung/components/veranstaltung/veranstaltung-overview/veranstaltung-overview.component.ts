@@ -24,6 +24,8 @@ import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/serv
 import {SessionHandling} from '@shared/event-handling';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
+import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
+import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
 
 export const NOTIFICATION_DELETE_VERANSTALTUNG = 'veranstaltung_overview_delete';
 
@@ -47,7 +49,9 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   private aktivesSportjahr: number;
   private sessionHandling: SessionHandling;
 
-  constructor(private veranstaltungDataProvider: VeranstaltungDataProviderService,
+  constructor(
+    private userDataProviderService: UserDataProviderService,
+    private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private router: Router, private notificationService: NotificationService,
     private currentUserService: CurrentUserService,
     private einstellungenDataProvider: EinstellungenProviderService,
@@ -60,7 +64,7 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
 
     //aktives Sportjahr wird nur im Online Modus ausgelesen und setzt die Default Filterung
     //auf das aktive Sportjahr
-    if(!this.onOfflineService.isOffline()) {
+    if (!this.onOfflineService.isOffline()) {
       getActiveSportYear(this.einstellungenDataProvider)
         .then(value => {
           this.aktivesSportjahr = value;
@@ -131,9 +135,12 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
   }
 
   private handleLoadTableRowsSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
-    // Überprüft ob der User ein Ligaleiter ist, ist dass der Fall filtered er die Payload so das nur noch seine Veranstaltungen zu sehen sind
-    if (this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_MY_VERANSTALTUNG) &&
-    !this.currentUserService.hasPermission(UserPermission.CAN_MODIFY_STAMMDATEN)) {
+    let isAdmin: boolean = false;
+    this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID()).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+      isAdmin = roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0;
+    });
+
+    if (this.currentUserService.hasPermission(UserPermission.CAN_READ_STAMMDATEN) && !isAdmin) {
       response.payload = response.payload.filter((entry) => this.currentUserService.getCurrentUserID() === entry.ligaleiterId);
       console.log('detected');
     }
