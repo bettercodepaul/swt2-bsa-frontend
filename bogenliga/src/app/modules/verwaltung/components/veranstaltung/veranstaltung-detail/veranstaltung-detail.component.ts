@@ -87,7 +87,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   public allTeamAmount: Array<number> = [4, 6, 8];
-  public currentTeamAmount: number = 4;
+
 
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
@@ -222,6 +222,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
       this.currentVeranstaltung.wettkampftypName = this.currentWettkampftyp.name;
     }
+
 
     // persist
     this.veranstaltungDataProvider.create(this.currentVeranstaltung)
