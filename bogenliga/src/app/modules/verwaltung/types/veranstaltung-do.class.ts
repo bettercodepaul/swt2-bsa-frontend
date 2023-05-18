@@ -14,6 +14,9 @@ export class VeranstaltungDO implements VersionedDataObject {
   wettkampftypName: string;
   ligaName: string;
   phase: string;
+  groesse: number;
+
+
 
 
 
