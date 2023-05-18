@@ -18,6 +18,10 @@ import {LigaDTO} from '../../../types/datatransfer/liga-dto.class';
 import {LIGA_OVERVIEW_CONFIG} from './liga-overview.config';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {LocalDataProviderService} from '@shared/local-data-provider';
+import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
+import {UserDO} from '@verwaltung/types/user-do.class';
+import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 
 export const NOTIFICATION_DELETE_LIGA = 'liga_overview_delete';
 
@@ -34,7 +38,9 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
 
   private sessionHandling: SessionHandling;
 
-  constructor(private ligaDataProvider: LigaDataProviderService,
+  constructor(
+    private userDataProviderService: UserDataProviderService,
+    private ligaDataProvider: LigaDataProviderService,
     private router: Router,
     private notificationService: NotificationService,
     private currentUserService: CurrentUserService,
@@ -103,7 +109,20 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
 
   private loadTableRows() {
     this.ligaDataProvider.findAll()
-        .then((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .then((response: BogenligaResponse<LigaDTO[]>) => {
+          this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID()).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+            if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0) {
+              this.handleLoadTableRowsSuccess(response);
+            } else {
+              let filtered = response.payload.filter(ligadto => {
+                if (ligadto.ligaVerantwortlichMail == this.currentUserService.getEmail())
+                  return true;
+                return false;
+              })
+              this.handleLoadTableRows(filtered);
+            }
+          });
+        })
         .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
@@ -121,6 +140,12 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
   private handleLoadTableRowsSuccess(response: BogenligaResponse<LigaDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
+    this.loading = false;
+  }
+
+  private handleLoadTableRows(response: LigaDTO[]): void {
+    this.rows = []; // reset array to ensure change detection
+    this.rows = toTableRows(response);
     this.loading = false;
   }
 
