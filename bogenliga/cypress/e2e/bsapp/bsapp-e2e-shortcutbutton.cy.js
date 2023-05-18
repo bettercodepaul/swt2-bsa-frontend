@@ -9,26 +9,36 @@ describe('Shortcuts appear on login', function() {
     cy.url().should('include', '/home');
 
     // Klicken Sie auf den Button zum Anlegen einer Veranstaltung
-    cy.get('div.Button button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/veranstaltung/add"]').click();
+    cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/veranstaltung/add"]').click();
 
     // Überprüfen, ob der Klick erfolgreich war und zur vorherigen Seite zurückkehren
+    cy.url().should('include', '/verwaltung/veranstaltung/add');
     cy.go('back');
 
     // Überprüfen, ob wir zurück auf der ursprünglichen Seite sind
     cy.url().should('include', '/home');
 
     // Klicken Sie auf den Button für die Terminübersicht
-    cy.get('div.Button button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/wkdurchfuehrung"]').click();
+    cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/wkdurchfuehrung"]').click();
 
     // Überprüfen, ob der Klick erfolgreich war und zur vorherigen Seite zurückkehren
+    cy.url().should('include', '/wkdurchfuehrung');
     cy.go('back');
 
-    // Klicken Sie auf den Button für die Vereinsübersicht
-    cy.get('div.Button button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/vereine"]').click();
+    // Überprüfen, ob wir zurück auf der ursprünglichen Seite sind
+    cy.url().should('include', '/home');
 
-    // Überprüfen, ob der Klick erfolgreich war
-    cy.url().should('include', '/vereine');
+    // Klicken Sie auf den Button für die Vereinsübersicht
+    cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/vereine"]').click();
+
+    // Überprüfen, ob der Klick erfolgreich war und zur vorherigen Seite zurückkehren
+    cy.url().should('include', '/verwaltung/vereine');
+    cy.go('back');
+
+    // Überprüfen, ob wir zurück auf der ursprünglichen Seite sind
+    cy.url().should('include', '/home');
+
+    // Weitere Tests oder Assertions hier hinzufügen
   });
 });
-
 
