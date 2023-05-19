@@ -88,7 +88,6 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
         selectedMannschaftId: this.selectedMannschaft,
         }}
       );
-     NavbarComponent.toggleColor();
 
     }
   }
