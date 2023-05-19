@@ -37,5 +37,5 @@ export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
   },
 
-  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN, UserPermission.CAN_CREATE_STAMMDATEN_LIGALEITER]
 };
