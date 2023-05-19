@@ -180,7 +180,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
       let sportJahrDo = x.payload.filter(x => x.key == 'aktives-Sportjahr')[0];
       sportJahr = parseInt(sportJahrDo.value);
     }).catch((response: BogenligaResponse<any>) => {
-      sportJahr = 2018
+      console.error("Can not get sport Jahr");
     }).finally( async() =>{
 
      await this.veranstaltungDataProvider.findBySportyear(sportJahr).then((response: BogenligaResponse<VeranstaltungDO[]>) => {
@@ -192,22 +192,22 @@ export class HomeComponent extends CommonComponentDirective implements OnInit {
         console.log('Veranstaltung not Found');
       });
      this.veranstaltungDO.forEach((element)=>{
-       this.wettkampfDataProvider.findByVeranstaltungId(element.id).then((response: BogenligaResponse<WettkampfDO[]>) => {
-         response.payload.forEach((elementWettkampf)=>{
-           console.log(elementWettkampf);
-           console.log(element)
-           let veranstaltungWettkaempfeDOLocal: VeranstaltungWettkaempfe = {
-             wettkaempfeDO : elementWettkampf,
-             veranstaltungDO: element,
-             month: this.numberToMonth(parseInt(elementWettkampf.wettkampfDatum.split("-")[1])),
-             day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
-
-
-           };
-           this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
-           console.log(veranstaltungWettkaempfeDOLocal)
+       if(element.id != null){
+         this.wettkampfDataProvider.findByVeranstaltungId(element.id).then((response: BogenligaResponse<WettkampfDO[]>) => {
+           response.payload.forEach((elementWettkampf)=>{
+             console.log(elementWettkampf);
+             console.log(element)
+             let veranstaltungWettkaempfeDOLocal: VeranstaltungWettkaempfe = {
+               wettkaempfeDO : elementWettkampf,
+               veranstaltungDO: element,
+               month: this.numberToMonth(parseInt(elementWettkampf.wettkampfDatum.split("-")[1])),
+               day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
+             };
+             this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
+             console.log(veranstaltungWettkaempfeDOLocal)
+           })
          })
-       })
+       }
      })
 
     });
