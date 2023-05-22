@@ -837,6 +837,12 @@
           "TITLE": "Verein löschen",
           "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? Der Verein ist danach nicht mehr verfügbar."
         }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Verein Auffüllmannschaft löschen",
+          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
+        }
       }
     },
     "VEREIN_DETAIL": {
@@ -912,6 +918,12 @@
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
+        }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Verein Auffüllmannschaft löschen",
+          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
         }
       }
     },
