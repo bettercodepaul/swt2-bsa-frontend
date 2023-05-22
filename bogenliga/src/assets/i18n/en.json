@@ -801,6 +801,12 @@
           "TITLE": "Delete club",
           "DESCRIPTION": "Are you sure, you want to delete the club with ID=%s? This can not be undone."
         }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Delete fill in club",
+          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
+        }
       }
     },
     "VEREIN_DETAIL": {
@@ -813,7 +819,7 @@
         },
         "VEREIN_IDENTIFIER": {
           "LABEL": "Club number",
-          "PLACEHOLDER": "Please enter a identifier for the club",
+          "PLACEHOLDER": "Please enter an identifier for the club",
           "ERROR": "Please enter a valid identifier."
         },
         "VEREIN_REGION": {
@@ -872,6 +878,12 @@
         "SAVE_FAILURE": {
           "TITLE": "Error while saving",
           "DESCRIPTION": "Sports director has no authority over this club or this target region."
+        }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Delete fill in club",
+          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
         }
       }
     },
