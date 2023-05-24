@@ -96,16 +96,24 @@ Cypress.Commands.add('logout', () => {
  * cy.dismissModal();
  */
 Cypress.Commands.add('dismissModal', () => {
-  cy.get('#exampleModal').then(($modal) => {
-    if ($modal.length > 0) {
-      cy.get('button#OKBtn1.action-btn-primary').click();
-    } else {
-      // Log a message indicating that the modal is not found
-      Cypress.log({
-        name: 'Modal',
-        message: 'The modal with ID "exampleModal" was not found.',
-      });
-    }
-  });
+
+  cy.wait(500)
+  cy.get('bla-actionbutton > #OKBtn1').then(($button) => {
+      if ($button.length > 0) {
+        $button.click();
+      } else {
+        Cypress.log({
+          name: 'Modal',
+          message: 'The OK button was not found.'
+        });
+      }
+    });
+
 });
 
+Cypress.Commands.add('loginAdmin', () => {
+  cy.visit('http://localhost:4200/#/home');
+  cy.dismissModal();
+  cy.get('[data-cy=login-button]').click();
+  cy.dismissModal();
+});

@@ -9,8 +9,6 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.contains('button.btn.btn-primary.btn-sm', 'Login für Team Ligaleiter').click();
 
-
-
     // Überprüfen, ob wir uns auf der Landingpage befinden
     cy.url().should('include', '/home');
 
@@ -50,32 +48,38 @@ describe('Shortcut buttons appear on login with different roles', () => {
   });
 
 
-  it.only('Shortcutbuttons appear on Login as Sportleiter/Mannschaftsführer', () => {
+  it('Shortcutbuttons appear on Login as Sportleiter/Mannschaftsführer', () => {
     cy.visit('http://localhost:4200/');
 
     cy.dismissModal();
 
     cy.get('[data-cy="login-button"]').click()
 
-   // cy.get('button#OKBtn1.action-btn-primary').click();
-
     cy.dismissModal();
 
     cy.contains('button.btn.btn-primary.btn-sm', 'Login für Team Sportleiter').click();
 
-    cy.wait(2000)
-
     cy.get(':nth-child(1) > .Button > .shortcut-btn').click();
 
-   // cy.get(':nth-child(2) > .Button > .shortcut-btn')
+    cy.dismissModal();
+
+    cy.go('back');
+
+    cy.get(':nth-child(2) > .Button > .shortcut-btn').click();
+
+    cy.logout()
   });
 
   it('Shortcutbuttons appear on Login as Ausrichter',  () => {
+    cy.visit('http://localhost:4200/');
 
+    cy.dismissModal();
   })
 
   it('Shortcutbuttons appear on Login as Kampfrichter',  () => {
+    cy.visit('http://localhost:4200/');
 
+    cy.dismissModal();
   })
 });
 
