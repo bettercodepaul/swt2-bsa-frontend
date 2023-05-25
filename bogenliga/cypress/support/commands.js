@@ -111,6 +111,15 @@ Cypress.Commands.add('dismissModal', () => {
 
 });
 
+/**
+ * Logs in as an admin user.
+ *
+ * This custom command visits the 'http://localhost:4200/#/home' URL, dismisses any modal windows present,
+ * clicks the login button, and dismisses any modal windows again.
+ *
+ * @example
+ * cy.loginAdmin();
+ */
 Cypress.Commands.add('loginAdmin', () => {
   cy.visit('http://localhost:4200/#/home');
   cy.dismissModal();
