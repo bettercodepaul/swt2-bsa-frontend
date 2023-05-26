@@ -1,7 +1,6 @@
 
 describe('Shortcut buttons appear on login with different roles', () => {
 
-/*
   it('Shortcut buttons appear on Login as Ligaleiter', () => {
     cy.visit('http://localhost:4200/');
 
@@ -68,7 +67,7 @@ describe('Shortcut buttons appear on login with different roles', () => {
     cy.get(':nth-child(2) > .Button > .shortcut-btn').click();
 
     cy.logout()
-  });*/
+  });
 
   it('Shortcutbuttons appear on Login as Ausrichter',  () => {
     cy.visit('http://localhost:4200/#/user/login');
@@ -103,12 +102,25 @@ describe('Shortcut buttons appear on login with different roles', () => {
   })
 
   it('Shortcutbuttons appear on Login as Kampfrichter',  () => {
-    cy.visit('http://localhost:4200/');
+    cy.visit('http://localhost:4200/#/user/login');
 
+    cy.get('input#loginEmail').type('testKampfrichter@testmail.com');
+    cy.get('input#loginPassword').type('Test123456');
+    cy.get('#loginButton').click({ force: true });
     cy.dismissModal();
+    cy.wait(2000);
 
+    cy.url().should('include', '/home');
 
+    cy.get('button.shortcut-btn[ng-reflect-router-link="/wkdurchfuehrung"]').click();
 
-  })
+    cy.url().should('include', '/wkdurchfuehrung');
+
+    // Weitere Aktionen für den Kampfrichter-Test hier...
+
+    cy.go('back');
+    cy.url().should('include', '/home');
+  });
+
 });
 
