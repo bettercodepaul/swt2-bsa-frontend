@@ -61,7 +61,7 @@ describe("offline-fähigkeit", {browser: "!firefox"}, () => {
   /**
    * This test checks if going offline works
    */
-  it.only('Offline gehen in wkdurchfuehrung',  () => {
+  it('Offline gehen in wkdurchfuehrung',  () => {
 
     cy.url().should('include', '#/user/login')
     cy.get('[data-cy=login-als-admin-button]').click()
@@ -72,7 +72,7 @@ describe("offline-fähigkeit", {browser: "!firefox"}, () => {
     cy.wait(2000)
     cy.get('[data-cy="wkdurchfuehrung-btn-offlinegehen"]').click()
 
-    cy.wait(3000) //  offile feahigkeit does not work 
+    cy.wait(3000) //  offile feahigkeit does not work
     cy.get('.modal-dialog-header').should('be.visible').should('contain.text', ' Offline-Modus aktiviert')
     cy.get('.modal-dialog-ok').find('bla-button').click()
     cy.get('.modal-content').should('not.be.visible')
