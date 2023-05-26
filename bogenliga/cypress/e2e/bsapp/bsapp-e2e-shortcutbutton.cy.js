@@ -81,24 +81,23 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.url().should('include', '/home');
 
-    // Klicken Sie auf den Button für die Vorauswahl Veranstaltungen
+
     cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/veranstaltung"]').click();
 
-    // Überprüfen, ob der Klick erfolgreich war und zur vorherigen Seite zurückkehren
+
     cy.url().should('include', '/verwaltung/veranstaltung');
     cy.go('back');
 
-    // Überprüfen, ob wir zurück auf der ursprünglichen Seite sind
+
     cy.url().should('include', '/home');
 
-    // Klicken Sie auf den Button für die Terminübersicht
     cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/wkdurchfuehrung"]').click();
 
-    // Überprüfen, ob der Klick erfolgreich war und zur vorherigen Seite zurückkehren
+
     cy.url().should('include', '/wkdurchfuehrung');
     cy.go('back');
 
-    // Überprüfen, ob wir zurück auf der ursprünglichen Seite sind
+
     cy.url().should('include', '/home');
 
   })
