@@ -186,6 +186,12 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
   public onUpdate(ignore: any): void {
+    if (this.currentLiga.ligaDetail.length > 30) {
+      /*alert("too long\n length of String: " + this.currentLiga.ligaDetail.length + " \n String:" + this.currentLiga.ligaDetail )*/
+      alert("Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl an Wörtern.")
+      return
+    }
+
     this.saveLoading = true;
     this.currentLiga.regionId = this.currentRegion.id;
     this.currentLiga.disziplinId = this.currentDisziplin.id;
