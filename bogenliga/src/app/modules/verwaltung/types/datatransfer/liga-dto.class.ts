@@ -11,6 +11,7 @@ export class LigaDTO implements DataTransferObject {
   ligaUebergeordnetName: string;
   ligaVerantwortlichId: number;
   ligaVerantwortlichMail: string;
+  ligaDetail: string;
   version: number;
 
   static copyFrom(optional: {
@@ -23,6 +24,7 @@ export class LigaDTO implements DataTransferObject {
     ligaUebergeordnetName?: string,
     ligaVerantwortlichId?: number,
     ligaVerantwortlichMail?: string,
+    ligaDetail?: string;
     version?: number
   } = {}): LigaDTO {
     const copy = new LigaDTO();
@@ -58,10 +60,14 @@ export class LigaDTO implements DataTransferObject {
       copy.disziplinId = null;
     }
 
+
+
+
     copy.name = optional.name || '';
     copy.regionName = optional.regionName || '';
     copy.ligaUebergeordnetName = optional.ligaUebergeordnetName || '';
     copy.ligaVerantwortlichMail = optional.ligaVerantwortlichMail || '';
+    copy.ligaDetail = optional.ligaDetail || null;
 
     return copy;
   }

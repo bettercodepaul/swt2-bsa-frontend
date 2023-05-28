@@ -1,15 +1,29 @@
 
 
   <div id="homePage">
-    <div style="max-width: 75%; margin: 15px; padding: 5px">
+    <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasID">
       <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
       <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
     </div>
 
 
-    <!-- Row 1 -->
-    <div style="margin-left: 20px; min-height: 40vh">
-      <h2>Unsere nächsten Wettkämpfe</h2>
+    <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID" >
+      <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
+      <p class="subtitle" [innerHTML]="selectedLigaID"> </p>
+    </div>
+
+
+   <div class="container">
+      <div class="calendar">
+        <h2>Unsere nächsten Wettkämpfe</h2>
+      <div id = "competitionList">
+        <bla-veranstaltungen-button routerLink="/wkdurchfuehrung" *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
+          <p heading>{{veranstaltung.veranstaltungDO.name}}</p>
+          <p date-month>{{veranstaltung.month}}</p>
+          <h1 date-day>{{veranstaltung.day}}</h1>
+        </bla-veranstaltungen-button>
+      </div>
+
       <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
       <table id="example"
              class="table table-hover table-sm table-responsive-sm thead-light table-striped"
@@ -21,67 +35,74 @@
                           [hidden]="checkIfTableIsEmpty()"
                           (onMapEntry)="onMap($event)">
 
-            <!--
-      <h3> <a class="blackLink"
-             routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
--->
-            <!-- headlines -->
-            <!-- <thead>
-             <tr>
-               -- These are taken out of the JSON File ->
-               <th>{{ 'TABLE.DATE' | translate }}</th>
-               <th>{{ 'TABLE.TIME' | translate }}</th>
-               <th>{{ 'TABLE.LIGA' | translate }}</th>
-               <th>{{ 'TABLE.PLACE' | translate }}</th>
-             </tr>
-             </thead>-->
-            <!-- Rows -->
-            <!--
-                      <tbody>
-                      <tr>
-                        <td>03.11.2018</td>
-                        <td>14:00</td>
-                        <td>2. Bundesliga</td>
-                        <td>Welzheim</td>
-                      </tr>
+              <!--
+        <h3> <a class="blackLink"
+               routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
+  -->
+              <!-- headlines -->
+              <!-- <thead>
+               <tr>
+                 -- These are taken out of the JSON File ->
+                 <th>{{ 'TABLE.DATE' | translate }}</th>
+                 <th>{{ 'TABLE.TIME' | translate }}</th>
+                 <th>{{ 'TABLE.LIGA' | translate }}</th>
+                 <th>{{ 'TABLE.PLACE' | translate }}</th>
+               </tr>
+               </thead>-->
+              <!-- Rows -->
+              <!--
+                        <tbody>
+                        <tr>
+                          <td>03.11.2018</td>
+                          <td>14:00</td>
+                          <td>2. Bundesliga</td>
+                          <td>Welzheim</td>
+                        </tr>
 
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>14:00</td>
-                        <td>Landesliga Nord Recurve</td>
-                        <td>Welzheim</td>
-                      </tr>
+                        <tr>
+                          <td>17.11.2018</td>
+                          <td>14:00</td>
+                          <td>Landesliga Nord Recurve</td>
+                          <td>Welzheim</td>
+                        </tr>
 
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>10:00</td>
-                        <td>Landesliga A Compound</td>
-                        <td>Hochdorf o. Essendorf</td>
+                        <tr>
+                          <td>17.11.2018</td>
+                          <td>10:00</td>
+                          <td>Landesliga A Compound</td>
+                          <td>Hochdorf o. Essendorf</td>
 
-                      <tr>
-                        <td>17.11.2018</td>
-                        <td>14:00</td>
-                        <td>Württembergliga Compound</td>
-                        <td>Hochdorf o. Essendorf</td>
-                      </tr>
+                        <tr>
+                          <td>17.11.2018</td>
+                          <td>14:00</td>
+                          <td>Württembergliga Compound</td>
+                          <td>Hochdorf o. Essendorf</td>
+                        </tr>
 
-                      <tr>
-                        <td>18.11.2018</td>
-                        <td>10:00</td>
-                        <td>Landesliga Süd Recurve</td>
-                        <td>Hochdorf o. Essendorf</td>
-                      </tr>
-                      </tbody>
-                      -->
+                        <tr>
+                          <td>18.11.2018</td>
+                          <td>10:00</td>
+                          <td>Landesliga Süd Recurve</td>
+                          <td>Hochdorf o. Essendorf</td>
+                        </tr>
+                        </tbody>
+                        -->
 
-          </bla-data-table>
-        </div>
-      </table>
+            </bla-data-table>
+          </div>
+        </table>
+      </div>
+
+
+    <!-- Row 1 -->
+    <div class="shortcuts">
+      <bla-shortcut-button  [config]="config_shortcut"></bla-shortcut-button>
     </div>
 
-    <div class="homeContent">
+    <div class="news" style="margin-left: 20px; min-height: 40vh">
       <!-- Row 2 -->
-      <div class="flexChild">
+
+      <div class="flexChild" *ngIf="!hasID">
         <h2>Neues aus dem Bogensport</h2>
         <div class="news-container">
 
@@ -96,5 +117,33 @@
           </div>
         </div>
       </div>
+
+      <div class="flexChild" *ngIf="hasID"> <!--TODO: Check ID is valid -->
+        <h2>Ligadetails</h2>
+        <div class="news-container">
+
+          <div class="flexChild">
+            <h3> Liga ID: {{ providedID }}</h3>
+            <div [innerHTML]="selectedLigaDetails"></div>
+          </div>
+
+        </div>
+                                            <!-- Button -->
+        <div id="Button">
+          <bla-actionbutton
+            [id]="'ligadetailRegionSaveButton'"
+            [color]= "ActionButtonColors.SUCCESS"
+            [iconClass]="'th-list'"
+            (onClick)="ligatabelleLinking()">
+            {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
+            <!--{{ selectedVeranstaltungName}}
+            name of the currently selected Liga displayed in button-->
+
+            {{this.providedID}}
+          </bla-actionbutton>
+        </div>
+      </div>
+
     </div>
+  </div>
   </div>
