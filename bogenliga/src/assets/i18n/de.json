@@ -1259,7 +1259,7 @@
           "ERROR": "Bitte geben Sie ein gültiges Jahr ein"
         },
         "TEILNEHMER": {
-          "LABEL": "Team Anzahl",
+          "LABEL": "Anzahl Mannschaften",
           "PLACEHOLDER": "Bitte geben Sie an wieviele Teams bei der Veranstaltung teilnehmen dürfen",
           "ERROR": "Bitte geben Sie eine Anzahl an Teilnehmenden Teams an"
         },
