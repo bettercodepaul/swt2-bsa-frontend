@@ -45,7 +45,7 @@ import {TableActionType} from '@shared/components/tables/types/table-action-type
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 
@@ -528,7 +528,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.allUsers = [];
     this.allUsers = response.payload;
     if (this.id === 'add') {
-      this.currentUser = this.allUsers[0];
+      this.currentUser = this.allUsers.filter((user) => user.id === this.currentUserService.getCurrentUserID())[0];
     } else {
       this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaleiterId)[0];
     }
@@ -763,5 +763,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.notificationService.showNotification(notification);
   }
 
+  public hasCurrentUserAdminPermissions(): boolean {
+    return this.currentUserService.hasPermission(UserPermission.CAN_CREATE_SYSTEMDATEN);
+  }
 
 }

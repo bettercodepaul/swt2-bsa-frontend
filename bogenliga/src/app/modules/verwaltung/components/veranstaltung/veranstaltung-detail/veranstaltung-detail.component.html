@@ -205,7 +205,7 @@
 
         <div class="col-sm-9">
           <select class="form-control"
-                  required
+                  [disabled] = !hasCurrentUserAdminPermissions()
                   id="ligaleiter"
                   name="ligaleiter"
                   #ligaleiter="ngModel"
@@ -213,15 +213,11 @@
                   data-cy="veranstaltung-detail-ligaleiter-email"
                   required
                   placeholder="">
-            <option hidden
-                    [value]="">beispiel@email.de
-            </option>
             <option [ngValue]="ligaleiter"
-                    *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}</option>
-
-
+                    [selected]="ligaleiter.email == currentUser.email"
+                    *ngFor="let ligaleiter of allLigaleiter"> {{ligaleiter.email}}
+            </option>
           </select>
-
 
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGALEITER_MAIL.ERROR' | translate }}

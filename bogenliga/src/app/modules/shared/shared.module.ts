@@ -57,6 +57,10 @@ import {ActionButtonComponent} from '@shared/components/buttons/button/actionbut
 import {
   DownloadActionButtonComponent
 } from '@shared/components/buttons/download-button/download-actionbutton.component';
+import { ShortcutButton } from './components/buttons/shortcut-button/shortcut-button.component';
+import {
+  VeranstaltungenButtonComponent
+} from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
 
 @NgModule({
   imports: [
@@ -114,6 +118,8 @@ import {
     HilfeButtonComponent,
     ActionButtonComponent,
     DownloadActionButtonComponent,
+    ShortcutButton,
+    VeranstaltungenButtonComponent,
   ],
   declarations: [
     ButtonComponent,
@@ -153,7 +159,9 @@ import {
     TagesuebersichtDownloadComponent,
     HilfeButtonComponent,
     ActionButtonComponent,
-    DownloadActionButtonComponent
+    DownloadActionButtonComponent,
+    ShortcutButton,
+    VeranstaltungenButtonComponent
   ]
 })
 export class SharedModule {
