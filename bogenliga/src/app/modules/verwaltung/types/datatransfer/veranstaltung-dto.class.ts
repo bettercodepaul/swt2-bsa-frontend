@@ -13,6 +13,7 @@ export class VeranstaltungDTO implements DataTransferObject {
   wettkampftypName: string;
   ligaName: string;
   phase: string;
+  groesse: number;
 
   static copyFrom(optional: {
     id?: number,
@@ -27,6 +28,7 @@ export class VeranstaltungDTO implements DataTransferObject {
     ligaName?: string,
     version?: number,
     phase?: string
+    groesse?: number
 
   } = {}): VeranstaltungDTO {
     const copy = new VeranstaltungDTO();
@@ -65,6 +67,12 @@ export class VeranstaltungDTO implements DataTransferObject {
       copy.version = null;
     }
 
+
+    if(optional.groesse >= 0 ){
+      copy.groesse = optional.groesse;
+    } else {
+      copy.groesse = null;
+    }
 
     copy.name = optional.name || '';
     copy.meldeDeadline = optional.meldeDeadline || '';
