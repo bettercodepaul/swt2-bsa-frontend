@@ -35,7 +35,7 @@ describe('Shortcut buttons appear on login with different roles', () => {
   });
 
 
-  it.only('Shortcutbuttons appear on Login as Sportleiter/Mannschaftsführer', () => {
+  it('Shortcutbuttons appear on Login as Sportleiter/Mannschaftsführer', () => {
     cy.visit('http://localhost:4200/');
 
     cy.dismissModal();
@@ -57,14 +57,16 @@ describe('Shortcut buttons appear on login with different roles', () => {
     cy.logout()
   });
 
-  it('Shortcutbuttons appear on Login as Ausrichter',  () => {
-    cy.visit('http://localhost:4200/#/user/login');
+  it.only('Shortcutbuttons appear on Login as Ausrichter',  () => {
+    //cy.visit('http://localhost:4200/#/user/login');
 
-    cy.get('input#loginEmail').type('test@testmail.com');
-    cy.get('input#loginPassword').type('Test123456');
-    cy.get('#loginButton').click({ force: true });
-    cy.dismissModal();
-    cy.wait(2000);
+    cy.loginAdmin();
+
+    cy.createUserTest();
+
+    cy.pause();
+
+    cy.loginUserText
 
     cy.url().should('include', '/home');
 
