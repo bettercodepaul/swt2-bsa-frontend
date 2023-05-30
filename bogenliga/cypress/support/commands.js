@@ -123,6 +123,47 @@ Cypress.Commands.add('dismissModal', () => {
 Cypress.Commands.add('loginAdmin', () => {
   cy.visit('http://localhost:4200/#/home');
   cy.dismissModal();
-  cy.get('[data-cy=login-button]').click();
+  cy.contains('button.btn.btn-primary.btn-sm', 'Login als Admin').click();
   cy.dismissModal();
 });
+
+
+Cypress.Commands.add('createUserTest', () => {
+  cy.get('[data-cy="sidebar-verwaltung-button"]').click()
+
+  cy.get('[data-cy="verwaltung-user-button"]').click();
+
+  cy.get('[data-cy="dsb-mitglied-add-button"]').click();
+
+  cy.get('[data-cy="username-input"]').type('test@example.com');
+
+  cy.get('[data-cy="password-input"]').type('Test123456');
+
+  cy.get('[data-cy="verify-password-input"]').type('Test123456');
+
+  cy.get('#userSaveButton').click();
+
+  //cy.dismissModal();
+
+  cy.wait(2000);
+
+
+})
+
+
+
+Cypress.Commands.add('loginUserTest', () => {
+  cy.get('input#loginEmail').type('test@example.com');
+
+  cy.get('input#loginPassword').type('Test123456');
+
+  cy.get('#loginButton').click({ force: true });
+
+  cy.dismissModal();
+
+  cy.wait(2000);
+})
+
+Cypress.Commands.add('setRoleforUserTest', (role) => {
+
+})

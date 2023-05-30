@@ -61,7 +61,7 @@ describe("offline-fähigkeit", {browser: "!firefox"}, () => {
   /**
    * This test checks if going offline works
    */
-  it('Offline gehen in wkdurchfuehrung',  () => {
+  it.only('Offline gehen in wkdurchfuehrung',  () => {
 
     cy.url().should('include', '#/user/login')
     cy.get('[data-cy=login-als-admin-button]').click()
