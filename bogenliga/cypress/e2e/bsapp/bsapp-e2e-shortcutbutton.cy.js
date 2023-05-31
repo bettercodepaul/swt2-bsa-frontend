@@ -64,11 +64,13 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.createUserTest();
 
-    cy.pause();
+    cy.visit('http://localhost:4200/#/verwaltung/user');
 
-    cy.loginUserText
+    cy.assignRoleToTestUser("Kapmfrichter");
 
-    cy.url().should('include', '/home');
+    cy.logout();
+
+    cy.loginUserTest();
 
     cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/veranstaltung"]').click();
 

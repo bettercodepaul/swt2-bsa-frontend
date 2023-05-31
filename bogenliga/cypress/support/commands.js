@@ -81,6 +81,7 @@ Cypress.Commands.add('logout', () => {
 
   cy.get('.dropdown-menu > :nth-child(4)')
     .click()
+  cy.wait(2000);
 }
 );
 
@@ -135,33 +136,39 @@ Cypress.Commands.add('createUserTest', () => {
 
   cy.get('[data-cy="dsb-mitglied-add-button"]').click();
 
-  cy.get('[data-cy="username-input"]').type('test@example.com');
+  cy.get('[data-cy="bla-selection-list"]').select('103: 1027');
+
+  cy.get('[data-cy="username-input"]').type('shortcutButtonTestuser@cypressTestuser.com');
 
   cy.get('[data-cy="password-input"]').type('Test123456');
 
   cy.get('[data-cy="verify-password-input"]').type('Test123456');
 
+
   cy.get('#userSaveButton').click();
 
-  //cy.dismissModal();
+  cy.get('.modal-dialog-header').then(() => {
+    cy.get('bla-actionbutton > #OKBtn1').click();
+  });
 
-  cy.wait(2000);
+})
 
-
+Cypress.Commands.add('assignRoleToTestUser', (role) => {
+  cy.get('#email-1081 > span')
 })
 
 
 
 Cypress.Commands.add('loginUserTest', () => {
-  cy.get('input#loginEmail').type('test@example.com');
+
+  cy.get('[data-cy="login-button"]').click();
+
+  cy.get('input#loginEmail').type('shortcutButtonTestuser@cypressTestuser.com');
 
   cy.get('input#loginPassword').type('Test123456');
 
   cy.get('#loginButton').click({ force: true });
 
-  cy.dismissModal();
-
-  cy.wait(2000);
 })
 
 Cypress.Commands.add('setRoleforUserTest', (role) => {
