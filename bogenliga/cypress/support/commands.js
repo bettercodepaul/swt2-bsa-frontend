@@ -154,7 +154,27 @@ Cypress.Commands.add('createUserTest', () => {
 })
 
 Cypress.Commands.add('assignRoleToTestUser', (role) => {
-  cy.get('#email-1081 > span')
+
+  cy.contains('tr', 'shortcutButtonTestuser@cypressTestuser.com')
+    .find('a[data-cy="TABLE.ACTIONS.EDIT"]')
+    .click();
+
+  cy.url().should('include', '/verwaltung/user');
+
+  cy.get(':nth-child(3) > bla-selectionlist > [data-cy="bla-selection-list"]').select('USER');
+
+  cy.get('#shiftLeft-right').click();
+
+  cy.get(':nth-child(1) > bla-selectionlist > [data-cy="bla-selection-list"]').select(role);
+
+  cy.get('#shiftLeft-left').click();
+
+  cy.get('#userUpdateButton').click();
+
+  cy.get('.modal-dialog-header').then(() => {
+    cy.get('bla-actionbutton > #OKBtn1').click();
+  });
+
 })
 
 
@@ -168,9 +188,5 @@ Cypress.Commands.add('loginUserTest', () => {
   cy.get('input#loginPassword').type('Test123456');
 
   cy.get('#loginButton').click({ force: true });
-
-})
-
-Cypress.Commands.add('setRoleforUserTest', (role) => {
 
 })
