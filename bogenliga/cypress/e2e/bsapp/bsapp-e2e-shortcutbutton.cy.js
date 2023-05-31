@@ -57,7 +57,7 @@ describe('Shortcut buttons appear on login with different roles', () => {
     cy.logout()
   });
 
-  it.only('Shortcutbuttons appear on Login as Ausrichter',  () => {
+  it.only('Shortcutbuttons appear on Login as Kampfrichter',  () => {
     //cy.visit('http://localhost:4200/#/user/login');
 
     cy.loginAdmin();
@@ -66,31 +66,30 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.visit('http://localhost:4200/#/verwaltung/user');
 
-    cy.assignRoleToTestUser("Kapmfrichter");
+    cy.assignRoleToTestUser("KAMPFRICHTER");
 
     cy.logout();
 
     cy.loginUserTest();
 
-    cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/veranstaltung"]').click();
-
-    cy.url().should('include', '/verwaltung/veranstaltung');
-    cy.go('back');
-
     cy.url().should('include', '/home');
 
-    cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/wkdurchfuehrung"]').click();
+    cy.go('back');
+
+
+    cy.get(':nth-child(1) > .Button > .shortcut-btn').click()
 
     cy.url().should('include', '/wkdurchfuehrung');
+
+
     cy.go('back');
 
-    cy.url().should('include', '/home');
 
     cy.logout();
 
   })
 
-  it('Shortcutbuttons appear on Login as Kampfrichter',  () => {
+  it('Shortcutbuttons appear on Login as Ausrichter',  () => {
     cy.visit('http://localhost:4200/#/user/login');
 
     cy.get('input#loginEmail').type('testKampfrichter@testmail.com');
