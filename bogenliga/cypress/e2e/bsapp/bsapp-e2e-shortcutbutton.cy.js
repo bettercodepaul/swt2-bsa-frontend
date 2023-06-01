@@ -87,21 +87,33 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.deleteTestUser();
 
-
   })
 
   it('Shortcutbuttons appear on Login as Ausrichter',  () => {
-    cy.visit('http://localhost:4200/#/user/login');
 
-    cy.get('input#loginEmail').type('testKampfrichter@testmail.com');
-    cy.get('input#loginPassword').type('Test123456');
-    cy.get('#loginButton').click({ force: true });
-    cy.dismissModal();
-    cy.wait(2000);
+    cy.loginAdmin();
+
+    cy.createUserTest();
+
+    cy.visit('http://localhost:4200/#/verwaltung/user');
+
+    cy.assignRoleToTestUser("AUSRICHTER");
+
+    cy.logout();
+
+    cy.loginUserTest();
 
     cy.url().should('include', '/home');
 
-    cy.get('button.shortcut-btn[ng-reflect-router-link="/wkdurchfuehrung"]').click();
+    cy.get(':nth-child(1) > .Button > .shortcut-btn').click();
+
+    cy.url().should('include', '/verwaltung/veranstaltung');
+
+    cy.go('back');
+
+    cy.url().should('include', '/home');
+
+    cy.get(':nth-child(2) > .Button > .shortcut-btn').click();
 
     cy.url().should('include', '/wkdurchfuehrung');
 
@@ -109,7 +121,13 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.url().should('include', '/home');
 
-    cy.logout()
+    cy.logout();
+
+    cy.visit('http://localhost:4200/#/user/login');
+
+    cy.dismissModal();
+
+    cy.deleteTestUser();
   });
 
 });
