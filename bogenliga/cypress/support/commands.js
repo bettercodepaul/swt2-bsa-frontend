@@ -122,7 +122,7 @@ Cypress.Commands.add('dismissModal', () => {
  * cy.loginAdmin();
  */
 Cypress.Commands.add('loginAdmin', () => {
-  cy.visit('http://localhost:4200/#/home');
+  cy.visit('http://localhost:4200/#/user/login');
   cy.dismissModal();
   cy.contains('button.btn.btn-primary.btn-sm', 'Login als Admin').click();
   cy.dismissModal();
@@ -153,6 +153,7 @@ Cypress.Commands.add('createUserTest', () => {
 
 })
 
+//This function requires that you are logged in as admin
 Cypress.Commands.add('assignRoleToTestUser', (role) => {
 
   cy.contains('tr', 'shortcutButtonTestuser@cypressTestuser.com')
@@ -174,6 +175,23 @@ Cypress.Commands.add('assignRoleToTestUser', (role) => {
   cy.get('.modal-dialog-header').then(() => {
     cy.get('bla-actionbutton > #OKBtn1').click();
   });
+
+})
+
+Cypress.Commands.add('deleteTestUser', (role) => {
+  cy.loginAdmin();
+
+  cy.get('[data-cy="sidebar-verwaltung-button"]').click()
+
+  cy.get('[data-cy="verwaltung-user-button"]').click();
+
+  cy.contains('tr', 'shortcutButtonTestuser@cypressTestuser.com')
+    .find('a[data-cy="TABLE.ACTIONS.DELETE"]')
+    .click();
+
+  cy.get('[ng-reflect-color="action-btn-primary"] > #undefined > .action-btn-circle').click();
+
+  cy.logout();
 
 })
 

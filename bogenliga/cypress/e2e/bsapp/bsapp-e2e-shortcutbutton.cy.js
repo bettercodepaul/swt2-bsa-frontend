@@ -58,7 +58,6 @@ describe('Shortcut buttons appear on login with different roles', () => {
   });
 
   it.only('Shortcutbuttons appear on Login as Kampfrichter',  () => {
-    //cy.visit('http://localhost:4200/#/user/login');
 
     cy.loginAdmin();
 
@@ -74,18 +73,20 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.url().should('include', '/home');
 
-    cy.go('back');
-
-
     cy.get(':nth-child(1) > .Button > .shortcut-btn').click()
 
     cy.url().should('include', '/wkdurchfuehrung');
 
-
     cy.go('back');
 
-
     cy.logout();
+
+    cy.visit('http://localhost:4200/#/user/login');
+
+    cy.dismissModal();
+
+    cy.deleteTestUser();
+
 
   })
 
