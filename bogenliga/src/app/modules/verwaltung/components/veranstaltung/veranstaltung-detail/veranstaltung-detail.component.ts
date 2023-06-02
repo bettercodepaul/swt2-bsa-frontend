@@ -86,7 +86,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public allLiga: Array<LigaDO> = [new LigaDO()];
 
 
-  public allTeamAmount: Array<number> = [4, 6, 8];
+  public allTeamAmount: Array<number> = [8, 6, 4];
 
 
 
