@@ -798,12 +798,16 @@
         },
         "LIGA_DETAIL" : {
           "LABEL": "Ligadetails",
-          "MAX_WORDS_WARNING": "(max. 300 Wörter)"
+          "MAX_WORDS_WARNING": "(max. 5000 Wörter)"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+      "ALERT": {
+        "MAX_WORDS_SURPASSED": "Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl von 5000 Wörtern."
+      },
+
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Liga löschen",
