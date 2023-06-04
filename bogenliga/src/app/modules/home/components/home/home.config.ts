@@ -24,9 +24,6 @@ export const HOME_CONFIG: CommonDialogConfig = {
   pageTitleTranslationKey: 'HOME.HOME.TITLE',
 };
 
-
-
-// @ts-ignore
 export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
   shortcutButtons: [
     {
@@ -77,8 +74,6 @@ export const HOME_SHORTCUT_BUTTON_CONFIG: ShortcutButtonsConfig = {
       route: '/verwaltung/vereine',
       permissions: [UserPermission.CAN_CREATE_MANNSCHAFT, UserPermission.CAN_MODIFY_STAMMDATEN],
       roles:["LIGALEITER"]
-    },
+    }
   ]
 };
-
-
