@@ -34,7 +34,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   private sessionHandling: SessionHandling;
 
-  protected zuruecksetzenIcon: IconProp = faUndo;
+  public zuruecksetzenIcon: IconProp = faUndo;
 
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
@@ -223,7 +223,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.veranstaltungenForYear = [];
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
     this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id;
-    this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); // automatische Auswahl
+    //this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); // automatische Auswahl
 
   }
 
