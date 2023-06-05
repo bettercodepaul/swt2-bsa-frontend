@@ -924,7 +924,17 @@
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
+        },
+        "UPDATE":  {
+          "FAILURE": {
+            "FULL": {
+              "TITLE": "Veranstaltung bereits ausgebucht: Aktualisierung der Mannschaft nicht möglich",
+
+              "DESCRIPTION": "Aufgrund der Tatsache, dass die Veranstaltung bereits vollständig ausgebucht ist, bedauern wir Ihnen mitteilen zu müssen, dass eine Aktualisierung des Teilnehmerkreises derzeit nicht möglich ist."
+            }
+          }
         }
+
       },
       "NOTIFICATION_AUFFUELLMANNSCHAFT": {
         "DELETE": {

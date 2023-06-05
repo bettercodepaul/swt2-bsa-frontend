@@ -54,6 +54,8 @@ const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_SAVE_MANNSCHAFT = 'mannschaft_detail_save';
 const NOTIFICATION_UPDATE_MANNSCHAFT = 'mannschaft_detail_update';
+const NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE = 'mannschaft_detail_update_failure';
+
 const NOTIFICATION_DELETE_MITGLIED = 'mannschaft_mitglied_delete';
 const NOTIFICATION_DELETE_MITGLIED_DEADLINE_FAILURE = 'mannschaft_mitglied_delete_deadline_failure';
 const NOTIFICATION_DELETE_MITGLIED_EXISTING_RESULTS_FAILURE = 'mannschaft_mitglied_delete_existing_results_failure';
@@ -244,7 +246,25 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
             this.notificationService.showNotification(notification);
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
-          console.log('Failed');
+          console.log('Failed: ' + response);
+          const notification: Notification = {
+            id:          NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE,
+            title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE",
+            description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+
+          }
+          this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
+                }
+              });
+
+          this.notificationService.showNotification(notification);
           this.saveLoading = false;
         });
     // show response message
