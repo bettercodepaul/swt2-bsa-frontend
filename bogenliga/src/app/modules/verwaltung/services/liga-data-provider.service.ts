@@ -60,6 +60,7 @@ export class LigaDataProviderService  extends DataProviderService {
       });
   }
 
+
   public deleteById(id: number): Promise<BogenligaResponse<void>> {
     // return promise
     // sign in success -> resolve promise
@@ -103,11 +104,20 @@ export class LigaDataProviderService  extends DataProviderService {
     });
   }
 
+
+
+
+
+
+
+
+
+
+
   public checkExists(id: string | number): Promise<BogenligaResponse<LigaDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    console.log("________________Check exists");
     return new Promise((resolve, reject) => {
       this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('checkExist').path(id).build())
           .then((data: VersionedDataTransferObject) => {
@@ -124,6 +134,15 @@ export class LigaDataProviderService  extends DataProviderService {
           });
     });
   }
+
+
+
+
+
+
+
+
+
 
   public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<LigaDO>> {
     // return promise
