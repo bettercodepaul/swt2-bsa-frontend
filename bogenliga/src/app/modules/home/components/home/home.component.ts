@@ -188,7 +188,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
           this.wettkaempfeDTO = response.payload;
         });
   }
-  
 
   /**
    * Backend call to get Liga from the Parameter in the URL (LigaID)
