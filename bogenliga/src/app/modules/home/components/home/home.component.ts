@@ -188,32 +188,46 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
           this.wettkaempfeDTO = response.payload;
         });
   }
-
+  
 
   /**
    * Backend call to get Liga from the Parameter in the URL (LigaID)
-   * to display LigaDetailSeite
+   * to display LigaDetailSeite.
+   * Because checkExists always returns an object, handleGotLigaObject has to check
+   * if the liga truly exists (if not, function returns empty LigaObject)
    * */
 
-   private async loadLiga(urlLigaID : number){
-    await this.ligaDataProvider.findById(urlLigaID)
-        .then((response: BogenligaResponse<LigaDO>) => this.handleFindLigaSuccess(response))
-        .catch((response: BogenligaResponse<LigaDO>) => this.handleFindLigaFailure(response));
+  private async loadLiga(urlLigaID : number){
+    await this.ligaDataProvider.checkExists(urlLigaID)
+              .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
+              .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
   }
 
+//console.log("Resultat vom Backendcall zu " + urlLigaID+" gekommen:"+ console.log(JSON.stringify(response.payload, null, 2)))
 
-  /**Handling a successfull backendcall to get Liga by LigaIDa*/
-  private handleFindLigaSuccess(response: BogenligaResponse<LigaDO>) : void {
-    this.selectedLigaName=response.payload.name;
-    this.selectedLigaID=response.payload.id;
-    this.selectedLigaDetails=response.payload.ligaDetail;
-    this.loadedLigaData=true;
+
+  /**
+   *Handling a successfull backendcall to get Liga by LigaIDa
+   **/
+  private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
+    if(response.payload.id==null){ //means there is no liga with this ID
+      //route to home and show pop-up
+      //routing back to home URL
+      const link = '/home';
+      this.router.navigateByUrl(link);
+    }
+    else{
+      this.selectedLigaName=response.payload.name;
+      this.selectedLigaID=response.payload.id;
+      this.selectedLigaDetails=response.payload.ligaDetail;
+      this.loadedLigaData=true;
+    }
   }
 
-  /**Handling a failed backendcall to get Liga by LigaID
-   * if LigaID not present in DB, then route to home
-   * */
-  public handleFindLigaFailure(response: BogenligaResponse<LigaDO>) : void {
+  /**
+   * Handling a failed backendcall to get Liga by LigaID
+   **/
+  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {
     //routing back to home URL
     const link = '/home';
     this.router.navigateByUrl(link);
