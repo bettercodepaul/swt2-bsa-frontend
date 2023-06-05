@@ -85,6 +85,15 @@
         </div>
 
       </bla-row-layout>
+
+      <bla-actionbutton
+        [id]="'regionSaveButton'"
+        [color]= "ActionButtonColors.SECONDARY"
+        [iconClass]="zuruecksetzenIcon"
+        (onClick)="deselect()">
+        Auswahl zurücksetzen
+      </bla-actionbutton>
+
     </div>
   </div>
 </bla-common-dialog>
