@@ -17,6 +17,9 @@ import {SessionHandling} from '@shared/event-handling';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {faUndo} from '@fortawesome/free-solid-svg-icons';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
+
 
 
 const ID_PATH_PARAM = 'id';
@@ -30,6 +33,8 @@ const ID_PATH_PARAM = 'id';
 export class LigatabelleComponent extends CommonComponentDirective implements OnInit {
 
   private sessionHandling: SessionHandling;
+
+  protected zuruecksetzenIcon: IconProp = faUndo;
 
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
@@ -47,6 +52,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public rowsLigatabelle: TableRow[];
   public providedID: number;
   private hasID: boolean;
+
+  private isDeselected: boolean = false;
   private remainingLigatabelleRequests: number;
 
   private loadedVeranstaltungen: Map<number, VeranstaltungDO[]>;
@@ -60,8 +67,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedVeranstaltungId: number;
   public selectedYearId: number;
   private aktivesSportjahr: number;
-
-  private isDefaultSelect: boolean = true;
 
   constructor(
     private router: Router,
@@ -78,21 +83,23 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   ngOnInit() {
-    console.log('Bin im Liga');
-    this.loadTableData();
-    this.providedID = undefined;
-    this.hasID = false;
-    this.notificationService.discardNotification();
-    this.route.params.subscribe((params) => {
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        console.log('Provided Id AT LIGATABELLE', this.providedID);
-        this.hasID = true;
+    if(this.isDeselected == false) {
+      console.log('Bin im Liga');
+      this.loadTableData();
+      this.providedID = undefined;
+      this.hasID = false;
+      this.notificationService.discardNotification();
+      this.route.params.subscribe((params) => {
+        if (!isUndefined(params[ID_PATH_PARAM])) {
+          this.providedID = parseInt(params[ID_PATH_PARAM], 10);
+          console.log('Provided Id AT LIGATABELLE', this.providedID);
+          this.hasID = true;
 
-      } else {
-        console.log('no params at ligatabelle');
-      }
-    });
+        } else {
+          console.log('no params at ligatabelle');
+        }
+      });
+    }
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -211,7 +218,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
      onSelectYear wird einmal zu Beginn für eine automatische Auswahl aufgerufen und jedes mal wenn das Jahr geändert wird.
      Dabei werden die Ligen für das ausgewählte Jahr aufgerufen und angezeigt.
      */
-    this.isDefaultSelect = true;
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button');
     buttonVisibility.style.display = 'block';
     this.veranstaltungenForYear = [];
@@ -233,7 +239,13 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.loadLigaTableRows();
     //this.providedID = this.selectedVeranstaltung.ligaId;
     const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
-    !this.isDefaultSelect ? this.router.navigateByUrl(link) : null;
-    this.selectedVeranstaltungId === this.veranstaltungenForYear[0].id ? this.isDefaultSelect = false : null;
+    this.router.navigateByUrl(link);
+  }
+
+  public deselect(){
+    this.isDeselected = true;
+    console.log(this.isDeselected);
+    const link = '/ligatabelle';
+    this.router.navigateByUrl(link);
   }
 }
