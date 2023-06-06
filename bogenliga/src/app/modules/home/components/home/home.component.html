@@ -1,21 +1,20 @@
+<div id="homePage">
 
+  <!--Welcome Page Title and paragraph-->
+  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasID">
+    <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
+    <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
+  </div>
 
-  <div id="homePage">
-    <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasID">
-      <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
-      <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
-    </div>
+  <!--Ligadetail Page Title-->
+  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID" >
+    <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
+  </div>
 
-
-    <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID" >
-      <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
-      <p class="subtitle" [innerHTML]="selectedLigaID"> </p>
-    </div>
-
-
-   <div class="container">
-      <div class="calendar">
-        <h2>Unsere nächsten Wettkämpfe</h2>
+  <!--Wettkampftabelle-->
+  <div class="container">
+    <div class="calendar">
+      <h2>Unsere nächsten Wettkämpfe</h2>
       <div id = "competitionList">
         <bla-veranstaltungen-button routerLink="/wkdurchfuehrung" *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
           <p heading>{{veranstaltung.veranstaltungDO.name}}</p>
@@ -35,80 +34,26 @@
                           [hidden]="checkIfTableIsEmpty()"
                           (onMapEntry)="onMap($event)">
 
-              <!--
-        <h3> <a class="blackLink"
-               routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
-  -->
-              <!-- headlines -->
-              <!-- <thead>
-               <tr>
-                 -- These are taken out of the JSON File ->
-                 <th>{{ 'TABLE.DATE' | translate }}</th>
-                 <th>{{ 'TABLE.TIME' | translate }}</th>
-                 <th>{{ 'TABLE.LIGA' | translate }}</th>
-                 <th>{{ 'TABLE.PLACE' | translate }}</th>
-               </tr>
-               </thead>-->
-              <!-- Rows -->
-              <!--
-                        <tbody>
-                        <tr>
-                          <td>03.11.2018</td>
-                          <td>14:00</td>
-                          <td>2. Bundesliga</td>
-                          <td>Welzheim</td>
-                        </tr>
-
-                        <tr>
-                          <td>17.11.2018</td>
-                          <td>14:00</td>
-                          <td>Landesliga Nord Recurve</td>
-                          <td>Welzheim</td>
-                        </tr>
-
-                        <tr>
-                          <td>17.11.2018</td>
-                          <td>10:00</td>
-                          <td>Landesliga A Compound</td>
-                          <td>Hochdorf o. Essendorf</td>
-
-                        <tr>
-                          <td>17.11.2018</td>
-                          <td>14:00</td>
-                          <td>Württembergliga Compound</td>
-                          <td>Hochdorf o. Essendorf</td>
-                        </tr>
-
-                        <tr>
-                          <td>18.11.2018</td>
-                          <td>10:00</td>
-                          <td>Landesliga Süd Recurve</td>
-                          <td>Hochdorf o. Essendorf</td>
-                        </tr>
-                        </tbody>
-                        -->
-
-            </bla-data-table>
-          </div>
-        </table>
-      </div>
-
+          </bla-data-table>
+        </div>
+      </table>
+    </div>
 
     <!-- Row 1 -->
     <div class="shortcuts">
       <bla-shortcut-button  [config]="config_shortcut"></bla-shortcut-button>
     </div>
-
     <div class="news" style="margin-left: 20px; min-height: 40vh">
-      <!-- Row 2 -->
 
+      <!-- Row 2 -->
+      <!--Block of Information-->
+
+      <!--Welcome Page Information-->
       <div class="flexChild" *ngIf="!hasID">
         <h2>Neues aus dem Bogensport</h2>
         <div class="news-container">
-
           <div class="flexChild">
-            <img class="mosaikImg"
-                 src="assets/img/home_halle.png" alt="Bogenliga Halle">
+            <img class="mosaikImg" src="assets/img/home_halle.png" alt="Bogenliga Halle">
           </div>
 
           <div class="flexChild">
@@ -118,17 +63,16 @@
         </div>
       </div>
 
-      <div class="flexChild" *ngIf="hasID"> <!--TODO: Check ID is valid -->
+      <!--Ligadetail Page Information (Ligadetailes)-->
+      <div class="flexChild" *ngIf="hasID">
         <h2>Ligadetails</h2>
         <div class="news-container">
-
           <div class="flexChild">
-            <h3> Liga ID: {{ providedID }}</h3>
             <div [innerHTML]="selectedLigaDetails"></div>
           </div>
-
         </div>
-                                            <!-- Button -->
+
+        <!-- Button -->
         <div id="Button">
           <bla-actionbutton
             [id]="'ligadetailRegionSaveButton'"
@@ -143,7 +87,6 @@
           </bla-actionbutton>
         </div>
       </div>
-
     </div>
   </div>
-  </div>
+</div>
