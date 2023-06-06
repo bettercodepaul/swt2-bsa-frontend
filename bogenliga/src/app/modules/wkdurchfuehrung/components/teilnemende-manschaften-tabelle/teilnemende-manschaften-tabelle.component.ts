@@ -17,6 +17,7 @@ import {
   SchuetzenPopUpComponent
 } from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen-pop-up/schuetzen-pop-up.component';
 
+import {NavbarComponent} from '../../../../components/navbar/navbar.component';
 
 @Component
 ({
@@ -40,6 +41,7 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
   }
 
   ngOnInit(): void {
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -76,6 +78,8 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
     return mannschaften;
 
   }
+
+
 
   onAdd($event: VersionedDataObject) {
     if ($event.id >= 0) {
