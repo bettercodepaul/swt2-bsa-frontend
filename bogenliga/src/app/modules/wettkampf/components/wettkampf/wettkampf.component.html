@@ -76,7 +76,7 @@
                 id="jahr"
                 name="Jahre"
                 [(ngModel)]="currentJahr"
-                disabled="true">
+                [disabled]="loadingData">
           <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
         </select>
         <div class="invalid-feedback">
