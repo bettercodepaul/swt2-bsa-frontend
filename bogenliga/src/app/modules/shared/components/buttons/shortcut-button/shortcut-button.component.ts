@@ -22,16 +22,25 @@ export class ShortcutButton implements OnInit {
   public currentUserRole = this.userDataProviderService.findUserRoleById(this.currentUserId);
 
   public  currentRolename: string;
+
+  public VereinsID: number;
   constructor(private currentUserService: CurrentUserService, private userDataProviderService: UserDataProviderService) {}
 
   @Input() public config: ShortcutButtonsConfig = {shortcutButtons: []};
 
 
 
+  public setCorrectID(){
+    const verein = this.currentUserService.getVerein();
+    this.VereinsID = verein;
+  }
 
+  public getCorrectLink(): String{
+    return "/verwaltung/vereine/" + this.VereinsID;
+  }
 
   ngOnInit(): void {
-
+    this.setCorrectID();
     const userRoleDo =  this.userDataProviderService.findUserRoleById(this.currentUserId);
 
     userRoleDo.then((value) => {

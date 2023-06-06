@@ -27,7 +27,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/fonts/Poppins",
-              "src/assets/fonts/Bitter"
+              "src/assets/fonts/Bitter",
+              {"glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/" }
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -35,7 +36,8 @@
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/tinymce/tinymce.min.js"
             ]
           },
           "configurations": {

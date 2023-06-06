@@ -6,13 +6,13 @@
     <form class="horizontal-form half-page"
           id="regionenForm">
       <div>
-        <h2 style="display: inline">Gewählte Veranstaltung: </h2>
+        <h2 style="display: inline">{{'WETTKAEMPFE.WETTKAEMPFE.GEWAEHLTE_VERANSTALTUNG' | translate}}</h2>
         <h3 class="print1"
             id="titel"
             style="display: inline">{{currentVeranstaltung.name}}</h3>
       </div>
       <div>
-        <h2 style="display: inline">Gewählte Mannschaft: </h2>
+        <h2 style="display: inline">{{'WETTKAEMPFE.WETTKAEMPFE.GEWAEHLTE_MANNSCHAFT' | translate}}</h2>
         <h3 style="display: inline"
             class="print1"
             id="titel2"> {{getTitle()}}</h3>
@@ -76,7 +76,7 @@
                 id="jahr"
                 name="Jahre"
                 [(ngModel)]="currentJahr"
-                disabled="true">
+                [disabled]="loadingData">
           <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
         </select>
         <div class="invalid-feedback">
