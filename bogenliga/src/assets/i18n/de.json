@@ -16,7 +16,7 @@
     "WETTKAMPF": "Wettkämpfe",
     "REGIONEN": "Regionen",
     "VEREINE": "Vereine",
-    "WKDURCHFUEHRUNG": "Wettkampfdurchführung",
+    "WKDURCHFUEHRUNG": "WettkampfdurchfÜhrung",
     "MANNSCHAFTEN": "Ligatabelle",
     "SETTINGS": "Einstellungen",
     "PLAYGROUND": "Playground",
@@ -206,6 +206,8 @@
     },
     "BUTTON": {
       "MATCHES": "generiere Matches",
+      "DURCHFUEHRUNG": "Wettkampf Durchführung",
+      "ZURUECK": "Zurück",
       "SETZLISTE": "Setzliste",
       "SCHUSSZETTEL": "Schusszettel",
       "KONTROLLLISTE": "Bogenkontrollliste",

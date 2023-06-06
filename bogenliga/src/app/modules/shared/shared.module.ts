@@ -5,6 +5,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {
+  ExpandComponent,
   AlertComponent,
   BreadcrumbsComponent,
   ButtonComponent,
@@ -120,8 +121,10 @@ import {
     DownloadActionButtonComponent,
     ShortcutButton,
     VeranstaltungenButtonComponent,
+    ExpandComponent,
   ],
   declarations: [
+    ExpandComponent,
     ButtonComponent,
     AlertComponent,
     ModalDialogComponent,
