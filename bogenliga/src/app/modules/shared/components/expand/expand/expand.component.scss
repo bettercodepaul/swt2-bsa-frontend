@@ -1,0 +1,24 @@
+.expand-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: 80%;
+}
+
+.expand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.expand-content {
+  padding: 10px;
+}
+
+.expand-icon {
+  font-weight: bold;
+}

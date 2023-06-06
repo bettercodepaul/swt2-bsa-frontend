@@ -95,9 +95,10 @@ label {
 }
 
 .mannschaften_col-3 {
-  width: 183px;
+  width: 200px;
   margin-left: 4em;
-  margin-top: 3em;
+  margin-top: 5em;
+  font-size: 12px;
 }
 
 .henlo.match_col-3 h2 {
@@ -105,9 +106,9 @@ label {
 }
 
 .match_col-3 {
-  width: 180px;
-  margin-left: 4em;
-  margin-top: 3em
+  width: 220px;
+  margin-left: 6.5em;
+  margin-top: 3em;
 }
 
 @media print {
@@ -121,7 +122,7 @@ label {
     font-size: 10px!important; //30px
   }
   h3 {
-    font-size: 2vm;
+    font-size: 2em;
   }
 
   .match1 {
@@ -228,16 +229,21 @@ label {
   margin-left: 100px
 }
 .col-4{
-  margin-right: 8px
+  margin-right: 10px;
+  width: 80px;
 }
 .offset-9{
-  margin-left: 80.5%;
+  margin-top: 10px;
+  margin-left: 82%;
+  margin-bottom: 15px;
 }
 .tabelle{
-  margin-left: 100px;
+  margin-left: 35px;
+  margin-top: 10px;
 }
 
 #buttonContainer{
-  margin-left: 15%;
-  align-items: center;
+  margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
 }
