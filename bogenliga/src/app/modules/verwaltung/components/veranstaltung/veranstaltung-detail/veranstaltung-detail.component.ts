@@ -45,7 +45,7 @@ import {TableActionType} from '@shared/components/tables/types/table-action-type
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 
@@ -84,6 +84,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public currentLiga: LigaDO = new LigaDO();
   public allLiga: Array<LigaDO> = [new LigaDO()];
+
+
+  public allTeamAmount: Array<number> = [4, 6, 8];
+  public currentTeamAmount: number = 4;
+
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
@@ -249,6 +254,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           }
         )
         .catch((response) => {
+          /*If a Veranstaltung already exists, a notification is created at this point which is displayed on the GUI.
+          Ticket BSAPP-686 requires a meaningful text output for the user on this notification which has been implemented.
+          Regarding the architecture, this is the right place in the code, because it is responsible for the GUI.  */
           console.log('Veranstaltung existiert bereits in diesem Sportjahr');
           const notification: Notification = {
             id:          NOTIFICATION_SAVE_VERANSTALTUNG_FAILURE,
@@ -520,7 +528,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.allUsers = [];
     this.allUsers = response.payload;
     if (this.id === 'add') {
-      this.currentUser = this.allUsers[0];
+      this.currentUser = this.allUsers.filter((user) => user.id === this.currentUserService.getCurrentUserID())[0];
     } else {
       this.currentUser = this.allUsers.filter((user) => user.id === this.currentVeranstaltung.ligaleiterId)[0];
     }
@@ -755,5 +763,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.notificationService.showNotification(notification);
   }
 
+  public hasCurrentUserAdminPermissions(): boolean {
+    return this.currentUserService.hasPermission(UserPermission.CAN_CREATE_SYSTEMDATEN);
+  }
 
 }

@@ -32,7 +32,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   /**
@@ -56,6 +55,17 @@ export class NavbarComponent implements OnInit {
 
   public isOffline(): Boolean {
     return this.onOfflineService.isOffline();
+  }
+
+  static toggleColor(): void{
+    const navbar = document.getElementById("navbar");
+    navbar.style.backgroundColor = "#b2b2b2";
+    navbar.style.pointerEvents = "none";
+  }
+  static toggleColorAgain(): void{
+    const navbar = document.getElementById("navbar");
+    navbar.style.backgroundColor = "#ffffff";
+    navbar.style.pointerEvents = "auto";
   }
 
 }

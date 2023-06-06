@@ -557,9 +557,19 @@ export class SchusszettelComponent implements OnInit {
 
     } else {
 
+      //const previousPage = window.history.state?.url || '/';
+      //this.router.navigateByUrl(previousPage);
+
       console.log('Keine Änderung');
       console.log('Wettkampftag', this.match1.wettkampfTag);
-      this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
+      this.router.navigate(['/wkdurchfuehrung']);
+
+      //old code
+      //this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
+
+      //Das Problem bestand darin, dass bei der Rückkehr
+      //von der Schusszettel-Seite zu einer anderen Seite navigiert wurde.
+
     }
   }
 

@@ -60,6 +60,8 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
 
+
+
   public deleteLoading = false;
   public saveLoading = false;
 
@@ -67,20 +69,18 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   private sessionHandling: SessionHandling;
 
   constructor(private ligaDataProvider: LigaDataProviderService,
-    private regionProvider: RegionDataProviderService,
-    private userProvider: UserProfileDataProviderService,
-    private disziplinDataProvider: DisziplinDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
-    private currentUserService: CurrentUserService,
-    private onOfflineService: OnOfflineService) {
-    super();
-    this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
+              private regionProvider: RegionDataProviderService,
+              private userProvider: UserProfileDataProviderService,
+              private disziplinDataProvider: DisziplinDataProviderService,
+              private router: Router, private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private currentUserService: CurrentUserService,
+              private onOfflineService: OnOfflineService) {
+              super();
+              this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
   ngOnInit() {
-
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
