@@ -35,10 +35,9 @@ import {
   NotificationSeverity,
   NotificationType,
   NotificationUserAction,
-  OnOfflineService
+  OnOfflineService,
+  NotificationService
 } from '@shared/services';
-
-import { NotificationService } from '@shared/services';
 
 
 
@@ -135,7 +134,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   async ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
       await this.logindataprovider.signInDefaultUser()
-          .then(() => this.handleSuccessfulLogin());
+                .then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
@@ -143,27 +142,15 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
     }
 
+    this.checkingAndLoadingLiga();
 
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         this.hasID = true;
-        this.checkingAndLoadingLiga();
+        this.checkingAndLoadingLiga(); // load liga with changes of id in url
       } else {
         this.hasID = false;
-      }
-    });
-
-    /**
-     * On URL change
-     * check if there is an ID in the URL,
-     * check if it is valid and load Liga
-     * */
-
-    this.checkingAndLoadingLiga();
-    this.routeSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.checkingAndLoadingLiga();
       }
     });
   }
