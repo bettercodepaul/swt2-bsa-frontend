@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/bettercodepaul/swt2-bsa-frontend/issues"
   },
-  "homepage": "https://github.com/bettercodepaul/swt2-bsa-frontend#readme"
+  "homepage": "https://github.com/bettercodepaul/swt2-bsa-frontend#readme",
+  "dependencies": {
+    "@tinymce/tinymce-angular": "^7.0.0",
+    "tinymce": "^6.4.2"
+  }
 }

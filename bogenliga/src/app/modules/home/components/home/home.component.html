@@ -1,17 +1,21 @@
 
 
   <div id="homePage">
-    <div style="max-width: 75%; margin: 15px; padding: 5px">
+    <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasID">
       <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
       <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
     </div>
 
-    <div class="container">
-      <div class="calendar">
 
-    <!-- Row 1 -->
-    <div style="margin-left: 20px; min-height: 40vh">
-      <h2>Unsere nächsten Wettkämpfe</h2>
+    <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID" >
+      <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
+      <p class="subtitle" [innerHTML]="selectedLigaID"> </p>
+    </div>
+
+
+   <div class="container">
+      <div class="calendar">
+        <h2>Unsere nächsten Wettkämpfe</h2>
       <div id = "competitionList">
         <bla-veranstaltungen-button routerLink="/wkdurchfuehrung" *ngFor="let veranstaltung of veranstaltungWettkaempfeDO | slice:0:5">
           <p heading>{{veranstaltung.veranstaltungDO.name}}</p>
@@ -19,6 +23,7 @@
           <h1 date-day>{{veranstaltung.day}}</h1>
         </bla-veranstaltungen-button>
       </div>
+
       <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
       <table id="example"
              class="table table-hover table-sm table-responsive-sm thead-light table-striped"
@@ -96,7 +101,8 @@
 
     <div class="news" style="margin-left: 20px; min-height: 40vh">
       <!-- Row 2 -->
-      <div class="flexChild">
+
+      <div class="flexChild" *ngIf="!hasID">
         <h2>Neues aus dem Bogensport</h2>
         <div class="news-container">
 
@@ -111,6 +117,33 @@
           </div>
         </div>
       </div>
+
+      <div class="flexChild" *ngIf="hasID"> <!--TODO: Check ID is valid -->
+        <h2>Ligadetails</h2>
+        <div class="news-container">
+
+          <div class="flexChild">
+            <h3> Liga ID: {{ providedID }}</h3>
+            <div [innerHTML]="selectedLigaDetails"></div>
+          </div>
+
+        </div>
+                                            <!-- Button -->
+        <div id="Button">
+          <bla-actionbutton
+            [id]="'ligadetailRegionSaveButton'"
+            [color]= "ActionButtonColors.SUCCESS"
+            [iconClass]="'th-list'"
+            (onClick)="ligatabelleLinking()">
+            {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
+            <!--{{ selectedVeranstaltungName}}
+            name of the currently selected Liga displayed in button-->
+
+            {{this.providedID}}
+          </bla-actionbutton>
+        </div>
+      </div>
+
     </div>
   </div>
   </div>

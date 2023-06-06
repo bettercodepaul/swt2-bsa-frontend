@@ -11,21 +11,6 @@
           <h2><a class="blackLink"
                  routerLink="/wkdurchfuehrung">{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}</a></h2>
 
-          <div id="dropDownMenuYear"
-               style="width: 80%; margin-bottom: 2%;">
-            <bla-dropdown-menu (onSelect)="onSelectYear($event)"
-                               [id]="'Veranstaltungen-dropdown-menu'"
-                               [items]="availableYears"
-                               [optionFieldSelector]="'sportjahr'"
-                               [loading]="loadingYears"
-                               [selectedItemId]='selItemId'
-                               [disabled]="isOfflineDisabled()"
-                               data-cy="wkduchfuehrung-jahr-dropdown"
-                               style="width: 40%;">
-            </bla-dropdown-menu>
-
-          </div>
-
           <table id="example"
                  class="table table-hover table-sm table-responsive-sm thead-light table-striped"
                  style="width:80%">
@@ -124,10 +109,10 @@
             [id]="'downloadBogenkontrollliste'"
             [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
             [fileName]="'bogenkontrollliste.pdf'"
-            [disabled]="isDisabled()"
             [color]="ActionButtonColors.PRIMARY"
-            [iconClass]="'file-download'">
-            {{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+            [iconClass]="'file-download'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+
           </bla-download-actionbutton>
 
           <bla-download-actionbutton
@@ -154,7 +139,7 @@
             [color]="ActionButtonColors.PRIMARY"
             [iconClass]="'user-plus'"
             (onClick)="addDSBMitglied()">
-            DSB-Mitglied anlegen
+            {{ 'WKDURCHFUEHRUNG.BUTTON.MITGLIED_ANLEGEN' | translate }}
           </bla-actionbutton>
 
         <ng-template #onlineSetupTables
@@ -175,7 +160,7 @@
                             [color]="ActionButtonColors.DANGER"
                             [iconClass]="'power-off'"
                             [disabled]="isDisabled()"
-                            data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
+                            data-cy="wkdurchfuehrung-btn-offlinegehen">{{ 'WKDURCHFUEHRUNG.BUTTON.OFFLINE_GEHEN' | translate }}
           </bla-actionbutton>
         </div>
 
@@ -185,7 +170,7 @@
             <bla-actionbutton (click)="onButtonGoOfflineClick()"
                               [color]="ActionButtonColors.SUCCESS"
                               [iconClass]="'cloud'"
-                              [disabled]="isDisabled()">Online gehen
+                              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.ONLINE_GEHEN' | translate }}
             </bla-actionbutton>
           </div>
         </ng-template>
@@ -195,7 +180,7 @@
           <bla-actionbutton (click)="resetWettkampfToken(this.selectedWettkampfId)"
                             [color]="ActionButtonColors.DANGER"
                             [iconClass]="'trash'"
-                            [disabled]="isDisabled()">Offlinetoken löschen
+                            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.OFFLINE_TOKEN' | translate }}
           </bla-actionbutton>
         </div>
 
