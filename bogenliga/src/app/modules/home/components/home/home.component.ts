@@ -28,8 +28,7 @@ import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.s
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
 
-
-
+//for notification
 import {
   CurrentUserService,
   NotificationOrigin,
@@ -44,8 +43,6 @@ import { NotificationService } from '@shared/services';
 
 
 const ID_PATH_PARAM = 'id';
-const NOTIFICATION_DOWNLOAD_SUCCESS = 'download_success';
-const NOTIFICATION_DOWNLOAD_FAILURE = 'download_failure';
 
 class VeranstaltungWettkaempfe {
   public veranstaltungDO: VeranstaltungDO;
@@ -136,10 +133,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   async ngOnInit() {
-
-
-
-
     if (this.currentUserService.isLoggedIn() === false) {
       await this.logindataprovider.signInDefaultUser()
           .then(() => this.handleSuccessfulLogin());
@@ -155,6 +148,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         this.hasID = true;
+        this.checkingAndLoadingLiga();
       } else {
         this.hasID = false;
       }
@@ -201,6 +195,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         });
   }
 
+
   /**
    * Backend call to get Liga from the Parameter in the URL (LigaID)
    * to display LigaDetailSeite.
@@ -214,22 +209,22 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
               .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
   }
 
-//console.log("Resultat vom Backendcall zu " + urlLigaID+" gekommen:"+ console.log(JSON.stringify(response.payload, null, 2)))
-  private NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE: string;
-
 
   /**
-   *Handling a successfull backendcall to get Liga by LigaIDa
+   *Handling a successfull backendcall to get Liga by LigaID
+   * the response object is either:
+   * - a liga
+   * - null -> no liga with that id does exist
    **/
-  private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
-    
-    if(response.payload.id==null){ //means there is no liga with this ID
-      //route to home and show pop-up
-      //routing back to home URL
 
+  private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
+
+    if(response.payload.id==null){
+      //routing back to home URL
       const link = '/home';
       this.router.navigateByUrl(link);
 
+      //show a pop-up if liga with that id does not exist
       this.notificationService.showNotification({
         id: 'LigaIDWarning',
         description: 'HOME.LIGADETAILES.DESCRIPTION',
@@ -239,15 +234,16 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         type: NotificationType.OK,
         severity: NotificationSeverity.INFO,
       });
-
     }
     else{
+      //store Liga information
       this.selectedLigaName=response.payload.name;
       this.selectedLigaID=response.payload.id;
       this.selectedLigaDetails=response.payload.ligaDetail;
       this.loadedLigaData=true;
     }
   }
+
 
   /**
    * Handling a failed backendcall to get Liga by LigaID
@@ -257,6 +253,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     const link = '/home';
     this.router.navigateByUrl(link);
   }
+
 
   private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
     this.wettkaempfeDTO = payload;
