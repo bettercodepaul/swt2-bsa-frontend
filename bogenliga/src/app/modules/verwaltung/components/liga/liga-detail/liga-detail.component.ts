@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ButtonType, CommonComponentDirective} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -27,7 +27,7 @@ import {DisziplinDO} from '@verwaltung/types/disziplin-do.class';
 import {DisziplinDTO} from '@verwaltung/types/datatransfer/disziplin-dto.class';
 import {DisziplinDataProviderService} from '@verwaltung/services/disziplin-data-provider-service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
-
+import {HttpClient} from '@angular/common/http';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';
@@ -68,6 +68,14 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public id;
   private sessionHandling: SessionHandling;
 
+
+  //FileUpload
+
+  public fileName = '';
+
+
+
+
   constructor(private ligaDataProvider: LigaDataProviderService,
               private regionProvider: RegionDataProviderService,
               private userProvider: UserProfileDataProviderService,
@@ -75,7 +83,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
               private router: Router, private route: ActivatedRoute,
               private notificationService: NotificationService,
               private currentUserService: CurrentUserService,
-              private onOfflineService: OnOfflineService) {
+              private onOfflineService: OnOfflineService,
+
+              //FileUpload
+              private http: HttpClient) {
               super();
               this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -188,7 +199,16 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public onUpdate(ignore: any): void {
     if (this.currentLiga.ligaDetail.length > 3000) {
       //TODO: Tatsächlichen String holen
-      alert('MANAGEMENT.LIGA_DETAIL.ALERT.MAX_WORDS_SURPASSED')
+      //alert('MANAGEMENT.LIGA_DETAIL.ALERT.MAX_WORDS_SURPASSED')
+      this.notificationService.showNotification({
+        id: 'MaxWordsWarning',
+        description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.MAX_WORDS_SURPASSED.DESCRIPTION',
+        title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.MAX_WORDS_SURPASSED.TITLE',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
       return
     }
 
@@ -233,6 +253,27 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
           this.saveLoading = false;
         });
   }
+
+//File Upload
+  public onFileSelected(event){
+    const file:File = event.target.files[0];
+
+    if(file){
+
+      this.fileName = file.name;
+
+      const formData = new FormData();
+
+      formData.append("thumbnail", file);
+
+      const upload$ = this.http.post("/api/thumbnail-upload", formData);
+
+      upload$.subscribe();
+    }
+  }
+
+
+
 
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
