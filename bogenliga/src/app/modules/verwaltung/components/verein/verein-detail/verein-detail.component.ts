@@ -261,30 +261,53 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
     const id = this.currentVerein.id;
 
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_VEREIN + id,
-      title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN + id)
-        .subscribe((myNotification) => {
+    if(id==9999) {
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_VEREIN + id,
+        title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.TITLE',
+        description:      'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN + id)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.deleteLoading = false;
+            }
+          });
 
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.vereinProvider.deleteById(id)
-                .then((response) => this.handleDeleteSuccess(response))
-                .catch((response) => this.handleDeleteFailure(response));
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.deleteLoading = false;
-          }
-        });
+      this.notificationService.showNotification(notification)
 
-    this.notificationService.showNotification(notification);
+    } else {
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_VEREIN + id,
+        title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE.TITLE',
+        description:      'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN + id)
+          .subscribe((myNotification) => {
+
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.vereinProvider.deleteById(id)
+                  .then((response) => this.handleDeleteSuccess(response))
+                  .catch((response) => this.handleDeleteFailure(response));
+            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.deleteLoading = false;
+            }
+          });
+
+      this.notificationService.showNotification(notification);
+    }
   }
 
   public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
