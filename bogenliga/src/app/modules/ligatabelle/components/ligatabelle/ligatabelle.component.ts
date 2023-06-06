@@ -19,6 +19,7 @@ import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {faUndo} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
 
 
 
@@ -66,6 +67,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   public selectedVeranstaltungId: number;
   public selectedYearId: number;
+  public selectedItemId: number;
   private aktivesSportjahr: number;
 
   constructor(
@@ -95,12 +97,52 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
           console.log('Provided Id AT LIGATABELLE', this.providedID);
           this.hasID = true;
 
+          this.loadVeranstaltungFromLigaID(this.providedID);
+
         } else {
           console.log('no params at ligatabelle');
         }
       });
+
     }
   }
+
+
+  private async loadVeranstaltungFromLigaID(urlLigaID : number){
+    await this.veranstaltungsDataProvider.findByLigaId(urlLigaID)
+              .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleFindLigaSuccess(response))
+              .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleFindLigaFailure(response));
+  }
+
+
+  private handleFindLigaSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
+
+    console.log(response.payload);
+    //this.selectedItemId = response.payload[0].id;
+
+    const veranstaltungen: VeranstaltungDO[] = response.payload;
+
+    //veranstaltungen.forEach((veranstaltung: VeranstaltungDO) => {
+      for (const veranstaltung of veranstaltungen) {
+      console.log("yearitem:" + veranstaltung.sportjahr);
+      console.log("yearselected:" + this.selectedYearId);
+      if (veranstaltung.sportjahr == 2018 ){ //this.selectedYearId
+        console.log("V ID :: =====:" + veranstaltung.id);
+        this.selectedItemId = veranstaltung.id;
+        break;
+      } else {
+        this.deselect();
+      }
+    };
+  }
+
+
+  public handleFindLigaFailure(error: any): void {
+    // Routing back to ligatabelle URL
+    const link = '/ligatabelle';
+    this.router.navigateByUrl(link);
+  }
+
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
    *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
@@ -179,7 +221,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.loadingLigatabelle = false;
       console.log(e);
     }
-
   }
 
   private loadLigaTableRows() {
@@ -222,7 +263,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     buttonVisibility.style.display = 'block';
     this.veranstaltungenForYear = [];
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
+    //this.selectedVeranstaltung.id
+    //this.selectedVeranstaltungId = 1001; //this.providedID  null
     this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id;
+    //console.log("selected V ID : " + this.selectedVeranstaltungId);
     //this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); // automatische Auswahl
 
   }
@@ -239,8 +283,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.loadLigaTableRows();
     //this.providedID = this.selectedVeranstaltung.ligaId;
     const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
-    this.router.navigateByUrl(link);
+    this.router.navigate([link]);
+    //this.router.navigate([link], { skipLocationChange: true });  URL doesn't change anymore with this
   }
+
 
   public deselect(){
     this.isDeselected = true;
