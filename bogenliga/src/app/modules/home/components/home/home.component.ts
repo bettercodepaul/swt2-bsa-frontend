@@ -343,6 +343,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     return this.rows.length === 0;
   }
 
+  public chekIfVeranstaltungskalender(): boolean{
+    return this.veranstaltungWettkaempfeDO.length === 0;
+  }
+
   /**
    * Checks that only dates that are in the future will be portrayed
    * BSAPP-366
