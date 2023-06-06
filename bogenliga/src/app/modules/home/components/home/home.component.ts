@@ -12,33 +12,40 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
+
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
-import {ConsoleLogger} from '@angular/compiler-cli/ngcc';
-import {element} from 'protractor';
+
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
-import {ID} from '../home/home.config';
-import {
-  ShortcutButtonsConfig
-} from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
-import {VERWALTUNG_CONFIG} from '@verwaltung/components/verwaltung/verwaltung.config';
 import {HOME_SHORTCUT_BUTTON_CONFIG} from './home.config';
-import {db, OfflineDB} from '@shared/data-provider/offlinedb/offlinedb';
-import {
-  VeranstaltungenButtonComponent
-} from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
+
 import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
-import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
 
+
+
+import {
+  CurrentUserService,
+  NotificationOrigin,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction,
+  OnOfflineService
+} from '@shared/services';
+
+import { NotificationService } from '@shared/services';
+
+
+
 const ID_PATH_PARAM = 'id';
+const NOTIFICATION_DOWNLOAD_SUCCESS = 'download_success';
+const NOTIFICATION_DOWNLOAD_FAILURE = 'download_failure';
 
 class VeranstaltungWettkaempfe {
   public veranstaltungDO: VeranstaltungDO;
@@ -53,6 +60,7 @@ class VeranstaltungWettkaempfe {
 })
 
 export class HomeComponent extends CommonComponentDirective implements OnInit, OnDestroy {
+
 
   public config = HOME_CONFIG;
 
@@ -85,7 +93,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
 
+
   constructor(
+    private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private wettkampfDataProvider: WettkampfDataProviderService,
@@ -127,6 +137,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   async ngOnInit() {
 
+
+
+
     if (this.currentUserService.isLoggedIn() === false) {
       await this.logindataprovider.signInDefaultUser()
           .then(() => this.handleSuccessfulLogin());
@@ -136,7 +149,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.setCorrectID();
       // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
     }
-
 
 
     this.route.params.subscribe((params) => {
@@ -203,17 +215,31 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
 //console.log("Resultat vom Backendcall zu " + urlLigaID+" gekommen:"+ console.log(JSON.stringify(response.payload, null, 2)))
+  private NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE: string;
 
 
   /**
    *Handling a successfull backendcall to get Liga by LigaIDa
    **/
   private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
+    
     if(response.payload.id==null){ //means there is no liga with this ID
       //route to home and show pop-up
       //routing back to home URL
+
       const link = '/home';
       this.router.navigateByUrl(link);
+
+      this.notificationService.showNotification({
+        id: 'LigaIDWarning',
+        description: 'HOME.LIGADETAILES.DESCRIPTION',
+        title: 'HOME.LIGADETAILES.IDWARNING',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
+
     }
     else{
       this.selectedLigaName=response.payload.name;
