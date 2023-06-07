@@ -86,8 +86,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public allLiga: Array<LigaDO> = [new LigaDO()];
 
 
-  public allTeamAmount: Array<number> = [4, 6, 8];
-  public currentTeamAmount: number = 4;
+  public allTeamAmount: Array<number> = [8, 6, 4];
+
 
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
@@ -158,6 +158,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.currentLiga = new LigaDO();
 
 
+          this.currentVeranstaltung.groesse = 8;
+
 
           this.loadUsers();
           this.loadLigaleiter();
@@ -222,6 +224,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
       this.currentVeranstaltung.wettkampftypName = this.currentWettkampftyp.name;
     }
+
 
     // persist
     this.veranstaltungDataProvider.create(this.currentVeranstaltung)
@@ -458,6 +461,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
+
     this.loading = false;
     this.loadWettkampftyp();
     this.loadUsers();

@@ -16,13 +16,13 @@
     "WETTKAMPF": "Wettkämpfe",
     "REGIONEN": "Regionen",
     "VEREINE": "Vereine",
-    "WKDURCHFUEHRUNG": "Wettkampfdurchführung",
+    "WKDURCHFUEHRUNG": "WettkampfdurchfÜhrung",
     "MANNSCHAFTEN": "Ligatabelle",
     "SETTINGS": "Einstellungen",
     "PLAYGROUND": "Playground",
     "SPOTTING": "Spotting",
     "COLLAPSE": "Einklappen",
-    "HILFE" :  "Hilfe"
+    "HILFE": "Hilfe"
   },
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
@@ -110,17 +110,17 @@
         }
       }
     },
-      "BUTTONS":{
-        "EINZEL_ALS_PDF": {
-          "LABEL": "Einzelstatistik als PDF"
-        },
-        "GESAMT_ALS_PDF": {
-          "LABEL": "Gesamtstatistik als PDF"
+    "BUTTONS": {
+      "EINZEL_ALS_PDF": {
+        "LABEL": "Einzelstatistik als PDF"
       },
-        "TAGESUEBERSICHT_ALS_PDF": {
-          "LABEL": "Tagesübersicht als PDF"
-        }
+      "GESAMT_ALS_PDF": {
+        "LABEL": "Gesamtstatistik als PDF"
+      },
+      "TAGESUEBERSICHT_ALS_PDF": {
+        "LABEL": "Tagesübersicht als PDF"
       }
+    }
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -197,7 +197,7 @@
       "VERANSTALTUNG": "Veranstaltungen",
       "WETTKAEMPFE": "Wettkampftage",
       "LT_DURCHFUEHRUNG": "Ligatabelle Durchführung"
-      },
+    },
     "WETTKAMPF": {
       "TABLE": {
         "CDAY": "Wettkampftag",
@@ -210,6 +210,8 @@
     },
     "BUTTON": {
       "MATCHES": "generiere Matches",
+      "DURCHFUEHRUNG": "Wettkampf Durchführung",
+      "ZURUECK": "Zurück",
       "SETZLISTE": "Setzliste",
       "SCHUSSZETTEL": "Schusszettel",
       "KONTROLLLISTE": "Bogenkontrollliste",
@@ -374,7 +376,7 @@
           "LABEL": "Veranstaltungen:"
         },
         "SPORTJAHR":{
-        "LABEL": "Sportjahr:"
+          "LABEL": "Sportjahr:"
         }
 
       },
@@ -610,7 +612,8 @@
       "TABLE": {
         "HEADERS": {
           "KEY": "KEY",
-          "VALUE": "VALUE"
+          "VALUE": "VALUE",
+          "ISHIDDEN": "Versteckt"
         }
       },
       "NOTIFICATION": {
@@ -850,6 +853,12 @@
           "TITLE": "Verein löschen",
           "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? Der Verein ist danach nicht mehr verfügbar."
         }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Verein Auffüllmannschaft löschen",
+          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
+        }
       }
     },
     "VEREIN_DETAIL": {
@@ -925,6 +934,22 @@
         "NO_LICENSE": {
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
+        },
+        "UPDATE":  {
+          "FAILURE": {
+            "FULL": {
+              "TITLE": "Veranstaltung bereits ausgebucht: Aktualisierung der Mannschaft nicht möglich",
+
+              "DESCRIPTION": "Aufgrund der Tatsache, dass die Veranstaltung bereits vollständig ausgebucht ist, bedauern wir Ihnen mitteilen zu müssen, dass eine Aktualisierung des Teilnehmerkreises derzeit nicht möglich ist."
+            }
+          }
+        }
+
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Verein Auffüllmannschaft löschen",
+          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
         }
       }
     },
@@ -1268,7 +1293,7 @@
           "ERROR": "Bitte geben Sie ein gültiges Jahr ein"
         },
         "TEILNEHMER": {
-          "LABEL": "Team Anzahl",
+          "LABEL": "Anzahl Mannschaften",
           "PLACEHOLDER": "Bitte geben Sie an wieviele Teams bei der Veranstaltung teilnehmen dürfen",
           "ERROR": "Bitte geben Sie eine Anzahl an Teilnehmenden Teams an"
         },
@@ -1337,50 +1362,50 @@
               "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
             }
           },
-            "NOTIFICATION": {
-              "SAVE": {
-                "TITLE": "Speichern erfolgreich",
-                "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
-              },
-              "UPDATE": {
-                "TITLE": "Update erfolgreich",
-                "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
-              },
-              "DELETE": {
-                "TITLE": "Löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
-              },
-              "ADD": {
-                "TITLE": "Neu",
-                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
-              },
-              "COPY": {
-                "TITLE": "Kopieren",
-                "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
-              },
-              "DELETE_SUCCESS": {
-                "TITLE": "Erfolgreich",
-                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
-              },
-              "DELETE_FAILURE": {
-                "TITLE": "Fehler beim Löschen",
-                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
-              },
-              "DEADLINE_EXPIRED": {
-                "TITLE": "Meldedeadline abgelaufen",
-                "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
-              },
-              "TOO_MANY": {
-                "TITLE": "Zu viele Wettkampftage",
-                "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
-              }
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Speichern erfolgreich",
+              "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Update erfolgreich",
+              "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
+            },
+            "DELETE": {
+              "TITLE": "Löschen",
+              "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+            },
+            "ADD": {
+              "TITLE": "Neu",
+              "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+            },
+            "COPY": {
+              "TITLE": "Kopieren",
+              "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
+            },
+            "DELETE_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+            },
+            "DELETE_FAILURE": {
+              "TITLE": "Fehler beim Löschen",
+              "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+            },
+            "DEADLINE_EXPIRED": {
+              "TITLE": "Meldedeadline abgelaufen",
+              "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
+            },
+            "TOO_MANY": {
+              "TITLE": "Zu viele Wettkampftage",
+              "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
             }
-          },
-          "KAMPFRICHTERLISTE": {
-            "LABEL": "Kampfrichter",
-            "LEFTCAPTION":  "abgewählt",
-            "RIGHTCAPTION": "ausgewählt"
-          },
+          }
+        },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Kampfrichter",
+          "LEFTCAPTION":  "abgewählt",
+          "RIGHTCAPTION": "ausgewählt"
+        },
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
@@ -1578,6 +1603,9 @@
           "LABEL": "Neuer Value",
           "PLACEHOLDER": "Bitte einen neuen Value eingeben",
           "ERROR": "Bitte einen gültigen Value eingeben."
+        },
+        "ISHIDDEN": {
+          "LABEL": "Versteckte Einstellungen"
         },
         "SAVE": "Speichern"
       }
