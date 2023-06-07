@@ -57,6 +57,8 @@ import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
 import { DsbMitgliedDetailPopUpComponent } from './components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 import {SchuetzenPopUpComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen-pop-up/schuetzen-pop-up.component';
 import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -66,6 +68,8 @@ import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
     SharedModule.forChild(),
     FormsModule,
     EditorModule,
+    MatProgressBarModule,
+    MatIconModule,
   ],
   declarations: [
     VerwaltungComponent,
