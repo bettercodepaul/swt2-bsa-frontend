@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, DoCheck} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {TranslateService} from '@ngx-translate/core';
 import {ButtonType} from '@shared/components';
@@ -7,6 +7,17 @@ import {UserState} from '@shared/redux-store';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {AppState, SidebarState} from '../../modules/shared/redux-store';
 
+import {BogenligaResponse} from '@shared/data-provider';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
+import {ActivatedRoute, NavigationStart} from '@angular/router';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
+import {isUndefined} from '@shared/functions';
+import {ligaID} from '../sidebar/sidebar.component'
+import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
+
+const ID_PATH_PARAM = 'id';
+
+
 @Component({
   selector:    'bla-navbar',
   templateUrl: './navbar.component.html',
@@ -14,7 +25,7 @@ import {AppState, SidebarState} from '../../modules/shared/redux-store';
     './navbar.component.scss'
   ]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, DoCheck {
 
   public isActive: boolean; // for class and css to know if sidebar is wide or small
   public ButtonType = ButtonType;
@@ -22,7 +33,12 @@ export class NavbarComponent implements OnInit {
   public isDefaultUserLoggedIn: boolean;
   public isUserDropdownVisible = false;
 
-  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService, private onOfflineService: OnOfflineService) {
+  public ligaName: string = 's';
+
+  public providedID: number;
+  public hasID: boolean;
+
+  constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService, private onOfflineService: OnOfflineService, private route: ActivatedRoute, private ligaDataProvider: LigaDataProviderService, private selectedLigaDataprovider: SelectedLigaDataprovider) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
     store.pipe(select((state) => state.userState))
@@ -32,6 +48,31 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  ngDoCheck () {
+    this.providedID = this.selectedLigaDataprovider.getSelectedLigaID();
+  console.log("Liga id ============================= "+ligaID)
+
+      if (this.providedID) {
+        this.hasID = true;
+
+      } else {
+        this.hasID = false;
+      }
+
+
+
+    /*this.routeSubscription = this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+
+
+      }
+
+    });*/
+    console.log("Liga name = " + this.providedID)
+    this.hasID ? this.loadLigaName(this.providedID) : null;
   }
 
   /**
@@ -57,6 +98,21 @@ export class NavbarComponent implements OnInit {
     return this.onOfflineService.isOffline();
   }
 
+
+private async loadLigaName(ligaID: number) {
+  await this.ligaDataProvider.findById(this.providedID)
+.then((response: BogenligaResponse<LigaDO>) => this.setLigaName(response))
+.catch()
+}
+  private setLigaName(response: BogenligaResponse<LigaDO>) : void {
+    this.ligaName = response.payload.name;
+    //console.log("Liga name = " + this.ligaName)
+  }
+
+  public getLigaName() : string {
+    return this.ligaName;
+  }
+
   static toggleColor(): void{
     const navbar = document.getElementById("navbar");
     navbar.style.backgroundColor = "#b2b2b2";
@@ -66,6 +122,8 @@ export class NavbarComponent implements OnInit {
     const navbar = document.getElementById("navbar");
     navbar.style.backgroundColor = "#ffffff";
     navbar.style.pointerEvents = "auto";
+
   }
 
 }
+
