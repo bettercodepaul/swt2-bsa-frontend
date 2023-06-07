@@ -46,6 +46,10 @@
       "BOX1DATE": "2. Mai 2018",
       "BOX1CONTENT": "Seid dabei, wenn wir am 20. & 21. Oktober 2018 im WSV- Schulungszentrum in Ruit gemeinsam ein tolles Wochenende Rund um das Sport- und Bogenschießen erleben und jede Menge Spaß haben werden.Beim Schüler- und Jugend- Cup können Jungschützen mit dem Bogen, dem Luftgewehr sowie der Luftpistole und dem Lichtgewehr sowie der Lichtpistole ihr Können in spannenden Wettkämpfen, Geschicklichkeits- und Konzentrationsübungen unter Beweis stellen.Detaillierte Informationen zu den Altersklassen und den Disziplinen, sowie den Meldebogen findet Ihr hier. Wir freuen uns auf euch!"
     },
+    "LIGADETAILES": {
+      "IDWARNING": "Falsche Liga ID",
+      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden."
+    },
     "IMPRESSUM": {
       "TITLE": "Impressum"
     }
@@ -801,12 +805,13 @@
         },
         "LIGA_DETAIL" : {
           "LABEL": "Ligadetails",
-          "MAX_WORDS_WARNING": "(max. 300 Wörter)"
+          "MAX_WORDS_WARNING": "(max. 5000 Wörter)"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Liga löschen",
@@ -823,6 +828,10 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Die Liga wurde erfolgreich gespeichert."
+        },
+        "MAX_WORDS_SURPASSED": {
+          "TITLE": "Fehler",
+          "DESCRIPTION":  "Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl von 5000 Wörtern."
         }
       }
     },
