@@ -12,7 +12,6 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
@@ -81,12 +80,14 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public currentDate: number = Date.now();
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
+
+  public VereinsID: number;
   public providedID: number;
   public hasID: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
-
+  public veranstaltung: VeranstaltungDO;
 
   constructor(
     private notificationService: NotificationService,
@@ -120,6 +121,14 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   @ViewChild('kampfrichter') kampfrichter: ElementRef;
   @ViewChild('sportleiter') sportleiter: ElementRef;
 
+  public setCorrectID(){
+    const verein = this.currentUserService.getVerein();
+    this.VereinsID = verein;
+  }
+  public getCorrectID(): number {
+    return this.VereinsID;
+  }
+
   async ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
       await this.logindataprovider.signInDefaultUser()
@@ -127,6 +136,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
+      this.setCorrectID();
+      // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
     }
 
 
@@ -145,11 +156,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();
-
-
       }
-
     });
+    this.getVeranstaltungen(this.providedID);
   }
 
 
