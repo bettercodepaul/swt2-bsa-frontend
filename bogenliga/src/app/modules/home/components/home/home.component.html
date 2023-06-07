@@ -10,7 +10,7 @@
   <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID" >
     <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
   </div>
-
+    
   <!--Wettkampftabelle-->
   <div class="container">
     <div class="calendar">
@@ -22,7 +22,6 @@
           <h1 date-day>{{veranstaltung.day}}</h1>
         </bla-veranstaltungen-button>
       </div>
-
       <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
       <table id="example"
              class="table table-hover table-sm table-responsive-sm thead-light table-striped"

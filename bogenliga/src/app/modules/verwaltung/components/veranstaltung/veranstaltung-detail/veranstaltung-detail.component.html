@@ -127,7 +127,7 @@
                   id="teamanzahl"
                   name="teamanzahl"
                   #teamAmount="ngModel"
-                  [(ngModel)]="currentTeamAmount"
+                  [(ngModel)]="currentVeranstaltung.groesse"
                   data-cy="veranstaltung-detail-teamanzahl">
             <option [ngValue]="teamAmount"
                     *ngFor="let teamAmount of allTeamAmount"> {{teamAmount}}</option>
