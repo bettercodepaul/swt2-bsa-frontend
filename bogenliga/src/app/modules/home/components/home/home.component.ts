@@ -142,7 +142,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
     }
 
-    this.checkingAndLoadingLiga();
 
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -153,12 +152,15 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.hasID = false;
       }
     });
-    
+
+    this.checkingAndLoadingLiga();
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();
       }
     });
+
+
   }
 
 
