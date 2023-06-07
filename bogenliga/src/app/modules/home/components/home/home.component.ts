@@ -154,6 +154,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       }
     });
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();

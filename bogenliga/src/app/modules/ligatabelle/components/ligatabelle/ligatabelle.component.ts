@@ -69,6 +69,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedYearId: number;
   public selectedItemId: number;
   private aktivesSportjahr: number;
+  private selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
+
+  private istURLkorrekt: boolean = false;
 
   constructor(
     private router: Router,
@@ -94,7 +97,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.route.params.subscribe((params) => {
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-          console.log('Provided Id AT LIGATABELLE', this.providedID);
           this.hasID = true;
 
           this.loadVeranstaltungFromLigaID(this.providedID);
@@ -118,29 +120,34 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   private handleFindLigaSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
 
     console.log(response.payload);
-    //this.selectedItemId = response.payload[0].id;
 
     const veranstaltungen: VeranstaltungDO[] = response.payload;
 
-    //veranstaltungen.forEach((veranstaltung: VeranstaltungDO) => {
-      for (const veranstaltung of veranstaltungen) {
-      console.log("yearitem:" + veranstaltung.sportjahr);
-      console.log("yearselected:" + this.selectedYearId);
-      if (veranstaltung.sportjahr == 2018 ){ //this.selectedYearId
-        console.log("V ID :: =====:" + veranstaltung.id);
-        this.selectedItemId = veranstaltung.id;
+    console.log("sport jahr selected:::"+this.selectedYearForVeranstaltung);
+
+    for (const veranstaltung of veranstaltungen) {
+      //Überprüfen das jahr der Veranstaltung der Liga die über die URL ausgewählte würde mit dem selektierten Jahr übereinstimmt
+
+      if (veranstaltung.sportjahr == 2018){ //veranstaltung.sportjahr == this.selectedYearForVeranstaltung
+        //falls Übereinstimmung, Veranstaltung visuell selektieren
+        this.selectedItemId = veranstaltung.id; //select Veranstaltung in der Liste
+        this.istURLkorrekt = true
         break;
       } else {
-        this.deselect();
       }
-    };
+    }
+
+    if (!this.istURLkorrekt){
+      //this.deselect();
+    }
+    this.istURLkorrekt = false;
   }
 
 
   public handleFindLigaFailure(error: any): void {
     // Routing back to ligatabelle URL
-    const link = '/ligatabelle';
-    this.router.navigateByUrl(link);
+/*    const link = '/ligatabelle';
+    this.router.navigateByUrl(link);*/
   }
 
 
@@ -262,6 +269,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button');
     buttonVisibility.style.display = 'block';
     this.veranstaltungenForYear = [];
+    this.selectedYearForVeranstaltung = $event[0].sportjahr;
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
     //this.selectedVeranstaltung.id
     //this.selectedVeranstaltungId = 1001; //this.providedID  null
