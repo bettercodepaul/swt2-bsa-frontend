@@ -153,6 +153,12 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.hasID = false;
       }
     });
+
+    this.routeSubscription = this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.checkingAndLoadingLiga();
+      }
+    });
   }
 
 
