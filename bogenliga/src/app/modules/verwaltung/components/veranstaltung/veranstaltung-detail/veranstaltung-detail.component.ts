@@ -157,7 +157,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.currentWettkampftyp = new WettkampftypDO();
           this.currentLiga = new LigaDO();
 
-
+          this.currentVeranstaltung.groesse = 8;
 
           this.loadUsers();
           this.loadLigaleiter();
@@ -459,6 +459,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
+
     this.loading = false;
     this.loadWettkampftyp();
     this.loadUsers();
