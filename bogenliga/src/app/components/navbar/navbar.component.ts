@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit, DoCheck {
   public isDefaultUserLoggedIn: boolean;
   public isUserDropdownVisible = false;
 
-  public ligaName: string = 's';
+  public ligaName: string = '';
 
   public providedID: number;
   public hasID: boolean;
@@ -53,7 +53,7 @@ export class NavbarComponent implements OnInit, DoCheck {
 
   ngDoCheck () {
     this.providedID = this.selectedLigaDataprovider.getSelectedLigaID();
-  console.log("Liga id ============================= "+ligaID)
+
 
       if (this.providedID) {
         this.hasID = true;
@@ -71,7 +71,7 @@ export class NavbarComponent implements OnInit, DoCheck {
       }
 
     });*/
-    console.log("Liga name = " + this.providedID)
+
     this.hasID ? this.loadLigaName(this.providedID) : null;
   }
 
