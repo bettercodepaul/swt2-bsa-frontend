@@ -29,6 +29,6 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
       width:       6
     },
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
-    editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN]
+    editPermission: [UserPermission.CAN_MODIFY_MY_VEREIN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER]
 
 };
