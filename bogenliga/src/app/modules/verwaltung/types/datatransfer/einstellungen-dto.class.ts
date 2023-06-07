@@ -3,14 +3,13 @@ import {DataTransferObject} from '../../../shared/data-provider';
 export class EinstellungenDTO implements DataTransferObject {
 
 
-
-
   id: number;
   version: number;
   key: string;
   value: string;
   regex: string;
 
+  hidden: boolean;
 
 
   static copyFrom(optional: {
@@ -19,6 +18,7 @@ export class EinstellungenDTO implements DataTransferObject {
     key?: string;
     value?: string;
     regex?: string;
+    hidden?: boolean;
 
 
   } = {}): EinstellungenDTO {
@@ -28,7 +28,7 @@ export class EinstellungenDTO implements DataTransferObject {
     copy.key = optional.key || '';
     copy.value = optional.value || '';
     copy.regex = optional.regex || null;
-
+    copy.hidden = optional.hidden || false;
     return copy;
   }
 
