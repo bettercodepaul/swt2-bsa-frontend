@@ -22,7 +22,7 @@
     "PLAYGROUND": "Playground",
     "SPOTTING": "Spotting",
     "COLLAPSE": "Einklappen",
-    "HILFE" :  "Hilfe"
+    "HILFE": "Hilfe"
   },
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
@@ -106,17 +106,17 @@
         }
       }
     },
-      "BUTTONS":{
-        "EINZEL_ALS_PDF": {
-          "LABEL": "Einzelstatistik als PDF"
-        },
-        "GESAMT_ALS_PDF": {
-          "LABEL": "Gesamtstatistik als PDF"
+    "BUTTONS": {
+      "EINZEL_ALS_PDF": {
+        "LABEL": "Einzelstatistik als PDF"
       },
-        "TAGESUEBERSICHT_ALS_PDF": {
-          "LABEL": "Tagesübersicht als PDF"
-        }
+      "GESAMT_ALS_PDF": {
+        "LABEL": "Gesamtstatistik als PDF"
+      },
+      "TAGESUEBERSICHT_ALS_PDF": {
+        "LABEL": "Tagesübersicht als PDF"
       }
+    }
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -193,7 +193,7 @@
       "VERANSTALTUNG": "Veranstaltungen",
       "WETTKAEMPFE": "Wettkampftage",
       "LT_DURCHFUEHRUNG": "Ligatabelle Durchführung"
-      },
+    },
     "WETTKAMPF": {
       "TABLE": {
         "CDAY": "Wettkampftag",
@@ -372,7 +372,7 @@
           "LABEL": "Veranstaltungen:"
         },
         "SPORTJAHR":{
-        "LABEL": "Sportjahr:"
+          "LABEL": "Sportjahr:"
         }
 
       },
@@ -608,7 +608,8 @@
       "TABLE": {
         "HEADERS": {
           "KEY": "KEY",
-          "VALUE": "VALUE"
+          "VALUE": "VALUE",
+          "ISHIDDEN": "Versteckt"
         }
       },
       "NOTIFICATION": {
@@ -1352,50 +1353,50 @@
               "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
             }
           },
-            "NOTIFICATION": {
-              "SAVE": {
-                "TITLE": "Speichern erfolgreich",
-                "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
-              },
-              "UPDATE": {
-                "TITLE": "Update erfolgreich",
-                "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
-              },
-              "DELETE": {
-                "TITLE": "Löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
-              },
-              "ADD": {
-                "TITLE": "Neu",
-                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
-              },
-              "COPY": {
-                "TITLE": "Kopieren",
-                "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
-              },
-              "DELETE_SUCCESS": {
-                "TITLE": "Erfolgreich",
-                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
-              },
-              "DELETE_FAILURE": {
-                "TITLE": "Fehler beim Löschen",
-                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
-              },
-              "DEADLINE_EXPIRED": {
-                "TITLE": "Meldedeadline abgelaufen",
-                "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
-              },
-              "TOO_MANY": {
-                "TITLE": "Zu viele Wettkampftage",
-                "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
-              }
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Speichern erfolgreich",
+              "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Update erfolgreich",
+              "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
+            },
+            "DELETE": {
+              "TITLE": "Löschen",
+              "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+            },
+            "ADD": {
+              "TITLE": "Neu",
+              "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+            },
+            "COPY": {
+              "TITLE": "Kopieren",
+              "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
+            },
+            "DELETE_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+            },
+            "DELETE_FAILURE": {
+              "TITLE": "Fehler beim Löschen",
+              "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+            },
+            "DEADLINE_EXPIRED": {
+              "TITLE": "Meldedeadline abgelaufen",
+              "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
+            },
+            "TOO_MANY": {
+              "TITLE": "Zu viele Wettkampftage",
+              "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
             }
-          },
-          "KAMPFRICHTERLISTE": {
-            "LABEL": "Kampfrichter",
-            "LEFTCAPTION":  "abgewählt",
-            "RIGHTCAPTION": "ausgewählt"
-          },
+          }
+        },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Kampfrichter",
+          "LEFTCAPTION":  "abgewählt",
+          "RIGHTCAPTION": "ausgewählt"
+        },
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
@@ -1593,6 +1594,9 @@
           "LABEL": "Neuer Value",
           "PLACEHOLDER": "Bitte einen neuen Value eingeben",
           "ERROR": "Bitte einen gültigen Value eingeben."
+        },
+        "ISHIDDEN": {
+          "LABEL": "Versteckte Einstellungen"
         },
         "SAVE": "Speichern"
       }
