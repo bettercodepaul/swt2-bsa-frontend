@@ -169,6 +169,26 @@
         </div>
       </div>
 
+
+      <!-- File Upload -->
+      <div>
+        <input type="file" class="file-input"
+               (change)="onFileSelected($event)" #fileUpload>
+
+        <div class="file-upload">
+
+          {{fileName || "Keine Datei vorhanden"}}
+
+          <button mat-mini-fab color="primary" class="upload-btn"
+                  (click)="fileUpload.click()">
+            <mat-icon>Datei Hochladen</mat-icon>
+          </button>
+        </div>
+
+
+      </div>
+
+
       <!-- SAVE/UPDATE/DELETE BUTTON -->
       <div class="form-group row">
         <div class="col-sm-3"></div>

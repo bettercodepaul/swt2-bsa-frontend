@@ -35,7 +35,7 @@
                                   [placeholderTranslationKey]="PLACEHOLDER_VAR"
                                   [optionFieldSelector]="'ligaName'"
                                   [multipleSelections]="!multipleSelections"
-                                  [selectedItemIds]=[selectedVeranstaltungId]
+                                  [selectedItemIds]=[selectedItemId]
                                   selectionListHeight="15em"
                                   style="width: 60%; flex-grow: 0;">
 
@@ -85,6 +85,15 @@
         </div>
 
       </bla-row-layout>
+
+      <bla-actionbutton
+        [id]="'regionSaveButton'"
+        [color]= "ActionButtonColors.SECONDARY"
+        [iconClass]="zuruecksetzenIcon"
+        (onClick)="deselect()">
+        Auswahl zurücksetzen
+      </bla-actionbutton>
+
     </div>
   </div>
 </bla-common-dialog>
