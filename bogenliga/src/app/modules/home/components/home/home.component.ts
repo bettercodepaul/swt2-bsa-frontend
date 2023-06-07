@@ -22,7 +22,7 @@ import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.s
 import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
-import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
+import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
 
 const ID_PATH_PARAM = 'id';
 
@@ -118,6 +118,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();
+
 
       }
 
