@@ -27,6 +27,7 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
+import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
 
 //for notification
 import {
@@ -148,6 +149,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         this.hasID = true;
         this.checkingAndLoadingLiga(); // load liga with changes of id in url
+
       } else {
         this.hasID = false;
       }
@@ -157,10 +159,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();
+
+
       }
+
     });
-
-
   }
 
 
@@ -197,6 +200,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * Because checkExists always returns an object, handleGotLigaObject has to check
    * if the liga truly exists (if not, function returns empty LigaObject)
    * */
+
 
   private async loadLiga(urlLigaID : number){
     await this.ligaDataProvider.checkExists(urlLigaID)
@@ -427,9 +431,34 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-    const link = '/wettkaempfe/' + this.providedID;
+
+    console.log("Id der veranstaltung " + this.veranstaltung.id)
+    const link = '/wettkaempfe/' + this.veranstaltung.id;
     this.router.navigateByUrl(link);
   }
+
+
+  //BSAPP-1384
+  private getVeranstaltungen(ligaId: number) {
+    var veranstaltungsListe = [];
+
+    this.veranstaltungDataProvider.findByLigaId(ligaId)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+
+          veranstaltungsListe=response.payload
+          if (veranstaltungsListe.length == 1) {
+            this.veranstaltung = veranstaltungsListe[0]
+          } else {
+            this.veranstaltung = veranstaltungsListe.reduce((prev, current) => {
+              return (prev.sportjahr > current.sportjahr) ? prev : current;
+            })
+          }
+        })
+        .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
+          //error
+        });
+  }
+
 
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();
