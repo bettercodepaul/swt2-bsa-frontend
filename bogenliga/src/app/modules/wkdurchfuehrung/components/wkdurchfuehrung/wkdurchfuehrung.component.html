@@ -109,10 +109,10 @@
             [id]="'downloadBogenkontrollliste'"
             [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
             [fileName]="'bogenkontrollliste.pdf'"
-            [disabled]="isDisabled()"
             [color]="ActionButtonColors.PRIMARY"
-            [iconClass]="'file-download'">
-            {{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+            [iconClass]="'file-download'"
+            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+
           </bla-download-actionbutton>
 
           <bla-download-actionbutton

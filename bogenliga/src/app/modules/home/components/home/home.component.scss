@@ -1,19 +1,11 @@
 @import 'src/styles.scss';
 
-h1{
-  font-size: 2.8em;
+#homePage {
+  max-width: 89%;
 }
 
-// basic css of content
-.homeContent {
-  margin: 5px;
-  padding: 15px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  align-content: space-around;
-  flex-wrap: wrap;
+h1{
+  font-size: 2.8em;
 }
 
 // container for pictures and text
@@ -27,6 +19,7 @@ h1{
 
 .news-container{
   display: flex;
+
 }
 
 // css for Images of containers
@@ -43,7 +36,59 @@ h1{
 .home-page-wrapper {
   padding: 1em;
   display: flex;
-  flex-direction: column;
-  align-items: center;
 }
+
+.container {
+  display: grid;
+  max-width:100%;
+  margin: 0 auto;
+  grid-template-columns: 50% 50%;
+  grid-template-areas:
+    "calendar shortcuts"
+    "news news";
+  column-gap: 10%;
+  min-height: 40vh
+}
+
+  .calendar {
+    grid-area: calendar;
+    width: 100%;
+    display: block;
+    vertical-align: top;
+  }
+
+  .shortcuts {
+    grid-area: shortcuts;
+    width: 100%;
+    display: block;
+    vertical-align: top;
+  }
+
+  .news {
+    grid-area: news;
+    width: 100%;
+    display: block;
+    clear: left;
+
+    /*
+        position: absolute;
+        text-align: left;
+        margin: 5px;
+        padding: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        align-content: space-around;
+        flex-wrap: wrap;*/
+  }
+
+
+
+
+
+
+
+
+
 
