@@ -22,22 +22,8 @@
           <h1 date-day>{{veranstaltung.day}}</h1>
         </bla-veranstaltungen-button>
       </div>
-      <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:100%; margin-left: 15px;">
-        <div class="row">
-          <bla-data-table [config]="config_table"
-                          [rows]="rows"
-                          [loading]="loadingTable"
-                          [hidden]="checkIfTableIsEmpty()"
-                          (onMapEntry)="onMap($event)">
-
-          </bla-data-table>
-        </div>
-      </table>
-    </div>
-
+      <p [hidden]="!chekIfVeranstaltungskalender()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
+      </div>
     <!-- Row 1 -->
     <div class="shortcuts">
       <bla-shortcut-button  [config]="config_shortcut"></bla-shortcut-button>
