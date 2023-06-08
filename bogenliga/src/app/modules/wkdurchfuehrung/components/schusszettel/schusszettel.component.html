@@ -424,41 +424,42 @@
   </div>
 
   <div >
-    <div id="buttonContainer"> <!-- Spalte mit Buttons zum speichern/drucken links -->
 
-      <button (click)="previous()"
-              style="margin-right: 10px; width: 170px"
-              class="btn btn-primary nextButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.VORHERIGES_MATCH' | translate }}
-      </button>
+    <div id="buttonContainer" > <!-- Spalte mit Buttons zum speichern/drucken links -->
+
+      <bla-actionbutton
+        (onClick)="previous()"
+        [iconClass]="'long-arrow-alt-left'"
+
+        >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.VORHERIGES_MATCH' | translate }}</bla-actionbutton>
+
+      <bla-actionbutton
+        (onClick)="back()"
+        [iconClass]="'arrow-alt-circle-left'"
+      >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.ZURUECK' | translate }}</bla-actionbutton>
+
+      <bla-actionbutton
+        (onClick)="save()"
+        [iconClass]="'save'"
+      >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SPEICHERN' | translate }}</bla-actionbutton>
 
 
-      <button (click)=" back()"
-              style="margin-right: 10px"
-              class="btn btn-primary backButton"
-      >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.ZURUECK' | translate }}
-      </button>
-
-      <button (click)="save()"
-              class="btn btn-primary saveButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.SPEICHERN' | translate }}
-      </button>
-
-      <bla-download-button
-        class="btn"
+      <bla-download-actionbutton
+        [iconClass]="'file-download'"
         [id]="'downloadMatchSchusszettel'"
         [downloadUrl]="onButtonDownload('pdf/schusszettel_matches')"
         [fileName]="'match_schusszettel.pdf'"
         [disabled]="false">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.DRUCKEN' | translate }}
-      </bla-download-button>
+      </bla-download-actionbutton>
 
-      <!--        style="width: 100px; height: 40px; margin-left: 20px; margin-top: 3px" --->
+      <bla-actionbutton
+        (onClick)="next()"
+        [iconClass]="'long-arrow-alt-right'"
+      >{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NAECHSTES_MATCH' | translate }}</bla-actionbutton>
 
-      <button (click)="next()"
-              style="width: 170px"
-              class="btn btn-primary nextButton">{{ 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NAECHSTES_MATCH' | translate }}
-      </button>
+           <!--        style="width: 100px; height: 40px; margin-left: 20px; margin-top: 3px" --->
 
     </div>
-
   </div>
 
 

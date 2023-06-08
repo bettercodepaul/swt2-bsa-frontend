@@ -53,8 +53,11 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
   templateUrl: './wkdurchfuehrung.component.html',
   styleUrls: ['./wkdurchfuehrung.component.scss']
 })
+
 export class WkdurchfuehrungComponent extends CommonComponentDirective implements OnInit {
 
+  public div1Visible: boolean = false;
+  public div2Visible: boolean = true;
   public ActionButtonColors = ActionButtonColors;
   public config = WKDURCHFUEHRUNG_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
@@ -122,6 +125,11 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   ) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
+  }
+
+  toggleDiv(){
+    this.div1Visible = !this.div1Visible;
+    this.div2Visible = !this.div2Visible;
   }
 
   ngOnInit() {
@@ -528,9 +536,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public checkMannschaften() {
     this.dsbMannschaftDataProviderService.findAllByVeranstaltungsId(this.selectedVeranstaltungId).then(r => {
       if (r.payload.length > 0) {
-        this.disabledButton = false;
-      } else {
         this.disabledButton = true;
+      } else {
+        this.disabledButton = false;
       }
     });
   }
@@ -538,13 +546,16 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Zeigt Matches an
   public showMatches() {
-    this.disabledButton = true;
+    //this.disabledButton = true;
     this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
       .then((response: BogenligaResponse<MatchDTOExt[]>) => {
         // Prüfe ob Matches schon existieren
         if (response.payload.length !== 0) {
+          //this.disabledButton = true;
           this.checkMannschaften();
+          this.disabledOtherButtons = false;
         } else {
+          this.disabledOtherButtons = true;
           this.checkMannschaften();
           // prüfe, ob es sich um den ersten wettkampftag handelt
           if (this.selectedWettkampfListeIndex  === 0) {
@@ -598,19 +609,18 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // wenn ein Wettkampftag ausgewÃ¤hlt wurde - dann werden die Button enabled,
   // da die Ligatabelle-ID als Parameter weiter gegeben wird.
 
+  //!this.selectedWettkampfId
   public isDisabled(): boolean {
-    return !this.selectedWettkampfId; // prüft, ob ein Wettkampf ausgewählt wurde
+    return this.disabledOtherButtons; // prüft, ob ein Wettkampf ausgewählt wurde
   }
 
   // macht buttons unklickbar wenn die Anwendung offline ist
   public isOfflineDisabled(): boolean {
     return this.onOfflineService.isOffline();
   }
-
-
-
+ //!this.selectedWettkampfId ||
   public isDisabledGMButton(): boolean {
-    return !this.selectedWettkampfId || this.disabledButton; //prüft ob der disabledButton-Wert auf true gesetzt ist & ob ein Wettkampf ausgwählt wurde
+    return this.disabledButton; //prüft ob der disabledButton-Wert auf true gesetzt ist & ob ein Wettkampf ausgwählt wurde
   }
 
   /*public PasseDTO loadDsbMitglied() {
@@ -642,14 +652,12 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
 
   public generateMatches() {
-    this.disabledButton = true; //verhindern, dass der Button mehrmals geklickt wird
     this.matchDataProvider.generateDataForMatches(this.selectedWettkampfId)
         .then(() => {
           this.showMatches();
-          this.disabledButton = false;
+          //this.disabledButton = true;
         })
         .catch((error) => {
-          this.disabledButton = false;
           this.handleFailureGenerateMatchesMissingMitglied();
           this.showMatches();
         });

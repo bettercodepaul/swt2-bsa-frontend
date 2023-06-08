@@ -235,6 +235,33 @@ export class SchusszettelComponent implements OnInit {
               if (this.onOfflineService.isOffline()) {
                 this.notificationService.discardNotification();
               }
+
+              let stringMatch1 = this.match1.mannschaftName;
+              let stringMatch2 = this.match2.mannschaftName;
+              let auffuellmannschaft= 'Auffüllmannschaft';
+
+              if(stringMatch1.includes(auffuellmannschaft)) {
+                for (const i of Object.keys(this.match1.schuetzen)) {
+                  this.match1.schuetzen[i][0].rueckennummer = 0;
+                  for(let j=0; j<=4; j++){
+                    this.match1.schuetzen[i][j].ringzahlPfeil1 = 0;
+                    this.match1.schuetzen[i][j].ringzahlPfeil2 = 0;
+                  }
+                }
+                this.match1.satzpunkte = 0;
+                this.match1.matchpunkte = 0;
+
+              }else if(stringMatch2.includes(auffuellmannschaft)){
+                for (const i of Object.keys(this.match2.schuetzen)) {
+                  this.match2.schuetzen[i][0].rueckennummer = 0;
+                  for(let j=0; j<=4; j++){
+                    this.match2.schuetzen[i][j].ringzahlPfeil1 = 0;
+                    this.match2.schuetzen[i][j].ringzahlPfeil2 = 0;
+                  }
+                }
+                this.match2.satzpunkte = 0;
+                this.match2.matchpunkte = 0;
+              }
             })
             .catch((error) => {
               console.error(error);
@@ -409,25 +436,30 @@ export class SchusszettelComponent implements OnInit {
    }
 
 
-   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
-      this.notificationService.showNotification({
-        id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
-        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.DESCRIPTION',
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.SYSTEM,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.ACCEPTED
-      });
-    } else if (
-      // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
-      // daher prüfen wir hier ersten auf "leer" d.h. gleich 0
-      this.match1.schuetzen[0][0].rueckennummer == null ||
-      this.match1.schuetzen[1][0].rueckennummer == null ||
-      this.match1.schuetzen[2][0].rueckennummer == null ||
-      this.match2.schuetzen[0][0].rueckennummer == null ||
-      this.match2.schuetzen[1][0].rueckennummer == null ||
-      this.match2.schuetzen[2][0].rueckennummer == null) {
+   let stringMatch1 = this.match1.mannschaftName;
+   let stringMatch2 = this.match2.mannschaftName;
+   let auffuellmannschaft= 'Auffüllmannschaft';
+
+   if (this.match1.satzpunkte > 7 && !stringMatch1.includes(auffuellmannschaft)
+     || this.match2.satzpunkte > 7 && !stringMatch2.includes(auffuellmannschaft)) {
+     this.notificationService.showNotification({
+       id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+       title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
+       description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.DESCRIPTION',
+       severity:    NotificationSeverity.ERROR,
+       origin:      NotificationOrigin.SYSTEM,
+       type:        NotificationType.OK,
+       userAction:  NotificationUserAction.ACCEPTED
+     });
+   } else if (
+     // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
+     // daher prüfen wir hier ersten auf "leer" d.h. gleich 0
+     this.match1.schuetzen[0][0].rueckennummer == null && !stringMatch1.includes(auffuellmannschaft) ||
+     this.match1.schuetzen[1][0].rueckennummer == null && !stringMatch1.includes(auffuellmannschaft) ||
+     this.match1.schuetzen[2][0].rueckennummer == null && !stringMatch1.includes(auffuellmannschaft) ||
+     this.match2.schuetzen[0][0].rueckennummer == null && !stringMatch2.includes(auffuellmannschaft) ||
+     this.match2.schuetzen[1][0].rueckennummer == null && !stringMatch2.includes(auffuellmannschaft) ||
+     this.match2.schuetzen[2][0].rueckennummer == null && !stringMatch2.includes(auffuellmannschaft)) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
@@ -440,12 +472,12 @@ export class SchusszettelComponent implements OnInit {
     } else if (
       // und jetzt prüfen wir noch ob in einer Mannschaft die gleiche
       // Schützennummer zweimal angegeben wurde -> auch nicht möglich
-      this.match1.schuetzen[0][0].rueckennummer === this.match1.schuetzen[1][0].rueckennummer ||
-      this.match1.schuetzen[1][0].rueckennummer === this.match1.schuetzen[2][0].rueckennummer ||
-      this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer ||
-      this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer ||
-      this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer ||
-      this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer) {
+     this.match1.schuetzen[0][0].rueckennummer === this.match1.schuetzen[1][0].rueckennummer  && !stringMatch1.includes(auffuellmannschaft)||
+     this.match1.schuetzen[1][0].rueckennummer === this.match1.schuetzen[2][0].rueckennummer  && !stringMatch1.includes(auffuellmannschaft)||
+     this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer  && !stringMatch1.includes(auffuellmannschaft)||
+     this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer  && !stringMatch2.includes(auffuellmannschaft)||
+     this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer  && !stringMatch2.includes(auffuellmannschaft)||
+     this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer  && !stringMatch2.includes(auffuellmannschaft)) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
@@ -458,8 +490,8 @@ export class SchusszettelComponent implements OnInit {
     } else {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SPEICHERN',
-        title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
-        description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SPEICHERN.DESCRIPTION',
         severity:    NotificationSeverity.INFO,
         origin:      NotificationOrigin.USER,
         // type: NotificationType.OK, //--TO-DO Maximilian
@@ -494,8 +526,8 @@ export class SchusszettelComponent implements OnInit {
             this.ngOnInit();
             this.notificationService.showNotification({
               id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-              title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
-              description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
+              title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
+              description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
               severity:    NotificationSeverity.ERROR,
               origin:      NotificationOrigin.SYSTEM,
               type:        NotificationType.OK,
@@ -505,8 +537,8 @@ export class SchusszettelComponent implements OnInit {
             console.error(error);
             this.notificationService.showNotification({
               id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-              title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
-              description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
+              title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
+              description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
               severity:    NotificationSeverity.ERROR,
               origin:      NotificationOrigin.SYSTEM,
               type:        NotificationType.OK,
@@ -531,8 +563,8 @@ export class SchusszettelComponent implements OnInit {
       // TODO Texte in json.de anlegen
       const notification: Notification = {
         id:          NOTIFICATION_ZURUECK,
-        title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
-        description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ZURUECK.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ZURUECK.DESCRIPTION',
         severity:    NotificationSeverity.QUESTION,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.YES_NO,
@@ -581,8 +613,8 @@ export class SchusszettelComponent implements OnInit {
       // TODO TExte in json.de anlegen
       const notification: Notification = {
         id:          NOTIFICATION_WEITER_SCHALTEN,
-        title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
-        description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
         severity:    NotificationSeverity.QUESTION,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.YES_NO,
@@ -623,8 +655,8 @@ export class SchusszettelComponent implements OnInit {
       // TODO TExte in json.de anlegen
       const notification: Notification = {
         id:          NOTIFICATION_WEITER_SCHALTEN,
-        title:       'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
-        description: 'wkdurchfuehrung.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.WEITER.DESCRIPTION',
         severity:    NotificationSeverity.QUESTION,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.YES_NO,

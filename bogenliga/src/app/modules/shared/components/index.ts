@@ -10,6 +10,7 @@ export * from './layouts';
 export * from './tooltips';
 export * from './dropdowns';
 export * from './selectionlists';
+export * from './expand';
 
 export * from './common/common-component.class';
 export * from './common/common-secured-component.class';
