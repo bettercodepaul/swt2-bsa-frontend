@@ -77,7 +77,7 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
-    if(id == 9999) {
+    if(id == 99) {
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_VEREINE + id,
         title:            'MANAGEMENT.VEREINE.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.TITLE',
