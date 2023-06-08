@@ -43,6 +43,10 @@
       "BOX1HEADING": "STUDENT CUP 2018",
       "BOX1CONTENT": "Be there..."
     },
+    "LIGADETAILES": {
+      "IDWARNING": "Wrong Liga ID",
+      "DESCRIPTION": "No valid league ID could be read from the URL"
+    },
     "IMPRESSUM": {
       "TITLE": "Imprint"
     }
@@ -801,6 +805,12 @@
           "TITLE": "Delete club",
           "DESCRIPTION": "Are you sure, you want to delete the club with ID=%s? This can not be undone."
         }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Delete fill in club",
+          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
+        }
       }
     },
     "VEREIN_DETAIL": {
@@ -813,7 +823,7 @@
         },
         "VEREIN_IDENTIFIER": {
           "LABEL": "Club number",
-          "PLACEHOLDER": "Please enter a identifier for the club",
+          "PLACEHOLDER": "Please enter an identifier for the club",
           "ERROR": "Please enter a valid identifier."
         },
         "VEREIN_REGION": {
@@ -872,6 +882,12 @@
         "SAVE_FAILURE": {
           "TITLE": "Error while saving",
           "DESCRIPTION": "Sports director has no authority over this club or this target region."
+        }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Delete fill in club",
+          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
         }
       }
     },
@@ -1010,6 +1026,14 @@
         "NO_LICENSE": {
           "TITLE": "Error while downloading",
           "DESCRIPTION": "Could not download licence, because there is none available for this marksman."
+        },
+        "UPDATE": {
+          "FAILURE": {
+            "FULL": {
+              "TITLE": "Event already fully booked: Unable to update roster",
+              "DESCRIPTION": "Due to the event being already fully booked, we regret to inform you that updating the participant list is currently not possible."
+            }
+          }
         }
       }
     },
