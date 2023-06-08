@@ -33,7 +33,6 @@ export class CurrentUserService {
               private store: Store<AppState>,
               private router: Router) {
     this.observeUserState();
-    this.observeSessionExpiredNotifications();
     this.loadCurrentUser();
   }
 
@@ -157,6 +156,10 @@ export class CurrentUserService {
     return this.isUserLoggedIn;
   }
 
+  public setIsLoggedIn(isLoggedIn: boolean) {
+    this.isUserLoggedIn = isLoggedIn;
+}
+
   // TODO: remove because unused
   public isDefaultUser(): boolean {
     return this.isDefaultUserLoggedIn;
@@ -193,26 +196,7 @@ export class CurrentUserService {
         });
   }
 
-  private observeSessionExpiredNotifications() {
-    this.store.pipe(
-      select((state) => state.notificationState),
-      filter((notificationState) => !isNullOrUndefined(notificationState.notification)),
-      map((notificationState) => notificationState.notification),
-      filter((notification) => notification.id === 'NO_SESSION_ERROR'),
-      filter((notification) => notification.userAction === NotificationUserAction.ACCEPTED)
-    ).subscribe((notification: Notification) => {
-      // dont logout user if the application is in offlinemode
-      this.store.select((state) => state.onOfflineState.isOffline).subscribe((offline) => {
-        if (offline) {
-          return;
-        }
-      });
-      console.log('ExpiredNotification');
-      this.logout();
-      this.isUserLoggedIn = false;
-      this.router.navigateByUrl('/user/login');
-    });
-  }
+
 
   private getCurrentUser(): UserSignInDTO {
     return this.currentUser;
