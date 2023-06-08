@@ -19,73 +19,7 @@
           <h1 date-day>{{veranstaltung.day}}</h1>
         </bla-veranstaltungen-button>
       </div>
-      <p [hidden]="!checkIfTableIsEmpty()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
-      <table id="example"
-             class="table table-hover table-sm table-responsive-sm thead-light table-striped"
-             style="width:100%; margin-left: 15px;">
-        <div class="row">
-          <bla-data-table [config]="config_table"
-                          [rows]="rows"
-                          [loading]="loadingTable"
-                          [hidden]="checkIfTableIsEmpty()"
-                          (onMapEntry)="onMap($event)">
-
-              <!--
-        <h3> <a class="blackLink"
-               routerLink="/wettkaempfe">{{ 'HOME.HOME.WETTKAEMPFE' | translate }}</a></h3>
-  -->
-              <!-- headlines -->
-              <!-- <thead>
-               <tr>
-                 -- These are taken out of the JSON File ->
-                 <th>{{ 'TABLE.DATE' | translate }}</th>
-                 <th>{{ 'TABLE.TIME' | translate }}</th>
-                 <th>{{ 'TABLE.LIGA' | translate }}</th>
-                 <th>{{ 'TABLE.PLACE' | translate }}</th>
-               </tr>
-               </thead>-->
-              <!-- Rows -->
-              <!--
-                        <tbody>
-                        <tr>
-                          <td>03.11.2018</td>
-                          <td>14:00</td>
-                          <td>2. Bundesliga</td>
-                          <td>Welzheim</td>
-                        </tr>
-
-                        <tr>
-                          <td>17.11.2018</td>
-                          <td>14:00</td>
-                          <td>Landesliga Nord Recurve</td>
-                          <td>Welzheim</td>
-                        </tr>
-
-                        <tr>
-                          <td>17.11.2018</td>
-                          <td>10:00</td>
-                          <td>Landesliga A Compound</td>
-                          <td>Hochdorf o. Essendorf</td>
-
-                        <tr>
-                          <td>17.11.2018</td>
-                          <td>14:00</td>
-                          <td>Württembergliga Compound</td>
-                          <td>Hochdorf o. Essendorf</td>
-                        </tr>
-
-                        <tr>
-                          <td>18.11.2018</td>
-                          <td>10:00</td>
-                          <td>Landesliga Süd Recurve</td>
-                          <td>Hochdorf o. Essendorf</td>
-                        </tr>
-                        </tbody>
-                        -->
-
-            </bla-data-table>
-          </div>
-        </table>
+      <p [hidden]="!chekIfVeranstaltungskalender()">{{ 'HOME.HOME.WETTKAMPFERSATZ' | translate }}</p>
       </div>
 
 
