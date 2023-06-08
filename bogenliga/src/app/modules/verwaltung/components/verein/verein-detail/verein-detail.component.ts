@@ -262,7 +262,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     const id = this.currentVerein.id;
 
 
-    if(id==9999) {
+    if(id==99) {
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_VEREIN + id,
         title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.TITLE',
