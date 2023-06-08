@@ -137,7 +137,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
       this.setCorrectID();
-      // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
     }
 
 
@@ -158,7 +157,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.checkingAndLoadingLiga();
       }
     });
-    this.getVeranstaltungen(this.providedID);
+    this.hasID ? this.getVeranstaltungen(this.providedID):undefined;
   }
 
 
