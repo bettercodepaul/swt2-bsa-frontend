@@ -44,10 +44,16 @@ export class LoginComponent implements OnInit {
   public config = USER_LOGIN_CONFIG;
   private destinationRouteAfterLogin = '/home';
 
-  constructor(private loginDataProviderService: LoginDataProviderService, private currentUserService: CurrentUserService, private route: ActivatedRoute, private router: Router) {
+  constructor(private loginDataProviderService: LoginDataProviderService,
+               private currentUserService: CurrentUserService,
+               private route: ActivatedRoute,
+               private router: Router) {
   }
 
   ngOnInit() {
+    if (this.currentUserService.isLoggedIn() === false) {
+      this.loginDataProviderService.signInDefaultUser();
+    }
     this.route.queryParams.subscribe((params) => {
       if (!isUndefined(params[LOGIN_REDIRECT_QUERY_PARAM])) {
         this.destinationRouteAfterLogin = params[LOGIN_REDIRECT_QUERY_PARAM];
