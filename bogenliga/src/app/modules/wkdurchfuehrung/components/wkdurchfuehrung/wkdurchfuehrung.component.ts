@@ -536,9 +536,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public checkMannschaften() {
     this.dsbMannschaftDataProviderService.findAllByVeranstaltungsId(this.selectedVeranstaltungId).then(r => {
       if (r.payload.length > 0) {
-        this.disabledButton = true;
-      } else {
         this.disabledButton = false;
+      } else {
+        this.disabledButton = true;
       }
     });
   }
@@ -551,9 +551,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
       .then((response: BogenligaResponse<MatchDTOExt[]>) => {
         // Prüfe ob Matches schon existieren
         if (response.payload.length !== 0) {
-          //this.disabledButton = true;
           this.checkMannschaften();
           this.disabledOtherButtons = false;
+          //this.disabledButton = true;
         } else {
           this.disabledOtherButtons = true;
           this.checkMannschaften();
@@ -568,7 +568,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
             this.matchProvider.findAllWettkampfMatchesAndNamesById(this.wettkampfListe[this.selectedWettkampfListeIndex - 1].id)
               .then((response1: BogenligaResponse<MatchDTOExt[]>) => {
                 // wenn es keine Matches gibt
-                this.disabledButton = response1.payload.length === 0; // Falls erstes Match angefragt wird
+                this.disabledButton = response1.payload.length === 0;// Falls erstes Match angefragt wird
               }).catch((reason) => {
               console.error('Error at findAllWettkampfMatchesAndNamesByID: ' + reason);
             });
@@ -622,7 +622,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   public isDisabledGMButton(): boolean {
     return this.disabledButton; //prüft ob der disabledButton-Wert auf true gesetzt ist & ob ein Wettkampf ausgwählt wurde
   }
-
+  /*public isDisabledGMButton(): boolean {
+    if(this.disabledOtherButtons == true){
+      return this.disabledButton = false;
+    }else{
+      return this.disabledButton = true;
+    }//prüft ob der disabledButton-Wert auf true gesetzt ist & ob ein Wettkampf ausgwählt wurde
+  }*/
   /*public PasseDTO loadDsbMitglied() {
     this.matchProvider.findAllWettkampfMatchesAndNamesById(this.selectedWettkampfId)
         .then((response: BogenligaResponse<MatchDTOExt[]>) => {
@@ -659,7 +665,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         })
         .catch((error) => {
           this.handleFailureGenerateMatchesMissingMitglied();
-          this.showMatches();
+          //this.showMatches();
         });
   }
 
