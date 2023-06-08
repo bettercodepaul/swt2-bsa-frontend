@@ -209,6 +209,7 @@ export class CurrentUserService {
       });
       console.log('ExpiredNotification');
       this.logout();
+      this.isUserLoggedIn = false;
       this.router.navigateByUrl('/user/login');
     });
   }
