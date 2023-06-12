@@ -45,7 +45,7 @@
     },
     "LIGADETAILES": {
       "IDWARNING": "Wrong Liga ID",
-      "DESCRIPTION": "No valid league ID could be read from the URL"
+      "DESCRIPTION": "No valid league link could be found"
     },
     "IMPRESSUM": {
       "TITLE": "Imprint"
