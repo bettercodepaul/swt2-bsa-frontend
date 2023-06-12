@@ -65,7 +65,6 @@ Cypress.Commands.add("restoreLocalStorage", () => {
 });
 
 
-// Cypress.Commands.add('logout', () => {
 /**
  * Logs out the user.
  *
