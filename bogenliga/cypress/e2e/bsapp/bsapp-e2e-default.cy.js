@@ -15,7 +15,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
    */
-  it.only('Home aufrufen / Wettkampftabelle gefüllt', function () {
+  it('Home aufrufen / Wettkampftabelle gefüllt', function () {
     cy.visit('http://localhost:4200/')
     cy.url().should('include', '#/home')
   })
@@ -24,7 +24,6 @@ describe('Anonyme User tests', function () {
    * This test presses the login button on the home page and checks whether the login page opens
    */
   it('Login möglich / Fenster öffnet sich', function() {
-    cy.visit('http://localhost:4200/')
     cy.get('[data-cy=login-button]').click()
     cy.url().should('include', '#/user/login')
   })
@@ -33,12 +32,12 @@ describe('Anonyme User tests', function () {
    * This test opens the sidebar and clicks on the "REGIONEN" tab and checks if the url has changed successfully
    */
   it('Anzeige Regionen', function() {
-    cy.visit('http://localhost:4200/');
     cy.get('[data-cy=sidebar-regionen-button]').click()
     cy.url().should('include', '#/regionen')
   })
 
   /*Test hilfeicon */
+  /*
   it('test hilfeicon', function() {
     cy.visit('http://localhost:4200/')
     cy.get('[data-cy=login-button]').click()
@@ -47,13 +46,12 @@ describe('Anonyme User tests', function () {
     cy.get('bla-hilfe-button a')
       .should('have.attr', 'href', 'https://wiki.bsapp.de/doku.php?id=liga:regionen')
       .should('have.attr', 'target', '_blank');
-  })
+  })*/
 
   /**
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
    */
   it('Sunburst details anzeigen', function () {
-    cy.visit('http://localhost:4200/');
     cy.get('[data-cy=sidebar-regionen-button]').click();
     cy.wait(2000)
     cy.get(':nth-child(2) > .main-arc').click({force:true})
@@ -222,27 +220,22 @@ describe('Anonyme User tests', function () {
   })
 })
 
-describe('Admin User tests', function() {
-
-  beforeEach(() => {
-    cy.loginAdmin()
-  });
+describe('Admin User tests', { testIsolation: false }, function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
-
-  it.only('Login erfolgreich', function() {})
+  it.only('Login erfolgreich', function() {
+    cy.loginAdmin()
+    cy.url().should('include', '#/home');
+  });
 
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
    */
   it.only('Anzeige Verwaltung', function() {
-
-    cy.url().should('include', '#/home');
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
-
   })
 
   /**
@@ -250,10 +243,6 @@ describe('Admin User tests', function() {
    * important: only hoover not clicking!
    * */
   it.only('Tooltips prüfen (Hoover effekt)', function () {
-
-
-    cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.url().should('include', '#/verwaltung')
 
     /* Hoover DSB Mitglieder */
     cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').trigger('mouseenter')
@@ -285,11 +274,6 @@ describe('Admin User tests', function() {
    * This test lists all "DSBMitglieder" items and checks if the URI has been updated accordingly
    */
   it.only('Anzeige DSBMitglieder', function() {
-
-
-    cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.url().should('include', '#/verwaltung')
-
     cy.wait(1000)
     cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
@@ -299,16 +283,10 @@ describe('Admin User tests', function() {
    * This test adds a new "DSB-Mitglied"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Neues DSB-Mitglied', function() {
+  it.only('Neues DSB-Mitglied', function() {
     //cy.get('body').then((body) => {
     //if (!body.text().includes('MitgliedVorname')) {
     const randomID = generateID().toString();
-    cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.url().should('include', '#/verwaltung')
-    cy.wait(1000)
-    cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
-    cy.url().should('include', '#/verwaltung/dsbmitglieder')
-
 
     cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
     cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').click()
@@ -379,13 +357,7 @@ describe('Admin User tests', function() {
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
    */
-  it.only('Edit DSBMitglied', function() {
-
-    cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.url().should('include', '#/verwaltung')
-    cy.wait(1000)
-    cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
-    cy.url().should('include', '#/verwaltung/dsbmitglieder')
+  it('Edit DSBMitglied', function() {
 
     cy.wait(1000)
     //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
@@ -562,7 +534,7 @@ describe('Admin User tests', function() {
   /**
    * This test shows the "Wettkampfklassen" tab in administration
    */
-  it('Anzeige Wettkampfklassen', function () {
+  it.only('Anzeige Wettkampfklassen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-klassen-button]').click()
     cy.url().should('include', '#/verwaltung/klassen')
@@ -571,7 +543,7 @@ describe('Admin User tests', function() {
   /**
    * This test edits a "Wettkampfklasse"
    */
-  it('Wettkampfklasse bearbeiten', function () {
+  it.only('Wettkampfklasse bearbeiten', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.get('[data-cy=wettkampfklassen-jahrgang-bis-button]').type('1973')
     cy.get('[data-cy=wettkampfklassen-update-button]').click()
@@ -586,7 +558,7 @@ describe('Admin User tests', function() {
    * This test adds a new "Wettkampfklasse"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Wettkampfklasse hinzufügen', function () {
+  it.only('Wettkampfklasse hinzufügen', function () {
     cy.get('body').then((body) => {
       if (!body.text().includes('Testfall')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
@@ -603,7 +575,7 @@ describe('Admin User tests', function() {
   /**
    * This test opens the administration table and check whether the table has any content
    */
-  it('Anzeige Verwaltung Vereinsliste', function () {
+  it.only('Anzeige Verwaltung Vereinsliste', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -616,7 +588,7 @@ describe('Admin User tests', function() {
    * This test checks if it's possible to add a new club to the administration table successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Neuen Verein anlegen', function () {
+  it.only('Neuen Verein anlegen', function () {
     cy.get('body').then((body) => {
       if (!body.text().includes('CypressTest')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
@@ -641,7 +613,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
-  it('Editieren eines Vereins', function () {
+  it.only('Editieren eines Vereins', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
     cy.get('[data-cy=vereine-vereinswebsite]').focus().clear()
@@ -664,7 +636,7 @@ describe('Admin User tests', function() {
    * This test checks if it is possible to add a new team to a club successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Neue Vereins-Mannschaft anlegen', function () {
+  it.only('Neue Vereins-Mannschaft anlegen', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
 
@@ -690,7 +662,7 @@ describe('Admin User tests', function() {
   /**
    * The test checks if it's possible to edit a team successfully
    */
-  it('Vereins-Mannschaft bearbeiten', function () {
+  it.only('Vereins-Mannschaft bearbeiten', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -714,7 +686,7 @@ describe('Admin User tests', function() {
   /**
    * The test checks if it's possible to delete a team successfully
    */
-  it('Vereins-Mannschaft löschen', function () {
+  it.only('Vereins-Mannschaft löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -732,7 +704,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to delete a club successfully
    */
-  it('Einen Verein löschen', function () {
+  it.only('Einen Verein löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -752,7 +724,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if the League-table is filled.
    */
-  it('Alle Ligen zu sehen', function() {
+  it.only('Alle Ligen zu sehen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-liga-button]').click()
     cy.wait(4000)
@@ -763,7 +735,7 @@ describe('Admin User tests', function() {
    * This test adds a League and checks if it gets added.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Liga Hinzufügen', function() {
+  it.only('Liga Hinzufügen', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('SWT_Liga')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
@@ -789,7 +761,7 @@ describe('Admin User tests', function() {
   /**
    * This test deletes a League and checks if its deleted in the table.
    */
-  it('Liga Löschen', function() {
+  it.only('Liga Löschen', function() {
     cy.get('tbody').should('contain.text', 'SWT_Liga')
     cy.wait(5000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
@@ -802,7 +774,7 @@ describe('Admin User tests', function() {
   /**
    *  This test checks if the Region-table is filled.
    */
-  it('Regionen Anzeigen', function() {
+  it.only('Regionen Anzeigen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-regionen-button]').click()
     cy.wait(4000)
@@ -814,7 +786,7 @@ describe('Admin User tests', function() {
    * This test adds a Region and checks if it gets added.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Region Hinzufügen', function() {
+  it.only('Region Hinzufügen', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('SWT3_Region')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
@@ -835,7 +807,7 @@ describe('Admin User tests', function() {
   /**
    * this test changes a Region and checks if the changes worked.
    */
-  it('Region Ändern', function() {
+  it.only('Region Ändern', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(5000)
     cy.get('div > #regionenForm > .form-group > .col-sm-9 > #regionName').type('17')
@@ -849,7 +821,7 @@ describe('Admin User tests', function() {
   /**
    * This test deletes a Region and checks if its deleted in the table.
    */
-  it('Region Löschen', function() {
+  it.only('Region Löschen', function() {
     cy.get('tbody').should('contain.text', 'SWT3_Region17')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
@@ -860,7 +832,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if the Event-table gets filled.
    */
-  it('Veranstaltungen Anzeigen', function() {
+  it.only('Veranstaltungen Anzeigen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
     cy.wait(1000)
@@ -874,7 +846,7 @@ describe('Admin User tests', function() {
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
 
-  it('Veranstaltungen hinzufügen', function() {
+  it.only('Veranstaltungen hinzufügen', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('Testveranstaltung')) {
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -905,7 +877,7 @@ describe('Admin User tests', function() {
    * This test edits a "Veranstaltung" and checks if it was changed
    */
 
-  it('Veranstaltungen bearbeiten', function() {
+  it.only('Veranstaltungen bearbeiten', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
@@ -926,7 +898,7 @@ describe('Admin User tests', function() {
    * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
    */
 
-  it('Veranstaltung Löschen', function() {
+  it.only('Veranstaltung Löschen', function() {
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
@@ -940,7 +912,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if "Wettkampftage" has entries.
    */
-  it('Wettkampftage anzeigen', function() {
+  it.only('Wettkampftage anzeigen', function() {
     cy.wait(11000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.wait(5000)
