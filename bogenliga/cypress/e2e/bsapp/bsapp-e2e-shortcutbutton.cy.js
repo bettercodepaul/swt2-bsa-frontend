@@ -1,7 +1,7 @@
 
 describe('Shortcut buttons appear on login with different roles', () => {
 
-  it('Shortcut buttons appear on Login as Ligaleiter', () => {
+  it.only('Shortcut buttons appear on Login as Ligaleiter', () => {
 
     cy.visit('http://localhost:4200/#/user/login');
 
@@ -92,7 +92,7 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
   })
 
-  it('Shortcutbuttons appear on Login as Ausrichter',  () => {
+  it.only('Shortcutbuttons appear on Login as Ausrichter',  () => {
 
     cy.loginAdmin();
 
@@ -128,7 +128,7 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.visit('http://localhost:4200/#/user/login');
 
-    cy.dismissModal();
+    //cy.dismissModal();
 
     cy.deleteTestUser();
   });

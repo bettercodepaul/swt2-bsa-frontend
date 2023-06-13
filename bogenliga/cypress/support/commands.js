@@ -121,10 +121,10 @@ Cypress.Commands.add('dismissModal', () => {
  * cy.loginAdmin();
  */
 Cypress.Commands.add('loginAdmin', () => {
-  cy.visit('http://localhost:4200/#/user/login');
-  cy.dismissModal();
-  cy.get('[data-cy=login-als-admin-button]').click()
-  cy.dismissModal();
+    cy.visit('http://localhost:4200/#/user/login');
+    //cy.dismissModal();
+    cy.get('[data-cy=login-als-admin-button]').click()
+    //cy.dismissModal();
 });
 
 

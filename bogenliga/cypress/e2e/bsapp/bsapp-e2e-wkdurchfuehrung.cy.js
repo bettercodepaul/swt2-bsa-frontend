@@ -1,7 +1,7 @@
 describe('Wkdurchfuehrung tests', function () {
 
   beforeEach(() => {
-    cy.loginAdmin()
+    cy.loginAdmin();
   });
 
   /**
@@ -39,7 +39,7 @@ describe('Wkdurchfuehrung tests', function () {
  */
 describe("offline-fähigkeit", {browser: "!firefox"}, () => {
   beforeEach(() => {
-    cy.loginAdmin()
+    cy.loginAdmin();
     cy.restoreLocalStorage();
   });
 
