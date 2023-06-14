@@ -67,8 +67,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   public selectedVeranstaltungId: number;
   public selectedYearId: number;
-  public selectedItemId: number;
   private aktivesSportjahr: number;
+  public selectedItemId: number;
   private selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
   private istURLkorrekt: boolean = false;
 
@@ -96,15 +96,52 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
+          //this.loadVeranstaltungFromLigaID(this.providedID);
+          this.selectedYearForVeranstaltung = 2018;
 
-          this.loadVeranstaltungFromLigaID(this.providedID);
-
+         console.log("found VeranstaltungsID: " + this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung));
         } else {
           console.log('no params at ligatabelle');
         }
       });
 
     }
+  }
+
+  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number){
+    const ligaID = 1000;
+    const sportYear = 2018;
+    this.veranstaltungsDataProvider.findByLigaIdAndYear(ligaID, sportYear)
+        .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungSuccess(response))
+        .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungFailure(response));
+    //return veranstaltungsID;
+  }
+
+  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO>): void {
+    const veranstaltungen: VeranstaltungDO = response.payload;
+    console.log("0000000000dd00");
+    console.log(response.payload);
+    /*for (const veranstaltung of veranstaltungen) {
+      //Überprüfen das jahr der Veranstaltung der Liga, die über die URL ausgewählte, übereinstimmt mit dem selektierten Jahr
+      if (veranstaltung.sportjahr == this.selectedYearForVeranstaltung && veranstaltung.id != undefined){
+        //falls Übereinstimmung, Veranstaltung visuell selektieren
+        this.selectedItemId = veranstaltung.id;
+        this.istURLkorrekt = true
+        break;
+      }
+    }
+
+    if (!this.istURLkorrekt && this.selectedYearForVeranstaltung != undefined){
+      this.handleFindLigaFailure(Error);
+    }
+    this.istURLkorrekt = false;*/
+  }
+
+  public handleFindVeranstaltungFailure(error: any): void {
+    // Routing zurück zur Ligatabelle URL, wenn keine ID gefunden wird
+    console.log("Failure, ID not found 2222 ");
+/*    const link = '/ligatabelle';
+    this.router.navigateByUrl(link);*/
   }
 
   //Findet und wählt das zugehörige Veranstaltung für gegebene Liga-ID
@@ -116,10 +153,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   private handleFindLigaSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
     const veranstaltungen: VeranstaltungDO[] = response.payload;
-
+    console.log(response.payload);
     for (const veranstaltung of veranstaltungen) {
       //Überprüfen das jahr der Veranstaltung der Liga, die über die URL ausgewählte, übereinstimmt mit dem selektierten Jahr
-      if (veranstaltung.sportjahr == this.selectedYearForVeranstaltung && veranstaltung.id != undefined){ //veranstaltung.sportjahr == this.selectedYearForVeranstaltung
+      if (veranstaltung.sportjahr == this.selectedYearForVeranstaltung && veranstaltung.id != undefined){
         //falls Übereinstimmung, Veranstaltung visuell selektieren
         this.selectedItemId = veranstaltung.id;
         this.istURLkorrekt = true
@@ -169,8 +206,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     let selectedYear: SportjahrVeranstaltungDO[] = [];
 
     try {
-      console.log(this.onOfflineService.isOffline());
+      console.log("Offline: " + this.onOfflineService.isOffline());
       const responseYear = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
+
       this.loadedYears = responseYear.payload;
 
       for (const year of responseYear.payload) {
