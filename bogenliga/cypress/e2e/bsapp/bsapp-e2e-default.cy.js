@@ -11,7 +11,7 @@ function generateLigaID() {
   return Math.floor(Math.random() * 18 + 1);
 }
 
-describe('Anonyme User tests', { testIsolation: false }, function () {
+describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
    */
@@ -220,7 +220,7 @@ describe('Anonyme User tests', { testIsolation: false }, function () {
   })
 })
 
-describe('Admin User tests', { testIsolation: false }, function() {
+describe('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
