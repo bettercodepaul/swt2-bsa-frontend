@@ -222,7 +222,7 @@ describe('Anonyme User tests', function () {
   })
 })
 
-describe('Admin User tests', function() {
+describe.only('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
@@ -616,7 +616,12 @@ describe('Admin User tests', function() {
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
   it('Editieren eines Vereins', function () {
-    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+
+    cy.contains('td', '1111111111')
+      .parent('tr')
+      .find('[data-cy="TABLE.ACTIONS.EDIT"]')
+      .click();
+
     cy.wait(1000)
     cy.get('[data-cy=vereine-vereinswebsite]').focus().clear()
     cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest.com')
@@ -624,7 +629,12 @@ describe('Admin User tests', function() {
     cy.wait(500)
     cy.get('#OKBtn1').click()
     cy.contains('http://cypresstest.com')
-    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+
+    cy.contains('td', '1111111111')
+      .parent('tr')
+      .find('[data-cy="TABLE.ACTIONS.EDIT"]')
+      .click();
+
     cy.wait(1000)
     cy.get('[data-cy=vereine-vereinswebsite]').type('{selectall}{backspace}')
     cy.get('[data-cy=vereine-update-button]').click()
