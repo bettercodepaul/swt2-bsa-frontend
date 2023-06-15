@@ -227,7 +227,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
-  it('Login erfolgreich', function() {
+  it.only('Login erfolgreich', function() {
     cy.loginAdmin()
     cy.url().should('include', '#/home');
   });
@@ -235,7 +235,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
    */
-  it('Anzeige Verwaltung', function() {
+  it.only('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
   })
@@ -739,7 +739,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test checks if the League-table is filled.
    */
-  it('Alle Ligen zu sehen', function() {
+  it.only('Alle Ligen zu sehen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-liga-button]').click()
     cy.wait(4000)
@@ -763,6 +763,17 @@ describe.only('Admin User tests', function() {
         cy.wait(5000)
         cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
         cy.wait(5000)
+
+        /*
+        cy.frameLoaded('#ligaDetail_ifr')
+        // after the frame has loaded, we can use "cy.iframe()"
+        // to retrieve it
+        cy.iframe().get('body').type('Test');
+        */
+
+
+
+        cy.wait(5000)
         cy.get('[data-cy=liga-save-button]').click()
         cy.wait(5000)
         cy.get('#OKBtn1').click()
@@ -776,7 +787,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test deletes a League and checks if its deleted in the table.
    */
-  it('Liga Löschen', function() {
+  it.only('Liga Löschen', function() {
     cy.get('tbody').should('contain.text', 'SWT_Liga')
     cy.wait(5000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
