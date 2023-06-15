@@ -1,7 +1,7 @@
 
 describe('Shortcut buttons appear on login with different roles', () => {
 
-  it.only('Shortcut buttons appear on Login as Ligaleiter', () => {
+  it.('Shortcut buttons appear on Login as Ligaleiter', () => {
 
     cy.visit('http://localhost:4200/#/user/login')
 
