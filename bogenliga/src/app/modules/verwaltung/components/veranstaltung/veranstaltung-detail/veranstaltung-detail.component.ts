@@ -157,7 +157,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.currentWettkampftyp = new WettkampftypDO();
           this.currentLiga = new LigaDO();
 
-        this.currentVeranstaltung.groesse = 8;
+
+          this.currentVeranstaltung.groesse = 8;
+
 
           this.loadUsers();
           this.loadLigaleiter();
