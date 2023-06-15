@@ -16,6 +16,8 @@ describe('Anonyme User tests', function () {
    * This test opens the home page and check whether the tournament table has any content
    */
   it('Home aufrufen / Wettkampftabelle gefüllt', function () {
+    cy.clearLocalStorage();
+    cy.clearCookies();
     cy.visit('http://localhost:4200/')
     cy.url().should('include', '#/home')
   })
@@ -220,7 +222,7 @@ describe('Anonyme User tests', function () {
   })
 })
 
-describe('Admin User tests', function() {
+describe.only('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
@@ -614,7 +616,12 @@ describe('Admin User tests', function() {
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
   it('Editieren eines Vereins', function () {
-    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+
+    cy.contains('td', '1111111111')
+      .parent('tr')
+      .find('[data-cy="TABLE.ACTIONS.EDIT"]')
+      .click();
+
     cy.wait(1000)
     cy.get('[data-cy=vereine-vereinswebsite]').focus().clear()
     cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest.com')
@@ -622,7 +629,12 @@ describe('Admin User tests', function() {
     cy.wait(500)
     cy.get('#OKBtn1').click()
     cy.contains('http://cypresstest.com')
-    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+
+    cy.contains('td', '1111111111')
+      .parent('tr')
+      .find('[data-cy="TABLE.ACTIONS.EDIT"]')
+      .click();
+
     cy.wait(1000)
     cy.get('[data-cy=vereine-vereinswebsite]').type('{selectall}{backspace}')
     cy.get('[data-cy=vereine-update-button]').click()
@@ -713,7 +725,10 @@ describe('Admin User tests', function() {
     cy.get('tbody').should('contain.text', 'CypressTest')
     cy.wait(200)
     cy.get('tbody').should('contain.text', '1111111111')
-    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
+    cy.contains('td', '1111111111')
+      .parent('tr')
+      .find('[data-cy="TABLE.ACTIONS.DELETE"]')
+      .click();
     cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.get('tbody').should('not.contain.text', 'CypressTest')
     cy.wait(200)
