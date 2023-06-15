@@ -725,7 +725,10 @@ describe.only('Admin User tests', function() {
     cy.get('tbody').should('contain.text', 'CypressTest')
     cy.wait(200)
     cy.get('tbody').should('contain.text', '1111111111')
-    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
+    cy.contains('td', '1111111111')
+      .parent('tr')
+      .find('[data-cy="TABLE.ACTIONS.DELETE"]')
+      .click();
     cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.get('tbody').should('not.contain.text', 'CypressTest')
     cy.wait(200)
