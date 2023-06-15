@@ -10,10 +10,11 @@ import {SIDE_BAR_CONFIG} from './sidebar.config';
 import {SideBarNavigationSubitem} from './types/sidebar-navigation-subitem.interface';
 import {SIDE_BAR_CONFIG_OFFLINE} from './sidebar.config';
 import {OnOfflineService} from '@shared/services';
+import {SelectedLigaDataprovider} from '../../modules/shared/data-provider/SelectedLigaDataprovider'
 
 
 const ID_PATH_PARAM = 'id';
-
+export var ligaID: number;
 
 @Component({
   selector:    'bla-sidebar',
@@ -34,14 +35,14 @@ export class SidebarComponent implements OnInit {
   public inProd = environment.production;
   public CONFIG;
   public hasLigaID: boolean;
-  public ligaID2: number;
+  public ligaID: number;
   public URLRoute: string;
 
 
 
   faCaretDown = faCaretDown;
 
-  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService) {
+  constructor(private store: Store<AppState>, private currentUserService: CurrentUserService, private router: Router, private route: ActivatedRoute, private onOfflineService: OnOfflineService, private selectedLigaDataprovider: SelectedLigaDataprovider) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
   }
@@ -78,10 +79,10 @@ export class SidebarComponent implements OnInit {
       switch(lastSlashIndex){
         case 0:
           //forget liga ID if no liga ID is part of the URL-route
-          this.ligaID2 = undefined;
+          this.ligaID = undefined;
           break;
         case result.length:
-          this.ligaID2 = parseInt(this.URLRoute.substring(lastSlashIndex + 1));
+          this.ligaID = parseInt(this.URLRoute.substring(lastSlashIndex + 1));
           break;
         }
       }
@@ -94,12 +95,12 @@ export class SidebarComponent implements OnInit {
       result = result;
     }
 
-    if (this.ligaID2 != undefined && route.startsWith("/home")){
-      result =  result + '/'+ this.ligaID2.toString();
-    } else if(this.ligaID2 != undefined && route.startsWith("/ligatabelle")){
-      result =  result + '/'+ this.ligaID2.toString();
+    if (this.ligaID != undefined && route.startsWith("/home")){
+      result =  result + '/'+ this.ligaID.toString();
+    } else if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
+      result =  result + '/'+ this.ligaID.toString();
     }
-
+      this.selectedLigaDataprovider.setSelectedLigaID(ligaID);
       return result;
     }
 
@@ -122,5 +123,9 @@ export class SidebarComponent implements OnInit {
   isSelected(itemroute: string): boolean {
     return (this.router.url.indexOf(itemroute) >= 0);
   }
+
+  public getID(): number {
+    return this.ligaID;
+}
 
 }
