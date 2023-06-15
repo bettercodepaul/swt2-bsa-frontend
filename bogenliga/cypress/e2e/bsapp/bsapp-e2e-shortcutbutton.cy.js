@@ -1,10 +1,20 @@
 
 describe('Shortcut buttons appear on login with different roles', () => {
 
-  it('Shortcut buttons appear on Login as Ligaleiter', () => {
+  it.only('Shortcut buttons appear on Login as Ligaleiter', () => {
 
-    cy.visit('http://localhost:4200/#/user/login');
+    cy.visit('http://localhost:4200/#/user/login')
 
+    /*
+    cy.get('input#loginEmail').type('HSRT-Test@bogenliga.de')
+
+    cy.get('input#loginPassword').type('mki4HSRT')
+
+    cy.get('button#loginButton').click()
+
+    cy.pause()
+
+     */
     cy.contains('button.btn.btn-primary.btn-sm', 'Login für Team Ligaleiter').click();
 
     cy.url().should('include', '/home');
@@ -37,6 +47,17 @@ describe('Shortcut buttons appear on login with different roles', () => {
   it('Shortcutbuttons appear on Login as Sportleiter/Mannschaftsführer', () => {
     cy.visit('http://localhost:4200/#/user/login');
 
+    /*
+cy.get('input#loginEmail').type('HSRT-Test3@bogenliga.de')
+
+cy.get('input#loginPassword').type('mki4HSRT')
+
+cy.get('button#loginButton').click()
+
+cy.pause()
+
+ */
+
     cy.get('[data-cy="login-button"]').click()
 
     cy.contains('button.btn.btn-primary.btn-sm', 'Login für Team Sportleiter').click();
@@ -67,6 +88,16 @@ describe('Shortcut buttons appear on login with different roles', () => {
     cy.logout();
 
     cy.loginUserTest();
+    /*
+cy.get('input#loginEmail').type('HSRT-Test4@bogenliga.de')
+
+cy.get('input#loginPassword').type('mki4HSRT')
+
+cy.get('button#loginButton').click()
+
+cy.pause()
+
+ */
 
     cy.url().should('include', '/home');
 
@@ -98,7 +129,18 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.loginUserTest();
 
-    cy.url().should('include', '/home');
+    cy.url().should('include', '/home');77
+
+    /*
+    cy.get('input#loginEmail').type('HSRT-Test@bogenliga.de')
+
+    cy.get('input#loginPassword').type('mki4HSRT')
+
+    cy.get('button#loginButton').click()
+
+    cy.pause()
+
+     */
 
     cy.get('[data-cy="shortcut-btn-Vorauswahl-Veranstaltungen"]').click();
 
