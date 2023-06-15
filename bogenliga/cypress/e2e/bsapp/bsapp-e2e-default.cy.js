@@ -16,6 +16,8 @@ describe('Anonyme User tests', function () {
    * This test opens the home page and check whether the tournament table has any content
    */
   it('Home aufrufen / Wettkampftabelle gefüllt', function () {
+    cy.clearLocalStorage();
+    cy.clearCookies();
     cy.visit('http://localhost:4200/')
     cy.url().should('include', '#/home')
   })
