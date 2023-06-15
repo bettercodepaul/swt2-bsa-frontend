@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //https://github.com/cypress-io/cypress/issues/461#issuecomment-392070888
+
 let LOCAL_STORAGE_MEMORY = {};
 
 
