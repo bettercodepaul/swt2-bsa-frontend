@@ -43,6 +43,10 @@
       "BOX1HEADING": "STUDENT CUP 2018",
       "BOX1CONTENT": "Be there..."
     },
+    "LIGADETAILES": {
+      "IDWARNING": "Wrong Liga ID",
+      "DESCRIPTION": "No valid league ID could be read from the URL"
+    },
     "IMPRESSUM": {
       "TITLE": "Imprint"
     }
@@ -1022,6 +1026,14 @@
         "NO_LICENSE": {
           "TITLE": "Error while downloading",
           "DESCRIPTION": "Could not download licence, because there is none available for this marksman."
+        },
+        "UPDATE": {
+          "FAILURE": {
+            "FULL": {
+              "TITLE": "Event already fully booked: Unable to update roster",
+              "DESCRIPTION": "Due to the event being already fully booked, we regret to inform you that updating the participant list is currently not possible."
+            }
+          }
         }
       }
     },

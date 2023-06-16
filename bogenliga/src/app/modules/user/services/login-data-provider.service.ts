@@ -2,13 +2,18 @@ import { CredentialsDTO } from '@user/types/model/credentials-dto.class';
 import {Injectable} from '@angular/core';
 
 import {HttpErrorResponse} from '@angular/common/http';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {DataProviderService, RestClient, UriBuilder} from '../../shared/data-provider';
 import {AppState} from '@shared/redux-store';
 import {LOGOUT} from '@shared/redux-store';
 import {CurrentUserService, UserSignInDTO} from '../../shared/services/current-user';
 import {CredentialsDO} from '../types/credentials-do.class';
 import {LoginResult} from '../types/login-result.enum';
+import {filter, map} from "rxjs/operators";
+import {isNullOrUndefined} from "@shared/functions";
+import {Notification, NotificationUserAction} from "@shared/services";
+import {Router} from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +34,10 @@ export class LoginDataProviderService extends DataProviderService {
    */
   constructor(private restClient: RestClient,
               private currentUserService: CurrentUserService,
-              private store: Store<AppState>) {
+              private store: Store<AppState>,
+              private router: Router) {
     super();
+    this.observeSessionExpiredNotifications();
   }
 
 
@@ -93,5 +100,29 @@ export class LoginDataProviderService extends DataProviderService {
   signInDefaultUser(): Promise<LoginResult> {
     const defaultUserCredentials: CredentialsDO = new CredentialsDO('ligadefault', 'user');
     return this.signIn(defaultUserCredentials);
+  }
+
+
+  private observeSessionExpiredNotifications() {
+    this.store.pipe(
+      select((state) => state.notificationState),
+      filter((notificationState) => !isNullOrUndefined(notificationState.notification)),
+      map((notificationState) => notificationState.notification),
+      filter((notification) => notification.id === 'NO_SESSION_ERROR'),
+      filter((notification) => notification.userAction === NotificationUserAction.ACCEPTED)
+    ).subscribe((notification: Notification) => {
+      // dont logout user if the application is in offlinemode
+      this.store.select((state) => state.onOfflineState.isOffline).subscribe((offline) => {
+        if (offline) {
+          return;
+        }
+      });
+      console.log('ExpiredNotification');
+      this.currentUserService.logout();
+      this.currentUserService.setIsLoggedIn(false);
+      this.signInDefaultUser().then(() => {
+        this.router.navigateByUrl('/user/login');
+      });
+    });
   }
 }
