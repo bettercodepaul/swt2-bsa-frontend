@@ -12,7 +12,6 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
@@ -25,6 +24,20 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
+import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
+
+//for notification
+import {
+  CurrentUserService,
+  NotificationOrigin,
+  NotificationSeverity,
+  NotificationType,
+  NotificationUserAction,
+  OnOfflineService,
+  NotificationService
+} from '@shared/services';
+
+
 
 const ID_PATH_PARAM = 'id';
 
@@ -41,6 +54,7 @@ class VeranstaltungWettkaempfe {
 })
 
 export class HomeComponent extends CommonComponentDirective implements OnInit, OnDestroy {
+
 
   public config = HOME_CONFIG;
 
@@ -66,13 +80,17 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public currentDate: number = Date.now();
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
+
+  public VereinsID: number;
   public providedID: number;
   public hasID: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
+  public veranstaltung: VeranstaltungDO;
 
   constructor(
+    private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private wettkampfDataProvider: WettkampfDataProviderService,
@@ -103,31 +121,35 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   @ViewChild('kampfrichter') kampfrichter: ElementRef;
   @ViewChild('sportleiter') sportleiter: ElementRef;
 
+  public setCorrectID(){
+    const verein = this.currentUserService.getVerein();
+    this.VereinsID = verein;
+  }
+  public getCorrectID(): number {
+    return this.VereinsID;
+  }
+
   async ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
       await this.logindataprovider.signInDefaultUser()
-          .then(() => this.handleSuccessfulLogin());
+                .then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
+      this.setCorrectID();
     }
-
 
 
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         this.hasID = true;
+        this.checkingAndLoadingLiga(); // load liga with changes of id in url
+
       } else {
         this.hasID = false;
       }
     });
-
-    /**
-     * On URL change
-     * check if there is an ID in the URL,
-     * check if it is valid and load Liga
-     * */
 
     this.checkingAndLoadingLiga();
     this.routeSubscription = this.router.events.subscribe(event => {
@@ -135,6 +157,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.checkingAndLoadingLiga();
       }
     });
+    this.hasID ? this.getVeranstaltungen(this.providedID):undefined;
   }
 
 
@@ -167,32 +190,63 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   /**
    * Backend call to get Liga from the Parameter in the URL (LigaID)
-   * to display LigaDetailSeite
+   * to display LigaDetailSeite.
+   * Because checkExists always returns an object, handleGotLigaObject has to check
+   * if the liga truly exists (if not, function returns empty LigaObject)
    * */
 
-   private async loadLiga(urlLigaID : number){
-    await this.ligaDataProvider.findById(urlLigaID)
-        .then((response: BogenligaResponse<LigaDO>) => this.handleFindLigaSuccess(response))
-        .catch((response: BogenligaResponse<LigaDO>) => this.handleFindLigaFailure(response));
+
+  private async loadLiga(urlLigaID : number){
+    await this.ligaDataProvider.checkExists(urlLigaID)
+              .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
+              .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
   }
 
 
-  /**Handling a successfull backendcall to get Liga by LigaIDa*/
-  private handleFindLigaSuccess(response: BogenligaResponse<LigaDO>) : void {
-    this.selectedLigaName=response.payload.name;
-    this.selectedLigaID=response.payload.id;
-    this.selectedLigaDetails=response.payload.ligaDetail;
-    this.loadedLigaData=true;
+  /**
+   *Handling a successfull backendcall to get Liga by LigaID
+   * the response object is either:
+   * - a liga
+   * - null -> no liga with that id does exist
+   **/
+
+  private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
+
+    if(response.payload.id==null){
+      //routing back to home URL
+      const link = '/home';
+      this.router.navigateByUrl(link);
+
+      //show a pop-up if liga with that id does not exist
+      this.notificationService.showNotification({
+        id: 'LigaIDWarning',
+        description: 'HOME.LIGADETAILES.DESCRIPTION',
+        title: 'HOME.LIGADETAILES.IDWARNING',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
+    }
+    else{
+      //store Liga information
+      this.selectedLigaName=response.payload.name;
+      this.selectedLigaID=response.payload.id;
+      this.selectedLigaDetails=response.payload.ligaDetail;
+      this.loadedLigaData=true;
+    }
   }
 
-  /**Handling a failed backendcall to get Liga by LigaID
-   * if LigaID not present in DB, then route to home
-   * */
-  public handleFindLigaFailure(response: BogenligaResponse<LigaDO>) : void {
+
+  /**
+   * Handling a failed backendcall to get Liga by LigaID
+   **/
+  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {
     //routing back to home URL
     const link = '/home';
     this.router.navigateByUrl(link);
   }
+
 
   private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
     this.wettkaempfeDTO = payload;
@@ -378,9 +432,34 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-    const link = '/wettkaempfe/' + this.providedID;
+
+    console.log("Id der veranstaltung " + this.veranstaltung.id)
+    const link = '/wettkaempfe/' + this.veranstaltung.id;
     this.router.navigateByUrl(link);
   }
+
+
+  //BSAPP-1384
+  private getVeranstaltungen(ligaId: number) {
+    var veranstaltungsListe = [];
+
+    this.veranstaltungDataProvider.findByLigaId(ligaId)
+        .then((response: BogenligaResponse<VeranstaltungDTO[]>) => {
+
+          veranstaltungsListe=response.payload
+          if (veranstaltungsListe.length == 1) {
+            this.veranstaltung = veranstaltungsListe[0]
+          } else {
+            this.veranstaltung = veranstaltungsListe.reduce((prev, current) => {
+              return (prev.sportjahr > current.sportjahr) ? prev : current;
+            })
+          }
+        })
+        .catch((response: BogenligaResponse<VeranstaltungDTO>) => {
+          //error
+        });
+  }
+
 
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();

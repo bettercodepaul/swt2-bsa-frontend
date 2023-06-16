@@ -11,5 +11,6 @@ export class EinstellungenDO implements VersionedDataObject {
   value: string;
   key: string;
   regex: string;
+  hidden: boolean;
 
 }
