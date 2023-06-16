@@ -22,7 +22,7 @@
     "PLAYGROUND": "Playground",
     "SPOTTING": "Spotting",
     "COLLAPSE": "Einklappen",
-    "HILFE" :  "Hilfe"
+    "HILFE": "Hilfe"
   },
   "APP": {
     "SUPPORT": "Mit freundlicher Unterstützung von:",
@@ -45,6 +45,10 @@
       "BOX1HEADING": "Schüler- und Jugend- Cup 2018",
       "BOX1DATE": "2. Mai 2018",
       "BOX1CONTENT": "Seid dabei, wenn wir am 20. & 21. Oktober 2018 im WSV- Schulungszentrum in Ruit gemeinsam ein tolles Wochenende Rund um das Sport- und Bogenschießen erleben und jede Menge Spaß haben werden.Beim Schüler- und Jugend- Cup können Jungschützen mit dem Bogen, dem Luftgewehr sowie der Luftpistole und dem Lichtgewehr sowie der Lichtpistole ihr Können in spannenden Wettkämpfen, Geschicklichkeits- und Konzentrationsübungen unter Beweis stellen.Detaillierte Informationen zu den Altersklassen und den Disziplinen, sowie den Meldebogen findet Ihr hier. Wir freuen uns auf euch!"
+    },
+    "LIGADETAILES": {
+      "IDWARNING": "Falsche Liga ID",
+      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden."
     },
     "IMPRESSUM": {
       "TITLE": "Impressum"
@@ -106,17 +110,17 @@
         }
       }
     },
-      "BUTTONS":{
-        "EINZEL_ALS_PDF": {
-          "LABEL": "Einzelstatistik als PDF"
-        },
-        "GESAMT_ALS_PDF": {
-          "LABEL": "Gesamtstatistik als PDF"
+    "BUTTONS": {
+      "EINZEL_ALS_PDF": {
+        "LABEL": "Einzelstatistik als PDF"
       },
-        "TAGESUEBERSICHT_ALS_PDF": {
-          "LABEL": "Tagesübersicht als PDF"
-        }
+      "GESAMT_ALS_PDF": {
+        "LABEL": "Gesamtstatistik als PDF"
+      },
+      "TAGESUEBERSICHT_ALS_PDF": {
+        "LABEL": "Tagesübersicht als PDF"
       }
+    }
   },
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
@@ -193,7 +197,7 @@
       "VERANSTALTUNG": "Veranstaltungen",
       "WETTKAEMPFE": "Wettkampftage",
       "LT_DURCHFUEHRUNG": "Ligatabelle Durchführung"
-      },
+    },
     "WETTKAMPF": {
       "TABLE": {
         "CDAY": "Wettkampftag",
@@ -372,7 +376,7 @@
           "LABEL": "Veranstaltungen:"
         },
         "SPORTJAHR":{
-        "LABEL": "Sportjahr:"
+          "LABEL": "Sportjahr:"
         }
 
       },
@@ -608,7 +612,8 @@
       "TABLE": {
         "HEADERS": {
           "KEY": "KEY",
-          "VALUE": "VALUE"
+          "VALUE": "VALUE",
+          "ISHIDDEN": "Versteckt"
         }
       },
       "NOTIFICATION": {
@@ -800,12 +805,13 @@
         },
         "LIGA_DETAIL" : {
           "LABEL": "Ligadetails",
-          "MAX_WORDS_WARNING": "(max. 300 Wörter)"
+          "MAX_WORDS_WARNING": "(max. 5000 Wörter)"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
+
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Liga löschen",
@@ -822,6 +828,10 @@
         "SAVE": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Die Liga wurde erfolgreich gespeichert."
+        },
+        "MAX_WORDS_SURPASSED": {
+          "TITLE": "Fehler",
+          "DESCRIPTION":  "Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl von 5000 Wörtern."
         }
       }
     },
@@ -1352,50 +1362,50 @@
               "ERROR": "Gültige Uhrzeit (Format: HH:MM)."
             }
           },
-            "NOTIFICATION": {
-              "SAVE": {
-                "TITLE": "Speichern erfolgreich",
-                "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
-              },
-              "UPDATE": {
-                "TITLE": "Update erfolgreich",
-                "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
-              },
-              "DELETE": {
-                "TITLE": "Löschen",
-                "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
-              },
-              "ADD": {
-                "TITLE": "Neu",
-                "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
-              },
-              "COPY": {
-                "TITLE": "Kopieren",
-                "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
-              },
-              "DELETE_SUCCESS": {
-                "TITLE": "Erfolgreich",
-                "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
-              },
-              "DELETE_FAILURE": {
-                "TITLE": "Fehler beim Löschen",
-                "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
-              },
-              "DEADLINE_EXPIRED": {
-                "TITLE": "Meldedeadline abgelaufen",
-                "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
-              },
-              "TOO_MANY": {
-                "TITLE": "Zu viele Wettkampftage",
-                "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
-              }
+          "NOTIFICATION": {
+            "SAVE": {
+              "TITLE": "Speichern erfolgreich",
+              "DESCRIPTION": "Daten zum Wettkampftag gespeichert"
+            },
+            "UPDATE": {
+              "TITLE": "Update erfolgreich",
+              "DESCRIPTION": "Daten vom Wettkampftag aktualisiert"
+            },
+            "DELETE": {
+              "TITLE": "Löschen",
+              "DESCRIPTION": "Wollen Sie den Wettkampftag mit der ID=%s wirklich löschen? ACHTUNG! Wenn Sie diesen Wettkampftag löschen werden alle Datensätze, die darauf referenzieren ebenfalls gelöscht!"
+            },
+            "ADD": {
+              "TITLE": "Neu",
+              "DESCRIPTION": "Wollen Sie einen weiteren Wettkampftag hinzufügen?"
+            },
+            "COPY": {
+              "TITLE": "Kopieren",
+              "DESCRIPTION": "Wollen Sie den ausgewählten Wettkampftag kopieren?"
+            },
+            "DELETE_SUCCESS": {
+              "TITLE": "Erfolgreich",
+              "DESCRIPTION": "Der Wettkampftag wurde erfolgreich gelöscht."
+            },
+            "DELETE_FAILURE": {
+              "TITLE": "Fehler beim Löschen",
+              "DESCRIPTION": "Der Wettkampftag konnte nicht gelöscht werden."
+            },
+            "DEADLINE_EXPIRED": {
+              "TITLE": "Meldedeadline abgelaufen",
+              "DESCRIPTION": "Die Meldedeadline für diese Veranstaltung ist abgelaufen. Sie können die dazugehörigen Wettkampftage nicht mehr löschen."
+            },
+            "TOO_MANY": {
+              "TITLE": "Zu viele Wettkampftage",
+              "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
             }
-          },
-          "KAMPFRICHTERLISTE": {
-            "LABEL": "Kampfrichter",
-            "LEFTCAPTION":  "abgewählt",
-            "RIGHTCAPTION": "ausgewählt"
-          },
+          }
+        },
+        "KAMPFRICHTERLISTE": {
+          "LABEL": "Kampfrichter",
+          "LEFTCAPTION":  "abgewählt",
+          "RIGHTCAPTION": "ausgewählt"
+        },
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
@@ -1593,6 +1603,9 @@
           "LABEL": "Neuer Value",
           "PLACEHOLDER": "Bitte einen neuen Value eingeben",
           "ERROR": "Bitte einen gültigen Value eingeben."
+        },
+        "ISHIDDEN": {
+          "LABEL": "Versteckte Einstellungen"
         },
         "SAVE": "Speichern"
       }
