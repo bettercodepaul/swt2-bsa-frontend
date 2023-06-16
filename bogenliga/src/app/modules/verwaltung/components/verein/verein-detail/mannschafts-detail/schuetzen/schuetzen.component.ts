@@ -102,8 +102,6 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
       this.loadVereinById(Number.parseInt(this.route.snapshot.url[1].path, 10));
     }
 
-    this.loadVereine();
-
     this.notificationService.discardNotification();
   }
 
@@ -412,10 +410,13 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
 
   // ----------------------------------------------------------- //
 
-  // sets the current Mannschaft, to which the User wants to add the member
+  // Sets the currentMannschaft, to which the User wants to add the member
   private loadMannschaftById(id: number) {
     this.mannschaftProvider.findById(id)
-        .then((response: BogenligaResponse<DsbMannschaftDO>) => this.handleMannschaftSuccess(response))
+        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+          this.handleMannschaftSuccess(response);
+          this.loadVereine();
+        })
         .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleMannschaftFailure(response));
   }
 
@@ -429,10 +430,10 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.loading = false;
   }
 
+  // Lädt die Tabelle mit den Daten von currentMannschaft
   private loadTableRows() {
     this.loading = true;
-
-    this.dsbMitgliedProvider.findAllNotInTeam(Number.parseInt(this.route.snapshot.url[2].path, 10), Number.parseInt(this.route.snapshot.url[1].path, 10))
+    this.dsbMitgliedProvider.findAllNotInTeam(Number(this.currentMannschaft.id), Number(this.currentMannschaft.vereinId))
         .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleTableRowSuccess(response))
         .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleTableRowFailure(response));
   }
@@ -477,6 +478,7 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.loading = false;
   }
 
+
   private loadVereine() {
     this.loading = true;
     this.emptyVerein.name = 'Kein Verein';
@@ -493,18 +495,20 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     this.loading = false;
   }
 
+  // Findet gewählte Mannschaft und Verein
+  // Return: Promise mit ausgewähltem Verein und Mannschaft
   private loadMannschaftenUndVereinByMannschaftsId(selectedMannschaftId: number) {
     this.mannschaftProvider.findById(selectedMannschaftId)
-        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
-          this.handleMannschaftSuccess(response);
-          this.vereineProvider.findById(response.payload.vereinId)
-              .then((vereins_response: BogenligaResponse<VereinDTO>) => {
-                this.handleVereinSuccess(vereins_response);
-                this.onSearch();
-              })
-              .catch((vereins_response: BogenligaResponse<VereinDTO>) => this.handleVereinFailure(vereins_response));
-        })
-        .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleMannschaftFailure(response));
+                    .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+                      this.handleMannschaftSuccess(response);
+                      this.vereineProvider.findById(response.payload.vereinId)
+                          .then((vereins_response: BogenligaResponse<VereinDTO>) => {
+                            this.handleVereinSuccess(vereins_response);
+                            this.loadVereine();
+                          })
+                          .catch((vereins_response: BogenligaResponse<VereinDTO>) => this.handleVereinFailure(vereins_response));
+                    })
+                    .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleMannschaftFailure(response));
   }
 }
 
