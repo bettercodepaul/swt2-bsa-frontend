@@ -193,6 +193,15 @@ Cypress.Commands.add('deleteTestUser', (role) => {
 
 })
 
+Cypress.Commands.add('typeInIFrame', (text) => {
+  const iframe = cy.get('#ligaDetail_ifr')
+    .its('0.contentDocument.body')
+    .should('be.visible')
+    .then(cy.wrap)
+
+  iframe.clear().type(text)
+})
+
 
 
 Cypress.Commands.add('loginUserTest', () => {
