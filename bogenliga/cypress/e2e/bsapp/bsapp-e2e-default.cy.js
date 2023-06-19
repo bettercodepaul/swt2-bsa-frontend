@@ -222,7 +222,7 @@ describe('Anonyme User tests', function () {
   })
 })
 
-describe('Admin User tests', function() {
+describe.only('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
@@ -438,47 +438,48 @@ describe('Admin User tests', function() {
   /**
    * This test adds a new user
    */
-  /*
+
   it('Testfall 11: User hinzufügen', function() {
-    cy.get('[data-cy=dsb-mitglied-add-button]').click()
-    cy.get('.col-sm-9 > #userDsbMitglied > .quicksearch-list > .quicksearch-list-select > #selectionListRegions').select('SWT2_Nachname14,SWT2_Vorname14 No.:SWT2_Mitgliedsnummer14')
-    cy.get('[data-cy=username-input]').type('testtest@bogenliga.de')
-    cy.get('[data-cy=password-input]').type('Testfall1')
-    cy.get('[data-cy=verify-password-input]').type('Testfall1')
-    cy.get('[data-cy=user-submit-button]').click()
-    cy.wait(1500)
-    cy.get('#OKBtn1').click()
+    cy.createUserTest("DefaultCypressTestUser@cypressTestuser.com");
+
+    cy.contains('.modal-content', 'Erfolg').within(() => {
+      cy.get('.modal-dialog-ok button')
+        .should('contain', 'OK')
+        .click();
+    });
+
   })
-  *\
-   */
+
 
 
   /**
    * This test edits a user
    */
-  /*
-  it('Testfall 9: User bearbeiten', function () {
-    cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.url().should('include', '#/verwaltung')
-    cy.get('[data-cy=verwaltung-user-button]').click()
-    cy.url().should('include', '#/verwaltung/user')
 
+  it('Testfall 9: User bearbeiten', function () {
+    /*
     //cy.get('div > #management\.user\.table\.headers\.roleSorted > .ng-fa-icon > .svg-inline--fa > path').click()
     cy.get('[data-cy=TABLE.ACTIONS.EDIT]').last().click()
     cy.get('bla-double-selectionlist > bla-col-layout > .col-layout > bla-selectionlist > #left').select('0: 1')
     cy.get('bla-col-layout > .col-layout > bla-selectionlist > #left > option:nth-child(1)').click()
     cy.get('.col-layout > .shift-buttons > .shift-button > bla-button > #shiftLeft-left').click()
     cy.get('#userForm > .form-group > .col-sm-9 > bla-button > #userUpdateButton').click()
-    cy.get('#OKBtn1').click()
+    cy.get('#OKBtn1').click()*/
+    cy.assignRoleToTestUser("LIGALEITER", "DefaultCypressTestUser@cypressTestuser.com")
+    cy.contains('.modal-content', 'Erfolg').within(() => {
+      cy.get('.modal-dialog-ok button')
+        .should('contain', 'OK')
+        .click();
+    });
   })
-  *\
-   */
+
 
   /**
    * This test deletes a user
    */
-  /*
+
     it('Testfall 10: User löschen', function() {
+      /*
       cy.get('#sidebarCollapseBottom').click()
       cy.contains('VERWALTUNG').click()
       cy.get('#sidebarCollapseBottom').click()
@@ -489,8 +490,12 @@ describe('Admin User tests', function() {
       //löschen von Nicholas Corle - Moderator
       cy.get('#payload-id-4 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').click()
       cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
+       */
+      cy.deleteTestUser("DefaultCypressTestUser@cypressTestuser.com");
+
+      //cy.get('[ng-reflect-color="action-btn-primary"] > #undefined > .action-btn-circle').click();
     })
-  */
+
 
 
 
