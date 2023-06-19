@@ -327,3 +327,4 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.router.navigateByUrl(link);
   }
 }
+gi
