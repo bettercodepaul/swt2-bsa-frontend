@@ -51,6 +51,7 @@ describe('Shortcut buttons appear on login with different roles', () => {
     cy.get('[data-cy="login-button"]').click()
 
 
+    
     cy.get(':nth-child(1) > .Button > .shortcut-btn').click();
 
     cy.go('back');
