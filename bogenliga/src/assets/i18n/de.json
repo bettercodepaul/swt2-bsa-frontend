@@ -804,8 +804,8 @@
           "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
         },
         "LIGA_DETAIL" : {
-          "LABEL": "Ligadetails",
-          "MAX_WORDS_WARNING": "(max. 5000 Wörter)"
+          "LABEL": "Ligabeschreibung",
+          "MAX_WORDS_WARNING": "(max. 1500 Zeichen)"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
@@ -831,7 +831,7 @@
         },
         "MAX_WORDS_SURPASSED": {
           "TITLE": "Fehler",
-          "DESCRIPTION":  "Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl von 5000 Wörtern."
+          "DESCRIPTION":  "Die Ligabeschreibung ist zu lang! Bitte beachten Sie die maximale Anzahl von 1500 Zeichen."
         }
       }
     },
