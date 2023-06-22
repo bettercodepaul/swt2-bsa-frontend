@@ -197,7 +197,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
   public onUpdate(ignore: any): void {
-    if (this.currentLiga.ligaDetail.length > 3000) {
+    if (this.currentLiga.ligaDetail.length > 5000) {
       //TODO: Tatsächlichen String holen
       //alert('MANAGEMENT.LIGA_DETAIL.ALERT.MAX_WORDS_SURPASSED')
       this.notificationService.showNotification({
