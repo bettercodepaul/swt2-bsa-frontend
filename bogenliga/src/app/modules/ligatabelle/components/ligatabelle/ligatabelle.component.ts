@@ -99,7 +99,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
           //this.loadVeranstaltungFromLigaID(this.providedID);
           this.selectedYearForVeranstaltung = 2018;
 
-         console.log("found VeranstaltungsID: " + this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung));
+         //console.log("found VeranstaltungsID: " + this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung));
         } else {
           console.log('no params at ligatabelle');
         }
@@ -327,4 +327,3 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.router.navigateByUrl(link);
   }
 }
-gi
