@@ -53,6 +53,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public rowsLigatabelle: TableRow[];
   public providedID: number;
   private hasID: boolean;
+  private hasVeranstaltung: boolean = true;
 
   private isDeselected: boolean = false;
   private remainingLigatabelleRequests: number;
@@ -70,7 +71,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   private aktivesSportjahr: number;
   public selectedItemId: number;
   private selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
-  private istURLkorrekt: boolean = false;
 
   constructor(
     private router: Router,
@@ -96,10 +96,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
-          //this.loadVeranstaltungFromLigaID(this.providedID);
-          this.selectedYearForVeranstaltung = 2018;
-
-         //console.log("found VeranstaltungsID: " + this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung));
+          this.selectedYearForVeranstaltung != undefined && this.hasID ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
         } else {
           console.log('no params at ligatabelle');
         }
@@ -109,32 +106,15 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number){
-    const ligaID = 1000;
-    const sportYear = 2018;
-    this.veranstaltungsDataProvider.findByLigaIdAndYear(ligaID, sportYear)
+    this.veranstaltungsDataProvider.findByLigaIdAndYear(urlLigaID, selectedSportYear)
         .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungFailure(response));
-    //return veranstaltungsID;
   }
 
   private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO>): void {
-    const veranstaltungen: VeranstaltungDO = response.payload;
-    console.log("0000000000dd00");
-    console.log(response.payload);
-    /*for (const veranstaltung of veranstaltungen) {
-      //Überprüfen das jahr der Veranstaltung der Liga, die über die URL ausgewählte, übereinstimmt mit dem selektierten Jahr
-      if (veranstaltung.sportjahr == this.selectedYearForVeranstaltung && veranstaltung.id != undefined){
-        //falls Übereinstimmung, Veranstaltung visuell selektieren
-        this.selectedItemId = veranstaltung.id;
-        this.istURLkorrekt = true
-        break;
-      }
-    }
-
-    if (!this.istURLkorrekt && this.selectedYearForVeranstaltung != undefined){
-      this.handleFindLigaFailure(Error);
-    }
-    this.istURLkorrekt = false;*/
+    this.hasVeranstaltung = true;
+    this.selectedItemId = response.payload.id;
+    this.onSelectVeranstaltung([response.payload]);
   }
 
   public handleFindVeranstaltungFailure(error: any): void {
@@ -142,39 +122,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     console.log("Failure, ID not found 2222 ");
 /*    const link = '/ligatabelle';
     this.router.navigateByUrl(link);*/
-  }
-
-  //Findet und wählt das zugehörige Veranstaltung für gegebene Liga-ID
-  private async loadVeranstaltungFromLigaID(urlLigaID : number){
-    await this.veranstaltungsDataProvider.findByLigaId(urlLigaID)
-              .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleFindLigaSuccess(response))
-              .catch((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleFindLigaFailure(response));
-  }
-
-  private handleFindLigaSuccess(response: BogenligaResponse<VeranstaltungDO[]>): void {
-    const veranstaltungen: VeranstaltungDO[] = response.payload;
-    console.log(response.payload);
-    for (const veranstaltung of veranstaltungen) {
-      //Überprüfen das jahr der Veranstaltung der Liga, die über die URL ausgewählte, übereinstimmt mit dem selektierten Jahr
-      if (veranstaltung.sportjahr == this.selectedYearForVeranstaltung && veranstaltung.id != undefined){
-        //falls Übereinstimmung, Veranstaltung visuell selektieren
-        this.selectedItemId = veranstaltung.id;
-        this.istURLkorrekt = true
-        break;
-      }
-    }
-
-    if (!this.istURLkorrekt && this.selectedYearForVeranstaltung != undefined){
-      this.handleFindLigaFailure(Error);
-    }
-    this.istURLkorrekt = false;
-  }
-
-  public handleFindLigaFailure(error: any): void {
-    // Routing zurück zur Ligatabelle URL, wenn keine ID gefunden wird
-    console.log("Failure, ID not found ");
-    const link = '/ligatabelle';
-    this.router.navigateByUrl(link);
   }
 
 
@@ -243,13 +190,14 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       }
       this.loading = false;
       this.loadingLigatabelle = false;
-      this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id;
+      console.log("Has Veranstaltung: " + this.hasVeranstaltung);
+      !this.hasVeranstaltung ? this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id : this.selectedYearId = 2016;
 
       if (this.availableYears.length > 0) {
         // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (IndexOfSelectedYearInAvailableYears = 0)
         selectedYear.push(this.availableYears[indexOfSelectedYearInAvailableYears]);
-
-        this.onSelectYear(selectedYear); // automatische Auswahl nur bei vorhandenen Daten
+        console.log("Has Veranstaltung: " + selectedYear);
+        !this.hasVeranstaltung ? this.onSelectYear(selectedYear) : undefined; // automatische Auswahl nur bei vorhandenen Daten
       }
     } catch (e) {
       this.loading = false;
@@ -300,7 +248,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedYearForVeranstaltung = $event[0].sportjahr; //Ausgewähltes Jahr in der Liste speichern
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
     this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id;
-    this.hasID ? this.loadVeranstaltungFromLigaID(this.providedID): undefined; //Wenn die Liga-ID in der URL vorhanden ist, lade veranstaltung für korrekte Auswahl
+
+    console.log("Selected YEAR IS: " + this.selectedYearForVeranstaltung );
+    //this.hasID ? this.loadVeranstaltungFromLigaID(this.providedID): undefined; //Wenn die Liga-ID in der URL vorhanden ist, lade veranstaltung für korrekte Auswahl
+    // this.loadVeranstaltungFromLigaID(this.providedID): undefined; //Wenn die Liga-ID in der URL vorhanden ist, lade veranstaltung für korrekte Auswahl
+    this.hasID ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
 
     //this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); //automatische Auswahl: Aus
   }
@@ -315,8 +267,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
     this.buttonForward = this.selectedVeranstaltung.id;
     this.loadLigaTableRows();
+    this.hasVeranstaltung = true;
     const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
     this.router.navigate([link]);
+
   }
 
 
