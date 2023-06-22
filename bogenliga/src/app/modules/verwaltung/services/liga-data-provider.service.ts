@@ -111,9 +111,6 @@ export class LigaDataProviderService  extends DataProviderService {
 
 
 
-
-
-
   public checkExists(id: string | number): Promise<BogenligaResponse<LigaDO>> {
     // return promise
     // sign in success -> resolve promise
