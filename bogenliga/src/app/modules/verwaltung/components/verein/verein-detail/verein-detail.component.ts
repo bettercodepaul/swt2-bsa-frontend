@@ -466,21 +466,22 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0)
         isAdmin = true;
 
-      if (isAdmin == true) {
+      if (isAdmin == true) { //Wenn admin
         this.regionProvider.findAllByType(type)
             .then((response: BogenligaResponse<RegionDO[]>) => {
               this.handleResponseArraySuccess(response);
               this.loadVerein();
             })
             .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
-      }else{
-        let myVereinId = this.currentUserService.getVerein();
+      }else{ //Wenn KEIN Admin
+        let myVereinId = this.currentUserService.getVerein(); //Aktueller Verein des eingeloggten Users
         this.vereinProvider.findById(myVereinId).then((response: BogenligaResponse<VereinDO>) => {
           let myVereinRegionId = response.payload.regionId;
           let allRegions: any[]= [];
           let allowedRegions: any[]= [];
           let seenRegions: any[] = [];
-          console.log("Bevor "+ allowedRegions);
+
+          //Alle Regionen in Liste schreiben
           this.regionProvider.findAll().then((regions: BogenligaResponse<RegionDO[]>) => {
             regions.payload.forEach((e) => {
               allRegions.push(e.id);
@@ -488,9 +489,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
             })
           }).catch(e => console.log(e));
 
+          //Rekursive funktion um die allowedRegions zu filtern und Liste zu befüllen
           allowedRegions = this.findAllowedRegions(myVereinRegionId, allRegions, allowedRegions, seenRegions);
-          console.log("Danach "+ allowedRegions);
 
+          //Erlaubte Regionen in die Klappliste schreiben
           this.regionProvider.findAll().then((value) => {
             let filteredRegions = value.payload.filter((f) => {
               return allowedRegions.includes(f.id)
@@ -498,28 +500,6 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
             this.handleResponseArraySuccessRegion(filteredRegions);
             this.loadVerein();
           }).catch(e => console.log(e))
-
-          /*
-          //seenRegions.push(myVereinRegionId);
-          allowedRegions.push(myVereinRegionId);
-          this.regionProvider.findAll().then((regions: BogenligaResponse<RegionDO[]>) => {
-            regions.payload.forEach((e) => {
-              allRegions.push(e.id);
-            })
-            regions.payload.forEach((e) => {
-              let size = 0;
-              while (size != allRegions.length){
-                if(myVereinRegionId == e.regionUebergeordnet){
-                  let size1 = 0;
-                  while(size1 != allRegions.length) {
-                    allowedRegions.push(e.id);
-                    size1++;
-                  }
-                }
-                size++;
-              }
-            })
-          });*/
 
         }).catch(err => console.log(err));
       }
