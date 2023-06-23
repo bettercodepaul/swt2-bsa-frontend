@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CurrentUserService, UserPermission} from '@shared/services';
 import {RoleDataProviderService} from '@verwaltung/services/role-data-provider.service';
 import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
+import {LoginDataProviderService} from '@user/services/login-data-provider.service';
+
 import {
   ShortcutButtonsConfig
 } from '@shared/components/buttons/shortcut-button/types/shortcut-buttons-config.interface';
@@ -15,43 +17,65 @@ import {RoleDTO} from '@verwaltung/types/datatransfer/role-dto.class';
 
 
 export class ShortcutButton implements OnInit {
+  constructor(private currentUserService: CurrentUserService, private userDataProviderService: UserDataProviderService, private loginDataproviderService: LoginDataProviderService) {
 
-  @Input()
+  }
+
   public id: string;
-  public  currentUserId = this.currentUserService.getCurrentUserID();
-  public currentUserRole = this.userDataProviderService.findUserRoleById(this.currentUserId);
+  public  currentUserId;
+  public currentUserRole;
 
   public  currentRolename: string;
 
   public VereinsID: number;
-  constructor(private currentUserService: CurrentUserService, private userDataProviderService: UserDataProviderService) {}
 
   @Input() public config: ShortcutButtonsConfig = {shortcutButtons: []};
 
+  private void;
 
 
-  public setCorrectID(){
+  public setCorrectID() {
     const verein = this.currentUserService.getVerein();
     this.VereinsID = verein;
   }
 
-  public getCorrectLink(): String{
-    return "/verwaltung/vereine/" + this.VereinsID;
+  public getCorrectLink(): String {
+    return '/verwaltung/vereine/' + this.VereinsID;
   }
 
   ngOnInit(): void {
+    if (this.currentUserService.isLoggedIn() === false) {
+       this.loginDataproviderService.signInDefaultUser()
+        .then(() => {
+          this.setup();
+        });
+    } else {
+      this.setup();
+    }
+
+
+
+
+
+  }
+  private setup(): void {
+
+    this.currentUserId = this.currentUserService.getCurrentUserID();
+    this.currentUserRole = this.userDataProviderService.findUserRoleById(this.currentUserId);
     this.setCorrectID();
-    const userRoleDo =  this.userDataProviderService.findUserRoleById(this.currentUserId);
+    const userRoleDo =  this.currentUserRole;
 
     userRoleDo.then((value) => {
 
-       this.currentRolename = value.payload[0].roleName;
+      this.currentRolename = value.payload[0].roleName;
 
-    })
+    });
+
+
   }
 
 
-  async getCurrentUserRole(){
+  async getCurrentUserRole() {
     const userRoleDo = await  this.userDataProviderService.findUserRoleById(this.currentUserId);
 
     const currentRolename = userRoleDo.payload[0].roleName;
@@ -67,7 +91,7 @@ export class ShortcutButton implements OnInit {
    * @returns `true` if the current user has any of the specified roles, `false` otherwise.
    */
   public hasUserRole(roles: string[]): boolean {
-    let result: boolean = false;
+    let result = false;
 
     // Check if the current role is undefined
     if (this.currentRolename === undefined) {
@@ -105,7 +129,7 @@ export class ShortcutButton implements OnInit {
   checkPermissions(): boolean {
 
     let permissionAvailable = false;
-    for (let button of this.config.shortcutButtons) {
+    for (const button of this.config.shortcutButtons) {
       if (this.hasUserPermissions(button.permissions) && this.hasUserRole(button.roles)) {
         permissionAvailable = true;
       }
