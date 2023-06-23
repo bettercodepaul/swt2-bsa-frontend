@@ -5,7 +5,7 @@
       <div *ngIf="hasUserPermissions(button.permissions) && hasUserRole(button.roles)" class="buttonwrapper">
         <div class="Button">
           <button *ngIf="button.title !== 'Mannschaftsmitglied hinzufügen'"
-                  type="button" class="shortcut-btn" [routerLink]="button.route" routerLinkActive="active">
+                  type="button" class="shortcut-btn" [routerLink]="button.route" routerLinkActive="active" [attr.data-cy]="'shortcut-btn-' + button.title.replace(' ', '-')">
             <img class="buttonlogo" *ngIf="button.icon" [src]="button.icon" alt="{{ button.title }}" />
           </button>
           <button *ngIf="button.title === 'Mannschaftsmitglied hinzufügen'"
