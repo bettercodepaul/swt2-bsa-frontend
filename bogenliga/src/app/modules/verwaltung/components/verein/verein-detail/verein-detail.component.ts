@@ -100,15 +100,6 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     this.loading = true;
     this.notificationService.discardNotification();
     this.loadRegions(this.regionType); // Request all regions from the backend
-    console.log("TEST");
-    console.log(this.regionProvider.findById(7));
-    console.log(this.regionProvider.findAll());
-    console.log("TEST2");
-    let myVereinId = this.currentUserService.getVerein();
-    let wholeVerein = this.vereinProvider.findById(myVereinId);
-    console.log(wholeVerein);
-
-
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -116,14 +107,6 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
    *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
    *  be logged out automatically.
    */
-
-  public getUser(){
-    const currentUserId = this.currentUserService.getCurrentUserID();
-    const ligaleiterVerein = this.currentUserService.getVerein();
-
-    const regions = this.regionProvider.findAll();
-
-  }
 
   public onMouseOver(event: any) {
     const isExpired = this.sessionHandling.checkSessionExpired();
