@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 // @ts-ignore
 import {NavbarComponent} from '../../../../../../../components/navbar/navbar.component';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 @Component({
   selector: 'bla-schuetzen-pop-up',
@@ -9,6 +10,8 @@ import {NavbarComponent} from '../../../../../../../components/navbar/navbar.com
   styleUrls: ['./schuetzen-pop-up.component.scss']
 })
 export class SchuetzenPopUpComponent implements OnInit {
+
+  public ActionButtonColors = ActionButtonColors;
 
   constructor(public dialogRef: MatDialogRef<MatDialog>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
