@@ -47,6 +47,7 @@ import {UserRolleDTO} from '@verwaltung/types/datatransfer/user-rolle-dto.class'
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {VereinDO} from '@verwaltung/types/verein-do.class';
 
 
 
@@ -63,6 +64,8 @@ const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
 const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failure';
 const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_FINISH_VERANSTALTUNG = 'veranstaltung_detail_finish';
+const NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT = 'auffuellmannschaft_create';
+const NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT_FAILURE = 'auffuellmannschaft_create_failure';
 
 
 @Component({
@@ -112,6 +115,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public AlertType = AlertType;
   public showPopup = false;
   public selectedMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
+  public currentVerein: VereinDO = new VereinDO();
   public possibleTabellenplatz: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
   public oldSortierung: number;
 
@@ -362,6 +366,66 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           console.log('Failed');
           this.saveLoading = false;
         });
+  }
+
+
+  public onCreateAuffuellmannschaft(ignore: any): void {
+    this.saveLoading = true;
+
+    const auffuellmannschaftId = 99;
+    const auffuellmannschaftNummer = "1";
+
+
+    this.selectedMannschaft.vereinId = auffuellmannschaftId;
+    this.selectedMannschaft.nummer = auffuellmannschaftNummer;
+    this.selectedMannschaft.benutzerId = 1;
+    this.selectedMannschaft.veranstaltungId = this.currentVeranstaltung.id;
+
+    this.mannschaftDataProvider.create(this.selectedMannschaft, this.currentVerein)
+        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+            console.log('Saved with id: ' + response.payload.id);
+            const notification: Notification = {
+              id:          NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT,
+              title:       "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_SAVE.TITLE",
+              description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_SAVE.DESCRIPTION",
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT)
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                  }
+                });
+
+            this.notificationService.showNotification(notification);
+          }
+        }
+    )
+        .catch((response) => {
+      const notification: Notification = {
+        id:          NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT_FAILURE,
+        title: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_FAILURE.TITLE",
+        description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_FAILURE.DESCRIPTION",
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+      this.notificationService.observeNotification(NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT_FAILURE)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.saveLoading = false;
+            }
+          });
+      this.notificationService.showNotification(notification);
+    });;
   }
 
   // This method is called when the abschließen Button is pressed

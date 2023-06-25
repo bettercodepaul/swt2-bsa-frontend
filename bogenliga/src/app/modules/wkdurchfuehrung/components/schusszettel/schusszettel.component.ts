@@ -37,6 +37,7 @@ const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
 const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
 const NOTIFACTION_SCHUETZE = 'schuetze';
+const AUFFUELLMANNSCHAFT = 'Auffüllmannschaft';
 
 
 @Component({
@@ -238,12 +239,11 @@ export class SchusszettelComponent implements OnInit {
 
               let stringMatch1 = this.match1.mannschaftName;
               let stringMatch2 = this.match2.mannschaftName;
-              let auffuellmannschaft= 'Auffüllmannschaft';
 
-              if(stringMatch1.includes(auffuellmannschaft)) {
+              if(stringMatch1.includes(AUFFUELLMANNSCHAFT)) {
                 for (const i of Object.keys(this.match1.schuetzen)) {
                   this.match1.schuetzen[i][0].rueckennummer = 0;
-                  for(let j=0; j<=4; j++){
+                  for(let j=0; j<=2; j++){
                     this.match1.schuetzen[i][j].ringzahlPfeil1 = 0;
                     this.match1.schuetzen[i][j].ringzahlPfeil2 = 0;
                   }
@@ -251,10 +251,10 @@ export class SchusszettelComponent implements OnInit {
                 this.match1.satzpunkte = 0;
                 this.match1.matchpunkte = 0;
 
-              }else if(stringMatch2.includes(auffuellmannschaft)){
+              }else if(stringMatch2.includes(AUFFUELLMANNSCHAFT)){
                 for (const i of Object.keys(this.match2.schuetzen)) {
                   this.match2.schuetzen[i][0].rueckennummer = 0;
-                  for(let j=0; j<=4; j++){
+                  for(let j=0; j<=2; j++){
                     this.match2.schuetzen[i][j].ringzahlPfeil1 = 0;
                     this.match2.schuetzen[i][j].ringzahlPfeil2 = 0;
                   }
@@ -262,6 +262,7 @@ export class SchusszettelComponent implements OnInit {
                 this.match2.satzpunkte = 0;
                 this.match2.matchpunkte = 0;
               }
+
             })
             .catch((error) => {
               console.error(error);
