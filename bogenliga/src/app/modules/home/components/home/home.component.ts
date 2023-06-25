@@ -83,6 +83,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   public VereinsID: number;
   public providedID: number;
+  public ligaName: string;
   public hasID: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
@@ -142,9 +143,20 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        this.hasID = true;
-        this.checkingAndLoadingLiga(); // load liga with changes of id in url
+
+        const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
+
+        if (!paramIsNumber) {
+          this.ligaName = params[ID_PATH_PARAM]
+          this.hasID = false;
+          console.log("String liga name is: " + this.ligaName);
+          this.ligaName? this.loadLiga(this.ligaName) : null;
+        } else {
+          this.providedID = parseInt(params[ID_PATH_PARAM], 10);
+          this.hasID = true;
+          console.log("Number ID is: " + this.providedID);
+          this.checkingAndLoadingLiga(); // load liga with changes of id in url
+        }
 
       } else {
         this.hasID = false;
@@ -169,6 +181,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   /**Check if LigaID of URL exists and load the corresponding page*/
   private checkingAndLoadingLiga(){
     this.hasID ? this.loadLiga(this.providedID) : null;
+
   }
 
 
@@ -196,10 +209,18 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * */
 
 
-  private async loadLiga(urlLigaID : number){
+  private async loadLiga(urlLigaID : number | string){
+    console.log("loadliga called");
+    //If number or string, versch backend call
+    if (typeof urlLigaID === 'number'){
     await this.ligaDataProvider.checkExists(urlLigaID)
               .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
               .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
+    } else {
+    await this.ligaDataProvider.checkExistsLigaName(urlLigaID)
+              .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
+              .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
+    }
   }
 
 
@@ -211,7 +232,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    **/
 
   private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
-
+    console.log("Success");
+    console.log("Payload ist:" +response.payload.id);
     if(response.payload.id==null){
       //routing back to home URL
       const link = '/home';
@@ -242,6 +264,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * Handling a failed backendcall to get Liga by LigaID
    **/
   public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {
+    console.log("FAIL!!!!!!!!!!!!!!" +response.payload.id);
     //routing back to home URL
     const link = '/home';
     this.router.navigateByUrl(link);
