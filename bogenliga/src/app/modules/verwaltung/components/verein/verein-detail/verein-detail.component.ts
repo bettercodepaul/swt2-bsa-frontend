@@ -8,7 +8,7 @@ import {
   showDeleteLoadingIndicatorIcon,
   toTableRows
 } from '../../../../shared/components';
-import {BogenligaResponse, UriBuilder} from '../../../../shared/data-provider';
+import {BogenligaResponse, RequestResult, UriBuilder} from '../../../../shared/data-provider';
 import {
   Notification,
   NotificationOrigin,
@@ -40,6 +40,8 @@ import {jsPDF} from 'jspdf';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {SessionHandling} from '@shared/event-handling';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
+import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
 
 
 const ID_PATH_PARAM = 'id';
@@ -87,7 +89,9 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
               private router: Router,
               private route: ActivatedRoute,
               private onOfflineService: OnOfflineService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private userDataProviderService: UserDataProviderService,)
+  {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -103,6 +107,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
    *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
    *  be logged out automatically.
    */
+
   public onMouseOver(event: any) {
     const isExpired = this.sessionHandling.checkSessionExpired();
     if (isExpired) {
@@ -438,12 +443,63 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   private loadRegions(type: string) {
-    this.regionProvider.findAllByType(type)
-        .then((response: BogenligaResponse<RegionDO[]>) => {
-          this.handleResponseArraySuccess(response);
-          this.loadVerein();
-        } )
-        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
+    let currentUserId = this.currentUserService.getCurrentUserID();
+    this.userDataProviderService.findUserRoleById(currentUserId).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+      let isAdmin = false;
+      if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0)
+        isAdmin = true;
+
+      if (isAdmin == true) { //Wenn admin
+        this.regionProvider.findAllByType(type)
+            .then((response: BogenligaResponse<RegionDO[]>) => {
+              this.handleResponseArraySuccess(response);
+              this.loadVerein();
+            })
+            .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
+      }else{ //Wenn KEIN Admin
+        let myVereinId = this.currentUserService.getVerein(); //Aktueller Verein des eingeloggten Users
+        this.vereinProvider.findById(myVereinId).then((response: BogenligaResponse<VereinDO>) => {
+          let myVereinRegionId = response.payload.regionId;
+          let allRegions: any[]= [];
+          let allowedRegions: any[]= [];
+          let seenRegions: any[] = [];
+
+          //Alle Regionen in Liste schreiben
+          this.regionProvider.findAll().then((regions: BogenligaResponse<RegionDO[]>) => {
+            regions.payload.forEach((e) => {
+              allRegions.push(e.id);
+
+            })
+          }).catch(e => console.log(e));
+
+          //Rekursive funktion um die allowedRegions zu filtern und Liste zu befüllen
+          allowedRegions = this.findAllowedRegions(myVereinRegionId, allRegions, allowedRegions, seenRegions);
+
+          //Erlaubte Regionen in die Klappliste schreiben
+          this.regionProvider.findAll().then((value) => {
+            let filteredRegions = value.payload.filter((f) => {
+              return allowedRegions.includes(f.id)
+            })
+            this.handleResponseArraySuccessRegion(filteredRegions);
+            this.loadVerein();
+          }).catch(e => console.log(e))
+
+        }).catch(err => console.log(err));
+      }
+    }).catch(err => console.log(err))
+        .finally(() => this.loading = false);
+  }
+
+  public findAllowedRegions(parentRegionId, allRegions, allowedRegions, seenRegions): any {
+    allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
+
+    allRegions.forEach(region => {
+      if (region.regionUebergeordnet === parentRegionId && !seenRegions.includes(region.id)) {
+        seenRegions.push(region.id);  // Vermeide Endlosschleifen
+        this.findAllowedRegions(region.id, allRegions, allowedRegions, seenRegions);  // Rekursiver Aufruf für untergeordnete Region
+      }
+    });
+    return allowedRegions;
   }
 
   private handleSuccess(response: BogenligaResponse<VereinDO>) {
@@ -528,8 +584,12 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
   }
 
   private handleResponseArraySuccess(response: BogenligaResponse<RegionDO[]>): void {
+    this.handleResponseArraySuccessRegion(response.payload);
+  }
+
+  private handleResponseArraySuccessRegion(response: RegionDO[]): void {
     this.regionen = []; // reset array to ensure change detection
-    this.regionen = response.payload;
+    this.regionen = response;
     this.currentRegion = this.regionen[0]; // Set first element of object as selected.
 
     this.loading = false;
