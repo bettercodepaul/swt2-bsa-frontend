@@ -809,7 +809,7 @@
       "NOTIFICATION_AUFFUELLMANNSCHAFT": {
         "DELETE": {
           "TITLE": "Delete fill in club",
-          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
+          "DESCRIPTION": "You cannot delete this club! This club is needed to create the fill in team."
         }
       }
     },
@@ -887,7 +887,7 @@
       "NOTIFICATION_AUFFUELLMANNSCHAFT": {
         "DELETE": {
           "TITLE": "Delete fill in club",
-          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
+          "DESCRIPTION": "You cannot delete this club! This club is needed to create the fill in team."
         }
       }
     },
@@ -1314,7 +1314,8 @@
         "FINISH": "Finish",
         "WETTKAMPFTAGE": "Competition days",
         "MANNSCHAFT": "Copy teams from previous year",
-        "BACK": "Back"
+        "BACK": "Back",
+        "AUFFUELLMANNSCHAFT": "Add Fill in team"
       },
       "NOTIFICATION": {
         "ADD": {
@@ -1340,6 +1341,14 @@
         "UPDATE": {
           "TITLE": "Success",
           "DESCRIPTION": "Successfully updated event."
+        },
+        "AUFFUELLMANNSCHAFT_SAVE": {
+          "TITLE": "Created",
+          "DESCRIPTION": "Successfully create a fill in team"
+        },
+        "AUFFUELLMANNSCHAFT_FAILURE": {
+          "TITLE": "Error",
+          "DESCRIPTION": "The creation of the fill in team has failed. Reasons for this may be that the event is full or a fill in team already exists."
         }
       }
     },
