@@ -120,6 +120,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public handleFindVeranstaltungFailure(error: any): void {
     // Routing zurück zur Ligatabelle URL, wenn keine ID gefunden wird
     console.log("Failure, ID not found 2222 ");
+    this.hasVeranstaltung = false;
 /*    const link = '/ligatabelle';
     this.router.navigateByUrl(link);*/
   }
@@ -190,14 +191,15 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       }
       this.loading = false;
       this.loadingLigatabelle = false;
-      console.log("Has Veranstaltung: " + this.hasVeranstaltung);
-      !this.hasVeranstaltung ? this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id : this.selectedYearId = 2016;
+      console.log("Has Veranstaltung: " + this.hasVeranstaltung + "Year is:" + this.selectedYearForVeranstaltung + "  this.selectedYearID  " +this.selectedYearId +" avalyear  " + this.availableYears[indexOfSelectedYearInAvailableYears].id);
+      this.hasVeranstaltung ? this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id : this.selectedYearId = 2016;
 
       if (this.availableYears.length > 0) {
         // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (IndexOfSelectedYearInAvailableYears = 0)
         selectedYear.push(this.availableYears[indexOfSelectedYearInAvailableYears]);
         console.log("Has Veranstaltung: " + selectedYear);
-        !this.hasVeranstaltung ? this.onSelectYear(selectedYear) : undefined; // automatische Auswahl nur bei vorhandenen Daten
+        //!this.hasVeranstaltung ? this.onSelectYear(selectedYear) : undefined; // automatische Auswahl nur bei vorhandenen Daten
+        this.onSelectYear(selectedYear);
       }
     } catch (e) {
       this.loading = false;
@@ -270,7 +272,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.hasVeranstaltung = true;
     const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
     this.router.navigate([link]);
-
   }
 
 
