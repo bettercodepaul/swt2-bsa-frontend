@@ -85,6 +85,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public providedID: number;
   public ligaName: string;
   public hasID: boolean;
+  public hasLigaNameInUrl: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
@@ -146,20 +147,24 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
         const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
 
+        //check if url has number or liganame
         if (!paramIsNumber) {
           this.ligaName = params[ID_PATH_PARAM]
           this.hasID = false;
+          this.hasLigaNameInUrl=true;
           console.log("String liga name is: " + this.ligaName);
           this.ligaName? this.loadLiga(this.ligaName) : null;
         } else {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
+          this.hasLigaNameInUrl=false;
           console.log("Number ID is: " + this.providedID);
           this.checkingAndLoadingLiga(); // load liga with changes of id in url
         }
 
       } else {
         this.hasID = false;
+        this.hasLigaNameInUrl=false;
       }
     });
 
@@ -251,11 +256,22 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       });
     }
     else{
+      console.log("Else Block")
+
+
       //store Liga information
       this.selectedLigaName=response.payload.name;
       this.selectedLigaID=response.payload.id;
       this.selectedLigaDetails=response.payload.ligaDetail;
       this.loadedLigaData=true;
+      console.log(response.payload.id)
+      console.log(this.selectedLigaID)
+      console.log(response.payload.name)
+      console.log(this.selectedLigaName)
+      if(this.hasLigaNameInUrl){
+        const link = '/home/' + this.selectedLigaID;
+        this.router.navigateByUrl(link);
+      }
     }
   }
 
