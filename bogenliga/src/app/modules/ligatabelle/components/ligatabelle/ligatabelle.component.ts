@@ -96,9 +96,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
-          this.selectedYearForVeranstaltung != undefined && this.hasID ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
+          params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
+          this.selectedYearForVeranstaltung != undefined && this.hasID
+            ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
         } else {
           console.log('no params at ligatabelle');
+          this.router.navigate(['/ligatabelle/ligaid']);
         }
       });
 
@@ -121,8 +124,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     // Routing zurück zur Ligatabelle URL, wenn keine ID gefunden wird
     console.log("Failure, ID not found 2222 ");
     this.hasVeranstaltung = false;
-/*    const link = '/ligatabelle';
-    this.router.navigateByUrl(link);*/
+    const link = '/ligatabelle';
+    this.router.navigateByUrl(link);
   }
 
 
@@ -191,13 +194,13 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       }
       this.loading = false;
       this.loadingLigatabelle = false;
-      console.log("Has Veranstaltung: " + this.hasVeranstaltung + "Year is:" + this.selectedYearForVeranstaltung + "  this.selectedYearID  " +this.selectedYearId +" avalyear  " + this.availableYears[indexOfSelectedYearInAvailableYears].id);
-      this.hasVeranstaltung ? this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id : this.selectedYearId = 2016;
-
+      //console.log("Has Veranstaltung: " + this.hasVeranstaltung + "Year is:" + this.selectedYearForVeranstaltung + "  this.selectedYearID  " +this.selectedYearId +" avalyear  " + this.availableYears[indexOfSelectedYearInAvailableYears].id);
+      //!this.hasVeranstaltung ? this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id : this.selectedYearId = 2016;
+      this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id
       if (this.availableYears.length > 0) {
         // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (IndexOfSelectedYearInAvailableYears = 0)
         selectedYear.push(this.availableYears[indexOfSelectedYearInAvailableYears]);
-        console.log("Has Veranstaltung: " + selectedYear);
+        //console.log("Has Veranstaltung: " + selectedYear);
         //!this.hasVeranstaltung ? this.onSelectYear(selectedYear) : undefined; // automatische Auswahl nur bei vorhandenen Daten
         this.onSelectYear(selectedYear);
       }
