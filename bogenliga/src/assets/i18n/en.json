@@ -45,7 +45,8 @@
     },
     "LIGADETAILES": {
       "IDWARNING": "Wrong Link",
-      "DESCRIPTION": "No valid league link could be found"
+      "DESCRIPTION": "No valid league link could be found",
+      "BACK_TO_HOME": "Back to home"
     },
     "IMPRESSUM": {
       "TITLE": "Imprint"
@@ -95,7 +96,9 @@
         "VERANSTALTUNG": "League",
         "WETTKAMPFTAG_AKT": "Competition day",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION" : "reset league selection",
+      "GOTO_LIGADETAILS" : "To the league details"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {

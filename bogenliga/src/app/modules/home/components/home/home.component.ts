@@ -36,6 +36,8 @@ import {
   OnOfflineService,
   NotificationService
 } from '@shared/services';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {faHome} from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -89,6 +91,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private loadedLigaData: boolean;
   public veranstaltung: VeranstaltungDO;
 
+  public zurStartseiteIcon: IconProp = faHome;
+
   constructor(
     private notificationService: NotificationService,
     private router: Router,
@@ -139,8 +143,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.setCorrectID();
     }
 
+    //to get id of liga from route path
 
     this.route.params.subscribe((params) => {
+      //If parameter ID_PATH_PARAM is defined
+      //it parses the parameter value as an integer and assigns it to the providedID variable
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         this.hasID = true;
@@ -323,6 +330,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
                day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
              };
              this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
+             //filter wettkampftabelle, wenn auf Ligadetailseite, nach LigaID
+             if(this.selectedLigaID != null || this.selectedLigaID != undefined)
+               this.veranstaltungWettkaempfeDO.filter(veranstaltung => veranstaltung.veranstaltungDO.ligaId == this.selectedLigaID);
              console.log(veranstaltungWettkaempfeDOLocal)
            })
          })
@@ -435,6 +445,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
     console.log("Id der veranstaltung " + this.veranstaltung.id)
     const link = '/wettkaempfe/' + this.veranstaltung.id;
+    this.router.navigateByUrl(link);
+  }
+
+  public deselect(){
+    const link = '/home';
     this.router.navigateByUrl(link);
   }
 
