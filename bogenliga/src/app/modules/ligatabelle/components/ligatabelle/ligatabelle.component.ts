@@ -18,6 +18,7 @@ import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-d
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {faUndo} from '@fortawesome/free-solid-svg-icons';
+import {faSitemap } from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 
@@ -36,6 +37,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   private sessionHandling: SessionHandling;
 
   public zuruecksetzenIcon: IconProp = faUndo;
+  public zuDenLigadetailsIcon: IconProp = faSitemap;
 
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
@@ -286,6 +288,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.isDeselected = true;
     console.log(this.isDeselected);
     const link = '/ligatabelle';
+    this.router.navigateByUrl(link);
+  }
+
+  public goToLigaDetails(){
+    console.log("IDDD" + this.providedID);
+    const link = '/home/' +  this.providedID;
     this.router.navigateByUrl(link);
   }
 }

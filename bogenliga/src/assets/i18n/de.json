@@ -48,7 +48,8 @@
     },
     "LIGADETAILES": {
       "IDWARNING": "Falscher Link",
-      "DESCRIPTION": "Es wurde kein gültiger Liga-Link gefunden."
+      "DESCRIPTION": "Es wurde kein gültiger Liga-Link gefunden.",
+      "BACK_TO_HOME": "Zurück zur Startseite"
     },
     "IMPRESSUM": {
       "TITLE": "Impressum"
@@ -100,7 +101,9 @@
         "VERANSTALTUNG": "Liga",
         "WETTKAMPFTAG_AKT": "Wettkampftag",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION" : "Auswahl zurücksetzen",
+      "GOTO_LIGADETAILS" : "Zu den Ligadetails"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
