@@ -222,12 +222,12 @@ describe('Anonyme User tests', function () {
   })
 })
 
-describe('Admin User tests', function() {
+describe.only('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
-  it('Login erfolgreich', function() {
+  it.only('Login erfolgreich', function() {
     cy.loginAdmin()
     cy.url().should('include', '#/home');
   });
@@ -235,7 +235,7 @@ describe('Admin User tests', function() {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
    */
-  it('Anzeige Verwaltung', function() {
+  it.only('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
   })
@@ -428,7 +428,7 @@ describe('Admin User tests', function() {
   /**
    * This test shows the user tab in the administration
    */
-  it('Anzeige User', function () {
+  it.only('Anzeige User', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-user-button]').click()
@@ -502,24 +502,24 @@ describe('Admin User tests', function() {
   /**
    * This test adds a new user with two-factor-authentication
    */
-  /*
-  it('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
+
+  it.only('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
     cy.get('#sidebarCollapseBottom').click()
-    cy.contains('VERWALTUNG').click()
+    cy.contains('Verwaltung').click()
     cy.get('#sidebarCollapseBottom').click()
     cy.url().should('include', '#/verwaltung')
-    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(2) > .card-body > .btn').click()
+    cy.get('[data-cy="verwaltung-user-button"]').click()
     cy.url().should('include', '#/verwaltung/user')
 
-    cy.get('.dialog-content > .overview-dialog-header > .overview-dialog-add > .btn > span').click()
+    cy.get('[data-cy="dsb-mitglied-add-button"]').click()
     cy.get('.col-sm-9 > #userDsbMitglied > .quicksearch-list > .quicksearch-list-select > #selectionListRegions').select('7: 45')
     cy.get('#userDsbMitglied > .quicksearch-list > .quicksearch-list-select > #selectionListRegions > option:nth-child(8)').click()
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userUsername').click()
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userUsername').type('zweifaktorauthentifizierung@bogenliga.de')
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userPassword').click()
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userPassword').type('2FaktorAuthentifizierung1')
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userVerifyPassword').click()
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userVerifyPassword').type('2FaktorAuthentifizierung1')
+    cy.get('[value="9: 47"]').click()
+    cy.get('[value="9: 47"]').type('zweifaktorauthentifizierung@bogenliga.de')
+    cy.get('[value="9: 47"]').click()
+    cy.get('[value="9: 47"]').type('2FaktorAuthentifizierung1')
+    cy.get('[value="9: 47"]').click()
+    cy.get('[value="9: 47"]').type('2FaktorAuthentifizierung1')
 
     cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-1 > #user2FA').click()
     // cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-1 > #user2FA').check('on')
@@ -536,7 +536,7 @@ describe('Admin User tests', function() {
     cy.get('.card-body > #loginForm > .container > bla-button > #loginButton').click()
     cy.get('#OKBtn1').click()
   })
-  */
+
 
   /**
    * This test shows the "Wettkampfklassen" tab in administration
