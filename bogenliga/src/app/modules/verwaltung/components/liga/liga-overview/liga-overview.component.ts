@@ -114,7 +114,7 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
     this.ligaDataProvider.findAll()
         .then((response: BogenligaResponse<LigaDTO[]>) => {
           this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID()).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
-            if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0) {
+            if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0 || roleresponse.payload.filter(role => role.roleName == 'LIGALEITER').length > 0) {
               this.handleLoadTableRowsSuccess(response);
             } else {
               let filtered = response.payload.filter(ligadto => {

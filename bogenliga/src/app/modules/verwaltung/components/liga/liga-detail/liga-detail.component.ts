@@ -22,7 +22,7 @@ import {LigaDO} from '../../../types/liga-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {LIGA_DETAIL_CONFIG} from './liga-detail.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {DisziplinDO} from '@verwaltung/types/disziplin-do.class';
 import {DisziplinDTO} from '@verwaltung/types/datatransfer/disziplin-dto.class';
 import {DisziplinDataProviderService} from '@verwaltung/services/disziplin-data-provider-service';
@@ -92,6 +92,8 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
   ngOnInit() {
+    this.isAdmin = this.currentUserService.hasPermission(
+      UserPermission.CAN_MODIFY_SYSTEMDATEN);
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
