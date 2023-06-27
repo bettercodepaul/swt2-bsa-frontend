@@ -60,6 +60,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
 
+  public isAdmin: Boolean = false;
 
 
   public deleteLoading = false;
