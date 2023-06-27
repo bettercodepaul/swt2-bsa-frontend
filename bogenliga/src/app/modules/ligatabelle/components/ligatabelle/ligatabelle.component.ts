@@ -10,7 +10,12 @@ import {LigatabelleDataProviderService} from '../../services/ligatabelle-data-pr
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {LigatabelleErgebnisDO} from '../../types/ligatabelle-ergebnis-do.class';
 import {isUndefined} from '@shared/functions';
-import {NotificationService} from '@shared/services/notification';
+import {
+  NotificationOrigin,
+  NotificationService, NotificationSeverity,
+  NotificationType,
+  NotificationUserAction
+} from '@shared/services/notification';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
@@ -118,12 +123,14 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.hasVeranstaltung = true;
     this.selectedItemId = response.payload.id;
     this.onSelectVeranstaltung([response.payload]);
+
   }
 
   public handleFindVeranstaltungFailure(error: any): void {
     // Routing zurück zur Ligatabelle URL, wenn keine ID gefunden wird
     console.log("Failure, ID not found 2222 ");
     this.hasVeranstaltung = false;
+
     const link = '/ligatabelle';
     this.router.navigateByUrl(link);
   }
