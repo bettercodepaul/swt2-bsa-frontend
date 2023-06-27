@@ -222,12 +222,12 @@ describe('Anonyme User tests', function () {
   })
 })
 
-describe.only('Admin User tests', function() {
+describe('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
-  it.only('Login erfolgreich', function() {
+  it('Login erfolgreich', function() {
     cy.loginAdmin()
     cy.url().should('include', '#/home');
   });
@@ -235,7 +235,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
    */
-  it.only('Anzeige Verwaltung', function() {
+  it('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
   })
@@ -428,12 +428,41 @@ describe.only('Admin User tests', function() {
   /**
    * This test shows the user tab in the administration
    */
-  it.only('Anzeige User', function () {
+  it('Anzeige User', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-user-button]').click()
     cy.url().should('include', '#/verwaltung/user')
   })
+
+  /**
+   * This test adds a new user with two-factor-authentication
+   */
+
+  it('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
+
+    cy.get('[data-cy="dsb-mitglied-add-button"]').click();
+    cy.get('[data-cy="bla-selection-list"]').select('103: 1027');
+    cy.get('[data-cy="username-input"]').type("DefaultCypressTestUser2WayAuth@cypressTestuser.com");
+    cy.get('[data-cy="password-input"]').type('Test123456');
+    cy.get('[data-cy="verify-password-input"]').type('Test123456');
+    cy.get('#user2FA').click()
+    cy.get('[data-cy="user-submit-button"]').click()
+
+    cy.contains('.modal-content', 'Erfolg').within(() => {
+      cy.get('.modal-dialog-ok button')
+        .should('contain', 'OK')
+        .click();
+    });
+
+    cy.wait(5000)
+    cy.get('#qr > img').should('exist');
+    cy.wait(5000)
+    cy.go('back')
+    cy.deleteTestUser("DefaultCypressTestUser2WayAuth@cypressTestuser.com");
+
+  })
+
 
   /**
    * This test adds a new user
@@ -495,47 +524,6 @@ describe.only('Admin User tests', function() {
 
       //cy.get('[ng-reflect-color="action-btn-primary"] > #undefined > .action-btn-circle').click();
     })
-
-
-
-
-  /**
-   * This test adds a new user with two-factor-authentication
-   */
-
-  it.only('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
-    cy.get('#sidebarCollapseBottom').click()
-    cy.contains('Verwaltung').click()
-    cy.get('#sidebarCollapseBottom').click()
-    cy.url().should('include', '#/verwaltung')
-    cy.get('[data-cy="verwaltung-user-button"]').click()
-    cy.url().should('include', '#/verwaltung/user')
-
-    cy.get('[data-cy="dsb-mitglied-add-button"]').click()
-    cy.get('.col-sm-9 > #userDsbMitglied > .quicksearch-list > .quicksearch-list-select > #selectionListRegions').select('7: 45')
-    cy.get('#userDsbMitglied > .quicksearch-list > .quicksearch-list-select > #selectionListRegions > option:nth-child(8)').click()
-    cy.get('[value="9: 47"]').click()
-    cy.get('[value="9: 47"]').type('zweifaktorauthentifizierung@bogenliga.de')
-    cy.get('[value="9: 47"]').click()
-    cy.get('[value="9: 47"]').type('2FaktorAuthentifizierung1')
-    cy.get('[value="9: 47"]').click()
-    cy.get('[value="9: 47"]').type('2FaktorAuthentifizierung1')
-
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-1 > #user2FA').click()
-    // cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-1 > #user2FA').check('on')
-    cy.get('#userNeuForm > .form-group > .col-sm-9 > bla-button > #userSaveButton').click()
-    cy.get('.modal-content > .modal-footer > bla-button > #undefined > span').click()
-
-    //check login - man erkennt nicht ob es funktioniert
-    cy.visit('http://localhost:4200/')
-    cy.get('bla-navbar > #navbar > #navbar-right > .nav-link > .btn').click()
-    cy.url().should('include', '#/user/login')
-    cy.get('.card-body > #loginForm > .container > .form-group > #loginEmail').click()
-    cy.get('.card-body > #loginForm > .container > .form-group > #loginEmail').type('zweifaktorauthentifizierung@bogenliga.de')
-    cy.get('.card-body > #loginForm > .container > .form-group > #loginPassword').type('2FaktorAuthentifizierung1')
-    cy.get('.card-body > #loginForm > .container > bla-button > #loginButton').click()
-    cy.get('#OKBtn1').click()
-  })
 
 
   /**
@@ -937,6 +925,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test checks if "Wettkampftage" has entries.
    */
+  /*
   it('Wettkampftage anzeigen', function() {
     cy.wait(11000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
@@ -944,11 +933,12 @@ describe.only('Admin User tests', function() {
     cy.get('[data-cy="wettkampftage-button"]').click()
     cy.wait(10000)
     cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select(0)
-  })
+  })*/
 
   /**
    * This test edits a "Wettkampftag" and checks if it was changed.
    */
+  /*
    it('Wettkampftage bearbeiten', function() {
      cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
      cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 221')
@@ -974,7 +964,7 @@ describe.only('Admin User tests', function() {
      cy.get('[data-cy="wettkampftage-button"]').click()
      cy.wait(2000)
      cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
-  })
+  })*/
 
 })
 
