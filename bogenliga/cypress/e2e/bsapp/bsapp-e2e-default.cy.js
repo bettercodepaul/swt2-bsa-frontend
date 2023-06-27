@@ -605,6 +605,7 @@ describe('Admin User tests', function() {
     });
   })
 
+
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
