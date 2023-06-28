@@ -39,7 +39,6 @@ describe('Anonyme User tests', function () {
   })
 
   /*Test hilfeicon */
-  /*
   it('test hilfeicon', function() {
     cy.visit('http://localhost:4200/')
     cy.get('[data-cy=login-button]').click()
@@ -48,7 +47,7 @@ describe('Anonyme User tests', function () {
     cy.get('bla-hilfe-button a')
       .should('have.attr', 'href', 'https://wiki.bsapp.de/doku.php?id=liga:regionen')
       .should('have.attr', 'target', '_blank');
-  })*/
+  })
 
   /**
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
@@ -845,7 +844,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if the Event-table gets filled.
    */
-  /*
+
   it('Veranstaltungen Anzeigen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
@@ -853,13 +852,13 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=bla-selection-list]').select('0: 0')
     cy.wait(5000)
     cy.get('tbody').should('have.length.at.least', 1)
-  })*/
+  })
 
   /**
    * This test adds a "Veranstaltung" and checks if it gets added
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-/*
+
   it('Veranstaltungen hinzufügen', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('Testveranstaltung')) {
@@ -885,12 +884,12 @@ describe('Admin User tests', function() {
         cy.get('tbody').should('contain.text', 'Testveranstaltung')
       }
     });
-  })*/
+  })
 
   /**
    * This test edits a "Veranstaltung" and checks if it was changed
    */
-/*
+
   it('Veranstaltungen bearbeiten', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
@@ -906,12 +905,12 @@ describe('Admin User tests', function() {
     cy.wait(11000)
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
 
-  })*/
+  })
 
   /**
    * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
    */
-/*
+
   it('Veranstaltung Löschen', function() {
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
@@ -921,12 +920,12 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=bla-selection-list]').select('0: 0')
     cy.wait(11000)
     cy.get('tbody').should('not.contain.text', 'TestveranstaltungTTT')
-  })*/
+  })
 
   /**
    * This test checks if "Wettkampftage" has entries.
    */
-  /*
+
   it('Wettkampftage anzeigen', function() {
     cy.wait(11000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
@@ -934,12 +933,12 @@ describe('Admin User tests', function() {
     cy.get('[data-cy="wettkampftage-button"]').click()
     cy.wait(10000)
     cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select(0)
-  })*/
+  })
 
   /**
    * This test edits a "Wettkampftag" and checks if it was changed.
    */
-  /*
+
    it('Wettkampftage bearbeiten', function() {
      cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
      cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 221')
@@ -965,7 +964,7 @@ describe('Admin User tests', function() {
      cy.get('[data-cy="wettkampftage-button"]').click()
      cy.wait(2000)
      cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
-  })*/
+  })
 
 })
 
