@@ -10,12 +10,7 @@ import {LigatabelleDataProviderService} from '../../services/ligatabelle-data-pr
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {LigatabelleErgebnisDO} from '../../types/ligatabelle-ergebnis-do.class';
 import {isUndefined} from '@shared/functions';
-import {
-  NotificationOrigin,
-  NotificationService, NotificationSeverity,
-  NotificationType,
-  NotificationUserAction
-} from '@shared/services/notification';
+import {NotificationService} from '@shared/services/notification';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
@@ -203,14 +198,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       }
       this.loading = false;
       this.loadingLigatabelle = false;
-      //console.log("Has Veranstaltung: " + this.hasVeranstaltung + "Year is:" + this.selectedYearForVeranstaltung + "  this.selectedYearID  " +this.selectedYearId +" avalyear  " + this.availableYears[indexOfSelectedYearInAvailableYears].id);
-      //!this.hasVeranstaltung ? this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id : this.selectedYearId = 2016;
       this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id
       if (this.availableYears.length > 0) {
         // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (IndexOfSelectedYearInAvailableYears = 0)
         selectedYear.push(this.availableYears[indexOfSelectedYearInAvailableYears]);
-        //console.log("Has Veranstaltung: " + selectedYear);
-        //!this.hasVeranstaltung ? this.onSelectYear(selectedYear) : undefined; // automatische Auswahl nur bei vorhandenen Daten
         this.onSelectYear(selectedYear);
       }
     } catch (e) {
@@ -262,10 +253,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedYearForVeranstaltung = $event[0].sportjahr; //Ausgewähltes Jahr in der Liste speichern
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
     this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id;
-
-    console.log("Selected YEAR IS: " + this.selectedYearForVeranstaltung );
-    //this.hasID ? this.loadVeranstaltungFromLigaID(this.providedID): undefined; //Wenn die Liga-ID in der URL vorhanden ist, lade veranstaltung für korrekte Auswahl
-    // this.loadVeranstaltungFromLigaID(this.providedID): undefined; //Wenn die Liga-ID in der URL vorhanden ist, lade veranstaltung für korrekte Auswahl
     this.hasID ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
 
     //this.onSelectVeranstaltung([this.veranstaltungIdMap.get(this.selectedVeranstaltungId)]); //automatische Auswahl: Aus
@@ -280,10 +267,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedVeranstaltung = $event[0];
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
     this.buttonForward = this.selectedVeranstaltung.id;
-    this.loadLigaTableRows();
     this.hasVeranstaltung = true;
+    this.loadLigaTableRows();
     const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
     this.router.navigate([link]);
+
+
   }
 
 
@@ -295,8 +284,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   public goToLigaDetails(){
-    console.log("IDDD" + this.providedID);
     const link = '/home/' +  this.providedID;
-    this.router.navigateByUrl(link);
+    const homeLink = '/home';
+    this.hasID ? this.router.navigateByUrl(link) : this.router.navigateByUrl(homeLink);
   }
 }
