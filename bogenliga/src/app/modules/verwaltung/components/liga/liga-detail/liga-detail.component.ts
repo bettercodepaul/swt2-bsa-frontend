@@ -72,6 +72,8 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   //FileUpload
 
   public fileName = '';
+  public fileType;
+  public Basetests = '';
 
 
 
@@ -272,6 +274,101 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     }
   }
 
+
+  public convertFileToBase64($event): void {
+    this.readThis($event.target);
+  }
+
+  public readThis(inputValue: any): void {
+    const file: File = inputValue.files[0];
+    this.fileType = file.type;
+    this.fileName = file.name
+    const myReader: FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.Basetests = String(myReader.result);
+    };
+
+    myReader.readAsDataURL(file);
+  }
+
+  public fileDownload(){
+
+    const typeOfFile = this.Basetests.substring(this.Basetests.indexOf(':')+1, this.Basetests.indexOf(';'))
+    this.Basetests = this.Basetests.replace('data:' + typeOfFile + ';base64,', '');
+
+    const byteArray = new Uint8Array(
+      atob(this.Basetests)
+        .split('')
+        .map((char) => char.charCodeAt(0))
+    );
+
+    const file = new Blob([byteArray], {type: typeOfFile});
+    const fileUrl = URL.createObjectURL(file);
+    let fileName = this.fileName + this.getFileType(typeOfFile);
+    let link = document.createElement('a');
+    link.download = fileName;
+    link.target = '_blank';
+    link.href = fileUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+  }
+
+  private getFileType(typeOfFile: string){
+    switch (typeOfFile){
+      case 'application/pdf':
+        return '.pdf'
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        return '.docx';
+      case 'application/msword':
+        return '.doc';
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        return '.xlsx';
+      case 'application/vnd.ms-excel':
+        return '.xls';
+      default:
+        return '';
+    }
+  }
+
+
+  /*
+  public fileDownload(): void {
+    const base64Data = this.Basetests.replace('data:application/pdf;base64,', '');
+    const blob = this.base64ToBlob(base64Data, 'application/pdf');
+    const fileUrl = URL.createObjectURL(blob);
+    const fileName = 'downloaded.pdf';
+
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  private base64ToBlob(base64Data: string, contentType: string): Blob {
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, { type: contentType });
+  }
+*/
 
 
 
