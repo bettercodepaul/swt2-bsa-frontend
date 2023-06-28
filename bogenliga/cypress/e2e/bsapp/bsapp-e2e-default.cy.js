@@ -221,12 +221,12 @@ describe('Anonyme User tests', function () {
   })
 })
 
-describe.only('Admin User tests', function() {
+describe('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
-  it.only('Login erfolgreich', function() {
+  it('Login erfolgreich', function() {
     cy.loginAdmin()
     cy.url().should('include', '#/home');
   });
@@ -234,7 +234,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
    */
-  it.only('Anzeige Verwaltung', function() {
+  it('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
   })
@@ -569,7 +569,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test opens the administration table and check whether the table has any content
    */
-  it.only('Anzeige Verwaltung Vereinsliste', function () {
+  it('Anzeige Verwaltung Vereinsliste', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -582,7 +582,7 @@ describe.only('Admin User tests', function() {
    * This test checks if it's possible to add a new club to the administration table successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it.only('Neuen Verein anlegen', function () {
+  it('Neuen Verein anlegen', function () {
     cy.get('body').then((body) => {
       if (!body.text().includes('CypressTest')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
@@ -612,7 +612,7 @@ describe.only('Admin User tests', function() {
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
-  it.only('Editieren eines Vereins', function () {
+  it('Editieren eines Vereins', function () {
 
     cy.contains('td', '1111111111')
       .parent('tr')
@@ -645,7 +645,7 @@ describe.only('Admin User tests', function() {
    * This test checks if it is possible to add a new team to a club successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it.only('Neue Vereins-Mannschaft anlegen', function () {
+  it('Neue Vereins-Mannschaft anlegen', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
 
@@ -671,7 +671,7 @@ describe.only('Admin User tests', function() {
   /**
    * The test checks if it's possible to edit a team successfully
    */
-  it.only('Vereins-Mannschaft bearbeiten', function () {
+  it('Vereins-Mannschaft bearbeiten', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -695,7 +695,7 @@ describe.only('Admin User tests', function() {
   /**
    * The test checks if it's possible to delete a team successfully
    */
-  it.only('Vereins-Mannschaft löschen', function () {
+  it('Vereins-Mannschaft löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -878,7 +878,7 @@ describe.only('Admin User tests', function() {
         cy.get('[data-cy=veranstaltung-detail-deadline]').type('2022-01-01')
         cy.wait(5000)
         cy.get('[data-cy=veranstaltung-detail-save-button]').click()
-        cy.wait(5000)
+        cy.wait(42000)
         cy.get('#OKBtn1').click()
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
         cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
@@ -897,6 +897,7 @@ describe.only('Admin User tests', function() {
   it('Veranstaltungen bearbeiten', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
+    cy.wait(10000)
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
     cy.wait(1000)
     cy.get('[data-cy=veranstaltung-detail-update-button]').click()
@@ -946,7 +947,11 @@ describe.only('Admin User tests', function() {
    it('Wettkampftage bearbeiten', function() {
      cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
      cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 221')
+     cy.get('#wettkampftagePLZ').type('{selectall}{backspace}')
+     cy.get('#wettkampftagePLZ').type('70197')
+
      cy.get('[data-cy="wettkampftage-update-button"]').click()
+     cy.wait(1000)
      cy.get('#OKBtn1').click()
      cy.wait(1000)
      cy.get('[data-cy="wettkampftage-zurueck"]').click()
