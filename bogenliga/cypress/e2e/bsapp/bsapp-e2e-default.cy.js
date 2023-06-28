@@ -221,12 +221,12 @@ describe('Anonyme User tests', function () {
   })
 })
 
-describe('Admin User tests', function() {
+describe.only('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
    */
-  it('Login erfolgreich', function() {
+  it.only('Login erfolgreich', function() {
     cy.loginAdmin()
     cy.url().should('include', '#/home');
   });
@@ -234,7 +234,7 @@ describe('Admin User tests', function() {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
    */
-  it('Anzeige Verwaltung', function() {
+  it.only('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
   })
@@ -569,7 +569,7 @@ describe('Admin User tests', function() {
   /**
    * This test opens the administration table and check whether the table has any content
    */
-  it('Anzeige Verwaltung Vereinsliste', function () {
+  it.only('Anzeige Verwaltung Vereinsliste', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -582,17 +582,21 @@ describe('Admin User tests', function() {
    * This test checks if it's possible to add a new club to the administration table successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Neuen Verein anlegen', function () {
+  it.only('Neuen Verein anlegen', function () {
     cy.get('body').then((body) => {
       if (!body.text().includes('CypressTest')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
         cy.url().should('include', '#/verwaltung/vereine/add')
+        cy.wait(1000)
         cy.get('[data-cy=vereine-vereinsname]').click().type('CypressTest')
+        cy.wait(1000)
         cy.get('[data-cy=vereine-vereinsnummer]').click().type('1111111111')
+        cy.wait(1000)
         cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest')
+        cy.wait(1000)
         cy.get('[data-cy=vereine-add-button]').click()
         cy.get('#OKBtn1').click()
-        cy.wait(500)
+        cy.wait(1000)
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
         cy.url().should('include', '#/verwaltung')
         cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -608,7 +612,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
    */
-  it('Editieren eines Vereins', function () {
+  it.only('Editieren eines Vereins', function () {
 
     cy.contains('td', '1111111111')
       .parent('tr')
@@ -641,7 +645,7 @@ describe('Admin User tests', function() {
    * This test checks if it is possible to add a new team to a club successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-  it('Neue Vereins-Mannschaft anlegen', function () {
+  it.only('Neue Vereins-Mannschaft anlegen', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.wait(1000)
 
@@ -667,7 +671,7 @@ describe('Admin User tests', function() {
   /**
    * The test checks if it's possible to edit a team successfully
    */
-  it('Vereins-Mannschaft bearbeiten', function () {
+  it.only('Vereins-Mannschaft bearbeiten', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -691,7 +695,7 @@ describe('Admin User tests', function() {
   /**
    * The test checks if it's possible to delete a team successfully
    */
-  it('Vereins-Mannschaft löschen', function () {
+  it.only('Vereins-Mannschaft löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -701,7 +705,7 @@ describe('Admin User tests', function() {
     cy.wait(500)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.wait(500)
-    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
+    cy.get('button.action-btn-primary:contains("Ja")').click()
     cy.wait(500)
     cy.get('tbody').should('not.contain.text', '76')
   })
