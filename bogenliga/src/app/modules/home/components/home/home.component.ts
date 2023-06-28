@@ -146,7 +146,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     }
 
     //to get id of liga from route path
-
     this.route.params.subscribe((params) => {
       //If parameter ID_PATH_PARAM is defined
       //it parses the parameter value as an integer and assigns it to the providedID variable
