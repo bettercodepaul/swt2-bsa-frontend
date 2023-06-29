@@ -1207,7 +1207,11 @@
             },
             "COPYMANNSCHAFT_FAILURE": {
               "TITLE": "Copy failed",
-              "DESCRIPTION": "No Event in last year"
+              "DESCRIPTION": "No Event from last year"
+            },
+            "COPYMANNSCHAFT_FAILURE_SIZEDIFF": {
+              "TITLE": "Copy failed",
+              "DESCRIPTION": "Event from last year has a different amount of Teams"
             },
             "FAILURE": {
               "TITLE": "Error while initializing",
