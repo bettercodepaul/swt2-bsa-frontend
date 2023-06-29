@@ -290,6 +290,11 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
         .then((response) => {
             this.lastVeranstaltung = response.payload;
+            if(this.lastVeranstaltung.groesse!=this.currentVeranstaltung.groesse){
+              this.saveLoading = false;
+              console.log('Failed (Size of previous Mannschaft does not equal size of new Mannschaft)')
+              return;
+            }
             console.log(this.lastVeranstaltung.id);
             console.log('Mannschaften werden kopiert');
             this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
