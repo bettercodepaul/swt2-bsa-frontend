@@ -1,13 +1,13 @@
 <div id="homePage">
 
   <!--Welcome Page Title and paragraph-->
-  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasID && (! hasLigaNameInUrl)">
+  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasLigaIDInUrl && (! hasLigaNameInUrl)">
     <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
     <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
   </div>
 
   <!--Ligadetail Page Title-->
-  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID || hasLigaNameInUrl" >
+  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasLigaIDInUrl || hasLigaNameInUrl" >
     <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
   </div>
 
@@ -34,7 +34,7 @@
       <!--Block of Information-->
 
       <!--Welcome Page Information-->
-      <div class="flexChild" *ngIf="!hasID && (! hasLigaNameInUrl)">
+      <div class="flexChild" *ngIf="!hasLigaIDInUrl && (! hasLigaNameInUrl)">
         <h2>Neues aus dem Bogensport</h2>
         <div class="news-container">
           <div class="flexChild">
@@ -49,7 +49,7 @@
       </div>
 
       <!--Ligadetail Page Information (Ligadetailes)-->
-      <div class="flexChild" *ngIf="hasID || hasLigaNameInUrl">
+      <div class="flexChild" *ngIf="hasLigaIDInUrl || hasLigaNameInUrl">
         <h2>Ligadetails</h2>
         <div class="news-container">
           <div class="flexChild">
