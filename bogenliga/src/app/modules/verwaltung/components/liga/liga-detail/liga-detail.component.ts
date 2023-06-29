@@ -274,7 +274,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     }
   }
 
-
+  // File Upload button, converts selected files to Base64 String
   public convertFileToBase64($event): void {
     this.readThis($event.target);
   }
@@ -292,6 +292,8 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     myReader.readAsDataURL(file);
   }
 
+
+  // File Download Button, converts Base64 string back to its original File and downloads it
   public fileDownload(){
 
     const typeOfFile = this.Basetests.substring(this.Basetests.indexOf(':')+1, this.Basetests.indexOf(';'))
@@ -332,43 +334,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         return '';
     }
   }
-
-
-  /*
-  public fileDownload(): void {
-    const base64Data = this.Basetests.replace('data:application/pdf;base64,', '');
-    const blob = this.base64ToBlob(base64Data, 'application/pdf');
-    const fileUrl = URL.createObjectURL(blob);
-    const fileName = 'downloaded.pdf';
-
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = fileName;
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  private base64ToBlob(base64Data: string, contentType: string): Blob {
-    const byteCharacters = atob(base64Data);
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-      const slice = byteCharacters.slice(offset, offset + 512);
-      const byteNumbers = new Array(slice.length);
-
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-
-    return new Blob(byteArrays, { type: contentType });
-  }
-*/
 
 
 
