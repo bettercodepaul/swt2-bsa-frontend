@@ -1433,11 +1433,15 @@
         },
         "COPYMANNSCHAFT_FAILURE_SIZEDIFF": {
           "TITLE": "Kopieren fehlgeschlagen",
-          "DESCRIPTION": "Veranstaltung im Vorjahr hat eine andere Anzahl an Mannschaften"
+          "DESCRIPTION": "Veranstaltung im Vorjahr hat eine andere Anzahl an Mannschaften."
         },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
-          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
+          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Aktualisieren fehlgeschlagen",
+          "DESCRIPTION": "Die Veranstaltung hat mehr zugewiesene Mannschaften als ausgewählt."
         }
     }
   },

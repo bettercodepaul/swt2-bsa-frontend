@@ -1344,6 +1344,10 @@
         "UPDATE": {
           "TITLE": "Success",
           "DESCRIPTION": "Successfully updated event."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Update Failed",
+          "DESCRIPTION": "Event has more dedicated teams than selected."
         }
       }
     },
