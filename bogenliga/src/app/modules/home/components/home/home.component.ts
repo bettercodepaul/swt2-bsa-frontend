@@ -86,7 +86,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public VereinsID: number;
   public providedID: number;
   public ligaName: string;
-  public hasID: boolean;
+  public hasLigaIDInUrl: boolean;
   public hasLigaNameInUrl: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
@@ -156,20 +156,20 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         //check if url has number or liganame
         if (!paramIsNumber) {
           this.ligaName = params[ID_PATH_PARAM]
-          this.hasID = false;
+          this.hasLigaIDInUrl = false;
           this.hasLigaNameInUrl=true;
           console.log("String liga name is: " + this.ligaName);
           this.ligaName? this.loadLiga(this.ligaName) : null;
         } else {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-          this.hasID = true;
+          this.hasLigaIDInUrl = true;
           this.hasLigaNameInUrl=false;
           console.log("Number ID is: " + this.providedID);
           this.checkingAndLoadingLiga(); // load liga with changes of id in url
         }
 
       } else {
-        this.hasID = false;
+        this.hasLigaIDInUrl = false;
         this.hasLigaNameInUrl=false;
       }
     });
@@ -180,18 +180,18 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.checkingAndLoadingLiga();
       }
     });
-    this.hasID ? this.getVeranstaltungen(this.providedID):undefined;
+    this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
   }
 
 
   /**unsubscribe to avoid memory leaks*/
   ngOnDestroy() {
-    this.hasID ? this.routeSubscription.unsubscribe() : null;
+    this.hasLigaIDInUrl ? this.routeSubscription.unsubscribe() : null;
   }
 
   /**Check if LigaID of URL exists and load the corresponding page*/
   private checkingAndLoadingLiga(){
-    this.hasID ? this.loadLiga(this.providedID) : null;
+    this.hasLigaIDInUrl ? this.loadLiga(this.providedID) : null;
 
   }
 
