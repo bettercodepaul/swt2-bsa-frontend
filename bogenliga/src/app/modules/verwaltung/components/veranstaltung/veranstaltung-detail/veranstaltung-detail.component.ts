@@ -57,6 +57,7 @@ const NOTIFICATION_DELETE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_delete_f
 const NOTIFICATION_SAVE_VERANSTALTUNG = 'veranstaltung_detail_save';
 const NOTIFICATION_SAVE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_save_failure';
 const NOTIFICATION_UPDATE_VERANSTALTUNG = 'veranstaltung_detail_update';
+const NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE = 'veranstaltung_detail_update_failure';
 const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
 const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
 const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
@@ -349,6 +350,22 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.currentVeranstaltung.ligaId = this.currentLiga.id;
     this.currentVeranstaltung.ligaleiterId = this.currentUser.id;
     this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
+    const id = this.currentVeranstaltung.id;
+
+    if(this.rows.length > this.currentVeranstaltung.groesse){
+      this.saveLoading = false;
+      const notification: Notification = {
+        id:          NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE + id,
+        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_FAILURE.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_FAILURE.DESCRIPTION',
+        severity:    NotificationSeverity.INFO,
+        origin:      NotificationOrigin.USER,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.PENDING
+      };
+      this.notificationService.showNotification(notification);
+      return;
+    }
 
     // persist
     this.veranstaltungDataProvider.update(this.currentVeranstaltung)
@@ -356,8 +373,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
-
-            const id = this.currentVeranstaltung.id;
 
             const notification: Notification = {
               id:          NOTIFICATION_UPDATE_VERANSTALTUNG + id,
