@@ -171,22 +171,30 @@
 
 
       <!-- File Upload -->
-      <div>
-        <input type="file" class="file-input"
-               (change)="onFileSelected($event)" #fileUpload>
 
-        <div class="file-upload">
-
-          {{fileName || "Keine Datei vorhanden"}}
-
-          <button mat-mini-fab color="primary" class="upload-btn"
-                  (click)="fileUpload.click()">
-            <mat-icon>Datei Hochladen</mat-icon>
-          </button>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="ligaName">
+          <span> {{ 'MANAGEMENT.LIGA_DETAIL.FORM.LIGA_DETAIL.LABEL' | translate }}*
+          </span>
+        </label>
+        <div class="col-sm-9">
+          <input
+          (change) = "convertFileToBase64($event)"
+          accept=".pdf,.doc,.docx,.xls,.xlsx"
+          id="FileID"
+          name="FileName"
+          type="file">
+          <button (click)="fileDownload()">DownloadFile</button>
         </div>
-
-
       </div>
+
+      <!-- File testfield-->
+      <div>
+        <p>{{fileName}}</p>
+      </div>
+
+
 
 
       <!-- SAVE/UPDATE/DELETE BUTTON -->
