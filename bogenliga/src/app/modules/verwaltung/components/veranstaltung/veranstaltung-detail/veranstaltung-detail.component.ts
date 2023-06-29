@@ -61,6 +61,7 @@ const NOTIFICATION_SAVE_SORTIERUNG = 'veranstaltung_detail_save_sortierung';
 const NOTIFICATION_INIT_LIGATABELLE_SUC = 'init_Ligatabelle_suc';
 const NOTIFICATION_INIT_LIGATABELLE_FAIL = 'init_Ligatabelle_fail';
 const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failure';
+const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_SIZEDIFF = 'veranstaltung_detail_copy_failure_sizediff';
 const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_FINISH_VERANSTALTUNG = 'veranstaltung_detail_finish';
 
@@ -292,7 +293,23 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             this.lastVeranstaltung = response.payload;
             if(this.lastVeranstaltung.groesse!=this.currentVeranstaltung.groesse){
               this.saveLoading = false;
-              console.log('Failed (Size of previous Mannschaft does not equal size of new Mannschaft)')
+              console.log('Size of previous Mannschaft does not equal size of new Mannschaft')
+              const notification: Notification = {
+                id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_SIZEDIFF,
+                title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE_SIZEDIFF.TITLE',
+                description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE_SIZEDIFF.DESCRIPTION',
+                severity:    NotificationSeverity.ERROR,
+                origin:      NotificationOrigin.USER,
+                type:        NotificationType.OK,
+                userAction:  NotificationUserAction.PENDING
+              };
+              this.notificationService.observeNotification(NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_SIZEDIFF)
+                  .subscribe((myNotification) => {
+                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                      this.saveLoading = false;
+                    }
+                  });
+              this.notificationService.showNotification(notification);
               return;
             }
             console.log(this.lastVeranstaltung.id);
