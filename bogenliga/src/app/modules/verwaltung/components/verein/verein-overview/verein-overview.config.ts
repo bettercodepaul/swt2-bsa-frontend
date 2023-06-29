@@ -33,9 +33,9 @@ export const VEREIN_OVERVIEW_CONFIG: OverviewDialogConfig = {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
-    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN],
+    editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER, UserPermission.CAN_MODIFY_STAMMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN],
   },
 
-  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN]
+  createPermission : [UserPermission.CAN_CREATE_STAMMDATEN_LIGALEITER, UserPermission.CAN_CREATE_STAMMDATEN]
 };

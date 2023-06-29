@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit, DoCheck {
   public isDefaultUserLoggedIn: boolean;
   public isUserDropdownVisible = false;
 
-  public ligaName: string = 's';
+  public ligaName: string = '';
 
   public providedID: number;
   public hasID: boolean;
@@ -48,11 +48,12 @@ export class NavbarComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
+
   }
 
   ngDoCheck () {
     this.providedID = this.selectedLigaDataprovider.getSelectedLigaID();
-  console.log("Liga id ============================= "+ligaID)
+
 
       if (this.providedID) {
         this.hasID = true;
@@ -70,7 +71,7 @@ export class NavbarComponent implements OnInit, DoCheck {
       }
 
     });*/
-    console.log("Liga name = " + this.providedID)
+
     this.hasID ? this.loadLigaName(this.providedID) : null;
   }
 
@@ -110,6 +111,18 @@ private async loadLigaName(ligaID: number) {
 
   public getLigaName() : string {
     return this.ligaName;
+  }
+
+  static toggleColor(): void{
+    const navbar = document.getElementById("navbar");
+    navbar.style.backgroundColor = "#b2b2b2";
+    navbar.style.pointerEvents = "none";
+  }
+  static toggleColorAgain(): void{
+    const navbar = document.getElementById("navbar");
+    navbar.style.backgroundColor = "#ffffff";
+    navbar.style.pointerEvents = "auto";
+
   }
 
 }

@@ -12,15 +12,12 @@ import {VeranstaltungDTO} from '@verwaltung/types/datatransfer/veranstaltung-dto
 import {formatDate, registerLocaleData} from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import {LoginDataProviderService} from '@user/services/login-data-provider.service';
-
 import {onMapService} from '@shared/functions/onMap-service.ts';
 import {SessionHandling} from '@shared/event-handling';
-
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
 import {HOME_SHORTCUT_BUTTON_CONFIG} from './home.config';
-
 import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {isUndefined} from '@shared/functions';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
@@ -83,13 +80,14 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public currentDate: number = Date.now();
   public dateHelper: string;
   public veranstaltungWettkaempfeDO: VeranstaltungWettkaempfe[] = [];
+
   public VereinsID: number;
   public providedID: number;
   public hasID: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
-
+  public veranstaltung: VeranstaltungDO;
 
   constructor(
     private notificationService: NotificationService,
@@ -123,7 +121,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   @ViewChild('kampfrichter') kampfrichter: ElementRef;
   @ViewChild('sportleiter') sportleiter: ElementRef;
 
-
   public setCorrectID(){
     const verein = this.currentUserService.getVerein();
     this.VereinsID = verein;
@@ -140,7 +137,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
       this.setCorrectID();
-      // ID(this.VereinsID); //TODO: beheben von Fehler bei dieser Seite
     }
 
 
@@ -159,11 +155,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     this.routeSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.checkingAndLoadingLiga();
-
-
       }
-
     });
+    this.hasID ? this.getVeranstaltungen(this.providedID):undefined;
   }
 
 
@@ -306,7 +300,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       let sportJahrDo = x.payload.filter(x => x.key == 'aktives-Sportjahr')[0];
       sportJahr = parseInt(sportJahrDo.value);
     }).catch((response: BogenligaResponse<any>) => {
-      sportJahr = 2018
+      console.error("Can not get sport Jahr");
     }).finally( async() =>{
 
      await this.veranstaltungDataProvider.findBySportyear(sportJahr).then((response: BogenligaResponse<VeranstaltungDO[]>) => {
@@ -317,19 +311,22 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         console.log('Veranstaltung not Found');
       });
      this.veranstaltungDO.forEach((element)=>{
-       this.wettkampfDataProvider.findByVeranstaltungId(element.id).then((response: BogenligaResponse<WettkampfDO[]>) => {
-         response.payload.forEach((elementWettkampf)=>{
-           let veranstaltungWettkaempfeDOLocal: VeranstaltungWettkaempfe = {
-             wettkaempfeDO : elementWettkampf,
-             veranstaltungDO: element,
-             month: this.numberToMonth(parseInt(elementWettkampf.wettkampfDatum.split("-")[1])),
-             day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
-
-
-           };
-           this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
+       if(element.id != null){
+         this.wettkampfDataProvider.findByVeranstaltungId(element.id).then((response: BogenligaResponse<WettkampfDO[]>) => {
+           response.payload.forEach((elementWettkampf)=>{
+             console.log(elementWettkampf);
+             console.log(element)
+             let veranstaltungWettkaempfeDOLocal: VeranstaltungWettkaempfe = {
+               wettkaempfeDO : elementWettkampf,
+               veranstaltungDO: element,
+               month: this.numberToMonth(parseInt(elementWettkampf.wettkampfDatum.split("-")[1])),
+               day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
+             };
+             this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
+             console.log(veranstaltungWettkaempfeDOLocal)
+           })
          })
-       })
+       }
      })
 
     });
@@ -398,6 +395,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    */
   public checkIfTableIsEmpty(): boolean {
     return this.rows.length === 0;
+  }
+
+  public chekIfVeranstaltungskalender(): boolean{
+    return this.veranstaltungWettkaempfeDO.length === 0;
   }
 
   /**
