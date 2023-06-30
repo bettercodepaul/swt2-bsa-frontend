@@ -425,7 +425,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             }
           });
       this.notificationService.showNotification(notification);
-    });;
+    });
   }
 
   // This method is called when the abschließen Button is pressed
