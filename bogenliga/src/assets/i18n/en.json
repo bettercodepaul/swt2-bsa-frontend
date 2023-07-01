@@ -695,6 +695,14 @@
         "DELETE": {
           "TITLE": "Delete DSB Member",
           "DESCRIPTION": "Are you sure, you want to delete the DSB Member with ID=%s? This can not be undone."
+        },
+        "DELETE_AUFFUELLMANNSCHAFT_MITGLIED": {
+          "TITLE": "Delete Fill in club DSB Member",
+          "DESCRIPTION": "You cannot delete this DSB Member as it is needed for the Fill-in team."
+        },
+        "EDIT_AUFFUELLMANNSCHAFT_MITGLIED": {
+          "TITLE": "Edit Fill-in DSB Member",
+          "DESCRIPTION": "You cannot edit this DSB Member as it is needed for the Fill-in team."
         }
       }
     },

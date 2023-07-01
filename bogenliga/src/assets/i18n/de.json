@@ -738,6 +738,14 @@
         "DELETE": {
           "TITLE": "DSB Mitglied löschen",
           "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_AUFFUELLMANNSCHAFT_MITGLIED": {
+          "TITLE": "Auffüllmannschaft DSB Mitglied löschen",
+          "DESCRIPTION": "Sie können diesen Schützen nicht löschen."
+        },
+        "EDIT_AUFFUELLMANNSCHAFT_MITGLIED": {
+          "TITLE": "Auffüllmannschaft DSB Mitglied bearbeiten",
+          "DESCRIPTION": "Sie können diesen Schützen nicht bearbeiten."
         }
       }
     },
