@@ -20,6 +20,7 @@ import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/serv
 import {SessionHandling} from '@shared/event-handling';
 
 export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
+export const NOTIFICATION_EDIT_DSB_MITGLIED_AUFFUELLMANNSCHAFT = "dsb_mitglied_auffuellmannschaft_overview_edit";
 
 @Component({
   selector: 'bla-dsb-mitglied-overview',
@@ -67,38 +68,86 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
   }
 
   public onEdit(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
+    const id = versionedDataObject.id;
+
+    // Auffuellmannschaft dummy Member has MitgliedId 1,2 and 3
+    if(id < 1 || id > 3) {
+      this.navigateToDetailDialog(versionedDataObject);
+    }else{
+      this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
+      const notification: Notification = {
+        id:               NOTIFICATION_EDIT_DSB_MITGLIED_AUFFUELLMANNSCHAFT + id,
+        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.EDIT_AUFFUELLMANNSCHAFT_MITGLIED.TITLE',
+        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.EDIT_AUFFUELLMANNSCHAFT_MITGLIED.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.INFO,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.OK,
+        userAction:       NotificationUserAction.PENDING
+      };
+
+      this.notificationService.observeNotification(NOTIFICATION_EDIT_DSB_MITGLIED_AUFFUELLMANNSCHAFT + id)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.rows = hideLoadingIndicator(this.rows, id);
+            }
+          });
+      this.notificationService.showNotification(notification);
+    }
   }
 
   public onDelete(versionedDataObject: VersionedDataObject): void {
     // show loading icon
     const id = versionedDataObject.id;
+    console.log(id);
 
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
-    const notification: Notification = {
-      id: NOTIFICATION_DELETE_DSB_MITGLIED + id,
-      title: 'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.TITLE',
-      description: 'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity: NotificationSeverity.QUESTION,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.YES_NO,
-      userAction: NotificationUserAction.PENDING
-    };
+    // Auffuellmannschaft dummy Member has MitgliedId 1,2 and 3
+    if(id >= 1 && id <= 3){
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
+        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_AUFFUELLMANNSCHAFT_MITGLIED.TITLE',
+        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_AUFFUELLMANNSCHAFT_MITGLIED.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.INFO,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.OK,
+        userAction:       NotificationUserAction.PENDING
+      };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.dsbMitgliedDataProvider.deleteById(id)
-                .then((response) => this.loadTableRows())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.rows = hideLoadingIndicator(this.rows, id);
-          }
-        });
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.rows = hideLoadingIndicator(this.rows, id);
+            }
+          });
+      this.notificationService.showNotification(notification);
+    }else {
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
+        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.TITLE',
+        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
 
-    this.notificationService.showNotification(notification);
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.dsbMitgliedDataProvider.deleteById(id)
+                  .then((response) => this.loadTableRows())
+                  .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.rows = hideLoadingIndicator(this.rows, id);
+            }
+          });
+      this.notificationService.showNotification(notification);
+    }
+
 
   }
 
