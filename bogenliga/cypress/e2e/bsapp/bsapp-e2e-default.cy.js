@@ -913,6 +913,18 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * This test creates an Auffuellmannschaft for the Veranstaltung
+   */
+
+  it('Auffuellmannschaft erstellen', function() {
+    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+    cy.get('[data-cy=veranstaltung-detail-create-auffuellmannschaft]').click()
+    cy.wait(3000)
+    cy.get('#OKBtn1').click()
+    cy.get('tbody').should('contain.text', 'Auffüllmannschaft')
+  })
+
+  /**
    * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
    */
 
