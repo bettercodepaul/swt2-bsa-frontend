@@ -738,6 +738,14 @@
         "DELETE": {
           "TITLE": "DSB Mitglied löschen",
           "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_AUFFUELLMANNSCHAFT_MITGLIED": {
+          "TITLE": "Auffüllmannschaft DSB Mitglied löschen",
+          "DESCRIPTION": "Sie können diesen Schützen nicht löschen."
+        },
+        "EDIT_AUFFUELLMANNSCHAFT_MITGLIED": {
+          "TITLE": "Auffüllmannschaft DSB Mitglied bearbeiten",
+          "DESCRIPTION": "Sie können diesen Schützen nicht bearbeiten."
         }
       }
     },
@@ -857,7 +865,7 @@
       "NOTIFICATION_AUFFUELLMANNSCHAFT": {
         "DELETE": {
           "TITLE": "Verein Auffüllmannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
+          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Auffüllmannschaft benötigt."
         }
       }
     },
@@ -949,7 +957,7 @@
       "NOTIFICATION_AUFFUELLMANNSCHAFT": {
         "DELETE": {
           "TITLE": "Verein Auffüllmannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
+          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Auffüllmannschaft benötigt."
         }
       }
     },
@@ -1412,7 +1420,8 @@
         "FINISH": "Abschließen",
         "WETTKAMPFTAGE": "Wettkampftage",
         "MANNSCHAFT": "Mannschaften aus Vorjahr kopieren",
-        "BACK": "Zurück"
+        "BACK": "Zurück",
+        "AUFFUELLMANNSCHAFT": "Auffüllmannschaft hinzufügen"
       },
       "NOTIFICATION": {
         "FINISH" : {
@@ -1437,11 +1446,15 @@
         },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
-          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert."
+          "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
         },
-        "UPDATE_FAILURE": {
-          "TITLE": "Aktualisieren fehlgeschlagen",
-          "DESCRIPTION": "Die Veranstaltung hat mehr zugewiesene Mannschaften als ausgewählt."
+        "AUFFUELLMANNSCHAFT_SAVE": {
+          "TITLE": "Auffüllmannschaft erstellt",
+          "DESCRIPTION": "Auffüllmannschaft wurde erfolgreich erstellt"
+        },
+        "AUFFUELLMANNSCHAFT_FAILURE": {
+          "TITLE": "Erstellen der Auffüllmannschft fehlgeschlagen",
+          "DESCRIPTION": "Die Erstellung der Auffüllmannschaft ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits eine Auffüllmannschaft vorhanden ist."
         }
     }
   },
