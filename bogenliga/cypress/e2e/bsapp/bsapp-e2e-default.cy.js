@@ -369,7 +369,7 @@ describe('Admin User tests', function() {
     cy.wait(1000)
     cy.get('#OKBtn1').click()
     cy.wait(1000)
-    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
+    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').eq(3).click()
     cy.get('[data-cy=detail-vorname-feld]').click()
     cy.get('[data-cy=detail-vorname-feld]').focus().clear().type('SWTZweiTestLocal')
     cy.get('[data-cy=detail-update-button]').click()
@@ -655,7 +655,7 @@ describe('Admin User tests', function() {
         cy.wait(1000)
         //cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
         cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
-        cy.wait(9000)
+        cy.wait(15000)
         cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
         cy.wait(6000)
         //cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
@@ -874,11 +874,11 @@ describe('Admin User tests', function() {
         cy.wait(10000)
         cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
         cy.wait(5005)
-        cy.get('[data-cy=veranstaltung-detail-sportjahr]').type('2018')
-        cy.get('[data-cy=veranstaltung-detail-deadline]').type('2022-01-01')
+        cy.get('[data-cy=veranstaltung-detail-sportjahr]').type('2030')
+        cy.get('[data-cy=veranstaltung-detail-deadline]').type('2030-01-01')
         cy.wait(5000)
         cy.get('[data-cy=veranstaltung-detail-save-button]').click()
-        cy.wait(42000)
+        cy.wait(30000)
         cy.get('#OKBtn1').click()
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
         cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
@@ -913,15 +913,19 @@ describe('Admin User tests', function() {
   })
 
   /**
-   * This test creates an Auffuellmannschaft for the Veranstaltung
+   * This test creates an Platzhalter for the Veranstaltung
    */
 
-  it('Auffuellmannschaft erstellen', function() {
+  it('Platzhalter erstellen', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
-    cy.get('[data-cy=veranstaltung-detail-create-auffuellmannschaft]').click()
+    cy.get('[data-cy=veranstaltung-detail-create-platzhalter]').click()
     cy.wait(3000)
     cy.get('#OKBtn1').click()
-    cy.get('tbody').should('contain.text', 'Auffüllmannschaft')
+    cy.get('tbody').should('contain.text', 'Platzhalter')
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(3000)
+    cy.get('[data-cy=bla-selection-list]').first()
   })
 
   /**
