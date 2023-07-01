@@ -1440,6 +1440,10 @@
           "TITLE": "Kopieren fehlgeschlagen",
           "DESCRIPTION": "Keine Veranstaltung im Vorjahr vorhanden"
         },
+        "COPYMANNSCHAFT_FAILURE_SIZEDIFF": {
+          "TITLE": "Kopieren fehlgeschlagen",
+          "DESCRIPTION": "Veranstaltung im Vorjahr hat eine andere Anzahl an Mannschaften."
+        },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
           "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
