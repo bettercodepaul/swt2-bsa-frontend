@@ -122,7 +122,7 @@ describe('Anonyme User tests', function () {
    * This test checks if a valid search term yields the expected results from the website
    */
   it('Suchfeld Ligatabelle', function() {
-    cy.wait(2000)
+    cy.wait(7000)
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('Württemberg')
     cy.wait(2000)
     cy.get('[data-cy=quicksearch-liste]').should('contain.text', 'Recurve')

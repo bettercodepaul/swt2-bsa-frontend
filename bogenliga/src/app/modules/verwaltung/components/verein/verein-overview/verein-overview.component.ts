@@ -26,6 +26,7 @@ import {RegionDataProviderService} from '@verwaltung/services/region-data-provid
 import * as VereinDetailComponent from '@verwaltung/components/verein/verein-detail/verein-detail.component';
 
 export const NOTIFICATION_DELETE_VEREINE = 'vereine_overview_delete';
+const AUFFUELLMANNSCHAFT_ID = 99;
 
 @Component({
   selector:    'bla-verein-overview',
@@ -87,20 +88,20 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
-    if(id == 99) {
+    if(id == AUFFUELLMANNSCHAFT_ID) {
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_VEREINE + id,
         title:            'MANAGEMENT.VEREINE.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.TITLE',
         description:      'MANAGEMENT.VEREINE.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.DESCRIPTION',
         descriptionParam: '' + id,
-        severity:         NotificationSeverity.QUESTION,
+        severity:         NotificationSeverity.INFO,
         origin:           NotificationOrigin.USER,
-        type:             NotificationType.YES_NO,
+        type:             NotificationType.OK,
         userAction:       NotificationUserAction.PENDING
       };
       this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREINE + id)
           .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.rows = hideLoadingIndicator(this.rows, id);
             }
           });
