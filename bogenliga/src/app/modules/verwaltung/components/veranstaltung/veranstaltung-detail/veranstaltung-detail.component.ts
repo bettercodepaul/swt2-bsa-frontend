@@ -401,6 +401,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
+                    this.loadMannschaftsTable();
                   }
                 });
 
