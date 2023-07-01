@@ -201,8 +201,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
 
   public onUpdate(ignore: any): void {
     if (this.currentLiga.ligaDetail.length > 5000) {
-      //TODO: Tatsächlichen String holen
-      //alert('MANAGEMENT.LIGA_DETAIL.ALERT.MAX_WORDS_SURPASSED')
       this.notificationService.showNotification({
         id: 'MaxWordsWarning',
         description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.MAX_WORDS_SURPASSED.DESCRIPTION',
@@ -218,7 +216,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.saveLoading = true;
     this.currentLiga.regionId = this.currentRegion.id;
     this.currentLiga.disziplinId = this.currentDisziplin.id;
-    console.log(this.currentDisziplin.id);
     this.currentLiga.ligaUebergeordnetId = this.currentUbergeordneteLiga.id;
     this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
     // persist
