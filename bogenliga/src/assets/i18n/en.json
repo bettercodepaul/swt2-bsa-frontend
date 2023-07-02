@@ -696,13 +696,13 @@
           "TITLE": "Delete DSB Member",
           "DESCRIPTION": "Are you sure, you want to delete the DSB Member with ID=%s? This can not be undone."
         },
-        "DELETE_AUFFUELLMANNSCHAFT_MITGLIED": {
-          "TITLE": "Delete Fill in club DSB Member",
-          "DESCRIPTION": "You cannot delete this DSB Member as it is needed for the Fill-in team."
+        "DELETE_PLATZHALTER_MITGLIED": {
+          "TITLE": "Delete Placeholder club DSB Member",
+          "DESCRIPTION": "You cannot delete this DSB Member as it is needed for the Placeholder team."
         },
-        "EDIT_AUFFUELLMANNSCHAFT_MITGLIED": {
-          "TITLE": "Edit Fill-in DSB Member",
-          "DESCRIPTION": "You cannot edit this DSB Member as it is needed for the Fill-in team."
+        "EDIT_PLATZHALTER_MITGLIED": {
+          "TITLE": "Edit Placeholder DSB Member",
+          "DESCRIPTION": "You cannot edit this DSB Member as it is needed for the Placeholder team."
         }
       }
     },
@@ -814,10 +814,10 @@
           "DESCRIPTION": "Are you sure, you want to delete the club with ID=%s? This can not be undone."
         }
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Delete fill in club",
-          "DESCRIPTION": "You cannot delete this club! This club is needed to create the fill in team."
+          "TITLE": "Delete Placeholder club",
+          "DESCRIPTION": "You cannot delete this club! This club is needed to create the Placeholder team."
         }
       }
     },
@@ -892,10 +892,10 @@
           "DESCRIPTION": "Sports director has no authority over this club or this target region."
         }
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Delete fill in club",
-          "DESCRIPTION": "You cannot delete this club! This club is needed to create the fill in team."
+          "TITLE": "Delete Placeholder club",
+          "DESCRIPTION": "You cannot delete this club! This club is needed to create the Placeholder team."
         }
       }
     },
@@ -1327,7 +1327,7 @@
         "WETTKAMPFTAGE": "Competition days",
         "MANNSCHAFT": "Copy teams from previous year",
         "BACK": "Back",
-        "AUFFUELLMANNSCHAFT": "Add Fill in team"
+        "PLATZHALTER": "Add Placeholder team"
       },
       "NOTIFICATION": {
         "ADD": {
@@ -1354,13 +1354,13 @@
           "TITLE": "Success",
           "DESCRIPTION": "Successfully updated event."
         },
-        "AUFFUELLMANNSCHAFT_SAVE": {
-          "TITLE": "Created",
-          "DESCRIPTION": "Successfully create a fill in team"
+        "PLATZHALTER_SAVE": {
+          "TITLE": "Created Placeholder",
+          "DESCRIPTION": "Successfully create a Placeholder team"
         },
-        "AUFFUELLMANNSCHAFT_FAILURE": {
-          "TITLE": "Error",
-          "DESCRIPTION": "The creation of the fill in team has failed. Reasons for this may be that the event is full or a fill in team already exists."
+        "PLATZHALTER_FAILURE": {
+          "TITLE": "Placeholder Error",
+          "DESCRIPTION": "The creation of the Placeholder team has failed. Reasons for this may be that the event is full or a Placeholder team is already in this event."
         }
       }
     },

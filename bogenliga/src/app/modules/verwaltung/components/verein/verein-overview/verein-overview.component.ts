@@ -26,7 +26,7 @@ import {RegionDataProviderService} from '@verwaltung/services/region-data-provid
 import * as VereinDetailComponent from '@verwaltung/components/verein/verein-detail/verein-detail.component';
 
 export const NOTIFICATION_DELETE_VEREINE = 'vereine_overview_delete';
-const AUFFUELLMANNSCHAFT_ID = 99;
+const PLATZHALTER_ID = 99;
 
 @Component({
   selector:    'bla-verein-overview',
@@ -88,11 +88,11 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
-    if(id == AUFFUELLMANNSCHAFT_ID) {
+    if(id == PLATZHALTER_ID) {
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_VEREINE + id,
-        title:            'MANAGEMENT.VEREINE.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.TITLE',
-        description:      'MANAGEMENT.VEREINE.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.DESCRIPTION',
+        title:            'MANAGEMENT.VEREINE.NOTIFICATION_PLATZHALTER.DELETE.TITLE',
+        description:      'MANAGEMENT.VEREINE.NOTIFICATION_PLATZHALTER.DELETE.DESCRIPTION',
         descriptionParam: '' + id,
         severity:         NotificationSeverity.INFO,
         origin:           NotificationOrigin.USER,
