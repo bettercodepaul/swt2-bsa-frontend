@@ -757,7 +757,6 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
           this.notificationService.showNotification(notification);
           this.saveLoading = false;
-          this.saveLoading = false;
         });
   }
 
