@@ -20,7 +20,7 @@ import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/serv
 import {SessionHandling} from '@shared/event-handling';
 
 export const NOTIFICATION_DELETE_DSB_MITGLIED = 'dsb_mitglied_overview_delete';
-export const NOTIFICATION_EDIT_DSB_MITGLIED_AUFFUELLMANNSCHAFT = "dsb_mitglied_auffuellmannschaft_overview_edit";
+export const NOTIFICATION_EDIT_DSB_MITGLIED_PLATZHALTER = "dsb_mitglied_platzhalter_overview_edit";
 
 @Component({
   selector: 'bla-dsb-mitglied-overview',
@@ -70,15 +70,15 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
   public onEdit(versionedDataObject: VersionedDataObject): void {
     const id = versionedDataObject.id;
 
-    // Auffuellmannschaft dummy Member has MitgliedId 1,2 and 3
+    // Placeholder dummy Member has MitgliedId 1,2 and 3
     if(id < 1 || id > 3) {
       this.navigateToDetailDialog(versionedDataObject);
     }else{
       this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
       const notification: Notification = {
-        id:               NOTIFICATION_EDIT_DSB_MITGLIED_AUFFUELLMANNSCHAFT + id,
-        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.EDIT_AUFFUELLMANNSCHAFT_MITGLIED.TITLE',
-        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.EDIT_AUFFUELLMANNSCHAFT_MITGLIED.DESCRIPTION',
+        id:               NOTIFICATION_EDIT_DSB_MITGLIED_PLATZHALTER + id,
+        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.EDIT_PLATZHALTER_MITGLIED.TITLE',
+        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.EDIT_PLATZHALTER_MITGLIED.DESCRIPTION',
         descriptionParam: '' + id,
         severity:         NotificationSeverity.INFO,
         origin:           NotificationOrigin.USER,
@@ -86,7 +86,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
         userAction:       NotificationUserAction.PENDING
       };
 
-      this.notificationService.observeNotification(NOTIFICATION_EDIT_DSB_MITGLIED_AUFFUELLMANNSCHAFT + id)
+      this.notificationService.observeNotification(NOTIFICATION_EDIT_DSB_MITGLIED_PLATZHALTER + id)
           .subscribe((myNotification) => {
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.rows = hideLoadingIndicator(this.rows, id);
@@ -103,12 +103,12 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
 
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
-    // Auffuellmannschaft dummy Member has MitgliedId 1,2 and 3
+    // Placeholder dummy Member has MitgliedId 1,2 and 3
     if(id >= 1 && id <= 3){
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
-        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_AUFFUELLMANNSCHAFT_MITGLIED.TITLE',
-        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_AUFFUELLMANNSCHAFT_MITGLIED.DESCRIPTION',
+        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_PLATZHALTER_MITGLIED.TITLE',
+        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_PLATZHALTER_MITGLIED.DESCRIPTION',
         descriptionParam: '' + id,
         severity:         NotificationSeverity.INFO,
         origin:           NotificationOrigin.USER,

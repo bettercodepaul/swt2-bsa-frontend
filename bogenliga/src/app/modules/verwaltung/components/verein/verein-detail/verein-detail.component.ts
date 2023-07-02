@@ -54,7 +54,7 @@ const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
-const AUFFUELLMANNSCHAFT_ID = 99;
+const PLATZHALTER_ID = 99;
 
 @Component({
   selector:    'bla-verein-detail',
@@ -267,11 +267,12 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
     const id = this.currentVerein.id;
 
-    if(id==AUFFUELLMANNSCHAFT_ID) {
+    // Don´t delete the placeholder club
+    if(id==PLATZHALTER_ID) {
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_VEREIN + id,
-        title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.TITLE',
-        description:      'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.DESCRIPTION',
+        title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_PLATZHALTER.DELETE.TITLE',
+        description:      'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_PLATZHALTER.DELETE.DESCRIPTION',
         descriptionParam: '' + id,
         severity:         NotificationSeverity.INFO,
         origin:           NotificationOrigin.USER,

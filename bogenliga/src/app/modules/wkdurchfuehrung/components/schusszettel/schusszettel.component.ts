@@ -37,7 +37,7 @@ const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
 const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
 const NOTIFACTION_SCHUETZE = 'schuetze';
-const AUFFUELLMANNSCHAFT = 'Auffüllmannschaft';
+const PLATZHALTER = 'Platzhalter';
 
 
 @Component({
@@ -240,7 +240,7 @@ export class SchusszettelComponent implements OnInit {
               let stringMatch1 = this.match1.mannschaftName;
               let stringMatch2 = this.match2.mannschaftName;
 
-              if(stringMatch1.includes(AUFFUELLMANNSCHAFT)) {
+              if(stringMatch1.includes(PLATZHALTER)) {
                 for (const i of Object.keys(this.match1.schuetzen)) {
                   this.match1.schuetzen[0][0].rueckennummer = 1;
                   this.match1.schuetzen[1][0].rueckennummer = 2;
@@ -253,7 +253,7 @@ export class SchusszettelComponent implements OnInit {
                 this.match1.satzpunkte = 0;
                 this.match1.matchpunkte = 0;
 
-              }else if(stringMatch2.includes(AUFFUELLMANNSCHAFT)){
+              }else if(stringMatch2.includes(PLATZHALTER)){
                 for (const i of Object.keys(this.match2.schuetzen)) {
                   this.match2.schuetzen[0][0].rueckennummer = 1;
                   this.match2.schuetzen[1][0].rueckennummer = 2;
