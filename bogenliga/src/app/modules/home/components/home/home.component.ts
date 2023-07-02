@@ -228,12 +228,15 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   private async loadLiga(urlLigaID : number | string){
     console.log("loadliga called");
-    //If number or string, versch backend call
+    //If number or string, verschiedener backend call
     if (typeof urlLigaID === 'number'){
     await this.ligaDataProvider.checkExists(urlLigaID)
               .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
               .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
     } else {
+      //check if underscore in text and replace with space
+      urlLigaID = urlLigaID.replace(/_/g, ' ')
+      urlLigaID=urlLigaID.toLowerCase()
     await this.ligaDataProvider.checkExistsLigaName(urlLigaID)
               .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
               .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
