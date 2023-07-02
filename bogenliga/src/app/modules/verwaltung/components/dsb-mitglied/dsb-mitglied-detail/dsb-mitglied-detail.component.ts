@@ -282,12 +282,12 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
     const id = this.currentMitglied.id;
 
-    // Auffuellmannschaft dummy Member has MitgliedId 1,2 and 3
+    // Placeholder dummy Member has MitgliedId 1,2 and 3
     if(id >= 1 && id <= 3){
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
-        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_AUFFUELLMANNSCHAFT_MITGLIED.TITLE',
-        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_AUFFUELLMANNSCHAFT_MITGLIED.DESCRIPTION',
+        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_PLATZHALTER_MITGLIED.TITLE',
+        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_PLATZHALTER_MITGLIED.DESCRIPTION',
         descriptionParam: '' + id,
         severity:         NotificationSeverity.INFO,
         origin:           NotificationOrigin.USER,

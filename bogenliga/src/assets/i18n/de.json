@@ -739,12 +739,12 @@
           "TITLE": "DSB Mitglied löschen",
           "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
-        "DELETE_AUFFUELLMANNSCHAFT_MITGLIED": {
-          "TITLE": "Auffüllmannschaft DSB Mitglied löschen",
+        "DELETE_PLATZHALTER_MITGLIED": {
+          "TITLE": "Platzhalter DSB Mitglied löschen",
           "DESCRIPTION": "Sie können diesen Schützen nicht löschen."
         },
-        "EDIT_AUFFUELLMANNSCHAFT_MITGLIED": {
-          "TITLE": "Auffüllmannschaft DSB Mitglied bearbeiten",
+        "EDIT_PLATZHALTER_MITGLIED": {
+          "TITLE": "Platzhalter DSB Mitglied bearbeiten",
           "DESCRIPTION": "Sie können diesen Schützen nicht bearbeiten."
         }
       }
@@ -862,10 +862,10 @@
           "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? Der Verein ist danach nicht mehr verfügbar."
         }
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Verein Auffüllmannschaft löschen",
-          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Auffüllmannschaft benötigt."
+          "TITLE": "Verein Platzhalter löschen",
+          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Platzhalter benötigt."
         }
       }
     },
@@ -954,10 +954,10 @@
         }
 
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Verein Auffüllmannschaft löschen",
-          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Auffüllmannschaft benötigt."
+          "TITLE": "Verein Platzhalter löschen",
+          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Platzhalter benötigt."
         }
       }
     },
@@ -1421,7 +1421,7 @@
         "WETTKAMPFTAGE": "Wettkampftage",
         "MANNSCHAFT": "Mannschaften aus Vorjahr kopieren",
         "BACK": "Zurück",
-        "AUFFUELLMANNSCHAFT": "Auffüllmannschaft hinzufügen"
+        "PLATZHALTER": "Platzhalter hinzufügen"
       },
       "NOTIFICATION": {
         "FINISH" : {
@@ -1448,13 +1448,13 @@
           "TITLE": "Aktualisieren erfolgreich",
           "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
         },
-        "AUFFUELLMANNSCHAFT_SAVE": {
-          "TITLE": "Auffüllmannschaft erstellt",
-          "DESCRIPTION": "Auffüllmannschaft wurde erfolgreich erstellt"
+        "PLATZHALTER_SAVE": {
+          "TITLE": "Platzhalter erstellt",
+          "DESCRIPTION": "Platzhalter wurde erfolgreich erstellt"
         },
-        "AUFFUELLMANNSCHAFT_FAILURE": {
-          "TITLE": "Erstellen der Auffüllmannschft fehlgeschlagen",
-          "DESCRIPTION": "Die Erstellung der Auffüllmannschaft ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits eine Auffüllmannschaft vorhanden ist."
+        "PLATZHALTER_FAILURE": {
+          "TITLE": "Erstellen des Platzhalters fehlgeschlagen",
+          "DESCRIPTION": "Die Erstellung des Platzhalters ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits ein Platzhalter in dieser Veranstaltung existiert."
         }
     }
   },

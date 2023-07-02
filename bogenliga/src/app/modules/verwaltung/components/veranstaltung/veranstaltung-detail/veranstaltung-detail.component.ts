@@ -66,8 +66,8 @@ const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE = 'veranstaltung_detail_copy_failur
 const NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_SIZEDIFF = 'veranstaltung_detail_copy_failure_sizediff';
 const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_FINISH_VERANSTALTUNG = 'veranstaltung_detail_finish';
-const NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT = 'auffuellmannschaft_create';
-const NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT_FAILURE = 'auffuellmannschaft_create_failure';
+const NOTIFICATION_CREATE_PLATZHALTER = 'platzhalter_create';
+const NOTIFICATION_CREATE_PLATZHALTER_FAILURE = 'platzhalter_create_failure';
 
 
 @Component({
@@ -406,15 +406,15 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
-  public onCreateAuffuellmannschaft(ignore: any): void {
+  public onCreatePlatzhalter(ignore: any): void {
     this.saveLoading = true;
 
-    const auffuellmannschaftId = 99;
-    const auffuellmannschaftNummer = "1";
+    const platzhalterId = 99;
+    const platzhalterNummer = "1";
 
 
-    this.selectedMannschaft.vereinId = auffuellmannschaftId;
-    this.selectedMannschaft.nummer = auffuellmannschaftNummer;
+    this.selectedMannschaft.vereinId = platzhalterId;
+    this.selectedMannschaft.nummer = platzhalterNummer;
     this.selectedMannschaft.benutzerId = 1;
     this.selectedMannschaft.veranstaltungId = this.currentVeranstaltung.id;
 
@@ -425,16 +425,16 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
             const notification: Notification = {
-              id:          NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT,
-              title:       "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_SAVE.TITLE",
-              description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_SAVE.DESCRIPTION",
+              id:          NOTIFICATION_CREATE_PLATZHALTER,
+              title:       "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.TITLE",
+              description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.DESCRIPTION",
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
               userAction:  NotificationUserAction.PENDING
             };
 
-            this.notificationService.observeNotification(NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT)
+            this.notificationService.observeNotification(NOTIFICATION_CREATE_PLATZHALTER)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
                     this.saveLoading = false;
@@ -448,15 +448,15 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     )
         .catch((response) => {
       const notification: Notification = {
-        id:          NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT_FAILURE,
-        title: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_FAILURE.TITLE",
-        description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_FAILURE.DESCRIPTION",
+        id:          NOTIFICATION_CREATE_PLATZHALTER_FAILURE,
+        title: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE",
+        description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION",
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.OK,
         userAction:  NotificationUserAction.PENDING
       };
-      this.notificationService.observeNotification(NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT_FAILURE)
+      this.notificationService.observeNotification(NOTIFICATION_CREATE_PLATZHALTER_FAILURE)
           .subscribe((myNotification) => {
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.saveLoading = false;
