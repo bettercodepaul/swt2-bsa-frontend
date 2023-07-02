@@ -424,6 +424,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
             console.log('Saved with id: ' + response.payload.id);
+            console.log('Wir sind der Sturm, der über das Ziel hinwegfegt, niemand kann uns aufhalten!');
             const notification: Notification = {
               id:          NOTIFICATION_CREATE_AUFFUELLMANNSCHAFT,
               title:       "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.AUFFUELLMANNSCHAFT_SAVE.TITLE",
