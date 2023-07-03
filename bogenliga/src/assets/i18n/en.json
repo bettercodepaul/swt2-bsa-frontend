@@ -1038,7 +1038,7 @@
         "UPDATE": {
           "FAILURE": {
             "FULL": {
-              "TITLE": "Event already fully booked: Unable to update roster",
+              "TITLE": "Event already fully booked",
               "DESCRIPTION": "Due to the event being already fully booked, we regret to inform you that updating the participant list is currently not possible."
             }
           }
