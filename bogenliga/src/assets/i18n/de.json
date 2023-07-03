@@ -835,6 +835,10 @@
         "MAX_WORDS_SURPASSED": {
           "TITLE": "Fehler",
           "DESCRIPTION":  "Die Ligabeschreibung ist zu lang! Bitte beachten Sie die maximale Anzahl von 1500 Zeichen."
+        },
+        "WRONG_FORMAT": {
+          "TITLE": "Fehler",
+          "DESCRIPTION":  "Der Name der Liga darf kein Unterstrich beinhalten."
         }
       }
     },

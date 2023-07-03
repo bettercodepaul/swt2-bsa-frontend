@@ -161,6 +161,11 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
     }
 
+    //TODO: besser schreiben
+    if(this.currentLiga.name.includes("_")){
+      this.currentLiga.name=null;
+    }
+
     // persist
     this.ligaDataProvider.create(this.currentLiga)
         .then((response: BogenligaResponse<LigaDO>) => {
@@ -206,6 +211,18 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         id: 'MaxWordsWarning',
         description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.MAX_WORDS_SURPASSED.DESCRIPTION',
         title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.MAX_WORDS_SURPASSED.TITLE',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
+      return
+    }
+    else if (this.currentLiga.name.includes("_")){
+      this.notificationService.showNotification({
+        id: 'MaxWordsWarning',
+        description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.DESCRIPTION',
+        title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.TITLE',
         origin: NotificationOrigin.SYSTEM,
         userAction: NotificationUserAction.PENDING,
         type: NotificationType.OK,
