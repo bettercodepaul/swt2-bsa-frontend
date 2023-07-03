@@ -695,6 +695,14 @@
         "DELETE": {
           "TITLE": "Delete DSB Member",
           "DESCRIPTION": "Are you sure, you want to delete the DSB Member with ID=%s? This can not be undone."
+        },
+        "DELETE_PLATZHALTER_MITGLIED": {
+          "TITLE": "Delete Placeholder club DSB Member",
+          "DESCRIPTION": "You cannot delete this DSB Member as it is needed for the Placeholder team."
+        },
+        "EDIT_PLATZHALTER_MITGLIED": {
+          "TITLE": "Edit Placeholder DSB Member",
+          "DESCRIPTION": "You cannot edit this DSB Member as it is needed for the Placeholder team."
         }
       }
     },
@@ -806,10 +814,10 @@
           "DESCRIPTION": "Are you sure, you want to delete the club with ID=%s? This can not be undone."
         }
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Delete fill in club",
-          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
+          "TITLE": "Delete Placeholder club",
+          "DESCRIPTION": "You cannot delete this club! This club is needed to create the Placeholder team."
         }
       }
     },
@@ -884,10 +892,10 @@
           "DESCRIPTION": "Sports director has no authority over this club or this target region."
         }
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Delete fill in club",
-          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
+          "TITLE": "Delete Placeholder club",
+          "DESCRIPTION": "You cannot delete this club! This club is needed to create the Placeholder team."
         }
       }
     },
@@ -1030,7 +1038,7 @@
         "UPDATE": {
           "FAILURE": {
             "FULL": {
-              "TITLE": "Event already fully booked: Unable to update roster",
+              "TITLE": "Event already fully booked",
               "DESCRIPTION": "Due to the event being already fully booked, we regret to inform you that updating the participant list is currently not possible."
             }
           }
@@ -1207,7 +1215,11 @@
             },
             "COPYMANNSCHAFT_FAILURE": {
               "TITLE": "Copy failed",
-              "DESCRIPTION": "No Event in last year"
+              "DESCRIPTION": "No Event from last year"
+            },
+            "COPYMANNSCHAFT_FAILURE_SIZEDIFF": {
+              "TITLE": "Copy failed",
+              "DESCRIPTION": "Event from last year has a different amount of Teams"
             },
             "FAILURE": {
               "TITLE": "Error while initializing",
@@ -1314,7 +1326,8 @@
         "FINISH": "Finish",
         "WETTKAMPFTAGE": "Competition days",
         "MANNSCHAFT": "Copy teams from previous year",
-        "BACK": "Back"
+        "BACK": "Back",
+        "PLATZHALTER": "Add Placeholder team"
       },
       "NOTIFICATION": {
         "ADD": {
@@ -1340,6 +1353,14 @@
         "UPDATE": {
           "TITLE": "Success",
           "DESCRIPTION": "Successfully updated event."
+        },
+        "PLATZHALTER_SAVE": {
+          "TITLE": "Created Placeholder",
+          "DESCRIPTION": "Successfully create a Placeholder team"
+        },
+        "PLATZHALTER_FAILURE": {
+          "TITLE": "Placeholder Error",
+          "DESCRIPTION": "The creation of the Placeholder team has failed. Reasons for this may be that the event is full or a Placeholder team is already in this event."
         }
       }
     },
