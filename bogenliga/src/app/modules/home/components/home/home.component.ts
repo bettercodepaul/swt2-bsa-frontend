@@ -169,13 +169,13 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
           console.log("Number ID is: " + this.providedID);
           this.checkingAndLoadingLiga(); // load liga with changes of id in url
         }
-
+        this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
       } else {
         this.hasLigaIDInUrl = false;
         this.hasLigaNameInUrl=false;
       }
     });
-    this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
+
   }
 
 
@@ -224,7 +224,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * Because checkExists always returns an object, handleGotLigaObject has to check
    * if the liga truly exists (if not, function returns empty LigaObject)
    * */
-  
+
   private async loadLiga(urlLigaID : number | string){
     //If number or string, verschiedener backend call
     if (typeof urlLigaID === 'number'){
@@ -365,8 +365,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
              };
              this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
              //filter wettkampftabelle, wenn auf Ligadetailseite, nach LigaID
-             if(this.selectedLigaID != null || this.selectedLigaID != undefined)
-               this.veranstaltungWettkaempfeDO.filter(veranstaltung => veranstaltung.veranstaltungDO.ligaId == this.selectedLigaID);
+             if(this.providedID != null || this.providedID != undefined)
+               this.veranstaltungWettkaempfeDO.filter(veranstaltung => veranstaltung.veranstaltungDO.ligaId == this.providedID);
              console.log(veranstaltungWettkaempfeDOLocal)
            })
          })
