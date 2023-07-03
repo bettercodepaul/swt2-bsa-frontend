@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -11,14 +10,4 @@ export default defineConfig({
     testIsolation: false
   },
 })
-=======
-import { defineConfig } from "cypress";
 
-export default defineConfig({
-  e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
-  },
-});
->>>>>>> BSAPP-1433-Sprint3
