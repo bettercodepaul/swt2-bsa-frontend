@@ -1364,7 +1364,7 @@
         },
         "UPDATE_FAILURE": {
           "TITLE": "Update error",
-          "DESCRIPTION": "The event has a higher number of teams than the new maximum number allowes."
+          "DESCRIPTION": "The event has a higher number of teams than the new maximum number allows."
         }
       }
     },
