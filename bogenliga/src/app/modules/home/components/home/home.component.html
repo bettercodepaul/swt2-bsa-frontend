@@ -28,7 +28,7 @@
     <div class="shortcuts">
       <bla-shortcut-button  [config]="config_shortcut"></bla-shortcut-button>
     </div>
-    <div class="news" style="margin-left: 20px; min-height: 40vh">
+    <div class="news" style="margin-left: 0px; min-height: 40vh">
 
       <!-- Row 2 -->
       <!--Block of Information-->
@@ -67,8 +67,8 @@
             {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
             <!--{{ selectedVeranstaltungName}}
             name of the currently selected Liga displayed in button-->
+            {{this.selectedLigaName}}
 
-            {{this.veranstaltung.name}}
           </bla-actionbutton>
 
           <bla-actionbutton
