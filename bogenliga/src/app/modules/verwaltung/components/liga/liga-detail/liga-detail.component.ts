@@ -274,12 +274,13 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
 //File Upload
+  /*
   public onFileSelected(event){
     const file:File = event.target.files[0];
 
     if(file){
 
-      this.fileName = file.name;
+      this.currentLiga.ligaDetailFileName = file.name;
 
       const formData = new FormData();
 
@@ -290,6 +291,8 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       upload$.subscribe();
     }
   }
+  */
+
 
   // File Upload button, converts selected files to Base64 String
   public convertFileToBase64($event): void {
@@ -298,12 +301,12 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
 
   public readThis(inputValue: any): void {
     const file: File = inputValue.files[0];
-    this.fileType = file.type;
-    this.fileName = file.name
+    this.currentLiga.ligaDetailFileType = file.type;
+    this.currentLiga.ligaDetailFileName = file.name
     const myReader: FileReader = new FileReader();
 
     myReader.onloadend = (e) => {
-      this.Basetests = String(myReader.result);
+      this.currentLiga.ligaDetailFileBase64 = String(myReader.result);
     };
 
     myReader.readAsDataURL(file);
