@@ -83,6 +83,7 @@ export class SchusszettelComponent implements OnInit {
 
   allowedMitglieder1: number[];
   allowedMitglieder2: number[];
+  isSaved: boolean = false;
 
 
 
@@ -149,6 +150,15 @@ export class SchusszettelComponent implements OnInit {
 
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
+
+              console.log(this.match1, this.match2)
+              if(this.match1.matchpunkte != null && !(this.match1.mannschaftName == 'Platzhalter 1')){
+                this.isSaved = true;
+              } else if(this.match2.matchpunkte != null && !(this.match2.mannschaftName == 'Platzhalter 1')){
+                this.isSaved = true;
+              }
+
+
 
               /**
                * Limits the Schützen of match 1 to 3 and each passe-array
@@ -554,6 +564,7 @@ export class SchusszettelComponent implements OnInit {
         await this.ligatabelleService.updateLigatabelleVeranstaltung(this.match1, alt_match1, this.match2, alt_match2);
       }
       this.dirtyFlag = false; // Daten gespeichert
+      this.isSaved = true;
 
     }
   }
@@ -584,6 +595,7 @@ export class SchusszettelComponent implements OnInit {
               console.log('accepted');
               this.dirtyFlag = false;
               console.log('Wettkampftag', this.match1.wettkampfTag);
+              this.isSaved = false;
               this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
             }
             console.log('notification.userAction after: ' + notification.userAction);
@@ -596,6 +608,7 @@ export class SchusszettelComponent implements OnInit {
 
       console.log('Keine Änderung');
       console.log('Wettkampftag', this.match1.wettkampfTag);
+      this.isSaved = false;
       this.router.navigate(['/wkdurchfuehrung']);
 
       //old code
@@ -631,6 +644,7 @@ export class SchusszettelComponent implements OnInit {
                   .then((data) => {
                     if (data.payload.length === 2) {
                       this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                      this.isSaved = false;
                     }
                   });
             }
@@ -643,6 +657,7 @@ export class SchusszettelComponent implements OnInit {
           .then((data) => {
             if (data.payload.length === 2) {
               this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+              this.isSaved = false;
             }
           });
     }
@@ -673,6 +688,7 @@ export class SchusszettelComponent implements OnInit {
                   .then((data) => {
                     if (data.payload.length === 2) {
                       this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                      this.isSaved = false;
                     }
                   });
             }
@@ -685,6 +701,7 @@ export class SchusszettelComponent implements OnInit {
           .then((data) => {
             if (data.payload.length === 2) {
               this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+              this.isSaved = false;
             }
           });
     }
