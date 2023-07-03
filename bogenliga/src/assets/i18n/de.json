@@ -1455,6 +1455,10 @@
         "PLATZHALTER_FAILURE": {
           "TITLE": "Erstellen des Platzhalters fehlgeschlagen",
           "DESCRIPTION": "Die Erstellung des Platzhalters ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits ein Platzhalter in dieser Veranstaltung existiert."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
         }
     }
   },
