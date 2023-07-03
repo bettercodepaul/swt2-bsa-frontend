@@ -268,6 +268,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
           this.saveLoading = false;
         });
     // show response message
+
   }
 
   public onDelete(ignore: any): void {
@@ -737,6 +738,24 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           console.log(response.payload);
           console.log('Failed');
+          const notification: Notification = {
+            id:          NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE,
+            title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE" ,
+            description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+
+          }
+          this.notificationService.observeNotification(NOTIFICATION_UPDATE_MANNSCHAFT_FAILURE)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
+                }
+              });
+
+          this.notificationService.showNotification(notification);
           this.saveLoading = false;
         });
   }
