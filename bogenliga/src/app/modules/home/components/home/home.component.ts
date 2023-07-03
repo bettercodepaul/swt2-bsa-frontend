@@ -224,10 +224,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * Because checkExists always returns an object, handleGotLigaObject has to check
    * if the liga truly exists (if not, function returns empty LigaObject)
    * */
-
-
+  
   private async loadLiga(urlLigaID : number | string){
-    console.log("loadliga called");
     //If number or string, verschiedener backend call
     if (typeof urlLigaID === 'number'){
     await this.ligaDataProvider.checkExists(urlLigaID)
@@ -252,8 +250,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    **/
 
   private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
-    console.log("Success");
-    console.log("Payload ist:" +response.payload.id);
     if(response.payload.id==null){
       //routing back to home URL
       const link = '/home';
@@ -271,18 +267,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       });
     }
     else{
-      console.log("Else Block")
-
-
       //store Liga information
       this.selectedLigaName=response.payload.name;
       this.selectedLigaID=response.payload.id;
       this.selectedLigaDetails=response.payload.ligaDetail;
       this.loadedLigaData=true;
-      console.log(response.payload.id)
-      console.log(this.selectedLigaID)
-      console.log(response.payload.name)
-      console.log(this.selectedLigaName)
       if(this.hasLigaNameInUrl){
         const link = '/home/' + this.selectedLigaID;
         this.router.navigateByUrl(link);
@@ -294,9 +283,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   /**
    * Handling a failed backendcall to get Liga by LigaID
    **/
-  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {
-    console.log("FAIL!!!!!!!!!!!!!!" +response.payload.id);
-    //routing back to home URL
+  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {//routing back to home URL
     const link = '/home';
     this.router.navigateByUrl(link);
   }
@@ -489,7 +476,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-
     console.log("Id der veranstaltung " + this.veranstaltung.id)
     const link = '/wettkaempfe/' + this.veranstaltung.id;
     this.router.navigateByUrl(link);
@@ -499,7 +485,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     const link = '/home';
     this.router.navigateByUrl(link);
   }
-
 
   //BSAPP-1384
   private getVeranstaltungen(ligaId: number) {
@@ -522,15 +507,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         });
   }
 
-
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();
     this.buildVeranstaltungskalender();
   }
-
-
-
-
 }
 
 
