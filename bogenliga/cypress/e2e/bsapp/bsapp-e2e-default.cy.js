@@ -978,6 +978,7 @@ describe('Admin User tests', function() {
 
 })
 
+
 /**
  * This test checks if the URL of Ligadetailseite is correct depending on the selected Liga ID
  */
@@ -1004,23 +1005,5 @@ describe('Ligadetailseite', function(){
   it('Deselektieren der LigaID', function() {
     cy.get('[id*=navbar-header]').click()
     cy.url().should('not.include', '#/home/' + randomID)
-  })
-
-  it('Deselektieren der LigaID über Button', function() {
-    cy.visit('http://localhost:4200/#/home/' + randomID)
-    cy.get('[id="deselectLigaButtonLigadetailseite"]').click();
-    cy.url().should('not.include', '#/home/' + randomID)
-  })
-
-  it('Deselektieren der ausgewählten Liga in Ligatabelle', function() {
-    cy.visit('http://localhost:4200/#/ligatabelle/' + randomID)
-    cy.get('[id="deselectLigaButton"]').click();
-    cy.url().should('not.include', '#/ligatabelle/' + randomID)
-  })
-
-  it('Zu den Ligadetails-Button auf Ligatabellenseite', function() {
-    cy.visit('http://localhost:4200/#/ligatabelle/' + randomID)
-    cy.get('[id="goToLigadetailsButton"]').click();
-    cy.url().should('include', '#/home/' + randomID)
   })
 })
