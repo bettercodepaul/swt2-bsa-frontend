@@ -28,6 +28,8 @@ import {DisziplinDTO} from '@verwaltung/types/datatransfer/disziplin-dto.class';
 import {DisziplinDataProviderService} from '@verwaltung/services/disziplin-data-provider-service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {HttpClient} from '@angular/common/http';
+import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
+import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';
@@ -80,6 +82,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   constructor(private ligaDataProvider: LigaDataProviderService,
               private regionProvider: RegionDataProviderService,
               private userProvider: UserProfileDataProviderService,
+              private userDataProviderService: UserDataProviderService,
               private disziplinDataProvider: DisziplinDataProviderService,
               private router: Router, private route: ActivatedRoute,
               private notificationService: NotificationService,
@@ -93,8 +96,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
   ngOnInit() {
-    this.isAdmin = this.currentUserService.hasPermission(
-      UserPermission.CAN_MODIFY_SYSTEMDATEN);
+
+    this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID()).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+      this.isAdmin = roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0
+    })
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
