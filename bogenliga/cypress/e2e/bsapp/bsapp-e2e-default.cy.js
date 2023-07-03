@@ -757,10 +757,10 @@ describe('Admin User tests', function() {
    */
   it('Liga Hinzufügen', function() {
     cy.get('body').then((body) => {
-      if (!body.text().includes('SWT_Liga')) {
+      if (!body.text().includes('SWTTestLiga')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
         cy.wait(5000)
-        cy.get('[data-cy=liga-detail-name]').type('SWT_Liga')
+        cy.get('[data-cy=liga-detail-name]').type('SWTTestLiga')
         cy.wait(5000)
         cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
         cy.wait(5000)
@@ -776,7 +776,7 @@ describe('Admin User tests', function() {
         cy.wait(5000)
         cy.get('#OKBtn1').click()
         cy.wait(15000)
-        cy.get('tbody').should('contain.text', 'SWT_Liga')
+        cy.get('tbody').should('contain.text', 'SWTTestLiga')
         cy.wait(5000)
       }
     });
@@ -786,13 +786,13 @@ describe('Admin User tests', function() {
    * This test deletes a League and checks if its deleted in the table.
    */
   it('Liga Löschen', function() {
-    cy.get('tbody').should('contain.text', 'SWT_Liga')
+    cy.get('tbody').should('contain.text', 'SWTTestLiga')
     cy.wait(5000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.wait(5000)
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.wait(10000)
-    cy.get('tbody').should('not.contain.text', 'SWT_Liga')
+    cy.get('tbody').should('not.contain.text', 'SWTTestLiga')
   })
 
   /**
