@@ -946,7 +946,7 @@
         "UPDATE":  {
           "FAILURE": {
             "FULL": {
-              "TITLE": "Veranstaltung bereits ausgebucht: Aktualisierung der Mannschaft nicht möglich",
+              "TITLE": "Veranstaltung bereits ausgebucht",
 
               "DESCRIPTION": "Aufgrund der Tatsache, dass die Veranstaltung bereits vollständig ausgebucht ist, bedauern wir Ihnen mitteilen zu müssen, dass eine Aktualisierung des Teilnehmerkreises derzeit nicht möglich ist."
             }
