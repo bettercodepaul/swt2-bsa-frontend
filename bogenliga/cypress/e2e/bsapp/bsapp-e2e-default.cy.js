@@ -753,7 +753,7 @@ describe('Admin User tests', function() {
         cy.wait(1000)
         cy.get('[data-cy=liga-detail-name]').type('SWT_Liga')
         cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
-        cy.wait(5000)
+        cy.wait(10000)
         cy.get('[data-cy=liga-detail-uebergeordnet]').select('Bundesliga')
         cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
 
@@ -919,8 +919,8 @@ describe('Admin User tests', function() {
     cy.get('tbody').should('contain.text', 'Platzhalter')
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
-    cy.wait(3000)
-    cy.get('[data-cy=bla-selection-list]').first()
+    cy.wait(5000)
+    cy.get('[data-cy=bla-selection-list]').select('2030')
   })
 
   /**
@@ -940,11 +940,12 @@ describe('Admin User tests', function() {
    */
 
   it('Wettkampftage anzeigen', function() {
+    cy.get('[data-cy=bla-selection-list]').select('2018')
     cy.wait(11000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.wait(5000)
     cy.get('[data-cy="wettkampftage-button"]').click()
-    cy.wait(10000)
+    cy.wait(1000)
     cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select(0)
   })
 
@@ -953,11 +954,9 @@ describe('Admin User tests', function() {
    */
 
    it('Wettkampftage bearbeiten', function() {
-     cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
-     cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 221')
-     cy.get('#wettkampftagePLZ').type('{selectall}{backspace}')
-     cy.get('#wettkampftagePLZ').type('70197')
-
+     cy.get('[data-cy="wettkampftage-adresse"]').clear().type('Bahnhofstrasse 221')
+     cy.get('#wettkampftagePLZ').clear().type('70197')
+     cy.get('#wettkampftageOrt').clear().type('Stuttgart')
      cy.get('[data-cy="wettkampftage-update-button"]').click()
      cy.wait(1000)
      cy.get('#OKBtn1').click()
