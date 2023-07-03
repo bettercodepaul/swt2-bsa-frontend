@@ -54,6 +54,7 @@ const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_DELETE_MANNSCHAFT_SUCCESS = 'mannschaft_detail_delete_success';
 const NOTIFICATION_DELETE_MANNSCHAFT_FAILURE = 'mannschaft_detail_delete_failure';
 const NOTIFICATION_NO_LICENSE = 'no_license_found';
+const PLATZHALTER_ID = 99;
 
 @Component({
   selector:    'bla-verein-detail',
@@ -266,21 +267,21 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
     const id = this.currentVerein.id;
 
-
-    if(id==9999) {
+    // Don´t delete the placeholder club
+    if(id==PLATZHALTER_ID) {
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_VEREIN + id,
-        title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.TITLE',
-        description:      'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.DESCRIPTION',
+        title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_PLATZHALTER.DELETE.TITLE',
+        description:      'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_PLATZHALTER.DELETE.DESCRIPTION',
         descriptionParam: '' + id,
-        severity:         NotificationSeverity.QUESTION,
+        severity:         NotificationSeverity.INFO,
         origin:           NotificationOrigin.USER,
-        type:             NotificationType.YES_NO,
+        type:             NotificationType.OK,
         userAction:       NotificationUserAction.PENDING
       };
       this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREIN + id)
           .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.DECLINED) {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.deleteLoading = false;
             }
           });
