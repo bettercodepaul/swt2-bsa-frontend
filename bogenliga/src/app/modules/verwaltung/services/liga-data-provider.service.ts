@@ -107,13 +107,6 @@ export class LigaDataProviderService  extends DataProviderService {
 
 
 
-
-
-
-
-
-
-
   public checkExists(id: string | number): Promise<BogenligaResponse<LigaDO>> {
     // return promise
     // sign in success -> resolve promise
@@ -136,7 +129,26 @@ export class LigaDataProviderService  extends DataProviderService {
   }
 
 
+  public checkExistsLigaName(liganame: string ): Promise<BogenligaResponse<LigaDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('checkExistsLigaName').path(liganame).build())
+          .then((data: VersionedDataTransferObject) => {
+            console.log("Liga Data PRovider");
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
 
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
 
 
 

@@ -444,5 +444,49 @@ export class VeranstaltungDataProviderService  extends DataProviderService {
     });
   }
 
+/*  public async findByLigaIdAndYear(id: string | number, sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO>> {
+      const VerObj = await this.findByLigaId(id); //versch. Sportjahr, gleiche Liga ID
+      const VerYear = await this.findBySportyear(sportjahr).then(); //verschn. Liga ID, glecihes Sportjahr
+      let result = undefined;
+      for (const veranstaltungAusYear of VerYear.payload) {
+        for (const veranstaltungAusLiga of VerObj.payload){
+          if(veranstaltungAusLiga == veranstaltungAusYear){
+            result = veranstaltungAusLiga;
+            console.log("VeranstaltungsID FOUND: " + result.id);
+            break;
+          }
+        }
+        if(result == veranstaltungAusYear){
+         break;
+        }
+
+
+      }
+      return result;
+  }*/
+
+  public async findByLigaIdAndYear(id: string | number, sportjahr: number): Promise<BogenligaResponse<VeranstaltungDO>> {
+
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path(id).path(sportjahr).build())
+            .then((data: VersionedDataTransferObject) => {
+
+              resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
+
+
 
 }

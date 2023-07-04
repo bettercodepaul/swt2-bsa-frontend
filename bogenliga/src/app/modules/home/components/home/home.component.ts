@@ -36,6 +36,8 @@ import {
   OnOfflineService,
   NotificationService
 } from '@shared/services';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
+import {faHome} from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -74,6 +76,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private selectedLigaName: string;
   private selectedLigaID: number;
   private selectedLigaDetails: string;
+  private selectedLigaDetailBase64: string;
+  private selectedLigaDetailFileName: string;
+  private selectedLigaDetailFileType: string;
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[] = [];
@@ -83,11 +88,16 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   public VereinsID: number;
   public providedID: number;
-  public hasID: boolean;
+  public ligaName: string;
+  public hasLigaIDInUrl: boolean;
+  public hasLigaNameInUrl: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
   public veranstaltung: VeranstaltungDO;
+
+
+  public zurStartseiteIcon: IconProp = faHome;
 
   constructor(
     private notificationService: NotificationService,
@@ -139,36 +149,102 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.setCorrectID();
     }
 
+    //to get id of liga from route path
+    this.routeSubscription= this.route.params.subscribe((params) => {
+      //If parameter ID_PATH_PARAM is defined
+      //it parses the parameter value as an integer and assigns it to the providedID variable
 
-    this.route.params.subscribe((params) => {
+      //checking if url has parameter
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        this.hasID = true;
-        this.checkingAndLoadingLiga(); // load liga with changes of id in url
 
+        const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
+
+        //check if url has number or liganame
+        if (!paramIsNumber) {
+          this.ligaName = params[ID_PATH_PARAM]
+          this.hasLigaIDInUrl = false;
+          this.hasLigaNameInUrl=true;
+          console.log("String liga name is: " + this.ligaName);
+          this.ligaName? this.loadLiga(this.ligaName) : null;
+        } else {
+          this.providedID = parseInt(params[ID_PATH_PARAM], 10);
+          this.hasLigaIDInUrl = true;
+          this.hasLigaNameInUrl=false;
+          console.log("Number ID is: " + this.providedID);
+          this.checkingAndLoadingLiga(); // load liga with changes of id in url
+        }
+        this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
       } else {
-        this.hasID = false;
+        this.hasLigaIDInUrl = false;
+        this.hasLigaNameInUrl=false;
       }
     });
 
-    this.checkingAndLoadingLiga();
-    this.routeSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.checkingAndLoadingLiga();
-      }
-    });
-    this.hasID ? this.getVeranstaltungen(this.providedID):undefined;
+  }
+
+  /**File Download, converts Base64 string back to its original file with its original name*/
+  public fileDownload(){
+
+    const typeOfFile = this.selectedLigaDetailBase64.substring(this.selectedLigaDetailBase64.indexOf(':')+1, this.selectedLigaDetailBase64.indexOf(';'))
+    this.selectedLigaDetailBase64 = this.selectedLigaDetailBase64.replace('data:' + typeOfFile + ';base64,', '');
+
+    const byteArray = new Uint8Array(
+      atob(this.selectedLigaDetailBase64)
+        .split('')
+        .map((char) => char.charCodeAt(0))
+    );
+
+    const file = new Blob([byteArray], {type: this.selectedLigaDetailFileType});
+    const fileUrl = URL.createObjectURL(file);
+    let fileName = this.selectedLigaDetailFileName + this.getFileType(this.selectedLigaDetailFileType);
+    let link = document.createElement('a');
+    link.download = fileName;
+    link.target = '_blank';
+    link.href = fileUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+  }
+
+  private getFileType(typeOfFile: string){
+    switch (typeOfFile){
+      case 'application/pdf':
+        return '.pdf'
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        return '.docx';
+      case 'application/msword':
+        return '.doc';
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        return '.xlsx';
+      case 'application/vnd.ms-excel':
+        return '.xls';
+      default:
+        return '';
+    }
   }
 
 
   /**unsubscribe to avoid memory leaks*/
   ngOnDestroy() {
-    this.hasID ? this.routeSubscription.unsubscribe() : null;
+    if(this.hasLigaNameInUrl){
+      this.hasLigaNameInUrl=undefined;
+      this.hasLigaIDInUrl=undefined;
+      this.routeSubscription.unsubscribe();
+    }
+    if(this.hasLigaIDInUrl){
+      this.routeSubscription.unsubscribe();
+      this.hasLigaIDInUrl=undefined;
+      this.hasLigaNameInUrl=undefined;
+    }
+
   }
+
 
   /**Check if LigaID of URL exists and load the corresponding page*/
   private checkingAndLoadingLiga(){
-    this.hasID ? this.loadLiga(this.providedID) : null;
+    this.hasLigaIDInUrl ? this.loadLiga(this.providedID) : null;
+
   }
 
 
@@ -195,11 +271,20 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * if the liga truly exists (if not, function returns empty LigaObject)
    * */
 
-
-  private async loadLiga(urlLigaID : number){
+  private async loadLiga(urlLigaID : number | string){
+    //If number or string, verschiedener backend call
+    if (typeof urlLigaID === 'number'){
     await this.ligaDataProvider.checkExists(urlLigaID)
               .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
               .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
+    } else {
+      //check if underscore in text and replace with space
+      urlLigaID = urlLigaID.replace(/_/g, ' ')
+      urlLigaID=urlLigaID.toLowerCase()
+    await this.ligaDataProvider.checkExistsLigaName(urlLigaID)
+              .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
+              .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
+    }
   }
 
 
@@ -211,7 +296,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    **/
 
   private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
-
     if(response.payload.id==null){
       //routing back to home URL
       const link = '/home';
@@ -233,7 +317,14 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.selectedLigaName=response.payload.name;
       this.selectedLigaID=response.payload.id;
       this.selectedLigaDetails=response.payload.ligaDetail;
+      this.selectedLigaDetailBase64=response.payload.ligaDetailFileBase64;
+      this.selectedLigaDetailFileName=response.payload.ligaDetailFileName;
+      this.selectedLigaDetailFileType=response.payload.ligaDetailFileType;
       this.loadedLigaData=true;
+      if(this.hasLigaNameInUrl){
+        const link = '/home/' + this.selectedLigaID;
+        this.router.navigateByUrl(link);
+      }
     }
   }
 
@@ -241,8 +332,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   /**
    * Handling a failed backendcall to get Liga by LigaID
    **/
-  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {
-    //routing back to home URL
+  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {//routing back to home URL
     const link = '/home';
     this.router.navigateByUrl(link);
   }
@@ -323,6 +413,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
                day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
              };
              this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
+             //filter wettkampftabelle, wenn auf Ligadetailseite, nach LigaID
+             if(this.providedID != null || this.providedID != undefined)
+               this.veranstaltungWettkaempfeDO.filter(veranstaltung => veranstaltung.veranstaltungDO.ligaId == this.providedID);
              console.log(veranstaltungWettkaempfeDOLocal)
            })
          })
@@ -432,12 +525,15 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   }
 
   public ligatabelleLinking() {
-
     console.log("Id der veranstaltung " + this.veranstaltung.id)
     const link = '/wettkaempfe/' + this.veranstaltung.id;
     this.router.navigateByUrl(link);
   }
 
+  public deselect(){
+    const link = '/home';
+    this.router.navigateByUrl(link);
+  }
 
   //BSAPP-1384
   private getVeranstaltungen(ligaId: number) {
@@ -460,15 +556,10 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         });
   }
 
-
   private handleSuccessfulLogin() {
     this.loadWettkaempfe();
     this.buildVeranstaltungskalender();
   }
-
-
-
-
 }
 
 

@@ -82,7 +82,8 @@ export class SidebarComponent implements OnInit {
           this.ligaID = undefined;
           break;
         case result.length:
-          this.ligaID = parseInt(this.URLRoute.substring(lastSlashIndex + 1));
+          !(this.URLRoute.substring(lastSlashIndex + 1).toString() ==="ligaid") ?
+            this.ligaID = parseInt(this.URLRoute.substring(lastSlashIndex + 1)) : undefined;
           break;
         }
       }

@@ -2,144 +2,149 @@
   [config]="config"
   [loading]="loading">
 
+
   <div (mouseover)="onMouseOver($event)">
     <form #dsbMitgliedForm="ngForm"
           class="horizontal-form half-page"
           id="ligaForm">
 
-      <!-- VORNAME -->
-      <div class="form-group row">
-        <label class="col-sm-3 col-form-label"
-               for="ligaName">
-          <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <input type="text"
-                 class="form-control"
-                 required
-                 id="ligaName"
-                 name="ligaName"
-                 #ligaName="ngModel"
-                 [(ngModel)]="currentLiga.name"
-                 [class.is-invalid]="ligaName.invalid && !ligaName.untouched"
-                 placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
-                 data-cy="liga-detail-name">
+      <!-- ADMINFUNKTIONEN -->
+      <div *ngIf=isAdmin>
 
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.ERROR' | translate }}
+        <!-- VORNAME -->
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label"
+                 for="ligaName">
+            <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+          <div class="col-sm-9">
+            <input type="text"
+                   class="form-control"
+                   required
+                   id="ligaName"
+                   name="ligaName"
+                   #ligaName="ngModel"
+                   [(ngModel)]="currentLiga.name"
+                   [class.is-invalid]="ligaName.invalid && !ligaName.untouched"
+                   placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
+                   data-cy="liga-detail-name">
+
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NAME.ERROR' | translate }}
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Disziplinname -->
-      <div class="form-group row">
-        <label for="disziplinName"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DISZIPLIN.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <select type="text"
-                  class="form-control"
-                  required
-                  id="disziplinName"
-                  name="disziplinName"
-                  #disziplinName="ngModel"
-                  [(ngModel)]="currentDisziplin"
-                  data-cy="veranstaltung-detail-disziplinname">
-            <option [ngValue]="disziplinName"
-                    *ngFor="let disziplinName of allDisziplin"> {{disziplinName.disziplinName}}</option>
+        <!-- Disziplinname -->
+        <div class="form-group row">
+          <label for="disziplinName"
+                 class="col-sm-3 col-form-label">
+            <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DISZIPLIN.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+          <div class="col-sm-9">
+            <select type="text"
+                    class="form-control"
+                    required
+                    id="disziplinName"
+                    name="disziplinName"
+                    #disziplinName="ngModel"
+                    [(ngModel)]="currentDisziplin"
+                    data-cy="veranstaltung-detail-disziplinname">
+              <option [ngValue]="disziplinName"
+                      *ngFor="let disziplinName of allDisziplin"> {{disziplinName.disziplinName}}</option>
 
-            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
-          </select>
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
+              placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
+            </select>
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
+            </div>
           </div>
         </div>
-      </div>
 
 
-      <!-- Region -->
-      <div class="form-group row">
-        <label for="ligaRegion"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <select class="form-control"
-                  id="ligaRegion"
-                  name="ligaRegion"
-                  #vereinRegion="ngModel"
-                  [(ngModel)]="currentRegion"
-                  data-cy="liga-detail-region">
+        <!-- Region -->
+        <div class="form-group row">
+          <label for="ligaRegion"
+                 class="col-sm-3 col-form-label">
+            <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+          <div class="col-sm-9">
+            <select class="form-control"
+                    id="ligaRegion"
+                    name="ligaRegion"
+                    #vereinRegion="ngModel"
+                    [(ngModel)]="currentRegion"
+                    data-cy="liga-detail-region">
 
-            <option [ngValue]="region"
-                    *ngFor="let region of regionen"> {{region.regionName}}</option>
-          </select>
+              <option [ngValue]="region"
+                      *ngFor="let region of regionen"> {{region.regionName}}</option>
+            </select>
 
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.ERROR' | translate }}
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.ERROR' | translate }}
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Uebergeordnet -->
-      <div class="form-group row">
-        <label for="ligaRegion"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <select class="form-control"
-                  id="ligaUebergeordnet"
-                  name="ligaUebergeordnet"
-                  #ligaUebergeordnet="ngModel"
-                  [(ngModel)]="currentUbergeordneteLiga"
-                  data-cy="liga-detail-uebergeordnet">
-            <option [ngValue]="uebergeordnet"
-                    *ngFor="let uebergeordnet of allUebergeordnete"> {{uebergeordnet.name}}</option>
+        <!-- Uebergeordnet -->
+        <div class="form-group row">
+          <label for="ligaRegion"
+                 class="col-sm-3 col-form-label">
+            <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+          <div class="col-sm-9">
+            <select class="form-control"
+                    id="ligaUebergeordnet"
+                    name="ligaUebergeordnet"
+                    #ligaUebergeordnet="ngModel"
+                    [(ngModel)]="currentUbergeordneteLiga"
+                    data-cy="liga-detail-uebergeordnet">
+              <option [ngValue]="uebergeordnet"
+                      *ngFor="let uebergeordnet of allUebergeordnete"> {{uebergeordnet.name}}</option>
 
-            placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
-          </select>
+              placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.PLACEHOLDER' | translate }}">
+            </select>
 
 
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.ERROR' | translate }}
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.ERROR' | translate }}
+            </div>
           </div>
         </div>
-      </div>
 
 
-      <!-- Verantwortlicher -->
-      <div class="form-group row">
-        <label for="ligaRegion"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <select class="form-control"
-                  id="ligaVerantwortlicher"
-                  name="ligaVerantwortlicher"
-                  #ligaUebergeordnet="ngModel"
-                  [(ngModel)]="currentUser"
-                  data-cy="liga-detail-verantwortlicher">
-            <option [ngValue]="user"
-                    *ngFor="let user of allUsers"> {{user.email}}</option>
+        <!-- Verantwortlicher -->
+        <div class="form-group row">
+          <label for="ligaRegion"
+                 class="col-sm-3 col-form-label">
+            <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.LABEL' | translate }}</span>
+            <span> *</span>
+          </label>
+          <div class="col-sm-9">
+            <select class="form-control"
+                    id="ligaVerantwortlicher"
+                    name="ligaVerantwortlicher"
+                    #ligaUebergeordnet="ngModel"
+                    [(ngModel)]="currentUser"
+                    data-cy="liga-detail-verantwortlicher">
+              <option [ngValue]="user"
+                      *ngFor="let user of allUsers"> {{user.email}}</option>
 
-            placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.PLACEHOLDER' | translate }}">
-          </select>
+              placeholder="{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.PLACEHOLDER' | translate }}">
+            </select>
 
 
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.LIGA_DETAIL.LABEL' | translate }}
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.LIGA_DETAIL.FORM.LIGA_DETAIL.LABEL' | translate }}
+            </div>
           </div>
         </div>
-      </div>
 
+      </div>
       <!-- Liga Details -->
       <div class="form-group row">
         <label class="col-sm-3 col-form-label"
@@ -171,22 +176,24 @@
 
 
       <!-- File Upload -->
-      <div>
-        <input type="file" class="file-input"
-               (change)="onFileSelected($event)" #fileUpload>
 
-        <div class="file-upload">
-
-          {{fileName || "Keine Datei vorhanden"}}
-
-          <button mat-mini-fab color="primary" class="upload-btn"
-                  (click)="fileUpload.click()">
-            <mat-icon>Datei Hochladen</mat-icon>
-          </button>
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label"
+               for="ligaName">
+        </label>
+        <div class="col-sm-9">
+          <input
+          (change) = "convertFileToBase64($event)"
+          accept=".pdf,.doc,.docx,.xls,.xlsx"
+          id="FileID"
+          name="FileName"
+          type="file">
         </div>
-
-
       </div>
+
+
+
+
 
 
       <!-- SAVE/UPDATE/DELETE BUTTON -->

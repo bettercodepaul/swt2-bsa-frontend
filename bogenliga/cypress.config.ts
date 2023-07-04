@@ -1,3 +1,4 @@
+
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
@@ -10,3 +11,4 @@ export default defineConfig({
     testIsolation: false
   },
 })
+
