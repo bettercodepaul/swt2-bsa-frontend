@@ -76,6 +76,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private selectedLigaName: string;
   private selectedLigaID: number;
   private selectedLigaDetails: string;
+  private selectedLigaDetailBase64: string;
+  private selectedLigaDetailFileName: string;
+  private selectedLigaDetailFileType: string;
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[] = [];
@@ -92,6 +95,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
   public veranstaltung: VeranstaltungDO;
+
 
   public zurStartseiteIcon: IconProp = faHome;
 
@@ -176,6 +180,48 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       }
     });
 
+  }
+
+  /**File Download, converts Base64 string back to its original file with its original name*/
+  public fileDownload(){
+
+    const typeOfFile = this.selectedLigaDetailBase64.substring(this.selectedLigaDetailBase64.indexOf(':')+1, this.selectedLigaDetailBase64.indexOf(';'))
+    this.selectedLigaDetailBase64 = this.selectedLigaDetailBase64.replace('data:' + typeOfFile + ';base64,', '');
+
+    const byteArray = new Uint8Array(
+      atob(this.selectedLigaDetailBase64)
+        .split('')
+        .map((char) => char.charCodeAt(0))
+    );
+
+    const file = new Blob([byteArray], {type: this.selectedLigaDetailFileType});
+    const fileUrl = URL.createObjectURL(file);
+    let fileName = this.selectedLigaDetailFileName + this.getFileType(this.selectedLigaDetailFileType);
+    let link = document.createElement('a');
+    link.download = fileName;
+    link.target = '_blank';
+    link.href = fileUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+  }
+
+  private getFileType(typeOfFile: string){
+    switch (typeOfFile){
+      case 'application/pdf':
+        return '.pdf'
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        return '.docx';
+      case 'application/msword':
+        return '.doc';
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        return '.xlsx';
+      case 'application/vnd.ms-excel':
+        return '.xls';
+      default:
+        return '';
+    }
   }
 
 
@@ -271,6 +317,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.selectedLigaName=response.payload.name;
       this.selectedLigaID=response.payload.id;
       this.selectedLigaDetails=response.payload.ligaDetail;
+      this.selectedLigaDetailBase64=response.payload.ligaDetailFileBase64;
+      this.selectedLigaDetailFileName=response.payload.ligaDetailFileName;
+      this.selectedLigaDetailFileType=response.payload.ligaDetailFileType;
       this.loadedLigaData=true;
       if(this.hasLigaNameInUrl){
         const link = '/home/' + this.selectedLigaID;
