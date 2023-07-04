@@ -196,20 +196,20 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
   }
 
   public async findAllowedRegionsForVereine(parentRegionId, allRegions, allowedRegions, seenRegions): Promise<any> {
-    if(!(allowedRegions.includes(parentRegionId))){
+    if (!(allowedRegions.includes(parentRegionId))) {
       allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
     }
 
-    await this.regionProvider.findAll().then(region => {
-      region.payload.forEach(async e => {
-        if (e.regionUebergeordnet === parentRegionId && !seenRegions.includes(e.id)) {
-          console.log(e.regionUebergeordnet);
-          seenRegions.push(e.id);  // Vermeide Endlosschleife
-          await this.findAllowedRegionsForVereine(e.id, allRegions, allowedRegions, seenRegions);  // Rekursiver Aufruf für untergeordnete Region
-        }
-      })
-    });
-    console.log("TTT "+ allowedRegions);
+    const region = await this.regionProvider.findAll();
+    const subRegions = region.payload.filter(e => e.regionUebergeordnet === parentRegionId && !seenRegions.includes(e.id));
+
+    const recursivePromises = subRegions.map(e =>
+      this.findAllowedRegionsForVereine(e.id, allRegions, allowedRegions, seenRegions)
+    );
+
+    await Promise.all(recursivePromises);
+
+    console.log("TTT " + allowedRegions);
     return allowedRegions;
   }
 
