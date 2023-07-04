@@ -41,7 +41,6 @@ describe('Anonyme User tests', function () {
   })
 
   /*Test hilfeicon */
-  /*
   it('test hilfeicon', function() {
     cy.visit('http://localhost:4200/')
     cy.get('[data-cy=login-button]').click()
@@ -50,27 +49,27 @@ describe('Anonyme User tests', function () {
     cy.get('bla-hilfe-button a')
       .should('have.attr', 'href', 'https://wiki.bsapp.de/doku.php?id=liga:regionen')
       .should('have.attr', 'target', '_blank');
-  })*/
+  })
 
   /**
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
    */
   it('Sunburst details anzeigen', function () {
     cy.get('[data-cy=sidebar-regionen-button]').click();
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get(':nth-child(2) > .main-arc').click({force:true})
-    cy.wait(5000)
+    cy.wait(1000)
     cy.get('#details')
     cy.get('[data-cy=sidebar-regionen-button]').click()
-    cy.wait(5000)
+    cy.wait(1000)
   })
   /**
    * This test checks if after an item has been selected the website redirected to the correct location
    */
   it('Weiterleitung Ligatabelle', function () {
-    cy.wait(5000)
+    cy.wait(6000)
     cy.get('#ligen > bla-selectionlist > #undefined').select(0)
-    cy.wait(5000)
+    cy.wait(1000)
     cy.url().should('include', '#/ligatabelle')
   })
 
@@ -80,11 +79,11 @@ describe('Anonyme User tests', function () {
    */
   it('Weiterleitung Vereinseite', function () {
     cy.get('[data-cy=sidebar-regionen-button]').click()
-    cy.wait(5000)
+    cy.wait(3000)
     cy.get(':nth-child(11) > .main-arc').click({force:true})
     cy.wait(2000)
     cy.get('#vereine > bla-selectionlist > #undefined').select(0)
-    cy.wait(5000)
+    cy.wait(1000)
     cy.url().should('include', '#/vereine')
   })
 
@@ -92,9 +91,9 @@ describe('Anonyme User tests', function () {
    * This test opens the sidebar and clicks on the "VEREINE" tab and checks if the url has changed successfully
    */
   it('Anzeige Vereine', function () {
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('[data-cy=sidebar-vereine-button]').click({force:true})
-    cy.wait(2000)
+    cy.wait(1000)
     cy.url().should('include', '#/vereine')
   })
 
@@ -102,14 +101,13 @@ describe('Anonyme User tests', function () {
    * This test checks if after typing in a search term the list shrinks in size accordingly
    */
   it('Vereinsliste Verringert sich', function() {
-    cy.wait(2000)
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('[data-cy=quicksearch-suchfeld]').click({force:true}).type('SV')
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('[data-cy=quicksearch-liste]').should('have.length.at.least', 1)
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('[data-cy=quicksearch-suchfeld]').click({force:true}).type('X')
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('[data-cy=quicksearch-liste]').should('have.length', 1)
   })
 
@@ -125,11 +123,11 @@ describe('Anonyme User tests', function () {
    * This test checks if a valid search term yields the expected results from the website
    */
   it('Suchfeld Ligatabelle', function() {
-    cy.wait(2000)
+    cy.wait(6000)
     cy.get('[data-cy=quicksearch-suchfeld]').click().type('Württemberg')
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('[data-cy=quicksearch-liste]').should('contain.text', 'Recurve')
-    cy.wait(2000)
+    cy.wait(1000)
     cy.contains('Württembergliga Recurve').click()
   })
 
@@ -147,7 +145,7 @@ describe('Anonyme User tests', function () {
   it('Ergebnis anzeigen', function() {
     cy.wait(10000)
     cy.contains('Würtembergliga')
-    cy.wait(15000)
+    cy.wait(3000)
     cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
     cy.contains('Wettkampftag 1')
   })
@@ -306,7 +304,7 @@ describe('Admin User tests', function() {
     cy.wait(3000)
     //cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
     cy.get('#OKBtn1').click()
-    cy.wait(3000)
+    cy.wait(1000)
   });
 
   /*
@@ -365,14 +363,14 @@ describe('Admin User tests', function() {
 
     cy.wait(1000)
     //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
-    cy.get('#payload-id-28 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').click()
+    cy.contains('tr', 'vorname').find('[data-cy="TABLE.ACTIONS.EDIT"]').click();
     cy.get('[data-cy=detail-vorname-feld]').click()
     cy.get('[data-cy=detail-vorname-feld]').focus().clear().type('SWTZweiTestLocalBitte')
     cy.get('[data-cy=detail-update-button]').click()
     cy.wait(1000)
     cy.get('#OKBtn1').click()
     cy.wait(1000)
-    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
+    cy.contains('tr', 'SWTZweiTestLocalBitte').find('[data-cy="TABLE.ACTIONS.EDIT"]').click();
     cy.get('[data-cy=detail-vorname-feld]').click()
     cy.get('[data-cy=detail-vorname-feld]').focus().clear().type('SWTZweiTestLocal')
     cy.get('[data-cy=detail-update-button]').click()
@@ -383,7 +381,7 @@ describe('Admin User tests', function() {
     //cy.get('.modal-dialog > .modal-content > .modal-footer.modal-dialog.ok > bla-actionbutton > #undefined').click()
     //cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
     cy.get('#OKBtn1').click()
-    cy.wait(2000)
+    cy.wait(500)
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
     //document.querySelector("#exampleModal > div > div > div.modal-footer.modal-dialog-ok > bla-actionbutton")
     ////*[@id="exampleModal"]/div/div/div[3]/bla-actionbutton
@@ -403,7 +401,6 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
         cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('34563456')
         cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
-        cy.wait(1500)
         cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
         cy.wait(1500)
         /*
@@ -422,9 +419,11 @@ describe('Admin User tests', function() {
    */
   it('Löschen DSBMitglied', function() {
     cy.wait(1000)
-    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
+    cy.contains('tr', 'SWTZweiTestLocal').find('[data-cy="TABLE.ACTIONS.DELETE"]').click();
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
+    //Überprüfung dass Elemente nicht in Liste
+    //cy.should('not.contain.text', 'KampfrichterVorname')
   })
 
   /**
@@ -436,6 +435,34 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=verwaltung-user-button]').click()
     cy.url().should('include', '#/verwaltung/user')
   })
+
+  /**
+   * This test adds a new user with two-factor-authentication
+   */
+
+  it('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
+
+    cy.get('[data-cy="dsb-mitglied-add-button"]').click();
+    cy.get('select[data-cy="bla-selection-list"]').select('KampfrichterNachname,KampfrichterVorname No.:34563456');
+    cy.get('[data-cy="username-input"]').type("DefaultCypressTestUser2WayAuth@cypressTestuser.com");
+    cy.get('[data-cy="password-input"]').type('Test123456');
+    cy.get('[data-cy="verify-password-input"]').type('Test123456');
+    cy.get('#user2FA').click()
+    cy.get('[data-cy="user-submit-button"]').click()
+
+    cy.contains('.modal-content', 'Erfolg').within(() => {
+      cy.get('.modal-dialog-ok button')
+        .should('contain', 'OK')
+        .click();
+    });
+
+    cy.wait(4000)
+    cy.get('#qr > img').should('exist');
+    cy.go('back')
+    cy.deleteTestUser("DefaultCypressTestUser2WayAuth@cypressTestuser.com");
+
+  })
+
 
   /**
    * This test adds a new user
@@ -499,47 +526,6 @@ describe('Admin User tests', function() {
     })
 
 
-
-
-  /**
-   * This test adds a new user with two-factor-authentication
-   */
-  /*
-  it('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
-    cy.get('#sidebarCollapseBottom').click()
-    cy.contains('VERWALTUNG').click()
-    cy.get('#sidebarCollapseBottom').click()
-    cy.url().should('include', '#/verwaltung')
-    cy.get('bla-grid-layout > .grid-layout > .card:nth-child(2) > .card-body > .btn').click()
-    cy.url().should('include', '#/verwaltung/user')
-
-    cy.get('.dialog-content > .overview-dialog-header > .overview-dialog-add > .btn > span').click()
-    cy.get('.col-sm-9 > #userDsbMitglied > .quicksearch-list > .quicksearch-list-select > #selectionListRegions').select('7: 45')
-    cy.get('#userDsbMitglied > .quicksearch-list > .quicksearch-list-select > #selectionListRegions > option:nth-child(8)').click()
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userUsername').click()
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userUsername').type('zweifaktorauthentifizierung@bogenliga.de')
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userPassword').click()
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userPassword').type('2FaktorAuthentifizierung1')
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userVerifyPassword').click()
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-9 > #userVerifyPassword').type('2FaktorAuthentifizierung1')
-
-    cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-1 > #user2FA').click()
-    // cy.get('.dialog-content > #userNeuForm > .form-group > .col-sm-1 > #user2FA').check('on')
-    cy.get('#userNeuForm > .form-group > .col-sm-9 > bla-button > #userSaveButton').click()
-    cy.get('.modal-content > .modal-footer > bla-button > #undefined > span').click()
-
-    //check login - man erkennt nicht ob es funktioniert
-    cy.visit('http://localhost:4200/')
-    cy.get('bla-navbar > #navbar > #navbar-right > .nav-link > .btn').click()
-    cy.url().should('include', '#/user/login')
-    cy.get('.card-body > #loginForm > .container > .form-group > #loginEmail').click()
-    cy.get('.card-body > #loginForm > .container > .form-group > #loginEmail').type('zweifaktorauthentifizierung@bogenliga.de')
-    cy.get('.card-body > #loginForm > .container > .form-group > #loginPassword').type('2FaktorAuthentifizierung1')
-    cy.get('.card-body > #loginForm > .container > bla-button > #loginButton').click()
-    cy.get('#OKBtn1').click()
-  })
-  */
-
   /**
    * This test shows the "Wettkampfklassen" tab in administration
    */
@@ -602,12 +588,16 @@ describe('Admin User tests', function() {
       if (!body.text().includes('CypressTest')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
         cy.url().should('include', '#/verwaltung/vereine/add')
+        cy.wait(1000)
         cy.get('[data-cy=vereine-vereinsname]').click().type('CypressTest')
+        cy.wait(1000)
         cy.get('[data-cy=vereine-vereinsnummer]').click().type('1111111111')
+        cy.wait(1000)
         cy.get('[data-cy=vereine-vereinswebsite]').click().type('cypresstest')
+        cy.wait(1000)
         cy.get('[data-cy=vereine-add-button]').click()
         cy.get('#OKBtn1').click()
-        cy.wait(500)
+        cy.wait(1000)
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
         cy.url().should('include', '#/verwaltung')
         cy.get('[data-cy=verwaltung-vereine-button]').click()
@@ -618,6 +608,7 @@ describe('Admin User tests', function() {
       }
     });
   })
+
 
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
@@ -665,7 +656,7 @@ describe('Admin User tests', function() {
         cy.wait(1000)
         //cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
         cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
-        cy.wait(9000)
+        cy.wait(15000)
         cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
         cy.wait(6000)
         //cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
@@ -715,7 +706,7 @@ describe('Admin User tests', function() {
     cy.wait(500)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.wait(500)
-    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
+    cy.get('button.action-btn-primary:contains("Ja")').click()
     cy.wait(500)
     cy.get('tbody').should('not.contain.text', '76')
   })
@@ -765,15 +756,13 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=liga-detail-name]').type('SWTTestLiga')
         cy.wait(5000)
         cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
-        cy.wait(5000)
+        cy.wait(10000)
         cy.get('[data-cy=liga-detail-uebergeordnet]').select('Bundesliga')
-        cy.wait(5000)
         cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
-        cy.wait(5000)
 
         cy.typeInIFrame("Testliga");
 
-        cy.wait(5000)
+        cy.wait(1000)
         cy.get('[data-cy=liga-save-button]').click()
         cy.wait(5000)
         cy.get('#OKBtn1').click()
@@ -858,21 +847,21 @@ describe('Admin User tests', function() {
   /**
    * This test checks if the Event-table gets filled.
    */
-  /*
+
   it('Veranstaltungen Anzeigen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
-    cy.wait(1000)
-    cy.get('[data-cy=bla-selection-list]').select('0: 0')
+    cy.wait(5000)
+    cy.get('[data-cy=bla-selection-list]').select('2018')
     cy.wait(5000)
     cy.get('tbody').should('have.length.at.least', 1)
-  })*/
+  })
 
   /**
    * This test adds a "Veranstaltung" and checks if it gets added
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
-/*
+
   it('Veranstaltungen hinzufügen', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('Testveranstaltung')) {
@@ -883,30 +872,30 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=veranstaltung-detail-name]').type('Testveranstaltung')
         cy.wait(10000)
         cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
-        cy.wait(5005)
-        cy.get('[data-cy=veranstaltung-detail-sportjahr]').type('2018')
-        cy.get('[data-cy=veranstaltung-detail-deadline]').type('2022-01-01')
-        cy.wait(5000)
+        cy.get('[data-cy=veranstaltung-detail-sportjahr]').type('2030')
+        cy.get('[data-cy=veranstaltung-detail-deadline]').type('2030-01-01')
+        cy.wait(1000)
         cy.get('[data-cy=veranstaltung-detail-save-button]').click()
-        cy.wait(5000)
+        cy.wait(25000)
         cy.get('#OKBtn1').click()
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
         cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
         cy.wait(5000)
-        cy.get('[data-cy=bla-selection-list]').select('0: 0')
-        cy.wait(10000)
+        cy.get('[data-cy=bla-selection-list]').select('2030')
+        cy.wait(1000)
         cy.get('tbody').should('contain.text', 'Testveranstaltung')
       }
     });
-  })*/
+  })
 
   /**
    * This test edits a "Veranstaltung" and checks if it was changed
    */
-/*
+
   it('Veranstaltungen bearbeiten', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
+    cy.wait(10000)
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
     cy.wait(1000)
     cy.get('[data-cy=veranstaltung-detail-update-button]').click()
@@ -914,47 +903,65 @@ describe('Admin User tests', function() {
     cy.get('#OKBtn1').click()
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(5000)
+    cy.get('[data-cy=bla-selection-list]').select('2030')
     cy.wait(1000)
-    cy.get('[data-cy=bla-selection-list]').select('0: 0')
-    cy.wait(11000)
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
 
-  })*/
+  })
+
+  /**
+   * This test creates an Platzhalter for the Veranstaltung
+   */
+
+  it('Platzhalter erstellen', function() {
+    cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+    cy.get('[data-cy=veranstaltung-detail-create-platzhalter]').click()
+    cy.wait(3000)
+    cy.get('#OKBtn1').click()
+    cy.get('tbody').should('contain.text', 'Platzhalter')
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(5000)
+    cy.get('[data-cy=bla-selection-list]').select('2030')
+  })
 
   /**
    * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
    */
-/*
+
   it('Veranstaltung Löschen', function() {
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
-    cy.get('[data-cy=bla-selection-list]').select('1: 22')
-    cy.wait(5000)
-    cy.get('[data-cy=bla-selection-list]').select('0: 0')
-    cy.wait(11000)
+    cy.wait(1000)
     cy.get('tbody').should('not.contain.text', 'TestveranstaltungTTT')
-  })*/
+  })
 
   /**
    * This test checks if "Wettkampftage" has entries.
    */
+
   it('Wettkampftage anzeigen', function() {
+    cy.get('[data-cy=bla-selection-list]').select('2018')
     cy.wait(11000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.wait(5000)
     cy.get('[data-cy="wettkampftage-button"]').click()
-    cy.wait(10000)
+    cy.wait(1000)
     cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select(0)
   })
 
   /**
    * This test edits a "Wettkampftag" and checks if it was changed.
    */
+
    it('Wettkampftage bearbeiten', function() {
-     cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
-     cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 221')
+     cy.get('[data-cy="wettkampftage-adresse"]').clear().type('Bahnhofstrasse 221')
+     cy.get('#wettkampftagePLZ').clear().type('70197')
+     cy.get('#wettkampftageOrt').clear().type('Stuttgart')
      cy.get('[data-cy="wettkampftage-update-button"]').click()
+     cy.wait(1000)
      cy.get('#OKBtn1').click()
      cy.wait(1000)
      cy.get('[data-cy="wettkampftage-zurueck"]').click()
