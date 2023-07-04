@@ -37,6 +37,7 @@ const NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN = 'schusszettelEntschieden';
 const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
 const NOTIFACTION_SCHUETZE = 'schuetze';
+const PLATZHALTER = 'Platzhalter';
 
 
 @Component({
@@ -82,6 +83,7 @@ export class SchusszettelComponent implements OnInit {
 
   allowedMitglieder1: number[];
   allowedMitglieder2: number[];
+  isSaved: boolean = false;
 
 
 
@@ -148,6 +150,15 @@ export class SchusszettelComponent implements OnInit {
 
               this.match1 = data.payload[0];
               this.match2 = data.payload[1];
+
+              console.log(this.match1, this.match2)
+              if(this.match1.matchpunkte != null && !(this.match1.mannschaftName == 'Platzhalter 1')){
+                this.isSaved = true;
+              } else if(this.match2.matchpunkte != null && !(this.match2.mannschaftName == 'Platzhalter 1')){
+                this.isSaved = true;
+              }
+
+
 
               /**
                * Limits the Schützen of match 1 to 3 and each passe-array
@@ -238,12 +249,13 @@ export class SchusszettelComponent implements OnInit {
 
               let stringMatch1 = this.match1.mannschaftName;
               let stringMatch2 = this.match2.mannschaftName;
-              let auffuellmannschaft= 'Auffüllmannschaft';
 
-              if(stringMatch1.includes(auffuellmannschaft)) {
+              if(stringMatch1.includes(PLATZHALTER)) {
                 for (const i of Object.keys(this.match1.schuetzen)) {
-                  this.match1.schuetzen[i][0].rueckennummer = 0;
-                  for(let j=0; j<=4; j++){
+                  this.match1.schuetzen[0][0].rueckennummer = 1;
+                  this.match1.schuetzen[1][0].rueckennummer = 2;
+                  this.match1.schuetzen[2][0].rueckennummer = 3;
+                  for(let j=0; j<=2; j++){
                     this.match1.schuetzen[i][j].ringzahlPfeil1 = 0;
                     this.match1.schuetzen[i][j].ringzahlPfeil2 = 0;
                   }
@@ -251,10 +263,12 @@ export class SchusszettelComponent implements OnInit {
                 this.match1.satzpunkte = 0;
                 this.match1.matchpunkte = 0;
 
-              }else if(stringMatch2.includes(auffuellmannschaft)){
+              }else if(stringMatch2.includes(PLATZHALTER)){
                 for (const i of Object.keys(this.match2.schuetzen)) {
-                  this.match2.schuetzen[i][0].rueckennummer = 0;
-                  for(let j=0; j<=4; j++){
+                  this.match2.schuetzen[0][0].rueckennummer = 1;
+                  this.match2.schuetzen[1][0].rueckennummer = 2;
+                  this.match2.schuetzen[2][0].rueckennummer = 3;
+                  for(let j=0; j<=2; j++){
                     this.match2.schuetzen[i][j].ringzahlPfeil1 = 0;
                     this.match2.schuetzen[i][j].ringzahlPfeil2 = 0;
                   }
@@ -262,6 +276,7 @@ export class SchusszettelComponent implements OnInit {
                 this.match2.satzpunkte = 0;
                 this.match2.matchpunkte = 0;
               }
+
             })
             .catch((error) => {
               console.error(error);
@@ -436,12 +451,9 @@ export class SchusszettelComponent implements OnInit {
    }
 
 
-   let stringMatch1 = this.match1.mannschaftName;
-   let stringMatch2 = this.match2.mannschaftName;
-   let auffuellmannschaft= 'Auffüllmannschaft';
 
-   if (this.match1.satzpunkte > 7 && !stringMatch1.includes(auffuellmannschaft)
-     || this.match2.satzpunkte > 7 && !stringMatch2.includes(auffuellmannschaft)) {
+
+   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
      this.notificationService.showNotification({
        id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
@@ -454,12 +466,12 @@ export class SchusszettelComponent implements OnInit {
    } else if (
      // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
      // daher prüfen wir hier ersten auf "leer" d.h. gleich 0
-     this.match1.schuetzen[0][0].rueckennummer == null && !stringMatch1.includes(auffuellmannschaft) ||
-     this.match1.schuetzen[1][0].rueckennummer == null && !stringMatch1.includes(auffuellmannschaft) ||
-     this.match1.schuetzen[2][0].rueckennummer == null && !stringMatch1.includes(auffuellmannschaft) ||
-     this.match2.schuetzen[0][0].rueckennummer == null && !stringMatch2.includes(auffuellmannschaft) ||
-     this.match2.schuetzen[1][0].rueckennummer == null && !stringMatch2.includes(auffuellmannschaft) ||
-     this.match2.schuetzen[2][0].rueckennummer == null && !stringMatch2.includes(auffuellmannschaft)) {
+     this.match1.schuetzen[0][0].rueckennummer == null ||
+     this.match1.schuetzen[1][0].rueckennummer == null ||
+     this.match1.schuetzen[2][0].rueckennummer == null ||
+     this.match2.schuetzen[0][0].rueckennummer == null ||
+     this.match2.schuetzen[1][0].rueckennummer == null ||
+     this.match2.schuetzen[2][0].rueckennummer == null) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
@@ -472,12 +484,12 @@ export class SchusszettelComponent implements OnInit {
     } else if (
       // und jetzt prüfen wir noch ob in einer Mannschaft die gleiche
       // Schützennummer zweimal angegeben wurde -> auch nicht möglich
-     this.match1.schuetzen[0][0].rueckennummer === this.match1.schuetzen[1][0].rueckennummer  && !stringMatch1.includes(auffuellmannschaft)||
-     this.match1.schuetzen[1][0].rueckennummer === this.match1.schuetzen[2][0].rueckennummer  && !stringMatch1.includes(auffuellmannschaft)||
-     this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer  && !stringMatch1.includes(auffuellmannschaft)||
-     this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer  && !stringMatch2.includes(auffuellmannschaft)||
-     this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer  && !stringMatch2.includes(auffuellmannschaft)||
-     this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer  && !stringMatch2.includes(auffuellmannschaft)) {
+     this.match1.schuetzen[0][0].rueckennummer === this.match1.schuetzen[1][0].rueckennummer ||
+     this.match1.schuetzen[1][0].rueckennummer === this.match1.schuetzen[2][0].rueckennummer ||
+     this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer ||
+     this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer ||
+     this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer ||
+     this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer ) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
@@ -552,6 +564,7 @@ export class SchusszettelComponent implements OnInit {
         await this.ligatabelleService.updateLigatabelleVeranstaltung(this.match1, alt_match1, this.match2, alt_match2);
       }
       this.dirtyFlag = false; // Daten gespeichert
+      this.isSaved = true;
 
     }
   }
@@ -582,6 +595,7 @@ export class SchusszettelComponent implements OnInit {
               console.log('accepted');
               this.dirtyFlag = false;
               console.log('Wettkampftag', this.match1.wettkampfTag);
+              this.isSaved = false;
               this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
             }
             console.log('notification.userAction after: ' + notification.userAction);
@@ -594,6 +608,7 @@ export class SchusszettelComponent implements OnInit {
 
       console.log('Keine Änderung');
       console.log('Wettkampftag', this.match1.wettkampfTag);
+      this.isSaved = false;
       this.router.navigate(['/wkdurchfuehrung']);
 
       //old code
@@ -629,6 +644,7 @@ export class SchusszettelComponent implements OnInit {
                   .then((data) => {
                     if (data.payload.length === 2) {
                       this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                      this.isSaved = false;
                     }
                   });
             }
@@ -641,6 +657,7 @@ export class SchusszettelComponent implements OnInit {
           .then((data) => {
             if (data.payload.length === 2) {
               this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+              this.isSaved = false;
             }
           });
     }
@@ -671,6 +688,7 @@ export class SchusszettelComponent implements OnInit {
                   .then((data) => {
                     if (data.payload.length === 2) {
                       this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                      this.isSaved = false;
                     }
                   });
             }
@@ -683,6 +701,7 @@ export class SchusszettelComponent implements OnInit {
           .then((data) => {
             if (data.payload.length === 2) {
               this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+              this.isSaved = false;
             }
           });
     }
