@@ -24,6 +24,7 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import * as VereinDetailComponent from '@verwaltung/components/verein/verein-detail/verein-detail.component';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 
 export const NOTIFICATION_DELETE_VEREINE = 'vereine_overview_delete';
 const PLATZHALTER_ID = 99;
@@ -48,7 +49,8 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
     private onOfflineService: OnOfflineService,
     private userDataProviderService: UserDataProviderService,
     private vereinProvider: VereinDataProviderService,
-    private regionProvider: RegionDataProviderService,)
+    private regionProvider: RegionDataProviderService,
+    private ligaProvider: LigaDataProviderService,)
   {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -143,10 +145,14 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
         isLigaleiter = true;
 
       if(isLigaleiter == true){
+        let ligaRegions: any[] = [];
+        this.ligaProvider.findAll().then((data) => {
+          data.payload.forEach(e => {
+            if(e.ligaVerantwortlichId === currentUserId){
+              ligaRegions.push(e.regionId);
+            }
+          })
 
-        let myVereinId = this.currentUserService.getVerein(); //Aktueller Verein des eingeloggten Users
-        this.vereinProvider.findById(myVereinId).then((response: BogenligaResponse<VereinDO>) => {
-          let myVereinRegionId = response.payload.regionId;
           let allRegions: any[]= [];
           let allowedRegions: any[]= [];
           let seenRegions: any[] = [];
@@ -158,9 +164,12 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
             })
           }).catch(e => console.log(e));
-          //Rekursive funktion um die allowedRegions zu filtern und Liste zu befüllen
-          allowedRegions = this.findAllowedRegionsForVereine(myVereinRegionId, allRegions, allowedRegions, seenRegions);
-
+          ligaRegions.forEach(e => {
+            console.log(e);
+            //Rekursive funktion um die allowedRegions zu filtern und Liste zu befüllen
+            allowedRegions = this.findAllowedRegionsForVereine(e, allRegions, allowedRegions, seenRegions);
+          })
+          console.log("TEST2 "+ allowedRegions);
           //Erlaubte Vereine in die Liste schreiben
           this.vereinProvider.findAll().then((value) => {
             let filteredVereine = value.payload.filter((f) => {
@@ -187,7 +196,9 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
   }
 
   public findAllowedRegionsForVereine(parentRegionId, allRegions, allowedRegions, seenRegions): any {
-    allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
+    if(!allowedRegions.includes(parentRegionId)){
+      allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
+    }
 
     allRegions.forEach(region => {
       if (region.regionUebergeordnet === parentRegionId && !seenRegions.includes(region.id)) {
