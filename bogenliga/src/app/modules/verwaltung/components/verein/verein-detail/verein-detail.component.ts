@@ -42,6 +42,7 @@ import {SessionHandling} from '@shared/event-handling';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
 import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 
 
 const ID_PATH_PARAM = 'id';
@@ -81,18 +82,19 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
   @ViewChild('downloadLink')
   private aElementRef: ElementRef;
+
   constructor(private vereinProvider: VereinDataProviderService,
-              private downloadService: DownloadButtonResourceProviderService,
-              private regionProvider: RegionDataProviderService,
-              private currentUserService: CurrentUserService,
-              private mannschaftsDataProvider: DsbMannschaftDataProviderService,
-              private veranstaltungsProvider: VeranstaltungDataProviderService,
-              private router: Router,
-              private route: ActivatedRoute,
-              private onOfflineService: OnOfflineService,
-              private notificationService: NotificationService,
-              private userDataProviderService: UserDataProviderService,)
-  {
+    private downloadService: DownloadButtonResourceProviderService,
+    private regionProvider: RegionDataProviderService,
+    private currentUserService: CurrentUserService,
+    private mannschaftsDataProvider: DsbMannschaftDataProviderService,
+    private veranstaltungsProvider: VeranstaltungDataProviderService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private onOfflineService: OnOfflineService,
+    private notificationService: NotificationService,
+    private userDataProviderService: UserDataProviderService,
+    private ligaProvider: LigaDataProviderService,) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -224,13 +226,13 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
           }
         }, (response: BogenligaResponse<DsbMitgliedDO>) => {
           const notification: Notification = {
-            id: NOTIFICATION_UPDATE_VEREIN,
+            id:          NOTIFICATION_UPDATE_VEREIN,
             title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE_FAILURE.TITLE',
             description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.SAVE_FAILURE.DESCRIPTION',
-            severity: NotificationSeverity.INFO,
-            origin: NotificationOrigin.USER,
-            type: NotificationType.OK,
-            userAction: NotificationUserAction.PENDING
+            severity:    NotificationSeverity.INFO,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
           };
           this.notificationService.showNotification(notification);
 
@@ -268,7 +270,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     const id = this.currentVerein.id;
 
     // Don´t delete the placeholder club
-    if(id==PLATZHALTER_ID) {
+    if (id == PLATZHALTER_ID) {
       const notification: Notification = {
         id:               NOTIFICATION_DELETE_VEREIN + id,
         title:            'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION_PLATZHALTER.DELETE.TITLE',
@@ -335,18 +337,18 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     };
 
     const notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
-        .subscribe((myNotification) => {
+                                  .subscribe((myNotification) => {
 
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.mannschaftsDataProvider.deleteById(id)
-                .then((response) => this.loadMannschaften())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.rows = hideLoadingIndicator(this.rows, id);
-            notificationEvent.unsubscribe();
-          }
+                                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                                      this.mannschaftsDataProvider.deleteById(id)
+                                          .then((response) => this.loadMannschaften())
+                                          .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+                                    } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+                                      this.rows = hideLoadingIndicator(this.rows, id);
+                                      notificationEvent.unsubscribe();
+                                    }
 
-        });
+                                  });
 
     this.notificationService.showNotification(notification);
   }
@@ -363,9 +365,9 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
           .then((response: BogenligaResponse<string>) => console.log(response))
           .catch((response: BogenligaResponse<string>) => console.log(response));
     } else {
-        console.log('offline');
-        this.returnMatch(versionedDataObject);
-      }
+      console.log('offline');
+      this.returnMatch(versionedDataObject);
+    }
 
   }
 
@@ -384,10 +386,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       const mannschaftsName = mannschaftId[0].mannschaftName;
       const ligaName = mannschaftId[0].veranstaltungName;
       for (let i = 0; i < nums.length; i++) {
-        console.log('rueckennummer: ' + nums[0].rueckennummer  );
+        console.log('rueckennummer: ' + nums[0].rueckennummer);
         doc.setFontSize(10).setFont(undefined, 'normal');
-        doc.text(ligaName, 20, 20, );
-        doc.text(mannschaftsName, 20, 28, )// .setFontSize(25).setFont(undefined, 'bold');
+        doc.text(ligaName, 20, 20,);
+        doc.text(mannschaftsName, 20, 28,)// .setFontSize(25).setFont(undefined, 'bold');
 
           // Todo add Name Nachname to Rueckennumer if OnlineDatabase is filled
           // doc.text('Spielername', width / 2, height / 2 - 95, {align: 'center'})
@@ -395,7 +397,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
            .setFontSize(100).setFont(undefined, 'bold');
         doc.text(nums[i].rueckennummer.toString(), width / 2, height / 2 - 50, {align: 'center'});
         if (i + 1 < nums.length) {
-          console.log('i ist ' +  i + ' length ist ' + nums.length);
+          console.log('i ist ' + i + ' length ist ' + nums.length);
           doc.addPage();
         }
       }
@@ -407,7 +409,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
       x.document.write(embed);
       x.document.close();
     })
-      .catch (function(error) {
+      .catch(function (error) {
         console.error('Transaction aborted due to error: ' + error);
       });
   }
@@ -443,9 +445,9 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         .catch((response: BogenligaResponse<VereinDO>) => this.handleFailure(response));
   }
 
-  private loadRegions(type: string) {
+  private async loadRegions(type: string) {
     let currentUserId = this.currentUserService.getCurrentUserID();
-    this.userDataProviderService.findUserRoleById(currentUserId).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+    this.userDataProviderService.findUserRoleById(currentUserId).then(async (roleresponse: BogenligaResponse<UserRolleDO[]>) => {
       let isAdmin = false;
       if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0)
         isAdmin = true;
@@ -457,24 +459,23 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
               this.loadVerein();
             })
             .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleResponseArrayFailure(response));
-      }else{ //Wenn KEIN Admin
-        let myVereinId = this.currentUserService.getVerein(); //Aktueller Verein des eingeloggten Users
-        this.vereinProvider.findById(myVereinId).then((response: BogenligaResponse<VereinDO>) => {
-          let myVereinRegionId = response.payload.regionId;
-          let allRegions: any[]= [];
-          let allowedRegions: any[]= [];
+      } else { //Wenn KEIN Admin
+        let ligaRegions: any[] = [];
+        await this.ligaProvider.findAll().then(async (data) => {
+          data.payload.forEach(e => {
+            if (e.ligaVerantwortlichId === currentUserId) {
+              ligaRegions.push(e.regionId);
+            }
+          })
+          let allowedRegions: any[] = [];
           let seenRegions: any[] = [];
 
-          //Alle Regionen in Liste schreiben
-          this.regionProvider.findAll().then((regions: BogenligaResponse<RegionDO[]>) => {
-            regions.payload.forEach((e) => {
-              allRegions.push(e.id);
-
-            })
-          }).catch(e => console.log(e));
-
-          //Rekursive funktion um die allowedRegions zu filtern und Liste zu befüllen
-          allowedRegions = this.findAllowedRegions(myVereinRegionId, allRegions, allowedRegions, seenRegions);
+          // Erzeuge ein Array von Promises für alle rekursiven Aufrufe
+          const recursivePromises = ligaRegions.map(e =>
+            this.findAllowedRegions(e, allowedRegions, seenRegions)
+          );
+          // Warte auf den Abschluss aller rekursiven Aufrufe
+          await Promise.all(recursivePromises);
 
           //Erlaubte Regionen in die Klappliste schreiben
           this.regionProvider.findAll().then((value) => {
@@ -491,15 +492,17 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         .finally(() => this.loading = false);
   }
 
-  public findAllowedRegions(parentRegionId, allRegions, allowedRegions, seenRegions): any {
-    allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
+  public async findAllowedRegions(parentRegionId, allowedRegions, seenRegions): Promise<any> {
+    if (!(allowedRegions.includes(parentRegionId))) {
+      allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
+    }
+    const region = await this.regionProvider.findAll();
+    const subRegions = region.payload.filter(e => e.regionUebergeordnet === parentRegionId && !seenRegions.includes(e.id));
+    const recursivePromises = subRegions.map(e =>
+      this.findAllowedRegions(e.id, allowedRegions, seenRegions)
+    );
 
-    allRegions.forEach(region => {
-      if (region.regionUebergeordnet === parentRegionId && !seenRegions.includes(region.id)) {
-        seenRegions.push(region.id);  // Vermeide Endlosschleifen
-        this.findAllowedRegions(region.id, allRegions, allowedRegions, seenRegions);  // Rekursiver Aufruf für untergeordnete Region
-      }
-    });
+    await Promise.all(recursivePromises);
     return allowedRegions;
   }
 
@@ -562,20 +565,20 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
 
   private showNoLicense(): void {
     const noLicenseNotification: Notification = {
-      id: NOTIFICATION_NO_LICENSE,
-      title: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.NO_LICENSE.TITLE',
+      id:          NOTIFICATION_NO_LICENSE,
+      title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.NO_LICENSE.TITLE',
       description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.NO_LICENSE.DESCRIPTION',
-      severity: NotificationSeverity.ERROR,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.OK,
-      userAction: NotificationUserAction.PENDING
+      severity:    NotificationSeverity.ERROR,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING
     };
     this.notificationService.observeNotification(NOTIFICATION_NO_LICENSE)
-      .subscribe((myNotification) => {
-        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-          this.saveLoading = false;
-        }
-      });
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.saveLoading = false;
+          }
+        });
     this.notificationService.showNotification(noLicenseNotification);
   }
 
@@ -615,7 +618,7 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
     this.veranstaltungsProvider.findById(mannschaft.veranstaltungId)
         .then((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = response.payload.name)
         .catch((response: BogenligaResponse<VeranstaltungDTO>) => mannschaft.veranstaltungName = '');
-    mannschaft.name = this.currentVerein.name + ' '  + mannschaft.nummer + '.Mannschaft';
+    mannschaft.name = this.currentVerein.name + ' ' + mannschaft.nummer + '.Mannschaft';
   }
 
   private handleLoadMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
