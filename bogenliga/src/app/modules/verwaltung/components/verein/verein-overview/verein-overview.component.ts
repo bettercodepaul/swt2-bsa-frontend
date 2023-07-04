@@ -137,55 +137,56 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
     }
   }
 
-  private loadTableRows() {
+  private async loadTableRows() {
     let currentUserId = this.currentUserService.getCurrentUserID();
-    this.userDataProviderService.findUserRoleById(currentUserId).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+    await this.userDataProviderService.findUserRoleById(currentUserId).then(async (roleresponse: BogenligaResponse<UserRolleDO[]>) => {
       let isLigaleiter = false;
       if (roleresponse.payload.filter(role => role.roleName == 'LIGALEITER').length > 0)
         isLigaleiter = true;
 
-      if(isLigaleiter == true){
+      if (isLigaleiter == true) {
         let ligaRegions: any[] = [];
-        this.ligaProvider.findAll().then((data) => {
+        await this.ligaProvider.findAll().then(async (data) => {
           data.payload.forEach(e => {
-            if(e.ligaVerantwortlichId === currentUserId){
+            if (e.ligaVerantwortlichId === currentUserId) {
               ligaRegions.push(e.regionId);
             }
           })
 
-          let allRegions: any[]= [];
-          let allowedRegions: any[]= [];
+          let allRegions: any[] = [];
+          let allowedRegions: any[] = [];
           let seenRegions: any[] = [];
 
           //Alle Regionen in Liste schreiben
-          this.regionProvider.findAll().then((regions: BogenligaResponse<RegionDO[]>) => {
+          await this.regionProvider.findAll().then(async (regions: BogenligaResponse<RegionDO[]>) => {
             regions.payload.forEach((e) => {
               allRegions.push(e.id);
+            });
 
-            })
-          }).catch(e => console.log(e));
-          ligaRegions.forEach(e => {
-            //Rekursive funktion um die allowedRegions zu filtern und Liste zu befüllen
-            allowedRegions = this.findAllowedRegionsForVereine(e, allRegions, allowedRegions, seenRegions);
-          })
-          console.log("TEST2 "+ allowedRegions);
-          //Erlaubte Vereine in die Liste schreiben
-          this.vereinProvider.findAll().then((value) => {
-            let filteredVereine = value.payload.filter((f) => {
-              return allowedRegions.includes(f.regionId)
-            })
-            this.handleLoadTableRowsSuccessVereine(filteredVereine);
+            // Erzeuge ein Array von Promises für alle rekursiven Aufrufe
+            const recursivePromises = ligaRegions.map(e =>
+              this.findAllowedRegionsForVereine(e, allRegions, allowedRegions, seenRegions)
+            );
 
+            // Warte auf den Abschluss aller rekursiven Aufrufe
+            await Promise.all(recursivePromises);
 
-          }).catch(e => console.log(e))
+            console.log("TEST2 " + allowedRegions);
 
+            //Erlaubte Vereine in die Liste schreiben
+            await this.vereinProvider.findAll().then((value) => {
+              let filteredVereine = value.payload.filter((f) => {
+                return allowedRegions.includes(f.regionId);
+              })
+              this.handleLoadTableRowsSuccessVereine(filteredVereine);
+            }).catch(e => console.log(e));
+          }).catch(err => console.log(err));
         }).catch(err => console.log(err));
-      }else{
-        this.vereinDataProvider.findAll()
+      } else {
+        await this.vereinDataProvider.findAll()
             .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
             .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
       }
-
 
 
     }).catch(err => console.log(err))
@@ -194,17 +195,17 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
   }
 
-  public findAllowedRegionsForVereine(parentRegionId, allRegions, allowedRegions, seenRegions): any {
+  public async findAllowedRegionsForVereine(parentRegionId, allRegions, allowedRegions, seenRegions): Promise<any> {
     if(!(allowedRegions.includes(parentRegionId))){
       allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
     }
 
-    this.regionProvider.findAll().then(region => {
-      region.payload.forEach(e => {
+    await this.regionProvider.findAll().then(region => {
+      region.payload.forEach(async e => {
         if (e.regionUebergeordnet === parentRegionId && !seenRegions.includes(e.id)) {
           console.log(e.regionUebergeordnet);
           seenRegions.push(e.id);  // Vermeide Endlosschleife
-          this.findAllowedRegionsForVereine(e.id, allRegions, allowedRegions, seenRegions);  // Rekursiver Aufruf für untergeordnete Region
+          await this.findAllowedRegionsForVereine(e.id, allRegions, allowedRegions, seenRegions);  // Rekursiver Aufruf für untergeordnete Region
         }
       })
     });
