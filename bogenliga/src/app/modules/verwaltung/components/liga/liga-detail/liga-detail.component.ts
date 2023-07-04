@@ -69,12 +69,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   private sessionHandling: SessionHandling;
 
 
-  //FileUpload
-
-  public fileName = '';
-  public fileType;
-  public Basetests = '';
-
 
 
 
@@ -313,47 +307,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
 
-  // File Download Button, converts Base64 string back to its original File and downloads it
-  public fileDownload(){
-
-    const typeOfFile = this.Basetests.substring(this.Basetests.indexOf(':')+1, this.Basetests.indexOf(';'))
-    this.Basetests = this.Basetests.replace('data:' + typeOfFile + ';base64,', '');
-
-    const byteArray = new Uint8Array(
-      atob(this.Basetests)
-        .split('')
-        .map((char) => char.charCodeAt(0))
-    );
-
-    const file = new Blob([byteArray], {type: typeOfFile});
-    const fileUrl = URL.createObjectURL(file);
-    let fileName = this.fileName + this.getFileType(typeOfFile);
-    let link = document.createElement('a');
-    link.download = fileName;
-    link.target = '_blank';
-    link.href = fileUrl;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-  }
-
-  private getFileType(typeOfFile: string){
-    switch (typeOfFile){
-      case 'application/pdf':
-        return '.pdf'
-      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-        return '.docx';
-      case 'application/msword':
-        return '.doc';
-      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-        return '.xlsx';
-      case 'application/vnd.ms-excel':
-        return '.xls';
-      default:
-        return '';
-    }
-  }
 
 
 
