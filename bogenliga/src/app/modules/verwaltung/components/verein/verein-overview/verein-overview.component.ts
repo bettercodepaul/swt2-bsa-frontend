@@ -165,7 +165,6 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
             })
           }).catch(e => console.log(e));
           ligaRegions.forEach(e => {
-            console.log(e);
             //Rekursive funktion um die allowedRegions zu filtern und Liste zu befüllen
             allowedRegions = this.findAllowedRegionsForVereine(e, allRegions, allowedRegions, seenRegions);
           })
@@ -196,16 +195,20 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
   }
 
   public findAllowedRegionsForVereine(parentRegionId, allRegions, allowedRegions, seenRegions): any {
-    if(!allowedRegions.includes(parentRegionId)){
+    if(!(allowedRegions.includes(parentRegionId))){
       allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
     }
 
-    allRegions.forEach(region => {
-      if (region.regionUebergeordnet === parentRegionId && !seenRegions.includes(region.id)) {
-        seenRegions.push(region.id);  // Vermeide Endlosschleifen
-        this.findAllowedRegionsForVereine(region.id, allRegions, allowedRegions, seenRegions);  // Rekursiver Aufruf für untergeordnete Region
-      }
+    this.regionProvider.findAll().then(region => {
+      region.payload.forEach(e => {
+        if (e.regionUebergeordnet === parentRegionId && !seenRegions.includes(e.id)) {
+          console.log(e.regionUebergeordnet);
+          seenRegions.push(e.id);  // Vermeide Endlosschleife
+          this.findAllowedRegionsForVereine(e.id, allRegions, allowedRegions, seenRegions);  // Rekursiver Aufruf für untergeordnete Region
+        }
+      })
     });
+    console.log("TTT "+ allowedRegions);
     return allowedRegions;
   }
 
