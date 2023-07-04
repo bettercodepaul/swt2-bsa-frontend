@@ -13,5 +13,8 @@ export class LigaDO implements VersionedDataObject {
   ligaVerantwortlichId: number;
   ligaVerantwortlichMail: string;
   ligaDetail: string;
+  ligaDetailFileBase64: string;
+  ligaDetailFileName: string;
+  ligaDetailFileType: string;
 
 }

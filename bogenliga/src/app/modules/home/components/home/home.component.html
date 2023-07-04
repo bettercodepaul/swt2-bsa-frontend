@@ -1,16 +1,16 @@
 <div id="homePage">
 
   <!--Welcome Page Title and paragraph-->
-  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasID">
+  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasLigaIDInUrl && (! hasLigaNameInUrl)">
     <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
     <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
   </div>
 
   <!--Ligadetail Page Title-->
-  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID" >
+  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasLigaIDInUrl || hasLigaNameInUrl" >
     <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
   </div>
-    
+
   <!--Wettkampftabelle-->
   <div class="container">
     <div class="calendar">
@@ -34,7 +34,7 @@
       <!--Block of Information-->
 
       <!--Welcome Page Information-->
-      <div class="flexChild" *ngIf="!hasID">
+      <div class="flexChild" *ngIf="!hasLigaIDInUrl && (! hasLigaNameInUrl)">
         <h2>Neues aus dem Bogensport</h2>
         <div class="news-container">
           <div class="flexChild">
@@ -49,13 +49,17 @@
       </div>
 
       <!--Ligadetail Page Information (Ligadetailes)-->
-      <div class="flexChild" *ngIf="hasID">
+      <div class="flexChild" *ngIf="hasLigaIDInUrl || hasLigaNameInUrl">
         <h2>Ligadetails</h2>
         <div class="news-container">
           <div class="flexChild">
             <div [innerHTML]="selectedLigaDetails"></div>
           </div>
         </div>
+
+        <!-- File Download -->
+        <button (click)="fileDownload()">DownloadFile</button>
+
 
         <!-- Button -->
         <div id="Button">
@@ -69,6 +73,14 @@
             name of the currently selected Liga displayed in button-->
 
             {{this.veranstaltung.name}}
+          </bla-actionbutton>
+
+          <bla-actionbutton
+            [id]="'deselectLigaButton'"
+            [color]= "ActionButtonColors.SECONDARY"
+            [iconClass]="zurStartseiteIcon"
+            (onClick)="deselect()">
+            {{ 'HOME.LIGADETAILES.BACK_TO_HOME' | translate }}
           </bla-actionbutton>
         </div>
       </div>
