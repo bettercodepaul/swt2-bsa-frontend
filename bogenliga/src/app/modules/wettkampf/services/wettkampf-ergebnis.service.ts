@@ -156,7 +156,7 @@ export class WettkampfErgebnisService {
         );
         this.wettkampfErgebnisse.push(wettkampfErgebnis);
       }
-    }
+
     this.matches = [];
     this.passen = [];
     return this.wettkampfErgebnisse;
