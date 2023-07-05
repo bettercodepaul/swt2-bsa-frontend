@@ -20,10 +20,9 @@
 
   <a id="navbar-header"
      routerLink="/home">
-    <h1>{{'NAVBAR.TITLE' | translate }}</h1>
+    <h1>{{'NAVBAR.TITLE' | translate }} &nbsp; {{getLigaName() | translate}}</h1>
   </a>
 
-  <h1>{{getLigaName() | translate}}</h1>
 
   <div *ngIf="(isOffline())"
      id="navbar-offline">
