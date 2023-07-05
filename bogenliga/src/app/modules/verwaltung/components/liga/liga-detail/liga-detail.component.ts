@@ -71,10 +71,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public id;
   private sessionHandling: SessionHandling;
 
-
-
-
-
   constructor(private ligaDataProvider: LigaDataProviderService,
               private regionProvider: RegionDataProviderService,
               private userProvider: UserProfileDataProviderService,
@@ -148,14 +144,11 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       this.currentLiga.regionId = this.currentRegion.id;
     }
 
-
     if (typeof this.currentDisziplin  === 'undefined') {
       this.currentLiga.disziplinId = null;
     } else {
       this.currentLiga.disziplinId = this.currentDisziplin.id;
     }
-
-
 
     if (typeof this.currentUser  === 'undefined') {
       this.currentLiga.ligaVerantwortlichId = null;
@@ -207,7 +200,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         }, (response: BogenligaResponse<LigaDO>) => {
           console.log('Failed');
           this.saveLoading = false;
-
 
         });
     // show response message
@@ -319,10 +311,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     myReader.readAsDataURL(file);
   }
 
-
-
-
-
   public onDelete(ignore: any): void {
     this.deleteLoading = true;
     this.notificationService.discardNotification();
@@ -387,7 +375,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.userProvider.findAll()
         .then( (response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess (response))
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure (response));
-
   }
 
   private handleSuccess(response: BogenligaResponse<LigaDO>) {
@@ -465,7 +452,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     }
     this.loading = false;
   }
-
 
   private handleDisziplinResponseArrayFailure(response: BogenligaResponse<DisziplinDTO[]>): void {
     this.allDisziplin = [];
