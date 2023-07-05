@@ -50,16 +50,15 @@ export class WettkampfErgebnisService {
 
     let Satz = null;
     const passenFil = this.passen.filter((passenFiltered) => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
+
     for (const passe of passenFil) {
         for (const i of passe.ringzahl) {
-          Satz += i;
+          if(passe.ringzahl[0] != null || passe.ringzahl[1] != null) {
+            Satz += i;
+          }
         }
     }
     return Satz;
-  }
-
-  public SatzergebnisPlatzhalter(){
-    return null;
   }
 
   public getSatzpunkte(nr: number): string {
@@ -137,28 +136,6 @@ export class WettkampfErgebnisService {
 
     this.wettkampfErgebnisse = [];
     for (let i = 0; i < this.matches.length ; i = i + 2) {
-      if(this.getMannschaftsname(this.matches[i].mannschaftId).includes("Platzhalter")
-        || this.getMannschaftsname(this.matches[i+1].mannschaftId).includes("Platzhalter")){
-        const wettkampfErgebnis = new WettkampfErgebnis (
-          this.matches[i].nr,
-          this.matches[i].wettkampfId,
-          this.getMannschaftsname(this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
-          this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
-          this.SatzergebnisPlatzhalter(),
-          this.SatzergebnisPlatzhalter(),
-          this.getMannschaftsname(this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
-          this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
-          this.SatzergebnisPlatzhalter(),
-          this.SatzergebnisPlatzhalter(),
-          this.getSatzpunkte(i),
-          this.getMatchpunkte(i)
-        );
-        this.wettkampfErgebnisse.push(wettkampfErgebnis);
-      }else {
         const wettkampfErgebnis = new WettkampfErgebnis(
           this.matches[i].nr,
           this.matches[i].wettkampfId,
