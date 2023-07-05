@@ -330,6 +330,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
      })
 
     });
+    if(this.providedID != null || this.providedID != undefined)
+      this.veranstaltungWettkaempfeDO.filter(veranstaltung => veranstaltung.veranstaltungDO.ligaId === this.providedID);
   }
 
   private numberToMonth(m:number):string{
