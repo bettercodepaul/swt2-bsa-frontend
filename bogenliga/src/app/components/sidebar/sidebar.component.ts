@@ -100,7 +100,7 @@ export class SidebarComponent implements OnInit {
     } else if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
       result =  result + '/'+ this.ligaID.toString();
     }
-      this.selectedLigaDataprovider.setSelectedLigaID(ligaID);
+      this.selectedLigaDataprovider.setSelectedLigaID(this.ligaID);
       return result;
     }
 

@@ -53,6 +53,7 @@ export class NavbarComponent implements OnInit, DoCheck {
 
   ngDoCheck () {
     this.providedID = this.selectedLigaDataprovider.getSelectedLigaID();
+    console.log("Id ==============", this.providedID)
 
 
       if (this.providedID) {
@@ -105,7 +106,11 @@ private async loadLigaName(ligaID: number) {
 .catch()
 }
   private setLigaName(response: BogenligaResponse<LigaDO>) : void {
-    this.ligaName = response.payload.name;
+    if(this.providedID) {
+      this.ligaName = response.payload.name;
+    } else {
+      this.ligaName = "";
+    }
     //console.log("Liga name = " + this.ligaName)
   }
 
