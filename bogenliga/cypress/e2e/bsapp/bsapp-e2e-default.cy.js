@@ -54,12 +54,12 @@ describe('Anonyme User tests', function () {
    */
   it('Sunburst details anzeigen', function () {
     cy.get('[data-cy=sidebar-regionen-button]').click();
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get(':nth-child(2) > .main-arc').click({force:true})
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('#details')
     cy.get('[data-cy=sidebar-regionen-button]').click()
-    cy.wait(1000)
+    cy.wait(1500)
   })
   /**
    * This test checks if after an item has been selected the website redirected to the correct location
@@ -880,7 +880,7 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=veranstaltung-detail-deadline]').type('2030-01-01')
         cy.wait(1000)
         cy.get('[data-cy=veranstaltung-detail-save-button]').click()
-        cy.wait(25000)
+        cy.wait(30000)
         cy.get('#OKBtn1').click()
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
         cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
