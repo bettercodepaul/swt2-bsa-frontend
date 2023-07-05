@@ -69,13 +69,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   private sessionHandling: SessionHandling;
 
 
-  //FileUpload
-
-  public fileName = '';
-
-
-
-
   constructor(private ligaDataProvider: LigaDataProviderService,
               private regionProvider: RegionDataProviderService,
               private userProvider: UserProfileDataProviderService,
@@ -144,19 +137,30 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       this.currentLiga.regionId = this.currentRegion.id;
     }
 
-
     if (typeof this.currentDisziplin  === 'undefined') {
       this.currentLiga.disziplinId = null;
     } else {
       this.currentLiga.disziplinId = this.currentDisziplin.id;
     }
 
-
-
     if (typeof this.currentUser  === 'undefined') {
       this.currentLiga.ligaVerantwortlichId = null;
     } else {
       this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
+    }
+
+
+    if(this.currentLiga.name.includes("_")){
+      this.notificationService.showNotification({
+        id: 'MaxWordsWarning',
+        description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.DESCRIPTION',
+        title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.TITLE',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
+      return
     }
 
     // persist
@@ -190,7 +194,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         }, (response: BogenligaResponse<LigaDO>) => {
           console.log('Failed');
           this.saveLoading = false;
-
 
         });
     // show response message
@@ -272,7 +275,26 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     }
   }
 
+  
 
+
+  // File Upload button, converts selected files to Base64 String
+  public convertFileToBase64($event): void {
+    this.readThis($event.target);
+  }
+
+  public readThis(inputValue: any): void {
+    const file: File = inputValue.files[0];
+    this.currentLiga.ligaDetailFileType = file.type;
+    this.currentLiga.ligaDetailFileName = file.name
+    const myReader: FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.currentLiga.ligaDetailFileBase64 = String(myReader.result);
+    };
+
+    myReader.readAsDataURL(file);
+  }
 
 
   public onDelete(ignore: any): void {
@@ -339,7 +361,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.userProvider.findAll()
         .then( (response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess (response))
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure (response));
-
   }
 
   private handleSuccess(response: BogenligaResponse<LigaDO>) {
@@ -417,7 +438,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     }
     this.loading = false;
   }
-
 
   private handleDisziplinResponseArrayFailure(response: BogenligaResponse<DisziplinDTO[]>): void {
     this.allDisziplin = [];
