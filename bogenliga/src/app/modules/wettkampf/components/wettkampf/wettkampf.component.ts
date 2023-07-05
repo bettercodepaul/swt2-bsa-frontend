@@ -105,7 +105,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
    *  be logged out automatically.
    */
-  public onMouseOver() {
+  public onMouseOver(event: any) {
     const isExpired = this.sessionHandling.checkSessionExpired();
     if (isExpired) {
       window.location.reload();
