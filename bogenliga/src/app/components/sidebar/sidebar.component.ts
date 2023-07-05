@@ -13,6 +13,7 @@ import {OnOfflineService} from '@shared/services';
 import {SelectedLigaDataprovider} from '../../modules/shared/data-provider/SelectedLigaDataprovider'
 
 
+
 const ID_PATH_PARAM = 'id';
 export var ligaID: number;
 
@@ -85,6 +86,7 @@ export class SidebarComponent implements OnInit {
           this.ligaID = parseInt(this.URLRoute.substring(lastSlashIndex + 1));
           break;
         }
+
       }
 
     if (detailType === 'undefined') {
@@ -100,11 +102,11 @@ export class SidebarComponent implements OnInit {
     } else if(this.ligaID != undefined && route.startsWith("/ligatabelle")){
       result =  result + '/'+ this.ligaID.toString();
     }
-      this.selectedLigaDataprovider.setSelectedLigaID(ligaID);
-      return result;
+
+    this.selectedLigaDataprovider.setSelectedLigaID(this.ligaID);
+
+    return result;
     }
-
-
 
 
   public getSidebarCollapseIcon(): string {
