@@ -24,6 +24,7 @@ import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {RegionDataProviderService} from '@verwaltung/services/region-data-provider.service';
 import * as VereinDetailComponent from '@verwaltung/components/verein/verein-detail/verein-detail.component';
+import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 
 export const NOTIFICATION_DELETE_VEREINE = 'vereine_overview_delete';
 const PLATZHALTER_ID = 99;
@@ -48,7 +49,8 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
     private onOfflineService: OnOfflineService,
     private userDataProviderService: UserDataProviderService,
     private vereinProvider: VereinDataProviderService,
-    private regionProvider: RegionDataProviderService,)
+    private regionProvider: RegionDataProviderService,
+    private ligaProvider: LigaDataProviderService,)
   {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -135,66 +137,58 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
     }
   }
 
-  private loadTableRows() {
+  private async loadTableRows() {
     let currentUserId = this.currentUserService.getCurrentUserID();
-    this.userDataProviderService.findUserRoleById(currentUserId).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+    await this.userDataProviderService.findUserRoleById(currentUserId).then(async (roleresponse: BogenligaResponse<UserRolleDO[]>) => {
       let isLigaleiter = false;
       if (roleresponse.payload.filter(role => role.roleName == 'LIGALEITER').length > 0)
         isLigaleiter = true;
 
-      if(isLigaleiter == true){
-
-        let myVereinId = this.currentUserService.getVerein(); //Aktueller Verein des eingeloggten Users
-        this.vereinProvider.findById(myVereinId).then((response: BogenligaResponse<VereinDO>) => {
-          let myVereinRegionId = response.payload.regionId;
-          let allRegions: any[]= [];
-          let allowedRegions: any[]= [];
+      if (isLigaleiter == true) {
+        let ligaRegions: any[] = [];
+        await this.ligaProvider.findAll().then(async (data) => {
+          data.payload.forEach(e => {
+            if (e.ligaVerantwortlichId === currentUserId) {
+              ligaRegions.push(e.regionId);
+            }
+          })
+          let allowedRegions: any[] = [];
           let seenRegions: any[] = [];
 
-          //Alle Regionen in Liste schreiben
-          this.regionProvider.findAll().then((regions: BogenligaResponse<RegionDO[]>) => {
-            regions.payload.forEach((e) => {
-              allRegions.push(e.id);
-
-            })
-          }).catch(e => console.log(e));
-          //Rekursive funktion um die allowedRegions zu filtern und Liste zu befüllen
-          allowedRegions = this.findAllowedRegionsForVereine(myVereinRegionId, allRegions, allowedRegions, seenRegions);
-
+          // Erzeuge ein Array von Promises für alle rekursiven Aufrufe
+          const recursivePromises = ligaRegions.map(e =>
+            this.findAllowedRegionsForVereine(e, allowedRegions, seenRegions)
+          );
+          // Warte auf den Abschluss aller rekursiven Aufrufe
+          await Promise.all(recursivePromises);
           //Erlaubte Vereine in die Liste schreiben
-          this.vereinProvider.findAll().then((value) => {
+          await this.vereinProvider.findAll().then((value) => {
             let filteredVereine = value.payload.filter((f) => {
-              return allowedRegions.includes(f.regionId)
+              return allowedRegions.includes(f.regionId);
             })
             this.handleLoadTableRowsSuccessVereine(filteredVereine);
-
-
-          }).catch(e => console.log(e))
-
+          }).catch(e => console.log(e));
         }).catch(err => console.log(err));
-      }else{
-        this.vereinDataProvider.findAll()
-            .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
-            .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
+      } else {
+        await this.vereinDataProvider.findAll()
+                  .then((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsSuccess(response))
+                  .catch((response: BogenligaResponse<VereinDTO[]>) => this.handleLoadTableRowsFailure(response));
       }
-
-
-
     }).catch(err => console.log(err))
-        .finally(() => this.loading = false);
-
-
+              .finally(() => this.loading = false);
   }
 
-  public findAllowedRegionsForVereine(parentRegionId, allRegions, allowedRegions, seenRegions): any {
-    allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
+  public async findAllowedRegionsForVereine(parentRegionId, allowedRegions, seenRegions): Promise<any> {
+    if (!(allowedRegions.includes(parentRegionId))) {
+      allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
+    }
+    const region = await this.regionProvider.findAll();
+    const subRegions = region.payload.filter(e => e.regionUebergeordnet === parentRegionId && !seenRegions.includes(e.id));
+    const recursivePromises = subRegions.map(e =>
+      this.findAllowedRegionsForVereine(e.id, allowedRegions, seenRegions)
+    );
 
-    allRegions.forEach(region => {
-      if (region.regionUebergeordnet === parentRegionId && !seenRegions.includes(region.id)) {
-        seenRegions.push(region.id);  // Vermeide Endlosschleifen
-        this.findAllowedRegionsForVereine(region.id, allRegions, allowedRegions, seenRegions);  // Rekursiver Aufruf für untergeordnete Region
-      }
-    });
+    await Promise.all(recursivePromises);
     return allowedRegions;
   }
 

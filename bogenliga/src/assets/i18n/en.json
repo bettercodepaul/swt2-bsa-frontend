@@ -562,8 +562,8 @@
     "TITLE": "Administration",
     "NAVIGATION": {
       "DSBMITGLIEDER": {
-        "LABEL": "DSB members",
-        "DESCRIPTION": "Management of DSB members"
+        "LABEL": "Association members",
+        "DESCRIPTION": "Management of association members"
       },
       "BENUTZER": {
         "LABEL": "User",
@@ -638,7 +638,7 @@
       }
     },
     "DSBMANNSCHAFT": {
-      "TITLE": "DSB Teams - Overview",
+      "TITLE": "Association Teams - Overview",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -649,13 +649,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Team",
+          "TITLE": "Delete Association Team",
           "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
         }
       }
     },
     "DSBMANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Teams - Details",
+      "TITLE": "Association Teams - Details",
       "FORM": {
         "DSBVEREINNUMMER": {
           "LABEL": "Club-number",
@@ -675,13 +675,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Team",
+          "TITLE": "Delete Association Team",
           "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
         }
       }
     },
     "DSBMITGLIEDER": {
-      "TITLE": "DSB Members - Overview",
+      "TITLE": "Association Members - Overview",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -693,8 +693,8 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Member",
-          "DESCRIPTION": "Are you sure, you want to delete the DSB Member with ID=%s? This can not be undone."
+          "TITLE": "Delete Association Member",
+          "DESCRIPTION": "Are you sure, you want to delete the Association Member with ID=%s? This can not be undone."
         },
         "DELETE_PLATZHALTER_MITGLIED": {
           "TITLE": "Delete Placeholder club DSB Member",
@@ -966,7 +966,7 @@
       }
     },
     "MANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Team - Details",
+      "TITLE": "Association Team - Details",
       "FORM": {
         "MANNSCHAFT_NAME": {
           "LABEL": "Team name",
@@ -1101,7 +1101,7 @@
       }
     },
     "DSBMITGLIEDER_DETAIL": {
-      "TITLE": "DSB Member - Details",
+      "TITLE": "Association Member - Details",
       "FORM": {
         "VORNAME": {
           "LABEL": "first name",
@@ -1144,20 +1144,20 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB member",
-          "DESCRIPTION": "Are you sure, you want to delete the DSB member with ID=%s? This can not be undone."
+          "TITLE": "Delete Association member",
+          "DESCRIPTION": "Are you sure, you want to delete the association member with ID=%s? This can not be undone."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Success",
-          "DESCRIPTION": "Successfully deleted DSB member."
+          "DESCRIPTION": "Successfully deleted association member."
         },
         "DELETE_FAILURE": {
           "TITLE": "Error while deleting",
-          "DESCRIPTION": "Could not delete DSB member."
+          "DESCRIPTION": "Could not delete association member."
         },
         "SAVE": {
           "TITLE": "Success",
-          "DESCRIPTION": "Successfully saved DSB member."
+          "DESCRIPTION": "Successfully saved association member."
         },
         "DUPLICATE": {
           "TITLE": "Failed to add",
