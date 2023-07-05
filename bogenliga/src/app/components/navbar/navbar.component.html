@@ -18,11 +18,15 @@
       style="width:4.8em;">
   </a>
 
+  <div *ngIf="!hasID">
   <a id="navbar-header"
      routerLink="/home">
-    <h1>{{'NAVBAR.TITLE' | translate }} &nbsp; {{getLigaName() | translate}}</h1>
+    <h1>{{'NAVBAR.TITLE' | translate }}</h1>
   </a>
-
+  </div>
+  <div *ngIf="hasID">
+      <h1>{{getLigaName() | translate}}</h1>
+  </div>
 
   <div *ngIf="(isOffline())"
      id="navbar-offline">

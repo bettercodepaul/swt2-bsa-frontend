@@ -51,24 +51,9 @@ export class NavbarComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
-    /*this.route.params.subscribe((params) => {
-      if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-      } else {
-        console.log('no params at ligatabelle');
-        //this.router.navigate(['/ligatabelle/ligaid']);
-      }
-      if (this.providedID) {
-        this.hasID = true;
 
-      } else {
-        this.hasID = false;
-      }
-      console.log("Liga ID", this.providedID)
-      this.hasID ? this.loadLigaName(this.providedID) : null;
-    });*/
 
-    this.selectedLigaDataprovider.getSelectedLigaID()
+
   }
 
   ngDoCheck () {
@@ -87,8 +72,9 @@ export class NavbarComponent implements OnInit, DoCheck {
 
       } else {
         this.hasID = false;
+        this.ligaName = "";
       }
-
+      console.log("ID", this.providedID)
 
       this.hasID ? this.loadLigaName(this.providedID) : null;
     }

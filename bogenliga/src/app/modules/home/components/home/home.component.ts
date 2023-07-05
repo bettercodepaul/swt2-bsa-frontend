@@ -159,7 +159,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       //checking if url has parameter
       if (!isUndefined(params[ID_PATH_PARAM])) {
 
-        this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
+        //this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
         const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
 
         //check if url has number or liganame
