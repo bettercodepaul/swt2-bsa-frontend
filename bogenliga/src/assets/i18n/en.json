@@ -263,7 +263,7 @@
         },
         "SCHUETZENNUMMER": {
           "TITLE": "Input error - saving canceled",
-          "DESCRIPTION": "Please enter all marksman numbers."
+          "DESCRIPTION": "The marksman has already participated on this competition day in a different league."
         },
         "SCHUETZENEINDEUTIG": {
           "TITLE": "Input error - saving canceled",
