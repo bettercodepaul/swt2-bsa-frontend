@@ -9,7 +9,7 @@ export class MatchDOExt implements DataObject {
   wettkampfId: number;
   nr: number;
   begegnung: number;
-  scheibenNummer: number;
+  matchScheibennummer: number;
   wettkampfTag: number;
   wettkampfTyp: string;
   sumSatz: Array<number>;
@@ -26,7 +26,7 @@ export class MatchDOExt implements DataObject {
               wettkampfId?: number,
               matchNr?: number,
               begegnung?: number,
-              scheibennummer?: number,
+              matchScheibennummer?: number,
               sumSatz?: Array<number>,
               matchpunkte?: number,
               satzpunkte?: number,
@@ -40,7 +40,7 @@ export class MatchDOExt implements DataObject {
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
     this.nr = matchNr;
     this.begegnung = begegnung;
-    this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
+    this.matchScheibennummer = !!matchScheibennummer ? matchScheibennummer : null;
     this.sumSatz = !!sumSatz ? sumSatz : [5];
     this.matchpunkte = matchpunkte;
     this.satzpunkte = satzpunkte;
