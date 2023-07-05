@@ -58,6 +58,10 @@ export class WettkampfErgebnisService {
     return Satz;
   }
 
+  public SatzergebnisPlatzhalter(){
+    return null;
+  }
+
   public getSatzpunkte(nr: number): string {
 
     let satzpunkte1 = '-';
@@ -133,25 +137,48 @@ export class WettkampfErgebnisService {
 
     this.wettkampfErgebnisse = [];
     for (let i = 0; i < this.matches.length ; i = i + 2) {
-      const wettkampfErgebnis = new WettkampfErgebnis (
-        this.matches[i].nr,
-        this.matches[i].wettkampfId,
-        this.getMannschaftsname(this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 3, this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 4, this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 5, this.matches[i].mannschaftId),
-        this.getMannschaftsname(this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 4, this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 5, this.matches[i + 1].mannschaftId),
-        this.getSatzpunkte(i),
-        this.getMatchpunkte(i)
-      );
-      this.wettkampfErgebnisse.push(wettkampfErgebnis);
+      if(this.getMannschaftsname(this.matches[i].mannschaftId).includes("Platzhalter")
+        || this.getMannschaftsname(this.matches[i+1].mannschaftId).includes("Platzhalter")){
+        const wettkampfErgebnis = new WettkampfErgebnis (
+          this.matches[i].nr,
+          this.matches[i].wettkampfId,
+          this.getMannschaftsname(this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
+          this.SatzergebnisPlatzhalter(),
+          this.SatzergebnisPlatzhalter(),
+          this.getMannschaftsname(this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
+          this.SatzergebnisPlatzhalter(),
+          this.SatzergebnisPlatzhalter(),
+          this.getSatzpunkte(i),
+          this.getMatchpunkte(i)
+        );
+        this.wettkampfErgebnisse.push(wettkampfErgebnis);
+      }else {
+        const wettkampfErgebnis = new WettkampfErgebnis(
+          this.matches[i].nr,
+          this.matches[i].wettkampfId,
+          this.getMannschaftsname(this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 3, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 4, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 5, this.matches[i].mannschaftId),
+          this.getMannschaftsname(this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 4, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 5, this.matches[i + 1].mannschaftId),
+          this.getSatzpunkte(i),
+          this.getMatchpunkte(i)
+        );
+        this.wettkampfErgebnisse.push(wettkampfErgebnis);
+      }
     }
     this.matches = [];
     this.passen = [];
