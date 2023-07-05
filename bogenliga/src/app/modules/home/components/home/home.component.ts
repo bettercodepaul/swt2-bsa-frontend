@@ -24,6 +24,7 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 import {LigaDataProviderService} from '@verwaltung/services/liga-data-provider.service';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
+import {element} from 'protractor';
 import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
 
 //for notification
@@ -36,7 +37,6 @@ import {
   OnOfflineService,
   NotificationService
 } from '@shared/services';
-
 
 
 const ID_PATH_PARAM = 'id';
@@ -332,6 +332,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     });
     if(this.providedID != null || this.providedID != undefined)
       this.veranstaltungWettkaempfeDO.filter(veranstaltung => veranstaltung.veranstaltungDO.ligaId === this.providedID);
+    this.veranstaltungWettkaempfeDO.sort((a,b) => Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum));
   }
 
   private numberToMonth(m:number):string{
