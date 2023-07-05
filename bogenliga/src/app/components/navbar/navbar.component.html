@@ -23,6 +23,8 @@
     <h1>{{'NAVBAR.TITLE' | translate }}</h1>
   </a>
 
+  <h1>{{getLigaName() | translate}}</h1>
+
   <div *ngIf="(isOffline())"
      id="navbar-offline">
     <h3>OFFLINE</h3>

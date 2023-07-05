@@ -10,4 +10,6 @@ export interface OfflineVeranstaltung {
   ligaleiterId: number;
   ligaId: number;
   phase: string;
+
+  groesse: number;
 }

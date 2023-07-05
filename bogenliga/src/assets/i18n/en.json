@@ -43,6 +43,10 @@
       "BOX1HEADING": "STUDENT CUP 2018",
       "BOX1CONTENT": "Be there..."
     },
+    "LIGADETAILES": {
+      "IDWARNING": "Wrong Liga ID",
+      "DESCRIPTION": "No valid league ID could be read from the URL"
+    },
     "IMPRESSUM": {
       "TITLE": "Imprint"
     }
@@ -558,8 +562,8 @@
     "TITLE": "Administration",
     "NAVIGATION": {
       "DSBMITGLIEDER": {
-        "LABEL": "DSB members",
-        "DESCRIPTION": "Management of DSB members"
+        "LABEL": "Association members",
+        "DESCRIPTION": "Management of association members"
       },
       "BENUTZER": {
         "LABEL": "User",
@@ -634,7 +638,7 @@
       }
     },
     "DSBMANNSCHAFT": {
-      "TITLE": "DSB Teams - Overview",
+      "TITLE": "Association Teams - Overview",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -645,13 +649,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Team",
+          "TITLE": "Delete Association Team",
           "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
         }
       }
     },
     "DSBMANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Teams - Details",
+      "TITLE": "Association Teams - Details",
       "FORM": {
         "DSBVEREINNUMMER": {
           "LABEL": "Club-number",
@@ -671,13 +675,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Team",
+          "TITLE": "Delete Association Team",
           "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
         }
       }
     },
     "DSBMITGLIEDER": {
-      "TITLE": "DSB Members - Overview",
+      "TITLE": "Association Members - Overview",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -689,8 +693,8 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Member",
-          "DESCRIPTION": "Are you sure, you want to delete the DSB Member with ID=%s? This can not be undone."
+          "TITLE": "Delete Association Member",
+          "DESCRIPTION": "Are you sure, you want to delete the Association Member with ID=%s? This can not be undone."
         }
       }
     },
@@ -801,6 +805,12 @@
           "TITLE": "Delete club",
           "DESCRIPTION": "Are you sure, you want to delete the club with ID=%s? This can not be undone."
         }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Delete fill in club",
+          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
+        }
       }
     },
     "VEREIN_DETAIL": {
@@ -813,7 +823,7 @@
         },
         "VEREIN_IDENTIFIER": {
           "LABEL": "Club number",
-          "PLACEHOLDER": "Please enter a identifier for the club",
+          "PLACEHOLDER": "Please enter an identifier for the club",
           "ERROR": "Please enter a valid identifier."
         },
         "VEREIN_REGION": {
@@ -872,6 +882,12 @@
         "SAVE_FAILURE": {
           "TITLE": "Error while saving",
           "DESCRIPTION": "Sports director has no authority over this club or this target region."
+        }
+      },
+      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+        "DELETE": {
+          "TITLE": "Delete fill in club",
+          "DESCRIPTION": "Are you sure, want to delete this club? This can not be undone. ATTENTION! It will no longer be possible to create a fill in team!"
         }
       }
     },
@@ -942,7 +958,7 @@
       }
     },
     "MANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Team - Details",
+      "TITLE": "Association Team - Details",
       "FORM": {
         "MANNSCHAFT_NAME": {
           "LABEL": "Team name",
@@ -1010,6 +1026,14 @@
         "NO_LICENSE": {
           "TITLE": "Error while downloading",
           "DESCRIPTION": "Could not download licence, because there is none available for this marksman."
+        },
+        "UPDATE": {
+          "FAILURE": {
+            "FULL": {
+              "TITLE": "Event already fully booked: Unable to update roster",
+              "DESCRIPTION": "Due to the event being already fully booked, we regret to inform you that updating the participant list is currently not possible."
+            }
+          }
         }
       }
     },
@@ -1069,7 +1093,7 @@
       }
     },
     "DSBMITGLIEDER_DETAIL": {
-      "TITLE": "DSB Member - Details",
+      "TITLE": "Association Member - Details",
       "FORM": {
         "VORNAME": {
           "LABEL": "first name",
@@ -1112,20 +1136,20 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB member",
-          "DESCRIPTION": "Are you sure, you want to delete the DSB member with ID=%s? This can not be undone."
+          "TITLE": "Delete Association member",
+          "DESCRIPTION": "Are you sure, you want to delete the association member with ID=%s? This can not be undone."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Success",
-          "DESCRIPTION": "Successfully deleted DSB member."
+          "DESCRIPTION": "Successfully deleted association member."
         },
         "DELETE_FAILURE": {
           "TITLE": "Error while deleting",
-          "DESCRIPTION": "Could not delete DSB member."
+          "DESCRIPTION": "Could not delete association member."
         },
         "SAVE": {
           "TITLE": "Success",
-          "DESCRIPTION": "Successfully saved DSB member."
+          "DESCRIPTION": "Successfully saved association member."
         },
         "DUPLICATE": {
           "TITLE": "Failed to add",

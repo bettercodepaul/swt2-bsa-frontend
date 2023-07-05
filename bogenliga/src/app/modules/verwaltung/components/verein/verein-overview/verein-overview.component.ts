@@ -77,30 +77,51 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
 
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_VEREINE + id,
-      title:            'MANAGEMENT.VEREINE.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.VEREINE.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
+    if(id == 9999) {
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_VEREINE + id,
+        title:            'MANAGEMENT.VEREINE.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.TITLE',
+        description:      'MANAGEMENT.VEREINE.NOTIFICATION_AUFFUELLMANNSCHAFT.DELETE.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREINE + id)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.rows = hideLoadingIndicator(this.rows, id);
+            }
+          });
+      this.notificationService.showNotification(notification);
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREINE + id)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.vereinDataProvider.deleteById(id)
-                .then((response) => this.loadTableRows())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.rows = hideLoadingIndicator(this.rows, id);
-          }
-        });
+    }
+    else {
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_VEREINE + id,
+        title:            'MANAGEMENT.VEREINE.NOTIFICATION.DELETE.TITLE',
+        description:      'MANAGEMENT.VEREINE.NOTIFICATION.DELETE.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.PENDING
+      };
 
-    this.notificationService.showNotification(notification);
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_VEREINE + id)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.vereinDataProvider.deleteById(id)
+                  .then((response) => this.loadTableRows())
+                  .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
+            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.rows = hideLoadingIndicator(this.rows, id);
+            }
+          });
 
+      this.notificationService.showNotification(notification);
+    }
   }
 
   private loadTableRows() {
