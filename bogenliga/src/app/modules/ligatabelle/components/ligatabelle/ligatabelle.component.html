@@ -21,7 +21,7 @@
                                selectionListHeight="3em">
 
             </bla-selectionlist>
-          </table>
+        </table>
         <div>
           <h5><a class="blackLink"
           >{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.VERANSTALTUNG' | translate }}</a></h5>
@@ -77,14 +77,6 @@
             {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
             {{ selectedVeranstaltungName}}
           </bla-actionbutton>
-
-          <bla-actionbutton
-            [id]="'goToLigadetailsButton'"
-            [color]= "ActionButtonColors.PRIMARY"
-            [iconClass]="zuDenLigadetailsIcon"
-            (onClick)="goToLigaDetails()">
-            {{ 'WETTKAEMPFE.LIGATABELLE.GOTO_LIGADETAILS' | translate }}
-          </bla-actionbutton>
         </div>
         <div class="col-sm-9">
           <div class="invalid-feedback">
@@ -95,14 +87,12 @@
       </bla-row-layout>
 
       <bla-actionbutton
-        [id]="'deselectLigaButton'"
+        [id]="'regionSaveButton'"
         [color]= "ActionButtonColors.SECONDARY"
         [iconClass]="zuruecksetzenIcon"
         (onClick)="deselect()">
-        {{ 'WETTKAEMPFE.LIGATABELLE.RESET_LIGASELECTION' | translate }}
+        Auswahl zurücksetzen
       </bla-actionbutton>
-
-
 
     </div>
   </div>
