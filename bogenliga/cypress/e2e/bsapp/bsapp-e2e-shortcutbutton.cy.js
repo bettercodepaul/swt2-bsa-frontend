@@ -2,29 +2,33 @@
 describe('Shortcut buttons appear on login with different roles', () => {
 
   it('Shortcut buttons appear on Login as Ligaleiter', () => {
-    cy.visit('http://localhost:4200/');
 
-    cy.dismissModal();
+    cy.visit('http://localhost:4200/#/user/login')
 
-    cy.contains('button.btn.btn-primary.btn-sm', 'Login für Team Ligaleiter').click();
+    cy.get('input#loginEmail').type('HSRT-Test@bogenliga.de')
+
+    cy.get('input#loginPassword').type('mki4HSRT')
+
+    cy.get('button#loginButton').click()
 
     cy.url().should('include', '/home');
 
-    cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/veranstaltung/add"]').click();
+    cy.get('[data-cy="shortcut-btn-Veranstaltung-anlegen"]').click();
 
     cy.url().should('include', '/verwaltung/veranstaltung/add');
+
     cy.go('back');
 
     cy.url().should('include', '/home');
 
-    cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/wkdurchfuehrung"]').click();
+    cy.get('[data-cy="shortcut-btn-Wettkampf--durchführung"]').click();
 
     cy.url().should('include', '/wkdurchfuehrung');
     cy.go('back');
 
     cy.url().should('include', '/home');
 
-    cy.get('button.shortcut-btn[routerlinkactive="active"][ng-reflect-router-link="/verwaltung/vereine"]').click();
+    cy.get('[data-cy="shortcut-btn-Vereinsübersicht"]').click();
 
     cy.url().should('include', '/verwaltung/vereine');
     cy.go('back');
@@ -36,44 +40,45 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
 
   it('Shortcutbuttons appear on Login as Sportleiter/Mannschaftsführer', () => {
-    cy.visit('http://localhost:4200/');
+    cy.visit('http://localhost:4200/#/user/login');
 
-    cy.dismissModal();
+    cy.get('input#loginEmail').type('HSRT-Test3@bogenliga.de')
+
+    cy.get('input#loginPassword').type('mki4HSRT')
+
+    cy.get('button#loginButton').click()
 
     cy.get('[data-cy="login-button"]').click()
 
-    cy.dismissModal();
 
-    cy.contains('button.btn.btn-primary.btn-sm', 'Login für Team Sportleiter').click();
-
+    
     cy.get(':nth-child(1) > .Button > .shortcut-btn').click();
-
-    cy.dismissModal();
 
     cy.go('back');
 
-    cy.get(':nth-child(2) > .Button > .shortcut-btn').click();
+    cy.get('[data-cy="shortcut-btn-Vereinsmitglied-anlegen"]').click();
+
+    cy.go('back');
+
+    cy.get('[data-cy="shortcut-btn-Vereinsmitglieder-verwalten"]').click();
 
     cy.logout()
   });
 
-  it.only('Shortcutbuttons appear on Login as Kampfrichter',  () => {
+  it('Shortcutbuttons appear on Login as Kampfrichter',  () => {
+    cy.visit('http://localhost:4200/#/user/login');
 
-    cy.loginAdmin();
 
-    cy.createUserTest();
+cy.get('input#loginEmail').type('HSRT-Test4@bogenliga.de')
 
-    cy.visit('http://localhost:4200/#/verwaltung/user');
+cy.get('input#loginPassword').type('mki4HSRT')
 
-    cy.assignRoleToTestUser("KAMPFRICHTER");
+cy.get('button#loginButton').click()
 
-    cy.logout();
-
-    cy.loginUserTest();
 
     cy.url().should('include', '/home');
 
-    cy.get(':nth-child(1) > .Button > .shortcut-btn').click()
+    cy.get('[data-cy="shortcut-btn-Wettkampf--durchführung"]').click();
 
     cy.url().should('include', '/wkdurchfuehrung');
 
@@ -81,31 +86,21 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.logout();
 
-    cy.visit('http://localhost:4200/#/user/login');
-
-    cy.dismissModal();
-
-    cy.deleteTestUser();
 
   })
 
   it('Shortcutbuttons appear on Login as Ausrichter',  () => {
 
-    cy.loginAdmin();
 
-    cy.createUserTest();
+    cy.visit('http://localhost:4200/#/user/login');
 
-    cy.visit('http://localhost:4200/#/verwaltung/user');
+    cy.get('input#loginEmail').type('HSRT-Test@bogenliga.de')
 
-    cy.assignRoleToTestUser("AUSRICHTER");
+    cy.get('input#loginPassword').type('mki4HSRT')
 
-    cy.logout();
+    cy.get('button#loginButton').click()
 
-    cy.loginUserTest();
-
-    cy.url().should('include', '/home');
-
-    cy.get(':nth-child(1) > .Button > .shortcut-btn').click();
+    cy.get('[data-cy="shortcut-btn-Veranstaltung-anlegen"]').click();
 
     cy.url().should('include', '/verwaltung/veranstaltung');
 
@@ -113,7 +108,7 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.url().should('include', '/home');
 
-    cy.get(':nth-child(2) > .Button > .shortcut-btn').click();
+    cy.get('[data-cy="shortcut-btn-Wettkampf--durchführung"]').click();
 
     cy.url().should('include', '/wkdurchfuehrung');
 
@@ -122,12 +117,6 @@ describe('Shortcut buttons appear on login with different roles', () => {
     cy.url().should('include', '/home');
 
     cy.logout();
-
-    cy.visit('http://localhost:4200/#/user/login');
-
-    cy.dismissModal();
-
-    cy.deleteTestUser();
   });
 
 });
