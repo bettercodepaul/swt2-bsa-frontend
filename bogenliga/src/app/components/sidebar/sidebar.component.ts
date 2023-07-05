@@ -104,7 +104,9 @@ export class SidebarComponent implements OnInit {
       result =  result + '/'+ this.ligaID.toString();
     }
 
-      return result;
+    this.selectedLigaDataprovider.setSelectedLigaID(this.ligaID);
+
+    return result;
     }
 
 

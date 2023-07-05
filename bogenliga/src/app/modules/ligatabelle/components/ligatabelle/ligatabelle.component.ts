@@ -104,9 +104,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
           params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
           this.selectedYearForVeranstaltung != undefined && this.hasID
             ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
-          this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
+          //this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
 
         } else {
+
           console.log('no params at ligatabelle');
           this.router.navigate(['/ligatabelle/ligaid']);
         }
