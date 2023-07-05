@@ -738,6 +738,14 @@
         "DELETE": {
           "TITLE": "Vereinsmitglieder löschen",
           "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_PLATZHALTER_MITGLIED": {
+          "TITLE": "Platzhalter DSB Mitglied löschen",
+          "DESCRIPTION": "Sie können diesen Schützen nicht löschen."
+        },
+        "EDIT_PLATZHALTER_MITGLIED": {
+          "TITLE": "Platzhalter DSB Mitglied bearbeiten",
+          "DESCRIPTION": "Sie können diesen Schützen nicht bearbeiten."
         }
       }
     },
@@ -854,10 +862,10 @@
           "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? Der Verein ist danach nicht mehr verfügbar."
         }
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Verein Auffüllmannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
+          "TITLE": "Verein Platzhalter löschen",
+          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Platzhalter benötigt."
         }
       }
     },
@@ -938,7 +946,7 @@
         "UPDATE":  {
           "FAILURE": {
             "FULL": {
-              "TITLE": "Veranstaltung bereits ausgebucht: Aktualisierung der Mannschaft nicht möglich",
+              "TITLE": "Veranstaltung bereits ausgebucht",
 
               "DESCRIPTION": "Aufgrund der Tatsache, dass die Veranstaltung bereits vollständig ausgebucht ist, bedauern wir Ihnen mitteilen zu müssen, dass eine Aktualisierung des Teilnehmerkreises derzeit nicht möglich ist."
             }
@@ -946,10 +954,10 @@
         }
 
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Verein Auffüllmannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
+          "TITLE": "Verein Platzhalter löschen",
+          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Platzhalter benötigt."
         }
       }
     },
@@ -1412,7 +1420,8 @@
         "FINISH": "Abschließen",
         "WETTKAMPFTAGE": "Wettkampftage",
         "MANNSCHAFT": "Mannschaften aus Vorjahr kopieren",
-        "BACK": "Zurück"
+        "BACK": "Zurück",
+        "PLATZHALTER": "Platzhalter hinzufügen"
       },
       "NOTIFICATION": {
         "FINISH" : {
@@ -1431,9 +1440,21 @@
           "TITLE": "Kopieren fehlgeschlagen",
           "DESCRIPTION": "Keine Veranstaltung im Vorjahr vorhanden"
         },
+        "COPYMANNSCHAFT_FAILURE_SIZEDIFF": {
+          "TITLE": "Kopieren fehlgeschlagen",
+          "DESCRIPTION": "Veranstaltung im Vorjahr hat eine andere Anzahl an Mannschaften."
+        },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
           "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
+        },
+        "PLATZHALTER_SAVE": {
+          "TITLE": "Platzhalter erstellt",
+          "DESCRIPTION": "Platzhalter wurde erfolgreich erstellt"
+        },
+        "PLATZHALTER_FAILURE": {
+          "TITLE": "Erstellen des Platzhalters fehlgeschlagen",
+          "DESCRIPTION": "Die Erstellung des Platzhalters ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits ein Platzhalter in dieser Veranstaltung existiert."
         }
     }
   },

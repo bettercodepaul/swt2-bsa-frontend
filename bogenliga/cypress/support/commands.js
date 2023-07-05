@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //https://github.com/cypress-io/cypress/issues/461#issuecomment-392070888
+
 let LOCAL_STORAGE_MEMORY = {};
 
 
@@ -65,7 +66,6 @@ Cypress.Commands.add("restoreLocalStorage", () => {
 });
 
 
-// Cypress.Commands.add('logout', () => {
 /**
  * Logs out the user.
  *
@@ -122,23 +122,21 @@ Cypress.Commands.add('dismissModal', () => {
  * cy.loginAdmin();
  */
 Cypress.Commands.add('loginAdmin', () => {
-  cy.visit('http://localhost:4200/#/user/login');
-  cy.dismissModal();
-  cy.contains('button.btn.btn-primary.btn-sm', 'Login als Admin').click();
-  cy.dismissModal();
+    cy.visit('http://localhost:4200/#/user/login');
+    cy.get('[data-cy=login-als-admin-button]').click()
 });
 
 
-Cypress.Commands.add('createUserTest', () => {
+Cypress.Commands.add('createUserTest', (testusermail) => {
   cy.get('[data-cy="sidebar-verwaltung-button"]').click()
 
   cy.get('[data-cy="verwaltung-user-button"]').click();
 
   cy.get('[data-cy="dsb-mitglied-add-button"]').click();
 
-  cy.get('[data-cy="bla-selection-list"]').select('103: 1027');
+  cy.get('select[data-cy="bla-selection-list"]').select('KampfrichterNachname,KampfrichterVorname No.:34563456');
 
-  cy.get('[data-cy="username-input"]').type('shortcutButtonTestuser@cypressTestuser.com');
+  cy.get('[data-cy="username-input"]').type(testusermail);
 
   cy.get('[data-cy="password-input"]').type('Test123456');
 
@@ -147,16 +145,17 @@ Cypress.Commands.add('createUserTest', () => {
 
   cy.get('#userSaveButton').click();
 
+  /*
   cy.get('.modal-dialog-header').then(() => {
     cy.get('bla-actionbutton > #OKBtn1').click();
-  });
+  });*/
 
 })
 
 //This function requires that you are logged in as admin
-Cypress.Commands.add('assignRoleToTestUser', (role) => {
+Cypress.Commands.add('assignRoleToTestUser', (role, testmail) => {
 
-  cy.contains('tr', 'shortcutButtonTestuser@cypressTestuser.com')
+  cy.contains('tr', testmail)
     .find('a[data-cy="TABLE.ACTIONS.EDIT"]')
     .click();
 
@@ -172,27 +171,25 @@ Cypress.Commands.add('assignRoleToTestUser', (role) => {
 
   cy.get('#userUpdateButton').click();
 
-  cy.get('.modal-dialog-header').then(() => {
-    cy.get('bla-actionbutton > #OKBtn1').click();
-  });
-
 })
 
-Cypress.Commands.add('deleteTestUser', (role) => {
-  cy.loginAdmin();
+Cypress.Commands.add('deleteTestUser', (testusermail) => {
 
-  cy.get('[data-cy="sidebar-verwaltung-button"]').click()
-
-  cy.get('[data-cy="verwaltung-user-button"]').click();
-
-  cy.contains('tr', 'shortcutButtonTestuser@cypressTestuser.com')
+  cy.contains('tr', testusermail)
     .find('a[data-cy="TABLE.ACTIONS.DELETE"]')
     .click();
 
   cy.get('[ng-reflect-color="action-btn-primary"] > #undefined > .action-btn-circle').click();
 
-  cy.logout();
+})
 
+Cypress.Commands.add('typeInIFrame', (text) => {
+  const iframe = cy.get('#ligaDetail_ifr')
+    .its('0.contentDocument.body')
+    .should('be.visible')
+    .then(cy.wrap)
+
+  iframe.clear().type(text)
 })
 
 
