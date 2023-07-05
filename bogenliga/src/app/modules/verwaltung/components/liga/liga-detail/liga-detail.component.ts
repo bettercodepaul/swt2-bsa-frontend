@@ -163,9 +163,17 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
     }
 
-    //TODO: besser schreiben
     if(this.currentLiga.name.includes("_")){
-      this.currentLiga.name=null;
+      this.notificationService.showNotification({
+        id: 'MaxWordsWarning',
+        description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.DESCRIPTION',
+        title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.TITLE',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
+      return
     }
 
     // persist
