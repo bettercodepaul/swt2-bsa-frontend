@@ -86,8 +86,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public allLiga: Array<LigaDO> = [new LigaDO()];
 
 
-  public allTeamAmount: Array<number> = [4, 6, 8];
-  public currentTeamAmount: number = 4;
+  public allTeamAmount: Array<number> = [8, 6, 4];
+
 
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
@@ -125,6 +125,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   constructor(
+    private userDataProviderService: UserDataProviderService,
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampftypDataProvider: WettkampftypDataProviderService,
     private regionProvider: RegionDataProviderService,
@@ -157,6 +158,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.currentWettkampftyp = new WettkampftypDO();
           this.currentLiga = new LigaDO();
 
+
+          this.currentVeranstaltung.groesse = 8;
 
 
           this.loadUsers();
@@ -222,6 +225,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
       this.currentVeranstaltung.wettkampftypName = this.currentWettkampftyp.name;
     }
+
 
     // persist
     this.veranstaltungDataProvider.create(this.currentVeranstaltung)
@@ -458,6 +462,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
+
     this.loading = false;
     this.loadWettkampftyp();
     this.loadUsers();
@@ -477,13 +482,22 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allLiga = [];
-    this.allLiga = response.payload;
-    if (this.id === 'add') {
-      this.currentLiga = this.allLiga[0];
-    } else {
-      this.currentLiga = this.allLiga.filter((liga) => liga.id === this.currentVeranstaltung.ligaId)[0];
-    }
-    this.loading = false;
+    let currentUserId = this.currentUserService.getCurrentUserID();
+    this.userDataProviderService.findUserRoleById(currentUserId).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+      let isAdmin = false;
+      if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0)
+        isAdmin = true;
+
+      this.allLiga = response.payload.filter(ligaDo => {
+        return ligaDo.ligaUebergeordnetId == currentUserId || ligaDo.ligaVerantwortlichId == currentUserId || isAdmin;
+      });
+      if (this.id === 'add') {
+        this.currentLiga = this.allLiga[0];
+      } else {
+        this.currentLiga = this.allLiga.filter((liga) => liga.id === this.currentVeranstaltung.ligaId)[0];
+      }
+    }).catch(err => console.log(err))
+        .finally(() => this.loading = false);
   }
 
 
