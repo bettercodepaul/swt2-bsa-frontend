@@ -21,6 +21,8 @@ import {faUndo} from '@fortawesome/free-solid-svg-icons';
 import {faSitemap } from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
+import {SelectedLigaDataprovider} from '../../../shared/data-provider/SelectedLigaDataprovider'
+
 
 
 
@@ -83,6 +85,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private onOfflineService: OnOfflineService,
     private currentUserService: CurrentUserService,
     private einstellungenDataProvider: EinstellungenProviderService,
+    private selectedLigaDataprovider: SelectedLigaDataprovider,
   ) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -101,10 +104,13 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
           params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
           this.selectedYearForVeranstaltung != undefined && this.hasID
             ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
+          this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
+
         } else {
           console.log('no params at ligatabelle');
           this.router.navigate(['/ligatabelle/ligaid']);
         }
+
       });
 
     }

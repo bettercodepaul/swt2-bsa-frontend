@@ -15,6 +15,7 @@ import {isUndefined} from '@shared/functions';
 import {ligaID} from '../sidebar/sidebar.component'
 import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
 
+
 const ID_PATH_PARAM = 'id';
 
 
@@ -38,6 +39,8 @@ export class NavbarComponent implements OnInit, DoCheck {
   public providedID: number;
   public hasID: boolean;
 
+  public previousSelectedLigaID: number;
+
   constructor(private translate: TranslateService, private store: Store<AppState>, private userService: CurrentUserService, private onOfflineService: OnOfflineService, private route: ActivatedRoute, private ligaDataProvider: LigaDataProviderService, private selectedLigaDataprovider: SelectedLigaDataprovider) {
     store.pipe(select((state) => state.sidebarState))
          .subscribe((state: SidebarState) => this.isActive = state.toggleSidebar);
@@ -48,11 +51,35 @@ export class NavbarComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
+    /*this.route.params.subscribe((params) => {
+      if (!isUndefined(params[ID_PATH_PARAM])) {
+        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
+      } else {
+        console.log('no params at ligatabelle');
+        //this.router.navigate(['/ligatabelle/ligaid']);
+      }
+      if (this.providedID) {
+        this.hasID = true;
 
+      } else {
+        this.hasID = false;
+      }
+      console.log("Liga ID", this.providedID)
+      this.hasID ? this.loadLigaName(this.providedID) : null;
+    });*/
+
+    this.selectedLigaDataprovider.getSelectedLigaID()
   }
 
   ngDoCheck () {
-    this.providedID = this.selectedLigaDataprovider.getSelectedLigaID();
+    const currentSelectedLigaID = this.selectedLigaDataprovider.getSelectedLigaID();
+
+
+    if(currentSelectedLigaID !== this.previousSelectedLigaID) {
+      this.previousSelectedLigaID = currentSelectedLigaID;
+
+
+      this.providedID = this.selectedLigaDataprovider.getSelectedLigaID();
 
 
       if (this.providedID) {
@@ -63,16 +90,9 @@ export class NavbarComponent implements OnInit, DoCheck {
       }
 
 
+      this.hasID ? this.loadLigaName(this.providedID) : null;
+    }
 
-    /*this.routeSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-
-
-      }
-
-    });*/
-
-    this.hasID ? this.loadLigaName(this.providedID) : null;
   }
 
   /**
@@ -105,7 +125,11 @@ private async loadLigaName(ligaID: number) {
 .catch()
 }
   private setLigaName(response: BogenligaResponse<LigaDO>) : void {
-    this.ligaName = response.payload.name;
+    if(this.providedID) {
+      this.ligaName = response.payload.name;
+    } else {
+      this.ligaName = "";
+    }
     //console.log("Liga name = " + this.ligaName)
   }
 
