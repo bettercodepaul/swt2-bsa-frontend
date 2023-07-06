@@ -10,7 +10,7 @@
   <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasID" >
     <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
   </div>
-    
+
   <!--Wettkampftabelle-->
   <div class="container">
     <div class="calendar">
@@ -56,6 +56,9 @@
             <div [innerHTML]="selectedLigaDetails"></div>
           </div>
         </div>
+
+        <!-- File Download Button -->
+        <button (click)="fileDownload()">DownloadFile</button>
 
         <!-- Button -->
         <div id="Button">
