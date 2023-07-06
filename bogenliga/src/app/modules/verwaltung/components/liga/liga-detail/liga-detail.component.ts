@@ -257,26 +257,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         });
   }
 
-//File Upload
-  public onFileSelected(event){
-    const file:File = event.target.files[0];
-
-    if(file){
-
-      this.fileName = file.name;
-
-      const formData = new FormData();
-
-      formData.append("thumbnail", file);
-
-      const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-      upload$.subscribe();
-    }
-  }
-
-  
-
 
   // File Upload button, converts selected files to Base64 String
   public convertFileToBase64($event): void {
