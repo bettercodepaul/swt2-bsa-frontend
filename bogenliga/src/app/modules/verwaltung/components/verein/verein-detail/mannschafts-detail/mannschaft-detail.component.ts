@@ -160,6 +160,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
     this.duplicateSubscription = this.notificationService.observeNotification(NOTIFICATION_WARING_MANNSCHAFT)
                                      .subscribe((myNotification) => {
                                        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                                         this.saveLoading = true;
                                          this.saveMannschaft();
                                        }
                                        if (myNotification.userAction === NotificationUserAction.DECLINED) {
