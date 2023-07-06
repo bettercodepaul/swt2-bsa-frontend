@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit, DoCheck {
         this.hasID = false;
         this.ligaName = "";
       }
-      console.log("ID", this.providedID)
+
 
       this.hasID ? this.loadLigaName(this.providedID) : null;
     }
