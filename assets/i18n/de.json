@@ -48,7 +48,8 @@
     },
     "LIGADETAILES": {
       "IDWARNING": "Falsche Liga ID",
-      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden."
+      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden.",
+      "BACK_TO_HOME": "Zurück zur Startseite"
     },
     "IMPRESSUM": {
       "TITLE": "Impressum"
@@ -100,7 +101,9 @@
         "VERANSTALTUNG": "Liga",
         "WETTKAMPFTAG_AKT": "Wettkampftag",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION" : "Auswahl zurücksetzen",
+      "GOTO_LIGADETAILS" : "Zu den Ligadetails"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
@@ -287,7 +290,7 @@
         },
         "SCHUETZENNUMMER":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
-          "DESCRIPTION": "Bitte geben sie unter Schütze alle Schützennummern ein."
+          "DESCRIPTION": "Der Schütze hat bereits an diesem Wettkampftag in einer anderen Liga geschossen."
         },
         "SCHUETZENEINDEUTIG":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
@@ -813,7 +816,7 @@
         },
         "LIGA_DETAIL" : {
           "LABEL": "Ligadetails",
-          "MAX_WORDS_WARNING": "(max. 5000 Wörter)"
+          "MAX_WORDS_WARNING": "(max. 1500 Zeichen)"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
@@ -840,6 +843,10 @@
         "MAX_WORDS_SURPASSED": {
           "TITLE": "Fehler",
           "DESCRIPTION":  "Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl von 5000 Wörtern."
+        },
+        "WRONG_FORMAT": {
+          "TITLE": "Fehler",
+          "DESCRIPTION":  "Der Name der Liga darf kein Unterstrich beinhalten."
         }
       }
     },
@@ -1455,6 +1462,10 @@
         "PLATZHALTER_FAILURE": {
           "TITLE": "Erstellen des Platzhalters fehlgeschlagen",
           "DESCRIPTION": "Die Erstellung des Platzhalters ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits ein Platzhalter in dieser Veranstaltung existiert."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
         }
     }
   },
