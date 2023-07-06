@@ -749,6 +749,7 @@ describe('Admin User tests', function() {
    * This test adds a League and checks if it throughs a popup notification.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
+
   it('Liga Hinzufügen mit Unterstrich', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('SWT_Liga_')) {
@@ -782,6 +783,9 @@ describe('Admin User tests', function() {
       }
     });
   })
+  
+
+
   /**
    * This test adds a League and checks if it gets added.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
