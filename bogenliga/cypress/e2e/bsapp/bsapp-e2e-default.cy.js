@@ -1,3 +1,5 @@
+import tinymce from "tinymce";
+
 /**
  * Testblock describing all anonymous user tests as specified on Confluence
  */
@@ -744,15 +746,53 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * This test adds a League and checks if it throughs a popup notification.
+   * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   */
+  // it('Liga Hinzufügen mit Unterstrich', function() {
+  //   cy.get('body').then((body) => {
+  //     if (!body.text().includes('SWT_Liga_')) {
+  //   cy.get('[data-cy=sidebar-verwaltung-button]').click()
+  //   cy.get('[data-cy=verwaltung-liga-button]').click()
+  //   cy.wait(4000)
+  //   cy.get('tbody').should('have.length.at.least', 1)
+  //
+  //       cy.get('[data-cy=dsb-mitglied-add-button]').click()
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-detail-name]').type('SWT_Liga_')
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-detail-uebergeordnet]').select('Bundesliga')
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
+  //       cy.wait(5000)
+  //
+  //       cy.typeInIFrame("Testliga");
+  //
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-save-button]').click()
+  //       cy.wait(5000)
+  //       cy.get('#OKBtn1').click()
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=sidebar-verwaltung-button]').click()
+  //       cy.get('[data-cy=verwaltung-liga-button]').click()
+  //       cy.wait(14000)
+  //       cy.get('tbody').should('have.length.at.least', 1)
+  //     }
+  //   });
+  // })
+  /**
    * This test adds a League and checks if it gets added.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
   it('Liga Hinzufügen', function() {
     cy.get('body').then((body) => {
-      if (!body.text().includes('SWT_Liga')) {
+      if (!body.text().includes('SWTLiga')) {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
-        cy.wait(1000)
-        cy.get('[data-cy=liga-detail-name]').type('SWT_Liga')
+        cy.wait(5000)
+        cy.get('[data-cy=liga-detail-name]').type('SWTLiga')
+        cy.wait(5000)
         cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
         cy.wait(20000)
         cy.get('[data-cy=liga-detail-uebergeordnet]').select('Bundesliga')
@@ -770,7 +810,7 @@ describe('Admin User tests', function() {
             .click();
         });
         cy.wait(15000)
-        cy.get('tbody').should('contain.text', 'SWT_Liga')
+        cy.get('tbody').should('contain.text', 'SWTLiga')
         cy.wait(5000)
       }
     });
@@ -780,14 +820,15 @@ describe('Admin User tests', function() {
    * This test deletes a League and checks if its deleted in the table.
    */
   it('Liga Löschen', function() {
+
     cy.wait(3000)
-    cy.get('tbody').should('contain.text', 'SWT_Liga')
+    cy.get('tbody').should('contain.text', 'SWTLiga')
     cy.wait(5000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
     cy.wait(5000)
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.wait(10000)
-    cy.get('tbody').should('not.contain.text', 'SWT_Liga')
+    cy.get('tbody').should('not.contain.text', 'SWTLiga')
   })
 
   /**
@@ -1020,4 +1061,112 @@ describe('Ligadetailseite', function(){
     cy.get('[id*=navbar-header]').click()
     cy.url().should('not.include', '#/home/' + randomID)
   })
-})
+}
+)
+
+describe('Ligaleiter User Tests', function(){
+    const randomID = generateLigaID().toString();
+
+    // admin wird hier abgemeldet
+    // nach Test ist Ligaleiter angemeldet
+    it('Ligadetail bearbeiten für zuständige Liga', function() {
+
+      cy.visit('http://localhost:4200/#/verwaltung/liga')
+
+      cy.wait(12000)
+
+      //Überprüfen, ob eine Liga existiert die der Ligaleiter bearbeiten kann
+      cy.get('body').then($body => {
+        if($body.text().includes('TeamLigaleiter@bogenliga.de')) {
+          // Liga existiert
+          cy.log('existiert')
+        } else {
+          // keine Liga existiert für die Ligaleiter zuständig ist
+          // hier wird eine solche Liga erstellt
+
+          cy.log('existiert nicht')
+          cy.visit('http://localhost:4200/#/verwaltung/liga/add')
+
+          cy.wait(10000)
+
+          cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').click()
+
+          cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').type('Ligaleiter Test Liga')
+
+          cy.get('[data-cy=liga-detail-verantwortlicher]').select("TeamLigaleiter@bogenliga.de");
+
+          cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaVerantwortlicher').select('TeamLigaleiter@bogenliga.de')
+
+          // TinyMCE Text eingeben
+          cy.get('iframe#ligaDetail_ifr')
+            .then(($iframe) => {
+              const body = $iframe.contents().find('body');
+
+              cy.wrap(body).clear().type('Hier ist ein Text, der eingegeben wird');
+            });
+
+          // Save Button nach Eingabe von TinyMCE Text
+          cy.get('#ligaSaveButton').click();
+
+          // nach klick auf Speichern warten
+          cy.wait(6000)
+
+          //auf ok klicken
+          cy.get('#OKBtn1 > .action-btn-circle').click();
+        }
+      })
+
+
+      // auf Profil klicken
+      cy.get('.fa-user-circle').click();
+      // auf ausloggen klicken
+      cy.contains('Logout').click();
+      cy.wait(2000);
+
+      // ab hier Ligaleiter
+
+      cy.visit('http://localhost:4200/#/user/login')
+      cy.wait(2000);
+
+      cy.contains('Login für Team Ligaleiter').click();
+      cy.wait(2000);
+
+      cy.visit('http://localhost:4200/#/verwaltung/liga')
+      cy.wait(12000)
+
+      // auf Liga bearbeiten klicken
+      cy.get('.action_icon > a > .ng-fa-icon > .fa-edit > path').click()
+      cy.wait(2000)
+
+      // random Text generieren
+      const text = Math.random().toString(36).substring(2,7);
+      // in TinyMCE Text eingeben
+      cy.get('iframe#ligaDetail_ifr')
+        .then(($iframe) => {
+          const body = $iframe.contents().find('body');
+
+          cy.wrap(body).clear().type(text);
+        });
+
+      // klick auf Update
+      cy.get('#ligaForm > .form-group > .col-sm-9 > bla-actionbutton > #ligaUpdateButton').click()
+      cy.wait(6000)
+
+      cy.reload(true)
+      cy.wait(2000)
+
+      let textReadFromEditor
+
+      // Text von Editor einlesen und mit random-Text vergleichen
+      cy.window()
+        .then(win => {
+          textReadFromEditor = win.tinymce.activeEditor.getContent({format: 'text'});
+        }).then(() => {
+          expect(textReadFromEditor).to.equal(text)})
+
+    })
+
+  }
+)
+
+

@@ -45,7 +45,8 @@
     },
     "LIGADETAILES": {
       "IDWARNING": "Wrong Liga ID",
-      "DESCRIPTION": "No valid league ID could be read from the URL"
+      "DESCRIPTION": "No valid league ID could be read from the URL",
+      "BACK_TO_HOME": "Back to home page"
     },
     "IMPRESSUM": {
       "TITLE": "Imprint"
@@ -95,7 +96,9 @@
         "VERANSTALTUNG": "League",
         "WETTKAMPFTAG_AKT": "Competition day",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION" : "reset league selection",
+      "GOTO_LIGADETAILS" : "To the league details"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
@@ -792,6 +795,10 @@
         "SAVE": {
           "TITLE": "Success",
           "DESCRIPTION": "The league was successfully saved."
+        },
+        "WRONG_FORMAT": {
+          "TITLE": "Error",
+          "DESCRIPTION":  "The name of the leage shouln't contain an underscore."
         }
       }
     },
