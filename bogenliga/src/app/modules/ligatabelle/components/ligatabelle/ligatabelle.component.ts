@@ -103,23 +103,14 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
-
           params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
           this.selectedYearForVeranstaltung != undefined && this.hasID
             ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
-          //this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
-
-
-
-
         } else {
-
           console.log('no params at ligatabelle');
           this.router.navigate(['/ligatabelle/ligaid']);
         }
-
       });
-
     }
   }
 
@@ -133,14 +124,11 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.hasVeranstaltung = true;
     this.selectedItemId = response.payload.id;
     this.onSelectVeranstaltung([response.payload]);
-
   }
 
-  public handleFindVeranstaltungFailure(error: any): void {
+  private handleFindVeranstaltungFailure(error: any): void {
     // Routing zurück zur Ligatabelle URL, wenn keine ID gefunden wird
-    console.log("Failure, ID not found 2222 ");
     this.hasVeranstaltung = false;
-
     const link = '/ligatabelle';
     this.router.navigateByUrl(link);
   }
