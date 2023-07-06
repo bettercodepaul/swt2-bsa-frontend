@@ -48,7 +48,8 @@
     },
     "LIGADETAILES": {
       "IDWARNING": "Falsche Liga ID",
-      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden."
+      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden.",
+      "BACK_TO_HOME": "Zurück zur Startseite"
     },
     "IMPRESSUM": {
       "TITLE": "Impressum"
@@ -100,7 +101,9 @@
         "VERANSTALTUNG": "Liga",
         "WETTKAMPFTAG_AKT": "Wettkampftag",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION" : "Auswahl zurücksetzen",
+      "GOTO_LIGADETAILS" : "Zu den Ligadetails"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
