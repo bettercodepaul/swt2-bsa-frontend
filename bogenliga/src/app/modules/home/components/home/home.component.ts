@@ -277,9 +277,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
 
   /**
-   * Backend call to get Liga from the Parameter in the URL (LigaID)
+   * Backend call to get Liga from the Parameter in the URL (LigaID or Liganame)
    * to display LigaDetailSeite.
-   * Because checkExists always returns an object, handleGotLigaObject has to check
+   * Because checkExists and checkExistsLigaName always return an object, handleGotLigaObject has to check
    * if the liga truly exists (if not, function returns empty LigaObject)
    * */
 
