@@ -291,30 +291,53 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
     const id = this.currentMitglied.id;
 
-    const notification: Notification = {
-      id: NOTIFICATION_DELETE_DSB_MITGLIED + id,
-      title: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description: 'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity: NotificationSeverity.QUESTION,
-      origin: NotificationOrigin.USER,
-      type: NotificationType.YES_NO,
-      userAction: NotificationUserAction.ACCEPTED
-    };
+    // Placeholder dummy Member has MitgliedId 1,2 and 3
+    if(id >= 1 && id <= 3){
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
+        title:            'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_PLATZHALTER_MITGLIED.TITLE',
+        description:      'MANAGEMENT.DSBMITGLIEDER.NOTIFICATION.DELETE_PLATZHALTER_MITGLIED.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.INFO,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.OK,
+        userAction:       NotificationUserAction.PENDING
+      };
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
-      .subscribe((myNotification) => {
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.deleteLoading = false;
+            }
+          });
+      this.notificationService.showNotification(notification);
+    }else {
 
-        if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-          this.dsbMitgliedDataProvider.deleteById(id)
-            .then((response) => this.handleDeleteSuccess(response))
-            .catch((response) => this.handleDeleteFailure(response));
-        } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-          this.deleteLoading = false;
-        }
-      });
+      const notification: Notification = {
+        id:               NOTIFICATION_DELETE_DSB_MITGLIED + id,
+        title:            'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.TITLE',
+        description:      'MANAGEMENT.DSBMITGLIEDER_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
+        descriptionParam: '' + id,
+        severity:         NotificationSeverity.QUESTION,
+        origin:           NotificationOrigin.USER,
+        type:             NotificationType.YES_NO,
+        userAction:       NotificationUserAction.ACCEPTED
+      };
 
-    this.notificationService.showNotification(notification);
+      this.notificationService.observeNotification(NOTIFICATION_DELETE_DSB_MITGLIED + id)
+          .subscribe((myNotification) => {
+
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.dsbMitgliedDataProvider.deleteById(id)
+                  .then((response) => this.handleDeleteSuccess(response))
+                  .catch((response) => this.handleDeleteFailure(response));
+            } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
+              this.deleteLoading = false;
+            }
+          });
+
+      this.notificationService.showNotification(notification);
+    }
   }
 
   public entityExists(): boolean {

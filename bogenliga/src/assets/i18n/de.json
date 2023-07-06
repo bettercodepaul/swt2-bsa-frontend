@@ -48,7 +48,8 @@
     },
     "LIGADETAILES": {
       "IDWARNING": "Falsche Liga ID",
-      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden."
+      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden.",
+      "BACK_TO_HOME": "Zurück zur Startseite"
     },
     "IMPRESSUM": {
       "TITLE": "Impressum"
@@ -100,7 +101,9 @@
         "VERANSTALTUNG": "Liga",
         "WETTKAMPFTAG_AKT": "Wettkampftag",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION" : "Auswahl zurücksetzen",
+      "GOTO_LIGADETAILS" : "Zu den Ligadetails"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
@@ -216,7 +219,7 @@
       "SCHUSSZETTEL": "Schusszettel",
       "KONTROLLLISTE": "Bogenkontrollliste",
       "MELDEZETTEL": "Meldezettel",
-      "MITGLIED_ANLEGEN": "DSB-Mitglied anlegen",
+      "MITGLIED_ANLEGEN": "Vereinsmitglied anlegen",
       "TABLE_SETUP": "Setup Tablets",
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
@@ -287,7 +290,7 @@
         },
         "SCHUETZENNUMMER":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
-          "DESCRIPTION": "Bitte geben sie unter Schütze alle Schützennummern ein."
+          "DESCRIPTION": "Der Schütze hat bereits an diesem Wettkampftag in einer anderen Liga geschossen."
         },
         "SCHUETZENEINDEUTIG":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
@@ -539,13 +542,13 @@
       "DESCRIPTION": "Die zentrale Verwaltung aller Bestandteile des Bogenligabetriebs und der Bogenliga App. Bearbeite die Details existierender Bestandteile, lösche Bestandteile oder lege neue an.",
       "NAVIGATION": {
         "DSBMITGLIEDER": {
-          "LABEL": "DSB Mitglieder",
+          "LABEL": "Vereinsmitglieder",
           "DESCRIPTION": "Registrierte Mitglieder des Deutschen Schützenbunds",
-          "TOOLTIP": "● Neue DSB Mitglieder erstellen\n● DSB Mitglieder bearbeiten\n● DSB Mitglieder löschen"
+          "TOOLTIP": "● Neue Vereinsmitglieder erstellen\n● Vereinsmitglieder bearbeiten\n● Vereinsmitglieder löschen"
         },
         "USER": {
           "LABEL": "Benutzer",
-          "DESCRIPTION": "DSB Mitglieder mit Account in der Bogenliga App",
+          "DESCRIPTION": "Vereinsmitglieder mit Account in der Bogenliga App",
           "TOOLTIP": "● Neue Benutzer anlegen\n● Benutzerliste bearbeiten\n● Benutzer löschen"
         },
         "KLASSEN": {
@@ -585,7 +588,7 @@
         },
         "EINSTELLUNGEN": {
           "LABEL": "Einstellungen",
-          "DESCRIPTION": "Einstellungen der DSB Details, sowie der Bogenliaga App ",
+          "DESCRIPTION": "Einstellungen der Vereinsdetails, sowie der Bogenliaga App ",
           "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
         }
       }
@@ -680,7 +683,7 @@
       }
     },
     "DSBMANNSCHAFT": {
-      "TITLE": "DSB Mannschaften - Übersicht",
+      "TITLE": "Vereinsmannschaften - Übersicht",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -691,13 +694,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mannschaft löschen",
+          "TITLE": "Vereinsmannschaft löschen",
           "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
     "DSBMANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Mannschaften - Details",
+      "TITLE": "Vereinsmannschaften - Details",
       "FORM": {
         "DSBVEREINNUMMER": {
           "LABEL": "Vereinsnummer",
@@ -718,13 +721,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mannschaft löschen",
+          "TITLE": "Vereinsmannschaft löschen",
           "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
     "DSBMITGLIEDER": {
-      "TITLE": "DSB Mitglieder - Übersicht",
+      "TITLE": "Vereinsmitglieder - Übersicht",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -736,8 +739,16 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mitglied löschen",
-          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Vereinsmitglieder löschen",
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        },
+        "DELETE_PLATZHALTER_MITGLIED": {
+          "TITLE": "Platzhalter DSB Mitglied löschen",
+          "DESCRIPTION": "Sie können diesen Schützen nicht löschen."
+        },
+        "EDIT_PLATZHALTER_MITGLIED": {
+          "TITLE": "Platzhalter DSB Mitglied bearbeiten",
+          "DESCRIPTION": "Sie können diesen Schützen nicht bearbeiten."
         }
       }
     },
@@ -805,7 +816,7 @@
         },
         "LIGA_DETAIL" : {
           "LABEL": "Ligadetails",
-          "MAX_WORDS_WARNING": "(max. 5000 Wörter)"
+          "MAX_WORDS_WARNING": "(max. 1500 Zeichen)"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
@@ -832,6 +843,10 @@
         "MAX_WORDS_SURPASSED": {
           "TITLE": "Fehler",
           "DESCRIPTION":  "Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl von 5000 Wörtern."
+        },
+        "WRONG_FORMAT": {
+          "TITLE": "Fehler",
+          "DESCRIPTION":  "Der Name der Liga darf kein Unterstrich beinhalten."
         }
       }
     },
@@ -854,10 +869,10 @@
           "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? Der Verein ist danach nicht mehr verfügbar."
         }
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Verein Auffüllmannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
+          "TITLE": "Verein Platzhalter löschen",
+          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Platzhalter benötigt."
         }
       }
     },
@@ -938,7 +953,7 @@
         "UPDATE":  {
           "FAILURE": {
             "FULL": {
-              "TITLE": "Veranstaltung bereits ausgebucht: Aktualisierung der Mannschaft nicht möglich",
+              "TITLE": "Veranstaltung bereits ausgebucht",
 
               "DESCRIPTION": "Aufgrund der Tatsache, dass die Veranstaltung bereits vollständig ausgebucht ist, bedauern wir Ihnen mitteilen zu müssen, dass eine Aktualisierung des Teilnehmerkreises derzeit nicht möglich ist."
             }
@@ -946,10 +961,10 @@
         }
 
       },
-      "NOTIFICATION_AUFFUELLMANNSCHAFT": {
+      "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
-          "TITLE": "Verein Auffüllmannschaft löschen",
-          "DESCRIPTION": "Wollen Sie den Verein wirklich löschen? ACHTUNG! Es können keine Auffüllmannschaften mehr erstellt werden!"
+          "TITLE": "Verein Platzhalter löschen",
+          "DESCRIPTION": "Sie können diesen Verein nicht löschen! Dieser Verein wird zur Erstellung der Platzhalter benötigt."
         }
       }
     },
@@ -1021,7 +1036,7 @@
       }
     },
     "MANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Mannschaft - Details",
+      "TITLE": "Vereinsmannschaft - Details",
       "FORM": {
         "MANNSCHAFT_NAME": {
           "LABEL": "Mannschaftsname",
@@ -1157,7 +1172,7 @@
       }
     },
     "DSBMITGLIEDER_DETAIL": {
-      "TITLE": "DSB Mitglied - Details",
+      "TITLE": "Vereinsmitglieder - Details",
       "FORM": {
         "VORNAME": {
           "LABEL": "Vorname",
@@ -1200,20 +1215,20 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mitglied löschen",
-          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Vereinsmitglieder löschen",
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gelöscht."
+          "DESCRIPTION": "Das Vereinsmitglieder wurde erfolgreich gelöscht."
         },
         "DELETE_FAILURE": {
           "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Das DSB Mitglied konnte nicht gelöscht werden."
+          "DESCRIPTION": "Das Vereinsmitglieder konnte nicht gelöscht werden."
         },
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Das Vereinsmitglieder wurde erfolgreich gespeichert."
         },
         "DUPLICATE": {
           "TITLE": "Hinzufügen fehlgeschlagen",
@@ -1412,7 +1427,8 @@
         "FINISH": "Abschließen",
         "WETTKAMPFTAGE": "Wettkampftage",
         "MANNSCHAFT": "Mannschaften aus Vorjahr kopieren",
-        "BACK": "Zurück"
+        "BACK": "Zurück",
+        "PLATZHALTER": "Platzhalter hinzufügen"
       },
       "NOTIFICATION": {
         "FINISH" : {
@@ -1431,9 +1447,25 @@
           "TITLE": "Kopieren fehlgeschlagen",
           "DESCRIPTION": "Keine Veranstaltung im Vorjahr vorhanden"
         },
+        "COPYMANNSCHAFT_FAILURE_SIZEDIFF": {
+          "TITLE": "Kopieren fehlgeschlagen",
+          "DESCRIPTION": "Veranstaltung im Vorjahr hat eine andere Anzahl an Mannschaften."
+        },
         "UPDATE": {
           "TITLE": "Aktualisieren erfolgreich",
           "DESCRIPTION": "Die Veranstaltung wurde erfolgreich aktualisiert"
+        },
+        "PLATZHALTER_SAVE": {
+          "TITLE": "Platzhalter erstellt",
+          "DESCRIPTION": "Platzhalter wurde erfolgreich erstellt"
+        },
+        "PLATZHALTER_FAILURE": {
+          "TITLE": "Erstellen des Platzhalters fehlgeschlagen",
+          "DESCRIPTION": "Die Erstellung des Platzhalters ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits ein Platzhalter in dieser Veranstaltung existiert."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
         }
     }
   },
@@ -1534,8 +1566,8 @@
       "TITLE": "BENUTZER - Neuanlage",
       "FORM": {
         "DSBMITGLIED": {
-          "LABEL": "Vorhandenes DSB-Mitglied",
-          "PLACEHOLDER": "Bitte ein existierendes DSB-Mitgiled auswählen"
+          "LABEL": "Vorhandenes Vereinsitglied",
+          "PLACEHOLDER": "Bitte ein existierendes Vereinsmitgiled auswählen"
         },
         "EMAIL": {
           "LABEL": "E-Mail",
