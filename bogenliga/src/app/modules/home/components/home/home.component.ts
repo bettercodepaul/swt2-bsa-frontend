@@ -27,6 +27,7 @@ import { Subscription } from 'rxjs';
 import {element} from 'protractor';
 import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
 
+
 //for notification
 import {
   CurrentUserService,
@@ -99,7 +100,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     private ligaDataProvider: LigaDataProviderService,
     private logindataprovider: LoginDataProviderService,
     private currentUserService: CurrentUserService,
-    private onOfflineService: OnOfflineService) {
+    private onOfflineService: OnOfflineService,
+    private selectedLigaDataprovider: SelectedLigaDataprovider) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
 
@@ -145,6 +147,26 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         this.hasID = true;
         this.checkingAndLoadingLiga(); // load liga with changes of id in url
+
+
+        //this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
+        const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
+
+        //check if url has number or liganame
+        if (!paramIsNumber) {
+          this.ligaName = params[ID_PATH_PARAM]
+          this.hasLigaIDInUrl = false;
+          this.hasLigaNameInUrl=true;
+          console.log("String liga name is: " + this.ligaName);
+          this.ligaName? this.loadLiga(this.ligaName) : null;
+        } else {
+          this.providedID = parseInt(params[ID_PATH_PARAM], 10);
+          this.hasLigaIDInUrl = true;
+          this.hasLigaNameInUrl=false;
+          console.log("Number ID is: " + this.providedID);
+          this.checkingAndLoadingLiga(); // load liga with changes of id in url
+        }
+        this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
 
       } else {
         this.hasID = false;
