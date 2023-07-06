@@ -816,7 +816,7 @@
         },
         "LIGA_DETAIL" : {
           "LABEL": "Ligadetails",
-          "MAX_WORDS_WARNING": "(max. 5000 Wörter)"
+          "MAX_WORDS_WARNING": "(max. 1500 Zeichen)"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
