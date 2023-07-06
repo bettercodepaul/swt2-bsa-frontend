@@ -1,19 +1,17 @@
-<!--<div class="expand-container">
-  <div class="expand-header" (click)="toggleExpand()">
-    {{ headerText }}
-    <span class="expand-icon">{{ expanded ? '▲' : '▼' }}</span>
-  </div>
-  <div class="expand-content" [hidden]="!expanded">
-    <ng-content></ng-content>
-  </div>
-</div>-->
-
 <div class="expand-container">
-  <div class="expand-header" (click)="toggleExpand()">
+
+  <div class="expand-header" (click)="toggleExpand()" [class.expanded]="expanded">
+
     <a [routerLink]="headerLink">{{ headerText }}</a>
-    <span class="expand-icon">{{ expanded ? '▲' : '▼' }}</span>
+    <span class="selected-item">{{ selectedItem }}</span> <!-- Anzeige des ausgewählten Elements -->
+    <span class="expand-icon">{{ expanded  ? '▲' : '▼' }}</span>
+
   </div>
-  <div class="expand-content" [hidden]="!expanded">
+
+  <div class="expand-content" [hidden]="!expanded ">
+
     <ng-content></ng-content>
+
   </div>
+
 </div>
