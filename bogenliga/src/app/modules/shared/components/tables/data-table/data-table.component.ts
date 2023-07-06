@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
 import {isNullOrUndefined} from '@shared/functions';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
@@ -14,7 +14,6 @@ import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
 import {Router} from '@angular/router';
 import {CurrentUserService, UserPermission} from '@shared/services';
-import {ExpandComponent} from '@shared/components';
 
 
 @Component({
@@ -24,7 +23,6 @@ import {ExpandComponent} from '@shared/components';
   providers:   [TranslatePipe, TruncationPipe]
 })
 export class DataTableComponent extends CommonComponentDirective implements OnInit, OnChanges {
-  @ViewChild(ExpandComponent) expandMenu: ExpandComponent;
   @Input() public config: TableConfig;
   @Input() public rows: TableRow[] = [];
   @Input() tableSorter: BaseTableSorter;
@@ -39,8 +37,8 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   @Output() public onMapEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadRueckennummerEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
+
   @Output() public onColumnEntry = new EventEmitter<TableColumnConfig>();
-  @Output() public onSelect: EventEmitter<any> = new EventEmitter<any>();
 
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
@@ -313,9 +311,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   public getRowId(row: TableRow) {
     return `payload-id-${row.payload.id}`;
   }
-
-
-
 
   getStyleClass(row: TableRow, column: TableColumnConfig) {
     if (!isNullOrUndefined(column.stylesMapper)) {

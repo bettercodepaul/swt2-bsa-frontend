@@ -8,13 +8,12 @@ export const TEILNEHMENDE_MANNSCHAFT_CONFIG: TableConfig = {
 
   columns: [
     {
-      translationKey: 'Mannschaftsname',
+      translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.MANNSCHAFTSNAME',
       propertyName:   'name',
       width:          20,
     }
   ],
   actions: {
-    localizationKeys: {actionColum: "Mitglied/Schütze hinzufügen"},
     actionTypes: [TableActionType.ADD],
     width:       6
   },

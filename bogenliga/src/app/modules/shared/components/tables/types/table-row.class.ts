@@ -9,7 +9,6 @@ export class TableRow {
   hiddenActions: TableActionType[];
   loadingActions: TableActionType[];
 
-
   public static copyFrom(sourceObject: any): TableRow {
     const row = new TableRow();
 
