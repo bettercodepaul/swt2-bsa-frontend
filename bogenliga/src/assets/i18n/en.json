@@ -44,8 +44,8 @@
       "BOX1CONTENT": "Be there..."
     },
     "LIGADETAILES": {
-      "IDWARNING": "Wrong Liga ID",
-      "DESCRIPTION": "No valid league ID could be read from the URL",
+      "IDWARNING": "Wrong Link",
+      "DESCRIPTION": "The input link is not a valid link",
       "BACK_TO_HOME": "Back to home page"
     },
     "IMPRESSUM": {
