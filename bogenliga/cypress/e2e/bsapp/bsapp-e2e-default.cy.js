@@ -747,11 +747,52 @@ describe('Admin User tests', function() {
 
   /**
    * This test adds a League and checks if it throughs a popup notification.
+<<<<<<< Updated upstream
+=======
+   * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   */
+  // it('Liga Hinzufügen mit Unterstrich', function() {
+  //   cy.get('body').then((body) => {
+  //     if (!body.text().includes('SWT_Liga_')) {
+  //   cy.get('[data-cy=sidebar-verwaltung-button]').click()
+  //   cy.get('[data-cy=verwaltung-liga-button]').click()
+  //   cy.wait(4000)
+  //   cy.get('tbody').should('have.length.at.least', 1)
+  //
+  //       cy.get('[data-cy=dsb-mitglied-add-button]').click()
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-detail-name]').type('SWT_Liga_')
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-detail-uebergeordnet]').select('Bundesliga')
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
+  //       cy.wait(5000)
+  //
+  //       cy.typeInIFrame("Testliga");
+  //
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=liga-save-button]').click()
+  //       cy.wait(5000)
+  //       cy.get('#OKBtn1').click()
+  //       cy.wait(5000)
+  //       cy.get('[data-cy=sidebar-verwaltung-button]').click()
+  //       cy.get('[data-cy=verwaltung-liga-button]').click()
+  //       cy.wait(14000)
+  //       cy.get('tbody').should('have.length.at.least', 1)
+  //     }
+  //   });
+  // })
+  /**
+   * This test adds a League and checks if it gets added.
+>>>>>>> Stashed changes
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
 
   it('Liga Hinzufügen mit Unterstrich', function() {
     cy.get('body').then((body) => {
+<<<<<<< Updated upstream
       if (!body.text().includes('SWT_Liga_')) {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-liga-button]').click()
@@ -761,6 +802,12 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=dsb-mitglied-add-button]').click()
         cy.wait(5000)
         cy.get('[data-cy=liga-detail-name]').type('SWT_Liga_')
+=======
+      if (!body.text().includes('SWTLiga')) {
+        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.wait(5000)
+        cy.get('[data-cy=liga-detail-name]').type('SWTLiga')
+>>>>>>> Stashed changes
         cy.wait(5000)
         cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
         cy.wait(5000)
@@ -824,8 +871,11 @@ describe('Admin User tests', function() {
    * This test deletes a League and checks if its deleted in the table.
    */
   it('Liga Löschen', function() {
+<<<<<<< Updated upstream
 
     cy.wait(3000)
+=======
+>>>>>>> Stashed changes
     cy.get('tbody').should('contain.text', 'SWTLiga')
     cy.wait(5000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
