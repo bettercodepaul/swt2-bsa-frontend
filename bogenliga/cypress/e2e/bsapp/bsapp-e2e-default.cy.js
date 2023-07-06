@@ -1,3 +1,5 @@
+import tinymce from "tinymce";
+
 /**
  * Testblock describing all anonymous user tests as specified on Confluence
  */
