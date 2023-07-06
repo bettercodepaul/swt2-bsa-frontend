@@ -330,14 +330,16 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadWettkaempfe
    * @param $event
    */
-  public onSelect($event: VeranstaltungDO[]): void {
-
+  public async onSelect($event: VeranstaltungDO[]): Promise<void> {
+    this.loadingData = true;
     this.currentVeranstaltung = $event[0];
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
     this.clear();
-    this.loadMannschaften(this.currentVeranstaltung.id);
-    this.loadWettkaempfe(this.currentVeranstaltung.id);
+    await this.loadMannschaften(this.currentVeranstaltung.id);
+    await this.loadWettkaempfe(this.currentVeranstaltung.id);
+    await this.loadAllErgebnisse(undefined);
+    this.loadingData = false;
   }
 
   private clear() {
@@ -369,10 +371,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async loadMannschaften(veranstaltungsId: number) {
-    console.log("Veranstaltung" + veranstaltungsId)
     await this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
       .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
-        console.log("Response " + response)
         this.handleSuccessLoadMannschaft(response)
       })
       .catch(() => this.mannschaften === []);
@@ -513,6 +513,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       await this.loadWettkaempfeByCurrentMannschaft();
     }
     await this.loadVerein(this.currentMannschaft.vereinId);
+    await this.loadErgebnisse(this.currentMannschaft);
     this.loadingData = false;
   }
 
