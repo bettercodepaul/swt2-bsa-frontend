@@ -56,12 +56,12 @@ describe('Anonyme User tests', function () {
    */
   it('Sunburst details anzeigen', function () {
     cy.get('[data-cy=sidebar-regionen-button]').click();
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get(':nth-child(2) > .main-arc').click({force:true})
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('#details')
     cy.get('[data-cy=sidebar-regionen-button]').click()
-    cy.wait(1000)
+    cy.wait(1500)
   })
   /**
    * This test checks if after an item has been selected the website redirected to the correct location
@@ -422,6 +422,7 @@ describe('Admin User tests', function() {
     cy.contains('tr', 'SWTZweiTestLocal').find('[data-cy="TABLE.ACTIONS.DELETE"]').click();
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
+    cy.wait(2000)
     //Überprüfung dass Elemente nicht in Liste
     //cy.should('not.contain.text', 'KampfrichterVorname')
   })
@@ -740,7 +741,7 @@ describe('Admin User tests', function() {
   it('Alle Ligen zu sehen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-liga-button]').click()
-    cy.wait(4000)
+    cy.wait(4500)
     cy.get('tbody').should('have.length.at.least', 1)
   })
 
@@ -793,8 +794,9 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=liga-detail-name]').type('SWTLiga')
         cy.wait(5000)
         cy.get('[data-cy=liga-detail-region]').select('SWT2_Region')
-        cy.wait(10000)
+        cy.wait(20000)
         cy.get('[data-cy=liga-detail-uebergeordnet]').select('Bundesliga')
+        cy.wait(1000)
         cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de')
 
         cy.typeInIFrame("Testliga");
@@ -802,7 +804,11 @@ describe('Admin User tests', function() {
         cy.wait(1000)
         cy.get('[data-cy=liga-save-button]').click()
         cy.wait(5000)
-        cy.get('#OKBtn1').click()
+        cy.contains('.modal-content', 'Erfolg').within(() => {
+          cy.get('.modal-dialog-ok button')
+            .should('contain', 'OK')
+            .click();
+        });
         cy.wait(15000)
         cy.get('tbody').should('contain.text', 'SWTLiga')
         cy.wait(5000)
@@ -814,6 +820,8 @@ describe('Admin User tests', function() {
    * This test deletes a League and checks if its deleted in the table.
    */
   it('Liga Löschen', function() {
+
+    cy.wait(3000)
     cy.get('tbody').should('contain.text', 'SWTLiga')
     cy.wait(5000)
     cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
@@ -913,7 +921,7 @@ describe('Admin User tests', function() {
         cy.get('[data-cy=veranstaltung-detail-deadline]').type('2030-01-01')
         cy.wait(1000)
         cy.get('[data-cy=veranstaltung-detail-save-button]').click()
-        cy.wait(25000)
+        cy.wait(30000)
         cy.get('#OKBtn1').click()
         cy.get('[data-cy=sidebar-verwaltung-button]').click()
         cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
@@ -931,8 +939,9 @@ describe('Admin User tests', function() {
 
   it('Veranstaltungen bearbeiten', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+    //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
-    cy.wait(10000)
+    cy.wait(20000)
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
     cy.wait(1000)
     cy.get('[data-cy=veranstaltung-detail-update-button]').click()
@@ -954,7 +963,7 @@ describe('Admin User tests', function() {
   it('Platzhalter erstellen', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
     cy.get('[data-cy=veranstaltung-detail-create-platzhalter]').click()
-    cy.wait(3000)
+    cy.wait(9000)
     cy.get('#OKBtn1').click()
     cy.get('tbody').should('contain.text', 'Platzhalter')
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
