@@ -80,5 +80,13 @@
                     [loading]="loading"
                     [rows]="rows">
     </bla-data-table>
+
+    <bla-actionbutton (onClick)="addDSBSchuetze()"
+                      [id]="'DSB-Mitglied anlegen'"
+                      [iconClass]="'user-plus'"
+                      [hidden]="!isPopUp">
+      Neues DSB-Mitglied hinzufügen
+    </bla-actionbutton>
+
   </div>
 </bla-common-dialog>

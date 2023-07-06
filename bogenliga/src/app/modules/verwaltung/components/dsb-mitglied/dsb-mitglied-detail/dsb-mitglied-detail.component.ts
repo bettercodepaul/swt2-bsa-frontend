@@ -41,6 +41,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
   @Input() isPopUp: boolean;
   @Input() dialogRef;
+  @Input() selectedVereinId: number;
 
 
   public config = DSB_MITGLIED_DETAIL_CONFIG;
@@ -119,6 +120,14 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
       this.deleteLoading = false;
       this.saveLoading = false;
       this.currentMitgliedNat = 'Germany';
+      if(this.selectedVereinId != null)
+      {
+        for (let i = 0; i < this.vereine.length; i++) {
+          if (this.vereine[i].id === this.selectedVereinId) {
+            this.currentVerein = this.vereine[i];
+          }
+        }
+      }
     }
 
   }

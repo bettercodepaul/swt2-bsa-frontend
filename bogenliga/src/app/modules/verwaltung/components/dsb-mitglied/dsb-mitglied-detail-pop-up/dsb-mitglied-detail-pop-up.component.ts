@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 
@@ -12,7 +12,7 @@ export class DsbMitgliedDetailPopUpComponent implements OnInit {
 
   public ActionButtonColors = ActionButtonColors;
 
-  constructor(public dialogRef: MatDialogRef<MatDialog>) { }
+  constructor(public dialogRef: MatDialogRef<MatDialog>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
   }

@@ -31,6 +31,16 @@ import {RegionDataProviderService} from '@verwaltung/services/region-data-provid
 import {RegionDO} from '@verwaltung/types/region-do.class';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {SessionHandling} from '@shared/event-handling';
+import {
+  SchuetzenPopUpComponent
+} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen-pop-up/schuetzen-pop-up.component';
+import {
+  DsbMitgliedDetailPopUpComponent
+} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
+import {MatDialog} from '@angular/material/dialog';
+import {
+  DsbMitgliedSchuetzePopUpComponent
+} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-schuetze-pop-up/dsb-mitglied-schuetze-pop-up.component';
 
 
 const ID_PATH_PARAM = 'id';
@@ -87,7 +97,8 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
     private route: ActivatedRoute,
     private onOfflineService: OnOfflineService,
     private notificationService: NotificationService,
-    private currentUserService: CurrentUserService) {
+    private currentUserService: CurrentUserService,
+    private dialog: MatDialog) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
@@ -509,6 +520,17 @@ export class SchuetzenComponent extends CommonComponentDirective implements OnIn
                           .catch((vereins_response: BogenligaResponse<VereinDTO>) => this.handleVereinFailure(vereins_response));
                     })
                     .catch((response: BogenligaResponse<DsbMannschaftDO>) => this.handleMannschaftFailure(response));
+  }
+
+  addDSBSchuetze() {
+      const dialogRef = this.dialog.open(DsbMitgliedDetailPopUpComponent, {data: {
+          selectedVereinId: this.currentVerein.id,
+        }}
+      );
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadMannschaftenUndVereinByMannschaftsId(this.selectedMannschaftId);
+    });
+
   }
 }
 
