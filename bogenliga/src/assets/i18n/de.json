@@ -101,7 +101,9 @@
         "VERANSTALTUNG": "Liga",
         "WETTKAMPFTAG_AKT": "Wettkampftag",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION" : "Auswahl zurücksetzen",
+      "GOTO_LIGADETAILS" : "Zu den Ligadetails"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
