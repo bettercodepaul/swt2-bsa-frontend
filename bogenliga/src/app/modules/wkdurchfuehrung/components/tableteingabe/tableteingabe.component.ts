@@ -112,7 +112,7 @@ export class TabletEingabeComponent implements OnInit {
               this.tabletAdminRoute = '/schusszettel/tabletadmin/' + this.match1.wettkampfId;
               this.initStorageData();
               if (this.tabletSession) {
-                this.currentMatch = this.match2.scheibenNummer === this.tabletSession.scheibenNr ? this.match2 : this.match1;
+                this.currentMatch = this.match2.matchScheibennummer === this.tabletSession.scheibenNr ? this.match2 : this.match1;
                 this.initExistingPassen();
               }
               this.tabletSession.matchID = (this.currentMatch && this.currentMatch.id) ? this.currentMatch.id : this.tabletSession.matchID;
