@@ -220,6 +220,18 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       });
       return
     }
+    if(this.currentLiga.name.includes("_")){
+      this.notificationService.showNotification({
+        id: 'MaxWordsWarning',
+        description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.DESCRIPTION',
+        title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.TITLE',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
+      return
+    }
 
     this.saveLoading = true;
     this.currentLiga.regionId = this.currentRegion.id;
