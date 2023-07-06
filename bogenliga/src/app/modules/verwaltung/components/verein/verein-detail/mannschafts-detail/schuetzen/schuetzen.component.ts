@@ -38,9 +38,6 @@ import {
   DsbMitgliedDetailPopUpComponent
 } from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 import {MatDialog} from '@angular/material/dialog';
-import {
-  DsbMitgliedSchuetzePopUpComponent
-} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-schuetze-pop-up/dsb-mitglied-schuetze-pop-up.component';
 
 
 const ID_PATH_PARAM = 'id';
