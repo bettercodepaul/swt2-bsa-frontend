@@ -338,7 +338,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.clear();
     await this.loadMannschaften(this.currentVeranstaltung.id);
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
-    await this.loadAllErgebnisse(undefined);
+    await this.loadAllErgebnisse(this.currentMannschaft);
     this.loadingData = false;
   }
 
