@@ -73,7 +73,7 @@ export class MatchMapperExt {
         let counter = schuetzenInitialLength;
         for (let j = 0; j < (5 - schuetzenInitialLength); j++) {
 
-          schuetzen[i].push(new PasseDO(null, payload.id, payload.mannschaftId, payload.wettkampfId, payload.nr, (counter + 1)));
+          schuetzen[i].push(new PasseDO(null, payload.id, payload.mannschaftId, payload.wettkampfId, payload.matchNr, (counter + 1)));
           ++counter;
         }
         schuetzen[i] = schuetzen[i].sort((p1, p2) => p1.lfdNr - p2.lfdNr);
@@ -91,9 +91,9 @@ export class MatchMapperExt {
       payload.mannschaftId,
       payload.mannschaftName,
       payload.wettkampfId,
-      payload.nr,
+      payload.matchNr,
       payload.begegnung,
-      payload.scheibenNummer,
+      payload.matchScheibennummer,
       sumSatz,
       payload.matchpunkte,
       payload.satzpunkte,
@@ -124,7 +124,7 @@ export class MatchMapperExt {
       payload.wettkampfId,
       payload.nr,
       payload.begegnung,
-      payload.scheibenNummer,
+      payload.matchScheibennummer,
       payload.matchpunkte,
       payload.satzpunkte,
       strafPunkteSatz1,
