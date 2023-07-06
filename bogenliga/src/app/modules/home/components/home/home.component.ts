@@ -26,8 +26,8 @@ import {LigaDO} from '@verwaltung/types/liga-do.class';
 import { Subscription } from 'rxjs';
 import {element} from 'protractor';
 import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
-
-
+import {faHome} from '@fortawesome/free-solid-svg-icons';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 //for notification
 import {
   CurrentUserService,
@@ -42,7 +42,10 @@ import {
 
 const ID_PATH_PARAM = 'id';
 
+
 class VeranstaltungWettkaempfe {
+
+
   public veranstaltungDO: VeranstaltungDO;
   public wettkaempfeDO: WettkampfDO;
   public day: number;
@@ -56,7 +59,7 @@ class VeranstaltungWettkaempfe {
 
 export class HomeComponent extends CommonComponentDirective implements OnInit, OnDestroy {
 
-
+  public zurStartseiteIcon: IconProp = faHome;
   public config = HOME_CONFIG;
 
   public config_shortcut = HOME_SHORTCUT_BUTTON_CONFIG;
@@ -186,6 +189,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   /**unsubscribe to avoid memory leaks*/
   ngOnDestroy() {
     this.hasID ? this.routeSubscription.unsubscribe() : null;
+  }
+
+  public deselect(){
+    const link = '/home';
+    this.router.navigateByUrl(link);
   }
 
   /**Check if LigaID of URL exists and load the corresponding page*/
