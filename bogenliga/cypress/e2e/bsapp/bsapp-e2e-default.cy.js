@@ -1020,12 +1020,13 @@ describe('Ligadetailseite', function(){
 describe('Ligaleiter User Tests', function(){
     const randomID = generateLigaID().toString();
 
+    // admin wird hier abgemeldet
     // nach Test ist Ligaleiter angemeldet
     it('Ligadetail bearbeiten für zuständige Liga', function() {
 
       cy.visit('http://localhost:4200/#/verwaltung/liga')
 
-      cy.wait(10000)
+      cy.wait(12000)
 
       //Überprüfen, ob eine Liga existiert die der Ligaleiter bearbeiten kann
       cy.get('body').then($body => {
@@ -1037,7 +1038,7 @@ describe('Ligaleiter User Tests', function(){
           // hier wird eine solche Liga erstellt
 
           cy.log('existiert nicht')
-          cy.visit('http://localho  st:4200/#/verwaltung/liga/add')
+          cy.visit('http://localhost:4200/#/verwaltung/liga/add')
 
           cy.wait(10000)
 
@@ -1047,10 +1048,7 @@ describe('Ligaleiter User Tests', function(){
 
           cy.get('[data-cy=liga-detail-verantwortlicher]').select("TeamLigaleiter@bogenliga.de");
 
-          cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaVerantwortlicher').select('2: Object')
-
-
-          cy.get('.form-group > .col-sm-9 > bla-actionbutton > #ligaSaveButton > .action-btn-circle').click()
+          cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaVerantwortlicher').select('TeamLigaleiter@bogenliga.de')
 
           // TinyMCE Text eingeben
           cy.get('iframe#ligaDetail_ifr')
@@ -1105,24 +1103,10 @@ describe('Ligaleiter User Tests', function(){
 
       // klick auf Update
       cy.get('#ligaForm > .form-group > .col-sm-9 > bla-actionbutton > #ligaUpdateButton').click()
-      cy.wait(5000)
+      cy.wait(6000)
 
-      // klick auf OK
-      cy.get('.modal-dialog > .modal-content > .modal-footer > #OKBtn1 > #OKBtn1').click()
-
-      cy.wait(12000)
-
-      // auf Liga bearbeiten klicken
-      cy.get('.action_icon > a > .ng-fa-icon > .fa-edit > path').click()
-
-      cy.wait(500)
-
-      let link;
-
+      cy.reload(true)
       cy.wait(2000)
-
-
-      cy.wait(200)
 
       let textReadFromEditor
 
