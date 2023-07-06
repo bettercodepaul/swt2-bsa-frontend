@@ -1061,8 +1061,25 @@ describe('Ligadetailseite', function(){
     cy.get('[id*=navbar-header]').click()
     cy.url().should('not.include', '#/home/' + randomID)
   })
-}
-)
+
+  it('Deselektieren der LigaID über Button', function() {
+    cy.visit('http://localhost:4200/#/home/' + randomID)
+    cy.get('[id="deselectLigaButtonLigadetailseite"]').click();
+    cy.url().should('not.include', '#/home/' + randomID)
+  })
+
+  it('Deselektieren der ausgewählten Liga in Ligatabelle', function() {
+    cy.visit('http://localhost:4200/#/ligatabelle/' + randomID)
+    cy.get('[id="deselectLigaButton"]').click();
+    cy.url().should('not.include', '#/ligatabelle/' + randomID)
+  })
+
+  it('Zu den Ligadetails-Button auf Ligatabellenseite', function() {
+    cy.visit('http://localhost:4200/#/ligatabelle/' + randomID)
+    cy.get('[id="goToLigadetailsButton"]').click();
+    cy.url().should('include', '#/home/' + randomID)
+  })
+})
 
 describe('Ligaleiter User Tests', function(){
     const randomID = generateLigaID().toString();
