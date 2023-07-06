@@ -297,9 +297,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
         .then((response) => {
             this.lastVeranstaltung = response.payload;
-            if(this.lastVeranstaltung.groesse!=this.currentVeranstaltung.groesse){
+            if(this.lastVeranstaltung.groesse > this.currentVeranstaltung.groesse){
               this.saveLoading = false;
-              console.log('Size of previous Mannschaft does not equal size of new Mannschaft')
+              console.log('Size of previous Veranstaltung does not equal size of new Veranstaltung')
               const notification: Notification = {
                 id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_SIZEDIFF,
                 title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE_SIZEDIFF.TITLE',

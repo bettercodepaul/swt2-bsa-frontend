@@ -287,7 +287,7 @@
         },
         "SCHUETZENNUMMER":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
-          "DESCRIPTION": "Bitte geben sie unter Schütze alle Schützennummern ein."
+          "DESCRIPTION": "Der Schütze hat bereits an diesem Wettkampftag in einer anderen Liga geschossen."
         },
         "SCHUETZENEINDEUTIG":{
           "TITLE":"Eingabefehler - Speichern abgebrochen",
@@ -1455,6 +1455,10 @@
         "PLATZHALTER_FAILURE": {
           "TITLE": "Erstellen des Platzhalters fehlgeschlagen",
           "DESCRIPTION": "Die Erstellung des Platzhalters ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits ein Platzhalter in dieser Veranstaltung existiert."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
         }
     }
   },
