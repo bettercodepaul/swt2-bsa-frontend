@@ -795,6 +795,10 @@
         "SAVE": {
           "TITLE": "Success",
           "DESCRIPTION": "The league was successfully saved."
+        },
+        "WRONG_FORMAT": {
+          "TITLE": "Error",
+          "DESCRIPTION":  "The name of the leage shouln't contain an underscore."
         }
       }
     },
