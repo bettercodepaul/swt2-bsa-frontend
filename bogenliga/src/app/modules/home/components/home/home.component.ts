@@ -87,7 +87,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   public VereinsID: number;
   public providedID: number;
-  public hasID: boolean;
+  public ligaName: string;
+  public hasLigaIDInUrl: boolean;
+  public hasLigaNameInUrl: boolean;
   private sessionHandling: SessionHandling;
   private routeSubscription: Subscription;
   private loadedLigaData: boolean;
@@ -145,15 +147,17 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     }
 
 
-    this.route.params.subscribe((params) => {
+    //to get if of liga from route path
+    this.routeSubscription=this.route.params.subscribe((params) => {
+      //if parameter ID_Path_PARAM is defined
+      //it parses the parameter value as an integer and assigns it to the providedID variable
+
+      //checking if url has parameter
       if (!isUndefined(params[ID_PATH_PARAM])) {
-        this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-        this.hasID = true;
-        this.checkingAndLoadingLiga(); // load liga with changes of id in url
 
-
-        //this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
+        //this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
+
 
         //check if url has number or liganame
         if (!paramIsNumber) {
@@ -172,23 +176,25 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         this.hasLigaIDInUrl ? this.getVeranstaltungen(this.providedID):undefined;
 
       } else {
-        this.hasID = false;
+        this.hasLigaIDInUrl = false;
+        this.hasLigaNameInUrl=false;
       }
     });
-
-    this.checkingAndLoadingLiga();
-    this.routeSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.checkingAndLoadingLiga();
-      }
-    });
-    this.hasID ? this.getVeranstaltungen(this.providedID):undefined;
   }
 
 
   /**unsubscribe to avoid memory leaks*/
   ngOnDestroy() {
-    this.hasID ? this.routeSubscription.unsubscribe() : null;
+    if(this.hasLigaNameInUrl){
+      this.hasLigaNameInUrl=undefined;
+      this.hasLigaIDInUrl=undefined;
+      this.routeSubscription.unsubscribe();
+    }
+    if(this.hasLigaIDInUrl){
+      this.routeSubscription.unsubscribe();
+      this.hasLigaIDInUrl=undefined;
+      this.hasLigaNameInUrl=undefined;
+    }
   }
 
   public deselect(){
@@ -198,7 +204,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   /**Check if LigaID of URL exists and load the corresponding page*/
   private checkingAndLoadingLiga(){
-    this.hasID ? this.loadLiga(this.providedID) : null;
+    this.hasLigaNameInUrl ? this.loadLiga(this.providedID) : null;
   }
 
 
@@ -226,10 +232,20 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    * */
 
 
-  private async loadLiga(urlLigaID : number){
-    await this.ligaDataProvider.checkExists(urlLigaID)
-              .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
-              .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
+  private async loadLiga(urlLigaID : number | string){
+    //If number or string, verschiedener backend call
+    if (typeof urlLigaID === 'number'){
+      await this.ligaDataProvider.checkExists(urlLigaID)
+                .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
+                .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
+    } else {
+      //check if underscore in text and replace with space
+      urlLigaID = urlLigaID.replace(/_/g, ' ')
+      urlLigaID=urlLigaID.toLowerCase()
+      await this.ligaDataProvider.checkExistsLigaName(urlLigaID)
+                .then((response: BogenligaResponse<LigaDO>)=> this.handleGotLigaObjectSuccess(response))
+                .catch((response: BogenligaResponse<LigaDO>)=>this.handleGotLigaObjectFailure(response))
+    }
   }
 
 
@@ -241,7 +257,6 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
    **/
 
   private handleGotLigaObjectSuccess(response: BogenligaResponse<LigaDO>) : void {
-
     if(response.payload.id==null){
       //routing back to home URL
       const link = '/home';
@@ -263,7 +278,14 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       this.selectedLigaName=response.payload.name;
       this.selectedLigaID=response.payload.id;
       this.selectedLigaDetails=response.payload.ligaDetail;
+      this.selectedLigaDetailBase64=response.payload.ligaDetailFileBase64;
+      this.selectedLigaDetailFileName=response.payload.ligaDetailFileName;
+      this.selectedLigaDetailFileType=response.payload.ligaDetailFileType;
       this.loadedLigaData=true;
+      if(this.hasLigaNameInUrl){
+        const link = '/home/' + this.selectedLigaID;
+        this.router.navigateByUrl(link);
+      }
     }
   }
 
@@ -271,11 +293,11 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   /**
    * Handling a failed backendcall to get Liga by LigaID
    **/
-  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {
-    //routing back to home URL
+  public handleGotLigaObjectFailure(response: BogenligaResponse<LigaDO>) : void {//routing back to home URL
     const link = '/home';
     this.router.navigateByUrl(link);
   }
+
 
 
   private handleSuccessLoadWettkaempfe(payload: WettkampfDTO[]): void {
