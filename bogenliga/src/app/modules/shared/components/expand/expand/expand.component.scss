@@ -3,16 +3,17 @@
   border-radius: 8px;
   margin-bottom: 10px;
   cursor: pointer;
-  width: 80%;
+  width: 90%;
 }
 
 .expand-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  //justify-content: space-between;
   padding: 10px;
   font-size: 20px;
   font-weight: bold;
+  position: relative;
 }
 
 .expand-content {
@@ -21,4 +22,22 @@
 
 .expand-icon {
   font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.expand-header.expanded {
+  // Hier kannst du den Stil für den erweiterten Zustand des Headers definieren
+}
+
+.expand-content.expanded {
+  display: block;
+}
+.selected-item{
+  font-size: 14px;
+  color: #487AF5;
+  margin-left: 40px;
+  position: absolute;
+  top: 15px;
+  right: 10%;
 }
