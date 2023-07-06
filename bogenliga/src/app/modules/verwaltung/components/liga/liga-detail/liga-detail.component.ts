@@ -75,6 +75,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   constructor(private ligaDataProvider: LigaDataProviderService,
               private regionProvider: RegionDataProviderService,
               private userProvider: UserProfileDataProviderService,
+              private userDataProviderService: UserDataProviderService,
               private disziplinDataProvider: DisziplinDataProviderService,
               private router: Router, private route: ActivatedRoute,
               private notificationService: NotificationService,
