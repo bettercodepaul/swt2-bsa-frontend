@@ -91,6 +91,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   public VereinsID: number;
   public providedID: number;
   public ligaName: string;
+  public hasID: boolean;
   public hasLigaIDInUrl: boolean;
   public hasLigaNameInUrl: boolean;
   private sessionHandling: SessionHandling;
@@ -141,8 +142,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   async ngOnInit() {
     if (this.currentUserService.isLoggedIn() === false) {
-      await this.logindataprovider.signInDefaultUser()
-                .then(() => this.handleSuccessfulLogin());
+      await this.logindataprovider.signInDefaultUser().then(() => this.handleSuccessfulLogin());
     } else if (this.currentUserService.isLoggedIn() === true) {
       this.loadWettkaempfe();
       this.findByVeranstalungsIds();
@@ -157,7 +157,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
       //checking if url has parameter
       if (!isUndefined(params[ID_PATH_PARAM])) {
-
+        this.hasID = true;
         //this.providedID = parseInt(params[ID_PATH_PARAM], 10);
         const paramIsNumber = !isNaN(Number(params[ID_PATH_PARAM]));
 
@@ -181,6 +181,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
       } else {
         this.hasLigaIDInUrl = false;
         this.hasLigaNameInUrl=false;
+        this.hasID=false;
       }
     });
   }
@@ -210,7 +211,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   /**Check if LigaID of URL exists and load the corresponding page*/
   private checkingAndLoadingLiga(){
-    this.hasLigaNameInUrl ? this.loadLiga(this.providedID) : null;
+    this.hasID ? this.loadLiga(this.providedID) : null;
   }
 
 
