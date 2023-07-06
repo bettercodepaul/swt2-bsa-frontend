@@ -10,6 +10,7 @@ export class LigaDetailGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // CAN_MODIFY_SYSTEMDATEN required to activate Liga Detail
     return this.currentUserService.hasPermission(
-      UserPermission.CAN_MODIFY_SYSTEMDATEN);
+      UserPermission.CAN_MODIFY_SYSTEMDATEN) || this.currentUserService.hasPermission(
+      UserPermission.CAN_MODIFY_SYSTEMDATEN_LIGALEITER);
   }
 }
