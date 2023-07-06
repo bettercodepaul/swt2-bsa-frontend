@@ -77,6 +77,14 @@
             {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
             {{ selectedVeranstaltungName}}
           </bla-actionbutton>
+
+          <bla-actionbutton
+            [id]="'goToLigadetailsButton'"
+            [color]= "ActionButtonColors.PRIMARY"
+            [iconClass]="zuDenLigadetailsIcon"
+            (onClick)="goToLigaDetails()">
+            {{ 'WETTKAEMPFE.LIGATABELLE.GOTO_LIGADETAILS' | translate }}
+          </bla-actionbutton>
         </div>
         <div class="col-sm-9">
           <div class="invalid-feedback">
@@ -87,12 +95,13 @@
       </bla-row-layout>
 
       <bla-actionbutton
-        [id]="'regionSaveButton'"
+        [id]="'deselectLigaButton'"
         [color]= "ActionButtonColors.SECONDARY"
         [iconClass]="zuruecksetzenIcon"
         (onClick)="deselect()">
-        Auswahl zurücksetzen
+        {{ 'WETTKAEMPFE.LIGATABELLE.RESET_LIGASELECTION' | translate }}
       </bla-actionbutton>
+
 
     </div>
   </div>
