@@ -50,9 +50,12 @@ export class WettkampfErgebnisService {
 
     let Satz = null;
     const passenFil = this.passen.filter((passenFiltered) => passenFiltered.matchNr === nr && passenFiltered.lfdNr === satznummer && id === passenFiltered.mannschaftId);
+
     for (const passe of passenFil) {
         for (const i of passe.ringzahl) {
-          Satz += i;
+          if(passe.ringzahl[0] != null || passe.ringzahl[1] != null) {
+            Satz += i;
+          }
         }
     }
     return Satz;
@@ -133,26 +136,27 @@ export class WettkampfErgebnisService {
 
     this.wettkampfErgebnisse = [];
     for (let i = 0; i < this.matches.length ; i = i + 2) {
-      const wettkampfErgebnis = new WettkampfErgebnis (
-        this.matches[i].nr,
-        this.matches[i].wettkampfId,
-        this.getMannschaftsname(this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 3, this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 4, this.matches[i].mannschaftId),
-        this.getSatzergebnis(this.matches[i].nr, 5, this.matches[i].mannschaftId),
-        this.getMannschaftsname(this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 4, this.matches[i + 1].mannschaftId),
-        this.getSatzergebnis(this.matches[i + 1].nr, 5, this.matches[i + 1].mannschaftId),
-        this.getSatzpunkte(i),
-        this.getMatchpunkte(i)
-      );
-      this.wettkampfErgebnisse.push(wettkampfErgebnis);
-    }
+        const wettkampfErgebnis = new WettkampfErgebnis(
+          this.matches[i].nr,
+          this.matches[i].wettkampfId,
+          this.getMannschaftsname(this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 1, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 2, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 3, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 4, this.matches[i].mannschaftId),
+          this.getSatzergebnis(this.matches[i].nr, 5, this.matches[i].mannschaftId),
+          this.getMannschaftsname(this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 1, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 2, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 3, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 4, this.matches[i + 1].mannschaftId),
+          this.getSatzergebnis(this.matches[i + 1].nr, 5, this.matches[i + 1].mannschaftId),
+          this.getSatzpunkte(i),
+          this.getMatchpunkte(i)
+        );
+        this.wettkampfErgebnisse.push(wettkampfErgebnis);
+      }
+
     this.matches = [];
     this.passen = [];
     return this.wettkampfErgebnisse;
