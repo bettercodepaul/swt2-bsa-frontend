@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 // import {NotificationService} from '@shared/services';
+import {faSitemap } from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import {LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from './ligatabelle.config';
@@ -37,6 +38,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
   private sessionHandling: SessionHandling;
 
+  public zuDenLigadetailsIcon: IconProp = faSitemap;
   public zuruecksetzenIcon: IconProp = faUndo;
 
   public config = WETTKAEMPFE_CONFIG;
@@ -106,7 +108,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
           //this.selectedLigaDataprovider.setSelectedLigaID(parseInt(params[ID_PATH_PARAM], 10));
 
 
-         
+
 
         } else {
 
@@ -297,6 +299,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.isDeselected = true;
     console.log(this.isDeselected);
     const link = '/ligatabelle';
+    this.router.navigateByUrl(link);
+  }
+
+  public goToLigaDetails(){
+    console.log("IDDD" + this.providedID);
+    const link = '/home/' +  this.providedID;
     this.router.navigateByUrl(link);
   }
 }
