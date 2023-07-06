@@ -263,7 +263,7 @@
         },
         "SCHUETZENNUMMER": {
           "TITLE": "Input error - saving canceled",
-          "DESCRIPTION": "Please enter all marksman numbers."
+          "DESCRIPTION": "The marksman has already participated on this competition day in a different league."
         },
         "SCHUETZENEINDEUTIG": {
           "TITLE": "Input error - saving canceled",
@@ -1361,6 +1361,10 @@
         "PLATZHALTER_FAILURE": {
           "TITLE": "Placeholder Error",
           "DESCRIPTION": "The creation of the Placeholder team has failed. Reasons for this may be that the event is full or a Placeholder team is already in this event."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Update error",
+          "DESCRIPTION": "The event has a higher number of teams than the new maximum number allows."
         }
       }
     },
