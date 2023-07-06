@@ -426,17 +426,19 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
                month: this.numberToMonth(parseInt(elementWettkampf.wettkampfDatum.split("-")[1])),
                day: parseInt(elementWettkampf.wettkampfDatum.split("-")[2])
              };
-             this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
-             console.log(veranstaltungWettkaempfeDOLocal)
+             if(this.providedID == null || this.providedID == undefined) {
+               this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
+             }else if(this.providedID == veranstaltungWettkaempfeDOLocal.veranstaltungDO.ligaId){
+               this.veranstaltungWettkaempfeDO.push(veranstaltungWettkaempfeDOLocal);
+             }
+             this.veranstaltungWettkaempfeDO.sort((a,b) => Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum));
            })
          })
        }
      })
 
     });
-    if(this.providedID != null || this.providedID != undefined)
-      this.veranstaltungWettkaempfeDO.filter(veranstaltung => veranstaltung.veranstaltungDO.ligaId === this.providedID);
-    this.veranstaltungWettkaempfeDO.sort((a,b) => Date.parse(a.wettkaempfeDO.wettkampfDatum) - Date.parse(b.wettkaempfeDO.wettkampfDatum));
+
   }
 
   private numberToMonth(m:number):string{
