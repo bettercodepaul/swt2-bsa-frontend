@@ -51,6 +51,9 @@
       "DESCRIPTION": "Der eingegebene Link ist kein gültiger Link.",
       "BACK_TO_HOME": "Zurück zur Startseite"
     },
+    "FILEUPLOAD": {
+      "NO_FILE": "Keine Datei vorhanden"
+    },
     "IMPRESSUM": {
       "TITLE": "Impressum"
     }
@@ -817,6 +820,9 @@
         "LIGA_DETAIL" : {
           "LABEL": "Ligadetails",
           "MAX_WORDS_WARNING": "(max. 1500 Zeichen)"
+        },
+        "FILE_UPLOAD" :{
+          "LABEL": "Datei für weitere Informationen hochladen"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",

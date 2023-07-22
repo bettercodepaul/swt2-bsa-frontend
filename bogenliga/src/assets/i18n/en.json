@@ -48,6 +48,9 @@
       "DESCRIPTION": "The input link is not a valid link",
       "BACK_TO_HOME": "Back to home page"
     },
+    "FILEUPLOAD": {
+      "NO_FILE": "No File Available"
+    },
     "IMPRESSUM": {
       "TITLE": "Imprint"
     }
@@ -774,6 +777,9 @@
         "LIGA_DETAIL" : {
           "LABEL": "League details",
           "MAX_WORDS_WARNING": "(max. 300 words)"
+        },
+        "FILE_UPLOAD" :{
+          "LABEL": "Upload file for more Information"
         },
         "SAVE": "Save",
         "UPDATE": "Refresh",

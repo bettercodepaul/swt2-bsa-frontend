@@ -43,6 +43,8 @@ import {
 const ID_PATH_PARAM = 'id';
 
 
+
+
 class VeranstaltungWettkaempfe {
 
 
@@ -81,6 +83,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private selectedLigaDetailBase64: string;
   private selectedLigaDetailFileName: string;
   private selectedLigaDetailFileType: string;
+
   public loadingWettkampf = true;
   public loadingTable = false;
   public rows: TableRow[] = [];
@@ -99,6 +102,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
   private loadedLigaData: boolean;
   public veranstaltung: VeranstaltungDO;
 
+
+
   constructor(
     private notificationService: NotificationService,
     private router: Router,
@@ -113,6 +118,8 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     private selectedLigaDataprovider: SelectedLigaDataprovider) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
+
+
 
   }
 
@@ -186,7 +193,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     });
   }
 
-
+  isFileEmpty(): boolean{
+    return !this.selectedLigaDetailBase64 || this.selectedLigaDetailBase64.trim().length === 0;
+  }
 
 
 
@@ -232,7 +241,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
 
   /**File Download, converts Base64 string back to its original file with its original name*/
+
   public fileDownload(){
+
 
     const typeOfFile = this.selectedLigaDetailBase64.substring(this.selectedLigaDetailBase64.indexOf(':')+1, this.selectedLigaDetailBase64.indexOf(';'))
     this.selectedLigaDetailBase64 = this.selectedLigaDetailBase64.replace('data:' + typeOfFile + ';base64,', '');
@@ -245,7 +256,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
     const file = new Blob([byteArray], {type: this.selectedLigaDetailFileType});
     const fileUrl = URL.createObjectURL(file);
-    let fileName = this.selectedLigaDetailFileName + this.getFileType(this.selectedLigaDetailFileType);
+    let fileName = this.selectedLigaDetailFileName;
     let link = document.createElement('a');
     link.download = fileName;
     link.target = '_blank';
@@ -255,8 +266,9 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
     document.body.removeChild(link);
 
   }
+  /* Not needed anymore, because fileType is already in FileName
 
-  private getFileType(typeOfFile: string) {
+  getFileType(typeOfFile: string): string {
     switch (typeOfFile) {
       case 'application/pdf':
         return '.pdf'
@@ -272,7 +284,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
         return '';
     }
   }
-
+   */
 
 
 

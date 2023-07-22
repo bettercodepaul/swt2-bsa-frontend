@@ -57,8 +57,22 @@
           </div>
         </div>
 
-        <!-- File Download Button -->
-        <button (click)="fileDownload()">DownloadFile</button>
+        <div class="form-group-row">
+
+          <bla-actionbutton
+            [color]="ActionButtonColors.PRIMARY"
+            [iconClass]="'file-download'"
+            [id]="'downloadPdf'"
+            [disabled]="isFileEmpty()"
+            (click)="fileDownload()">
+            {{ selectedLigaDetailFileName ? selectedLigaDetailFileName : 'HOME.FILEUPLOAD.NO_FILE' | translate }}
+          </bla-actionbutton>
+
+
+
+        </div>
+
+
 
         <!-- Button -->
         <div id="Button">
