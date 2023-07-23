@@ -828,6 +828,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   // Creates Initial Matches for a Veranstaltung
   public createMatchesWT0(event: any) {
 
+    this.saveLoading = true;
+
     this.matchDataProvider.createInitialMatchesWT0(this.currentVeranstaltung)
         .then(() => {
           this.handleCreateMatchesWT0Success();
