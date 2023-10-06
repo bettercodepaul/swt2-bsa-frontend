@@ -38,6 +38,7 @@ export class CurrentUserService {
 
   public disableDefaultUser(): void {
     this.isDefaultUserLoggedIn = false;
+    // Test-Änderung
   }
 
   public persistCurrentUser(currentUser: UserSignInDTO): void {
@@ -140,10 +141,10 @@ export class CurrentUserService {
     return false;
   }
 
-  public hasAnyRole(roles :string [], currentRolename: string): boolean{
+  public hasAnyRole(roles: string [], currentRolename: string): boolean {
     let userAvailable = false;
-    for (let role of roles) {
-      if (role ===currentRolename) {
+    for (const role of roles) {
+      if (role === currentRolename) {
         userAvailable = true;
       }
     }
