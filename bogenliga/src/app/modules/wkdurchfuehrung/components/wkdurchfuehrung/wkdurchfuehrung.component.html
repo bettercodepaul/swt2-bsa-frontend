@@ -63,7 +63,7 @@
         </bla-grid-layout>
 
         <!---Alle Buttons zum: Setzliste, Schusszettel, Bogenkontrollliste, Meldezettel---->
-        <bla-col-layout [style]="'flex-wrap: wrap'">
+        <bla-col-layout [style]="!isDisabled() ? 'flex-wrap: wrap' : 'display: none'">
 
           <bla-download-actionbutton
             [id]="'downloadSetzliste'"
