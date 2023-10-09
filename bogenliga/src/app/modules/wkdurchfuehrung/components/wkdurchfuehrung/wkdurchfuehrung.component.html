@@ -42,6 +42,7 @@
         </bla-row-layout>
 
         <bla-grid-layout>
+          <div style="display: flex">
           <bla-actionbutton
             [id]="'generiereMatches'"
             [disabled]="isDisabledGMButton()"
@@ -51,6 +52,16 @@
             {{ 'WKDURCHFUEHRUNG.BUTTON.MATCHES' | translate }}
           </bla-actionbutton>
 
+          <div id="offlineButton"
+               *ngIf="(!isOffline()); else backOnline ">
+            <bla-actionbutton (click)="onButtonGoOfflineClick()"
+                              [color]="ActionButtonColors.DANGER"
+                              [iconClass]="'power-off'"
+                              [disabled]="isDisabled()"
+                              data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
+            </bla-actionbutton>
+          </div>
+
           <bla-actionbutton
             [id] = "'wettkampfDurchfuehrung'"
             [color]="ActionButtonColors.PRIMARY"
@@ -59,11 +70,21 @@
             [disabled]="isDisabled()">
             {{ 'WKDURCHFUEHRUNG.BUTTON.DURCHFUEHRUNG' | translate }}
           </bla-actionbutton>
+          </div>
+
+          <div id="adminOfflineResetButton"
+               *ngIf="(isAdmin())">
+            <bla-actionbutton (click)="resetWettkampfToken(this.selectedWettkampfId)"
+                              [color]="ActionButtonColors.DANGER"
+                              [iconClass]="'trash'"
+                              [disabled]="isDisabled()">Offlinetoken löschen
+            </bla-actionbutton>
+          </div>
 
         </bla-grid-layout>
 
         <!---Alle Buttons zum: Setzliste, Schusszettel, Bogenkontrollliste, Meldezettel---->
-        <bla-col-layout [style]="'flex-wrap: wrap'">
+        <bla-col-layout [style]="!isDisabled() ? 'flex-wrap: wrap' : 'display: none'">
 
           <bla-download-actionbutton
             [id]="'downloadSetzliste'"
@@ -121,15 +142,6 @@
             </div>
           </ng-template>
 
-          <div id="offlineButton"
-               *ngIf="(!isOffline()); else backOnline ">
-            <bla-actionbutton (click)="onButtonGoOfflineClick()"
-                              [color]="ActionButtonColors.DANGER"
-                              [iconClass]="'power-off'"
-                              [disabled]="isDisabled()"
-                              data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
-            </bla-actionbutton>
-          </div>
           <ng-template #backOnline id="onlineButton">
             <div>
               <bla-actionbutton (click)="onButtonGoOfflineClick()"
@@ -139,15 +151,6 @@
               </bla-actionbutton>
             </div>
           </ng-template>
-
-          <div id="adminOfflineResetButton"
-               *ngIf="(isAdmin())">
-            <bla-actionbutton (click)="resetWettkampfToken(this.selectedWettkampfId)"
-                              [color]="ActionButtonColors.DANGER"
-                              [iconClass]="'trash'"
-                              [disabled]="isDisabled()">Offlinetoken löschen
-            </bla-actionbutton>
-          </div>
 
         </bla-col-layout>
       </div>
