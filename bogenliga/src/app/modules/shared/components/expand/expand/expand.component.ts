@@ -10,7 +10,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class ExpandComponent {
   @Input() headerText: string;
   @Input() headerLink?: string;
-  expanded: boolean = true;
+  @Input() expanded: boolean = true;
   @Input() selectedItem: any;
   @Output() closeMenu: EventEmitter<void> = new EventEmitter<void>();
   @Output() itemSelected: EventEmitter<any> = new EventEmitter<any>();

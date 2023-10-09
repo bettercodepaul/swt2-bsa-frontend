@@ -198,6 +198,7 @@
     "TITEL": {
       "WKTAG": "Wettkampftage der Veranstaltung",
       "VERANSTALTUNG": "Veranstaltungen",
+      "DRUCKDATEN": "Druckdaten",
       "WETTKAEMPFE": "Wettkampftage",
       "LT_DURCHFUEHRUNG": "Ligatabelle Durchführung"
     },

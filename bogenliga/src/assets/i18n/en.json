@@ -82,7 +82,8 @@
       "WETTKAMPFTAGVIER": "Competition day 4"
     },
     "TITEL": {
-      "VERANSTALTUNG": "League-Selection"
+      "VERANSTALTUNG": "League-Selection",
+
     },
     "LIGATABELLE": {
       "TITEL": "League-Ranking",
@@ -136,6 +137,7 @@
     "TITEL": {
       "WKTAG": "Event competition days",
       "VERANSTALTUNG": "Events",
+      "DRUCKDATEN": "Print Data",
       "WETTKAEMPFE": "competition days",
       "LT_DURCHFUEHRUNG": "League table implementation"
     },
