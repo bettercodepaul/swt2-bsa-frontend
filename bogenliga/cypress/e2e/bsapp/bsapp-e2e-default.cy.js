@@ -1080,6 +1080,47 @@ describe('Ligadetailseite', function(){
     cy.get('[id="goToLigadetailsButton"]').click();
     cy.url().should('include', '#/home/' + randomID)
   })
+
+  it('Ligadetail speichern', function() {
+    const randomString = () => Math.random().toString(36).substring(2, 12);
+    let detailText = randomString();
+    cy.visit('http://localhost:4200/#/user/login');
+    cy.get('[data-cy=login-als-admin-button]').click();
+    cy.wait(2000);
+    cy.visit('http://localhost:4200/#/verwaltung/liga/1000');
+    cy.wait(5000);
+    cy.get('iframe').then($iframe => {
+      const $body = $iframe.contents().find('body');
+      cy.wrap($body).click().type('{selectall}{del}').type(detailText);
+    });
+    cy.get('[id*=ligaUpdateButton]').click();
+    cy.wait(9000)
+    cy.reload(true);
+    let value
+    cy.wait(2000)
+    cy.window()
+      .then(win => {
+        value = win.tinymce.activeEditor.getContent({format: 'text'});
+      }).then(() => {
+      expect(value).to.equal(detailText)
+    });
+  })
+
+  it("tests FileDownloadUndUpload", function()  {
+
+    cy.visit('http://localhost:4200/#/verwaltung/liga/1000');
+    cy.get("#FileID").click();
+    cy.get("#FileID").selectFile('cypress/TestFiles/TestDokument.pdf');
+    cy.wait(2000);
+    cy.get("#ligaUpdateButton").click();
+    cy.wait(10000);
+    cy.get("bla-notification button").click();
+    cy.get("li:nth-of-type(1) svg").click();
+    cy.visit("http://localhost:4200/#/home/1000");
+    cy.get("#downloadPdf").click();
+    cy.readFile('cypress/downloads/Testdokument.pdf')
+    })
+
 })
 
 describe('Ligaleiter User Tests', function(){
