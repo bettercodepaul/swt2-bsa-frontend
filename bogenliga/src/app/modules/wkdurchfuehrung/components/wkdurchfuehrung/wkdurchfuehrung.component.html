@@ -11,9 +11,10 @@
         [hidden]="div1Visible">
         <!--TABELLEN mit Wettkampftag-->
         <bla-row-layout>
-          <bla-expand #expandMenu headerText="{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}"
+          <bla-expand #expandMenu
+                      headerText="{{ 'WKDURCHFUEHRUNG.TITEL.VERANSTALTUNG' | translate }}"
                       headerLink="/wkdurchfuehrung"
-                      [selectedItem]= this.currentVeranstaltungName
+                      [selectedItem]=this.currentVeranstaltungName
                       (itemSelected)="expandMenu.onItemSelected($event)">
             <bla-quicksearch-list (onSelect)="onSelect($event); expandMenu.closeExpandMenu()"
                                   [items]="veranstaltungen"
@@ -27,7 +28,11 @@
                                   style="width: 40%; flex-grow: 0;">
             </bla-quicksearch-list>
           </bla-expand>
-          <bla-expand #expandMenu1 headerText="{{'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}" class="expandContainer" [selectedItem]= this.selectedWettkampftag (itemSelected)="expandMenu.onItemSelected($event)">
+          <bla-expand #expandMenu1
+                      headerText="{{'WKDURCHFUEHRUNG.TITEL.WKTAG' | translate }}"
+                      class="expandContainer"
+                      [selectedItem]=this.selectedWettkampftag
+                      (itemSelected)="expandMenu.onItemSelected($event)">
             <bla-data-table
               [config]="config_table"
               [rows]="rows"
@@ -40,36 +45,113 @@
             </bla-data-table>
           </bla-expand>
         </bla-row-layout>
+        <bla-expand #expandMenu2
+                    headerText="{{ 'WKDURCHFUEHRUNG.TITEL.DRUCKDATEN' | translate }}"
+                    headerLink="/wkdurchfuehrung"
+                    [selectedItem]=this.selectedWettkampftag
+                    [expanded]=!isDisabled()
+                    (itemSelected)="expandMenu2.onItemSelected($event)">
+          <bla-col-layout [style]="'flex-wrap: wrap'">
 
+            <bla-download-actionbutton
+              [id]="'downloadSetzliste'"
+              [downloadUrl]="onButtonDownload('pdf/setzliste')"
+              [fileName]="'setzliste.pdf'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'file-download'"
+              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
+            </bla-download-actionbutton>
+
+            <bla-download-actionbutton
+              [id]="'downloadSchusszettel'"
+              [downloadUrl]="onButtonDownload('pdf/schusszettel')"
+              [fileName]="'schusszettel.pdf'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'file-download'"
+              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
+            </bla-download-actionbutton>
+
+            <bla-download-actionbutton
+              [id]="'downloadBogenkontrollliste'"
+              [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
+              [fileName]="'bogenkontrollliste.pdf'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'file-download'"
+              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+            </bla-download-actionbutton>
+
+            <bla-download-actionbutton
+              [id]="'downloadMeldezettel'"
+              [downloadUrl]="onButtonDownload('pdf/meldezettel')"
+              [fileName]="'meldezettel.pdf'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'file-download'"
+              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
+            </bla-download-actionbutton>
+
+            <div id="setupTable"
+                 *ngIf="(!isOffline()); else onlineSetupTables">
+              <bla-actionbutton (click)="onButtonTabletClick()"
+                                [color]="ActionButtonColors.PRIMARY"
+                                [iconClass]="'table'"
+                                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+              </bla-actionbutton>
+            </div>
+
+
+            <ng-template #onlineSetupTables
+                         id="onlineSetupTables">
+              <div>
+                <bla-actionbutton (click)="onButtonTabletClick()"
+                                  [color]="ActionButtonColors.PRIMARY"
+                                  [iconClass]="'table'"
+                                  [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+                </bla-actionbutton>
+              </div>
+            </ng-template>
+
+            <ng-template #backOnline
+                         id="onlineButton">
+              <div>
+                <bla-actionbutton (click)="onButtonGoOfflineClick()"
+                                  [color]="ActionButtonColors.SUCCESS"
+                                  [iconClass]="'cloud'"
+                                  [disabled]="isDisabled()">Online gehen
+                </bla-actionbutton>
+              </div>
+            </ng-template>
+
+          </bla-col-layout>
+        </bla-expand>
         <bla-grid-layout>
           <div style="display: flex">
-          <bla-actionbutton
-            [id]="'generiereMatches'"
-            [disabled]="isDisabledGMButton()"
-            [color]="ActionButtonColors.SUCCESS"
-            [iconClass]="'cogs'"
-            (onClick)="generateMatches()">
-            {{ 'WKDURCHFUEHRUNG.BUTTON.MATCHES' | translate }}
-          </bla-actionbutton>
-
-          <div id="offlineButton"
-               *ngIf="(!isOffline()); else backOnline ">
-            <bla-actionbutton (click)="onButtonGoOfflineClick()"
-                              [color]="ActionButtonColors.DANGER"
-                              [iconClass]="'power-off'"
-                              [disabled]="isDisabled()"
-                              data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
+            <bla-actionbutton
+              [id]="'generiereMatches'"
+              [disabled]="isDisabledGMButton()"
+              [color]="ActionButtonColors.SUCCESS"
+              [iconClass]="'cogs'"
+              (onClick)="generateMatches()">
+              {{ 'WKDURCHFUEHRUNG.BUTTON.MATCHES' | translate }}
             </bla-actionbutton>
-          </div>
 
-          <bla-actionbutton
-            [id] = "'wettkampfDurchfuehrung'"
-            [color]="ActionButtonColors.PRIMARY"
-            [iconClass]="'arrow-right'"
-            (onClick)="toggleDiv()"
-            [disabled]="isDisabled()">
-            {{ 'WKDURCHFUEHRUNG.BUTTON.DURCHFUEHRUNG' | translate }}
-          </bla-actionbutton>
+            <div id="offlineButton"
+                 *ngIf="(!isOffline()); else backOnline ">
+              <bla-actionbutton (click)="onButtonGoOfflineClick()"
+                                [color]="ActionButtonColors.DANGER"
+                                [iconClass]="'power-off'"
+                                [disabled]="isDisabled()"
+                                data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
+              </bla-actionbutton>
+            </div>
+
+            <bla-actionbutton
+              [id]="'wettkampfDurchfuehrung'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'arrow-right'"
+              (onClick)="toggleDiv()"
+              [disabled]="isDisabled()">
+              {{ 'WKDURCHFUEHRUNG.BUTTON.DURCHFUEHRUNG' | translate }}
+            </bla-actionbutton>
           </div>
 
           <div id="adminOfflineResetButton"
@@ -84,75 +166,7 @@
         </bla-grid-layout>
 
         <!---Alle Buttons zum: Setzliste, Schusszettel, Bogenkontrollliste, Meldezettel---->
-        <bla-col-layout [style]="!isDisabled() ? 'flex-wrap: wrap' : 'display: none'">
 
-          <bla-download-actionbutton
-            [id]="'downloadSetzliste'"
-            [downloadUrl]="onButtonDownload('pdf/setzliste')"
-            [fileName]="'setzliste.pdf'"
-            [color]="ActionButtonColors.PRIMARY"
-            [iconClass]="'file-download'"
-            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
-          </bla-download-actionbutton>
-
-          <bla-download-actionbutton
-            [id]="'downloadSchusszettel'"
-            [downloadUrl]="onButtonDownload('pdf/schusszettel')"
-            [fileName]="'schusszettel.pdf'"
-            [color]="ActionButtonColors.PRIMARY"
-            [iconClass]="'file-download'"
-            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
-          </bla-download-actionbutton>
-
-          <bla-download-actionbutton
-            [id]="'downloadBogenkontrollliste'"
-            [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
-            [fileName]="'bogenkontrollliste.pdf'"
-            [color]="ActionButtonColors.PRIMARY"
-            [iconClass]="'file-download'"
-            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
-          </bla-download-actionbutton>
-
-          <bla-download-actionbutton
-            [id]="'downloadMeldezettel'"
-            [downloadUrl]="onButtonDownload('pdf/meldezettel')"
-            [fileName]="'meldezettel.pdf'"
-            [color]="ActionButtonColors.PRIMARY"
-            [iconClass]="'file-download'"
-            [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
-          </bla-download-actionbutton>
-
-          <div id="setupTable"
-               *ngIf="(!isOffline()); else onlineSetupTables">
-            <bla-actionbutton (click)="onButtonTabletClick()"
-                              [color]="ActionButtonColors.PRIMARY"
-                              [iconClass]="'table'"
-                              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-            </bla-actionbutton>
-          </div>
-
-
-          <ng-template #onlineSetupTables id="onlineSetupTables">
-            <div>
-              <bla-actionbutton (click)="onButtonTabletClick()"
-                                [color]="ActionButtonColors.PRIMARY"
-                                [iconClass]="'table'"
-                                [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-              </bla-actionbutton>
-            </div>
-          </ng-template>
-
-          <ng-template #backOnline id="onlineButton">
-            <div>
-              <bla-actionbutton (click)="onButtonGoOfflineClick()"
-                                [color]="ActionButtonColors.SUCCESS"
-                                [iconClass]="'cloud'"
-                                [disabled]="isDisabled()">Online gehen
-              </bla-actionbutton>
-            </div>
-          </ng-template>
-
-        </bla-col-layout>
       </div>
 
       <!--DIV 2 MIT DEN ANDEREN TABELLEN UND ANSICHTEN NACH GENERIERUNG MATCHES -->
@@ -177,11 +191,13 @@
 
         <bla-expand headerText="{{ 'WKDURCHFUEHRUNG.TITEL.LT_DURCHFUEHRUNG' | translate }}">
           <bla-col-layout>
-            <div class="row" style="margin-left: 5px">
+            <div class="row"
+                 style="margin-left: 5px">
               <section class="overview-dialog-content">
                 <ng-container *ngFor="let group of groupedMatches">
                   <bla-expand [headerText]="group.groupName">
-                    <bla-data-table [config]="config_table_match" [rows]="group.matches"></bla-data-table>
+                    <bla-data-table [config]="config_table_match"
+                                    [rows]="group.matches"></bla-data-table>
                   </bla-expand>
                 </ng-container>
               </section>
@@ -190,7 +206,7 @@
         </bla-expand>
 
         <bla-actionbutton
-          [id] = "'zurück'"
+          [id]="'zurück'"
           [color]="ActionButtonColors.PRIMARY"
           [iconClass]="'arrow-left'"
           (onClick)="toggleDiv()">
