@@ -1,4 +1,13 @@
 <!--<h2>Teilnehmende Mannschaften</h2>-->
+<div id="mitglied-anlegen-div">
+  <bla-actionbutton
+    id="vereinsmitglied-anlegen"
+    [id]="'DSB-Mitglied anlegen'"
+    [color]="ActionButtonColors.PRIMARY"
+    [iconClass]="'user-plus'"
+    (onClick)="addDSBMitglied()">
+    Vereinsmitglied anlegen
+  </bla-actionbutton>
 <div>
   <bla-data-table
     [config]="config_table"
@@ -8,6 +17,6 @@
   >
   </bla-data-table>
 </div>
-
+</div>
 
 
