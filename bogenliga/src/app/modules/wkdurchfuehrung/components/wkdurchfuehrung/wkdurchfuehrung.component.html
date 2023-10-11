@@ -195,10 +195,12 @@
                  style="margin-left: 5px">
               <section class="overview-dialog-content">
                 <ng-container *ngFor="let group of groupedMatches">
-                  <bla-expand [headerText]="group.groupName">
-                    <bla-data-table [config]="config_table_match"
-                                    [rows]="group.matches"></bla-data-table>
-                  </bla-expand>
+                  <h2 style="color:black;">
+                    {{group.groupName}}
+                  </h2>
+                  <bla-data-table [config]="config_table_match"
+                                  [rows]="group.matches">
+                  </bla-data-table>
                 </ng-container>
               </section>
             </div>
