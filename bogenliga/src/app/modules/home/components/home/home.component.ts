@@ -233,8 +233,7 @@ export class HomeComponent extends CommonComponentDirective implements OnInit, O
 
   /**File Download, converts Base64 string back to its original file with its original name*/
   public fileDownload(){
-    console.log("this.selectedLigaDetailFileName: "+ this.selectedLigaDetailFileName);
-    //typeOfFile wirft Fehler, weil die variablen NULL sind. Siehe oberer console.log)
+    //typeOfFile wirft Fehler, weil die variablen NULL sind.
     const typeOfFile = this.selectedLigaDetailBase64.substring(this.selectedLigaDetailBase64.indexOf(':')+1, this.selectedLigaDetailBase64.indexOf(';'))
     this.selectedLigaDetailBase64 = this.selectedLigaDetailBase64.replace('data:' + typeOfFile + ';base64,', '');
 
