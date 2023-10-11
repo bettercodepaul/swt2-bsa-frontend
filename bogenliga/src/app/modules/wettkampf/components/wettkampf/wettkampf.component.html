@@ -191,24 +191,26 @@
       </bla-actionbutton>
       &nbsp;
       <!-- Button - Einzelstatistik als PDF -->
-      <bla-download-button
+      <bla-download-actionbutton
         class = "hidden"
         id = "einzeldruckButton"
         [id]="'downloadEinzelstatistik'"
         [loading]="loadingData"
         [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
+        [iconClass]="'file-download'"
         [fileName]="'Einzelstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.EINZEL_ALS_PDF.LABEL'| translate}}
-      </bla-download-button>
+      </bla-download-actionbutton>
 
       <!-- Button - Gesamtstatistik Drucken -->
-      <bla-download-button
+      <bla-download-actionbutton
         class = "hidden"
         id = "gesamtdruckButton"
         [id]="'downloadGesamtstatistik'"
         [loading]="loadingData"
         [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
+        [iconClass]="'file-download'"
         [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
-      </bla-download-button>
+      </bla-download-actionbutton>
 
     </bla-col-layout>
 <!-- popup -->
