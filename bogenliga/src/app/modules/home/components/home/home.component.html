@@ -57,10 +57,11 @@
           </div>
         </div>
 
-        <!-- File Download Button -->
-        <button (click)="fileDownload()">DownloadFile</button>
+        <!-- File Download Link -->
+        <!-- Bug? File selectedLigaDetailFileName ist null, Name des files kann nicht angezeigt werden -->
+         <a (click)="fileDownload()">Download {{this.selectedLigaDetailFileName + this.getFileType(this.selectedLigaDetailFileType)}}</a>
 
-        <!-- Button -->
+         <!-- Button -->
         <div id="Button">
           <bla-actionbutton
             [id]="'ligadetailRegionSaveButton'"
