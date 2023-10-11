@@ -44,85 +44,74 @@
             >
             </bla-data-table>
           </bla-expand>
-        </bla-row-layout>
-        <bla-expand #expandMenu2
-                    headerText="{{ 'WKDURCHFUEHRUNG.TITEL.DRUCKDATEN' | translate }}"
-                    headerLink="/wkdurchfuehrung"
-                    [selectedItem]=this.selectedWettkampftag
-                    [expanded]=!isDisabled()
-                    (itemSelected)="expandMenu2.onItemSelected($event)">
-          <bla-col-layout [style]="'flex-wrap: wrap'">
+          <bla-expand #expandMenu2
+                      headerText="{{ 'WKDURCHFUEHRUNG.TITEL.DRUCKDATEN' | translate }}"
+                      headerLink="/wkdurchfuehrung"
+                      [selectedItem]=this.selectedWettkampftag
+                      [expanded]=!isDisabled()
+                      (itemSelected)="expandMenu2.onItemSelected($event)">
+            <bla-col-layout [style]="'flex-wrap: wrap'">
 
-            <bla-download-actionbutton
-              [id]="'downloadSetzliste'"
-              [downloadUrl]="onButtonDownload('pdf/setzliste')"
-              [fileName]="'setzliste.pdf'"
-              [color]="ActionButtonColors.PRIMARY"
-              [iconClass]="'file-download'"
-              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
-            </bla-download-actionbutton>
+              <bla-download-actionbutton
+                [id]="'downloadSetzliste'"
+                [downloadUrl]="onButtonDownload('pdf/setzliste')"
+                [fileName]="'setzliste.pdf'"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="'file-download'"
+                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SETZLISTE' | translate }}
+              </bla-download-actionbutton>
 
-            <bla-download-actionbutton
-              [id]="'downloadSchusszettel'"
-              [downloadUrl]="onButtonDownload('pdf/schusszettel')"
-              [fileName]="'schusszettel.pdf'"
-              [color]="ActionButtonColors.PRIMARY"
-              [iconClass]="'file-download'"
-              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
-            </bla-download-actionbutton>
+              <bla-download-actionbutton
+                [id]="'downloadSchusszettel'"
+                [downloadUrl]="onButtonDownload('pdf/schusszettel')"
+                [fileName]="'schusszettel.pdf'"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="'file-download'"
+                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.SCHUSSZETTEL' | translate }}
+              </bla-download-actionbutton>
 
-            <bla-download-actionbutton
-              [id]="'downloadBogenkontrollliste'"
-              [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
-              [fileName]="'bogenkontrollliste.pdf'"
-              [color]="ActionButtonColors.PRIMARY"
-              [iconClass]="'file-download'"
-              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
-            </bla-download-actionbutton>
+              <bla-download-actionbutton
+                [id]="'downloadBogenkontrollliste'"
+                [downloadUrl]="onButtonDownload('pdf/bogenkontrollliste')"
+                [fileName]="'bogenkontrollliste.pdf'"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="'file-download'"
+                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.KONTROLLLISTE' | translate }}
+              </bla-download-actionbutton>
 
-            <bla-download-actionbutton
-              [id]="'downloadMeldezettel'"
-              [downloadUrl]="onButtonDownload('pdf/meldezettel')"
-              [fileName]="'meldezettel.pdf'"
-              [color]="ActionButtonColors.PRIMARY"
-              [iconClass]="'file-download'"
-              [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
-            </bla-download-actionbutton>
+              <bla-download-actionbutton
+                [id]="'downloadMeldezettel'"
+                [downloadUrl]="onButtonDownload('pdf/meldezettel')"
+                [fileName]="'meldezettel.pdf'"
+                [color]="ActionButtonColors.PRIMARY"
+                [iconClass]="'file-download'"
+                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.MELDEZETTEL' | translate }}
+              </bla-download-actionbutton>
 
-            <div id="setupTable"
-                 *ngIf="(!isOffline()); else onlineSetupTables">
-              <bla-actionbutton (click)="onButtonTabletClick()"
-                                [color]="ActionButtonColors.PRIMARY"
-                                [iconClass]="'table'"
-                                [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
-              </bla-actionbutton>
-            </div>
-
-
-            <ng-template #onlineSetupTables
-                         id="onlineSetupTables">
-              <div>
+              <div id="setupTable"
+                   *ngIf="(!isOffline()); else onlineSetupTables">
                 <bla-actionbutton (click)="onButtonTabletClick()"
                                   [color]="ActionButtonColors.PRIMARY"
                                   [iconClass]="'table'"
-                                  [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+                                  [disabled]="isDisabled()">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
                 </bla-actionbutton>
               </div>
-            </ng-template>
 
-            <ng-template #backOnline
-                         id="onlineButton">
-              <div>
-                <bla-actionbutton (click)="onButtonGoOfflineClick()"
-                                  [color]="ActionButtonColors.SUCCESS"
-                                  [iconClass]="'cloud'"
-                                  [disabled]="isDisabled()">Online gehen
-                </bla-actionbutton>
-              </div>
-            </ng-template>
 
-          </bla-col-layout>
-        </bla-expand>
+              <ng-template #onlineSetupTables
+                           id="onlineSetupTables">
+                <div>
+                  <bla-actionbutton (click)="onButtonTabletClick()"
+                                    [color]="ActionButtonColors.PRIMARY"
+                                    [iconClass]="'table'"
+                                    [disabled]="true">{{ 'WKDURCHFUEHRUNG.BUTTON.TABLE_SETUP' | translate }}
+                  </bla-actionbutton>
+                </div>
+              </ng-template>
+            </bla-col-layout>
+          </bla-expand>
+        </bla-row-layout>
+
         <bla-grid-layout>
           <div style="display: flex">
             <bla-actionbutton
@@ -143,6 +132,17 @@
                                 data-cy="wkdurchfuehrung-btn-offlinegehen">Offline gehen
               </bla-actionbutton>
             </div>
+
+            <ng-template #backOnline
+                         id="onlineButton">
+              <div>
+                <bla-actionbutton (click)="onButtonGoOfflineClick()"
+                                  [color]="ActionButtonColors.SUCCESS"
+                                  [iconClass]="'cloud'"
+                                  [disabled]="isDisabled()">Online gehen
+                </bla-actionbutton>
+              </div>
+            </ng-template>
 
             <bla-actionbutton
               [id]="'wettkampfDurchfuehrung'"
