@@ -42,7 +42,8 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
     // TableActionType.MAP removed, maybe added again later on
     actionTypes: [TableActionType.VIEW],
     width:       6
-  }
+  },
+  buttonVersion2: true
   };
 
 

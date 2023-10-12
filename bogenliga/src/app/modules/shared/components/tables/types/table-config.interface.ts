@@ -15,5 +15,6 @@ export interface TableConfig {
   addPermission?: UserPermission[];
   downloadPermission?: UserPermission[];
   mapPermission?: UserPermission[];
+  buttonVersion2?: boolean; // In case buttons should be displayed colored and with text
 }
 

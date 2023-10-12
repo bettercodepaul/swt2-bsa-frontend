@@ -15,6 +15,8 @@ import {TableRow} from '../types/table-row.class';
 import {Router} from '@angular/router';
 import {CurrentUserService, UserPermission} from '@shared/services';
 import {ExpandComponent} from '@shared/components';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 
 @Component({
@@ -54,6 +56,32 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     super();
   }
 
+  // Returns true if buttons in table should be displayed colored and with text
+  public hasButtonVersion2(): boolean {
+    if(this.config.hasOwnProperty('buttonVersion2') && this.config.buttonVersion2){
+      return true;
+    }
+    return false;
+  }
+
+  public getButtonVersion2Icon(action: TableActionType): IconProp{
+    switch(action) {
+      case TableActionType.EDIT:
+        return 'edit';
+      case TableActionType.VIEW:
+        return 'hand-pointer';
+      case TableActionType.DELETE:
+        return 'trash';
+      case TableActionType.ADD:
+        return 'plus';
+      case TableActionType.MAP:
+        return 'map';
+      default:
+        return 'download';
+    }
+  }
+
+
   ngOnInit() {
     const clone = this.config;
     this.config = tableConfigWithDefaults(clone);
@@ -92,6 +120,28 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
       }
     }
     return icon;
+  }
+
+  public getButtonVersion2TranslationKey(action: TableActionType): string{
+    let translation: string = ''
+    switch(action){
+      case TableActionType.EDIT:
+        return 'TABLE.BUTTON2.EDIT';
+      case TableActionType.VIEW:
+        return 'TABLE.BUTTON2.VIEW';
+      case TableActionType.DELETE:
+        return 'TABLE.BUTTON2.DELETE';
+      case TableActionType.ADD:
+        return 'TABLE.BUTTON2.ADD';
+      case TableActionType.MAP:
+        return 'TABLE.BUTTON2.MAP';
+      case TableActionType.DOWNLOADLIZENZEN:
+        return 'TABLE.BUTTON2.DOWNLOADLIZENZEN';
+      case TableActionType.DOWNLOAD:
+        return 'TABLE.BUTTON2.DOWNLOAD';
+      default:
+        return'TABLE.BUTTON2.DOWNLOADRUECKENNUMMER';
+    }
   }
 
   public sortColumn(sortColumn: TableColumnConfig): void {
@@ -412,4 +462,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     const sortingClasses = this.tableSorter.getSortingClasses(column);
     return sortingClasses.indexOf('sortable') > -1;
   }
+
+  protected readonly ActionButtonColors = ActionButtonColors;
 }

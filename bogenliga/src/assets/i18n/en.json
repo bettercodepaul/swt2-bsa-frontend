@@ -82,7 +82,7 @@
       "WETTKAMPFTAGVIER": "Competition day 4"
     },
     "TITEL": {
-      "VERANSTALTUNG": "League-Selection",
+      "VERANSTALTUNG": "League-Selection"
 
     },
     "LIGATABELLE": {
@@ -1625,6 +1625,16 @@
       "DELETE": "Delete",
       "ADD": "Add",
       "DOWNLOAD": "Download licence"
+    },
+    "BUTTON2": {
+      "EDIT": "Edit",
+      "MAP": "View on map",
+      "DELETE": "Delete",
+      "ADD": "Add",
+      "DOWNLOAD": "Download",
+      "DOWNLOADLIZENZEN": "Download licenses",
+      "DOWNLOADRUECKENNUMMER": "Download back number",
+      "VIEW": "Select"
     },
     "NO_ENTRIES_FOUND": "No entries found",
     "LOADING": "Loading entries",
