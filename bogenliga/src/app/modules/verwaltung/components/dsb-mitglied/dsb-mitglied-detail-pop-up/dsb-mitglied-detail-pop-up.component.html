@@ -1,6 +1,3 @@
 <div class="mat-dialog-content">
-<bla-dsb-mitglied-detail [isPopUp]="true" [dialogRef]="dialogRef"></bla-dsb-mitglied-detail>
-<bla-actionbutton (onClick)="dialogRef.close()"
-                  [color]="ActionButtonColors.SECONDARY"
-                  [iconClass]="'arrow-left'">Zurück</bla-actionbutton>
-
+<bla-dsb-mitglied-detail [isPopUp]="true" [dialogRef]="dialogRef" [selectedVereinId]="data.selectedVereinId"></bla-dsb-mitglied-detail>
+</div>

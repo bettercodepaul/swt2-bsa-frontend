@@ -822,7 +822,9 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.loadingYears = false;
   }
   addDSBMitglied(): void {
-    const dialogRef = this.dialog.open(DsbMitgliedDetailPopUpComponent
+    const dialogRef = this.dialog.open(DsbMitgliedDetailPopUpComponent, {data: {
+        selectedMannschaftId: null,
+      }}
     );
 
   }
