@@ -1781,6 +1781,17 @@
       "DOWNLOAD": "Lizenz herunterladen",
       "MAP": "Ort anzeigen"
     },
+    "BUTTON2": {
+      "EDIT": "Bearbeiten",
+      "MAP": "Ort anzeigen",
+      "DELETE": "Löschen",
+      "ADD": "Hinzufügen",
+      "DOWNLOAD": "Download",
+      "DOWNLOADLIZENZEN": "Lizenzen downloaden",
+      "DOWNLOADRUECKENNUMMER": "Rückennummer downloaden",
+      "VIEW": "Auswählen"
+    },
+
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
     "TITLE": "Tabelle",
