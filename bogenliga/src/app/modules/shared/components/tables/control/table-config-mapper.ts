@@ -198,7 +198,7 @@ export function tableConfigWithDefaults(optional: {
     tableConfig.columns = columnConfig;
   }
 
-  if(optional.hasOwnProperty('buttonVersion2')){
+  if(optional.hasOwnProperty('buttonVersion2') && optional.buttonVersion2){
     tableConfig.buttonVersion2 = true;
   }
 
