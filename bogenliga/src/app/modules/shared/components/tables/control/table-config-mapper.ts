@@ -66,7 +66,8 @@ const DEFAULT_TABLE_ACTION_CONFIG: TableActionConfig = {
 };
 
 const DEFAULT_TABLE_CONFIG: TableConfig = {
-  columns: []
+  columns: [],
+  buttonVersion2: false
 };
 
 
@@ -180,7 +181,8 @@ export function tableConfigWithDefaults(optional: {
   columns?: TableColumnConfig[],
   iconUrls?: any,
   actions?: TableActionConfig,
-  actionColumnTranslationKey?: string
+  actionColumnTranslationKey?: string,
+  buttonVersion2?: boolean
 } = {}): TableConfig {
   // clone defaults
   const tableConfig = Object.assign({}, DEFAULT_TABLE_CONFIG);
@@ -194,6 +196,10 @@ export function tableConfigWithDefaults(optional: {
     });
 
     tableConfig.columns = columnConfig;
+  }
+
+  if(optional.hasOwnProperty('buttonVersion2') && optional.buttonVersion2){
+    tableConfig.buttonVersion2 = true;
   }
 
   tableConfig.actions = tableActionConfigWithDefaults(optional.actions);
