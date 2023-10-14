@@ -56,7 +56,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     super();
   }
 
-  // Returns true if buttons in table should be displayed colored and with text
+  // Returns true if actions in table should be displayed as colored buttons with text
   public hasButtonVersion2(): boolean {
     if(this.config.hasOwnProperty('buttonVersion2') && this.config.buttonVersion2){
       return true;
@@ -64,12 +64,14 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     return false;
   }
 
+  // Gets icons for colored buttons
+
   public getButtonVersion2Icon(action: TableActionType): IconProp{
     switch(action) {
       case TableActionType.EDIT:
         return 'edit';
       case TableActionType.VIEW:
-        return 'hand-pointer';
+        return 'check';
       case TableActionType.DELETE:
         return 'trash';
       case TableActionType.ADD:
@@ -77,10 +79,34 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
       case TableActionType.MAP:
         return 'map';
       default:
-        return 'download';
+        return 'file-download';
     }
   }
 
+  // Gets translation key for colored buttons
+  public getButtonVersion2TranslationKey(action: TableActionType): string{
+    let actionName = TableActionType[action];
+    return 'TABLE.BUTTON2.' + actionName;
+  }
+
+  // Gets color scheme for colored buttons
+  public getButtonVersion2Color(action: TableActionType): ActionButtonColors {
+    switch(action){
+      case TableActionType.DOWNLOAD:
+      case TableActionType.DOWNLOADRUECKENNUMMER:
+      case TableActionType.DOWNLOADLIZENZEN:
+      case TableActionType.VIEW:
+      case TableActionType.MAP:
+      case TableActionType.EDIT:
+        return ActionButtonColors.PRIMARY;
+      case TableActionType.ADD:
+        return ActionButtonColors.SUCCESS;
+      case TableActionType.DELETE:
+          return ActionButtonColors.DANGER;
+      default:
+        return ActionButtonColors.SECONDARY;
+    }
+  }
 
   ngOnInit() {
     const clone = this.config;
@@ -105,10 +131,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
    * ~~~~ sorting methods ~~~~
    */
 
-  public getSortingIcon(column: TableColumnConfig): string {
+  public getSortingIcon(column: TableColumnConfig): IconProp {
     const sortingClasses = this.tableSorter.getSortingClasses(column);
     // map css classes to icons ...
-    let icon = '';
+    let icon: any = '';
     if (sortingClasses.indexOf('sortable') > -1) {
 
       if (sortingClasses.indexOf('unsorted') > -1) {
@@ -122,32 +148,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     return icon;
   }
 
-  public getButtonVersion2TranslationKey(action: TableActionType): string{
-    let translation: string = ''
-    switch(action){
-      case TableActionType.EDIT:
-        return 'TABLE.BUTTON2.EDIT';
-      case TableActionType.VIEW:
-        return 'TABLE.BUTTON2.VIEW';
-      case TableActionType.DELETE:
-        return 'TABLE.BUTTON2.DELETE';
-      case TableActionType.ADD:
-        return 'TABLE.BUTTON2.ADD';
-      case TableActionType.MAP:
-        return 'TABLE.BUTTON2.MAP';
-      case TableActionType.DOWNLOADLIZENZEN:
-        return 'TABLE.BUTTON2.DOWNLOADLIZENZEN';
-      case TableActionType.DOWNLOAD:
-        return 'TABLE.BUTTON2.DOWNLOAD';
-      default:
-        return'TABLE.BUTTON2.DOWNLOADRUECKENNUMMER';
-    }
-  }
 
   public sortColumn(sortColumn: TableColumnConfig): void {
     this.rows = this.tableSorter.sortByColumn(this.rows, sortColumn);
   }
-
 
   /*
    * ~~~~ getter methods ~~~~
@@ -160,7 +164,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
       return '0';
     }
   }
-
 
   public formatText(row: TableRow, column: TableColumnConfig): string {
     const text = row.getText(column);
@@ -241,7 +244,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
    * @param action current action
    * @returns {string} path to the icon
    */
-  public determineIcon(row: TableRow, action: TableActionType): string {
+  public determineIcon(row: TableRow, action: TableActionType): IconProp {
     let iconSelector = TableActionType[action].toLowerCase();
     let iconStateSelector = 'active';
 

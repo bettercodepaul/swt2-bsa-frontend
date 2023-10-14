@@ -110,7 +110,7 @@
              [title]="getButtonVersion2TranslationKey(action) | translate"
              *ngIf="hasActionPermission(action) && hasButtonVersion2()">
             <bla-actionbutton
-              [color]="ActionButtonColors.PRIMARY"
+              [color]= "getButtonVersion2Color(action)"
               [iconClass]=" getButtonVersion2Icon(action)">
                {{ getButtonVersion2TranslationKey(action) | translate}}
             </bla-actionbutton>
