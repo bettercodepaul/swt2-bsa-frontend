@@ -605,6 +605,10 @@
       "EINSTELLUNG": {
         "LABEL": "settings",
         "DESCRIPTION": "Management of settings"
+      },
+      "SYNC": {
+        "LABEL": "Data",
+        "DESCRIPTION": "Synchronise Data between old and new App"
       }
     },
     "SPORTJAHR": {

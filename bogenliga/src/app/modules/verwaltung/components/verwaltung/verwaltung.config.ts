@@ -80,6 +80,15 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         datacy:         'verwaltung-einstellungen-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.TOOLTIP'
       },
+      {
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.SYNC.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.SYNC.DESCRIPTION',
+        icon:           'database',
+        route:          'data',
+        permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
+        datacy:         'verwaltung-user-button',
+        tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.SYNC.TOOLTIP'
+      },
       ]
   }
 };

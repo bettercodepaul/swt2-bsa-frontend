@@ -591,6 +591,11 @@
           "LABEL": "Einstellungen",
           "DESCRIPTION": "Einstellungen der Vereinsdetails, sowie der Bogenliaga App ",
           "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
+        },
+        "SYNC": {
+          "LABEL": "Daten",
+          "DESCRIPTION": "Synchronizieren der Daten zwischen altes und neues System",
+          "TOOLTIP": "● Synchronizieren der Daten zwischen altes und neues System\n"
         }
       }
     },
