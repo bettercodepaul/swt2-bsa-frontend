@@ -20,7 +20,7 @@ import {
   WettkampftageComponent,
   EinstellungenDetailComponent,
   EinstellungenOverviewComponent,
-  DatenComponent
+  SyncdatenComponent
 } from './components';
 import {
   UserDetailGuard,
@@ -113,7 +113,7 @@ export const VERWALTUNG_ROUTES: Routes = [
   },
   {
     path: 'daten',
-    component: DatenComponent,
+    component: SyncdatenComponent,
     pathMatch: 'full',
     canActivate: [EinstellungenOverviewGuard]
   },
