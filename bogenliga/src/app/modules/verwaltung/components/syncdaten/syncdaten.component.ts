@@ -32,7 +32,6 @@ const ID_PATH_PARAM = 'id';
 export class SyncdatenComponent extends CommonComponentDirective implements OnInit {
   public config = DATEN_CONFIG;
   public ButtonType = ButtonType;
-  public regionen: Array<RegionDO> = [new RegionDO()];
   public deleteLoading = false;
   public saveLoading = false;
   public id;
