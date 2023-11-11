@@ -591,9 +591,9 @@
           "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
         },
         "SYNC": {
-          "LABEL": "Daten",
-          "DESCRIPTION": "Synchronizieren der Daten zwischen altes und neues System",
-          "TOOLTIP": "● Synchronizieren der Daten zwischen altes und neues System\n"
+          "LABEL": "Sync",
+          "DESCRIPTION": "Synchronisierung zwischen altem und neuem System",
+          "TOOLTIP": "● Check Sync Status\n● Start New Sync\n"
         }
       }
     },
