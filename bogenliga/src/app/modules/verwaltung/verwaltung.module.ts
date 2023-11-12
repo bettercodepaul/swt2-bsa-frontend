@@ -22,7 +22,7 @@ import {
   VeranstaltungDetailComponent,
   WettkampftageComponent,
   EinstellungenOverviewComponent,
-  EinstellungenDetailComponent
+  EinstellungenDetailComponent, SyncdatenComponent
 } from './components';
 import {
   UserDetailGuard,
@@ -95,6 +95,7 @@ import {MatIconModule} from '@angular/material/icon';
     RegionOverviewComponent,
     MannschaftDetailComponent,
     SchuetzenComponent,
+    SyncdatenComponent,
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
     WettkampftageComponent,
