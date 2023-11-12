@@ -112,7 +112,7 @@ export const VERWALTUNG_ROUTES: Routes = [
     canActivate: [EinstellungenOverviewGuard]
   },
   {
-    path: 'daten',
+    path: 'syncdaten',
     component: SyncdatenComponent,
     pathMatch: 'full',
     canActivate: [EinstellungenOverviewGuard]
