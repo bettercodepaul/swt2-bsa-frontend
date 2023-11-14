@@ -9,25 +9,20 @@ export const SYNC_OVERVIEW_CONFIG: OverviewDialogConfig = {
   tableConfig: {
     columns: [
       {
-        translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.NAME',
-        propertyName:   'regionName',
+        translationKey: 'MANAGEMENT.SYNC.TABLE.HEADERS.TIMESTAMP',
+        propertyName:   'syncTimestamp',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.CONTRACTION',
-        propertyName:   'regionKuerzel',
+        translationKey: 'MANAGEMENT.SYNC.TABLE.HEADERS.DESCRIPTION',
+        propertyName:   'syncDescription',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.REGION_TYP',
-        propertyName:   'regionTyp',
+        translationKey: 'MANAGEMENT.SYNC.TABLE.HEADERS.STATUS',
+        propertyName:   'syncStatus',
         width:          20,
       },
-      {
-        translationKey: 'MANAGEMENT.REGIONEN.TABLE.HEADERS.REGION_SUPERORDINATE',
-        propertyName:   'regionUebergeordnetAsName',
-        width:          20,
-      }
     ],
     actions: {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
