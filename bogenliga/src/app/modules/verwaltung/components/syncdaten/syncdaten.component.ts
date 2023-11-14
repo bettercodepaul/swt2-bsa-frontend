@@ -18,19 +18,16 @@ import {
 } from '../../../shared/services/notification';
 import {RegionDataProviderService} from '../../services/region-data-provider.service';
 
-import {RegionDO} from '../../types/region-do.class';
-import { SYNC_OVERVIEW_CONFIG} from './syncdaten.config';
+import {SYNC_OVERVIEW_CONFIG} from './syncdaten.config';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {RegionDTO} from '@verwaltung/types/datatransfer/region-dto.class';
-import {NOTIFICATION_DELETE_REGIONEN} from '@verwaltung/components';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 
-
-
+export const NOTIFICATION_DELETE_SYNCDATEN = 'syncdaten_delete';
 const ID_PATH_PARAM = 'id';
 
 @Component({
@@ -99,9 +96,9 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
     const notification: Notification = {
-      id:               NOTIFICATION_DELETE_REGIONEN + id,
-      title:            'MANAGEMENT.REGIONEN.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.REGIONEN.NOTIFICATION.DELETE.DESCRIPTION',
+      id:               NOTIFICATION_DELETE_SYNCDATEN + id,
+      title:            'MANAGEMENT.SYNC.NOTIFICATION.DELETE.TITLE',
+      description:      'MANAGEMENT.SYNC.NOTIFICATION.DELETE.DESCRIPTION',
       descriptionParam: '' + id,
       severity:         NotificationSeverity.QUESTION,
       origin:           NotificationOrigin.USER,
@@ -110,7 +107,7 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
     };
 
 
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_REGIONEN + id)
+    this.notificationService.observeNotification(NOTIFICATION_DELETE_SYNCDATEN + id)
         .subscribe((myNotification) => {
           if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
             this.SyncdatenDataProvider.deleteById(id)
@@ -138,7 +135,7 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/regionen/' + versionedDataObject.id);
+    this.router.navigateByUrl('/verwaltung/syncdaten/' + versionedDataObject.id);
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<RegionDTO[]>): void {

@@ -1588,6 +1588,22 @@
     "SYNC_DETAIL": {
       "TITLE": "Syncdaten - Details"
     },
+    "SYNC": {
+      "TITLE": "Syncdaten",
+      "TABLE": {
+        "HEADERS": {
+          "TIMESTAMP": "Timestamp",
+          "DESCRIPTION": "Description",
+          "STATUS": "Status"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Syncdaten löschen",
+          "DESCRIPTION": "Wollen Sie die Syncdaten mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
     "EINSTELLUNGEN": {
       "TITLE": "Einstellungen - Übersicht",
       "FORM": {
