@@ -58,8 +58,7 @@
         </div>
 
         <!-- File Download Link -->
-        <!-- Bug? File selectedLigaDetailFileName ist null, Name des files kann nicht angezeigt werden -->
-         <a (click)="fileDownload()">Download {{this.selectedLigaDetailFileName + this.getFileType(this.selectedLigaDetailFileType)}}</a>
+         <a (click)="fileDownload()" *ngIf="this.selectedLigaDetailFileName">Download {{this.selectedLigaDetailFileName + this.getFileType(this.selectedLigaDetailFileType)}}</a>
 
          <!-- Button -->
         <div id="Button">
