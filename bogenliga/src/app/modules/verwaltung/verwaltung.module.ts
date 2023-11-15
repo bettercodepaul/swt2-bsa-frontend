@@ -22,8 +22,7 @@ import {
   VeranstaltungDetailComponent,
   WettkampftageComponent,
   EinstellungenOverviewComponent,
-  EinstellungenDetailComponent
-
+  EinstellungenDetailComponent, SyncdatenComponent
 } from './components';
 import {
   UserDetailGuard,
@@ -49,20 +48,28 @@ import {
 
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
-import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
+import {
+  MannschaftDetailComponent
+} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
 
-import {SchuetzenComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
+import {
+  SchuetzenComponent
+} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
 import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
-import { DsbMitgliedDetailPopUpComponent } from './components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
-import {SchuetzenPopUpComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen-pop-up/schuetzen-pop-up.component';
+import {
+  DsbMitgliedDetailPopUpComponent
+} from './components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
+import {
+  SchuetzenPopUpComponent
+} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen-pop-up/schuetzen-pop-up.component';
 import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
-  imports: [
+  imports:      [
     CommonModule,
     RouterModule.forChild(VERWALTUNG_ROUTES),
     SharedModule.forChild(),
@@ -88,6 +95,7 @@ import {MatIconModule} from '@angular/material/icon';
     RegionOverviewComponent,
     MannschaftDetailComponent,
     SchuetzenComponent,
+    SyncdatenComponent,
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
     WettkampftageComponent,
@@ -96,15 +104,15 @@ import {MatIconModule} from '@angular/material/icon';
     DsbMitgliedDetailPopUpComponent,
     SchuetzenPopUpComponent
   ],
-  providers: [
-    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
+  providers:    [
+    {provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js'}
   ]
 })
 export class VerwaltungModule {
 
   static forRoot(): ModuleWithProviders<SharedModule> {
     return {
-      ngModule: SharedModule,
+      ngModule:  SharedModule,
       providers: [
         VerwaltungGuard,
         DsbMitgliedOverviewGuard,
@@ -134,7 +142,7 @@ export class VerwaltungModule {
 
   static forChild(): ModuleWithProviders<SharedModule> {
     return {
-      ngModule: SharedModule,
+      ngModule:  SharedModule,
       providers: []
     };
   }

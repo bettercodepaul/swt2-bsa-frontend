@@ -17,3 +17,4 @@ export * from './veranstaltung/veranstaltung-detail/veranstaltung-detail.compone
 export * from './veranstaltung/veranstaltung-detail/wettkampftage/wettkampftage.component';
 export * from './einstellungen/einstellungen-overview/einstellungen-overview.component';
 export * from './einstellungen/einstellungen-detail/einstellungen-detail.component';
+export * from './syncdaten/syncdaten.component';
