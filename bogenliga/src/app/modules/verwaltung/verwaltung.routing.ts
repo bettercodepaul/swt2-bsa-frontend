@@ -42,7 +42,8 @@ import {
   WettkampftageGuard,
   SportjahrOverviewGuard,
   EinstellungenDetailGuard,
-  EinstellungenOverviewGuard
+  EinstellungenOverviewGuard,
+  SyncdatenOverviewGuard
 } from './guards';
 import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
@@ -115,7 +116,7 @@ export const VERWALTUNG_ROUTES: Routes = [
     path: 'syncdaten',
     component: SyncdatenComponent,
     pathMatch: 'full',
-    canActivate: [EinstellungenOverviewGuard]
+    canActivate: [SyncdatenOverviewGuard]
   },
   {path: 'einstellungen/:id', component: EinstellungenDetailComponent, canActivate: [EinstellungenDetailGuard]},
   {path: 'sportjahr/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
