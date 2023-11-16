@@ -44,7 +44,8 @@ import {
   WettkampftageGuard,
   SportjahrOverviewGuard,
   EinstellungenDetailGuard,
-  EinstellungenOverviewGuard
+  EinstellungenOverviewGuard,
+  SyncdatenOverviewGuard
 
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
@@ -135,7 +136,8 @@ export class VerwaltungModule {
         WettkampftageGuard,
         SportjahrOverviewGuard,
         EinstellungenDetailGuard,
-        EinstellungenOverviewGuard
+        EinstellungenOverviewGuard,
+        SyncdatenOverviewGuard
       ]
     };
   }
