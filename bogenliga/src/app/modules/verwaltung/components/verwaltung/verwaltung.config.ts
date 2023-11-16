@@ -86,7 +86,7 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         icon:           'database',
         route:          'syncdaten',
         permissions:    [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN],
-        datacy:         'verwaltung-user-button',
+        datacy:         'verwaltung-sync-button',
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.SYNC.TOOLTIP'
       },
       ]
