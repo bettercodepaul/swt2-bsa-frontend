@@ -14,7 +14,7 @@ import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
 import {Router} from '@angular/router';
 import {CurrentUserService, UserPermission} from '@shared/services';
-import {ExpandComponent} from '@shared/components';
+import {ExpandComponent} from '@shared/components/expand';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
