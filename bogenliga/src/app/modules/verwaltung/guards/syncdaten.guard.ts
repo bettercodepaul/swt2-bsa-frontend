@@ -9,6 +9,6 @@ export class SyncdatenOverviewGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.currentUserService.hasAnyPermisson(
-      [UserPermission.CAN_READ_SYSTEMDATEN, UserPermission.CAN_MODIFY_SYSTEMDATEN]);
+      [UserPermission.CAN_MODIFY_SYSTEMDATEN]);
   }
 }
