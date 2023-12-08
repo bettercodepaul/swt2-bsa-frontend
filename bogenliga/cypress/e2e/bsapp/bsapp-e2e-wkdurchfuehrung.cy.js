@@ -17,9 +17,10 @@ describe('Wkdurchfuehrung tests', function () {
    * This test checks if Veranstaltungen in wkdurchfuehrung load correctly
    */
   it.only('Anzeige Veranstaltung und Jahre in wkdurchfuehrung',  () => {
+    cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
     cy.wait(1000)
-    cy.get('[headerlink="/wkdurchfuehrung"] > .expand-container > .expand-header').click()
+    cy.get('[headerlink="/wkdurchfuehrung"] > .expand-container > .expand-header').click({ multiple: true })
     cy.wait(1000)
     cy.get('[data-cy="bla-selection-list"] > option:eq(1)').click({force: true}) // click function does not work
 
