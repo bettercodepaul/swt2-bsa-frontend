@@ -1781,7 +1781,7 @@
       "DOWNLOAD": "Lizenz herunterladen",
       "MAP": "Ort anzeigen"
     },
-    "BUTTON2": {
+    "ACTION_TEXT": {
       "EDIT": "Bearbeiten",
       "MAP": "Ort anzeigen",
       "DELETE": "Löschen",

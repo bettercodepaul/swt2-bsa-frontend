@@ -57,8 +57,8 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   }
 
   // Returns true if actions in table should be displayed as colored buttons with text
-  public hasButtonVersion2(): boolean {
-    if(this.config.hasOwnProperty('buttonVersion2') && this.config.buttonVersion2){
+  public hasColoredActionsWithText(): boolean {
+    if(this.config.hasOwnProperty('coloredActionsWithText') && this.config.coloredActionsWithText){
       return true;
     }
     return false;
@@ -66,7 +66,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
 
   // Gets icons for colored buttons
 
-  public getButtonVersion2Icon(action: TableActionType): IconProp{
+  public getColoredActionsWithTextIcon(action: TableActionType): IconProp{
     switch(action) {
       case TableActionType.EDIT:
         return 'edit';
@@ -84,13 +84,13 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   }
 
   // Gets translation key for colored buttons
-  public getButtonVersion2TranslationKey(action: TableActionType): string{
+  public getColoredActionsWithTextTranslationKey(action: TableActionType): string{
     let actionName = TableActionType[action];
-    return 'TABLE.BUTTON2.' + actionName;
+    return 'TABLE.ACTION_TEXT.' + actionName;
   }
 
   // Gets color scheme for colored buttons
-  public getButtonVersion2Color(action: TableActionType): ActionButtonColors {
+  public getColoredActionsWithTextColor(action: TableActionType): ActionButtonColors {
     switch(action){
       case TableActionType.DOWNLOAD:
       case TableActionType.DOWNLOADRUECKENNUMMER:
