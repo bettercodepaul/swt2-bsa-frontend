@@ -20,9 +20,12 @@ describe('Wkdurchfuehrung tests', function () {
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
     cy.wait(1000)
-    cy.get('[headerlink="/wkdurchfuehrung"] > .expand-container > .expand-header').click({ multiple: true })
+    cy.get('[ng-reflect-header-text="Veranstaltungen"] > .expand-container > .expand-header').click()
     cy.wait(1000)
-    cy.get('[data-cy="bla-selection-list"] > option:eq(1)').click({force: true}) // click function does not work
+    cy.get('[ng-reflect-header-text="Veranstaltungen"] > .expand-container > .expand-header > .expand-icon').click()
+    cy.wait(1000)
+    cy.get('[data-cy="bla-selection-list"]').should('be.visible');
+    //cy.get('[data-cy="bla-selection-list"] > option:eq(1)').first().click() // click function does not work
 
     // cy.get('.expandContainer > .expand-container > .expand-header').click()
 
