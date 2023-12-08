@@ -1626,7 +1626,7 @@
       "ADD": "Add",
       "DOWNLOAD": "Download licence"
     },
-    "BUTTON2": {
+    "ACTION_TEXT": {
       "EDIT": "Edit",
       "MAP": "View on map",
       "DELETE": "Delete",

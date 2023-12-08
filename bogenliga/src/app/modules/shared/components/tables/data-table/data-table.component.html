@@ -97,7 +97,7 @@
              data-toggle="tooltip" data-placement="top"
              [attr.data-cy]="determineTitle(row, action)"
              [title]="determineTitle(row, action) | translate"
-             *ngIf="hasActionPermission(action) && !hasButtonVersion2()">
+             *ngIf="hasActionPermission(action) && !hasColoredActionsWithText()">
              <fa-icon *ngIf="isActionVisible(row, action)"
                       [icon]="determineIcon(row, action)"
                       [spin]="determineIcon(row, action) === 'sync'"
@@ -107,12 +107,12 @@
 
           <a (click)="onIconClicked(row, action)"
              [attr.data-cy]="determineTitle(row, action)"
-             [title]="getButtonVersion2TranslationKey(action) | translate"
-             *ngIf="hasActionPermission(action) && hasButtonVersion2()">
+             [title]="getColoredActionsWithTextTranslationKey(action) | translate"
+             *ngIf="hasActionPermission(action) && hasColoredActionsWithText()">
             <bla-actionbutton
-              [color]= "getButtonVersion2Color(action)"
-              [iconClass]=" getButtonVersion2Icon(action)">
-               {{ getButtonVersion2TranslationKey(action) | translate}}
+              [color]= "getColoredActionsWithTextColor(action)"
+              [iconClass]=" getColoredActionsWithTextIcon(action)">
+               {{ getColoredActionsWithTextTranslationKey(action) | translate}}
             </bla-actionbutton>
           </a>
         </span>
