@@ -30,7 +30,7 @@ describe('Wkdurchfuehrung tests', function () {
     /**
      * This test checks if Matches of Wettkampftage in wkdurchfuehrung load correctly
      */
-    cy.get('[data-cy="bla-selection-list"]').select(0)
+    cy.get('[data-cy="bla-selection-list"]').select(1)
     cy.wait(1000)
     cy.get('[data-cy="wkdurchfuehrung-wettkampftage-list"] > .table-responsive').should('be.visible')
     cy.wait(1000)
@@ -38,8 +38,8 @@ describe('Wkdurchfuehrung tests', function () {
     /**
      * This test checks if buttons of Wettkampftage-table are displayed
      */
-    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > bla-actionbutton ' +
-      '> #undefined').first().click()
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+      '[data-cy="actionButton"]').click()
     cy.wait(1000)
     //cy.get('[data-cy="wkdurchfuehrung-match-list"]')
     //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').should('be.visible')

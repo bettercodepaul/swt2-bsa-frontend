@@ -110,6 +110,7 @@
              [title]="getColoredActionsWithTextTranslationKey(action) | translate"
              *ngIf="hasActionPermission(action) && hasColoredActionsWithText()">
             <bla-actionbutton
+              [attr.data-cy]="'actionButton'"
               [color]= "getColoredActionsWithTextColor(action)"
               [iconClass]=" getColoredActionsWithTextIcon(action)">
                {{ getColoredActionsWithTextTranslationKey(action) | translate}}
