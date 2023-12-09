@@ -24,15 +24,21 @@ describe('Wkdurchfuehrung tests', function () {
     cy.wait(1000)
     cy.get('[ng-reflect-header-text="Veranstaltungen"] > .expand-container > .expand-header > .expand-icon').click()
     cy.wait(1000)
-    cy.get('[data-cy="bla-selection-list"]').should('be.visible');
-    //cy.get('[data-cy="bla-selection-list"] > option:eq(1)').first().click() // click function does not work
-
-    // cy.get('.expandContainer > .expand-container > .expand-header').click()
+    cy.get('[data-cy="bla-selection-list"]').should('be.visible')
+    cy.wait(1000)
 
     /**
      * This test checks if Matches of Wettkampftage in wkdurchfuehrung load correctly
      */
-   // cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').first().click()
+    cy.get('[value="0: 1001"]').click()
+    cy.wait(1000)
+    cy.get('[data-cy="wkdurchfuehrung-wettkampftage-list"] > .table-responsive').should('be.visible')
+    cy.wait(1000)
+
+    /**
+     * This test checks if buttons of Wettkampftage-table are displayed
+     */
+    // cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').first().click()
     //cy.get('[data-cy="wkdurchfuehrung-match-list"]')
     //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').should('be.visible')
   })
