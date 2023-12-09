@@ -1,13 +1,10 @@
 describe('Wkdurchfuehrung tests', function () {
 
-  beforeEach(() => {
-    cy.loginAdmin();
-  });
-
   /**
    * This test opens the sidebar and clicks on the "WKDURCHFUEHRUNG" tab and checks if the url has changed successfully
    */
   it('Anzeige Wkdurchfuehrung',  () => {
+    cy.loginAdmin()
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
     cy.url().should('include', '#/wkdurchfuehrung')
@@ -17,6 +14,7 @@ describe('Wkdurchfuehrung tests', function () {
    * This test checks if Veranstaltungen in wkdurchfuehrung load correctly
    */
   it.only('Anzeige Veranstaltung und Jahre in wkdurchfuehrung',  () => {
+    cy.loginAdmin()
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
     cy.wait(1000)
@@ -26,28 +24,42 @@ describe('Wkdurchfuehrung tests', function () {
     cy.wait(1000)
     cy.get('[data-cy="bla-selection-list"]').should('be.visible')
     cy.wait(1000)
+  })
 
-    /**
-     * This test checks if Matches of Wettkampftage in wkdurchfuehrung load correctly
-     */
+  /**
+   * This test checks if Matches of Wettkampftage in wkdurchfuehrung load correctly
+   */
+  it.only('Anzeige Wettkampftage in wkdurchfuehrung',  () => {
     cy.get('[data-cy="bla-selection-list"]').select(1)
     cy.wait(1000)
     cy.get('[data-cy="wkdurchfuehrung-wettkampftage-list"] > .table-responsive').should('be.visible')
+  })
 
-    /**
-     * This test checks if buttons of Wettkampftage-table are displayed
-     */
+  /**
+   * This test checks if buttons of Wettkampftage-table are displayed
+   */
+  it.only('Anzeige Action-Buttons', () => {
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+      '[data-cy="actionButton"]').should('be.visible')
+    cy.wait(1000)
+  })
+
+  /**
+   * This test checks if click on buttons collapses Wettkampftage-table
+   */
+  it.only('Einklappen Tabelle auf Button-Click', () => {
     cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
-    cy.wait(1000)
-
-    /**
-     * This test checks if buttons collapse Wettkampftage-table on click and display Druckdaten
-     */
     cy.get('.expandContainer > .expand-container > .expand-content').should('not.be.visible')
+    cy.wait(1000)
+  })
+
+  /**
+   * This test checks if click on buttons displays Druckdaten
+   */
+  it.only('Anzeigen Druckdaten auf Button-Click', () => {
     cy.get('[ng-reflect-header-text="Druckdaten"] > .expand-container > .expand-content').should('be.visible')
-    //cy.get('[data-cy="wkdurchfuehrung-match-list"]')
-    //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').should('be.visible')
+    cy.wait(1000)
   })
 })
 
