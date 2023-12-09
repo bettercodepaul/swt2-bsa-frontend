@@ -33,7 +33,6 @@ describe('Wkdurchfuehrung tests', function () {
     cy.get('[data-cy="bla-selection-list"]').select(1)
     cy.wait(1000)
     cy.get('[data-cy="wkdurchfuehrung-wettkampftage-list"] > .table-responsive').should('be.visible')
-    cy.wait(1000)
 
     /**
      * This test checks if buttons of Wettkampftage-table are displayed
@@ -41,6 +40,12 @@ describe('Wkdurchfuehrung tests', function () {
     cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
     cy.wait(1000)
+
+    /**
+     * This test checks if buttons collapse Wettkampftage-table on click and display Druckdaten
+     */
+    cy.get('.expandContainer > .expand-container > .expand-content').should('not.be.visible')
+    cy.get('[ng-reflect-header-text="Druckdaten"] > .expand-container > .expand-content').should('be.visible')
     //cy.get('[data-cy="wkdurchfuehrung-match-list"]')
     //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').should('be.visible')
   })
