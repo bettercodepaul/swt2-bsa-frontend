@@ -43,7 +43,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
     actionTypes: [TableActionType.VIEW],
     width:       6
   },
-  buttonVersion2: true
+  coloredActionsWithText: true
   };
 
 
