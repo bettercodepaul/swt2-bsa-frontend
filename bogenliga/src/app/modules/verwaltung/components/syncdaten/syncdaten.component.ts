@@ -134,6 +134,10 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
+  public startSync($event: string) {
+    alert("API Logic here?")
+  }
+
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/syncdaten/' + versionedDataObject.id);
   }
