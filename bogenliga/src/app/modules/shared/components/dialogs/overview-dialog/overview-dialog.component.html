@@ -18,12 +18,13 @@
         <fa-icon icon="plus"></fa-icon>
         <span> Neu</span>
       </button>-->
+
       <bla-actionbutton
         routerLink="add"
         data-cy="dsb-mitglied-add-button"
         [color]="ActionButtonColors.SUCCESS"
         [iconClass]="'plus'">
-        Neu
+        {{buttonLabel || "Neu"}}
       </bla-actionbutton>
     </div>
   </section>

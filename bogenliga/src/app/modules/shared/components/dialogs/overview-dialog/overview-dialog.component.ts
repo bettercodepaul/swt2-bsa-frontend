@@ -17,6 +17,7 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public rows: TableRow[];
   @Input() public hidden = true;
   @Input() public searchTerm: string;
+  @Input() public buttonLabel: string;
 
   public ActionButtonColors = ActionButtonColors;
 
