@@ -18,6 +18,7 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public hidden = true;
   @Input() public searchTerm: string;
   @Input() public buttonLabel: string;
+  @Input() public isCustomActionButton: boolean = false;
 
   public ActionButtonColors = ActionButtonColors;
 
@@ -52,6 +53,10 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
 
   public onSearch(searchTerm: string): void {
     this.onSearchClicked.emit(searchTerm);
+  }
+
+  public onCustomActionButtonClick() {
+    alert('Action Button without Routing Clicked.')
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
