@@ -126,6 +126,12 @@ Cypress.Commands.add('loginAdmin', () => {
     cy.get('[data-cy=login-als-admin-button]').click()
 });
 
+Cypress.Commands.add('expandWettkampfTage', () =>  {
+  cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
+  cy.wait(1000)
+  cy.get('[data-cy="bla-selection-list"]').select(1)
+  cy.wait(1000)
+})
 
 Cypress.Commands.add('createUserTest', (testusermail) => {
   cy.get('[data-cy="sidebar-verwaltung-button"]').click()

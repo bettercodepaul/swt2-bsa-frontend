@@ -17,6 +17,8 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public rows: TableRow[];
   @Input() public hidden = true;
   @Input() public searchTerm: string;
+  @Input() public buttonLabel: string;
+  @Input() public isCustomActionButton: boolean = false;
 
   public ActionButtonColors = ActionButtonColors;
 
@@ -25,6 +27,7 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Output() public onDeleteClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onAddClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onSearchClicked = new EventEmitter<string>();
+  @Output() public onCustomActionButtonClicked = new EventEmitter<string>();
 
   constructor(private currentUserService: CurrentUserService) {
     super(currentUserService);
@@ -51,6 +54,10 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
 
   public onSearch(searchTerm: string): void {
     this.onSearchClicked.emit(searchTerm);
+  }
+
+  public onCustomActionButtonClick() {
+    this.onCustomActionButtonClicked.emit();
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {

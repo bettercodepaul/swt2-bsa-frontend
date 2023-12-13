@@ -1,8 +1,8 @@
 describe('Wkdurchfuehrung tests', function () {
-
   beforeEach(() => {
-    cy.loginAdmin();
-  });
+    cy.loginAdmin()
+    cy.wait(1000)
+  })
 
   /**
    * This test opens the sidebar and clicks on the "WKDURCHFUEHRUNG" tab and checks if the url has changed successfully
@@ -10,27 +10,64 @@ describe('Wkdurchfuehrung tests', function () {
   it('Anzeige Wkdurchfuehrung',  () => {
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
+    cy.wait(1000)
     cy.url().should('include', '#/wkdurchfuehrung')
   })
 
   /**
    * This test checks if Veranstaltungen in wkdurchfuehrung load correctly
    */
-  it.only('Anzeige Veranstaltung und Jahre in wkdurchfuehrung',  () => {
+  it('Anzeige Veranstaltung und Jahre in Wkdurchfuehrung',  () => {
+    cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
     cy.wait(1000)
-    cy.get('[headerlink="/wkdurchfuehrung"] > .expand-container > .expand-header').click()
+    cy.get('[ng-reflect-header-text="Veranstaltungen"] > .expand-container > .expand-header').click()
     cy.wait(1000)
-    cy.get('[data-cy="bla-selection-list"] > option:eq(1)').click({force: true}) // click function does not work
+    cy.get('[ng-reflect-header-text="Veranstaltungen"] > .expand-container > .expand-header > .expand-icon').click()
+    cy.wait(1000)
+    cy.get('[data-cy="bla-selection-list"]').should('be.visible')
+  })
 
-    // cy.get('.expandContainer > .expand-container > .expand-header').click()
+  /**
+   * This test checks if Matches of Wettkampftage in wkdurchfuehrung load correctly
+   */
+  it('Anzeige Wettkampftage in Wkdurchfuehrung',  () => {
+    cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
+    cy.wait(1000)
+    cy.get('[data-cy="bla-selection-list"]').select(1)
+    cy.wait(1000)
+    cy.get('[data-cy="wkdurchfuehrung-wettkampftage-list"] > .table-responsive').should('be.visible')
+  })
 
-    /**
-     * This test checks if Matches of Wettkampftage in wkdurchfuehrung load correctly
-     */
-   // cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').first().click()
-    //cy.get('[data-cy="wkdurchfuehrung-match-list"]')
-    //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').should('be.visible')
+  /**
+   * This test checks if buttons of Wettkampftage-table are displayed
+   */
+  it('Anzeige Action-Buttons', () => {
+    cy.expandWettkampfTage()
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+      '[data-cy="actionButton"]').should('be.visible')
+  })
+
+  /**
+   * This test checks if click on buttons collapses Wettkampftage-Tabelle
+   */
+  it('Einklappen Tabelle auf Button-Click', () => {
+    cy.expandWettkampfTage()
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+      '[data-cy="actionButton"]').click()
+    cy.wait(1000)
+    cy.get('.expandContainer > .expand-container > .expand-content').should('not.be.visible')
+  })
+
+  /**
+   * This test checks if click on buttons displays Druckdaten
+   */
+  it('Anzeigen Druckdaten auf Button-Click', () => {
+    cy.expandWettkampfTage()
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+      '[data-cy="actionButton"]').click()
+    cy.wait(1000)
+    cy.get('[ng-reflect-header-text="Druckdaten"] > .expand-container > .expand-content').should('be.visible')
   })
 })
 
