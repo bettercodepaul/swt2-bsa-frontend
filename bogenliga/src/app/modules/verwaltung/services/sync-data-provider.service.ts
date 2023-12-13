@@ -17,7 +17,7 @@ import {OnOfflineService} from '@shared/services';
 @Injectable({
   providedIn: 'root'
 })
-export class RegionDataProviderService extends DataProviderService {
+export class SyncDataProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/trigger';
 
