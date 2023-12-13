@@ -64,7 +64,7 @@ export class RegionDataProviderService extends DataProviderService {
   }
 
   public startSync(): void {
-    this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('ping').build())
+    this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
   }
   public findAllByType(type: string): Promise<BogenligaResponse<RegionDO[]>> {
     if (this.onOfflineService.isOffline()) {
