@@ -6,24 +6,31 @@
 
   <section class="overview-dialog-header">
     <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
-    <bla-quicksearch  (onSearchEntry)="onSearch($event)"
-                      [hidden]="hidden"
-                      [sessionSearch]="searchTerm">
+    <bla-quicksearch (onSearchEntry)="onSearch($event)"
+                     [hidden]="hidden"
+                     [sessionSearch]="searchTerm">
 
     </bla-quicksearch>
-    <div class="overview-dialog-add" *ngIf="hasUserPermissions(config.createPermission)">
-      <!--<button class="btn btn-success"
-              routerLink="add"
-              data-cy="dsb-mitglied-add-button">
-        <fa-icon icon="plus"></fa-icon>
-        <span> Neu</span>
-      </button>-->
+    <div class="overview-dialog-add"
+         *ngIf="hasUserPermissions(config.createPermission)">
+      <bla-actionbutton
+        data-cy="dsb-mitglied-add-button"
+        *ngIf="isCustomActionButton"
+        [color]="ActionButtonColors.SUCCESS"
+        [iconClass]="'plus'"
+        (onClick)="onCustomActionButtonClick()"
+      >
+        {{buttonLabel || "Neu"}}
+      </bla-actionbutton>
+
       <bla-actionbutton
         routerLink="add"
         data-cy="dsb-mitglied-add-button"
+        *ngIf="!isCustomActionButton"
         [color]="ActionButtonColors.SUCCESS"
-        [iconClass]="'plus'">
-        Neu
+        [iconClass]="'plus'"
+      >
+        {{buttonLabel || "Neu"}}
       </bla-actionbutton>
     </div>
   </section>
