@@ -16,7 +16,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../shared/services/notification';
-import {RegionDataProviderService} from '../../services/region-data-provider.service';
+import {RegionDataProviderService} from '../../services/sync-data-provider.service';
 
 import {SYNC_OVERVIEW_CONFIG} from './syncdaten.config';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
@@ -134,8 +134,9 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
         .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  public startSync($event: string) {
-    alert("API Logic here?")
+  public startSync() {
+    alert(this.SyncdatenDataProvider.getUrl())
+    this.SyncdatenDataProvider.startSync();
   }
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
