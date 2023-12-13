@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNullOrUndefined, isUndefined} from '@shared/functions';
 import {
   ButtonType,
   CommonComponentDirective,
@@ -16,7 +15,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../shared/services/notification';
-import {RegionDataProviderService} from '../../services/sync-data-provider.service';
+import {SyncDataProviderService} from '../../services/sync-data-provider.service';
 
 import {SYNC_OVERVIEW_CONFIG} from './syncdaten.config';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
@@ -50,7 +49,7 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
   public ActionButtonColors = ActionButtonColors;
 
 
-  constructor(private SyncdatenDataProvider: RegionDataProviderService, //TODO: Create SyncdataDataProvider
+  constructor(private SyncdatenDataProvider: SyncDataProviderService, //TODO: Create SyncdataDataProvider
     private userProvider: UserProfileDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
