@@ -135,7 +135,6 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
   }
 
   public startSync() {
-    alert(this.SyncdatenDataProvider.getUrl())
     this.SyncdatenDataProvider.startSync();
   }
 
