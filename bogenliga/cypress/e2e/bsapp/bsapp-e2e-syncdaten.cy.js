@@ -29,7 +29,7 @@ describe('Verwaltung/Syncdaten tests', function () {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the Sync Section Button is present, clicks it and checks if route has changed
    */
-  it('Anzeige Syncdaten Overview',  () => {
+  it('Anzeige Syncdaten Section',  () => {
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.wait(1000)
