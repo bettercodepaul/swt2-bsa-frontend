@@ -23,7 +23,7 @@ import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
-import {RegionDTO} from '@verwaltung/types/datatransfer/region-dto.class';
+import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 
 export const NOTIFICATION_DELETE_SYNCDATEN = 'syncdaten_delete';
@@ -49,7 +49,7 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
   public ActionButtonColors = ActionButtonColors;
 
 
-  constructor(private SyncdatenDataProvider: SyncDataProviderService, //TODO: Create SyncdataDataProvider
+  constructor(private SyncdatenDataProvider: SyncDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
@@ -79,74 +79,23 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
     }
   }
 
-  public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
-
-  }
-
-  public onEdit(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
-  }
-
-  public onDelete(versionedDataObject: VersionedDataObject): void {
-    // show loading icon
-    const id = versionedDataObject.id;
-
-    this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
-
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_SYNCDATEN + id,
-      title:            'MANAGEMENT.SYNC.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.SYNC.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
-
-
-    this.notificationService.observeNotification(NOTIFICATION_DELETE_SYNCDATEN + id)
-        .subscribe((myNotification) => {
-          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-            this.SyncdatenDataProvider.deleteById(id)
-                .then((response) => this.loadTableRows())
-                .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
-          } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-            this.rows = hideLoadingIndicator(this.rows, id);
-          }
-        });
-
-    this.notificationService.showNotification(notification);
-
-  }
 
   private loadTableRows() {
     this.SyncdatenDataProvider.findAll()
-        .then((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsFailure(response));
-  }
-
-  public findBySearch($event: string) {
-    this.SyncdatenDataProvider.findBySearch($event)
-        .then((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsSuccess(response))
-        .catch((response: BogenligaResponse<RegionDTO[]>) => this.handleLoadTableRowsFailure(response));
+        .then((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   public startSync() {
     this.SyncdatenDataProvider.startSync();
   }
 
-  private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/syncdaten/' + versionedDataObject.id);
-  }
-
-  private handleLoadTableRowsFailure(response: BogenligaResponse<RegionDTO[]>): void {
+  private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];
     this.loading = false;
   }
 
-  private handleLoadTableRowsSuccess(response: BogenligaResponse<RegionDTO[]>): void {
+  private handleLoadTableRowsSuccess(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     this.rows = toTableRows(response.payload);
     this.loading = false;
