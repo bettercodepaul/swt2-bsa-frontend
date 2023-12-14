@@ -591,9 +591,9 @@
           "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
         },
         "SYNC": {
-          "LABEL": "Sync",
-          "DESCRIPTION": "Synchronisierung zwischen altem und neuem System",
-          "TOOLTIP": "● Check Sync Status\n● Start New Sync\n"
+          "LABEL": "Datensynchronization",
+          "DESCRIPTION": "Synchronization der Daten zwischen altem und neuem System",
+          "TOOLTIP": "● Prüfe Status\n● Starte neue Datensynchronization\n"
         }
       }
     },
@@ -1586,10 +1586,10 @@
       }
     },
     "SYNC_DETAIL": {
-      "TITLE": "Syncdaten - Details"
+      "TITLE": "Datensynchronization - Details"
     },
     "SYNC": {
-      "TITLE": "Syncdaten",
+      "TITLE": "Datensynchronization",
       "TABLE": {
         "HEADERS": {
           "TIMESTAMP": "Timestamp",
