@@ -6,10 +6,6 @@
                      [searchTerm]="searchTerm"
                      [buttonLabel]="'Start New Sync'"
                      [isCustomActionButton]=true
-                     (onViewClicked)="onView($event)"
-                     (onEditClicked)="onEdit($event)"
-                     (onDeleteClicked)="onDelete($event)"
-                     (onSearchClicked)="findBySearch($event)"
                      (onCustomActionButtonClicked)="startSync()"
 >
  <div (mouseover)="onMouseOver($event)"></div>
