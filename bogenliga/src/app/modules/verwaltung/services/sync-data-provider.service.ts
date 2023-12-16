@@ -49,24 +49,4 @@ export class SyncDataProviderService extends DataProviderService {
   public startSync(): void {
     this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
   }
-
-  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<TriggerDO>> {
-    // return promise
-    // sign in success -> resolve promise
-    // sign in failure -> reject promise with result
-    return new Promise((resolve, reject) => {
-      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
-          .then((data: VersionedDataTransferObject) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
-
-          }, (error: HttpErrorResponse) => {
-
-            if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
-            } else {
-              reject({result: RequestResult.FAILURE});
-            }
-          });
-    });
-  }
 }
