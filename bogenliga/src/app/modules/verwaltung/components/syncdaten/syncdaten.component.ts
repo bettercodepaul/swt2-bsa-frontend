@@ -82,7 +82,9 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
 
   private loadTableRows() {
     this.SyncdatenDataProvider.findAll()
-        .then((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsSuccess(response))
+        .then((response: BogenligaResponse<TriggerDTO[]>) => {
+          this.handleLoadTableRowsSuccess(response);
+        })
         .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
