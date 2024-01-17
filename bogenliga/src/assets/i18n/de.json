@@ -590,10 +590,10 @@
           "DESCRIPTION": "Einstellungen der Vereinsdetails, sowie der Bogenliaga App ",
           "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
         },
-        "SYNC": {
-          "LABEL": "Synchronization",
-          "DESCRIPTION": "Synchronization der Daten zwischen altem und neuem System",
-          "TOOLTIP": "● Prüfe Status\n● Starte neue Datensynchronization\n"
+        "MIGRATION": {
+          "LABEL": "Migration",
+          "DESCRIPTION": "Migration der Daten zwischen altem und neuem System",
+          "TOOLTIP": "● Prüfe Status\n● Starte neue Migration\n"
         }
       }
     },
@@ -1585,11 +1585,11 @@
         }
       }
     },
-    "SYNC_DETAIL": {
-      "TITLE": "Datensynchronization - Details"
+    "MIGRATION_DETAIL": {
+      "TITLE": "Migration - Details"
     },
-    "SYNC": {
-      "TITLE": "Datensynchronization",
+    "MIGRATION": {
+      "TITLE": "Migration",
       "TABLE": {
         "HEADERS": {
           "TIMESTAMP": "Timestamp",
@@ -1599,8 +1599,8 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Syncdaten löschen",
-          "DESCRIPTION": "Wollen Sie die Syncdaten mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Migration löschen",
+          "DESCRIPTION": "Wollen Sie die Migration mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
