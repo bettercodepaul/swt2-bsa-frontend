@@ -2,25 +2,25 @@ import {OverviewDialogConfig} from '../../../shared/components/dialogs';
 import {TableActionType} from '../../../shared/components/tables/types/table-action-type.enum';
 import {UserPermission} from '@shared/services';
 
-export const SYNC_OVERVIEW_CONFIG: OverviewDialogConfig = {
+export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.SYNC.TITLE',
+  pageTitleTranslationKey: 'MANAGEMENT.MIGRATION.TITLE',
 
   tableConfig: {
     columns: [
       {
-        translationKey: 'MANAGEMENT.SYNC.TABLE.HEADERS.TIMESTAMP',
-        propertyName:   'syncTimestamp',
+        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TIMESTAMP',
+        propertyName:   'migrationTimestamp',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.SYNC.TABLE.HEADERS.DESCRIPTION',
-        propertyName:   'syncDescription',
+        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.DESCRIPTION',
+        propertyName:   'migrationDescription',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.SYNC.TABLE.HEADERS.STATUS',
-        propertyName:   'syncStatus',
+        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.STATUS',
+        propertyName:   'migrationStatus',
         width:          20,
       },
     ],

@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from '@angular
 import {CurrentUserService, UserPermission} from '@shared/services';
 
 @Injectable()
-export class SyncdatenOverviewGuard implements CanActivate {
+export class MigrationOverviewGuard implements CanActivate {
   constructor(private currentUserService: CurrentUserService) {
   }
 

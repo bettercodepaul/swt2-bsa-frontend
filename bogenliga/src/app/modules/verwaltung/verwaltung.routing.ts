@@ -20,7 +20,7 @@ import {
   WettkampftageComponent,
   EinstellungenDetailComponent,
   EinstellungenOverviewComponent,
-  SyncdatenComponent
+  MigrationComponent
 } from './components';
 import {
   UserDetailGuard,
@@ -43,43 +43,47 @@ import {
   SportjahrOverviewGuard,
   EinstellungenDetailGuard,
   EinstellungenOverviewGuard,
-  SyncdatenOverviewGuard
+  MigrationOverviewGuard
 } from './guards';
-import {MannschaftDetailComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
+import {
+  MannschaftDetailComponent
+} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
-import {SchuetzenComponent} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
+import {
+  SchuetzenComponent
+} from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
 import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
 
 export const VERWALTUNG_ROUTES: Routes = [
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
   {
-    path: 'dsbmitglieder',
-    component: DsbMitgliedOverviewComponent,
-    pathMatch: 'full',
+    path:        'dsbmitglieder',
+    component:   DsbMitgliedOverviewComponent,
+    pathMatch:   'full',
     canActivate: [DsbMitgliedOverviewGuard]
   },
   {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]}
   ,
   {
-    path: 'user',
-    component: UserOverviewComponent,
-    pathMatch: 'full',
+    path:        'user',
+    component:   UserOverviewComponent,
+    pathMatch:   'full',
     canActivate: [UserOverviewGuard]
   },
   {path: 'user/add', component: UserNeuComponent, canActivate: [UserNeuGuard]}
   ,
   {path: 'user/:id', component: UserDetailComponent, canActivate: [UserDetailGuard]},
   {
-    path: 'klassen',
-    component: WettkampfklasseOverviewComponent,
-    pathMatch: 'full',
+    path:        'klassen',
+    component:   WettkampfklasseOverviewComponent,
+    pathMatch:   'full',
     canActivate: [WettkampfklasseOverviewGuard]
   },
   {path: 'klassen/:id', component: WettkampfklasseDetailComponent, canActivate: [WettkampfklasseDetailGuard]},
   {
-    path: 'vereine',
-    component: VereinOverviewComponent,
-    pathMatch: 'full',
+    path:        'vereine',
+    component:   VereinOverviewComponent,
+    pathMatch:   'full',
     canActivate: [VereinOverviewGuard]
   },
   {path: 'vereine/:id', component: VereinDetailComponent, canActivate: [VereinDetailGuard]},
@@ -87,36 +91,36 @@ export const VERWALTUNG_ROUTES: Routes = [
   {path: 'vereine/:id/:id/:id', component: SchuetzenComponent, canActivate: [SchuetzenNeuGuard]},
 
   {
-    path: 'liga',
-    component: LigaOverviewComponent,
-    pathMatch: 'full',
+    path:        'liga',
+    component:   LigaOverviewComponent,
+    pathMatch:   'full',
     canActivate: [LigaOverviewGuard]
   },
   {path: 'liga/:id', component: LigaDetailComponent, canActivate: [LigaDetailGuard]},
   {
-    path: 'regionen',
-    component: RegionOverviewComponent,
-    pathMatch: 'full',
+    path:        'regionen',
+    component:   RegionOverviewComponent,
+    pathMatch:   'full',
     canActivate: [RegionOverviewGuard]
   },
   {path: 'regionen/:id', component: RegionDetailComponent, canActivate: [RegionDetailGuard]},
   {
-    path: 'veranstaltung',
-    component: VeranstaltungOverviewComponent,
-    pathMatch: 'full',
+    path:        'veranstaltung',
+    component:   VeranstaltungOverviewComponent,
+    pathMatch:   'full',
     canActivate: [VeranstaltungOverviewGuard]
   },
   {
-    path: 'einstellungen',
-    component: EinstellungenOverviewComponent,
-    pathMatch: 'full',
+    path:        'einstellungen',
+    component:   EinstellungenOverviewComponent,
+    pathMatch:   'full',
     canActivate: [EinstellungenOverviewGuard]
   },
   {
-    path: 'syncdaten',
-    component: SyncdatenComponent,
-    pathMatch: 'full',
-    canActivate: [SyncdatenOverviewGuard]
+    path:        'migration',
+    component:   MigrationComponent,
+    pathMatch:   'full',
+    canActivate: [MigrationOverviewGuard]
   },
   {path: 'einstellungen/:id', component: EinstellungenDetailComponent, canActivate: [EinstellungenDetailGuard]},
   {path: 'sportjahr/:id', component: VeranstaltungDetailComponent, canActivate: [VeranstaltungDetailGuard]},
