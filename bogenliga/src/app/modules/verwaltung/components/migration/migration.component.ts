@@ -15,7 +15,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../shared/services/notification';
-import {SyncDataProviderService} from '../../services/sync-data-provider.service';
+import {MigrationDataProviderService} from '../../services/migration-data-provider.service';
 
 import {MIGRATION_OVERVIEW_CONFIG} from './migration.config';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
@@ -49,7 +49,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public ActionButtonColors = ActionButtonColors;
 
 
-  constructor(private SyncdatenDataProvider: SyncDataProviderService,
+  constructor(private SyncdatenDataProvider: MigrationDataProviderService,
     private userProvider: UserProfileDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
@@ -86,8 +86,8 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  public startSync() {
-    this.SyncdatenDataProvider.startSync();
+  public startMigration() {
+    this.SyncdatenDataProvider.startMigration();
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
