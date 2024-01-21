@@ -11,6 +11,7 @@ export class TriggerDTO implements DataTransferObject {
   status: number;
   nachricht: string;
   created_at_utc: string;
+  run_at_utc: string;
   static copyFrom(optional: {
     id?: number;
     version?: number;
@@ -20,6 +21,7 @@ export class TriggerDTO implements DataTransferObject {
     status?: number;
     nachricht?: string;
     created_at_utc?: string;
+    run_at_utc?: string;
   } = {}): TriggerDTO {
     const copy = new TriggerDTO();
     if (optional.id >= 0) {
@@ -34,6 +36,7 @@ export class TriggerDTO implements DataTransferObject {
     copy.nachricht = optional.nachricht || '';
     copy.status = optional.status || null;
     copy.created_at_utc = optional.created_at_utc || '';
+    copy.run_at_utc = optional.run_at_utc || '';
     return copy;
   }
 }
