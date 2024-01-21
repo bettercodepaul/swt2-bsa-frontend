@@ -8,6 +8,8 @@ import {OfflineMannschaftsmitglied} from '@shared/data-provider/offlinedb/types/
 import {OfflineDsbMitglied} from '@shared/data-provider/offlinedb/types/offline-dsbmitglied.interface';
 import {OfflineVeranstaltung} from '@shared/data-provider/offlinedb/types/offline-veranstaltung.interface';
 import {OfflineVerein} from '@shared/data-provider/offlinedb/types/offline-verein.interface';
+import {OfflineTrigger} from '@shared/data-provider/offlinedb/types/offline-trigger.interface';
+
 
 /**
  * The OfflineDb class is a wrapper for the Dexie database.
@@ -28,7 +30,7 @@ export class OfflineDB extends Dexie {
   dsbMitgliedTabelle!: Table<OfflineDsbMitglied, number>;
   veranstaltungTabelle!: Table<OfflineVeranstaltung, number>;
   vereinTabelle!: Table<OfflineVerein, number>;
-
+  triggerTabelle!: Table<OfflineTrigger, number>;
 
   /**
    * Constructor for the OfflineDB class.

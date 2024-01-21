@@ -7,8 +7,8 @@ export class TriggerDTO implements DataTransferObject {
 
   kategorie: string;
   altsystem_id: number;
-  operation: number;
-  status: number;
+  operation: string;
+  status: string;
   nachricht: string;
   created_at_utc: string;
   run_at_utc: string;
@@ -17,8 +17,8 @@ export class TriggerDTO implements DataTransferObject {
     version?: number;
     kategorie?: string;
     altsystem_id?: number;
-    operation?: number;
-    status?: number;
+    operation?: string;
+    status?: string;
     nachricht?: string;
     created_at_utc?: string;
     run_at_utc?: string;
@@ -32,9 +32,9 @@ export class TriggerDTO implements DataTransferObject {
     copy.version = optional.version || null;
     copy.kategorie = String(optional.kategorie || null);
     copy.altsystem_id = optional.altsystem_id || null;
-    copy.operation = optional.operation || null;
+    copy.operation = optional.operation || '';
     copy.nachricht = optional.nachricht || '';
-    copy.status = optional.status || null;
+    copy.status = optional.status || '';
     copy.created_at_utc = optional.created_at_utc || '';
     copy.run_at_utc = optional.run_at_utc || '';
     return copy;

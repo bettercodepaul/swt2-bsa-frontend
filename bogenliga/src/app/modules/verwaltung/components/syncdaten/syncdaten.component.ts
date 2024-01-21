@@ -61,10 +61,12 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
   }
 
   ngOnInit() {
+    console.log("gnaha");
     this.loading = true;
-
-    this.notificationService.discardNotification();
-
+    this.loadTableRows();
+    if (!localStorage.getItem(this.searchTerm)) {
+      this.loadTableRows();
+    }
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -81,6 +83,7 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
 
 
   private loadTableRows() {
+    console.log("hahaha");
     this.SyncdatenDataProvider.findAll()
         .then((response: BogenligaResponse<TriggerDTO[]>) => {
           this.handleLoadTableRowsSuccess(response);
@@ -102,4 +105,5 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
     this.rows = toTableRows(response.payload);
     this.loading = false;
   }
+
 }
