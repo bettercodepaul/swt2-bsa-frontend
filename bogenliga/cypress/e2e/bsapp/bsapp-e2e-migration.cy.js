@@ -1,4 +1,4 @@
-describe('Verwaltung/Syncdaten tests', function () {
+describe('Verwaltung/Migration tests', function () {
   beforeEach(() => {
     cy.loginAdmin()
     cy.wait(1000)
@@ -17,7 +17,7 @@ describe('Verwaltung/Syncdaten tests', function () {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the Sync Section Button is present
    */
-  it('Anzeige Syncdaten Overview',  () => {
+  it('Anzeige Migration Overview',  () => {
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.wait(1000)
@@ -29,28 +29,28 @@ describe('Verwaltung/Syncdaten tests', function () {
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the Sync Section Button is present, clicks it and checks if route has changed
    */
-  it('Anzeige Syncdaten Section',  () => {
+  it('Anzeige Migration Section',  () => {
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.wait(1000)
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-sync-button]').click()
     cy.wait(1000)
-    cy.url().should('include', '#/verwaltung/syncdaten')
+    cy.url().should('include', '#/verwaltung/migration')
   })
 
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab, clicks the Sync Section Button, checks if route has changed, clicks the "New" Button and checks if it has made a request to Endpoint
    */
 
-  it('Anzeige Syncdaten Button Click',  () => {
+  it('Anzeige Migration Button Click',  () => {
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.wait(1000)
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-sync-button]').click()
     cy.wait(1000)
-    cy.url().should('include', '#/verwaltung/syncdaten')
+    cy.url().should('include', '#/verwaltung/migration')
     cy.get('[data-cy=dsb-mitglied-add-button]').click()
     cy.intercept({
       method: 'GET',
