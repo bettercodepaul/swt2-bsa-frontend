@@ -15,7 +15,7 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../shared/services/notification';
-import {MigrationDataProviderService} from '../../services/migration-data-provider.service';
+import {MigrationProviderService} from '../../services/migration-data-provider.service';
 
 import {MIGRATION_OVERVIEW_CONFIG} from './migration.config';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
@@ -40,7 +40,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public ButtonType = ButtonType;
   public deleteLoading = false;
   public saveLoading = false;
-  public searchTerm = 'searchTermSync';
+  public searchTerm = 'searchTermMigration';
   public id;
 
 
@@ -49,7 +49,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public ActionButtonColors = ActionButtonColors;
 
 
-  constructor(private SyncdatenDataProvider: MigrationDataProviderService,
+  constructor(private MigrationDataProvider: MigrationProviderService,
     private userProvider: UserProfileDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
@@ -62,9 +62,10 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
   ngOnInit() {
     this.loading = true;
-
-    this.notificationService.discardNotification();
-
+    this.loadTableRows();
+    if (!localStorage.getItem(this.searchTerm)) {
+      this.loadTableRows();
+    }
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -81,13 +82,15 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
 
   private loadTableRows() {
-    this.SyncdatenDataProvider.findAll()
-        .then((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsSuccess(response))
+    this.MigrationDataProvider.findAll()
+        .then((response: BogenligaResponse<TriggerDTO[]>) => {
+          this.handleLoadTableRowsSuccess(response);
+        })
         .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
   public startMigration() {
-    this.SyncdatenDataProvider.startMigration();
+    this.MigrationDataProvider.startMigration();
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
@@ -100,4 +103,5 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     this.rows = toTableRows(response.payload);
     this.loading = false;
   }
+
 }
