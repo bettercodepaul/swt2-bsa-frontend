@@ -31,7 +31,6 @@ export class SyncDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      console.log("lel");
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});

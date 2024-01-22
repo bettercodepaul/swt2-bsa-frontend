@@ -61,7 +61,6 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
   }
 
   ngOnInit() {
-    console.log("gnaha");
     this.loading = true;
     this.loadTableRows();
     if (!localStorage.getItem(this.searchTerm)) {
@@ -83,7 +82,6 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
 
 
   private loadTableRows() {
-    console.log("hahaha");
     this.SyncdatenDataProvider.findAll()
         .then((response: BogenligaResponse<TriggerDTO[]>) => {
           this.handleLoadTableRowsSuccess(response);
