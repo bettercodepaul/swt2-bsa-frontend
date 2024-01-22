@@ -17,7 +17,7 @@ import {OnOfflineService} from '@shared/services';
 @Injectable({
   providedIn: 'root'
 })
-export class MigrationDataProviderService extends DataProviderService {
+export class MigrationProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/trigger';
 
@@ -31,7 +31,6 @@ export class MigrationDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      // maybe use different url?
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
@@ -46,7 +45,151 @@ export class MigrationDataProviderService extends DataProviderService {
     });
   }
 
-  public startMigration(): void {
+  public findBySearch(searchTerm: string): Promise<BogenligaResponse<TriggerDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return (searchTerm === '' || searchTerm === null)
+      ? this.findAll()
+      : new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('search/' + searchTerm).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+              (error.status === 0)
+                ? reject({result: RequestResult.CONNECTION_PROBLEM})
+                : reject({result: RequestResult.FAILURE});
+            });
+      });
+  }
+
+  public findAllByType(type: string): Promise<BogenligaResponse<TriggerDO[]>> {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findall regionen by type');
+      return new Promise((resolve, reject) => {
+        db.triggerTabelle.toArray()
+          .then((data) => {
+            const faketrigger: TriggerDO[] = [];
+            data.forEach((verein) => {
+              faketrigger.push({
+                id:             verein.id,
+                kategorie:      verein.kategorie,
+                altsystem_id:   verein.altsystem_id,
+                operation:      verein.operation,
+                status:         verein.status,
+                nachricht:      verein.nachricht,
+                created_at_utc: verein.created_at_utc,
+                run_at_utc:     verein.created_at_utc,
+                version:        1
+              });
+            });
+            resolve({result: RequestResult.SUCCESS, payload: faketrigger});
+          })
+          .catch((e) => reject(e));
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path(type).build())
+            .then((data: VersionedDataTransferObject[]) => {
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
+  }
+
+
+  public deleteById(id: number): Promise<BogenligaResponse<void>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.DELETE<void>(new UriBuilder().fromPath(this.getUrl()).path(id).build())
+          .then((noData) => {
+            resolve({result: RequestResult.SUCCESS});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  public findById(id: string | number): Promise<BogenligaResponse<TriggerDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('ID/' + id).build())
+          .then((data: VersionedDataTransferObject) => {
+
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  public create(payload: TriggerDO): Promise<BogenligaResponse<TriggerDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.POST<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  public update(payload: VersionedDataTransferObject): Promise<BogenligaResponse<TriggerDO>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.PUT<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).build(), payload)
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  public startMigration() {
     this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
   }
 }

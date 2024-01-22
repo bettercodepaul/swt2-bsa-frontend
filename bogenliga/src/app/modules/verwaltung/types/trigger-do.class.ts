@@ -4,7 +4,11 @@ export class TriggerDO implements VersionedDataObject {
   id: number;
   version: number;
 
-  timestamp: string;
-  description: string;
+  kategorie: string;
+  altsystem_id: number;
+  operation: string;
   status: string;
+  nachricht: string;
+  created_at_utc: string;
+  run_at_utc: string;
 }
