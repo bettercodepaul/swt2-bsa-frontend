@@ -81,13 +81,13 @@ export const VERWALTUNG_CONFIG: NavigationDialogConfig = {
         tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.EINSTELLUNGEN.TOOLTIP'
       },
       {
-        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.SYNC.LABEL',
-        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.SYNC.DESCRIPTION',
+        labelKey:       'MANAGEMENT.VERWALTUNG.NAVIGATION.MIGRATION.LABEL',
+        descriptionKey: 'MANAGEMENT.VERWALTUNG.NAVIGATION.MIGRATION.DESCRIPTION',
         icon:           'database',
-        route:          'syncdaten',
+        route:          'migration',
         permissions:    [UserPermission.CAN_MODIFY_SYSTEMDATEN],
         datacy:         'verwaltung-sync-button',
-        tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.SYNC.TOOLTIP'
+        tooltipText:    'MANAGEMENT.VERWALTUNG.NAVIGATION.MIGRATION.TOOLTIP'
       },
       ]
   }

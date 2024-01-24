@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SyncdatenComponent } from './syncdaten.component';
+import { MigrationComponent } from './migration.component';
 
 
 //TODO: Tests
 describe('SyncdatenComponent', () => {
-  let component: SyncdatenComponent;
-  let fixture: ComponentFixture<SyncdatenComponent>;
+  let component: MigrationComponent;
+  let fixture: ComponentFixture<MigrationComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SyncdatenComponent]
+      declarations: [MigrationComponent]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SyncdatenComponent);
+    fixture = TestBed.createComponent(MigrationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

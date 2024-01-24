@@ -17,7 +17,7 @@ import {OnOfflineService} from '@shared/services';
 @Injectable({
   providedIn: 'root'
 })
-export class SyncDataProviderService extends DataProviderService {
+export class MigrationProviderService extends DataProviderService {
 
   serviceSubUrl = 'v1/trigger';
 
@@ -31,7 +31,6 @@ export class SyncDataProviderService extends DataProviderService {
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      // maybe use different url?
       this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
@@ -46,7 +45,7 @@ export class SyncDataProviderService extends DataProviderService {
     });
   }
 
-  public startSync(): void {
+  public startMigration() {
     this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
   }
 }

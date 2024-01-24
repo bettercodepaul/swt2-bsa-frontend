@@ -22,7 +22,7 @@ import {
   VeranstaltungDetailComponent,
   WettkampftageComponent,
   EinstellungenOverviewComponent,
-  EinstellungenDetailComponent, SyncdatenComponent
+  EinstellungenDetailComponent, MigrationComponent
 } from './components';
 import {
   UserDetailGuard,
@@ -45,8 +45,7 @@ import {
   SportjahrOverviewGuard,
   EinstellungenDetailGuard,
   EinstellungenOverviewGuard,
-  SyncdatenOverviewGuard
-
+  MigrationOverviewGuard
 } from './guards';
 import {VERWALTUNG_ROUTES} from './verwaltung.routing';
 import {
@@ -96,7 +95,7 @@ import {MatIconModule} from '@angular/material/icon';
     RegionOverviewComponent,
     MannschaftDetailComponent,
     SchuetzenComponent,
-    SyncdatenComponent,
+    MigrationComponent,
     VeranstaltungOverviewComponent,
     VeranstaltungDetailComponent,
     WettkampftageComponent,
@@ -137,7 +136,7 @@ export class VerwaltungModule {
         SportjahrOverviewGuard,
         EinstellungenDetailGuard,
         EinstellungenOverviewGuard,
-        SyncdatenOverviewGuard
+        MigrationOverviewGuard
       ]
     };
   }
