@@ -15,9 +15,9 @@ import {
   NotificationType,
   NotificationUserAction
 } from '../../../shared/services/notification';
-import {SyncDataProviderService} from '../../services/sync-data-provider.service';
+import {MigrationProviderService} from '../../services/migration-data-provider.service';
 
-import {SYNC_OVERVIEW_CONFIG} from './syncdaten.config';
+import {MIGRATION_OVERVIEW_CONFIG} from './migration.config';
 import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
@@ -31,16 +31,16 @@ const ID_PATH_PARAM = 'id';
 
 @Component({
   selector:    'bla-daten-detail',
-  templateUrl: './syncdaten.component.html',
-  styleUrls:   ['./syncdaten.component.scss']
+  templateUrl: './migration.component.html',
+  styleUrls:   ['./migration.component.scss']
 })
-export class SyncdatenComponent extends CommonComponentDirective implements OnInit {
+export class MigrationComponent extends CommonComponentDirective implements OnInit {
   public rows: TableRow[];
-  public config = SYNC_OVERVIEW_CONFIG;
+  public config = MIGRATION_OVERVIEW_CONFIG;
   public ButtonType = ButtonType;
   public deleteLoading = false;
   public saveLoading = false;
-  public searchTerm = 'searchTermSync';
+  public searchTerm = 'searchTermMigration';
   public id;
 
 
@@ -49,7 +49,7 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
   public ActionButtonColors = ActionButtonColors;
 
 
-  constructor(private SyncdatenDataProvider: SyncDataProviderService,
+  constructor(private MigrationDataProvider: MigrationProviderService,
     private userProvider: UserProfileDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
@@ -62,9 +62,10 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
 
   ngOnInit() {
     this.loading = true;
-
-    this.notificationService.discardNotification();
-
+    this.loadTableRows();
+    if (!localStorage.getItem(this.searchTerm)) {
+      this.loadTableRows();
+    }
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -81,13 +82,16 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
 
 
   private loadTableRows() {
-    this.SyncdatenDataProvider.findAll()
-        .then((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsSuccess(response))
+    this.MigrationDataProvider.findAll()
+        .then((response: BogenligaResponse<TriggerDTO[]>) => {
+          this.handleLoadTableRowsSuccess(response);
+          console.log(response);
+        })
         .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
   }
 
-  public startSync() {
-    this.SyncdatenDataProvider.startSync();
+  public startMigration() {
+    this.MigrationDataProvider.startMigration();
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
@@ -100,4 +104,5 @@ export class SyncdatenComponent extends CommonComponentDirective implements OnIn
     this.rows = toTableRows(response.payload);
     this.loading = false;
   }
+
 }
