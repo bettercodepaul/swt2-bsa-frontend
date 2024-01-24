@@ -1594,6 +1594,10 @@
         "HEADERS": {
           "TIMESTAMP": "Timestamp",
           "DESCRIPTION": "Description",
+          "STATUS": "Status",
+          "OLD": "Alte Id",
+          "TABLENAME": "Alte Tabelle",
+          "CATEGORY": "Kategorie",
           "STATUS": "Status"
         }
       },

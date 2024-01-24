@@ -9,20 +9,26 @@ export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
   tableConfig: {
     columns: [
       {
-        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TIMESTAMP',
+        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.OLD',
         propertyName:   'migrationTimestamp',
-        width:          20,
+        width:          15,
       },
       {
-        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.DESCRIPTION',
+        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TABLENAME',
         propertyName:   'migrationDescription',
-        width:          20,
+        width:          15,
+      },
+      {
+        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.CATEGORY',
+        propertyName:   'migrationStatus',
+        width:          15,
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.STATUS',
         propertyName:   'migrationStatus',
-        width:          20,
+        width:          15,
       },
+
     ],
     actions: {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
