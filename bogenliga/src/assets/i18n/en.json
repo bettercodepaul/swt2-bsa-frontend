@@ -608,8 +608,18 @@
       },
       "MIGRATION": {
         "LABEL": "Data",
-        "DESCRIPTION": "Migrate Data between old and new App"
-      }
+        "DESCRIPTION": "Migrate Data between old and new App";,
+        "TABLE": {
+          "HEADERS": {
+            "TIMESTAMP": "Timestamp",
+            "MESSAGE": "Message",
+            "OLD": "Old id",
+            "TABLENAME": "Old table",
+            "CATEGORY": "category",
+            "STATUS": "Status",
+            "OPERATION": "Operation"
+          }
+        }
     },
     "SPORTJAHR": {
       "TITLE": "Choose league",
