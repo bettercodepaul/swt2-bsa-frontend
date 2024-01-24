@@ -5,8 +5,8 @@
   <!-- Heading-->
 
   <section class="overview-dialog-header">
-    <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
-    <bla-quicksearch (onSearchEntry)="onSearch($event)"
+    <bla-page-heading *ngIf="!isCustomActionButton">{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
+    <bla-quicksearch *ngIf="!isCustomActionButton" (onSearchEntry)="onSearch($event)"
                      [hidden]="hidden"
                      [sessionSearch]="searchTerm">
 
