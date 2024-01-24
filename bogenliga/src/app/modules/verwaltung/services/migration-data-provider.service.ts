@@ -74,12 +74,12 @@ export class MigrationProviderService extends DataProviderService {
               faketrigger.push({
                 id:             verein.id,
                 kategorie:      verein.kategorie,
-                altsystem_id:   verein.altsystem_id,
+                altsystemId:   verein.altsystemId,
                 operation:      verein.operation,
                 status:         verein.status,
                 nachricht:      verein.nachricht,
-                created_at_utc: verein.created_at_utc,
-                run_at_utc:     verein.created_at_utc,
+                createdAtUtc: verein.createdAtUtc,
+                runAtUtc:     verein.runAtUtc,
                 version:        1
               });
             });
