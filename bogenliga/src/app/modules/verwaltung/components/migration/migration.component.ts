@@ -85,6 +85,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     this.MigrationDataProvider.findAll()
         .then((response: BogenligaResponse<TriggerDTO[]>) => {
           this.handleLoadTableRowsSuccess(response);
+          console.log(response);
         })
         .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
   }

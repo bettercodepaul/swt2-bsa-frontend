@@ -6,22 +6,22 @@ export class TriggerDTO implements DataTransferObject {
   version: number;
 
   kategorie: string;
-  altsystem_id: number;
+  altsystemId: number;
   operation: string;
   status: string;
   nachricht: string;
-  created_at_utc: string;
-  run_at_utc: string;
+  createdAtUtc: string;
+  runAtUtc: string;
   static copyFrom(optional: {
     id?: number;
     version?: number;
     kategorie?: string;
-    altsystem_id?: number;
+    altsystemId?: number;
     operation?: string;
     status?: string;
     nachricht?: string;
-    created_at_utc?: string;
-    run_at_utc?: string;
+    createdAtUtc?: string;
+    runAtUtc?: string;
   } = {}): TriggerDTO {
     const copy = new TriggerDTO();
     if (optional.id >= 0) {
@@ -31,12 +31,12 @@ export class TriggerDTO implements DataTransferObject {
     }
     copy.version = optional.version || null;
     copy.kategorie = String(optional.kategorie || null);
-    copy.altsystem_id = optional.altsystem_id || null;
+    copy.altsystemId = optional.altsystemId || null;
     copy.operation = optional.operation || '';
     copy.nachricht = optional.nachricht || '';
     copy.status = optional.status || '';
-    copy.created_at_utc = optional.created_at_utc || '';
-    copy.run_at_utc = optional.run_at_utc || '';
+    copy.createdAtUtc = optional.createdAtUtc || '';
+    copy.runAtUtc = optional.runAtUtc || '';
     return copy;
   }
 }
