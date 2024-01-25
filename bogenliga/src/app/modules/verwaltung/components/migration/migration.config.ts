@@ -4,7 +4,7 @@ import {UserPermission} from '@shared/services';
 
 export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
-  pageTitleTranslationKey: 'MANAGEMENT.MIGRATION.TITLE',
+  pageTitleTranslationKey: 'MANAGEMENT.MIGRATION_DETAIL.TITLE',
 
   tableConfig: {
     columns: [
