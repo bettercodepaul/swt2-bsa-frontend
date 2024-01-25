@@ -591,9 +591,9 @@
           "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
         },
         "MIGRATION": {
-          "LABEL": "Migration",
+          "LABEL": "Migrationen",
           "DESCRIPTION": "Migration der Daten zwischen altem und neuem System",
-          "TOOLTIP": "● Prüfe Status\n● Starte neue Migration\n"
+          "TOOLTIP": "● Prüfe Status\n● Starte neue Migrationen\n"
         }
       }
     },
@@ -1586,10 +1586,10 @@
       }
     },
     "MIGRATION_DETAIL": {
-      "TITLE": "Migration - Details"
+      "TITLE": "Migrationen - Details"
     },
     "MIGRATION": {
-      "TITLE": "Migration",
+      "TITLE": "Migrationen",
       "TABLE": {
         "HEADERS": {
           "TIMESTAMP": "Zeitpunkt",
