@@ -26,7 +26,7 @@ import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-o
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 
-export const NOTIFICATION_DELETE_SYNCDATEN = 'syncdaten_delete';
+export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 const ID_PATH_PARAM = 'id';
 
 @Component({
