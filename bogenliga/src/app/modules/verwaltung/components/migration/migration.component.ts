@@ -2,13 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   ButtonType,
-  CommonComponentDirective,
-  hideLoadingIndicator,
-  showDeleteLoadingIndicatorIcon, toTableRows
+  CommonComponentDirective, toTableRows
 } from '../../../shared/components';
 import {BogenligaResponse} from '../../../shared/data-provider';
 import {
-  Notification,
   NotificationOrigin,
   NotificationService,
   NotificationSeverity,
@@ -22,7 +19,6 @@ import {UserProfileDataProviderService} from '@user/services/user-profile-data-p
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
-import {VersionedDataObject} from '@shared/data-provider/models/versioned-data-object.interface';
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 
@@ -91,8 +87,31 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 
   public startMigration() {
-    this.MigrationDataProvider.startMigration();
+    try {
+      this.MigrationDataProvider.startMigration();
+      this.notificationService.showNotification({
+        id: 'Migrationslauf gestartet',
+        description: 'Die Migration wurde angestoßen und läuft',
+        title: 'Migration gestartet',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.ACCEPTED,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO
+      });
+    } catch (e) {
+
+    this.notificationService.showNotification({
+      id: 'Fehler beim Starten der Migration',
+      description: 'Ein fehler ist aufgetreten und die Migration wurde nicht gestartet.',
+      title: 'Fehler beim Start der MIgration',
+      origin: NotificationOrigin.SYSTEM,
+      userAction: NotificationUserAction.ACCEPTED,
+      type: NotificationType.OK,
+      severity: NotificationSeverity.INFO
+    });
+
   }
+}
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];
