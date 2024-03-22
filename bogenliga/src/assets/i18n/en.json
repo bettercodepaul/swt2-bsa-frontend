@@ -44,8 +44,9 @@
       "BOX1CONTENT": "Be there..."
     },
     "LIGADETAILES": {
-      "IDWARNING": "Wrong Liga ID",
-      "DESCRIPTION": "No valid league ID could be read from the URL"
+      "IDWARNING": "Wrong Link",
+      "DESCRIPTION": "The input link is not a valid link",
+      "BACK_TO_HOME": "Back to home page"
     },
     "IMPRESSUM": {
       "TITLE": "Imprint"
@@ -82,6 +83,7 @@
     },
     "TITEL": {
       "VERANSTALTUNG": "League-Selection"
+
     },
     "LIGATABELLE": {
       "TITEL": "League-Ranking",
@@ -95,7 +97,9 @@
         "VERANSTALTUNG": "League",
         "WETTKAMPFTAG_AKT": "Competition day",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION" : "reset league selection",
+      "GOTO_LIGADETAILS" : "To the league details"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
@@ -133,6 +137,7 @@
     "TITEL": {
       "WKTAG": "Event competition days",
       "VERANSTALTUNG": "Events",
+      "DRUCKDATEN": "Print Data",
       "WETTKAEMPFE": "competition days",
       "LT_DURCHFUEHRUNG": "League table implementation"
     },
@@ -263,7 +268,7 @@
         },
         "SCHUETZENNUMMER": {
           "TITLE": "Input error - saving canceled",
-          "DESCRIPTION": "Please enter all marksman numbers."
+          "DESCRIPTION": "The marksman has already participated on this competition day in a different league."
         },
         "SCHUETZENEINDEUTIG": {
           "TITLE": "Input error - saving canceled",
@@ -562,8 +567,8 @@
     "TITLE": "Administration",
     "NAVIGATION": {
       "DSBMITGLIEDER": {
-        "LABEL": "DSB members",
-        "DESCRIPTION": "Management of DSB members"
+        "LABEL": "Association members",
+        "DESCRIPTION": "Management of association members"
       },
       "BENUTZER": {
         "LABEL": "User",
@@ -600,7 +605,21 @@
       "EINSTELLUNG": {
         "LABEL": "settings",
         "DESCRIPTION": "Management of settings"
-      }
+      },
+      "MIGRATION": {
+        "LABEL": "Data",
+        "DESCRIPTION": "Migrate Data between old and new App";,
+        "TABLE": {
+          "HEADERS": {
+            "TIMESTAMP": "Timestamp",
+            "MESSAGE": "Message",
+            "OLD": "Old id",
+            "TABLENAME": "Old table",
+            "CATEGORY": "category",
+            "STATUS": "Status",
+            "OPERATION": "Operation"
+          }
+        }
     },
     "SPORTJAHR": {
       "TITLE": "Choose league",
@@ -638,7 +657,7 @@
       }
     },
     "DSBMANNSCHAFT": {
-      "TITLE": "DSB Teams - Overview",
+      "TITLE": "Association Teams - Overview",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -649,13 +668,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Team",
+          "TITLE": "Delete Association Team",
           "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
         }
       }
     },
     "DSBMANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Teams - Details",
+      "TITLE": "Association Teams - Details",
       "FORM": {
         "DSBVEREINNUMMER": {
           "LABEL": "Club-number",
@@ -675,13 +694,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Team",
+          "TITLE": "Delete Association Team",
           "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
         }
       }
     },
     "DSBMITGLIEDER": {
-      "TITLE": "DSB Members - Overview",
+      "TITLE": "Association Members - Overview",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -693,8 +712,8 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB Member",
-          "DESCRIPTION": "Are you sure, you want to delete the DSB Member with ID=%s? This can not be undone."
+          "TITLE": "Delete Association Member",
+          "DESCRIPTION": "Are you sure, you want to delete the Association Member with ID=%s? This can not be undone."
         },
         "DELETE_PLATZHALTER_MITGLIED": {
           "TITLE": "Delete Placeholder club DSB Member",
@@ -792,6 +811,10 @@
         "SAVE": {
           "TITLE": "Success",
           "DESCRIPTION": "The league was successfully saved."
+        },
+        "WRONG_FORMAT": {
+          "TITLE": "Error",
+          "DESCRIPTION":  "The name of the leage shouln't contain an underscore."
         }
       }
     },
@@ -966,7 +989,7 @@
       }
     },
     "MANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Team - Details",
+      "TITLE": "Association Team - Details",
       "FORM": {
         "MANNSCHAFT_NAME": {
           "LABEL": "Team name",
@@ -1101,7 +1124,7 @@
       }
     },
     "DSBMITGLIEDER_DETAIL": {
-      "TITLE": "DSB Member - Details",
+      "TITLE": "Association Member - Details",
       "FORM": {
         "VORNAME": {
           "LABEL": "first name",
@@ -1144,20 +1167,20 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Delete DSB member",
-          "DESCRIPTION": "Are you sure, you want to delete the DSB member with ID=%s? This can not be undone."
+          "TITLE": "Delete Association member",
+          "DESCRIPTION": "Are you sure, you want to delete the association member with ID=%s? This can not be undone."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Success",
-          "DESCRIPTION": "Successfully deleted DSB member."
+          "DESCRIPTION": "Successfully deleted association member."
         },
         "DELETE_FAILURE": {
           "TITLE": "Error while deleting",
-          "DESCRIPTION": "Could not delete DSB member."
+          "DESCRIPTION": "Could not delete association member."
         },
         "SAVE": {
           "TITLE": "Success",
-          "DESCRIPTION": "Successfully saved DSB member."
+          "DESCRIPTION": "Successfully saved association member."
         },
         "DUPLICATE": {
           "TITLE": "Failed to add",
@@ -1361,6 +1384,10 @@
         "PLATZHALTER_FAILURE": {
           "TITLE": "Placeholder Error",
           "DESCRIPTION": "The creation of the Placeholder team has failed. Reasons for this may be that the event is full or a Placeholder team is already in this event."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Update error",
+          "DESCRIPTION": "The event has a higher number of teams than the new maximum number allows."
         }
       }
     },
@@ -1612,6 +1639,16 @@
       "DELETE": "Delete",
       "ADD": "Add",
       "DOWNLOAD": "Download licence"
+    },
+    "ACTION_TEXT": {
+      "EDIT": "Edit",
+      "MAP": "View on map",
+      "DELETE": "Delete",
+      "ADD": "Add",
+      "DOWNLOAD": "Download",
+      "DOWNLOADLIZENZEN": "Download licenses",
+      "DOWNLOADRUECKENNUMMER": "Download back number",
+      "VIEW": "Select"
     },
     "NO_ENTRIES_FOUND": "No entries found",
     "LOADING": "Loading entries",

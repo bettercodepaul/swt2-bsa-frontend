@@ -1,6 +1,7 @@
 .grid-layout {
   height: 100%;
-  width: 100%;
+  width: 90%;
+  justify-content: space-between;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

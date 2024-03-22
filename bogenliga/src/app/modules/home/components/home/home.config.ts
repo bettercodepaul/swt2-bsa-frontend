@@ -19,6 +19,8 @@ import VorauswahlVeranstaltung from '../home/Buttons/VorauswahlVeranstaltung.svg
 import VereinsmitgliederVerwalten from '../home/Buttons/VereinsmitgliederVerwalten.svg';
 
 
+
+
 export const HOME_CONFIG: CommonDialogConfig = {
   moduleTranslationKey:    'HOME',
   pageTitleTranslationKey: 'HOME.HOME.TITLE',

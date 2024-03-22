@@ -75,14 +75,14 @@ Cypress.Commands.add("restoreLocalStorage", () => {
  * 3. Clicks on the fourth child element of the dropdown menu to initiate the logout process.
  */
 Cypress.Commands.add('logout', () => {
-  cy.log('log out user')
-  cy.get('.dropdown')
-    .click()
+    cy.log('log out user')
+    cy.get('.dropdown')
+      .click()
 
-  cy.get('.dropdown-menu > :nth-child(4)')
-    .click()
-  cy.wait(2000);
-}
+    cy.get('.dropdown-menu > :nth-child(4)')
+      .click()
+    cy.wait(2000);
+  }
 );
 
 
@@ -100,15 +100,15 @@ Cypress.Commands.add('dismissModal', () => {
 
   cy.wait(500)
   cy.get('bla-actionbutton > #OKBtn1').then(($button) => {
-      if ($button.length > 0) {
-        $button.click();
-      } else {
-        Cypress.log({
-          name: 'Modal',
-          message: 'The OK button was not found.'
-        });
-      }
-    });
+    if ($button.length > 0) {
+      $button.click();
+    } else {
+      Cypress.log({
+        name: 'Modal',
+        message: 'The OK button was not found.'
+      });
+    }
+  });
 
 });
 
@@ -122,10 +122,30 @@ Cypress.Commands.add('dismissModal', () => {
  * cy.loginAdmin();
  */
 Cypress.Commands.add('loginAdmin', () => {
-    cy.visit('http://localhost:4200/#/user/login');
-    cy.get('[data-cy=login-als-admin-button]').click()
+  cy.visit('http://localhost:4200/#/user/login');
+  cy.get('[data-cy=login-als-admin-button]').click()
 });
 
+Cypress.Commands.add('disbandModalIfShown', () => {
+  cy.get('#exampleModal').then(($modal) => {
+    if ($modal.is(':visible')) {
+      // Disband the modal
+      cy.get('#OKBtn1', {timeout: 1000}).should('be.visible').then(($button) => {
+        if ($button.length > 0) {
+          // If the button is present and visible, click on it
+          cy.get('#OKBtn1').click();
+        }
+      });
+    }
+  });
+});
+
+Cypress.Commands.add('expandWettkampfTage', () => {
+  cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
+  cy.wait(1000)
+  cy.get('[data-cy="bla-selection-list"]').select(1)
+  cy.wait(1000)
+})
 
 Cypress.Commands.add('createUserTest', (testusermail) => {
   cy.get('[data-cy="sidebar-verwaltung-button"]').click()
@@ -193,7 +213,6 @@ Cypress.Commands.add('typeInIFrame', (text) => {
 })
 
 
-
 Cypress.Commands.add('loginUserTest', () => {
 
   cy.get('[data-cy="login-button"]').click();
@@ -202,6 +221,6 @@ Cypress.Commands.add('loginUserTest', () => {
 
   cy.get('input#loginPassword').type('Test123456');
 
-  cy.get('#loginButton').click({ force: true });
+  cy.get('#loginButton').click({force: true});
 
 })

@@ -39,7 +39,6 @@
       "WELCOME": "Willkommen",
       "WETTKAEMPFE": "Unsere nächsten Wettkämpfe",
       "WETTKAMPFERSATZ": "Derzeit sind keine Wettkämpfe geplant",
-
       "FURTHER": "Weitere Infos",
       "CONTENT": "Hier finden Sie alle Informationen der Deutschen Ligen im Bogenschießen. Stöbern Sie durch die Ligen und lassen Sie sich in die Faszination des Mannschaftsbogensports ziehen.",
       "BOX1HEADING": "Schüler- und Jugend- Cup 2018",
@@ -47,8 +46,9 @@
       "BOX1CONTENT": "Seid dabei, wenn wir am 20. & 21. Oktober 2018 im WSV- Schulungszentrum in Ruit gemeinsam ein tolles Wochenende Rund um das Sport- und Bogenschießen erleben und jede Menge Spaß haben werden.Beim Schüler- und Jugend- Cup können Jungschützen mit dem Bogen, dem Luftgewehr sowie der Luftpistole und dem Lichtgewehr sowie der Lichtpistole ihr Können in spannenden Wettkämpfen, Geschicklichkeits- und Konzentrationsübungen unter Beweis stellen.Detaillierte Informationen zu den Altersklassen und den Disziplinen, sowie den Meldebogen findet Ihr hier. Wir freuen uns auf euch!"
     },
     "LIGADETAILES": {
-      "IDWARNING": "Falsche Liga ID",
-      "DESCRIPTION": "Es konnte keine gültige Liga ID aus der URL gelesen werden."
+      "IDWARNING": "Falscher Link",
+      "DESCRIPTION": "Der eingegebene Link ist kein gültiger Link.",
+      "BACK_TO_HOME": "Zurück zur Startseite"
     },
     "IMPRESSUM": {
       "TITLE": "Impressum"
@@ -58,7 +58,7 @@
     "REGIONEN": {
       "TITLE": "Regionen",
       "DESCRIPTION": "Eine Übersicht über alle Regionen. Ein Klick auf die entsprechende Region in der Grafik oder in der Tabelle darunter öffnet die Detailansicht mit den dazugehörigen Ligen und Vereinen.",
-      "CLOSE" : "Um zurück zu navigieren, auf den innersten Kreis klicken."
+      "CLOSE": "Um zurück zu navigieren, auf den innersten Kreis klicken."
     }
   },
   "VEREINE": {
@@ -79,10 +79,10 @@
       "TITLE": "Liga-Tabelle",
       "GEWAEHLTE_VERANSTALTUNG": "Gewählte Veranstaltung: ",
       "GEWAEHLTE_MANNSCHAFT": "Gewählte Mannschaft: ",
-      "WETTKAMPFTAGEINS" : "Wettkampftag 1",
-      "WETTKAMPFTAGZWEI" : "Wettkampftag 2",
-      "WETTKAMPFTAGDREI" : "Wettkampftag 3",
-      "WETTKAMPFTAGVIER" : "Wettkampftag 4"
+      "WETTKAMPFTAGEINS": "Wettkampftag 1",
+      "WETTKAMPFTAGZWEI": "Wettkampftag 2",
+      "WETTKAMPFTAGDREI": "Wettkampftag 3",
+      "WETTKAMPFTAGVIER": "Wettkampftag 4"
     },
     "TITEL": {
       "VERANSTALTUNG": "Ligen-Auswahl"
@@ -90,7 +90,7 @@
     "LIGATABELLE": {
       "TITEL": "Liga-Tabelle",
       "DESCRIPTION": "Alle Ligen und die jeweiligen Ligatabellen des ausgewählten Jahres",
-      "LINKDESCRIPTION": "Zu den Wettkampfergebnissen" ,
+      "LINKDESCRIPTION": "Zu den Wettkampfergebnissen",
       "TABELLENPLATZ": "Tabellenplatz",
       "MANNSCHAFTNAME": "Mannschaft",
       "MATCHPUNKTE": "Matchpunkte",
@@ -100,7 +100,9 @@
         "VERANSTALTUNG": "Liga",
         "WETTKAMPFTAG_AKT": "Wettkampftag",
         "WETTKAMPFTAG": "0"
-      }
+      },
+      "RESET_LIGASELECTION": "Auswahl zurücksetzen",
+      "GOTO_LIGADETAILS": "Zu den Ligadetails"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
@@ -195,13 +197,14 @@
     "TITEL": {
       "WKTAG": "Wettkampftage der Veranstaltung",
       "VERANSTALTUNG": "Veranstaltungen",
+      "DRUCKDATEN": "Druckdaten",
       "WETTKAEMPFE": "Wettkampftage",
-      "LT_DURCHFUEHRUNG": "Ligatabelle Durchführung"
+      "LT_DURCHFUEHRUNG": "Begegnungen / Matches"
     },
     "WETTKAMPF": {
       "TABLE": {
         "CDAY": "Wettkampftag",
-        "DAY":"Wochentag",
+        "DAY": "Wochentag",
         "DATE": "Datum",
         "TIME": "Uhrzeit",
         "LIGA": "Disziplin",
@@ -216,33 +219,33 @@
       "SCHUSSZETTEL": "Schusszettel",
       "KONTROLLLISTE": "Bogenkontrollliste",
       "MELDEZETTEL": "Meldezettel",
-      "MITGLIED_ANLEGEN": "DSB-Mitglied anlegen",
+      "MITGLIED_ANLEGEN": "Vereinsmitglied anlegen",
       "TABLE_SETUP": "Setup Tablets",
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
       "OFFLINE_TOKEN": "Offlinetoken löschen"
     },
-    "SETZLISTE" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Fehler beim generieren der Setzliste:",
+    "SETZLISTE": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren der Setzliste:",
           "DESCRIPTION": "Setzliste konnte nicht generiert werden, da keine Daten zum vorherigen Wettkampftag vorhanden sind."
         }
       }
     },
-    "BOGENKONTROLLLISTE" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Fehler beim generieren der Bogenkontrollliste:",
+    "BOGENKONTROLLLISTE": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren der Bogenkontrollliste:",
           "DESCRIPTION": "Bogenkontrollliste konnte nicht generiert werden, da keine Setzliste vorhanden ist."
         }
       }
     },
-    "MELDEZETTEL" : {
-      "NOTIFICATION" : {
-        "DOWNLOADFEHLER" : {
-          "TITLE" :"Fehler beim generieren des Meldezettels:",
+    "MELDEZETTEL": {
+      "NOTIFICATION": {
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren des Meldezettels:",
           "DESCRIPTION": "Meldezettel konnte nicht generiert werden, da keine Schützen vorhanden sind."
         }
       }
@@ -270,47 +273,47 @@
       "ANDERER_TAG_PRUEFUNG3": "geschossen",
       "NOTIFICATION": {
         "LADEN": {
-          "TITLE":"Schusszettel laden",
+          "TITLE": "Schusszettel laden",
           "DESCRIPTION": "Schusszettel wird geladen..."
         },
-        "DOWNLOADFEHLER":{
-          "TITLE":"Fehler beim generieren des Schusszettels:",
+        "DOWNLOADFEHLER": {
+          "TITLE": "Fehler beim generieren des Schusszettels:",
           "DESCRIPTION": "Schusszettel konnte nicht generiert werden, da keine Matches für den Wettkampf vorhanden sind."
         },
-        "EINGABEFEHLER":{
-          "TITLE":"Eingabefehler",
+        "EINGABEFEHLER": {
+          "TITLE": "Eingabefehler",
           "DESCRIPTION": "Pfeilwert ungültig..."
         },
-        "ENTSCHIEDEN":{
-          "TITLE":"Eingabefehler - Speichern abgebrochen",
+        "ENTSCHIEDEN": {
+          "TITLE": "Eingabefehler - Speichern abgebrochen",
           "DESCRIPTION": "Satzpunkte >7"
         },
-        "SCHUETZENNUMMER":{
-          "TITLE":"Eingabefehler - Speichern abgebrochen",
-          "DESCRIPTION": "Bitte geben sie unter Schütze alle Schützennummern ein."
+        "SCHUETZENNUMMER": {
+          "TITLE": "Eingabefehler - Speichern abgebrochen",
+          "DESCRIPTION": "Der Schütze hat bereits an diesem Wettkampftag in einer anderen Liga geschossen."
         },
-        "SCHUETZENEINDEUTIG":{
-          "TITLE":"Eingabefehler - Speichern abgebrochen",
+        "SCHUETZENEINDEUTIG": {
+          "TITLE": "Eingabefehler - Speichern abgebrochen",
           "DESCRIPTION": "Bitte geben sie drei unterschiedliche Schützenummern an."
         },
-        "SPEICHERN":{
-          "TITLE":"Schusszettel speichern",
+        "SPEICHERN": {
+          "TITLE": "Schusszettel speichern",
           "DESCRIPTION": "Schusszettel wird gespeichert..."
         },
-        "GESPEICHERT":{
-          "TITLE":"Schusszettel gespeichert",
+        "GESPEICHERT": {
+          "TITLE": "Schusszettel gespeichert",
           "DESCRIPTION": "Schusszettel wurde erfolgreich gespeichert"
         },
-        "RUECKENNUMMERZUHOCH":{
-          "TITLE":"Eingabefehler - Speichern abgebrochen",
+        "RUECKENNUMMERZUHOCH": {
+          "TITLE": "Eingabefehler - Speichern abgebrochen",
           "DESCRIPTION": "Eingegebene Rueckennummer existiert nicht in dieser Mannschaft"
         },
-        "WEITER":{
-          "TITLE":"Es gibt ungespeicherte Änderungen",
+        "WEITER": {
+          "TITLE": "Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
         },
         "ZURUECK": {
-          "TITLE":"Es gibt ungespeicherte Änderungen",
+          "TITLE": "Es gibt ungespeicherte Änderungen",
           "DESCRIPTION": "Soll der Dialog verlassen werden? Alle nicht gespeicherten Änderungen werden verworfen."
         }
       }
@@ -318,7 +321,7 @@
     "MATCH": {
       "TABLE": {
         "NUMMER": "Match",
-        "SCHEIBE":"Scheibe",
+        "SCHEIBE": "Scheibe",
         "MANNSCHAFT": "Mannschaft",
         "BEGEGNUNG": "Begegnung",
         "MATCHPUNKTE": "Matchpunkte",
@@ -333,7 +336,7 @@
       "TEXT": "Es muss ein Wettkampftag ausgewählt sein um die Buttons nutzen zu können"
     },
     "SCHUETZEN_STATISTIK": {
-      "TITEL" : "Gesamtstatistik pro Schütze"
+      "TITEL": "Gesamtstatistik pro Schütze"
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
@@ -375,10 +378,9 @@
         "VERANSTALTUNG_NAME": {
           "LABEL": "Veranstaltungen:"
         },
-        "SPORTJAHR":{
+        "SPORTJAHR": {
           "LABEL": "Sportjahr:"
         }
-
       },
       "TABLE": {
         "COLUMNS": {
@@ -539,13 +541,13 @@
       "DESCRIPTION": "Die zentrale Verwaltung aller Bestandteile des Bogenligabetriebs und der Bogenliga App. Bearbeite die Details existierender Bestandteile, lösche Bestandteile oder lege neue an.",
       "NAVIGATION": {
         "DSBMITGLIEDER": {
-          "LABEL": "DSB Mitglieder",
+          "LABEL": "Vereinsmitglieder",
           "DESCRIPTION": "Registrierte Mitglieder des Deutschen Schützenbunds",
-          "TOOLTIP": "● Neue DSB Mitglieder erstellen\n● DSB Mitglieder bearbeiten\n● DSB Mitglieder löschen"
+          "TOOLTIP": "● Neue Vereinsmitglieder erstellen\n● Vereinsmitglieder bearbeiten\n● Vereinsmitglieder löschen"
         },
         "USER": {
           "LABEL": "Benutzer",
-          "DESCRIPTION": "DSB Mitglieder mit Account in der Bogenliga App",
+          "DESCRIPTION": "Vereinsmitglieder mit Account in der Bogenliga App",
           "TOOLTIP": "● Neue Benutzer anlegen\n● Benutzerliste bearbeiten\n● Benutzer löschen"
         },
         "KLASSEN": {
@@ -585,8 +587,13 @@
         },
         "EINSTELLUNGEN": {
           "LABEL": "Einstellungen",
-          "DESCRIPTION": "Einstellungen der DSB Details, sowie der Bogenliaga App ",
+          "DESCRIPTION": "Einstellungen der Vereinsdetails, sowie der Bogenliaga App ",
           "TOOLTIP": "● Autorefresh & Interval\n● SMTP Benutzer & Passwort\n● Max. Wettkampftage\n● SMTP Einstellungen"
+        },
+        "MIGRATION": {
+          "LABEL": "Migrationen",
+          "DESCRIPTION": "Migration der Daten zwischen altem und neuem System",
+          "TOOLTIP": "● Prüfe Status\n● Starte neue Migrationen\n"
         }
       }
     },
@@ -632,17 +639,14 @@
         }
       },
       "NOTIFICATION": {
-        "SAVE":{
+        "SAVE": {
           "TITLE": "Einstellung speichern",
           "DESCRIPTION": "Einstellung wurde gespeichert "
-
         },
-        "EDIT":{
+        "EDIT": {
           "TITLE": "Einstellung bearbeiten",
           "DESCRIPTION": "Neue Value wurde gesetzt "
-
         },
-
         "DELETE": {
           "TITLE": "Einstellung löschen",
           "DESCRIPTION": "Einstellung wurde erfolgreich gelöscht"
@@ -658,9 +662,6 @@
         }
       }
     },
-
-
-
     "SPORTJAHR_OVERVIEW": {
       "TITLE": "Veranstaltungen",
       "TABLE": {
@@ -680,7 +681,7 @@
       }
     },
     "DSBMANNSCHAFT": {
-      "TITLE": "DSB Mannschaften - Übersicht",
+      "TITLE": "Vereinsmannschaften - Übersicht",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -691,13 +692,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mannschaft löschen",
+          "TITLE": "Vereinsmannschaft löschen",
           "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
     "DSBMANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Mannschaften - Details",
+      "TITLE": "Vereinsmannschaften - Details",
       "FORM": {
         "DSBVEREINNUMMER": {
           "LABEL": "Vereinsnummer",
@@ -718,13 +719,13 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mannschaft löschen",
+          "TITLE": "Vereinsmannschaft löschen",
           "DESCRIPTION": "Wollen Sie die Mannschaft mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         }
       }
     },
     "DSBMITGLIEDER": {
-      "TITLE": "DSB Mitglieder - Übersicht",
+      "TITLE": "Vereinsmitglieder - Übersicht",
       "TABLE": {
         "HEADERS": {
           "ID": "ID",
@@ -736,8 +737,8 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mitglied löschen",
-          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Vereinsmitglieder löschen",
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_PLATZHALTER_MITGLIED": {
           "TITLE": "Platzhalter DSB Mitglied löschen",
@@ -811,15 +812,14 @@
           "PLACEHOLDER": "Wählen Sie einen Ligaverantwortlichen",
           "ERROR": "Bitte wählen Sie eine gültige Email Adresse"
         },
-        "LIGA_DETAIL" : {
+        "LIGA_DETAIL": {
           "LABEL": "Ligadetails",
-          "MAX_WORDS_WARNING": "(max. 5000 Wörter)"
+          "MAX_WORDS_WARNING": "(max. 1500 Zeichen)"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
         "DELETE": "Löschen"
       },
-
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Liga löschen",
@@ -839,7 +839,11 @@
         },
         "MAX_WORDS_SURPASSED": {
           "TITLE": "Fehler",
-          "DESCRIPTION":  "Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl von 5000 Wörtern."
+          "DESCRIPTION": "Der Ligadetail-Text ist zu lang! Bitte beachten Sie die maximale Anzahl von 5000 Wörtern."
+        },
+        "WRONG_FORMAT": {
+          "TITLE": "Fehler",
+          "DESCRIPTION": "Der Name der Liga darf kein Unterstrich beinhalten."
         }
       }
     },
@@ -943,16 +947,14 @@
           "TITLE": "Fehler beim Download",
           "DESCRIPTION": "Der Lizenzenübersicht konnte nicht heruntergeladen werden, da eine oder mehreren Lizenzen nicht vorhanden sind."
         },
-        "UPDATE":  {
+        "UPDATE": {
           "FAILURE": {
             "FULL": {
               "TITLE": "Veranstaltung bereits ausgebucht",
-
               "DESCRIPTION": "Aufgrund der Tatsache, dass die Veranstaltung bereits vollständig ausgebucht ist, bedauern wir Ihnen mitteilen zu müssen, dass eine Aktualisierung des Teilnehmerkreises derzeit nicht möglich ist."
             }
           }
         }
-
       },
       "NOTIFICATION_PLATZHALTER": {
         "DELETE": {
@@ -973,7 +975,6 @@
           "REGION_SUPERORDINATE": "Übergeordnete Region"
         }
       },
-
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Region löschen",
@@ -1029,7 +1030,7 @@
       }
     },
     "MANNSCHAFT_DETAIL": {
-      "TITLE": "DSB Mannschaft - Details",
+      "TITLE": "Vereinsmannschaft - Details",
       "FORM": {
         "MANNSCHAFT_NAME": {
           "LABEL": "Mannschaftsname",
@@ -1082,7 +1083,6 @@
           "TITLE": "Mitglied aus Mannschaft löschen",
           "DESCRIPTION": "Im Offlinemodus können Mitglieder nicht gelöscht werden."
         },
-
         "DELETE_MITGLIED_SUCCESS": {
           "TITLE": "Erfolg",
           "DESCRIPTION": "Schütze wurde erfolgreich entfernt."
@@ -1165,7 +1165,7 @@
       }
     },
     "DSBMITGLIEDER_DETAIL": {
-      "TITLE": "DSB Mitglied - Details",
+      "TITLE": "Vereinsmitglieder - Details",
       "FORM": {
         "VORNAME": {
           "LABEL": "Vorname",
@@ -1208,20 +1208,20 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "DSB Mitglied löschen",
-          "DESCRIPTION": "Wollen Sie das DSB Mitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Vereinsmitglieder löschen",
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gelöscht."
+          "DESCRIPTION": "Das Vereinsmitglieder wurde erfolgreich gelöscht."
         },
         "DELETE_FAILURE": {
           "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Das DSB Mitglied konnte nicht gelöscht werden."
+          "DESCRIPTION": "Das Vereinsmitglieder konnte nicht gelöscht werden."
         },
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das DSB Mitglied wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Das Vereinsmitglieder wurde erfolgreich gespeichert."
         },
         "DUPLICATE": {
           "TITLE": "Hinzufügen fehlgeschlagen",
@@ -1290,11 +1290,9 @@
           "PLACEHOLDER": "Bitte geben Sie einen Namen für die Veranstaltung ein",
           "ERROR": "Bitte geben Sie einen gültigen Namen ein"
         },
-
         "DISZIPLIN": {
           "LABEL": "Disziplin"
         },
-
         "SPORTJAHR": {
           "LABEL": "Sportjahr",
           "PLACEHOLDER": "YYYY",
@@ -1305,7 +1303,6 @@
           "PLACEHOLDER": "Bitte geben Sie an wieviele Teams bei der Veranstaltung teilnehmen dürfen",
           "ERROR": "Bitte geben Sie eine Anzahl an Teilnehmenden Teams an"
         },
-
         "WETTKAMPFTYPID": {
           "LABEL": "Wettkampftyp",
           "PLACEHOLDER": "Bitte geben Sie einen Wettkampftyp für die Veranstaltung ein",
@@ -1321,7 +1318,6 @@
           "PLACEHOLDER": "Bitte geben Sie ein Datum für die Meldedeadline ein",
           "ERROR": "Bitte geben Sie ein gültiges Datum ein (Format: JJJJ-MM-TT)."
         },
-
         "LIGANAME": {
           "LABEL": "Liganame",
           "PLACEHOLDER": "Wählen Sie eine Liga",
@@ -1405,13 +1401,13 @@
             },
             "TOO_MANY": {
               "TITLE": "Zu viele Wettkampftage",
-              "DESCRIPTION" : "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
+              "DESCRIPTION": "Sie haben bereits die maximale Anzahl an Wettkampftagen hinzugefügt."
             }
           }
         },
         "KAMPFRICHTERLISTE": {
           "LABEL": "Kampfrichter",
-          "LEFTCAPTION":  "abgewählt",
+          "LEFTCAPTION": "abgewählt",
           "RIGHTCAPTION": "ausgewählt"
         },
         "SAVE": "Speichern",
@@ -1424,9 +1420,9 @@
         "PLATZHALTER": "Platzhalter hinzufügen"
       },
       "NOTIFICATION": {
-        "FINISH" : {
-          "TITLE" : "Veranstaltung abschließen",
-          "DESCRIPTION" : "Wollen Sie die Veranstaltung '%s' wirklich abschließen?"
+        "FINISH": {
+          "TITLE": "Veranstaltung abschließen",
+          "DESCRIPTION": "Wollen Sie die Veranstaltung '%s' wirklich abschließen?"
         },
         "SAVE": {
           "TITLE": "Veranstaltung angelegt",
@@ -1455,9 +1451,13 @@
         "PLATZHALTER_FAILURE": {
           "TITLE": "Erstellen des Platzhalters fehlgeschlagen",
           "DESCRIPTION": "Die Erstellung des Platzhalters ist gescheitert. Gründe dafür könnten sein, dass die Veranstaltung voll ist oder bereits ein Platzhalter in dieser Veranstaltung existiert."
+        },
+        "UPDATE_FAILURE": {
+          "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
         }
-    }
-  },
+      }
+    },
     "VERANSTALTUNG_NEU": {
       "TITLE": "VERANSTALTUNG - Neuanlage",
       "FORM": {
@@ -1533,8 +1533,8 @@
         "ROLE_NEW": {
           "LABEL": "Zukünftige Rolle",
           "PLACEHOLDER": "bitte eine Rolle wählen",
-          "LEFTCAPTION":  "ausgewählt",
-          "RIGHTCAPTION":  "abgewählt"
+          "LEFTCAPTION": "ausgewählt",
+          "RIGHTCAPTION": "abgewählt"
         },
         "PASSWORD_NEW": {
           "LABEL": "Neues Passwort",
@@ -1555,8 +1555,8 @@
       "TITLE": "BENUTZER - Neuanlage",
       "FORM": {
         "DSBMITGLIED": {
-          "LABEL": "Vorhandenes DSB-Mitglied",
-          "PLACEHOLDER": "Bitte ein existierendes DSB-Mitgiled auswählen"
+          "LABEL": "Vorhandenes Vereinsitglied",
+          "PLACEHOLDER": "Bitte ein existierendes Vereinsmitgiled auswählen"
         },
         "EMAIL": {
           "LABEL": "E-Mail",
@@ -1585,7 +1585,29 @@
         }
       }
     },
-
+    "MIGRATION_DETAIL": {
+      "TITLE": "Migrationen - Übersicht"
+    },
+    "MIGRATION": {
+      "TITLE": "Migrationen",
+      "TABLE": {
+        "HEADERS": {
+          "TIMESTAMP": "Zeitpunkt",
+          "MESSAGE": "Nachricht",
+          "STATUS": "Status",
+          "OLD": "Alte Id",
+          "TABLENAME": "Alte Tabelle",
+          "CATEGORY": "Kategorie",
+          "OPERATION": "Operation"
+        }
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Migration löschen",
+          "DESCRIPTION": "Wollen Sie die Migration mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+        }
+      }
+    },
     "EINSTELLUNGEN": {
       "TITLE": "Einstellungen - Übersicht",
       "FORM": {
@@ -1606,7 +1628,6 @@
         }
       }
     },
-
     "EINSTELLUNGEN_DETAIL": {
       "TITLE": "Einstellungen - Detail",
       "FORM": {
@@ -1631,8 +1652,6 @@
         "SAVE": "Speichern"
       }
     },
-
-
     "WETTKAMPFKLASSE_DETAIL": {
       "TITLE": "Wettkampfklasse - Details",
       "FORM": {
@@ -1691,7 +1710,6 @@
       "CANCEL": "Abbrechen",
       "YES": "Ja",
       "NO": "Nein"
-
     },
     "INFO": {
       "MEHR": "Mehr Informationen anzeigen",
@@ -1769,6 +1787,16 @@
       "DOWNLOAD": "Lizenz herunterladen",
       "MAP": "Ort anzeigen"
     },
+    "ACTION_TEXT": {
+      "EDIT": "Bearbeiten",
+      "MAP": "Ort anzeigen",
+      "DELETE": "Löschen",
+      "ADD": "Hinzufügen",
+      "DOWNLOAD": "Download",
+      "DOWNLOADLIZENZEN": "Lizenzen downloaden",
+      "DOWNLOADRUECKENNUMMER": "Rückennummer downloaden",
+      "VIEW": "Auswählen"
+    },
     "NO_ENTRIES_FOUND": "Keine Einträge vorhanden",
     "LOADING": "Einträge werden geladen",
     "TITLE": "Tabelle",
@@ -1837,7 +1865,6 @@
         "SATZPUNKTE": "Satzpunkte",
         "MANNSCHAFT": "Mannschaft"
       }
-
     }
   },
   "SHARED": {
@@ -1846,7 +1873,7 @@
         "BOGENKONTROLLISTE": "Download Bogenkontrollliste",
         "EINZELSTATISTIK": "Download Einzelstatistik",
         "GESAMTSTATISTIK": "Download Gesamtstatistik",
-        "MEDLEZETTEL" : "Download Meldezettel",
+        "MEDLEZETTEL": "Download Meldezettel",
         "SCHUSSZETTEL": "Download Schusszettel",
         "SETZLISTE": "Download Setzliste",
         "TAG": "Download Tagesübersicht"

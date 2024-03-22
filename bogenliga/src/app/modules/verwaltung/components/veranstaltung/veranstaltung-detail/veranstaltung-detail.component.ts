@@ -131,6 +131,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   constructor(
+    private userDataProviderService: UserDataProviderService,
     private veranstaltungDataProvider: VeranstaltungDataProviderService,
     private wettkampftypDataProvider: WettkampftypDataProviderService,
     private regionProvider: RegionDataProviderService,
@@ -296,9 +297,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
         .then((response) => {
             this.lastVeranstaltung = response.payload;
-            if(this.lastVeranstaltung.groesse!=this.currentVeranstaltung.groesse){
+            if(this.lastVeranstaltung.groesse > this.currentVeranstaltung.groesse){
               this.saveLoading = false;
-              console.log('Size of previous Mannschaft does not equal size of new Mannschaft')
+              console.log('Size of previous Veranstaltung does not equal size of new Veranstaltung')
               const notification: Notification = {
                 id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_SIZEDIFF,
                 title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE_SIZEDIFF.TITLE',
@@ -584,13 +585,22 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allLiga = [];
-    this.allLiga = response.payload;
-    if (this.id === 'add') {
-      this.currentLiga = this.allLiga[0];
-    } else {
-      this.currentLiga = this.allLiga.filter((liga) => liga.id === this.currentVeranstaltung.ligaId)[0];
-    }
-    this.loading = false;
+    let currentUserId = this.currentUserService.getCurrentUserID();
+    this.userDataProviderService.findUserRoleById(currentUserId).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+      let isAdmin = false;
+      if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0)
+        isAdmin = true;
+
+      this.allLiga = response.payload.filter(ligaDo => {
+        return ligaDo.ligaUebergeordnetId == currentUserId || ligaDo.ligaVerantwortlichId == currentUserId || isAdmin;
+      });
+      if (this.id === 'add') {
+        this.currentLiga = this.allLiga[0];
+      } else {
+        this.currentLiga = this.allLiga.filter((liga) => liga.id === this.currentVeranstaltung.ligaId)[0];
+      }
+    }).catch(err => console.log(err))
+        .finally(() => this.loading = false);
   }
 
 
@@ -817,6 +827,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   // Creates Initial Matches for a Veranstaltung
   public createMatchesWT0(event: any) {
+
+    this.saveLoading = true;
 
     this.matchDataProvider.createInitialMatchesWT0(this.currentVeranstaltung)
         .then(() => {

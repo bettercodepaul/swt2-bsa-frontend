@@ -11,9 +11,9 @@ export class MatchDTOExt implements DataTransferObject {
   wettkampfId: number;
   wettkampfTag: number;
   wettkampfTyp: string;
-  nr: number;
+  matchNr: number;
   begegnung: number;
-  scheibenNummer: number;
+  matchScheibennummer: number;
   matchpunkte: number;
   satzpunkte: number;
   strafPunkteSatz1: number;
@@ -29,7 +29,7 @@ export class MatchDTOExt implements DataTransferObject {
               wettkampfId?: number,
               matchNr?: number,
               begegnung?: number,
-              scheibennummer?: number,
+              matchScheibennummer?: number,
               matchpunkte?: number,
               satzpunkte?: number,
               strafPunkteSatz1?: number,
@@ -44,9 +44,9 @@ export class MatchDTOExt implements DataTransferObject {
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
-    this.nr = !!matchNr ? matchNr : null;
+    this.matchNr = !!matchNr ? matchNr : null;
     this.begegnung = !!begegnung ? begegnung : null;
-    this.scheibenNummer = !!scheibennummer ? scheibennummer : null;
+    this.matchScheibennummer = !!matchScheibennummer ? matchScheibennummer : null;
     this.matchpunkte = matchpunkte;
     this.satzpunkte = satzpunkte;
     this.strafPunkteSatz1 = !!strafPunkteSatz1 ? strafPunkteSatz1 : 0;
@@ -68,9 +68,9 @@ export class MatchDTOExt implements DataTransferObject {
     wettkampfId?: number,
     wettkampfTag?: number,
     wettkampfTyp?: string,
-    nr?: number,
+    matchNr?: number,
     begegnung?: number,
-    scheibenNummer?: number,
+    matchScheibennummer?: number,
     matchpunkte?: number,
     satzpunkte?: number,
     strafPunkteSatz1?: number,
@@ -113,20 +113,20 @@ export class MatchDTOExt implements DataTransferObject {
     }
     copy.wettkampfTyp = optional.wettkampfTyp || '';
 
-    if (optional.nr >= 0) {
-      copy.nr = optional.nr;
+    if (optional.matchNr >= 0) {
+      copy.matchNr = optional.matchNr;
     } else {
-      copy.nr = null;
+      copy.matchNr = null;
     }
     if (optional.begegnung >= 0) {
       copy.begegnung = optional.begegnung;
     } else {
       copy.begegnung = null;
     }
-    if (optional.scheibenNummer >= 0) {
-      copy.scheibenNummer = optional.scheibenNummer;
+    if (optional.matchScheibennummer >= 0) {
+      copy.matchScheibennummer = optional.matchScheibennummer;
     } else {
-      copy.scheibenNummer = null;
+      copy.matchScheibennummer = null;
     }
     if (optional.matchpunkte >= 0) {
       copy.matchpunkte = optional.matchpunkte;

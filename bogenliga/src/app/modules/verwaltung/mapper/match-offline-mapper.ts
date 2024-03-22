@@ -50,10 +50,10 @@ export function toDTOFromOfflineMatch(offlineMatch: OfflineMatch, offlinePassen:
     version: offlineMatch.matchVersion,
     mannschaftId: offlineMatch.mannschaftId,
     mannschaftName: offlineMatch.mannschaftName,
-    nr: offlineMatch.matchNr,
+    matchNr: offlineMatch.matchNr,
     begegnung,
     matchpunkte: offlineMatch.matchpkt,
-    scheibenNummer: offlineMatch.matchScheibennummer,
+    matchScheibennummer: offlineMatch.matchScheibennummer,
     passen,     // werden aus der passe tabelle geholt, damit sie nicht doppelt gespeichert/übergeben werden müssen
     satzpunkte: offlineMatch.satzpunkte,
     strafPunkteSatz1: offlineMatch.strafpunkteSatz1,

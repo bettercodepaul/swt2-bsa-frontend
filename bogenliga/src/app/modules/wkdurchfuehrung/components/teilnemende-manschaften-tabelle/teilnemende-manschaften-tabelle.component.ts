@@ -18,6 +18,10 @@ import {
 } from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen-pop-up/schuetzen-pop-up.component';
 
 import {NavbarComponent} from '../../../../components/navbar/navbar.component';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {
+  DsbMitgliedDetailPopUpComponent
+} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 
 @Component
 ({
@@ -91,4 +95,11 @@ export class TeilnemendeManschaftenTabelleComponent implements OnInit, OnChanges
 
     }
   }
+  addDSBMitglied(): void {
+    const dialogRef = this.dialog.open(DsbMitgliedDetailPopUpComponent
+    );
+
+  }
+
+  protected readonly ActionButtonColors = ActionButtonColors;
 }

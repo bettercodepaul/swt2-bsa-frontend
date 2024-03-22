@@ -1,4 +1,4 @@
-<!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
+  <!-- fa-*x is the size of the icon with * = 2,3,4,5 -->
 <nav id="navbar"
      class="navbar navbar-expand navbar-dark fixed-top shadow-sm">
 
@@ -18,12 +18,15 @@
       style="width:4.8em;">
   </a>
 
+  <div *ngIf="!hasID">
   <a id="navbar-header"
      routerLink="/home">
     <h1>{{'NAVBAR.TITLE' | translate }}</h1>
   </a>
-
-  <h1>{{getLigaName() | translate}}</h1>
+  </div>
+  <div *ngIf="hasID">
+      <h1>{{getLigaName() | translate}}</h1>
+  </div>
 
   <div *ngIf="(isOffline())"
      id="navbar-offline">

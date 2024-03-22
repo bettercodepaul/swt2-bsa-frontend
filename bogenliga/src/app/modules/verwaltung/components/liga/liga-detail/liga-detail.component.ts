@@ -22,12 +22,14 @@ import {LigaDO} from '../../../types/liga-do.class';
 import {RegionDO} from '../../../types/region-do.class';
 import {LIGA_DETAIL_CONFIG} from './liga-detail.config';
 import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {DisziplinDO} from '@verwaltung/types/disziplin-do.class';
 import {DisziplinDTO} from '@verwaltung/types/datatransfer/disziplin-dto.class';
 import {DisziplinDataProviderService} from '@verwaltung/services/disziplin-data-provider-service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {HttpClient} from '@angular/common/http';
+import {UserRolleDO} from '@verwaltung/types/user-rolle-do.class';
+import {UserDataProviderService} from '@verwaltung/services/user-data-provider.service';
 
 const ID_PATH_PARAM = 'id';
 const NOTIFICATION_DELETE_LIGA = 'liga_detail_delete';
@@ -60,6 +62,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public currentUser: UserProfileDO = new UserProfileDO();
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
 
+  public isAdmin: Boolean = false;
 
 
   public deleteLoading = false;
@@ -69,16 +72,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   private sessionHandling: SessionHandling;
 
 
-  //FileUpload
-
-  public fileName = '';
-
-
-
-
   constructor(private ligaDataProvider: LigaDataProviderService,
               private regionProvider: RegionDataProviderService,
               private userProvider: UserProfileDataProviderService,
+              private userDataProviderService: UserDataProviderService,
               private disziplinDataProvider: DisziplinDataProviderService,
               private router: Router, private route: ActivatedRoute,
               private notificationService: NotificationService,
@@ -92,6 +89,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   }
 
   ngOnInit() {
+
+    this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID()).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
+      this.isAdmin = roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0
+    })
     this.loading = true;
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
@@ -144,19 +145,30 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       this.currentLiga.regionId = this.currentRegion.id;
     }
 
-
     if (typeof this.currentDisziplin  === 'undefined') {
       this.currentLiga.disziplinId = null;
     } else {
       this.currentLiga.disziplinId = this.currentDisziplin.id;
     }
 
-
-
     if (typeof this.currentUser  === 'undefined') {
       this.currentLiga.ligaVerantwortlichId = null;
     } else {
       this.currentLiga.ligaVerantwortlichId = this.currentUser.id;
+    }
+
+
+    if(this.currentLiga.name.includes("_")){
+      this.notificationService.showNotification({
+        id: 'MaxWordsWarning',
+        description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.DESCRIPTION',
+        title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.TITLE',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
+      return
     }
 
     // persist
@@ -191,19 +203,28 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
           console.log('Failed');
           this.saveLoading = false;
 
-
         });
     // show response message
   }
 
   public onUpdate(ignore: any): void {
-    if (this.currentLiga.ligaDetail.length > 3000) {
-      //TODO: Tatsächlichen String holen
-      //alert('MANAGEMENT.LIGA_DETAIL.ALERT.MAX_WORDS_SURPASSED')
+    if (this.currentLiga.ligaDetail.length > 5000) {
       this.notificationService.showNotification({
         id: 'MaxWordsWarning',
         description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.MAX_WORDS_SURPASSED.DESCRIPTION',
         title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.MAX_WORDS_SURPASSED.TITLE',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.PENDING,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO,
+      });
+      return
+    }
+    if(this.currentLiga.name.includes("_")){
+      this.notificationService.showNotification({
+        id: 'MaxWordsWarning',
+        description: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.DESCRIPTION',
+        title: 'MANAGEMENT.LIGA_DETAIL.NOTIFICATION.WRONG_FORMAT.TITLE',
         origin: NotificationOrigin.SYSTEM,
         userAction: NotificationUserAction.PENDING,
         type: NotificationType.OK,
@@ -254,25 +275,24 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         });
   }
 
-//File Upload
-  public onFileSelected(event){
-    const file:File = event.target.files[0];
 
-    if(file){
-
-      this.fileName = file.name;
-
-      const formData = new FormData();
-
-      formData.append("thumbnail", file);
-
-      const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-      upload$.subscribe();
-    }
+  // File Upload button, converts selected files to Base64 String
+  public convertFileToBase64($event): void {
+    this.readThis($event.target);
   }
 
+  public readThis(inputValue: any): void {
+    const file: File = inputValue.files[0];
+    this.currentLiga.ligaDetailFileType = file.type;
+    this.currentLiga.ligaDetailFileName = file.name
+    const myReader: FileReader = new FileReader();
 
+    myReader.onloadend = (e) => {
+      this.currentLiga.ligaDetailFileBase64 = String(myReader.result);
+    };
+
+    myReader.readAsDataURL(file);
+  }
 
 
   public onDelete(ignore: any): void {
@@ -339,7 +359,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.userProvider.findAll()
         .then( (response: BogenligaResponse<UserProfileDO[]>) => this.handleUserResponseArraySuccess (response))
         .catch((response: BogenligaResponse<UserProfileDTO[]>) => this.handleUserResponseArrayFailure (response));
-
   }
 
   private handleSuccess(response: BogenligaResponse<LigaDO>) {
@@ -417,7 +436,6 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     }
     this.loading = false;
   }
-
 
   private handleDisziplinResponseArrayFailure(response: BogenligaResponse<DisziplinDTO[]>): void {
     this.allDisziplin = [];

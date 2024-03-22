@@ -10,7 +10,6 @@ import {
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzelGesamt.config';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isUndefined} from '@shared/functions';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {MatchDataProviderService} from '@wettkampf/services/match-data-provider.service';
@@ -25,7 +24,6 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {CurrentUserService, NotificationService, OnOfflineService} from '@shared/services';
-import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
 import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
 import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
@@ -35,8 +33,6 @@ import {SessionHandling} from '@shared/event-handling';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
 
-
-const ID_PATH_PARAM = 'id';
 @Component({
   selector:    'bla-mannschaft',
   templateUrl: './wettkampf.component.html',
@@ -46,9 +42,6 @@ const ID_PATH_PARAM = 'id';
 export class WettkampfComponent extends CommonComponentDirective implements OnInit {
 
   public show = false;
-  public directMannschaft = null;
-  public directWettkampf = null;
-  public routes = null;
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
@@ -70,7 +63,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
-  public dsbMitglieder: Array<DsbMitgliedDO> = [];
   public ActionButtonColors = ActionButtonColors;
 
   private sessionHandling: SessionHandling;
@@ -105,17 +97,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadVeranstaltungen
    */
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-
-
-      if (!isUndefined(params['Wettkampf']) && !isUndefined(params['Mannschaft'])) {
-        this.directWettkampf = parseInt(params['Wettkampf'], 10);
-        this.directMannschaft = parseInt(params['Mannschaft'], 10);
-      } else if (!isUndefined(params['Wettkampf'])) {
-        this.directWettkampf = parseInt(params['Wettkampf'], 10);
-      }
-
-    });
     this.loadVeranstaltungen();
   }
 
@@ -349,14 +330,16 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadWettkaempfe
    * @param $event
    */
-  public onSelect($event: VeranstaltungDO[]): void {
-
+  public async onSelect($event: VeranstaltungDO[]): Promise<void> {
+    this.loadingData = true;
     this.currentVeranstaltung = $event[0];
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
     this.clear();
-    this.loadMannschaften(this.currentVeranstaltung.id);
-    this.loadWettkaempfe(this.currentVeranstaltung.id);
+    await this.loadMannschaften(this.currentVeranstaltung.id);
+    await this.loadWettkaempfe(this.currentVeranstaltung.id);
+    await this.loadAllErgebnisse(this.currentMannschaft);
+    this.loadingData = false;
   }
 
   private clear() {
@@ -378,17 +361,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   async handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.veranstaltungen = response.payload;
-    if (this.directWettkampf != null) {
-      for (const i of this.veranstaltungen) {
-        if (this.directWettkampf === i.id) {
-          this.currentVeranstaltung = i;
-          break;
-        }
-        this.currentVeranstaltung = this.veranstaltungen[0];
-      }
-    } else {
-      this.currentVeranstaltung = this.veranstaltungen[0];
-    }
+    this.currentVeranstaltung = this.veranstaltungen[0];
     this.areVeranstaltungenLoading = false;
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     await this.loadMannschaften(this.currentVeranstaltung.id);
@@ -399,23 +372,16 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   public async loadMannschaften(veranstaltungsId: number) {
     await this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
-      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => this.handleSuccessLoadMannschaft(response))
+      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
+        this.handleSuccessLoadMannschaft(response)
+      })
       .catch(() => this.mannschaften === []);
   }
 
   public handleSuccessLoadMannschaft(response: BogenligaResponse<DsbMannschaftDO[]>) {
     this.mannschaften = response.payload;
-    if (this.directMannschaft != null) {
-      for (const i of this.mannschaften) {
-        if (this.directMannschaft === i.id) {
-          this.mannschaften[0] = i;
-        }
-        this.currentMannschaft = this.mannschaften[0];
-      }
-    } else if (this.currentMannschaft !== null) {
-
-      this.currentMannschaft = undefined;
-    }
+    this.currentMannschaft = this.mannschaften[0]
+    this.loadVerein(this.currentMannschaft.vereinId);
   }
 
   public async loadJahre() {
@@ -547,6 +513,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       await this.loadWettkaempfeByCurrentMannschaft();
     }
     await this.loadVerein(this.currentMannschaft.vereinId);
+    await this.loadErgebnisse(this.currentMannschaft);
     this.loadingData = false;
   }
 

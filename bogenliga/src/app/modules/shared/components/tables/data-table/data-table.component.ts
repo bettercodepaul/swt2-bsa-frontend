@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {TranslatePipe} from '@ngx-translate/core';
 import {isNullOrUndefined} from '@shared/functions';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
@@ -14,6 +14,9 @@ import {TableConfig} from '../types/table-config.interface';
 import {TableRow} from '../types/table-row.class';
 import {Router} from '@angular/router';
 import {CurrentUserService, UserPermission} from '@shared/services';
+import {ExpandComponent} from '@shared/components/expand';
+import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {IconProp} from '@fortawesome/fontawesome-svg-core';
 
 
 @Component({
@@ -23,6 +26,7 @@ import {CurrentUserService, UserPermission} from '@shared/services';
   providers:   [TranslatePipe, TruncationPipe]
 })
 export class DataTableComponent extends CommonComponentDirective implements OnInit, OnChanges {
+  @ViewChild(ExpandComponent) expandMenu: ExpandComponent;
   @Input() public config: TableConfig;
   @Input() public rows: TableRow[] = [];
   @Input() tableSorter: BaseTableSorter;
@@ -37,8 +41,8 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   @Output() public onMapEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadRueckennummerEntry = new EventEmitter<VersionedDataObject>();
   @Output() public onDownloadLizenzenEntry = new EventEmitter<VersionedDataObject>();
-
   @Output() public onColumnEntry = new EventEmitter<TableColumnConfig>();
+  @Output() public onSelect: EventEmitter<any> = new EventEmitter<any>();
 
   // do not remove, the view uses this enum
   public TableColumnType = TableColumnType;
@@ -47,9 +51,61 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
   private router: Router;
 
   constructor(private truncationPipe: TruncationPipe,
-              private translatePipe: TranslatePipe,
-              private currentUserService: CurrentUserService) {
+    private translatePipe: TranslatePipe,
+    private currentUserService: CurrentUserService) {
     super();
+  }
+
+  // Returns true if actions in table should be displayed as colored buttons with text
+  public hasColoredActionsWithText(): boolean {
+    if(this.config.hasOwnProperty('coloredActionsWithText') && this.config.coloredActionsWithText){
+      return true;
+    }
+    return false;
+  }
+
+  // Gets icons for colored buttons
+
+  public getColoredActionsWithTextIcon(action: TableActionType): IconProp{
+    switch(action) {
+      case TableActionType.EDIT:
+        return 'edit';
+      case TableActionType.VIEW:
+        return 'check';
+      case TableActionType.DELETE:
+        return 'trash';
+      case TableActionType.ADD:
+        return 'plus';
+      case TableActionType.MAP:
+        return 'map';
+      default:
+        return 'file-download';
+    }
+  }
+
+  // Gets translation key for colored buttons
+  public getColoredActionsWithTextTranslationKey(action: TableActionType): string{
+    let actionName = TableActionType[action];
+    return 'TABLE.ACTION_TEXT.' + actionName;
+  }
+
+  // Gets color scheme for colored buttons
+  public getColoredActionsWithTextColor(action: TableActionType): ActionButtonColors {
+    switch(action){
+      case TableActionType.DOWNLOAD:
+      case TableActionType.DOWNLOADRUECKENNUMMER:
+      case TableActionType.DOWNLOADLIZENZEN:
+      case TableActionType.VIEW:
+      case TableActionType.MAP:
+      case TableActionType.EDIT:
+        return ActionButtonColors.PRIMARY;
+      case TableActionType.ADD:
+        return ActionButtonColors.SUCCESS;
+      case TableActionType.DELETE:
+          return ActionButtonColors.DANGER;
+      default:
+        return ActionButtonColors.SECONDARY;
+    }
   }
 
   ngOnInit() {
@@ -75,10 +131,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
    * ~~~~ sorting methods ~~~~
    */
 
-  public getSortingIcon(column: TableColumnConfig): string {
+  public getSortingIcon(column: TableColumnConfig): IconProp {
     const sortingClasses = this.tableSorter.getSortingClasses(column);
     // map css classes to icons ...
-    let icon = '';
+    let icon: any = '';
     if (sortingClasses.indexOf('sortable') > -1) {
 
       if (sortingClasses.indexOf('unsorted') > -1) {
@@ -92,10 +148,10 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     return icon;
   }
 
+
   public sortColumn(sortColumn: TableColumnConfig): void {
     this.rows = this.tableSorter.sortByColumn(this.rows, sortColumn);
   }
-
 
   /*
    * ~~~~ getter methods ~~~~
@@ -108,7 +164,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
       return '0';
     }
   }
-
 
   public formatText(row: TableRow, column: TableColumnConfig): string {
     const text = row.getText(column);
@@ -189,7 +244,7 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
    * @param action current action
    * @returns {string} path to the icon
    */
-  public determineIcon(row: TableRow, action: TableActionType): string {
+  public determineIcon(row: TableRow, action: TableActionType): IconProp {
     let iconSelector = TableActionType[action].toLowerCase();
     let iconStateSelector = 'active';
 
@@ -312,6 +367,9 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     return `payload-id-${row.payload.id}`;
   }
 
+
+
+
   getStyleClass(row: TableRow, column: TableColumnConfig) {
     if (!isNullOrUndefined(column.stylesMapper)) {
       return column.stylesMapper(row.getText(column));
@@ -407,4 +465,6 @@ export class DataTableComponent extends CommonComponentDirective implements OnIn
     const sortingClasses = this.tableSorter.getSortingClasses(column);
     return sortingClasses.indexOf('sortable') > -1;
   }
+
+  protected readonly ActionButtonColors = ActionButtonColors;
 }
