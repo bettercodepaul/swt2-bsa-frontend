@@ -7,14 +7,20 @@ import {EinstellungenDO} from '@verwaltung/types/einstellungen-do.class';
   shared function um das aktive Sportjahr aus der Datenbank zu lesen und als number zurueck gibt
  */
 
-export async function getActiveSportYear(einstellungenDataProvider:EinstellungenProviderService ): Promise<number>  {
+export async function getActiveSportYear(einstellungenDataProvider: EinstellungenProviderService ): Promise<number>  {
 
   let activeSportYear: number;
 
-   await(einstellungenDataProvider.findAll()
+  await einstellungenDataProvider.findAll()
       .then((response: BogenligaResponse<EinstellungenDO[]>) => {
-        activeSportYear = parseInt(response.payload[8].value);
-        console.log("1 " + activeSportYear);
-      }));
+        let i;
+        for (i of response.payload.values()) {
+          if ( i.key === 'aktives-Sportjahr') {
+            // tslint:disable-next-line:radix
+            activeSportYear = parseInt(i.value);
+          }
+        }
+        console.log('1 ' + activeSportYear);
+      });
   return activeSportYear;
 }
