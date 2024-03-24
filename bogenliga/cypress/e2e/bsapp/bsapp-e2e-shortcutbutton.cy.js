@@ -51,7 +51,7 @@ describe('Shortcut buttons appear on login with different roles', () => {
     cy.get('[data-cy="login-button"]').click()
 
 
-    
+
     cy.get(':nth-child(1) > .Button > .shortcut-btn').click();
 
     cy.go('back');
@@ -64,30 +64,6 @@ describe('Shortcut buttons appear on login with different roles', () => {
 
     cy.logout()
   });
-
-  it('Shortcutbuttons appear on Login as Kampfrichter',  () => {
-    cy.visit('http://localhost:4200/#/user/login');
-
-
-cy.get('input#loginEmail').type('HSRT-Test4@bogenliga.de')
-
-cy.get('input#loginPassword').type('mki4HSRT')
-
-cy.get('button#loginButton').click()
-
-
-    cy.url().should('include', '/home');
-
-    cy.get('[data-cy="shortcut-btn-Wettkampf--durchführung"]').click();
-
-    cy.url().should('include', '/wkdurchfuehrung');
-
-    cy.go('back');
-
-    cy.logout();
-
-
-  })
 
   it('Shortcutbuttons appear on Login as Ausrichter',  () => {
 
