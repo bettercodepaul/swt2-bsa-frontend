@@ -990,6 +990,9 @@ describe('Admin User tests', function() {
    */
 
   it('Wettkampftage anzeigen', function() {
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(5000)
     cy.get('[data-cy=bla-selection-list]').select('2018')
     cy.wait(11000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
