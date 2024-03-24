@@ -82,7 +82,8 @@
             [id]="'goToLigadetailsButton'"
             [color]= "ActionButtonColors.PRIMARY"
             [iconClass]="zuDenLigadetailsIcon"
-            (onClick)="goToLigaDetails()">
+            (onClick)="goToLigaDetails()"
+            data-cy="goToLigadetailsButton">
             {{ 'WETTKAEMPFE.LIGATABELLE.GOTO_LIGADETAILS' | translate }}
           </bla-actionbutton>
         </div>
@@ -98,7 +99,8 @@
         [id]="'deselectLigaButton'"
         [color]= "ActionButtonColors.SECONDARY"
         [iconClass]="zuruecksetzenIcon"
-        (onClick)="deselect()">
+        (onClick)="deselect()"
+        data-cy="deselectLigaButton">
         {{ 'WETTKAEMPFE.LIGATABELLE.RESET_LIGASELECTION' | translate }}
       </bla-actionbutton>
 
