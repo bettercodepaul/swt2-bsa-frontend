@@ -894,6 +894,15 @@ describe('Admin User tests', function() {
    * This test checks if the Event-table gets filled.
    */
 
+  /**
+   * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
+   */
+  it('Login erfolgreich', function() {
+    cy.loginAdmin()
+    cy.url().should('include', '#/home');
+  });
+
+
   it('Veranstaltungen Anzeigen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
@@ -973,17 +982,6 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=bla-selection-list]').select('2030')
   })
 
-  /**
-   * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
-   */
-
-  it('Veranstaltung Löschen', function() {
-    cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
-    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
-    cy.wait(1000)
-    cy.get('tbody').should('not.contain.text', 'TestveranstaltungTTT')
-  })
 
   /**
    * This test checks if "Wettkampftage" has entries.

@@ -105,7 +105,7 @@ export class VeranstaltungOverviewComponent extends CommonComponentDirective imp
     this.navigateToDetailDialog(versionedDataObject);
   }
 
-  public onDelete(versionedDataObject: VersionedDataObject): void {
+  public onDeleteVeranstaltung(versionedDataObject: VersionedDataObject): void {
     // show loading icon
     const id = versionedDataObject.id;
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
