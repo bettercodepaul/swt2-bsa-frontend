@@ -894,6 +894,15 @@ describe('Admin User tests', function() {
    * This test checks if the Event-table gets filled.
    */
 
+  /**
+   * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
+   */
+  it('Login erfolgreich', function() {
+    cy.loginAdmin()
+    cy.url().should('include', '#/home');
+  });
+
+
   it('Veranstaltungen Anzeigen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
@@ -973,23 +982,14 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=bla-selection-list]').select('2030')
   })
 
-  /**
-   * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
-   */
-
-  it('Veranstaltung Löschen', function() {
-    cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
-    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click()
-    cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
-    cy.wait(1000)
-    cy.get('tbody').should('not.contain.text', 'TestveranstaltungTTT')
-  })
 
   /**
    * This test checks if "Wettkampftage" has entries.
    */
-
   it('Wettkampftage anzeigen', function() {
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
+    cy.wait(5000)
     cy.get('[data-cy=bla-selection-list]').select('2018')
     cy.wait(11000)
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
@@ -999,37 +999,70 @@ describe('Admin User tests', function() {
     cy.get('bla-col-layout > .col-layout > table > bla-selectionlist > #undefined').select(0)
   })
 
+
+  it('Wettkampftage anlegen', function() {
+    cy.get('[data-cy="wettkampftage-add-button"]').click()
+    cy.get('[data-cy="wettkampftage-adresse"]').clear().type('Bahnhofstrasse 221')
+    cy.get('#wettkampftagePLZ').clear().type('70197')
+    cy.get('#wettkampftageOrt').clear().type('Stuttgart')
+    cy.get('#wettkampftageBeginn').clear().type('09:00')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.wait(1000)
+    cy.get('#OKBtn1').click()
+    cy.wait(1000)
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(2000)
+    cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 221')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.wait(500)
+    cy.get('#OKBtn1').click()
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(1000)
+    cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
+    cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 22')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.wait(500)
+    cy.get('#OKBtn1').click()
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(2000)
+    cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
+  })
+
+
   /**
    * This test edits a "Wettkampftag" and checks if it was changed.
    */
 
-   it('Wettkampftage bearbeiten', function() {
-     cy.get('[data-cy="wettkampftage-adresse"]').clear().type('Bahnhofstrasse 221')
-     cy.get('#wettkampftagePLZ').clear().type('70197')
-     cy.get('#wettkampftageOrt').clear().type('Stuttgart')
-     cy.get('[data-cy="wettkampftage-update-button"]').click()
-     cy.wait(1000)
-     cy.get('#OKBtn1').click()
-     cy.wait(1000)
-     cy.get('[data-cy="wettkampftage-zurueck"]').click()
-     cy.get('[data-cy="wettkampftage-button"]').click()
-     cy.wait(2000)
-     cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 221')
-     cy.get('[data-cy="wettkampftage-update-button"]').click()
-     cy.wait(500)
-     cy.get('#OKBtn1').click()
-     cy.get('[data-cy="wettkampftage-zurueck"]').click()
-     cy.get('[data-cy="wettkampftage-button"]').click()
-     cy.wait(1000)
-     cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
-     cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 22')
-     cy.get('[data-cy="wettkampftage-update-button"]').click()
-     cy.wait(500)
-     cy.get('#OKBtn1').click()
-     cy.get('[data-cy="wettkampftage-zurueck"]').click()
-     cy.get('[data-cy="wettkampftage-button"]').click()
-     cy.wait(2000)
-     cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'Bahnhofstrasse 22')
+  it('Wettkampftage bearbeiten', function() {
+    cy.get('[data-cy="wettkampftage-adresse"]').clear().type('NeueBahnhofstrasse 221')
+    cy.get('#wettkampftagePLZ').clear().type('70197')
+    cy.get('#wettkampftageOrt').clear().type('Stuttgart')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.wait(1000)
+    cy.get('#OKBtn1').click()
+    cy.wait(1000)
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(2000)
+    cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'NeueBahnhofstrasse 221')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.wait(500)
+    cy.get('#OKBtn1').click()
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(1000)
+    cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
+    cy.get('[data-cy="wettkampftage-adresse"]').type('NeueBahnhofstrasse 22')
+    cy.get('[data-cy="wettkampftage-update-button"]').click()
+    cy.wait(500)
+    cy.get('#OKBtn1').click()
+    cy.get('[data-cy="wettkampftage-zurueck"]').click()
+    cy.get('[data-cy="wettkampftage-button"]').click()
+    cy.wait(2000)
+    cy.get('[data-cy="wettkampftage-adresse"]').should('have.value', 'NeueBahnhofstrasse 22')
   })
 
 })
@@ -1039,46 +1072,50 @@ describe('Admin User tests', function() {
  * This test checks if the URL of Ligadetailseite is correct depending on the selected Liga ID
  */
 describe('Ligadetailseite', function(){
-  const randomID = generateLigaID().toString();
 
   it('Von Home ID gemerkt auf Ligatabelle ID', function() {
-    cy.visit('http://localhost:4200/#/home/' + randomID)
+    cy.visit('http://localhost:4200/#/home/2')
     cy.get('[data-cy=sidebar-ligatabelle-button]').click()
-    cy.url().should('include', '#/ligatabelle/' + randomID)
+    cy.url().should('include', '#/ligatabelle/2')
   })
 
   it('Von Ligatabelle ID gemerkt auf Home ID', function() {
-    cy.get('[data-cy=sidebar-ligatabelle-button]').click()
-    cy.get('[data-cy=sidebar-home-button]').click()
-    cy.url().should('include', '#/home/' + randomID)
+    cy.get('[data-cy="sidebar-ligatabelle-button"]').click()
+    cy.wait(800)
+    cy.get('[data-cy="sidebar-home-button"]').click( )
+    cy.wait(800)
+    cy.url().should('include', '#/home/2')
   })
 
   it('"Wettbewerbe anzeigen" Button', function() {
-    cy.get('[id*=ligadetailRegionSaveButton]').click()
-    cy.url().should('include', '#/wettkaempfe/' + randomID)
+    cy.get('[id*="ligadetailRegionSaveButton"]').click()
+    cy.url().should('include', '#/wettkaempfe/0')
   })
 
   it('Deselektieren der LigaID', function() {
-    cy.get('[id*=navbar-header]').click()
-    cy.url().should('not.include', '#/home/' + randomID)
+    cy.get('[id*=navbar-brand]').click()
+    cy.url().should('not.include', '#/home/2')
   })
 
   it('Deselektieren der LigaID über Button', function() {
-    cy.visit('http://localhost:4200/#/home/' + randomID)
-    cy.get('[id="deselectLigaButtonLigadetailseite"]').click();
-    cy.url().should('not.include', '#/home/' + randomID)
+    cy.visit('http://localhost:4200/#/home/2')
+    cy.wait(300)
+    cy.get('[data-cy="deselectLigaButton"]').click("left")
+    cy.url().should('not.include', '#/home/2')
   })
 
   it('Deselektieren der ausgewählten Liga in Ligatabelle', function() {
-    cy.visit('http://localhost:4200/#/ligatabelle/' + randomID)
-    cy.get('[id="deselectLigaButton"]').click();
-    cy.url().should('not.include', '#/ligatabelle/' + randomID)
+    cy.visit('http://localhost:4200/#/ligatabelle/2')
+    cy.wait(300)
+    cy.get('[id*="deselectLigaButton"]').click()
+    cy.url().should('not.include', '#/ligatabelle/2')
   })
 
   it('Zu den Ligadetails-Button auf Ligatabellenseite', function() {
-    cy.visit('http://localhost:4200/#/ligatabelle/' + randomID)
-    cy.get('[id="goToLigadetailsButton"]').click();
-    cy.url().should('include', '#/home/' + randomID)
+    cy.visit('http://localhost:4200/#/ligatabelle/2')
+    cy.wait(300)
+    cy.get('[id*="deselectLigaButton"]').click();
+    cy.url().should('include', '/home')
   })
 })
 

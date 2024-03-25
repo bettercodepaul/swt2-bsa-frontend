@@ -80,7 +80,7 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
     this.navigateToDetailDialog(versionedDataObject);
   }
 
-  public onDelete(versionedDataObject: VersionedDataObject): void {
+  public onDeleteLiga(versionedDataObject: VersionedDataObject): void {
     // show loading icon
     const id = versionedDataObject.id;
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);

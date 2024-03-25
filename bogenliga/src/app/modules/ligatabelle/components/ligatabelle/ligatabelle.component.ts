@@ -21,7 +21,7 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 import {faUndo} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
-import {SelectedLigaDataprovider} from '../../../shared/data-provider/SelectedLigaDataprovider'
+import {SelectedLigaDataprovider} from '../../../shared/data-provider/SelectedLigaDataprovider';
 
 
 
@@ -57,9 +57,9 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public rowsLigatabelle: TableRow[];
   public providedID: number;
   private hasID: boolean;
-  private hasVeranstaltung: boolean = true;
+  private hasVeranstaltung = true;
 
-  private isDeselected: boolean = false;
+  private isDeselected = false;
   private remainingLigatabelleRequests: number;
 
   private loadedVeranstaltungen: Map<number, VeranstaltungDO[]>;
@@ -74,8 +74,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedYearId: number;
   public selectedItemId: number;
   private aktivesSportjahr: number;
-  private selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
-  private istURLkorrekt: boolean = false;
+  private selectedYearForVeranstaltung: number; // In der Tabelle selektiertes Sportjahr
+  private istURLkorrekt = false;
 
 
   constructor(
@@ -94,7 +94,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   ngOnInit() {
-    if(this.isDeselected == false) {
+    if (this.isDeselected == false) {
       this.loadTableData();
       this.providedID = undefined;
       this.hasID = false;
@@ -103,7 +103,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
-          params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
+          params[ID_PATH_PARAM] === 'ligaid' ? this.hasID = false : undefined;
           this.selectedYearForVeranstaltung != undefined && this.hasID
             ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
         } else {
@@ -114,7 +114,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     }
   }
 
-  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number){
+  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number) {
     this.veranstaltungsDataProvider.findByLigaIdAndYear(urlLigaID, selectedSportYear)
         .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungFailure(response));
@@ -159,7 +159,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.veranstaltungIdMap = new Map();
     let indexOfSelectedYearInAvailableYears = 0;
     let counter = 0;
-    let selectedYear: SportjahrVeranstaltungDO[] = [];
+    const selectedYear: SportjahrVeranstaltungDO[] = [];
 
     try {
       console.log(this.onOfflineService.isOffline());
@@ -185,7 +185,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       }
 
       // lese aktives Sportjahr aus Datenbank aus aus im Online-Modus
-      if(!this.onOfflineService.isOffline()) {
+      if (!this.onOfflineService.isOffline()) {
         this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
       }
       // Prüfe ob das aktive Sportjahr in der Liste der verfügbaren Jahre ist
@@ -251,7 +251,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button');
     buttonVisibility.style.display = 'block';
     this.veranstaltungenForYear = [];
-    this.selectedYearForVeranstaltung = $event[0].sportjahr; //Ausgewähltes Jahr in der Liste speichern
+    this.selectedYearForVeranstaltung = $event[0].sportjahr; // Ausgewähltes Jahr in der Liste speichern
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get($event[0].sportjahr);
     this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id;
     this.hasID ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
@@ -272,15 +272,15 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
 
-  public deselect(){
+  public deselect() {
     this.isDeselected = true;
     console.log(this.isDeselected);
-    const link = '/ligatabelle';
+    const link = '/home';
     this.router.navigateByUrl(link);
   }
 
-  public goToLigaDetails(){
-    console.log("IDDD" + this.providedID);
+  public goToLigaDetails() {
+    console.log('IDDD' + this.providedID);
     const link = '/home/' +  this.providedID;
     this.router.navigateByUrl(link);
   }

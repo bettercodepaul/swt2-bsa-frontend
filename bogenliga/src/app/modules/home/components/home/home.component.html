@@ -66,7 +66,8 @@
             [id]="'ligadetailRegionSaveButton'"
             [color]= "ActionButtonColors.SUCCESS"
             [iconClass]="'th-list'"
-            (onClick)="ligatabelleLinking()">
+            (onClick)="ligatabelleLinking()"
+            data-cy="ligadetailRegionSaveButton">
             {{ 'WETTKAEMPFE.LIGATABELLE.LINKDESCRIPTION' | translate }}
             <!--{{ selectedVeranstaltungName}}
             name of the currently selected Liga displayed in button-->
@@ -78,7 +79,8 @@
             [id]="'deselectLigaButton'"
             [color]= "ActionButtonColors.SECONDARY"
             [iconClass]="zurStartseiteIcon"
-            (onClick)="deselect()">
+            (onClick)="deselect()"
+            data-cy="deselectLigaButton">
             {{ 'HOME.LIGADETAILES.BACK_TO_HOME' | translate }}
           </bla-actionbutton>
         </div>
