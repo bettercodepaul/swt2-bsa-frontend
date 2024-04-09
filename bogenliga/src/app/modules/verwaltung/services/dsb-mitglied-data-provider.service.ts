@@ -106,6 +106,38 @@ export class DsbMitgliedDataProviderService extends DataProviderService {
     }
   }
 
+  public findAllForOverview(): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
+    if (this.onOfflineService.isOffline()) {
+      console.log('Choosing offline way for findall dsbmitglieder in overview');
+      return new Promise((resolve, reject) => {
+        db.dsbMitgliedTabelle.toArray()
+          .then((dsbMitglieder) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromOfflineToDsbMitgliedDOArray(dsbMitglieder)});
+          })
+          .catch((err) => reject(err));
+      });
+    } else {
+      // return promise
+      // sign in success -> resolve promise
+      // sign in failure -> reject promise with result
+      return new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(this.getUrl() + "/overview")
+            .then((data: VersionedDataTransferObject[]) => {
+
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+    }
+  }
+
   public findAllNotInTeam(id: number, vereinid: number): Promise<BogenligaResponse<DsbMitgliedDO[]>> {
     if (this.onOfflineService.isOffline()) {
       console.log('Choosing offline way for findAllNotInTeam dsbmitglieder');

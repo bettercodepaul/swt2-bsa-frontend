@@ -158,7 +158,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
   }
 
   private loadTableRows() {
-    this.dsbMitgliedDataProvider.findAll()
+    this.dsbMitgliedDataProvider.findAllForOverview()
         .then((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsSuccess(response))
         .catch((response: BogenligaResponse<DsbMitgliedDTO[]>) => this.handleLoadTableRowsFailure(response));
   }

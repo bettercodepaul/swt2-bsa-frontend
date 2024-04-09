@@ -706,6 +706,7 @@
           "ID": "ID",
           "VORNAME": "first name",
           "NACHNAME": "last name",
+          "VEREIN": "club",
           "GEBURTSDATUM": "date of birth",
           "MITGLIEDSNUMMER": "member-number"
         }
