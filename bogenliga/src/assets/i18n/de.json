@@ -224,7 +224,8 @@
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
-      "OFFLINE_TOKEN": "Offlinetoken löschen"
+      "OFFLINE_TOKEN": "Offlinetoken löschen",
+      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
