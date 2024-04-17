@@ -27,6 +27,7 @@ import {
   TabletadminGuard
 } from '../wkdurchfuehrung/guards';
 import { TeilnemendeManschaftenTabelleComponent } from './components/teilnemende-manschaften-tabelle/teilnemende-manschaften-tabelle.component';
+import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
 
 @NgModule({
   imports:      [
@@ -45,7 +46,8 @@ import { TeilnemendeManschaftenTabelleComponent } from './components/teilnemende
     SchuetzenTabIndexDirective,
     TabletEingabeComponent,
     TabletAdminComponent,
-    TeilnemendeManschaftenTabelleComponent
+    TeilnemendeManschaftenTabelleComponent,
+    FullscreenComponent
   ],
   providers:    [
     WkdurchfuehrungGuard,

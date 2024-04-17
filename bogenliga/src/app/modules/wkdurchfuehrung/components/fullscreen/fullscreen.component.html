@@ -1,0 +1,19 @@
+<div>
+ <h5><a class="blackLink"
+ >{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
+
+ <div class="row" style="margin-left: 5px">
+
+
+  <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
+
+  <bla-data-table
+    [config]="config_table"
+    [rows]="rowsLigatabelle"
+    [loading]="loadingLigatabelle"
+    (onRowEntry)="ligatabelleLinking();"
+  >
+  </bla-data-table>
+
+ </div>
+</div>
