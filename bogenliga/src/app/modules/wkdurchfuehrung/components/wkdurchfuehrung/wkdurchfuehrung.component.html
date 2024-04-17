@@ -152,6 +152,16 @@
               [disabled]="isDisabled()">
               {{ 'WKDURCHFUEHRUNG.BUTTON.DURCHFUEHRUNG' | translate }}
             </bla-actionbutton>
+
+            <!--Neuer Button Vollbildansicht-->
+            <bla-actionbutton
+              [id]="'vollbildAnsicht'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'arrow-right'"
+              (onClick)="toggleDiv()"
+              [disabled]="isDisabled()">
+              {{ 'WKDURCHFUEHRUNG.BUTTON.DURCHFUEHRUNG' | translate }}
+            </bla-actionbutton>
           </div>
 
           <div id="adminOfflineResetButton"
