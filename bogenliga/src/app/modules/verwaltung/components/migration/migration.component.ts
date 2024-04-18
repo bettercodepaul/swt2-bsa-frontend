@@ -113,6 +113,10 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 }
 
+  public onFilterButtonClick() {
+    //TODO
+  }
+
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];
     this.loading = false;

@@ -67,4 +67,5 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
       return this.currentUserService.hasAnyPermisson(userPermissions);
     }
   }
+
 }

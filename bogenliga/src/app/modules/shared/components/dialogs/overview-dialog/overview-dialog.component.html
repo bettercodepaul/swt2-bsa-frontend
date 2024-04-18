@@ -13,6 +13,15 @@
     </bla-quicksearch>
     <div class="overview-dialog-add"
          *ngIf="hasUserPermissions(config.createPermission)">
+
+      <bla-actionbutton
+        [color]="ActionButtonColors.SUCCESS"
+        [iconClass]="'filter'"
+        data-cy="filter-migration-button"
+        (onClick)="onFilterButtonClick()">
+        {{buttonLabel || "Neu"}}
+      </bla-actionbutton>
+
       <bla-actionbutton
         data-cy="dsb-mitglied-add-button"
         *ngIf="isCustomActionButton"
@@ -32,6 +41,7 @@
       >
         {{buttonLabel || "Neu"}}
       </bla-actionbutton>
+
     </div>
   </section>
 
