@@ -10,7 +10,7 @@ import {APP_REDUCERS} from '@shared/redux-store';
 import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from '@shared/shared.module';
 
-describe('FullscreenComponent', () => {
+describe('WettkaempfeComponent', () => {
   let component: FullscreenComponent;
   let fixture: ComponentFixture<FullscreenComponent>;
 
