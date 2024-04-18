@@ -1,0 +1,18 @@
+.status-bar-container{
+  justify-content: center;
+  height: 50px;
+  width: 200px;
+}
+
+.status-bar{
+  height: 7px;
+  width: 200px;
+  line-height:30px;
+  background-color:grey;
+  color:green;
+  border-radius: 25px;
+  }
+
+.hide-status-bar{
+  display:none;
+}
