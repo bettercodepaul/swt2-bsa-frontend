@@ -15,10 +15,12 @@
          *ngIf="hasUserPermissions(config.createPermission)">
 
       <bla-actionbutton
-        [color]="ActionButtonColors.SUCCESS"
+        *ngIf="showFilterUnsuccessful"
+        [color]="filterButtonColor"
         [iconClass]="'filter'"
         data-cy="filter-migration-button"
-        (onClick)="onFilterButtonClick()">
+        (onClick)="onFilterButtonClick()"
+        >
         {{buttonLabel || "Neu"}}
       </bla-actionbutton>
 
