@@ -88,6 +88,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   }
 
   ngOnInit() {
+
     if(this.isDeselected == false) {
       this.loadTableData();
       this.providedID = undefined;
@@ -102,7 +103,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
             ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
         } else {
           console.log('no params at ligatabelle');
-          this.router.navigate(['/ligatabelle/ligaid']);
+          this.router.navigate(['/fullscreen']);
         }
       });
     }
