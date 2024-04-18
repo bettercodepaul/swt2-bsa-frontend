@@ -10,8 +10,6 @@ import {CurrentUserService, NotificationService, OnOfflineService} from '@shared
 import {isUndefined} from '@shared/functions';
 import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
-import {IconProp} from '@fortawesome/fontawesome-svg-core';
-import {faSitemap, faUndo} from '@fortawesome/free-solid-svg-icons';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
@@ -32,8 +30,6 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
 
   private sessionHandling: SessionHandling;
 
-  public zuDenLigadetailsIcon: IconProp = faSitemap;
-  public zuruecksetzenIcon: IconProp = faUndo;
 
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
@@ -264,19 +260,5 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     this.loadLigaTableRows();
     const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
     this.router.navigate([link]);
-  }
-
-
-  public deselect(){
-    this.isDeselected = true;
-    console.log(this.isDeselected);
-    const link = '/ligatabelle';
-    this.router.navigateByUrl(link);
-  }
-
-  public goToLigaDetails(){
-    console.log("IDDD" + this.providedID);
-    const link = '/home/' +  this.providedID;
-    this.router.navigateByUrl(link);
   }
 }
