@@ -89,7 +89,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
 
   ngOnInit() {
 
-    if(this.isDeselected == false) {
+    if(!this.isDeselected) {
       this.loadTableData();
       this.providedID = undefined;
       this.hasID = false;
