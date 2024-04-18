@@ -13,6 +13,12 @@
     </bla-quicksearch>
     <div class="overview-dialog-add"
          *ngIf="hasUserPermissions(config.createPermission)">
+      <bla-migrationstatusbar
+        [progress]="50"
+      >
+        {{""}}
+      </bla-migrationstatusbar>
+
       <bla-actionbutton
         data-cy="dsb-mitglied-add-button"
         *ngIf="isCustomActionButton"

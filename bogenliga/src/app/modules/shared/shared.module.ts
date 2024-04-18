@@ -30,7 +30,7 @@ import {
   SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  TooltipComponent
+  TooltipComponent,
 } from './components';
 import {RestClient} from './data-provider';
 import * as LocalDataProvider from './local-data-provider/services';
@@ -62,6 +62,7 @@ import { ShortcutButton } from './components/buttons/shortcut-button/shortcut-bu
 import {
   VeranstaltungenButtonComponent
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
+import {StatusbarComponent} from '@shared/components/statusbars';
 
 @NgModule({
   imports: [
@@ -72,7 +73,7 @@ import {
     TranslateModule.forChild(),
     RouterModule,
     FontAwesomeModule,
-    StorageServiceModule
+    StorageServiceModule,
   ],
   exports: [
     TranslateModule,
@@ -122,6 +123,7 @@ import {
     ShortcutButton,
     VeranstaltungenButtonComponent,
     ExpandComponent,
+    StatusbarComponent,
   ],
   declarations: [
     ExpandComponent,
@@ -164,7 +166,8 @@ import {
     ActionButtonComponent,
     DownloadActionButtonComponent,
     ShortcutButton,
-    VeranstaltungenButtonComponent
+    VeranstaltungenButtonComponent,
+    StatusbarComponent
   ]
 })
 export class SharedModule {
