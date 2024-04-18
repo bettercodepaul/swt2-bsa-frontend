@@ -7,6 +7,9 @@
                      [buttonLabel]="'Neue Migration'"
                      [isCustomActionButton]=true
                      (onCustomActionButtonClicked)="startMigration()"
+                     [showFilterUnsuccessful]=true
+                     (onFilterButtonClicked)="filterUnsuccessful()"
+                     [filterButtonColor] = "buttonColor"
 >
  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>

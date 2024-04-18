@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {
-  ButtonType,
-  CommonComponentDirective, toTableRows
-} from '../../../shared/components';
+import {ButtonType, CommonComponentDirective, toTableRows} from '../../../shared/components';
 import {BogenligaResponse} from '../../../shared/data-provider';
 import {
   NotificationOrigin,
@@ -36,6 +33,8 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public ButtonType = ButtonType;
   public deleteLoading = false;
   public saveLoading = false;
+  public isFiltered = false;
+  public buttonColor = ActionButtonColors.SECONDARY;
   public searchTerm = 'searchTermMigration';
   public id;
 
@@ -113,8 +112,31 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 }
 
-  public onFilterButtonClick() {
-    //TODO
+  filterUnsuccessful() {
+    try {
+      if(this.isFiltered){
+        this.MigrationDataProvider.findLimited();
+        this.buttonColor = ActionButtonColors.SECONDARY;
+        this.isFiltered = false;
+      }
+      else{
+        this.MigrationDataProvider.findAll();
+        this.buttonColor = ActionButtonColors.PRIMARY;
+        this.isFiltered = true;
+      }
+    } catch (e) {
+
+      this.notificationService.showNotification({
+        id: 'Fehler beim Starten der Filterung',
+        description: 'Ein Fehler ist aufgetreten und die Filterung konnte nicht gestartet werden.',
+        title: 'Fehler beim Start der Filterung',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.ACCEPTED,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO
+      });
+
+    }
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
@@ -127,5 +149,6 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     this.rows = toTableRows(response.payload);
     this.loading = false;
   }
+
 
 }
