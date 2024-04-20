@@ -17,6 +17,11 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
   vereinName: string;
   wettkampfId: number;
   wettkampfTag: number;
+  schuetzeSatz1: string;
+  schuetzeSatz2: string;
+  schuetzeSatz3: string;
+  schuetzeSatz4: string;
+  schuetzeSatz5: string;
 
   constructor(id: number,
               version: number,
@@ -33,7 +38,13 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
               vereinId: number,
               vereinName: string,
               wettkampfId: number,
-              wettkampfTag: number) {
+              wettkampfTag: number,
+              schuetzeSatz1: string,
+              schuetzeSatz2: string,
+              schuetzeSatz3: string,
+              schuetzeSatz4: string,
+              schuetzeSatz5: string
+  ) {
     this.id = id;
     this.version = version;
     this.mannschaftsId = mannschaftsId;
@@ -50,6 +61,11 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
     this.vereinName = vereinName;
     this.wettkampfId = wettkampfId;
     this.wettkampfTag = wettkampfTag;
+    this.schuetzeSatz1 = schuetzeSatz1;
+    this.schuetzeSatz2 = schuetzeSatz2;
+    this.schuetzeSatz3 = schuetzeSatz3;
+    this.schuetzeSatz4 = schuetzeSatz4;
+    this.schuetzeSatz5 = schuetzeSatz5;
   }
 
   static copyFrom(optional: {
@@ -68,7 +84,13 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
     vereinId?: number;
     vereinName?: string;
     wettkampfId?: number;
-    wettkampfTag?: number; }
+    wettkampfTag?: number;
+    schuetzeSatz1?: string;
+    schuetzeSatz2?: string;
+    schuetzeSatz3?: string;
+    schuetzeSatz4?: string;
+    schuetzeSatz5?: string;
+  }
   ): SchuetzenstatistikDTO {
     return new SchuetzenstatistikDTO(
       optional.id || null,
@@ -86,6 +108,12 @@ export class SchuetzenstatistikDTO implements DataTransferObject {
       optional.vereinId || null,
       optional.vereinName || null,
       optional.wettkampfId || null,
-      optional.wettkampfTag || null);
+      optional.wettkampfTag || null,
+      optional.schuetzeSatz1 || null,
+      optional.schuetzeSatz2 || null,
+      optional.schuetzeSatz3 || null,
+      optional.schuetzeSatz4 || null,
+      optional.schuetzeSatz5 || null
+    );
   }
 }
