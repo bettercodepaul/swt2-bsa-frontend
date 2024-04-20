@@ -21,6 +21,7 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public isCustomActionButton: boolean = false;
   @Input() public showFilterUnsuccessful: boolean = false;
   @Input() public filterButtonColor: ActionButtonColors;
+  @Input() public showFilterButton: boolean = false;
 
   public ActionButtonColors = ActionButtonColors;
 

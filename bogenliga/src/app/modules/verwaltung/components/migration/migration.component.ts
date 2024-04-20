@@ -36,8 +36,6 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public isFiltered = false;
   public buttonColor = ActionButtonColors.PRIMARY;
   public searchTerm = 'searchTermMigration';
-  public id;
-
 
   private sessionHandling: SessionHandling;
 

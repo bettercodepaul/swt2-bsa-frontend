@@ -10,10 +10,12 @@
                      [hidden]="hidden"
                      [sessionSearch]="searchTerm">
 
-    </bla-quicksearch>
+    </bla-quicksearch >
+    <bla-filterinputbar *ngIf="showFilterButton" >
 
+    </bla-filterinputbar>
     <div class="overview-dialog-add"
-         *ngIf="hasUserPermissions(config.createPermission)">
+         >
 
 
       <bla-actionbutton
