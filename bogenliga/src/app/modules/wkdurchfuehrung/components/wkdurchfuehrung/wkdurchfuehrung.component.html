@@ -153,12 +153,11 @@
               {{ 'WKDURCHFUEHRUNG.BUTTON.DURCHFUEHRUNG' | translate }}
             </bla-actionbutton>
 
-            <!--Neuer Button Vollbildansicht-->
             <bla-actionbutton
               [id]="'vollbildAnsicht'"
               [color]="ActionButtonColors.PRIMARY"
               [iconClass]="'arrow-right'"
-              (onClick)="toggleDiv()"
+              (onClick)="redirectToFullScreen()"
               [disabled]="isDisabled()">
               {{ 'WKDURCHFUEHRUNG.BUTTON.VOLLBILDANSICHT' | translate }}
             </bla-actionbutton>
