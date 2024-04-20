@@ -1,24 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  LIGATABELLE_TABLE_CONFIG,
-  WETTKAEMPFE_CONFIG
-} from '../../../ligatabelle/components/ligatabelle/ligatabelle.config';
-import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {ActivatedRoute, Router} from '@angular/router';
-import {SessionHandling} from '@shared/event-handling';
-import {CurrentUserService, NotificationService, OnOfflineService} from '@shared/services';
-import {isUndefined} from '@shared/functions';
-import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
-import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
-import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
-import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
-import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
-import {SelectedLigaDataprovider} from '@shared/data-provider/SelectedLigaDataprovider';
-import {BogenligaResponse} from '@shared/data-provider';
-import {getActiveSportYear} from '@shared/functions/active-sportyear';
-import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
-import {CommonComponentDirective, toTableRows} from '@shared/components';
-import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SessionHandling } from '@shared/event-handling';
+import { CurrentUserService, NotificationService, OnOfflineService } from '@shared/services';
+import { isUndefined } from '@shared/functions';
+import { VeranstaltungDO } from '@verwaltung/types/veranstaltung-do.class';
+import { SportjahrVeranstaltungDO } from '@verwaltung/types/sportjahr-veranstaltung-do';
+import { VeranstaltungDataProviderService } from '@verwaltung/services/veranstaltung-data-provider.service';
+import { LigatabelleDataProviderService } from '../../../ligatabelle/services/ligatabelle-data-provider.service';
+import { EinstellungenProviderService } from '@verwaltung/services/einstellungen-data-provider.service';
+import { SelectedLigaDataprovider } from '@shared/data-provider/SelectedLigaDataprovider';
+import { BogenligaResponse } from '@shared/data-provider';
+import { getActiveSportYear } from '@shared/functions/active-sportyear';
+import { LigatabelleErgebnisDO } from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
+import { CommonComponentDirective, toTableRows } from '@shared/components';
+import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
+import { LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG } from '../../../ligatabelle/components/ligatabelle/ligatabelle.config';
+import { TableRow } from '@shared/components/tables/types/table-row.class';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -29,18 +26,12 @@ const ID_PATH_PARAM = 'id';
 export class FullscreenComponent extends CommonComponentDirective implements OnInit {
 
   private sessionHandling: SessionHandling;
-
-
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
-
-
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
   public buttonForward: number;
   public selectedVeranstaltungName: string;
   public ActionButtonColors = ActionButtonColors;
-
-
   public loading = true;
   public loadingLigatabelle = true;
   public multipleSelections = true;
@@ -48,18 +39,14 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   public providedID: number;
   private hasID: boolean;
   private hasVeranstaltung: boolean = true;
-
   private isDeselected: boolean = false;
   private remainingLigatabelleRequests: number;
-
   private loadedVeranstaltungen: Map<number, VeranstaltungDO[]>;
   private selectedVeranstaltung: VeranstaltungDO;
   public loadedYears: SportjahrVeranstaltungDO[];
   public availableYears: SportjahrVeranstaltungDO[];
   public veranstaltungenForYear: VeranstaltungDO[];
-
   private veranstaltungIdMap: Map<number, VeranstaltungDO>;
-
   public selectedVeranstaltungId: number;
   public selectedYearId: number;
   public selectedItemId: number;
@@ -84,8 +71,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   }
 
   ngOnInit() {
-
-    if(!this.isDeselected) {
+    if (!this.isDeselected) {
       this.loadTableData();
       this.providedID = undefined;
       this.hasID = false;
@@ -94,9 +80,8 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
-          params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
-          this.selectedYearForVeranstaltung != undefined && this.hasID
-            ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
+          params[ID_PATH_PARAM] === 'ligaid' ? this.hasID = false : undefined;
+          this.selectedYearForVeranstaltung != undefined && this.hasID ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
         } else {
           console.log('no params at ligatabelle');
           this.router.navigate(['/fullscreen']);
