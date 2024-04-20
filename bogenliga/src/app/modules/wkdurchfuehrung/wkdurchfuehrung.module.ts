@@ -47,7 +47,7 @@ import { FullscreenComponent } from './components/fullscreen/fullscreen.componen
     TabletEingabeComponent,
     TabletAdminComponent,
     TeilnemendeManschaftenTabelleComponent,
-    FullscreenComponent
+    FullscreenComponent,
   ],
   providers:    [
     WkdurchfuehrungGuard,
