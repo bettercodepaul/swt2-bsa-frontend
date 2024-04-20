@@ -3,12 +3,12 @@ import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
-  selector: 'bla-quicksearch',
-  templateUrl: './quicksearch.component.html',
-  styleUrls: ['./quicksearch.component.scss'],
+  selector: 'bla-filterinputbar',
+  templateUrl: './filterinputbar.component.html',
+  styleUrls: ['./filterinputbar.component.scss'],
   providers: [TranslatePipe]
 })
-export class QuicksearchComponent implements OnInit, OnChanges {
+export class FilterinputbarComponent implements OnInit, OnChanges {
 
   @Input() id: string;
   @Input() visible = true;
