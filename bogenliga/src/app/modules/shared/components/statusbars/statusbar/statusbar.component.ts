@@ -9,7 +9,6 @@ import {Component, Input, OnInit} from '@angular/core';
 export class StatusbarComponent implements OnInit{
   showProgress: boolean = false;
   @Input() progress!: number;
-  @Input() public visible = true;
   @Input() public disabled = false;
   @Input() public loading = false;
 
