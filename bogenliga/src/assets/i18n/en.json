@@ -333,14 +333,19 @@
         "ANZEIGENALL": {
           "LABEL": "Show all"
         },
-        "ANZEIGENEINZEL": {
-          "LABEL": "Show individual statistics"
-        },
-        "ANZEIGENEINZELGESAMT": {
-          "LABEL": "Show over all statistics of individual"
+        "ANZEIGENSTATISTIK": {
+          "LABEL": "Show statistics"
         },
         "ANZEIGENEINZELGESAMTDRUCKEN": {
           "LABEL": "Print individual statistic"
+        }
+      },
+      "DROPDOWN": {
+        "OPTION1": {
+          "LABEL": "Complete statistics"
+        },
+        "OPTION2": {
+          "LABEL": "Statistics per archer"
         }
       },
       "FORM": {

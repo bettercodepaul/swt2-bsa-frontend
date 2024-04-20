@@ -355,17 +355,22 @@
         "ANZEIGENALL": {
           "LABEL": "Alle Mannschaften anzeigen"
         },
-        "ANZEIGENEINZEL": {
-          "LABEL": "Einzelstatistik anzeigen"
-        },
-        "ANZEIGENEINZELGESAMT": {
-          "LABEL": "Gesamtstatistik anzeigen"
+        "ANZEIGENSTATISTIK": {
+          "LABEL": "Statistik anzeigen"
         },
         "ANZEIGENEinzelDrucken": {
           "LABEL": "Einzelstatistik drucken"
         },
         "ANZEIGENEINZELGESAMTDRUCKEN": {
           "LABEL": "Gesamtstatistik drucken"
+        }
+      },
+      "DROPDOWN": {
+        "OPTION1": {
+          "LABEL": "Gesamtstatistik"
+        },
+        "OPTION2": {
+          "LABEL": "Einzelstatistik"
         }
       },
       "FORM": {

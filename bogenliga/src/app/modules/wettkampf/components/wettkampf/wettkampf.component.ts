@@ -67,6 +67,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   private sessionHandling: SessionHandling;
 
+  public selectedStatistik: string = 'gesamtstatistik';
+
   popup: boolean;
   gesamt = false;
 
@@ -530,5 +532,18 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadingData = true;
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
     this.loadingData = false;
+  }
+
+  public async onSelectStatistik() {
+    if (this.selectedStatistik === 'einzelstatistik') {
+      this.loadEinzelstatistik(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'gesamtstatistik') {
+      this.loadGesamtstatistik(this.currentMannschaft);
+    }
+  }
+
+  public async showStatistikOptions() {
+    document.getElementById('selectStatistik').classList.remove('hidden');
+    this.loadGesamtstatistik(this.currentMannschaft);
   }
 }
