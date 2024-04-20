@@ -34,7 +34,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public deleteLoading = false;
   public saveLoading = false;
   public isFiltered = false;
-  public buttonColor = ActionButtonColors.SECONDARY;
+  public buttonColor = ActionButtonColors.PRIMARY;
   public searchTerm = 'searchTermMigration';
   public id;
 
@@ -116,12 +116,12 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     try {
       if(this.isFiltered){
         this.MigrationDataProvider.findLimited();
-        this.buttonColor = ActionButtonColors.SECONDARY;
+        this.buttonColor = ActionButtonColors.PRIMARY;
         this.isFiltered = false;
       }
       else{
         this.MigrationDataProvider.findAll();
-        this.buttonColor = ActionButtonColors.PRIMARY;
+        this.buttonColor = ActionButtonColors.SECONDARY;
         this.isFiltered = true;
       }
     } catch (e) {
