@@ -16,6 +16,7 @@ import { CommonComponentDirective, toTableRows } from '@shared/components';
 import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
 import { LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG } from '../../../ligatabelle/components/ligatabelle/ligatabelle.config';
 import { TableRow } from '@shared/components/tables/types/table-row.class';
+import { interval, Subscription } from 'rxjs';
 
 const ID_PATH_PARAM = 'id';
 @Component({
@@ -53,6 +54,8 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   private aktivesSportjahr: number;
   private selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
   private istURLkorrekt: boolean = false;
+  currentTime: string;
+  private timeSubscription: Subscription;
 
 
   constructor(
@@ -71,6 +74,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   }
 
   ngOnInit() {
+    this.startClock();
     if (!this.isDeselected) {
       this.loadTableData();
       this.providedID = undefined;
@@ -108,6 +112,14 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     const link = '/ligatabelle';
     this.router.navigateByUrl(link);
   }
+
+  startClock() {
+    this.currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+    this.timeSubscription = interval(60000).subscribe(() => {
+      this.currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+    });
+  }
+
 
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
