@@ -115,12 +115,21 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   filterUnsuccessful() {
     try {
       if(this.isFiltered){
-        this.MigrationDataProvider.findLimited();
+        this.MigrationDataProvider.findLimited()
+            .then((response: BogenligaResponse<TriggerDTO[]>) => {
+              this.handleLoadTableRowsSuccess(response);
+              console.log(response);
+            })
+            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
         this.buttonColor = ActionButtonColors.PRIMARY;
         this.isFiltered = false;
       }
       else{
-        this.MigrationDataProvider.findAll();
+        this.MigrationDataProvider.findAll()
+            .then((response: BogenligaResponse<TriggerDTO[]>) => {
+              this.handleLoadTableRowsSuccess(response);
+              console.log(response);
+            })
         this.buttonColor = ActionButtonColors.SECONDARY;
         this.isFiltered = true;
       }

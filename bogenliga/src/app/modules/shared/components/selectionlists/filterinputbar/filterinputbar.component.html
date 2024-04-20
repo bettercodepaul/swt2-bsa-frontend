@@ -1,0 +1,19 @@
+<div class="quicksearch">
+  <div class="input-group mb-3">
+    <input (input)="onSearch($event.target.value)"
+           [id]="id"
+           [name]="id"
+           [placeholder]="getPlaceholder()"
+           [(ngModel)]="lastSearchValue"
+           class="quicksearch-input"
+           style="width: 25%; "
+           type="text">
+    <div class="input-group-append"
+         style="">
+      <span class="input-group-text"
+            id="basic-addon2">
+        <fa-icon [icon]="findIcon"></fa-icon>
+      </span>
+    </div>
+  </div>
+</div>

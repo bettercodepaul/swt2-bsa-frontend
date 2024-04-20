@@ -11,8 +11,10 @@
                      [sessionSearch]="searchTerm">
 
     </bla-quicksearch>
+
     <div class="overview-dialog-add"
          *ngIf="hasUserPermissions(config.createPermission)">
+
 
       <bla-actionbutton
         *ngIf="showFilterUnsuccessful"
@@ -21,7 +23,7 @@
         data-cy="filter-migration-button"
         (onClick)="onFilterButtonClick()"
         >
-        {{buttonLabel || "Neu"}}
+        {{"Nicht erfolgreiche Migrationen filtern"}}
       </bla-actionbutton>
 
       <bla-actionbutton
