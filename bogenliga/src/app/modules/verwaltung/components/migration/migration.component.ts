@@ -85,22 +85,24 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
   public startMigration() {
     try {
-      this.MigrationDataProvider.startMigration();
+      //this.MigrationDataProvider.startMigration();
       this.notificationService.showNotification({
-        id: 'Migrationslauf gestartet',
-        description: 'Die Migration wurde angestoßen und läuft',
-        title: 'Migration gestartet',
+        id: 'Migrationslauf starten?',
+        description: 'Möchten Sie die Migration manuell starten?',
+        title: 'Migration starten',
         origin: NotificationOrigin.SYSTEM,
         userAction: NotificationUserAction.ACCEPTED,
-        type: NotificationType.OK,
+        type: NotificationType.OK_CANCEL,
         severity: NotificationSeverity.INFO
-      });
+      })
+      if(this.notificationService.getCurrentNotification().userAction === NotificationUserAction.ACCEPTED){
+        this.MigrationDataProvider.startMigration();
+      }
     } catch (e) {
-
     this.notificationService.showNotification({
       id: 'Fehler beim Starten der Migration',
-      description: 'Ein fehler ist aufgetreten und die Migration wurde nicht gestartet.',
-      title: 'Fehler beim Start der MIgration',
+      description: 'Ein Fehler ist aufgetreten und die Migration wurde nicht gestartet.',
+      title: 'Fehler beim Start der Migration',
       origin: NotificationOrigin.SYSTEM,
       userAction: NotificationUserAction.ACCEPTED,
       type: NotificationType.OK,
@@ -113,7 +115,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   filterUnsuccessful() {
     try {
       if(this.isFiltered){
-        this.MigrationDataProvider.findLimited()
+        this.MigrationDataProvider.findAll()
             .then((response: BogenligaResponse<TriggerDTO[]>) => {
               this.handleLoadTableRowsSuccess(response);
               console.log(response);
@@ -123,7 +125,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         this.isFiltered = false;
       }
       else{
-        this.MigrationDataProvider.findAll()
+        this.MigrationDataProvider.findLimited()
             .then((response: BogenligaResponse<TriggerDTO[]>) => {
               this.handleLoadTableRowsSuccess(response);
               console.log(response);
