@@ -5,8 +5,9 @@
 }
 
 .status-bar{
+  transform: translate(0px, -15px);
   height: 7px;
-  width: 100px;
+  width: 100%;
   line-height:30px;
   background-color:grey;
   color:green;

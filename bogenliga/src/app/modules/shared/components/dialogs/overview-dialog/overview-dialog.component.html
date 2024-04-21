@@ -13,11 +13,7 @@
     </bla-quicksearch>
     <div class="overview-dialog-add"
          *ngIf="hasUserPermissions(config.createPermission)">
-      <bla-migrationstatusbar
-        [progress]="50"
-      >
-        {{""}}
-      </bla-migrationstatusbar>
+
 
       <bla-actionbutton
         data-cy="dsb-mitglied-add-button"
@@ -38,10 +34,16 @@
       >
         {{buttonLabel || "Neu"}}
       </bla-actionbutton>
-
-
+      <bla-migrationstatusbar
+        [progress]="50"
+        *ngIf = "isMigrationStatusBar"
+      >
+        {{""}}
+      </bla-migrationstatusbar>
     </div>
+
   </section>
+
 
   <!-- Content -->
   <section class="overview-dialog-content">
