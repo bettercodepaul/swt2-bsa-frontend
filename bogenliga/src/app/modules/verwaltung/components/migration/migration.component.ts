@@ -111,7 +111,12 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
   }
 }
-
+  public previousPageButton(){
+    //TODO
+  }
+  public nextPageButton(){
+    //TODO
+  }
   filterUnsuccessful() {
     try {
       if(this.isFiltered){

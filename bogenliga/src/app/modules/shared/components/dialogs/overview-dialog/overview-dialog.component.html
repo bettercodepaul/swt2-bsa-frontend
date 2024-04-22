@@ -68,8 +68,24 @@
 
   <!-- Footer -->
   <section class="overview-dialog-footer">
-
-
+    <div class="changePageButtons"  >
+      <bla-actionbutton
+        *ngIf="changePageButtons"
+        [iconClass]="'arrow-left'"
+        data-cy="previous-page-button"
+        (onClick)="onFilterButtonClick()"
+      >
+        {{"vorherige Seite"}}
+      </bla-actionbutton>
+      <bla-actionbutton
+        *ngIf="changePageButtons"
+        [iconClass]="'arrow-right'"
+        data-cy="next-page-button"
+        (onClick)="onFilterButtonClick()"
+      >
+        {{"nächste Seite"}}
+      </bla-actionbutton>
+    </div>
   </section>
 
 </div>

@@ -7,9 +7,12 @@
                      [buttonLabel]="'Neue Migration'"
                      [filterButtonLabel] ="'Nicht erfolgreiche Migrationen filtern'"
                      [isCustomActionButton]=true
+                     [changePageButtons]=true
                      (onCustomActionButtonClicked)="startMigration()"
                      [showFilterButton] =true
                      [showFilterUnsuccessful]=true
+                     (onPreviousPageButtonClicked)="previousPageButton()"
+                     (onNextPageButtonClicked)="nextPageButton()"
                      (onFilterButtonClicked)="filterUnsuccessful()"
                      [filterButtonColor] = "buttonColor"
 >

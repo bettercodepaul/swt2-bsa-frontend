@@ -1,3 +1,4 @@
+
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 import {CurrentUserService, UserPermission} from '../../../services/current-user';
@@ -21,6 +22,7 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public filterButtonLabel: string;
   @Input() public isCustomActionButton: boolean = false;
   @Input() public showFilterUnsuccessful: boolean = false;
+  @Input() public changePageButtons: boolean = false;
   @Input() public filterButtonColor: ActionButtonColors;
   @Input() public showFilterButton: boolean = false;
 
@@ -33,7 +35,8 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Output() public onSearchClicked = new EventEmitter<string>();
   @Output() public onCustomActionButtonClicked = new EventEmitter<string>();
   @Output() public onFilterButtonClicked = new EventEmitter<string>();
-
+  @Output() public onNextPageButtonClicked = new EventEmitter<string>();
+  @Output() public onPreviousPageButtonClicked = new EventEmitter<string>();
   constructor(private currentUserService: CurrentUserService) {
     super(currentUserService);
   }
@@ -67,6 +70,12 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
 
   public onFilterButtonClick() {
     this.onFilterButtonClicked.emit();
+  }
+  public onPreviousPageButtonClick() {
+    this.onPreviousPageButtonClicked.emit();
+  }
+  public onNextPageButtonClick() {
+    this.onNextPageButtonClicked.emit();
   }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
