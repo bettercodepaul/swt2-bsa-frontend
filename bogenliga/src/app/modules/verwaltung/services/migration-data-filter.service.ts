@@ -17,7 +17,7 @@ import {OnOfflineService} from '@shared/services';
 @Injectable({
   providedIn: 'root'
 })
-export class MigrationProviderService extends DataProviderService {
+export class MigrationFilterService extends DataProviderService {
 
   serviceSubUrl = 'v1/trigger';
 
@@ -64,7 +64,7 @@ export class MigrationProviderService extends DataProviderService {
     });
   }
 
-  public startMigration() {
+  public startFilter() {
     this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
   }
 }

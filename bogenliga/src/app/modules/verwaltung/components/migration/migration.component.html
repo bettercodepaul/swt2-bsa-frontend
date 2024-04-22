@@ -7,6 +7,10 @@
                      [buttonLabel]="'Neue Migration'"
                      [isCustomActionButton]=true
                      (onCustomActionButtonClicked)="startMigration()"
+
+                     [buttonLabel]="'Data Filter'"
+                     [isCustomActionButton]=true
+                     (onCustomActionButtonClicked)="startFilter()"
 >
  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>

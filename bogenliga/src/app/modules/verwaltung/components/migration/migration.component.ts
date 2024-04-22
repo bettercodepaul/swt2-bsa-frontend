@@ -21,6 +21,7 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {MigrationFilterService} from '@verwaltung/services/migration-data-filter.service';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 const ID_PATH_PARAM = 'id';
@@ -46,6 +47,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
 
   constructor(private MigrationDataProvider: MigrationProviderService,
+    private MigrationFilterService: MigrationFilterService,
     private userProvider: UserProfileDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
@@ -56,11 +58,18 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
-  ngOnInit() {
+  ngOnInit(data_limit:number = 0) {
     this.loading = true;
-    this.loadTableRows();
-    if (!localStorage.getItem(this.searchTerm)) {
+    if (data_limit == 0){
       this.loadTableRows();
+      if (!localStorage.getItem(this.searchTerm)) {
+        this.loadTableRows();
+      }
+    } else {
+      this.loadTableRows(data_limit);
+      if (!localStorage.getItem(this.searchTerm)) {
+        this.loadTableRows(data_limit);
+      }
     }
   }
 
@@ -77,13 +86,23 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 
 
-  private loadTableRows() {
-    this.MigrationDataProvider.findAll()
-        .then((response: BogenligaResponse<TriggerDTO[]>) => {
-          this.handleLoadTableRowsSuccess(response);
-          console.log(response);
-        })
-        .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+  private loadTableRows(data_limit:number = 5) {
+    if (data_limit != 5){
+      this.MigrationDataProvider.findAll()
+          .then((response: BogenligaResponse<TriggerDTO[]>) => {
+            this.handleLoadTableRowsSuccess(response);
+            console.log(response);
+          })
+          .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+    }
+    else {
+      this.MigrationDataProvider.findLimitedData(data_limit)
+          .then((response: BogenligaResponse<TriggerDTO[]>) => {
+            this.handleLoadTableRowsSuccess(response);
+            console.log(response);
+          })
+          .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+    }
   }
 
   public startMigration() {
@@ -112,6 +131,33 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
   }
 }
+
+  public startFilter(data_limit:number = 5) {
+    try {
+      this.MigrationFilterService.startFilter();
+      this.notificationService.showNotification({
+        id: 'Data filter gestartet',
+        description: 'Der Data Filter wurde angestoßen und läuft',
+        title: 'Filter gestartet',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.ACCEPTED,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO
+      });
+    } catch (e) {
+
+      this.notificationService.showNotification({
+        id: 'Fehler beim Starten des Filters ',
+        description: 'Ein fehler ist aufgetreten und der Filter wurde nicht gestartet.',
+        title: 'Fehler beim Start des Filters',
+        origin: NotificationOrigin.SYSTEM,
+        userAction: NotificationUserAction.ACCEPTED,
+        type: NotificationType.OK,
+        severity: NotificationSeverity.INFO
+      });
+
+    }
+  }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];

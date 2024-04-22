@@ -10,3 +10,10 @@ export function fromPayloadArray(payload: VersionedDataTransferObject[]): Trigge
   payload.forEach((single) => list.push(fromPayload(single)));
   return list;
 }
+
+export function fromPayloadArrayWithLimit(payload: VersionedDataTransferObject[], data_limit:number): TriggerDTO[] {
+  const list: TriggerDTO[] = [];
+  const payloadWithLimit: VersionedDataTransferObject[] = payload.slice(0, data_limit)
+  payloadWithLimit.forEach((single) => list.push(fromPayload(single)));
+  return list;
+}
