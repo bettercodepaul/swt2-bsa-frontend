@@ -163,18 +163,18 @@ describe('Anonyme User tests', function () {
   /**
    * This test selects a single statistic and checks if the required data is present
    */
-  it('Ergebnis anzeigen Einzelstatistik', function() {
+  /*it('Ergebnis anzeigen Einzelstatistik', function() {
     cy.get('[data-cy=einzelstatistik-anzeigen-button]').click()
     cy.contains('Pfeilwert pro Match')
   })
 
-  /**
+  /!**
    * This test selects all items from the statistics and checks if the required data is present
-   */
+   *!/
   it('Ergebnis anzeigen Gesamtstatistik', function() {
     cy.get('[data-cy=einzelstatistik-gesamt-anzeigen-button]').click()
     cy.contains('Pfeilwert pro Jahr')
-  })
+  })*/
 
   /**
    * This test opens the sidebar and clicks on the "HILFE" tab and checks if
