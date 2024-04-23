@@ -14,6 +14,7 @@ export function toDO(dsbMitgliedDTO: DsbMitgliedOfflineSyncDto): OfflineDsbMitgl
     vorname: dsbMitgliedDTO.vorname,
     nachname: dsbMitgliedDTO.nachname,
     geburtsdatum: dsbMitgliedDTO.geburtsdatum,
+    vereinsName: dsbMitgliedDTO.vereinsName,
     mitgliedsnummer: dsbMitgliedDTO.mitgliedsnummer,
     nationalitaet: dsbMitgliedDTO.nationalitaet,
     benutzerId: dsbMitgliedDTO.benutzerId,
@@ -55,6 +56,7 @@ export function fromDOtoOfflineDsbMitglied(payload: DsbMitgliedDO): OfflineDsbMi
     nachname:        payload.nachname,
     nationalitaet:   payload.nationalitaet,
     vereinId:        payload.vereinsId,
+    vereinsName:     payload.vereinsName,
     version:         1,
     vorname:         payload.vorname
 

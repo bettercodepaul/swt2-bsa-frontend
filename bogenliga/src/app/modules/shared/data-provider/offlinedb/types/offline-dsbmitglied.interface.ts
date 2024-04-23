@@ -6,6 +6,7 @@ export interface OfflineDsbMitglied {
   geburtsdatum: string;
   nationalitaet: string;
   mitgliedsnummer: string;
+  vereinsName: string;
   vereinId: number;
   benutzerId: number;
 }

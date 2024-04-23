@@ -732,7 +732,6 @@
           "VORNAME": "Vorname",
           "NACHNAME": "Nachname",
           "VEREIN": "Verein",
-          "GEBURTSDATUM": "Geburtsdatum",
           "MITGLIEDSNUMMER": "Mitgliedsnummer"
         }
       },
