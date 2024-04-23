@@ -543,5 +543,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public async showStatistikOptions() {
     document.getElementById('selectStatistik').classList.remove('hidden');
     await this.loadGesamtstatistik(this.currentMannschaft);
+    this.selectedStatistik = 'gesamtstatistik';
   }
 }
