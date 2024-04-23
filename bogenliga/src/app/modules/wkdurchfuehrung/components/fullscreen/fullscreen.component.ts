@@ -36,7 +36,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   public loading = true;
   public loadingLigatabelle = true;
   public multipleSelections = true;
-  public rowsLigatabelle: TableRow[];
+
   public providedID: number;
   private hasID: boolean;
   private hasVeranstaltung: boolean = true;
@@ -56,7 +56,18 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   private istURLkorrekt: boolean = false;
   currentTime: string;
   private timeSubscription: Subscription;
+  public rowsLigatabelle: TableRow[];
 
+  public ligatabelleData: any[] = [
+    { platz: 1, mannschaft: 'BSC Geislingen Steige-2', matchpunkte: '11 : 3', satzpunkte: '39 : 21', satzpunktdifferenz: 18 },
+    { platz: 2, mannschaft: 'SK Fellbach Schmiden-0', matchpunkte: '11 : 3', satzpunkte: '37 : 21', satzpunktdifferenz: 16 },
+    { platz: 3, mannschaft: 'SV Mögglingen-0', matchpunkte: '8 : 6', satzpunkte: '32 : 24', satzpunktdifferenz: 8 },
+    { platz: 4, mannschaft: 'SGi Welzheim-3', matchpunkte: '8 : 6', satzpunkte: '32 : 28', satzpunktdifferenz: 4 },
+    { platz: 5, mannschaft: 'SSV Steinheim Albuch-0', matchpunkte: '7 : 7', satzpunkte: '32 : 26', satzpunktdifferenz: 6 },
+    { platz: 6, mannschaft: 'BSV Brackenheim-0', matchpunkte: '7 : 7', satzpunkte: '27 : 29', satzpunktdifferenz: -2 },
+    { platz: 7, mannschaft: 'SGi Ditzingen-3', matchpunkte: '4 : 10', satzpunkte: '23 : 31', satzpunktdifferenz: -8 },
+    { platz: 8, mannschaft: 'SV Weil im Schönbuch-0', matchpunkte: '0 : 14', satzpunkte: '0 : 42', satzpunktdifferenz: -42 }
+  ];
 
   constructor(
     private router: Router,
@@ -202,26 +213,25 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
 
   private loadLigaTableRows() {
     this.loadingLigatabelle = true;
-    this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.selectedVeranstaltung.id)
-        .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleSuccess(response))
-        .catch(() => this.handleLigatabelleFailure());
+    // Führe den Erfolgshandler direkt aus, da die Daten bereits vorhanden sind
+    this.handleLigatabelleSuccess({ payload: this.ligatabelleData } as BogenligaResponse<LigatabelleErgebnisDO[]>);
   }
 
   private handleLigatabelleFailure() {
     console.log('failure');
-    this.rowsLigatabelle = [];
+    this.ligatabelleData = [];
     this.loadingLigatabelle = false;
   }
 
   private handleLigatabelleSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
     console.log('success');
-    this.rowsLigatabelle = []; // reset array to ensure change detection
     this.remainingLigatabelleRequests = response.payload.length;
-    if (response.payload.length <= 0
-    ) {
+    if (response.payload.length <= 0) {
       this.loadingLigatabelle = false;
     } else {
-      this.rowsLigatabelle = toTableRows(response.payload);
+      const newTableData = toTableRows(response.payload);
+      // Füge die neuen Daten zu den vorhandenen hinzu oder ersetze sie, je nach Bedarf
+      this.ligatabelleData = newTableData; // Wenn du die vorhandenen Daten beibehalten möchtest, könntest du this.ligatabelleData.concat(newTableData) verwenden
       this.loadingLigatabelle = false;
     }
   }

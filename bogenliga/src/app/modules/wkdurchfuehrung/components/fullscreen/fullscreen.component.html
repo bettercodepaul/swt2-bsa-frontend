@@ -7,15 +7,29 @@
           Clock Icon {{ currentTime }}
         </div>
 
-        <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
+        <!-- Dies ist die aktuelle Ligatabelle-->
 
-        <bla-data-table
-          [config]="config_table"
-          [rows]="rowsLigatabelle"
-          [loading]="loadingLigatabelle"
-          (onRowEntry)="ligatabelleLinking();"
-        >
-        </bla-data-table>
+        <table class="table table-hover table-sm table-responsive-sm thead-light"
+               [id]="id"
+               *ngIf="visible">
+          <thead>
+          <tr>
+            <th *ngFor="let column of config_table.columns"
+                >
+              {{ column.propertyName.toUpperCase() }}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of ligatabelleData">
+            <td>{{ row.platz }}</td>
+            <td>{{ row.mannschaft }}</td>
+            <td>{{ row.matchpunkte }}</td>
+            <td>{{ row.satzpunkte }}</td>
+            <td>{{ row.satzpunktdifferenz }}</td>
+          </tr>
+          </tbody>
+        </table>
        </div>
     </div>
   </div>
