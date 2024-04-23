@@ -89,4 +89,52 @@ describe('Verwaltung/Migration tests', function () {
     }).as('request');
     cy.wait('@request')
   })
+  it('Anzeige Filter Migration Button Click', () => {
+    cy.url().should('include', '#/home')
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.wait(1000)
+    cy.url().should('include', '#/verwaltung')
+    cy.get('[data-cy=verwaltung-sync-button]').click()
+    cy.wait(1000)
+    cy.url().should('include', '#/verwaltung/migration')
+    cy.wait(1000)
+    cy.disbandModalIfShown();
+    cy.wait(1000)
+    cy.get('[data-cy=dsb-mitglied-add-button]').click()
+    cy.wait(1000)
+    cy.get('[data-cy=filter-migration-button]').click()
+
+    //Intercept Call to Backend
+    cy.intercept({
+      method: 'GET',
+      url: `http://localhost:9000/v1/trigger/buttonSync`,
+    }).as('request');
+    cy.wait('@request')
+  })
+
+
+  it('Anzeige Next and Previous Page Button Click', () => {
+    cy.url().should('include', '#/home')
+    cy.get('[data-cy=sidebar-verwaltung-button]').click()
+    cy.wait(1000)
+    cy.url().should('include', '#/verwaltung')
+    cy.get('[data-cy=verwaltung-sync-button]').click()
+    cy.wait(1000)
+    cy.url().should('include', '#/verwaltung/migration')
+    cy.wait(1000)
+    cy.disbandModalIfShown();
+    cy.wait(1000)
+    cy.get('[data-cy=filter-migration-button]').click()
+    cy.wait(1000)
+    cy.get('[data-cy=dsb-mitglied-add-button]').click()
+    cy.wait(1000)
+    cy.get('[data-cy=next-page-button]').click()
+
+    //Intercept Call to Backend
+    cy.intercept({
+      method: 'GET',
+      url: `http://localhost:9000/v1/trigger/buttonSync`,
+    }).as('request');
+    cy.wait('@request')
+  })
 })
