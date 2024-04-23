@@ -10,7 +10,7 @@ export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
     columns: [
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.OLD',
-        propertyName:   'altsystem_id',
+        propertyName:   'altsystemId',
         width:          10,
       },
       {
