@@ -1,5 +1,5 @@
 <!--<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_migrationen" target="_blank"></bla-hilfe-button>-->
-<div>
+<div id="filter">
   <label for="statusArray">Filter </label>
   <select id="statusArray" [(ngModel)]="currentStatus" (ngModelChange)="selectFilterForStatus()">
     <option *ngFor="let status of statusArray" [ngValue]="status">{{ status }}</option>
