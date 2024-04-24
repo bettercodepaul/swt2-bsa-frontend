@@ -158,9 +158,11 @@
               [color]="ActionButtonColors.PRIMARY"
               [iconClass]="'arrow-right'"
               (onClick)="redirectToFullScreen()"
-              [disabled]="isDisabled()">
+              [disabled]="isDisabled()"
+              data-cy="vollbildAnsichtButton">
               {{ 'WKDURCHFUEHRUNG.BUTTON.VOLLBILDANSICHT' | translate }}
             </bla-actionbutton>
+
           </div>
 
           <div id="adminOfflineResetButton"
