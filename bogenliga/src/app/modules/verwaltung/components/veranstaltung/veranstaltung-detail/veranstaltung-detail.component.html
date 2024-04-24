@@ -13,6 +13,7 @@
           <span> *</span>
         </label>
         <div class="col-sm-9">
+          <!-- If abfrage, ob Warteschlange -->
           <ng-container *ngIf="currentLiga.name.toLowerCase() === 'warteschlange'; else keineWarteschlangeName">
             <input type="text"
                    class="form-control"
@@ -114,6 +115,7 @@
           <span> *</span>
         </label>
         <div class="col-sm-9">
+          <!-- If abfrage, ob Warteschlange -->
           <ng-container *ngIf="currentLiga.name.toLowerCase() === 'warteschlange'; else keineWarteschlangeAnzahl">
             <select class="form-control"
                     required
