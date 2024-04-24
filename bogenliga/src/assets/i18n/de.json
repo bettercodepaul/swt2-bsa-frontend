@@ -16,7 +16,7 @@
     "WETTKAMPF": "Wettkämpfe",
     "REGIONEN": "Regionen",
     "VEREINE": "Vereine",
-    "WKDURCHFUEHRUNG": "WettkampfdurchfÜhrung",
+    "WKDURCHFUEHRUNG": "Wettkampfdurchführung",
     "MANNSCHAFTEN": "Ligatabelle",
     "SETTINGS": "Einstellungen",
     "PLAYGROUND": "Playground",
@@ -224,7 +224,8 @@
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Offline gehen",
       "ONLINE_GEHEN": "Online gehen",
-      "OFFLINE_TOKEN": "Offlinetoken löschen"
+      "OFFLINE_TOKEN": "Offlinetoken löschen",
+      "VOLLBILDANSICHT": "Tabelle in Vollbildmodus"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
@@ -355,17 +356,22 @@
         "ANZEIGENALL": {
           "LABEL": "Alle Mannschaften anzeigen"
         },
-        "ANZEIGENEINZEL": {
-          "LABEL": "Einzelstatistik anzeigen"
-        },
-        "ANZEIGENEINZELGESAMT": {
-          "LABEL": "Gesamtstatistik anzeigen"
+        "ANZEIGENSTATISTIK": {
+          "LABEL": "Statistik anzeigen"
         },
         "ANZEIGENEinzelDrucken": {
           "LABEL": "Einzelstatistik drucken"
         },
         "ANZEIGENEINZELGESAMTDRUCKEN": {
           "LABEL": "Gesamtstatistik drucken"
+        }
+      },
+      "DROPDOWN": {
+        "OPTION1": {
+          "LABEL": "Gesamtstatistik"
+        },
+        "OPTION2": {
+          "LABEL": "Einzelstatistik"
         }
       },
       "FORM": {
@@ -731,6 +737,7 @@
           "ID": "ID",
           "VORNAME": "Vorname",
           "NACHNAME": "Nachname",
+          "VEREIN": "Verein",
           "GEBURTSDATUM": "Geburtsdatum",
           "MITGLIEDSNUMMER": "Mitgliedsnummer"
         }

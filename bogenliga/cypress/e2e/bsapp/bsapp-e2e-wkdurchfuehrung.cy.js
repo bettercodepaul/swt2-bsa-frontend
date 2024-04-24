@@ -5,6 +5,44 @@ describe('Wkdurchfuehrung tests', function () {
   })
 
   /**
+   * This tests the fullscreen button for the presenter view
+   */
+  it('Aktivierung der Vollbildansicht nach Auswahl', () => {
+    cy.visit('/#/wkdurchfuehrung');
+
+    let openedUrl;
+    cy.window().then(win => {
+      cy.stub(win, 'open').callsFake(url => {
+        openedUrl = url;
+        return win;
+      }).as('open');
+    });
+
+    cy.expandWettkampfTage();
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > [data-cy="actionButton"]').click();
+    cy.wait(1000);
+
+    cy.get('[ng-reflect-header-text="Druckdaten"]').then($header => {
+      $header.click();
+    });
+
+    cy.get('[data-cy=vollbildAnsichtButton]').click();
+    cy.get('@open').should('be.called');
+
+    cy.wrap(null).then(() => {
+      expect(openedUrl).to.exist;
+      cy.visit(`${openedUrl}/fullscreen`);
+    });
+
+    cy.url().should('include', '/fullscreen');
+
+    //Additional testing for when the table works
+
+    cy.go('back');
+  });
+
+
+  /**
    * This test opens the sidebar and clicks on the "WKDURCHFUEHRUNG" tab and checks if the url has changed successfully
    */
   it('Anzeige Wkdurchfuehrung',  () => {
@@ -69,6 +107,11 @@ describe('Wkdurchfuehrung tests', function () {
     cy.wait(1000)
     cy.get('[ng-reflect-header-text="Druckdaten"] > .expand-container > .expand-content').should('be.visible')
   })
+
+
+
+
+
 })
 
 /**

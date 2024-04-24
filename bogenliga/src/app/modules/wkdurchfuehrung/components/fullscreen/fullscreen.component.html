@@ -1,0 +1,47 @@
+
+  <div (mouseover)="onMouseOver($event)">
+    <div>
+      <div class="row" style="margin-left: 5px">
+
+        <div class="logo-and-header-container">
+          <div class="logo-container">
+            <img src="assets/img/Logos/BL_Logo/Favicon/apple-touch-icon.png"
+                 alt="bogenliga-logo" class="logo">
+          </div>
+          <div class="header-container">
+            <div class="veranstaltung-header">
+              Württembergliga
+            </div>
+            <div class="wettkampftag-header">
+              Wettkampftag 4
+            </div>
+          </div>
+        </div>
+
+        <div class="time-box">
+          {{ currentTime }}
+        </div>
+
+        <table class="table table-hover table-sm table-responsive-sm thead-light"
+               [id]="id" *ngIf="visible"> <!-- Tabelle, zum anzeigen der Mockup-Daten -->
+          <thead>
+          <tr>
+            <th *ngFor="let column of config_table.columns">
+              {{ column.translationKey | translate}}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of ligatabelleData">
+            <td>{{ row.platz }}</td>
+            <td>{{ row.mannschaft }}</td>
+            <td>{{ row.matchpunkte }}</td>
+            <td>{{ row.satzpunkte }}</td>
+            <td>{{ row.satzpunktdifferenz }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
