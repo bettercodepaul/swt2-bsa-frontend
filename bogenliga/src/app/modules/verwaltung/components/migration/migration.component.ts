@@ -131,8 +131,9 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
   filterUnsuccessful() {
     try {
+      this.offsetMultiplictor = 0;
       if(this.isFiltered){
-        this.MigrationDataProvider.findAll()
+        this.MigrationDataProvider.findAllWithPages(this.defaultOffsetMultiplicator,this.defaultQueryPageLimit)
             .then((response: BogenligaResponse<TriggerDTO[]>) => {
               this.handleLoadTableRowsSuccess(response);
               console.log(response);
@@ -200,10 +201,10 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
       });
     }
   }
-  filterUnsuccessfulForPageButton(multiplicator: number,pagelimit: number) {
+  filterUnsuccessfulForPageButton(multiplicator: number,pagelimit: number) {//TODO
     try {
       if(!this.isFiltered){
-        this.MigrationDataProvider.findAll()
+        this.MigrationDataProvider.findAllWithPages(multiplicator,pagelimit)
             .then((response: BogenligaResponse<TriggerDTO[]>) => {
               this.handleLoadTableRowsSuccess(response);
               console.log(response);
