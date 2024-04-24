@@ -73,7 +73,7 @@
         *ngIf="changePageButtons"
         [iconClass]="'arrow-left'"
         data-cy="previous-page-button"
-        (onClick)="onFilterButtonClick()"
+        (onClick)="onPreviousPageButtonClick()"
       >
         {{"vorherige Seite"}}
       </bla-actionbutton>
@@ -81,9 +81,9 @@
         *ngIf="changePageButtons"
         [iconClass]="'arrow-right'"
         data-cy="next-page-button"
-        (onClick)="onFilterButtonClick()"
+        (onClick)="onNextPageButtonClick()"
       >
-        {{"nächste Seite"}}
+        {{"nÃ¤chste Seite"}}
       </bla-actionbutton>
     </div>
   </section>

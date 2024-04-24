@@ -1,4 +1,3 @@
-
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {VersionedDataObject} from '../../../data-provider/models/versioned-data-object.interface';
 import {CurrentUserService, UserPermission} from '../../../services/current-user';

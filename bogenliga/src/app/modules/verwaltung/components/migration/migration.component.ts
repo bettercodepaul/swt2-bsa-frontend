@@ -127,7 +127,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     //TODO
   }
   public nextPageButton(){
-      //TODO
+    //TODO
   }
   filterUnsuccessful() {
     try {
@@ -142,13 +142,51 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         this.isFiltered = false;
       }
       else{
-        this.MigrationDataProvider.findLimited()
-            .then((response: BogenligaResponse<TriggerDTO[]>) => {
-              this.handleLoadTableRowsSuccess(response);
-              console.log(response);
-            })
-        this.buttonColor = ActionButtonColors.SECONDARY;
-        this.isFiltered = true;
+        switch(this.currentStatus) {
+          case "ERROR":
+            this.MigrationDataProvider.findErrors()
+                .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                  this.handleLoadTableRowsSuccess(response);
+                  console.log(response);
+                })
+                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+            this.buttonColor = ActionButtonColors.SECONDARY;
+            this.isFiltered = true;
+            break;
+          case "SUCCESS":
+            this.MigrationDataProvider.findSuccessed()
+                .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                  this.handleLoadTableRowsSuccess(response);
+                  console.log(response);
+                })
+                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+            this.buttonColor = ActionButtonColors.SECONDARY;
+            this.isFiltered = true;
+            break;
+          case "IN_PROGRESS":
+            this.MigrationDataProvider.findInProgress()
+                .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                  this.handleLoadTableRowsSuccess(response);
+                  console.log(response);
+                })
+                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+            this.buttonColor = ActionButtonColors.SECONDARY;
+            this.isFiltered = true;
+            break;
+          case "NEW":
+            this.MigrationDataProvider.findNews()
+                .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                  this.handleLoadTableRowsSuccess(response);
+                  console.log(response);
+                })
+                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+            this.buttonColor = ActionButtonColors.SECONDARY;
+            this.isFiltered = true;
+            break;
+          default:
+            console.log('ERROR WHILE SELECTING STATUS')
+            break;
+        }
       }
     } catch (e) {
       this.notificationService.showNotification({
@@ -164,52 +202,10 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
   selectFilterForStatus(){
     console.log('Status switched to ' + this.currentStatus)
-    switch(this.currentStatus){
-      case "ERROR":
-        this.MigrationDataProvider.findErrors()
-            .then((response: BogenligaResponse<TriggerDTO[]>) => {
-              this.handleLoadTableRowsSuccess(response);
-              console.log(response);
-            })
-            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-        this.buttonColor = ActionButtonColors.PRIMARY;
-        this.isFiltered = false;
-        break;
-      case "SUCCESS":
-        this.MigrationDataProvider.findSuccessed()
-            .then((response: BogenligaResponse<TriggerDTO[]>) => {
-              this.handleLoadTableRowsSuccess(response);
-              console.log(response);
-            })
-            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-        this.buttonColor = ActionButtonColors.PRIMARY;
-        this.isFiltered = false;
-        break;
-      case "IN_PROGRESS":
-        this.MigrationDataProvider.findInProgress()
-            .then((response: BogenligaResponse<TriggerDTO[]>) => {
-              this.handleLoadTableRowsSuccess(response);
-              console.log(response);
-            })
-            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-        this.buttonColor = ActionButtonColors.PRIMARY;
-        this.isFiltered = false;
-        break;
-      case "NEW":
-        this.MigrationDataProvider.findNews()
-            .then((response: BogenligaResponse<TriggerDTO[]>) => {
-              this.handleLoadTableRowsSuccess(response);
-              console.log(response);
-            })
-            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-        this.buttonColor = ActionButtonColors.PRIMARY;
-        this.isFiltered = false;
-        break;
-      default:
-        console.log('ERROR WHILE SELECTING STATUS')
-        break;
+    if(this.isFiltered){
+      this.isFiltered = false
+      this.filterUnsuccessful()
     }
-
   }
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];

@@ -5,7 +5,6 @@
     <option *ngFor="let status of statusArray" [ngValue]="status">{{ status }}</option>
   </select>
 </div>
-
 <bla-overview-dialog [hidden]=false
                      [config]="config"
                      [rows]="rows"
@@ -22,6 +21,7 @@
                      (onNextPageButtonClicked)="nextPageButton()"
                      (onFilterButtonClicked)="filterUnsuccessful()"
                      [filterButtonColor] = "buttonColor"
+
 >
  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
