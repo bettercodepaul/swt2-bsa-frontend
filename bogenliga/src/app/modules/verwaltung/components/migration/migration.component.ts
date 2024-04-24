@@ -18,7 +18,6 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
-import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 const ID_PATH_PARAM = 'id';
@@ -86,6 +85,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 
   public startMigration() {
+
     try {
       this.notificationService.showNotification({
         id:          'Migrationslauf starten?',
@@ -94,22 +94,13 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.YES_NO,
         severity:    NotificationSeverity.QUESTION,
+        userAction: NotificationUserAction.PENDING
       });
 
       this.notificationService.observeNotification('Migrationslauf starten?')
           .subscribe((myNotification) => {
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.MigrationDataProvider.startMigration();
-            } else {
-              this.notificationService.showNotification({
-                id: 'Migration abgebrochen',
-                description: 'Die Migration wurde abgebrochen.',
-                title: 'Migration abgebrochen',
-                origin: NotificationOrigin.SYSTEM,
-                userAction: NotificationUserAction.ACCEPTED,
-                type: NotificationType.OK,
-                severity: NotificationSeverity.INFO
-              });
             }
           });
     } catch (e) {
