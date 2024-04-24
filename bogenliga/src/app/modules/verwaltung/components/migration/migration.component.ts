@@ -22,7 +22,8 @@ import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 const ID_PATH_PARAM = 'id';
-
+let offsetMultiplicator = 0;
+export {offsetMultiplicator};
 @Component({
   selector:    'bla-daten-detail',
   templateUrl: './migration.component.html',
@@ -125,9 +126,16 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
   public previousPageButton(){
     //TODO
+    if(offsetMultiplicator === 0){
+      return;
+    }
+    else {
+      offsetMultiplicator--;
+    }
   }
   public nextPageButton(){
     //TODO
+    offsetMultiplicator++;
   }
   filterUnsuccessful() {
     try {
