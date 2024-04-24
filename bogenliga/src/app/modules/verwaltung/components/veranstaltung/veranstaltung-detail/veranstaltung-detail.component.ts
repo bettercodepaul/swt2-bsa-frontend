@@ -92,6 +92,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   public allTeamAmount: Array<number> = [8, 6, 4];
+  public allTeamAmount_queue: Array<number> = [1000];
+
+  public warteschlangeTeamAmount: number = 1000;
+  public warteschlangeName: string = "Warteschlange";
 
 
 

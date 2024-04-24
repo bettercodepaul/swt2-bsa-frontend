@@ -13,17 +13,35 @@
           <span> *</span>
         </label>
         <div class="col-sm-9">
-          <input type="text"
-                 class="form-control"
-                 required
-                 id="veranstaltung_name"
-                 name="veranstaltung_name"
-                 #veranstaltung_name="ngModel"
-                 [(ngModel)]="currentVeranstaltung.name"
-                 [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
-                 placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
-                 data-cy="veranstaltung-detail-name">
+          <ng-container *ngIf="currentLiga.name.toLowerCase() === 'warteschlange'; else keineWarteschlangeName">
+            <input type="text"
+                   class="form-control"
+                   required
+                   id="veranstaltung_name_warteschlange"
+                   name="veranstaltung_name"
+                   value="Warteschlange"
+                   [value]="'Warteschlange'"
+                   #veranstaltung_name="ngModel"
+                   currentVeranstaltung.name=warteschlangeName
+                   [(ngModel)]="currentVeranstaltung.name"
+                   [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
+                   placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
+                   data-cy="veranstaltung-detail-name">
 
+
+          </ng-container>
+          <ng-template #keineWarteschlangeName>
+            <input type="text"
+                   class="form-control"
+                   required
+                   id="veranstaltung_name"
+                   name="veranstaltung_name"
+                   #veranstaltung_name="ngModel"
+                   [(ngModel)]="currentVeranstaltung.name"
+                   [class.is-invalid]="veranstaltung_name.invalid && ! veranstaltung_name.untouched"
+                   placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}"
+                   data-cy="veranstaltung-detail-name">
+          </ng-template>
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.ERROR' | translate }}
           </div>
@@ -58,33 +76,7 @@
         </div>
       </div>
 
-      <!-- Disziplinname
-      <div class="form-group row">
-        <label for="disziplinName"
-               class="col-sm-3 col-form-label">
-          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DISZIPLIN.LABEL' | translate }}</span>
-          <span> *</span>
-        </label>
-        <div class="col-sm-9">
-          <select type="text"
-                  class="form-control"
-                  required
-                  id="disziplinName"
-                  name="disziplinName"
-                  #disziplinName="ngModel"
-                  [(ngModel)]="currentDisziplin"
-                  data-cy="veranstaltung-detail-disziplinname">
-            <option [ngValue]="disziplinName"
-                    *ngFor="let disziplinName of allDisziplin"> {{disziplinName.disziplinName}}</option>
 
-            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.NAME.PLACEHOLDER' | translate }}">
-          </select>
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.LIGANAME.ERROR' | translate }}
-          </div>
-        </div>
-      </div>
-      -->
 
       <!-- WettkampftypName -->
       <div class="form-group row">
@@ -122,18 +114,32 @@
           <span> *</span>
         </label>
         <div class="col-sm-9">
-          <select class="form-control"
-                  required
-                  id="teamanzahl"
-                  name="teamanzahl"
-                  #teamAmount="ngModel"
-                  [(ngModel)]="currentVeranstaltung.groesse"
-                  data-cy="veranstaltung-detail-teamanzahl">
-            <option [ngValue]="teamAmount"
-                    *ngFor="let teamAmount of allTeamAmount"> {{teamAmount}}</option>
-            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.TEILNEHMER.PLACEHOLDER' | translate }}">
-          </select>
-
+          <ng-container *ngIf="currentLiga.name.toLowerCase() === 'warteschlange'; else keineWarteschlangeAnzahl">
+            <select class="form-control"
+                    required
+                    id="teamanzahl_queue"
+                    name="teamanzahl_queue"
+                    #teamAmount="ngModel"
+                    [(ngModel)]="currentVeranstaltung.groesse"
+                    data-cy="veranstaltung-detail-teamanzahl">
+              <option [ngValue]="teamAmount"
+                      *ngFor="let teamAmount of allTeamAmount_queue"> {{teamAmount}}</option>
+              placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.TEILNEHMER.PLACEHOLDER' | translate }}">
+            </select>
+          </ng-container>
+          <ng-template #keineWarteschlangeAnzahl>
+            <select class="form-control"
+                    required
+                    id="teamanzahl"
+                    name="teamanzahl"
+                    #teamAmount="ngModel"
+                    [(ngModel)]="currentVeranstaltung.groesse"
+                    data-cy="veranstaltung-detail-teamanzahl">
+              <option [ngValue]="teamAmount"
+                      *ngFor="let teamAmount of allTeamAmount"> {{teamAmount}}</option>
+              placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.TEILNEHMER.PLACEHOLDER' | translate }}">
+            </select>
+          </ng-template>
 
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.TEILNEHMER.ERROR' | translate }}
