@@ -18,6 +18,7 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 const ID_PATH_PARAM = 'id';
@@ -36,9 +37,9 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public isFiltered = false;
   public buttonColor = ActionButtonColors.PRIMARY;
   public searchTerm = 'searchTermMigration';
-
   private sessionHandling: SessionHandling;
-
+  public currentStatus: string = "ERROR";
+  public statusArray: Array<string> = ["ERROR", "SUCCESS", "IN_PROGRESS", "NEW"];
   public ActionButtonColors = ActionButtonColors;
 
 
@@ -85,37 +86,48 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
   public startMigration() {
     try {
-      //this.MigrationDataProvider.startMigration();
       this.notificationService.showNotification({
-        id: 'Migrationslauf starten?',
+        id:          'Migrationslauf starten?',
         description: 'Möchten Sie die Migration manuell starten?',
-        title: 'Migration starten',
+        title:       'Migration starten',
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.YES_NO,
+        severity:    NotificationSeverity.QUESTION,
+      });
+
+      this.notificationService.observeNotification('Migrationslauf starten?')
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.MigrationDataProvider.startMigration();
+            } else {
+              this.notificationService.showNotification({
+                id: 'Migration abgebrochen',
+                description: 'Die Migration wurde abgebrochen.',
+                title: 'Migration abgebrochen',
+                origin: NotificationOrigin.SYSTEM,
+                userAction: NotificationUserAction.ACCEPTED,
+                type: NotificationType.OK,
+                severity: NotificationSeverity.INFO
+              });
+            }
+          });
+    } catch (e) {
+      this.notificationService.showNotification({
+        id: 'Fehler beim Starten der Migration',
+        description: 'Ein Fehler ist aufgetreten und die Migration wurde nicht gestartet.',
+        title: 'Fehler beim Start der Migration',
         origin: NotificationOrigin.SYSTEM,
         userAction: NotificationUserAction.ACCEPTED,
-        type: NotificationType.OK_CANCEL,
+        type: NotificationType.OK,
         severity: NotificationSeverity.INFO
-      })
-      if(this.notificationService.getCurrentNotification().userAction === NotificationUserAction.ACCEPTED){
-        this.MigrationDataProvider.startMigration();
-      }
-    } catch (e) {
-    this.notificationService.showNotification({
-      id: 'Fehler beim Starten der Migration',
-      description: 'Ein Fehler ist aufgetreten und die Migration wurde nicht gestartet.',
-      title: 'Fehler beim Start der Migration',
-      origin: NotificationOrigin.SYSTEM,
-      userAction: NotificationUserAction.ACCEPTED,
-      type: NotificationType.OK,
-      severity: NotificationSeverity.INFO
-    });
-
+      });
+    }
   }
-}
   public previousPageButton(){
     //TODO
   }
   public nextPageButton(){
-    //TODO
+      //TODO
   }
   filterUnsuccessful() {
     try {
@@ -139,7 +151,6 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         this.isFiltered = true;
       }
     } catch (e) {
-
       this.notificationService.showNotification({
         id: 'Fehler beim Starten der Filterung',
         description: 'Ein Fehler ist aufgetreten und die Filterung konnte nicht gestartet werden.',
@@ -149,10 +160,29 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         type: NotificationType.OK,
         severity: NotificationSeverity.INFO
       });
-
     }
   }
+  selectFilterForStatus(){
+      console.log('Status switched to ' + this.currentStatus)
+    switch(this.currentStatus){
+      case "ERROR":
+        this.MigrationDataProvider.findErrors();
+        break;
+      case "SUCCESS":
+        this.MigrationDataProvider.findSuccessed();
+        break;
+      case "IN_PROGRESS":
+        this.MigrationDataProvider.findInProgress();
+        break;
+      case "NEW":
+        this.MigrationDataProvider.findNews();
+        break;
+      default:
+        console.log('ERROR WHILE SELECTING STATUS')
+        break;
+    }
 
+  }
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];
     this.loading = false;

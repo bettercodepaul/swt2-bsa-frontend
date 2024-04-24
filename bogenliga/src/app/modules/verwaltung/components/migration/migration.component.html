@@ -18,3 +18,11 @@
 >
  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
+
+<div>
+  <label for="statusArray">Filter </label>
+  <select id="statusArray" [(ngModel)]="statusArray" (ngModelChange)="selectFilterForStatus()">
+    <option *ngFor="let status of statusArray" [value]="currentStatus">{{ status }}</option>
+  </select>
+</div>
+
