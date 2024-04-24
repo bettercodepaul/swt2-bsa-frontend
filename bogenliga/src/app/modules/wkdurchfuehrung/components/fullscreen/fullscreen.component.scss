@@ -1,9 +1,114 @@
-.logo {
-  width: 100px;
-  height: auto;
+// Base styles
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 5px;
 }
 
+// Container for logo and headers
+.logo-and-header-container {
+  display: flex;
+  align-items: center;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+}
+
+// Styling for the logo container
 .logo-container {
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 20px;
+  border-radius: 10px;
+
+  img.logo {
+    width: 150px;
+    height: auto;
+    display: block;
+  }
+}
+
+// Styling for the veranstaltung header
+.veranstaltung-header {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+// Styling for the wettkampftag header
+.wettkampftag-header {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 40px;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+// Styling for the time box
+.time-box {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  margin-left: auto;
+  margin-top: -10px;
+  margin-right: 20px;
+
+  &:before {
+    content: '🕒';
+    margin-right: 15px;
+    font-size: 55px;
+  }
+}
+
+// Table styles
+.table {
+  width: 100%;
+  margin-top: 100px;
+  margin-bottom: 40px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: white;
+  border-radius: 10px;
+
+  // Styles for table header
+  thead {
+    background-color: #ffffff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    th {
+      text-align: left;
+      padding: 8px;
+    }
+  }
+
+  // Styles for table cells
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  tbody {
+
+    tr:nth-child(odd) {
+      background-color: #f8f8f8;
+    }
+
+    tr:last-child td:first-child {
+      border-bottom-left-radius: 10px;
+    }
+
+    tr:last-child td:last-child {
+      border-bottom-right-radius: 10px;
+    }
+  }
 }
