@@ -122,12 +122,12 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     if(this.offsetMultiplictor > 0){
       this.offsetMultiplictor--;
     }
-    this.filterUnsuccessfulForPageButton(this.offsetMultiplictor,this.queryPageLimit)
+    this.filterWhileAlreadyActive(this.offsetMultiplictor,this.queryPageLimit)
   }
   public nextPageButton(){
     //TODO
     this.offsetMultiplictor++;
-    this.filterUnsuccessfulForPageButton(this.offsetMultiplictor,this.queryPageLimit)
+    this.filterWhileAlreadyActive(this.offsetMultiplictor,this.queryPageLimit)
   }
   filterUnsuccessful() {
     try {
@@ -201,7 +201,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
       });
     }
   }
-  filterUnsuccessfulForPageButton(multiplicator: number,pagelimit: number) {//TODO
+  filterWhileAlreadyActive(multiplicator: number,pagelimit: number) {
     try {
       if(!this.isFiltered){
         this.MigrationDataProvider.findAllWithPages(multiplicator,pagelimit)
