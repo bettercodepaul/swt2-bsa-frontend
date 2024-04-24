@@ -163,19 +163,47 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     }
   }
   selectFilterForStatus(){
-      console.log('Status switched to ' + this.currentStatus)
+    console.log('Status switched to ' + this.currentStatus)
     switch(this.currentStatus){
       case "ERROR":
-        this.MigrationDataProvider.findErrors();
+        this.MigrationDataProvider.findErrors()
+            .then((response: BogenligaResponse<TriggerDTO[]>) => {
+              this.handleLoadTableRowsSuccess(response);
+              console.log(response);
+            })
+            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+        this.buttonColor = ActionButtonColors.PRIMARY;
+        this.isFiltered = false;
         break;
       case "SUCCESS":
-        this.MigrationDataProvider.findSuccessed();
+        this.MigrationDataProvider.findSuccessed()
+            .then((response: BogenligaResponse<TriggerDTO[]>) => {
+              this.handleLoadTableRowsSuccess(response);
+              console.log(response);
+            })
+            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+        this.buttonColor = ActionButtonColors.PRIMARY;
+        this.isFiltered = false;
         break;
       case "IN_PROGRESS":
-        this.MigrationDataProvider.findInProgress();
+        this.MigrationDataProvider.findInProgress()
+            .then((response: BogenligaResponse<TriggerDTO[]>) => {
+              this.handleLoadTableRowsSuccess(response);
+              console.log(response);
+            })
+            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+        this.buttonColor = ActionButtonColors.PRIMARY;
+        this.isFiltered = false;
         break;
       case "NEW":
-        this.MigrationDataProvider.findNews();
+        this.MigrationDataProvider.findNews()
+            .then((response: BogenligaResponse<TriggerDTO[]>) => {
+              this.handleLoadTableRowsSuccess(response);
+              console.log(response);
+            })
+            .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+        this.buttonColor = ActionButtonColors.PRIMARY;
+        this.isFiltered = false;
         break;
       default:
         console.log('ERROR WHILE SELECTING STATUS')

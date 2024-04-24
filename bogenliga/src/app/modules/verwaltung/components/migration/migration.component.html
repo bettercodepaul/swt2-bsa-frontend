@@ -1,4 +1,11 @@
 <!--<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_migrationen" target="_blank"></bla-hilfe-button>-->
+<div>
+  <label for="statusArray">Filter </label>
+  <select id="statusArray" [(ngModel)]="currentStatus" (ngModelChange)="selectFilterForStatus()">
+    <option *ngFor="let status of statusArray" [ngValue]="status">{{ status }}</option>
+  </select>
+</div>
+
 <bla-overview-dialog [hidden]=false
                      [config]="config"
                      [rows]="rows"
@@ -19,10 +26,5 @@
  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
 
-<div>
-  <label for="statusArray">Filter </label>
-  <select id="statusArray" [(ngModel)]="statusArray" (ngModelChange)="selectFilterForStatus()">
-    <option *ngFor="let status of statusArray" [value]="currentStatus">{{ status }}</option>
-  </select>
-</div>
+
 
