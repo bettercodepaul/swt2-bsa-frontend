@@ -41,7 +41,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public statusArray: Array<string> = ["ERROR", "SUCCESS", "IN_PROGRESS", "NEW"];
   public ActionButtonColors = ActionButtonColors;
   public offsetMultiplictor = 0;
-  public queryPageLimit = 10;
+  public queryPageLimit = 500;
   public defaultQueryPageLimit = 500;
   public defaultOffsetMultiplicator = 0;
 
@@ -119,17 +119,15 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
   public previousPageButton(){
     //TODO
-    if(this.offsetMultiplictor === 0){
-      return;
-    }
-    else {
+    if(this.offsetMultiplictor > 0){
       this.offsetMultiplictor--;
     }
+    this.filterUnsuccessfulForPageButton(this.offsetMultiplictor,this.queryPageLimit)
   }
   public nextPageButton(){
     //TODO
-    this.offsetMultiplictor++
-
+    this.offsetMultiplictor++;
+    this.filterUnsuccessfulForPageButton(this.offsetMultiplictor,this.queryPageLimit)
   }
   filterUnsuccessful() {
     try {
@@ -202,7 +200,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
       });
     }
   }
-  filterUnsuccessfulForPageButton(pagelimit: number, multiplicator: number) {
+  filterUnsuccessfulForPageButton(multiplicator: number,pagelimit: number) {
     try {
       if(!this.isFiltered){
         this.MigrationDataProvider.findAll()

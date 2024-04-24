@@ -46,12 +46,12 @@ export class MigrationProviderService extends DataProviderService {
     });
   }
 
-  public findSuccessed(queryPageLimit: number, offsetMultiplicator:number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findSuccessed(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl() + 'findSuccessed?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findSuccessed?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -64,12 +64,13 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findErrors(queryPageLimit: number, offsetMultiplicator:number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findErrors(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl() + 'findErrors?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findErrors?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build()
+      )
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -82,12 +83,12 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findInProgress(queryPageLimit: number, offsetMultiplicator:number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findInProgress(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl() + 'findInProgress?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findInProgress?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -100,12 +101,12 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findNews(queryPageLimit: number, offsetMultiplicator:number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findNews(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl() + 'findNews?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).path('findNews').build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findNews?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
