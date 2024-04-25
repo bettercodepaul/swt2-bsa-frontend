@@ -92,11 +92,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
 
   public allTeamAmount: Array<number> = [8, 6, 4];
-  public allTeamAmount_queue: Array<number> = [1000];
 
+  //Standarddaten für Warteschlange
   public warteschlangeTeamAmount: number = 1000;
   public warteschlangeName: string = "Warteschlange";
-
 
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
@@ -223,6 +222,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       this.currentVeranstaltung.ligaId = this.currentLiga.id;
       this.currentVeranstaltung.ligaName = this.currentLiga.name;
     }
+    if (this.currentLiga.name.toLowerCase()==="warteschlange") {
+      this.currentVeranstaltung.groesse=this.warteschlangeTeamAmount;
+      this.currentVeranstaltung.name=this.warteschlangeName;
+    }
     if (typeof this.currentUser === 'undefined') {
       this.currentVeranstaltung.ligaleiterId = null;
     } else {
@@ -269,8 +272,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         )
         .catch((response) => {
           /*If a Veranstaltung already exists, a notification is created at this point which is displayed on the GUI.
-          Ticket BSAPP-686 requires a meaningful text output for the user on this notification which has been implemented.
-          Regarding the architecture, this is the right place in the code, because it is responsible for the GUI.  */
+           Ticket BSAPP-686 requires a meaningful text output for the user on this notification which has been implemented.
+           Regarding the architecture, this is the right place in the code, because it is responsible for the GUI.  */
           console.log('Veranstaltung existiert bereits in diesem Sportjahr');
           const notification: Notification = {
             id:          NOTIFICATION_SAVE_VERANSTALTUNG_FAILURE,
@@ -425,51 +428,51 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
     this.mannschaftDataProvider.create(this.selectedMannschaft, this.currentVerein)
         .then((response: BogenligaResponse<DsbMannschaftDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
-            console.log('Saved with id: ' + response.payload.id);
-            console.log('Wir sind der Sturm, der über das Ziel hinwegfegt, niemand kann uns aufhalten!');
-            const notification: Notification = {
-              id:          NOTIFICATION_CREATE_PLATZHALTER,
-              title:       "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.TITLE",
-              description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.DESCRIPTION",
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+            if (!isNullOrUndefined(response)
+              && !isNullOrUndefined(response.payload)
+              && !isNullOrUndefined(response.payload.id)) {
+              console.log('Saved with id: ' + response.payload.id);
+              console.log('Wir sind der Sturm, der über das Ziel hinwegfegt, niemand kann uns aufhalten!');
+              const notification: Notification = {
+                id:          NOTIFICATION_CREATE_PLATZHALTER,
+                title:       "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.TITLE",
+                description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.DESCRIPTION",
+                severity:    NotificationSeverity.INFO,
+                origin:      NotificationOrigin.USER,
+                type:        NotificationType.OK,
+                userAction:  NotificationUserAction.PENDING
+              };
 
-            this.notificationService.observeNotification(NOTIFICATION_CREATE_PLATZHALTER)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.loadMannschaftsTable();
-                  }
-                });
+              this.notificationService.observeNotification(NOTIFICATION_CREATE_PLATZHALTER)
+                  .subscribe((myNotification) => {
+                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                      this.saveLoading = false;
+                      this.loadMannschaftsTable();
+                    }
+                  });
 
-            this.notificationService.showNotification(notification);
-          }
-        }
-    )
-        .catch((response) => {
-      const notification: Notification = {
-        id:          NOTIFICATION_CREATE_PLATZHALTER_FAILURE,
-        title: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE",
-        description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION",
-        severity:    NotificationSeverity.ERROR,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.PENDING
-      };
-      this.notificationService.observeNotification(NOTIFICATION_CREATE_PLATZHALTER_FAILURE)
-          .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.saveLoading = false;
+              this.notificationService.showNotification(notification);
             }
-          });
-      this.notificationService.showNotification(notification);
-    });
+          }
+        )
+        .catch((response) => {
+          const notification: Notification = {
+            id:          NOTIFICATION_CREATE_PLATZHALTER_FAILURE,
+            title: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE",
+            description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION",
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
+          this.notificationService.observeNotification(NOTIFICATION_CREATE_PLATZHALTER_FAILURE)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
+                }
+              });
+          this.notificationService.showNotification(notification);
+        });
   }
 
   // This method is called when the abschließen Button is pressed
