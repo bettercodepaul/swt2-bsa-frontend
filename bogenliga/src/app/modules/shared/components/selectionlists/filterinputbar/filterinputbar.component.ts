@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {TranslatePipe} from '@ngx-translate/core';
+import {MigrationComponent} from '@verwaltung/components';
 
 @Component({
   selector: 'bla-filterinputbar',
@@ -9,39 +10,24 @@ import {TranslatePipe} from '@ngx-translate/core';
   providers: [TranslatePipe]
 })
 export class FilterinputbarComponent implements OnInit, OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
+  ngOnInit(): void {
+    throw new Error("Method not implemented.");
+  }
 
   @Input() id: string;
-  @Input() visible = true;
-  @Input() sessionSearch = '';
-  @Input() public placeholderTranslationKey = 'SELECTIONLIST.SEARCH_PLACEHOLDER';
+  @Input() item: string;
+  @Input() items: Array<string>;
 
-  @Output() public onSearchEntry = new EventEmitter<string>();
+  @Output() public onFilterButtonClicked = new EventEmitter<string>();
 
-  public lastSearchValue: string;
-  public findIcon = faSearch;
-
-  constructor(private translate: TranslatePipe) {
+  public static currentItem:string;
+  public onFilterButtonClick() {
+    FilterinputbarComponent.currentItem = this.item;
+    this.onFilterButtonClicked.emit();
   }
 
-
-  ngOnInit() {
-    if (localStorage.getItem(this.sessionSearch)) {
-      this.lastSearchValue = JSON.parse(localStorage.getItem(this.sessionSearch));
-      this.onSearch(this.lastSearchValue);
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-
-  }
-
-  public getPlaceholder(): string {
-    return this.translate.transform(this.placeholderTranslationKey);
-  }
-
-  public onSearch(searchValue: string) {
-      this.lastSearchValue = searchValue;
-      localStorage.setItem(this.sessionSearch, JSON.stringify(searchValue));
-      this.onSearchEntry.emit(searchValue);
-  }
+  protected readonly MigrationComponent = MigrationComponent;
 }

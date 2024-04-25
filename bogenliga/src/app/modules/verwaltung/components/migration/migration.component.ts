@@ -18,6 +18,7 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 const ID_PATH_PARAM = 'id';
@@ -253,7 +254,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 })
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             this.buttonColor = ActionButtonColors.SECONDARY;
-            this.isFiltered = true;
+            this.isFiltered= true;
             break;
           default:
             console.log('ERROR WHILE SELECTING STATUS')
@@ -273,6 +274,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     }
   }
   selectFilterForStatus(){
+    this.currentStatus = FilterinputbarComponent.currentItem
     console.log('Status switched to ' + this.currentStatus)
     if(this.isFiltered){
       this.isFiltered = false

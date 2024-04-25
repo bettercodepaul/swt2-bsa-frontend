@@ -11,13 +11,13 @@
                      [sessionSearch]="searchTerm">
 
     </bla-quicksearch >
-    <bla-filterinputbar *ngIf="showFilterButton" >
 
-    </bla-filterinputbar>
     <div class="overview-dialog-add"
          >
-
-
+      <bla-filterinputbar [item]="filterItem"
+                          [items]="filterItems"
+                          (onFilterButtonClicked) ="onFilterClick()" >
+      </bla-filterinputbar>
       <bla-actionbutton
         *ngIf="showFilterUnsuccessful"
         [color]="filterButtonColor"

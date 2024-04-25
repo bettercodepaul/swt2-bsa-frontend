@@ -1,8 +1,21 @@
+@import 'src/styles.scss';
 .filterinputbar {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
-.filterinputbar-input {
-  margin-left: auto;
+.row{
+  display: flex;
+  align-items: center;
+}
+
+.form-label-box{
+  flex: 0 0 auto;
+  padding-right: 15px;
+}
+#filterFormLabel{
+  display: block;
+  line-height: 1.5;
+  height: 100%;
 }
 

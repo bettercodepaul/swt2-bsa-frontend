@@ -64,6 +64,7 @@ import {
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
 import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -124,6 +125,8 @@ import {FilterinputbarComponent} from '@shared/components/selectionlists/filteri
     ShortcutButton,
     VeranstaltungenButtonComponent,
     ExpandComponent,
+
+
   ],
   declarations: [
     ExpandComponent,
@@ -167,7 +170,8 @@ import {FilterinputbarComponent} from '@shared/components/selectionlists/filteri
     ActionButtonComponent,
     DownloadActionButtonComponent,
     ShortcutButton,
-    VeranstaltungenButtonComponent
+    VeranstaltungenButtonComponent,
+
   ]
 })
 export class SharedModule {

@@ -1,10 +1,5 @@
 <!--<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_migrationen" target="_blank"></bla-hilfe-button>-->
-<div id="filter">
-  <label for="statusArray">Filter </label>
-  <select id="statusArray" [(ngModel)]="currentStatus" (ngModelChange)="selectFilterForStatus()">
-    <option *ngFor="let status of statusArray" [ngValue]="status">{{ status }}</option>
-  </select>
-</div>
+
 <bla-overview-dialog [hidden]=false
                      [config]="config"
                      [rows]="rows"
@@ -21,6 +16,9 @@
                      (onNextPageButtonClicked)="nextPageButton()"
                      (onFilterButtonClicked)="filterUnsuccessful()"
                      [filterButtonColor] = "buttonColor"
+                     [filterItem]="currentStatus"
+                     [filterItems]="statusArray"
+                     (onFilterClicked) = "selectFilterForStatus()"
 
 >
  <div (mouseover)="onMouseOver($event)"></div>

@@ -1,18 +1,14 @@
 <div class="filterinputbar">
-  <div class="input-group mb-3">
-    <input (input)="onSearch($event.target.value)"
-           [id]="id"
-           [name]="id"
-           placeholder= "Einträge pro Seite"
-           [(ngModel)]="lastSearchValue"
-           class="filterinputbar-input"
-           style="width: 6%; "
-           type="text">
-    <div class="input-group-append">
-      <span class="input-group-text"
-            id="basic-addon2">
-        <fa-icon [icon]="'arrow-right'"></fa-icon>
-      </span>
+  <div class="row" id="rowsFilter">
+    <label class="form-label-box col-form-label" id="filterFormLabel">
+      <span>{{ 'Filter' | translate }}</span>
+    </label>
+    <div class="col-sm-8">
+      <select class="form-control"
+              [(ngModel)]="item"
+              (ngModelChange)="onFilterButtonClick()">
+        <option *ngFor="let status of items" [ngValue]="status"> {{status}}</option>
+      </select>
     </div>
   </div>
 </div>
