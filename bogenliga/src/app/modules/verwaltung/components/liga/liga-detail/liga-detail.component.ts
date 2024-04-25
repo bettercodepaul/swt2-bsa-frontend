@@ -63,6 +63,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public allUsers: Array<UserProfileDO> = [new UserProfileDO()];
 
   public isAdmin: Boolean = false;
+  public isLigaLeiter: Boolean = false;
 
 
   public deleteLoading = false;
@@ -92,6 +93,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
 
     this.userDataProviderService.findUserRoleById(this.currentUserService.getCurrentUserID()).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
       this.isAdmin = roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0
+      this.isLigaLeiter = roleresponse.payload.filter(role => role.roleName == 'LIGALEITER').length > 0
     })
     this.loading = true;
     this.notificationService.discardNotification();

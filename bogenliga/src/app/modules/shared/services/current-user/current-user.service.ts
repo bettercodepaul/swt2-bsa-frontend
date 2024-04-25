@@ -74,6 +74,9 @@ export class CurrentUserService {
     }
     console.log('CurrentUserValue: ' + currentUserValue);
     console.log('CurrentUserPermission: ' + this.currentUserPermissions);
+    this.currentUserPermissions.forEach((element)=>{
+      console.log(Object.keys(UserPermission)[Object.values(UserPermission).indexOf(element)])
+    });
     console.log('DefaultUser: ' + isDefault);
   }
 
