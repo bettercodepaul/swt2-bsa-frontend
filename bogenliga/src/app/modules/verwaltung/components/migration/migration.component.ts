@@ -119,14 +119,14 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     }
   }
   public previousPageButton(){
-    //TODO
+
     if(this.offsetMultiplictor > 0){
       this.offsetMultiplictor--;
     }
     this.filterWhileAlreadyActive(this.offsetMultiplictor,this.queryPageLimit)
   }
   public nextPageButton(){
-    //TODO
+
     this.offsetMultiplictor++;
     this.filterWhileAlreadyActive(this.offsetMultiplictor,this.queryPageLimit)
   }
