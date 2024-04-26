@@ -207,7 +207,7 @@
       "OFFLINE_GEHEN": "Go offline",
       "ONLINE_GEHEN": "Go online",
       "OFFLINE_TOKEN": "Delete offline token",
-      "VOLLBILDANSICHT": "Table in fullscreen mode"
+      "VOLLBILDANSICHT": "League in fullscreen mode"
     },
     "SETZLISTE": {
       "NOTIFICATION": {
@@ -609,7 +609,7 @@
       },
       "MIGRATION": {
         "LABEL": "Data",
-        "DESCRIPTION": "Migrate Data between old and new App";,
+        "DESCRIPTION": "Migrate Data between old and new App",
         "TABLE": {
           "HEADERS": {
             "TIMESTAMP": "Timestamp",
