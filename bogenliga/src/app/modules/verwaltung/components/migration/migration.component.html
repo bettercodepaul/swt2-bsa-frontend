@@ -11,11 +11,9 @@
                      [changePageButtons]=true
                      (onCustomActionButtonClicked)="startMigration()"
                      [showFilterButton] =true
-                     [showFilterUnsuccessful]=true
+                     [showStatusFilter]=true
                      (onPreviousPageButtonClicked)="previousPageButton()"
                      (onNextPageButtonClicked)="nextPageButton()"
-                     (onFilterButtonClicked)="filterUnsuccessful()"
-                     [filterButtonColor] = "buttonColor"
                      [filterItem]="currentStatus"
                      [filterItems]="statusArray"
                      (onFilterClicked) = "selectFilterForStatus()"

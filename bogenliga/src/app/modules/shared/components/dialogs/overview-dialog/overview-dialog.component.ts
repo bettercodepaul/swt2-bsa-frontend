@@ -20,9 +20,8 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public buttonLabel: string;
   @Input() public filterButtonLabel: string;
   @Input() public isCustomActionButton: boolean = false;
-  @Input() public showFilterUnsuccessful: boolean = false;
+  @Input() public showStatusFilter: boolean = false;
   @Input() public changePageButtons: boolean = false;
-  @Input() public filterButtonColor: ActionButtonColors;
   @Input() public showFilterButton: boolean = false;
   @Input() public filterItem: string;
   @Input() public filterItems: Array<string>;
@@ -35,7 +34,6 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Output() public onAddClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onSearchClicked = new EventEmitter<string>();
   @Output() public onCustomActionButtonClicked = new EventEmitter<string>();
-  @Output() public onFilterButtonClicked = new EventEmitter<string>();
   @Output() public onNextPageButtonClicked = new EventEmitter<string>();
   @Output() public onPreviousPageButtonClicked = new EventEmitter<string>();
   @Output() public onFilterClicked = new EventEmitter<string>();
@@ -71,10 +69,6 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   }
   public onFilterClick() {
     this.onFilterClicked.emit();
-  }
-
-  public onFilterButtonClick() {
-    this.onFilterButtonClicked.emit();
   }
   public onPreviousPageButtonClick() {
     this.onPreviousPageButtonClicked.emit();

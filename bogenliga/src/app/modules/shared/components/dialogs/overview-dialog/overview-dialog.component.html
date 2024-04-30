@@ -14,19 +14,28 @@
 
     <div class="overview-dialog-add"
          >
+      <div class="changePageButtonsAbove"  >
+        <bla-actionbutton
+          *ngIf="changePageButtons"
+          [iconClass]="'arrow-left'"
+          data-cy="previous-page-button"
+          (onClick)="onPreviousPageButtonClick()"
+        >
+          {{"vorherige Seite"}}
+        </bla-actionbutton>
+        <bla-actionbutton
+          *ngIf="changePageButtons"
+          [iconClass]="'arrow-right'"
+          data-cy="next-page-button"
+          (onClick)="onNextPageButtonClick()"
+        >
+          {{"nächste Seite"}}
+        </bla-actionbutton>
+      </div>
       <bla-filterinputbar [item]="filterItem"
                           [items]="filterItems"
                           (onFilterButtonClicked) ="onFilterClick()" >
       </bla-filterinputbar>
-      <bla-actionbutton
-        *ngIf="showFilterUnsuccessful"
-        [color]="filterButtonColor"
-        [iconClass]="'filter'"
-        data-cy="filter-migration-button"
-        (onClick)="onFilterButtonClick()"
-        >
-        {{filterButtonLabel|| "Neu"}}
-      </bla-actionbutton>
 
       <bla-actionbutton
         data-cy="dsb-mitglied-add-button"
