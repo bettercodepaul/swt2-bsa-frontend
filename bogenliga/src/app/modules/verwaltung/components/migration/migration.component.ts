@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ButtonType, CommonComponentDirective, toTableRows} from '../../../shared/components';
-import {BogenligaResponse} from '../../../shared/data-provider';
+import {ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
+import {BogenligaResponse} from '@shared/data-provider';
 import {
   NotificationOrigin,
   NotificationService,
   NotificationSeverity,
   NotificationType,
   NotificationUserAction
-} from '../../../shared/services/notification';
+} from '@shared/services';
 import {MigrationProviderService} from '../../services/migration-data-provider.service';
 
 import {MIGRATION_OVERVIEW_CONFIG} from './migration.config';
@@ -21,8 +21,6 @@ import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
-const ID_PATH_PARAM = 'id';
-
 @Component({
   selector:    'bla-daten-detail',
   templateUrl: './migration.component.html',
@@ -36,8 +34,8 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public saveLoading = false;
   public searchTerm = 'searchTermMigration';
   private sessionHandling: SessionHandling;
-  public currentStatus: string = "ERROR";
-  public statusArray: Array<string> = ["ERROR", "SUCCESS", "IN_PROGRESS", "NEW", "ALL"];
+  public currentStatus: string = "Fehlgeschlagen";
+  public statusArray: Array<string> = ["Fehlgeschlagen", "Erfolgreich", "Laufend", "Neu", "Alle"];
   public ActionButtonColors = ActionButtonColors;
   public offsetMultiplictor = 0;
   public queryPageLimit = 500;
@@ -127,7 +125,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   filterForStatus(multiplicator: number,pagelimit: number) {
     try {
         switch(this.currentStatus) {
-          case "ERROR":
+          case "Fehlgeschlagen":
             this.MigrationDataProvider.findErrors(multiplicator,pagelimit)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
@@ -135,7 +133,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 })
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             break;
-          case "ALL":
+          case "Alle":
             this.MigrationDataProvider.findAllWithPages(multiplicator,pagelimit)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
@@ -143,7 +141,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 })
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             break;
-          case "SUCCESS":
+          case "Erfolgreich":
             this.MigrationDataProvider.findSuccessed(multiplicator,pagelimit)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
@@ -151,7 +149,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 })
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             break;
-          case "IN_PROGRESS":
+          case "Laufend":
             this.MigrationDataProvider.findInProgress(multiplicator,pagelimit)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
@@ -159,7 +157,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 })
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             break;
-          case "NEW":
+          case "Neu":
             this.MigrationDataProvider.findNews(multiplicator,pagelimit)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);

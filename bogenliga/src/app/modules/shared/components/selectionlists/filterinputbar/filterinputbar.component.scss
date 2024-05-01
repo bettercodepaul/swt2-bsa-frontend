@@ -1,8 +1,8 @@
-@import 'src/styles.scss';
 .filterinputbar {
   display: flex;
   align-items: center;
   height: 100%;
+  width: fit-content;
 }
 .row{
   display: flex;
@@ -19,3 +19,6 @@
   height: 100%;
 }
 
+.form-control{
+  width: fit-content;
+}
