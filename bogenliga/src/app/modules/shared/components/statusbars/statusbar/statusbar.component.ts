@@ -9,23 +9,18 @@ import {AuthenticationComponent} from '../../../../spotter/components';
   //imports: [MatProgressBarModule]
 })
 
-export class StatusbarComponent implements OnInit{
-  title='Websocketclient';
+export class StatusbarComponent {
+
   showProgress: boolean = false;
   @Input() progress!: number;
   @Input() public disabled = false;
   @Input() public loading = false;
   @Input() public isMigrationStatusBar = false;
   message: any ={};
-  private webSocket : WebSocket;
+
 
   constructor() {
-    this.webSocket = new WebSocket('ws://localhost:9000/websocket');
-    
-    this.webSocket.onmessage=(event) =>{
-      this.message = JSON.parse(event.data)
-      console.log(this.message)
-    };
+
   }
 
   ngOnInit(): void {
@@ -34,8 +29,5 @@ export class StatusbarComponent implements OnInit{
   public showStatusBar(){
     this.showProgress = true;
   }
-  closeWebSocket() {
-    // WebSocket-Verbindung schließen
-    this.webSocket.close();
-  }
+
 }

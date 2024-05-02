@@ -34,14 +34,14 @@
       >
         {{buttonLabel || "Neu"}}
       </bla-actionbutton>
-      <bla-migrationstatusbar
-        [progress]="50"
-        *ngIf = "isMigrationStatusBar"
-      >
-        {{""}}
-      </bla-migrationstatusbar>
-    </div>
 
+    </div>
+    <bla-migrationstatusbar
+      [progress]="50"
+      *ngIf = "isMigrationStatusBar"
+    >
+      {{""}}
+    </bla-migrationstatusbar>
   </section>
 
 
