@@ -5,6 +5,7 @@
     </label>
     <div class="col-sm-8">
       <select class="form-control"
+              data-cy="status-filter-selection"
               [(ngModel)]="item"
               (ngModelChange)="onFilterButtonClick()">
         <option *ngFor="let status of items" [ngValue]="status"> {{status}}</option>

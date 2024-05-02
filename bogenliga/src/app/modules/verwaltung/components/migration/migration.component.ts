@@ -116,10 +116,24 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     if(this.offsetMultiplictor > 0){
       this.offsetMultiplictor--;
     }
+    const element = document.getElementById("hilfe-button");
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block:    'start'
+      });
+    }
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
   }
   public nextPageButton(){
     this.offsetMultiplictor++;
+    const element = document.getElementById("hilfe-button");
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
   }
   filterForStatus(multiplicator: number,pagelimit: number) {

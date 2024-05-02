@@ -33,14 +33,14 @@
         </bla-actionbutton>
       </div>
       <bla-filterinputbar
-                          data-cy="status-filter-selection"
+
                           [item]="filterItem"
                           [items]="filterItems"
                           (onFilterButtonClicked) ="onFilterClick()" >
       </bla-filterinputbar>
 
       <bla-actionbutton
-        data-cy="dsb-mitglied-add-button"
+        data-cy="start-migration-button"
         *ngIf="isCustomActionButton"
         [color]="ActionButtonColors.SUCCESS"
         [iconClass]="'plus'"
@@ -51,7 +51,6 @@
 
       <bla-actionbutton
         routerLink="add"
-        data-cy="dsb-mitglied-add-button"
         *ngIf="!isCustomActionButton"
         [color]="ActionButtonColors.SUCCESS"
         [iconClass]="'plus'"
