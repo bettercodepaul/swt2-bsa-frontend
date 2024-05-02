@@ -16,6 +16,7 @@ import {BogenligaResponse} from '@shared/data-provider';
 import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
 
 const ID_PATH_PARAM = 'id';
+
 @Component({
   selector: 'bla-fullscreen',
   templateUrl: './fullscreen.component.html',
@@ -24,13 +25,16 @@ const ID_PATH_PARAM = 'id';
 export class FullscreenComponent extends CommonComponentDirective implements OnInit {
 
   private sessionHandling: SessionHandling;
+
   public zuDenLigadetailsIcon: IconProp = faSitemap;
   public zuruecksetzenIcon: IconProp = faUndo;
+
   public config = WETTKAEMPFE_CONFIG;
   public config_table = LIGATABELLE_TABLE_CONFIG;
   public ActionButtonColors = ActionButtonColors;
   public loading = true;
   public multipleSelections = true;
+
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
   public buttonForward: number;
   public selectedVeranstaltungName: string;
@@ -38,6 +42,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
 
   currentTime: string;
   private timeSubscription: Subscription;
+
 
   public loadingLigatabelle = true;
   public rowsLigatabelle: TableRow[];
@@ -64,12 +69,14 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     private notificationService: NotificationService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private ligatabelleDataProvider: LigatabelleDataProviderService,
+
     private onOfflineService: OnOfflineService,
     private currentUserService: CurrentUserService,
   ) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
+
 
   ngOnInit(): void {
     this.startClock();
@@ -106,6 +113,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
    *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
    *  be logged out automatically.
    */
+
   public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number){
     this.veranstaltungsDataProvider.findByLigaIdAndYear(urlLigaID, selectedSportYear)
         .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungSuccess(response))
@@ -130,6 +138,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
    *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
    *  be logged out automatically.
    */
+
   public onMouseOver(event: any) {
     const isExpired = this.sessionHandling.checkSessionExpired();
     if (isExpired) {
@@ -216,5 +225,4 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     const link = '/home/' +  this.providedID;
     this.router.navigateByUrl(link);
   }
-
 }

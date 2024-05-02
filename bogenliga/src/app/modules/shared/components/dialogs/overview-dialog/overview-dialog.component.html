@@ -10,11 +10,37 @@
                      [hidden]="hidden"
                      [sessionSearch]="searchTerm">
 
-    </bla-quicksearch>
+    </bla-quicksearch >
+
     <div class="overview-dialog-add"
-         *ngIf="hasUserPermissions(config.createPermission)">
+         >
+      <div class="changePageButtonsAbove"  >
+        <bla-actionbutton
+          *ngIf="changePageButtons"
+          [iconClass]="'arrow-left'"
+          data-cy="previous-page-button-above"
+          (onClick)="onPreviousPageButtonClick()"
+        >
+          {{"vorherige Seite"}}
+        </bla-actionbutton>
+        <bla-actionbutton
+          *ngIf="changePageButtons"
+          [iconClass]="'arrow-right'"
+          data-cy="next-page-button-above"
+          (onClick)="onNextPageButtonClick()"
+        >
+          {{"nächste Seite"}}
+        </bla-actionbutton>
+      </div>
+      <bla-filterinputbar
+
+                          [item]="filterItem"
+                          [items]="filterItems"
+                          (onFilterButtonClicked) ="onFilterClick()" >
+      </bla-filterinputbar>
+
       <bla-actionbutton
-        data-cy="dsb-mitglied-add-button"
+        data-cy="start-migration-button"
         *ngIf="isCustomActionButton"
         [color]="ActionButtonColors.SUCCESS"
         [iconClass]="'plus'"
@@ -25,13 +51,13 @@
 
       <bla-actionbutton
         routerLink="add"
-        data-cy="dsb-mitglied-add-button"
         *ngIf="!isCustomActionButton"
         [color]="ActionButtonColors.SUCCESS"
         [iconClass]="'plus'"
       >
         {{buttonLabel || "Neu"}}
       </bla-actionbutton>
+
     </div>
   </section>
 
@@ -52,8 +78,24 @@
 
   <!-- Footer -->
   <section class="overview-dialog-footer">
-
-
+    <div class="changePageButtons"  >
+      <bla-actionbutton
+        *ngIf="changePageButtons"
+        [iconClass]="'arrow-left'"
+        data-cy="previous-page-button"
+        (onClick)="onPreviousPageButtonClick()"
+      >
+        {{"vorherige Seite"}}
+      </bla-actionbutton>
+      <bla-actionbutton
+        *ngIf="changePageButtons"
+        [iconClass]="'arrow-right'"
+        data-cy="next-page-button"
+        (onClick)="onNextPageButtonClick()"
+      >
+        {{"nächste Seite"}}
+      </bla-actionbutton>
+    </div>
   </section>
 
 </div>

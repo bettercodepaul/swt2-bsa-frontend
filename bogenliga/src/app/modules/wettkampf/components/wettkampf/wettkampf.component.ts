@@ -64,8 +64,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   private passen: Array<PasseDoClass[]> = [];
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public ActionButtonColors = ActionButtonColors;
-
   private sessionHandling: SessionHandling;
+  public selectedStatistik: string = 'gesamtstatistik';
 
   popup: boolean;
   gesamt = false;
@@ -530,5 +530,19 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadingData = true;
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
     this.loadingData = false;
+  }
+
+  public async onSelectStatistik() {
+    if (this.selectedStatistik === 'einzelstatistik') {
+      await this.loadEinzelstatistik(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'gesamtstatistik') {
+      await this.loadGesamtstatistik(this.currentMannschaft);
+    }
+  }
+
+  public async showStatistikOptions() {
+    document.getElementById('selectStatistik').classList.remove('hidden');
+    await this.loadGesamtstatistik(this.currentMannschaft);
+    this.selectedStatistik = 'gesamtstatistik';
   }
 }

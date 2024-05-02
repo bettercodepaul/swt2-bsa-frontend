@@ -54,5 +54,10 @@ export function ToDTO(payload: SchuetzenstatistikDO): SchuetzenstatistikDTO {
     payload.vereinName,
     payload.wettkampfId,
     payload.wettkampfTag,
+    payload.schuetzeSatz1,
+    payload.schuetzeSatz2,
+    payload.schuetzeSatz3,
+    payload.schuetzeSatz4,
+    payload.schuetzeSatz5
   );
 }

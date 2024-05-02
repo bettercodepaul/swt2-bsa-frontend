@@ -830,5 +830,6 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   // Navigiert den User, in einem neuem Tab, zur Live-Tabelle
   redirectToFullScreen(veranstaltungId: number): void {
     this.router.navigate(['/wkdurchfuehrung/fullscreen/', veranstaltungId]);
+
   }
 }
