@@ -32,7 +32,9 @@
           {{"nächste Seite"}}
         </bla-actionbutton>
       </div>
-      <bla-filterinputbar [item]="filterItem"
+      <bla-filterinputbar
+                          data-cy="status-filter-selection"
+                          [item]="filterItem"
                           [items]="filterItems"
                           (onFilterButtonClicked) ="onFilterClick()" >
       </bla-filterinputbar>
