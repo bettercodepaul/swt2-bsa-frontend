@@ -157,7 +157,7 @@
               [id]="'vollbildAnsicht'"
               [color]="ActionButtonColors.PRIMARY"
               [iconClass]="'arrow-right'"
-              (onClick)="redirectToFullScreen()"
+              (onClick)="redirectToFullScreen(this.selectedVeranstaltungId)"
               [disabled]="isDisabled()"
               data-cy="vollbildAnsichtButton">
               {{ 'WKDURCHFUEHRUNG.BUTTON.VOLLBILDANSICHT' | translate }}

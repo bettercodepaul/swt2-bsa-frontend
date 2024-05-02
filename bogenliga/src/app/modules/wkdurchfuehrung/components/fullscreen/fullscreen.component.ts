@@ -12,7 +12,6 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {ActivatedRoute, Router} from '@angular/router';
 import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltung-data-provider.service';
 import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
-import {isUndefined} from '@shared/functions';
 import {BogenligaResponse} from '@shared/data-provider';
 import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
 
@@ -35,6 +34,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   public PLACEHOLDER_VAR = 'Zur Suche Liga-Bezeichnung eingeben...';
   public buttonForward: number;
   public selectedVeranstaltungName: string;
+  public selectedVeranstaltungId: number;
 
   currentTime: string;
   private timeSubscription: Subscription;
@@ -47,6 +47,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
 
   private isDeselected: boolean = false;
   private remainingLigatabelleRequests: number;
+
 
   private loadedVeranstaltungen: Map<number, VeranstaltungDO[]>;
   private selectedVeranstaltung: VeranstaltungDO;
@@ -70,27 +71,24 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.startClock();
-    if(this.isDeselected == false) {
+    if(!this.isDeselected) {
       console.log('Component is not deselected.');
-      this.loadTableData();
-      console.log('Table data loaded.');
       this.providedID = undefined;
       this.hasID = false;
       this.notificationService.discardNotification();
       this.route.params.subscribe((params) => {
         console.log('Route params subscribed:', params);
-        if (!isUndefined(params[ID_PATH_PARAM])) {
-          this.providedID = parseInt(params[ID_PATH_PARAM], 10);
-          console.log('Provided ID:', this.providedID);
-          this.hasID = true;
-          params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
-          this.selectedYearForVeranstaltung != undefined && this.hasID
-            ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
+        if (!isNaN(params['veranstaltungId'])) {
+          // Konvertiere es in eine Zahl
+          this.selectedVeranstaltungId = +params['veranstaltungId'];
+
+          this.loadTableData(this.selectedVeranstaltungId);
+          console.log('Table data loaded.');
         } else {
-          console.log('No ID provided in route params.');
-          this.router.navigate(['/wkdurchfuehrung/fullscreen']);
+          console.error('Ungültige Veranstaltungs-ID');
+          this.router.navigate(['/error']); // Weiterleitung zu einer Fehlerseite
         }
       });
     }
@@ -139,44 +137,54 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     }
   }
 
-  private async loadTableData() {
-    this.loadedVeranstaltungen = new Map();
-    this.veranstaltungIdMap = new Map();
-
+  public async loadTableData(veranstaltungId: number) {
+    this.loading = true;
     try {
-      const year = 2018; // Jahr festlegen
+      // Lade die spezifische Veranstaltung basierend auf der übergebenen ID
+      const response = await this.veranstaltungsDataProvider.findById(veranstaltungId);
 
-      // Direkt nach dem Jahr 2018 filtern
-      const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportjahrDestinct(year);
+      if (response?.payload) {
+        this.selectedVeranstaltung = response.payload;
+        console.log('Ausgewählte Veranstaltung geladen:', this.selectedVeranstaltung);
 
-      for (const veranstaltung of responseVeranstaltung.payload) {
-        this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung); // -> Ligatabelle
-        this.loadedVeranstaltungen.set(year, responseVeranstaltung.payload);  // -> "Liga"
-      }
-      console.log('Veranstaltungen für das Jahr 2018:', responseVeranstaltung.payload);
-      if (responseVeranstaltung.payload.length > 0) {
-        const selectedVeranstaltung = responseVeranstaltung.payload[0];
-        this.selectedVeranstaltung = selectedVeranstaltung;
+        // Lade Ligatabelle-Daten für die ausgewählte Veranstaltung
         this.loadLigaTableRows();
       } else {
-        console.log('Keine Veranstaltungen gefunden für das Jahr 2018.');
+        console.log('Keine Veranstaltung gefunden mit der ID:', veranstaltungId);
       }
-
-      this.loading = false;
-      this.loadingLigatabelle = false;
     } catch (e) {
+      console.error('Fehler beim Laden der Veranstaltungsdaten:', e);
+    } finally {
       this.loading = false;
       this.loadingLigatabelle = false;
-      console.log('Fehler beim Laden der Daten:', e);
     }
   }
 
   private loadLigaTableRows() {
-    this.loadingLigatabelle = true;
+    if (!this.selectedVeranstaltung) {
+      console.log('Keine Veranstaltung ausgewählt, Ligatabelle kann nicht geladen werden.');
+      return;
+    }
+
     this.ligatabelleDataProvider.getLigatabelleVeranstaltung(this.selectedVeranstaltung.id)
-        .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => this.handleLigatabelleSuccess(response))
-        .catch(() => this.handleLigatabelleFailure());
+        .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => {
+          if (response && response.payload.length > 0) {
+            this.rowsLigatabelle = toTableRows(response.payload);
+            console.log('Ligatabelle erfolgreich geladen');
+          } else {
+            console.log('Keine Ergebnisse gefunden für Ligatabelle');
+            this.rowsLigatabelle = [];
+          }
+        })
+        .catch(error => {
+          console.error('Fehler beim Laden der Ligatabelle:', error);
+          this.rowsLigatabelle = [];
+        })
+        .finally(() => {
+          this.loadingLigatabelle = false;
+        });
   }
+
 
   private handleLigatabelleFailure() {
     console.log('failure');
