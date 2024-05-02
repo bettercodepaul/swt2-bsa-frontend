@@ -50,7 +50,7 @@
 
 // Styling for the time box
 .time-box {
-  font-size: 50px;
+  font-size: 20px;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -64,7 +64,7 @@
   &:before {
     content: '🕒';
     margin-right: 15px;
-    font-size: 20px;
+    font-size: 55px;
   }
 }
 
