@@ -77,6 +77,10 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
 
+  get _selectedVeranstaltung(): VeranstaltungDO {
+    return this.selectedVeranstaltung;
+  }
+
 
   ngOnInit(): void {
     this.startClock();
@@ -108,36 +112,6 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     });
   }
 
-  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
-   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
-   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
-   *  be logged out automatically.
-   */
-
-  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number){
-    this.veranstaltungsDataProvider.findByLigaIdAndYear(urlLigaID, selectedSportYear)
-        .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungSuccess(response))
-        .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungFailure(response));
-  }
-
-  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO>): void {
-    this.hasVeranstaltung = true;
-    this.selectedItemId = response.payload.id;
-  }
-
-  private handleFindVeranstaltungFailure(error: any): void {
-    // Routing zurück zur Ligatabelle URL, wenn keine ID gefunden wird
-    this.hasVeranstaltung = false;
-    const link = '/ligatabelle';
-    this.router.navigateByUrl(link);
-  }
-
-
-  /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
-   *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
-   *  If the boolean value is true, then the page will be reloaded and due to the expired session, the user will
-   *  be logged out automatically.
-   */
 
   public onMouseOver(event: any) {
     const isExpired = this.sessionHandling.checkSessionExpired();
@@ -194,35 +168,9 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
         });
   }
 
-
-  private handleLigatabelleFailure() {
-    console.log('failure');
-    this.rowsLigatabelle = [];
-    this.loadingLigatabelle = false;
-  }
-
-  private handleLigatabelleSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
-    console.log('success');
-    this.rowsLigatabelle = []; // reset array to ensure change detection
-    this.remainingLigatabelleRequests = response.payload.length;
-    if (response.payload.length <= 0
-    ) {
-      this.loadingLigatabelle = false;
-    } else {
-      this.rowsLigatabelle = toTableRows(response.payload);
-      this.loadingLigatabelle = false;
-    }
-  }
-
   public ligatabelleLinking() {
     const link = '/wettkaempfe/' + this.buttonForward;
     this.router.navigateByUrl(link);
   }
 
-
-  public goToLigaDetails(){
-    console.log("IDDD" + this.providedID);
-    const link = '/home/' +  this.providedID;
-    this.router.navigateByUrl(link);
-  }
 }
