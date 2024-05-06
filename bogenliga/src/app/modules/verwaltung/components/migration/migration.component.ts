@@ -39,8 +39,11 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public currentTimestamp: string = "letzter Monat";
   public timestampArray: Array<string> = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "Alle"];
   public ActionButtonColors = ActionButtonColors;
+  public timestampDropdownLable = "Zeitstempel";
+  public filterDropdownLable ="Status";
   public offsetMultiplictor = 0;
   public queryPageLimit = 500;
+
 
   constructor(private MigrationDataProvider: MigrationProviderService,
     private userProvider: UserProfileDataProviderService,

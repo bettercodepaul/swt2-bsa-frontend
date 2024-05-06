@@ -16,7 +16,7 @@ export class FilterinputbarComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     throw new Error("Method not implemented.");
   }
-
+  @Input() filterlabel: string;
   @Input() id: string;
   @Input() item: string;
   @Input() items: Array<string>;
@@ -28,11 +28,9 @@ export class FilterinputbarComponent implements OnInit, OnChanges {
   public onFilterButtonClick() {
     if( this.items.includes(FilterinputbarComponent.currentItem)){
         FilterinputbarComponent.currentTimestamp=FilterinputbarComponent.currentItem
-      console.log("Timestamp switched")
     }else{
       FilterinputbarComponent.currentItem = this.item;
       this.onFilterButtonClicked.emit();
-      console.log("filter switched")
     }
   }
 

@@ -27,6 +27,9 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public filterItems: Array<string>;
   @Input() public timeItem: string;
   @Input() public timeItems: Array<string>;
+  @Input() public timestampDropdownLabel: string;
+  @Input() public filterDropdownLabel: string;
+
 
   public ActionButtonColors = ActionButtonColors;
 
