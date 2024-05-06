@@ -33,7 +33,7 @@
         </bla-actionbutton>
       </div>
       <bla-filterinputbar
-
+                          *ngIf="isCustomActionButton"
                           [item]="filterItem"
                           [items]="filterItems"
                           (onFilterButtonClicked) ="onFilterClick()" >
