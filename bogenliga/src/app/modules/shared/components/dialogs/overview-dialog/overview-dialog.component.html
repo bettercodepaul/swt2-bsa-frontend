@@ -14,6 +14,21 @@
 
     <div class="overview-dialog-add"
          >
+      <bla-filterinputbar
+        *ngIf="isCustomActionButton"
+        [item]="timeItem"
+        [items]="timeItems"
+        (onFilterButtonClicked) ="onTimestampClick()" >
+      </bla-filterinputbar>
+      <bla-actionbutton
+        data-cy="delete-button"
+        *ngIf="isCustomActionButton"
+        [color]="ActionButtonColors.SUCCESS"
+        [iconClass]="'minus'"
+        (onClick)="onDeleteButtonClick()"
+      >
+        {{"Löschen der Einträge"}}
+      </bla-actionbutton>
       <div class="changePageButtonsAbove"  >
         <bla-actionbutton
           *ngIf="changePageButtons"
@@ -38,7 +53,6 @@
                           [items]="filterItems"
                           (onFilterButtonClicked) ="onFilterClick()" >
       </bla-filterinputbar>
-
       <bla-actionbutton
         data-cy="start-migration-button"
         *ngIf="isCustomActionButton"

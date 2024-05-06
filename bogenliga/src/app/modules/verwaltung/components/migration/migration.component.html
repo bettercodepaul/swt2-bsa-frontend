@@ -9,13 +9,18 @@
                      [isCustomActionButton]=true
                      [changePageButtons]=true
                      (onCustomActionButtonClicked)="startMigration()"
+                     (onDeleteButtonClicked)="deleteEntries()"
                      [showFilterButton] =true
                      [showStatusFilter]=true
                      (onPreviousPageButtonClicked)="previousPageButton()"
                      (onNextPageButtonClicked)="nextPageButton()"
                      [filterItem]="currentStatus"
                      [filterItems]="statusArray"
+                     [timeItem]="currentTimestamp"
+                     [timeItems]="timestampArray"
                      (onFilterClicked) = "selectFilterForStatus()"
+                     (onTimestampClicked)="selectTimestamp()"
+
 
 >
  <div (mouseover)="onMouseOver($event)"></div>
