@@ -36,6 +36,8 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   private sessionHandling: SessionHandling;
   public currentStatus: string = "Fehlgeschlagen";
   public statusArray: Array<string> = ["Fehlgeschlagen", "Erfolgreich", "Laufend", "Neu", "Alle"];
+  public currentTimestamp: string = "letzter Monat";
+  public timestampArray: Array<string> = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "Alle"];
   public ActionButtonColors = ActionButtonColors;
   public offsetMultiplictor = 0;
   public queryPageLimit = 500;
@@ -136,6 +138,9 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     }
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
   }
+  selectTimestamp() {
+
+  }
   filterForStatus(multiplicator: number,pagelimit: number) {
     try {
         switch(this.currentStatus) {
@@ -201,6 +206,44 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     this.queryPageLimit= 500;
     this.offsetMultiplictor=0;
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
+  }
+  deleteEntries() {
+    try {
+      this.notificationService.showNotification({
+        id:          'Löschung durchführen?',
+        description: 'Möchten Sie die Eintrage löschen?',
+        title:       'Löschung starten',
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.YES_NO,
+        severity:    NotificationSeverity.QUESTION,
+        userAction:  NotificationUserAction.PENDING
+      });
+
+      this.notificationService.observeNotification('Löschung durchführen?')
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.offsetMultiplictor = 0;
+              this.queryPageLimit = 500;
+              this.MigrationDataProvider.findDeleteEntries()
+                  .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                    this.handleLoadTableRowsSuccess(response);
+                    console.log(response);
+                  })
+                  .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+              this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit);
+            }
+          });
+    } catch (e) {
+      this.notificationService.showNotification({
+        id:          'Fehler beim Starten der Löschung',
+        description: 'Ein Fehler ist aufgetreten und es wurden keine Daten gelöscht.',
+        title:       'Fehler beim Start des Löschens',
+        origin:      NotificationOrigin.SYSTEM,
+        userAction:  NotificationUserAction.ACCEPTED,
+        type:        NotificationType.OK,
+        severity:    NotificationSeverity.INFO
+      });
+    }
   }
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];
