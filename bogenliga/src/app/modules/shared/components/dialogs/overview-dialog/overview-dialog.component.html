@@ -14,21 +14,24 @@
 
     <div class="overview-dialog-add"
          >
-      <bla-filterinputbar
-        *ngIf="isCustomActionButton"
-        [item]="timeItem"
-        [items]="timeItems"
-        (onFilterButtonClicked) ="onTimestampClick()" >
-      </bla-filterinputbar>
-      <bla-actionbutton
-        data-cy="delete-button"
-        *ngIf="isCustomActionButton"
-        [color]="ActionButtonColors.SUCCESS"
-        [iconClass]="'minus'"
-        (onClick)="onDeleteButtonClick()"
-      >
-        {{"Löschen der Einträge"}}
-      </bla-actionbutton>
+      <div class="deleteButtonAndTimestampFilter">
+        <bla-filterinputbar class="item"
+          [filterlabel]="timestampDropdownLabel"
+          *ngIf="isCustomActionButton"
+          [item]="timeItem"
+          [items]="timeItems"
+          (onFilterButtonClicked) ="onTimestampClick()" >
+        </bla-filterinputbar>
+        <bla-actionbutton class="item"
+          data-cy="delete-button"
+          *ngIf="isCustomActionButton"
+          [color]="ActionButtonColors.DANGER"
+          [iconClass]="'minus'"
+          (onClick)="onDeleteButtonClick()"
+        >
+          {{"Löschen der Einträge"}}
+        </bla-actionbutton>
+      </div>
       <div class="changePageButtonsAbove"  >
         <bla-actionbutton
           *ngIf="changePageButtons"
@@ -47,22 +50,25 @@
           {{"nächste Seite"}}
         </bla-actionbutton>
       </div>
-      <bla-filterinputbar
-                          *ngIf="isCustomActionButton"
-                          [item]="filterItem"
-                          [items]="filterItems"
-                          (onFilterButtonClicked) ="onFilterClick()" >
-      </bla-filterinputbar>
-      <bla-actionbutton
-        data-cy="start-migration-button"
-        *ngIf="isCustomActionButton"
-        [color]="ActionButtonColors.SUCCESS"
-        [iconClass]="'plus'"
-        (onClick)="onCustomActionButtonClick()"
-      >
-        {{buttonLabel || "Neu"}}
-      </bla-actionbutton>
-
+      <div class="deleteButtonAndTimestampFilter">
+        <bla-filterinputbar class="item"
+          [filterlabel]="filterDropdownLabel"
+                            *ngIf="isCustomActionButton"
+                            [item]="filterItem"
+                            [items]="filterItems"
+                            (onFilterButtonClicked) ="onFilterClick()" >
+        </bla-filterinputbar>
+        <bla-actionbutton
+          class="item"
+          data-cy="start-migration-button"
+          *ngIf="isCustomActionButton"
+          [color]="ActionButtonColors.SUCCESS"
+          [iconClass]="'plus'"
+          (onClick)="onCustomActionButtonClick()"
+        >
+          {{buttonLabel || "Neu"}}
+        </bla-actionbutton>
+      </div>
       <bla-actionbutton
         routerLink="add"
         *ngIf="!isCustomActionButton"
