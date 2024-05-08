@@ -37,7 +37,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public currentStatus: string = "Fehlgeschlagen";
   public statusArray: Array<string> = ["Fehlgeschlagen", "Erfolgreich", "Laufend", "Neu", "Alle"];
   public currentTimestamp: string = "letzter Monat";
-  public timestampArray: Array<string> = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "unbegrenzt"];
+  public timestampArray: Array<string> = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "alle"];
   public ActionButtonColors = ActionButtonColors;
   public timestampDropdownLable = "Zeitstempel";
   public filterDropdownLable ="Status";

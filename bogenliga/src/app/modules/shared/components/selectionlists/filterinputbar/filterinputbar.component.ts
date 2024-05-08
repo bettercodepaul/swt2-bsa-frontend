@@ -22,7 +22,7 @@ export class FilterinputbarComponent implements OnInit, OnChanges {
   @Input() items: Array<string>;
 
   @Output() public onFilterButtonClicked = new EventEmitter<string>();
-  public timestamps = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "unbegrenzt"];
+  public timestamps = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "alle"];
   public static currentItem:string;
   public static currentStatus:string;
   public static currentTimestamp:string;
