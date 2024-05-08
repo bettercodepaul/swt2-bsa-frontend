@@ -34,6 +34,7 @@ export class FilterinputbarComponent implements OnInit, OnChanges {
     }else{
       FilterinputbarComponent.currentStatus = FilterinputbarComponent.currentItem
     }
+    this.onFilterButtonClicked.emit();
   }
 
   protected readonly MigrationComponent = MigrationComponent;
