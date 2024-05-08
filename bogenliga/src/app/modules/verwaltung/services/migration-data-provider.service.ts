@@ -48,4 +48,10 @@ export class MigrationProviderService extends DataProviderService {
   public startMigration() {
     this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
   }
+  public getSucceededDataCount(){
+    this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('afterTime').build())
+  }
+  public getEntireDataCount(){
+    this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('afterTime').build())
+  }
 }

@@ -113,6 +113,18 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 }
 
+
+public gatherMigrationStatus(){
+
+    setInterval(() => {
+      try{
+        this.gatherMigrationStatus();
+      }catch (e) {
+
+      }
+  });
+}
+
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];
     this.loading = false;
