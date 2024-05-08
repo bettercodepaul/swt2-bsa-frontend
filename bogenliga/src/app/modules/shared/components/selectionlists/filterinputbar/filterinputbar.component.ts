@@ -24,13 +24,15 @@ export class FilterinputbarComponent implements OnInit, OnChanges {
   @Output() public onFilterButtonClicked = new EventEmitter<string>();
   public timestamps = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "Alle"];
   public static currentItem:string;
+  public static currentStatus:string;
   public static currentTimestamp:string;
   public onFilterButtonClick() {
-    if( this.items.includes(FilterinputbarComponent.currentItem)){
-        FilterinputbarComponent.currentTimestamp=FilterinputbarComponent.currentItem
+    FilterinputbarComponent.currentItem = this.item;
+    console.log("Current ITEM is: " + FilterinputbarComponent.currentItem)
+    if(this.timestamps.includes(FilterinputbarComponent.currentItem)){
+      FilterinputbarComponent.currentTimestamp = FilterinputbarComponent.currentItem
     }else{
-      FilterinputbarComponent.currentItem = this.item;
-      this.onFilterButtonClicked.emit();
+      FilterinputbarComponent.currentStatus = FilterinputbarComponent.currentItem
     }
   }
 

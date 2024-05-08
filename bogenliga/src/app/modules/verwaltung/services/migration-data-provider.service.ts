@@ -46,12 +46,13 @@ export class MigrationProviderService extends DataProviderService {
     });
   }
 
-  public findSuccessed(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findSuccessed(offsetMultiplicator:number,queryPageLimit: number, timestamp:string): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findSuccessed?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findSuccessed?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -64,12 +65,13 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findAllWithPages(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findAllWithPages(offsetMultiplicator:number,queryPageLimit: number, timestamp:string): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findAllWithPages?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build()
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findAllWithPages?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build()
       )
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
@@ -83,12 +85,13 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findErrors(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findErrors(offsetMultiplicator:number,queryPageLimit: number, timestamp:string): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findErrors?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build()
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findErrors?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build()
       )
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
@@ -102,12 +105,13 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findInProgress(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findInProgress(offsetMultiplicator:number,queryPageLimit: number, timestamp:string): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findInProgress?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findInProgress?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -120,12 +124,13 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findNews(offsetMultiplicator:number,queryPageLimit: number): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findNews(offsetMultiplicator:number,queryPageLimit: number, timestamp:string): Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findNews?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findNews?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -138,16 +143,16 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findDeleteEntries(): Promise<BogenligaResponse<TriggerDO[]>> {
+  public findDeleteEntries(status: string,timestamp:string):Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
+    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('deleteEntries').build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('deleteEntries?status=' + status + '&dateInterval=' + dateInterval).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
-
             if (error.status === 0) {
               reject({result: RequestResult.CONNECTION_PROBLEM});
             } else {
@@ -155,8 +160,30 @@ export class MigrationProviderService extends DataProviderService {
             }
           });
     });
+
   }
   public startMigration() {
     this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
+  }
+  private changeTimestampToInterval(timestamp:string):string{
+    let interval:string;
+    switch (timestamp){
+      case 'Alle':
+        interval = "20 YEAR"
+        break;
+      case 'letzter Monat':
+        interval = "1 MONTH"
+        break;
+      case 'letzten drei Monate':
+        interval = "3 MONTH"
+        break;
+      case 'letzten sechs Monate':
+        interval = "6 MONTH"
+        break;
+      case 'im letzten Jahr':
+        interval = "12 MONTH"
+        break;
+    }
+    return interval;
   }
 }
