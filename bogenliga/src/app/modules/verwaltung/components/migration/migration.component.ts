@@ -230,7 +230,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.offsetMultiplictor = 0;
               this.queryPageLimit = 500;
-              this.MigrationDataProvider.findDeleteEntries(this.currentStatus,this.currentTimestamp)
+              this.MigrationDataProvider.deleteEntries(this.currentStatus,this.currentTimestamp)
                   .then((response: BogenligaResponse<TriggerDTO[]>) => {
                     this.handleLoadTableRowsSuccess(response);
                     console.log(response);

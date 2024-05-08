@@ -143,24 +143,24 @@ export class MigrationProviderService extends DataProviderService {
           });
     });
   }
-  public findDeleteEntries(status: string,timestamp:string):Promise<BogenligaResponse<TriggerDO[]>> {
+  public deleteEntries(status: string,timestamp:string):Promise<BogenligaResponse<TriggerDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('deleteEntries?status=' + status + '&dateInterval=' + dateInterval).build())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
-          }, (error: HttpErrorResponse) => {
+      this.restClient.DELETE<any>(new UriBuilder().fromPath(this.getUrl()).path('deleteEntries?status=' + status + '&dateInterval=' + dateInterval).build())
+          .then(() => {
+            resolve({ result: RequestResult.SUCCESS});
+          })
+          .catch((error: HttpErrorResponse) => {
             if (error.status === 0) {
-              reject({result: RequestResult.CONNECTION_PROBLEM});
+              reject({ result: RequestResult.CONNECTION_PROBLEM });
             } else {
-              reject({result: RequestResult.FAILURE});
+              reject({ result: RequestResult.FAILURE });
             }
           });
     });
-
   }
   public startMigration() {
     this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
