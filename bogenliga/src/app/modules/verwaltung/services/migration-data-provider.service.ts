@@ -168,7 +168,7 @@ export class MigrationProviderService extends DataProviderService {
   private changeTimestampToInterval(timestamp:string):string{
     let interval:string;
     switch (timestamp){
-      case 'Alle':
+      case 'unbegrenzt':
         interval = "20 YEAR"
         break;
       case 'letzter Monat':
