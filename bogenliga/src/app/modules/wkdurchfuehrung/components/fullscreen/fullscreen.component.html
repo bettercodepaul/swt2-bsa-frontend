@@ -10,10 +10,13 @@
           </div>
           <div class="header-container">
             <div class="veranstaltung-header">
-              Württembergliga
+              {{ _selectedVeranstaltung.name }}
+            </div>
+            <div class="veranstaltung-header">
+              {{ _selectedVeranstaltung.ligaName}}
             </div>
             <div class="wettkampftag-header">
-              Wettkampftag 4
+              Wettkampftag 5
             </div>
           </div>
         </div>
@@ -22,25 +25,15 @@
           {{ currentTime }}
         </div>
 
-        <table class="table table-hover table-sm table-responsive-sm thead-light"
-               [id]="id" *ngIf="visible"> <!-- Tabelle, zum anzeigen der Mockup-Daten -->
-          <thead>
-          <tr>
-            <th *ngFor="let column of config_table.columns">
-              {{ column.translationKey | translate}}
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let row of ligatabelleData">
-            <td>{{ row.platz }}</td>
-            <td>{{ row.mannschaft }}</td>
-            <td>{{ row.matchpunkte }}</td>
-            <td>{{ row.satzpunkte }}</td>
-            <td>{{ row.satzpunktdifferenz }}</td>
-          </tr>
-          </tbody>
-        </table>
+       <div class="table table-hover table-sm table-responsive-sm thead-light">
+        <bla-data-table
+          [config]="config_table"
+          [rows]="rowsLigatabelle"
+          [loading]="loadingLigatabelle"
+          (onRowEntry)="ligatabelleLinking();"
+        >
+        </bla-data-table>
+       </div>
       </div>
     </div>
   </div>
