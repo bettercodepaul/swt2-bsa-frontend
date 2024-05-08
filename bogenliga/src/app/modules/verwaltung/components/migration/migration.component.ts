@@ -78,7 +78,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
 
   private loadTableRows() {
-    this.MigrationDataProvider.findErrors(this.offsetMultiplictor,this.queryPageLimit)
+    this.MigrationDataProvider.findErrors(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
         .then((response: BogenligaResponse<TriggerDTO[]>) => {
           this.handleLoadTableRowsSuccess(response);
           console.log(response);
@@ -87,7 +87,6 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 
   public startMigration() {
-
     try {
       this.notificationService.showNotification({
         id:          'Migrationslauf starten?',
@@ -128,7 +127,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         block:    'start'
       });
     }
-    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
+    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
   public nextPageButton(){
     this.offsetMultiplictor++;
@@ -139,16 +138,20 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         block: 'start'
       });
     }
-    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
+    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
   selectTimestamp() {
-
+    this.currentTimestamp = FilterinputbarComponent.currentTimestamp
+    console.log('Timestamp switched to ' + this.currentTimestamp + ' and resetted OffsetMultiplicator')
+    this.queryPageLimit= 500;
+    this.offsetMultiplictor=0;
+    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
-  filterForStatus(multiplicator: number,pagelimit: number) {
+  filterForStatus(multiplicator: number,pagelimit: number,timestamp:string) {
     try {
         switch(this.currentStatus) {
           case "Fehlgeschlagen":
-            this.MigrationDataProvider.findErrors(multiplicator,pagelimit)
+            this.MigrationDataProvider.findErrors(multiplicator,pagelimit,timestamp)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
                   console.log(response);
@@ -156,7 +159,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             break;
           case "Alle":
-            this.MigrationDataProvider.findAllWithPages(multiplicator,pagelimit)
+            this.MigrationDataProvider.findAllWithPages(multiplicator,pagelimit,timestamp)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
                   console.log(response);
@@ -164,7 +167,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             break;
           case "Erfolgreich":
-            this.MigrationDataProvider.findSuccessed(multiplicator,pagelimit)
+            this.MigrationDataProvider.findSuccessed(multiplicator,pagelimit,timestamp)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
                   console.log(response);
@@ -172,7 +175,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             break;
           case "Laufend":
-            this.MigrationDataProvider.findInProgress(multiplicator,pagelimit)
+            this.MigrationDataProvider.findInProgress(multiplicator,pagelimit,timestamp)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
                   console.log(response);
@@ -180,7 +183,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
                 .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
             break;
           case "Neu":
-            this.MigrationDataProvider.findNews(multiplicator,pagelimit)
+            this.MigrationDataProvider.findNews(multiplicator,pagelimit,timestamp)
                 .then((response: BogenligaResponse<TriggerDTO[]>) => {
                   this.handleLoadTableRowsSuccess(response);
                   console.log(response);
@@ -204,11 +207,11 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     }
   }
   selectFilterForStatus(){
-    this.currentStatus = FilterinputbarComponent.currentItem
-    console.log('Status switched to ' + this.currentStatus + ' and resetet OffsetMultiplicator')
+    this.currentStatus = FilterinputbarComponent.currentStatus
+    console.log('Status switched to ' + this.currentStatus + ' and resetted OffsetMultiplicator')
     this.queryPageLimit= 500;
     this.offsetMultiplictor=0;
-    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
+    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
   deleteEntries() {
     try {
@@ -227,13 +230,13 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
             if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
               this.offsetMultiplictor = 0;
               this.queryPageLimit = 500;
-              this.MigrationDataProvider.findDeleteEntries()
+              this.MigrationDataProvider.findDeleteEntries(this.currentStatus,this.currentTimestamp)
                   .then((response: BogenligaResponse<TriggerDTO[]>) => {
                     this.handleLoadTableRowsSuccess(response);
                     console.log(response);
                   })
                   .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-              this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit);
+              this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp);
             }
           });
     } catch (e) {
