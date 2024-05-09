@@ -4,12 +4,12 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {MigrationComponent} from '@verwaltung/components';
 
 @Component({
-  selector: 'bla-filterinputbar',
-  templateUrl: './filterinputbar.component.html',
-  styleUrls: ['./filterinputbar.component.scss'],
+  selector: 'bla-filterTimestampInputbar',
+  templateUrl: './filterTimestampInputbar.component.html',
+  styleUrls: ['./filterTimestampInputbar.component.scss'],
   providers: [TranslatePipe]
 })
-export class FilterinputbarComponent implements OnInit, OnChanges {
+export class FilterTimestampInputbarComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
 
   }
@@ -27,12 +27,12 @@ export class FilterinputbarComponent implements OnInit, OnChanges {
 
   }
   public onFilterButtonClick() {
-    FilterinputbarComponent.currentItem = this.item;
-    console.log("Current ITEM is: " + FilterinputbarComponent.currentItem)
-    if(this.timestamps.includes(FilterinputbarComponent.currentItem)){
-      FilterinputbarComponent.currentTimestamp = FilterinputbarComponent.currentItem
+    FilterTimestampInputbarComponent.currentItem = this.item;
+    console.log("Current ITEM is: " + FilterTimestampInputbarComponent.currentItem)
+    if(this.timestamps.includes(FilterTimestampInputbarComponent.currentItem)){
+      FilterTimestampInputbarComponent.currentTimestamp = FilterTimestampInputbarComponent.currentItem
     }else{
-      FilterinputbarComponent.currentStatus = FilterinputbarComponent.currentItem
+      FilterTimestampInputbarComponent.currentStatus = FilterTimestampInputbarComponent.currentItem
     }
     this.onFilterButtonClicked.emit();
   }

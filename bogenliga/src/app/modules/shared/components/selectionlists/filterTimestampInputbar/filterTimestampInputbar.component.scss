@@ -1,0 +1,24 @@
+.filterinputbar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: fit-content;
+}
+.row{
+  display: flex;
+  align-items: center;
+}
+
+.form-label-box{
+  flex: 0 0 auto;
+  padding-right: 15px;
+}
+#filterFormLabel{
+  display: block;
+  line-height: 1.5;
+  height: 100%;
+}
+
+.form-control{
+  width: fit-content;
+}
