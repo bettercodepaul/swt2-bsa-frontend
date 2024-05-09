@@ -43,11 +43,6 @@ import {SessionHandling} from '@shared/event-handling';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
-
-
-
-
-
 @Component({
   selector: 'bla-wkdurchfuehrung',
   templateUrl: './wkdurchfuehrung.component.html',
@@ -829,7 +824,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Navigiert den User, in einem neuem Tab, zur Live-Tabelle
   redirectToFullScreen(veranstaltungId: number): void {
-    this.router.navigate(['/wkdurchfuehrung/fullscreen/', veranstaltungId]);
-
+    console.log("selectedWettkampftag wkdurchführung", this.selectedWettkampftag)
+    this.router.navigate(['/wkdurchfuehrung/fullscreen', veranstaltungId], { queryParams: { wettkampftag: this.selectedWettkampftag} });
   }
 }
