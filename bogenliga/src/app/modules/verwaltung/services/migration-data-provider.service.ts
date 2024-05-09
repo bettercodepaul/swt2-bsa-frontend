@@ -52,7 +52,8 @@ export class MigrationProviderService extends DataProviderService {
     // sign in failure -> reject promise with result
     const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findSuccessed?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findSuccessed?offsetMultiplicator=' + offsetMultiplicator.toString()
+        + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
