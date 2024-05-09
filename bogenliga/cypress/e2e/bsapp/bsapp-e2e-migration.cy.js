@@ -139,16 +139,6 @@ describe('Verwaltung/Migration tests', function () {
     cy.wait(1000)
     cy.wait('@filter')
   })
-  it('Filtern nach Zeitstempel Letzter Monat', () => {
-    cy.viewport(1920,1080)
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('0: letzter Monat')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
   it('Filtern nach Zeitstempel letzten drei Monate', () => {
     cy.viewport(1920,1080)
     cy.intercept({
@@ -156,6 +146,16 @@ describe('Verwaltung/Migration tests', function () {
       url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=3%20MONTH`,
     }).as('filter');
     cy.get('[data-cy=timestamp-filter-selection]').select('1: letzten drei Monate')
+    cy.wait(1000)
+    cy.wait('@filter')
+  })
+  it('Filtern nach Zeitstempel letzter Monat', () => {
+    cy.viewport(1920,1080)
+    cy.intercept({
+      method: 'GET',
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+    }).as('filter');
+    cy.get('[data-cy=timestamp-filter-selection]').select('0: letzter Monat')
     cy.wait(1000)
     cy.wait('@filter')
   })
