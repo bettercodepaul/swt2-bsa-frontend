@@ -19,6 +19,9 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
+import {
+  FilterTimestampInputbarComponent
+} from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 @Component({
@@ -41,6 +44,8 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public ActionButtonColors = ActionButtonColors;
   public timestampDropdownLable = "Zeitstempel";
   public filterDropdownLable ="Status";
+  public cypressTagStatus ="status-filter-selection";
+  public cypressTagTimestamp = "timestamp-filter-selection";
   public offsetMultiplictor = 0;
   public queryPageLimit = 500;
 
@@ -141,7 +146,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
   selectTimestamp() {
-    this.currentTimestamp = FilterinputbarComponent.currentTimestamp
+    this.currentTimestamp = FilterTimestampInputbarComponent.currentTimestamp
     console.log('Timestamp switched to ' + this.currentTimestamp + ' and resetted OffsetMultiplicator')
     this.queryPageLimit= 500;
     this.offsetMultiplictor=0;

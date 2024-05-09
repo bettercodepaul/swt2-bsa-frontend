@@ -15,13 +15,13 @@
     <div class="overview-dialog-add"
          >
       <div class="deleteButtonAndTimestampFilter">
-        <bla-filterinputbar class="item"
+        <bla-filterTimestampInputbar class="item"
           [filterlabel]="timestampDropdownLabel"
           *ngIf="isCustomActionButton"
           [item]="timeItem"
           [items]="timeItems"
           (onFilterButtonClicked) ="onTimestampClick()" >
-        </bla-filterinputbar>
+        </bla-filterTimestampInputbar>
         <bla-actionbutton class="item"
           data-cy="delete-button"
           *ngIf="isCustomActionButton"
@@ -54,6 +54,7 @@
         <bla-filterinputbar class="item"
           [filterlabel]="filterDropdownLabel"
                             *ngIf="isCustomActionButton"
+                            [id]="cypressTagStatus"
                             [item]="filterItem"
                             [items]="filterItems"
                             (onFilterButtonClicked) ="onFilterClick()" >

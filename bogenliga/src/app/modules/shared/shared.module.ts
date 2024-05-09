@@ -63,6 +63,9 @@ import {
   VeranstaltungenButtonComponent
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
 import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
+import {
+  FilterTimestampInputbarComponent
+} from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
 
 
 @NgModule({
@@ -108,6 +111,7 @@ import {FilterinputbarComponent} from '@shared/components/selectionlists/filteri
     QuicksearchListComponent,
     QuicksearchComponent,
     FilterinputbarComponent,
+    FilterTimestampInputbarComponent,
     DownloadButtonComponent,
     SimpleOverviewDialogComponent,
     DoubleSelectionlistComponent,
@@ -156,6 +160,7 @@ import {FilterinputbarComponent} from '@shared/components/selectionlists/filteri
     QuicksearchListComponent,
     QuicksearchComponent,
     FilterinputbarComponent,
+    FilterTimestampInputbarComponent,
     DownloadButtonComponent,
     DoubleSelectionlistComponent,
     BogenkontrolllisteDownloadComponent,
