@@ -19,6 +19,9 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
+import {
+  FilterTimestampInputbarComponent
+} from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 @Component({
@@ -36,9 +39,16 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   private sessionHandling: SessionHandling;
   public currentStatus: string = "Fehlgeschlagen";
   public statusArray: Array<string> = ["Fehlgeschlagen", "Erfolgreich", "Laufend", "Neu", "Alle"];
+  public currentTimestamp: string = "letzter Monat";
+  public timestampArray: Array<string> = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "alle"];
   public ActionButtonColors = ActionButtonColors;
+  public timestampDropdownLable = "Zeitstempel";
+  public filterDropdownLable ="Status";
+  public cypressTagStatus ="status-filter-selection";
+  public cypressTagTimestamp = "timestamp-filter-selection";
   public offsetMultiplictor = 0;
   public queryPageLimit = 500;
+
 
   constructor(private MigrationDataProvider: MigrationProviderService,
     private userProvider: UserProfileDataProviderService,
@@ -73,7 +83,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
 
 
   private loadTableRows() {
-    this.MigrationDataProvider.findErrors(this.offsetMultiplictor,this.queryPageLimit)
+    this.MigrationDataProvider.findErrors(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
         .then((response: BogenligaResponse<TriggerDTO[]>) => {
           this.handleLoadTableRowsSuccess(response);
           console.log(response);
@@ -82,7 +92,6 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 
   public startMigration() {
-
     try {
       this.notificationService.showNotification({
         id:          'Migrationslauf starten?',
@@ -123,7 +132,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         block:    'start'
       });
     }
-    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
+    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
   public nextPageButton(){
     this.offsetMultiplictor++;
@@ -134,54 +143,61 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
         block: 'start'
       });
     }
-    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
+    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
-  filterForStatus(multiplicator: number,pagelimit: number) {
+  selectTimestamp() {
+    this.currentTimestamp = FilterTimestampInputbarComponent.currentTimestamp
+    console.log('Timestamp switched to ' + this.currentTimestamp + ' and resetted OffsetMultiplicator')
+    this.queryPageLimit= 500;
+    this.offsetMultiplictor=0;
+    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
+  }
+  filterForStatus(multiplicator: number,pagelimit: number,timestamp:string) {
     try {
-        switch(this.currentStatus) {
-          case "Fehlgeschlagen":
-            this.MigrationDataProvider.findErrors(multiplicator,pagelimit)
-                .then((response: BogenligaResponse<TriggerDTO[]>) => {
-                  this.handleLoadTableRowsSuccess(response);
-                  console.log(response);
-                })
-                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-            break;
-          case "Alle":
-            this.MigrationDataProvider.findAllWithPages(multiplicator,pagelimit)
-                .then((response: BogenligaResponse<TriggerDTO[]>) => {
-                  this.handleLoadTableRowsSuccess(response);
-                  console.log(response);
-                })
-                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-            break;
-          case "Erfolgreich":
-            this.MigrationDataProvider.findSuccessed(multiplicator,pagelimit)
-                .then((response: BogenligaResponse<TriggerDTO[]>) => {
-                  this.handleLoadTableRowsSuccess(response);
-                  console.log(response);
-                })
-                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-            break;
-          case "Laufend":
-            this.MigrationDataProvider.findInProgress(multiplicator,pagelimit)
-                .then((response: BogenligaResponse<TriggerDTO[]>) => {
-                  this.handleLoadTableRowsSuccess(response);
-                  console.log(response);
-                })
-                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-            break;
-          case "Neu":
-            this.MigrationDataProvider.findNews(multiplicator,pagelimit)
-                .then((response: BogenligaResponse<TriggerDTO[]>) => {
-                  this.handleLoadTableRowsSuccess(response);
-                  console.log(response);
-                })
-                .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
-            break;
-          default:
-            console.log('ERROR WHILE SELECTING STATUS')
-            break;
+      switch(this.currentStatus) {
+        case "Fehlgeschlagen":
+          this.MigrationDataProvider.findErrors(multiplicator,pagelimit,timestamp)
+              .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                this.handleLoadTableRowsSuccess(response);
+                console.log(response);
+              })
+              .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+          break;
+        case "Alle":
+          this.MigrationDataProvider.findAllWithPages(multiplicator,pagelimit,timestamp)
+              .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                this.handleLoadTableRowsSuccess(response);
+                console.log(response);
+              })
+              .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+          break;
+        case "Erfolgreich":
+          this.MigrationDataProvider.findSuccessed(multiplicator,pagelimit,timestamp)
+              .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                this.handleLoadTableRowsSuccess(response);
+                console.log(response);
+              })
+              .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+          break;
+        case "Laufend":
+          this.MigrationDataProvider.findInProgress(multiplicator,pagelimit,timestamp)
+              .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                this.handleLoadTableRowsSuccess(response);
+                console.log(response);
+              })
+              .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+          break;
+        case "Neu":
+          this.MigrationDataProvider.findNews(multiplicator,pagelimit,timestamp)
+              .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                this.handleLoadTableRowsSuccess(response);
+                console.log(response);
+              })
+              .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+          break;
+        default:
+          console.log('ERROR WHILE SELECTING STATUS')
+          break;
       }
     } catch (e) {
       this.notificationService.showNotification({
@@ -196,11 +212,48 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     }
   }
   selectFilterForStatus(){
-    this.currentStatus = FilterinputbarComponent.currentItem
-    console.log('Status switched to ' + this.currentStatus + ' and resetet OffsetMultiplicator')
+    this.currentStatus = FilterinputbarComponent.currentStatus
+    console.log('Status switched to ' + this.currentStatus + ' and resetted OffsetMultiplicator')
     this.queryPageLimit= 500;
     this.offsetMultiplictor=0;
-    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit)
+    this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
+  }
+  deleteEntries() {
+    try {
+      this.notificationService.showNotification({
+        id:          'Löschung durchführen?',
+        description: 'Möchten Sie die Eintrage löschen?',
+        title:       'Löschung starten',
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.YES_NO,
+        severity:    NotificationSeverity.QUESTION,
+        userAction:  NotificationUserAction.PENDING
+      });
+
+      this.notificationService.observeNotification('Löschung durchführen?')
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.offsetMultiplictor = 0;
+              this.queryPageLimit = 500;
+              this.MigrationDataProvider.deleteEntries(this.currentStatus,this.currentTimestamp)
+                  .then((response: BogenligaResponse<TriggerDTO[]>) => {
+                    this.handleLoadTableRowsSuccess(response);
+                    console.log(response);
+                  })
+                  .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+            }
+          });
+    } catch (e) {
+      this.notificationService.showNotification({
+        id:          'Fehler beim Starten der Löschung',
+        description: 'Ein Fehler ist aufgetreten und es wurden keine Daten gelöscht.',
+        title:       'Fehler beim Start des Löschens',
+        origin:      NotificationOrigin.SYSTEM,
+        userAction:  NotificationUserAction.ACCEPTED,
+        type:        NotificationType.OK,
+        severity:    NotificationSeverity.INFO
+      });
+    }
   }
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];

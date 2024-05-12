@@ -25,6 +25,13 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public showFilterButton: boolean = false;
   @Input() public filterItem: string;
   @Input() public filterItems: Array<string>;
+  @Input() public timeItem: string;
+  @Input() public timeItems: Array<string>;
+  @Input() public timestampDropdownLabel: string;
+  @Input() public filterDropdownLabel: string;
+  @Input() public cypressTagTimestamp: string;
+  @Input() public cypressTagStatus: string;
+
 
   public ActionButtonColors = ActionButtonColors;
 
@@ -37,6 +44,9 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Output() public onNextPageButtonClicked = new EventEmitter<string>();
   @Output() public onPreviousPageButtonClicked = new EventEmitter<string>();
   @Output() public onFilterClicked = new EventEmitter<string>();
+  @Output() public onDeleteButtonClicked = new EventEmitter<string>();
+  @Output() public onTimestampClicked = new EventEmitter<string>();
+
   constructor(private currentUserService: CurrentUserService) {
     super(currentUserService);
   }
@@ -67,11 +77,17 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   public onCustomActionButtonClick() {
     this.onCustomActionButtonClicked.emit();
   }
+  public onDeleteButtonClick() {
+    this.onDeleteButtonClicked.emit();
+  }
   public onFilterClick() {
     this.onFilterClicked.emit();
   }
   public onPreviousPageButtonClick() {
     this.onPreviousPageButtonClicked.emit();
+  }
+  public onTimestampClick() {
+    this.onTimestampClicked.emit();
   }
   public onNextPageButtonClick() {
     this.onNextPageButtonClicked.emit();

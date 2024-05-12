@@ -48,9 +48,9 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   public rowsLigatabelle: TableRow[];
   public providedID: number;
   private hasID: boolean;
-  private hasVeranstaltung: boolean = true;
+  private hasVeranstaltung = true;
 
-  private isDeselected: boolean = false;
+  private isDeselected = false;
   private remainingLigatabelleRequests: number;
 
 
@@ -59,8 +59,9 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
 
   private veranstaltungIdMap: Map<number, VeranstaltungDO>;
   public selectedItemId: number;
-  private selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
+  private selectedYearForVeranstaltung: number; 
   public selectedWettkampftag: any;
+
 
 
 
@@ -89,6 +90,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
       console.log("selectedWettkampftag:", this.selectedWettkampftag);
     });
     if(!this.isDeselected) {
+
       console.log('Component is not deselected.');
       this.providedID = undefined;
       this.hasID = false;
@@ -113,7 +115,17 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     this.currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
     this.timeSubscription = interval(60000).subscribe(() => {
       this.currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+      this.refreshTable();
     });
+  }
+
+  async refreshTable() {
+    try {
+      await this.loadTableData(this.selectedVeranstaltungId);
+      console.log('Table data updated. Waiting 60 seconds.');
+    } catch (error) {
+      console.error('Error updating table data:', error);
+    }
   }
 
 
@@ -163,7 +175,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
             this.rowsLigatabelle = [];
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Fehler beim Laden der Ligatabelle:', error);
           this.rowsLigatabelle = [];
         })
