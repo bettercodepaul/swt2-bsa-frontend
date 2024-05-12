@@ -5,44 +5,55 @@
     <p class="subtitle">{{'VEREINE.VEREINE.DESCRIPTION' | translate}}</p>
     <form class="horizontal-form half-page"
           id="regionenForm">
-      <div>
-        <h2 style="display: inline">{{'WETTKAEMPFE.WETTKAEMPFE.GEWAEHLTE_VERANSTALTUNG' | translate}}</h2>
-        <h3 class="print1"
-            id="titel"
-            style="display: inline">{{currentVeranstaltung.name}}</h3>
-      </div>
-      <div>
-        <h2 style="display: inline">{{'WETTKAEMPFE.WETTKAEMPFE.GEWAEHLTE_MANNSCHAFT' | translate}}</h2>
-        <h3 style="display: inline"
-            class="print1"
-            id="titel2"> {{getTitle()}}</h3>
-      </div>
-
 
       <!-- Die Texte werden in der de.json Datei gesetzt-->
       <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
       gesetzt wird es in styles.scss-->
 
-    <!-- Veranstaltung -->
-    <div id="selectVereink">
-      <div class="row">
+      <!-- Jahr -->
+      <div class="row print1">
         <label class="form-label-box col-form-label">
-          <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.VERANSTALTUNG_NAME.LABEL' | translate }}</span>
+          <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
         </label>
         <div class="col-sm-8">
-          <bla-selectionlist [id]="'quickSearch'"
-                             [loading]="areVeranstaltungenLoading"
-                             [items]="veranstaltungen"
-                             [selectedItemIds]=[currentVeranstaltung.id]
-                             [optionFieldSelector]="'name'"
-                             (onSelect)="onSelect($event);"
-                             [multipleSelections]="!multipleSelections"
-                             style="width: 50%; height: 10em;">
+          <select class="form-control"
+                  id="jahr"
+                  name="Jahre"
+                  [(ngModel)]="currentJahr"
+                  [disabled]="loadingData"
+                  (ngModelChange)="filterVeranstaltungenBySportjahr()"
+          >
 
-          </bla-selectionlist>
+            <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
+          </select>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+          </div>
         </div>
       </div>
-    </div>
+
+      <!-- Liga -->
+      <div id="selectVereink">
+        <div class="row">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.LIGA_NAME.LABEL' | translate }}</span>
+          </label>
+
+          <div class="col-sm-8">
+            <select
+              class="form-control"
+              id="veranstaltungen"
+              name="VeranstaltungName"
+              [(ngModel)]="currentVeranstaltung"
+              (ngModelChange)="onSelect()"
+              [disabled]="loadingData">
+
+              <option *ngFor="let veranstaltung of veranstaltungBySportjahr" [ngValue]="veranstaltung"> {{veranstaltung.name}} </option>
+            </select>
+          </div>
+        </div>
+
+      </div>
 
     <!-- Mannschaft -->
     <div id="selectVerein">
@@ -66,24 +77,7 @@
       </div>
     </div>
 
-    <!-- Jahr -->
-    <div class="row print1">
-      <label class="form-label-box col-form-label">
-        <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
-      </label>
-      <div class="col-sm-8">
-        <select class="form-control"
-                id="jahr"
-                name="Jahre"
-                [(ngModel)]="currentJahr"
-                [disabled]="loadingData">
-          <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
-        </select>
-        <div class="invalid-feedback">
-          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
-        </div>
-      </div>
-    </div>
+
 
     <br>
     <div id="vereinsinformationen" class="hidden">

@@ -66,6 +66,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public ActionButtonColors = ActionButtonColors;
   private sessionHandling: SessionHandling;
   public selectedStatistik: string = 'gesamtstatistik';
+  public veranstaltungBySportjahr: Array<VeranstaltungDO> = []
 
   popup: boolean;
   gesamt = false;
@@ -97,7 +98,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadVeranstaltungen
    */
   ngOnInit() {
-    this.loadVeranstaltungen();
+    this.loadVeranstaltungen()
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -330,9 +331,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadWettkaempfe
    * @param $event
    */
-  public async onSelect($event: VeranstaltungDO[]): Promise<void> {
+  public async onSelect(): Promise<void> {
     this.loadingData = true;
-    this.currentVeranstaltung = $event[0];
     this.currentJahr = this.currentVeranstaltung.sportjahr;
     this.jahre[0] = this.currentJahr;
     this.clear();
@@ -358,16 +358,36 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   }
 
+  public async filterVeranstaltungenBySportjahr() {
+    this.loadingData = true;
+
+    let visibleListOfVeranstaltungen = []
+
+    for (const v of this.veranstaltungen) {
+      if (v.sportjahr == this.currentJahr) {
+        visibleListOfVeranstaltungen.push(v)
+      }
+    }
+    this.veranstaltungBySportjahr = visibleListOfVeranstaltungen;
+    this.currentVeranstaltung = this.veranstaltungBySportjahr[0];
+
+    await this.loadMannschaften(this.currentVeranstaltung.id);
+    await this.loadWettkaempfe(this.currentVeranstaltung.id);
+
+    this.loadingData = false;
+  }
+
 
   async handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.veranstaltungen = response.payload;
+
     this.currentVeranstaltung = this.veranstaltungen[0];
     this.areVeranstaltungenLoading = false;
     this.currentJahr = this.currentVeranstaltung.sportjahr;
-    await this.loadMannschaften(this.currentVeranstaltung.id);
-    await this.loadWettkaempfe(this.currentVeranstaltung.id);
+
     await this.loadJahre();
-    this.loadingData = false;
+
+    await this.filterVeranstaltungenBySportjahr();
   }
 
   public async loadMannschaften(veranstaltungsId: number) {

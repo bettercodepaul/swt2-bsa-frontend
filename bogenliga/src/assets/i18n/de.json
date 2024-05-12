@@ -385,6 +385,9 @@
         },
         "SPORTJAHR": {
           "LABEL": "Sportjahr:"
+        },
+        "LIGA_NAME": {
+          "LABEL": "Liga:"
         }
       },
       "TABLE": {
