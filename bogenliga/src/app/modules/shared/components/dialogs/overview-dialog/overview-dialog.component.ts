@@ -5,6 +5,7 @@ import {CommonSecuredDirective} from '../../common/common-secured-component.clas
 import {TableRow} from '../../tables/types/table-row.class';
 import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {MigrationTableSorter} from '@shared/components/tables/control/migration-table-sorter';
 
 @Component({
   selector:    'bla-overview-dialog',
@@ -14,6 +15,7 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 export class OverviewDialogComponent extends CommonSecuredDirective implements OnInit {
 
   @Input() public config: OverviewDialogConfig;
+  @Input() public tableSorter: MigrationTableSorter;
   @Input() public rows: TableRow[];
   @Input() public hidden = true;
   @Input() public searchTerm: string;

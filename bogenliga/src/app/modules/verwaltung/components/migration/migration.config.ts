@@ -12,31 +12,37 @@ export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.OLD',
         propertyName:   'altsystemId',
         width:          10,
+        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TABLENAME',
         propertyName:   'kategorie',
         width:          20,
+        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.OPERATION',
         propertyName:   'operation',
         width:          20,
+        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.STATUS',
         propertyName:   'status',
         width:          10,
+        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.MESSAGE',
         propertyName:   'nachricht',
         width:          20,
+        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TIMESTAMP',
         propertyName:   'runAtUtc',
         width:          20,
+        sortable: true
       },
 
     ],
