@@ -1,6 +1,6 @@
 import {OverviewDialogConfig} from '../../../shared/components/dialogs';
-import {TableActionType} from '../../../shared/components/tables/types/table-action-type.enum';
 import {UserPermission} from '@shared/services';
+import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
 
 export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -12,37 +12,33 @@ export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.OLD',
         propertyName:   'altsystemId',
         width:          10,
-        sortable: true
+        sortable: true,
+        type: TableColumnType.NUMBER
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TABLENAME',
         propertyName:   'kategorie',
         width:          20,
-        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.OPERATION',
         propertyName:   'operation',
         width:          20,
-        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.STATUS',
         propertyName:   'status',
         width:          10,
-        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.MESSAGE',
         propertyName:   'nachricht',
         width:          20,
-        sortable: true
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TIMESTAMP',
         propertyName:   'runAtUtc',
         width:          20,
-        sortable: true
       },
 
     ],

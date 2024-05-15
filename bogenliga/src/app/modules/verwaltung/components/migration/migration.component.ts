@@ -23,7 +23,7 @@ import {
   FilterTimestampInputbarComponent
 } from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
 import {Migration} from '@angular/cdk/schematics';
-import {MigrationTableSorter} from '@shared/components/tables/control/migration-table-sorter';
+
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 @Component({
@@ -34,7 +34,6 @@ export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 export class MigrationComponent extends CommonComponentDirective implements OnInit {
   public rows: TableRow[];
   public config = MIGRATION_OVERVIEW_CONFIG;
-  public tableSorter = new MigrationTableSorter(this.config.tableConfig);
   public ButtonType = ButtonType;
   public deleteLoading = false;
   public saveLoading = false;
