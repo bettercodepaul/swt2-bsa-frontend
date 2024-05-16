@@ -824,7 +824,13 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
 
   // Navigiert den User, in einem neuem Tab, zur Live-Tabelle
   redirectToFullScreen(veranstaltungId: number): void {
-    console.log("selectedWettkampftag wkdurchführung", this.selectedWettkampftag)
-    this.router.navigate(['/wkdurchfuehrung/fullscreen', veranstaltungId], { queryParams: { wettkampftag: this.selectedWettkampftag} });
+    console.log('selectedWettkampftag wkdurchführung', this.selectedWettkampftag);
+    const url = '#' + this.router.serializeUrl(
+      this.router.createUrlTree(
+        ['wkdurchfuehrung/fullscreen', veranstaltungId],
+        { queryParams: { wettkampftag: this.selectedWettkampftag } }
+      )
+    );
+    window.open(url, '_blank');
   }
 }
