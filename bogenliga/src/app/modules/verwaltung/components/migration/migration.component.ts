@@ -22,6 +22,8 @@ import {FilterinputbarComponent} from '@shared/components/selectionlists/filteri
 import {
   FilterTimestampInputbarComponent
 } from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
+import {Migration} from '@angular/cdk/schematics';
+
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 @Component({

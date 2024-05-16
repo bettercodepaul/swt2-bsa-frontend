@@ -1,6 +1,6 @@
 import {OverviewDialogConfig} from '../../../shared/components/dialogs';
-import {TableActionType} from '../../../shared/components/tables/types/table-action-type.enum';
 import {UserPermission} from '@shared/services';
+import {TableColumnType} from '@shared/components/tables/types/table-column-type.enum';
 
 export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
   moduleTranslationKey:    'MANAGEMENT',
@@ -12,6 +12,8 @@ export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.OLD',
         propertyName:   'altsystemId',
         width:          10,
+        sortable: true,
+        type: TableColumnType.NUMBER
       },
       {
         translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TABLENAME',
