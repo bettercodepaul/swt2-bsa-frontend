@@ -9,8 +9,8 @@ import {
   VersionedDataTransferObject
 } from '@shared/data-provider';
 import {CurrentUserService} from '@shared/services';
-import {fromPayloadArray} from '@verwaltung/mapper/schuetzenstatistik-mapper';
-import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
+import {fromPayloadArray} from '@verwaltung/mapper/schuetzenstatistikmatch-mapper';
+import {SchuetzenstatistikMatchDO} from '@verwaltung/types/schuetzenstatistikmatch-do.class';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class SchuetzenstatistikMatchDataProviderService extends DataProviderServ
     super();
   }
 
-  public getSchuetzenstatistikMatchVeranstaltung(vereinId: string | number, veranstaltungId: string | number): Promise<BogenligaResponse<SchuetzenstatistikDO[]>> {
+  public getSchuetzenstatistikMatchVeranstaltung(vereinId: string | number, veranstaltungId: string | number): Promise<BogenligaResponse<SchuetzenstatistikMatchDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
@@ -45,7 +45,7 @@ export class SchuetzenstatistikMatchDataProviderService extends DataProviderServ
     });
   }
 
-  public getSchuetzenstatistikMatchWettkampf(vereinId: string | number, wettkampfId: string | number): Promise<BogenligaResponse<SchuetzenstatistikDO[]>> {
+  public getSchuetzenstatistikMatchWettkampf(vereinId: string | number, wettkampfId: string | number): Promise<BogenligaResponse<SchuetzenstatistikMatchDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
