@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '@shared/shared.module';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
 import {WettkampfComponent} from '@wettkampf/components';
+import {StatistikFilterComponent} from '@shared/components/buttons/statistik-filter-button/statistik-filter.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import {WettkampfComponent} from '@wettkampf/components';
     SharedModule,
     FormsModule
   ],
-  declarations: [WettkampfComponent]
+  declarations: [WettkampfComponent, StatistikFilterComponent]
 })
 export class WettkampfModule {
 }

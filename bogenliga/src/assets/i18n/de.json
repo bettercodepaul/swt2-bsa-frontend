@@ -882,7 +882,7 @@
       }
     },
     "VEREIN_DETAIL": {
-      "TITLE": "Verein - Details",
+      "TITLE": "Details zum Verein",
       "FORM": {
         "VEREIN_NAME": {
           "LABEL": "Vereinsname",
@@ -905,9 +905,9 @@
           "ERROR": "Bitte eine gültige Webseite angeben."
         },
         "VEREIN_DESCRIPTION": {
-          "LABEL": "Freitext",
+          "LABEL": "Beschreibung",
           "PLACEHOLDER": "Bitte eine kurze Vorstellung eingeben",
-          "ERROR": "Bitte einen gültigen Freitext eingeben."
+          "ERROR": "Bitte eine gültige Beschreibung eingeben."
         },
         "VEREIN_ICON": {
           "LABEL": "Vereinslogo",

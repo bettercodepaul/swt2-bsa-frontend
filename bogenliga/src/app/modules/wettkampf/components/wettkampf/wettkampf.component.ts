@@ -65,11 +65,20 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public ActionButtonColors = ActionButtonColors;
   private sessionHandling: SessionHandling;
+
   public selectedStatistik: string = 'gesamtstatistik';
-  public veranstaltungBySportjahr: Array<VeranstaltungDO> = []
+  public selectedMannschaft: string = 'aktuelle_mannschaft';
+
+  public schuetzenStatistikActive = false;
+  public mannschaftStatistikActive = false;
+
+  /**
+   * Enthält alle Veranstaltungen aus dem ausgewählten Sportjahr
+   * {@link this.filterVeranstaltungenBySportjahr}
+   */
+  public veranstaltungenFilteredBySportjahr: Array<VeranstaltungDO> = []
 
   popup: boolean;
-  gesamt = false;
 
   // Die Werte des Array's entspricht dem Inhalt von allen 4 Wettkampftagen. false = leere Tabelle, true = Tabelle mit Inhalt
   isTableFilled: Array<boolean> = [false, false, false, false];
@@ -121,7 +130,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.vereinDataProvider.findById(vereinId)
               .then((response: BogenligaResponse<VereinDO>) => this.handleLoadVerein(response))
               .catch(() => this.handleLoadVerein(null));
-    document.getElementById('vereinsinformationen').classList.remove('hidden');
+    //document.getElementById('vereinsinformationen').classList.remove('hidden');
   }
 
   /**
@@ -246,7 +255,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadingData = false;
   }
 
-  /* loadGesamtstatistik
+  /**
    Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
    Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ergebnis-service.ts zu finden)
    Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
@@ -358,18 +367,24 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   }
 
+  /**
+   * Erzeugt ein Array aus Veranstaltungen, welche im aktuell ausgewählten Sportjahr stattinden.
+   * Dieses Array ({@link this.veranstaltungBySportjahr}) wird in der {@link wettkampf.component.html}
+   * demensprechend in das Dropdown für Veranstaltungen geladen.
+   */
   public async filterVeranstaltungenBySportjahr() {
     this.loadingData = true;
 
-    let visibleListOfVeranstaltungen = []
+    let veranstaltungenInCurrentSportjahr = [];
 
     for (const v of this.veranstaltungen) {
       if (v.sportjahr == this.currentJahr) {
-        visibleListOfVeranstaltungen.push(v)
+        veranstaltungenInCurrentSportjahr.push(v)
       }
     }
-    this.veranstaltungBySportjahr = visibleListOfVeranstaltungen;
-    this.currentVeranstaltung = this.veranstaltungBySportjahr[0];
+
+    this.veranstaltungenFilteredBySportjahr = veranstaltungenInCurrentSportjahr;
+    this.currentVeranstaltung = this.veranstaltungenFilteredBySportjahr[0];
 
     await this.loadMannschaften(this.currentVeranstaltung.id);
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
@@ -386,8 +401,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.currentJahr = this.currentVeranstaltung.sportjahr;
 
     await this.loadJahre();
-
     await this.filterVeranstaltungenBySportjahr();
+    await this.showStatistikOptions();
   }
 
   public async loadMannschaften(veranstaltungsId: number) {
@@ -497,7 +512,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       .build();
   }
 
-  public hideUebersichtsButtons(): void {
+  private hideUebersichtsButtons(): void {
     document.getElementById('TagesuebersichtButton').classList.add('hidden');
     document.getElementById('TagesuebersichtButton2').classList.add('hidden');
     document.getElementById('TagesuebersichtButton3').classList.add('hidden');
@@ -560,9 +575,33 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
   }
 
+  public async onSelectMannschaft() {
+    if (this.selectedMannschaft === 'aktuelle_mannschaft') {
+      await this.loadErgebnisForMannschaft(this.currentMannschaft);
+    } else if (this.selectedMannschaft === 'alle_mannschaften') {
+      await this.loadAllErgebnisse(undefined);
+    }
+  }
+
   public async showStatistikOptions() {
     document.getElementById('selectStatistik').classList.remove('hidden');
+    document.getElementById('selectMannschaftStatistik').classList.add('hidden');
+
+    this.mannschaftStatistikActive = false;
+    this.schuetzenStatistikActive = true;
+
     await this.loadGesamtstatistik(this.currentMannschaft);
     this.selectedStatistik = 'gesamtstatistik';
+  }
+
+  public async showMannschaftOptions() {
+    document.getElementById('selectMannschaftStatistik').classList.remove('hidden');
+    document.getElementById('selectStatistik').classList.add('hidden');
+
+    this.schuetzenStatistikActive = false;
+    this.mannschaftStatistikActive = true;
+
+    await this.loadErgebnisForMannschaft(this.currentMannschaft);
+    this.selectedMannschaft = 'aktuelle_mannschaft';
   }
 }

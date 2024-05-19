@@ -10,6 +10,13 @@
       <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
       gesetzt wird es in styles.scss-->
 
+
+
+      <!-- Überschrift Auswahl Veranstaltung Mannschaft -->
+      <!-- TODO mit der de.json verbinden -->
+      <h2 style="margin-top: 0">Auswahl der Veranstaltung und Mannschaft</h2>
+
+
       <!-- Jahr -->
       <div class="row print1">
         <label class="form-label-box col-form-label">
@@ -23,7 +30,6 @@
                   [disabled]="loadingData"
                   (ngModelChange)="filterVeranstaltungenBySportjahr()"
           >
-
             <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
           </select>
           <div class="invalid-feedback">
@@ -32,13 +38,13 @@
         </div>
       </div>
 
+
       <!-- Liga -->
       <div id="selectVereink">
         <div class="row">
           <label class="form-label-box col-form-label">
             <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.LIGA_NAME.LABEL' | translate }}</span>
           </label>
-
           <div class="col-sm-8">
             <select
               class="form-control"
@@ -46,144 +52,191 @@
               name="VeranstaltungName"
               [(ngModel)]="currentVeranstaltung"
               (ngModelChange)="onSelect()"
-              [disabled]="loadingData">
-
-              <option *ngFor="let veranstaltung of veranstaltungBySportjahr" [ngValue]="veranstaltung"> {{veranstaltung.name}} </option>
+              [disabled]="loadingData"
+            >
+              <option *ngFor="let veranstaltung of veranstaltungenFilteredBySportjahr" [ngValue]="veranstaltung"> {{veranstaltung.name}} </option>
             </select>
           </div>
         </div>
-
       </div>
 
-    <!-- Mannschaft -->
-    <div id="selectVerein">
-      <div class="row">
-        <label class="form-label-box col-form-label">
-          <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
-        </label>
-        <div class="col-sm-8">
-          <select class="form-control"
-                  id="vereine"
-                  name="VereinName"
-                  [(ngModel)]="currentMannschaft"
-                  [disabled]="loadingData"
-                  (ngModelChange)="onSelectVerein()">
-            <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
-          </select>
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+
+      <!-- Mannschaft -->
+      <div id="selectVerein">
+        <div class="row">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.MANNSCHAFT_NAME.LABEL' | translate }}</span>
+          </label>
+          <div class="col-sm-8">
+            <select class="form-control"
+                    id="vereine"
+                    name="VereinName"
+                    [(ngModel)]="currentMannschaft"
+                    [disabled]="loadingData"
+                    (ngModelChange)="onSelectVerein()">
+              <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
+            </select>
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
 
-
-    <br>
-    <div id="vereinsinformationen" class="hidden">
-      <h3>{{ 'MANAGEMENT.VEREIN_DETAIL.TITLE' | translate }}</h3>
-      <!-- Vereinsname -->
-      <div class="row print1">
-        <label class="form-label-box col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}:</span>
-        </label>
-        <div class="col-sm-8">
-          <div class="form-control">
-            <div>{{this.currentVerein.name}}</div>
+      <!-- Details zum Verein -->
+      <div id="vereinsinformationen" >
+        <h2>{{ 'MANAGEMENT.VEREIN_DETAIL.TITLE' | translate }}</h2>
+        <!-- Vereinsname -->
+        <div class="row print1">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}:</span>
+          </label>
+          <div class="col-sm-8">
+            <div class="form-control">
+              <div>{{this.currentVerein.name}}</div>
+            </div>
+          </div>
+        </div>
+        <!-- Regionsname -->
+        <div class="row print1">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}:</span>
+          </label>
+          <div class="col-sm-8">
+            <div class="form-control">
+              <div>{{this.currentVerein.regionName}}</div>
+            </div>
+          </div>
+        </div>
+        <!-- Webseite -->
+        <div class="row print1">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}:</span>
+          </label>
+          <div class="col-sm-8">
+            <div class="form-control">
+              <div><a href="{{this.currentVerein.website}}">{{this.currentVerein.website}}</a></div>
+            </div>
+          </div>
+        </div>
+        <!-- Beschreibung -->
+        <div class="row print1">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}:</span>
+          </label>
+          <div class="col-sm-8">
+              <div class="form-control">{{this.currentVerein.description}}</div>
+          </div>
+        </div>
+        <!-- Vereinslogo -->
+        <div class="row print1">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}:</span>
+          </label>
+          <div class="col-sm-8">
+            <img src="{{this.currentVerein.icon}}"
+                 alt="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.ERROR_PLACEHOLDER' | translate }}"
+                 width="100" height="100"/>
           </div>
         </div>
       </div>
-      <!-- Regionsname -->
-      <div class="row print1">
-        <label class="form-label-box col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_REGION.LABEL' | translate }}:</span>
-        </label>
-        <div class="col-sm-8">
-          <div class="form-control">
-            <div>{{this.currentVerein.regionName}}</div>
+
+
+      <!-- Überschrift Statistiken -->
+      <!-- TODO mit der de.json verbinden -->
+      <h2>Statistiken</h2>
+
+
+      <!-- Filter Buttons für die verschiedenen Tabellen -->
+      <div style="margin-top: 20px">
+        <!-- TODO mit der de.json verbinden -->
+        <bla-statistik-filter-button
+          [id]="'showResultsButton'"
+          (onClick)="showStatistikOptions();"
+          [active]="schuetzenStatistikActive"
+          [disabled]="loadingData"
+        >
+          Schützen
+        </bla-statistik-filter-button>
+
+        <!-- TODO mit der de.json verbinden -->
+        <bla-statistik-filter-button
+          [id]="''"
+          (onClick)="showMannschaftOptions()"
+          [active]="mannschaftStatistikActive"
+          [disabled]="loadingData"
+        >
+          Mannschaften
+        </bla-statistik-filter-button>
+      </div>
+
+
+      <!-- popup -->
+      <div class="overlay" *ngIf="popup">
+        <div class="popup">
+          <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.POPUPTXT.POPUPÜBERSCHRIFT.LABEL' | translate }}</h2>
+          <a class="close" (click)="popup = false">&times;</a>
+          <div class="content_popup">
+            <p>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.POPUPTXT.POPUPINHALT.LABEL' | translate }}
+            </p>
+            <p></p>
           </div>
         </div>
       </div>
-      <!-- Webseite -->
-      <div class="row print1">
-        <label class="form-label-box col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_WEBSITE.LABEL' | translate }}:</span>
-        </label>
-        <div class="col-sm-8">
-          <div class="form-control">
-            <div><a href="{{this.currentVerein.website}}">{{this.currentVerein.website}}</a></div>
+
+
+      <div class="col-sm-9">
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+        </div>
+      </div>
+
+
+      <!-- Dropdown Schützenstatistik -->
+      <div id="selectStatistik" class="hidden">
+        <div class="row">
+          <div class="col-sm-8">
+            <select class="form-control"
+                    style="width: 50%"
+                    id="statistiken"
+                    name="StatistikName"
+                    [(ngModel)]="selectedStatistik"
+                    [disabled]="loadingData"
+                    (ngModelChange)="onSelectStatistik()">
+              <option value="gesamtstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION1.LABEL' | translate }} </option>
+              <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
+            </select>
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+            </div>
           </div>
         </div>
       </div>
-      <!-- Freitext -->
-      <div class="row print1">
-        <label class="form-label-box col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_DESCRIPTION.LABEL' | translate }}:</span>
-        </label>
-        <div class="col-sm-8">
-            <textarea class="form-control" readonly>{{this.currentVerein.description}}</textarea>
+
+
+      <!-- Dropdown Mannschaftsstatistik -->
+      <div id="selectMannschaftStatistik" class="hidden">
+        <div class="row">
+          <div class="col-sm-8">
+            <select class="form-control"
+                    style="width: 50%"
+                    id="mannschaftsStatistiken"
+                    name="MannschaftStatistikName"
+                    [(ngModel)]="selectedMannschaft"
+                    [disabled]="loadingData"
+                    (ngModelChange)="onSelectMannschaft()">
+              <option value="aktuelle_mannschaft"> Aktuelle Mannschaft "{{currentMannschaft.name}}" </option>
+              <option value="alle_mannschaften"> Alle Mannschaften </option>
+            </select>
+            <div class="invalid-feedback">
+              {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Vereinslogo -->
-      <div class="row print1">
-        <label class="form-label-box col-form-label">
-          <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.LABEL' | translate }}:</span>
-        </label>
-        <div class="col-sm-8">
-          <img src="{{this.currentVerein.icon}}"
-               alt="{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_ICON.ERROR_PLACEHOLDER' | translate }}"
-               width="100" height="100"/>
-        </div>
-      </div>
-    </div>
 
-    <!-- Button -->
-    <div id="Button">
-      <!-- Button - Alle Mannschaften anzeigen -->
-      <bla-actionbutton
-        [id]="'showResultsButton'"
-        [loading]="loadingData"
-        [color]="ActionButtonColors.PRIMARY"
-        [iconClass]="'poll'"
-        (onClick)="loadAllErgebnisse(undefined);"
-        data-cy="alle-mannschaften-anzeigen-button">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENALL.LABEL' | translate }}
-
-      </bla-actionbutton>
-      &nbsp;
-      <!-- Button - Aktuelle Mannschaft anzeigen -->
-      <bla-actionbutton
-        [id]="'showResultsButton'"
-        [loading]="loadingData"
-        [color]="ActionButtonColors.PRIMARY"
-        [iconClass]="'poll'"
-        (onClick)="gesamt = false; loadErgebnisForMannschaft(this.currentMannschaft);">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
-      </bla-actionbutton>
-
-      <!-- Button - Statistik anzeigen -->
-      <bla-actionbutton
-        [id]="'showResultsButton'"
-        [loading]="loadingData"
-        [color]="ActionButtonColors.PRIMARY"
-        [iconClass]="'poll'"
-        (onClick)="gesamt = true; showStatistikOptions();">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENSTATISTIK.LABEL' | translate }}
-      </bla-actionbutton>
-      &nbsp;
-      <!-- Button - Einzelstatistik als PDF -->
-      <bla-download-actionbutton
-        class = "hidden"
-        id = "einzeldruckButton"
-        [id]="'downloadEinzelstatistik'"
-        [loading]="loadingData"
-        [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
-        [iconClass]="'file-download'"
-        [fileName]="'Einzelstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.EINZEL_ALS_PDF.LABEL'| translate}}
-      </bla-download-actionbutton>
-
-      <!-- Button - Gesamtstatistik Drucken -->
       <bla-download-actionbutton
         class = "hidden"
         id = "gesamtdruckButton"
@@ -193,152 +246,124 @@
         [iconClass]="'file-download'"
         [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
       </bla-download-actionbutton>
+      <!-- Row Gesamtstatistik -->
+      <div class="row print1">
+        <div id="Table0" class="hidden" style="padding:1em">
+          <h3>{{'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL' | translate}}</h3>
+          <!-- Button - Gesamtstatistik Drucken -->
 
 
 
-    </div>
-<!-- popup -->
-    <div class="overlay" *ngIf="popup">
-      <div class="popup">
-        <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.POPUPTXT.POPUPÜBERSCHRIFT.LABEL' | translate }}</h2>
-        <a class="close" (click)="popup = false">&times;</a>
-        <div class="content_popup">
-          <p>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.POPUPTXT.POPUPINHALT.LABEL' | translate }}
-          </p>
-          <p></p>
+          <bla-data-table id="row00"
+                          [loading]="loadingData"
+                          [config]="config_einzelGesamt_table"
+                          [rows]="rows[0]">
+          </bla-data-table>
         </div>
       </div>
-    </div>
-
-    <div class="col-sm-9">
-      <div class="invalid-feedback">
-        {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
-      </div>
-    </div>
-
-    <div id="selectStatistik" class="hidden">
-      <div class="row">
-        <div class="col-sm-8">
-          <select class="form-control"
-                  id="statistiken"
-                  name="StatistikName"
-                  [(ngModel)]="selectedStatistik"
-                  [disabled]="loadingData"
-                  (ngModelChange)="onSelectStatistik()">
-            <option value="gesamtstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION1.LABEL' | translate }} </option>
-            <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
-          </select>
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
-          </div>
+        <!-- Button - Einzelstatistik als PDF -->
+        <bla-download-actionbutton
+          class = "hidden"
+          id = "einzeldruckButton"
+          [id]="'downloadEinzelstatistik'"
+          [loading]="loadingData"
+          [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
+          [iconClass]="'file-download'"
+          [fileName]="'Einzelstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.EINZEL_ALS_PDF.LABEL'| translate}}
+        </bla-download-actionbutton>
+      <!-- Row 1 -->
+      <div class="row print1">
+        <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]" style="padding:1em">
+          <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGEINS' | translate}}</h3>
+          <bla-download-actionbutton id = "TagesuebersichtButton"
+                                     [iconClass]="'file-download'"
+                                     [color]="ActionButtonColors.PRIMARY"
+                               [id]="'downloadTagesuebersicht'"
+                               [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=1')"
+                               [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
+          </bla-download-actionbutton>
+          <bla-data-table id="row0"
+                          [loading]="loadingData"
+                          [config]="config_table"
+                          [rows]="rows[0]">
+          </bla-data-table>
+          <bla-data-table id="row01" class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_einzel_table"
+                          [rows]="rows[0]">
+          </bla-data-table>
         </div>
       </div>
-    </div>
-
-    <!-- Row Gesamtstatistik -->
-    <div class="row print1">
-      <div id="Table0" class="hidden" style="padding:1em">
-        <h3>{{'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL' | translate}}</h3>
-        <bla-data-table id="row00"
-                        [loading]="loadingData"
-                        [config]="config_einzelGesamt_table"
-                        [rows]="rows[0]">
-        </bla-data-table>
+      <!-- Row 2 -->
+      <div class="row print1">
+        <div id="Table2" class="hidden" [hidden]="!isTableFilled[1]">
+          <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGZWEI' | translate}}</h3>
+          <bla-download-actionbutton id = "TagesuebersichtButton2"
+                                     [iconClass]="'file-download'"
+                                     [color]="ActionButtonColors.PRIMARY"
+                               [id]="'downloadTagesuebersicht'"
+                               [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=2')"
+                               [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
+          </bla-download-actionbutton>
+          <bla-data-table id="row1"
+                          [loading]="loadingData"
+                          [config]="config_table"
+                          [rows]="rows[1]">
+          </bla-data-table>
+          <bla-data-table id="row11" class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_einzel_table"
+                          [rows]="rows[1]">
+          </bla-data-table>
+        </div>
       </div>
-    </div>
-    <!-- Row 1 -->
-    <div class="row print1">
-      <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]" style="padding:1em">
-        <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGEINS' | translate}}</h3>
-        <bla-download-actionbutton id = "TagesuebersichtButton"
-                                   [iconClass]="'file-download'"
-                                   [color]="ActionButtonColors.PRIMARY"
-                             [id]="'downloadTagesuebersicht'"
-                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=1')"
-                             [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
-        </bla-download-actionbutton>
-        <bla-data-table id="row0"
-                        [loading]="loadingData"
-                        [config]="config_table"
-                        [rows]="rows[0]">
-        </bla-data-table>
-        <bla-data-table id="row01" class="hidden"
-                        [loading]="loadingData"
-                        [config]="config_einzel_table"
-                        [rows]="rows[0]">
-        </bla-data-table>
+      <!-- Row 3 -->
+      <div class="row print1">
+        <div id="Table3" class="hidden" [hidden]="!isTableFilled[2]">
+          <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGDREI' | translate}}</h3>
+          <bla-download-actionbutton id = "TagesuebersichtButton3"
+                                     [iconClass]="'file-download'"
+                                     [color]="ActionButtonColors.PRIMARY"
+                               [id]="'downloadTagesuebersicht'"
+                               [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=3')"
+                               [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
+          </bla-download-actionbutton>
+          <bla-data-table id="row2"
+                          [loading]="loadingData"
+                          [config]="config_table"
+                          [rows]="rows[2]">
+          </bla-data-table>
+          <bla-data-table id="row21" class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_einzel_table"
+                          [rows]="rows[2]">
+          </bla-data-table>
+        </div>
       </div>
-    </div>
-    <!-- Row 2 -->
-    <div class="row print1">
-      <div id="Table2" class="hidden" [hidden]="!isTableFilled[1]">
-        <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGZWEI' | translate}}</h3>
-        <bla-download-actionbutton id = "TagesuebersichtButton2"
-                                   [iconClass]="'file-download'"
-                                   [color]="ActionButtonColors.PRIMARY"
-                             [id]="'downloadTagesuebersicht'"
-                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=2')"
-                             [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
-        </bla-download-actionbutton>
-        <bla-data-table id="row1"
-                        [loading]="loadingData"
-                        [config]="config_table"
-                        [rows]="rows[1]">
-        </bla-data-table>
-        <bla-data-table id="row11" class="hidden"
-                        [loading]="loadingData"
-                        [config]="config_einzel_table"
-                        [rows]="rows[1]">
-        </bla-data-table>
+      <!-- Row 4 -->
+      <div class="row print1">
+        <div id="Table4" class="hidden" [hidden]="!isTableFilled[3]">
+          <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGVIER' | translate}}</h3>
+          <bla-download-actionbutton id = "TagesuebersichtButton4"
+                                     [iconClass]="'file-download'"
+                                     [color]="ActionButtonColors.PRIMARY"
+                               [id]="'downloadTagesuebersicht'"
+                               [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=4')"
+                               [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
+          </bla-download-actionbutton>
+          <bla-data-table id="row3"
+                          [loading]="loadingData"
+                          [config]="config_table"
+                          [rows]="rows[3]">
+          </bla-data-table>
+          <bla-data-table id="row31"
+                          class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_einzel_table"
+                          [rows]="rows[3]">
+          </bla-data-table>
+        </div>
       </div>
-    </div>
-    <!-- Row 3 -->
-    <div class="row print1">
-      <div id="Table3" class="hidden" [hidden]="!isTableFilled[2]">
-        <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGDREI' | translate}}</h3>
-        <bla-download-actionbutton id = "TagesuebersichtButton3"
-                                   [iconClass]="'file-download'"
-                                   [color]="ActionButtonColors.PRIMARY"
-                             [id]="'downloadTagesuebersicht'"
-                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=3')"
-                             [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
-        </bla-download-actionbutton>
-        <bla-data-table id="row2"
-                        [loading]="loadingData"
-                        [config]="config_table"
-                        [rows]="rows[2]">
-        </bla-data-table>
-        <bla-data-table id="row21" class="hidden"
-                        [loading]="loadingData"
-                        [config]="config_einzel_table"
-                        [rows]="rows[2]">
-        </bla-data-table>
-      </div>
-    </div>
-    <!-- Row 4 -->
-    <div class="row print1">
-      <div id="Table4" class="hidden" [hidden]="!isTableFilled[3]">
-        <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGVIER' | translate}}</h3>
-        <bla-download-actionbutton id = "TagesuebersichtButton4"
-                                   [iconClass]="'file-download'"
-                                   [color]="ActionButtonColors.PRIMARY"
-                             [id]="'downloadTagesuebersicht'"
-                             [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=4')"
-                             [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
-        </bla-download-actionbutton>
-        <bla-data-table id="row3"
-                        [loading]="loadingData"
-                        [config]="config_table"
-                        [rows]="rows[3]">
-        </bla-data-table>
-        <bla-data-table id="row31"
-                        class="hidden"
-                        [loading]="loadingData"
-                        [config]="config_einzel_table"
-                        [rows]="rows[3]">
-        </bla-data-table>
-      </div>
-    </div>
 
       <div class="form-group row">
         <div class="col-sm-3"></div>
