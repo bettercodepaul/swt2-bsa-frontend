@@ -1,12 +1,34 @@
-<!--<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_migrationen" target="_blank"></bla-hilfe-button>-->
+<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_migrationen" target="_blank" id="hilfe-button"></bla-hilfe-button>
 <bla-overview-dialog [hidden]=false
                      [config]="config"
                      [rows]="rows"
                      [loading]="loading"
                      [searchTerm]="searchTerm"
                      [buttonLabel]="'Neue Migration'"
+                     [filterButtonLabel] ="'Nicht erfolgreiche Migrationen filtern'"
                      [isCustomActionButton]=true
+                     [changePageButtons]=true
                      (onCustomActionButtonClicked)="startMigration()"
+                     (onDeleteButtonClicked)="deleteEntries()"
+                     [showFilterButton] =true
+                     [showStatusFilter]=true
+                     (onPreviousPageButtonClicked)="previousPageButton()"
+                     (onNextPageButtonClicked)="nextPageButton()"
+                     [filterItem]="currentStatus"
+                     [filterItems]="statusArray"
+                     [timeItem]="currentTimestamp"
+                     [timeItems]="timestampArray"
+                     [timestampDropdownLabel]="timestampDropdownLable"
+                     [filterDropdownLabel]="filterDropdownLable"
+                     [cypressTagTimestamp]="cypressTagTimestamp"
+                     [cypressTagStatus]="cypressTagStatus"
+                     (onFilterClicked) = "selectFilterForStatus()"
+                     (onTimestampClicked)="selectTimestamp()"
+
+
 >
  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
+
+
+

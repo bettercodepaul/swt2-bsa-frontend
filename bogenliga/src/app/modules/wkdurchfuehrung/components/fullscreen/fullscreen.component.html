@@ -1,0 +1,40 @@
+
+  <div (mouseover)="onMouseOver($event)">
+    <div>
+      <div class="row" style="margin-left: 5px">
+
+        <div class="logo-and-header-container">
+          <div class="logo-container">
+            <img src="assets/img/Logos/BL_Logo/Favicon/apple-touch-icon.png"
+                 alt="bogenliga-logo" class="logo">
+          </div>
+          <div class="header-container">
+            <div class="veranstaltung-header">
+              {{ _selectedVeranstaltung.name }}
+            </div>
+            <div class="veranstaltung-header">
+              {{ _selectedVeranstaltung.ligaName}}
+            </div>
+            <div class="wettkampftag-header">
+              Wettkampftag 5
+            </div>
+          </div>
+        </div>
+
+        <div class="time-box">
+          {{ currentTime }}
+        </div>
+
+       <div class="table table-hover table-sm table-responsive-sm thead-light">
+        <bla-data-table
+          [config]="config_table"
+          [rows]="rowsLigatabelle"
+          [loading]="loadingLigatabelle"
+          (onRowEntry)="ligatabelleLinking();"
+        >
+        </bla-data-table>
+       </div>
+      </div>
+    </div>
+  </div>
+

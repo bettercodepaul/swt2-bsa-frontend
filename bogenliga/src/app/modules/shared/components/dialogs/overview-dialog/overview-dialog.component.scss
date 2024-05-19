@@ -7,7 +7,32 @@
 
   .overview-dialog-add {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between; /* Damit die Divs an den Enden der Reihe sind */
+    align-items: center;
+  }
+  .overview-dialog-add div {
+    flex-grow: 1; /* Streckt die Divs automatisch aus, um den verfügbaren Platz auszufüllen */
   }
 }
 
+.changePageButtonsAbove {
+  flex: auto;
+  display: flex;
+  justify-content: center; /* Zentriert die Elemente horizontal */
+  align-items: center;
+
+}
+
+.changePageButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.deleteButtonAndTimestampFilter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item {
+  margin: 10px;
+}

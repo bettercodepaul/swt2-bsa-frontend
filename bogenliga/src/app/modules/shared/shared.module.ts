@@ -62,6 +62,11 @@ import { ShortcutButton } from './components/buttons/shortcut-button/shortcut-bu
 import {
   VeranstaltungenButtonComponent
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
+import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
+import {
+  FilterTimestampInputbarComponent
+} from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
+
 
 @NgModule({
   imports: [
@@ -105,6 +110,8 @@ import {
     SelectionlistComponent,
     QuicksearchListComponent,
     QuicksearchComponent,
+    FilterinputbarComponent,
+    FilterTimestampInputbarComponent,
     DownloadButtonComponent,
     SimpleOverviewDialogComponent,
     DoubleSelectionlistComponent,
@@ -122,6 +129,8 @@ import {
     ShortcutButton,
     VeranstaltungenButtonComponent,
     ExpandComponent,
+
+
   ],
   declarations: [
     ExpandComponent,
@@ -150,6 +159,8 @@ import {
     SelectionlistComponent,
     QuicksearchListComponent,
     QuicksearchComponent,
+    FilterinputbarComponent,
+    FilterTimestampInputbarComponent,
     DownloadButtonComponent,
     DoubleSelectionlistComponent,
     BogenkontrolllisteDownloadComponent,
@@ -164,7 +175,8 @@ import {
     ActionButtonComponent,
     DownloadActionButtonComponent,
     ShortcutButton,
-    VeranstaltungenButtonComponent
+    VeranstaltungenButtonComponent,
+
   ]
 })
 export class SharedModule {

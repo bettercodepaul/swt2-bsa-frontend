@@ -18,7 +18,20 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public hidden = true;
   @Input() public searchTerm: string;
   @Input() public buttonLabel: string;
+  @Input() public filterButtonLabel: string;
   @Input() public isCustomActionButton: boolean = false;
+  @Input() public showStatusFilter: boolean = false;
+  @Input() public changePageButtons: boolean = false;
+  @Input() public showFilterButton: boolean = false;
+  @Input() public filterItem: string;
+  @Input() public filterItems: Array<string>;
+  @Input() public timeItem: string;
+  @Input() public timeItems: Array<string>;
+  @Input() public timestampDropdownLabel: string;
+  @Input() public filterDropdownLabel: string;
+  @Input() public cypressTagTimestamp: string;
+  @Input() public cypressTagStatus: string;
+
 
   public ActionButtonColors = ActionButtonColors;
 
@@ -28,6 +41,11 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Output() public onAddClicked = new EventEmitter<VersionedDataObject>();
   @Output() public onSearchClicked = new EventEmitter<string>();
   @Output() public onCustomActionButtonClicked = new EventEmitter<string>();
+  @Output() public onNextPageButtonClicked = new EventEmitter<string>();
+  @Output() public onPreviousPageButtonClicked = new EventEmitter<string>();
+  @Output() public onFilterClicked = new EventEmitter<string>();
+  @Output() public onDeleteButtonClicked = new EventEmitter<string>();
+  @Output() public onTimestampClicked = new EventEmitter<string>();
 
   constructor(private currentUserService: CurrentUserService) {
     super(currentUserService);
@@ -59,6 +77,21 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   public onCustomActionButtonClick() {
     this.onCustomActionButtonClicked.emit();
   }
+  public onDeleteButtonClick() {
+    this.onDeleteButtonClicked.emit();
+  }
+  public onFilterClick() {
+    this.onFilterClicked.emit();
+  }
+  public onPreviousPageButtonClick() {
+    this.onPreviousPageButtonClicked.emit();
+  }
+  public onTimestampClick() {
+    this.onTimestampClicked.emit();
+  }
+  public onNextPageButtonClick() {
+    this.onNextPageButtonClicked.emit();
+  }
 
   public hasUserPermissions(userPermissions: UserPermission[]): boolean {
     if (userPermissions === undefined) {
@@ -67,4 +100,5 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
       return this.currentUserService.hasAnyPermisson(userPermissions);
     }
   }
+
 }
