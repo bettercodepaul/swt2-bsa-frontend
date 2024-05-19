@@ -35,6 +35,7 @@ import {WETTKAMPF_TABLE_MATCH_CONFIG} from '@wettkampf/components/wettkampf/wett
 import {
   SchuetzenstatistikMatchDataProviderService
 } from '@wettkampf/services/schuetzenstatistikmatch-data-provider-service';
+import {SchuetzenstatistikMatchDO} from '@verwaltung/types/schuetzenstatistikmatch-do.class';
 
 
 @Component({
@@ -128,7 +129,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
               .catch(() => this.handleLoadVerein(null));
     document.getElementById('vereinsinformationen').classList.remove('hidden');
   }
+  public selectProperConfig() {
 
+  }
   /**
    * Sets the currently selected verein to the response
    * @param response | sets the current verein to the response
@@ -344,10 +347,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
   private async loadSchuetzenstatistikenMatch(vereinId, index) {
     await this.loadSchuetzenstatistikMatchData(vereinId, this.wettkaempfe[index].id)
-              .then((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
+              .then((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadSchuetzenstatistikMatchSuccess(response.payload));
     if (index < this.wettkaempfe.length - 1) {
       index += 1;
-      return this.loadSchuetzenstatistiken(vereinId, index);
+      return this.loadSchuetzenstatistikenMatch(vereinId, index);
     }
   }
   private async loadSchuetzenstatistikMatchData(vereinId, wettkampfId) {
@@ -359,6 +362,12 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public handleLoadSchuetzenstatistikSuccess(payload) {
+    if (payload.length > 0) {
+      console.log(payload);
+      this.rows.push(toTableRows(payload));
+    }
+  }
+  public handleLoadSchuetzenstatistikMatchSuccess(payload) {
     if (payload.length > 0) {
       console.log(payload);
       this.rows.push(toTableRows(payload));
@@ -593,6 +602,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       await this.loadEinzelstatistik(this.currentMannschaft);
     } else if (this.selectedStatistik === 'gesamtstatistik') {
       await this.loadGesamtstatistik(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
+      await this.loadSchuetzenstatistikMatch(this.currentMannschaft);
     }
   }
 

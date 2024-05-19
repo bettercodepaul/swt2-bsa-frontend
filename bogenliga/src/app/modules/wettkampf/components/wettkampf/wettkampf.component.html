@@ -233,6 +233,8 @@
                   (ngModelChange)="onSelectStatistik()">
             <option value="gesamtstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION1.LABEL' | translate }} </option>
             <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
+            <option value="schuetzenstatistikMatch"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION3.LABEL' | translate }} </option>
+
           </select>
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -252,6 +254,7 @@
         </bla-data-table>
       </div>
     </div>
+
     <!-- Row 1 -->
     <div class="row print1">
       <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]" style="padding:1em">
