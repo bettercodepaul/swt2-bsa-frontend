@@ -5,6 +5,7 @@ import {CommonSecuredDirective} from '../../common/common-secured-component.clas
 import {TableRow} from '../../tables/types/table-row.class';
 import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {MIGRATION_OVERVIEW_CONFIG} from '@verwaltung/components/migration/migration.config';
 
 @Component({
   selector:    'bla-overview-dialog',

@@ -21,6 +21,8 @@ import {CurrentUserService, OnOfflineService} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
+import {TriggerCountDO} from '@verwaltung/types/trigger-count-do-class';
+import {TriggerCountDTO} from '@verwaltung/types/datatransfer/trigger-count-dto-class';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 const ID_PATH_PARAM = 'id';
@@ -38,6 +40,11 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public saveLoading = false;
   public searchTerm = 'searchTermMigration';
   public id;
+  public countObj: TriggerCountDTO;
+  public migrationCompleted = false;
+  public progress:number;
+  public succeededCount:number;
+  public entireCount:number;
 
 
   private sessionHandling: SessionHandling;
@@ -113,17 +120,48 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 }
 
-
-public gatherMigrationStatus(){
-
-    setInterval(() => {
-      try{
-        this.gatherMigrationStatus();
-      }catch (e) {
-
-      }
-  });
+public getEntireDataCount(){
+    this.MigrationDataProvider.getEntireDataCount()
+      .then((response: BogenligaResponse<TriggerCountDO>) => {
+        this.handleEntireData(response);
+        console.log(this.entireCount);
+      })
+      .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
 }
+public getSucceededDataCount(){
+  this.MigrationDataProvider.getSucceededDataCount()
+      .then((response: BogenligaResponse<TriggerCountDO>) => {
+        this.handleSucceeededData(response);
+        console.log(this.succeededCount);
+      })
+      .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+}
+
+
+  public gatherMigrationStatus() {
+
+    this.getEntireDataCount();
+    const checkProgress = () => {
+      try {
+        if (this.progress != 100) {
+          this.getSucceededDataCount();
+          let progress = (this.succeededCount/ this.entireCount) * 100;
+          this.progress = Math.round(progress * 10) / 10;
+          console.log(this.progress);
+
+          // Schedule the next check
+          setTimeout(checkProgress, 3000);
+        } else {
+          this.migrationCompleted = true;
+        }
+      } catch (e) {
+        console.error('Daten konnten nicht erhalten werden:', e);
+      }
+    };
+
+    // Start the first check
+    checkProgress();
+  }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<TriggerDTO[]>): void {
     this.rows = [];
