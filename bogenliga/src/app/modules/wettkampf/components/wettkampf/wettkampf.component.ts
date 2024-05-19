@@ -31,6 +31,10 @@ import {environment} from '@environment';
 import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
 import {SessionHandling} from '@shared/event-handling';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {WETTKAMPF_TABLE_MATCH_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.match.config';
+import {
+  SchuetzenstatistikMatchDataProviderService
+} from '@wettkampf/services/schuetzenstatistikmatch-data-provider-service';
 
 
 @Component({
@@ -46,6 +50,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
   public config_einzelGesamt_table = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
+  public config_schuetzenstatistikMatch_table = WETTKAMPF_TABLE_MATCH_CONFIG;
   public jahre: Array<number> = [];
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
@@ -83,6 +88,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
     private mannschaftsmitgliedDataProvider: MannschaftsmitgliedDataProviderService,
     private schuetzenstatistikDataProvider: SchuetzenstatistikDataProviderService,
+    private schuetzenstatistikMatchDataProvider: SchuetzenstatistikMatchDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
@@ -245,6 +251,45 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadingData = false;
   }
 
+  public async loadSchuetzenstatistikMatch(selectedMannschaft: DsbMannschaftDO) {
+    this.loadPopup(this.currentMannschaft);
+    this.hideUebersichtsButtons();
+
+    if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
+      for (let i = 0; i < 4; i++) {
+        let rowNumber = 'row';
+        rowNumber += i;
+        document.getElementById(rowNumber).classList.add('hidden');
+        rowNumber += '1';
+        document.getElementById(rowNumber).classList.remove('hidden');
+      }
+      for (let i = 0; i <= 4; i++) {
+        let tableNumber = 'Table';
+        tableNumber += i;
+        if (i === 0) {
+          document.getElementById(tableNumber).classList.add('hidden');
+        } else {
+          document.getElementById(tableNumber).classList.remove('hidden');
+        }
+      }
+
+
+      this.rows = [];
+      await this.loadSchuetzenstatistikenMatch(selectedMannschaft.vereinId, 0);
+
+      document.getElementById('einzeldruckButton').classList.remove('hidden');
+      document.getElementById('gesamtdruckButton').classList.add('hidden');
+
+      // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
+      for (let i = 0; i < this.rows.length; i++) {
+        if (this.rows[i].length > 0) {
+          this.isTableFilled[i] = true;
+        }
+      }
+    }
+    this.loadingData = false;
+  }
+
   /* loadGesamtstatistik
    Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
    Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ergebnis-service.ts zu finden)
@@ -296,6 +341,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       index += 1;
       return this.loadSchuetzenstatistiken(vereinId, index);
     }
+  }
+  private async loadSchuetzenstatistikenMatch(vereinId, index) {
+    await this.loadSchuetzenstatistikMatchData(vereinId, this.wettkaempfe[index].id)
+              .then((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
+    if (index < this.wettkaempfe.length - 1) {
+      index += 1;
+      return this.loadSchuetzenstatistiken(vereinId, index);
+    }
+  }
+  private async loadSchuetzenstatistikMatchData(vereinId, wettkampfId) {
+    return this.schuetzenstatistikMatchDataProvider.getSchuetzenstatistikMatchWettkampf(vereinId, wettkampfId);
   }
 
   private async loadSchuetzenstatistikEinzel(vereinId, wettkampfId) {
@@ -380,7 +436,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   public handleSuccessLoadMannschaft(response: BogenligaResponse<DsbMannschaftDO[]>) {
     this.mannschaften = response.payload;
-    this.currentMannschaft = this.mannschaften[0]
+    this.currentMannschaft = this.mannschaften[0];
     this.loadVerein(this.currentMannschaft.vereinId);
   }
 
