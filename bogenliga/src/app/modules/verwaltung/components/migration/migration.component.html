@@ -4,15 +4,24 @@
                      [rows]="rows"
                      [loading]="loading"
                      [searchTerm]="searchTerm"
+                     [buttonLabel]="'TEST'"
+                     [isCustomActionButton]=true
+                     (onCustomActionButtonClicked)="gatherMigrationStatus()"
+>
+  <div (mouseover)="onMouseOver($event)"></div>
+</bla-overview-dialog>
+<bla-overview-dialog [hidden]=false
+                     [config]="config"
+                     [rows]="rows"
+                     [loading]="loading"
+                     [searchTerm]="searchTerm"
                      [buttonLabel]="'Neue Migration'"
                      [isCustomActionButton]=true
                      (onCustomActionButtonClicked)="startMigration()"
 >
  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
-<bla-migrationstatusbar>
 
-</bla-migrationstatusbar>
 <bla-migrationstatusbar
   [isMigrationStatusBar] = true
   [hidden]="false"
