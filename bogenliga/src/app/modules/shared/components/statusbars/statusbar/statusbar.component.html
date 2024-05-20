@@ -1,6 +1,12 @@
-<div class="status-bar" *ngIf="showProgress">
-  <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
-</div>
+<div class="status-bar-container">
+  <div class="status-bar-text">
+    {{ progress }}%
 
+  </div>
+  <div class="status-bar" *ngIf="showProgress">
+
+    <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+  </div>
+</div>
 
 

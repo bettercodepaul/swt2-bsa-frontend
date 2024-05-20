@@ -4,13 +4,18 @@
 
   <!-- Heading-->
 
+
   <section class="overview-dialog-header">
     <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
+
     <bla-quicksearch *ngIf="!isCustomActionButton" (onSearchEntry)="onSearch($event)"
                      [hidden]="hidden"
                      [sessionSearch]="searchTerm">
 
     </bla-quicksearch>
+
+
+
     <div class="overview-dialog-add"
          *ngIf="hasUserPermissions(config.createPermission)">
 
@@ -48,17 +53,19 @@
 
 
     </div>
-    <bla-migrationstatusbar
-      [progress]="progress"
-      *ngIf="isMigrationStatusBar"
-    >
 
-    </bla-migrationstatusbar>
   </section>
 
 
   <!-- Content -->
   <section class="overview-dialog-content">
+    <bla-migrationstatusbar
+      [progress]="progress"
+
+
+      *ngIf="isMigrationStatusBar"
+    >
+    </bla-migrationstatusbar>
 
     <bla-data-table [config]="config.tableConfig"
                     [rows]="rows"

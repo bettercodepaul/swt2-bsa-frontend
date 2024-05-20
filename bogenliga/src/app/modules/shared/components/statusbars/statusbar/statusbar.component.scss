@@ -1,18 +1,27 @@
 .status-bar-container{
   justify-content: center;
-  height: 50px;
-  width: 200px;
+  display: flex;
+  transform: translate(0,2650%);
 }
 
 .status-bar{
-  transform: translate(0px, -15px);
+  z-index: 50;
+
+  justify-content: center;
   height: 7px;
-  width: 100%;
+  width: 95%;
   line-height:30px;
-  background-color:grey;
+
   color:green;
   border-radius: 25px;
   }
+
+.status-bar-text{
+  z-index: 60;
+  transform: translate(-1250%,-100%);
+  position: absolute;
+
+}
 
 .hide-status-bar{
   display:none;
@@ -22,3 +31,7 @@
   background-color: #4caf50;
 }
 
+.mat-progress-bar {
+  height: 7px;
+  border-radius: 25px;
+}

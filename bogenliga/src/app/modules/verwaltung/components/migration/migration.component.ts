@@ -100,6 +100,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public startMigration() {
     try {
       this.MigrationDataProvider.startMigration();
+
       this.notificationService.showNotification({
         id: 'Migrationslauf gestartet',
         description: 'Die Migration wurde angestoßen und läuft',

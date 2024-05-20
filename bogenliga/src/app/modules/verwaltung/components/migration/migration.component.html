@@ -1,4 +1,12 @@
 <!--<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_migrationen" target="_blank"></bla-hilfe-button>-->
+
+<bla-migrationstatusbar
+  [progress]="progress"
+  [isMigrationStatusBar] = true
+>
+
+</bla-migrationstatusbar>
+
 <bla-overview-dialog [hidden]=false
                      [config]="config"
                      [rows]="rows"
@@ -10,6 +18,7 @@
 >
   <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
+
 
 <bla-overview-dialog [hidden]=false
                      [config]="config"
@@ -23,10 +32,6 @@
  <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
 
-<bla-migrationstatusbar
-  [progress]="progress"
-  [isMigrationStatusBar] = true
-  [hidden] = "false">
 
-</bla-migrationstatusbar>
+
 
