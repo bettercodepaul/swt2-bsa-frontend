@@ -21,6 +21,7 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public buttonLabel: string;
   @Input() public isCustomActionButton: boolean = false;
   @Input() public isMigrationStatusBar: boolean = false;
+  @Input() public progress: number = 0;
 
   public ActionButtonColors = ActionButtonColors;
 

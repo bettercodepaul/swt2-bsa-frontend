@@ -10,6 +10,7 @@
 >
   <div (mouseover)="onMouseOver($event)"></div>
 </bla-overview-dialog>
+
 <bla-overview-dialog [hidden]=false
                      [config]="config"
                      [rows]="rows"
@@ -23,10 +24,9 @@
 </bla-overview-dialog>
 
 <bla-migrationstatusbar
+  [progress]="progress"
   [isMigrationStatusBar] = true
-  [hidden]="false"
-  [progress]="40"
->
+  [hidden] = "false">
 
 </bla-migrationstatusbar>
 

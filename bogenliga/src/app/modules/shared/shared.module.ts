@@ -63,6 +63,7 @@ import {
   VeranstaltungenButtonComponent
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
 import {StatusbarComponent} from '@shared/components/statusbars';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   imports: [
@@ -74,6 +75,7 @@ import {StatusbarComponent} from '@shared/components/statusbars';
     RouterModule,
     FontAwesomeModule,
     StorageServiceModule,
+    MatProgressBarModule,
   ],
   exports: [
     TranslateModule,

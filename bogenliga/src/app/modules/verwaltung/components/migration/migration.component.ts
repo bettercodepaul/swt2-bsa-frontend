@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   ButtonType,
@@ -23,6 +23,8 @@ import {TriggerDTO} from '@verwaltung/types/datatransfer/trigger-dto.class';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {TriggerCountDO} from '@verwaltung/types/trigger-count-do-class';
 import {TriggerCountDTO} from '@verwaltung/types/datatransfer/trigger-count-dto-class';
+import {StatusbarComponent} from '@shared/components/statusbars';
+import {OverviewDialogComponent} from '../../../shared/components';
 
 export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
 const ID_PATH_PARAM = 'id';
@@ -62,6 +64,8 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
   }
+  @ViewChild(StatusbarComponent) statusbar: StatusbarComponent;
+  @ViewChild(OverviewDialogComponent) overviewDialog: OverviewDialogComponent;
 
   ngOnInit() {
     this.loading = true;
@@ -147,10 +151,12 @@ public getSucceededDataCount(){
           this.getSucceededDataCount();
           let progress = (this.succeededCount/ this.entireCount) * 100;
           this.progress = Math.round(progress * 10) / 10;
+          this.statusbar.progress = this.progress;
+          //this.overviewDialog.progress = this.progress;
           console.log(this.progress);
 
           // Schedule the next check
-          setTimeout(checkProgress, 3000);
+          setTimeout(checkProgress, 8000);
         } else {
           this.migrationCompleted = true;
         }
