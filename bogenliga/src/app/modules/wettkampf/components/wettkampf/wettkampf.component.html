@@ -206,6 +206,8 @@
                     (ngModelChange)="onSelectStatistik()">
               <option value="gesamtstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION1.LABEL' | translate }} </option>
               <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
+              <option value="schuetzenstatistikMatch"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION3.LABEL' | translate }} </option>
+
             </select>
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -292,6 +294,12 @@
                           [config]="config_einzel_table"
                           [rows]="rows[0]">
           </bla-data-table>
+          <bla-data-table id="row02"
+                          class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_schuetzenstatistikMatch_table"
+                          [rows]="rows[0]">
+          </bla-data-table>
         </div>
       </div>
       <!-- Row 2 -->
@@ -313,6 +321,12 @@
           <bla-data-table id="row11" class="hidden"
                           [loading]="loadingData"
                           [config]="config_einzel_table"
+                          [rows]="rows[1]">
+          </bla-data-table>
+          <bla-data-table id="row12"
+                          class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_schuetzenstatistikMatch_table"
                           [rows]="rows[1]">
           </bla-data-table>
         </div>
@@ -338,6 +352,12 @@
                           [config]="config_einzel_table"
                           [rows]="rows[2]">
           </bla-data-table>
+          <bla-data-table id="row22"
+                          class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_schuetzenstatistikMatch_table"
+                          [rows]="rows[2]">
+          </bla-data-table>
         </div>
       </div>
       <!-- Row 4 -->
@@ -360,6 +380,12 @@
                           class="hidden"
                           [loading]="loadingData"
                           [config]="config_einzel_table"
+                          [rows]="rows[3]">
+          </bla-data-table>
+          <bla-data-table id="row32"
+                          class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_schuetzenstatistikMatch_table"
                           [rows]="rows[3]">
           </bla-data-table>
         </div>

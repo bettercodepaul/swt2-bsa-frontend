@@ -15,37 +15,37 @@ export const WETTKAMPF_TABLE_MATCH_CONFIG: TableConfig = {
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH1',
-      propertyName:   'match 1',
+      propertyName:   'match1',
       width:          100,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH2',
-      propertyName:   'match 2',
+      propertyName:   'match2',
       width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH3',
-      propertyName:   'match 3',
+      propertyName:   'match3',
       width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH4',
-      propertyName:   'match 4',
+      propertyName:   'match4',
       width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH5',
-      propertyName:   'match 5',
+      propertyName:   'match5',
       width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH6',
-      propertyName:   'match 6',
+      propertyName:   'match6',
       width:          30,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH7',
-      propertyName:   'match 7',
+      propertyName:   'match7',
       width:          30,
     },
     {

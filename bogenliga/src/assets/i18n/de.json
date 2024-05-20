@@ -124,6 +124,7 @@
       }
     }
   },
+
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
       "HEADERS": {
@@ -372,6 +373,9 @@
         },
         "OPTION2": {
           "LABEL": "Einzelstatistik"
+        },
+        "OPTION3": {
+          "LABEL": "Matchstatistik"
         }
       },
       "FORM": {
@@ -406,7 +410,14 @@
           "SCHUETZE": "Schütze",
           "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
           "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr",
-          "RUEKENNUMMER": "Rückennummer"
+          "RUEKENNUMMER": "Rückennummer",
+          "MATCH1": "M1",
+          "MATCH2": "M2",
+          "MATCH3": "M3",
+          "MATCH4": "M4",
+          "MATCH5": "M5",
+          "MATCH6": "M6",
+          "MATCH7": "M7"
         }
       }
     }

@@ -345,6 +345,9 @@
         },
         "OPTION2": {
           "LABEL": "Statistics per archer"
+        },
+        "OPTION3": {
+          "LABEL": "Statistics per competition day"
         }
       },
       "FORM": {
@@ -378,7 +381,15 @@
           "MATCHPUNKTE": "Match-points",
           "SCHUETZE": "Archer",
           "DURCHSCHPFEILWERTMATCH": "average arrow-point per match",
-          "DURCHSCHPFEILWERTJAHR": "average arrow-point per year"
+          "DURCHSCHPFEILWERTJAHR": "average arrow-point per year",
+          "RUEKENNUMMER": "archer number",
+          "MATCH1": "M1",
+          "MATCH2": "M2",
+          "MATCH3": "M3",
+          "MATCH4": "M4",
+          "MATCH5": "M5",
+          "MATCH6": "M6",
+          "MATCH7": "M7"
         }
       }
     }

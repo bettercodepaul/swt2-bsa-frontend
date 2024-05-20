@@ -47,6 +47,7 @@ import {SchuetzenstatistikMatchDO} from '@verwaltung/types/schuetzenstatistikmat
 export class WettkampfComponent extends CommonComponentDirective implements OnInit {
 
   public show = false;
+  public currentConfig = WETTKAMPF_TABLE_EINZEL_CONFIG;
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
@@ -83,14 +84,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * Enthält alle Veranstaltungen aus dem ausgewählten Sportjahr
    * {@link this.filterVeranstaltungenBySportjahr}
    */
-  public veranstaltungenFilteredBySportjahr: Array<VeranstaltungDO> = []
+  public veranstaltungenFilteredBySportjahr: Array<VeranstaltungDO> = [];
 
   popup: boolean;
 
   // Die Werte des Array's entspricht dem Inhalt von allen 4 Wettkampftagen. false = leere Tabelle, true = Tabelle mit Inhalt
   isTableFilled: Array<boolean> = [false, false, false, false];
 
-  constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+  constructor(
+    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private vereinDataProvider: VereinDataProviderService,
     private wettkampfDataProviderService: WettkampfDataProviderService,
     private matchDataProviderService: MatchDataProviderService,
@@ -219,6 +221,16 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
 
+  selectConfig(chosenTable) {
+    if (chosenTable === 0) {
+      return this.config_schuetzenstatistikMatch_table;
+    } else if (chosenTable === 1) {
+      return this.config_einzel_table;
+    } else if (chosenTable === 2) {
+      return this.config_einzelGesamt_table;
+    }
+    return this.currentConfig;
+  }
   /* loadEinzelstatistik
   Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
   Desweiteren wird hier die Tabelle befüllt für die Einzelstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
@@ -233,8 +245,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         let rowNumber = 'row';
         rowNumber += i;
         document.getElementById(rowNumber).classList.add('hidden');
-        rowNumber += '1';
-        document.getElementById(rowNumber).classList.remove('hidden');
+        document.getElementById(rowNumber + '2').classList.add('hidden');
+        document.getElementById(rowNumber + '1').classList.remove('hidden');
       }
       for (let i = 0; i <= 4; i++) {
         let tableNumber = 'Table';
@@ -272,8 +284,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         let rowNumber = 'row';
         rowNumber += i;
         document.getElementById(rowNumber).classList.add('hidden');
-        rowNumber += '1';
-        document.getElementById(rowNumber).classList.remove('hidden');
+        document.getElementById(rowNumber + '1').classList.add('hidden');
+        document.getElementById(rowNumber + '2').classList.remove('hidden');
       }
       for (let i = 0; i <= 4; i++) {
         let tableNumber = 'Table';
@@ -291,9 +303,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
       document.getElementById('einzeldruckButton').classList.remove('hidden');
       document.getElementById('gesamtdruckButton').classList.add('hidden');
-
       // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
       for (let i = 0; i < this.rows.length; i++) {
+        console.log(this.rows[i]);
         if (this.rows[i].length > 0) {
           this.isTableFilled[i] = true;
         }
@@ -303,9 +315,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   /**
-   Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
-   Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ergebnis-service.ts zu finden)
-   Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
+   * Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
+   * Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ergebnis-service.ts zu finden)
+   * Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public async loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
     await this.loadPopup(this.currentMannschaft);
@@ -316,8 +328,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         let rowNumber = 'row';
         rowNumber += i;
         document.getElementById(rowNumber).classList.add('hidden');
-        rowNumber += '1';
-        document.getElementById(rowNumber).classList.add('hidden');
+        document.getElementById(rowNumber + '1').classList.add('hidden');
+        document.getElementById(rowNumber + '2').classList.add('hidden');
       }
       for (let i = 0; i <= 4; i++) {
         let tableNumber = 'Table';
@@ -631,10 +643,23 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectStatistik() {
+
     if (this.selectedStatistik === 'einzelstatistik') {
       await this.loadEinzelstatistik(this.currentMannschaft);
     } else if (this.selectedStatistik === 'gesamtstatistik') {
       await this.loadGesamtstatistik(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
+      await this.loadSchuetzenstatistikMatch(this.currentMannschaft);
+    }
+  }
+  public getCurrentStatistikConfig() {
+    console.log('Die aktuelle Statistik ist: ' + this.selectedStatistik);
+    if (this.selectedStatistik === 'einzelstatistik') {
+      return WETTKAMPF_TABLE_EINZEL_CONFIG;
+    } else if (this.selectedStatistik === 'gesamtstatistik') {
+      return WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
+    } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
+      return WETTKAMPF_TABLE_MATCH_CONFIG;
     }
   }
 
