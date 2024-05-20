@@ -60,6 +60,8 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   private veranstaltungIdMap: Map<number, VeranstaltungDO>;
   public selectedItemId: number;
   private selectedYearForVeranstaltung: number;
+  public selectedWettkampftag: any;
+
 
 
 
@@ -81,10 +83,14 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     return this.selectedVeranstaltung;
   }
 
-
   ngOnInit(): void {
     this.startClock();
+    this.route.queryParams.subscribe((params) => {
+      this.selectedWettkampftag = params['wettkampftag'];
+      console.log('selectedWettkampftag:', this.selectedWettkampftag);
+    });
     if (!this.isDeselected) {
+
       console.log('Component is not deselected.');
       this.providedID = undefined;
       this.hasID = false;
