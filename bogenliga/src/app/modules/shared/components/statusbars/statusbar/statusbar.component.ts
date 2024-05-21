@@ -14,6 +14,7 @@ export class StatusbarComponent implements OnInit{
   @Input() public disabled = false;
   @Input() public loading = false;
   @Input() public isMigrationStatusBar = false;
+  @Input() public hidden = true;
   message: any ={};
 
 

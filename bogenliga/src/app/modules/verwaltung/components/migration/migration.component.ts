@@ -100,31 +100,35 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public startMigration() {
 
     try {
-      this.MigrationDataProvider.startMigration();
-
       this.notificationService.showNotification({
-        id: 'Migrationslauf gestartet',
-        description: 'Die Migration wurde angestoßen und läuft',
-        title: 'Migration gestartet',
+        id:          'Migrationslauf starten?',
+        description: 'Möchten Sie die Migration manuell starten?',
+        title:       'Migration starten',
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.YES_NO,
+        severity:    NotificationSeverity.QUESTION,
+        userAction: NotificationUserAction.PENDING
+      });
+
+      this.notificationService.observeNotification('Migrationslauf starten?')
+          .subscribe((myNotification) => {
+            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+              this.MigrationDataProvider.startMigration();
+              this.gatherMigrationStatus();
+            }
+          });
+    } catch (e) {
+      this.notificationService.showNotification({
+        id: 'Fehler beim Starten der Migration',
+        description: 'Ein Fehler ist aufgetreten und die Migration wurde nicht gestartet.',
+        title: 'Fehler beim Start der Migration',
         origin: NotificationOrigin.SYSTEM,
         userAction: NotificationUserAction.ACCEPTED,
         type: NotificationType.OK,
         severity: NotificationSeverity.INFO
       });
-    } catch (e) {
-
-    this.notificationService.showNotification({
-      id: 'Fehler beim Starten der Migration',
-      description: 'Ein fehler ist aufgetreten und die Migration wurde nicht gestartet.',
-      title: 'Fehler beim Start der MIgration',
-      origin: NotificationOrigin.SYSTEM,
-      userAction: NotificationUserAction.ACCEPTED,
-      type: NotificationType.OK,
-      severity: NotificationSeverity.INFO
-    });
-
+    }
   }
-}
 
 public getEntireDataCount(){
     this.MigrationDataProvider.getEntireDataCount()
