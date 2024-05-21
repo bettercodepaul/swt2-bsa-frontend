@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
   ButtonType,
@@ -44,9 +44,10 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public id;
   public countObj: TriggerCountDTO;
   public migrationCompleted = false;
-  public progress:number;
+  public progress = 0;
   public succeededCount:number;
   public entireCount:number;
+
 
 
   private sessionHandling: SessionHandling;
@@ -87,7 +88,6 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     }
   }
 
-
   private loadTableRows() {
     this.MigrationDataProvider.findAll()
         .then((response: BogenligaResponse<TriggerDTO[]>) => {
@@ -98,6 +98,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   }
 
   public startMigration() {
+
     try {
       this.MigrationDataProvider.startMigration();
 
@@ -144,16 +145,23 @@ public getSucceededDataCount(){
 
 
   public gatherMigrationStatus() {
-
+    this.statusbar.hidden = false;
+    let firstRound = true
     this.getEntireDataCount();
+
+    this.progress = 0;
     const checkProgress = () => {
       try {
         if (this.progress != 100) {
           this.getSucceededDataCount();
-          let progress = (this.succeededCount/ this.entireCount) * 100;
-          this.progress = Math.round(progress * 10) / 10;
-          this.statusbar.progress = this.progress;
-          //this.overviewDialog.progress = this.progress;
+          if (!isNaN(this.succeededCount) && !isNaN(this.entireCount)) {
+            let progress = (this.succeededCount/ this.entireCount) * 100;
+            this.progress = Math.round(progress * 10) / 10;
+            this.statusbar.progress = this.progress;
+          } else {
+            this.progress = 0;
+            this.statusbar.progress = this.progress;
+          }
           console.log(this.progress);
 
           // Schedule the next check

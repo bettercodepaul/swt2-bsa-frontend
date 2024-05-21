@@ -1,23 +1,15 @@
 <!--<bla-hilfe-button href="https://wiki.bsapp.de/doku.php?id=liga:verwaltung_migrationen" target="_blank"></bla-hilfe-button>-->
 
 <bla-migrationstatusbar
+
   [progress]="progress"
-  [isMigrationStatusBar] = true
+  [isMigrationStatusBar] = false
+
 >
 
 </bla-migrationstatusbar>
 
-<bla-overview-dialog [hidden]=false
-                     [config]="config"
-                     [rows]="rows"
-                     [loading]="loading"
-                     [searchTerm]="searchTerm"
-                     [buttonLabel]="'TEST'"
-                     [isCustomActionButton]=true
-                     (onCustomActionButtonClicked)="gatherMigrationStatus()"
->
-  <div (mouseover)="onMouseOver($event)"></div>
-</bla-overview-dialog>
+
 
 
 <bla-overview-dialog [hidden]=false
