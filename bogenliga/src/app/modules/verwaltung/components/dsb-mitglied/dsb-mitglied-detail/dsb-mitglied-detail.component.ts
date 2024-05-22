@@ -272,7 +272,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
         }
         this.saveLoading = false;
       });
-    (document.getElementById('dsbMitgliedSaveButton') as HTMLInputElement).disabled = true;
+    (document.getElementById('dsbMitgliedUpdateButton') as HTMLInputElement).disabled = true;
     // show response message
   }
 

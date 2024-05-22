@@ -1204,6 +1204,11 @@
           "PLACEHOLDER": "Bitte eine Vereinsid eingeben",
           "ERROR": "Bitte eine gültige Vereinsid eingeben."
         },
+        "BEITRITTSDATUM": {
+          "LABEL": "Beitrittsdatum",
+          "PLACEHOLDER": "Bitte ein Beitrittsdatum eingeben",
+          "ERROR": "Bitte ein gültiges Beitrittsdatum eingeben."
+        },
         "KAMPFRICHTER": {
           "LABEL": "Kampfrichterlizenz"
         },
