@@ -11,6 +11,8 @@ export class DsbMitgliedOfflineSyncDto implements DataTransferObject {
   mitgliedsnummer: string;
   vereinId: number;
   benutzerId: number;
+  vereinsName: string;
+  beitrittsdatum: string;
 
   static copyFrom(optional: {
     id?: number,
@@ -21,6 +23,8 @@ export class DsbMitgliedOfflineSyncDto implements DataTransferObject {
     nationalitaet?: string,
     mitgliedsnummer?: string,
     vereinId?: number,
+    vereinsName?: string,
+    beitrittsdatum?: string,
   } = {}): DsbMitgliedOfflineSyncDto {
     const copy = new DsbMitgliedOfflineSyncDto();
 
@@ -38,6 +42,8 @@ export class DsbMitgliedOfflineSyncDto implements DataTransferObject {
     copy.mitgliedsnummer = optional.mitgliedsnummer || '';
     copy.version = optional.version || null;
     copy.vereinId = optional.vereinId || null;
+    copy.vereinsName = optional.vereinsName || '';
+    copy.beitrittsdatum = optional.beitrittsdatum || '';
     return copy;
   }
 }
