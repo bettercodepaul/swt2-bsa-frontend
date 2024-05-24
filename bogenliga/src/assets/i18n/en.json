@@ -1308,6 +1308,11 @@
             "PLACEHOLDER": "Select a league leader",
             "ERROR": "Please select a valid E-Mail."
           },
+          "VERANSTALTUNGSPHASE": {
+            "LABEL": "Phase of event",
+            "PLACEHOLDER": "Select a phase for the event",
+            "ERROR": "Please select a valid phase for the event"
+          },
           "WETTKAMPFTAG": {
             "FORM": {
               "LABEL": "Competition day",
@@ -1406,6 +1411,14 @@
           "UPDATE_FAILURE": {
             "TITLE": "Update error",
             "DESCRIPTION": "The event has a higher number of teams than the new maximum number allows."
+          },
+          "UPDATE_VERANSTALTUNG_FAILURE": {
+            "TITLE": "Update error",
+            "DESCRIPTION": "The update failed, because the event doesn't have any matches."
+          },
+          "UPDATE_DATABASE_FAILURE": {
+            "TITLE": "Update error",
+            "DESCRIPTION": "A database request didn't receive an answer. The update will be canceled."
           }
         }
       },

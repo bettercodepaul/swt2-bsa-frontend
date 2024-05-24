@@ -194,6 +194,36 @@
         </div>
       </div>
 
+      <!-- Veranstaltungsphase -->
+      <div class="form-group row">
+        <label for="veranstaltungphase"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANSTALTUNGSPHASE.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <select class="form-control"
+                  required
+                  id="veranstaltungphase"
+                  name="veranstaltungphase"
+                  [disabled]="isPhaseSelectDisabled"
+                  #veranstaltungphase="ngModel"
+                  [(ngModel)]="currentVeranstaltungPhase"
+                  data-cy="veranstaltungs-detail-veranstaltungphase">
+              <option
+                [ngValue]="veranstaltungphase"
+                *ngFor="let veranstaltungphase of allVeranstaltungPhases">
+                {{veranstaltungphase}}
+              </option>
+            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANSTALTUNGSPHASE.PLACEHOLDER' | translate }}">
+          </select>
+
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANSTALTUNGSPHASE.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
 
       <!-- LigaleiterEmail -->
       <div class="form-group row">
@@ -259,7 +289,6 @@
                             (onClick)="onCopyMannschaft($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
           </bla-actionbutton>
-
 
           <bla-actionbutton *ngIf="!entityExists()"
                             [id]="'veranstaltungSaveButton'"

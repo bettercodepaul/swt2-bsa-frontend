@@ -1339,6 +1339,11 @@
           "PLACEHOLDER": "Bitte geben Sie ein Datum für die Meldedeadline ein",
           "ERROR": "Bitte geben Sie ein gültiges Datum ein (Format: JJJJ-MM-TT)."
         },
+        "VERANSTALTUNGSPHASE": {
+          "LABEL": "Phase der Veranstaltung",
+          "PLACEHOLDER": "Bitte geben Sie eine gültige Phase für die Veranstaltungsphase ein",
+          "ERROR": "Bitte geben sie eine gültige Veranstaltungsphase an"
+        },
         "LIGANAME": {
           "LABEL": "Liganame",
           "PLACEHOLDER": "Wählen Sie eine Liga",
@@ -1476,6 +1481,14 @@
         "UPDATE_FAILURE": {
           "TITLE": "Update fehlgeschlagen",
           "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
+        },
+        "UPDATE_VERANSTALTUNG_FAILURE": {
+         "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Die Umstellung auf Laufend ist nicht möglich, da keine Matches existieren, bite generieren Sie Matches. Dadurch wird die Veranstaltung automatisch auf Laufend gestellt."
+        },
+        "UPDATE_DATABASE_FAILURE": {
+          "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Eine Datenbankabfrage ist gescheitert und die Update-Anfrage wurde abgelehnt."
         }
       }
     },
