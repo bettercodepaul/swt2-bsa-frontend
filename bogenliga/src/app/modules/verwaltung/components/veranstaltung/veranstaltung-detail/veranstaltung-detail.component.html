@@ -1,5 +1,6 @@
 <bla-common-dialog [config]="config"
-                   [loading]="loading">
+                   [loading]="loading"
+                    id="dialogVeranstaltungDetail">
   <div (mouseover)="onMouseOver($event)">
     <form #dsbMitgliedForm="ngForm"
           class="horizontal-form half-page"
@@ -209,7 +210,7 @@
                   [disabled]="isPhaseSelectDisabled"
                   #veranstaltungphase="ngModel"
                   [(ngModel)]="currentVeranstaltungPhase"
-                  data-cy="veranstaltungs-detail-veranstaltungphase">
+                  data-cy="veranstaltung-detail-veranstaltungphase">
               <option
                 [ngValue]="veranstaltungphase"
                 *ngFor="let veranstaltungphase of allVeranstaltungPhases">

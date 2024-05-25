@@ -138,43 +138,31 @@ describe('Anonyme User tests', function () {
     cy.get('[data-cy=sidebar-wettkampf-button]').click()
     cy.url().should('include', '#/wettkaempfe')
   })
-
   /**
-   * This test checks if the shown results contain expected data
+   * This test checks if the gesamtstatistik in Wettkaempfe show results
    */
-  it('Ergebnis anzeigen', function() {
-    cy.wait(10000)
-    cy.contains('Würtembergliga')
-    cy.wait(3000)
-    cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
-    cy.contains('Wettkampftag 1')
+  it('Gesamtstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('gesamtstatistik', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-gesamtstatistik-table]').contains('Gesamtstatistik pro Schütze')
+    // required: add check if data is present in selected statistik
   })
-
   /**
-   * This test checks if the selected item of a team shows the expected data
+   * This test checks if the Matchstatistik of Schuetzen in Wettkaempfe shows results
    */
-  it('Ergebnis anzeigen einzelner Verein', function() {
-    cy.wait(1000)
-    cy.get('#vereine').select(0)
-    cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
-    cy.contains('Wettkampftag 1')
+  it('Matchstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikMatch', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
   })
-
   /**
-   * This test selects a single statistic and checks if the required data is present
+   * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
    */
-  /*it('Ergebnis anzeigen Einzelstatistik', function() {
-    cy.get('[data-cy=einzelstatistik-anzeigen-button]').click()
-    cy.contains('Pfeilwert pro Match')
+  it('Einzelstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
   })
-
-  /!**
-   * This test selects all items from the statistics and checks if the required data is present
-   *!/
-  it('Ergebnis anzeigen Gesamtstatistik', function() {
-    cy.get('[data-cy=einzelstatistik-gesamt-anzeigen-button]').click()
-    cy.contains('Pfeilwert pro Jahr')
-  })*/
 
   /**
    * This test opens the sidebar and clicks on the "HILFE" tab and checks if
@@ -960,6 +948,10 @@ describe('Admin User tests', function() {
     cy.wait(20000)
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
     cy.wait(1000)
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Laufend')
+    cy.wait(500)
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Geplant')
+    cy.wait(500)
     cy.get('[data-cy=veranstaltung-detail-update-button]').click()
     cy.wait(1000)
     cy.get('#OKBtn1').click()

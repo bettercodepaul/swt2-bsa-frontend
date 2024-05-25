@@ -152,6 +152,7 @@
       <div style="margin-top: 20px">
         <!-- TODO mit der de.json verbinden -->
         <bla-statistik-filter-button
+          id="showSchuetzenstatistik"
           [id]="'showResultsButton'"
           (onClick)="showStatistikOptions();"
           [active]="schuetzenStatistikActive"
@@ -250,7 +251,8 @@
       </bla-download-actionbutton>
       <!-- Row Gesamtstatistik -->
       <div class="row print1">
-        <div id="Table0" class="hidden" style="padding:1em">
+        <div id="Table0" class="hidden" style="padding:1em"
+        data-cy="wettkampf-schuetzenstatistik-gesamtstatistik-table">
           <h3>{{'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL' | translate}}</h3>
           <!-- Button - Gesamtstatistik Drucken -->
 
@@ -275,7 +277,8 @@
         </bla-download-actionbutton>
       <!-- Row 1 -->
       <div class="row print1">
-        <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]" style="padding:1em">
+        <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]" style="padding:1em"
+        data-cy="wettkampf-schuetzenstatistik-table">
           <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGEINS' | translate}}</h3>
           <bla-download-actionbutton id = "TagesuebersichtButton"
                                      [iconClass]="'file-download'"
@@ -287,7 +290,8 @@
           <bla-data-table id="row0"
                           [loading]="loadingData"
                           [config]="config_table"
-                          [rows]="rows[0]">
+                          [rows]="rows[0]"
+                          >
           </bla-data-table>
           <bla-data-table id="row01" class="hidden"
                           [loading]="loadingData"
