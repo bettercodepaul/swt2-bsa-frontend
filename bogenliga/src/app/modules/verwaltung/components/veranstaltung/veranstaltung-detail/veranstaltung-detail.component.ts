@@ -390,8 +390,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
               this.currentVeranstaltungPhase = this.currentVeranstaltung.phase;
               this.saveLoading = false;
               const notification = this.createVeranstaltungUpdateNotification(id,
-                'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_VERANSTALTUNG_FAILURE.TITLE',
-                'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_VERANSTALTUNG_FAILURE.DESCRIPTION');
+                'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_DATABASE_FAILURE.TITLE',
+                'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_DATABASE_FAILURE.DESCRIPTION');
               this.notificationService.showNotification(notification);
               return;
       }
