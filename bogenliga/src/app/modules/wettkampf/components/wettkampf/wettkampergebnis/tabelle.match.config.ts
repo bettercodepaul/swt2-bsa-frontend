@@ -5,7 +5,7 @@ export const WETTKAMPF_TABLE_MATCH_CONFIG: TableConfig = {
   columns: [
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUEKENNUMMER',
-      propertyName:   'rueckenNummer',
+      propertyName:   'rueckennummer',
       width:          100,
     },
     {
