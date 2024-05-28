@@ -32,14 +32,14 @@ export const FULLSCREEN_TABLE_CONFIG: TableConfig = {
       sortable:        false,
     },
     {
-      translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTE',
-      propertyName:   'satzpunkte',
+      translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTDIFFERENZ',
+      propertyName:   'satzpkt_differenz',
       width:           15,
       sortable:        false,
     },
     {
-      translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTDIFFERENZ',
-      propertyName:   'satzpkt_differenz',
+      translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTE',
+      propertyName:   'satzpunkte',
       width:           15,
       sortable:        false,
     }
