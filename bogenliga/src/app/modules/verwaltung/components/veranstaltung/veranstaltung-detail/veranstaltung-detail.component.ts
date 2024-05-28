@@ -17,21 +17,21 @@ import {
   NotificationSeverity,
   NotificationType,
   NotificationUserAction
-} from '../../../../shared/services/notification';
-import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
+} from '@shared/services';
+import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
 import {UserDataProviderService} from '../../../services/user-data-provider.service';
-import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.class';
-import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
+import {UserProfileDTO} from '@user/types/model/user-profile-dto.class';
+import {UserProfileDO} from '@user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_DETAIL_CONFIG, VERANSTALTUNG_DETAIL_TABLE_Config} from './veranstaltung-detail.config';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
-import {LigaDO} from '../../../../verwaltung/types/liga-do.class';
-import {LigaDTO} from '../../../../verwaltung/types/datatransfer/liga-dto.class';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
+import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {WettkampftypDataProviderService} from '../../../services/wettkampftyp-data-provider.service';
-import {WettkampftypDO} from '../../../../verwaltung/types/wettkampftyp-do.class';
-import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkampftyp-dto.class';
+import {WettkampftypDO} from '@verwaltung/types/wettkampftyp-do.class';
+import {WettkampftypDTO} from '@verwaltung/types/datatransfer/wettkampftyp-dto.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
@@ -91,7 +91,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public currentLiga: LigaDO = new LigaDO();
   public allLiga: Array<LigaDO> = [new LigaDO()];
-  public currentVeranstaltungPhase: string;
+  public currentSelectedVeranstaltungPhase: string;
 
   public allTeamAmount: Array<number> = [8, 6, 4];
   public allVeranstaltungPhases: Array<string>  = ['Geplant', 'Laufend'];
@@ -321,8 +321,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             console.log(this.lastVeranstaltung.id);
             console.log('Mannschaften werden kopiert');
             this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
-                .then((response) => this.handleCopyFromVeranstaltungSuccess(response)
-                  , (response: BogenligaResponse<VeranstaltungDO>) => {
+                .then((databaseResponse) => this.handleCopyFromVeranstaltungSuccess(databaseResponse)
+                  , (databaseResponse: BogenligaResponse<VeranstaltungDO>) => {
                     console.log('Failed');
                     this.saveLoading = false;
                   });
@@ -360,8 +360,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       userAction:  NotificationUserAction.PENDING};
     return notification;
   }
-  public async onUpdate(ignore: any): Promise<null> {
+  public async onUpdate(ignore: any): Promise<void> {
     this.saveLoading = true;
+    // set new values for the data persistence
     this.currentVeranstaltung.ligaId = this.currentLiga.id;
     this.currentVeranstaltung.ligaleiterId = this.currentUser.id;
     this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
@@ -374,11 +375,12 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       this.notificationService.showNotification(notification);
     }
     // When the user tries to update the phase of the Veranstaltung
-    if (this.currentVeranstaltungPhase !== this.currentVeranstaltung.phase) {
+    if (this.currentSelectedVeranstaltungPhase !== this.currentVeranstaltung.phase) {
       const response = await this.matchDataProvider.findAllbyVeranstaltungId(id);
       if (!isNullOrUndefined(response) && !isNullOrUndefined(response.payload)) {
-              if (response.payload.length === 0 && this.currentVeranstaltungPhase === 'Laufend') {
-                this.currentVeranstaltungPhase = 'Geplant';
+              // if the veranstaltung has no matches, the select is reset and set to 'Geplant'
+              if (response.payload.length === 0 && this.currentSelectedVeranstaltungPhase === 'Laufend') {
+                this.currentSelectedVeranstaltungPhase = 'Geplant';
                 this.saveLoading = false;
                 const notification = this.createVeranstaltungUpdateNotification(id,
                   'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_VERANSTALTUNG_FAILURE.TITLE',
@@ -386,8 +388,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
                 this.notificationService.showNotification(notification);
                 return;
                 }
-              } else {
-              this.currentVeranstaltungPhase = this.currentVeranstaltung.phase;
+      // no proper answer of the backend
+      } else {
+              this.currentSelectedVeranstaltungPhase = this.currentVeranstaltung.phase;
               this.saveLoading = false;
               const notification = this.createVeranstaltungUpdateNotification(id,
                 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_DATABASE_FAILURE.TITLE',
@@ -397,6 +400,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       }
           }
     // persist
+    this.currentVeranstaltung.phase = this.currentSelectedVeranstaltungPhase;
     this.veranstaltungDataProvider.update(this.currentVeranstaltung)
         .then((response: BogenligaResponse<VeranstaltungDO>) => {
           if (!isNullOrUndefined(response)
@@ -405,6 +409,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             const notification = this.createVeranstaltungUpdateNotification(id,
               'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE.TITLE',
               'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION');
+            this.isPhaseSelectDisabled = true;
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG + id)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
@@ -581,8 +586,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
-    this.currentVeranstaltungPhase = this.allVeranstaltungPhases.find((phase) => (phase === this.currentVeranstaltung.phase));
-    if (this.currentVeranstaltungPhase === 'Geplant') {
+    this.currentSelectedVeranstaltungPhase = this.allVeranstaltungPhases.find((phase) => (phase === this.currentVeranstaltung.phase));
+    if (this.currentSelectedVeranstaltungPhase === 'Geplant') {
       this.isPhaseSelectDisabled = false;
     }
     this.loading = false;
@@ -830,8 +835,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleLigatabelleExistsSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
     try {
       this.currentLigatabelle = response.payload;
-      for (let i = 0; i < this.rows.length; i++) {
-        const row = this.rows[i];
+      for (const row of this.rows) {
+        // const row = this.rows[i];
         row.disabledActions.push(TableActionType.EDIT);
         row.hiddenActions.push(TableActionType.EDIT);
       }
