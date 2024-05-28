@@ -836,7 +836,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     try {
       this.currentLigatabelle = response.payload;
       for (const row of this.rows) {
-        // const row = this.rows[i];
         row.disabledActions.push(TableActionType.EDIT);
         row.hiddenActions.push(TableActionType.EDIT);
       }
