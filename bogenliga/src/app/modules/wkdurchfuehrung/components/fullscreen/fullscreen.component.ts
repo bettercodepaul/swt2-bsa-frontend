@@ -169,6 +169,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
         .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => {
           if (response && response.payload.length > 0) {
             this.rowsLigatabelle = toTableRows(response.payload);
+            console.log(response.payload);
             console.log('Ligatabelle erfolgreich geladen');
           } else {
             console.log('Keine Ergebnisse gefunden für Ligatabelle');

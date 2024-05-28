@@ -14,8 +14,8 @@ export const FULLSCREEN_TABLE_CONFIG: TableConfig = {
 
   columns: [
     {
-      translationKey: 'WETTKAEMPFE.LIGATABELLE.MATCH_ID',
-      propertyName:   'match_nr',
+      translationKey: 'WETTKAEMPFE.LIGATABELLE.MATCHCOUNT',
+      propertyName:   'matchCount',
       width:           15,
       sortable:        false,
     },
