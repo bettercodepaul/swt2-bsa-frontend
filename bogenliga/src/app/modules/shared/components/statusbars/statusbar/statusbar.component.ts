@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 
+
 @Component({
   selector:    'bla-migrationstatusbar',
   templateUrl: 'statusbar.component.html',
@@ -19,7 +20,6 @@ export class StatusbarComponent implements OnInit{
 
 
   constructor() {
-
   }
 
   ngOnInit(): void {

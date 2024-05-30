@@ -1,9 +1,9 @@
-<div class="status-bar-container"[hidden] = "hidden">
+<div class="status-bar-container" [hidden] = "hidden">
   <div class="status-bar-text">
     {{ progress + "%"}}
   </div>
   <div class="status-bar" *ngIf="showProgress">
-    <mat-progress-bar mode="determinate" [value]="progress" color="primary"></mat-progress-bar>
+    <progress id="file" [value]="progress" class="status-bar-size" max="100"></progress>
   </div>
 </div>
 
