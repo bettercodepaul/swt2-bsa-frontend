@@ -3,7 +3,6 @@ import { SessionHandling } from '@shared/event-handling';
 import {CurrentUserService, NotificationService, OnOfflineService} from '@shared/services';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
-import { LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG } from '../../../ligatabelle/components/ligatabelle/ligatabelle.config';
 import { interval, Subscription } from 'rxjs';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {faSitemap, faUndo} from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +13,7 @@ import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltu
 import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
 import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
+import {FULLSCREEN_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from '@wkdurchfuehrung/components/fullscreen/fullscreen.config';
 
 const ID_PATH_PARAM = 'id';
 
@@ -30,7 +30,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   public zuruecksetzenIcon: IconProp = faUndo;
 
   public config = WETTKAEMPFE_CONFIG;
-  public config_table = LIGATABELLE_TABLE_CONFIG;
+  public config_table = FULLSCREEN_TABLE_CONFIG;
   public ActionButtonColors = ActionButtonColors;
   public loading = true;
   public multipleSelections = true;
@@ -169,6 +169,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
         .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => {
           if (response && response.payload.length > 0) {
             this.rowsLigatabelle = toTableRows(response.payload);
+            console.log(response.payload);
             console.log('Ligatabelle erfolgreich geladen');
           } else {
             console.log('Keine Ergebnisse gefunden für Ligatabelle');
