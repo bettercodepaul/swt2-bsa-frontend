@@ -40,4 +40,3 @@ export const FULLSCREEN_TABLE_CONFIG: TableConfig = {
   ]
 
 };
-
