@@ -14,12 +14,6 @@ export const FULLSCREEN_TABLE_CONFIG: TableConfig = {
 
   columns: [
     {
-      translationKey: 'WETTKAEMPFE.LIGATABELLE.MATCHCOUNT',
-      propertyName:   'matchCount',
-      width:           15,
-      sortable:        false,
-    },
-    {
       translationKey: 'WETTKAEMPFE.LIGATABELLE.TABELLENPLATZ',
       propertyName:   'tabellenplatz',
       width:           15,
@@ -32,19 +26,17 @@ export const FULLSCREEN_TABLE_CONFIG: TableConfig = {
       sortable:        false,
     },
     {
-      translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTDIFFERENZ',
-      propertyName:   'satzpkt_differenz',
+      translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTE',
+      propertyName:   'satzpunkte',
       width:           15,
       sortable:        false,
     },
     {
-      translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTE',
-      propertyName:   'satzpunkte',
+      translationKey: 'WETTKAEMPFE.LIGATABELLE.SATZPUNKTDIFFERENZ',
+      propertyName:   'satzpkt_differenz',
       width:           15,
       sortable:        false,
     }
   ]
 
 };
-
-
