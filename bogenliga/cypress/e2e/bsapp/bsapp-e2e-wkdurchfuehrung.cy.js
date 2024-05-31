@@ -8,7 +8,10 @@ describe('Wkdurchfuehrung tests', function () {
    * This tests the fullscreen button for the presenter view
    */
   it('Aktivierung der Vollbildansicht nach Auswahl', () => {
-    cy.visit('/#/wkdurchfuehrung');
+    const veranstaltung = '1'; // hard coded to the event, the test uses
+    const wettkampftag = '1.%20Wettkampftag'; // hard coded to the day, the test uses
+
+    cy.visit(`/#/wkdurchfuehrung?wettkampftag=${wettkampftag}&veranstaltung=${veranstaltung}`);
 
     let openedUrl;
     cy.window().then(win => {
