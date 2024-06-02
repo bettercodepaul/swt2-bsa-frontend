@@ -127,7 +127,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadVeranstaltungen
    */
   ngOnInit() {
-    this.loadVeranstaltungen();
+     this.loadVeranstaltungen();
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -236,7 +236,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       return this.config_schuetzenstatistikWettkampftage_table;
     } else if (chosenTable === 1) {
       return this.config_schuetzenstatistikMatch_table;
-    }else if (chosenTable === 2) {
+    } else if (chosenTable === 2) {
       return this.config_einzel_table;
     } else if (chosenTable === 3) {
       return this.config_einzelGesamt_table;
@@ -491,7 +491,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    */
   public async onSelect(): Promise<void> {
     this.loadingData = true;
-    this.currentJahr = this.currentVeranstaltung.sportjahr;
+    this.currentJahr = 2023;
     this.jahre[0] = this.currentJahr;
     this.clear();
     await this.loadMannschaften(this.currentVeranstaltung.id);
@@ -556,7 +556,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public async loadMannschaften(veranstaltungsId: number) {
     await this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
       .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
-        this.handleSuccessLoadMannschaft(response)
+        this.handleSuccessLoadMannschaft(response);
       })
       .catch(() => this.mannschaften === []);
   }
@@ -568,6 +568,12 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async loadJahre() {
+/*
+TODO METHODE SUCHT JAHRE INDEM ES DAS AKTUELLE GEGEBENE SPORTJAHR NIMMT UND VON EINEM UNTEREN ENDE BIS ZUM
+OBEREN DURCHLÄUFT => SPORTJAHR-MAPPER, DANACH BRAUCH MAN DIE VERANSTALTUNG DEPENDING ON YEAR
+DAFÜR => VERANSTALTUNG DATA PROVIDER SERVICE NUTZEN UND VERANSTALTUNGEN HOLEN
+BASIEREND AUF AUSGEWÄHLTER VERANSTALTUNG HOLT MAN MANNSCHAFTEN/ VEREINE || DAUMEN HOCH
+*/
     for (const i of this.veranstaltungen) {
       if (this.jahre.includes(i.sportjahr) === false) {
         this.jahre[this.jahre.length] = i.sportjahr;
