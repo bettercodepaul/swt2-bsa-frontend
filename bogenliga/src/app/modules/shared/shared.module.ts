@@ -30,7 +30,7 @@ import {
   SimpleOverviewDialogComponent,
   TableEmptyPlaceholderComponent,
   TableLoadingPlaceholderComponent,
-  TooltipComponent
+  TooltipComponent,
 } from './components';
 import {RestClient} from './data-provider';
 import * as LocalDataProvider from './local-data-provider/services';
@@ -62,11 +62,12 @@ import { ShortcutButton } from './components/buttons/shortcut-button/shortcut-bu
 import {
   VeranstaltungenButtonComponent
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
+import {StatusbarComponent} from '@shared/components/statusbars';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
 import {
   FilterTimestampInputbarComponent
 } from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
-
 
 @NgModule({
   imports: [
@@ -77,7 +78,8 @@ import {
     TranslateModule.forChild(),
     RouterModule,
     FontAwesomeModule,
-    StorageServiceModule
+    StorageServiceModule,
+    MatProgressBarModule,
   ],
   exports: [
     TranslateModule,
@@ -129,8 +131,7 @@ import {
     ShortcutButton,
     VeranstaltungenButtonComponent,
     ExpandComponent,
-
-
+    StatusbarComponent,
   ],
   declarations: [
     ExpandComponent,
@@ -176,7 +177,7 @@ import {
     DownloadActionButtonComponent,
     ShortcutButton,
     VeranstaltungenButtonComponent,
-
+    StatusbarComponent
   ]
 })
 export class SharedModule {

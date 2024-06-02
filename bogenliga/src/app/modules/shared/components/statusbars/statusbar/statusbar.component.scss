@@ -1,0 +1,27 @@
+.status-bar-container{
+  justify-content: center;
+  display: flex;
+  top: 185px;
+  position: relative;
+}
+
+.status-bar{
+  justify-content: center;
+  height: 15px;
+  width: 95%;
+  line-height:30px;
+  border-radius: 25%;
+}
+
+.status-bar-text{
+  left: 2.5%;
+  top: -10px;
+  position: absolute;
+  font-family: Poppins-light, serif;
+}
+
+.status-bar-size{
+  width: 100%;
+  height: 100%;
+}
+
