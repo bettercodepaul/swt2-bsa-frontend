@@ -203,7 +203,9 @@
                     {{group.groupName}}
                   </h2>
                   <bla-data-table [config]="config_table_match"
-                                  [rows]="group.matches">
+                                  [rows]="group.matches"
+                                  [loading]="loading"
+                                  (onEditEntry)="onEdit($event)">
                   </bla-data-table>
                 </ng-container>
               </section>
