@@ -6,7 +6,7 @@
 
     <p class="subtitle">{{'WKDURCHFUEHRUNG.WKDURCHFUEHRUNG.DESCRIPTION' | translate}}</p>
     <div class="layout-elements">
-      <!--DIV 1 MIT VERANSTALTUNGEN UND BUTTONS -->
+      <!--DIV 1 MIT VERANSTALTUNGEN UND  BUTTONS -->
       <div
         [hidden]="div1Visible">
         <!--TABELLEN mit Wettkampftag-->
@@ -152,6 +152,17 @@
               [disabled]="isDisabled()">
               {{ 'WKDURCHFUEHRUNG.BUTTON.DURCHFUEHRUNG' | translate }}
             </bla-actionbutton>
+
+            <bla-actionbutton
+              [id]="'vollbildAnsicht'"
+              [color]="ActionButtonColors.PRIMARY"
+              [iconClass]="'arrow-right'"
+              (onClick)="redirectToFullScreen(this.selectedVeranstaltungId)"
+              [disabled]="isDisabled()"
+              data-cy="vollbildAnsichtButton">
+              {{ 'WKDURCHFUEHRUNG.BUTTON.VOLLBILDANSICHT' | translate }}
+            </bla-actionbutton>
+
           </div>
 
           <div id="adminOfflineResetButton"
@@ -169,7 +180,7 @@
 
       </div>
 
-      <!--DIV 2 MIT DEN ANDEREN TABELLEN UND ANSICHTEN NACH GENERIERUNG MATCHES -->
+      <!--DIV 2 MIT DEN ANDEREN TABELLEN UND ANSICHTEN NACH GENERIERUNG MATCHES  -->
       <div
         [hidden]="div2Visible">
 

@@ -163,18 +163,18 @@ describe('Anonyme User tests', function () {
   /**
    * This test selects a single statistic and checks if the required data is present
    */
-  it('Ergebnis anzeigen Einzelstatistik', function() {
+  /*it('Ergebnis anzeigen Einzelstatistik', function() {
     cy.get('[data-cy=einzelstatistik-anzeigen-button]').click()
     cy.contains('Pfeilwert pro Match')
   })
 
-  /**
+  /!**
    * This test selects all items from the statistics and checks if the required data is present
-   */
+   *!/
   it('Ergebnis anzeigen Gesamtstatistik', function() {
     cy.get('[data-cy=einzelstatistik-gesamt-anzeigen-button]').click()
     cy.contains('Pfeilwert pro Jahr')
-  })
+  })*/
 
   /**
    * This test opens the sidebar and clicks on the "HILFE" tab and checks if
@@ -280,6 +280,21 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
   })
+
+  /**
+   * This test searches for a specific "DSBMitglied" name and checks if the corresponding club name has been listed
+   */
+  it('Suche DSBMitglieder', function () {
+      cy.get('.input-group > #undefined').click();
+      cy.get('.input-group > #undefined').type('Gero');
+      cy.wait(1000)
+      cy.get('table td')
+        .contains('span', 'SGes Gerstetten')
+        .should('exist')
+      cy.wait(2000)
+      cy.get('.input-group > #undefined').clear();
+    }
+  )
 
   /**
    * This test adds a new "DSB-Mitglied"

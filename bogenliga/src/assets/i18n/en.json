@@ -93,6 +93,7 @@
       "MATCHPUNKTE": "Match-score",
       "SATZPUNKTE": "Set-score",
       "SATZPUNKTDIFFERENZ": "Set-score-difference",
+      "MATCHCOUNT": "Match count",
       "HEADER": {
         "VERANSTALTUNG": "League",
         "WETTKAMPFTAG_AKT": "Competition day",
@@ -206,7 +207,9 @@
       "OFFLINE": "Offline",
       "OFFLINE_GEHEN": "Go offline",
       "ONLINE_GEHEN": "Go online",
-      "OFFLINE_TOKEN": "Delete offline token"
+      "OFFLINE_TOKEN": "Delete offline token",
+      "VOLLBILDANSICHT": "League in fullscreen mode"
+
     },
     "SETZLISTE": {
       "NOTIFICATION": {
@@ -333,14 +336,19 @@
         "ANZEIGENALL": {
           "LABEL": "Show all"
         },
-        "ANZEIGENEINZEL": {
-          "LABEL": "Show individual statistics"
-        },
-        "ANZEIGENEINZELGESAMT": {
-          "LABEL": "Show over all statistics of individual"
+        "ANZEIGENSTATISTIK": {
+          "LABEL": "Show statistics"
         },
         "ANZEIGENEINZELGESAMTDRUCKEN": {
           "LABEL": "Print individual statistic"
+        }
+      },
+      "DROPDOWN": {
+        "OPTION1": {
+          "LABEL": "Complete statistics"
+        },
+        "OPTION2": {
+          "LABEL": "Statistics per archer"
         }
       },
       "FORM": {
@@ -608,7 +616,7 @@
       },
       "MIGRATION": {
         "LABEL": "Data",
-        "DESCRIPTION": "Migrate Data between old and new App";,
+        "DESCRIPTION": "Migrate Data between old and new App",
         "TABLE": {
           "HEADERS": {
             "TIMESTAMP": "Timestamp",
@@ -706,6 +714,7 @@
           "ID": "ID",
           "VORNAME": "first name",
           "NACHNAME": "last name",
+          "VEREIN": "club",
           "GEBURTSDATUM": "date of birth",
           "MITGLIEDSNUMMER": "member-number"
         }

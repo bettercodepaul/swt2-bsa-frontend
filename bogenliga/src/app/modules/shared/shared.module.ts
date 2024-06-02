@@ -64,6 +64,10 @@ import {
 } from '@shared/components/buttons/veranstaltungen-button/veranstaltungen-button.component';
 import {StatusbarComponent} from '@shared/components/statusbars';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {FilterinputbarComponent} from '@shared/components/selectionlists/filterinputbar/filterinputbar.component';
+import {
+  FilterTimestampInputbarComponent
+} from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
 
 @NgModule({
   imports: [
@@ -108,6 +112,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     SelectionlistComponent,
     QuicksearchListComponent,
     QuicksearchComponent,
+    FilterinputbarComponent,
+    FilterTimestampInputbarComponent,
     DownloadButtonComponent,
     SimpleOverviewDialogComponent,
     DoubleSelectionlistComponent,
@@ -154,6 +160,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     SelectionlistComponent,
     QuicksearchListComponent,
     QuicksearchComponent,
+    FilterinputbarComponent,
+    FilterTimestampInputbarComponent,
     DownloadButtonComponent,
     DoubleSelectionlistComponent,
     BogenkontrolllisteDownloadComponent,

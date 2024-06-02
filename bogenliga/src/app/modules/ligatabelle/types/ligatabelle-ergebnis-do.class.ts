@@ -21,5 +21,6 @@ export class LigatabelleErgebnisDO implements VersionedDataObject {
   satzpkt_differenz: number;
   tabellenplatz: number;
   sortierung: number;
+  matchCount: number;
 
 }

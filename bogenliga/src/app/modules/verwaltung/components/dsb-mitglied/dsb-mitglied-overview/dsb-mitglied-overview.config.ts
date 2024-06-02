@@ -1,6 +1,5 @@
 import {OverviewDialogConfig} from '../../../../shared/components/dialogs';
 import {TableActionType} from '../../../../shared/components/tables/types/table-action-type.enum';
-import {TableColumnType} from '../../../../shared/components/tables/types/table-column-type.enum';
 import {UserPermission} from '@shared/services';
 
 export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
@@ -21,9 +20,8 @@ export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.GEBURTSDATUM',
-        propertyName:   'geburtsdatum',
-        type:           TableColumnType.DATE,
+        translationKey: 'MANAGEMENT.DSBMITGLIEDER.TABLE.HEADERS.VEREIN',
+        propertyName:   'vereinsName',
         width:          20,
       },
       {

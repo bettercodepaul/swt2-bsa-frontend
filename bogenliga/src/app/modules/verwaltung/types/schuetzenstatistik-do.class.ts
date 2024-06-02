@@ -18,6 +18,11 @@ export class SchuetzenstatistikDO implements VersionedDataObject {
   vereinName: string;
   wettkampfId: number;
   wettkampfTag: number;
+  schuetzeSatz1: string;
+  schuetzeSatz2: string;
+  schuetzeSatz3: string;
+  schuetzeSatz4: string;
+  schuetzeSatz5: string;
 
 
   constructor(
@@ -37,6 +42,11 @@ export class SchuetzenstatistikDO implements VersionedDataObject {
     vereinName?: string,
     wettkampfId?: number,
     wettkampfTag?: number,
+    schuetzeSatz1?: string,
+    schuetzeSatz2?: string,
+    schuetzeSatz3?: string,
+    schuetzeSatz4?: string,
+    schuetzeSatz5?: string
   ) {
     this.id = id;
     this.version = version;
@@ -54,5 +64,10 @@ export class SchuetzenstatistikDO implements VersionedDataObject {
     this.vereinName = vereinName;
     this.wettkampfId = wettkampfId;
     this.wettkampfTag = wettkampfTag;
+    this.schuetzeSatz1 = schuetzeSatz1;
+    this.schuetzeSatz2 = schuetzeSatz2;
+    this.schuetzeSatz3 = schuetzeSatz3;
+    this.schuetzeSatz4 = schuetzeSatz4;
+    this.schuetzeSatz5 = schuetzeSatz5;
   }
 }

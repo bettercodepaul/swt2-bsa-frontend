@@ -43,11 +43,6 @@ import {SessionHandling} from '@shared/event-handling';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
-
-
-
-
-
 @Component({
   selector: 'bla-wkdurchfuehrung',
   templateUrl: './wkdurchfuehrung.component.html',
@@ -825,5 +820,17 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     const dialogRef = this.dialog.open(DsbMitgliedDetailPopUpComponent
     );
 
+  }
+
+  // Navigiert den User, in einem neuem Tab, zur Live-Tabelle
+  redirectToFullScreen(veranstaltungId: number): void {
+    console.log('selectedWettkampftag wkdurchführung', this.selectedWettkampftag);
+    const url = '#' + this.router.serializeUrl(
+      this.router.createUrlTree(
+        ['wkdurchfuehrung/fullscreen', veranstaltungId],
+        { queryParams: { wettkampftag: this.selectedWettkampftag } }
+      )
+    );
+    window.open(url, '_blank');
   }
 }

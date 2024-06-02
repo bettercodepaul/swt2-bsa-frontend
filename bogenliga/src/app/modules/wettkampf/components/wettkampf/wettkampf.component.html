@@ -145,7 +145,7 @@
     </div>
 
     <!-- Button -->
-    <bla-col-layout id="Button">
+    <div id="Button">
       <!-- Button - Alle Mannschaften anzeigen -->
       <bla-actionbutton
         [id]="'showResultsButton'"
@@ -167,27 +167,15 @@
         (onClick)="gesamt = false; loadErgebnisForMannschaft(this.currentMannschaft);">
         {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGEN.LABEL' | translate }}
       </bla-actionbutton>
-      &nbsp;
-      <!-- Button - Einzelstatistik anzeigen -->
+
+      <!-- Button - Statistik anzeigen -->
       <bla-actionbutton
         [id]="'showResultsButton'"
         [loading]="loadingData"
         [color]="ActionButtonColors.PRIMARY"
         [iconClass]="'poll'"
-        (onClick)="gesamt = false; this.loadEinzelstatistik(this.currentMannschaft);"
-        data-cy="einzelstatistik-anzeigen-button">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEINZEL.LABEL' | translate }}
-      </bla-actionbutton>
-      &nbsp;
-      <!-- Button - Einzelstatistik Gesamt anzeigen -->
-      <bla-actionbutton
-        [id]="'showResultsButton'"
-        [loading]="loadingData"
-        [color]="ActionButtonColors.PRIMARY"
-        [iconClass]="'poll'"
-        (onClick)="gesamt = true; this.loadGesamtstatistik(this.currentMannschaft);"
-        data-cy="einzelstatistik-gesamt-anzeigen-button">
-        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENEINZELGESAMT.LABEL' | translate }}
+        (onClick)="gesamt = true; showStatistikOptions();">
+        {{ 'MANNSCHAFTEN.MANNSCHAFTEN.BUTTONS.ANZEIGENSTATISTIK.LABEL' | translate }}
       </bla-actionbutton>
       &nbsp;
       <!-- Button - Einzelstatistik als PDF -->
@@ -212,7 +200,9 @@
         [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
       </bla-download-actionbutton>
 
-    </bla-col-layout>
+
+
+    </div>
 <!-- popup -->
     <div class="overlay" *ngIf="popup">
       <div class="popup">
@@ -232,9 +222,28 @@
       </div>
     </div>
 
+    <div id="selectStatistik" class="hidden">
+      <div class="row">
+        <div class="col-sm-8">
+          <select class="form-control"
+                  id="statistiken"
+                  name="StatistikName"
+                  [(ngModel)]="selectedStatistik"
+                  [disabled]="loadingData"
+                  (ngModelChange)="onSelectStatistik()">
+            <option value="gesamtstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION1.LABEL' | translate }} </option>
+            <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
+          </select>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Row Gesamtstatistik -->
     <div class="row print1">
-      <div id="Table0" class="hidden">
+      <div id="Table0" class="hidden" style="padding:1em">
         <h3>{{'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL' | translate}}</h3>
         <bla-data-table id="row00"
                         [loading]="loadingData"

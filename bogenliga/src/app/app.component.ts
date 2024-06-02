@@ -7,6 +7,7 @@ import {environment} from '../environments/environment';
 import {AppState, SidebarState} from './modules/shared/redux-store';
 import {HttpHeaders} from '@angular/common/http';
 import {FeedbackProviderService} from '@verwaltung/services/feedback-data-provider.service';
+import { FullscreenComponent } from './modules/wkdurchfuehrung/components/fullscreen/fullscreen.component';
 
 @Injectable({
   providedIn: 'root'
@@ -66,13 +67,20 @@ export class AppComponent implements OnInit {
     if (event instanceof InterfaceComponent) {
       this.fullscreen = true;
     }
+    if (event instanceof FullscreenComponent) {
+      this.fullscreen = true;
+    }
   }
 
   onDeactivate(event: any) {
     if (event instanceof InterfaceComponent) {
       this.fullscreen = false;
     }
+    if (event instanceof FullscreenComponent) {
+      this.fullscreen = false;
+    }
   }
+
 
   // Create new String with Feedback and the E-Mail address
   // then call the sendFeedback function to send the feedback

@@ -1,0 +1,15 @@
+<div class="filterinputbar">
+  <div class="row" id="rowsFilter">
+    <label class="form-label-box col-form-label" id="filterFormLabel">
+      <span>{{ filterlabel | translate }}</span>
+    </label>
+    <div class="col-sm-8">
+      <select class="form-control"
+              data-cy="status-filter-selection"
+              [(ngModel)]="item"
+              (ngModelChange)="onFilterButtonClick()">
+        <option *ngFor="let status of items" [ngValue]="status"> {{status}}</option>
+      </select>
+    </div>
+  </div>
+</div>
