@@ -1196,9 +1196,6 @@
           }
         }
       },
-      "DSBMITGLIEDER_INFO": {
-        "TITLE": "Association Member - Info"
-      },
       "VERANSTALTUNG": {
         "TITLE": "Event - Overview",
         "TABLE": {
