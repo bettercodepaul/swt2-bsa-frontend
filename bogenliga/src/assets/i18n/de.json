@@ -825,7 +825,8 @@
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
+        "DELETE": "Löschen",
+        "NEW_LOWEST": "Untergeordnete Liga erzeugen"
       },
       "NOTIFICATION": {
         "DELETE": {
