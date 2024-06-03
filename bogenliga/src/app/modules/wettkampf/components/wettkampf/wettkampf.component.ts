@@ -270,6 +270,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         }
       }
 
+      document.getElementById('row06').classList.add('hidden');
 
       this.rows = [];
       await this.loadSchuetzenstatistiken(selectedMannschaft.vereinId, 0);
@@ -309,6 +310,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         }
       }
 
+      document.getElementById('row06').classList.add('hidden');
 
       this.rows = [];
       await this.loadSchuetzenstatistikenMatch(selectedMannschaft.vereinId, 0);
@@ -396,6 +398,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         }
       }
 
+      document.getElementById('row06').classList.add('hidden');
+      document.getElementById('row00').classList.remove('hidden');
       this.rows = [];
       await this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(selectedMannschaft.vereinId, this.currentVeranstaltung.id)
         .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
