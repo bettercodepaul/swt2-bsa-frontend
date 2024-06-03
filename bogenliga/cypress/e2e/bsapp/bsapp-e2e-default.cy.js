@@ -279,7 +279,24 @@ describe('Admin User tests', function() {
     cy.wait(1000)
     cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
+
+
+
   })
+
+  it('Suche DSBMitglieder', function () {
+
+
+
+    cy.get('.input-group > #undefined').click();
+    cy.get('.input-group > #undefined').type('Gero');
+    cy.wait(1000)
+    cy.get('table td')
+      .contains('span', 'SGes Gerstetten')
+      .should('exist')
+    }
+  )
+
 
   /**
    * This test searches for a specific "DSBMitglied" name and checks if the corresponding club name has been listed

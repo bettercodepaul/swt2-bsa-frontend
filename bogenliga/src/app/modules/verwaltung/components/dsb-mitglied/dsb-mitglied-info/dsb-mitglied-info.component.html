@@ -1,0 +1,79 @@
+<bla-common-dialog [config]="config"
+                   [loading]="loading">
+
+    <form #dsbMitgliedForm="ngForm"
+          class="horizontal-form half-page"
+          id="dsbMitgliedForm">
+      <!-- VORNAME -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-9 right-span">
+          <span>{{ currentMitglied.vorname }}</span>
+        </div>
+      </div>
+
+      <!-- NACHNAME -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-9 right-span">
+          <span>{{ currentMitglied.nachname }}</span>
+        </div>
+      </div>
+
+      <!-- GEBURTSDATUM -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-9 right-span">
+          <span>{{ currentMitglied.geburtsdatum }}</span>
+        </div>
+      </div>
+
+      <!-- MITGLIEDSNUMMER -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-9 right-span">
+          <span>{{ currentMitglied.mitgliedsnummer }}</span>
+        </div>
+      </div>
+
+      <!-- NATIONALITAET -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-9 right-span">
+          <span>{{ currentMitgliedNat }}</span>
+        </div>
+      </div>
+
+      <!-- Vereine -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-9 right-span">
+          <span>{{ currentVerein.name }}</span>
+        </div>
+      </div>
+
+      <!-- Kampfrichterlizenz -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.KAMPFRICHTER.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-9 right-span">
+          <span>{{ currentMitglied.kampfrichter }}</span>
+        </div>
+      </div>
+
+    </form>
+
+</bla-common-dialog>

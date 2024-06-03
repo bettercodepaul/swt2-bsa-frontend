@@ -31,11 +31,12 @@ export const DSB_MITGLIED_OVERVIEW_CONFIG: OverviewDialogConfig = {
       }
     ],
     actions: {
-      actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
+      actionTypes: [TableActionType.VIEW, TableActionType.EDIT, TableActionType.DELETE],
       width:       6
     },
     editPermission : [UserPermission.CAN_MODIFY_DSBMITGLIEDER],
-    deletePermission : [UserPermission.CAN_DELETE_DSBMITGLIEDER]
+    deletePermission : [UserPermission.CAN_DELETE_DSBMITGLIEDER],
+    viewPermission : [UserPermission.CAN_READ_DSBMITGLIEDER]
   },
   createPermission : [UserPermission.CAN_CREATE_DSBMITGLIEDER, UserPermission.CAN_CREATE_VEREIN_DSBMITGLIEDER]
 };
