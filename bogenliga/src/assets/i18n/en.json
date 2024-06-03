@@ -626,7 +626,8 @@
             "OPERATION": "Operation"
           }
         }
-      },
+      }
+    },
       "SPORTJAHR": {
         "TITLE": "Choose league",
         "TABLE": {
@@ -1744,4 +1745,4 @@
       }
     }
   }
-}
+
