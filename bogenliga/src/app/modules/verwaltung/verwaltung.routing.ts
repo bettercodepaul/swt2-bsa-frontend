@@ -6,6 +6,7 @@ import {
   UserOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
+  DsbMitgliedInfoComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
   RegionDetailComponent,
@@ -28,6 +29,7 @@ import {
   UserOverviewGuard,
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard,
+  DsbMitgliedInfoGuard,
   LigaDetailGuard,
   LigaOverviewGuard,
   RegionDetailGuard,
@@ -62,7 +64,8 @@ export const VERWALTUNG_ROUTES: Routes = [
     pathMatch:   'full',
     canActivate: [DsbMitgliedOverviewGuard]
   },
-  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]}
+  {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
+  {path: 'dsbmitglieder/:id/info', component: DsbMitgliedInfoComponent, canActivate: [DsbMitgliedInfoGuard]}
   ,
   {
     path:        'user',

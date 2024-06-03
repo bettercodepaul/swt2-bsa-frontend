@@ -1,6 +1,7 @@
 export * from './verwaltung.guard';
 export * from './dsb-mitglied-overview.guard';
 export * from './dsb-mitglied-detail.guard';
+export * from './dsb-mitglied-info.guard';
 export * from './user-overview.guard';
 export * from './user-neu.guard';
 export * from './user-detail.guard';

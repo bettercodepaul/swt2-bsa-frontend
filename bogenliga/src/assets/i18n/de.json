@@ -1236,6 +1236,9 @@
         }
       }
     },
+    "DSBMITGLIEDER_INFO": {
+      "TITLE": "Vereinsmitglieder - Info"
+    },
     "VERANSTALTUNG": {
       "TITLE": "Veranstaltung - Übersicht",
       "TABLE": {
