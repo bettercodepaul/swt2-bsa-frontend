@@ -1165,6 +1165,11 @@
           "PLACEHOLDER": "Please enter a club ID",
           "ERROR": "Please enter a valid club ID."
         },
+        "BEITRITTSDATUM": {
+          "LABEL": "Date of Joining",
+          "PLACEHOLDER": "Please enter a date of joining.",
+          "ERROR": "Please enter a valid date of joining."
+        },
         "KAMPFRICHTER": {
           "LABEL": "Referee license"
         },
