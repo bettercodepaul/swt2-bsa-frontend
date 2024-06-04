@@ -4,6 +4,7 @@
     <form #dsbMitgliedForm="ngForm"
           class="horizontal-form half-page"
           id="dsbMitgliedForm">
+
       <!-- VORNAME -->
       <div class="form-group row">
         <label class="col-sm-3 col-form-label">
@@ -63,6 +64,19 @@
           <span>{{ currentVerein.name }}</span>
         </div>
       </div>
+
+
+      <!-- BEITRITTSDATUM -->
+      <div class="form-group row">
+        <label class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.BEITRITTSDATUM.LABEL' | translate }}:</span>
+        </label>
+        <div class="col-sm-9 right-span">
+          <span>{{ currentMitglied.beitrittsdatum }}</span>
+        </div>
+      </div>
+
+
 
       <!-- Kampfrichterlizenz -->
       <div class="form-group row">
