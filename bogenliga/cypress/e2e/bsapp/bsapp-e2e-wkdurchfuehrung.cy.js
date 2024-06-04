@@ -8,10 +8,8 @@ describe('Wkdurchfuehrung tests', function () {
    * This tests the fullscreen button for the presenter view
    */
   it('Aktivierung der Vollbildansicht nach Auswahl', () => {
-    const veranstaltung = '1'; // hard coded to the event, the test uses
-    const wettkampftag = '1.%20Wettkampftag'; // hard coded to the day, the test uses
 
-    cy.visit(`/#/wkdurchfuehrung?wettkampftag=${wettkampftag}&veranstaltung=${veranstaltung}`);
+    cy.visit(`/#/wkdurchfuehrung/`);
 
     let openedUrl;
     cy.window().then(win => {
@@ -21,29 +19,54 @@ describe('Wkdurchfuehrung tests', function () {
       }).as('open');
     });
 
-    cy.expandWettkampfTage();
-    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > [data-cy="actionButton"]').click();
-    cy.wait(1000);
+    cy.expandWettkampfTage()
 
-    cy.get('[ng-reflect-header-text="Druckdaten"]').then($header => {
-      $header.click();
-    });
+    cy.wait(2000);
+
+    cy.get('[data-cy="wkdurchfuehrung-wettkampftage-list"]').should('be.visible').find('.table-responsive')
+      .should('be.visible').find('#payload-id-2000')
+      .should('be.visible').within(() => {
+        cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').should('be.visible').click();
+      })
+      .then(() => {
+        cy.get('#wettkampfTag-2000').click({ force: true });
+      });
 
     cy.get('[data-cy=vollbildAnsichtButton]').click();
     cy.get('@open').should('be.called');
 
     cy.wrap(null).then(() => {
       expect(openedUrl).to.exist;
-      cy.visit(`${openedUrl}/fullscreen`);
+      cy.visit(`${openedUrl}`);
     });
 
+    //prüft die Vollbildanzeige
     cy.url().should('include', '/fullscreen');
 
-    //Additional testing for when the table works
+    cy.get('.logo-and-header-container').should('exist');
+    cy.get('.logo-container img')
+      .should('have.attr', 'src', 'assets/img/Logos/BL_Logo/Favicon/apple-touch-icon.png')
+      .should('have.attr', 'alt', 'bogenliga-logo');
+    cy.get('.header-container .veranstaltung-header')
+      .invoke('text')
+      .as('selectedVeranstaltung');
+    cy.get('.header-container .wettkampftag-header')
+      .invoke('text')
+      .as('selectedWettkampftag');
+    cy.get('[data-cy=table-fullscreen]').should('exist');
+
+    cy.get('[data-cy=table-fullscreen]').within(() => {
+      cy.contains('Match Anzahl').should('exist');
+      cy.contains('Tabellenplatz').should('exist');
+      cy.contains('Mannschaft').should('exist');
+      cy.contains('Satzpunktdifferenz').should('exist');
+      cy.contains('Satzpunkte').should('exist');
+    });
+
+    cy.get('bla-data-table tbody tr').should('have.length.greaterThan', 0);
 
     cy.go('back');
   });
-
 
   /**
    * This test opens the sidebar and clicks on the "WKDURCHFUEHRUNG" tab and checks if the url has changed successfully
