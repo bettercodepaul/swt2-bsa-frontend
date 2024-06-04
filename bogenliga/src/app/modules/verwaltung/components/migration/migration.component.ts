@@ -35,7 +35,7 @@ export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
   templateUrl: './migration.component.html',
   styleUrls:   ['./migration.component.scss']
 })
-export class MigrationComponent extends CommonComponentDirective implements OnInit {
+export class MigrationComponent extends CommonComponentDirective implements OnInit, AfterViewInit {
   public rows: TableRow[];
   public config = MIGRATION_OVERVIEW_CONFIG;
   public ButtonType = ButtonType;
@@ -153,17 +153,13 @@ public getEntireDataCount(){
     this.MigrationDataProvider.getEntireDataCount()
       .then((response: BogenligaResponse<TriggerCountDO>) => {
         this.handleEntireData(response);
-        console.log(this.entireCount);
-      })
-      .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+      });
 }
 public getSucceededDataCount(){
   this.MigrationDataProvider.getSucceededDataCount()
       .then((response: BogenligaResponse<TriggerCountDO>) => {
         this.handleSucceeededData(response);
-        console.log(this.succeededCount);
-      })
-      .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+      });
 }
 
   public getInProgressDataCount(callback: (count: number) => void) {
