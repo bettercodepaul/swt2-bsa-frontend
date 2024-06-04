@@ -724,12 +724,12 @@
             "DESCRIPTION": "Are you sure, you want to delete the Association Member with ID=%s? This can not be undone."
           },
           "DELETE_PLATZHALTER_MITGLIED": {
-            "TITLE": "Delete Placeholder club member",
-            "DESCRIPTION": "You cannot delete this member as it is needed for the Placeholder team."
+            "TITLE": "Delete Placeholder association member",
+            "DESCRIPTION": "You cannot delete this association member as it is needed for the Placeholder team."
           },
           "EDIT_PLATZHALTER_MITGLIED": {
-            "TITLE": "Edit Placeholder member",
-            "DESCRIPTION": "You cannot edit this member as it is needed for the Placeholder team."
+            "TITLE": "Edit Placeholder association member",
+            "DESCRIPTION": "You cannot edit this association member as it is needed for the Placeholder team."
           }
         }
       },
