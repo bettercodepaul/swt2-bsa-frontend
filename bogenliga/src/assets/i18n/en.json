@@ -83,6 +83,7 @@
     },
     "TITEL": {
       "VERANSTALTUNG": "League-Selection"
+
     },
     "LIGATABELLE": {
       "TITEL": "League-Ranking",
@@ -98,8 +99,8 @@
         "WETTKAMPFTAG_AKT": "Competition day",
         "WETTKAMPFTAG": "0"
       },
-      "RESET_LIGASELECTION": "reset league selection",
-      "GOTO_LIGADETAILS": "To the league details"
+      "RESET_LIGASELECTION" : "reset league selection",
+      "GOTO_LIGADETAILS" : "To the league details"
     },
     "EINZELSTATISTIK": {
       "NOTIFICATION": {
@@ -208,6 +209,7 @@
       "ONLINE_GEHEN": "Go online",
       "OFFLINE_TOKEN": "Delete offline token",
       "VOLLBILDANSICHT": "League in fullscreen mode"
+
     },
     "SETZLISTE": {
       "NOTIFICATION": {
@@ -626,8 +628,7 @@
             "OPERATION": "Operation"
           }
         }
-      }
-    },
+      },
       "SPORTJAHR": {
         "TITLE": "Choose league",
         "TABLE": {
@@ -795,7 +796,7 @@
             "PLACEHOLDER": "Please select a league responsible",
             "ERROR": "Please enter a valid E-Mail"
           },
-          "LIGA_DETAIL": {
+          "LIGA_DETAIL" : {
             "LABEL": "League details",
             "MAX_WORDS_WARNING": "(max. 300 words)"
           },
@@ -822,7 +823,7 @@
           },
           "WRONG_FORMAT": {
             "TITLE": "Error",
-            "DESCRIPTION": "The name of the leage shouln't contain an underscore."
+            "DESCRIPTION":  "The name of the leage shouln't contain an underscore."
           }
         }
       },
@@ -1164,6 +1165,11 @@
             "PLACEHOLDER": "Please enter a club ID",
             "ERROR": "Please enter a valid club ID."
           },
+          "BEITRITTSDATUM": {
+            "LABEL": "Date of Joining",
+            "PLACEHOLDER": "Please enter a date of joining.",
+            "ERROR": "Please enter a valid date of joining."
+          },
           "KAMPFRICHTER": {
             "LABEL": "Referee license"
           },
@@ -1196,6 +1202,9 @@
           }
         }
       },
+      "DSBMITGLIEDER_INFO": {
+        "TITLE": "Association Member - Info"
+      },
       "VERANSTALTUNG": {
         "TITLE": "Event - Overview",
         "TABLE": {
@@ -1206,7 +1215,7 @@
             "WETTKAMPFTYPNAME": "Competition type name",
             "SPORTJAHR": "Sport year",
             "MELDEDEADLINE": "Registration deadline",
-            "PHASE": "Phase",
+            "PHASE" : "Phase",
             "LIGANAME": "League name",
             "LIGALEITERID": "League leader ID",
             "LIGALEITERMAIL": "League leader E-Mail"
@@ -1365,9 +1374,9 @@
             "TITLE": "Add competition day",
             "DESCRIPTION": "Do you want to add another competition day?"
           },
-          "FINISH": {
-            "TITLE": "Finish event",
-            "DESCRIPTION": "Are you sure, you want to finish the event '%s'?"
+          "FINISH" : {
+            "TITLE" : "Finish event",
+            "DESCRIPTION" : "Are you sure, you want to finish the event '%s'?"
           },
           "SAVE": {
             "TITLE": "Event created",
@@ -1741,5 +1750,4 @@
         }
       }
     }
-  }
-
+  },
