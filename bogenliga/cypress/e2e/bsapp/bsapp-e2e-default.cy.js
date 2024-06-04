@@ -297,29 +297,11 @@ describe('Admin User tests', function() {
     }
   )
 
-
-  /**
-   * This test searches for a specific "DSBMitglied" name and checks if the corresponding club name has been listed
-   */
-  it('Suche DSBMitglieder', function () {
-      cy.get('.input-group > #undefined').click();
-      cy.get('.input-group > #undefined').type('Gero');
-      cy.wait(1000)
-      cy.get('table td')
-        .contains('span', 'SGes Gerstetten')
-        .should('exist')
-      cy.wait(2000)
-      cy.get('.input-group > #undefined').clear();
-    }
-  )
-
   /**
    * This test adds a new "DSB-Mitglied"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
   it('Neues DSB-Mitglied', function() {
-    //cy.get('body').then((body) => {
-    //if (!body.text().includes('MitgliedVorname')) {
     const randomID = generateID().toString();
 
     cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
@@ -332,61 +314,43 @@ describe('Admin User tests', function() {
     cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').click()
     cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').type(randomID);
     cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').select('BSC Stuttgart')
+    cy.get('[data-cy=detail-beitrittsdatum-feld]').click();
+    cy.get('[data-cy=detail-beitrittsdatum-feld]').type('2001-02-02');
+
     cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedSaveButton').click()
     cy.wait(3000)
-    //cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
     cy.get('#OKBtn1').click()
     cy.wait(1000)
   });
 
-  /*
-  describe('test_name', function() {
 
- it('what_it_does', function() {
-
-    cy.viewport(1259, 896)
-
-    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder')
-
-    cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').type('vorname')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedNachname').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedNachname').type('nachname')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0001-02-01')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0019-02-01')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0199-02-01')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('1996-02-01')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').type('1234567')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').select('13: Object')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').click()
-
-    cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedSaveButton').click()
-
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
-
- })
-
-})
-
+  /**
+   * This test searches for a specific "DSBMitglied" name and checks if the corresponding club name has been listed
    */
+  it('Suche DSBMitglieder', function () {
+      cy.get('.input-group > #undefined').click();
+      cy.get('.input-group > #undefined').type('vorname');
+      cy.wait(1000)
+      cy.get('table td')
+        .contains('span', 'BSC Stuttgart')
+        .should('exist')
+      cy.wait(2000)
+      cy.get('.input-group > #undefined').clear();
+    }
+  )
+
+  /**
+   * This test views a single member and redirects to the overview page afterward
+   */
+  it('View DSBMitglied Info', function() {
+    cy.wait(1000)
+    cy.contains('tr', 'vorname').find('[data-cy="TABLE.ACTIONS.VIEW"]').click();
+    cy.wait(1000)
+    cy.url().should('include', '/info')
+    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder');
+    cy.url().should('include', '#/verwaltung/dsbmitglieder')
+  })
+
 
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
