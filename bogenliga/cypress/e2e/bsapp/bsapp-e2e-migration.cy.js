@@ -44,7 +44,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('findallErrors-request');
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
     cy.wait(1000)
@@ -61,7 +61,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findSuccessed?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findSuccessed?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('filter');
     cy.get('[data-cy=status-filter-selection]').select('1: Erfolgreich')
     cy.wait(2000)
@@ -71,7 +71,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findInProgress?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findInProgress?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('filter');
     cy.get('[data-cy=status-filter-selection]').select('2: Laufend')
     cy.wait(1000)
@@ -81,7 +81,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findNews?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findNews?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('filter');
     cy.get('[data-cy=status-filter-selection]').select('3: Neu')
     cy.wait(1000)
@@ -91,7 +91,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('filter');
     cy.get('[data-cy=status-filter-selection]').select('4: Alle')
     cy.wait(1000)
@@ -101,7 +101,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('nextPage');
     cy.get('[data-cy=next-page-button]').click()
   })
@@ -109,7 +109,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('previousPage');
     cy.get('[data-cy=previous-page-button]').click()
   })
@@ -117,7 +117,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('nextPage');
     cy.get('[data-cy=next-page-button-above]').click()
   })
@@ -125,7 +125,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('previousPage');
     cy.get('[data-cy=previous-page-button-above]').click()
   })
@@ -133,7 +133,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('filter');
     cy.get('[data-cy=status-filter-selection]').select('0: Fehlgeschlagen')
     cy.wait(1000)
@@ -143,7 +143,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=3%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzten drei Monate`,
     }).as('filter');
     cy.get('[data-cy=timestamp-filter-selection]').select('1: letzten drei Monate')
     cy.wait(1000)
@@ -153,7 +153,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=1%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('filter');
     cy.get('[data-cy=timestamp-filter-selection]').select('0: letzter Monat')
     cy.wait(1000)
@@ -163,7 +163,7 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=6%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzten sechs Monate`,
     }).as('filter');
     cy.get('[data-cy=timestamp-filter-selection]').select('2: letzten sechs Monate')
     cy.wait(1000)
@@ -173,9 +173,59 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=12%20MONTH`,
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
     }).as('filter');
     cy.get('[data-cy=timestamp-filter-selection]').select('3: im letzten Jahr')
+    cy.wait(1000)
+    cy.wait('@filter')
+  })
+  it('Filtern nach Zeitstempel im letzten Jahr', () => {
+    cy.viewport(1920,1080)
+    cy.intercept({
+      method: 'GET',
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
+    }).as('filter');
+    cy.get('[data-cy=timestamp-filter-selection]').select('3: im letzten Jahr')
+    cy.wait(1000)
+    cy.wait('@filter')
+  })
+  it('Filtern nach Zeitstempel im letzten Jahr', () => {
+    cy.viewport(1920,1080)
+    cy.intercept({
+      method: 'GET',
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
+    }).as('filter');
+    cy.get('[data-cy=timestamp-filter-selection]').select('3: im letzten Jahr')
+    cy.wait(1000)
+    cy.wait('@filter')
+  })
+  it('Filtern nach Zeitstempel älter als ein Monat', () => {
+    cy.viewport(1920,1080)
+    cy.intercept({
+      method: 'GET',
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=älter als ein Monat`,
+    }).as('filter');
+    cy.get('[data-cy=timestamp-filter-selection]').select('4: älter als ein Monat')
+    cy.wait(1000)
+    cy.wait('@filter')
+  })
+  it('Filtern nach Zeitstempel älter als drei Monate', () => {
+    cy.viewport(1920,1080)
+    cy.intercept({
+      method: 'GET',
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=älter als drei Monate`,
+    }).as('filter');
+    cy.get('[data-cy=timestamp-filter-selection]').select('5: älter als drei Monate')
+    cy.wait(1000)
+    cy.wait('@filter')
+  })
+  it('Filtern nach Zeitstempel älter als sechs Monate', () => {
+    cy.viewport(1920,1080)
+    cy.intercept({
+      method: 'GET',
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=älter als sechs Monate`,
+    }).as('filter');
+    cy.get('[data-cy=timestamp-filter-selection]').select('6: älter als sechs Monate')
     cy.wait(1000)
     cy.wait('@filter')
   })
@@ -183,9 +233,9 @@ describe('Verwaltung/Migration tests', function () {
     cy.viewport(1920,1080)
     cy.intercept({
       method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=20%20YEAR`,
+      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=alle`,
     }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('4: alle')
+    cy.get('[data-cy=timestamp-filter-selection]').select('7: alle')
     cy.wait(1000)
     cy.wait('@filter')
   })
