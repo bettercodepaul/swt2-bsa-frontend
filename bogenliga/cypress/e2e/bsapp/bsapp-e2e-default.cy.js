@@ -156,6 +156,14 @@ describe('Anonyme User tests', function () {
     cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
   })
   /**
+   * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Wettkampftagestatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikWettkampftage', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
+  })
+  /**
    * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Einzelstatistik anzeigen', function() {

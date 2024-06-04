@@ -208,6 +208,7 @@
               <option value="gesamtstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION1.LABEL' | translate }} </option>
               <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
               <option value="schuetzenstatistikMatch"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION3.LABEL' | translate }} </option>
+              <option value="schuetzenstatistikWettkampftage">{{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION4.LABEL' | translate }}</option>
 
             </select>
             <div class="invalid-feedback">
@@ -253,14 +254,18 @@
       <div class="row print1">
         <div id="Table0" class="hidden" style="padding:1em"
         data-cy="wettkampf-schuetzenstatistik-gesamtstatistik-table">
-          <h3>{{'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL' | translate}}</h3>
+         <h3>{{'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL' | translate}}</h3>
           <!-- Button - Gesamtstatistik Drucken -->
-
-
 
           <bla-data-table id="row00"
                           [loading]="loadingData"
                           [config]="config_einzelGesamt_table"
+                          [rows]="rows[0]">
+          </bla-data-table>
+          <bla-data-table id="row06"
+                          class="hidden"
+                          [loading]="loadingData"
+                          [config]="config_schuetzenstatistikWettkampftage_table"
                           [rows]="rows[0]">
           </bla-data-table>
         </div>
@@ -304,6 +309,7 @@
                           [config]="config_schuetzenstatistikMatch_table"
                           [rows]="rows[0]">
           </bla-data-table>
+
         </div>
       </div>
       <!-- Row 2 -->
@@ -333,6 +339,7 @@
                           [config]="config_schuetzenstatistikMatch_table"
                           [rows]="rows[1]">
           </bla-data-table>
+
         </div>
       </div>
       <!-- Row 3 -->
@@ -362,6 +369,7 @@
                           [config]="config_schuetzenstatistikMatch_table"
                           [rows]="rows[2]">
           </bla-data-table>
+
         </div>
       </div>
       <!-- Row 4 -->
@@ -392,6 +400,7 @@
                           [config]="config_schuetzenstatistikMatch_table"
                           [rows]="rows[3]">
           </bla-data-table>
+
         </div>
       </div>
 
