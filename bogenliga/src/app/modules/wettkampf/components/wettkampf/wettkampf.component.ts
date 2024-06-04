@@ -75,6 +75,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public areVeranstaltungenLoading = true;
   public loadingData = false;
+  public currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
@@ -701,10 +702,12 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     if (this.selectedStatistik === 'einzelstatistik') {
       await this.loadEinzelstatistik(this.currentMannschaft);
     } else if (this.selectedStatistik === 'gesamtstatistik') {
+      this.currentStatistikTitle = 'WETTKAEMPFE.WETTKAEMPFE.TITEL';
       await this.loadGesamtstatistik(this.currentMannschaft);
     } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
       await this.loadSchuetzenstatistikMatch(this.currentMannschaft);
     } else if (this.selectedStatistik === 'schuetzenstatistikWettkampftage') {
+      this.currentStatistikTitle = 'WETTKAEMPFE.WETTKAEMPFE.TITLE';
       await this.loadSchuetzenstatistikWettkampftage(this.currentMannschaft);
     }
   }
