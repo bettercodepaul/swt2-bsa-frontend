@@ -45,4 +45,25 @@ export class SchuetzenstatistikwettkampftageDataProviderService extends DataProv
     });
   }
 
+  public getSchuetzenstatistikAlleLigen(sportjahr: string | number, vereinId: string | number): Promise<BogenligaResponse<SchuetzenstatistikWettkampftageDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder()
+        .fromPath(this.getUrl())
+        .path('bySportjahrAndVerein/' + sportjahr + '/' + vereinId)
+        .build())
+          .then((data: VersionedDataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+          }, (error: HttpErrorResponse) => {
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
 }

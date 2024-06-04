@@ -341,6 +341,9 @@
     "SCHUETZEN_STATISTIK": {
       "TITEL": "Gesamtstatistik pro Schütze"
     },
+    "SCHUETZEN_STATISTIK_ALLE_LIGEN": {
+      "TITEL": "Saisonschnitte pro Schütze"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
       "POPUPTXT": {
@@ -380,6 +383,9 @@
         },
         "OPTION4": {
           "LABEL": "Wettkampftagestatistik"
+        },
+        "OPTION5": {
+          "LABEL": "Saisonschnittstatistik"
         }
       },
       "FORM": {
@@ -421,7 +427,12 @@
           "MATCH4": "M4",
           "MATCH5": "M5",
           "MATCH6": "M6",
-          "MATCH7": "M7"
+          "MATCH7": "M7",
+          "SCHNITTWETTKAMPFTAGE1": "⌀ Wettkampftage 1",
+          "SCHNITTWETTKAMPFTAGE2": "⌀ Wettkampftage 2",
+          "SCHNITTWETTKAMPFTAGE3": "⌀ Wettkampftage 3",
+          "SCHNITTWETTKAMPFTAGE4": "⌀ Wettkampftage 4",
+          "SAISONSCHNITT": "Saisonschnitt"
         }
       }
     }

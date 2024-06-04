@@ -37,6 +37,9 @@ import {
 } from '@wettkampf/services/schuetzenstatistikmatch-data-provider-service';
 import {SchuetzenstatistikMatchDO} from '@verwaltung/types/schuetzenstatistikmatch-do.class';
 import {
+  WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.pfeilschnittalleligenprosaison.config';
+import {
   WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.wettkampftage.config';
 import {SchuetzenstatistikWettkampftageDO} from '@verwaltung/types/schuetzenstatistikwettkampftage-do.class'
@@ -63,6 +66,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public config_schuetzenstatistikMatch_table = WETTKAMPF_TABLE_MATCH_CONFIG;
   public config_schuetzenstatistikWettkampftage_table = WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG;
   public jahre: Array<SportjahrVeranstaltungDO> = [];
+  public config_alleligen_table = WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG;
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
@@ -197,6 +201,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     } else {
       this.hideUebersichtsButtons();
     }
+
+
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
       rowNumber += i;
@@ -259,7 +265,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         document.getElementById(rowNumber + '2').classList.add('hidden');
         document.getElementById(rowNumber + '1').classList.remove('hidden');
       }
-      for (let i = 0; i <= 4; i++) {
+      for (let i = 0; i < 4; i++) {
         let tableNumber = 'Table';
         tableNumber += i;
         if (i === 0) {
@@ -291,7 +297,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.hideUebersichtsButtons();
 
     if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 5; i++) {
         let rowNumber = 'row';
         rowNumber += i;
         document.getElementById(rowNumber).classList.add('hidden');
@@ -347,6 +353,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         }
       }
       document.getElementById('row06').classList.remove('hidden');
+      document.getElementById('row07').classList.add('hidden');
       document.getElementById('row00').classList.add('hidden');
 
       this.rows = [];
@@ -402,6 +409,46 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
       document.getElementById('einzeldruckButton').classList.add('hidden');
       document.getElementById('gesamtdruckButton').classList.remove('hidden');
+
+      // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
+      for (let i = 0; i < this.rows.length; i++) {
+        if (this.rows[i].length > 0) {
+          this.isTableFilled[i] = true;
+        }
+      }
+    }
+    this.loadingData = false;
+  }
+
+  public async loadAlleLigenProSaisonStatistik(selectedMannschaft: DsbMannschaftDO) {
+    this.hideUebersichtsButtons();
+    if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
+      for (let i = 0; i < 4; i++) {
+        let rowNumber = 'row';
+        rowNumber += i;
+        document.getElementById(rowNumber).classList.add('hidden');
+        document.getElementById(rowNumber + '1').classList.add('hidden');
+        document.getElementById(rowNumber + '2').classList.add('hidden');
+      }
+      for (let i = 0; i <= 4; i++) {
+        let tableNumber = 'Table';
+        tableNumber += i;
+        if (i === 0) {
+          document.getElementById(tableNumber).classList.remove('hidden');
+        } else {
+          document.getElementById(tableNumber).classList.add('hidden');
+        }
+      }
+      document.getElementById('row07').classList.remove('hidden');
+      document.getElementById('row06').classList.add('hidden');
+      document.getElementById('row00').classList.add('hidden');
+
+      this.rows = [];
+      await this.schuetzenstatistikWettkampftageDataProvider.getSchuetzenstatistikAlleLigen(this.currentJahr, selectedMannschaft.vereinId)
+                .then((response: BogenligaResponse<SchuetzenstatistikWettkampftageDO[]>) => this.handleLoadSchuetzenstatistikAlleLigenSuccess(response.payload));
+
+      document.getElementById('einzeldruckButton').classList.add('hidden');
+      document.getElementById('gesamtdruckButton').classList.add('hidden');
 
       // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
       for (let i = 0; i < this.rows.length; i++) {
@@ -471,6 +518,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
   }
 
+  public handleLoadSchuetzenstatistikAlleLigenSuccess(payload) {
+    if(payload.length >0){
+      console.log(payload);
+      this.rows.push(toTableRows(payload));
+    }
+  }
+
   /* loadPopup
    ich werde in html aufgerufen,
    wenn ein Popup erscheinen soll das aufmerksam macht, dass die Mannschaft noch nicht ausgewählt wurde.
@@ -527,6 +581,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   async handleSuccessLoadVeranstaltungen(response: BogenligaResponse<VeranstaltungDO[]>) {
     this.veranstaltungen = response.payload;
+
     this.currentVeranstaltung = this.veranstaltungen[0];
     this.areVeranstaltungenLoading = false;
 
@@ -614,24 +669,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     return placeholder;
   }
 
-
-  /*
-  loadMitglieder:
-  Es stellt einen Request an das Backend um alle Mitglieder in der Datenbank dsb_mitglied zu erhalten
-  und diese dann in dem Array dsbMitglieder zu speichern.
-
-  public loadMitglieder() {
-    this.dsbMitgliedDataProvider.findAll()
-              .then((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = response.payload)
-              .catch((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = []);
-  }
-
-  public loadMannschaftsmitglieder() {
-    this.mannschaftsmitgliedDataProvider.findAll()
-        .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = response.payload)
-        .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = []);
-  }*/
-
   public onButtonDownloadUebersicht(path: string): string {
     return new UriBuilder()
       .fromPath(environment.backendBaseUrl)
@@ -705,6 +742,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     } else if (this.selectedStatistik === 'gesamtstatistik') {
       this.currentStatistikTitle =  'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
       await this.loadGesamtstatistik(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'alleligenstatistik') {
+      await this.loadAlleLigenProSaisonStatistik(this.currentMannschaft);
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK_ALLE_LIGEN.TITEL';
     } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
       await this.loadSchuetzenstatistikMatch(this.currentMannschaft);
     } else if (this.selectedStatistik === 'schuetzenstatistikWettkampftage') {

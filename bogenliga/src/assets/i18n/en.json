@@ -315,6 +315,9 @@
     "SCHUETZEN_STATISTIK": {
       "TITEL": "Overall statistics per shooter"
     },
+    "SCHUETZEN_STATISTIK_ALLE_LIGEN": {
+      "TITEL": "Archer statistics per season"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
       "POPUPTXT": {
@@ -348,6 +351,12 @@
         },
         "OPTION3": {
           "LABEL": "Statistics per competition day"
+        },
+        "OPTION4": {
+          "LABEL": "Archer statistics per league"
+        },
+        "OPTION5": {
+          "LABEL": "Archer statistics across all leagues"
         }
       },
       "FORM": {
@@ -389,7 +398,12 @@
           "MATCH4": "M4",
           "MATCH5": "M5",
           "MATCH6": "M6",
-          "MATCH7": "M7"
+          "MATCH7": "M7",
+          "SCHNITTWETTKAMPFTAGE1": "⌀ Competition Day 1",
+          "SCHNITTWETTKAMPFTAGE2": "⌀ Competition Day 2",
+          "SCHNITTWETTKAMPFTAGE3": "⌀ Competition Day 3",
+          "SCHNITTWETTKAMPFTAGE4": "⌀ Competition Day 4",
+          "SAISONSCHNITT": "Season average"
         }
       }
     }

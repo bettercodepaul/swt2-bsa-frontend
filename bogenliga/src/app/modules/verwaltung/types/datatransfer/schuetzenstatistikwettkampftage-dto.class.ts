@@ -24,7 +24,7 @@ export class SchuetzenstatistikWettkampftageDTO implements DataTransferObject {
     wettkampftag2: number,
     wettkampftag3: number,
     wettkampftag4: number,
-    wettkampftageSchnitt: number
+    wettkampftageSchnitt: number,
   ) {
     this.id = id;
     this.version = version;
