@@ -129,7 +129,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadVeranstaltungen
    */
   ngOnInit() {
-    this.init()
+    this.init();
   }
 
   async init() {
@@ -197,8 +197,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     } else {
       this.hideUebersichtsButtons();
     }
-
-
     for (let i = 0; i < 4; i++) {
       let rowNumber = 'row';
       rowNumber += i;
@@ -453,20 +451,23 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public handleLoadSchuetzenstatistikSuccess(payload) {
     if (payload.length > 0) {
       console.log(payload);
-      this.rows.push(toTableRows(payload));
+      const shortenedRows = payload.filter((element: SchuetzenstatistikDO) => element.pfeilpunkteSchnitt !== null);
+      this.rows.push(toTableRows(shortenedRows));
     }
   }
   public handleLoadSchuetzenstatistikMatchSuccess(payload) {
     if (payload.length > 0) {
       console.log(payload);
-      this.rows.push(toTableRows(payload));
+      const shortenedRows = payload.filter((element: SchuetzenstatistikMatchDO) => element.pfeilpunkteSchnitt !== null);
+      this.rows.push(toTableRows(shortenedRows));
     }
   }
 
-  public handleLoadSchuetzenstatistikWettkampftageSuccess(payload){
-    if(payload.length >0){
+  public handleLoadSchuetzenstatistikWettkampftageSuccess(payload) {
+    if (payload.length > 0) {
       console.log(payload);
-      this.rows.push(toTableRows(payload));
+      const shortenedRows = payload.filter((element: SchuetzenstatistikWettkampftageDO) => element.wettkampftageSchnitt !== null);
+      this.rows.push(toTableRows(shortenedRows));
     }
   }
 
@@ -501,7 +502,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   // backend-calls to get data from DB
   public async loadVeranstaltungen(sportjahr) {
-    console.log(sportjahr)
+    console.log(sportjahr);
     this.loadingData = true;
     await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
               .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
@@ -517,7 +518,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public async filterVeranstaltungenBySportjahr() {
     this.loadingData = true;
 
-    this.loadVeranstaltungen(this.currentJahr)
+    this.loadVeranstaltungen(this.currentJahr);
 
 
     this.loadingData = false;
