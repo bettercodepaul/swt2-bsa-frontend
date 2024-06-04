@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -44,6 +44,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public searchTerm = 'searchTermMigration';
   public id;
   public countObj: TriggerCountDTO;
+  public inprogressObj: TriggerCountDTO;
   public migrationCompleted = false;
   public progress = 0;
   public succeededCount:number;
@@ -60,6 +61,8 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public cypressTagTimestamp = "timestamp-filter-selection";
   public offsetMultiplictor = 0;
   public queryPageLimit = 500;
+  public inProgressCount:number;
+  public isMigrationRunning:boolean = false;
 
 
   constructor(private MigrationDataProvider: MigrationProviderService,
@@ -81,6 +84,15 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
     }
+  }
+
+
+  ngAfterViewInit() {
+    this.getInProgressDataCount((count) => {
+      if (count > 0) {
+        this.gatherMigrationStatus();
+      }
+    });
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -154,9 +166,18 @@ public getSucceededDataCount(){
       .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
 }
 
+  public getInProgressDataCount(callback: (count: number) => void) {
+    this.MigrationDataProvider.getInProgressDataCount()
+        .then((response: BogenligaResponse<TriggerCountDO>) => {
+          this.handleInProgressData(response);
+          callback(this.inProgressCount);
+        })
+  }
 
   public gatherMigrationStatus() {
+
     this.statusbar.hidden = false;
+
     let firstRound = true
     this.getEntireDataCount();
 
@@ -173,11 +194,19 @@ public getSucceededDataCount(){
             this.progress = 0;
             this.statusbar.progress = this.progress;
           }
-          console.log(this.progress);
 
           // Schedule the next check
-          setTimeout(checkProgress, 8000);
+          setTimeout(checkProgress, 5000);
         } else {
+          this.notificationService.showNotification({
+            id: 'Migration wurde abgeschlossen',
+            description: 'Die Migration wurde erfolgreich beendet.',
+            title: 'Migration abgeschlossen',
+            origin: NotificationOrigin.SYSTEM,
+            userAction: NotificationUserAction.ACCEPTED,
+            type: NotificationType.OK,
+            severity: NotificationSeverity.INFO
+          });
           this.migrationCompleted = true;
         }
       } catch (e) {
@@ -342,6 +371,12 @@ public getSucceededDataCount(){
   private handleSucceeededData(response: BogenligaResponse<TriggerCountDTO>): void {
     this.countObj = response.payload;
     this.succeededCount = this.countObj.count;
+    this.loading = false;
+  }
+
+  private handleInProgressData(response: BogenligaResponse<TriggerCountDTO>): void {
+    this.inprogressObj = response.payload;
+    this.inProgressCount = this.inprogressObj.count;
     this.loading = false;
   }
 }
