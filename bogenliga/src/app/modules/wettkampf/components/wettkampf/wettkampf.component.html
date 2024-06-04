@@ -28,9 +28,9 @@
                   name="Jahre"
                   [(ngModel)]="currentJahr"
                   [disabled]="loadingData"
-                  (ngModelChange)="filterVeranstaltungenBySportjahr()"
+                  (ngModelChange)="loadVeranstaltungen(currentJahr)"
           >
-            <option *ngFor="let Jahr of jahre"> {{Jahr}}</option>
+            <option *ngFor="let Jahr of jahre"> {{Jahr.sportjahr}}</option>
           </select>
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -54,7 +54,7 @@
               (ngModelChange)="onSelect()"
               [disabled]="loadingData"
             >
-              <option *ngFor="let veranstaltung of veranstaltungenFilteredBySportjahr" [ngValue]="veranstaltung"> {{veranstaltung.name}} </option>
+              <option *ngFor="let veranstaltung of veranstaltungen" [ngValue]="veranstaltung"> {{veranstaltung.name}} </option>
             </select>
           </div>
         </div>
@@ -86,18 +86,7 @@
 
       <!-- Details zum Verein -->
       <div id="vereinsinformationen" >
-        <h2>{{ 'MANAGEMENT.VEREIN_DETAIL.TITLE' | translate }}</h2>
-        <!-- Vereinsname -->
-        <div class="row print1">
-          <label class="form-label-box col-form-label">
-            <span>{{ 'MANAGEMENT.VEREIN_DETAIL.FORM.VEREIN_NAME.LABEL' | translate }}:</span>
-          </label>
-          <div class="col-sm-8">
-            <div class="form-control">
-              <div>{{this.currentVerein.name}}</div>
-            </div>
-          </div>
-        </div>
+        <h2>{{currentVerein.name != undefined ? currentVerein.name : 'MANAGEMENT.VEREIN_DETAIL.TITLE' | translate }}</h2>
         <!-- Regionsname -->
         <div class="row print1">
           <label class="form-label-box col-form-label">
@@ -230,7 +219,7 @@
                     [(ngModel)]="selectedMannschaft"
                     [disabled]="loadingData"
                     (ngModelChange)="onSelectMannschaft()">
-              <option value="aktuelle_mannschaft"> Aktuelle Mannschaft "{{currentMannschaft.name}}" </option>
+              <option value="aktuelle_mannschaft"> Aktuelle Mannschaft "{{currentMannschaft != null ? currentMannschaft.name : "Keine Veranstaltungen verfügbar"}}" </option>
               <option value="alle_mannschaften"> Alle Mannschaften </option>
             </select>
             <div class="invalid-feedback">
