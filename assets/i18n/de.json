@@ -749,11 +749,11 @@
           "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_PLATZHALTER_MITGLIED": {
-          "TITLE": "Platzhalter DSB Mitglied löschen",
+          "TITLE": "Platzhalter Vereinsmitglied löschen",
           "DESCRIPTION": "Sie können diesen Schützen nicht löschen."
         },
         "EDIT_PLATZHALTER_MITGLIED": {
-          "TITLE": "Platzhalter DSB Mitglied bearbeiten",
+          "TITLE": "Platzhalter Vereinsmitglied bearbeiten",
           "DESCRIPTION": "Sie können diesen Schützen nicht bearbeiten."
         }
       }
@@ -1221,20 +1221,20 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Vereinsmitglieder löschen",
-          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Vereinsmitglied löschen",
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das Vereinsmitglieder wurde erfolgreich gelöscht."
+          "DESCRIPTION": "Das Vereinsmitglied wurde erfolgreich gelöscht."
         },
         "DELETE_FAILURE": {
           "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Das Vereinsmitglieder konnte nicht gelöscht werden."
+          "DESCRIPTION": "Das Vereinsmitglied konnte nicht gelöscht werden."
         },
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das Vereinsmitglieder wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Das Vereinsmitglied wurde erfolgreich gespeichert."
         },
         "DUPLICATE": {
           "TITLE": "Hinzufügen fehlgeschlagen",
