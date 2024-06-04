@@ -377,6 +377,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     // When the user tries to update the phase of the Veranstaltung
     if (this.currentSelectedVeranstaltungPhase !== this.currentVeranstaltung.phase) {
       const response = await this.matchDataProvider.findAllbyVeranstaltungId(id);
+      // proper answer of the backend
       if (!isNullOrUndefined(response) && !isNullOrUndefined(response.payload)) {
               // if the veranstaltung has no matches, the select is reset and set to 'Geplant'
               if (response.payload.length === 0 && this.currentSelectedVeranstaltungPhase === 'Laufend') {
