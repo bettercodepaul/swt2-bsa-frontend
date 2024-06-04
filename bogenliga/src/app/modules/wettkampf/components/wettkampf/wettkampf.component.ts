@@ -702,7 +702,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     if (this.selectedStatistik === 'einzelstatistik') {
       await this.loadEinzelstatistik(this.currentMannschaft);
     } else if (this.selectedStatistik === 'gesamtstatistik') {
-      this.currentStatistikTitle = 'WETTKAEMPFE.WETTKAEMPFE.TITEL';
+      this.currentStatistikTitle =  'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
       await this.loadGesamtstatistik(this.currentMannschaft);
     } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
       await this.loadSchuetzenstatistikMatch(this.currentMannschaft);
