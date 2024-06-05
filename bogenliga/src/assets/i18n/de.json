@@ -333,6 +333,20 @@
     }
   },
   "MANNSCHAFTEN": {
+    "DROPDOWNWETTKAMPFTAGE": {
+      "OPTION1": {
+        "LABEL": "Wettkampftag 1"
+      },
+      "OPTION2": {
+        "LABEL": "Wettkampftag 2"
+      },
+      "OPTION3": {
+        "LABEL": "Wettkampftag 3"
+      },
+      "OPTION4": {
+        "LABEL": "Wettkampftag 4"
+      }
+    },
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle",
       "LIGATABELLE_VORBEREITUNG": "Ligatabelle Vorbereitung",

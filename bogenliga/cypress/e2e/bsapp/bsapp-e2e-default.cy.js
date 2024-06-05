@@ -120,15 +120,15 @@ describe('Anonyme User tests', function () {
   })
 
   /**
-   * This test checks if a valid search term yields the expected results from the website
+   * This test checks if you can filter for a Competition-Day in Ligatablle
    */
   it('Suchfeld Ligatabelle', function() {
     cy.wait(6000)
-    cy.get('[data-cy=quicksearch-suchfeld]').click().type('Württemberg')
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('Württembergliga Recurve')
     cy.wait(1000)
-    cy.get('[data-cy=quicksearch-liste]').should('contain.text', 'Recurve')
-    cy.wait(1000)
-    cy.contains('Württembergliga Recurve').click()
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('0: Object')
+    cy.wait(500)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #wettkampftag').find('option').should('have.length', 1);
   })
 
   /**
@@ -207,6 +207,15 @@ describe('Anonyme User tests', function () {
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
     cy.wait(500)
     cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
+  })
+
+  /**
+   * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
+   */
+  it('Filter for Competition-Day in Wettkampfergebnisse', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
+    cy.wait(2000)
+    cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')
   })
 
   /**

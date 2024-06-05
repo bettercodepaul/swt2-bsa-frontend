@@ -48,7 +48,10 @@ import {
 } from '@wettkampf/services/schuetzenstatistikwettkampftage-data-provider-service';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 
-
+interface Wettkampftag{
+  id: string,
+  name: string
+}
 @Component({
   selector:    'bla-mannschaft',
   templateUrl: './wettkampf.component.html',
@@ -85,8 +88,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   private passen: Array<PasseDoClass[]> = [];
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public ActionButtonColors = ActionButtonColors;
-  public selectedWettkampfTag: unknown;
-  public wettkampftage: Array<{ id: string; name: string; }> = [];
+  public selectedWettkampfTag: Wettkampftag;
+  public wettkampftage: Array<Wettkampftag> = [];
   private sessionHandling: SessionHandling;
 
   public selectedStatistik = 'gesamtstatistik';
@@ -95,11 +98,11 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public schuetzenStatistikActive = false;
   public mannschaftStatistikActive = false;
 
-  public alleTage: Array<{ id: string; name: string; }> = [
-    {id: 'Table1', name: 'Wettkampftag 1'},
-    {id: 'Table2', name: 'Wettkampftag 2'},
-    {id: 'Table3', name: 'Wettkampftag 3'},
-    {id: 'Table4', name: 'Wettkampftag 4'}
+  public alleTage: Array<Wettkampftag> = [
+    {id: 'Table1', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION1.LABEL'},
+    {id: 'Table2', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION2.LABEL'},
+    {id: 'Table3', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION3.LABEL'},
+    {id: 'Table4', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION4.LABEL'}
   ];
 
   /**
@@ -852,7 +855,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public onSelectWettkampfTag() {
     // Alle Tage hidden
     this.alleTage.forEach((tag) => {
-      // @ts-ignore
       if (this.selectedWettkampfTag.id === tag.id) {
         document.getElementById(tag.id).classList.remove('hidden');
       } else {

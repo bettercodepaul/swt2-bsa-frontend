@@ -225,6 +225,7 @@
         </div>
       </div>
 
+      <!-- Dropdown Wettkampftag -->
       <div id="selectWettkampftag" class="hidden">
         <div class="row">
           <div class="col-sm-8">
@@ -235,7 +236,7 @@
                     [(ngModel)]="selectedWettkampfTag"
                     [disabled]="loadingData"
                     (ngModelChange)="onSelectWettkampfTag()">
-              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of this.wettkampftage"> {{wettkampftag.name}}</option>
+              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of this.wettkampftage"> {{wettkampftag.name | translate}}</option>
             </select>
           </div>
         </div>

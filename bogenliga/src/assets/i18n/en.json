@@ -318,6 +318,20 @@
     "SCHUETZEN_STATISTIK_ALLE_LIGEN": {
       "TITEL": "Archer statistics per season"
     },
+    "DROPDOWNWETTKAMPFTAGE": {
+      "OPTION1": {
+        "LABEL": "Competitionday 1"
+      },
+      "OPTION2": {
+        "LABEL": "Competitionday 2"
+      },
+      "OPTION3": {
+        "LABEL": "Competitionday 3"
+      },
+      "OPTION4": {
+        "LABEL": "Competitionday 4"
+      }
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
       "HEADING": {

@@ -6,29 +6,70 @@
     <div class="layout-elements">
 
       <bla-row-layout>
-        <div class="flexChild">
-          <h5><a class="blackLink"
-          >{{ 'MANAGEMENT.SPORTJAHR_OVERVIEW.TABLE.HEADERS.SPORTJAHR' | translate }}</a></h5>
 
-          <table style="width: 10%; margin-bottom: 3%;">
-            <bla-selectionlist (onSelect)="onSelectYear($event)"
-                               [items]="availableYears"
-                               [optionFieldSelector]="'sportjahr'"
-                               [loading]="loading"
-                               [multipleSelections]="!multipleSelections"
-                               [selectedItemIds]=[selectedYearId]
-                               style="width: 10%; flex-grow: 0; height: 20px"
-                               selectionListHeight="3em">
+        <h2 style="margin-top: 0">Auswahl der Veranstaltung und Wettkampftag</h2>
+        <!--Jahr-->
+        <div class="row print1">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'MANAGEMENT.SPORTJAHR_OVERVIEW.TABLE.HEADERS.SPORTJAHR' | translate }}</span>
+          </label>
 
-            </bla-selectionlist>
-        </table>
-        <div>
+          <div class="col-sm-8">
+            <select class="form-control"
+                    id="availableYears"
+                    name="Years"
+                    [(ngModel)]="selectedYearForVeranstaltung"
+                    [disabled]="loading"
+                    (ngModelChange)="onSelectYear()"
+            >
+              <option *ngFor="let Jahr of availableYears"> {{Jahr.sportjahr}}</option>
+            </select>
+          </div>
+        </div>
+
+  <!--<div class="flexChild">
+            <h5><a class="blackLink"
+            >{{ 'MANAGEMENT.SPORTJAHR_OVERVIEW.TABLE.HEADERS.SPORTJAHR' | translate }}</a></h5>
+
+            <table style="width: 10%; margin-bottom: 3%;">
+              <bla-selectionlist (onSelect)="onSelectYear($event)"
+                                 [items]="availableYears"
+                                 [optionFieldSelector]="'sportjahr'"
+                                 [loading]="loading"
+                                 [multipleSelections]="!multipleSelections"
+                                 [selectedItemIds]=[selectedYearId]
+                                 style="width: 10%; flex-grow: 0; height: 20px"
+                                 selectionListHeight="3em">
+
+              </bla-selectionlist>
+            </table>
+-->
+
+        <!--Liga-->
+        <div class="row">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.VERANSTALTUNG' | translate }}</span>
+          </label>
+
+          <div class="col-sm-8">
+            <select class="form-control"
+                    id="veranstaltungen"
+                    name="veranstaltungName"
+                    [(ngModel)]="selectedVeranstaltung"
+                    [disabled]="loading"
+                    (ngModelChange)="onSelectVeranstaltung()"
+            >
+              <option *ngFor="let veranstaltung of veranstaltungenForYear" [ngValue]="veranstaltung"> {{veranstaltung.ligaName}}</option>
+            </select>
+          </div>
+        </div>
+          <!--<div>
           <h5><a class="blackLink"
           >{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.VERANSTALTUNG' | translate }}</a></h5>
           <table id="example"
                  class="table table-hover table-sm table-responsive-sm thead-light table-striped"
                  style="width:80%">
-            <!-- headlines -->
+            &lt;!&ndash; headlines &ndash;&gt;
 
             <bla-quicksearch-list (onSelect)="onSelectVeranstaltung($event)"
                                   [items]="veranstaltungenForYear"
@@ -41,34 +82,48 @@
 
             </bla-quicksearch-list>
           </table>
-        </div>
+        </div>-->
 
+        <!-- Dropdown Wettkampftag -->
+        <div class="row print1">
+          <label class="form-label-box col-form-label">
+            <span>{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.WETTKAMPFTAG_AKT' | translate }}</span>
+          </label>
 
-      </div>
-
-      <!-- Ligatabelle -->
-      <div>
-        <h5><a class="blackLink"
-        >{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</a></h5>
-
-        <div class="row" style="margin-left: 5px">
-
-
-          <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
-
-            <bla-data-table
-              [config]="config_table"
-              [rows]="rowsLigatabelle"
-              [loading]="loadingLigatabelle"
-              (onRowEntry)="ligatabelleLinking();"
+          <div class="col-sm-8">
+            <select class="form-control"
+                    id="wettkampftag"
+                    name="WettkampftagName"
+                    [(ngModel)]="selectedWettkampfTag"
+                    [disabled]="loadingWettkampftag"
+                    (ngModelChange)="onSelectWettkampftag()"
             >
-            </bla-data-table>
-
+              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of this.wettkampftage"> {{wettkampftag.name | translate}}</option>
+            </select>
+          </div>
         </div>
-      </div>
 
-      <!-- Button -->
+
+        <!-- Ligatabelle -->
+        <div class="row">
+          <label class="form-label-box col-form-label">
+            <h2>{{ 'WETTKAEMPFE.LIGATABELLE.TITEL' | translate }}</h2>
+          </label>
+        </div>
+        <div class="row" id="rowTable" style="margin-left: 5px">
+          <!-- Dies ist die aktuelle Ligatabelle  zur Veranstaltung  -->
+          <bla-data-table
+            [config]="config_table"
+            [rows]="rowsLigatabelle"
+            [loading]="loadingLigatabelle"
+            (onRowEntry)="ligatabelleLinking();"
+          >
+          </bla-data-table>
+        </div>
+
+        <!-- Button -->
         <div id="Button">
+          <!-- Button - Zu den Wettkampfergebnissen {Name der Liga} -->
           <bla-actionbutton
             [id]="'regionSaveButton'"
             [color]= "ActionButtonColors.SUCCESS"
@@ -78,6 +133,7 @@
             {{ selectedVeranstaltungName}}
           </bla-actionbutton>
 
+          <!-- Button - Zu den Ligadetails -->
           <bla-actionbutton
             [id]="'goToLigadetailsButton'"
             [color]= "ActionButtonColors.PRIMARY"
@@ -85,6 +141,16 @@
             (onClick)="goToLigaDetails()">
             {{ 'WETTKAEMPFE.LIGATABELLE.GOTO_LIGADETAILS' | translate }}
           </bla-actionbutton>
+
+          <!-- Button - Auswahl zurücksetzen -->
+          <bla-actionbutton
+            [id]="'deselectLigaButton'"
+            [color]= "ActionButtonColors.SECONDARY"
+            [iconClass]="zuruecksetzenIcon"
+            (onClick)="deselect()">
+            {{ 'WETTKAEMPFE.LIGATABELLE.RESET_LIGASELECTION' | translate }}
+          </bla-actionbutton>
+
         </div>
         <div class="col-sm-9">
           <div class="invalid-feedback">
@@ -94,13 +160,7 @@
 
       </bla-row-layout>
 
-      <bla-actionbutton
-        [id]="'deselectLigaButton'"
-        [color]= "ActionButtonColors.SECONDARY"
-        [iconClass]="zuruecksetzenIcon"
-        (onClick)="deselect()">
-        {{ 'WETTKAEMPFE.LIGATABELLE.RESET_LIGASELECTION' | translate }}
-      </bla-actionbutton>
+
 
 
     </div>
