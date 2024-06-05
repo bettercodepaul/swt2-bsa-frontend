@@ -707,16 +707,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectVerein() {
-    console.log('Verein switched to ' + this.currentMannschaft.name);
     this.loadingData = true;
-    /*if (!this.mannschaftAlreadyLoaded(this.currentMannschaft.id)) {
-      await this.loadWettkaempfeByCurrentMannschaft();
-    }*/
     await this.loadVerein(this.currentMannschaft.vereinId);
+
+    // Lädt je nach dem welche Statistik ausgewählt ist die jeweilige Statistik neu beim Mannschaftswechsel
     if(this.mannschaftStatistikActive) {
-      await this.loadErgebnisse(this.currentMannschaft)
+      await this.loadErgebnisse(this.currentMannschaft);
     }
-      ;
+    else if (this.schuetzenStatistikActive) {
+      await this.loadGesamtstatistik(this.currentMannschaft);
+    }
+
     this.loadingData = false;
   }
 
