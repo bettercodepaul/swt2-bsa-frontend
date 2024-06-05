@@ -18,7 +18,7 @@ import {SessionHandling} from '@shared/event-handling';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
-//import {faUndo} from '@fortawesome/free-solid-svg-icons'; //todo Löschen
+//import {faUndo} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {SelectedLigaDataprovider} from '../../../shared/data-provider/SelectedLigaDataprovider'
@@ -273,7 +273,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     }
   }
 
-  //todo Buttonfix --> Übergabe von Jahr, Veranstaltung, Wettkampftag muss in Wettkampfergebniss eingebunden werden, Array?
+
   public ligatabelleLinking() {
     const link = '/wettkaempfe/' + this.buttonForward;
     this.router.navigateByUrl(link);
