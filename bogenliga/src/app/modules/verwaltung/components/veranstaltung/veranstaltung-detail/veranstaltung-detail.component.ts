@@ -94,8 +94,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   public currentSelectedVeranstaltungPhase: string;
 
   public allTeamAmount: Array<number> = [8, 6, 4];
+
   public allVeranstaltungPhases: Array<string>  = ['Geplant', 'Laufend'];
   public isPhaseSelectDisabled = true;
+  public disabledVeranstaltungPhase = true;
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
@@ -179,6 +181,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.saveLoading = false;
         } else {
           this.loadById(params[ID_PATH_PARAM]);
+          this.disabledVeranstaltungPhase = false;
           this.showTable = true;
           this.loadMannschaftsTable();
         }
