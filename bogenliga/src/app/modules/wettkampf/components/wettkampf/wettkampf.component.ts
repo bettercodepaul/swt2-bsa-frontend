@@ -543,7 +543,19 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.clear();
     await this.loadMannschaften(this.currentVeranstaltung.id);
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
-    await this.loadAllErgebnisse(this.currentMannschaft);
+
+    this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
+
+    // Lädt je nach dem welche Statistik ausgewählt ist die jeweilige Statistik neu beim Mannschaftswechsel
+    if(this.mannschaftStatistikActive) {
+      this.selectedMannschaft = 'aktuelle_mannschaft';
+      await this.loadErgebnisse(this.currentMannschaft);
+    }
+    else if (this.schuetzenStatistikActive) {
+      this.selectedStatistik = 'gesamtstatistik';
+      await this.loadGesamtstatistik(this.currentMannschaft);
+    }
+
     this.loadingData = false;
   }
 
@@ -712,9 +724,11 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     // Lädt je nach dem welche Statistik ausgewählt ist die jeweilige Statistik neu beim Mannschaftswechsel
     if(this.mannschaftStatistikActive) {
+      this.selectedMannschaft = 'aktuelle_mannschaft';
       await this.loadErgebnisse(this.currentMannschaft);
     }
     else if (this.schuetzenStatistikActive) {
+      this.selectedStatistik = 'gesamtstatistik';
       await this.loadGesamtstatistik(this.currentMannschaft);
     }
 
