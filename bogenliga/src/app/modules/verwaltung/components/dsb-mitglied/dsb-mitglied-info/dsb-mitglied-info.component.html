@@ -84,7 +84,8 @@
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.KAMPFRICHTER.LABEL' | translate }}:</span>
         </label>
         <div class="col-sm-9 right-span">
-          <span>{{ currentMitglied.kampfrichter }}</span>
+          <span *ngIf="currentMitglied.kampfrichter; else keinKampfrichter">✓</span>
+          <ng-template #keinKampfrichter>✗</ng-template>
         </div>
       </div>
 
