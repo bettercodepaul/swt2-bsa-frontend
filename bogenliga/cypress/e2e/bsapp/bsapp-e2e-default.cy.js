@@ -143,60 +143,26 @@ describe('Anonyme User tests', function () {
    * This test checks if the selection of Sportjahr Liga and Mannschaft works
    */
   it('Auswahl Sportjahr Liga und Mannschaft', function() {
-    cy.viewport(1200, 666)
-
-    cy.visit('http://localhost:4200/#/wettkaempfe')
-
-    cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').click()
-
+    cy.wait(5000)
     cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2016')
-
-    cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').click()
-
+    cy.wait(5000)
     cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2018')
-
-    cy.get('#regionenForm > #selectVereink > .row > .col-sm-8 > #veranstaltungen').click()
-
-    cy.get('#regionenForm > #selectVereink > .row > .col-sm-8 > #veranstaltungen').select('13: Object')
-
-    cy.get('#regionenForm > #selectVereink > .row > .col-sm-8 > #veranstaltungen').click()
-
-    cy.get('#regionenForm > #selectVereink > .row > .col-sm-8 > #veranstaltungen').select('12: Object')
-
-    cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').click()
-
-    cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').select('73: Object')
-
-    cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').click()
-
-    cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').select('72: Object')
+    cy.wait(5000)
+    cy.get('#regionenForm > #selectVereink > .row > .col-sm-8 > #veranstaltungen').select('4: Object')
+    cy.wait(5000)
+    cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').select('17: Object')
   })
 
   /**
    * This test checks if the switch between Mannschaftsstatistik and Schptzenstatistik filter buttons works
    */
-  it('Wechsel zwischen Masnnschafs und Schützenstatistik', function() {
-    cy.viewport(1200, 666)
-
-    cy.visit('http://localhost:4200/#/wettkaempfe')
-
-    cy.get('div > #regionenForm > div > bla-statistik-filter-button:nth-child(2) > .statistik-filter-button').click()
-
+  it('Wechsel zwischen Mannschafts- und Schützenstatistik', function() {
+    cy.wait(5000)
+    cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
+    cy.wait(500)
     cy.get('div > #regionenForm > div > #showSchuetzenstatistik > .statistik-filter-button').click()
-
-    cy.get('div > #regionenForm > div > bla-statistik-filter-button:nth-child(2) > .statistik-filter-button').click()
-
-    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').click()
-
-    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('alle_mannschaften')
-
-    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').click()
-
-    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').click()
-
-    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('aktuelle_mannschaft')
-
-    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').click()
+    cy.wait(500)
+    cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
 })
 
 
