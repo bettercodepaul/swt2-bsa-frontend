@@ -28,3 +28,37 @@
 
 
 }
+
+// for queue
+.resizable-box {
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  resize: both;
+  overflow: auto;
+  height: 200px;
+  width: 1100px;
+  max-height: 700px; /* max height */
+  max-width: 1700px; /* max width */
+  min-height: 150px; /* min height */
+  min-width: 200px; /* min width */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+  z-index: 1;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  margin-top: 10px;
+  padding: 8px;
+  text-align: left;
+}
