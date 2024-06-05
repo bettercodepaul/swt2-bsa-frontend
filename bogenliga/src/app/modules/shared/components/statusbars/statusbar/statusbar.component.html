@@ -1,0 +1,10 @@
+<div class="status-bar-container" [hidden] = "hidden">
+  <div class="status-bar-text">
+    {{ progress + "%"}}
+  </div>
+  <div class="status-bar" *ngIf="showProgress">
+    <progress id="file" [value]="progress" class="status-bar-size" max="100"></progress>
+  </div>
+</div>
+
+

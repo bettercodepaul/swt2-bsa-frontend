@@ -20,6 +20,7 @@ export class LigatabelleErgebnisDTO implements DataTransferObject {
   satzpktDifferenz: number;
   sortierung: number;
   tabellenplatz: number;
+  matchCount: number;
 
   static copyFrom(optional: {
     id?: number,
@@ -38,7 +39,8 @@ export class LigatabelleErgebnisDTO implements DataTransferObject {
     satzpktGegen?: number,
     satzpktDifferenz?: number,
     sortierung?: number,
-    tabellenplatz?: number
+    tabellenplatz?: number,
+    matchCount?: number
   } = {}): LigatabelleErgebnisDTO {
     const copy = new LigatabelleErgebnisDTO();
     if (optional.id >= 0) {
@@ -63,6 +65,7 @@ export class LigatabelleErgebnisDTO implements DataTransferObject {
     copy.satzpktDifferenz = optional.satzpktDifferenz;
     copy.sortierung = optional.sortierung;
     copy.tabellenplatz = optional.tabellenplatz;
+    copy.matchCount = optional.matchCount;
 
     return copy;
   }

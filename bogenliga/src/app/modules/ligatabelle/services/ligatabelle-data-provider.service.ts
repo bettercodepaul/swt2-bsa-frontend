@@ -100,8 +100,8 @@ export class LigatabelleDataProviderService extends DataProviderService {
   }
 
 // Updaten der Mannschaftswerte in der Ligatabelle
-  public async updateMannschaftLT(id: number, satzpunkte: number, satzpunkteGegner: number, spd: number, matchpunkte: number, matchpunkteGegner: number) {
-    db.ligaTabelle.update(id, {'satzpkt': satzpunkte, 'satzpktGegen': satzpunkteGegner, 'satzpktDifferenz': spd, 'matchpkt': matchpunkte, 'matchpktGegen': matchpunkteGegner});
+  public async updateMannschaftLT(id: number, satzpunkte: number, satzpunkteGegner: number, spd: number, matchpunkte: number, matchpunkteGegner: number, matchCount: number) {
+    db.ligaTabelle.update(id, {'satzpkt': satzpunkte, 'satzpktGegen': satzpunkteGegner, 'satzpktDifferenz': spd, 'matchpkt': matchpunkte, 'matchpktGegen': matchpunkteGegner, 'matchCount': matchCount});
 
   }
 
@@ -168,6 +168,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
     let satzpunktedifferenz;
     let matchpunkte;
     let matchpunktegegner;
+    let matchCount;
 
 
     // Berechnung der Satzpunkte, Matchpunkte und Satzpunktedifferenz fuer Mannschaft 1
@@ -195,7 +196,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
     }
     // console.log("SP:",satzpunkte,"MP:",matchpunkte,satzpunkte,satzpunktegegner, satzpunktedifferenz,match1.mannschaftName.toString());
     // Daten Updaten
-    await this.updateMannschaftLT(mannschaftsid, satzpunkte, satzpunktegegner, satzpunktedifferenz, matchpunkte, matchpunktegegner);
+    await this.updateMannschaftLT(mannschaftsid, satzpunkte, satzpunktegegner, satzpunktedifferenz, matchpunkte, matchpunktegegner, matchCount);
 
     // Berechnung der Satzpunkte, Matchpunkte und Satzpunktedifferenz fuer Mannschaft 2
 
@@ -221,7 +222,7 @@ export class LigatabelleDataProviderService extends DataProviderService {
 
   }
     // Daten Updaten
-    await this.updateMannschaftLT(mannschaftsid, satzpunkte, satzpunktegegner, satzpunktedifferenz, matchpunkte, matchpunktegegner);
+    await this.updateMannschaftLT(mannschaftsid, satzpunkte, satzpunktegegner, satzpunktedifferenz, matchpunkte, matchpunktegegner, matchCount);
 
     await this.tabellesortieren(match1.wettkampfId);
   }

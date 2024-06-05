@@ -63,7 +63,7 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToDetailDialog(versionedDataObject);
+    this.navigateToInfoDialog(versionedDataObject);
 
   }
 
@@ -165,6 +165,10 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
 
   private navigateToDetailDialog(versionedDataObject: VersionedDataObject) {
     this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + versionedDataObject.id);
+  }
+
+  private navigateToInfoDialog(versionedDataObject: VersionedDataObject) {
+    this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + versionedDataObject.id + '/info');
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMitgliedDTO[]>): void {

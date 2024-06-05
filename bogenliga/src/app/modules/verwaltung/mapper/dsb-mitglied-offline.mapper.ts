@@ -18,6 +18,8 @@ export function toDO(dsbMitgliedDTO: DsbMitgliedOfflineSyncDto): OfflineDsbMitgl
     nationalitaet: dsbMitgliedDTO.nationalitaet,
     benutzerId: dsbMitgliedDTO.benutzerId,
     vereinId: dsbMitgliedDTO.vereinId,
+    vereinsName: dsbMitgliedDTO.vereinsName,
+    beitrittsdatum: dsbMitgliedDTO.beitrittsdatum
   };
 }
 
@@ -37,8 +39,8 @@ export function fromOfflineToDsbMitgliedDO(payload: OfflineDsbMitglied): DsbMitg
     vereinsId:       payload.vereinId,
     vereinsName:     '',
     version:         payload.version,
-    vorname:         payload.vorname
-
+    vorname:         payload.vorname,
+    beitrittsdatum:  payload.beitrittsdatum
   };
 }
 
@@ -56,8 +58,9 @@ export function fromDOtoOfflineDsbMitglied(payload: DsbMitgliedDO): OfflineDsbMi
     nationalitaet:   payload.nationalitaet,
     vereinId:        payload.vereinsId,
     version:         1,
-    vorname:         payload.vorname
-
+    vorname:         payload.vorname,
+    vereinsName:     payload.vereinsName,
+    beitrittsdatum:  payload.beitrittsdatum
   };
 }
 

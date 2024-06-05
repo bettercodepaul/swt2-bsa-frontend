@@ -66,7 +66,7 @@ export function createTranslateLoader(http: HttpClient) {
     SharedModule.forRoot(),
     VerwaltungModule.forRoot()
   ],
-  exports:      [TranslateModule],
+  exports: [TranslateModule, AppComponent],
   /* HTTP INTERCEPTORS */
   providers:    [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

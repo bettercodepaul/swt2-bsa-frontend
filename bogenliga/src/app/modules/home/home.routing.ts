@@ -15,7 +15,7 @@ import {
 import {
   DsbMitgliedDetailGuard,
   DsbMitgliedOverviewGuard, VeranstaltungDetailGuard, VeranstaltungOverviewGuard, VereinDetailGuard,
-  VereinOverviewGuard, VerwaltungGuard,
+  VereinOverviewGuard, VerwaltungGuard
 } from '@verwaltung/guards';
 
 import {

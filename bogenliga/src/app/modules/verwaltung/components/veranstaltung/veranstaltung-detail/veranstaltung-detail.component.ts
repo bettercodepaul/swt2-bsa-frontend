@@ -48,7 +48,11 @@ import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
+
 import {MatchDO} from '@verwaltung/types/match-do.class';
+import { RequestResult } from '@shared/data-provider/types/request-result.enum';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+
 
 
 
@@ -69,6 +73,7 @@ const NOTIFICATION_DELETE_MANNSCHAFT = 'mannschaft_detail_delete';
 const NOTIFICATION_FINISH_VERANSTALTUNG = 'veranstaltung_detail_finish';
 const NOTIFICATION_CREATE_PLATZHALTER = 'platzhalter_create';
 const NOTIFICATION_CREATE_PLATZHALTER_FAILURE = 'platzhalter_create_failure';
+
 
 
 @Component({
@@ -95,9 +100,16 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   public allTeamAmount: Array<number> = [8, 6, 4];
 
+
   public allVeranstaltungPhases: Array<string>  = ['Geplant', 'Laufend'];
   public isPhaseSelectDisabled = true;
   public disabledVeranstaltungPhase = true;
+
+  allTeams: DsbMannschaftDO[] = [];
+  unassignedTeams: DsbMannschaftDO[] = [];
+  assignedTeams: DsbMannschaftDO[] = [];
+
+
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
@@ -158,6 +170,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   ngOnInit() {
     this.loading = true;
+    this.loadUnassignedTeams();
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -188,6 +201,86 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
       }
     });
   }
+
+  loadUnassignedTeams(): void {
+    // this.mannschaftDataProvider.findAllByVeranstaltungsId(null)
+    this.mannschaftDataProvider.findAllByVeranstaltungsId(1001) // ^muss auf die VeranstaltungsId der Warteschlange gesetzt werden
+        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
+          if (response.result === RequestResult.SUCCESS) {
+            this.allTeams = response.payload;
+            this.unassignedTeams = this.allTeams.filter(team => !this.assignedTeams.includes(team));
+          } else {
+            console.error('Fehler beim Laden der Mannschaften:', response.result);
+          }
+        })
+        .catch(error => {
+          console.error('Verbindungsproblem:', error);
+        });
+  }
+
+  assignTeamToEvent(team: any): void {
+    this.saveLoading = true;
+    this.unassignedTeams = this.unassignedTeams.filter(t => t !== team);
+
+    this.selectedMannschaft.id = team.id;
+    this.selectedMannschaft.vereinId = team.vereinId;
+    this.selectedMannschaft.nummer = team.nummer;
+    this.selectedMannschaft.benutzerId = team.benutzerId;
+    this.selectedMannschaft.veranstaltungId = this.currentVeranstaltung.id;
+
+    this.mannschaftDataProvider.update(this.selectedMannschaft)
+        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+
+            const id = this.selectedMannschaft.id;
+
+            const notification: Notification = {
+              id:          NOTIFICATION_UPDATE_VERANSTALTUNG + id,
+              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG + id)
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                    this.loadMannschaftsTable();
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + response.payload.veranstaltungId);
+                  }
+                });
+
+            this.notificationService.showNotification(notification);
+          }
+        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+          console.log('Failed: ' + response);
+          const notification: Notification = {
+            id:          NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE,
+            title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE",
+            description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+
+          }
+          this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
+                }
+              });
+
+          this.notificationService.showNotification(notification);
+          this.saveLoading = false;
+        });
+  }
+
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
    *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.

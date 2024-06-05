@@ -257,6 +257,40 @@
 
       </div>
 
+      <!-- Warteschlange -->
+      <div *ngIf="showTable">
+      <div>
+        <h2>Mannschaften ohne Veranstaltung</h2>
+        <div class="resizable-box">
+          <table>
+            <thead>
+            <tr>
+              <th>Teamname</th>
+              <!--<th>Anzahl der Schützen</th> *später für die Anzeige von der Anzahl der Schützen*-->
+              <th>Aktion</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let team of unassignedTeams; let i = index">
+              <td>{{ team.name }}</td>
+              <!--<td>{{ team.nummer }}</td> *später für die Anzeige von der Anzahl der Schützen*-->
+              <td>
+                <bla-actionbutton
+                  [iconClass]="'plus'"
+                  [loading]="saveLoading"
+                  [color]="ActionButtonColors.SUCCESS"
+                  (onClick)="assignTeamToEvent(team)">
+                  {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.HINZUFUEGEN' | translate }}
+                </bla-actionbutton>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+
+
 
       <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE/ABSCHLIEßEN/PLATZHALTER BUTTON -->
       <div class="form-group row">
