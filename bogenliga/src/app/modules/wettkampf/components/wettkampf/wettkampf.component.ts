@@ -297,7 +297,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.hideUebersichtsButtons();
 
     if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < 4; i++) {
         let rowNumber = 'row';
         rowNumber += i;
         document.getElementById(rowNumber).classList.add('hidden');
@@ -315,6 +315,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       }
 
       document.getElementById('row06').classList.add('hidden');
+      document.getElementById('row07').classList.add('hidden');
 
       this.rows = [];
       await this.loadSchuetzenstatistikenMatch(selectedMannschaft.vereinId, 0);
@@ -400,7 +401,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
           document.getElementById(tableNumber).classList.add('hidden');
         }
       }
-
+      document.getElementById('row07').classList.add('hidden');
       document.getElementById('row06').classList.add('hidden');
       document.getElementById('row00').classList.remove('hidden');
       this.rows = [];
@@ -504,7 +505,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
   public handleLoadSchuetzenstatistikMatchSuccess(payload) {
     if (payload.length > 0) {
-      console.log(payload);
       const shortenedRows = payload.filter((element: SchuetzenstatistikMatchDO) => element.pfeilpunkteSchnitt !== null);
       this.rows.push(toTableRows(shortenedRows));
     }
