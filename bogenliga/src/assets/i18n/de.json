@@ -1499,7 +1499,7 @@
         },
         "UPDATE_VERANSTALTUNG_FAILURE": {
          "TITLE": "Update fehlgeschlagen",
-          "DESCRIPTION": "Die Umstellung auf Laufend ist nicht möglich, da keine Matches existieren, bite generieren Sie Matches. Dadurch wird die Veranstaltung automatisch auf Laufend gestellt."
+          "DESCRIPTION": "Die Umstellung auf Laufend ist nicht möglich, da keine Matches existieren, bitte generieren Sie Matches. Dadurch wird die Veranstaltung automatisch auf Laufend gestellt."
         },
         "UPDATE_DATABASE_FAILURE": {
           "TITLE": "Update fehlgeschlagen",
