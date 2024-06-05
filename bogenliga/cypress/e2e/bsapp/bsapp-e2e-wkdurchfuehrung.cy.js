@@ -23,7 +23,7 @@ describe('Wkdurchfuehrung tests', function () {
 
     cy.wait(2000);
 
-    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
 
     cy.get('[data-cy=vollbildAnsichtButton]').click();
@@ -102,7 +102,7 @@ describe('Wkdurchfuehrung tests', function () {
    */
   it('Anzeige Action-Buttons', () => {
     cy.expandWettkampfTage()
-    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').should('be.visible')
   })
 
@@ -111,7 +111,7 @@ describe('Wkdurchfuehrung tests', function () {
    */
   it('Einklappen Tabelle auf Button-Click', () => {
     cy.expandWettkampfTage()
-    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
     cy.wait(1000)
     cy.get('.expandContainer > .expand-container > .expand-content').should('not.be.visible')
@@ -122,7 +122,7 @@ describe('Wkdurchfuehrung tests', function () {
    */
   it('Anzeigen Druckdaten auf Button-Click', () => {
     cy.expandWettkampfTage()
-    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
     cy.wait(1000)
     cy.get('[ng-reflect-header-text="Druckdaten"] > .expand-container > .expand-content').should('be.visible')
