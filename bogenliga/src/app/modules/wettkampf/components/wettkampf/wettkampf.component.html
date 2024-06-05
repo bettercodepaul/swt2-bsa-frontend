@@ -230,6 +230,23 @@
         </div>
       </div>
 
+      <div id="selectWettkampftag" class="hidden">
+        <div class="row">
+          <div class="col-sm-8">
+            <select class="form-control"
+                    style="width: 50%"
+                    id="wettkampftage"
+                    name="WettkampfTag"
+                    [(ngModel)]="selectedWettkampfTag"
+                    [disabled]="loadingData"
+                    (ngModelChange)="onSelectWettkampfTag()">
+              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of this.wettkampftage"> {{wettkampftag.name}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
       <bla-download-actionbutton
         class = "hidden"
         id = "gesamtdruckButton"
@@ -309,7 +326,7 @@
       </div>
       <!-- Row 2 -->
       <div class="row print1">
-        <div id="Table2" class="hidden" [hidden]="!isTableFilled[1]">
+        <div id="Table2" class="hidden" [hidden]="!isTableFilled[1]" style="padding:1em">
           <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGZWEI' | translate}}</h3>
           <bla-download-actionbutton id = "TagesuebersichtButton2"
                                      [iconClass]="'file-download'"
