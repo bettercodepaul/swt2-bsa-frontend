@@ -120,15 +120,15 @@ describe('Anonyme User tests', function () {
   })
 
   /**
-   * This test checks if a valid search term yields the expected results from the website
+   * This test checks if you can filter for a Competition-Day in Ligatablle
    */
   it('Suchfeld Ligatabelle', function() {
     cy.wait(6000)
-    cy.get('[data-cy=quicksearch-suchfeld]').click().type('Württemberg')
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('Württembergliga Recurve')
     cy.wait(1000)
-    cy.get('[data-cy=quicksearch-liste]').should('contain.text', 'Recurve')
-    cy.wait(1000)
-    cy.contains('Württembergliga Recurve').click()
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('0: Object')
+    cy.wait(500)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #wettkampftag').find('option').should('have.length', 1);
   })
 
   /**
@@ -140,41 +140,83 @@ describe('Anonyme User tests', function () {
   })
 
   /**
-   * This test checks if the shown results contain expected data
+   * This test checks if the selection of Sportjahr Liga and Mannschaft works
    */
-  it('Ergebnis anzeigen', function() {
-    cy.wait(10000)
-    cy.contains('Würtembergliga')
-    cy.wait(3000)
-    cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
-    cy.contains('Wettkampftag 1')
+  it('Auswahl Sportjahr Liga und Mannschaft', function() {
+    cy.wait(5000)
+    cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2016')
+    cy.wait(5000)
+    cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2018')
+    cy.wait(5000)
+    cy.get('#regionenForm > #selectVereink > .row > .col-sm-8 > #veranstaltungen').select('4: Object')
+    cy.wait(5000)
+    cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').select('17: Object')
   })
 
   /**
-   * This test checks if the selected item of a team shows the expected data
+   * This test checks if the switch between Mannschaftsstatistik and Schptzenstatistik filter buttons works
    */
-  it('Ergebnis anzeigen einzelner Verein', function() {
-    cy.wait(1000)
-    cy.get('#vereine').select(0)
-    cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
-    cy.contains('Wettkampftag 1')
+  it('Wechsel zwischen Mannschafts- und Schützenstatistik', function() {
+    cy.wait(5000)
+    cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
+    cy.wait(500)
+    cy.get('div > #regionenForm > div > #showSchuetzenstatistik > .statistik-filter-button').click()
+    cy.wait(500)
+    cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
+})
+
+
+
+  /**
+   * This test checks if the gesamtstatistik in Wettkaempfe show results
+   */
+  it('Gesamtstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('gesamtstatistik', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-gesamtstatistik-table]').contains('Gesamtstatistik pro Schütze')
+    // required: add check if data is present in selected statistik
+  })
+  /**
+   * This test checks if the Matchstatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Matchstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikMatch', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
+  })
+  /**
+   * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Wettkampftagestatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikWettkampftage', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
+  })
+  /**
+   * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Saisonschnittstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('alleligenstatistik', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
+  })
+  /**
+   * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Einzelstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
+    cy.wait(500)
+    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
   })
 
   /**
-   * This test selects a single statistic and checks if the required data is present
+   * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
    */
-  /*it('Ergebnis anzeigen Einzelstatistik', function() {
-    cy.get('[data-cy=einzelstatistik-anzeigen-button]').click()
-    cy.contains('Pfeilwert pro Match')
+  it('Filter for Competition-Day in Wettkampfergebnisse', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
+    cy.wait(2000)
+    cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')
   })
-
-  /!**
-   * This test selects all items from the statistics and checks if the required data is present
-   *!/
-  it('Ergebnis anzeigen Gesamtstatistik', function() {
-    cy.get('[data-cy=einzelstatistik-gesamt-anzeigen-button]').click()
-    cy.contains('Pfeilwert pro Jahr')
-  })*/
 
   /**
    * This test opens the sidebar and clicks on the "HILFE" tab and checks if
@@ -927,6 +969,10 @@ describe('Admin User tests', function() {
     cy.wait(20000)
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
     cy.wait(1000)
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Laufend')
+    cy.wait(500)
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Geplant')
+    cy.wait(500)
     cy.get('[data-cy=veranstaltung-detail-update-button]').click()
     cy.wait(1000)
     cy.get('#OKBtn1').click()
