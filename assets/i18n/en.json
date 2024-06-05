@@ -802,7 +802,8 @@
         },
         "SAVE": "Save",
         "UPDATE": "Refresh",
-        "DELETE": "Delete"
+        "DELETE": "Delete",
+        "NEW_LOWEST": "Create subordinate League"
       },
       "NOTIFICATION": {
         "DELETE": {
