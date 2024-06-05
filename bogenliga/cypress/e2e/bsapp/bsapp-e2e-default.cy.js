@@ -1062,6 +1062,22 @@ describe('Ligadetailseite', function(){
     cy.get('[id="goToLigadetailsButton"]').click();
     cy.url().should('include', '#/home/' + randomID)
   })
+
+  it('Neue unterste Liga hinzufuegen',function (){
+
+
+    cy.visit('http://localhost:4200/#/verwaltung/liga')
+
+    cy.get('bla-navbar > #navbar > #navbar-right > .nav-link > .btn').click()
+
+    cy.get('bla-alert > #undefined > p:nth-child(7) > bla-button > #undefined').click()
+
+    cy.get('.sidebar-link > div > .ng-fa-icon > .fa-cogs > path').click()
+
+    cy.get('.navigation-card > .tooltip-navigation-card > .card-body > .button-container > .btn').click()
+
+  })
+
 })
 
 describe('Ligaleiter User Tests', function(){

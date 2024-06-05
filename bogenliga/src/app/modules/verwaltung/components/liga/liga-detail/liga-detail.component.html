@@ -225,6 +225,16 @@
                       (onClick)="onDelete($event)">
             {{ 'MANAGEMENT.LIGA_DETAIL.FORM.DELETE' | translate }}
           </bla-actionbutton>
+
+          <bla-actionbutton *ngIf="isLowestLiga"
+                            [loading] ="saveLoading"
+                            [color]="ActionButtonColors.SUCCESS"
+                            [iconClass]="'plus'"
+                            (onClick)="onCreateLowest($event)"
+                            data-cy="lowest-liga-create-button">
+            {{ 'MANAGEMENT.LIGA_DETAIL.FORM.NEW_LOWEST' | translate}}
+          </bla-actionbutton>
+
         </div>
       </div>
 

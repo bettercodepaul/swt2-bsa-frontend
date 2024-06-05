@@ -41,5 +41,5 @@ export const LIGA_OVERVIEW_CONFIG: OverviewDialogConfig = {
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
-  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN, UserPermission.CAN_CREATE_SYSTEMDATEN_LIGALEITER]
+  createPermission : [UserPermission.CAN_CREATE_SYSTEMDATEN]
 };
