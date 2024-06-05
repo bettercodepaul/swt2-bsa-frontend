@@ -23,14 +23,8 @@ describe('Wkdurchfuehrung tests', function () {
 
     cy.wait(2000);
 
-    cy.get('[data-cy="wkdurchfuehrung-wettkampftage-list"]').should('be.visible').find('.table-responsive')
-      .should('be.visible').find('#payload-id-2000')
-      .should('be.visible').within(() => {
-        cy.get('[data-cy="TABLE.ACTIONS.VIEW"]').should('be.visible').click();
-      })
-      .then(() => {
-        cy.get('#wettkampfTag-2000').click({ force: true });
-      });
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+      '[data-cy="actionButton"]').click()
 
     cy.get('[data-cy=vollbildAnsichtButton]').click();
     cy.get('@open').should('be.called');
