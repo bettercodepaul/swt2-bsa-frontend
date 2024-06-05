@@ -346,6 +346,14 @@
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
+      "HEADING": {
+        "VERANSTALTUNG": "Auswahl der Veranstaltung und Mannschaft",
+        "STATISTIKEN": "Statistiken"
+      },
+      "FILTER_BUTTON":{
+        "SCHUETZEN": "Schützen",
+        "MANNSCHAFTEN": "Mannschaften"
+      },
       "POPUPTXT": {
         "POPUPÜBERSCHRIFT": {
           "LABEL": "Mannschaft nicht ausgewählt!"

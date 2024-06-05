@@ -616,6 +616,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     await this.loadMannschaften(this.currentVeranstaltung.id);
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
+
+    if (this.mannschaftStatistikActive) {
+      this.selectedMannschaft = 'aktuelle_mannschaft';
+      await this.loadErgebnisse(this.currentMannschaft);
+    } else if (this.schuetzenStatistikActive) {
+      this.selectedStatistik = 'gesamtstatistik';
+      await this.loadGesamtstatistik(this.currentMannschaft);
+    }
+
     await this.showStatistikOptions();
   }
 
@@ -831,14 +840,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public async showMannschaftOptions() {
     document.getElementById('selectMannschaftStatistik').classList.remove('hidden');
     document.getElementById('selectStatistik').classList.add('hidden');
+    document.getElementById('selectWettkampftag').classList.add('hidden');
 
     this.schuetzenStatistikActive = false;
     this.mannschaftStatistikActive = true;
 
     await this.loadErgebnisForMannschaft(this.currentMannschaft);
     this.selectedMannschaft = 'aktuelle_mannschaft';
-    document.getElementById('selectWettkampftag').classList.remove('hidden');
-    this.onSelectWettkampfTag();
   }
 
   public onSelectWettkampfTag() {

@@ -10,12 +10,9 @@
       <!-- Print1 wird verwendet um gewisse html-Elemente im Druck sichtbar zu machen und diese anzuzeigen
       gesetzt wird es in styles.scss-->
 
-
-
       <!-- Überschrift Auswahl Veranstaltung Mannschaft -->
       <!-- TODO mit der de.json verbinden -->
-      <h2 style="margin-top: 0">Auswahl der Veranstaltung und Mannschaft</h2>
-
+      <h2 style="margin-top: 0">{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.VERANSTALTUNG' | translate }}</h2>
 
       <!-- Jahr -->
       <div class="row print1">
@@ -133,13 +130,11 @@
 
 
       <!-- Überschrift Statistiken -->
-      <!-- TODO mit der de.json verbinden -->
-      <h2>Statistiken</h2>
+      <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.STATISTIKEN' | translate }}</h2>
 
 
       <!-- Filter Buttons für die verschiedenen Tabellen -->
       <div style="margin-top: 20px">
-        <!-- TODO mit der de.json verbinden -->
         <bla-statistik-filter-button
           id="showSchuetzenstatistik"
           [id]="'showResultsButton'"
@@ -147,17 +142,16 @@
           [active]="schuetzenStatistikActive"
           [disabled]="loadingData"
         >
-          Schützen
+          {{ 'MANNSCHAFTEN.MANNSCHAFTEN.FILTER_BUTTON.SCHUETZEN' | translate }}
         </bla-statistik-filter-button>
 
-        <!-- TODO mit der de.json verbinden -->
         <bla-statistik-filter-button
           [id]="''"
           (onClick)="showMannschaftOptions()"
           [active]="mannschaftStatistikActive"
           [disabled]="loadingData"
         >
-          Mannschaften
+          {{ 'MANNSCHAFTEN.MANNSCHAFTEN.FILTER_BUTTON.MANNSCHAFTEN' | translate }}
         </bla-statistik-filter-button>
       </div>
 

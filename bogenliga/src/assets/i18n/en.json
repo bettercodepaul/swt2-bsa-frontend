@@ -320,6 +320,14 @@
     },
     "MANNSCHAFTEN": {
       "TITLE": "Competition results",
+      "HEADING": {
+        "VERANSTALTUNG": "Selection of the event and team",
+        "STATISTIKEN": "Statistics"
+      },
+      "FILTER_BUTTON":{
+        "SCHUETZEN": "Archers",
+        "MANNSCHAFTEN": "Teams"
+      },
       "POPUPTXT": {
         "POPUPÜBERSCHRIFT": {
           "LABEL": "Team is not selected!"
