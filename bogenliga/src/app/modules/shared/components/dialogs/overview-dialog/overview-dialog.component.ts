@@ -5,6 +5,7 @@ import {CommonSecuredDirective} from '../../common/common-secured-component.clas
 import {TableRow} from '../../tables/types/table-row.class';
 import {OverviewDialogConfig} from '../types/overview-dialog-config.interface';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {MIGRATION_OVERVIEW_CONFIG} from '@verwaltung/components/migration/migration.config';
 
 @Component({
   selector:    'bla-overview-dialog',
@@ -20,6 +21,8 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public buttonLabel: string;
   @Input() public filterButtonLabel: string;
   @Input() public isCustomActionButton: boolean = false;
+  @Input() public isMigrationStatusBar: boolean = false;
+  @Input() public progress: number = 0;
   @Input() public showStatusFilter: boolean = false;
   @Input() public changePageButtons: boolean = false;
   @Input() public showFilterButton: boolean = false;
@@ -31,7 +34,6 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public filterDropdownLabel: string;
   @Input() public cypressTagTimestamp: string;
   @Input() public cypressTagStatus: string;
-
 
   public ActionButtonColors = ActionButtonColors;
 

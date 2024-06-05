@@ -92,6 +92,7 @@
       "MATCHPUNKTE": "Match-score",
       "SATZPUNKTE": "Set-score",
       "SATZPUNKTDIFFERENZ": "Set-score-difference",
+      "MATCHCOUNT": "Match count",
       "HEADER": {
         "VERANSTALTUNG": "League",
         "WETTKAMPFTAG_AKT": "Competition day",
@@ -708,6 +709,31 @@
             "TITLE": "Delete event",
             "DESCRIPTION": "Are you sure, you want to delete the event with ID=%s? This can not be undone."
           }
+
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete Association Member",
+          "DESCRIPTION": "Are you sure, you want to delete the Association Member with ID=%s? This can not be undone."
+        },
+        "DELETE_PLATZHALTER_MITGLIED": {
+          "TITLE": "Delete Placeholder association member",
+          "DESCRIPTION": "You cannot delete this association member as it is needed for the Placeholder team."
+        },
+        "EDIT_PLATZHALTER_MITGLIED": {
+          "TITLE": "Edit Placeholder association member",
+          "DESCRIPTION": "You cannot edit this association member as it is needed for the Placeholder team."
+        }
+      }
+    },
+    "KLASSEN": {
+      "TITLE": "Classes - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "KLASSENR": "Class-number",
+          "KLASSENAME": "Class name",
+          "KLASSEALTERMIN": "min. year",
+          "KLASSEALTERMAX": "max. year"
         }
       },
       "DSBMANNSCHAFT": {
@@ -752,6 +778,40 @@
             "DESCRIPTION": "Are you sure, you want to delete the team with ID=%s? This can not be undone."
           }
         }
+
+      }
+    },
+    "LIGA_DETAIL": {
+      "TITLE": "League - Details",
+      "FORM": {
+        "NAME": {
+          "LABEL": "League name",
+          "PLACEHOLDER": "Please enter a name for the league",
+          "ERROR": "Please enter a valid name"
+        },
+        "REGION": {
+          "LABEL": "Region",
+          "PLACEHOLDER": "Please select a region",
+          "ERROR": "Please select a valid region"
+        },
+        "UEBERGEORDNET": {
+          "LABEL": "Parent league",
+          "PLACEHOLDER": "Please select a parent league",
+          "ERROR": "Please select a valid parent league"
+        },
+        "VERANTWORTLICH_MAIL": {
+          "LABEL": "E-Mail of the league responsible",
+          "PLACEHOLDER": "Please select a league responsible",
+          "ERROR": "Please enter a valid E-Mail"
+        },
+        "LIGA_DETAIL" : {
+          "LABEL": "League details",
+          "MAX_WORDS_WARNING": "(max. 300 words)"
+        },
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete",
+        "NEW_LOWEST": "Create subordinate League"
       },
       "DSBMITGLIEDER": {
         "TITLE": "Association Members - Overview",
@@ -1122,6 +1182,7 @@
           }
         }
       },
+
       "SCHUETZE_HINZUFUEGEN": {
         "TITLE": "Add marksman to team",
         "FORM": {
@@ -1145,6 +1206,88 @@
           "UPDATE": "Refresh",
           "DELETE": "Delete",
           "RESET_FILTER": "Reset filter"
+      "NOTIFICATION": {
+        "SAVE": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully added marksman to team. No licence was created, because the marksman already has one in this discipline."
+        },
+        "DUPLICATE": {
+          "TITLE": "Error",
+          "DESCRIPTION": "Marksman already in team. Please add a different marksman."
+        },
+        "OVERUSED": {
+          "TITLE": "Error",
+          "DESCRIPTION": "Can not add marksman to this team, because he already is part of to many teams."
+        },
+        "NOWETTKAEMPFE": {
+          "TITLE": "Could not check licence.",
+          "DESCRIPTION": "The teams league has no competition days."
+        },
+        "SAVE_AND_LIZENZ_ERSTELLT": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully added marksman to team and created a licence."
+        }
+      }
+    },
+    "DSBMITGLIEDER_DETAIL": {
+      "TITLE": "Association Member - Details",
+      "FORM": {
+        "VORNAME": {
+          "LABEL": "first name",
+          "PLACEHOLDER": "Please enter a first name",
+          "ERROR": "Please enter a valid first name."
+        },
+        "NACHNAME": {
+          "LABEL": "last name",
+          "PLACEHOLDER": "Please enter a last name",
+          "ERROR": "Please enter a valid last name."
+        },
+        "GEBURTSDATUM": {
+          "LABEL": "Date of birth",
+          "PLACEHOLDER": "Please enter a date of birth",
+          "ERROR": "Please enter a valid date of birth (Format: DD-MM-YYYY)."
+        },
+        "MITGLIEDSNUMMER": {
+          "LABEL": "Member number",
+          "PLACEHOLDER": "Please enter a member number",
+          "ERROR": "Please enter a valid member number."
+        },
+        "NATIONALITAET": {
+          "LABEL": "Nationality",
+          "PLACEHOLDER": "Please enter a nationality",
+          "ERROR": "Please enter a valid nationality."
+        },
+        "VEREIN": {
+          "LABEL": "Club",
+          "PLACEHOLDER": "Please enter a club ID",
+          "ERROR": "Please enter a valid club ID."
+        },
+        "BEITRITTSDATUM": {
+          "LABEL": "Date of Joining",
+          "PLACEHOLDER": "Please enter a date of joining.",
+          "ERROR": "Please enter a valid date of joining."
+        },
+        "KAMPFRICHTER": {
+          "LABEL": "Referee license"
+        },
+        "NO_USER": "Member has no User-Account. Please create one first. If you already created a User-Account then click on update.",
+        "REGISTRATION": "User registration",
+        "SAVE": "Save",
+        "UPDATE": "Refresh",
+        "DELETE": "Delete"
+      },
+      "NOTIFICATION": {
+        "DELETE": {
+          "TITLE": "Delete Association member",
+          "DESCRIPTION": "Are you sure, you want to delete the association member with ID=%s? This can not be undone."
+        },
+        "DELETE_SUCCESS": {
+          "TITLE": "Success",
+          "DESCRIPTION": "Successfully deleted association member."
+        },
+        "DELETE_FAILURE": {
+          "TITLE": "Error while deleting",
+          "DESCRIPTION": "Could not delete association member."
         },
         "TABLE": {
           "HEADERS": {
@@ -1175,6 +1318,29 @@
             "TITLE": "Success",
             "DESCRIPTION": "Successfully added marksman to team and created a licence."
           }
+        "DUPLICATE": {
+          "TITLE": "Failed to add",
+          "DESCRIPTION": "Member number already taken. Please choose a different number."
+        }
+      }
+    },
+    "DSBMITGLIEDER_INFO": {
+      "TITLE": "Association Member - Info"
+    },
+    "VERANSTALTUNG": {
+      "TITLE": "Event - Overview",
+      "TABLE": {
+        "HEADERS": {
+          "ID": "ID",
+          "NAME": "Event name",
+          "WETTKAMPFTYPID": "Competition type ID",
+          "WETTKAMPFTYPNAME": "Competition type name",
+          "SPORTJAHR": "Sport year",
+          "MELDEDEADLINE": "Registration deadline",
+          "PHASE" : "Phase",
+          "LIGANAME": "League name",
+          "LIGALEITERID": "League leader ID",
+          "LIGALEITERMAIL": "League leader E-Mail"
         }
       },
       "DSBMITGLIEDER_DETAIL": {

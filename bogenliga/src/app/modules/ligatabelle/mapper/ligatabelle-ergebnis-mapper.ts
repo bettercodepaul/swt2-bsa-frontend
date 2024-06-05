@@ -22,6 +22,7 @@ export function toDO(ligatabelleErgebnisDTO: LigatabelleErgebnisDTO): Ligatabell
   ligatabelleErgebnisDO.satzpkt_differenz = ligatabelleErgebnisDTO.satzpktDifferenz;
   ligatabelleErgebnisDO.tabellenplatz = ligatabelleErgebnisDTO.tabellenplatz;
   ligatabelleErgebnisDO.sortierung = ligatabelleErgebnisDTO.sortierung;
+  ligatabelleErgebnisDO.matchCount = ligatabelleErgebnisDTO.matchCount;
 
   return ligatabelleErgebnisDO;
 }

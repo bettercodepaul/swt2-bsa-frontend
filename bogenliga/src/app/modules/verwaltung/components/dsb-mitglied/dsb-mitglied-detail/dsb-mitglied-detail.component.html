@@ -156,6 +156,32 @@
         </div>
       </div>
 
+      <!-- BEITRITTSDATUM -->
+      <div class="form-group row">
+        <label for="dsbMitgliedBeitrittsdatum"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.BEITRITTSDATUM.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <input type="date"
+                 class="form-control"
+                 required
+                 pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                 id="dsbMitgliedBeitrittsdatum"
+                 name="dsbMitgliedBeitrittsdatum"
+                 #dsbMitgliedBeitrittsdatum="ngModel"
+                 [(ngModel)]="currentMitglied.beitrittsdatum"
+                 [class.is-invalid]="dsbMitgliedBeitrittsdatum.invalid && !dsbMitgliedBeitrittsdatum.untouched"
+                 placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.BEITRITTSDATUM.PLACEHOLDER' | translate }}"
+                 data-cy="detail-beitrittsdatum-feld">
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.BEITRITTSDATUM.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
+
       <!-- Kampfrichterlizenz -->
       <div class="form-group row">
         <label for="dsbMitgliedKampfrichter"

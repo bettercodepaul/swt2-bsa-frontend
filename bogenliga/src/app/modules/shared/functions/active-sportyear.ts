@@ -11,13 +11,14 @@ export async function getActiveSportYear(einstellungenDataProvider: Einstellunge
 
   await einstellungenDataProvider.findAll()
                                  .then((response: BogenligaResponse<EinstellungenDO[]>) => {
-                                   const sportYearSetting = response.payload.find(item => item.key === "aktives-Sportjahr");
+                                   const sportYearSetting = response.payload.find((item) => item.key === 'aktives-Sportjahr');
                                    if (sportYearSetting) {
 
+                                     // tslint:disable-next-line:radix
                                      activeSportYear = parseInt(sportYearSetting.value);
-                                     console.log("Aktives Sportjahr: " + activeSportYear);
+                                     console.log('Aktives Sportjahr: ' + activeSportYear);
                                    } else {
-                                     console.log("Kein Sportjahr gefunden");
+                                     console.log('Kein Sportjahr gefunden');
                                    }
                                  });
 

@@ -12,5 +12,6 @@ export class DsbMitgliedDO implements VersionedDataObject {
   vereinsId: number;
   vereinsName: string;
   userId: number;
+  beitrittsdatum: string;
   kampfrichter = false;
 }
