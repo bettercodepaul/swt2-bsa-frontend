@@ -1049,9 +1049,9 @@
           "ERROR": "Bitte eine gültige Nummer eingeben"
         },
         "MANNSCHAFT_VERANSTALTUNG": {
-          "LABEL": "Liga",
-          "PLACEHOLDER": "Bitte eine Liga auswählen",
-          "ERROR": "Bitte eine gültige Liga auswählen"
+          "LABEL": "Veranstaltung",
+          "PLACEHOLDER": "Der Ligaleiter teilt Veranstaltung zu.",
+          "ERROR": "Ein Fehler ist aufgetreten"
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
@@ -1417,6 +1417,7 @@
           "LEFTCAPTION": "abgewählt",
           "RIGHTCAPTION": "ausgewählt"
         },
+        "HINZUFUEGEN": "Zur Veranstaltung hinzufügen",
         "SAVE": "Speichern",
         "AUSRICHTER": "Ausrichter",
         "UPDATE": "Aktualisieren",
