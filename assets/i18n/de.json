@@ -797,7 +797,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Vereinsmitglieder löschen",
-          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_PLATZHALTER_MITGLIED": {
           "TITLE": "Platzhalter Vereinsmitglied löschen",
