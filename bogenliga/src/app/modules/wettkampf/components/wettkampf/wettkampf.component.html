@@ -306,12 +306,14 @@
                           >
           </bla-data-table>
           <bla-data-table id="row01" class="hidden"
+                          [ngClass] = "'text-center'"
                           [loading]="loadingData"
                           [config]="config_einzel_table"
                           [rows]="rows[0]">
           </bla-data-table>
           <bla-data-table id="row02"
                           class="hidden"
+                          [ngClass] = "'text-center'"
                           [loading]="loadingData"
                           [config]="config_schuetzenstatistikMatch_table"
                           [rows]="rows[0]">

@@ -522,51 +522,42 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     return this.schuetzenstatistikDataProvider.getSchuetzenstatistikWettkampf(vereinId, wettkampfId);
   }
 
-
+  /**
+   * Formats the Schuetzenstatistiken (=> German browser settings => 9,25 instead of 9.25
+   * In addition is transforming 'schuetzeSatz1-5' into a more readable format
+   */
+  private formatStatistik(statistikRow: TableRow[]): TableRow[] {
+    statistikRow.forEach((row) => {
+      for (const columnKey in row.payload ) {
+        // formats numbers into country-dependent format
+        if (typeof row.payload[columnKey] === 'number' && row.payload[columnKey] != null) {
+          row.payload[columnKey] = row.payload[columnKey].toLocaleString();
+          // transforms saetze into a more readable format
+        } else if (columnKey.startsWith('schuetzeSatz') && row.payload[columnKey] != null) {
+          row.payload[columnKey] = row.payload[columnKey].replace(',', ' | ');
+        }
+      }
+    });
+    return statistikRow;
+  }
   public handleLoadSchuetzenstatistikSuccess(payload) {
     if (payload.length > 0) {
-      console.log(payload);
-      const shortenedRows = toTableRows(payload.filter((element: SchuetzenstatistikDO) => element.pfeilpunkteSchnitt !== null));
-      shortenedRows.forEach((row) => {
-        for (const element in row.payload) {
-          console.log(element);
-          if (typeof row.payload[element] === 'number' && row.payload[element] != null) {
-            row.payload[element] = row.payload[element].toLocaleString();
-          }
-        }
-      });
-      this.rows.push(shortenedRows);
+      const formattedRows = this.formatStatistik(toTableRows(payload.filter((element: SchuetzenstatistikDO) => element.pfeilpunkteSchnitt !== null)));
+      this.rows.push(formattedRows);
     }
   }
 
   public handleLoadSchuetzenstatistikMatchSuccess(payload) {
     if (payload.length > 0) {
-      const shortenedRows: SchuetzenstatistikMatchDO[] = payload.filter((element: SchuetzenstatistikMatchDO) => element.pfeilpunkteSchnitt !== null);
-
-      this.rows.push(toTableRows(shortenedRows));
+      const formattedRows = this.formatStatistik(toTableRows(payload.filter((element: SchuetzenstatistikMatchDO) => element.pfeilpunkteSchnitt !== null)));
+      this.rows.push(formattedRows);
     }
-  }
-  formatNumbersInStatistik(statistikRow: SchuetzenstatistikMatchDO[]): any[] {
-    // Format the data before passing it to the table
-    if (!statistikRow || statistikRow.length === 0) {
-      return [];
-    }
-
-    // Iterate over each row and format specific columns
-    return statistikRow.map((row) => {
-      return {
-        ...row,
-        match1: this.decimalPipe.transform(row.match1 , '1.2-2', 'de'), // Format 'match1' column
-        // Add other columns to format if needed
-      };
-    });
   }
 
   public handleLoadSchuetzenstatistikWettkampftageSuccess(payload) {
     if (payload.length > 0) {
-      console.log(payload);
-      const shortenedRows = payload.filter((element: SchuetzenstatistikWettkampftageDO) => element.wettkampftageSchnitt !== null);
-      this.rows.push(toTableRows(shortenedRows));
+      const formattedRows = this.formatStatistik(toTableRows(payload.filter((element: SchuetzenstatistikWettkampftageDO) => element.wettkampftageSchnitt !== null)));
+      this.rows.push(formattedRows);
     }
   }
 
