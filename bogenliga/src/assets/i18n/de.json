@@ -402,7 +402,7 @@
           "LABEL": "Einzelstatistik"
         },
         "OPTION3": {
-          "LABEL": "Matchstatistik"
+          "LABEL": "Wettkampfstatistik"
         },
         "OPTION4": {
           "LABEL": "Wettkampftagestatistik"
@@ -433,17 +433,17 @@
           "MATCH": "Match",
           "MANNSCHAFT": "Mannschaft",
           "OPPONENT": "Gegner",
-          "SATZ1": "S1",
-          "SATZ2": "S2",
-          "SATZ3": "S3",
-          "SATZ4": "S4",
-          "SATZ5": "S5",
+          "SATZ1": "Satz 1",
+          "SATZ2": "Satz 2",
+          "SATZ3": "Satz 3",
+          "SATZ4": "Satz 4",
+          "SATZ5": "Satz 5",
           "SATZPUNKTE": "Satzpunkte",
           "MATCHPUNKTE": "Matchpunkte",
-          "SCHUETZE": "Schütze",
-          "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
-          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr",
-          "RUEKENNUMMER": "Rückennummer",
+          "SCHUETZE": "Name des Schützen",
+          "DURCHSCHPFEILWERTMATCH": "Pfeilschnitt pro Match",
+          "DURCHSCHPFEILWERTJAHR": "Pfeilschnitt pro Jahr",
+          "RUECKENNUMMER": "Rückennr",
           "MATCH1": "⌀ Match 1",
           "MATCH2": "⌀ Match 2",
           "MATCH3": "⌀ Match 3",
