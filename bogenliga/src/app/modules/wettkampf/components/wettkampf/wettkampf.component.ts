@@ -47,15 +47,22 @@ import {
   SchuetzenstatistikwettkampftageDataProviderService
 } from '@wettkampf/services/schuetzenstatistikwettkampftage-data-provider-service';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {DecimalPipe} from '@angular/common';
+import de from '@angular/common/locales/de';
 
-interface Wettkampftag{
-  id: string,
-  name: string
+
+
+interface Wettkampftag {
+  id: string;
+  name: string;
 }
+
+
 @Component({
   selector:    'bla-mannschaft',
   templateUrl: './wettkampf.component.html',
-  styleUrls:   ['./wettkampf.component.scss']
+  styleUrls:   ['./wettkampf.component.scss'],
+  providers: [DecimalPipe]
 })
 
 export class WettkampfComponent extends CommonComponentDirective implements OnInit {
@@ -97,7 +104,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   public schuetzenStatistikActive = false;
   public mannschaftStatistikActive = false;
-
   public alleTage: Array<Wettkampftag> = [
     {id: 'Table1', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION1.LABEL'},
     {id: 'Table2', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION2.LABEL'},
@@ -117,6 +123,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   isTableFilled: Array<boolean> = [false, false, false, false];
 
   constructor(
+    private decimalPipe: DecimalPipe,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private vereinDataProvider: VereinDataProviderService,
     private wettkampfDataProviderService: WettkampfDataProviderService,
@@ -519,16 +526,40 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public handleLoadSchuetzenstatistikSuccess(payload) {
     if (payload.length > 0) {
       console.log(payload);
-      const shortenedRows = payload.filter((element: SchuetzenstatistikDO) => element.pfeilpunkteSchnitt !== null);
-      this.rows.push(toTableRows(shortenedRows));
+      const shortenedRows = toTableRows(payload.filter((element: SchuetzenstatistikDO) => element.pfeilpunkteSchnitt !== null));
+      shortenedRows.forEach((row) => {
+        for (const element in row.payload) {
+          console.log(element);
+          if (typeof row.payload[element] === 'number' && row.payload[element] != null) {
+            row.payload[element] = row.payload[element].toLocaleString();
+          }
+        }
+      });
+      this.rows.push(shortenedRows);
     }
   }
 
   public handleLoadSchuetzenstatistikMatchSuccess(payload) {
     if (payload.length > 0) {
-      const shortenedRows = payload.filter((element: SchuetzenstatistikMatchDO) => element.pfeilpunkteSchnitt !== null);
+      const shortenedRows: SchuetzenstatistikMatchDO[] = payload.filter((element: SchuetzenstatistikMatchDO) => element.pfeilpunkteSchnitt !== null);
+
       this.rows.push(toTableRows(shortenedRows));
     }
+  }
+  formatNumbersInStatistik(statistikRow: SchuetzenstatistikMatchDO[]): any[] {
+    // Format the data before passing it to the table
+    if (!statistikRow || statistikRow.length === 0) {
+      return [];
+    }
+
+    // Iterate over each row and format specific columns
+    return statistikRow.map((row) => {
+      return {
+        ...row,
+        match1: this.decimalPipe.transform(row.match1 , '1.2-2', 'de'), // Format 'match1' column
+        // Add other columns to format if needed
+      };
+    });
   }
 
   public handleLoadSchuetzenstatistikWettkampftageSuccess(payload) {
