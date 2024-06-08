@@ -31,7 +31,7 @@ import {environment} from '@environment';
 import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
 import {SessionHandling} from '@shared/event-handling';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
-import {WETTKAMPF_TABLE_MATCH_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.match.config';
+import {WETTKAMPF_TABLE_MATCH_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.siebenmatch.config';
 import {
   SchuetzenstatistikMatchDataProviderService
 } from '@wettkampf/services/schuetzenstatistikmatch-data-provider-service';
@@ -542,21 +542,21 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
   public handleLoadSchuetzenstatistikSuccess(payload) {
     if (payload.length > 0) {
-      const formattedRows = this.formatStatistik(toTableRows(payload.filter((element: SchuetzenstatistikDO) => element.pfeilpunkteSchnitt !== null)));
+      const formattedRows = this.formatStatistik(toTableRows(payload));
       this.rows.push(formattedRows);
     }
   }
 
   public handleLoadSchuetzenstatistikMatchSuccess(payload) {
     if (payload.length > 0) {
-      const formattedRows = this.formatStatistik(toTableRows(payload.filter((element: SchuetzenstatistikMatchDO) => element.pfeilpunkteSchnitt !== null)));
+      const formattedRows = this.formatStatistik(toTableRows(payload));
       this.rows.push(formattedRows);
     }
   }
 
   public handleLoadSchuetzenstatistikWettkampftageSuccess(payload) {
     if (payload.length > 0) {
-      const formattedRows = this.formatStatistik(toTableRows(payload.filter((element: SchuetzenstatistikWettkampftageDO) => element.wettkampftageSchnitt !== null)));
+      const formattedRows = this.formatStatistik(toTableRows(payload));
       this.rows.push(formattedRows);
     }
   }
