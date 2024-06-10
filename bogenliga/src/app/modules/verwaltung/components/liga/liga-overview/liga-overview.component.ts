@@ -118,9 +118,11 @@ export class LigaOverviewComponent extends CommonComponentDirective implements O
               this.handleLoadTableRowsSuccess(response);
             } else {
               let filtered = response.payload.filter(ligadto => {
-                if (ligadto.ligaVerantwortlichMail == this.currentUserService.getEmail())
-                  return true;
-                return false;
+                if (ligadto.ligaVerantwortlichMail === this.currentUserService.getEmail()){
+                  return true;}
+                else {
+                  return false;
+                }
               })
               this.handleLoadTableRows(filtered);
             }

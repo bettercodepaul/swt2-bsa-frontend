@@ -17,21 +17,21 @@ import {
   NotificationSeverity,
   NotificationType,
   NotificationUserAction
-} from '../../../../shared/services/notification';
-import {UserProfileDataProviderService} from '../../../../user/services/user-profile-data-provider.service';
+} from '@shared/services';
+import {UserProfileDataProviderService} from '@user/services/user-profile-data-provider.service';
 import {UserDataProviderService} from '../../../services/user-data-provider.service';
-import {UserProfileDTO} from '../../../../user/types/model/user-profile-dto.class';
-import {UserProfileDO} from '../../../../user/types/user-profile-do.class';
+import {UserProfileDTO} from '@user/types/model/user-profile-dto.class';
+import {UserProfileDO} from '@user/types/user-profile-do.class';
 import {VeranstaltungDataProviderService} from '../../../services/veranstaltung-data-provider.service';
 import {RegionDataProviderService} from '../../../services/region-data-provider.service';
 import {VeranstaltungDO} from '../../../types/veranstaltung-do.class';
 import {VERANSTALTUNG_DETAIL_CONFIG, VERANSTALTUNG_DETAIL_TABLE_Config} from './veranstaltung-detail.config';
 import {LigaDataProviderService} from '../../../services/liga-data-provider.service';
-import {LigaDO} from '../../../../verwaltung/types/liga-do.class';
-import {LigaDTO} from '../../../../verwaltung/types/datatransfer/liga-dto.class';
+import {LigaDO} from '@verwaltung/types/liga-do.class';
+import {LigaDTO} from '@verwaltung/types/datatransfer/liga-dto.class';
 import {WettkampftypDataProviderService} from '../../../services/wettkampftyp-data-provider.service';
-import {WettkampftypDO} from '../../../../verwaltung/types/wettkampftyp-do.class';
-import {WettkampftypDTO} from '../../../../verwaltung/types/datatransfer/wettkampftyp-dto.class';
+import {WettkampftypDO} from '@verwaltung/types/wettkampftyp-do.class';
+import {WettkampftypDTO} from '@verwaltung/types/datatransfer/wettkampftyp-dto.class';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {DsbMannschaftDataProviderService} from '../../../services/dsb-mannschaft-data-provider.service';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
@@ -48,6 +48,11 @@ import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService, UserPermission} from '@shared/services';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
+
+import {MatchDO} from '@verwaltung/types/match-do.class';
+import { RequestResult } from '@shared/data-provider/types/request-result.enum';
+import {DsbMitgliedDO} from '@verwaltung/types/dsb-mitglied-do.class';
+
 
 
 
@@ -70,6 +75,7 @@ const NOTIFICATION_CREATE_PLATZHALTER = 'platzhalter_create';
 const NOTIFICATION_CREATE_PLATZHALTER_FAILURE = 'platzhalter_create_failure';
 
 
+
 @Component({
   selector:    'bla-veranstaltung-detail',
   templateUrl: './veranstaltung-detail.component.html',
@@ -78,20 +84,30 @@ const NOTIFICATION_CREATE_PLATZHALTER_FAILURE = 'platzhalter_create_failure';
 
 
 export class VeranstaltungDetailComponent extends CommonComponentDirective implements OnInit {
+  currentDisziplin: any;
+  allDisziplin: any;
 
   public config = VERANSTALTUNG_DETAIL_CONFIG;
   public tableConfig = VERANSTALTUNG_DETAIL_TABLE_Config;
   public ButtonType = ButtonType;
 
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
-  public allVeranstaltung: Array<VeranstaltungDO> = [new VeranstaltungDO()];
   public lastVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
 
   public currentLiga: LigaDO = new LigaDO();
   public allLiga: Array<LigaDO> = [new LigaDO()];
-
+  public currentSelectedVeranstaltungPhase: string;
 
   public allTeamAmount: Array<number> = [8, 6, 4];
+
+
+  public allVeranstaltungPhases: Array<string>  = ['Geplant', 'Laufend'];
+  public isPhaseSelectDisabled = true;
+  public disabledVeranstaltungPhase = true;
+
+  allTeams: DsbMannschaftDO[] = [];
+  unassignedTeams: DsbMannschaftDO[] = [];
+  assignedTeams: DsbMannschaftDO[] = [];
 
 
 
@@ -154,6 +170,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   ngOnInit() {
     this.loading = true;
+    this.loadUnassignedTeams();
     this.notificationService.discardNotification();
     this.route.params.subscribe((params) => {
       if (!isUndefined(params[ID_PATH_PARAM])) {
@@ -164,10 +181,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.currentWettkampftyp = new WettkampftypDO();
           this.currentLiga = new LigaDO();
 
-
           this.currentVeranstaltung.groesse = 8;
-
-
+          this.isPhaseSelectDisabled = true;
           this.loadUsers();
           this.loadLigaleiter();
           this.loadWettkampftyp();
@@ -179,12 +194,93 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
           this.saveLoading = false;
         } else {
           this.loadById(params[ID_PATH_PARAM]);
+          this.disabledVeranstaltungPhase = false;
           this.showTable = true;
           this.loadMannschaftsTable();
         }
       }
     });
   }
+
+  loadUnassignedTeams(): void {
+    // this.mannschaftDataProvider.findAllByVeranstaltungsId(null)
+    this.mannschaftDataProvider.findAllByVeranstaltungsId(1001) // ^muss auf die VeranstaltungsId der Warteschlange gesetzt werden
+        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
+          if (response.result === RequestResult.SUCCESS) {
+            this.allTeams = response.payload;
+            this.unassignedTeams = this.allTeams.filter(team => !this.assignedTeams.includes(team));
+          } else {
+            console.error('Fehler beim Laden der Mannschaften:', response.result);
+          }
+        })
+        .catch(error => {
+          console.error('Verbindungsproblem:', error);
+        });
+  }
+
+  assignTeamToEvent(team: any): void {
+    this.saveLoading = true;
+    this.unassignedTeams = this.unassignedTeams.filter(t => t !== team);
+
+    this.selectedMannschaft.id = team.id;
+    this.selectedMannschaft.vereinId = team.vereinId;
+    this.selectedMannschaft.nummer = team.nummer;
+    this.selectedMannschaft.benutzerId = team.benutzerId;
+    this.selectedMannschaft.veranstaltungId = this.currentVeranstaltung.id;
+
+    this.mannschaftDataProvider.update(this.selectedMannschaft)
+        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
+          if (!isNullOrUndefined(response)
+            && !isNullOrUndefined(response.payload)
+            && !isNullOrUndefined(response.payload.id)) {
+
+            const id = this.selectedMannschaft.id;
+
+            const notification: Notification = {
+              id:          NOTIFICATION_UPDATE_VERANSTALTUNG + id,
+              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+              severity:    NotificationSeverity.INFO,
+              origin:      NotificationOrigin.USER,
+              type:        NotificationType.OK,
+              userAction:  NotificationUserAction.PENDING
+            };
+
+            this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG + id)
+                .subscribe((myNotification) => {
+                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                    this.saveLoading = false;
+                    this.loadMannschaftsTable();
+                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + response.payload.veranstaltungId);
+                  }
+                });
+
+            this.notificationService.showNotification(notification);
+          }
+        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+          console.log('Failed: ' + response);
+          const notification: Notification = {
+            id:          NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE,
+            title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE",
+            description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+
+          }
+          this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
+                }
+              });
+
+          this.notificationService.showNotification(notification);
+          this.saveLoading = false;
+        });
+  }
+
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
    *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
@@ -297,9 +393,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.veranstaltungDataProvider.findLastVeranstaltungById(this.currentVeranstaltung.id)
         .then((response) => {
             this.lastVeranstaltung = response.payload;
-            if(this.lastVeranstaltung.groesse > this.currentVeranstaltung.groesse){
+            if (this.lastVeranstaltung.groesse > this.currentVeranstaltung.groesse) {
               this.saveLoading = false;
-              console.log('Size of previous Veranstaltung does not equal size of new Veranstaltung')
+              console.log('Size of previous Veranstaltung does not equal size of new Veranstaltung');
               const notification: Notification = {
                 id:          NOTIFICATION_COPY_MANNSCHAFTEN_FAILURE_SIZEDIFF,
                 title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.COPYMANNSCHAFT_FAILURE_SIZEDIFF.TITLE',
@@ -321,8 +417,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             console.log(this.lastVeranstaltung.id);
             console.log('Mannschaften werden kopiert');
             this.mannschaftDataProvider.copyMannschaftFromVeranstaltung(this.lastVeranstaltung.id, this.currentVeranstaltung.id)
-                .then((response) => this.handleCopyFromVeranstaltungSuccess(response)
-                  , (response: BogenligaResponse<VeranstaltungDO>) => {
+                .then((databaseResponse) => this.handleCopyFromVeranstaltungSuccess(databaseResponse)
+                  , (databaseResponse: BogenligaResponse<VeranstaltungDO>) => {
                     console.log('Failed');
                     this.saveLoading = false;
                   });
@@ -349,46 +445,68 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         });
   }
 
-
-  public onUpdate(ignore: any): void {
+  private createVeranstaltungUpdateNotification(id: number, updateTitle: string, updateDescription: string): Notification {
+    const notification: Notification = {
+      id:          NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE + id,
+      title:       updateTitle,
+      description: updateDescription,
+      severity:    NotificationSeverity.INFO,
+      origin:      NotificationOrigin.USER,
+      type:        NotificationType.OK,
+      userAction:  NotificationUserAction.PENDING};
+    return notification;
+  }
+  public async onUpdate(ignore: any): Promise<void> {
     this.saveLoading = true;
+    // set new values for the data persistence
     this.currentVeranstaltung.ligaId = this.currentLiga.id;
     this.currentVeranstaltung.ligaleiterId = this.currentUser.id;
     this.currentVeranstaltung.wettkampfTypId = this.currentWettkampftyp.id;
     const id = this.currentVeranstaltung.id;
-
-    if(this.rows.length > this.currentVeranstaltung.groesse){
+    if (this.rows.length > this.currentVeranstaltung.groesse) {
       this.saveLoading = false;
-      const notification: Notification = {
-        id:          NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE + id,
-        title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_FAILURE.TITLE',
-        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_FAILURE.DESCRIPTION',
-        severity:    NotificationSeverity.INFO,
-        origin:      NotificationOrigin.USER,
-        type:        NotificationType.OK,
-        userAction:  NotificationUserAction.PENDING
-      };
+      const notification = this.createVeranstaltungUpdateNotification(id,
+        'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_FAILURE.TITLE',
+        'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_FAILURE.DESCRIPTION');
       this.notificationService.showNotification(notification);
-      return;
     }
-
+    // When the user tries to update the phase of the Veranstaltung
+    if (this.currentSelectedVeranstaltungPhase !== this.currentVeranstaltung.phase) {
+      const response = await this.matchDataProvider.findAllbyVeranstaltungId(id);
+      // proper answer of the backend
+      if (!isNullOrUndefined(response) && !isNullOrUndefined(response.payload)) {
+              // if the veranstaltung has no matches, the select is reset and set to 'Geplant'
+              if (response.payload.length === 0 && this.currentSelectedVeranstaltungPhase === 'Laufend') {
+                this.currentSelectedVeranstaltungPhase = 'Geplant';
+                this.saveLoading = false;
+                const notification = this.createVeranstaltungUpdateNotification(id,
+                  'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_VERANSTALTUNG_FAILURE.TITLE',
+                  'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_VERANSTALTUNG_FAILURE.DESCRIPTION');
+                this.notificationService.showNotification(notification);
+                return;
+                }
+      // no proper answer of the backend
+      } else {
+              this.currentSelectedVeranstaltungPhase = this.currentVeranstaltung.phase;
+              this.saveLoading = false;
+              const notification = this.createVeranstaltungUpdateNotification(id,
+                'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_DATABASE_FAILURE.TITLE',
+                'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE_DATABASE_FAILURE.DESCRIPTION');
+              this.notificationService.showNotification(notification);
+              return;
+      }
+          }
     // persist
+    this.currentVeranstaltung.phase = this.currentSelectedVeranstaltungPhase;
     this.veranstaltungDataProvider.update(this.currentVeranstaltung)
         .then((response: BogenligaResponse<VeranstaltungDO>) => {
           if (!isNullOrUndefined(response)
             && !isNullOrUndefined(response.payload)
             && !isNullOrUndefined(response.payload.id)) {
-
-            const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_VERANSTALTUNG + id,
-              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE.TITLE',
-              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
-
+            const notification = this.createVeranstaltungUpdateNotification(id,
+              'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE.TITLE',
+              'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.UPDATE.DESCRIPTION');
+            this.isPhaseSelectDisabled = true;
             this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG + id)
                 .subscribe((myNotification) => {
                   if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
@@ -411,7 +529,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.saveLoading = true;
 
     const platzhalterId = 99;
-    const platzhalterNummer = "1";
+    const platzhalterNummer = '1';
 
 
     this.selectedMannschaft.vereinId = platzhalterId;
@@ -428,8 +546,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             console.log('Wir sind der Sturm, der über das Ziel hinwegfegt, niemand kann uns aufhalten!');
             const notification: Notification = {
               id:          NOTIFICATION_CREATE_PLATZHALTER,
-              title:       "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.TITLE",
-              description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.DESCRIPTION",
+              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.TITLE',
+              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
@@ -451,8 +569,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         .catch((response) => {
       const notification: Notification = {
         id:          NOTIFICATION_CREATE_PLATZHALTER_FAILURE,
-        title: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE",
-        description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION",
+        title:        'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.OK,
@@ -565,7 +683,10 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handleSuccess(response: BogenligaResponse<VeranstaltungDO>) {
     this.currentVeranstaltung = response.payload;
-
+    this.currentSelectedVeranstaltungPhase = this.allVeranstaltungPhases.find((phase) => (phase === this.currentVeranstaltung.phase));
+    if (this.currentSelectedVeranstaltungPhase === 'Geplant') {
+      this.isPhaseSelectDisabled = false;
+    }
     this.loading = false;
     this.loadWettkampftyp();
     this.loadUsers();
@@ -585,21 +706,21 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   private handlLigaResponseArraySuccess(response: BogenligaResponse<LigaDO[]>): void {
     this.allLiga = [];
-    let currentUserId = this.currentUserService.getCurrentUserID();
+    const currentUserId = this.currentUserService.getCurrentUserID();
     this.userDataProviderService.findUserRoleById(currentUserId).then((roleresponse: BogenligaResponse<UserRolleDO[]>) => {
       let isAdmin = false;
-      if (roleresponse.payload.filter(role => role.roleName == 'ADMIN').length > 0)
+      if (roleresponse.payload.filter((role) => role.roleName === 'ADMIN').length > 0) {
         isAdmin = true;
-
-      this.allLiga = response.payload.filter(ligaDo => {
-        return ligaDo.ligaUebergeordnetId == currentUserId || ligaDo.ligaVerantwortlichId == currentUserId || isAdmin;
+      }
+      this.allLiga = response.payload.filter((ligaDo) => {
+        return ligaDo.ligaUebergeordnetId === currentUserId || ligaDo.ligaVerantwortlichId === currentUserId || isAdmin;
       });
       if (this.id === 'add') {
         this.currentLiga = this.allLiga[0];
       } else {
         this.currentLiga = this.allLiga.filter((liga) => liga.id === this.currentVeranstaltung.ligaId)[0];
       }
-    }).catch(err => console.log(err))
+    }).catch((err) => console.log(err))
         .finally(() => this.loading = false);
   }
 
@@ -811,8 +932,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   private handleLigatabelleExistsSuccess(response: BogenligaResponse<LigatabelleErgebnisDO[]>) {
     try {
       this.currentLigatabelle = response.payload;
-      for (let i = 0; i < this.rows.length; i++) {
-        const row = this.rows[i];
+      for (const row of this.rows) {
         row.disabledActions.push(TableActionType.EDIT);
         row.hiddenActions.push(TableActionType.EDIT);
       }
@@ -822,8 +942,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     }
   }
 
-  currentDisziplin: any;
-  allDisziplin: any;
+
 
   // Creates Initial Matches for a Veranstaltung
   public createMatchesWT0(event: any) {

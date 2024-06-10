@@ -1,5 +1,6 @@
 <bla-common-dialog [config]="config"
-                   [loading]="loading">
+                   [loading]="loading"
+                    id="dialogVeranstaltungDetail">
   <div (mouseover)="onMouseOver($event)">
     <form #dsbMitgliedForm="ngForm"
           class="horizontal-form half-page"
@@ -194,6 +195,36 @@
         </div>
       </div>
 
+      <!-- Veranstaltungsphase -->
+      <div class="form-group row" [hidden] = disabledVeranstaltungPhase >
+        <label for="veranstaltungphase"
+               class="col-sm-3 col-form-label">
+          <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANSTALTUNGSPHASE.LABEL' | translate }}</span>
+          <span> *</span>
+        </label>
+        <div class="col-sm-9">
+          <select class="form-control"
+                  required
+                  id="veranstaltungphase"
+                  name="veranstaltungphase"
+                  [disabled]="isPhaseSelectDisabled"
+                  #veranstaltungphase="ngModel"
+                  [(ngModel)]="currentSelectedVeranstaltungPhase"
+                  data-cy="veranstaltung-detail-veranstaltungphase">
+              <option
+                [ngValue]="veranstaltungphase"
+                *ngFor="let veranstaltungphase of allVeranstaltungPhases">
+                {{veranstaltungphase}}
+              </option>
+            placeholder="{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANSTALTUNGSPHASE.PLACEHOLDER' | translate }}">
+          </select>
+
+
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.VERANSTALTUNGSPHASE.ERROR' | translate }}
+          </div>
+        </div>
+      </div>
 
       <!-- LigaleiterEmail -->
       <div class="form-group row">
@@ -225,6 +256,40 @@
         </div>
 
       </div>
+
+      <!-- Warteschlange -->
+      <div *ngIf="showTable">
+      <div>
+        <h2>Mannschaften ohne Veranstaltung</h2>
+        <div class="resizable-box">
+          <table>
+            <thead>
+            <tr>
+              <th>Teamname</th>
+              <!--<th>Anzahl der Schützen</th> *später für die Anzeige von der Anzahl der Schützen*-->
+              <th>Aktion</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let team of unassignedTeams; let i = index">
+              <td>{{ team.name }}</td>
+              <!--<td>{{ team.nummer }}</td> *später für die Anzeige von der Anzahl der Schützen*-->
+              <td>
+                <bla-actionbutton
+                  [iconClass]="'plus'"
+                  [loading]="saveLoading"
+                  [color]="ActionButtonColors.SUCCESS"
+                  (onClick)="assignTeamToEvent(team)">
+                  {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.HINZUFUEGEN' | translate }}
+                </bla-actionbutton>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+
 
 
       <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE/ABSCHLIEßEN/PLATZHALTER BUTTON -->
@@ -259,7 +324,6 @@
                             (onClick)="onCopyMannschaft($event)">
             {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.MANNSCHAFT' | translate }}
           </bla-actionbutton>
-
 
           <bla-actionbutton *ngIf="!entityExists()"
                             [id]="'veranstaltungSaveButton'"

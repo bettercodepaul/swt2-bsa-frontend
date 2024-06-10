@@ -53,6 +53,10 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
   public currentUbergeordneteLiga: LigaDO = new LigaDO();
   public allUebergeordnete: Array<LigaDO> = [new LigaDO()];
 
+  public allLowestLiga: Array<LigaDO> = [new LigaDO];
+  public isLowestLiga: boolean = false;
+  public lowestLiga: LigaDO = new LigaDO;
+
   public currentDisziplin: DisziplinDO = new DisziplinDO();
   public allDisziplin: Array<DisziplinDO> = [new DisziplinDO()];
 
@@ -101,16 +105,28 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
       if (!isUndefined(params[ID_PATH_PARAM])) {
         this.id = params[ID_PATH_PARAM];
         if (this.id === 'add') {
-          this.currentLiga = new LigaDO();
+          if(this.isLowestLiga) {
+            this.isLowestLiga = false;
+            this.loadByRestricted();
 
-          this.loadDisziplin();
-          this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
-          this.loadRegions(); // Request all regions from backend
-          this.loadUsers();
+            this.currentLiga = new LigaDO();
+            this.loading = false;
+            this.deleteLoading = false;
+            this.saveLoading = false;
+          }
+          else{
+            this.currentLiga = new LigaDO();
 
-          this.loading = false;
-          this.deleteLoading = false;
-          this.saveLoading = false;
+            this.loadDisziplin();
+            this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
+            this.loadRegions(); // Request all regions from backend
+            this.loadUsers();
+            this.loadByLowest(); // Get all lowest Liga in all Regions
+
+            this.loading = false;
+            this.deleteLoading = false;
+            this.saveLoading = false;
+          }
         } else {
           this.loadById(params[ID_PATH_PARAM]);
         }
@@ -329,14 +345,47 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.notificationService.showNotification(notification);
   }
 
+  public onCreateLowest(ignore:any):void{
+    this.router.navigateByUrl("/verwaltung/liga/add");
+  }
+
   public entityExists(): boolean {
     return this.currentLiga.id >= 0;
+  }
+
+  public checkLowestLiga(): boolean{
+    for(var i = 0; i<this.allLowestLiga.length; i++){
+      if(this.allLowestLiga[i].id === this.currentLiga.id){
+        this.lowestLiga = this.allLowestLiga[i];
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public loadByRestricted():void{
+    this.allDisziplin = [];
+    this.regionen = [];
+    this.allUebergeordnete = [];
+    this.allUsers = [];
+    this.currentUbergeordneteLiga = this.currentLiga;//TODO Da funktioniert noch was nicht ganz!
+
+    this.allDisziplin.push(this.currentDisziplin);
+    this.regionen.push(this.currentRegion);
+    this.allUebergeordnete.push(this.currentLiga);
+    this.allUsers.push(this.currentUser);
   }
 
   private loadById(id: number) {
     this.ligaDataProvider.findById(id)
         .then((response: BogenligaResponse<LigaDO>) => this.handleSuccess(response))
         .catch((response: BogenligaResponse<LigaDO>) => this.handleFailure(response));
+  }
+
+  private loadByLowest(){
+    this.ligaDataProvider.findByLowest()
+        .then((response: BogenligaResponse<LigaDO[]>) => this.handleLowestResponseArraySuccess(response))
+        .catch((response: BogenligaResponse<LigaDTO[]>) => this.handleLowestResponseArrayFailure(response));
   }
 
   private loadDisziplin() {
@@ -375,6 +424,7 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
     this.loadUebergeordnete(); // additional Request for all 'liga' to get all uebergeordnete
     this.loadRegions(); // Request all regions from backend
     this.loadUsers();
+    this.loadByLowest();
   }
 
   private handleFailure(response: BogenligaResponse<LigaDO>) {
@@ -425,6 +475,19 @@ export class LigaDetailComponent extends CommonComponentDirective implements OnI
         });
 
     this.notificationService.showNotification(notification);
+  }
+
+  private handleLowestResponseArraySuccess(response: BogenligaResponse<LigaDO[]>) : void{
+    this.allLowestLiga = [];
+    this.allLowestLiga = response.payload;
+    console.log(this.allLowestLiga);
+    this.isLowestLiga = this.checkLowestLiga();
+    this.loading = false;
+  }
+
+  private handleLowestResponseArrayFailure(response:BogenligaResponse<LigaDO[]>):void{
+    this.allLowestLiga = [];
+    this.loading = false;
   }
 
   private handleDisziplinResponseArraySuccess(response: BogenligaResponse<DisziplinDO[]>): void {

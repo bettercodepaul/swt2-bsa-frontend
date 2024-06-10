@@ -1,0 +1,43 @@
+@import 'src/styles.scss';
+
+.statistik-filter-button {
+  background-color: $dark-gray;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 30px;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  border: none;
+  color: white;
+  font-size: 12px;
+
+  width: fit-content;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.statistik-filter-button:hover {
+  filter:brightness(0.8);
+  transition: filter 0.3s;
+}
+
+.statistik-filter-button:disabled {
+  opacity: 0.75;
+}
+
+.statistik-filter-button:disabled,hover{
+  filter:none;
+}
+
+.statistik-filter-button:focus,*:hover{
+  outline:none;
+}
+
+.statistik-filter-button:focus{
+  outline:none;
+}
+
+.active {
+  background-color: $hero-blue;
+}
