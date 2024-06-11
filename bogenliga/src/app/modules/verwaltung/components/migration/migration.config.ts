@@ -40,7 +40,11 @@ export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
         propertyName:   'runAtUtc',
         width:          20,
       },
-
+      {
+        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TIMESTAMP',
+        propertyName:   'lastModifiedAtUtc',
+        width:          20,
+      },
     ],
 
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
