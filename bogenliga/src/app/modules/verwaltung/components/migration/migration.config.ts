@@ -36,12 +36,12 @@ export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TIMESTAMP',
+        translationKey: 'Erstellt am',
         propertyName:   'runAtUtc',
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TIMESTAMP',
+        translationKey: 'letzte Aktualisierung',
         propertyName:   'lastModifiedAtUtc',
         width:          20,
       },
