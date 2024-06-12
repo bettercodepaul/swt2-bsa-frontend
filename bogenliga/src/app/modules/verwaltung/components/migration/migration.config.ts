@@ -36,13 +36,11 @@ export const MIGRATION_OVERVIEW_CONFIG: OverviewDialogConfig = {
         width:          20,
       },
       {
-        translationKey: 'MANAGEMENT.MIGRATION.TABLE.HEADERS.TIMESTAMP',
-        propertyName:   'runAtUtc',
+        translationKey: 'letzte Aktualisierung',
+        propertyName:   'lastModifiedAtUtc',
         width:          20,
       },
-
     ],
-
     editPermission : [UserPermission.CAN_MODIFY_SYSTEMDATEN],
     deletePermission : [UserPermission.CAN_DELETE_SYSTEMDATEN]
   },
