@@ -365,6 +365,11 @@
           "LABEL": "Print individual statistic"
         }
       },
+      "DROPDOWN_MANNSCHAFTSTATISTIK": {
+        "OPTION3": {
+          "LABEL": "team standings over the years"
+        }
+      },
       "DROPDOWN": {
         "OPTION1": {
           "LABEL": "Complete statistics"
@@ -381,6 +386,9 @@
         "OPTION5": {
           "LABEL": "Archer statistics across all leagues"
         }
+      },
+      "TABLE_NAME": {
+        "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft der letzten 5 Jahre"
       },
       "FORM": {
         "MANNSCHAFT_NAME": {
