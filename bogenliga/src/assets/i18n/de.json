@@ -394,6 +394,11 @@
           "LABEL": "Gesamtstatistik drucken"
         }
       },
+      "DROPDOWN_MANNSCHAFTSTATISTIK": {
+        "OPTION3": {
+          "LABEL": "Mannschaftstabellenverlauf über Sportjahre hinweg"
+        }
+      },
       "DROPDOWN": {
         "OPTION1": {
           "LABEL": "Gesamtstatistik"
@@ -410,6 +415,9 @@
         "OPTION5": {
           "LABEL": "Saisonschnittstatistik"
         }
+      },
+      "TABLE_NAME": {
+        "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft der letzten 5 Jahre"
       },
       "FORM": {
         "MANNSCHAFT_NAME": {

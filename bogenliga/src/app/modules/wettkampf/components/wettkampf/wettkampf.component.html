@@ -187,7 +187,7 @@
                     name="StatistikName"
                     [(ngModel)]="selectedStatistik"
                     [disabled]="loadingData"
-                    (ngModelChange)="onSelectStatistik()">
+                    (ngModelChange)="onSelectSchuetzenStatistik()">
               <option value="gesamtstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION1.LABEL' | translate }} </option>
               <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
               <option value="schuetzenstatistikMatch"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION3.LABEL' | translate }} </option>
@@ -211,11 +211,12 @@
                     style="width: 50%"
                     id="mannschaftsStatistiken"
                     name="MannschaftStatistikName"
-                    [(ngModel)]="selectedMannschaft"
+                    [(ngModel)]="selectedMannschaftStatistik"
                     [disabled]="loadingData"
-                    (ngModelChange)="onSelectMannschaft()">
+                    (ngModelChange)="onSelectMannschaftStatistik()">
               <option value="aktuelle_mannschaft"> Aktuelle Mannschaft "{{currentMannschaft != null ? currentMannschaft.name : "Keine Veranstaltungen verfügbar"}}" </option>
               <option value="alle_mannschaften"> Alle Mannschaften </option>
+              <option value="tabellenverlauf_statistik_alle_sportjahre">{{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN_MANNSCHAFTSTATISTIK.OPTION3.LABEL'| translate}}</option>
             </select>
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -251,6 +252,7 @@
         [iconClass]="'file-download'"
         [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
       </bla-download-actionbutton>
+
       <!-- Row Gesamtstatistik -->
       <div class="row print1">
         <div id="Table0" class="hidden" style="padding:1em"
@@ -273,6 +275,12 @@
                           class="hidden"
                           [loading]="loadingData"
                           [config]="config_alleligen_table"
+                          [rows]="rows[0]">
+          </bla-data-table>
+          <bla-data-table id="rowMannschafttabellenverlaufSportjahre"
+                          class="hidden"
+                          [loading]="loadingData"
+                          [config]="mannschafttabellenverlaufConfig"
                           [rows]="rows[0]">
           </bla-data-table>
         </div>
