@@ -136,10 +136,6 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     }
   }
 
-  private setThisToken(Token) {
-    this.setThisToken(Token);
-  }
-
 
   public onMouseOver(event: any) {
     const isExpired = this.sessionHandling.checkSessionExpired();
