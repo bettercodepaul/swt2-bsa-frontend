@@ -118,7 +118,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
       this.currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
       this.refreshTable();
 
-      if (this.countTime < 1) {
+      if (this.countTime < 54) {
         this.countTime += 1;
       } else {
         this.sessionHandling.keepSessionAlive(this.injector);
