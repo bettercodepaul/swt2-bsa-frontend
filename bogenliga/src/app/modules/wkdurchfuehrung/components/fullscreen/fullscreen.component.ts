@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Injector, OnInit} from '@angular/core';
 import { SessionHandling } from '@shared/event-handling';
 import {CurrentUserService, NotificationService, OnOfflineService} from '@shared/services';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
@@ -43,6 +43,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   currentTime: string;
   private timeSubscription: Subscription;
 
+  private countTime = 0;
 
   public loadingLigatabelle = true;
   public rowsLigatabelle: TableRow[];
@@ -71,7 +72,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     private notificationService: NotificationService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private ligatabelleDataProvider: LigatabelleDataProviderService,
-
+    private injector: Injector,
     private onOfflineService: OnOfflineService,
     private currentUserService: CurrentUserService,
   ) {
@@ -116,6 +117,13 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     this.timeSubscription = interval(60000).subscribe(() => {
       this.currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
       this.refreshTable();
+
+      if (this.countTime < 1) {
+        this.countTime += 1;
+      } else {
+        this.sessionHandling.keepSessionAlive(this.injector);
+        this.countTime = 0;
+      }
     });
   }
 
@@ -126,6 +134,10 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     } catch (error) {
       console.error('Error updating table data:', error);
     }
+  }
+
+  private setThisToken(Token) {
+    this.setThisToken(Token);
   }
 
 
