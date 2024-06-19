@@ -47,6 +47,12 @@ import {LigatabelleDataProviderService} from '../../../ligatabelle/services/liga
 import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
 import {MannschaftTabellenverlaufSportjahre} from '@verwaltung/types/mannschaftstatistiksportjahre-do.class';
 import {SchuetzenstatistikMatchDTO} from '@verwaltung/types/datatransfer/schuetzenstatistikmatch-dto.class';
+import {
+  WETTKAMPF_TABLE_SECHS_MATCHES_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.sechsmatch.config';
+import {
+  WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
 
 interface Wettkampftag {
   id: string;
@@ -296,13 +302,20 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.rows = [];
       await this.loadSchuetzenstatistikenMatch(selectedMannschaft.vereinId, 0);
       if (this.loadingData) {
-        console.log('Die Reihenlänge ist:' + this.rows.length);
         console.log(this.rows);
-        if (this.rows.every((wettkampftag) => wettkampftag.every((wettkampf) => {
+        // this decides whether a wettkampf had 5, 6 or 7 matches, depending on the count the configuration will be adjusted
+        if (this.rows.some((wettkampftag) => wettkampftag.some((wettkampf) => {
           const statistics = wettkampf.payload as SchuetzenstatistikMatchDTO;
-          return statistics.match7 === null;
+          return statistics.match7 !== null;
         }))) {
-           // this.config_schuetzenstatistikMatch_table =
+          this.config_schuetzenstatistikMatch_table = WETTKAMPF_TABLE_MATCH_CONFIG;
+        } else if (this.rows.some((wettkampftag) => wettkampftag.some((wettkampf) => {
+          const statistics = wettkampf.payload as SchuetzenstatistikMatchDTO;
+          return statistics.match6 !== null;
+        }))) {
+          this.config_schuetzenstatistikMatch_table = WETTKAMPF_TABLE_SECHS_MATCHES_CONFIG;
+        } else {
+          this.config_schuetzenstatistikMatch_table = WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG;
         }
         // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
         for (let i = 0; i < this.rows.length; i++) {
