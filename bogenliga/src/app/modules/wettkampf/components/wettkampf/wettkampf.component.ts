@@ -269,11 +269,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.selectedWettkampfTag = this.alleTage[0];
     if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
       await this.clearAllStatistikTables();
-     /* for (let i = 0; i < 4; i++) {
-        document.getElementById('row' + i + '1').classList.remove('hidden');
-        document.getElementById('Table' + (i + 1)).classList.remove('hiddens');
-      }
-      */
       this.loadingData = true;
       this.currentConfig = WETTKAMPF_TABLE_EINZEL_CONFIG;
       document.getElementById('Table0').classList.remove('hidden');
@@ -837,6 +832,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.currentConfig = this.mannschafttabellenverlaufConfig;
     // document.getElementById('rowMannschafttabellenverlaufSportjahre').classList.remove('hidden');
     document.getElementById('Table0').classList.remove('hidden');
+    document.getElementById('row00').classList.remove('hidden');
     this.rows = [];
 
     await this.loadAllVeranstaltungenOfLiga(veranstaltung);
