@@ -46,5 +46,10 @@ export const WETTKAMPF_TABLE_SECHS_MATCHES_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH6',
       propertyName:   'match6',
       width:          30,
+    },
+    {
+      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTMATCH',
+      propertyName:   'pfeilpunkteSchnitt',
+      width:          30,
     }],
 };

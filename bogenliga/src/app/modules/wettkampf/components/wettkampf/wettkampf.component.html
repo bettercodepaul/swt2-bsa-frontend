@@ -253,7 +253,7 @@
         [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
       </bla-download-actionbutton>
 
-      <!-- Row Gesamtstatistik -->
+      <!-- Table for all Statistiken -->
       <div class="row print1">
         <div id="Table0" class="hidden" style="padding:1em"
         data-cy="wettkampf-schuetzenstatistik-gesamtstatistik-table">
@@ -262,7 +262,7 @@
 
           <bla-data-table id="row00"
                           [loading]="loadingData"
-                          [config]="config_einzelGesamt_table"
+                          [config]="currentConfig"
                           [rows]="rows[0]">
           </bla-data-table>
           <bla-data-table id="row06"
