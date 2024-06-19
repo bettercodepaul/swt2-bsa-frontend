@@ -348,6 +348,7 @@
         "LABEL": "Wettkampftag 4"
       }
     },
+
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle",
       "LIGATABELLE_VORBEREITUNG": "Ligatabelle Vorbereitung",
@@ -358,6 +359,21 @@
     },
     "SCHUETZEN_STATISTIK_ALLE_LIGEN": {
       "TITEL": "Saisonschnitte pro Schütze"
+    },
+    "SCHUETZENSTATISTIK_MATCH": {
+      "TITEL": "Schusswerte der Matches pro Schütze"
+    },
+    "SCHUETZENSTATISTIK_WETTKAMPF": {
+      "TITEL": "Matchschnitte pro Schütze"
+    },
+    "SCHUETZENSTATISTIK_VERANSTALTUNG": {
+      "TITEL": "Wettkampftagschnitte pro Schütze"
+    },
+    "MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT": {
+      "TITEL": "Statistik der aktuellen Mannschaft"
+    },
+    "MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN": {
+      "TITEL": "Statistik aller Mannschaften"
     },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",

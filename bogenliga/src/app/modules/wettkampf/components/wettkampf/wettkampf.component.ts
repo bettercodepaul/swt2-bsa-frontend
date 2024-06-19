@@ -52,7 +52,7 @@ import {
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
 
 interface Wettkampftag {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -70,7 +70,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public config = WETTKAMPF_CONFIG;
   public config_table = WETTKAMPF_TABLE_CONFIG;
   public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
-  public config_einzelGesamt_table = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public config_schuetzenstatistikMatch_table = WETTKAMPF_TABLE_MATCH_CONFIG;
   public config_schuetzenstatistikWettkampftage_table = WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG;
   public jahre: Array<SportjahrVeranstaltungDO> = [];
@@ -98,6 +97,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public ActionButtonColors = ActionButtonColors;
   public selectedWettkampfTag: Wettkampftag;
+  public currentWettkampftag: number = 0;
   public wettkampftage: Array<Wettkampftag> = [];
   private sessionHandling: SessionHandling;
 
@@ -107,10 +107,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public schuetzenStatistikActive = false;
   public mannschaftStatistikActive = false;
   public alleTage: Array<Wettkampftag> = [
-    {id: 'Table1', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION1.LABEL'},
-    {id: 'Table2', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION2.LABEL'},
-    {id: 'Table3', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION3.LABEL'},
-    {id: 'Table4', name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION4.LABEL'}
+    {id: 0, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION1.LABEL'},
+    {id: 1, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION2.LABEL'},
+    {id: 2, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION3.LABEL'},
+    {id: 3, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION4.LABEL'}
   ];
 
   /**
@@ -244,22 +244,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       }
     }
   }
-
-  selectSchuetzenstatistikConfig(chosenTable) {
-    if (chosenTable === 0) {
-      return this.config_schuetzenstatistikWettkampftage_table;
-    } else if (chosenTable === 1) {
-      return this.config_schuetzenstatistikMatch_table;
-    } else if (chosenTable === 2) {
-      return this.config_einzel_table;
-    } else if (chosenTable === 3) {
-      return this.config_einzelGesamt_table;
-    }
-    return this.currentConfig;
-  }
-
   /* loadEinzelstatistik
-  Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
   Desweiteren wird hier die Tabelle befüllt für die Einzelstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
   Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
@@ -740,7 +725,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     document.getElementById('selectWettkampftag').classList.add('hidden');
     this.selectedWettkampfTag =  this.alleTage[0];
     if (this.selectedStatistik === 'einzelstatistik') {
-      this.currentStatistikTitle = 'Einzelstatistik';
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_MATCH.TITEL';
       await this.loadEinzelstatistik(this.currentMannschaft);
       document.getElementById('selectWettkampftag').classList.remove('hidden');
       this.onSelectWettkampfTag();
@@ -748,41 +733,32 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.currentStatistikTitle =  'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
       await this.loadGesamtstatistik(this.currentMannschaft);
     } else if (this.selectedStatistik === 'alleligenstatistik') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK_ALLE_LIGEN.TITEL';
       await this.loadAlleLigenProSaisonStatistik(this.currentMannschaft);
       this.onSelectWettkampfTag();
-      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK_ALLE_LIGEN.TITEL';
     } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
-      this.currentStatistikTitle = 'Wettkampfstatistik';
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_WETTKAMPF.TITEL';
       await this.loadSchuetzenstatistikMatch(this.currentMannschaft);
       this.onSelectWettkampfTag();
       document.getElementById('selectWettkampftag').classList.remove('hidden');
-
     } else if (this.selectedStatistik === 'schuetzenstatistikWettkampftage') {
-      this.currentStatistikTitle = 'WETTKAEMPFE.WETTKAEMPFE.TITLE';
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_VERANSTALTUNG.TITEL';
       await this.loadSchuetzenstatistikWettkampftage(this.currentMannschaft);
-    }
-  }
-  public getCurrentStatistikConfig() {
-    if (this.selectedStatistik === 'einzelstatistik') {
-      return WETTKAMPF_TABLE_EINZEL_CONFIG;
-    } else if (this.selectedStatistik === 'gesamtstatistik') {
-      return WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
-    } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
-      return WETTKAMPF_TABLE_MATCH_CONFIG;
-    } else if (this.selectedStatistik === 'schuetzenstatistikWettkampftage') {
-      return WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG;
     }
   }
 
   public async onSelectMannschaftStatistik() {
     if (this.selectedMannschaftStatistik === 'aktuelle_mannschaft') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT.TITEL';
       await this.loadErgebnisForMannschaft(this.currentMannschaft);
       this.onSelectWettkampfTag();
     } else if (this.selectedMannschaftStatistik === 'alle_mannschaften') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_ALLE_MANNSCHAFTEN.TITEL';
       await this.loadAllErgebnisse(undefined);
       this.onSelectWettkampfTag();
     } else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_alle_sportjahre') {
-        await this.visualizeMannschaftTabellenverlaufSportjahre(this.currentVeranstaltung);
+      this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE_NAME.MANNSCHAFT_TABELLENVERLAUF_TITLE';
+      await this.visualizeMannschaftTabellenverlaufSportjahre(this.currentVeranstaltung);
     }
   }
 
@@ -792,7 +768,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @private
    */
   private async visualizeMannschaftTabellenverlaufSportjahre(veranstaltung: VeranstaltungDO) {
-    this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE_NAME.MANNSCHAFT_TABELLENVERLAUF_TITLE';
     // prepare array for the tabellenplatzierungen over the sportjahre
     this.mannschaftTabellenverlaufSportjahre = new MannschaftTabellenverlaufSportjahre();
     // create config for the table on frontend
@@ -940,18 +915,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public onSelectWettkampfTag() {
-    // Alle Tage hidden
-    this.alleTage.forEach((tag) => {
-      if (this.selectedWettkampfTag.id === tag.id) {
-        document.getElementById(tag.id).classList.remove('hidden');
-      } else {
-        // Ausgewählten Tag anzeigen
-        document.getElementById(tag.id).classList.add('hidden');
-      }
-
-    });
-
-
+    // Simply changes index of the table depending on the selected wettkampftag
+    this.currentWettkampftag = this.selectedWettkampfTag.id;
   }
-
 }
