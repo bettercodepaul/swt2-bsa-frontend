@@ -68,7 +68,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public show = false;
   public currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public config = WETTKAMPF_CONFIG;
-  public config_table = WETTKAMPF_TABLE_CONFIG;
+  public mannschaftenConfig = WETTKAMPF_TABLE_CONFIG;
   public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
   public config_schuetzenstatistikMatch_table = WETTKAMPF_TABLE_MATCH_CONFIG;
   public config_schuetzenstatistikWettkampftage_table = WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG;
@@ -97,7 +97,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public ActionButtonColors = ActionButtonColors;
   public selectedWettkampfTag: Wettkampftag;
-  public currentWettkampftag: number = 0;
+  public currentWettkampftag = 0;
   public wettkampftage: Array<Wettkampftag> = [];
   private sessionHandling: SessionHandling;
 
@@ -215,34 +215,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     } else {
       this.hideUebersichtsButtons();
     }
-    this.clearAllStatistikTables();
-    for (let i = 0; i < 4; i++) {
-      let rowNumber = 'row';
-      rowNumber += i;
-      document.getElementById(rowNumber).classList.remove('hidden');
-      rowNumber += '1';
-      document.getElementById(rowNumber).classList.add('hidden');
-    }
-    for (let i = 0; i <= 4; i++) {
-      let tableNumber = 'Table';
-      tableNumber += i;
-      if (i === 0) {
-        document.getElementById(tableNumber).classList.add('hidden');
-      } else {
-        document.getElementById(tableNumber).classList.remove('hidden');
-      }
-    }
+    await this.clearAllStatistikTables();
+
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
       this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
         this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i])));
     }
-    // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
-    for (let i = 0; i < this.rows.length; i++) {
-      if (this.rows[i].length > 0) {
-        this.isTableFilled[i] = true;
-      }
-    }
+    this.currentConfig = this.mannschaftenConfig;
+    document.getElementById('Table0').classList.remove('hidden');
+    document.getElementById('row00').classList.remove('hidden');
+
   }
   /* loadEinzelstatistik
   Desweiteren wird hier die Tabelle befüllt für die Einzelstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
@@ -753,7 +736,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       await this.loadErgebnisForMannschaft(this.currentMannschaft);
       this.onSelectWettkampfTag();
     } else if (this.selectedMannschaftStatistik === 'alle_mannschaften') {
-      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_ALLE_MANNSCHAFTEN.TITEL';
+      this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN.TITEL';
       await this.loadAllErgebnisse(undefined);
       this.onSelectWettkampfTag();
     } else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_alle_sportjahre') {
@@ -903,6 +886,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async showMannschaftOptions() {
+    this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT.TITEL';
     document.getElementById('selectMannschaftStatistik').classList.remove('hidden');
     document.getElementById('selectStatistik').classList.add('hidden');
     document.getElementById('selectWettkampftag').classList.add('hidden');
