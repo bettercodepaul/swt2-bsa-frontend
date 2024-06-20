@@ -69,11 +69,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public config = WETTKAMPF_CONFIG;
   public mannschaftenConfig = WETTKAMPF_TABLE_CONFIG;
-  public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
-  public config_schuetzenstatistikMatch_table = WETTKAMPF_TABLE_MATCH_CONFIG;
-  public config_schuetzenstatistikWettkampftage_table = WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG;
   public jahre: Array<SportjahrVeranstaltungDO> = [];
-  public config_alleligen_table = WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG;
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
@@ -289,6 +285,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    */
   public async loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
     this.isStatistikAllowed = true;
+    this.currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
     if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
       await this.clearAllStatistikTables();
       this.rows = [];
