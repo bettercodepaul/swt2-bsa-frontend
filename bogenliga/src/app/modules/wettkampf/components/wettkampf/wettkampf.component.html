@@ -127,7 +127,6 @@
         </div>
       </div>
 
-
       <!-- Überschrift Statistiken -->
       <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.STATISTIKEN' | translate }}</h2>
 
@@ -267,6 +266,18 @@
           </bla-data-table>
         </div>
       </div>
+      <div [hidden]="!showLineChart" style="width:700px; height: 300px">
+        <div>
+          <canvas
+            baseChart
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+          > </canvas>
+        </div>
+      </div>
         <!-- Button - Einzelstatistik als PDF -->
         <bla-download-actionbutton
           class = "hidden"
@@ -284,6 +295,7 @@
 
         </div>
       </div>
+
     </form>
   </div>
 </bla-common-dialog>
