@@ -114,11 +114,22 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public lineChartOptions: ChartOptions = {
     responsive: true,
     spanGaps: true,
+    // legend shows color of the line shown and the currently selected verein
     legend: {
       labels: {
-        fontSize: 18
+        fontSize: 16
       },
     },
+    // information shown, when you hover above the different dots
+    tooltips: {
+      callbacks: {
+        label(tooltipItem, data) {
+          const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+          const value = tooltipItem.yLabel;
+          return datasetLabel + ' Platz:' + value;
+        }}
+      },
+    // adjusting x axes and y axes
     scales: {
       xAxes: [{
         ticks: {
@@ -135,7 +146,10 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
           fontSize: 16,
           min: 1,
           max: 8,
-          reverse: true
+          reverse: true,
+          callback(value, index, values) {
+            return value + '.';
+          }
         },
           scaleLabel: {
             display: true,
