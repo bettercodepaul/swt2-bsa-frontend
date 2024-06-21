@@ -11,7 +11,7 @@ export class MatchDTOExt implements DataTransferObject {
   wettkampfId: number;
   wettkampfTag: number;
   wettkampfTyp: string;
-  matchNr: number;
+  nr: number;
   begegnung: number;
   matchScheibennummer: number;
   matchpunkte: number;
@@ -44,7 +44,7 @@ export class MatchDTOExt implements DataTransferObject {
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
-    this.matchNr = !!matchNr ? matchNr : null;
+    this.nr = !!matchNr ? matchNr : null;
     this.begegnung = !!begegnung ? begegnung : null;
     this.matchScheibennummer = !!matchScheibennummer ? matchScheibennummer : null;
     this.matchpunkte = matchpunkte;
@@ -114,9 +114,9 @@ export class MatchDTOExt implements DataTransferObject {
     copy.wettkampfTyp = optional.wettkampfTyp || '';
 
     if (optional.matchNr >= 0) {
-      copy.matchNr = optional.matchNr;
+      copy.nr = optional.matchNr;
     } else {
-      copy.matchNr = null;
+      copy.nr = null;
     }
     if (optional.begegnung >= 0) {
       copy.begegnung = optional.begegnung;
