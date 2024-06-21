@@ -50,7 +50,6 @@ import {
 import {
   WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
-import {ChartConfiguration, ChartOptions, ChartType} from 'chart.js';
 
 interface Wettkampftag {
   id: number;
