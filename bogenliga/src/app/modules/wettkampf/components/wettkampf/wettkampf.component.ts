@@ -472,6 +472,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   // backend-calls to get data from DB
   public async loadVeranstaltungen(sportjahr) {
     this.loadingData = true;
+    this.showLineChart = false;
     await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
               .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
               .catch(() => {
@@ -673,7 +674,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     // make everything invisible
     document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
-  }
+    // TODO lineChart Funktion, die es sauber macht und unsichtbar
+    this.lineChartData  = [
+      {
+        data: [],
+        label: 'Verein',
+        backgroundColor: 'rgb(72, 122, 245)',
+        borderColor: 'rgb(72, 122, 245)',
+        pointBackgroundColor: 'rgb(72, 122, 245)',
+        pointRadius: 6,
+        fill: false}
+    ];  }
   public async onSelectSchuetzenStatistik() {
     this.showLineChart = false;
     document.getElementById('selectWettkampftag').classList.add('hidden');
