@@ -114,22 +114,33 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public lineChartOptions: ChartOptions = {
     responsive: true,
     spanGaps: true,
+    legend: {
+      labels: {
+        fontSize: 18
+      },
+    },
     scales: {
       xAxes: [{
+        ticks: {
+          fontSize: 16,
+        },
         scaleLabel: {
           display: true,
-          labelString: 'Sportjahr'
+          labelString: 'Sportjahr',
+          fontSize: 18,
         }
-      }],
+      },  ],
       yAxes: [{
         ticks: {
+          fontSize: 16,
           min: 1,
           max: 8,
           reverse: true
         },
           scaleLabel: {
             display: true,
-            labelString: 'Tabellenplatz'
+            labelString: 'Tabellenplatz',
+            fontSize: 18,
           }
       }]},
   };
@@ -141,11 +152,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * Enthält alle Veranstaltungen aus dem ausgewählten Sportjahr
    * {@link this.filterVeranstaltungenBySportjahr}
    */
-
   popup: boolean;
-
-  // Die Werte des Array's entspricht dem Inhalt von allen 4 Wettkampftagen. false = leere Tabelle, true = Tabelle mit Inhalt
-  isTableFilled: Array<boolean> = [false, false, false, false];
 
   constructor(
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
@@ -312,6 +319,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * er hierfür relevant ist.
    */
   public async loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
+    this.loadingData = true;
     this.isStatistikAllowed = true;
     this.currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
     if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
@@ -328,17 +336,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   public async loadAlleLigenProSaisonStatistik(selectedMannschaft: DsbMannschaftDO) {
     if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
+      this.loadingData = true;
       await this.clearAllStatistikTables();
       this.rows = [];
       await this.schuetzenstatistikWettkampftageDataProvider.getSchuetzenstatistikAlleLigen(this.currentJahr, selectedMannschaft.vereinId)
                 .then((response: BogenligaResponse<SchuetzenstatistikWettkampftageDO[]>) => this.handleLoadSchuetzenstatistikAlleLigenSuccess(response.payload));
       this.currentConfig = WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG;
       // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
-      for (let i = 0; i < this.rows.length; i++) {
-        if (this.rows[i].length > 0) {
-          this.isTableFilled[i] = true;
-        }
-      }
     }
     this.loadingData = false;
   }
@@ -466,13 +470,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.passen = [];
     this.wettkaempfe = [];
     this.rows = [];
-    this.showLineChart = false;
+    this.cleanLineChart();
   }
 
   // backend-calls to get data from DB
   public async loadVeranstaltungen(sportjahr) {
     this.loadingData = true;
-    this.showLineChart = false;
+    this.cleanLineChart();
     await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
               .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
               .catch(() => {
@@ -638,7 +642,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectVerein() {
-    this.showLineChart = false;
+    this.cleanLineChart();
     this.loadingData = true;
     await this.loadVerein(this.currentMannschaft.vereinId);
     document.getElementById('selectWettkampftag').classList.add('hidden');
@@ -670,23 +674,28 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
     this.loadingData = false;
   }
-  private async clearAllStatistikTables() {
-    // make everything invisible
-    document.getElementById('einzeldruckButton').classList.add('hidden');
-    document.getElementById('gesamtdruckButton').classList.add('hidden');
-    // TODO lineChart Funktion, die es sauber macht und unsichtbar
+  private cleanLineChart() {
+    this.showLineChart = false;
     this.lineChartData  = [
       {
         data: [],
-        label: 'Verein',
+        label: '',
         backgroundColor: 'rgb(72, 122, 245)',
         borderColor: 'rgb(72, 122, 245)',
         pointBackgroundColor: 'rgb(72, 122, 245)',
         pointRadius: 6,
         fill: false}
-    ];  }
+    ];
+  }
+
+  private async clearAllStatistikTables() {
+  // make everything invisible
+    this.cleanLineChart();
+    document.getElementById('einzeldruckButton').classList.add('hidden');
+    document.getElementById('gesamtdruckButton').classList.add('hidden');
+  }
   public async onSelectSchuetzenStatistik() {
-    this.showLineChart = false;
+    this.cleanLineChart();
     document.getElementById('selectWettkampftag').classList.add('hidden');
     this.selectedWettkampfTag =  this.alleTage[0];
     if (this.selectedStatistik === 'einzelstatistik') {
@@ -713,7 +722,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectMannschaftStatistik() {
-    this.showLineChart = false;
+    this.cleanLineChart();
     if (this.selectedMannschaftStatistik === 'aktuelle_mannschaft') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT.TITEL';
       await this.loadErgebnisForMannschaft(this.currentMannschaft);
@@ -736,6 +745,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   private async visualizeMannschaftTabellenverlaufSportjahre(veranstaltung: VeranstaltungDO) {
     // prepare array for the tabellenplatzierungen over the sportjahre
     this.mannschaftTabellenverlaufSportjahre = new MannschaftTabellenverlaufSportjahre();
+    this.isStatistikAllowed = false;
     // create config for the table on frontend
     this.mannschafttabellenverlaufConfig = {
       actions: {actionTypes: []},
@@ -767,6 +777,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         },
       ],
     };
+    await this.clearAllStatistikTables();
     // create the x axes of the line chart depending on the current Veranstaltung Sportjahr
     this.lineChartLabels = Array((this.currentVeranstaltung.sportjahr - 4).toString(), (this.currentVeranstaltung.sportjahr - 3).toString(),
       (this.currentVeranstaltung.sportjahr - 2).toString(), (this.currentVeranstaltung.sportjahr - 1).toString(),
@@ -774,7 +785,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     // for every Sportjahr there can be a Tabellenplatz
     this.lineChartMannschaftTabellenverlaufData = Array(5);
     this.showLineChart = true;
-    await this.clearAllStatistikTables();
     this.loadingData = true;
     this.currentConfig = this.mannschafttabellenverlaufConfig;
     this.rows = [];
@@ -788,11 +798,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       {
         data: this.lineChartMannschaftTabellenverlaufData,
         label: this.currentVerein.name,
+
         backgroundColor: 'rgb(72, 122, 245)',
         borderColor: 'rgb(72, 122, 245)',
         pointBackgroundColor: 'rgb(72, 122, 245)',
         pointRadius: 6,
-        fill: false}
+        fill: false
+      }
     ];
     this.loadingData = false;
   }
