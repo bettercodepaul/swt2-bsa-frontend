@@ -735,7 +735,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.tableContentMatch = response.payload.map(match => {
       const tableContentRow: MatchDOExt = new MatchDOExt();
       tableContentRow.id = match.id;
-      tableContentRow.nr = match.matchNr;
+      tableContentRow.nr = match.nr;
       tableContentRow.begegnung = match.begegnung;
       tableContentRow.matchScheibennummer = match.matchScheibennummer;
       tableContentRow.mannschaftName = match.mannschaftName;
