@@ -258,7 +258,6 @@
         data-cy="wettkampf-schuetzenstatistik-gesamtstatistik-table">
          <h3>{{currentStatistikTitle | translate}}</h3>
           <!-- Button - Gesamtstatistik Drucken -->
-
           <bla-data-table id="row00"
                           [loading]="loadingData"
                           [config]="currentConfig"
@@ -266,7 +265,8 @@
           </bla-data-table>
         </div>
       </div>
-      <div [hidden]="!showLineChart" style="width:700px; height: 300px">
+      <div [hidden]="!showLineChart" style="width: 40%; height: 7%;">
+        <h3>{{currentStatistikTitle | translate}}</h3>
         <div>
           <canvas
             baseChart
