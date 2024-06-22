@@ -18,4 +18,5 @@ export interface OfflineLigatabelle {
   satzpktDifferenz: number; // akt. Stand der Satzpunktedifferenz der Mannschaft vor Wettkampfbeginn
   sortierung: number; // Sortierungskennzeichen zu Liga.Start
   tabellenplatz: number; // Tabellenplatz der Mannschaft vor Wettkampfbeginn
+  matchCount: number;
 }

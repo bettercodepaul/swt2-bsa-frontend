@@ -184,6 +184,8 @@ export class LigatabelleDataProviderService extends DataProviderService {
       matchpunkte = LT_match1[0].matchpkt + match1.matchpunkte;
       matchpunktegegner = LT_match1[0].matchpktGegen + match2.matchpunkte;
 
+      matchCount = LT_match1[0].matchCount;
+
     // Berechnung durch Offline-Modus -> alt_matches not null
     } else {
       satzpunkte = LT_match1[0].satzpkt - alt_match1.satzpunkte + match1.satzpunkte;
@@ -192,6 +194,8 @@ export class LigatabelleDataProviderService extends DataProviderService {
 
       matchpunkte = LT_match1[0].matchpkt - alt_match1.matchpunkte + match1.matchpunkte;
       matchpunktegegner = LT_match1[0].matchpktGegen - alt_match2.matchpunkte + match2.matchpunkte;
+
+      matchCount = LT_match1[0].matchCount;
 
     }
     // console.log("SP:",satzpunkte,"MP:",matchpunkte,satzpunkte,satzpunktegegner, satzpunktedifferenz,match1.mannschaftName.toString());
