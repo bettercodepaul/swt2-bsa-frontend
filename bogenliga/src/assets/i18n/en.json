@@ -92,7 +92,7 @@
       "MATCHPUNKTE": "Match-score",
       "SATZPUNKTE": "Set-score",
       "SATZPUNKTDIFFERENZ": "Set-score-difference",
-      "MATCHCOUNT": "Match count",
+      "MATCHCOUNT": "Scored match",
       "HEADER": {
         "VERANSTALTUNG": "League",
         "WETTKAMPFTAG_AKT": "Competition day",
