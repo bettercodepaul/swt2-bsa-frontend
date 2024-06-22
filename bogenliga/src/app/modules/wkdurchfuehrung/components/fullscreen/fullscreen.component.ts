@@ -86,9 +86,13 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
 
   ngOnInit(): void {
     this.startClock();
-    this.route.queryParams.subscribe((params) => {
-      this.selectedWettkampftag = params['wettkampftag'];
-      console.log('selectedWettkampftag:', this.selectedWettkampftag);
+    this.route.paramMap.subscribe((params) => {
+      const wettkampftag = params.get('wettkampftag');
+      if (wettkampftag !== null) {
+        this.selectedWettkampftag = wettkampftag + '. Wettkampftag';
+      } else {
+        this.selectedWettkampftag = 'Wettkampftag';
+      }
     });
     if (!this.isDeselected) {
 
