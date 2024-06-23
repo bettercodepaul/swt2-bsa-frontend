@@ -51,7 +51,7 @@ import {
   WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
 
-import {ChartConfiguration, ChartOptions, ChartType} from 'chart.js';
+import {ChartOptions, ChartType} from 'chart.js';
 
 
 interface Wettkampftag {
@@ -854,7 +854,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) =>
           this.handleLoadMannschaftTabellenverlaufSportjahreSuccess(response.payload, veranstaltungDO))
         .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) =>
-          this.handleLoadMannschaftTabellenverlaufSportjahreFailure(response.payload));
+          this.handleLoadMannschaftTabellenverlaufSportjahreFailure());
     }
     if (this.loadingData) {
       this.rows.push(toTableRows(Array(this.mannschaftTabellenverlaufSportjahre)));
@@ -875,7 +875,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       if (tabellenplatzVerein !== null) {
         switch (this.currentVeranstaltung.sportjahr - veranstaltung.sportjahr) {
           case 4:
-
             this.lineChartMannschaftTabellenverlaufData[0] = tabellenplatzVerein;
             this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr1 = tabellenplatzVerein + '.';
             break;
@@ -893,27 +892,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
             break;
           case 0:
             this.lineChartMannschaftTabellenverlaufData[4] = tabellenplatzVerein;
-
-            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr1 = tabellenplatzVerein + '.';
-            break;
-          case 3:
-            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr2 = tabellenplatzVerein + '.';
-            break;
-          case 2:
-            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr3 = tabellenplatzVerein + '.';
-            break;
-          case 1:
-            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr4 = tabellenplatzVerein + '.';
-            break;
-          case 0:
-
             this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr5 = tabellenplatzVerein + '.';
             break;
         }
       }
     }
   }
-  private handleLoadMannschaftTabellenverlaufSportjahreFailure(payload: LigatabelleErgebnisDO[]) {
+  private handleLoadMannschaftTabellenverlaufSportjahreFailure() {
     this.loadingData = false;
   }
   private async loadMannschaftTabellenverlaufSportjahreData(veranstaltung: VeranstaltungDO) {
