@@ -35,9 +35,7 @@ import {SchuetzenstatistikMatchDataProviderService} from '@wettkampf/services/sc
 import {SchuetzenstatistikMatchDO} from '@verwaltung/types/schuetzenstatistikmatch-do.class';
 
 import {SchuetzenstatistikWettkampftageDO} from '@verwaltung/types/schuetzenstatistikwettkampftage-do.class';
-import {
-  SchuetzenstatistikwettkampftageDataProviderService
-} from '@wettkampf/services/schuetzenstatistikwettkampftage-data-provider-service';
+import {SchuetzenstatistikwettkampftageDataProviderService} from '@wettkampf/services/schuetzenstatistikwettkampftage-data-provider-service';
 import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
 import {DecimalPipe} from '@angular/common';
 import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
@@ -51,7 +49,7 @@ import {
   WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
 
-import {ChartConfiguration, ChartOptions, ChartType} from 'chart.js';
+import {ChartOptions, ChartType} from 'chart.js';
 
 
 interface Wettkampftag {
