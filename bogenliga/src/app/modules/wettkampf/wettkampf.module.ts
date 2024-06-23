@@ -6,6 +6,7 @@ import {SharedModule} from '@shared/shared.module';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
 import {WettkampfComponent} from '@wettkampf/components';
 import {StatistikFilterComponent} from '@shared/components/buttons/statistik-filter-button/statistik-filter.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -13,6 +14,9 @@ import {StatistikFilterComponent} from '@shared/components/buttons/statistik-fil
     RouterModule.forChild(WETTKAMPF_ROUTES),
     SharedModule,
     FormsModule,
+
+    ChartsModule
+
   ],
   declarations: [WettkampfComponent, StatistikFilterComponent]
 })

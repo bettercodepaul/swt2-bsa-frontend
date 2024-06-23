@@ -51,6 +51,9 @@ import {
   WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
 
+import {ChartConfiguration, ChartOptions, ChartType} from 'chart.js';
+
+
 interface Wettkampftag {
   id: number;
   name: string;
@@ -107,6 +110,63 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     {id: 2, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION3.LABEL'},
     {id: 3, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION4.LABEL'}
   ];
+
+  // attributes for the line chart
+  public showLineChart = false;
+  private lineChartMannschaftTabellenverlaufData: Array<number> = [];
+  public lineChartOptions: ChartOptions = {
+    responsive: true,
+    spanGaps: true,
+    // legend shows color of the line shown and the currently selected verein
+    legend: {
+      labels: {
+        fontSize: 16
+      },
+    },
+    // information shown, when you hover above the different dots
+    tooltips: {
+      callbacks: {
+        label(tooltipItem, data) {
+          const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+          const value = tooltipItem.yLabel;
+          return datasetLabel + ' Platz:' + value;
+        }}
+      },
+    // adjusting x axes and y axes
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontSize: 16,
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Sportjahr',
+          fontSize: 18,
+        }
+      },  ],
+      yAxes: [{
+        ticks: {
+          fontSize: 16,
+          min: 1,
+          max: 8,
+          reverse: true,
+          callback(value, index, values) {
+            return value + '.';
+          }
+        },
+          scaleLabel: {
+            display: true,
+            labelString: 'Tabellenplatz',
+            fontSize: 18,
+          }
+      }]},
+  };
+  public lineChartLabels = [''];
+  public lineChartType: ChartType = 'line';
+  public lineChartLegend = true;
+  public lineChartData = [];
+
+
   /**
    * Enthält alle Veranstaltungen aus dem ausgewählten Sportjahr
    * {@link this.filterVeranstaltungenBySportjahr}
@@ -429,11 +489,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.passen = [];
     this.wettkaempfe = [];
     this.rows = [];
+    this.cleanLineChart();
   }
 
   // backend-calls to get data from DB
   public async loadVeranstaltungen(sportjahr) {
     this.loadingData = true;
+    this.cleanLineChart();
     await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
               .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
               .catch(() => {
@@ -599,6 +661,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectVerein() {
+    this.cleanLineChart();
     this.loadingData = true;
     await this.loadVerein(this.currentMannschaft.vereinId);
     document.getElementById('selectWettkampftag').classList.add('hidden');
@@ -630,12 +693,35 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
     this.loadingData = false;
   }
+
+  private cleanLineChart() {
+    this.showLineChart = false;
+    this.lineChartData  = [
+      {
+        data: [],
+        label: '',
+        backgroundColor: 'rgb(72, 122, 245)',
+        borderColor: 'rgb(72, 122, 245)',
+        pointBackgroundColor: 'rgb(72, 122, 245)',
+        pointRadius: 6,
+        fill: false}
+    ];
+  }
+
   private async clearAllStatistikTables() {
   // make everything invisible
+    this.cleanLineChart();
+
+  private async clearAllStatistikTables() {
+  // make everything invisible
+
     document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
   public async onSelectSchuetzenStatistik() {
+
+    this.cleanLineChart();
+
     document.getElementById('selectWettkampftag').classList.add('hidden');
     this.selectedWettkampfTag =  this.alleTage[0];
     if (this.selectedStatistik === 'einzelstatistik') {
@@ -662,6 +748,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectMannschaftStatistik() {
+
+    this.cleanLineChart();
+
     if (this.selectedMannschaftStatistik === 'aktuelle_mannschaft') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT.TITEL';
       await this.loadErgebnisForMannschaft(this.currentMannschaft);
@@ -718,6 +807,35 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     };
     await this.clearAllStatistikTables();
     // create the x axes of the line chart depending on the current Veranstaltung Sportjahr
+
+    this.lineChartLabels = Array((this.currentVeranstaltung.sportjahr - 4).toString(), (this.currentVeranstaltung.sportjahr - 3).toString(),
+      (this.currentVeranstaltung.sportjahr - 2).toString(), (this.currentVeranstaltung.sportjahr - 1).toString(),
+      (this.currentVeranstaltung.sportjahr).toString());
+    // for every Sportjahr there can be a Tabellenplatz
+    this.lineChartMannschaftTabellenverlaufData = Array(5);
+    this.showLineChart = true;
+    this.loadingData = true;
+    this.currentConfig = this.mannschafttabellenverlaufConfig;
+    this.rows = [];
+
+    await this.loadAllVeranstaltungenOfLiga(veranstaltung);
+    if (this.loadingData) {
+      await this.loadMannschaftTabellenverlaufSportjahre(this.filteredVeranstaltungenOfLiga);
+    }
+    // create the line chart data
+    this.lineChartData  = [
+      {
+        data: this.lineChartMannschaftTabellenverlaufData,
+        label: this.currentVerein.name,
+
+        backgroundColor: 'rgb(72, 122, 245)',
+        borderColor: 'rgb(72, 122, 245)',
+        pointBackgroundColor: 'rgb(72, 122, 245)',
+        pointRadius: 6,
+        fill: false
+      }
+    ];
+
     this.loadingData = true;
     this.currentConfig = this.mannschafttabellenverlaufConfig;
     this.rows = [];
@@ -728,6 +846,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     if (this.loadingData) {
       await this.loadMannschaftTabellenverlaufSportjahre(this.filteredVeranstaltungenOfLiga);
     }
+
 
     this.loadingData = false;
   }
@@ -760,6 +879,25 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       if (tabellenplatzVerein !== null) {
         switch (this.currentVeranstaltung.sportjahr - veranstaltung.sportjahr) {
           case 4:
+
+            this.lineChartMannschaftTabellenverlaufData[0] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr1 = tabellenplatzVerein + '.';
+            break;
+          case 3:
+            this.lineChartMannschaftTabellenverlaufData[1] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr2 = tabellenplatzVerein + '.';
+            break;
+          case 2:
+            this.lineChartMannschaftTabellenverlaufData[2] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr3 = tabellenplatzVerein + '.';
+            break;
+          case 1:
+            this.lineChartMannschaftTabellenverlaufData[3] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr4 = tabellenplatzVerein + '.';
+            break;
+          case 0:
+            this.lineChartMannschaftTabellenverlaufData[4] = tabellenplatzVerein;
+
             this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr1 = tabellenplatzVerein + '.';
             break;
           case 3:
@@ -772,6 +910,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
             this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr4 = tabellenplatzVerein + '.';
             break;
           case 0:
+
             this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr5 = tabellenplatzVerein + '.';
             break;
         }

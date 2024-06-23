@@ -24,6 +24,9 @@ import {APP_REDUCERS} from '@shared/redux-store';
 import {VerwaltungModule} from '@verwaltung/verwaltung.module';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {ChartsModule} from 'ng2-charts';
+
 import {MatDialogModule} from '@angular/material/dialog';
 import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
 
@@ -48,6 +51,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ChartsModule,
     MatDialogModule,
     TranslateModule.forRoot({
       loader: {
