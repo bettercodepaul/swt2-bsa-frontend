@@ -14,7 +14,9 @@ import {ChartsModule} from 'ng2-charts';
     RouterModule.forChild(WETTKAMPF_ROUTES),
     SharedModule,
     FormsModule,
+
     ChartsModule
+
   ],
   declarations: [WettkampfComponent, StatistikFilterComponent]
 })

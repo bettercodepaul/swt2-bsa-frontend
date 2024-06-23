@@ -50,7 +50,9 @@ import {
 import {
   WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
+
 import {ChartConfiguration, ChartOptions, ChartType} from 'chart.js';
+
 
 interface Wettkampftag {
   id: number;
@@ -108,6 +110,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     {id: 2, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION3.LABEL'},
     {id: 3, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION4.LABEL'}
   ];
+
   // attributes for the line chart
   public showLineChart = false;
   private lineChartMannschaftTabellenverlaufData: Array<number> = [];
@@ -162,6 +165,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public lineChartType: ChartType = 'line';
   public lineChartLegend = true;
   public lineChartData = [];
+
+
   /**
    * Enthält alle Veranstaltungen aus dem ausgewählten Sportjahr
    * {@link this.filterVeranstaltungenBySportjahr}
@@ -688,6 +693,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
     this.loadingData = false;
   }
+
   private cleanLineChart() {
     this.showLineChart = false;
     this.lineChartData  = [
@@ -705,11 +711,17 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   private async clearAllStatistikTables() {
   // make everything invisible
     this.cleanLineChart();
+
+  private async clearAllStatistikTables() {
+  // make everything invisible
+
     document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
   public async onSelectSchuetzenStatistik() {
+
     this.cleanLineChart();
+
     document.getElementById('selectWettkampftag').classList.add('hidden');
     this.selectedWettkampfTag =  this.alleTage[0];
     if (this.selectedStatistik === 'einzelstatistik') {
@@ -736,7 +748,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectMannschaftStatistik() {
+
     this.cleanLineChart();
+
     if (this.selectedMannschaftStatistik === 'aktuelle_mannschaft') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT.TITEL';
       await this.loadErgebnisForMannschaft(this.currentMannschaft);
@@ -793,6 +807,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     };
     await this.clearAllStatistikTables();
     // create the x axes of the line chart depending on the current Veranstaltung Sportjahr
+
     this.lineChartLabels = Array((this.currentVeranstaltung.sportjahr - 4).toString(), (this.currentVeranstaltung.sportjahr - 3).toString(),
       (this.currentVeranstaltung.sportjahr - 2).toString(), (this.currentVeranstaltung.sportjahr - 1).toString(),
       (this.currentVeranstaltung.sportjahr).toString());
@@ -820,6 +835,19 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         fill: false
       }
     ];
+
+    this.loadingData = true;
+    this.currentConfig = this.mannschafttabellenverlaufConfig;
+    this.rows = [];
+    this.isStatistikAllowed = true;
+
+    await this.loadAllVeranstaltungenOfLiga(veranstaltung);
+
+    if (this.loadingData) {
+      await this.loadMannschaftTabellenverlaufSportjahre(this.filteredVeranstaltungenOfLiga);
+    }
+
+
     this.loadingData = false;
   }
   // for every veranstaltung the ligatabelle gets fetched
@@ -851,6 +879,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       if (tabellenplatzVerein !== null) {
         switch (this.currentVeranstaltung.sportjahr - veranstaltung.sportjahr) {
           case 4:
+
             this.lineChartMannschaftTabellenverlaufData[0] = tabellenplatzVerein;
             this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr1 = tabellenplatzVerein + '.';
             break;
@@ -868,6 +897,20 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
             break;
           case 0:
             this.lineChartMannschaftTabellenverlaufData[4] = tabellenplatzVerein;
+
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr1 = tabellenplatzVerein + '.';
+            break;
+          case 3:
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr2 = tabellenplatzVerein + '.';
+            break;
+          case 2:
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr3 = tabellenplatzVerein + '.';
+            break;
+          case 1:
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr4 = tabellenplatzVerein + '.';
+            break;
+          case 0:
+
             this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr5 = tabellenplatzVerein + '.';
             break;
         }
