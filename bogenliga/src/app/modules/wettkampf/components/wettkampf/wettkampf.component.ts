@@ -711,10 +711,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   private async clearAllStatistikTables() {
   // make everything invisible
     this.cleanLineChart();
-
-  private async clearAllStatistikTables() {
-  // make everything invisible
-
     document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
