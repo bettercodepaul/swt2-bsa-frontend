@@ -195,8 +195,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
   loadUnassignedTeams(): void {
-    // this.mannschaftDataProvider.findAllByVeranstaltungsId(null)
-    this.mannschaftDataProvider.findAllByVeranstaltungsId(1001) // ^muss auf die VeranstaltungsId der Warteschlange gesetzt werden
+    this.mannschaftDataProvider.findAllByWarteschlangeId()
+    //this.mannschaftDataProvider.findAllByVeranstaltungsId(1001) // ^muss auf die VeranstaltungsId der Warteschlange gesetzt werden
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
           if (response.result === RequestResult.SUCCESS) {
             this.allTeams = response.payload;
