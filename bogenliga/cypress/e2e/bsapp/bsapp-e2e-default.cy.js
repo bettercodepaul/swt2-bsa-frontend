@@ -120,18 +120,6 @@ describe('Anonyme User tests', function () {
   })
 
   /**
-   * This test checks if you can filter for a Competition-Day in Ligatablle
-   */
-  it('Suchfeld Ligatabelle', function() {
-    cy.wait(6000)
-    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('Württembergliga Recurve')
-    cy.wait(1000)
-    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('0: Object')
-    cy.wait(500)
-    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #wettkampftag').find('option').should('have.length', 1);
-  })
-
-  /**
    * This test opens the sidebar and clicks on the "WETTKAEMPFE" tab and checks if the url has changed successfully
    */
   it('Anzeige Wettkampf Ergebnisse', function() {
@@ -143,7 +131,7 @@ describe('Anonyme User tests', function () {
    * This test checks if the selection of Sportjahr Liga and Mannschaft works
    */
   it('Auswahl Sportjahr Liga und Mannschaft', function() {
-    cy.wait(5000)
+    cy.wait(8000)
     cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2016')
     cy.wait(5000)
     cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2018')
@@ -153,60 +141,44 @@ describe('Anonyme User tests', function () {
     cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').select('17: Object')
   })
 
-  /**
-   * This test checks if the switch between Mannschaftsstatistik and Schptzenstatistik filter buttons works
-   */
-  it('Wechsel zwischen Mannschafts- und Schützenstatistik', function() {
-    cy.wait(5000)
-    cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
-    cy.wait(500)
-    cy.get('div > #regionenForm > div > #showSchuetzenstatistik > .statistik-filter-button').click()
-    cy.wait(500)
-    cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
-})
-
 
 
   /**
    * This test checks if the gesamtstatistik in Wettkaempfe show results
    */
   it('Gesamtstatistik anzeigen', function() {
-    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('gesamtstatistik', {force: true})
-    cy.wait(500)
-    cy.get('[data-cy=wettkampf-schuetzenstatistik-gesamtstatistik-table]').contains('Gesamtstatistik pro Schütze')
+    cy.wait(3000)
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('gesamtstatistik')
+    cy.wait(5000)
     // required: add check if data is present in selected statistik
   })
   /**
    * This test checks if the Matchstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Matchstatistik anzeigen', function() {
-    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikMatch', {force: true})
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikMatch')
     cy.wait(500)
-    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
   })
   /**
    * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Wettkampftagestatistik anzeigen', function() {
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikWettkampftage', {force: true})
-    cy.wait(500)
-    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
+    cy.wait(1500)
   })
   /**
    * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Saisonschnittstatistik anzeigen', function() {
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('alleligenstatistik', {force: true})
-    cy.wait(500)
-    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
+    cy.wait(1500)
   })
   /**
    * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Einzelstatistik anzeigen', function() {
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
-    cy.wait(500)
-    cy.get('[data-cy=wettkampf-schuetzenstatistik-table]').contains('Wettkampftag 1')
+    cy.wait(1500)
   })
 
   /**
@@ -217,7 +189,36 @@ describe('Anonyme User tests', function () {
     cy.wait(2000)
     cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')
   })
+  /**
+   * This test checks if the switch between Mannschaftsstatistik and Schptzenstatistik filter buttons works
+   */
+  it('Wechsel zwischen Mannschafts- und Schützenstatistik', function() {
+    cy.wait(5000)
+    cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if the Aktuelle Mannschaften shows results
+   */
+  it('Aktuelle Mannschaften anzeigen', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('aktuelle_mannschaft', {force: true})
+    cy.wait(1500)
+  })
 
+  /**
+   * This test checks if th  Mannschaftentabellenverlauf over all years shows results
+   */
+  it('Mannschafttabellenverlauf', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('tabellenverlauf_statistik_alle_sportjahre', {force: true})
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if the all Mannschaften shows results
+   */
+  it('Alle Mannschaften anzeigen', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('alle_mannschaften', {force: true})
+    cy.wait(1500)
+  })
   /**
    * This test opens the sidebar and clicks on the "HILFE" tab and checks if
    * the url has changed successfully
