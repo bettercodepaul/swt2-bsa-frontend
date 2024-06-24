@@ -261,13 +261,14 @@
           <bla-data-table id="row00"
                           [loading]="loadingData"
                           [config]="currentConfig"
-                          [rows]="rows[currentWettkampftag]">
+                          [rows]="rows[currentWettkampftag]"
+          data-cy="tableStatistik">
           </bla-data-table>
         </div>
       </div>
-      <div [hidden]="!showLineChart" style="width: 40%; height: 7%;">
+      <div [hidden]="!showLineChart">
         <h3>{{currentStatistikTitle | translate}}</h3>
-        <div>
+        <div class="chart-container">
           <canvas
             baseChart
             [datasets]="lineChartData"

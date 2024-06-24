@@ -299,15 +299,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       // if there wasn't a problem with the REST-calls
       if (this.loadingData) {
         // this decides whether a wettkampf had 5, 6 or 7 matches, depending on the count the configuration will be adjusted
-        if (this.rows.some((wettkampftag) => wettkampftag.some((wettkampf) => {
-          const statistics = wettkampf.payload as SchuetzenstatistikMatchDTO;
-          return statistics.match7 !== null;
-        }))) {
+        if (this.mannschaften.length === 8) {
           this.currentConfig = WETTKAMPF_TABLE_MATCH_CONFIG;
-        } else if (this.rows.some((wettkampftag) => wettkampftag.some((wettkampf) => {
-          const statistics = wettkampf.payload as SchuetzenstatistikMatchDTO;
-          return statistics.match6 !== null;
-        }))) {
+        } else if (this.mannschaften.length === 4) {
           this.currentConfig = WETTKAMPF_TABLE_SECHS_MATCHES_CONFIG;
         } else {
           this.currentConfig = WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG;
@@ -715,9 +709,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
   public async onSelectSchuetzenStatistik() {
-
+    this.isStatistikAllowed = true;
     this.cleanLineChart();
-
     document.getElementById('selectWettkampftag').classList.add('hidden');
     this.selectedWettkampfTag =  this.alleTage[0];
     if (this.selectedStatistik === 'einzelstatistik') {
@@ -744,7 +737,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectMannschaftStatistik() {
-
+    this.isStatistikAllowed = true;
     this.cleanLineChart();
 
     if (this.selectedMannschaftStatistik === 'aktuelle_mannschaft') {
@@ -770,8 +763,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     // prepare array for the tabellenplatzierungen over the sportjahre
     this.mannschaftTabellenverlaufSportjahre = new MannschaftTabellenverlaufSportjahre();
     this.isStatistikAllowed = false;
-    // create config for the table on frontend
-    this.mannschafttabellenverlaufConfig = {
+    // create config for the table on frontend, not required if you use the line chart
+   /* this.mannschafttabellenverlaufConfig = {
       actions: {actionTypes: []},
       columns: [
         {
@@ -801,6 +794,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         },
       ],
     };
+    */
     await this.clearAllStatistikTables();
     // create the x axes of the line chart depending on the current Veranstaltung Sportjahr
 
@@ -831,18 +825,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         fill: false
       }
     ];
-
-    this.loadingData = true;
-    this.currentConfig = this.mannschafttabellenverlaufConfig;
-    this.rows = [];
-    this.isStatistikAllowed = true;
-
-    await this.loadAllVeranstaltungenOfLiga(veranstaltung);
-
-    if (this.loadingData) {
-      await this.loadMannschaftTabellenverlaufSportjahre(this.filteredVeranstaltungenOfLiga);
-    }
-
 
     this.loadingData = false;
   }
