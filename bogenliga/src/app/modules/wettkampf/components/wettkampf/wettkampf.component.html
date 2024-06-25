@@ -235,7 +235,7 @@
                     [(ngModel)]="selectedWettkampfTag"
                     [disabled]="loadingData"
                     (ngModelChange)="onSelectWettkampfTag()">
-              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of this.wettkampftage"> {{wettkampftag.name | translate}}</option>
+              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of wettkampftage"> {{wettkampftag.name | translate}}</option>
             </select>
           </div>
         </div>

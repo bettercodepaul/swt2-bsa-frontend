@@ -704,6 +704,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   private async clearAllStatistikTables() {
   // make everything invisible
+    this.currentWettkampftag = 0;
     this.cleanLineChart();
     document.getElementById('einzeldruckButton').classList.add('hidden');
     document.getElementById('gesamtdruckButton').classList.add('hidden');
@@ -717,18 +718,15 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_MATCH.TITEL';
       await this.loadEinzelstatistik(this.currentMannschaft);
       document.getElementById('selectWettkampftag').classList.remove('hidden');
-      this.onSelectWettkampfTag();
     } else if (this.selectedStatistik === 'gesamtstatistik') {
       this.currentStatistikTitle =  'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
       await this.loadGesamtstatistik(this.currentMannschaft);
     } else if (this.selectedStatistik === 'alleligenstatistik') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK_ALLE_LIGEN.TITEL';
       await this.loadAlleLigenProSaisonStatistik(this.currentMannschaft);
-      this.onSelectWettkampfTag();
     } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_WETTKAMPF.TITEL';
       await this.loadSchuetzenstatistikMatch(this.currentMannschaft);
-      this.onSelectWettkampfTag();
       document.getElementById('selectWettkampftag').classList.remove('hidden');
     } else if (this.selectedStatistik === 'schuetzenstatistikWettkampftage') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_VERANSTALTUNG.TITEL';
