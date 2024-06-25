@@ -23,7 +23,7 @@ describe('Wkdurchfuehrung tests', function () {
 
     cy.wait(2000);
 
-    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
 
     cy.get('[data-cy=vollbildAnsichtButton]').click();
@@ -44,17 +44,17 @@ describe('Wkdurchfuehrung tests', function () {
     cy.get('.header-container .veranstaltung-header')
       .invoke('text')
       .as('selectedVeranstaltung');
-    cy.get('.header-container .wettkampftag-header')
+    cy.get('.wettkampftag-header')
       .invoke('text')
-      .as('selectedWettkampftag');
+      .as('selectedWettkampftagURL');
     cy.get('[data-cy=table-fullscreen]').should('exist');
 
     cy.get('[data-cy=table-fullscreen]').within(() => {
-      cy.contains('Match Anzahl').should('exist');
       cy.contains('Tabellenplatz').should('exist');
+      cy.contains('Geschossene Match').should('exist');
       cy.contains('Mannschaft').should('exist');
       cy.contains('Satzpunktdifferenz').should('exist');
-      cy.contains('Satzpunkte').should('exist');
+      cy.contains('Matchpunkte').should('exist');
     });
 
     cy.get('bla-data-table tbody tr').should('have.length.greaterThan', 0);
@@ -102,7 +102,7 @@ describe('Wkdurchfuehrung tests', function () {
    */
   it('Anzeige Action-Buttons', () => {
     cy.expandWettkampfTage()
-    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').should('be.visible')
   })
 
@@ -111,7 +111,7 @@ describe('Wkdurchfuehrung tests', function () {
    */
   it('Einklappen Tabelle auf Button-Click', () => {
     cy.expandWettkampfTage()
-    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
     cy.wait(1000)
     cy.get('.expandContainer > .expand-container > .expand-content').should('not.be.visible')
@@ -122,15 +122,11 @@ describe('Wkdurchfuehrung tests', function () {
    */
   it('Anzeigen Druckdaten auf Button-Click', () => {
     cy.expandWettkampfTage()
-    cy.get('#payload-id-2000 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
+    cy.get('#payload-id-30 > #undefinedActions > .action_icon > [data-cy="TABLE.ACTIONS.VIEW"] > ' +
       '[data-cy="actionButton"]').click()
     cy.wait(1000)
     cy.get('[ng-reflect-header-text="Druckdaten"] > .expand-container > .expand-content').should('be.visible')
   })
-
-
-
-
 
 })
 
@@ -156,8 +152,10 @@ describe("offline-fähigkeit", {browser: "!firefox"}, () => {
     cy.get('[data-cy=login-als-admin-button]').click()
     cy.url().should('include', '#/home')
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
-    cy.url().should('include', '#/wkdurchfuehrung')
+    cy.visit(`/#/wkdurchfuehrung/`);
+    cy.url().should('include', '#/wkdurchfuehrung/')
 
+    cy.expandWettkampfTage()
     cy.wait(2000)
     cy.get('[data-cy="wkdurchfuehrung-btn-offlinegehen"]').click()
 
@@ -168,6 +166,7 @@ describe("offline-fähigkeit", {browser: "!firefox"}, () => {
   })
 
   it('Offline wkdurchfuehrung Daten anzeigen', () => {
+    cy.expandWettkampfTage()
     cy.get('[data-cy=sidebar-ligatabelle-button]').click()
     cy.url().should('include', '#/ligatabelle')
     cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
@@ -177,11 +176,13 @@ describe("offline-fähigkeit", {browser: "!firefox"}, () => {
   })
 
   it('Offline Veranstaltung Tabelle anzeigen', () =>{
+    cy.expandWettkampfTage()
     cy.get('[data-cy=wkduchfuehrung-veranstaltung-list]')
       .find('select').find('option').should('be.visible')
   })
 
   it('Offline Wettkampftage Tabelle anzeigen', () =>{
+    cy.expandWettkampfTage()
     cy.get('[data-cy=wkdurchfuehrung-wettkampftage-list]')
       .find('[data-cy="TABLE.ACTIONS.VIEW"]').should('be.visible')
   })
@@ -192,6 +193,7 @@ describe("offline-fähigkeit", {browser: "!firefox"}, () => {
   })
 
   it('Zu Offline Match Seite wechseln', () =>{
+    cy.expandWettkampfTage()
     cy.get('[data-cy="wkdurchfuehrung-match-list"]')
       .find('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.url().should('include', '#/wkdurchfuehrung/schusszettel')
