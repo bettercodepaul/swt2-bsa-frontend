@@ -143,7 +143,7 @@ Cypress.Commands.add('disbandModalIfShown', () => {
 Cypress.Commands.add('expandWettkampfTage', () => {
   cy.get('[data-cy=sidebar-wkdurchfuehrung-button]').click()
   cy.wait(1000)
-  cy.get('[data-cy="bla-selection-list"]').select(1)
+  cy.get('[data-cy="bla-selection-list"]').select(0)
   cy.wait(1000)
 })
 
