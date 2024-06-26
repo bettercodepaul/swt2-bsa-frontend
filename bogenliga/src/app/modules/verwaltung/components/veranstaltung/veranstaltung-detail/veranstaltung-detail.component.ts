@@ -100,7 +100,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   allTeams: DsbMannschaftDO[] = [];
   unassignedTeams: DsbMannschaftDO[] = [];
   assignedTeams: DsbMannschaftDO[] = [];
-
+  private searchTimeout: any;
 
   public currentWettkampftyp: WettkampftypDO = new WettkampftypDO();
   public allWettkampftyp: Array<WettkampftypDO> = [new WettkampftypDO()];
@@ -196,7 +196,6 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
 
   loadUnassignedTeams(): void {
     this.mannschaftDataProvider.findAllByWarteschlangeId()
-    //this.mannschaftDataProvider.findAllByVeranstaltungsId(1001) // ^muss auf die VeranstaltungsId der Warteschlange gesetzt werden
         .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
           if (response.result === RequestResult.SUCCESS) {
             this.allTeams = response.payload;
@@ -208,6 +207,28 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         .catch(error => {
           console.error('Verbindungsproblem:', error);
         });
+  }
+
+  public onSearch($event: string): void {
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+
+    // Setzen Sie einen neuen Timeout
+    this.searchTimeout = setTimeout(() => {
+      this.mannschaftDataProvider.findAllByName($event)
+          .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
+            if (response.result === RequestResult.SUCCESS) {
+              this.allTeams = response.payload;
+              this.unassignedTeams = this.allTeams.filter(team => !this.assignedTeams.includes(team));
+            } else {
+              console.error('Fehler beim Laden der Mannschaften:', response.result);
+            }
+          })
+          .catch(error => {
+            console.error('Verbindungsproblem:', error);
+          });
+    }, 500);
   }
 
   assignTeamToEvent(team: any): void {

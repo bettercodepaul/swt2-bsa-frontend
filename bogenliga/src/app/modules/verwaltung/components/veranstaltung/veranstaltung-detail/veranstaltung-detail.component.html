@@ -234,15 +234,23 @@
           <table>
             <thead>
             <tr>
-              <th>Teamname</th>
-              <!--<th>Anzahl der Schützen</th> *später für die Anzeige von der Anzahl der Schützen*-->
-              <th>Aktion</th>
+              <th class="teamname-header">
+                <div class="th-content">
+                  <span class="header-text">Teamname</span>
+                  <div class="quicksearch-container">
+                    <bla-quicksearch
+                      class="custom-quicksearch"
+                      (onSearchEntry)="onSearch($event)">
+                    </bla-quicksearch>
+                  </div>
+                </div>
+              </th>
+              <th class="action-header">Aktion</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let team of unassignedTeams; let i = index">
               <td>{{ team.name }}</td>
-              <!--<td>{{ team.nummer }}</td> *später für die Anzeige von der Anzahl der Schützen*-->
               <td>
                 <bla-actionbutton
                   [iconClass]="'plus'"

@@ -96,8 +96,9 @@
              class="col-sm-9">
           <input  class="form-control"
                   data-cy="vereine-mannschaft-detail-mannschaftsveranstaltung"
-                  id="mannschaftVeranstaltung"
-                  name="mannschaftVeranstaltung"
+                  id="mannschaftVeranstaltung_edit"
+                  name="mannschaftVeranstaltung_edit"
+                  placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.PLACEHOLDER' | translate }}"
                   [(ngModel)]="currentVeranstaltung.name"
                   readonly>
           <div class="invalid-feedback">
