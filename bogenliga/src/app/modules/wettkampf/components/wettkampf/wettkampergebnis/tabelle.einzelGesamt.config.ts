@@ -5,7 +5,6 @@ export const WETTKAMPF_TABLE_EINZELGESAMT_CONFIG: TableConfig = {
   // Tabellenspaltenbezeichner in die JSON auslagern
   columns: [
     {
-      width: 80,
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUECKENNUMMER',
       propertyName:   'rueckenNummer',
       sortable: false

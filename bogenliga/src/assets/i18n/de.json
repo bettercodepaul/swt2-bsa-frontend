@@ -97,7 +97,7 @@
       "MATCHPUNKTE": "Matchpunkte",
       "SATZPUNKTE": "Satzpunkte",
       "SATZPUNKTDIFFERENZ": "Satzpunktdifferenz",
-      "MATCHCOUNT": "Match Anzahl",
+      "MATCHCOUNT": "Geschossene Match",
       "HEADER": {
         "VERANSTALTUNG": "Liga",
         "WETTKAMPFTAG_AKT": "Wettkampftag",
@@ -348,7 +348,6 @@
         "LABEL": "Wettkampftag 4"
       }
     },
-
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle",
       "LIGATABELLE_VORBEREITUNG": "Ligatabelle Vorbereitung",
@@ -416,6 +415,9 @@
       "DROPDOWN_MANNSCHAFTSTATISTIK": {
         "OPTION3": {
           "LABEL": "Mannschaftstabellenverlauf über Sportjahre hinweg"
+        },
+        "OPTION4": {
+          "LABEL": "Mannschaftstabellenverlauf über eine Saison hinweg"
         }
       },
       "DROPDOWN": {
@@ -433,10 +435,19 @@
         },
         "OPTION5": {
           "LABEL": "Saisonschnittstatistik"
+        },
+        "AKTUELLE_MANNSCHAFT": {
+          "LABEL": "Aktuelle Mannschaft"
+        },
+        "ALLE_MANNSCHAFTEN": {
+          "LABEL": "Alle Mannschaften"
         }
       },
       "TABLE_NAME": {
         "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft der letzten 5 Jahre"
+      },
+      "TABLE_NAME2": {
+        "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft innerhalb einer Saison "
       },
       "FORM": {
         "MANNSCHAFT_NAME": {
@@ -468,8 +479,8 @@
           "SATZPUNKTE": "Satzpunkte",
           "MATCHPUNKTE": "Matchpunkte",
           "SCHUETZE": "Name des Schützen",
-          "DURCHSCHPFEILWERTMATCH": "Pfeilschnitt pro Match",
-          "DURCHSCHPFEILWERTJAHR": "Pfeilschnitt pro Jahr",
+          "DURCHSCHPFEILWERTMATCH": "⌀ Pfeilwert pro Match",
+          "DURCHSCHPFEILWERTJAHR": "⌀ Pfeilwert pro Jahr",
           "RUECKENNUMMER": "Rückennr",
           "MATCH1": "⌀ Match 1",
           "MATCH2": "⌀ Match 2",
@@ -478,13 +489,11 @@
           "MATCH5": "⌀ Match 5",
           "MATCH6": "⌀ Match 6",
           "MATCH7": "⌀ Match 7",
-          "SCHNITTWETTKAMPFTAGE1": "⌀ Wettkampftage 1",
-          "SCHNITTWETTKAMPFTAGE2": "⌀ Wettkampftage 2",
-          "SCHNITTWETTKAMPFTAGE3": "⌀ Wettkampftage 3",
-          "SCHNITTWETTKAMPFTAGE4": "⌀ Wettkampftage 4",
-          "SAISONSCHNITT": "Saisonschnitt",
-          "SCHNITTSYMBOL": "⌀ ",
-          "SCHNITT_JAHRE": "⌀ Jahre"
+          "SCHNITTWETTKAMPFTAGE1": "⌀ Tag 1",
+          "SCHNITTWETTKAMPFTAGE2": "⌀ Tag 2",
+          "SCHNITTWETTKAMPFTAGE3": "⌀ Tag 3",
+          "SCHNITTWETTKAMPFTAGE4": "⌀ Tag 4",
+          "SAISONSCHNITT": "⌀ Saison"
         }
       }
     }

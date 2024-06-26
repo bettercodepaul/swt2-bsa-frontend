@@ -40,7 +40,7 @@
   max-height: 700px; /* max height */
   max-width: 1700px; /* max width */
   min-height: 150px; /* min height */
-  min-width: 200px; /* min width */
+  min-width: 800px; /* min width */
 }
 
 table {
@@ -61,4 +61,40 @@ th, td {
   margin-top: 10px;
   padding: 8px;
   text-align: left;
+}
+
+th.teamname-header {
+  position: relative;
+  width: 60%;
+}
+
+th.action-header {
+  width: 40%;
+}
+
+.th-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-text {
+  position: relative;
+  z-index: 2;
+}
+
+.quicksearch-container {
+  position: absolute;
+  margin: auto 5px;
+  margin-top: 7.9px !important;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.custom-quicksearch {
+  display: inline-block;
+  width: auto;
+  min-width: 800px !important;
 }

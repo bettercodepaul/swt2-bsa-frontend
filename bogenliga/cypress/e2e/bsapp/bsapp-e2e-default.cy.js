@@ -120,6 +120,18 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * This test checks if you can filter for a Competition-Day in Ligatablle
+   */
+  it('Wettkampftagauswahl Ligatabelle', function() {
+    cy.wait(6000)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('Württembergliga Recurve')
+    cy.wait(1000)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('0: Object')
+    cy.wait(500)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #wettkampftag').find('option').should('have.length', 4);
+  })
+
+  /**
    * This test opens the sidebar and clicks on the "WETTKAEMPFE" tab and checks if the url has changed successfully
    */
   it('Anzeige Wettkampf Ergebnisse', function() {
@@ -190,7 +202,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
    */
-  it('Filter for Competition-Day in Wettkampfergebnisse', function() {
+  it('Wettkampftagauswahl Wettkampfergebnisse', function() {
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
     cy.wait(2000)
     cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')
@@ -212,10 +224,17 @@ describe('Anonyme User tests', function () {
   })
 
   /**
-   * This test checks if th  Mannschaftentabellenverlauf over all years shows results
+   * This test checks if the  Mannschaftentabellenverlauf over all years shows results
    */
   it('Mannschafttabellenverlauf', function() {
     cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('tabellenverlauf_statistik_alle_sportjahre', {force: true})
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if the  Mannschaftentabellenverlauf over veranstaltung shows results
+   */
+  it('Mannschafttabellenverlauf', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('tabellenverlauf_statistik_wettkampftage', {force: true})
     cy.wait(1500)
   })
   /**
@@ -397,7 +416,8 @@ describe('Admin User tests', function() {
     cy.wait(1000)
     cy.contains('tr', 'vorname').find('[data-cy="TABLE.ACTIONS.VIEW"]').click();
     cy.wait(1000)
-    cy.url().should('include', '/info')
+    cy.get('[data-cy=detail-beitrittsdatum-feld]').invoke('attr', 'readonly')
+      .should('exist');
     cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder');
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
   })
@@ -686,12 +706,8 @@ describe('Admin User tests', function() {
       if (!body.text().includes('69')) {
         cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
         cy.wait(1000)
-        //cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
         cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
-        cy.wait(15000)
-        cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-        cy.wait(6000)
-        //cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
+        cy.wait(1000)
         cy.get('#mannschaftSaveButton').click()
         cy.wait(6000)
         cy.get('#OKBtn1').click()
@@ -716,8 +732,6 @@ describe('Admin User tests', function() {
     cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().clear().type('76')
     cy.wait(9000)
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-    cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-update-button]').click()
     cy.wait(9000)
     cy.get('#OKBtn1').click()
@@ -741,6 +755,16 @@ describe('Admin User tests', function() {
     cy.get('button.action-btn-primary:contains("Ja")').click()
     cy.wait(500)
     cy.get('tbody').should('not.contain.text', '76')
+    cy.wait(1000)
+    cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
+    cy.wait(1000)
+    cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
+    cy.wait(1000)
+    cy.get('#mannschaftSaveButton').click()
+    cy.wait(6000)
+    cy.get('#OKBtn1').click()
+    cy.wait(1000)
+    cy.contains('69')
   })
 
   /**
@@ -993,6 +1017,43 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * This test checks all functions of the queue
+   */
+
+    it('Filtert Teams basierend auf Suchbegriff', () => {
+      cy.viewport(2235, 1095)
+
+      cy.get('.quicksearch-container > .custom-quicksearch > .quicksearch > .input-group > #undefined').click()
+
+      cy.get('.quicksearch-container > .custom-quicksearch > .quicksearch > .input-group > #undefined').type('69')
+      cy.wait(5000)
+      cy.get('tbody > tr > td > bla-actionbutton > #undefined').click()
+      cy.wait(5000)
+      cy.get('.modal-dialog > .modal-content > .modal-footer > #OKBtn1 > #OKBtn1').click()
+      cy.wait(5000)
+      cy.get('#undefined > tbody > #payload-id-1217 > #name-1217 > span').click()
+
+      /*// Überprüfen, ob die Tabelle sichtbar ist
+      cy.get('h2').contains('Mannschaften ohne Veranstaltung').should('be.visible');
+
+      // Eingabe eines Suchbegriffs und Auslösen der Suche
+      const searchTerm = '69';
+      cy.get('.custom-quicksearch input').type(searchTerm).should('have.value', searchTerm);
+
+      // Warten auf die API-Antwort nach der Suche
+      cy.wait(1000);
+
+      // Überprüfen, ob die Tabelle der Teams aktualisiert wurde
+      cy.get('tbody tr').should('have.length.greaterThan', 0); // Stellt sicher, dass mindestens ein Ergebnis angezeigt wird
+
+      // Optional: Überprüfen, ob die angezeigten Ergebnisse den Suchkriterien entsprechen
+      cy.get('tbody tr').each(($row) => {
+        cy.wrap($row).find('td').eq(0).should('contain', searchTerm); // Überprüft, ob der Teamname im ersten <td> enthalten ist
+      });
+    });*/
+  })
+
+  /**
    * This test creates an Platzhalter for the Veranstaltung
    */
 
@@ -1115,22 +1176,6 @@ describe('Ligadetailseite', function(){
     cy.get('[id="goToLigadetailsButton"]').click();
     cy.url().should('include', '#/home/' + randomID)
   })
-
-  it('Neue unterste Liga hinzufuegen',function (){
-
-
-    cy.visit('http://localhost:4200/#/verwaltung/liga')
-
-    cy.get('bla-navbar > #navbar > #navbar-right > .nav-link > .btn').click()
-
-    cy.get('bla-alert > #undefined > p:nth-child(7) > bla-button > #undefined').click()
-
-    cy.get('.sidebar-link > div > .ng-fa-icon > .fa-cogs > path').click()
-
-    cy.get('.navigation-card > .tooltip-navigation-card > .card-body > .button-container > .btn').click()
-
-  })
-
 })
 
 describe('Ligaleiter User Tests', function(){
@@ -1234,6 +1279,44 @@ describe('Ligaleiter User Tests', function(){
           expect(textReadFromEditor).to.equal(text)})
 
     })
+
+  it('Neue unterste Liga hinzufuegen',function (){
+
+    // Login Ligaleiter
+
+    cy.visit('http://localhost:4200/#/user/login')
+    cy.wait(2000);
+
+    cy.contains('Login für Team Ligaleiter').click();
+    cy.wait(2000);
+
+    cy.visit('http://localhost:4200/#/verwaltung/liga')
+    cy.wait(12000)
+
+    cy.get('#payload-id-1127 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').click()
+
+    cy.wait(13000)
+
+    cy.get('#ligaForm > .form-group > .col-sm-9 > bla-actionbutton:nth-child(3) > #undefined').click()
+
+    cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').click()
+
+    cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').type('cypress 1')
+
+    cy.wait(1000)
+
+    cy.url().should('include', '#/verwaltung/liga/add')
+
+    // auf Profil klicken
+    cy.get('.fa-user-circle').click();
+    // auf ausloggen klicken
+    cy.contains('Logout').click();
+    cy.wait(2000);
+
+    //Ligaleiter wieder ausgelogged
+
+  })
+
 
   }
 )

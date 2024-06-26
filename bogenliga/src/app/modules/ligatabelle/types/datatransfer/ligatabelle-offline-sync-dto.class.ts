@@ -15,6 +15,7 @@ export class LigatabelleOfflineSyncDto implements DataTransferObject {
   satzpktDifferenz: number;
   sortierung: number;
   tabellenplatz: number;
+  matchCount: number;
 
   static copyFrom(optional: {
     veranstaltungId?: number,
@@ -30,6 +31,7 @@ export class LigatabelleOfflineSyncDto implements DataTransferObject {
     satzpktDifferenz?: number,
     sortierung?: number,
     tabellenplatz?: number,
+    matchCount?: number
   } = {}): LigatabelleOfflineSyncDto {
     const copy = new LigatabelleOfflineSyncDto();
 
@@ -46,6 +48,7 @@ export class LigatabelleOfflineSyncDto implements DataTransferObject {
     copy.satzpktDifferenz = optional.satzpktDifferenz;
     copy.sortierung = optional.sortierung;
     copy.tabellenplatz = optional.tabellenplatz;
+    copy.matchCount = optional.matchCount;
     return copy;
   }
 }

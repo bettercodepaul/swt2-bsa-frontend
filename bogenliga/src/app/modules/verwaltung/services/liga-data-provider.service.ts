@@ -42,14 +42,14 @@ export class LigaDataProviderService  extends DataProviderService {
     });
   }
 
-  public findByLowest(): Promise<BogenligaResponse<LigaDO[]>> {
+  public findByLowest(id:number): Promise<BogenligaResponse<LigaDO>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('lowest/').build())
-          .then((data: VersionedDataTransferObject[]) => {
-            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('lowest').path(id).build())
+          .then((data: VersionedDataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromPayload(data)});
           }, (error: HttpErrorResponse) => {
 
             if (error.status === 0) {

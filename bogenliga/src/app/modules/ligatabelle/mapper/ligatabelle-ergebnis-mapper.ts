@@ -46,6 +46,7 @@ export function toDOFromOffline(ligatabelle: OfflineLigatabelle): LigatabelleErg
   ligatabelleErgebnisDO.satzpkt_differenz = ligatabelle.satzpktDifferenz;
   ligatabelleErgebnisDO.tabellenplatz = ligatabelle.tabellenplatz;
   ligatabelleErgebnisDO.sortierung = ligatabelle.sortierung;
+  ligatabelleErgebnisDO.matchCount = ligatabelle.matchCount;
 
   return ligatabelleErgebnisDO;
 }

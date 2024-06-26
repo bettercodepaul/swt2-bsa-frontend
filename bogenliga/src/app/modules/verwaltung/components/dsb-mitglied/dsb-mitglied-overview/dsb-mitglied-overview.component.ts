@@ -63,7 +63,8 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
-    this.navigateToInfoDialog(versionedDataObject);
+    //this.navigateToInfoDialog(versionedDataObject);
+    this.navigateToViewDialog(versionedDataObject)
 
   }
 
@@ -167,8 +168,13 @@ export class DsbMitgliedOverviewComponent extends CommonComponentDirective imple
     this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + versionedDataObject.id);
   }
 
-  private navigateToInfoDialog(versionedDataObject: VersionedDataObject) {
-    this.router.navigateByUrl('/verwaltung/dsbmitglieder/' + versionedDataObject.id + '/info');
+
+  private navigateToViewDialog(versionedDataObject: VersionedDataObject) {
+    this.router.navigate(
+      ['/verwaltung/dsbmitglieder/' + versionedDataObject.id],
+      { state: { isReadOnly: true } } // set site in read-only mode
+    );
+    //console.log('Navigating with state:', { isReadOnly: true });
   }
 
   private handleLoadTableRowsFailure(response: BogenligaResponse<DsbMitgliedDTO[]>): void {

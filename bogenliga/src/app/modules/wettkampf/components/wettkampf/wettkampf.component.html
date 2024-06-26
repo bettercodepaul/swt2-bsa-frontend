@@ -48,7 +48,7 @@
               name="VeranstaltungName"
               [(ngModel)]="currentVeranstaltung"
               (ngModelChange)="onSelect()"
-              [disabled]="loadingData"
+              [disabled]="loadingData || veranstaltungen.length === 0"
             >
               <option *ngFor="let veranstaltung of veranstaltungen" [ngValue]="veranstaltung"> {{veranstaltung.name}} </option>
             </select>
@@ -68,7 +68,7 @@
                     id="vereine"
                     name="VereinName"
                     [(ngModel)]="currentMannschaft"
-                    [disabled]="loadingData"
+                    [disabled]="loadingData || mannschaften.length === 0"
                     (ngModelChange)="onSelectVerein()">
               <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
             </select>
@@ -216,6 +216,7 @@
                     (ngModelChange)="onSelectMannschaftStatistik()">
               <option value="aktuelle_mannschaft"> Aktuelle Mannschaft "{{currentMannschaft != null ? currentMannschaft.name : "Keine Veranstaltungen verfügbar"}}" </option>
               <option value="alle_mannschaften"> Alle Mannschaften </option>
+              <option value="tabellenverlauf_statistik_wettkampftage">{{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN_MANNSCHAFTSTATISTIK.OPTION4.LABEL'| translate}}</option>
               <option value="tabellenverlauf_statistik_alle_sportjahre">{{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN_MANNSCHAFTSTATISTIK.OPTION3.LABEL'| translate}}</option>
             </select>
             <div class="invalid-feedback">

@@ -1,7 +1,6 @@
 export * from './verwaltung/verwaltung.component';
 export * from './dsb-mitglied/dsb-mitglied-overview/dsb-mitglied-overview.component';
 export * from './dsb-mitglied/dsb-mitglied-detail/dsb-mitglied-detail.component';
-export * from './dsb-mitglied/dsb-mitglied-info/dsb-mitglied-info.component';
 export * from './user/user-overview/user-overview.component';
 export * from './user/user-neu/user-neu.component';
 export * from './user/user-detail/user-detail.component';
