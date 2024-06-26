@@ -413,6 +413,9 @@
       "DROPDOWN_MANNSCHAFTSTATISTIK": {
         "OPTION3": {
           "LABEL": "Mannschaftstabellenverlauf über Sportjahre hinweg"
+        },
+        "OPTION4": {
+          "LABEL": "Mannschaftstabellenverlauf über eine Saison hinweg"
         }
       },
       "DROPDOWN": {
@@ -434,6 +437,9 @@
       },
       "TABLE_NAME": {
         "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft der letzten 5 Jahre"
+      },
+      "TABLE_NAME2": {
+        "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft innerhalb einer Saison "
       },
       "FORM": {
         "MANNSCHAFT_NAME": {
