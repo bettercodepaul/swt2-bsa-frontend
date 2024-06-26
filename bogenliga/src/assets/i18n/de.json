@@ -359,6 +359,21 @@
     "SCHUETZEN_STATISTIK_ALLE_LIGEN": {
       "TITEL": "Saisonschnitte pro Schütze"
     },
+    "SCHUETZENSTATISTIK_MATCH": {
+      "TITEL": "Schusswerte der Matches pro Schütze"
+    },
+    "SCHUETZENSTATISTIK_WETTKAMPF": {
+      "TITEL": "Matchschnitte pro Schütze"
+    },
+    "SCHUETZENSTATISTIK_VERANSTALTUNG": {
+      "TITEL": "Wettkampftagschnitte pro Schütze"
+    },
+    "MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT": {
+      "TITEL": "Statistik der aktuellen Mannschaft"
+    },
+    "MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN": {
+      "TITEL": "Statistik aller Mannschaften"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
       "HEADING": {
@@ -394,6 +409,11 @@
           "LABEL": "Gesamtstatistik drucken"
         }
       },
+      "DROPDOWN_MANNSCHAFTSTATISTIK": {
+        "OPTION3": {
+          "LABEL": "Mannschaftstabellenverlauf über Sportjahre hinweg"
+        }
+      },
       "DROPDOWN": {
         "OPTION1": {
           "LABEL": "Gesamtstatistik"
@@ -402,7 +422,7 @@
           "LABEL": "Einzelstatistik"
         },
         "OPTION3": {
-          "LABEL": "Matchstatistik"
+          "LABEL": "Wettkampfstatistik"
         },
         "OPTION4": {
           "LABEL": "Wettkampftagestatistik"
@@ -416,6 +436,9 @@
         "ALLE_MANNSCHAFTEN": {
           "LABEL": "Alle Mannschaften"
         }
+      },
+      "TABLE_NAME": {
+        "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft der letzten 5 Jahre"
       },
       "FORM": {
         "MANNSCHAFT_NAME": {
@@ -439,14 +462,14 @@
           "MATCH": "Match",
           "MANNSCHAFT": "Mannschaft",
           "OPPONENT": "Gegner",
-          "SATZ1": "S1",
-          "SATZ2": "S2",
-          "SATZ3": "S3",
-          "SATZ4": "S4",
-          "SATZ5": "S5",
+          "SATZ1": "Satz 1",
+          "SATZ2": "Satz 2",
+          "SATZ3": "Satz 3",
+          "SATZ4": "Satz 4",
+          "SATZ5": "Satz 5",
           "SATZPUNKTE": "Satzpunkte",
           "MATCHPUNKTE": "Matchpunkte",
-          "SCHUETZE": "Schütze",
+          "SCHUETZE": "Name des Schützen",
           "DURCHSCHPFEILWERTMATCH": "⌀ Pfeilwert pro Match",
           "DURCHSCHPFEILWERTJAHR": "⌀ Pfeilwert pro Jahr",
           "RUEKENNUMMER": "Rückennr",
@@ -803,7 +826,7 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Vereinsmitglieder löschen",
-          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_PLATZHALTER_MITGLIED": {
           "TITLE": "Platzhalter Vereinsmitglied löschen",

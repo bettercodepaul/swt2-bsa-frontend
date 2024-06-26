@@ -1,7 +1,7 @@
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
 export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
-
+  actions: {actionTypes: []},
 // Tabellenspaltenbezeichner in die JSON auslagern
   columns: [
     {

@@ -65,7 +65,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   private hasID: boolean;
   private hasVeranstaltung: boolean = true;
 
-  private isDeselected: boolean = false;
+  private isDeselected = false;
   private remainingLigatabelleRequests: number;
 
   private loadedVeranstaltungen: Map<number, VeranstaltungDO[]>;
@@ -80,9 +80,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedYearId: number;
   public selectedItemId: number;
   private aktivesSportjahr: number;
-  public selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
-  private istURLkorrekt: boolean = false;
-  //private wettkampfDataProviderService: WettkampfDataProviderService = WettkampfDataProviderService;
+
+  public selectedYearForVeranstaltung: number; // In der Tabelle selektiertes Sportjahr
+  // private wettkampfDataProviderService: WettkampfDataProviderService = WettkampfDataProviderService;
+
   private currentWettkampftag: number;
   public loadingWettkampftag = false;
   public wettkampf_ids: number[];
@@ -111,7 +112,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   ngOnInit() {
-    if(this.isDeselected == false) {
+    if(this.isDeselected === false) {
       this.loadTableData();
       this.providedID = undefined;
       this.hasID = false;
@@ -120,8 +121,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
-          params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
-          this.selectedYearForVeranstaltung != undefined && this.hasID
+          params[ID_PATH_PARAM] === 'ligaid' ? this.hasID = false : undefined;
+          this.selectedYearForVeranstaltung !== undefined && this.hasID
             ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
         } else {
           console.log('no params at ligatabelle');
@@ -131,7 +132,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     }
   }
 
-  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number){
+  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number) {
     this.veranstaltungsDataProvider.findByLigaIdAndYear(urlLigaID, selectedSportYear)
         .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungFailure(response));

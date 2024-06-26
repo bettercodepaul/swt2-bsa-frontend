@@ -319,6 +319,21 @@
     "SCHUETZEN_STATISTIK_ALLE_LIGEN": {
       "TITEL": "Archer statistics per season"
     },
+    "SCHUETZENSTATISTIK_MATCH": {
+      "TITEL": "Passe-values of matches per shooter in a competition"
+    },
+    "SCHUETZENSTATISTIK_WETTKAMPF": {
+      "TITEL": "Average match score per competitor in a competition"
+    },
+    "SCHUETZENSTATISTIK_VERANSTALTUNG": {
+      "TITEL": "Average competition score per shooter"
+    },
+    "MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT": {
+      "TITEL": "Statistics of the current team"
+    },
+    "MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN": {
+      "TITEL": "Statistics of all teams"
+    },
     "DROPDOWNWETTKAMPFTAGE": {
       "OPTION1": {
         "LABEL": "Competitionday 1"
@@ -365,6 +380,11 @@
           "LABEL": "Print individual statistic"
         }
       },
+      "DROPDOWN_MANNSCHAFTSTATISTIK": {
+        "OPTION3": {
+          "LABEL": "team standings over the years"
+        }
+      },
       "DROPDOWN": {
         "OPTION1": {
           "LABEL": "Complete statistics"
@@ -387,6 +407,9 @@
         "ALLE_MANNSCHAFTEN": {
           "LABEL": "All teams"
         }
+      },
+      "TABLE_NAME": {
+        "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft der letzten 5 Jahre"
       },
       "FORM": {
         "MANNSCHAFT_NAME": {

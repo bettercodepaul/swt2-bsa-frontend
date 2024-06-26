@@ -1,10 +1,11 @@
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
 export const WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG: TableConfig = {
+  actions: {actionTypes: []},
   // Tabellenspaltenbezeichner in der de.json auslgelagert
   columns: [
     {
-      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUEKENNUMMER',
+      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUECKENNUMMER',
       propertyName:   'rueckenNummer',
       width:          5,
     },
