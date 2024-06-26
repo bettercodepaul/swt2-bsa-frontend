@@ -17,7 +17,7 @@
                  name="dsbMitgliedVorname"
                  #dsbMitgliedVorname="ngModel"
                  [(ngModel)]="currentMitglied.vorname"
-                 [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
+                 [class.is-invalid]="((dsbMitgliedVorname.invalid  && entityExists()) || dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched)"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}"
                  data-cy="detail-vorname-feld"
                  [readonly]="isReadOnly">
@@ -43,7 +43,7 @@
                  name="dsbMitgliedNachname"
                  #dsbMitgliedNachname="ngModel"
                  [(ngModel)]="currentMitglied.nachname"
-                 [class.is-invalid]="dsbMitgliedNachname.invalid && !dsbMitgliedNachname.untouched"
+                 [class.is-invalid]="((dsbMitgliedNachname.invalid  && entityExists()) || dsbMitgliedNachname.invalid && !dsbMitgliedNachname.untouched)"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.PLACEHOLDER' | translate }}"
                  data-cy="detail-nachname-feld"
                  [readonly]="isReadOnly">
@@ -69,7 +69,7 @@
                  name="dsbMitgliedGeburtsdatum"
                  #dsbMitgliedGeburtsdatum="ngModel"
                  [(ngModel)]="currentMitglied.geburtsdatum"
-                 [class.is-invalid]="dsbMitgliedGeburtsdatum.invalid && !dsbMitgliedGeburtsdatum.untouched"
+                 [class.is-invalid]="((dsbMitgliedGeburtsdatum.invalid  && entityExists()) || dsbMitgliedGeburtsdatum.invalid && !dsbMitgliedGeburtsdatum.untouched)"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.PLACEHOLDER' | translate }}"
                  data-cy="detail-geburtsdatum-feld"
                  [readonly]="isReadOnly">
@@ -90,12 +90,12 @@
           <input type="text"
                  class="form-control"
                  required
-                 pattern="(?=.*[0-9])[A-Z0-9\-\ \(\)]{1,50}$"
+                 pattern="(?=.*[0-9])[A-Za-z0-9\-_]{1,50}$"
                  id="dsbMitgliedMitgliedsnummer"
                  name="dsbMitgliedMitgliedsnummer"
                  #dsbMitgliedMitgliedsnummer="ngModel"
                  [(ngModel)]="currentMitglied.mitgliedsnummer"
-                 [class.is-invalid]="dsbMitgliedMitgliedsnummer.invalid && !dsbMitgliedMitgliedsnummer.untouched"
+                 [class.is-invalid]="((dsbMitgliedMitgliedsnummer.invalid  && entityExists()) || dsbMitgliedMitgliedsnummer.invalid && !dsbMitgliedMitgliedsnummer.untouched)"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}"
                  data-cy="detail-mitgliedsnummer-feld"
                  [readonly]="isReadOnly">
@@ -165,7 +165,7 @@
                  name="dsbMitgliedBeitrittsdatum"
                  #dsbMitgliedBeitrittsdatum="ngModel"
                  [(ngModel)]="currentMitglied.beitrittsdatum"
-                 [class.is-invalid]="dsbMitgliedBeitrittsdatum.invalid && !dsbMitgliedBeitrittsdatum.untouched"
+                 [class.is-invalid]="((dsbMitgliedBeitrittsdatum.invalid  && entityExists()) || dsbMitgliedBeitrittsdatum.invalid && !dsbMitgliedBeitrittsdatum.untouched)"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.BEITRITTSDATUM.PLACEHOLDER' | translate }}"
                  data-cy="detail-beitrittsdatum-feld"
                  [readonly]="isReadOnly">
@@ -189,7 +189,7 @@
                  #dsbMitgliedKampfrichter="ngModel"
                  [(ngModel)]="currentMitglied.kampfrichter"
                  [disabled]="isReadOnly || currentMitglied.userId===null || currentMitglied.userId===undefined"
-                 [class.is-invalid]="dsbMitgliedKampfrichter.invalid && !dsbMitgliedKampfrichter.untouched">
+                 [class.is-invalid]="dsbMitgliedKampfrichter.invalid">
           <span *ngIf="currentMitglied.userId==null">{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NO_USER' | translate }}
             <a href="#/verwaltung/benutzer/add">{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.REGISTRATION' | translate }}</a>
           </span>
