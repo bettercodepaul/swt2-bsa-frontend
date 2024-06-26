@@ -1110,22 +1110,6 @@ describe('Ligadetailseite', function(){
     cy.get('[id="goToLigadetailsButton"]').click();
     cy.url().should('include', '#/home/' + randomID)
   })
-
-  it('Neue unterste Liga hinzufuegen',function (){
-
-
-    cy.visit('http://localhost:4200/#/verwaltung/liga')
-
-    cy.get('bla-navbar > #navbar > #navbar-right > .nav-link > .btn').click()
-
-    cy.get('bla-alert > #undefined > p:nth-child(7) > bla-button > #undefined').click()
-
-    cy.get('.sidebar-link > div > .ng-fa-icon > .fa-cogs > path').click()
-
-    cy.get('.navigation-card > .tooltip-navigation-card > .card-body > .button-container > .btn').click()
-
-  })
-
 })
 
 describe('Ligaleiter User Tests', function(){
@@ -1229,6 +1213,44 @@ describe('Ligaleiter User Tests', function(){
           expect(textReadFromEditor).to.equal(text)})
 
     })
+
+  it('Neue unterste Liga hinzufuegen',function (){
+
+    // Login Ligaleiter
+
+    cy.visit('http://localhost:4200/#/user/login')
+    cy.wait(2000);
+
+    cy.contains('Login für Team Ligaleiter').click();
+    cy.wait(2000);
+
+    cy.visit('http://localhost:4200/#/verwaltung/liga')
+    cy.wait(12000)
+
+    cy.get('#payload-id-1127 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').click()
+
+    cy.wait(13000)
+
+    cy.get('#ligaForm > .form-group > .col-sm-9 > bla-actionbutton:nth-child(3) > #undefined').click()
+
+    cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').click()
+
+    cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').type('cypress 1')
+
+    cy.wait(1000)
+
+    cy.url().should('include', '#/verwaltung/liga/add')
+
+    // auf Profil klicken
+    cy.get('.fa-user-circle').click();
+    // auf ausloggen klicken
+    cy.contains('Logout').click();
+    cy.wait(2000);
+
+    //Ligaleiter wieder ausgelogged
+
+  })
+
 
   }
 )

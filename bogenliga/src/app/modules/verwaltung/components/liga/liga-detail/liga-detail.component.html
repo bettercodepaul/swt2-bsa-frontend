@@ -37,7 +37,7 @@
         </div>
 
         <!-- Disziplinname -->
-        <div class="form-group row">
+        <div class="form-group row" *ngIf="!isRestricted||isAdmin">
           <label for="disziplinName"
                  class="col-sm-3 col-form-label">
             <span>{{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.DISZIPLIN.LABEL' | translate }}</span>
@@ -65,7 +65,7 @@
 
 
         <!-- Region -->
-        <div class="form-group row">
+        <div class="form-group row" *ngIf="!isRestricted||isAdmin">
           <label for="ligaRegion"
                  class="col-sm-3 col-form-label">
             <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.REGION.LABEL' | translate }}</span>
@@ -90,7 +90,7 @@
         </div>
 
         <!-- Uebergeordnet -->
-        <div class="form-group row">
+        <div class="form-group row" *ngIf="!isRestricted||isAdmin">
           <label for="ligaRegion"
                  class="col-sm-3 col-form-label">
             <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.UEBERGEORDNET.LABEL' | translate }}</span>
@@ -118,7 +118,7 @@
 
 
         <!-- Verantwortlicher -->
-        <div class="form-group row">
+        <div class="form-group row" *ngIf="!isRestricted||isAdmin">
           <label for="ligaRegion"
                  class="col-sm-3 col-form-label">
             <span>{{ 'MANAGEMENT.LIGA_DETAIL.FORM.VERANTWORTLICH_MAIL.LABEL' | translate }}</span>
