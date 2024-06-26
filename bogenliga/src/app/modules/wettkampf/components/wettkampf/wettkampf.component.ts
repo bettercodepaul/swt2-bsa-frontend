@@ -168,12 +168,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
           }
       }]},
   };
-  //dynamic change of x-Axis Label
-  public updateChartOptions(newXAxisLabel: string) {
-    this.lineChartOptions.scales.xAxes[0].scaleLabel.labelString = newXAxisLabel;
-    // re-render the chart
-    this.lineChartOptions = { ...this.lineChartOptions };
-  }
 
   public lineChartLabels = [''];
   public lineChartType: ChartType = 'line';
@@ -217,6 +211,13 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.loadJahre();
     await this.loadVeranstaltungen(this.currentJahr);
     this.selectedWettkampfTag =  this.alleTage[0];
+  }
+
+  //dynamic change of x-Axis Label
+  public updateChartOptions(newXAxisLabel: string) {
+    this.lineChartOptions.scales.xAxes[0].scaleLabel.labelString = newXAxisLabel;
+    // re-render the chart
+    this.lineChartOptions = { ...this.lineChartOptions };
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
