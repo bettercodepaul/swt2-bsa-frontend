@@ -391,7 +391,8 @@ describe('Admin User tests', function() {
     cy.wait(1000)
     cy.contains('tr', 'vorname').find('[data-cy="TABLE.ACTIONS.VIEW"]').click();
     cy.wait(1000)
-    cy.url().should('include', '/info')
+    cy.get('[data-cy=detail-beitrittsdatum-feld]').invoke('attr', 'readonly')
+      .should('exist');
     cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder');
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
   })
