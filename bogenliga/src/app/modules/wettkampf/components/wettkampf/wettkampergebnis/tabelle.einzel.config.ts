@@ -13,11 +13,13 @@ export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
       propertyName:   'dsbMitgliedName',
       width:          30,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH',
       propertyName:   'matchNr',
       width:          5,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',
@@ -48,6 +50,7 @@ export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTMATCH',
       propertyName:   'pfeilpunkteSchnitt',
       width:          5,
+      sortable: true
     }
   ],
 };

@@ -79,10 +79,10 @@
       "TITLE": "Wettkampftageschnitte pro Schütze",
       "GEWAEHLTE_VERANSTALTUNG": "Gewählte Veranstaltung: ",
       "GEWAEHLTE_MANNSCHAFT": "Gewählte Mannschaft: ",
-      "WETTKAMPFTAGEINS": "Wettkampftag 1",
-      "WETTKAMPFTAGZWEI": "Wettkampftag 2",
-      "WETTKAMPFTAGDREI": "Wettkampftag 3",
-      "WETTKAMPFTAGVIER": "Wettkampftag 4",
+      "WETTKAMPFTAGEINS": "⌀ Tag 1",
+      "WETTKAMPFTAGZWEI": "⌀ Tag 2",
+      "WETTKAMPFTAGDREI": "⌀ Tag 3",
+      "WETTKAMPFTAGVIER": "⌀ Tag 4",
       "WETTKAMPFTAGESCHNITT": "Wettkampftage Schnitt"
     },
     "TITEL": {
@@ -375,6 +375,9 @@
     "MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN": {
       "TITEL": "Statistik aller Mannschaften"
     },
+    "SCHUETZENSTATISTIK_LETZTEJAHRE": {
+      "TITEL": "Statistik eines Schützen über die letzten fünf Jahre"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
       "HEADING": {
@@ -479,7 +482,9 @@
           "SCHNITTWETTKAMPFTAGE2": "⌀ Wettkampftage 2",
           "SCHNITTWETTKAMPFTAGE3": "⌀ Wettkampftage 3",
           "SCHNITTWETTKAMPFTAGE4": "⌀ Wettkampftage 4",
-          "SAISONSCHNITT": "Saisonschnitt"
+          "SAISONSCHNITT": "Saisonschnitt",
+          "SCHNITTSYMBOL": "⌀ ",
+          "SCHNITT_JAHRE": "⌀ Jahre"
         }
       }
     }

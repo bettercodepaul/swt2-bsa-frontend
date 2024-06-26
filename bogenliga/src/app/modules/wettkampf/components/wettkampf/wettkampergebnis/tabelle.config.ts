@@ -13,6 +13,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MANNSCHAFT',
       propertyName:   'mannschaftName',
       width:          20,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',
@@ -43,6 +44,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.OPPONENT',
       propertyName:   'opponentName',
       width:          20,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',
@@ -73,11 +75,13 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZPUNKTE',
       propertyName:   'satzpunkte',
       width:          20,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCHPUNKTE',
       propertyName:   'matchpunkte',
       width:          20,
+      sortable: true
     }
   ],
 
