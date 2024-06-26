@@ -41,6 +41,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
   @Input() isPopUp: boolean;
   @Input() dialogRef;
+  @Input() isReadOnly: boolean = false;
 
 
   public config = DSB_MITGLIED_DETAIL_CONFIG;
@@ -66,7 +67,9 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
 
   private sessionHandling: SessionHandling;
 
-  constructor(private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
+
+  constructor(
+    private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
     private router: Router,
     private route: ActivatedRoute,
     private vereinDataProvider: VereinDataProviderService,
@@ -84,6 +87,9 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
     await this.loadVereine();
     this.notificationService.discardNotification();
 
+
+
+
     this.httpService.get('./assets/i18n/Nationalitaeten.json').subscribe(
       (data) => {
         const json = JSON.parse(JSON.stringify(data));
@@ -98,6 +104,16 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
     );
 
     this.route.params.subscribe((params) => {
+
+      // Test ob Seite im Read-Only Modus aufgerufen werden soll
+      if (history.state && typeof history.state['isReadOnly'] !== 'undefined') {
+        this.isReadOnly = history.state['isReadOnly'];
+        console.log('isViewOnly in history state:', this.isReadOnly);  // Debugging
+      } else {
+        console.log('No navigation state found in history, Edit-Mode');  // Debugging
+      }
+
+
       if (!isUndefined(params[ID_PATH_PARAM])) {
         const id = params[ID_PATH_PARAM];
         if (id === 'add') {
@@ -112,6 +128,7 @@ export class DsbMitgliedDetailComponent extends CommonComponentDirective impleme
       }
     });
 
+    // Wird gar nicht verwendet??
     // Wenn das Fenster ein PopUp ist, wird von einem Hinzufügen ausgegangen
     if (this.isPopUp) {
       this.currentMitglied = new DsbMitgliedDO();
