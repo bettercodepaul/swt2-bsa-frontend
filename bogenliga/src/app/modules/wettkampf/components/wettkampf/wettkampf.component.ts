@@ -577,6 +577,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.wettkampfDataProviderService.findAllByVeranstaltungId(veranstaltungsId)
               .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
               .catch(() => this.handleLoadWettkaempfe([]));
+    this.wettkampftage = this.alleTage.slice(0, this.wettkaempfe.length);
+    this.selectedWettkampfTag = this.alleTage[0];
   }
 
   public async loadWettkaempfeByCurrentMannschaft() {

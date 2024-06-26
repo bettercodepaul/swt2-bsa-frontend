@@ -120,6 +120,18 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * This test checks if you can filter for a Competition-Day in Ligatablle
+   */
+  it('Wettkampftagauswahl Ligatabelle', function() {
+    cy.wait(6000)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('Württembergliga Recurve')
+    cy.wait(1000)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('0: Object')
+    cy.wait(500)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #wettkampftag').find('option').should('have.length', 4);
+  })
+
+  /**
    * This test opens the sidebar and clicks on the "WETTKAEMPFE" tab and checks if the url has changed successfully
    */
   it('Anzeige Wettkampf Ergebnisse', function() {
@@ -184,7 +196,7 @@ describe('Anonyme User tests', function () {
   /**
    * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
    */
-  it('Filter for Competition-Day in Wettkampfergebnisse', function() {
+  it('Wettkampftagauswahl Wettkampfergebnisse', function() {
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
     cy.wait(2000)
     cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')

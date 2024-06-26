@@ -22,12 +22,10 @@
                     [disabled]="loading"
                     (ngModelChange)="onSelectYear()"
             >
-              <option *ngFor="let Jahr of availableYears"> {{Jahr.sportjahr}}</option>
+              <option *ngFor="let Jahr of availableYears" [ngValue]="Jahr.sportjahr"> {{Jahr.sportjahr}}</option>
             </select>
           </div>
         </div>
-
-
 
         <!--Liga-->
         <div class="row">
@@ -48,9 +46,8 @@
           </div>
         </div>
 
-
         <!-- Dropdown Wettkampftag -->
-        <div class="row print1">
+        <div class="row print1" >
           <label class="form-label-box col-form-label">
             <span>{{ 'WETTKAEMPFE.LIGATABELLE.HEADER.WETTKAMPFTAG_AKT' | translate }}</span>
           </label>
@@ -63,11 +60,10 @@
                     [disabled]="loadingWettkampftag"
                     (ngModelChange)="onSelectWettkampftag()"
             >
-              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of this.wettkampftage"> {{wettkampftag.name | translate}}</option>
+              <option *ngFor="let wettkampftag of this.wettkampftage" [ngValue]="wettkampftag"> {{wettkampftag.name | translate}}</option>
             </select>
           </div>
         </div>
-
 
         <!-- Ligatabelle -->
         <div class="row">
@@ -124,10 +120,6 @@
         </div>
 
       </bla-row-layout>
-
-
-
-
     </div>
   </div>
 </bla-common-dialog>
