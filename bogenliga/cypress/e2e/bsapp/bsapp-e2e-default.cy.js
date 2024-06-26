@@ -206,10 +206,17 @@ describe('Anonyme User tests', function () {
   })
 
   /**
-   * This test checks if th  Mannschaftentabellenverlauf over all years shows results
+   * This test checks if the  Mannschaftentabellenverlauf over all years shows results
    */
   it('Mannschafttabellenverlauf', function() {
     cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('tabellenverlauf_statistik_alle_sportjahre', {force: true})
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if the  Mannschaftentabellenverlauf over veranstaltung shows results
+   */
+  it('Mannschafttabellenverlauf', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('tabellenverlauf_statistik_wettkampftage', {force: true})
     cy.wait(1500)
   })
   /**
