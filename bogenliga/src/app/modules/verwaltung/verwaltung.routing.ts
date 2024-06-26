@@ -6,7 +6,6 @@ import {
   UserOverviewComponent,
   DsbMitgliedDetailComponent,
   DsbMitgliedOverviewComponent,
-  DsbMitgliedInfoComponent,
   LigaDetailComponent,
   LigaOverviewComponent,
   RegionDetailComponent,
@@ -55,6 +54,9 @@ import {
   SchuetzenComponent
 } from '@verwaltung/components/verein/verein-detail/mannschafts-detail/schuetzen/schuetzen.component';
 import {SchuetzenNeuGuard} from '@verwaltung/guards/schuetzen-neu.guard';
+import {
+  DsbMitgliedDetailPopUpComponent
+} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 
 export const VERWALTUNG_ROUTES: Routes = [
   {path: '', component: VerwaltungComponent, canActivate: [VerwaltungGuard]},
@@ -65,7 +67,7 @@ export const VERWALTUNG_ROUTES: Routes = [
     canActivate: [DsbMitgliedOverviewGuard]
   },
   {path: 'dsbmitglieder/:id', component: DsbMitgliedDetailComponent, canActivate: [DsbMitgliedDetailGuard]},
-  {path: 'dsbmitglieder/:id/info', component: DsbMitgliedInfoComponent, canActivate: [DsbMitgliedInfoGuard]}
+  {path: 'dsbmitglieder/:id/view', component: DsbMitgliedDetailComponent, canActivate:[DsbMitgliedDetailGuard]}
   ,
   {
     path:        'user',

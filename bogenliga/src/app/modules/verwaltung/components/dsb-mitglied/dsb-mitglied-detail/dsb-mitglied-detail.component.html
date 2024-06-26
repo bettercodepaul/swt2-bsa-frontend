@@ -1,14 +1,10 @@
-<bla-common-dialog [config]="config"
-                   [loading]="loading">
+<bla-common-dialog [config]="config" [loading]="loading">
   <div (mouseover)="onMouseOver($event)">
-    <form #dsbMitgliedForm="ngForm"
-          class="horizontal-form half-page"
-          id="dsbMitgliedForm">
+    <form #dsbMitgliedForm="ngForm" class="horizontal-form half-page" id="dsbMitgliedForm">
 
       <!-- VORNAME -->
       <div class="form-group row">
-        <label class="col-sm-3 col-form-label"
-               for="dsbMitgliedVorname">
+        <label class="col-sm-3 col-form-label" for="dsbMitgliedVorname">
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.LABEL' | translate }}</span>
           <span> *</span>
         </label>
@@ -23,7 +19,8 @@
                  [(ngModel)]="currentMitglied.vorname"
                  [class.is-invalid]="dsbMitgliedVorname.invalid && !dsbMitgliedVorname.untouched"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.PLACEHOLDER' | translate }}"
-                 data-cy="detail-vorname-feld">
+                 data-cy="detail-vorname-feld"
+                 [readonly]="isReadOnly">
 
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VORNAME.ERROR' | translate }}
@@ -33,8 +30,7 @@
 
       <!-- NACHNAME -->
       <div class="form-group row">
-        <label for="dsbMitgliedNachname"
-               class="col-sm-3 col-form-label">
+        <label for="dsbMitgliedNachname" class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.LABEL' | translate }}</span>
           <span> *</span>
         </label>
@@ -49,7 +45,8 @@
                  [(ngModel)]="currentMitglied.nachname"
                  [class.is-invalid]="dsbMitgliedNachname.invalid && !dsbMitgliedNachname.untouched"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.PLACEHOLDER' | translate }}"
-                 data-cy="detail-nachname-feld">
+                 data-cy="detail-nachname-feld"
+                 [readonly]="isReadOnly">
 
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NACHNAME.ERROR' | translate }}
@@ -59,8 +56,7 @@
 
       <!-- GEBURTSDATUM -->
       <div class="form-group row">
-        <label for="dsbMitgliedGeburtsdatum"
-               class="col-sm-3 col-form-label">
+        <label for="dsbMitgliedGeburtsdatum" class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.LABEL' | translate }}</span>
           <span> *</span>
         </label>
@@ -75,7 +71,8 @@
                  [(ngModel)]="currentMitglied.geburtsdatum"
                  [class.is-invalid]="dsbMitgliedGeburtsdatum.invalid && !dsbMitgliedGeburtsdatum.untouched"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.PLACEHOLDER' | translate }}"
-                 data-cy="detail-geburtsdatum-feld">
+                 data-cy="detail-geburtsdatum-feld"
+                 [readonly]="isReadOnly">
 
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.GEBURTSDATUM.ERROR' | translate }}
@@ -84,10 +81,8 @@
       </div>
 
       <!-- MITGLIEDSNUMMER -->
-
       <div class="form-group row">
-        <label for="dsbMitgliedMitgliedsnummer"
-               class="col-sm-3 col-form-label">
+        <label for="dsbMitgliedMitgliedsnummer" class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.LABEL' | translate }}</span>
           <span> *</span>
         </label>
@@ -102,7 +97,8 @@
                  [(ngModel)]="currentMitglied.mitgliedsnummer"
                  [class.is-invalid]="dsbMitgliedMitgliedsnummer.invalid && !dsbMitgliedMitgliedsnummer.untouched"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.PLACEHOLDER' | translate }}"
-                 data-cy="detail-mitgliedsnummer-feld">
+                 data-cy="detail-mitgliedsnummer-feld"
+                 [readonly]="isReadOnly">
 
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.MITGLIEDSNUMMER.ERROR' | translate }}
@@ -112,8 +108,7 @@
 
       <!-- NATIONALITAET -->
       <div class="form-group row">
-        <label for="dsbMitgliedNationalitaet"
-               class="col-sm-3 col-form-label">
+        <label for="dsbMitgliedNationalitaet" class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.LABEL' | translate }}</span>
           <span> *</span>
         </label>
@@ -123,9 +118,9 @@
                   name="dsbMitgliedNationalitaet"
                   #dsbMitgliedNationalitaet="ngModel"
                   [(ngModel)]="currentMitgliedNat"
-                  data-cy="detail-nationalitaet-feld">
-            <option [ngValue]="nationalitaet"
-                    *ngFor="let nationalitaet of nationen"> {{nationalitaet}}</option>
+                  data-cy="detail-nationalitaet-feld"
+                  [disabled]="isReadOnly">
+            <option [ngValue]="nationalitaet" *ngFor="let nationalitaet of nationen"> {{nationalitaet}}</option>
           </select>
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NATIONALITAET.ERROR' | translate }}
@@ -135,8 +130,7 @@
 
       <!-- Vereine -->
       <div class="form-group row">
-        <label for="dsbMitgliedVerein"
-               class="col-sm-3 col-form-label">
+        <label for="dsbMitgliedVerein" class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.LABEL' | translate }}</span>
           <span> *</span>
         </label>
@@ -146,9 +140,9 @@
                   name="dsbMitgliedVerein"
                   #dsbMitgliedVerein="ngModel"
                   [(ngModel)]="currentVerein"
-                  data-cy="detail-vereine-dsb">
-            <option [ngValue]="verein"
-                    *ngFor="let verein of vereine"> {{verein.name}}</option>
+                  data-cy="detail-vereine-dsb"
+                  [disabled]="isReadOnly">
+            <option [ngValue]="verein" *ngFor="let verein of vereine"> {{verein.name}}</option>
           </select>
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.VEREIN.ERROR' | translate }}
@@ -158,8 +152,7 @@
 
       <!-- BEITRITTSDATUM -->
       <div class="form-group row">
-        <label for="dsbMitgliedBeitrittsdatum"
-               class="col-sm-3 col-form-label">
+        <label for="dsbMitgliedBeitrittsdatum" class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.BEITRITTSDATUM.LABEL' | translate }}</span>
           <span> *</span>
         </label>
@@ -174,7 +167,8 @@
                  [(ngModel)]="currentMitglied.beitrittsdatum"
                  [class.is-invalid]="dsbMitgliedBeitrittsdatum.invalid && !dsbMitgliedBeitrittsdatum.untouched"
                  placeholder="{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.BEITRITTSDATUM.PLACEHOLDER' | translate }}"
-                 data-cy="detail-beitrittsdatum-feld">
+                 data-cy="detail-beitrittsdatum-feld"
+                 [readonly]="isReadOnly">
 
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.BEITRITTSDATUM.ERROR' | translate }}
@@ -184,8 +178,7 @@
 
       <!-- Kampfrichterlizenz -->
       <div class="form-group row">
-        <label for="dsbMitgliedKampfrichter"
-               class="col-sm-3 col-form-label">
+        <label for="dsbMitgliedKampfrichter" class="col-sm-3 col-form-label">
           <span>{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.KAMPFRICHTER.LABEL' | translate }}</span>
         </label>
         <div class="col-sm-8">
@@ -195,11 +188,11 @@
                  name="dsbMitgliedKampfrichter"
                  #dsbMitgliedKampfrichter="ngModel"
                  [(ngModel)]="currentMitglied.kampfrichter"
-                 [disabled]="currentMitglied.userId===null || currentMitglied.userId===undefined"
+                 [disabled]="isReadOnly || currentMitglied.userId===null || currentMitglied.userId===undefined"
                  [class.is-invalid]="dsbMitgliedKampfrichter.invalid && !dsbMitgliedKampfrichter.untouched">
           <span *ngIf="currentMitglied.userId==null">{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.NO_USER' | translate }}
             <a href="#/verwaltung/benutzer/add">{{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.REGISTRATION' | translate }}</a>
-        </span>
+          </span>
         </div>
       </div>
 
@@ -207,9 +200,7 @@
       <div class="form-group row">
         <div class="col-sm-3"></div>
         <div class="col-sm-9 button-box">
-
-
-          <bla-actionbutton *ngIf="!entityExists()"
+          <bla-actionbutton *ngIf="!entityExists() && !isReadOnly"
                             [id]="'dsbMitgliedSaveButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
@@ -219,7 +210,7 @@
                             data-cy="detail-save-button">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.SAVE' | translate }}
           </bla-actionbutton>
-          <bla-actionbutton *ngIf="entityExists()"
+          <bla-actionbutton *ngIf="entityExists() && !isReadOnly"
                             [id]="'dsbMitgliedUpdateButton'"
                             [disabled]="!dsbMitgliedForm.valid"
                             [loading]="saveLoading"
@@ -230,12 +221,12 @@
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.UPDATE' | translate }}
           </bla-actionbutton>
 
-          <bla-actionbutton *ngIf="entityExists()"
-                      [buttonType]="ButtonType.DANGER"
-                      [loading]="deleteLoading"
-                      [color]="ActionButtonColors.DANGER"
-                      [iconClass]="'user-minus'"
-                      (onClick)="onDelete($event)">
+          <bla-actionbutton *ngIf="entityExists() && !isReadOnly"
+                            [buttonType]="ButtonType.DANGER"
+                            [loading]="deleteLoading"
+                            [color]="ActionButtonColors.DANGER"
+                            [iconClass]="'user-minus'"
+                            (onClick)="onDelete($event)">
             {{ 'MANAGEMENT.DSBMITGLIEDER_DETAIL.FORM.DELETE' | translate }}
           </bla-actionbutton>
         </div>

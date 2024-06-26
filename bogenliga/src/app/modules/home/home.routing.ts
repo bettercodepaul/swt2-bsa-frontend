@@ -13,7 +13,7 @@ import {
   VerwaltungComponent,
 } from '@verwaltung/components';
 import {
-  DsbMitgliedDetailGuard,
+  DsbMitgliedDetailGuard, DsbMitgliedInfoGuard,
   DsbMitgliedOverviewGuard, VeranstaltungDetailGuard, VeranstaltungOverviewGuard, VereinDetailGuard,
   VereinOverviewGuard, VerwaltungGuard
 } from '@verwaltung/guards';
@@ -28,6 +28,9 @@ import {
 } from '@verwaltung/components/verein/verein-detail/mannschafts-detail/mannschaft-detail.component';
 import {DsbMannschaftDetailGuard} from '@verwaltung/guards/dsb-mannschaft-detail.guard';
 import {VereineComponent} from '@vereine/components';
+import {
+  DsbMitgliedDetailPopUpComponent
+} from '@verwaltung/components/dsb-mitglied/dsb-mitglied-detail-pop-up/dsb-mitglied-detail-pop-up.component';
 
 
 
