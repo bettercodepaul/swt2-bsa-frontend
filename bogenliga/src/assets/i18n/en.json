@@ -334,6 +334,9 @@
     "MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN": {
       "TITEL": "Statistics of all teams"
     },
+    "SCHUETZENSTATISTIK_LETZTEJAHRE": {
+      "TITEL": "Statistics of an archer over the last five years"
+    },
     "DROPDOWNWETTKAMPFTAGE": {
       "OPTION1": {
         "LABEL": "Competitionday 1"
@@ -455,7 +458,9 @@
           "SCHNITTWETTKAMPFTAGE2": "⌀ Competition Day 2",
           "SCHNITTWETTKAMPFTAGE3": "⌀ Competition Day 3",
           "SCHNITTWETTKAMPFTAGE4": "⌀ Competition Day 4",
-          "SAISONSCHNITT": "Season average"
+          "SAISONSCHNITT": "Season average",
+          "SCHNITTSYMBOL": "⌀ ",
+          "SCHNITT_JAHRE": "⌀ Years"
         }
       }
     }

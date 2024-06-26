@@ -52,6 +52,13 @@ import {
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
 
 import {ChartOptions, ChartType} from 'chart.js';
+import {SchuetzenstatistikLetzteJahreDO} from '@verwaltung/types/schuetzenstatistikletztejahre-do.class';
+import {
+  WETTKAMPF_TABLE_SCHUETZELETZTEJAHRE_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.schuetzeletztejahre.config';
+import {
+  SchuetzenstatistikletztejahreDataProviderService
+} from '@wettkampf/services/schuetzenstatistikletztejahre-data-provider-service';
 import {
   MannschaftTabellenverlaufWettkampftage
 } from '@verwaltung/types/mannschafttabellenverlaufwettkampftage-do.class';
@@ -192,6 +199,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     private schuetzenstatistikDataProvider: SchuetzenstatistikDataProviderService,
     private schuetzenstatistikMatchDataProvider: SchuetzenstatistikMatchDataProviderService,
     private schuetzenstatistikWettkampftageDataProvider: SchuetzenstatistikwettkampftageDataProviderService,
+    private schuetzenstatistikLetzteJahreDataProvider: SchuetzenstatistikletztejahreDataProviderService,
     private ligaTabelleDataProvider: LigatabelleDataProviderService,
     private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService) {
@@ -340,12 +348,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadingData = false;
   }
 
-  /**
-   * Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
-   * Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in
-   * wettkampf-ergebnis-service.ts zu finden) Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da
-   * er hierfür relevant ist.
-   */
   public async loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
     this.loadingData = true;
     this.isStatistikAllowed = true;
@@ -368,8 +370,62 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       await this.clearAllStatistikTables();
       this.rows = [];
       await this.schuetzenstatistikWettkampftageDataProvider.getSchuetzenstatistikAlleLigen(this.currentJahr, selectedMannschaft.vereinId)
-                .then((response: BogenligaResponse<SchuetzenstatistikWettkampftageDO[]>) => this.handleLoadSchuetzenstatistikAlleLigenSuccess(response.payload));
+                .then((response: BogenligaResponse<SchuetzenstatistikWettkampftageDO[]>) => this.handleLoadSchuetzenstatistikLetzteJahreSuccess(response.payload));
       this.currentConfig = WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG;
+      // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
+    }
+    this.loadingData = false;
+  }
+
+  public async loadSchuetzenstatistikLetzteJahre(selectedMannschaft: DsbMannschaftDO) {
+    if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
+      this.loadingData = true;
+      await this.clearAllStatistikTables();
+      this.rows = [];
+      await this.schuetzenstatistikLetzteJahreDataProvider.getSchuetzenstatistikLetzteJahre(this.currentJahr, this.currentVeranstaltung.id, selectedMannschaft.vereinId)
+                .then((response: BogenligaResponse<SchuetzenstatistikLetzteJahreDO[]>) => this.handleLoadSchuetzenstatistikLetzteJahreSuccess(response.payload));
+      this.currentConfig = {
+        actions: {actionTypes: []},
+        columns: [
+          {
+            translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
+            propertyName: 'schuetzenname',
+            width: 100,
+            sortable: true
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr - 4).toString(),
+            propertyName: 'sportjahr1',
+            width: 40,
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr - 3).toString(),
+            propertyName: 'sportjahr2',
+            width: 40,
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr - 2).toString(),
+            propertyName: 'sportjahr3',
+            width: 40,
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr - 1).toString(),
+            propertyName: 'sportjahr4',
+            width: 40,
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr).toString(),
+            propertyName: 'sportjahr5',
+            width: 40,
+          },
+          {
+            translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHNITT_JAHRE',
+            propertyName: 'allejahre_schnitt',
+            width: 40,
+            sortable: true
+          },
+        ],
+      };
       // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
     }
     this.loadingData = false;
@@ -406,7 +462,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   }
 
-
   private async loadSchuetzenstatistikMatchData(vereinId, wettkampfId) {
     return this.schuetzenstatistikMatchDataProvider.getSchuetzenstatistikMatchWettkampf(vereinId, wettkampfId);
   }
@@ -427,7 +482,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
           row.payload[columnKey] = row.payload[columnKey].toLocaleString();
           // transforms saetze into a more readable format
         } else if (columnKey.startsWith('schuetzeSatz') && row.payload[columnKey] != null) {
-          row.payload[columnKey] = row.payload[columnKey].replace(',', ' | ');
+          row.payload[columnKey] = row.payload[columnKey].replace(',', '\\');
         }
       }
     });
@@ -460,13 +515,11 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
   }
 
-  /* loadPopup
-   ich werde in html aufgerufen,
-   wenn ein Popup erscheinen soll das aufmerksam macht, dass die Mannschaft noch nicht ausgewählt wurde.
-   Es werden die funktionen loadGesamtstatistik und loadEinzelstatistik im zusammenhang mit der variable gesamt aufgerufen,
-   sofern diese in dem jeweiligen Button auf true oder false gesetzt ist.
-   */
-
+  private handleLoadSchuetzenstatistikLetzteJahreSuccess(payload) {
+    if (payload.length > 0) {
+      this.rows.push(toTableRows(payload));
+    }
+  }
 
   /**
    * Get the data from the currently selected Veranstaltung. Starts the loading chain for all Wettkaempfe
@@ -769,6 +822,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     } else if (this.selectedStatistik === 'schuetzenstatistikWettkampftage') {
       this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_VERANSTALTUNG.TITEL';
       await this.loadSchuetzenstatistikWettkampftage(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'letztejahre') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_LETZTEJAHRE.TITEL';
+      await this.loadSchuetzenstatistikLetzteJahre(this.currentMannschaft);
     }
   }
 

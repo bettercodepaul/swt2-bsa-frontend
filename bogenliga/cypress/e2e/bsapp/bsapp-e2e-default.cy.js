@@ -192,7 +192,13 @@ describe('Anonyme User tests', function () {
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
     cy.wait(1500)
   })
-
+  /**
+   * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Statistik eines Schützen über die letzten fünf Jahre', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('letztejahre', {force: true})
+    cy.wait(1500)
+  })
   /**
    * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
    */
