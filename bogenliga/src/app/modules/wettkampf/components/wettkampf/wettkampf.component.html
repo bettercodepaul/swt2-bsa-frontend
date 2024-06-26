@@ -127,7 +127,6 @@
         </div>
       </div>
 
-
       <!-- Überschrift Statistiken -->
       <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.STATISTIKEN' | translate }}</h2>
 
@@ -187,7 +186,7 @@
                     name="StatistikName"
                     [(ngModel)]="selectedStatistik"
                     [disabled]="loadingData"
-                    (ngModelChange)="onSelectStatistik()">
+                    (ngModelChange)="onSelectSchuetzenStatistik()">
               <option value="gesamtstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION1.LABEL' | translate }} </option>
               <option value="einzelstatistik"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION2.LABEL' | translate }} </option>
               <option value="schuetzenstatistikMatch"> {{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN.OPTION3.LABEL' | translate }} </option>
@@ -211,11 +210,12 @@
                     style="width: 50%"
                     id="mannschaftsStatistiken"
                     name="MannschaftStatistikName"
-                    [(ngModel)]="selectedMannschaft"
+                    [(ngModel)]="selectedMannschaftStatistik"
                     [disabled]="loadingData"
-                    (ngModelChange)="onSelectMannschaft()">
+                    (ngModelChange)="onSelectMannschaftStatistik()">
               <option value="aktuelle_mannschaft"> Aktuelle Mannschaft "{{currentMannschaft != null ? currentMannschaft.name : "Keine Veranstaltungen verfügbar"}}" </option>
               <option value="alle_mannschaften"> Alle Mannschaften </option>
+              <option value="tabellenverlauf_statistik_alle_sportjahre">{{'MANNSCHAFTEN.MANNSCHAFTEN.DROPDOWN_MANNSCHAFTSTATISTIK.OPTION3.LABEL'| translate}}</option>
             </select>
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -235,7 +235,7 @@
                     [(ngModel)]="selectedWettkampfTag"
                     [disabled]="loadingData"
                     (ngModelChange)="onSelectWettkampfTag()">
-              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of this.wettkampftage"> {{wettkampftag.name | translate}}</option>
+              <option [ngValue]="wettkampftag" *ngFor="let wettkampftag of wettkampftage"> {{wettkampftag.name | translate}}</option>
             </select>
           </div>
         </div>
@@ -251,30 +251,32 @@
         [iconClass]="'file-download'"
         [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
       </bla-download-actionbutton>
-      <!-- Row Gesamtstatistik -->
+
+      <!-- Table for all Statistiken -->
       <div class="row print1">
-        <div id="Table0" class="hidden" style="padding:1em"
+        <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em"
         data-cy="wettkampf-schuetzenstatistik-gesamtstatistik-table">
          <h3>{{currentStatistikTitle | translate}}</h3>
           <!-- Button - Gesamtstatistik Drucken -->
-
           <bla-data-table id="row00"
                           [loading]="loadingData"
-                          [config]="config_einzelGesamt_table"
-                          [rows]="rows[0]">
+                          [config]="currentConfig"
+                          [rows]="rows[currentWettkampftag]"
+          data-cy="tableStatistik">
           </bla-data-table>
-          <bla-data-table id="row06"
-                          class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_schuetzenstatistikWettkampftage_table"
-                          [rows]="rows[0]">
-          </bla-data-table>
-          <bla-data-table id="row07"
-                          class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_alleligen_table"
-                          [rows]="rows[0]">
-          </bla-data-table>
+        </div>
+      </div>
+      <div [hidden]="!showLineChart">
+        <h3>{{currentStatistikTitle | translate}}</h3>
+        <div class="chart-container">
+          <canvas
+            baseChart
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+          > </canvas>
         </div>
       </div>
         <!-- Button - Einzelstatistik als PDF -->
@@ -287,136 +289,13 @@
           [iconClass]="'file-download'"
           [fileName]="'Einzelstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.EINZEL_ALS_PDF.LABEL'| translate}}
         </bla-download-actionbutton>
-      <!-- Row 1 -->
-      <div class="row print1">
-        <div id="Table1" class="hidden" [hidden]="!isTableFilled[0]" style="padding:1em"
-        data-cy="wettkampf-schuetzenstatistik-table">
-          <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGEINS' | translate}}</h3>
-          <bla-download-actionbutton id = "TagesuebersichtButton"
-                                     [iconClass]="'file-download'"
-                                     [color]="ActionButtonColors.PRIMARY"
-                               [id]="'downloadTagesuebersicht'"
-                               [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=1')"
-                               [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
-          </bla-download-actionbutton>
-          <bla-data-table id="row0"
-                          [loading]="loadingData"
-                          [config]="config_table"
-                          [rows]="rows[0]"
-                          >
-          </bla-data-table>
-          <bla-data-table id="row01" class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_einzel_table"
-                          [rows]="rows[0]">
-          </bla-data-table>
-          <bla-data-table id="row02"
-                          class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_schuetzenstatistikMatch_table"
-                          [rows]="rows[0]">
-          </bla-data-table>
-
-        </div>
-      </div>
-      <!-- Row 2 -->
-      <div class="row print1">
-        <div id="Table2" class="hidden" [hidden]="!isTableFilled[1]" style="padding:1em">
-          <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGZWEI' | translate}}</h3>
-          <bla-download-actionbutton id = "TagesuebersichtButton2"
-                                     [iconClass]="'file-download'"
-                                     [color]="ActionButtonColors.PRIMARY"
-                               [id]="'downloadTagesuebersicht'"
-                               [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=2')"
-                               [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
-          </bla-download-actionbutton>
-          <bla-data-table id="row1"
-                          [loading]="loadingData"
-                          [config]="config_table"
-                          [rows]="rows[1]">
-          </bla-data-table>
-          <bla-data-table id="row11" class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_einzel_table"
-                          [rows]="rows[1]">
-          </bla-data-table>
-          <bla-data-table id="row12"
-                          class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_schuetzenstatistikMatch_table"
-                          [rows]="rows[1]">
-          </bla-data-table>
-
-        </div>
-      </div>
-      <!-- Row 3 -->
-      <div class="row print1">
-        <div id="Table3" class="hidden" [hidden]="!isTableFilled[2]" style="padding:1em">
-          <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGDREI' | translate}}</h3>
-          <bla-download-actionbutton id = "TagesuebersichtButton3"
-                                     [iconClass]="'file-download'"
-                                     [color]="ActionButtonColors.PRIMARY"
-                               [id]="'downloadTagesuebersicht'"
-                               [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=3')"
-                               [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
-          </bla-download-actionbutton>
-          <bla-data-table id="row2"
-                          [loading]="loadingData"
-                          [config]="config_table"
-                          [rows]="rows[2]">
-          </bla-data-table>
-          <bla-data-table id="row21" class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_einzel_table"
-                          [rows]="rows[2]">
-          </bla-data-table>
-          <bla-data-table id="row22"
-                          class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_schuetzenstatistikMatch_table"
-                          [rows]="rows[2]">
-          </bla-data-table>
-
-        </div>
-      </div>
-      <!-- Row 4 -->
-      <div class="row print1">
-        <div id="Table4" class="hidden" [hidden]="!isTableFilled[3]" style="padding:1em">
-          <h3>{{'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGVIER' | translate}}</h3>
-          <bla-download-actionbutton id = "TagesuebersichtButton4"
-                                     [iconClass]="'file-download'"
-                                     [color]="ActionButtonColors.PRIMARY"
-                               [id]="'downloadTagesuebersicht'"
-                               [downloadUrl]="onButtonDownloadUebersicht('pdf/Uebersicht/?wettkampftag=4')"
-                               [fileName]="'Tagesuebersicht.pdf'"> {{ 'WETTKAEMPFE.BUTTONS.TAGESUEBERSICHT_ALS_PDF.LABEL'| translate }}
-          </bla-download-actionbutton>
-          <bla-data-table id="row3"
-                          [loading]="loadingData"
-                          [config]="config_table"
-                          [rows]="rows[3]">
-          </bla-data-table>
-          <bla-data-table id="row31"
-                          class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_einzel_table"
-                          [rows]="rows[3]">
-          </bla-data-table>
-          <bla-data-table id="row32"
-                          class="hidden"
-                          [loading]="loadingData"
-                          [config]="config_schuetzenstatistikMatch_table"
-                          [rows]="rows[3]">
-          </bla-data-table>
-
-        </div>
-      </div>
 
       <div class="form-group row">
         <div class="col-sm-3"></div>
         <div class="col-sm-9 button-box">
-
         </div>
       </div>
+
     </form>
   </div>
 </bla-common-dialog>

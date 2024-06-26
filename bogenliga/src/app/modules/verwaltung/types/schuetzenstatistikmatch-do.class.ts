@@ -17,7 +17,6 @@ export class SchuetzenstatistikMatchDO implements VersionedDataObject {
   match6: number;
   match7: number;
   pfeilpunkteSchnitt: number;
-
   constructor(
     id?: number,
     version?: number,

@@ -1,10 +1,14 @@
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
-export const WETTKAMPF_TABLE_MATCH_CONFIG: TableConfig = {
+/**
+ * Table layout for a Wettkampf with 6 Mannschaften (Matchstatistik)
+ */
+export const WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG: TableConfig = {
   // Tabellenspaltenbezeichner in die JSON auslagern
+  actions: {actionTypes: []},
   columns: [
     {
-      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUEKENNUMMER',
+      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUECKENNUMMER',
       propertyName:   'rueckennummer',
       width:          100,
     },
@@ -39,19 +43,8 @@ export const WETTKAMPF_TABLE_MATCH_CONFIG: TableConfig = {
       width:          30,
     },
     {
-      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH6',
-      propertyName:   'match6',
-      width:          30,
-    },
-    {
-      translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH7',
-      propertyName:   'match7',
-      width:          30,
-    },
-    {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTMATCH',
       propertyName:   'pfeilpunkteSchnitt',
       width:          30,
-    }
-  ],
+    }],
 };
