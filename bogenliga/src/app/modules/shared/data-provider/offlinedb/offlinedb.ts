@@ -41,7 +41,7 @@ export class OfflineDB extends Dexie {
       // Schema -> Every column name is the name of the attribute of the interface
       // ligatabelle - will read only - no offlineVersion, no sync back
       ligaTabelle: '++id, version, veranstaltungId, veranstaltungName, wettkampfId, wettkampfTag, mannschaftId, mannschaftName, ' +
-                     'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz',
+                     'matchpkt, matchpktGegen, satzpkt, satzpktGegen, satzpktDifferenz, sortierung, tabellenplatz, matchCount',
       matchTabelle: ', offlineVersion, matchId, matchVersion, wettkampfId, matchNr, matchScheibennummer,matchpkt,satzpunkte, mannschaftId,   mannschaftName, ' +
                      'nameGegner, scheibennummerGegner, matchIdGegner, naechsteMatchId, naechsteNaechsteMatchNrMatchId,' +
                      'strafpunkteSatz1, strafpunkteSatz2, strafpunkteSatz3, strafpunkteSatz4, strafpunkteSatz5',
@@ -54,7 +54,7 @@ export class OfflineDB extends Dexie {
       // mannschaftTabelle - will read only - no offlineVersion, no sync back
       mannschaftTabelle:          ', version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
       mannschaftsmitgliedTabelle: ', offlineVersion, id, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
-      dsbMitgliedTabelle:         ', version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId',
+      dsbMitgliedTabelle:         ', version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId, beitrittsdatum',
       // veranstaltungTabelle - will read only - no offlineVersion, no sync back
       veranstaltungTabelle: ', offline_version, id, version, name, sportjahr, meldeDeadline, ligaleiterId, ligaId, phase, groesse',
       // vereinTabelle - will read only - no offlineVersion, no sync back

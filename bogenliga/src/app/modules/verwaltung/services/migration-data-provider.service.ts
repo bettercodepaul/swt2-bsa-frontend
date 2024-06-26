@@ -2,17 +2,18 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {
   BogenligaResponse,
-  DataProviderService,
+  DataProviderService, DataTransferObject,
   RequestResult,
   RestClient,
   UriBuilder,
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService} from '../../shared/services/current-user';
-import {fromPayload, fromPayloadArray} from '../mapper/trigger-mapper';
+import {fromCountPayload, fromPayload, fromPayloadArray} from '../mapper/trigger-mapper';
 import {TriggerDO} from '../types/trigger-do.class';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {OnOfflineService} from '@shared/services';
+import {TriggerCountDO} from '@verwaltung/types/trigger-count-do-class';
 
 
 @Injectable({
@@ -50,10 +51,9 @@ export class MigrationProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findSuccessed?offsetMultiplicator=' + offsetMultiplicator.toString()
-        + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build())
+        + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + timestamp.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -70,9 +70,8 @@ export class MigrationProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findAllWithPages?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build()
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findAllWithPages?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + timestamp.toString()).build()
       )
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
@@ -90,9 +89,8 @@ export class MigrationProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findErrors?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build()
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findErrors?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + timestamp.toString()).build()
       )
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
@@ -110,9 +108,8 @@ export class MigrationProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findInProgress?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findInProgress?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + timestamp.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -129,9 +126,8 @@ export class MigrationProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findNews?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + dateInterval.toString()).build())
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('findNews?offsetMultiplicator=' + offsetMultiplicator.toString() + '&queryPageLimit=' + queryPageLimit.toString() + '&dateInterval=' + timestamp.toString()).build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
           }, (error: HttpErrorResponse) => {
@@ -148,9 +144,8 @@ export class MigrationProviderService extends DataProviderService {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
-    const dateInterval = this.changeTimestampToInterval(timestamp);
     return new Promise((resolve, reject) => {
-      this.restClient.DELETE<any>(new UriBuilder().fromPath(this.getUrl()).path('deleteEntries?status=' + status + '&dateInterval=' + dateInterval).build())
+      this.restClient.DELETE<any>(new UriBuilder().fromPath(this.getUrl()).path('deleteEntries?status=' + status + '&dateInterval=' + timestamp).build())
           .then(() => {
             resolve({ result: RequestResult.SUCCESS});
           })
@@ -166,25 +161,53 @@ export class MigrationProviderService extends DataProviderService {
   public startMigration() {
     this.restClient.GET(new UriBuilder().fromPath(this.getUrl()).path('buttonSync').build())
   }
-  private changeTimestampToInterval(timestamp:string):string{
-    let interval:string;
-    switch (timestamp){
-      case 'alle':
-        interval = "20 YEAR"
-        break;
-      case 'letzter Monat':
-        interval = "1 MONTH"
-        break;
-      case 'letzten drei Monate':
-        interval = "3 MONTH"
-        break;
-      case 'letzten sechs Monate':
-        interval = "6 MONTH"
-        break;
-      case 'im letzten Jahr':
-        interval = "12 MONTH"
-        break;
-    }
-    return interval;
+
+
+  public getEntireDataCount(): Promise<BogenligaResponse<TriggerCountDO>> {
+
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<DataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('firstCount').build())
+          .then((data: DataTransferObject[]) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromCountPayload(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+  public getInProgressDataCount():Promise<BogenligaResponse<TriggerCountDO>>{
+
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<DataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('check').build())
+          .then((data: DataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromCountPayload(data)});
+          }, (error: HttpErrorResponse) => {
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+  public getSucceededDataCount():Promise<BogenligaResponse<TriggerCountDO>>{
+
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<DataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('afterTime').build())
+          .then((data: DataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromCountPayload(data)});
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
   }
 }

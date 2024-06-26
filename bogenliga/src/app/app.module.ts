@@ -25,6 +25,8 @@ import {VerwaltungModule} from '@verwaltung/verwaltung.module';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+import {ChartsModule} from 'ng2-charts';
+
 import {MatDialogModule} from '@angular/material/dialog';
 import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
 
@@ -49,6 +51,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    ChartsModule,
     MatDialogModule,
     TranslateModule.forRoot({
       loader: {
@@ -66,7 +69,7 @@ export function createTranslateLoader(http: HttpClient) {
     SharedModule.forRoot(),
     VerwaltungModule.forRoot()
   ],
-  exports:      [TranslateModule],
+  exports: [TranslateModule, AppComponent],
   /* HTTP INTERCEPTORS */
   providers:    [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

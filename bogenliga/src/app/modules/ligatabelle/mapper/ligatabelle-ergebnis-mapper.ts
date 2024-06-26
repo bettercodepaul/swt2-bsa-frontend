@@ -22,6 +22,7 @@ export function toDO(ligatabelleErgebnisDTO: LigatabelleErgebnisDTO): Ligatabell
   ligatabelleErgebnisDO.satzpkt_differenz = ligatabelleErgebnisDTO.satzpktDifferenz;
   ligatabelleErgebnisDO.tabellenplatz = ligatabelleErgebnisDTO.tabellenplatz;
   ligatabelleErgebnisDO.sortierung = ligatabelleErgebnisDTO.sortierung;
+  ligatabelleErgebnisDO.matchCount = ligatabelleErgebnisDTO.matchCount;
 
   return ligatabelleErgebnisDO;
 }
@@ -45,6 +46,7 @@ export function toDOFromOffline(ligatabelle: OfflineLigatabelle): LigatabelleErg
   ligatabelleErgebnisDO.satzpkt_differenz = ligatabelle.satzpktDifferenz;
   ligatabelleErgebnisDO.tabellenplatz = ligatabelle.tabellenplatz;
   ligatabelleErgebnisDO.sortierung = ligatabelle.sortierung;
+  ligatabelleErgebnisDO.matchCount = ligatabelle.matchCount;
 
   return ligatabelleErgebnisDO;
 }

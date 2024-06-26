@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/bettercodepaul/swt2-bsa-frontend#readme",
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "@tinymce/tinymce-angular": "^7.0.0",
-    "tinymce": "^6.4.2"
+    "tinymce": "^6.4.2",
+    "websocket": "^1.0.34"
   }
 }

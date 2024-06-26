@@ -3,7 +3,6 @@ import {VersionedDataObject} from '../../shared/data-provider/models/versioned-d
 export class TriggerDO implements VersionedDataObject {
   id: number;
   version: number;
-
   kategorie: string;
   altsystemId: number;
   operation: string;
@@ -11,4 +10,5 @@ export class TriggerDO implements VersionedDataObject {
   nachricht: string;
   createdAtUtc: string;
   runAtUtc: string;
+  lastModifiedAtUtc: string;
 }

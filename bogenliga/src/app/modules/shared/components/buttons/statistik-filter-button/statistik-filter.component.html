@@ -1,0 +1,8 @@
+<button
+  class="statistik-filter-button"
+  (click)="onButtonClick()"
+  [ngClass]="{ 'active': active }"
+  [disabled]="isDisabled()"
+>
+  <ng-content></ng-content>
+</button>

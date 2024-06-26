@@ -4,15 +4,17 @@
 
   <!-- Heading-->
 
+
   <section class="overview-dialog-header">
     <bla-page-heading>{{config.pageTitleTranslationKey | translate }}</bla-page-heading>
+
     <bla-quicksearch *ngIf="!isCustomActionButton" (onSearchEntry)="onSearch($event)"
                      [hidden]="hidden"
                      [sessionSearch]="searchTerm">
+    </bla-quicksearch>
 
-    </bla-quicksearch >
-
-    <div class="overview-dialog-add"
+    <div class="overview-dialog-add" 
+         *ngIf="hasUserPermissions(config.createPermission)"
          >
       <div class="deleteButtonAndTimestampFilter">
         <bla-filterTimestampInputbar class="item"
@@ -29,7 +31,7 @@
           [iconClass]="'minus'"
           (onClick)="onDeleteButtonClick()"
         >
-          {{"Gefilterte Einträge löschen"}}
+          {{"Angezeigte Einträge löschen"}}
         </bla-actionbutton>
       </div>
       <div class="changePageButtonsAbove"  >
@@ -78,12 +80,22 @@
       >
         {{buttonLabel || "Neu"}}
       </bla-actionbutton>
-
     </div>
+
   </section>
+
 
   <!-- Content -->
   <section class="overview-dialog-content">
+    <!--
+    <bla-migrationstatusbar
+      [progress]="progress"
+
+
+      *ngIf="isMigrationStatusBar"
+    >
+    </bla-migrationstatusbar>
+    -->
 
     <bla-data-table [config]="config.tableConfig"
                     [rows]="rows"

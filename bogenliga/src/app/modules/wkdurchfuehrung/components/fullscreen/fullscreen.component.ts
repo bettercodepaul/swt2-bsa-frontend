@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Injector, OnInit} from '@angular/core';
 import { SessionHandling } from '@shared/event-handling';
 import {CurrentUserService, NotificationService, OnOfflineService} from '@shared/services';
 import {CommonComponentDirective, toTableRows} from '@shared/components';
 import { ActionButtonColors } from '@shared/components/buttons/button/actionbuttoncolors';
-import { LIGATABELLE_TABLE_CONFIG, WETTKAEMPFE_CONFIG } from '../../../ligatabelle/components/ligatabelle/ligatabelle.config';
 import { interval, Subscription } from 'rxjs';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {faSitemap, faUndo} from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +13,7 @@ import {VeranstaltungDataProviderService} from '@verwaltung/services/veranstaltu
 import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
 import {BogenligaResponse} from '@shared/data-provider';
 import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
+import {FULLSCREEN_TABLE_CONFIG, WETTKAEMPFE_CONFIG} from '@wkdurchfuehrung/components/fullscreen/fullscreen.config';
 
 const ID_PATH_PARAM = 'id';
 
@@ -30,7 +30,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   public zuruecksetzenIcon: IconProp = faUndo;
 
   public config = WETTKAEMPFE_CONFIG;
-  public config_table = LIGATABELLE_TABLE_CONFIG;
+  public config_table = FULLSCREEN_TABLE_CONFIG;
   public ActionButtonColors = ActionButtonColors;
   public loading = true;
   public multipleSelections = true;
@@ -43,6 +43,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
   currentTime: string;
   private timeSubscription: Subscription;
 
+  private countTime = 0;
 
   public loadingLigatabelle = true;
   public rowsLigatabelle: TableRow[];
@@ -71,7 +72,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     private notificationService: NotificationService,
     private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private ligatabelleDataProvider: LigatabelleDataProviderService,
-
+    private injector: Injector,
     private onOfflineService: OnOfflineService,
     private currentUserService: CurrentUserService,
   ) {
@@ -85,9 +86,13 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
 
   ngOnInit(): void {
     this.startClock();
-    this.route.queryParams.subscribe((params) => {
-      this.selectedWettkampftag = params['wettkampftag'];
-      console.log('selectedWettkampftag:', this.selectedWettkampftag);
+    this.route.paramMap.subscribe((params) => {
+      const wettkampftag = params.get('wettkampftag');
+      if (wettkampftag !== null) {
+        this.selectedWettkampftag = wettkampftag + '. Wettkampftag';
+      } else {
+        this.selectedWettkampftag = 'Wettkampftag';
+      }
     });
     if (!this.isDeselected) {
 
@@ -116,6 +121,13 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
     this.timeSubscription = interval(60000).subscribe(() => {
       this.currentTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
       this.refreshTable();
+
+      if (this.countTime < 54) {
+        this.countTime += 1;
+      } else {
+        this.sessionHandling.keepSessionAlive(this.injector);
+        this.countTime = 0;
+      }
     });
   }
 
@@ -169,6 +181,7 @@ export class FullscreenComponent extends CommonComponentDirective implements OnI
         .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) => {
           if (response && response.payload.length > 0) {
             this.rowsLigatabelle = toTableRows(response.payload);
+            console.log(response.payload);
             console.log('Ligatabelle erfolgreich geladen');
           } else {
             console.log('Keine Ergebnisse gefunden für Ligatabelle');

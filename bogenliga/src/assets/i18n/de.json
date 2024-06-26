@@ -76,13 +76,14 @@
   },
   "WETTKAEMPFE": {
     "WETTKAEMPFE": {
-      "TITLE": "Liga-Tabelle",
+      "TITLE": "Wettkampftageschnitte pro Schütze",
       "GEWAEHLTE_VERANSTALTUNG": "Gewählte Veranstaltung: ",
       "GEWAEHLTE_MANNSCHAFT": "Gewählte Mannschaft: ",
-      "WETTKAMPFTAGEINS": "Wettkampftag 1",
-      "WETTKAMPFTAGZWEI": "Wettkampftag 2",
-      "WETTKAMPFTAGDREI": "Wettkampftag 3",
-      "WETTKAMPFTAGVIER": "Wettkampftag 4"
+      "WETTKAMPFTAGEINS": "Tag 1",
+      "WETTKAMPFTAGZWEI": "Tag 2",
+      "WETTKAMPFTAGDREI": "Tag 3",
+      "WETTKAMPFTAGVIER": "Tag 4",
+      "WETTKAMPFTAGESCHNITT": "⌀ Wettkampftage"
     },
     "TITEL": {
       "VERANSTALTUNG": "Ligen-Auswahl"
@@ -96,6 +97,7 @@
       "MATCHPUNKTE": "Matchpunkte",
       "SATZPUNKTE": "Satzpunkte",
       "SATZPUNKTDIFFERENZ": "Satzpunktdifferenz",
+      "MATCHCOUNT": "Geschossene Match",
       "HEADER": {
         "VERANSTALTUNG": "Liga",
         "WETTKAMPFTAG_AKT": "Wettkampftag",
@@ -124,6 +126,7 @@
       }
     }
   },
+
   "MANNSCHAFTSMITGLIEDER": {
     "TABLE": {
       "HEADERS": {
@@ -331,6 +334,20 @@
     }
   },
   "MANNSCHAFTEN": {
+    "DROPDOWNWETTKAMPFTAGE": {
+      "OPTION1": {
+        "LABEL": "Wettkampftag 1"
+      },
+      "OPTION2": {
+        "LABEL": "Wettkampftag 2"
+      },
+      "OPTION3": {
+        "LABEL": "Wettkampftag 3"
+      },
+      "OPTION4": {
+        "LABEL": "Wettkampftag 4"
+      }
+    },
     "LIGATABELLE": {
       "TITLE": "Aktuelle Ligatabelle",
       "LIGATABELLE_VORBEREITUNG": "Ligatabelle Vorbereitung",
@@ -339,8 +356,34 @@
     "SCHUETZEN_STATISTIK": {
       "TITEL": "Gesamtstatistik pro Schütze"
     },
+    "SCHUETZEN_STATISTIK_ALLE_LIGEN": {
+      "TITEL": "Saisonschnitte pro Schütze"
+    },
+    "SCHUETZENSTATISTIK_MATCH": {
+      "TITEL": "Schusswerte der Matches pro Schütze"
+    },
+    "SCHUETZENSTATISTIK_WETTKAMPF": {
+      "TITEL": "Matchschnitte pro Schütze"
+    },
+    "SCHUETZENSTATISTIK_VERANSTALTUNG": {
+      "TITEL": "Wettkampftagschnitte pro Schütze"
+    },
+    "MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT": {
+      "TITEL": "Statistik der aktuellen Mannschaft"
+    },
+    "MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN": {
+      "TITEL": "Statistik aller Mannschaften"
+    },
     "MANNSCHAFTEN": {
       "TITLE": "Wettkampfergebnisse",
+      "HEADING": {
+        "VERANSTALTUNG": "Auswahl der Veranstaltung und Mannschaft",
+        "STATISTIKEN": "Statistiken"
+      },
+      "FILTER_BUTTON":{
+        "SCHUETZEN": "Schützen",
+        "MANNSCHAFTEN": "Mannschaften"
+      },
       "POPUPTXT": {
         "POPUPÜBERSCHRIFT": {
           "LABEL": "Mannschaft nicht ausgewählt!"
@@ -366,13 +409,42 @@
           "LABEL": "Gesamtstatistik drucken"
         }
       },
+      "DROPDOWN_MANNSCHAFTSTATISTIK": {
+        "OPTION3": {
+          "LABEL": "Mannschaftstabellenverlauf über Sportjahre hinweg"
+        },
+        "OPTION4": {
+          "LABEL": "Mannschaftstabellenverlauf über eine Saison hinweg"
+        }
+      },
       "DROPDOWN": {
         "OPTION1": {
           "LABEL": "Gesamtstatistik"
         },
         "OPTION2": {
           "LABEL": "Einzelstatistik"
+        },
+        "OPTION3": {
+          "LABEL": "Wettkampfstatistik"
+        },
+        "OPTION4": {
+          "LABEL": "Wettkampftagestatistik"
+        },
+        "OPTION5": {
+          "LABEL": "Saisonschnittstatistik"
+        },
+        "AKTUELLE_MANNSCHAFT": {
+          "LABEL": "Aktuelle Mannschaft"
+        },
+        "ALLE_MANNSCHAFTEN": {
+          "LABEL": "Alle Mannschaften"
         }
+      },
+      "TABLE_NAME": {
+        "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft der letzten 5 Jahre"
+      },
+      "TABLE_NAME2": {
+        "MANNSCHAFT_TABELLENVERLAUF_TITLE": "Tabellenverlauf der Mannschaft innerhalb einer Saison "
       },
       "FORM": {
         "MANNSCHAFT_NAME": {
@@ -386,6 +458,9 @@
         },
         "SPORTJAHR": {
           "LABEL": "Sportjahr:"
+        },
+        "LIGA_NAME": {
+          "LABEL": "Liga:"
         }
       },
       "TABLE": {
@@ -393,17 +468,29 @@
           "MATCH": "Match",
           "MANNSCHAFT": "Mannschaft",
           "OPPONENT": "Gegner",
-          "SATZ1": "S1",
-          "SATZ2": "S2",
-          "SATZ3": "S3",
-          "SATZ4": "S4",
-          "SATZ5": "S5",
+          "SATZ1": "Satz 1",
+          "SATZ2": "Satz 2",
+          "SATZ3": "Satz 3",
+          "SATZ4": "Satz 4",
+          "SATZ5": "Satz 5",
           "SATZPUNKTE": "Satzpunkte",
           "MATCHPUNKTE": "Matchpunkte",
-          "SCHUETZE": "Schütze",
-          "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
-          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr",
-          "RUEKENNUMMER": "Rückennummer"
+          "SCHUETZE": "Name des Schützen",
+          "DURCHSCHPFEILWERTMATCH": "⌀ Pfeilwert pro Match",
+          "DURCHSCHPFEILWERTJAHR": "⌀ Pfeilwert pro Jahr",
+          "RUECKENNUMMER": "Rückennr",
+          "MATCH1": "⌀ Match 1",
+          "MATCH2": "⌀ Match 2",
+          "MATCH3": "⌀ Match 3",
+          "MATCH4": "⌀ Match 4",
+          "MATCH5": "⌀ Match 5",
+          "MATCH6": "⌀ Match 6",
+          "MATCH7": "⌀ Match 7",
+          "SCHNITTWETTKAMPFTAGE1": "⌀ Tag 1",
+          "SCHNITTWETTKAMPFTAGE2": "⌀ Tag 2",
+          "SCHNITTWETTKAMPFTAGE3": "⌀ Tag 3",
+          "SCHNITTWETTKAMPFTAGE4": "⌀ Tag 4",
+          "SAISONSCHNITT": "⌀ Saison"
         }
       }
     }
@@ -745,14 +832,14 @@
       "NOTIFICATION": {
         "DELETE": {
           "TITLE": "Vereinsmitglieder löschen",
-          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_PLATZHALTER_MITGLIED": {
-          "TITLE": "Platzhalter DSB Mitglied löschen",
+          "TITLE": "Platzhalter Vereinsmitglied löschen",
           "DESCRIPTION": "Sie können diesen Schützen nicht löschen."
         },
         "EDIT_PLATZHALTER_MITGLIED": {
-          "TITLE": "Platzhalter DSB Mitglied bearbeiten",
+          "TITLE": "Platzhalter Vereinsmitglied bearbeiten",
           "DESCRIPTION": "Sie können diesen Schützen nicht bearbeiten."
         }
       }
@@ -825,7 +912,8 @@
         },
         "SAVE": "Speichern",
         "UPDATE": "Aktualisieren",
-        "DELETE": "Löschen"
+        "DELETE": "Löschen",
+        "NEW_LOWEST": "Untergeordnete Liga erzeugen"
       },
       "NOTIFICATION": {
         "DELETE": {
@@ -881,7 +969,7 @@
       }
     },
     "VEREIN_DETAIL": {
-      "TITLE": "Verein - Details",
+      "TITLE": "Details zum Verein",
       "FORM": {
         "VEREIN_NAME": {
           "LABEL": "Vereinsname",
@@ -904,9 +992,9 @@
           "ERROR": "Bitte eine gültige Webseite angeben."
         },
         "VEREIN_DESCRIPTION": {
-          "LABEL": "Freitext",
+          "LABEL": "Beschreibung",
           "PLACEHOLDER": "Bitte eine kurze Vorstellung eingeben",
-          "ERROR": "Bitte einen gültigen Freitext eingeben."
+          "ERROR": "Bitte eine gültige Beschreibung eingeben."
         },
         "VEREIN_ICON": {
           "LABEL": "Vereinslogo",
@@ -1204,6 +1292,11 @@
           "PLACEHOLDER": "Bitte eine Vereinsid eingeben",
           "ERROR": "Bitte eine gültige Vereinsid eingeben."
         },
+        "BEITRITTSDATUM": {
+          "LABEL": "Beitrittsdatum",
+          "PLACEHOLDER": "Bitte ein Beitrittsdatum eingeben",
+          "ERROR": "Bitte ein gültiges Beitrittsdatum eingeben."
+        },
         "KAMPFRICHTER": {
           "LABEL": "Kampfrichterlizenz"
         },
@@ -1215,26 +1308,29 @@
       },
       "NOTIFICATION": {
         "DELETE": {
-          "TITLE": "Vereinsmitglieder löschen",
-          "DESCRIPTION": "Wollen Sie das Vereinsmitglieder mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
+          "TITLE": "Vereinsmitglied löschen",
+          "DESCRIPTION": "Wollen Sie das Vereinsmitglied mit der ID=%s wirklich löschen? Der Datensatz ist danach nicht mehr verfügbar."
         },
         "DELETE_SUCCESS": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das Vereinsmitglieder wurde erfolgreich gelöscht."
+          "DESCRIPTION": "Das Vereinsmitglied wurde erfolgreich gelöscht."
         },
         "DELETE_FAILURE": {
           "TITLE": "Fehler beim Löschen",
-          "DESCRIPTION": "Das Vereinsmitglieder konnte nicht gelöscht werden."
+          "DESCRIPTION": "Das Vereinsmitglied konnte nicht gelöscht werden."
         },
         "SAVE": {
           "TITLE": "Erfolg",
-          "DESCRIPTION": "Das Vereinsmitglieder wurde erfolgreich gespeichert."
+          "DESCRIPTION": "Das Vereinsmitglied wurde erfolgreich gespeichert."
         },
         "DUPLICATE": {
           "TITLE": "Hinzufügen fehlgeschlagen",
           "DESCRIPTION": "Die Mitgliedsnummer ist bereits vergeben. Bitte wählen sie eine andere Mitgliedsnummer."
         }
       }
+    },
+    "DSBMITGLIEDER_INFO": {
+      "TITLE": "Vereinsmitglieder - Info"
     },
     "VERANSTALTUNG": {
       "TITLE": "Veranstaltung - Übersicht",
@@ -1324,6 +1420,11 @@
           "LABEL": "Meldedeadline",
           "PLACEHOLDER": "Bitte geben Sie ein Datum für die Meldedeadline ein",
           "ERROR": "Bitte geben Sie ein gültiges Datum ein (Format: JJJJ-MM-TT)."
+        },
+        "VERANSTALTUNGSPHASE": {
+          "LABEL": "Phase der Veranstaltung",
+          "PLACEHOLDER": "Bitte geben Sie eine gültige Phase für die Veranstaltungsphase ein",
+          "ERROR": "Bitte geben sie eine gültige Veranstaltungsphase an"
         },
         "LIGANAME": {
           "LABEL": "Liganame",
@@ -1463,6 +1564,14 @@
         "UPDATE_FAILURE": {
           "TITLE": "Update fehlgeschlagen",
           "DESCRIPTION": "Die Veranstaltung hat eine höhere Anzahl an Mannschaften als die neue maximale Anzahl erlaubt."
+        },
+        "UPDATE_VERANSTALTUNG_FAILURE": {
+         "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Die Umstellung auf Laufend ist nicht möglich, da keine Matches existieren, bitte generieren Sie Matches. Dadurch wird die Veranstaltung automatisch auf Laufend gestellt."
+        },
+        "UPDATE_DATABASE_FAILURE": {
+          "TITLE": "Update fehlgeschlagen",
+          "DESCRIPTION": "Eine Datenbankabfrage ist gescheitert und die Update-Anfrage wurde abgelehnt."
         }
       }
     },

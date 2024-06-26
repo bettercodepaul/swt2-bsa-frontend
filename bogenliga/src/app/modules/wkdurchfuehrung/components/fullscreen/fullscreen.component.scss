@@ -1,114 +1,72 @@
-// Base styles
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: 5px;
+  margin: 1vw;
+  height: 1vh;
+  flex-wrap: wrap;
 }
 
-// Container for logo and headers
 .logo-and-header-container {
   display: flex;
   align-items: center;
+  margin-left: 1vw;
+  flex: 1;
 }
 
-.header-container {
-  display: flex;
-  flex-direction: column;
-  margin-left: 40px;
-}
-
-// Styling for the logo container
 .logo-container {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-
-  img.logo {
-    width: 150px;
-    height: auto;
-    display: block;
-  }
+  margin-right: 1vw;
+  margin-top: 0.5vh;
 }
 
-// Styling for the veranstaltung header
+img.logo {
+  width: 4vw;
+  height: auto;
+  display: block;
+}
+
 .veranstaltung-header {
-  font-size: 32px;
+  font-size: clamp(40px, 8vw, 70px);
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
-// Styling for the wettkampftag header
 .wettkampftag-header {
-  font-size: 28px;
+  font-size: clamp(20px, 8vw, 35px);
   font-weight: bold;
-  margin-top: 40px;
-  background-color: #f0f0f0;
-  border-radius: 15px;
-  padding: 10px;
+  padding: 0.5vw;
+  margin-left: 2vw;
 }
 
-// Styling for the time box
 .time-box {
-  font-size: 40px;
+  font-size: clamp(30px, 8vw, 50px);
   font-weight: bold;
   display: flex;
   align-items: center;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border-radius: 15px;
-  margin-left: auto;
-  margin-top: -10px;
-  margin-right: 20px;
-
-  &:before {
-    content: '🕒';
-    margin-right: 15px;
-    font-size: 15px;
-  }
+  padding: 1vw;
+  margin-top: 1vh;
+  flex: 1;
+  justify-content: flex-end;
 }
 
-// Table styles
+.time-box:before {
+  content: '🕒';
+  margin-right: 1vw;
+  font-size: clamp(12px, 2.5vw, 25px);
+}
+
+.table-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1vh;
+}
+
 .table {
   width: 100%;
-  margin-top: 100px;
-  margin-bottom: 40px;
-  border-collapse: separate;
-  border-spacing: 0;
+  margin: 2vw;
+  border-collapse: collapse;
   background-color: white;
   border-radius: 10px;
-
-  // Styles for table header
-  thead {
-    background-color: #ffffff;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-
-    th {
-      text-align: left;
-      padding: 8px;
-    }
-  }
-
-  // Styles for table cells
-  th, td {
-    text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-
-  tbody {
-
-    tr:nth-child(odd) {
-      background-color: #f8f8f8;
-    }
-
-    tr:last-child td:first-child {
-      border-bottom-left-radius: 10px;
-    }
-
-    tr:last-child td:last-child {
-      border-bottom-right-radius: 10px;
-    }
-  }
+  font-size: clamp(12px, 2vw, 24px);
 }
