@@ -700,12 +700,8 @@ describe('Admin User tests', function() {
       if (!body.text().includes('69')) {
         cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
         cy.wait(1000)
-        //cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
         cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
-        cy.wait(15000)
-        cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-        cy.wait(6000)
-        //cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
+        cy.wait(1000)
         cy.get('#mannschaftSaveButton').click()
         cy.wait(6000)
         cy.get('#OKBtn1').click()
@@ -730,8 +726,6 @@ describe('Admin User tests', function() {
     cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().clear().type('76')
     cy.wait(9000)
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-    cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-update-button]').click()
     cy.wait(9000)
     cy.get('#OKBtn1').click()
@@ -755,6 +749,16 @@ describe('Admin User tests', function() {
     cy.get('button.action-btn-primary:contains("Ja")').click()
     cy.wait(500)
     cy.get('tbody').should('not.contain.text', '76')
+    cy.wait(1000)
+    cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
+    cy.wait(1000)
+    cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
+    cy.wait(1000)
+    cy.get('#mannschaftSaveButton').click()
+    cy.wait(6000)
+    cy.get('#OKBtn1').click()
+    cy.wait(1000)
+    cy.contains('69')
   })
 
   /**
@@ -1004,6 +1008,43 @@ describe('Admin User tests', function() {
     cy.wait(1000)
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
 
+  })
+
+  /**
+   * This test checks all functions of the queue
+   */
+
+    it('Filtert Teams basierend auf Suchbegriff', () => {
+      cy.viewport(2235, 1095)
+
+      cy.get('.quicksearch-container > .custom-quicksearch > .quicksearch > .input-group > #undefined').click()
+
+      cy.get('.quicksearch-container > .custom-quicksearch > .quicksearch > .input-group > #undefined').type('69')
+      cy.wait(5000)
+      cy.get('tbody > tr > td > bla-actionbutton > #undefined').click()
+      cy.wait(5000)
+      cy.get('.modal-dialog > .modal-content > .modal-footer > #OKBtn1 > #OKBtn1').click()
+      cy.wait(5000)
+      cy.get('#undefined > tbody > #payload-id-1217 > #name-1217 > span').click()
+
+      /*// Überprüfen, ob die Tabelle sichtbar ist
+      cy.get('h2').contains('Mannschaften ohne Veranstaltung').should('be.visible');
+
+      // Eingabe eines Suchbegriffs und Auslösen der Suche
+      const searchTerm = '69';
+      cy.get('.custom-quicksearch input').type(searchTerm).should('have.value', searchTerm);
+
+      // Warten auf die API-Antwort nach der Suche
+      cy.wait(1000);
+
+      // Überprüfen, ob die Tabelle der Teams aktualisiert wurde
+      cy.get('tbody tr').should('have.length.greaterThan', 0); // Stellt sicher, dass mindestens ein Ergebnis angezeigt wird
+
+      // Optional: Überprüfen, ob die angezeigten Ergebnisse den Suchkriterien entsprechen
+      cy.get('tbody tr').each(($row) => {
+        cy.wrap($row).find('td').eq(0).should('contain', searchTerm); // Überprüft, ob der Teamname im ersten <td> enthalten ist
+      });
+    });*/
   })
 
   /**

@@ -193,9 +193,9 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
   public onSave(ignore: any) {
     this.saveLoading = true;
     // persist
-    this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id
-    this.currentMannschaft.veranstaltungId = this.currentVeranstaltung.id; // set selected veranstaltung id
+    this.currentMannschaft.vereinId = this.currentVerein.id; // Set selected verein id// set selected veranstaltung id
     this.currentMannschaft.benutzerId = 1;
+    this.currentMannschaft.veranstaltungId = null;
     // within this method it will be checked if the mannschaftsnummer
     // is already used and an error will be displayed in case
     if (!this.existsMannschaftsNummer(this.currentMannschaft.nummer)) {
