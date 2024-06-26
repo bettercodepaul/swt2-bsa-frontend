@@ -80,8 +80,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedYearId: number;
   public selectedItemId: number;
   private aktivesSportjahr: number;
+
   public selectedYearForVeranstaltung: number; // In der Tabelle selektiertes Sportjahr
   // private wettkampfDataProviderService: WettkampfDataProviderService = WettkampfDataProviderService;
+
   private currentWettkampftag: number;
   public loadingWettkampftag = false;
   public wettkampf_ids: number[];
