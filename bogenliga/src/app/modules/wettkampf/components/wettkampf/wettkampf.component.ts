@@ -498,18 +498,28 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.passen = [];
     this.wettkaempfe = [];
     this.rows = [];
+    this.mannschaften = [];
+
+    this.currentVerein.name = undefined
+    this.currentVerein.regionName = ""
+    this.currentVerein.website = ""
+    this.currentVerein.description = ""
+    this.currentVerein.icon = ""
     this.cleanLineChart();
   }
 
   // backend-calls to get data from DB
   public async loadVeranstaltungen(sportjahr) {
+    console.log(sportjahr);
+    this.clear()
     this.loadingData = true;
     this.cleanLineChart();
     await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
               .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
               .catch(() => {
-                this.veranstaltungen = [];
+                this.veranstaltungen = []
                 this.currentVeranstaltung = null;
+                this.loadingData = false;
               });
   }
 
@@ -562,8 +572,19 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async loadJahre() {
-    const responseJahre = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
-    this.jahre = responseJahre.payload;
+    await this.veranstaltungsDataProvider.findAllSportyearDestinct()
+      .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
+        this.handleSuccessLoadJahre(response.payload);
+      })
+      .catch(() => {
+        this.jahre = []
+        this.loadingData = false
+      })
+
+  }
+
+  private handleSuccessLoadJahre(response: SportjahrVeranstaltungDO[]) {
+    this.jahre = response;
     this.currentJahr = this.jahre[0].sportjahr;
   }
 
@@ -571,6 +592,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.wettkampfDataProviderService.findAllByVeranstaltungId(veranstaltungsId)
               .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
               .catch(() => this.handleLoadWettkaempfe([]));
+    this.wettkampftage = this.alleTage.slice(0, this.wettkaempfe.length);
+    this.selectedWettkampfTag = this.alleTage[0];
   }
 
   public async loadWettkaempfeByCurrentMannschaft() {

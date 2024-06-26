@@ -80,12 +80,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedYearId: number;
   public selectedItemId: number;
   private aktivesSportjahr: number;
-
-  public selectedYearForVeranstaltung: number; // In der Tabelle selektiertes Sportjahr
-  // private wettkampfDataProviderService: WettkampfDataProviderService = WettkampfDataProviderService;
-
+  public selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
+  private istURLkorrekt: boolean = false;
   private currentWettkampftag: number;
-  public loadingWettkampftag = false;
+  public loadingWettkampftag = true;
   public wettkampf_ids: number[];
   public selectedWettkampfTag: Wettkampftag;
   public wettkampftage: Array<Wettkampftag> = [];
@@ -105,7 +103,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     private onOfflineService: OnOfflineService,
     private currentUserService: CurrentUserService,
     private einstellungenDataProvider: EinstellungenProviderService,
-    private selectedLigaDataprovider: SelectedLigaDataprovider,
+    private wettkampfDataProviderService: WettkampfDataProviderService
   ) {
     super();
     this.sessionHandling = new SessionHandling(this.currentUserService, this.onOfflineService);
@@ -121,7 +119,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
-          params[ID_PATH_PARAM] === 'ligaid' ? this.hasID = false : undefined;
+          params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
           this.selectedYearForVeranstaltung !== undefined && this.hasID
             ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
         } else {
@@ -132,7 +130,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     }
   }
 
-  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number) {
+  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number){
     this.veranstaltungsDataProvider.findByLigaIdAndYear(urlLigaID, selectedSportYear)
         .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungFailure(response));
@@ -141,7 +139,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDO>): void {
     this.hasVeranstaltung = true;
     this.selectedItemId = response.payload.id;
-    this.onSelectVeranstaltung();
   }
 
   private handleFindVeranstaltungFailure(error: any): void {
@@ -195,6 +192,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
            */
 
           this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung); // -> Ligatabelle
+        }
+        if(responseVeranstaltung.payload.length > 0) {
           this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);  // -> "Liga"
           if (!this.availableYears.includes(year)) {
             this.availableYears.push(year); // -> "Sportjahr"
@@ -206,6 +205,10 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       if (!this.onOfflineService.isOffline()) {
         this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
       }
+      this.selectedYearForVeranstaltung = this.availableYears[0].sportjahr;
+      this.veranstaltungenForYear = this.loadedVeranstaltungen.get(this.selectedYearForVeranstaltung);
+      this.loadVeranstaltung(this.veranstaltungenForYear[0]);
+
       // Prüfe ob das aktive Sportjahr in der Liste der verfügbaren Jahre ist
       for (const sportjahr of this.availableYears) {
         // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
@@ -221,7 +224,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       if (this.availableYears.length > 0) {
         // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (IndexOfSelectedYearInAvailableYears = 0)
         selectedYear.push(this.availableYears[indexOfSelectedYearInAvailableYears]);
-        this.onSelectYear(); // automatische Auswahl nur bei vorhandenen Daten
       }
     } catch (e) {
       this.loading = false;
@@ -270,10 +272,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     const buttonVisibility: HTMLInputElement = document.querySelector('#Button');
     buttonVisibility.style.display = 'block';
     this.veranstaltungenForYear = [];
-    this.selectedYearForVeranstaltung = this.availableYears[0].sportjahr;
     this.veranstaltungenForYear = this.loadedVeranstaltungen.get(this.selectedYearForVeranstaltung);
     this.selectedVeranstaltungId = this.veranstaltungenForYear[0].id;
     this.hasID ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
+    this.selectedVeranstaltung = this.veranstaltungenForYear[0];
+    this.loadVeranstaltung(this.selectedVeranstaltung);
+    //this.loadWettkaempfe(this.selectedVeranstaltungId);
   }
 
   public async onSelectVeranstaltung() {
@@ -284,18 +288,18 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
      */
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
     this.buttonForward = this.selectedVeranstaltung.id;
-    // await this.loadWettkaempfe(this.selectedVeranstaltungId);
-    this.loadLigaTableRows();
-    const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
-    this.router.navigate([link]);
+    this.loadVeranstaltung(this.selectedVeranstaltung);
+    //const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
+    //this.router.navigate([link]);
   }
 
-  /*public async loadWettkaempfe(veranstaltungsId: number) {
+  public async loadWettkaempfe(veranstaltungsId: number) {
     await this.wettkampfDataProviderService.findAllByVeranstaltungId(veranstaltungsId)
               .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
               .catch(() => this.handleLoadWettkaempfe([]));
   }
   public async handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
+    this.wettkampf_ids = Array();
     this.wettkampftage = [];
     for (let index = 0; index < wettkaempfe.length; index++) {
       this.wettkampf_ids.push(wettkaempfe[index].id);
@@ -304,8 +308,27 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     for (let i = 0; i < currentWettkampftag; i++) {
       this.wettkampftage.push(this.alleTage[i]);
     }
+
+    let today = new Date();
+    let currenWettkampf = wettkaempfe[0];
+    for(const aktuellerWettkampftag of wettkaempfe){
+      let aktuellerWettkampftagsDatum = new Date(aktuellerWettkampftag.wettkampfDatum).getDate();
+      if(today.getDate() > aktuellerWettkampftagsDatum){
+        currenWettkampf = aktuellerWettkampftag;
+      }
+    }
+    this.selectedWettkampfTag = this.wettkampftage[currenWettkampf.wettkampfTag - 1];
+    this. loadLigaTableWettkampftag(currenWettkampf.id);
   }
-  */
+
+  //Der link funktioniert wurde aukommentiert, da die ligaId Bugs verursacht
+  private loadVeranstaltung(veranstaltung: VeranstaltungDO){
+    this.selectedVeranstaltung = veranstaltung;
+    this.loadWettkaempfe(this.selectedVeranstaltung.id);
+    //const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
+    //this.router.navigate([link]);
+  }
+
   public onSelectWettkampftag() {
 
     if (this.selectedWettkampfTag.id === 1) {

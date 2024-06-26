@@ -12,7 +12,7 @@ export const WETTKAMPF_TABLE_EINZEL_CONFIG: TableConfig = {
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
       propertyName:   'dsbMitgliedName',
-      width:          30,
+      width:          200,
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH',
