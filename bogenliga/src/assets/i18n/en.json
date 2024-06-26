@@ -380,6 +380,12 @@
         },
         "OPTION5": {
           "LABEL": "Archer statistics across all leagues"
+        },
+        "AKTUELLE_MANNSCHAFT": {
+          "LABEL": "Current team"
+        },
+        "ALLE_MANNSCHAFTEN": {
+          "LABEL": "All teams"
         }
       },
       "FORM": {

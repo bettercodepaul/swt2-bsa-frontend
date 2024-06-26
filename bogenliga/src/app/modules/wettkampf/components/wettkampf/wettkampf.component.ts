@@ -584,15 +584,26 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.passen = [];
     this.wettkaempfe = [];
     this.rows = [];
+    this.mannschaften = [];
+
+    this.currentVerein.name = undefined
+    this.currentVerein.regionName = ""
+    this.currentVerein.website = ""
+    this.currentVerein.description = ""
+    this.currentVerein.icon = ""
   }
 
   // backend-calls to get data from DB
   public async loadVeranstaltungen(sportjahr) {
     console.log(sportjahr);
+    this.clear()
     this.loadingData = true;
     await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
               .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
-              .catch(() => this.veranstaltungen = []);
+              .catch(() => {
+                this.veranstaltungen = []
+                this.loadingData = false;
+              });
 
   }
 
@@ -646,8 +657,19 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async loadJahre() {
-    const responseJahre = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
-    this.jahre = responseJahre.payload;
+    await this.veranstaltungsDataProvider.findAllSportyearDestinct()
+      .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
+        this.handleSuccessLoadJahre(response.payload);
+      })
+      .catch(() => {
+        this.jahre = []
+        this.loadingData = false
+      })
+
+  }
+
+  private handleSuccessLoadJahre(response: SportjahrVeranstaltungDO[]) {
+    this.jahre = response;
     this.currentJahr = this.jahre[0].sportjahr;
   }
 

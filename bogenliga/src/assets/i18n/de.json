@@ -79,11 +79,11 @@
       "TITLE": "Wettkampftageschnitte pro Schütze",
       "GEWAEHLTE_VERANSTALTUNG": "Gewählte Veranstaltung: ",
       "GEWAEHLTE_MANNSCHAFT": "Gewählte Mannschaft: ",
-      "WETTKAMPFTAGEINS": "Wettkampftag 1",
-      "WETTKAMPFTAGZWEI": "Wettkampftag 2",
-      "WETTKAMPFTAGDREI": "Wettkampftag 3",
-      "WETTKAMPFTAGVIER": "Wettkampftag 4",
-      "WETTKAMPFTAGESCHNITT": "WettkampftageSchnitt"
+      "WETTKAMPFTAGEINS": "Tag 1",
+      "WETTKAMPFTAGZWEI": "Tag 2",
+      "WETTKAMPFTAGDREI": "Tag 3",
+      "WETTKAMPFTAGVIER": "Tag 4",
+      "WETTKAMPFTAGESCHNITT": "⌀ Wettkampftage"
     },
     "TITEL": {
       "VERANSTALTUNG": "Ligen-Auswahl"
@@ -409,6 +409,12 @@
         },
         "OPTION5": {
           "LABEL": "Saisonschnittstatistik"
+        },
+        "AKTUELLE_MANNSCHAFT": {
+          "LABEL": "Aktuelle Mannschaft"
+        },
+        "ALLE_MANNSCHAFTEN": {
+          "LABEL": "Alle Mannschaften"
         }
       },
       "FORM": {
@@ -441,9 +447,9 @@
           "SATZPUNKTE": "Satzpunkte",
           "MATCHPUNKTE": "Matchpunkte",
           "SCHUETZE": "Schütze",
-          "DURCHSCHPFEILWERTMATCH": "Durchschnitts Pfeilwert pro Match",
-          "DURCHSCHPFEILWERTJAHR": "Durchschnitts Pfeilwert pro Jahr",
-          "RUEKENNUMMER": "Rückennummer",
+          "DURCHSCHPFEILWERTMATCH": "⌀ Pfeilwert pro Match",
+          "DURCHSCHPFEILWERTJAHR": "⌀ Pfeilwert pro Jahr",
+          "RUEKENNUMMER": "Rückennr",
           "MATCH1": "⌀ Match 1",
           "MATCH2": "⌀ Match 2",
           "MATCH3": "⌀ Match 3",
@@ -451,11 +457,11 @@
           "MATCH5": "⌀ Match 5",
           "MATCH6": "⌀ Match 6",
           "MATCH7": "⌀ Match 7",
-          "SCHNITTWETTKAMPFTAGE1": "⌀ Wettkampftage 1",
-          "SCHNITTWETTKAMPFTAGE2": "⌀ Wettkampftage 2",
-          "SCHNITTWETTKAMPFTAGE3": "⌀ Wettkampftage 3",
-          "SCHNITTWETTKAMPFTAGE4": "⌀ Wettkampftage 4",
-          "SAISONSCHNITT": "Saisonschnitt"
+          "SCHNITTWETTKAMPFTAGE1": "⌀ Tag 1",
+          "SCHNITTWETTKAMPFTAGE2": "⌀ Tag 2",
+          "SCHNITTWETTKAMPFTAGE3": "⌀ Tag 3",
+          "SCHNITTWETTKAMPFTAGE4": "⌀ Tag 4",
+          "SAISONSCHNITT": "⌀ Saison"
         }
       }
     }
