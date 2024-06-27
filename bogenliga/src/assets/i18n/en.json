@@ -110,15 +110,7 @@
       }
     },
     "BUTTONS": {
-      "EINZEL_ALS_PDF": {
-        "LABEL": "Individual statistics as PDF"
-      },
-      "GESAMT_ALS_PDF": {
-        "LABEL": "Overall statistics as PDF"
-      },
-      "TAGESUEBERSICHT_ALS_PDF": {
-        "LABEL": "Daily overview as PDF"
-      }
+      "STATISTIK_DRUCKEN": "Print statistics"
     }
   },
   "MANNSCHAFTSMITGLIEDER": {

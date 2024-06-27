@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
-import {CommonComponentDirective, toTableRows} from '@shared/components';
+import {ButtonSize, ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
@@ -215,18 +215,60 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.init();
   }
 
-  async init() {
+async init() {
     await this.loadJahre();
     await this.loadVeranstaltungen(this.currentJahr);
     this.selectedWettkampfTag =  this.alleTage[0];
-  }
+}
 
-  // dynamic change of x-Axis Label
-  public updateChartOptions(newXAxisLabel: string) {
+printStatistics() {
+    // Get the printable content
+    const dropdownContents = document.getElementById('DropdownForPrintOut').innerHTML;
+    const statsAndGraphContents = document.getElementById('StatsAndGraphForPrintOut').innerHTML;
+
+    // Create a new container for printing
+    const printContainer = document.createElement('div');
+    printContainer.innerHTML = dropdownContents + statsAndGraphContents;
+
+    // Create an iframe for printing
+    const printFrame = document.createElement('iframe');
+    document.body.appendChild(printFrame);
+
+    const printDocument = printFrame.contentDocument || printFrame.contentWindow.document;
+    printDocument.open();
+
+    // Write the HTML and include the styles
+    printDocument.write('<html><head><title>Print</title>');
+
+    // Clone and append the current stylesheets to the print document
+    const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'));
+    styles.forEach(style => {
+      printDocument.write(style.outerHTML);
+    });
+
+    printDocument.write('</head><body>');
+    printDocument.write(printContainer.innerHTML);
+    printDocument.write('</body></html>');
+    printDocument.close();
+
+    // Wait for the content to be loaded and then print
+    printFrame.onload = () => {
+      printFrame.contentWindow.focus();
+      printFrame.contentWindow.print();
+
+      // Clean up by removing the iframe after printing
+      setTimeout(() => {
+        document.body.removeChild(printFrame);
+      }, 1000);
+    };
+}
+
+// dynamic change of x-Axis Label
+public updateChartOptions(newXAxisLabel: string) {
     this.lineChartOptions.scales.xAxes[0].scaleLabel.labelString = newXAxisLabel;
     // re-render the chart
     this.lineChartOptions = { ...this.lineChartOptions };
-  }
+}
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
    *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
@@ -1129,4 +1171,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     // Simply changes index of the table depending on the selected wettkampftag
     this.currentWettkampftag = this.selectedWettkampfTag.id;
   }
+
+  ButtonSize = ButtonSize;
+  ButtonType = ButtonType;
 }

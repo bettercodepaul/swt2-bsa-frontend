@@ -71,3 +71,14 @@ h2 {
   width: 900px;
   height: 650px;
 }
+
+@media print {
+  body * {
+    display: none;
+  }
+  #DropdownForPrintOut, #DropdownForPrintOut *,
+  #StatsAndGraphForPrintOut, #StatsAndGraphForPrintOut * {
+    display: block;
+  }
+}
+

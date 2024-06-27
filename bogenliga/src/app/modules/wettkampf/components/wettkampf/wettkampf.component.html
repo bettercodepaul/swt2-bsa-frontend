@@ -14,6 +14,7 @@
       <h2 style="margin-top: 0">{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.VERANSTALTUNG' | translate }}</h2>
 
       <!-- Jahr -->
+      <div id="DropdownForPrintOut">
       <div class="row print1">
         <label class="form-label-box col-form-label">
           <span>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.FORM.SPORTJAHR.LABEL' | translate }}</span>
@@ -26,11 +27,11 @@
                   [disabled]="loadingData"
                   (ngModelChange)="loadVeranstaltungen(currentJahr)"
           >
-            <option *ngFor="let Jahr of jahre"> {{Jahr.sportjahr}}</option>
+            <option *ngFor="let Jahr of jahre"> {{ Jahr.sportjahr }}</option>
           </select>
-          <div class="invalid-feedback">
-            {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
-          </div>
+        </div>
+        <div class="invalid-feedback">
+          {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
         </div>
       </div>
 
@@ -50,7 +51,9 @@
               (ngModelChange)="onSelect()"
               [disabled]="loadingData || veranstaltungen.length === 0"
             >
-              <option *ngFor="let veranstaltung of veranstaltungen" [ngValue]="veranstaltung"> {{veranstaltung.name}} </option>
+              <option *ngFor="let veranstaltung of veranstaltungen"
+                      [ngValue]="veranstaltung"> {{ veranstaltung.name }}
+              </option>
             </select>
           </div>
         </div>
@@ -70,7 +73,9 @@
                     [(ngModel)]="currentMannschaft"
                     [disabled]="loadingData || mannschaften.length === 0"
                     (ngModelChange)="onSelectVerein()">
-              <option *ngFor="let mannschaft of mannschaften" [ngValue]="mannschaft"> {{mannschaft.name}}</option>
+              <option *ngFor="let mannschaft of mannschaften"
+                      [ngValue]="mannschaft"> {{ mannschaft.name }}
+              </option>
             </select>
             <div class="invalid-feedback">
               {{ 'MANAGEMENT.REGION_DETAIL.FORM.REGION_TYP.ERROR' | translate }}
@@ -78,6 +83,7 @@
           </div>
         </div>
       </div>
+  </div>
 
 
       <!-- Details zum Verein -->
@@ -129,7 +135,6 @@
 
       <!-- Überschrift Statistiken -->
       <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.STATISTIKEN' | translate }}</h2>
-
 
       <!-- Filter Buttons für die verschiedenen Tabellen -->
       <div style="margin-top: 20px">
@@ -242,18 +247,20 @@
           </div>
         </div>
       </div>
+      <div style="margin-top: 20px">
+      <bla-statistik-filter-button
+        id="printButton"
+        [buttonType]="ButtonType.PRIMARY"
+        [buttonSize]="ButtonSize.NORMAL"
+        [active]="!loadingData"
+        [disabled]="loadingData"
+        (onClick)="printStatistics()"
+      >
+        {{ 'WETTKAEMPFE.BUTTONS.STATISTIK_DRUCKEN' | translate }}
+      </bla-statistik-filter-button>
+      </div>
 
-
-      <bla-download-actionbutton
-        class = "hidden"
-        id = "gesamtdruckButton"
-        [id]="'downloadGesamtstatistik'"
-        [loading]="loadingData"
-        [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
-        [iconClass]="'file-download'"
-        [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
-      </bla-download-actionbutton>
-
+      <div id="StatsAndGraphForPrintOut">
       <!-- Table for all Statistiken -->
       <div class="row print1">
         <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em"
@@ -281,23 +288,14 @@
           > </canvas>
         </div>
       </div>
-        <!-- Button - Einzelstatistik als PDF -->
-        <bla-download-actionbutton
-          class = "hidden"
-          id = "einzeldruckButton"
-          [id]="'downloadEinzelstatistik'"
-          [loading]="loadingData"
-          [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
-          [iconClass]="'file-download'"
-          [fileName]="'Einzelstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.EINZEL_ALS_PDF.LABEL'| translate}}
-        </bla-download-actionbutton>
 
       <div class="form-group row">
         <div class="col-sm-3"></div>
         <div class="col-sm-9 button-box">
         </div>
       </div>
-
+      </div>
     </form>
   </div>
+
 </bla-common-dialog>

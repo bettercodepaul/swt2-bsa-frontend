@@ -115,15 +115,7 @@
       }
     },
     "BUTTONS": {
-      "EINZEL_ALS_PDF": {
-        "LABEL": "Einzelstatistik als PDF"
-      },
-      "GESAMT_ALS_PDF": {
-        "LABEL": "Gesamtstatistik als PDF"
-      },
-      "TAGESUEBERSICHT_ALS_PDF": {
-        "LABEL": "Tagesübersicht als PDF"
-      }
+      "STATISTIK_DRUCKEN": "Statistik drucken"
     }
   },
 
