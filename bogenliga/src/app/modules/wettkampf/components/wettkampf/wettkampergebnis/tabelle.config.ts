@@ -8,6 +8,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH',
       propertyName:   'matchNr',
       width:          5,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MANNSCHAFT',
@@ -75,13 +76,11 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZPUNKTE',
       propertyName:   'satzpunkte',
       width:          20,
-      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCHPUNKTE',
       propertyName:   'matchpunkte',
       width:          20,
-      sortable: true
     }
   ],
 
