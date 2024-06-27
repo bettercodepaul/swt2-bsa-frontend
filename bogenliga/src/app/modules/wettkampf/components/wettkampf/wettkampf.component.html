@@ -130,7 +130,6 @@
       <!-- Überschrift Statistiken -->
       <h2>{{ 'MANNSCHAFTEN.MANNSCHAFTEN.HEADING.STATISTIKEN' | translate }}</h2>
 
-
       <!-- Filter Buttons für die verschiedenen Tabellen -->
       <div style="margin-top: 20px">
         <bla-statistik-filter-button
@@ -242,17 +241,7 @@
         </div>
       </div>
 
-
-      <bla-download-actionbutton
-        class = "hidden"
-        id = "gesamtdruckButton"
-        [id]="'downloadGesamtstatistik'"
-        [loading]="loadingData"
-        [downloadUrl]="onButtonDownload('pdf/Gesamtstatistik')"
-        [iconClass]="'file-download'"
-        [fileName]="'Gesamtstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.GESAMT_ALS_PDF.LABEL'| translate}}
-      </bla-download-actionbutton>
-
+      <div id="statisticsSection">
       <!-- Table for all Statistiken -->
       <div class="row print1">
         <div id="Table0" [hidden]="!isStatistikAllowed" style="padding:1em"
@@ -280,23 +269,24 @@
           > </canvas>
         </div>
       </div>
-        <!-- Button - Einzelstatistik als PDF -->
-        <bla-download-actionbutton
-          class = "hidden"
-          id = "einzeldruckButton"
-          [id]="'downloadEinzelstatistik'"
-          [loading]="loadingData"
-          [downloadUrl]="onButtonDownload('pdf/Einzelstatistik')"
-          [iconClass]="'file-download'"
-          [fileName]="'Einzelstatistik.pdf'"> {{'WETTKAEMPFE.BUTTONS.EINZEL_ALS_PDF.LABEL'| translate}}
-        </bla-download-actionbutton>
 
       <div class="form-group row">
         <div class="col-sm-3"></div>
         <div class="col-sm-9 button-box">
         </div>
       </div>
-
+      </div>
     </form>
   </div>
+
+  <bla-button
+    id="printButton"
+    [buttonType]="ButtonType.PRIMARY"
+    [buttonSize]="ButtonSize.NORMAL"
+    [disabled]="false"
+    (onClick)="printStatistics()"
+  >
+    {{ 'WETTKAEMPFE.BUTTONS.STATISTIK_DRUCKEN' | translate }}
+  </bla-button>
+
 </bla-common-dialog>

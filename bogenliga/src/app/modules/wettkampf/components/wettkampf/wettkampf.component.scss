@@ -71,3 +71,18 @@ h2 {
   width: 900px;
   height: 650px;
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #statisticsSection, #statisticsSection * {
+    visibility: visible;
+  }
+  #statisticsSection {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
-import {CommonComponentDirective, toTableRows} from '@shared/components';
+import {ButtonSize, ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
@@ -648,6 +648,14 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     }
     return placeholder;
   }
+  printStatistics() {
+    const printContents = document.getElementById('statisticsSection').innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  }
 
   public onButtonDownloadUebersicht(path: string): string {
     return new UriBuilder()
@@ -1073,4 +1081,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     // Simply changes index of the table depending on the selected wettkampftag
     this.currentWettkampftag = this.selectedWettkampfTag.id;
   }
+
+  ButtonSize = ButtonSize;
+  ButtonType = ButtonType;
 }
