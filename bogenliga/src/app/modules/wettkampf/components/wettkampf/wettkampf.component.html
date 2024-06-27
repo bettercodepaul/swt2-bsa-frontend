@@ -246,6 +246,18 @@
           </div>
         </div>
       </div>
+      <div style="margin-top: 20px">
+      <bla-statistik-filter-button
+        id="printButton"
+        [buttonType]="ButtonType.PRIMARY"
+        [buttonSize]="ButtonSize.NORMAL"
+        [active]="!loadingData"
+        [disabled]="loadingData"
+        (onClick)="printStatistics()"
+      >
+        {{ 'WETTKAEMPFE.BUTTONS.STATISTIK_DRUCKEN' | translate }}
+      </bla-statistik-filter-button>
+      </div>
 
       <div id="StatsAndGraphForPrintOut">
       <!-- Table for all Statistiken -->
@@ -284,15 +296,5 @@
       </div>
     </form>
   </div>
-
-  <bla-button
-    id="printButton"
-    [buttonType]="ButtonType.PRIMARY"
-    [buttonSize]="ButtonSize.NORMAL"
-    [disabled]="false"
-    (onClick)="printStatistics()"
-  >
-    {{ 'WETTKAEMPFE.BUTTONS.STATISTIK_DRUCKEN' | translate }}
-  </bla-button>
 
 </bla-common-dialog>

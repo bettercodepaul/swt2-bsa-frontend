@@ -234,7 +234,18 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     // Restore the original contents of the body
     document.body.innerHTML = originalContents;
+
+    // Re-bind Angular component to the DOM
+    this.reinitializeComponent();
   }
+
+  /**
+   * Reinitialize the Angular component to restore event listeners and bindings.
+   */
+  reinitializeComponent() {
+    this.ngOnInit();
+  }
+
 
   //dynamic change of x-Axis Label
   public updateChartOptions(newXAxisLabel: string) {
