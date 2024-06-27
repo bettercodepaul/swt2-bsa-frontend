@@ -7,7 +7,8 @@ export const WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG: TableConfig = {
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
       propertyName:   'dsbMitgliedName',
-      width:          200,
+      width:          100,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHNITTWETTKAMPFTAGE1',
@@ -33,6 +34,7 @@ export const WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SAISONSCHNITT',
       propertyName: 'wettkampftageSchnitt',
       width: 40,
+      sortable: true
     },
   ],
 };

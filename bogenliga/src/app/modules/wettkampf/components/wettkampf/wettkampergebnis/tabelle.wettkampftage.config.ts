@@ -12,7 +12,8 @@ export const WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG: TableConfig = {
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
       propertyName:   'dsbMitgliedName',
-      width:          200,
+      width:          100,
+      sortable: true
     },
     {
       translationKey: 'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGEINS',

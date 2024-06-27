@@ -7,17 +7,19 @@ export const WETTKAMPF_TABLE_EINZELGESAMT_CONFIG: TableConfig = {
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUECKENNUMMER',
       propertyName:   'rueckenNummer',
-      width:          5,
+      sortable: false
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
       propertyName:   'dsbMitgliedName',
-      width:          200,
+      width:          80,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.DURCHSCHPFEILWERTJAHR',
       propertyName:   'pfeilpunkteSchnitt',
       width:          80,
+      sortable: true
     }
   ],
 };
