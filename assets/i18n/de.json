@@ -493,7 +493,8 @@
           "SCHNITTWETTKAMPFTAGE2": "⌀ Tag 2",
           "SCHNITTWETTKAMPFTAGE3": "⌀ Tag 3",
           "SCHNITTWETTKAMPFTAGE4": "⌀ Tag 4",
-          "SAISONSCHNITT": "⌀ Saison"
+          "SAISONSCHNITT": "⌀ Saison",
+          "SCHNITT_JAHRE": "⌀ Jahre"
         }
       }
     }
