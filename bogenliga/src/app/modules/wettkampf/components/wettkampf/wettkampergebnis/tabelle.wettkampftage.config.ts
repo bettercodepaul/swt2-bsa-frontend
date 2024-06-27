@@ -8,6 +8,7 @@ export const WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.RUECKENNUMMER',
       propertyName:   'rueckenNummer',
       width:          5,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
@@ -39,6 +40,7 @@ export const WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG: TableConfig = {
       translationKey: 'WETTKAEMPFE.WETTKAEMPFE.WETTKAMPFTAGESCHNITT',
       propertyName:   'wettkampftageSchnitt',
       width:          40,
+      sortable: true
     }
   ],
 };
