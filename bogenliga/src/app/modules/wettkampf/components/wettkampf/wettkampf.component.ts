@@ -214,9 +214,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   printStatistics() {
-    // Store the original contents of the body
-    const originalContents = document.body.innerHTML;
-
     // Get the printable content
     const dropdownContents = document.getElementById('DropdownForPrintOut').innerHTML;
     const statsAndGraphContents = document.getElementById('StatsAndGraphForPrintOut').innerHTML;
@@ -225,19 +222,40 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     const printContainer = document.createElement('div');
     printContainer.innerHTML = dropdownContents + statsAndGraphContents;
 
-    // Append the print container to the body
-    document.body.innerHTML = '';
-    document.body.appendChild(printContainer);
+    // Create an iframe for printing
+    const printFrame = document.createElement('iframe');
+    document.body.appendChild(printFrame);
 
-    // Print the page
-    window.print();
+    const printDocument = printFrame.contentDocument || printFrame.contentWindow.document;
+    printDocument.open();
 
-    // Restore the original contents of the body
-    document.body.innerHTML = originalContents;
+    // Write the HTML and include the styles
+    printDocument.write('<html><head><title>Print</title>');
 
-    // Re-bind Angular component to the DOM
-    this.reinitializeComponent();
+    // Clone and append the current stylesheets to the print document
+    const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'));
+    styles.forEach(style => {
+      printDocument.write(style.outerHTML);
+    });
+
+    printDocument.write('</head><body>');
+    printDocument.write(printContainer.innerHTML);
+    printDocument.write('</body></html>');
+    printDocument.close();
+
+    // Wait for the content to be loaded and then print
+    printFrame.onload = () => {
+      printFrame.contentWindow.focus();
+      printFrame.contentWindow.print();
+
+      // Clean up by removing the iframe after printing
+      setTimeout(() => {
+        document.body.removeChild(printFrame);
+      }, 1000);
+    };
   }
+
+
 
   /**
    * Reinitialize the Angular component to restore event listeners and bindings.
