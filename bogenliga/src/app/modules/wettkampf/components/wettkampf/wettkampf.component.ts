@@ -255,16 +255,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     };
   }
 
-
-
-  /**
-   * Reinitialize the Angular component to restore event listeners and bindings.
-   */
-  reinitializeComponent() {
-    this.ngOnInit();
-  }
-
-
   //dynamic change of x-Axis Label
   public updateChartOptions(newXAxisLabel: string) {
     this.lineChartOptions.scales.xAxes[0].scaleLabel.labelString = newXAxisLabel;
