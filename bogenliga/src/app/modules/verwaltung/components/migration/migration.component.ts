@@ -194,15 +194,6 @@ public getSucceededDataCount(){
           // Schedule the next check
           setTimeout(checkProgress, 5000);
         } else {
-          this.notificationService.showNotification({
-            id: 'Migration wurde abgeschlossen',
-            description: 'Die Migration wurde erfolgreich beendet.',
-            title: 'Migration abgeschlossen',
-            origin: NotificationOrigin.SYSTEM,
-            userAction: NotificationUserAction.ACCEPTED,
-            type: NotificationType.OK,
-            severity: NotificationSeverity.INFO
-          });
           this.migrationCompleted = true;
         }
       } catch (e) {
