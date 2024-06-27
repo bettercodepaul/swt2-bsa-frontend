@@ -242,7 +242,7 @@ printStatistics() {
 
     // Clone and append the current stylesheets to the print document
     const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'));
-    styles.forEach(style => {
+    styles.forEach( (style) => {
       printDocument.write(style.outerHTML);
     });
 
@@ -399,9 +399,6 @@ public updateChartOptions(newXAxisLabel: string) {
       this.rows = [];
       await this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(selectedMannschaft.vereinId, this.currentVeranstaltung.id)
                 .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
-
-      document.getElementById('einzeldruckButton').classList.add('hidden');
-      document.getElementById('gesamtdruckButton').classList.remove('hidden');
     }
     this.loadingData = false;
   }
@@ -839,8 +836,6 @@ public updateChartOptions(newXAxisLabel: string) {
   // make everything invisible
     this.currentWettkampftag = 0;
     this.cleanLineChart();
-    document.getElementById('einzeldruckButton').classList.add('hidden');
-    document.getElementById('gesamtdruckButton').classList.add('hidden');
   }
   public async onSelectSchuetzenStatistik() {
     this.isStatistikAllowed = true;
