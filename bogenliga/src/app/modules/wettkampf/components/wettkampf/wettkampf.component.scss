@@ -74,15 +74,11 @@ h2 {
 
 @media print {
   body * {
-    visibility: hidden;
+    display: none;
   }
-  #statisticsSection, #statisticsSection * {
-    visibility: visible;
-  }
-  #statisticsSection {
-    position: absolute;
-    left: 0;
-    top: 0;
+  #DropdownForPrintOut, #DropdownForPrintOut *,
+  #StatsAndGraphForPrintOut, #StatsAndGraphForPrintOut * {
+    display: block;
   }
 }
 

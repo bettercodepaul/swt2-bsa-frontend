@@ -213,6 +213,29 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.selectedWettkampfTag =  this.alleTage[0];
   }
 
+  printStatistics() {
+    // Store the original contents of the body
+    const originalContents = document.body.innerHTML;
+
+    // Get the printable content
+    const dropdownContents = document.getElementById('DropdownForPrintOut').innerHTML;
+    const statsAndGraphContents = document.getElementById('StatsAndGraphForPrintOut').innerHTML;
+
+    // Create a new container for printing
+    const printContainer = document.createElement('div');
+    printContainer.innerHTML = dropdownContents + statsAndGraphContents;
+
+    // Append the print container to the body
+    document.body.innerHTML = '';
+    document.body.appendChild(printContainer);
+
+    // Print the page
+    window.print();
+
+    // Restore the original contents of the body
+    document.body.innerHTML = originalContents;
+  }
+
   //dynamic change of x-Axis Label
   public updateChartOptions(newXAxisLabel: string) {
     this.lineChartOptions.scales.xAxes[0].scaleLabel.labelString = newXAxisLabel;
@@ -647,14 +670,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       placeholder = this.currentMannschaft.name;
     }
     return placeholder;
-  }
-  printStatistics() {
-    const printContents = document.getElementById('statisticsSection').innerHTML;
-    const originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
   }
 
   public onButtonDownloadUebersicht(path: string): string {
