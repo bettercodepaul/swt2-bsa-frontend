@@ -96,7 +96,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public mannschafttabellenverlaufConfig = WETTKAMPF_TABLE_EINZEL_CONFIG;
   private mannschaftTabellenverlaufSportjahre = new MannschaftTabellenverlaufSportjahre();
   public multipleSelections = true;
-  //properties requiered the wettkampftagetabellenverlauf over the season
+  // properties requiered the wettkampftagetabellenverlauf over the season
   private filteredWettkampftageOfLiga: WettkampfDO[];
   private mannschaftTabellenverlaufWettkampftage = new MannschaftTabellenverlaufWettkampftage();
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
@@ -221,7 +221,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.selectedWettkampfTag =  this.alleTage[0];
   }
 
-  //dynamic change of x-Axis Label
+  // dynamic change of x-Axis Label
   public updateChartOptions(newXAxisLabel: string) {
     this.lineChartOptions.scales.xAxes[0].scaleLabel.labelString = newXAxisLabel;
     // re-render the chart
@@ -517,7 +517,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   private handleLoadSchuetzenstatistikLetzteJahreSuccess(payload) {
     if (payload.length > 0) {
-      this.rows.push(toTableRows(payload));
+      const formattedRows = this.formatStatistik(toTableRows(payload));
+      this.rows.push(formattedRows);
     }
   }
 
@@ -553,24 +554,23 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.rows = [];
     this.mannschaften = [];
 
-    this.currentVerein.name = undefined
-    this.currentVerein.regionName = ""
-    this.currentVerein.website = ""
-    this.currentVerein.description = ""
-    this.currentVerein.icon = ""
+    this.currentVerein.name = undefined;
+    this.currentVerein.regionName = '';
+    this.currentVerein.website = '';
+    this.currentVerein.description = '';
+    this.currentVerein.icon = '';
     this.cleanLineChart();
   }
 
   // backend-calls to get data from DB
   public async loadVeranstaltungen(sportjahr) {
-    console.log(sportjahr);
-    this.clear()
+    this.clear();
     this.loadingData = true;
     this.cleanLineChart();
     await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
               .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
               .catch(() => {
-                this.veranstaltungen = []
+                this.veranstaltungen = [];
                 this.currentVeranstaltung = null;
                 this.loadingData = false;
               });
@@ -630,9 +630,9 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
         this.handleSuccessLoadJahre(response.payload);
       })
       .catch(() => {
-        this.jahre = []
-        this.loadingData = false
-      })
+        this.jahre = [];
+        this.loadingData = false;
+      });
 
   }
 
@@ -903,7 +903,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.currentConfig = this.mannschafttabellenverlaufConfig;
     this.rows = [];
 
-    //change x-Axis Label
+    // change x-Axis Label
     this.updateChartOptions('Sportjahr');
 
     await this.loadAllVeranstaltungenOfLiga(veranstaltung);
@@ -1007,7 +1007,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.currentConfig = this.mannschafttabellenverlaufConfig;
     this.rows = [];
 
-    //changing the x-Axis Label
+    // changing the x-Axis Label
     this.updateChartOptions('Wettkampftag');
 
     if (this.loadingData) {
@@ -1029,7 +1029,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
     this.loadingData = false;
   }
-  //for every wettkampftag the wettkampftablle gets fetched
+  // for every wettkampftag the wettkampftablle gets fetched
   private async loadMannschaftTabellenverlaufWettkampftage(wettkaempfe: WettkampfDO[]) {
     // sort the wettkaempfe so there is no need for a sort afterward
     for (const wettkampftageDo of wettkaempfe.sort((i, j) => i.wettkampfTag - j.wettkampfTag)) {
