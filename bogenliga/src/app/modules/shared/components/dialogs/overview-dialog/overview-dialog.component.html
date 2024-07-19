@@ -13,7 +13,7 @@
                      [sessionSearch]="searchTerm">
     </bla-quicksearch>
 
-    <div class="overview-dialog-add" 
+    <div class="overview-dialog-add"
          *ngIf="hasUserPermissions(config.createPermission)"
          >
       <div class="deleteButtonAndTimestampFilter">
@@ -34,7 +34,7 @@
           {{"Angezeigte Einträge löschen"}}
         </bla-actionbutton>
       </div>
-      <div class="changePageButtonsAbove"  >
+      <div class="changePageButtonsAbove">
         <bla-actionbutton
           *ngIf="changePageButtons"
           [iconClass]="'arrow-left'"
@@ -43,6 +43,13 @@
         >
           {{"vorherige Seite"}}
         </bla-actionbutton>
+
+        <app-page-number-display
+          *ngIf="changePageButtons"
+          data-cy="next-page-button-above"
+        >
+        </app-page-number-display>
+
         <bla-actionbutton
           *ngIf="changePageButtons"
           [iconClass]="'arrow-right'"

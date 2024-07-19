@@ -60,6 +60,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public cypressTagStatus ="status-filter-selection";
   public cypressTagTimestamp = "timestamp-filter-selection";
   public offsetMultiplictor = 0;
+  public pageIndex = 1;
   public queryPageLimit = 500;
   public inProgressCount:number;
   public isMigrationRunning:boolean = false;
@@ -208,6 +209,7 @@ public getSucceededDataCount(){
 
   public previousPageButton(){
     if(this.offsetMultiplictor > 0){
+      this.pageIndex--;
       this.offsetMultiplictor--;
     }
     const element = document.getElementById("hilfe-button");
@@ -221,6 +223,7 @@ public getSucceededDataCount(){
   }
   public nextPageButton(){
     this.offsetMultiplictor++;
+    this.pageIndex++;
     const element = document.getElementById("hilfe-button");
     if (element) {
       element.scrollIntoView({
@@ -231,10 +234,6 @@ public getSucceededDataCount(){
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
 
-
-  public getPageNumber(){
-    return this.offsetMultiplictor
-  }
 
   public getEntriesByStatusAndDateIntervalCount(timestamp:string, status:string){
     this.MigrationDataProvider.countEntriesByStatusAndDateInterval(timestamp,status)
