@@ -163,6 +163,27 @@ export class MigrationProviderService extends DataProviderService {
   }
 
 
+
+
+  public countEntriesByStatusAndDateInterval(timestamp:string, status:string):Promise<BogenligaResponse<TriggerCountDO>>{
+
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<DataTransferObject>(new UriBuilder().fromPath(this.getUrl()).path('&dateInterval=' + timestamp.toString() + '&status=' + status.toString()).build())
+          .then((data: DataTransferObject) => {
+            resolve({result: RequestResult.SUCCESS, payload: fromCountPayload(data)});
+          }, (error: HttpErrorResponse) => {
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+
+
+
   public getEntireDataCount(): Promise<BogenligaResponse<TriggerCountDO>> {
 
     return new Promise((resolve, reject) => {

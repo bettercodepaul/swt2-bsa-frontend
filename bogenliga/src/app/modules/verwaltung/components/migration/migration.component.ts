@@ -170,6 +170,7 @@ public getSucceededDataCount(){
         })
   }
 
+
   public gatherMigrationStatus() {
 
     this.statusbar.hidden = false;
@@ -229,6 +230,19 @@ public getSucceededDataCount(){
     }
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
+
+
+  public getPageNumber(){
+    return this.offsetMultiplictor
+  }
+
+  public getEntriesByStatusAndDateIntervalCount(timestamp:string, status:string){
+    this.MigrationDataProvider.countEntriesByStatusAndDateInterval(timestamp,status)
+        .then((response: BogenligaResponse<TriggerCountDO>) => {
+          this.handleSucceeededData(response);
+        });
+  }
+
   selectTimestamp() {
     this.currentTimestamp = FilterTimestampInputbarComponent.currentTimestamp
     console.log('Timestamp switched to ' + this.currentTimestamp + ' and resetted OffsetMultiplicator')
@@ -236,6 +250,8 @@ public getSucceededDataCount(){
     this.offsetMultiplictor=0;
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
+
+
   filterForStatus(multiplicator: number,pagelimit: number,timestamp:string) {
     try {
       switch(this.currentStatus) {
@@ -366,4 +382,5 @@ public getSucceededDataCount(){
     this.inProgressCount = this.inprogressObj.count;
     this.loading = false;
   }
+
 }
