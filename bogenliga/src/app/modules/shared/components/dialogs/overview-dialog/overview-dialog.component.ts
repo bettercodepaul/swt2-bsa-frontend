@@ -34,6 +34,10 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   @Input() public filterDropdownLabel: string;
   @Input() public cypressTagTimestamp: string;
   @Input() public cypressTagStatus: string;
+  @Input() public currentPages: number;
+  @Input() public totalPage: number;
+
+
 
   public ActionButtonColors = ActionButtonColors;
 

@@ -61,6 +61,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public cypressTagTimestamp = "timestamp-filter-selection";
   public offsetMultiplictor = 0;
   public pageIndex = 1;
+  public totalPages = 1;
   public queryPageLimit = 500;
   public inProgressCount:number;
   public isMigrationRunning:boolean = false;
@@ -82,6 +83,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   ngOnInit() {
     this.loading = true;
     this.loadTableRows();
+    this.getEntriesByStatusAndDateIntervalCount(this.currentTimestamp,this.currentStatus)
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
     }
@@ -221,9 +223,11 @@ public getSucceededDataCount(){
     }
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
-  public nextPageButton(){
+  public nextPageButton() {
+    if(this.pageIndex < this.totalPages){
     this.offsetMultiplictor++;
     this.pageIndex++;
+  }
     const element = document.getElementById("hilfe-button");
     if (element) {
       element.scrollIntoView({
@@ -233,12 +237,14 @@ public getSucceededDataCount(){
     }
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
-
+public getPageIndicator(){
+    return this.pageIndex
+}
 
   public getEntriesByStatusAndDateIntervalCount(timestamp:string, status:string){
     this.MigrationDataProvider.countEntriesByStatusAndDateInterval(timestamp,status)
         .then((response: BogenligaResponse<TriggerCountDO>) => {
-          this.handleSucceeededData(response);
+          this.handleSucceeededPageCountData(response);
         });
   }
 
@@ -248,6 +254,7 @@ public getSucceededDataCount(){
     this.queryPageLimit= 500;
     this.offsetMultiplictor=0;
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
+    this.getEntriesByStatusAndDateIntervalCount(this.currentTimestamp,this.currentStatus)
   }
 
 
@@ -316,6 +323,7 @@ public getSucceededDataCount(){
     this.queryPageLimit= 500;
     this.offsetMultiplictor=0;
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
+    this.getEntriesByStatusAndDateIntervalCount(this.currentTimestamp,this.currentStatus)
   }
   deleteEntries() {
     try {
@@ -381,5 +389,8 @@ public getSucceededDataCount(){
     this.inProgressCount = this.inprogressObj.count;
     this.loading = false;
   }
+  private handleSucceeededPageCountData(response: BogenligaResponse<TriggerCountDTO>): void {
+    this.totalPages = response.payload.count;
 
+  }
 }

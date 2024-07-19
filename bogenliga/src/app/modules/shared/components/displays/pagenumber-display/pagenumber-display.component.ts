@@ -10,8 +10,8 @@ import {ActionButtonColors} from '@shared/components/buttons/button/actionbutton
 })
 export class PageNumberDisplayComponent implements OnInit {
 
-  @Input() currentPage: number = 1;
-  @Input() totalPages: number = 10;
+  @Input() currentPage: number;
+  @Input() totalPages: number;
 
   @Input() public id: string;
   @Input() public visible = true;
