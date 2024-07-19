@@ -1,0 +1,25 @@
+@import 'src/styles.scss';
+
+
+.page-info {
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+
+.page-number-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $dark-gray;
+  padding: 7px;
+  border-radius: 5px;
+  color: black;
+  width: fit-content;
+  margin: auto;
+}
+
+.page-info {
+  margin: 0 20px;
+  font-size: 16px;
+}

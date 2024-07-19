@@ -2,11 +2,16 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
 
+
 @Component({
-  selector:    'bla-actionbutton',
-  templateUrl: './actionbutton.component.html'
+  selector: 'app-page-number-display',
+  templateUrl: './pagenumber-display.component.html',
+  styleUrls: ['./pagenumber-display.component.scss']
 })
-export class ActionButtonComponent implements OnInit {
+export class PageNumberDisplayComponent implements OnInit {
+
+  @Input() currentPage: number = 1;
+  @Input() totalPages: number = 10;
 
   @Input() public id: string;
   @Input() public visible = true;
@@ -14,11 +19,8 @@ export class ActionButtonComponent implements OnInit {
   @Input() public loading = false;
   @Input() public minWidth: string;
   @Input() public margin: string;
-  @Input() public iconClass: IconProp;
-  @Input() public color: ActionButtonColors = ActionButtonColors.PRIMARY;
 
-
-  /**--
+  /**
    * The value is send via the event emitter to the parent component
    * @type {any} event emitter value
    */
@@ -46,15 +48,4 @@ export class ActionButtonComponent implements OnInit {
     return this.disabled || this.loading;
   }
 
-  public onButtonClick(): void {
-    if (!this.value || this.value.length === 0) {
-      this.onClick.emit();
-    } else {
-      this.onClick.emit(this.value);
-    }
-  }
-
-  public getColorClass() {
-    return this.color;
-  }
 }

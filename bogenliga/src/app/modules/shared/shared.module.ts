@@ -68,6 +68,7 @@ import {FilterinputbarComponent} from '@shared/components/selectionlists/filteri
 import {
   FilterTimestampInputbarComponent
 } from '@shared/components/selectionlists/filterTimestampInputbar/filterTimestampInputbar.component';
+import {PageNumberDisplayComponent} from '@shared/components/displays/pagenumber-display/pagenumber-display.component';
 
 @NgModule({
   imports: [
@@ -132,6 +133,7 @@ import {
     VeranstaltungenButtonComponent,
     ExpandComponent,
     StatusbarComponent,
+    PageNumberDisplayComponent,
   ],
   declarations: [
     ExpandComponent,
@@ -177,7 +179,8 @@ import {
     DownloadActionButtonComponent,
     ShortcutButton,
     VeranstaltungenButtonComponent,
-    StatusbarComponent
+    StatusbarComponent,
+    PageNumberDisplayComponent
   ]
 })
 export class SharedModule {
