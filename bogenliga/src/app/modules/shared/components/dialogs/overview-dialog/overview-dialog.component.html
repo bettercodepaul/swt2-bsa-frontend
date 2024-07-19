@@ -47,6 +47,8 @@
         <app-page-number-display
           *ngIf="changePageButtons"
           data-cy="next-page-button-above"
+          [currentPage]="currentPages"
+          [totalPages]="totalPage"
         >
         </app-page-number-display>
 
