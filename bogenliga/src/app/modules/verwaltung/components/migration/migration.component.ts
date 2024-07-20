@@ -237,8 +237,8 @@ public getSucceededDataCount(){
     }
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
   }
-public getPageIndicator(){
-    return this.pageIndex
+public resetPageIndex(){
+    this.pageIndex = 1;
 }
 
   public getEntriesByStatusAndDateIntervalCount(timestamp:string, status:string){
@@ -254,6 +254,7 @@ public getPageIndicator(){
     this.queryPageLimit= 500;
     this.offsetMultiplictor=0;
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
+    this.resetPageIndex();
     this.getEntriesByStatusAndDateIntervalCount(this.currentTimestamp,this.currentStatus)
   }
 
@@ -323,6 +324,7 @@ public getPageIndicator(){
     this.queryPageLimit= 500;
     this.offsetMultiplictor=0;
     this.filterForStatus(this.offsetMultiplictor,this.queryPageLimit,this.currentTimestamp)
+    this.resetPageIndex();
     this.getEntriesByStatusAndDateIntervalCount(this.currentTimestamp,this.currentStatus)
   }
   deleteEntries() {
@@ -390,7 +392,7 @@ public getPageIndicator(){
     this.loading = false;
   }
   private handleSucceeededPageCountData(response: BogenligaResponse<TriggerCountDTO>): void {
-    this.totalPages = response.payload.count;
+    this.totalPages = Math.ceil((response.payload.count)/500);
 
   }
 }
