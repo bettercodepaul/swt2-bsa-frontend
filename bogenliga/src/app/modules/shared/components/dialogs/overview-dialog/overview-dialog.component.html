@@ -46,7 +46,7 @@
 
         <app-page-number-display
           *ngIf="changePageButtons"
-          data-cy="next-page-button-above"
+          data-cy="page-number-display-above"
           [currentPage]="currentPages"
           [totalPages]="totalPage"
         >
@@ -129,6 +129,13 @@
       >
         {{"vorherige Seite"}}
       </bla-actionbutton>
+      <app-page-number-display
+        *ngIf="changePageButtons"
+        data-cy="page-number-display"
+        [currentPage]="currentPages"
+        [totalPages]="totalPage"
+      >
+      </app-page-number-display>
       <bla-actionbutton
         *ngIf="changePageButtons"
         [iconClass]="'arrow-right'"
