@@ -120,15 +120,15 @@ describe('Anonyme User tests', function () {
   })
 
   /**
-   * This test checks if a valid search term yields the expected results from the website
+   * This test checks if you can filter for a Competition-Day in Ligatablle
    */
-  it('Suchfeld Ligatabelle', function() {
+  it('Wettkampftagauswahl Ligatabelle', function() {
     cy.wait(6000)
-    cy.get('[data-cy=quicksearch-suchfeld]').click().type('Württemberg')
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('Württembergliga Recurve')
     cy.wait(1000)
-    cy.get('[data-cy=quicksearch-liste]').should('contain.text', 'Recurve')
-    cy.wait(1000)
-    cy.contains('Württembergliga Recurve').click()
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #veranstaltungen').select('0: Object')
+    cy.wait(500)
+    cy.get('bla-row-layout > .row-layout > .row > .col-sm-8 > #wettkampftag').find('option').should('have.length', 4);
   })
 
   /**
@@ -140,42 +140,110 @@ describe('Anonyme User tests', function () {
   })
 
   /**
-   * This test checks if the shown results contain expected data
+   * This test checks if the selection of Sportjahr Liga and Mannschaft works
    */
-  it('Ergebnis anzeigen', function() {
-    cy.wait(10000)
-    cy.contains('Würtembergliga')
+  it('Auswahl Sportjahr Liga und Mannschaft', function() {
+    cy.wait(8000)
+    cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2016')
+    cy.wait(5000)
+    cy.get('div > #regionenForm > .row > .col-sm-8 > #jahr').select('2018')
+    cy.wait(5000)
+    cy.get('#regionenForm > #selectVereink > .row > .col-sm-8 > #veranstaltungen').select('4: Object')
+    cy.wait(5000)
+    cy.get('#regionenForm > #selectVerein > .row > .col-sm-8 > #vereine').select('17: Object')
+  })
+
+
+
+  /**
+   * This test checks if the gesamtstatistik in Wettkaempfe show results
+   */
+  it('Gesamtstatistik anzeigen', function() {
     cy.wait(3000)
-    cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
-    cy.contains('Wettkampftag 1')
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('gesamtstatistik')
+    cy.wait(5000)
+    // required: add check if data is present in selected statistik
+  })
+  /**
+   * This test checks if the Matchstatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Matchstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikMatch')
+    cy.wait(500)
+  })
+  /**
+   * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Wettkampftagestatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('schuetzenstatistikWettkampftage', {force: true})
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Saisonschnittstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('alleligenstatistik', {force: true})
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Einzelstatistik anzeigen', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
+   */
+  it('Statistik eines Schützen über die letzten fünf Jahre', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('letztejahre', {force: true})
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
+   */
+  it('Wettkampftagauswahl Wettkampfergebnisse', function() {
+    cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('einzelstatistik', {force: true})
+    cy.wait(2000)
+    cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')
+  })
+  /**
+   * This test checks if the switch between Mannschaftsstatistik and Schptzenstatistik filter buttons works
+   */
+  it('Wechsel zwischen Mannschafts- und Schützenstatistik', function() {
+    cy.wait(5000)
+    cy.get('div > #regionenForm > div > #showMannschaftsstatistik > .statistik-filter-button').click()
+    cy.wait(1500)
+  })
+  /**
+   * This test checks if the Aktuelle Mannschaften shows results
+   */
+  it('Aktuelle Mannschaften anzeigen', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('aktuelle_mannschaft', {force: true})
+    cy.wait(1500)
   })
 
   /**
-   * This test checks if the selected item of a team shows the expected data
+   * This test checks if the  Mannschaftentabellenverlauf over all years shows results
    */
-  it('Ergebnis anzeigen einzelner Verein', function() {
-    cy.wait(1000)
-    cy.get('#vereine').select(0)
-    cy.get('[data-cy=alle-mannschaften-anzeigen-button]').click()
-    cy.contains('Wettkampftag 1')
+  it('Mannschafttabellenverlauf', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('tabellenverlauf_statistik_alle_sportjahre', {force: true})
+    cy.wait(1500)
   })
-
   /**
-   * This test selects a single statistic and checks if the required data is present
+   * This test checks if the  Mannschaftentabellenverlauf over veranstaltung shows results
    */
-  /*it('Ergebnis anzeigen Einzelstatistik', function() {
-    cy.get('[data-cy=einzelstatistik-anzeigen-button]').click()
-    cy.contains('Pfeilwert pro Match')
+  it('Mannschafttabellenverlauf', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('tabellenverlauf_statistik_wettkampftage', {force: true})
+    cy.wait(1500)
   })
-
-  /!**
-   * This test selects all items from the statistics and checks if the required data is present
-   *!/
-  it('Ergebnis anzeigen Gesamtstatistik', function() {
-    cy.get('[data-cy=einzelstatistik-gesamt-anzeigen-button]').click()
-    cy.contains('Pfeilwert pro Jahr')
-  })*/
-
+  /**
+   * This test checks if the all Mannschaften shows results
+   */
+  it('Alle Mannschaften anzeigen', function() {
+    cy.get('#regionenForm > #selectMannschaftStatistik > .row > .col-sm-8 > #mannschaftsStatistiken').select('alle_mannschaften', {force: true})
+    cy.wait(1500)
+  })
   /**
    * This test opens the sidebar and clicks on the "HILFE" tab and checks if
    * the url has changed successfully
@@ -279,30 +347,16 @@ describe('Admin User tests', function() {
     cy.wait(1000)
     cy.get('[data-cy=verwaltung-dsb-mitglieder-button]').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
-  })
 
-  /**
-   * This test searches for a specific "DSBMitglied" name and checks if the corresponding club name has been listed
-   */
-  it('Suche DSBMitglieder', function () {
-      cy.get('.input-group > #undefined').click();
-      cy.get('.input-group > #undefined').type('Gero');
-      cy.wait(1000)
-      cy.get('table td')
-        .contains('span', 'SGes Gerstetten')
-        .should('exist')
-      cy.wait(2000)
-      cy.get('.input-group > #undefined').clear();
-    }
-  )
+
+
+  })
 
   /**
    * This test adds a new "DSB-Mitglied"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
   it('Neues DSB-Mitglied', function() {
-    //cy.get('body').then((body) => {
-    //if (!body.text().includes('MitgliedVorname')) {
     const randomID = generateID().toString();
 
     cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
@@ -315,69 +369,64 @@ describe('Admin User tests', function() {
     cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').click()
     cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').type(randomID);
     cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').select('BSC Stuttgart')
+    cy.get('[data-cy=detail-beitrittsdatum-feld]').click();
+    cy.get('[data-cy=detail-beitrittsdatum-feld]').type('2001-02-02');
+
     cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedSaveButton').click()
     cy.wait(3000)
-    //cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
     cy.get('#OKBtn1').click()
     cy.wait(1000)
   });
 
-  /*
-  describe('test_name', function() {
 
- it('what_it_does', function() {
-
-    cy.viewport(1259, 896)
-
-    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder')
-
-    cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVorname').type('vorname')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedNachname').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedNachname').type('nachname')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0001-02-01')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0019-02-01')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('0199-02-01')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedGeburtsdatum').type('1996-02-01')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedMitgliedsnummer').type('1234567')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').click()
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').select('13: Object')
-
-    cy.get('div > #dsbMitgliedForm > .form-group > .col-sm-9 > #dsbMitgliedVerein').click()
-
-    cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedSaveButton').click()
-
-    cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
-
- })
-
-})
-
+  /**
+   * This test searches for a specific "DSBMitglied" name and checks if the corresponding club name has been listed
    */
+  it('Suche DSBMitglieder', function () {
+      cy.get('.input-group > #undefined').click();
+      cy.get('.input-group > #undefined').type('vorname');
+      cy.wait(1000)
+      cy.get('table td')
+        .contains('span', 'BSC Stuttgart')
+        .should('exist')
+      cy.wait(2000)
+      cy.get('.input-group > #undefined').clear();
+    }
+  )
+
+  /**
+   * This test searches for a specific "club name" name and checks if the corresponding name has been listed
+   */
+  it('Suche Verein eines DSBMitglieds', function () {
+      cy.get('.input-group > #undefined').click();
+      cy.get('.input-group > #undefined').type('BSC Stuttgart');
+      cy.wait(1000)
+      cy.get('table td')
+        .contains('span', 'vorname')
+        .should('exist')
+      cy.wait(2000)
+      cy.get('.input-group > #undefined').clear();
+    }
+  )
+
+  /**
+   * This test views a single member and redirects to the overview page afterward
+   */
+  it('View DSBMitglied Info', function() {
+    cy.wait(1000)
+    cy.contains('tr', 'vorname').find('[data-cy="TABLE.ACTIONS.VIEW"]').click();
+    cy.wait(1000)
+    cy.get('[data-cy=detail-beitrittsdatum-feld]').invoke('attr', 'readonly')
+      .should('exist');
+    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder');
+    cy.url().should('include', '#/verwaltung/dsbmitglieder')
+  })
 
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
    */
   it('Edit DSBMitglied', function() {
-
     cy.wait(1000)
-    //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').first().click()
     cy.contains('tr', 'vorname').find('[data-cy="TABLE.ACTIONS.EDIT"]').click();
     cy.get('[data-cy=detail-vorname-feld]').click()
     cy.get('[data-cy=detail-vorname-feld]').focus().clear().type('SWTZweiTestLocalBitte')
@@ -390,17 +439,9 @@ describe('Admin User tests', function() {
     cy.get('[data-cy=detail-vorname-feld]').focus().clear().type('SWTZweiTestLocal')
     cy.get('[data-cy=detail-update-button]').click()
     cy.wait(2000)
-    //cy.get('#OKBtn1').click()
-    //cy.get('#dsbMitgliedForm > .form-group > .col-sm-9 > bla-actionbutton > #dsbMitgliedUpdateButton').click()
-    //cy.get('bla-actionbutton > #undefined > .action-btn-circle > .ng-fa-icon > .fa-check').click()
-    //cy.get('.modal-dialog > .modal-content > .modal-footer.modal-dialog.ok > bla-actionbutton > #undefined').click()
-    //cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton > #undefined').click()
     cy.get('#OKBtn1').click()
     cy.wait(500)
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
-    //document.querySelector("#exampleModal > div > div > div.modal-footer.modal-dialog-ok > bla-actionbutton")
-    ////*[@id="exampleModal"]/div/div/div[3]/bla-actionbutton
-    //#undefined
   })
 
   /**
@@ -410,21 +451,18 @@ describe('Admin User tests', function() {
   it('Neuer DSB-Kampfrichter', function() {
     cy.get('body').then((body) => {
       if (!body.text().includes('KampfrichterVorname')) {
-        cy.get('[data-cy=dsb-mitglied-add-button]').click()
+        cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
         cy.get('[data-cy=detail-vorname-feld]').type('KampfrichterVorname')
         cy.get('[data-cy=detail-nachname-feld]').type('KampfrichterNachname')
         cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
         cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('34563456')
         cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
         cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
+        cy.get('[data-cy=detail-beitrittsdatum-feld]').click();
+        cy.get('[data-cy=detail-beitrittsdatum-feld]').type('2001-02-02');
         cy.wait(1500)
-        /*
-        @TODO implement Kampfrichterlizenz once function is available for testing
-         */
         cy.get('[data-cy=detail-save-button]').click()
         cy.get('#OKBtn1').click()
-        //cy.get('#undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').last().click()
-        //cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
       }}
     );
   })
@@ -438,8 +476,6 @@ describe('Admin User tests', function() {
     cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
     cy.url().should('include', '#/verwaltung/dsbmitglieder')
     cy.wait(2000)
-    //Überprüfung dass Elemente nicht in Liste
-    //cy.should('not.contain.text', 'KampfrichterVorname')
   })
 
   /**
@@ -670,12 +706,8 @@ describe('Admin User tests', function() {
       if (!body.text().includes('69')) {
         cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
         cy.wait(1000)
-        //cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().type('69')
         cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
-        cy.wait(15000)
-        cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-        cy.wait(6000)
-        //cy.get('[data-cy=vereine-mannschaft-detail-save-button]').click()
+        cy.wait(1000)
         cy.get('#mannschaftSaveButton').click()
         cy.wait(6000)
         cy.get('#OKBtn1').click()
@@ -700,8 +732,6 @@ describe('Admin User tests', function() {
     cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsnummer]').click().clear().type('76')
     cy.wait(9000)
-    cy.get('[data-cy=vereine-mannschaft-detail-mannschaftsveranstaltung]').select('Landesliga Süd')
-    cy.wait(9000)
     cy.get('[data-cy=vereine-mannschaft-detail-update-button]').click()
     cy.wait(9000)
     cy.get('#OKBtn1').click()
@@ -725,6 +755,16 @@ describe('Admin User tests', function() {
     cy.get('button.action-btn-primary:contains("Ja")').click()
     cy.wait(500)
     cy.get('tbody').should('not.contain.text', '76')
+    cy.wait(1000)
+    cy.get('[data-cy=vereine-details-add-mannschaft-button]').click()
+    cy.wait(1000)
+    cy.get('div > #mannschaftForm > .form-group > .col-sm-9 > #mannschaftNummer').type('69')
+    cy.wait(1000)
+    cy.get('#mannschaftSaveButton').click()
+    cy.wait(6000)
+    cy.get('#OKBtn1').click()
+    cy.wait(1000)
+    cy.contains('69')
   })
 
   /**
@@ -960,6 +1000,10 @@ describe('Admin User tests', function() {
     cy.wait(20000)
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
     cy.wait(1000)
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Laufend')
+    cy.wait(500)
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Geplant')
+    cy.wait(500)
     cy.get('[data-cy=veranstaltung-detail-update-button]').click()
     cy.wait(1000)
     cy.get('#OKBtn1').click()
@@ -970,6 +1014,43 @@ describe('Admin User tests', function() {
     cy.wait(1000)
     cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
 
+  })
+
+  /**
+   * This test checks all functions of the queue
+   */
+
+    it('Filtert Teams basierend auf Suchbegriff', () => {
+      cy.viewport(2235, 1095)
+
+      cy.get('.quicksearch-container > .custom-quicksearch > .quicksearch > .input-group > #undefined').click()
+
+      cy.get('.quicksearch-container > .custom-quicksearch > .quicksearch > .input-group > #undefined').type('69')
+      cy.wait(5000)
+      cy.get('tbody > tr > td > bla-actionbutton > #undefined').click()
+      cy.wait(5000)
+      cy.get('.modal-dialog > .modal-content > .modal-footer > #OKBtn1 > #OKBtn1').click()
+      cy.wait(5000)
+      cy.get('#undefined > tbody > #payload-id-1217 > #name-1217 > span').click()
+
+      /*// Überprüfen, ob die Tabelle sichtbar ist
+      cy.get('h2').contains('Mannschaften ohne Veranstaltung').should('be.visible');
+
+      // Eingabe eines Suchbegriffs und Auslösen der Suche
+      const searchTerm = '69';
+      cy.get('.custom-quicksearch input').type(searchTerm).should('have.value', searchTerm);
+
+      // Warten auf die API-Antwort nach der Suche
+      cy.wait(1000);
+
+      // Überprüfen, ob die Tabelle der Teams aktualisiert wurde
+      cy.get('tbody tr').should('have.length.greaterThan', 0); // Stellt sicher, dass mindestens ein Ergebnis angezeigt wird
+
+      // Optional: Überprüfen, ob die angezeigten Ergebnisse den Suchkriterien entsprechen
+      cy.get('tbody tr').each(($row) => {
+        cy.wrap($row).find('td').eq(0).should('contain', searchTerm); // Überprüft, ob der Teamname im ersten <td> enthalten ist
+      });
+    });*/
   })
 
   /**
@@ -1198,6 +1279,44 @@ describe('Ligaleiter User Tests', function(){
           expect(textReadFromEditor).to.equal(text)})
 
     })
+
+  it('Neue unterste Liga hinzufuegen',function (){
+
+    // Login Ligaleiter
+
+    cy.visit('http://localhost:4200/#/user/login')
+    cy.wait(2000);
+
+    cy.contains('Login für Team Ligaleiter').click();
+    cy.wait(2000);
+
+    cy.visit('http://localhost:4200/#/verwaltung/liga')
+    cy.wait(12000)
+
+    cy.get('#payload-id-1127 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').click()
+
+    cy.wait(13000)
+
+    cy.get('#ligaForm > .form-group > .col-sm-9 > bla-actionbutton:nth-child(3) > #undefined').click()
+
+    cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').click()
+
+    cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').type('cypress 1')
+
+    cy.wait(1000)
+
+    cy.url().should('include', '#/verwaltung/liga/add')
+
+    // auf Profil klicken
+    cy.get('.fa-user-circle').click();
+    // auf ausloggen klicken
+    cy.contains('Logout').click();
+    cy.wait(2000);
+
+    //Ligaleiter wieder ausgelogged
+
+  })
+
 
   }
 )

@@ -62,7 +62,7 @@
           <span> *</span>
         </label>
 
-        <div *ngIf="loadingVeranstaltungen"
+        <div *ngIf="loadingVeranstaltungen && entityExists()"
              class="loading">
           <tr>
             <td [colSpan]="colspan"
@@ -79,19 +79,28 @@
           </tr>
         </div>
 
-
-        <div *ngIf="!loadingVeranstaltungen"
+        <div *ngIf="!entityExists()"
              class="col-sm-9">
-          <select #mannschaftVeranstaltung="ngModel"
-                  [(ngModel)]="currentVeranstaltung"
-                  class="form-control"
+          <input  class="form-control"
                   data-cy="vereine-mannschaft-detail-mannschaftsveranstaltung"
                   id="mannschaftVeranstaltung"
                   name="mannschaftVeranstaltung"
-                  required>
-            <option *ngFor="let liga of ligen"
-                    [ngValue]="liga"> {{liga.name}}</option>
-          </select>
+                  placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.PLACEHOLDER' | translate }}"
+                  readonly>
+          <div class="invalid-feedback">
+            {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.ERROR' | translate }}
+          </div>
+        </div>
+
+        <div *ngIf="!loadingVeranstaltungen && entityExists()"
+             class="col-sm-9">
+          <input  class="form-control"
+                  data-cy="vereine-mannschaft-detail-mannschaftsveranstaltung"
+                  id="mannschaftVeranstaltung_edit"
+                  name="mannschaftVeranstaltung_edit"
+                  placeholder="{{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.PLACEHOLDER' | translate }}"
+                  [(ngModel)]="currentVeranstaltung.name"
+                  readonly>
           <div class="invalid-feedback">
             {{ 'MANAGEMENT.MANNSCHAFT_DETAIL.FORM.MANNSCHAFT_VERANSTALTUNG.ERROR' | translate }}
           </div>

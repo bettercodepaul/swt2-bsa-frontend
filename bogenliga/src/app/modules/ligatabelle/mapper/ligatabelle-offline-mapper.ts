@@ -17,7 +17,8 @@ export function toDO(ligatabelleOfflineSyncDto: LigatabelleOfflineSyncDto): Offl
       satzpktGegen: ligatabelleOfflineSyncDto.satzpktGegen, // akt. Stand der Gegen-Satzpunkte der Mannschaft vor Wettkampfbeginn
       satzpktDifferenz: ligatabelleOfflineSyncDto.satzpktDifferenz, // akt. Stand der Satzpunktedifferenz der Mannschaft vor Wettkampfbeginn
       sortierung: ligatabelleOfflineSyncDto.sortierung, // Sortierungskennzeichen zu Liga.Start
-      tabellenplatz: ligatabelleOfflineSyncDto.tabellenplatz // Tabellenplatz der Mannschaft vor Wettkampfbeginn
+      tabellenplatz: ligatabelleOfflineSyncDto.tabellenplatz, // Tabellenplatz der Mannschaft vor Wettkampfbeginn
+      matchCount: ligatabelleOfflineSyncDto.matchCount,
     };
     return offlineTabelle;
   }

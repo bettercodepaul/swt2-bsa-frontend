@@ -1,18 +1,20 @@
 import {TableConfig} from '@shared/components/tables/types/table-config.interface';
 
 export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
-
+  actions: {actionTypes: []},
 // Tabellenspaltenbezeichner in die JSON auslagern
   columns: [
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MATCH',
       propertyName:   'matchNr',
       width:          5,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.MANNSCHAFT',
       propertyName:   'mannschaftName',
       width:          20,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',
@@ -43,6 +45,7 @@ export const WETTKAMPF_TABLE_CONFIG: TableConfig = {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.OPPONENT',
       propertyName:   'opponentName',
       width:          20,
+      sortable: true
     },
     {
       translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SATZ1',

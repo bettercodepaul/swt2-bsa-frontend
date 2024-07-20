@@ -10,4 +10,5 @@ export class TriggerDO implements VersionedDataObject {
   nachricht: string;
   createdAtUtc: string;
   runAtUtc: string;
+  lastModifiedAtUtc: string;
 }

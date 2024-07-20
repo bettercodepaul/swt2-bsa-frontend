@@ -5,15 +5,20 @@ import {RouterModule} from '@angular/router';
 import {SharedModule} from '@shared/shared.module';
 import {WETTKAMPF_ROUTES} from './wettkampf.routing';
 import {WettkampfComponent} from '@wettkampf/components';
+import {StatistikFilterComponent} from '@shared/components/buttons/statistik-filter-button/statistik-filter.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(WETTKAMPF_ROUTES),
     SharedModule,
-    FormsModule
+    FormsModule,
+
+    ChartsModule
+
   ],
-  declarations: [WettkampfComponent]
+  declarations: [WettkampfComponent, StatistikFilterComponent]
 })
 export class WettkampfModule {
 }

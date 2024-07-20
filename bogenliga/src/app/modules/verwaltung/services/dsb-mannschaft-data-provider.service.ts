@@ -262,4 +262,47 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
           });
     });
   }
+  public findAllByWarteschlangeId(): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byWarteschlangeID/').build())
+          .then((data: VersionedDataTransferObject[]) => {
+
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
+
+  public findAllByName(searchTerm: string): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return (searchTerm === '' || searchTerm === null)
+      ? this.findAllByWarteschlangeId()
+      : new Promise((resolve, reject) => {
+        this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('byName').path(searchTerm).build())
+            .then((data: VersionedDataTransferObject[]) => {
+
+              resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+            }, (error: HttpErrorResponse) => {
+
+              if (error.status === 0) {
+                reject({result: RequestResult.CONNECTION_PROBLEM});
+              } else {
+                reject({result: RequestResult.FAILURE});
+              }
+            });
+      });
+  }
 }

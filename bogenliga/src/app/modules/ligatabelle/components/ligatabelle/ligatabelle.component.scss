@@ -1,0 +1,19 @@
+@import 'src/styles.scss';
+.form-label-box{
+  margin-left:20px;
+  min-width: 150px;
+}
+.row{
+  margin-top: 20px;
+}
+#rowTable{
+  margin-top: 0px;
+}
+h2 {
+  color: $hero-blue;
+  font-size: 1.2em;
+  font-family: Poppins-Medium, Roboto, "Helvetica Neue", sans-serif;
+
+  margin-bottom: 0px;
+  margin-top: 60px;
+}

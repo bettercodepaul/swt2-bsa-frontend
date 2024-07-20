@@ -47,6 +47,45 @@ export class CurrentUserService {
     this.loadCurrentUser();
   }
 
+  // helper functions to make sure this only gets hit for the keepalive endpoint as to not destroy any
+  // previous implementation (betterPersistCurrentUser and loadCurrentUserFromStorage)
+  public betterPersistCurrentUser(currentUser: UserSignInDTO): void {
+    this.localDataProviderService.setPermanently(CURRENT_USER_KEY, JSON.stringify(currentUser));
+    this.store.dispatch(new Login(currentUser, this.isDefaultUserLoggedIn));
+    this.loadCurrentUserFromStorage();
+  }
+
+  private loadCurrentUserFromStorage(): void {
+    this.currentUserPermissions = [];
+    console.log('Load current user from storage');
+    const currentUserValue = this.localDataProviderService.get(CURRENT_USER_KEY);
+
+    let isDefault: boolean;
+    if (currentUserValue != null) {
+      const currentUserJSONMap = JSON.parse(currentUserValue);
+      if (currentUserJSONMap.permissions) {
+        currentUserJSONMap.permissions.forEach((permission) => {
+          const userPermit = (UserPermission as any)[permission];
+          this.currentUserPermissions.push(userPermit);
+        });
+      }
+      const json = UserSignInDTO.copyFromJson(currentUserJSONMap);
+      if (json.email === DEFAULT_USERNAME) {
+        isDefault = true;
+      } else {
+        isDefault = false;
+      }
+      this.store.dispatch(new Login(json, isDefault));
+      this.currentUser = json; // Ensure currentUser is updated
+    }
+    console.log('CurrentUserValue: ' + currentUserValue);
+    console.log('CurrentUserPermission: ' + this.currentUserPermissions);
+    this.currentUserPermissions.forEach((element) => {
+      console.log(Object.keys(UserPermission)[Object.values(UserPermission).indexOf(element)]);
+    });
+    console.log('DefaultUser: ' + isDefault);
+  }
+
   public loadCurrentUser(): void {
     this.currentUserPermissions = [];
     console.log('Load current user from storage');
@@ -91,6 +130,12 @@ export class CurrentUserService {
   public getJsonWebToken(): string {
     return this.getCurrentUser().jwt;
 
+  }
+
+  public setJsonWebToken(token: string): void {
+    // Clone the current user object and set the new token (otherwise jwt is read only)
+    const updatedUser = {...this.currentUser, jwt: token};
+    this.betterPersistCurrentUser(updatedUser);
   }
 
   public getPermissions(): UserPermission[] {

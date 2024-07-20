@@ -226,6 +226,48 @@
 
       </div>
 
+      <!-- Warteschlange -->
+      <div *ngIf="showTable">
+      <div>
+        <h2>Mannschaften ohne Veranstaltung</h2>
+        <div class="resizable-box">
+          <table>
+            <thead>
+            <tr>
+              <th class="teamname-header">
+                <div class="th-content">
+                  <span class="header-text">Teamname</span>
+                  <div class="quicksearch-container">
+                    <bla-quicksearch
+                      class="custom-quicksearch"
+                      (onSearchEntry)="onSearch($event)">
+                    </bla-quicksearch>
+                  </div>
+                </div>
+              </th>
+              <th class="action-header">Aktion</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let team of unassignedTeams; let i = index">
+              <td>{{ team.name }}</td>
+              <td>
+                <bla-actionbutton
+                  [iconClass]="'plus'"
+                  [loading]="saveLoading"
+                  [color]="ActionButtonColors.SUCCESS"
+                  (onClick)="assignTeamToEvent(team)">
+                  {{ 'MANAGEMENT.VERANSTALTUNG_DETAIL.FORM.HINZUFUEGEN' | translate }}
+                </bla-actionbutton>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+
+
 
       <!-- SAVE/WETTKAMPFTAGE/UPDATE/DELETE/ABSCHLIEßEN/PLATZHALTER BUTTON -->
       <div class="form-group row">

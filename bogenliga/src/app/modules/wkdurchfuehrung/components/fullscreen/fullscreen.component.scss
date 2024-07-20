@@ -2,74 +2,71 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 40px;
-  height: 60px;
+  margin: 1vw;
+  height: 1vh;
+  flex-wrap: wrap;
 }
 
 .logo-and-header-container {
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 1vw;
+  flex: 1;
 }
 
 .logo-container {
-  margin-right: 20px;
-  border-radius: 10px;
+  margin-right: 1vw;
+  margin-top: 0.5vh;
 }
 
 img.logo {
-  width: 70px;
+  width: 4vw;
   height: auto;
   display: block;
 }
 
 .veranstaltung-header {
-  font-size: 30px;
+  font-size: clamp(40px, 8vw, 70px);
   font-weight: bold;
   margin-bottom: 0;
 }
 
 .wettkampftag-header {
-  font-size: 26px;
+  font-size: clamp(20px, 8vw, 35px);
   font-weight: bold;
-  background-color: #f0f0f0;
-  border-radius: 15px;
-  padding: 5px;
-  margin-left: 10px;
+  padding: 0.5vw;
+  margin-left: 2vw;
 }
 
 .time-box {
-  font-size: 35px;
+  font-size: clamp(30px, 8vw, 50px);
   font-weight: bold;
   display: flex;
   align-items: center;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border-radius: 15px;
-  position: absolute;
-  top: 10px;
-  right: 40px;
+  padding: 1vw;
+  margin-top: 1vh;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .time-box:before {
   content: '🕒';
-  margin-right: 10px;
-  font-size: 20px;
+  margin-right: 1vw;
+  font-size: clamp(12px, 2.5vw, 25px);
 }
 
 .table-container {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 1vh;
 }
 
 .table {
-  width: 65%;
+  width: 100%;
+  margin: 2vw;
   border-collapse: collapse;
   background-color: white;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: clamp(12px, 2vw, 24px);
 }
-
-

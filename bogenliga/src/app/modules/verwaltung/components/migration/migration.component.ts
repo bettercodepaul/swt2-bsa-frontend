@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse} from '@shared/data-provider';
@@ -35,7 +35,7 @@ export const NOTIFICATION_DELETE_MIGRATION = 'migration_delete';
   templateUrl: './migration.component.html',
   styleUrls:   ['./migration.component.scss']
 })
-export class MigrationComponent extends CommonComponentDirective implements OnInit {
+export class MigrationComponent extends CommonComponentDirective implements OnInit, AfterViewInit {
   public rows: TableRow[];
   public config = MIGRATION_OVERVIEW_CONFIG;
   public ButtonType = ButtonType;
@@ -44,6 +44,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public searchTerm = 'searchTermMigration';
   public id;
   public countObj: TriggerCountDTO;
+  public inprogressObj: TriggerCountDTO;
   public migrationCompleted = false;
   public progress = 0;
   public succeededCount:number;
@@ -52,7 +53,7 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public currentStatus: string = "Fehlgeschlagen";
   public statusArray: Array<string> = ["Fehlgeschlagen", "Erfolgreich", "Laufend", "Neu", "Alle"];
   public currentTimestamp: string = "letzter Monat";
-  public timestampArray: Array<string> = ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr", "alle"];
+  public timestampArray: Array<string> =  ["letzter Monat", "letzten drei Monate", "letzten sechs Monate", "im letzten Jahr","älter als ein Monat","älter als drei Monate","älter als sechs Monate","alle"];
   public ActionButtonColors = ActionButtonColors;
   public timestampDropdownLable = "Zeitstempel";
   public filterDropdownLable ="Status";
@@ -60,6 +61,8 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
   public cypressTagTimestamp = "timestamp-filter-selection";
   public offsetMultiplictor = 0;
   public queryPageLimit = 500;
+  public inProgressCount:number;
+  public isMigrationRunning:boolean = false;
 
 
   constructor(private MigrationDataProvider: MigrationProviderService,
@@ -81,6 +84,15 @@ export class MigrationComponent extends CommonComponentDirective implements OnIn
     if (!localStorage.getItem(this.searchTerm)) {
       this.loadTableRows();
     }
+  }
+
+
+  ngAfterViewInit() {
+    this.getInProgressDataCount((count) => {
+      if (count > 0) {
+        this.gatherMigrationStatus();
+      }
+    });
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -141,22 +153,27 @@ public getEntireDataCount(){
     this.MigrationDataProvider.getEntireDataCount()
       .then((response: BogenligaResponse<TriggerCountDO>) => {
         this.handleEntireData(response);
-        console.log(this.entireCount);
-      })
-      .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+      });
 }
 public getSucceededDataCount(){
   this.MigrationDataProvider.getSucceededDataCount()
       .then((response: BogenligaResponse<TriggerCountDO>) => {
         this.handleSucceeededData(response);
-        console.log(this.succeededCount);
-      })
-      .catch((response: BogenligaResponse<TriggerDTO[]>) => this.handleLoadTableRowsFailure(response));
+      });
 }
 
+  public getInProgressDataCount(callback: (count: number) => void) {
+    this.MigrationDataProvider.getInProgressDataCount()
+        .then((response: BogenligaResponse<TriggerCountDO>) => {
+          this.handleInProgressData(response);
+          callback(this.inProgressCount);
+        })
+  }
 
   public gatherMigrationStatus() {
+
     this.statusbar.hidden = false;
+
     let firstRound = true
     this.getEntireDataCount();
 
@@ -173,10 +190,9 @@ public getSucceededDataCount(){
             this.progress = 0;
             this.statusbar.progress = this.progress;
           }
-          console.log(this.progress);
 
           // Schedule the next check
-          setTimeout(checkProgress, 8000);
+          setTimeout(checkProgress, 5000);
         } else {
           this.migrationCompleted = true;
         }
@@ -342,6 +358,12 @@ public getSucceededDataCount(){
   private handleSucceeededData(response: BogenligaResponse<TriggerCountDTO>): void {
     this.countObj = response.payload;
     this.succeededCount = this.countObj.count;
+    this.loading = false;
+  }
+
+  private handleInProgressData(response: BogenligaResponse<TriggerCountDTO>): void {
+    this.inprogressObj = response.payload;
+    this.inProgressCount = this.inprogressObj.count;
     this.loading = false;
   }
 }

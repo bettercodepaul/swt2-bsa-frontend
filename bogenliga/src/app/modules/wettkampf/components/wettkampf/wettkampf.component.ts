@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WETTKAMPF_CONFIG} from './wettkampf.config';
-import {CommonComponentDirective, toTableRows} from '@shared/components';
+import {ButtonSize, ButtonType, CommonComponentDirective, toTableRows} from '@shared/components';
 import {BogenligaResponse, UriBuilder} from '@shared/data-provider';
 import {TableRow} from '@shared/components/tables/types/table-row.class';
 import {WETTKAMPF_TABLE_CONFIG} from './wettkampergebnis/tabelle.config';
@@ -9,7 +9,6 @@ import {
   WETTKAMPF_TABLE_EINZELGESAMT_CONFIG
 } from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.einzelGesamt.config';
 import {WettkampfErgebnisService} from '@wettkampf/services/wettkampf-ergebnis.service';
-import {ActivatedRoute, Router} from '@angular/router';
 import {DsbMannschaftDataProviderService} from '@verwaltung/services/dsb-mannschaft-data-provider.service';
 import {DsbMannschaftDO} from '@verwaltung/types/dsb-mannschaft-do.class';
 import {MatchDataProviderService} from '@wettkampf/services/match-data-provider.service';
@@ -24,68 +23,184 @@ import {VeranstaltungDO} from '@verwaltung/types/veranstaltung-do.class';
 import {VereinDO} from '@verwaltung/types/verein-do.class';
 import {MatchDO} from '@verwaltung/types/match-do.class';
 import {CurrentUserService, NotificationService, OnOfflineService} from '@shared/services';
-import {DsbMitgliedDataProviderService} from '@verwaltung/services/dsb-mitglied-data-provider.service';
 import {MannschaftsMitgliedDO} from '@verwaltung/types/mannschaftsmitglied-do.class';
-import {MannschaftsmitgliedDataProviderService} from '@verwaltung/services/mannschaftsmitglied-data-provider.service';
 import {environment} from '@environment';
 import {SchuetzenstatistikDO} from '@verwaltung/types/schuetzenstatistik-do.class';
 import {SessionHandling} from '@shared/event-handling';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
+import {WETTKAMPF_TABLE_MATCH_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.siebenmatch.config';
+import {WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.pfeilschnittalleligenprosaison.config';
+import {WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.wettkampftage.config';
+import {SchuetzenstatistikMatchDataProviderService} from '@wettkampf/services/schuetzenstatistikmatch-data-provider-service';
+import {SchuetzenstatistikMatchDO} from '@verwaltung/types/schuetzenstatistikmatch-do.class';
 
+import {SchuetzenstatistikWettkampftageDO} from '@verwaltung/types/schuetzenstatistikwettkampftage-do.class';
+import {
+  SchuetzenstatistikwettkampftageDataProviderService
+} from '@wettkampf/services/schuetzenstatistikwettkampftage-data-provider-service';
+import {SportjahrVeranstaltungDO} from '@verwaltung/types/sportjahr-veranstaltung-do';
+import {DecimalPipe} from '@angular/common';
+import {LigatabelleDataProviderService} from '../../../ligatabelle/services/ligatabelle-data-provider.service';
+import {LigatabelleErgebnisDO} from '../../../ligatabelle/types/ligatabelle-ergebnis-do.class';
+import {MannschaftTabellenverlaufSportjahre} from '@verwaltung/types/mannschaftstatistiksportjahre-do.class';
+import {SchuetzenstatistikMatchDTO} from '@verwaltung/types/datatransfer/schuetzenstatistikmatch-dto.class';
+import {
+  WETTKAMPF_TABLE_SECHS_MATCHES_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.sechsmatch.config';
+import {
+  WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.fuenfmatch.config';
+
+import {ChartOptions, ChartType} from 'chart.js';
+import {SchuetzenstatistikLetzteJahreDO} from '@verwaltung/types/schuetzenstatistikletztejahre-do.class';
+import {
+  WETTKAMPF_TABLE_SCHUETZELETZTEJAHRE_CONFIG
+} from '@wettkampf/components/wettkampf/wettkampergebnis/tabelle.schuetzeletztejahre.config';
+import {
+  SchuetzenstatistikletztejahreDataProviderService
+} from '@wettkampf/services/schuetzenstatistikletztejahre-data-provider-service';
+import {
+  MannschaftTabellenverlaufWettkampftage
+} from '@verwaltung/types/mannschafttabellenverlaufwettkampftage-do.class';
+
+
+interface Wettkampftag {
+  id: number;
+  name: string;
+}
 
 @Component({
   selector:    'bla-mannschaft',
   templateUrl: './wettkampf.component.html',
-  styleUrls:   ['./wettkampf.component.scss']
+  styleUrls:   ['./wettkampf.component.scss'],
+  providers: [DecimalPipe]
 })
 
 export class WettkampfComponent extends CommonComponentDirective implements OnInit {
 
   public show = false;
+  public currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public config = WETTKAMPF_CONFIG;
-  public config_table = WETTKAMPF_TABLE_CONFIG;
-  public config_einzel_table = WETTKAMPF_TABLE_EINZEL_CONFIG;
-  public config_einzelGesamt_table = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
-  public jahre: Array<number> = [];
+  public mannschaftenConfig = WETTKAMPF_TABLE_CONFIG;
+  public jahre: Array<SportjahrVeranstaltungDO> = [];
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
   public veranstaltungen: Array<VeranstaltungDO> = [];
   public currentVeranstaltung: VeranstaltungDO = new VeranstaltungDO();
+  public currentWettkampf: WettkampfDO = new WettkampfDO();
   public currentMannschaft: DsbMannschaftDO = new DsbMannschaftDO();
   public currentVerein: VereinDO = new VereinDO();
+  // properties required the mannschafttabellenverlauf over the sporjahre
+  private filteredVeranstaltungenOfLiga: VeranstaltungDO[];
+  public mannschafttabellenverlaufConfig = WETTKAMPF_TABLE_EINZEL_CONFIG;
+  private mannschaftTabellenverlaufSportjahre = new MannschaftTabellenverlaufSportjahre();
   public multipleSelections = true;
+  // properties requiered the wettkampftagetabellenverlauf over the season
+  private filteredWettkampftageOfLiga: WettkampfDO[];
+  private mannschaftTabellenverlaufWettkampftage = new MannschaftTabellenverlaufWettkampftage();
   // Because we have several match tables, we need an array of arrays for the several Rows in each Table
   public rows: Array<TableRow[]> = new Array<TableRow[]>();
   public areVeranstaltungenLoading = true;
   public loadingData = false;
+  public isStatistikAllowed = false;
+  public currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
   public matches: Array<MatchDO[]> = [];
   public wettkaempfe: Array<WettkampfDO> = [];
   private passen: Array<PasseDoClass[]> = [];
   public mannschaftsmitglieder: Array<MannschaftsMitgliedDO> = [];
   public ActionButtonColors = ActionButtonColors;
+  public selectedWettkampfTag: Wettkampftag;
+  public currentWettkampftag = 0;
+  public wettkampftage: Array<Wettkampftag> = [];
   private sessionHandling: SessionHandling;
-  public selectedStatistik: string = 'gesamtstatistik';
+  public selectedStatistik = 'gesamtstatistik';
+  public selectedMannschaftStatistik = 'aktuelle_mannschaft';
+  public schuetzenStatistikActive = false;
+  public mannschaftStatistikActive = false;
+  public alleTage: Array<Wettkampftag> = [
+    {id: 0, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION1.LABEL'},
+    {id: 1, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION2.LABEL'},
+    {id: 2, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION3.LABEL'},
+    {id: 3, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION4.LABEL'}
+  ];
 
+  // attributes for the line chart
+  public showLineChart = false;
+  private lineChartMannschaftTabellenverlaufData: Array<number> = [];
+  public lineChartOptions: ChartOptions = {
+    responsive: true,
+    spanGaps: true,
+    // legend shows color of the line shown and the currently selected verein
+    legend: {
+      labels: {
+        fontSize: 16
+      },
+    },
+    // information shown, when you hover above the different dots
+    tooltips: {
+      callbacks: {
+        label(tooltipItem, data) {
+          const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+          const value = tooltipItem.yLabel;
+          return datasetLabel + ' Platz:' + value;
+        }}
+      },
+    // adjusting x axes and y axes
+    scales: {
+      xAxes: [{
+        ticks: {
+          fontSize: 16,
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Sportjahr',
+          fontSize: 18,
+        }
+      },  ],
+      yAxes: [{
+        ticks: {
+          fontSize: 16,
+          min: 1,
+          max: 8,
+          reverse: true,
+          callback(value, index, values) {
+            return value + '.';
+          }
+        },
+          scaleLabel: {
+            display: true,
+            labelString: 'Tabellenplatz',
+            fontSize: 18,
+          }
+      }]},
+  };
+
+  public lineChartLabels = [''];
+  public lineChartType: ChartType = 'line';
+  public lineChartLegend = true;
+  public lineChartData = [];
+
+
+  /**
+   * Enthält alle Veranstaltungen aus dem ausgewählten Sportjahr
+   * {@link this.filterVeranstaltungenBySportjahr}
+   */
   popup: boolean;
-  gesamt = false;
 
-  // Die Werte des Array's entspricht dem Inhalt von allen 4 Wettkampftagen. false = leere Tabelle, true = Tabelle mit Inhalt
-  isTableFilled: Array<boolean> = [false, false, false, false];
-
-  constructor(private veranstaltungsDataProvider: VeranstaltungDataProviderService,
+  constructor(
+    private veranstaltungsDataProvider: VeranstaltungDataProviderService,
     private vereinDataProvider: VereinDataProviderService,
     private wettkampfDataProviderService: WettkampfDataProviderService,
     private matchDataProviderService: MatchDataProviderService,
     private passeDataProviderService: PasseDataProviderService,
     private wettkampfErgebnisService: WettkampfErgebnisService,
     private mannschaftDataProvider: DsbMannschaftDataProviderService,
-    private dsbMitgliedDataProvider: DsbMitgliedDataProviderService,
-    private mannschaftsmitgliedDataProvider: MannschaftsmitgliedDataProviderService,
     private schuetzenstatistikDataProvider: SchuetzenstatistikDataProviderService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
+    private schuetzenstatistikMatchDataProvider: SchuetzenstatistikMatchDataProviderService,
+    private schuetzenstatistikWettkampftageDataProvider: SchuetzenstatistikwettkampftageDataProviderService,
+    private schuetzenstatistikLetzteJahreDataProvider: SchuetzenstatistikletztejahreDataProviderService,
+    private ligaTabelleDataProvider: LigatabelleDataProviderService,
     private currentUserService: CurrentUserService,
     private onOfflineService: OnOfflineService) {
     super();
@@ -97,8 +212,63 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadVeranstaltungen
    */
   ngOnInit() {
-    this.loadVeranstaltungen();
+    this.init();
   }
+
+async init() {
+    await this.loadJahre();
+    await this.loadVeranstaltungen(this.currentJahr);
+    this.selectedWettkampfTag =  this.alleTage[0];
+}
+
+printStatistics() {
+    // Get the printable content
+    const dropdownContents = document.getElementById('DropdownForPrintOut').innerHTML;
+    const statsAndGraphContents = document.getElementById('StatsAndGraphForPrintOut').innerHTML;
+
+    // Create a new container for printing
+    const printContainer = document.createElement('div');
+    printContainer.innerHTML = dropdownContents + statsAndGraphContents;
+
+    // Create an iframe for printing
+    const printFrame = document.createElement('iframe');
+    document.body.appendChild(printFrame);
+
+    const printDocument = printFrame.contentDocument || printFrame.contentWindow.document;
+    printDocument.open();
+
+    // Write the HTML and include the styles
+    printDocument.write('<html><head><title>Print</title>');
+
+    // Clone and append the current stylesheets to the print document
+    const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]'));
+    styles.forEach( (style) => {
+      printDocument.write(style.outerHTML);
+    });
+
+    printDocument.write('</head><body>');
+    printDocument.write(printContainer.innerHTML);
+    printDocument.write('</body></html>');
+    printDocument.close();
+
+    // Wait for the content to be loaded and then print
+    printFrame.onload = () => {
+      printFrame.contentWindow.focus();
+      printFrame.contentWindow.print();
+
+      // Clean up by removing the iframe after printing
+      setTimeout(() => {
+        document.body.removeChild(printFrame);
+      }, 1000);
+    };
+}
+
+// dynamic change of x-Axis Label
+public updateChartOptions(newXAxisLabel: string) {
+    this.lineChartOptions.scales.xAxes[0].scaleLabel.labelString = newXAxisLabel;
+    // re-render the chart
+    this.lineChartOptions = { ...this.lineChartOptions };
+}
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
    *  This function calls the checkSessionExpired-function in the sessionHandling class and get a boolean value back.
@@ -120,7 +290,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     await this.vereinDataProvider.findById(vereinId)
               .then((response: BogenligaResponse<VereinDO>) => this.handleLoadVerein(response))
               .catch(() => this.handleLoadVerein(null));
-    document.getElementById('vereinsinformationen').classList.remove('hidden');
+    // document.getElementById('vereinsinformationen').classList.remove('hidden');
   }
 
   /**
@@ -139,7 +309,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
 
   public async loadErgebnisForMannschaft(selectedMannschaft: DsbMannschaftDO) {
     this.loadingData = true;
-    await this.loadPopup(this.currentMannschaft);
     await this.loadErgebnisse(selectedMannschaft);
     this.loadingData = false;
   }
@@ -155,174 +324,241 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * At the end the button for printing will be hidden so that its only available for 'Einzelstatistik'.
    */
   public async loadErgebnisse(selectedMannschaft: DsbMannschaftDO) {
-
-    if (selectedMannschaft === undefined) {
-      this.showUebersichtsButtons();
-    } else {
-      this.hideUebersichtsButtons();
-    }
-
-
-    for (let i = 0; i < 4; i++) {
-      let rowNumber = 'row';
-      rowNumber += i;
-      document.getElementById(rowNumber).classList.remove('hidden');
-      rowNumber += '1';
-      document.getElementById(rowNumber).classList.add('hidden');
-    }
-    for (let i = 0; i <= 4; i++) {
-      let tableNumber = 'Table';
-      tableNumber += i;
-      if (i === 0) {
-        document.getElementById(tableNumber).classList.add('hidden');
-      } else {
-        document.getElementById(tableNumber).classList.remove('hidden');
-      }
-    }
+    this.isStatistikAllowed = true;
+    await this.clearAllStatistikTables();
 
     this.rows = [];
     for (let i = 0; i < this.wettkaempfe.length; i++) {
       this.rows.push(toTableRows(this.wettkampfErgebnisService.createErgebnisse(this.currentJahr, selectedMannschaft,
         this.mannschaften, this.currentVeranstaltung, this.matches[i], this.passen[i])));
     }
-
-    // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
-    for (let i = 0; i < this.rows.length; i++) {
-      if (this.rows[i].length > 0) {
-        this.isTableFilled[i] = true;
-      }
-    }
-
-    document.getElementById('einzeldruckButton').classList.add('hidden');
-    // hide verein information if the user presses "Alle Mannschaften anzeigen"
-    if (selectedMannschaft === undefined) {
-      document.getElementById('vereinsinformationen').classList.add('hidden');
-    }
-    document.getElementById('gesamtdruckButton').classList.add('hidden');
+    this.currentConfig = this.mannschaftenConfig;
   }
-
   /* loadEinzelstatistik
-  Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
   Desweiteren wird hier die Tabelle befüllt für die Einzelstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ereignis-service.ts zu finden)
   Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
    */
   public async loadEinzelstatistik(selectedMannschaft: DsbMannschaftDO) {
-    this.loadPopup(this.currentMannschaft);
-    this.hideUebersichtsButtons();
-
+    this.wettkampftage = this.alleTage.slice(0, this.wettkaempfe.length);
+    this.selectedWettkampfTag = this.alleTage[0];
     if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
-      for (let i = 0; i < 4; i++) {
-        let rowNumber = 'row';
-        rowNumber += i;
-        document.getElementById(rowNumber).classList.add('hidden');
-        rowNumber += '1';
-        document.getElementById(rowNumber).classList.remove('hidden');
-      }
-      for (let i = 0; i <= 4; i++) {
-        let tableNumber = 'Table';
-        tableNumber += i;
-        if (i === 0) {
-          document.getElementById(tableNumber).classList.add('hidden');
-        } else {
-          document.getElementById(tableNumber).classList.remove('hidden');
-        }
-      }
-
-
+      await this.clearAllStatistikTables();
+      this.loadingData = true;
+      this.currentConfig = WETTKAMPF_TABLE_EINZEL_CONFIG;
       this.rows = [];
       await this.loadSchuetzenstatistiken(selectedMannschaft.vereinId, 0);
+    }
+    this.loadingData = false;
+  }
 
-      document.getElementById('einzeldruckButton').classList.remove('hidden');
-      document.getElementById('gesamtdruckButton').classList.add('hidden');
-
-      // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
-      for (let i = 0; i < this.rows.length; i++) {
-        if (this.rows[i].length > 0) {
-          this.isTableFilled[i] = true;
+  private async loadSchuetzenstatistikMatch(selectedMannschaft: DsbMannschaftDO) {
+    this.loadingData = true;
+    this.wettkampftage = this.alleTage.slice(0, this.wettkaempfe.length);
+    this.selectedWettkampfTag = this.alleTage[0];
+    if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
+      await this.clearAllStatistikTables();
+      this.rows = [];
+      // make first wettkampftag row visible
+      this.currentConfig = WETTKAMPF_TABLE_MATCH_CONFIG;
+      await this.loadSchuetzenstatistikenMatch(selectedMannschaft.vereinId, 0);
+      // if there wasn't a problem with the REST-calls
+      if (this.loadingData) {
+        // this decides whether a wettkampf had 5, 6 or 7 matches, depending on the count the configuration will be adjusted
+        if (this.mannschaften.length === 8) {
+          this.currentConfig = WETTKAMPF_TABLE_MATCH_CONFIG;
+        } else if (this.mannschaften.length === 4) {
+          this.currentConfig = WETTKAMPF_TABLE_SECHS_MATCHES_CONFIG;
+        } else {
+          this.currentConfig = WETTKAMPF_TABLE_FUENF_MATCHES_CONFIG;
         }
+      } else {
+        this.rows = [];
       }
     }
     this.loadingData = false;
   }
 
-  /* loadGesamtstatistik
-   Die ersten beiden for-Schleifen dienen dazu die jeweilige Reihe/Tabelle entweder zu verstecken oder anzuzeigen.
-   Desweiteren wird hier die Tabelle befüllt für die Gesamtstatistik der Schützen (die zugehörigen Methoden sind in wettkampf-ergebnis-service.ts zu finden)
-   Am Ende wird der Button zum drucken der 'Einzelstatistik' eingeblendet da er hierfür relevant ist.
-   */
-  public async loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
-    await this.loadPopup(this.currentMannschaft);
-
-    this.hideUebersichtsButtons();
+  public async loadSchuetzenstatistikWettkampftage(selectedMannschaft: DsbMannschaftDO) {
     if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
-      for (let i = 0; i < 4; i++) {
-        let rowNumber = 'row';
-        rowNumber += i;
-        document.getElementById(rowNumber).classList.add('hidden');
-        rowNumber += '1';
-        document.getElementById(rowNumber).classList.add('hidden');
-      }
-      for (let i = 0; i <= 4; i++) {
-        let tableNumber = 'Table';
-        tableNumber += i;
-        if (i === 0) {
-          document.getElementById(tableNumber).classList.remove('hidden');
-        } else {
-          document.getElementById(tableNumber).classList.add('hidden');
-        }
-      }
+      this.loadingData = true;
+      await this.clearAllStatistikTables();
+      this.rows = [];
+      await this.schuetzenstatistikWettkampftageDataProvider.getSchuetzenstatistikWettkampftageVeranstaltung(selectedMannschaft.vereinId, this.currentVeranstaltung.id)
+                .then((response: BogenligaResponse<SchuetzenstatistikWettkampftageDO[]>) => this.handleLoadSchuetzenstatistikWettkampftageSuccess(response.payload));
+      this.currentConfig = WETTKAMPF_TABLE_WETTKAMPFTAGE_CONFIG;
+    }
+    this.loadingData = false;
+  }
 
+  public async loadGesamtstatistik(selectedMannschaft: DsbMannschaftDO) {
+    this.loadingData = true;
+    this.isStatistikAllowed = true;
+    this.currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
+    if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
+      await this.clearAllStatistikTables();
       this.rows = [];
       await this.schuetzenstatistikDataProvider.getSchuetzenstatistikVeranstaltung(selectedMannschaft.vereinId, this.currentVeranstaltung.id)
-        .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
+                .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
+    }
+    this.loadingData = false;
+  }
 
-      document.getElementById('einzeldruckButton').classList.add('hidden');
-      document.getElementById('gesamtdruckButton').classList.remove('hidden');
-
+  public async loadAlleLigenProSaisonStatistik(selectedMannschaft: DsbMannschaftDO) {
+    if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
+      this.loadingData = true;
+      await this.clearAllStatistikTables();
+      this.rows = [];
+      await this.schuetzenstatistikWettkampftageDataProvider.getSchuetzenstatistikAlleLigen(this.currentJahr, selectedMannschaft.vereinId)
+                .then((response: BogenligaResponse<SchuetzenstatistikWettkampftageDO[]>) => this.handleLoadSchuetzenstatistikLetzteJahreSuccess(response.payload));
+      this.currentConfig = WETTKAMPF_TABLE_ALLELIGENPROSAISON_CONFIG;
       // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
-      for (let i = 0; i < this.rows.length; i++) {
-        if (this.rows[i].length > 0) {
-          this.isTableFilled[i] = true;
-        }
-      }
+    }
+    this.loadingData = false;
+  }
+
+  public async loadSchuetzenstatistikLetzteJahre(selectedMannschaft: DsbMannschaftDO) {
+    if (selectedMannschaft !== undefined && selectedMannschaft !== null) {
+      this.loadingData = true;
+      await this.clearAllStatistikTables();
+      this.rows = [];
+      await this.schuetzenstatistikLetzteJahreDataProvider.getSchuetzenstatistikLetzteJahre(this.currentJahr, this.currentVeranstaltung.id, selectedMannschaft.vereinId)
+                .then((response: BogenligaResponse<SchuetzenstatistikLetzteJahreDO[]>) => this.handleLoadSchuetzenstatistikLetzteJahreSuccess(response.payload));
+      this.currentConfig = {
+        actions: {actionTypes: []},
+        columns: [
+          {
+            translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHUETZE',
+            propertyName: 'schuetzenname',
+            width: 100,
+            sortable: true
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr - 4).toString(),
+            propertyName: 'sportjahr1',
+            width: 40,
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr - 3).toString(),
+            propertyName: 'sportjahr2',
+            width: 40,
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr - 2).toString(),
+            propertyName: 'sportjahr3',
+            width: 40,
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr - 1).toString(),
+            propertyName: 'sportjahr4',
+            width: 40,
+          },
+          {
+            translationKey: '⌀ ' + (this.currentJahr).toString(),
+            propertyName: 'sportjahr5',
+            width: 40,
+          },
+          {
+            translationKey: 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE.COLUMNS.SCHNITT_JAHRE',
+            propertyName: 'allejahre_schnitt',
+            width: 40,
+            sortable: true
+          },
+        ],
+      };
+      // This loop saves that the table is either empty or not. If table empty -> don't show on frontend
     }
     this.loadingData = false;
   }
 
   private async loadSchuetzenstatistiken(vereinId, index) {
     await this.loadSchuetzenstatistikEinzel(vereinId, this.wettkaempfe[index].id)
-      .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
+              .then((response: BogenligaResponse<SchuetzenstatistikDO[]>) => this.handleLoadSchuetzenstatistikSuccess(response.payload));
     if (index < this.wettkaempfe.length - 1) {
       index += 1;
       return this.loadSchuetzenstatistiken(vereinId, index);
     }
   }
 
+  private async loadSchuetzenstatistikenMatch(vereinId, index) {
+    await this.loadSchuetzenstatistikMatchData(vereinId, this.wettkaempfe[index].id)
+              .then((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadSchuetzenstatistikMatchSuccess(response.payload))
+              .catch((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadSchuetzenstatistikMatchFailure(response.payload));
+    if (index < this.wettkaempfe.length - 1 && this.loadingData) {
+      index += 1;
+      return this.loadSchuetzenstatistikenMatch(vereinId, index);
+    }
+  }
+  private handleLoadSchuetzenstatistikMatchFailure(payload) {
+    this.loadingData = false;
+  }
+  private async loadSchuetzenstatistikenWettkampftage(vereinId, index) {
+    await this.loadSchuetzenstatistikWettkampftageData(vereinId, this.currentVeranstaltung.id)
+              .then((response: BogenligaResponse<SchuetzenstatistikWettkampftageDO[]>) => this.handleLoadSchuetzenstatistikWettkampftageSuccess(response.payload));
+
+  }
+  private async loadSchuetzenstatistikWettkampftageData(vereinId, veranstaltungId) {
+    return this.schuetzenstatistikWettkampftageDataProvider.getSchuetzenstatistikWettkampftageVeranstaltung(vereinId, veranstaltungId);
+
+  }
+
+  private async loadSchuetzenstatistikMatchData(vereinId, wettkampfId) {
+    return this.schuetzenstatistikMatchDataProvider.getSchuetzenstatistikMatchWettkampf(vereinId, wettkampfId);
+  }
+
   private async loadSchuetzenstatistikEinzel(vereinId, wettkampfId) {
     return this.schuetzenstatistikDataProvider.getSchuetzenstatistikWettkampf(vereinId, wettkampfId);
   }
 
-  public handleLoadSchuetzenstatistikSuccess(payload) {
+  /**
+   * Formats the Schuetzenstatistiken (=> German browser settings => 9,25 instead of 9.25
+   * In addition is transforming 'schuetzeSatz1-5' into a more readable format
+   */
+  private formatStatistik(statistikRow: TableRow[]): TableRow[] {
+    statistikRow.forEach((row) => {
+      for (const columnKey in row.payload ) {
+        // formats numbers into country-dependent format
+        if (typeof row.payload[columnKey] === 'number' && row.payload[columnKey] != null) {
+          row.payload[columnKey] = row.payload[columnKey].toLocaleString();
+          // transforms saetze into a more readable format
+        } else if (columnKey.startsWith('schuetzeSatz') && row.payload[columnKey] != null) {
+          row.payload[columnKey] = row.payload[columnKey].replace(',', '\\');
+        }
+      }
+    });
+    return statistikRow;
+  }
+  private handleLoadSchuetzenstatistikSuccess(payload) {
     if (payload.length > 0) {
-      console.log(payload);
+      const formattedRows = this.formatStatistik(toTableRows(payload));
+      this.rows.push(formattedRows);
+    }
+  }
+
+  private handleLoadSchuetzenstatistikMatchSuccess(payload) {
+    if (payload.length > 0) {
+      const formattedRows = this.formatStatistik(toTableRows(payload));
+      this.rows.push(formattedRows);
+    }
+  }
+
+  private handleLoadSchuetzenstatistikWettkampftageSuccess(payload) {
+    if (payload.length > 0) {
+      const formattedRows = this.formatStatistik(toTableRows(payload));
+      this.rows.push(formattedRows);
+    }
+  }
+
+  private handleLoadSchuetzenstatistikAlleLigenSuccess(payload) {
+    if (payload.length > 0) {
       this.rows.push(toTableRows(payload));
     }
   }
 
-  /* loadPopup
-   ich werde in html aufgerufen,
-   wenn ein Popup erscheinen soll das aufmerksam macht, dass die Mannschaft noch nicht ausgewählt wurde.
-   Es werden die funktionen loadGesamtstatistik und loadEinzelstatistik im zusammenhang mit der variable gesamt aufgerufen,
-   sofern diese in dem jeweiligen Button auf true oder false gesetzt ist.
-   */
-  public loadPopup(selectedMannschaft: DsbMannschaftDO) {
-    if (!selectedMannschaft) {
-      this.popup = true;
-      this.loadingData = false;
-    } else {
-      this.loadingData = true;
+  private handleLoadSchuetzenstatistikLetzteJahreSuccess(payload) {
+    if (payload.length > 0) {
+      const formattedRows = this.formatStatistik(toTableRows(payload));
+      this.rows.push(formattedRows);
     }
-    return this.popup;
   }
 
   /**
@@ -330,15 +566,23 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * @see this.loadWettkaempfe
    * @param $event
    */
-  public async onSelect($event: VeranstaltungDO[]): Promise<void> {
+  public async onSelect(): Promise<void> {
     this.loadingData = true;
-    this.currentVeranstaltung = $event[0];
-    this.currentJahr = this.currentVeranstaltung.sportjahr;
-    this.jahre[0] = this.currentJahr;
     this.clear();
+    document.getElementById('selectWettkampftag').classList.add('hidden');
     await this.loadMannschaften(this.currentVeranstaltung.id);
     await this.loadWettkaempfe(this.currentVeranstaltung.id);
-    await this.loadAllErgebnisse(this.currentMannschaft);
+
+    this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
+
+    // Lädt je nach dem welche Statistik ausgewählt ist die jeweilige Statistik neu beim Mannschaftswechsel
+    if (this.mannschaftStatistikActive) {
+      this.selectedMannschaftStatistik = 'aktuelle_mannschaft';
+      await this.loadErgebnisse(this.currentMannschaft);
+    } else if (this.schuetzenStatistikActive) {
+      this.selectedStatistik = 'gesamtstatistik';
+      await this.loadGesamtstatistik(this.currentMannschaft);
+    }
     this.loadingData = false;
   }
 
@@ -347,15 +591,42 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.passen = [];
     this.wettkaempfe = [];
     this.rows = [];
+    this.mannschaften = [];
+
+    this.currentVerein.name = undefined;
+    this.currentVerein.regionName = '';
+    this.currentVerein.website = '';
+    this.currentVerein.description = '';
+    this.currentVerein.icon = '';
+    this.cleanLineChart();
   }
 
   // backend-calls to get data from DB
-  public async loadVeranstaltungen() {
+  public async loadVeranstaltungen(sportjahr) {
+    this.clear();
     this.loadingData = true;
-    await this.veranstaltungsDataProvider.findAllLaufendAbgeschlossen()
+    this.cleanLineChart();
+    await this.veranstaltungsDataProvider.findBySportjahrDestinct(sportjahr)
               .then((response: BogenligaResponse<VeranstaltungDO[]>) => this.handleSuccessLoadVeranstaltungen(response))
-              .catch(() => this.veranstaltungen = []);
+              .catch(() => {
+                this.veranstaltungen = [];
+                this.currentVeranstaltung = null;
+                this.loadingData = false;
+              });
+  }
 
+  /**
+   * Erzeugt ein Array aus Veranstaltungen, welche im aktuell ausgewählten Sportjahr stattinden.
+   * Dieses Array ({@link this.veranstaltungBySportjahr}) wird in der {@link wettkampf.component.html}
+   * demensprechend in das Dropdown für Veranstaltungen geladen.
+   */
+  public async filterVeranstaltungenBySportjahr() {
+    this.loadingData = true;
+
+    await this.loadVeranstaltungen(this.currentJahr);
+
+
+    this.loadingData = false;
   }
 
 
@@ -363,45 +634,64 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.veranstaltungen = response.payload;
     this.currentVeranstaltung = this.veranstaltungen[0];
     this.areVeranstaltungenLoading = false;
-    this.currentJahr = this.currentVeranstaltung.sportjahr;
-    await this.loadMannschaften(this.currentVeranstaltung.id);
-    await this.loadWettkaempfe(this.currentVeranstaltung.id);
-    await this.loadJahre();
-    this.loadingData = false;
+    if (this.veranstaltungen.length !== 0) {
+      await this.loadMannschaften(this.currentVeranstaltung.id);
+      await this.loadWettkaempfe(this.currentVeranstaltung.id);
+      if (this.mannschaftStatistikActive) {
+        this.selectedMannschaftStatistik = 'aktuelle_mannschaft';
+        await this.loadErgebnisse(this.currentMannschaft);
+      } else if (this.schuetzenStatistikActive) {
+        this.selectedStatistik = 'gesamtstatistik';
+        await this.loadGesamtstatistik(this.currentMannschaft);
+      }
+
+      await this.showStatistikOptions();
+    }
   }
 
   public async loadMannschaften(veranstaltungsId: number) {
     await this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
       .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
-        this.handleSuccessLoadMannschaft(response)
+        this.handleSuccessLoadMannschaft(response);
       })
       .catch(() => this.mannschaften === []);
   }
 
   public handleSuccessLoadMannschaft(response: BogenligaResponse<DsbMannschaftDO[]>) {
     this.mannschaften = response.payload;
-    this.currentMannschaft = this.mannschaften[0]
+    this.currentMannschaft = this.mannschaften[0];
     this.loadVerein(this.currentMannschaft.vereinId);
   }
 
   public async loadJahre() {
-    for (const i of this.veranstaltungen) {
-      if (this.jahre.includes(i.sportjahr) === false) {
-        this.jahre[this.jahre.length] = i.sportjahr;
-      }
-    }
+    await this.veranstaltungsDataProvider.findAllSportyearDestinct()
+      .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
+        this.handleSuccessLoadJahre(response.payload);
+      })
+      .catch(() => {
+        this.jahre = [];
+        this.loadingData = false;
+      });
+
+  }
+
+  private handleSuccessLoadJahre(response: SportjahrVeranstaltungDO[]) {
+    this.jahre = response;
+    this.currentJahr = this.jahre[0].sportjahr;
   }
 
   public async loadWettkaempfe(veranstaltungsId: number) {
     await this.wettkampfDataProviderService.findAllByVeranstaltungId(veranstaltungsId)
-      .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
-      .catch(() => this.handleLoadWettkaempfe([]));
+              .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
+              .catch(() => this.handleLoadWettkaempfe([]));
+    this.wettkampftage = this.alleTage.slice(0, this.wettkaempfe.length);
+    this.selectedWettkampfTag = this.alleTage[0];
   }
 
   public async loadWettkaempfeByCurrentMannschaft() {
     await this.wettkampfDataProviderService.findAllWettkaempfeByMannschaftsId(this.currentMannschaft.id)
-      .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
-      .catch(() => this.handleLoadWettkaempfe([]));
+              .then((response: BogenligaResponse<WettkampfDO[]>) => this.handleLoadWettkaempfe(response.payload))
+              .catch(() => this.handleLoadWettkaempfe([]));
   }
 
   /**
@@ -409,29 +699,29 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
    * WettkampfErgebnisse are put in correct order into this.rows
    * @param wettkaempfe the amount of wettkaempfe of one Veranstaltung
    */
-  public async  handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
+  public async handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = wettkaempfe;
     for (let index = 0; index < this.wettkaempfe.length; index++) {
       await this.loadMatches(this.wettkaempfe[index].id, index);
     }
   }
 
-  public async  loadMatches(wettkampfId: number, index: number) {
+  public async loadMatches(wettkampfId: number, index: number) {
     await this.matchDataProviderService.findByWettkampfId(wettkampfId)
-      .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId, index))
-      .catch(() => this.handleSuccessLoadMatches([], wettkampfId, index));
+              .then((response: BogenligaResponse<MatchDO[]>) => this.handleSuccessLoadMatches(response.payload, wettkampfId, index))
+              .catch(() => this.handleSuccessLoadMatches([], wettkampfId, index));
   }
 
 
-  public async  handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number, index: number) {
+  public async handleSuccessLoadMatches(matches: MatchDO[], wettkampfId: number, index: number) {
     this.matches[index] = matches;
     await this.loadPassen(wettkampfId, matches, index);
   }
 
   public async loadPassen(wettkampfId: number, matches: MatchDO[], index: number) {
     await this.passeDataProviderService.findByWettkampfId(wettkampfId)
-      .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, matches, index))
-      .catch(() => this.handleSuccessLoadPassen([], matches, index));
+              .then((response: BogenligaResponse<PasseDoClass[]>) => this.handleSuccessLoadPassen(response.payload, matches, index))
+              .catch(() => this.handleSuccessLoadPassen([], matches, index));
   }
 
   public handleSuccessLoadPassen(passen: PasseDoClass[], matches, index: number) {
@@ -451,24 +741,6 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     return placeholder;
   }
 
-
-  /*
-  loadMitglieder:
-  Es stellt einen Request an das Backend um alle Mitglieder in der Datenbank dsb_mitglied zu erhalten
-  und diese dann in dem Array dsbMitglieder zu speichern.
-
-  public loadMitglieder() {
-    this.dsbMitgliedDataProvider.findAll()
-              .then((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = response.payload)
-              .catch((response: BogenligaResponse<DsbMitgliedDO[]>) => this.dsbMitglieder = []);
-  }
-
-  public loadMannschaftsmitglieder() {
-    this.mannschaftsmitgliedDataProvider.findAll()
-        .then((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = response.payload)
-        .catch((response: BogenligaResponse<MannschaftsMitgliedDO[]>) => this.mannschaftsmitglieder = []);
-  }*/
-
   public onButtonDownloadUebersicht(path: string): string {
     return new UriBuilder()
       .fromPath(environment.backendBaseUrl)
@@ -477,7 +749,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
       .build();
   }
 
-  public hideUebersichtsButtons(): void {
+  // deprecated methods, even HTML isn't there ?
+  private hideUebersichtsButtons(): void {
     document.getElementById('TagesuebersichtButton').classList.add('hidden');
     document.getElementById('TagesuebersichtButton2').classList.add('hidden');
     document.getElementById('TagesuebersichtButton3').classList.add('hidden');
@@ -491,13 +764,18 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public onButtonDownload(path: string): string {
-    return new UriBuilder()
-      .fromPath(environment.backendBaseUrl)
-      .path('v1/download')
-      .path(path)
-      .path('?veranstaltungsid=' + this.currentVeranstaltung.id + '&manschaftsid=' + this.getMannschaftsID() + '&jahr=' + this.currentJahr)
-      .build();
+    let urlString = '';
+    if (this.currentVeranstaltung !== null && this.currentVeranstaltung !== undefined) {
+      urlString =  new UriBuilder()
+        .fromPath(environment.backendBaseUrl)
+        .path('v1/download')
+        .path(path)
+        .path('?veranstaltungsid=' + this.currentVeranstaltung.id + '&manschaftsid=' + this.getMannschaftsID() + '&jahr=' + this.currentJahr)
+        .build();
+    }
+    return urlString;
   }
+
   public getMannschaftsID(): number {
     if (this.currentMannschaft !== undefined) {
       return this.currentMannschaft.id;
@@ -507,14 +785,22 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   }
 
   public async onSelectVerein() {
-    console.log('Verein switched to ' + this.currentMannschaft.name);
+    this.cleanLineChart();
     this.loadingData = true;
-    if (!this.mannschaftAlreadyLoaded(this.currentMannschaft.id)) {
-      await this.loadWettkaempfeByCurrentMannschaft();
-    }
     await this.loadVerein(this.currentMannschaft.vereinId);
-    await this.loadErgebnisse(this.currentMannschaft);
+    document.getElementById('selectWettkampftag').classList.add('hidden');
+    // Lädt je nach dem welche Statistik ausgewählt ist die jeweilige Statistik neu beim Mannschaftswechsel
+    if (this.mannschaftStatistikActive) {
+      this.selectedMannschaftStatistik = 'aktuelle_mannschaft';
+      await this.loadErgebnisse(this.currentMannschaft);
+    } else if (this.schuetzenStatistikActive) {
+      this.selectedStatistik = 'gesamtstatistik';
+      await this.loadGesamtstatistik(this.currentMannschaft);
+    }
+
     this.loadingData = false;
+    this.onSelectWettkampfTag();
+
   }
 
   public mannschaftAlreadyLoaded(mannschaftId) {
@@ -532,17 +818,355 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
     this.loadingData = false;
   }
 
-  public async onSelectStatistik() {
+  private cleanLineChart() {
+    this.showLineChart = false;
+    this.lineChartData  = [
+      {
+        data: [],
+        label: '',
+        backgroundColor: 'rgb(72, 122, 245)',
+        borderColor: 'rgb(72, 122, 245)',
+        pointBackgroundColor: 'rgb(72, 122, 245)',
+        pointRadius: 6,
+        fill: false}
+    ];
+  }
+
+  private async clearAllStatistikTables() {
+  // make everything invisible
+    this.currentWettkampftag = 0;
+    this.cleanLineChart();
+  }
+  public async onSelectSchuetzenStatistik() {
+    this.isStatistikAllowed = true;
+    this.cleanLineChart();
+    document.getElementById('selectWettkampftag').classList.add('hidden');
+    this.selectedWettkampfTag =  this.alleTage[0];
     if (this.selectedStatistik === 'einzelstatistik') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_MATCH.TITEL';
       await this.loadEinzelstatistik(this.currentMannschaft);
+      document.getElementById('selectWettkampftag').classList.remove('hidden');
     } else if (this.selectedStatistik === 'gesamtstatistik') {
+      this.currentStatistikTitle =  'MANNSCHAFTEN.SCHUETZEN_STATISTIK.TITEL';
       await this.loadGesamtstatistik(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'alleligenstatistik') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZEN_STATISTIK_ALLE_LIGEN.TITEL';
+      await this.loadAlleLigenProSaisonStatistik(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'schuetzenstatistikMatch') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_WETTKAMPF.TITEL';
+      await this.loadSchuetzenstatistikMatch(this.currentMannschaft);
+      document.getElementById('selectWettkampftag').classList.remove('hidden');
+    } else if (this.selectedStatistik === 'schuetzenstatistikWettkampftage') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_VERANSTALTUNG.TITEL';
+      await this.loadSchuetzenstatistikWettkampftage(this.currentMannschaft);
+    } else if (this.selectedStatistik === 'letztejahre') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.SCHUETZENSTATISTIK_LETZTEJAHRE.TITEL';
+      await this.loadSchuetzenstatistikLetzteJahre(this.currentMannschaft);
     }
   }
 
+  public async onSelectMannschaftStatistik() {
+    this.isStatistikAllowed = true;
+    this.cleanLineChart();
+
+    if (this.selectedMannschaftStatistik === 'aktuelle_mannschaft') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT.TITEL';
+      await this.loadErgebnisForMannschaft(this.currentMannschaft);
+      this.onSelectWettkampfTag();
+    } else if (this.selectedMannschaftStatistik === 'alle_mannschaften') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_ALLE_MANNSCHAFTEN.TITEL';
+      await this.loadAllErgebnisse(undefined);
+      this.onSelectWettkampfTag();
+    } else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_alle_sportjahre') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE_NAME.MANNSCHAFT_TABELLENVERLAUF_TITLE';
+      await this.visualizeMannschaftTabellenverlaufSportjahre(this.currentVeranstaltung);
+    } else if (this.selectedMannschaftStatistik === 'tabellenverlauf_statistik_wettkampftage') {
+      this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTEN.TABLE_NAME2.MANNSCHAFT_TABELLENVERLAUF_TITLE';
+      await this.visualizeMannschaftTabellenverlaufWettkampftage(this.currentWettkampf);
+    }
+  }
+
+  /**
+   * Used to display the selected Mannschaft Tabellenverlauf in the last 5 years
+   * @param veranstaltung
+   * @private
+   */
+  private async visualizeMannschaftTabellenverlaufSportjahre(veranstaltung: VeranstaltungDO) {
+    // prepare array for the tabellenplatzierungen over the sportjahre
+    this.mannschaftTabellenverlaufSportjahre = new MannschaftTabellenverlaufSportjahre();
+    this.isStatistikAllowed = false;
+    // create config for the table on frontend, not required if you use the line chart
+   /* this.mannschafttabellenverlaufConfig = {
+      actions: {actionTypes: []},
+      columns: [
+        {
+          translationKey: (this.currentVeranstaltung.sportjahr - 4).toString(),
+          propertyName:   'tabellenplatzierung_sportjahr1',
+          width: 20,
+        },
+        {
+          translationKey: (this.currentVeranstaltung.sportjahr - 3).toString(),
+          propertyName: 'tabellenplatzierung_sportjahr2',
+          width: 20,
+        },
+        {
+          translationKey: (this.currentVeranstaltung.sportjahr - 2).toString(),
+          propertyName: 'tabellenplatzierung_sportjahr3',
+          width: 20,
+        },
+        {
+          translationKey: (this.currentVeranstaltung.sportjahr - 1).toString(),
+          propertyName: 'tabellenplatzierung_sportjahr4',
+          width: 20,
+        },
+        {
+          translationKey: (this.currentVeranstaltung.sportjahr).toString(),
+          propertyName: 'tabellenplatzierung_sportjahr5',
+          width: 20,
+        },
+      ],
+    };
+    */
+    await this.clearAllStatistikTables();
+    // create the x axes of the line chart depending on the current Veranstaltung Sportjahr
+
+    this.lineChartLabels = Array((this.currentVeranstaltung.sportjahr - 4).toString(), (this.currentVeranstaltung.sportjahr - 3).toString(),
+      (this.currentVeranstaltung.sportjahr - 2).toString(), (this.currentVeranstaltung.sportjahr - 1).toString(),
+      (this.currentVeranstaltung.sportjahr).toString());
+    // for every Sportjahr there can be a Tabellenplatz
+    this.lineChartMannschaftTabellenverlaufData = Array(5);
+    this.showLineChart = true;
+    this.loadingData = true;
+    this.currentConfig = this.mannschafttabellenverlaufConfig;
+    this.rows = [];
+
+    // change x-Axis Label
+    this.updateChartOptions('Sportjahr');
+
+    await this.loadAllVeranstaltungenOfLiga(veranstaltung);
+    if (this.loadingData) {
+      await this.loadMannschaftTabellenverlaufSportjahre(this.filteredVeranstaltungenOfLiga);
+    }
+    // create the line chart data
+    this.lineChartData  = [
+      {
+        data: this.lineChartMannschaftTabellenverlaufData,
+        label: this.currentVerein.name,
+
+        backgroundColor: 'rgb(72, 122, 245)',
+        borderColor: 'rgb(72, 122, 245)',
+        pointBackgroundColor: 'rgb(72, 122, 245)',
+        pointRadius: 6,
+        fill: false
+      }
+    ];
+
+    this.loadingData = false;
+  }
+  // for every veranstaltung the ligatabelle gets fetched
+  private async loadMannschaftTabellenverlaufSportjahre(veranstaltungen: VeranstaltungDO[]) {
+    // sort the veranstaltungen so there is no need for a sort afterward
+    for (const veranstaltungDO of veranstaltungen.sort((i, j) => i.sportjahr - j.sportjahr)) {
+      await this.loadMannschaftTabellenverlaufSportjahreData(veranstaltungDO)
+        .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) =>
+          this.handleLoadMannschaftTabellenverlaufSportjahreSuccess(response.payload, veranstaltungDO))
+        .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) =>
+          this.handleLoadMannschaftTabellenverlaufSportjahreFailure());
+    }
+    if (this.loadingData) {
+      this.rows.push(toTableRows(Array(this.mannschaftTabellenverlaufSportjahre)));
+    }
+  }
+  private handleLoadMannschaftTabellenverlaufSportjahreSuccess(payload: LigatabelleErgebnisDO[], veranstaltung: VeranstaltungDO) {
+    if (payload.length > 0) {
+      // only the current verein tabellenplatz will be returned
+      payload = payload.filter((mannschaft) => this.currentVerein.id === mannschaft.verein_id);
+      let tabellenplatzVerein: number;
+      // if the verein didn't play in the veranstaltung it will be skipped with a null value
+      if (payload.length === 0) {
+        tabellenplatzVerein = null;
+      } else {
+        tabellenplatzVerein = payload[0].tabellenplatz;
+      }
+      // places the value in the right variable
+      if (tabellenplatzVerein !== null) {
+        switch (this.currentVeranstaltung.sportjahr - veranstaltung.sportjahr) {
+          case 4:
+            this.lineChartMannschaftTabellenverlaufData[0] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr1 = tabellenplatzVerein + '.';
+            break;
+          case 3:
+            this.lineChartMannschaftTabellenverlaufData[1] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr2 = tabellenplatzVerein + '.';
+            break;
+          case 2:
+            this.lineChartMannschaftTabellenverlaufData[2] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr3 = tabellenplatzVerein + '.';
+            break;
+          case 1:
+            this.lineChartMannschaftTabellenverlaufData[3] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr4 = tabellenplatzVerein + '.';
+            break;
+          case 0:
+            this.lineChartMannschaftTabellenverlaufData[4] = tabellenplatzVerein;
+            this.mannschaftTabellenverlaufSportjahre.tabellenplatzierung_sportjahr5 = tabellenplatzVerein + '.';
+            break;
+        }
+      }
+    }
+  }
+
+  private handleLoadMannschaftTabellenverlaufSportjahreFailure() {
+    this.loadingData = false;
+  }
+  private async loadMannschaftTabellenverlaufSportjahreData(veranstaltung: VeranstaltungDO) {
+    return this.ligaTabelleDataProvider.getLigatabelleVeranstaltung(veranstaltung.id);
+  }
+
+  /**
+   * Used to display the selected Manschaften Tabellenverlauf in the Wettkampftagen
+   * @param wettkampf
+   * @private
+   */
+  private async visualizeMannschaftTabellenverlaufWettkampftage(wettkampf: WettkampfDO) {
+    // prepare array for the tabellenplatzierungen over the wettkampftage
+    this.mannschaftTabellenverlaufWettkampftage = new MannschaftTabellenverlaufWettkampftage();
+    this.isStatistikAllowed = false;
+
+    await this.clearAllStatistikTables();
+
+    // create the x axes of the line chart depending on the current Wettkampftag
+    this.lineChartLabels = Array('Tag 1', 'Tag 2', 'Tag 3', 'Tag 4');
+    // for every Wettkampftag there can be a Tabellenplatz
+    this.lineChartMannschaftTabellenverlaufData = Array(4);
+    this.showLineChart = true;
+    this.loadingData = true;
+    this.currentConfig = this.mannschafttabellenverlaufConfig;
+    this.rows = [];
+
+    // changing the x-Axis Label
+    this.updateChartOptions('Wettkampftag');
+
+    if (this.loadingData) {
+      await this.loadMannschaftTabellenverlaufWettkampftage(this.wettkaempfe);
+    }
+    // create the line chart data
+    this.lineChartData  = [
+      {
+        data: this.lineChartMannschaftTabellenverlaufData,
+        label: this.currentVerein.name,
+
+        backgroundColor: 'rgb(72, 122, 245)',
+        borderColor: 'rgb(72, 122, 245)',
+        pointBackgroundColor: 'rgb(72, 122, 245)',
+        pointRadius: 6,
+        fill: false
+      }
+    ];
+
+    this.loadingData = false;
+  }
+  // for every wettkampftag the wettkampftablle gets fetched
+  private async loadMannschaftTabellenverlaufWettkampftage(wettkaempfe: WettkampfDO[]) {
+    // sort the wettkaempfe so there is no need for a sort afterward
+    for (const wettkampftageDo of wettkaempfe.sort((i, j) => i.wettkampfTag - j.wettkampfTag)) {
+      await this.loadMannschaftTabellenverlaufWettkampftageData(wettkampftageDo)
+                .then((response: BogenligaResponse<LigatabelleErgebnisDO[]>) =>
+                  this.handleLoadMannschaftTabellenverlaufWettkampftageSuccess(response.payload, wettkampftageDo))
+                .catch((response: BogenligaResponse<LigatabelleErgebnisDO[]>) =>
+                  this.handleLoadMannschaftTabellenverlaufWettkampftageFailure());
+    }
+    if (this.loadingData) {
+      this.rows.push(toTableRows(Array(this.mannschaftTabellenverlaufWettkampftage)));
+    }
+  }
+  private handleLoadMannschaftTabellenverlaufWettkampftageSuccess(payload: LigatabelleErgebnisDO[], wettkampf: WettkampfDO) {
+    if (payload.length > 0) {
+      // only the current verein tabellenplatz will be returned
+      payload = payload.filter((mannschaft) => this.currentVerein.id === mannschaft.verein_id);
+      let tabellenplatzVerein: number;
+      // if the verein didn't play in the veranstaltung it will be skipped with a null value
+      if (payload.length === 0) {
+        tabellenplatzVerein = null;
+      } else {
+        tabellenplatzVerein = payload[0].tabellenplatz;
+      }
+      // places the value in the right variable
+      if (tabellenplatzVerein !== null) {
+        switch (wettkampf.wettkampfTag) {
+          case 1:
+            this.lineChartMannschaftTabellenverlaufData[0] = tabellenplatzVerein;
+            break;
+          case 2:
+            this.lineChartMannschaftTabellenverlaufData[1] = tabellenplatzVerein;
+            break;
+          case 3:
+            this.lineChartMannschaftTabellenverlaufData[2] = tabellenplatzVerein;
+            break;
+          case 4:
+            this.lineChartMannschaftTabellenverlaufData[3] = tabellenplatzVerein;
+            break;
+        }
+      }
+    }
+  }
+  private handleLoadMannschaftTabellenverlaufWettkampftageFailure() {
+    this.loadingData = false;
+  }
+  private async loadMannschaftTabellenverlaufWettkampftageData(wettkampf: WettkampfDO) {
+    return this.ligaTabelleDataProvider.getLigatabelleWettkampf(wettkampf.id);
+  }
+
+
+  private async loadAllVeranstaltungenOfLiga(veranstaltung: VeranstaltungDO) {
+    await this.loadAllVeranstaltungenOfLigaData(veranstaltung)
+              .then((response: BogenligaResponse<VeranstaltungDO[]>) =>
+                this.handleLoadVeranstaltungenMannschaftTabellenverlaufSuccess(response.payload, veranstaltung))
+              .catch((response: BogenligaResponse<VeranstaltungDO[]>) =>
+                this.handleLoadVeranstaltungenMannschaftTabellenverlaufFailure(response.payload));
+  }
+  private async loadAllVeranstaltungenOfLigaData(veranstaltung: VeranstaltungDO) {
+    return this.veranstaltungsDataProvider.findByLigaId(veranstaltung.ligaId);
+  }
+  private handleLoadVeranstaltungenMannschaftTabellenverlaufSuccess(payload: VeranstaltungDO[], veranstaltung: VeranstaltungDO) {
+    if (payload.length > 0) {
+        this.filteredVeranstaltungenOfLiga = payload.filter((loadedVeranstaltung) => {
+          const sportjahrDifference = veranstaltung.sportjahr - loadedVeranstaltung.sportjahr;
+          return sportjahrDifference >= 0 && sportjahrDifference <= 4;
+        });
+      }
+    }
+    private handleLoadVeranstaltungenMannschaftTabellenverlaufFailure(payload: VeranstaltungDO[]) {
+      this.loadingData = false;
+    }
   public async showStatistikOptions() {
     document.getElementById('selectStatistik').classList.remove('hidden');
+    document.getElementById('selectMannschaftStatistik').classList.add('hidden');
+    document.getElementById('selectWettkampftag').classList.add('hidden');
+    this.mannschaftStatistikActive = false;
+    this.schuetzenStatistikActive = true;
     await this.loadGesamtstatistik(this.currentMannschaft);
     this.selectedStatistik = 'gesamtstatistik';
   }
+
+  public async showMannschaftOptions() {
+    this.currentStatistikTitle = 'MANNSCHAFTEN.MANNSCHAFTSTATISTIK_AKTUELLE_MANNSCHAFT.TITEL';
+    document.getElementById('selectMannschaftStatistik').classList.remove('hidden');
+    document.getElementById('selectStatistik').classList.add('hidden');
+    document.getElementById('selectWettkampftag').classList.add('hidden');
+
+    this.schuetzenStatistikActive = false;
+    this.mannschaftStatistikActive = true;
+
+    await this.loadErgebnisForMannschaft(this.currentMannschaft);
+    this.selectedMannschaftStatistik = 'aktuelle_mannschaft';
+  }
+
+  public onSelectWettkampfTag() {
+    // Simply changes index of the table depending on the selected wettkampftag
+    this.currentWettkampftag = this.selectedWettkampfTag.id;
+  }
+
+  ButtonSize = ButtonSize;
+  ButtonType = ButtonType;
 }

@@ -88,6 +88,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
   veranstaltung: VeranstaltungDO;
   public matches: Array<MatchDO[]> = [];
   public selectedWettkampftag: any;
+  public selectedWettkampftagURL: number;
 
 
   private wettkampfComponent: WettkampfComponent;
@@ -506,6 +507,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
         ' - ' + wettkampfDO.wettkampfTag + '. Wettkampftag';
       // Aktualisiert die Variable für den ausgewählten Wettkampftag
       this.selectedWettkampftag = wettkampfDO.wettkampfTag + '. Wettkampftag';
+      this.selectedWettkampftagURL = wettkampfDO.wettkampfTag;
       // Setzt die Sichtbarkeit der Tabelle auf true
       this.visible = true;
       // Leert den Inhalt der Tabelle
@@ -735,7 +737,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.tableContentMatch = response.payload.map(match => {
       const tableContentRow: MatchDOExt = new MatchDOExt();
       tableContentRow.id = match.id;
-      tableContentRow.nr = match.matchNr;
+      tableContentRow.nr = match.nr;
       tableContentRow.begegnung = match.begegnung;
       tableContentRow.matchScheibennummer = match.matchScheibennummer;
       tableContentRow.mannschaftName = match.mannschaftName;
@@ -827,8 +829,7 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     console.log('selectedWettkampftag wkdurchführung', this.selectedWettkampftag);
     const url = '#' + this.router.serializeUrl(
       this.router.createUrlTree(
-        ['wkdurchfuehrung/fullscreen', veranstaltungId],
-        { queryParams: { wettkampftag: this.selectedWettkampftag } }
+        ['wkdurchfuehrung/fullscreen', veranstaltungId, this.selectedWettkampftagURL],
       )
     );
     window.open(url, '_blank');
