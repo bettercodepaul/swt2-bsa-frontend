@@ -10,14 +10,12 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
-import {fromPayload, fromPayloadArray, fromPayloadArrayVerAndWett} from '../mapper/dsb-mannschaft-mapper';
+import {fromPayload, fromPayloadArray} from '../mapper/dsb-mannschaft-mapper';
 import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
 import {VereinDO} from '../types/verein-do.class';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {mannschaftDOfromOffline, mannschaftDOfromOfflineArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
 import {OfflineVerein} from '@shared/data-provider/offlinedb/types/offline-verein.interface';
-import {DsbMannschaftVerAndWettDo} from '@verwaltung/types/dsb-mannschaft-ver-and-wett-do';
-import {DsbMannschaftVerAndWettDto} from '@verwaltung/types/datatransfer/dsb-mannschaft-ver-and-wett-dto';
 
 /**
  * TODO check usage

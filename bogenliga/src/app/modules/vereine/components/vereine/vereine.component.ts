@@ -23,8 +23,6 @@ import {TableColumnConfig} from '@shared/components/tables/types/table-column-co
 import {onMapService} from '@shared/functions/onMap-service';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
-import {DsbMannschaftVerAndWettDo} from '@verwaltung/types/dsb-mannschaft-ver-and-wett-do';
-import {DsbMannschaftVerAndWettDto} from '@verwaltung/types/datatransfer/dsb-mannschaft-ver-and-wett-dto';
 
 
 const ID_PATH_PARAM = 'id';
