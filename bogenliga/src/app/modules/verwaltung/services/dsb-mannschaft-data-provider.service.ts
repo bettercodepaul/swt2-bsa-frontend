@@ -10,12 +10,14 @@ import {
   VersionedDataTransferObject
 } from '../../shared/data-provider';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
-import {fromPayload, fromPayloadArray} from '../mapper/dsb-mannschaft-mapper';
+import {fromPayload, fromPayloadArray, fromPayloadArrayVerAndWett} from '../mapper/dsb-mannschaft-mapper';
 import {DsbMannschaftDO} from '../types/dsb-mannschaft-do.class';
 import {VereinDO} from '../types/verein-do.class';
 import {db} from '@shared/data-provider/offlinedb/offlinedb';
 import {mannschaftDOfromOffline, mannschaftDOfromOfflineArray} from '@verwaltung/mapper/mannschaft-offline-mapper';
 import {OfflineVerein} from '@shared/data-provider/offlinedb/types/offline-verein.interface';
+import {DsbMannschaftVerAndWettDo} from '@verwaltung/types/dsb-mannschaft-ver-and-wett-do';
+import {DsbMannschaftVerAndWettDto} from '@verwaltung/types/datatransfer/dsb-mannschaft-ver-and-wett-dto';
 
 /**
  * TODO check usage
@@ -147,7 +149,26 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
       });
     }
   }
+  public findAllVerAndWettByVereinsId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder().fromPath(this.getUrl()).path('VeranstaltungAndWettkampfByID/' + id).build())
+          .then((data: VersionedDataTransferObject[]) => {
 
+            resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});
+
+          }, (error: HttpErrorResponse) => {
+
+            if (error.status === 0) {
+              reject({result: RequestResult.CONNECTION_PROBLEM});
+            } else {
+              reject({result: RequestResult.FAILURE});
+            }
+          });
+    });
+  }
 
   public findAllByVeranstaltungsId(id: string | number): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
     // return promise
