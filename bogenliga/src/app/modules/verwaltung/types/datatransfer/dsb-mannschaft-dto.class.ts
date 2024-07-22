@@ -7,9 +7,13 @@ export class DsbMannschaftDTO implements DataTransferObject {
   benutzerId: number;
   version: number;
   veranstaltungId: number;
-  veranstaltungName: string;
   name: string;
   sortierung: number;
+  veranstaltungName: string;
+  wettkampfTag: string;
+  wettkampfOrtsname: string;
+  vereinName: string;
+  mannschaftNummer: number;
 
   static copyFrom(optional: {
     id?: number,
@@ -19,9 +23,15 @@ export class DsbMannschaftDTO implements DataTransferObject {
     version?: number,
     veranstaltungId?: number,
     name?: string,
-    sortierung?: number;
+    sortierung?: number,
+    veranstaltungName?: string,
+    wettkampfTag?: string,
+    wettkampfOrtsname?: string,
+    vereinName?: string,
+    mannschaftNummer?: number,
   } = {}): DsbMannschaftDTO {
     const copy = new DsbMannschaftDTO();
+
     // show '0' value
     if (optional.id >= 0) {
       copy.id = optional.id;
@@ -40,19 +50,31 @@ export class DsbMannschaftDTO implements DataTransferObject {
     } else {
       copy.vereinId = null;
     }
+
     if (optional.veranstaltungId >= 0) {
       copy.veranstaltungId = optional.veranstaltungId;
     } else {
       copy.veranstaltungId = null;
     }
+
     if (optional.sortierung >= 0) {
       copy.sortierung = optional.sortierung;
     } else {
       copy.sortierung = null;
     }
+    if (optional.mannschaftNummer >= 0) {
+      copy.mannschaftNummer = optional.mannschaftNummer;
+    } else {
+      copy.mannschaftNummer = null;
+    }
+
     copy.version = optional.version || null;
     copy.nummer = optional.nummer || '';
     copy.name = optional.name || '';
+    copy.veranstaltungName = optional.veranstaltungName || '';
+    copy.wettkampfTag = optional.wettkampfTag || '';
+    copy.wettkampfOrtsname = optional.wettkampfOrtsname || '';
+    copy.vereinName = optional.vereinName || '';
 
     return copy;
   }

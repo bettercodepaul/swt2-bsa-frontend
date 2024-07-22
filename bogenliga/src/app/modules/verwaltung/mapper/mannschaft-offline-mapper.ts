@@ -59,6 +59,7 @@ export function mannschaftDOfromOffline(m: OfflineMannschaft, vereine: OfflineVe
     }
   });
   return {
+    vereinName:        '', wettkampfOrtsname: '', wettkampfTag: '',
     benutzerId:        m.benutzerId,
     id:                m.id,
     name:              vereinName + ' ' + m.nummer,

@@ -23,6 +23,8 @@ import {TableColumnConfig} from '@shared/components/tables/types/table-column-co
 import {onMapService} from '@shared/functions/onMap-service';
 import {SessionHandling} from '@shared/event-handling';
 import {CurrentUserService, OnOfflineService} from '@shared/services';
+import {DsbMannschaftVerAndWettDo} from '@verwaltung/types/dsb-mannschaft-ver-and-wett-do';
+import {DsbMannschaftVerAndWettDto} from '@verwaltung/types/datatransfer/dsb-mannschaft-ver-and-wett-dto';
 
 
 const ID_PATH_PARAM = 'id';
@@ -89,8 +91,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
 
     });
     this.loadVereine();
-    this.getAllVeranstaltungen();
-    this.getAllMannschaften();
+
   }
 
   /** When a MouseOver-Event is triggered, it will call this inMouseOver-function.
@@ -257,8 +258,8 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
           this.loadingVereine = false;
           this.selectedVereinsId = this.hasID ? this.providedID : response.payload[0].id;
           // console.log('This.selectedVereinsID: ' + this.selectedVereinsId);
-          this.changeSelectedVerein();
-          this.onSelect(this.selectedVereine);
+          //this.changeSelectedVerein();
+          //this.onSelect(this.selectedVereine);
         })
         .catch((response: BogenligaResponse<VereinDTO[]>) => {this.vereine = response.payload; });
   }
@@ -267,16 +268,35 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   // table date will be loaded backwards (from right to left)
   private loadTableRows() {
     this.loadingTable = true;
-    this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
+    this.handleTest()
+    /*this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
         .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenSuccess(response))
-        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenFailure(response));
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenFailure(response));*/
    }
 
   private handleFindMannschaftenFailure(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = [];
     this.loadingTable = false;
   }
+  private handleTest(): void {
+    this.mannschaftsDataProvider.findAllVerAndWettByVereinsId(this.selectedVereinsId)
+        .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
+          // Hier kannst du das Ergebnis der Methode processen
+          this.processData(response);
+        })
+        .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenFailure(response));
+  }
 
+  private processData(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
+    if (response.payload.length <= 0) {
+      this.loadingTable = false;
+    }
+    this.remainingRequests = response.payload.length;
+    response.payload.forEach((item) => {
+        this.handleFindVeranstaltungSuccess(item.veranstaltungName,item.vereinName + " " + item.mannschaftNummer,item.wettkampfTag,item.wettkampfOrtsname)
+    });
+  }
+  /*
   private handleFindMannschaftenSuccess(response: BogenligaResponse<DsbMannschaftDTO[]>): void {
     this.rows = []; // reset array to ensure change detection
     let i: number;
@@ -321,15 +341,15 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
       this.rows = toTableRows(this.tableContent);
     }
 
-  }
+  }*/
   private handleFindVeranstaltungFailure(response: BogenligaResponse<VeranstaltungDTO>): void {
     this.rows = [];
     this.loadingTable = false;
   }
 
-  private handleFindVeranstaltungSuccess(response: BogenligaResponse<VeranstaltungDTO>, mannschaftsName: string, wettkampfTag: string, wettkampfOrtsname: string): void {
-    console.log('Content:' + response.payload.name + wettkampfTag +  mannschaftsName + wettkampfOrtsname);
-    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(response.payload.name, wettkampfTag, mannschaftsName, wettkampfOrtsname);
+  private handleFindVeranstaltungSuccess(veranstaltungsname: string, mannschaftsName: string, wettkampfTag: string, wettkampfOrtsname: string): void {
+    console.log('Content:' + veranstaltungsname + wettkampfTag +  mannschaftsName + wettkampfOrtsname);
+    const tableRowContent: VereinTabelleDO = new VereinTabelleDO(veranstaltungsname, wettkampfTag+ '. Wettkampftag', mannschaftsName, wettkampfOrtsname);
     this.tableContent.push(tableRowContent);
     this.remainingRequests -= 1;
 
