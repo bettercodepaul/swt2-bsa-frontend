@@ -1059,6 +1059,7 @@ public updateChartOptions(newXAxisLabel: string) {
         backgroundColor: 'rgb(72, 122, 245)',
         borderColor: 'rgb(72, 122, 245)',
         pointBackgroundColor: 'rgb(72, 122, 245)',
+        lineTension:0,
         pointRadius: 6,
         fill: false
       }

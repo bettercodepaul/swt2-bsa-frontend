@@ -3,7 +3,7 @@ import {TableConfig} from '@shared/components/tables/types/table-config.interfac
 
 export const WETTKAEMPFE_CONFIG: NavigationDialogConfig = {
   moduleTranslationKey:    'WETTKAEMPFE',
-  pageTitleTranslationKey: 'WETTKAEMPFE.WETTKAEMPFE.TITLE',
+  pageTitleTranslationKey: 'WETTKAEMPFE.LIGATABELLE.TITEL',
   navigationCardsConfig:   {
     navigationCards: []
   }
