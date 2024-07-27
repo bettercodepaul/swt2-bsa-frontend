@@ -266,7 +266,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
   // table date will be loaded backwards (from right to left)
   private loadTableRows() {
     this.loadingTable = true;
-    this.handleTest()
+    this.findVeranstaltungenAndWettkampfByID()
     /*this.mannschaftsDataProvider.findAllByVereinsId(this.selectedVereinsId)
         .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenSuccess(response))
         .catch((response: BogenligaResponse<DsbMannschaftDTO[]>) => this.handleFindMannschaftenFailure(response));*/
@@ -276,7 +276,7 @@ export class VereineComponent extends CommonComponentDirective implements OnInit
     this.rows = [];
     this.loadingTable = false;
   }
-  private handleTest(): void {
+  private findVeranstaltungenAndWettkampfByID(): void {
     this.mannschaftsDataProvider.findAllVerAndWettByVereinsId(this.selectedVereinsId)
         .then((response: BogenligaResponse<DsbMannschaftDTO[]>) => {
           // Hier kannst du das Ergebnis der Methode processen
