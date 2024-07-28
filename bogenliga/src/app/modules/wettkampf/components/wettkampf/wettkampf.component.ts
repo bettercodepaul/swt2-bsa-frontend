@@ -118,6 +118,8 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public selectedMannschaftStatistik = 'aktuelle_mannschaft';
   public schuetzenStatistikActive = false;
   public mannschaftStatistikActive = false;
+  ButtonSize = ButtonSize;
+  ButtonType = ButtonType;
   public alleTage: Array<Wettkampftag> = [
     {id: 0, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION1.LABEL'},
     {id: 1, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION2.LABEL'},
@@ -1059,7 +1061,7 @@ public updateChartOptions(newXAxisLabel: string) {
         backgroundColor: 'rgb(72, 122, 245)',
         borderColor: 'rgb(72, 122, 245)',
         pointBackgroundColor: 'rgb(72, 122, 245)',
-        lineTension:0,
+        lineTension: 0,
         pointRadius: 6,
         fill: false
       }
@@ -1168,6 +1170,5 @@ public updateChartOptions(newXAxisLabel: string) {
     this.currentWettkampftag = this.selectedWettkampfTag.id;
   }
 
-  ButtonSize = ButtonSize;
-  ButtonType = ButtonType;
+
 }
