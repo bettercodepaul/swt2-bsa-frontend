@@ -338,6 +338,9 @@
       },
       "OPTION4": {
         "LABEL": "Wettkampftag 4"
+      },
+      "OPTION5": {
+        "LABEL": "Insgesamt"
       }
     },
     "LIGATABELLE": {
