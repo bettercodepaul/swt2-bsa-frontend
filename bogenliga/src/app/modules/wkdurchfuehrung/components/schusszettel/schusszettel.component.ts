@@ -83,7 +83,7 @@ export class SchusszettelComponent implements OnInit {
 
   allowedMitglieder1: number[];
   allowedMitglieder2: number[];
-  isSaved: boolean = false;
+  isSaved = false;
 
 
 
@@ -146,141 +146,120 @@ export class SchusszettelComponent implements OnInit {
 
 
         this.schusszettelService.findMatches(match1id, match2id)
-            .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
+          .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
 
-              this.match1 = data.payload[0];
-              this.match2 = data.payload[1];
+            this.match1 = data.payload[0];
+            this.match2 = data.payload[1];
 
-              console.log(this.match1, this.match2)
-              if(this.match1.matchpunkte != null && !(this.match1.mannschaftName == 'Platzhalter 1')){
-                this.isSaved = true;
-              } else if(this.match2.matchpunkte != null && !(this.match2.mannschaftName == 'Platzhalter 1')){
-                this.isSaved = true;
-              }
+            console.log(this.match1, this.match2);
+            if (this.match1.matchpunkte !== null && !(this.match1.mannschaftName === 'Platzhalter 1')) {
+              this.isSaved = true;
+            } else if (this.match2.matchpunkte !== null && !(this.match2.mannschaftName === 'Platzhalter 1')) {
+              this.isSaved = true;
+            }
 
 
 
-              /**
-               * Limits the Schützen of match 1 to 3 and each passe-array
-               * for each Schütze to 5
-               * Only a maximum of 15 passe for each match will be possible
-               */
+            /**
+             * Limits the Schützen of match 1 to 3 and each passe-array
+             * for each Schütze to 5
+             * Only a maximum of 15 passe for each match will be possible
+             */
 
-              if (this.match1.schuetzen.length != 0) {
+            if (this.match1.schuetzen.length !== 0) {
 
-                if (this.match1.schuetzen.length > 3) {
-                  for (let i = this.match1.schuetzen.length; i > 3; i--) {
-                    this.match1.schuetzen.pop();
-                  }
-                }
-
-                for (let i = 0; i < 3; i++) {
-                  if (this.match1.schuetzen[i].length > 5 && this.match1.schuetzen[i].length != 0) {
-                    for (let j = this.match1.schuetzen[i].length; j > 5; j--) {
-                      this.match1.schuetzen[i].pop();
-                    }
-                  }
+              if (this.match1.schuetzen.length > 3) {
+                for (let i = this.match1.schuetzen.length; i > 3; i--) {
+                  this.match1.schuetzen.pop();
                 }
               }
-                /**
-                 * Limits the Schützen of match 2 to 3 and each passe-array
-                 * for each Schütze to 5
-                 * Only a maximum of 15 passe for each match will be possible
-                 */
-              if (this.match2.schuetzen.length != 0) {
 
-                if (this.match2.schuetzen.length > 3) {
-                  for (let i = this.match2.schuetzen.length; i > 3; i--) {
-                    this.match2.schuetzen.pop();
-                  }
-                }
-
-                for ( let i = 0; i < 3; i++) {
-                  if (this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length != 0) {
-                    for (let j = this.match2.schuetzen[i].length; j > 5; j--) {
-                      this.match2.schuetzen[i].pop();
-                    }
+              for (let i = 0; i < 3; i++) {
+                if (this.match1.schuetzen[i].length > 5 && this.match1.schuetzen[i].length !== 0) {
+                  for (let j = this.match1.schuetzen[i].length; j > 5; j--) {
+                    this.match1.schuetzen[i].pop();
                   }
                 }
               }
+            }
+            /**
+             * Limits the Schützen of match 2 to 3 and each passe-array
+             * for each Schütze to 5
+             * Only a maximum of 15 passe for each match will be possible
+             */
+            if (this.match2.schuetzen.length !== 0) {
 
-
-
-
-              console.log('match1', this.match1);
-              console.log('match2', this.match2);
-              let shouldInitSumSatz = true;
-              if (this.match1.schuetzen.length <= 0) {
-                this.initSchuetzenMatch1();
-                shouldInitSumSatz = false;
-              }
-
-              if (this.match2.schuetzen.length <= 0) {
-                this.initSchuetzenMatch2();
-                shouldInitSumSatz = false;
-              }
-
-
-              if (shouldInitSumSatz) {
-                this.initSumSatz();
-                this.setPoints();
-              }
-
-              this.wettkampfDataProvider.findAllowedMember(this.match1.wettkampfId, this.match1.mannschaftId, this.match2.mannschaftId).then((value) => {
-                this.allowedMitglieder1 = value;
-                console.log('Allowed for match1: ', this.allowedMitglieder1);
-                if (this.match1.wettkampfId === this.match2.wettkampfId) {
-                  this.allowedMitglieder2 = this.allowedMitglieder1;
-                  // Close notification when ready
-                  this.notificationService.discardNotification();
+              if (this.match2.schuetzen.length > 3) {
+                for (let i = this.match2.schuetzen.length; i > 3; i--) {
+                  this.match2.schuetzen.pop();
                 }
-              });
-              if (this.match1.wettkampfId !== this.match2.wettkampfId) {
-                this.wettkampfDataProvider.findAllowedMember(this.match2.wettkampfId, this.match1.mannschaftId, this.match2.mannschaftId).then((value) => {
-                  this.allowedMitglieder2 = value;
-                  console.log('Allowed for match2: ', this.allowedMitglieder2);
-                  // Close notification when ready
-                  this.notificationService.discardNotification();
-                });
-              }
-              if (this.onOfflineService.isOffline()) {
-                this.notificationService.discardNotification();
               }
 
-              let stringMatch1 = this.match1.mannschaftName;
-              let stringMatch2 = this.match2.mannschaftName;
-
-              if(stringMatch1.includes(PLATZHALTER)) {
-                for (const i of Object.keys(this.match1.schuetzen)) {
-                  this.match1.schuetzen[0][0].rueckennummer = 1;
-                  this.match1.schuetzen[1][0].rueckennummer = 2;
-                  this.match1.schuetzen[2][0].rueckennummer = 3;
-                  for(let j=0; j<=2; j++){
-                    this.match1.schuetzen[i][j].ringzahlPfeil1 = 0;
-                    this.match1.schuetzen[i][j].ringzahlPfeil2 = 0;
+              for ( let i = 0; i < 3; i++) {
+                if (this.match2.schuetzen[i].length > 5 && this.match1.schuetzen[i].length !== 0) {
+                  for (let j = this.match2.schuetzen[i].length; j > 5; j--) {
+                    this.match2.schuetzen[i].pop();
                   }
                 }
-                this.match1.satzpunkte = 0;
-                this.match1.matchpunkte = 0;
-
-              }else if(stringMatch2.includes(PLATZHALTER)){
-                for (const i of Object.keys(this.match2.schuetzen)) {
-                  this.match2.schuetzen[0][0].rueckennummer = 1;
-                  this.match2.schuetzen[1][0].rueckennummer = 2;
-                  this.match2.schuetzen[2][0].rueckennummer = 3;
-                  for(let j=0; j<=2; j++){
-                    this.match2.schuetzen[i][j].ringzahlPfeil1 = 0;
-                    this.match2.schuetzen[i][j].ringzahlPfeil2 = 0;
-                  }
-                }
-                this.match2.satzpunkte = 0;
-                this.match2.matchpunkte = 0;
               }
+            }
 
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+
+
+
+            console.log('match1', this.match1);
+            console.log('match2', this.match2);
+            let shouldInitSumSatz = true;
+            if (this.match1.schuetzen.length <= 0) {
+              this.initSchuetzenMatch1();
+              shouldInitSumSatz = false;
+            }
+
+            if (this.match2.schuetzen.length <= 0) {
+              this.initSchuetzenMatch2();
+              shouldInitSumSatz = false;
+            }
+
+
+            if (shouldInitSumSatz) {
+              this.initSumSatz();
+              this.setPoints();
+            }
+            this.notificationService.discardNotification();
+            const stringMatch1 = this.match1.mannschaftName;
+            const stringMatch2 = this.match2.mannschaftName;
+
+            if (stringMatch1.includes(PLATZHALTER)) {
+              for (const i of Object.keys(this.match1.schuetzen)) {
+                this.match1.schuetzen[0][0].rueckennummer = 1;
+                this.match1.schuetzen[1][0].rueckennummer = 2;
+                this.match1.schuetzen[2][0].rueckennummer = 3;
+                for (let j = 0; j <= 2; j++) {
+                  this.match1.schuetzen[i][j].ringzahlPfeil1 = 0;
+                  this.match1.schuetzen[i][j].ringzahlPfeil2 = 0;
+                }
+              }
+              this.match1.satzpunkte = 0;
+              this.match1.matchpunkte = 0;
+
+            } else if (stringMatch2.includes(PLATZHALTER)) {
+              for (const i of Object.keys(this.match2.schuetzen)) {
+                this.match2.schuetzen[0][0].rueckennummer = 1;
+                this.match2.schuetzen[1][0].rueckennummer = 2;
+                this.match2.schuetzen[2][0].rueckennummer = 3;
+                for (let j = 0; j <= 2; j++) {
+                  this.match2.schuetzen[i][j].ringzahlPfeil1 = 0;
+                  this.match2.schuetzen[i][j].ringzahlPfeil2 = 0;
+                }
+              }
+              this.match2.satzpunkte = 0;
+              this.match2.matchpunkte = 0;
+            }
+
+          })
+          .catch((error) => {
+            console.error(error);
+          });
 
       }
     });
@@ -371,30 +350,30 @@ export class SchusszettelComponent implements OnInit {
 
   private getAllMannschaften(): void {
     this.dsbMannschaftDataProvider.findAll()
-        .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
-          this.mannschaften = response.payload;
-        });
+      .then((response: BogenligaResponse<DsbMannschaftDO[]>) => {
+        this.mannschaften = response.payload;
+      });
   }
 
   private getAllVerein(): void {
     this.vereinDataProvider.findAll()
-        .then((response: BogenligaResponse<VereinDO[]>) => {
-          this.vereine = response.payload;
-        });
+      .then((response: BogenligaResponse<VereinDO[]>) => {
+        this.vereine = response.payload;
+      });
   }
 
   private getAllPasse(): void {
     this.passeDataProvider.findAll()
-        .then((response: BogenligaResponse<PasseDoClass[]>) => {
-          this.allPasse = response.payload;
-        });
+      .then((response: BogenligaResponse<PasseDoClass[]>) => {
+        this.allPasse = response.payload;
+      });
   }
 
   private getAllWettkaempfe(): void {
     this.wettkampfDataProvider.findAll()
-        .then((response: BogenligaResponse<WettkampfDO[]>) => {
-          this.allWettkaempfe = response.payload;
-        });
+      .then((response: BogenligaResponse<WettkampfDO[]>) => {
+        this.allWettkaempfe = response.payload;
+      });
   }
 
   /**
@@ -432,12 +411,12 @@ export class SchusszettelComponent implements OnInit {
   }
 
   // Hier muss die Update funktion aufgreufen werden.
- async save() {
+  async save() {
 
 
-   let alt_match1 = null;
-   let alt_match2 = null;
-   if (this.onOfflineService.isOffline()) {
+    let alt_match1 = null;
+    let alt_match2 = null;
+    if (this.onOfflineService.isOffline()) {
       const matchd = await this.matchProvider.getmatchoffline(this.match1.nr);
       const matchdaten = matchd.payload;
 
@@ -448,30 +427,30 @@ export class SchusszettelComponent implements OnInit {
           alt_match2 = match;
         }
       });
-   }
+    }
 
 
 
 
-   if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
-     this.notificationService.showNotification({
-       id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-       title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
-       description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.DESCRIPTION',
-       severity:    NotificationSeverity.ERROR,
-       origin:      NotificationOrigin.SYSTEM,
-       type:        NotificationType.OK,
-       userAction:  NotificationUserAction.ACCEPTED
-     });
-   } else if (
-     // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
-     // daher prüfen wir hier ersten auf "leer" d.h. gleich 0
-     this.match1.schuetzen[0][0].rueckennummer == null ||
-     this.match1.schuetzen[1][0].rueckennummer == null ||
-     this.match1.schuetzen[2][0].rueckennummer == null ||
-     this.match2.schuetzen[0][0].rueckennummer == null ||
-     this.match2.schuetzen[1][0].rueckennummer == null ||
-     this.match2.schuetzen[2][0].rueckennummer == null) {
+    if (this.match1.satzpunkte > 7 || this.match2.satzpunkte > 7) {
+      this.notificationService.showNotification({
+        id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+        title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.TITLE',
+        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.ENTSCHIEDEN.DESCRIPTION',
+        severity:    NotificationSeverity.ERROR,
+        origin:      NotificationOrigin.SYSTEM,
+        type:        NotificationType.OK,
+        userAction:  NotificationUserAction.ACCEPTED
+      });
+    } else if (
+      // zum Speichern konsitenteer Daten müssen alle Schützennnummern erfasst sein
+      // daher prüfen wir hier ersten auf "leer" d.h. gleich 0
+      this.match1.schuetzen[0][0].rueckennummer == null ||
+      this.match1.schuetzen[1][0].rueckennummer == null ||
+      this.match1.schuetzen[2][0].rueckennummer == null ||
+      this.match2.schuetzen[0][0].rueckennummer == null ||
+      this.match2.schuetzen[1][0].rueckennummer == null ||
+      this.match2.schuetzen[2][0].rueckennummer == null) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
@@ -484,12 +463,12 @@ export class SchusszettelComponent implements OnInit {
     } else if (
       // und jetzt prüfen wir noch ob in einer Mannschaft die gleiche
       // Schützennummer zweimal angegeben wurde -> auch nicht möglich
-     this.match1.schuetzen[0][0].rueckennummer === this.match1.schuetzen[1][0].rueckennummer ||
-     this.match1.schuetzen[1][0].rueckennummer === this.match1.schuetzen[2][0].rueckennummer ||
-     this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer ||
-     this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer ||
-     this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer ||
-     this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer ) {
+      this.match1.schuetzen[0][0].rueckennummer === this.match1.schuetzen[1][0].rueckennummer ||
+      this.match1.schuetzen[1][0].rueckennummer === this.match1.schuetzen[2][0].rueckennummer ||
+      this.match1.schuetzen[2][0].rueckennummer === this.match1.schuetzen[0][0].rueckennummer ||
+      this.match2.schuetzen[0][0].rueckennummer === this.match2.schuetzen[1][0].rueckennummer ||
+      this.match2.schuetzen[1][0].rueckennummer === this.match2.schuetzen[2][0].rueckennummer ||
+      this.match2.schuetzen[2][0].rueckennummer === this.match2.schuetzen[0][0].rueckennummer ) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
@@ -530,34 +509,34 @@ export class SchusszettelComponent implements OnInit {
       }
 
       this.schusszettelService.create(this.match1, this.match2)
-          .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
-            this.match1 = data.payload[0];
-            this.match2 = data.payload[1];
+        .then((data: BogenligaResponse<Array<MatchDOExt>>) => {
+          this.match1 = data.payload[0];
+          this.match2 = data.payload[1];
 
-            // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
-            this.ngOnInit();
-            this.notificationService.showNotification({
-              id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-              title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
-              description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
-              severity:    NotificationSeverity.ERROR,
-              origin:      NotificationOrigin.SYSTEM,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.ACCEPTED
-            });
-          }, (error) => {
-            console.error(error);
-            this.notificationService.showNotification({
-              id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
-              title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
-              description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
-              severity:    NotificationSeverity.ERROR,
-              origin:      NotificationOrigin.SYSTEM,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.ACCEPTED
-            });
-            this.notificationService.discardNotification();
+          // neu initialisieren, damit passen die noch keine ID haben eine ID vom Backend erhalten
+          this.ngOnInit();
+          this.notificationService.showNotification({
+            id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+            title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.TITLE',
+            description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.GESPEICHERT.DESCRIPTION',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.SYSTEM,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.ACCEPTED
           });
+        }, (error) => {
+          console.error(error);
+          this.notificationService.showNotification({
+            id:          'NOTIFICATION_SCHUSSZETTEL_ENTSCHIEDEN',
+            title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.TITLE',
+            description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.RUECKENNUMMERZUHOCH.DESCRIPTION',
+            severity:    NotificationSeverity.ERROR,
+            origin:      NotificationOrigin.SYSTEM,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.ACCEPTED
+          });
+          this.notificationService.discardNotification();
+        });
 
 
       if (this.onOfflineService.isOffline()) {
@@ -589,34 +568,25 @@ export class SchusszettelComponent implements OnInit {
 
       console.log('notification.userAction before: ' + notification.userAction);
       this.notificationService.observeNotification(NOTIFICATION_ZURUECK)
-          .subscribe((myNotification) => {
-            console.log('observe notification');
-            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              console.log('accepted');
-              this.dirtyFlag = false;
-              console.log('Wettkampftag', this.match1.wettkampfTag);
-              this.isSaved = false;
-              this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
-            }
-            console.log('notification.userAction after: ' + notification.userAction);
-          });
+        .subscribe((myNotification) => {
+          console.log('observe notification');
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            console.log('accepted');
+            this.dirtyFlag = false;
+            console.log('Wettkampftag', this.match1.wettkampfTag);
+            this.isSaved = false;
+            this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
+          }
+          console.log('notification.userAction after: ' + notification.userAction);
+        });
 
     } else {
 
-      //const previousPage = window.history.state?.url || '/';
-      //this.router.navigateByUrl(previousPage);
 
       console.log('Keine Änderung');
       console.log('Wettkampftag', this.match1.wettkampfTag);
       this.isSaved = false;
       this.router.navigate(['/wkdurchfuehrung']);
-
-      //old code
-      //this.router.navigate(['/wkdurchfuehrung' + '/' + this.match1.wettkampfId]);
-
-      //Das Problem bestand darin, dass bei der Rückkehr
-      //von der Schusszettel-Seite zu einer anderen Seite navigiert wurde.
-
     }
   }
 
@@ -637,29 +607,29 @@ export class SchusszettelComponent implements OnInit {
       };
 
       this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
-          .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.dirtyFlag = false;
-              this.matchProvider.pairToFollow(this.match2.id)
-                  .then((data) => {
-                    if (data.payload.length === 2) {
-                      this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
-                      this.isSaved = false;
-                    }
-                  });
-            }
-          });
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.dirtyFlag = false;
+            this.matchProvider.pairToFollow(this.match2.id)
+              .then((data) => {
+                if (data.payload.length === 2) {
+                  this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                  this.isSaved = false;
+                }
+              });
+          }
+        });
       this.notificationService.showNotification(notification);
 
     } else {
       // nächste Matches bestimmen --> schusszettel-service --> Backend-Call --> zwei IDs
       this.matchProvider.pairToFollow(this.match2.id)
-          .then((data) => {
-            if (data.payload.length === 2) {
-              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
-              this.isSaved = false;
-            }
-          });
+        .then((data) => {
+          if (data.payload.length === 2) {
+            this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+            this.isSaved = false;
+          }
+        });
     }
 
 
@@ -681,29 +651,29 @@ export class SchusszettelComponent implements OnInit {
       };
 
       this.notificationService.observeNotification(NOTIFICATION_WEITER_SCHALTEN)
-          .subscribe((myNotification) => {
-            if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-              this.dirtyFlag = false;
-              this.matchProvider.previousPair(this.match1.id)
-                  .then((data) => {
-                    if (data.payload.length === 2) {
-                      this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
-                      this.isSaved = false;
-                    }
-                  });
-            }
-          });
+        .subscribe((myNotification) => {
+          if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+            this.dirtyFlag = false;
+            this.matchProvider.previousPair(this.match1.id)
+              .then((data) => {
+                if (data.payload.length === 2) {
+                  this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+                  this.isSaved = false;
+                }
+              });
+          }
+        });
       this.notificationService.showNotification(notification);
 
     } else {
       // nächste Matches bestimmen --> schusszettel-service --> Backend-Call --> zwei IDs
       this.matchProvider.previousPair(this.match1.id)
-          .then((data) => {
-            if (data.payload.length === 2) {
-              this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
-              this.isSaved = false;
-            }
-          });
+        .then((data) => {
+          if (data.payload.length === 2) {
+            this.router.navigate(['/wkdurchfuehrung/schusszettel/' + data.payload[0] + '/' + data.payload[1]]);
+            this.isSaved = false;
+          }
+        });
     }
 
 
