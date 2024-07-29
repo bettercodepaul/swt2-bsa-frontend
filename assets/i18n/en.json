@@ -331,16 +331,19 @@
     },
     "DROPDOWNWETTKAMPFTAGE": {
       "OPTION1": {
-        "LABEL": "Competitionday 1"
+        "LABEL": "Competition day 1"
       },
       "OPTION2": {
-        "LABEL": "Competitionday 2"
+        "LABEL": "Competition day 2"
       },
       "OPTION3": {
-        "LABEL": "Competitionday 3"
+        "LABEL": "Competition day 3"
       },
       "OPTION4": {
-        "LABEL": "Competitionday 4"
+        "LABEL": "Competition day 4"
+      },
+      "OPTION5": {
+        "LABEL": "Overall"
       }
     },
     "MANNSCHAFTEN": {
