@@ -482,7 +482,7 @@ public updateChartOptions(newXAxisLabel: string) {
   }
 
   private async loadSchuetzenstatistikenMatch(vereinId, index) {
-    await this.loadSchuetzenstatistikMatchData(vereinId, this.wettkaempfe[index].id)
+    await this.loadSchuetzenstatistikMatchData(vereinId, this.wettkaempfe[index].id, index + 1)
               .then((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadSchuetzenstatistikMatchSuccess(response.payload))
               .catch((response: BogenligaResponse<SchuetzenstatistikMatchDO[]>) => this.handleLoadSchuetzenstatistikMatchFailure(response.payload));
     if (index < this.wettkaempfe.length - 1 && this.loadingData) {
@@ -503,8 +503,8 @@ public updateChartOptions(newXAxisLabel: string) {
 
   }
 
-  private async loadSchuetzenstatistikMatchData(vereinId, wettkampfId) {
-    return this.schuetzenstatistikMatchDataProvider.getSchuetzenstatistikMatchWettkampf(vereinId, wettkampfId);
+  private async loadSchuetzenstatistikMatchData(vereinId, wettkampfId, tag) {
+    return this.schuetzenstatistikMatchDataProvider.getSchuetzenstatistikMatchWettkampf(vereinId, wettkampfId, tag);
   }
 
   private async loadSchuetzenstatistikEinzel(vereinId, wettkampfId) {
@@ -829,6 +829,7 @@ public updateChartOptions(newXAxisLabel: string) {
         backgroundColor: 'rgb(72, 122, 245)',
         borderColor: 'rgb(72, 122, 245)',
         pointBackgroundColor: 'rgb(72, 122, 245)',
+        lineTension: 0,
         pointRadius: 6,
         fill: false}
     ];
@@ -958,6 +959,7 @@ public updateChartOptions(newXAxisLabel: string) {
         backgroundColor: 'rgb(72, 122, 245)',
         borderColor: 'rgb(72, 122, 245)',
         pointBackgroundColor: 'rgb(72, 122, 245)',
+        lineTension: 0,
         pointRadius: 6,
         fill: false
       }

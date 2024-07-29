@@ -45,14 +45,14 @@ export class SchuetzenstatistikMatchDataProviderService extends DataProviderServ
     });
   }
 
-  public getSchuetzenstatistikMatchWettkampf(vereinId: string | number, wettkampfId: string | number): Promise<BogenligaResponse<SchuetzenstatistikMatchDO[]>> {
+  public getSchuetzenstatistikMatchWettkampf(vereinId: string | number, wettkampfId: string | number, tag: string | number): Promise<BogenligaResponse<SchuetzenstatistikMatchDO[]>> {
     // return promise
     // sign in success -> resolve promise
     // sign in failure -> reject promise with result
     return new Promise((resolve, reject) => {
       this.restClient.GET<Array<VersionedDataTransferObject>>(new UriBuilder()
         .fromPath(this.getUrl())
-        .path('byWettkampfAndVerein/' + wettkampfId + '/' + vereinId)
+        .path('byWettkampfAndVereinAndTag/' + wettkampfId + '/' + vereinId + '/' + tag)
         .build())
           .then((data: VersionedDataTransferObject[]) => {
             resolve({result: RequestResult.SUCCESS, payload: fromPayloadArray(data)});

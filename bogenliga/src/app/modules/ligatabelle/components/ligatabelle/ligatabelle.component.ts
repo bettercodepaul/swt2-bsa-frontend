@@ -91,7 +91,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     {id: 1, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION1.LABEL'},
     {id: 2, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION2.LABEL'},
     {id: 3, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION3.LABEL'},
-    {id: 4, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION4.LABEL'}
+    {id: 4, name: 'MANNSCHAFTEN.DROPDOWNWETTKAMPFTAGE.OPTION4.LABEL'},
   ];
 
   constructor(
@@ -174,7 +174,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.veranstaltungIdMap = new Map();
     let indexOfSelectedYearInAvailableYears = 0;
     let counter = 0;
-    let selectedYear: SportjahrVeranstaltungDO[] = [];
+    const selectedYear: SportjahrVeranstaltungDO[] = [];
 
     try {
       console.log(this.onOfflineService.isOffline());
@@ -289,8 +289,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.selectedVeranstaltungName = this.selectedVeranstaltung.name;
     this.buttonForward = this.selectedVeranstaltung.id;
     this.loadVeranstaltung(this.selectedVeranstaltung);
-    //const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
-    //this.router.navigate([link]);
+    // const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
+    // this.router.navigate([link]);
   }
 
   public async loadWettkaempfe(veranstaltungsId: number) {
@@ -308,12 +308,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     for (let i = 0; i < currentWettkampftag; i++) {
       this.wettkampftage.push(this.alleTage[i]);
     }
-
-    let today = new Date();
+    this.wettkampftage.push(this.alleTage[4]);
+    const today = new Date();
     let currenWettkampf = wettkaempfe[0];
-    for(const aktuellerWettkampftag of wettkaempfe){
-      let aktuellerWettkampftagsDatum = new Date(aktuellerWettkampftag.wettkampfDatum).getDate();
-      if(today.getDate() > aktuellerWettkampftagsDatum){
+    for (const aktuellerWettkampftag of wettkaempfe) {
+      const aktuellerWettkampftagsDatum = new Date(aktuellerWettkampftag.wettkampfDatum).getDate();
+      if (today.getDate() > aktuellerWettkampftagsDatum) {
         currenWettkampf = aktuellerWettkampftag;
       }
     }
@@ -321,12 +321,12 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this. loadLigaTableWettkampftag(currenWettkampf.id);
   }
 
-  //Der link funktioniert wurde aukommentiert, da die ligaId Bugs verursacht
+  // Der link funktioniert wurde aukommentiert, da die ligaId Bugs verursacht
   private loadVeranstaltung(veranstaltung: VeranstaltungDO){
     this.selectedVeranstaltung = veranstaltung;
     this.loadWettkaempfe(this.selectedVeranstaltung.id);
-    //const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
-    //this.router.navigate([link]);
+    // const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
+    // this.router.navigate([link]);
   }
 
   public onSelectWettkampftag() {
@@ -339,6 +339,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.loadLigaTableWettkampftag(this.wettkampf_ids[2]);
     } else if (this.selectedWettkampfTag.id === 4) {
       this.loadLigaTableWettkampftag(this.wettkampf_ids[3]);
+    } else if (this.selectedWettkampfTag.id === 5) {
+      this.loadLigaTableRows();
     }
   }
 
@@ -357,9 +359,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     const link = '/ligatabelle';
     this.router.navigateByUrl(link);
   }
-
   public goToLigaDetails() {
-    console.log("IDDD" + this.providedID);
+    console.log('IDDD' + this.providedID);
     const link = '/home/' +  this.providedID;
     this.router.navigateByUrl(link);
   }
