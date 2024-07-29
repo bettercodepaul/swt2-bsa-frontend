@@ -18,7 +18,7 @@ import {SessionHandling} from '@shared/event-handling';
 import {EinstellungenProviderService} from '@verwaltung/services/einstellungen-data-provider.service';
 import {getActiveSportYear} from '@shared/functions/active-sportyear';
 import {ActionButtonColors} from '@shared/components/buttons/button/actionbuttoncolors';
-//import {faUndo} from '@fortawesome/free-solid-svg-icons';
+// import {faUndo} from '@fortawesome/free-solid-svg-icons';
 import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {LigaDO} from '@verwaltung/types/liga-do.class';
 import {SelectedLigaDataprovider} from '../../../shared/data-provider/SelectedLigaDataprovider';
@@ -30,9 +30,9 @@ import {WettkampfDataProviderService} from '@verwaltung/services/wettkampf-data-
 
 const ID_PATH_PARAM = 'id';
 
-interface Wettkampftag{
-  id: number,
-  name: string
+interface Wettkampftag {
+  id: number;
+  name: string;
 }
 
 @Component({
@@ -63,7 +63,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public rowsLigatabelle: TableRow[];
   public providedID: number;
   private hasID: boolean;
-  private hasVeranstaltung: boolean = true;
+  private hasVeranstaltung = true;
 
   private isDeselected = false;
   private remainingLigatabelleRequests: number;
@@ -80,8 +80,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   public selectedYearId: number;
   public selectedItemId: number;
   private aktivesSportjahr: number;
-  public selectedYearForVeranstaltung: number; //In der Tabelle selektiertes Sportjahr
-  private istURLkorrekt: boolean = false;
+  public selectedYearForVeranstaltung: number; // In der Tabelle selektiertes Sportjahr
+  private istURLkorrekt = false;
   private currentWettkampftag: number;
   public loadingWettkampftag = true;
   public wettkampf_ids: number[];
@@ -110,7 +110,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   ngOnInit() {
-    if(this.isDeselected === false) {
+    if (this.isDeselected === false) {
       this.loadTableData();
       this.providedID = undefined;
       this.hasID = false;
@@ -119,7 +119,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
         if (!isUndefined(params[ID_PATH_PARAM])) {
           this.providedID = parseInt(params[ID_PATH_PARAM], 10);
           this.hasID = true;
-          params[ID_PATH_PARAM] === "ligaid" ? this.hasID = false : undefined;
+          params[ID_PATH_PARAM] === 'ligaid' ? this.hasID = false : undefined;
           this.selectedYearForVeranstaltung !== undefined && this.hasID
             ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
         } else {
@@ -130,7 +130,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     }
   }
 
-  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number){
+  public loadVeranstaltungFromLigaIDAndSportYear(urlLigaID: number, selectedSportYear: number) {
     this.veranstaltungsDataProvider.findByLigaIdAndYear(urlLigaID, selectedSportYear)
         .then((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungSuccess(response))
         .catch((response: BogenligaResponse<VeranstaltungDO>) => this.handleFindVeranstaltungFailure(response));
@@ -193,7 +193,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
           this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung); // -> Ligatabelle
         }
-        if(responseVeranstaltung.payload.length > 0) {
+        if (responseVeranstaltung.payload.length > 0) {
           this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);  // -> "Liga"
           if (!this.availableYears.includes(year)) {
             this.availableYears.push(year); // -> "Sportjahr"
@@ -277,7 +277,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     this.hasID ? this.loadVeranstaltungFromLigaIDAndSportYear(this.providedID, this.selectedYearForVeranstaltung) : undefined;
     this.selectedVeranstaltung = this.veranstaltungenForYear[0];
     this.loadVeranstaltung(this.selectedVeranstaltung);
-    //this.loadWettkaempfe(this.selectedVeranstaltungId);
+    // this.loadWettkaempfe(this.selectedVeranstaltungId);
   }
 
   public async onSelectVeranstaltung() {
@@ -308,8 +308,8 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     for (let i = 0; i < currentWettkampftag; i++) {
       this.wettkampftage.push(this.alleTage[i]);
     }
-    this.wettkampftage.push(this.alleTage[4]);
     const today = new Date();
+
     let currenWettkampf = wettkaempfe[0];
     for (const aktuellerWettkampftag of wettkaempfe) {
       const aktuellerWettkampftagsDatum = new Date(aktuellerWettkampftag.wettkampfDatum).getDate();
@@ -322,7 +322,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
   }
 
   // Der link funktioniert wurde aukommentiert, da die ligaId Bugs verursacht
-  private loadVeranstaltung(veranstaltung: VeranstaltungDO){
+  private loadVeranstaltung(veranstaltung: VeranstaltungDO) {
     this.selectedVeranstaltung = veranstaltung;
     this.loadWettkaempfe(this.selectedVeranstaltung.id);
     // const link = '/ligatabelle/' +  this.selectedVeranstaltung.ligaId;
@@ -339,8 +339,6 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
       this.loadLigaTableWettkampftag(this.wettkampf_ids[2]);
     } else if (this.selectedWettkampfTag.id === 4) {
       this.loadLigaTableWettkampftag(this.wettkampf_ids[3]);
-    } else if (this.selectedWettkampfTag.id === 5) {
-      this.loadLigaTableRows();
     }
   }
 
