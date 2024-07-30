@@ -82,7 +82,7 @@ export class WettkampfComponent extends CommonComponentDirective implements OnIn
   public currentConfig = WETTKAMPF_TABLE_EINZELGESAMT_CONFIG;
   public config = WETTKAMPF_CONFIG;
   public mannschaftenConfig = WETTKAMPF_TABLE_CONFIG;
-  public jahre: Array<SportjahrVeranstaltungDO> = [];
+  public jahre: Array<number> = [];
   public currentJahr: number;
   public vereine: Array<VereinDO> = [];
   public mannschaften: Array<DsbMannschaftDO> = [];
@@ -664,9 +664,11 @@ public updateChartOptions(newXAxisLabel: string) {
   }
 
   public async loadJahre() {
-    await this.veranstaltungsDataProvider.findAllSportyearDestinct()
-      .then((response: BogenligaResponse<SportjahrVeranstaltungDO[]>) => {
+    this.loadingData = true;
+    await this.veranstaltungsDataProvider.findAllLaufendAbgeschlossen()
+      .then((response: BogenligaResponse<VeranstaltungDO[]>) => {
         this.handleSuccessLoadJahre(response.payload);
+        this.loadingData = false;
       })
       .catch(() => {
         this.jahre = [];
@@ -675,9 +677,12 @@ public updateChartOptions(newXAxisLabel: string) {
 
   }
 
-  private handleSuccessLoadJahre(response: SportjahrVeranstaltungDO[]) {
-    this.jahre = response;
-    this.currentJahr = this.jahre[0].sportjahr;
+  private handleSuccessLoadJahre(response: VeranstaltungDO[]) {
+    for (const veranstaltung of response) {
+      if (!this.jahre.includes(veranstaltung.sportjahr))
+        this.jahre.push(veranstaltung.sportjahr)
+    }
+    this.currentJahr = this.jahre[0];
   }
 
   public async loadWettkaempfe(veranstaltungsId: number) {

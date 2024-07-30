@@ -27,7 +27,7 @@
                   [disabled]="loadingData"
                   (ngModelChange)="loadVeranstaltungen(currentJahr)"
           >
-            <option *ngFor="let Jahr of jahre"> {{ Jahr.sportjahr }}</option>
+            <option *ngFor="let Jahr of jahre"> {{ Jahr }}</option>
           </select>
         </div>
         <div class="invalid-feedback">
