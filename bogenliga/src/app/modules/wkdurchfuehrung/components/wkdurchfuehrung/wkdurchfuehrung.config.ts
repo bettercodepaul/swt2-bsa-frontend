@@ -52,13 +52,8 @@ export const MATCH_TABLE_CONFIG: TableConfig = {
 
   columns: [
     {
-      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.NUMMER',
-      propertyName:   'nr',
-      width:          5,
-    },
-    {
       translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.SCHEIBE',
-      propertyName:   'scheibenNummer',
+      propertyName:   'matchScheibennummer',
       width:          5,
     },
     {
@@ -67,9 +62,9 @@ export const MATCH_TABLE_CONFIG: TableConfig = {
       width:          20,
     },
     {
-      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.BEGEGNUNG',
-      propertyName:   'begegnung',
-      width:          5
+      translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.GEGNER',
+      propertyName:   'mannschaftNameGegner',
+      width:          20,
     },
     {
       translationKey: 'WKDURCHFUEHRUNG.MATCH.TABLE.MATCHPUNKTE',
