@@ -6,8 +6,9 @@ export class MatchDOExt implements DataObject {
   version: number;
   mannschaftId: number;
   mannschaftName: string;
+  mannschaftNameGegner: string;
   wettkampfId: number;
-  nr: number;
+  matchNr: number;
   begegnung: number;
   matchScheibennummer: number;
   wettkampfTag: number;
@@ -23,6 +24,7 @@ export class MatchDOExt implements DataObject {
   constructor(id?: number,
               mannschaftId?: number,
               mannschaftName?: string,
+              mannschaftNameGegner?: string,
               wettkampfId?: number,
               matchNr?: number,
               begegnung?: number,
@@ -37,8 +39,9 @@ export class MatchDOExt implements DataObject {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';
+    this.mannschaftNameGegner = !!mannschaftNameGegner ? mannschaftNameGegner : 'Mannschaft 2';
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
-    this.nr = matchNr;
+    this.matchNr = !!matchNr ? matchNr : null;
     this.begegnung = begegnung;
     this.matchScheibennummer = !!matchScheibennummer ? matchScheibennummer : null;
     this.sumSatz = !!sumSatz ? sumSatz : [5];

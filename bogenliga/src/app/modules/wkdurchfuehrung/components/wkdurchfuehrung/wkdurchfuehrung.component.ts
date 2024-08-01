@@ -713,15 +713,15 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     const groupedMatchesMap = new Map<number, MatchDOExt[]>();
     // Iteriert über die Matches und füge sie der entsprechenden Gruppe in der Map hinzu
     for (const match of matches) {
-      if (groupedMatchesMap.has(match.nr)) {
-        groupedMatchesMap.get(match.nr)?.push(match);
+      if (groupedMatchesMap.has(match.matchNr)) {
+        groupedMatchesMap.get(match.matchNr)?.push(match);
       } else {
-        groupedMatchesMap.set(match.nr, [match]);
+        groupedMatchesMap.set(match.matchNr, [match]);
       }
     }
     // Konvertiert die Map-Einträge in das groupedMatches-Array
-    this.groupedMatches = Array.from(groupedMatchesMap.entries()).map(([nr, matches]) => ({
-      groupName: `Match ${nr}`,
+    this.groupedMatches = Array.from(groupedMatchesMap.entries()).map(([matchNr, matches]) => ({
+      groupName: `Match ${matchNr}`,
       matches: toTableRows(matches) // Konvertiere die Matches zu TableRow[]
     }));
   }
@@ -737,10 +737,11 @@ export class WkdurchfuehrungComponent extends CommonComponentDirective implement
     this.tableContentMatch = response.payload.map(match => {
       const tableContentRow: MatchDOExt = new MatchDOExt();
       tableContentRow.id = match.id;
-      tableContentRow.nr = match.nr;
+      tableContentRow.matchNr = match.matchNr;
       tableContentRow.begegnung = match.begegnung;
       tableContentRow.matchScheibennummer = match.matchScheibennummer;
       tableContentRow.mannschaftName = match.mannschaftName;
+      tableContentRow.mannschaftNameGegner = match.mannschaftNameGegner;
       tableContentRow.matchpunkte = match.matchpunkte;
       tableContentRow.satzpunkte = match.satzpunkte;
       tableContentRow.version = match.version;

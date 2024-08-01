@@ -11,6 +11,7 @@ export interface OfflineMatch {
   satzpunkte: number;
   mannschaftId: number;
   mannschaftName: string;
+  mannschaftNameGegner: string;
   nameGegner: string;
   scheibennummerGegner: number;
   matchIdGegner: number;

@@ -41,6 +41,7 @@ const dummyMatch = new MatchDOExt(
   null,
   null,
   null,
+  null,
   1,
   1,
   1,
@@ -415,7 +416,7 @@ export class TabletEingabeComponent implements OnInit {
    */
   private enrichPasseDO(passe: PasseDO, schuetze: SchuetzeErgebnisse) {
     passe.mannschaftId = this.currentMatch.mannschaftId;
-    passe.matchNr = this.currentMatch.nr;
+    passe.matchNr = this.currentMatch.matchNr;
     passe.matchId = this.currentMatch.id;
     passe.wettkampfId = this.currentMatch.wettkampfId;
     passe.rueckennummer = schuetze.schuetzeNr;

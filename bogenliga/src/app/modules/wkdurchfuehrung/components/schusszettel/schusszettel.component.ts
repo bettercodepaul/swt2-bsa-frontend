@@ -113,13 +113,13 @@ export class SchusszettelComponent implements OnInit {
   ngOnInit() {
     // initialwert schützen inputs
 
-    this.match1 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
-    this.match1.nr = 1;
+    this.match1 = new MatchDOExt(null, null, null, null,1, 1, 1, 1, [], 0, 0, null, null);
+    this.match1.matchNr = 1;
     this.match1.schuetzen = [];
     this.match1singlesatzpoints = [];
 
-    this.match2 = new MatchDOExt(null, null, null, 1, 1, 1, 1, [], 0, 0, null, null);
-    this.match2.nr = 1;
+    this.match2 = new MatchDOExt(null, null, null, null,1, 1, 1, 1, [], 0, 0, null, null);
+    this.match2.matchNr = 1;
     this.match2.schuetzen = [];
     this.match2singlesatzpoints = [];
 
@@ -417,7 +417,7 @@ export class SchusszettelComponent implements OnInit {
     let alt_match1 = null;
     let alt_match2 = null;
     if (this.onOfflineService.isOffline()) {
-      const matchd = await this.matchProvider.getmatchoffline(this.match1.nr);
+      const matchd = await this.matchProvider.getmatchoffline(this.match1.matchNr);
       const matchdaten = matchd.payload;
 
       matchdaten.forEach((match) => {
@@ -706,11 +706,11 @@ export class SchusszettelComponent implements OnInit {
       this.match1.schuetzen.push(new Array<PasseDO>());
       for (let j = 0; j < 5; j++) {
         if (i === 0) {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.matchNr, j + 1));
         } else if (i === 1) {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.matchNr, j + 1));
         } else {
-          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.nr, j + 1));
+          this.match1.schuetzen[i].push(new PasseDO(null, this.match1.id, this.match1.mannschaftId, this.match1.wettkampfId, this.match1.matchNr, j + 1));
         }
       }
     }
@@ -738,11 +738,11 @@ export class SchusszettelComponent implements OnInit {
       this.match2.schuetzen.push(new Array<PasseDO>());
       for (let j = 0; j < 5; j++) {
         if (i === 0) {
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.matchNr, j + 1));
         } else if (i === 1) {
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.matchNr, j + 1));
         } else {
-          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.nr, j + 1));
+          this.match2.schuetzen[i].push(new PasseDO(null, this.match2.id, this.match2.mannschaftId, this.match2.wettkampfId, this.match2.matchNr, j + 1));
         }
       }
     }

@@ -8,13 +8,14 @@ export class MatchDTOExt implements DataTransferObject {
   version: number;
   mannschaftId: number;
   mannschaftName: string;
+  mannschaftNameGegner: string;
   wettkampfId: number;
   wettkampfTag: number;
   wettkampfTyp: string;
-  nr: number;
   begegnung: number;
   matchScheibennummer: number;
   matchpunkte: number;
+  matchNr: number;
   satzpunkte: number;
   strafPunkteSatz1: number;
   strafPunkteSatz2: number;
@@ -26,11 +27,12 @@ export class MatchDTOExt implements DataTransferObject {
   constructor(id?: number,
               mannschaftId?: number,
               mannschaftName?: string,
+              mannschaftNameGegner?: string,
               wettkampfId?: number,
-              matchNr?: number,
               begegnung?: number,
               matchScheibennummer?: number,
               matchpunkte?: number,
+              matchNr?: number,
               satzpunkte?: number,
               strafPunkteSatz1?: number,
               strafPunkteSatz2?: number,
@@ -43,8 +45,9 @@ export class MatchDTOExt implements DataTransferObject {
     this.id = !!id ? id : null;
     this.mannschaftId = !!mannschaftId ? mannschaftId : null;
     this.mannschaftName = !!mannschaftName ? mannschaftName : 'Mannschaft 1';
+    this.mannschaftNameGegner = mannschaftNameGegner;
     this.wettkampfId = !!wettkampfId ? wettkampfId : null;
-    this.nr = !!matchNr ? matchNr : null;
+    this.matchNr = !!matchNr ? matchNr : null;
     this.begegnung = !!begegnung ? begegnung : null;
     this.matchScheibennummer = !!matchScheibennummer ? matchScheibennummer : null;
     this.matchpunkte = matchpunkte;
@@ -65,13 +68,14 @@ export class MatchDTOExt implements DataTransferObject {
     version?: number,
     mannschaftId?: number,
     mannschaftName?: string,
+    mannschaftNameGegner?: string,
     wettkampfId?: number,
     wettkampfTag?: number,
     wettkampfTyp?: string,
-    matchNr?: number,
     begegnung?: number,
     matchScheibennummer?: number,
     matchpunkte?: number,
+    matchNr?: number,
     satzpunkte?: number,
     strafPunkteSatz1?: number,
     strafPunkteSatz2?: number,
@@ -100,6 +104,8 @@ export class MatchDTOExt implements DataTransferObject {
     }
     copy.mannschaftName = optional.mannschaftName || '';
 
+    copy.mannschaftNameGegner = optional.mannschaftNameGegner || '';
+
     if (optional.wettkampfId >= 0) {
       copy.wettkampfId = optional.wettkampfId;
     } else {
@@ -114,10 +120,11 @@ export class MatchDTOExt implements DataTransferObject {
     copy.wettkampfTyp = optional.wettkampfTyp || '';
 
     if (optional.matchNr >= 0) {
-      copy.nr = optional.matchNr;
+      copy.matchNr = optional.matchNr;
     } else {
-      copy.nr = null;
+      copy.matchNr = null;
     }
+
     if (optional.begegnung >= 0) {
       copy.begegnung = optional.begegnung;
     } else {
