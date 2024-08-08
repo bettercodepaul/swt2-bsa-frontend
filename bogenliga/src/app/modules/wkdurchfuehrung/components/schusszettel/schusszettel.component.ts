@@ -300,30 +300,11 @@ export class SchusszettelComponent implements OnInit {
   async onSchuetzeChange(value: string, matchNr: number, rueckennummer: number) {
     const mannschaftId = matchNr === 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
 
-    let valid = true;
-    let allowed = [];
     let mitglied = null;
 
     try {
       mitglied = await this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value);
     } catch (e) {
-      valid = false;
-    }
-
-    if (mitglied != null && mitglied.result === RequestResult.SUCCESS) {
-      const dsbNummer = mitglied.payload.dsbMitgliedId;
-      console.log('DsbNummer for Mannschaftsmitglied in Mannschaft ' +
-        mannschaftId + ' and Rueckennummer ' + value + ' is ' + dsbNummer);
-
-      // tslint:disable-next-line:triple-equals
-      allowed = matchNr == 1 ? this.allowedMitglieder1 : this.allowedMitglieder2;
-
-      if (!allowed.includes(dsbNummer)) {
-        valid = false;
-      }
-    }
-
-    if (!valid) {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
@@ -334,6 +315,7 @@ export class SchusszettelComponent implements OnInit {
         userAction:  NotificationUserAction.ACCEPTED
       });
     }
+
   }
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
@@ -355,26 +337,7 @@ export class SchusszettelComponent implements OnInit {
       });
   }
 
-  private getAllVerein(): void {
-    this.vereinDataProvider.findAll()
-      .then((response: BogenligaResponse<VereinDO[]>) => {
-        this.vereine = response.payload;
-      });
-  }
 
-  private getAllPasse(): void {
-    this.passeDataProvider.findAll()
-      .then((response: BogenligaResponse<PasseDoClass[]>) => {
-        this.allPasse = response.payload;
-      });
-  }
-
-  private getAllWettkaempfe(): void {
-    this.wettkampfDataProvider.findAll()
-      .then((response: BogenligaResponse<WettkampfDO[]>) => {
-        this.allWettkaempfe = response.payload;
-      });
-  }
 
   /**
    * Diese Methode wurde überprüft und wird momentan nicht verwendet. Daher wurde hier die Methode findAll() nicht
