@@ -241,41 +241,38 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.selectedMannschaft.benutzerId = team.benutzerId;
     this.selectedMannschaft.veranstaltungId = this.currentVeranstaltung.id;
 
-    this.mannschaftDataProvider.update(this.selectedMannschaft)
-        .then((response: BogenligaResponse<DsbMannschaftDO>) => {
-          if (!isNullOrUndefined(response)
-            && !isNullOrUndefined(response.payload)
-            && !isNullOrUndefined(response.payload.id)) {
+    this.mannschaftDataProvider.assignMannschaftToVeranstaltung(this.currentVeranstaltung.id, this.selectedMannschaft.id)
+      .then((response) => {
+        if (response.result === RequestResult.SUCCESS) {
+          const id = this.selectedMannschaft.id;
 
-            const id = this.selectedMannschaft.id;
+          const notification: Notification = {
+            id:          NOTIFICATION_UPDATE_VERANSTALTUNG + id,
+            title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
+            description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
+            severity:    NotificationSeverity.INFO,
+            origin:      NotificationOrigin.USER,
+            type:        NotificationType.OK,
+            userAction:  NotificationUserAction.PENDING
+          };
 
-            const notification: Notification = {
-              id:          NOTIFICATION_UPDATE_VERANSTALTUNG + id,
-              title:       'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.TITLE',
-              description: 'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.SAVE.DESCRIPTION',
-              severity:    NotificationSeverity.INFO,
-              origin:      NotificationOrigin.USER,
-              type:        NotificationType.OK,
-              userAction:  NotificationUserAction.PENDING
-            };
+          this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG + id)
+              .subscribe((myNotification) => {
+                if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
+                  this.saveLoading = false;
+                  this.loadMannschaftsTable();
+                  this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id);
+                }
+              });
 
-            this.notificationService.observeNotification(NOTIFICATION_UPDATE_VERANSTALTUNG + id)
-                .subscribe((myNotification) => {
-                  if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                    this.saveLoading = false;
-                    this.loadMannschaftsTable();
-                    this.router.navigateByUrl('/verwaltung/veranstaltung/' + response.payload.veranstaltungId);
-                  }
-                });
-
-            this.notificationService.showNotification(notification);
+          this.notificationService.showNotification(notification);
           }
-        }, (response: BogenligaResponse<DsbMitgliedDO>) => {
+        }, (response) => {
           console.log('Failed: ' + response);
           const notification: Notification = {
             id:          NOTIFICATION_UPDATE_VERANSTALTUNG_FAILURE,
-            title: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE",
-            description: "MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION",
+            title:       'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.TITLE',
+            description: 'MANAGEMENT.VEREIN_DETAIL.NOTIFICATION.UPDATE.FAILURE.FULL.DESCRIPTION',
             severity:    NotificationSeverity.ERROR,
             origin:      NotificationOrigin.USER,
             type:        NotificationType.OK,
@@ -537,8 +534,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
             console.log('Wir sind der Sturm, der über das Ziel hinwegfegt, niemand kann uns aufhalten!');
             const notification: Notification = {
               id:          NOTIFICATION_CREATE_PLATZHALTER,
-              title:       "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.TITLE",
-              description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.DESCRIPTION",
+              title:       'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.TITLE',
+              description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_SAVE.DESCRIPTION',
               severity:    NotificationSeverity.INFO,
               origin:      NotificationOrigin.USER,
               type:        NotificationType.OK,
@@ -560,8 +557,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         .catch((response) => {
       const notification: Notification = {
         id:          NOTIFICATION_CREATE_PLATZHALTER_FAILURE,
-        title: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE",
-        description: "MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION",
+        title: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.TITLE',
+        description: 'MANAGEMENT.VERANSTALTUNG_DETAIL.NOTIFICATION.PLATZHALTER_FAILURE.DESCRIPTION',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.USER,
         type:        NotificationType.OK,
@@ -701,7 +698,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
         isAdmin = true;
 
       this.allLiga = response.payload.filter(ligaDo => {
-        return ligaDo.ligaUebergeordnetId == currentUserId || ligaDo.ligaVerantwortlichId == currentUserId || isAdmin;
+        return ligaDo.ligaUebergeordnetId === currentUserId || ligaDo.ligaVerantwortlichId === currentUserId || isAdmin;
       });
       if (this.id === 'add') {
         this.currentLiga = this.allLiga[0];
@@ -830,7 +827,7 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
                                   .subscribe((myNotification) => {
 
                                     if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                                      this.mannschaftDataProvider.deleteById(id)
+                                      this.mannschaftDataProvider.unassignMannschaftFromVeranstaltung(id)
                                           .then((response) => this.loadMannschaftsTable())
                                           .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
                                     } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
