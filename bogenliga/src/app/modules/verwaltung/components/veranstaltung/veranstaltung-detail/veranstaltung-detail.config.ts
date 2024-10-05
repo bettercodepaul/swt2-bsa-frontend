@@ -24,7 +24,7 @@ export const VERANSTALTUNG_DETAIL_TABLE_Config: TableConfig = {
   ],
   actions: {
     actionTypes: [TableActionType.EDIT, TableActionType.DELETE],
-    width:       6
+    width:       12
   },
   editPermission : [UserPermission.CAN_MODIFY_STAMMDATEN, UserPermission.CAN_MODIFY_STAMMDATEN_LIGALEITER],
   deletePermission : [UserPermission.CAN_DELETE_STAMMDATEN]
