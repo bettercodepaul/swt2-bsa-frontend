@@ -690,8 +690,7 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
   private existsMannschaftsNummer(mannschaftsnummer: string): boolean {
 
-    // TODO: hier die Prüfung auf identische Sportjahr (auch leer) ergänzen und Fehler nur bei beiden gleich...
-    for (const mannschaft of this.mannschaften) {
+     for (const mannschaft of this.mannschaften) {
       if (parseInt(mannschaft.nummer , 10) === parseInt(mannschaftsnummer, 10) &&
         (typeof mannschaft.sportjahr  === 'undefined')) {
         this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
