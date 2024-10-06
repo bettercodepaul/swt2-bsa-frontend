@@ -7,4 +7,5 @@ export interface OfflineMannschaft {
   benutzerId: number;
   veranstaltungId: number;
   sortierung: number;
+  sportjahr: number;
 }

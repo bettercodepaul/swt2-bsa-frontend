@@ -9,6 +9,7 @@ export class MannschaftOfflineSyncDto implements DataTransferObject {
   benutzerId: number;
   veranstaltungId: number;
   sortierung: number;
+  sportjahr: number;
 
   static copyFrom(optional: {
     id?: number,
@@ -18,6 +19,7 @@ export class MannschaftOfflineSyncDto implements DataTransferObject {
     version?: number,
     veranstaltungId?: number,
     sortierung?: number;
+    sportjahr?: number;
   } = {}): MannschaftOfflineSyncDto {
     const copy = new MannschaftOfflineSyncDto();
     // show '0' value
@@ -47,6 +49,11 @@ export class MannschaftOfflineSyncDto implements DataTransferObject {
       copy.sortierung = optional.sortierung;
     } else {
       copy.sortierung = null;
+    }
+    if (optional.sportjahr >= 0) {
+      copy.sportjahr = optional.sportjahr;
+    } else {
+      copy.sportjahr = null;
     }
     copy.version = optional.version || null;
 

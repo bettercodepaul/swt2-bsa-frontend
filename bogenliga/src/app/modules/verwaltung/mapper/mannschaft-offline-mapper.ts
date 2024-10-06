@@ -15,6 +15,7 @@ export function toDO(offlineSyncDto: MannschaftOfflineSyncDto): OfflineMannschaf
     version: offlineSyncDto.version,
     nummer: offlineSyncDto.nummer,
     sortierung: offlineSyncDto.sortierung,
+    sportjahr: offlineSyncDto.sportjahr,
     veranstaltungId: offlineSyncDto.veranstaltungId,
     vereinId: offlineSyncDto.vereinId,
     benutzerId: offlineSyncDto.benutzerId,
@@ -38,8 +39,9 @@ export function offlineMannschaftFromDsbMannschaftDO(mannschaft: DsbMannschaftDO
   return {
     benutzerId: mannschaft.benutzerId,
     id: mannschaft.id,
-    nummer: parseInt(mannschaft.nummer),
+    nummer: parseInt(mannschaft.nummer, 10),
     sortierung: mannschaft.sortierung,
+    sportjahr: mannschaft.sportjahr,
     veranstaltungId: mannschaft.veranstaltungId,
     vereinId: mannschaft.vereinId,
     version: 1
@@ -66,6 +68,7 @@ export function mannschaftDOfromOffline(m: OfflineMannschaft, vereine: OfflineVe
     name:              vereinName + ' ' + m.nummer,
     nummer:            m.nummer.toString(),
     sortierung:        m.sortierung,
+    sportjahr:         m.sportjahr,
     veranstaltungId:   m.veranstaltungId,
     veranstaltungName: '',
     vereinId:          m.vereinId,

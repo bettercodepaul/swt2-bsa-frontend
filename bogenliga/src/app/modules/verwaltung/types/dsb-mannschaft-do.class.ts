@@ -11,6 +11,7 @@ export class DsbMannschaftDO implements VersionedDataObject {
   veranstaltungName: string;
   name: string;
   sortierung: number;
+  sportjahr: number;
   wettkampfTag: string;
   wettkampfOrtsname: string;
   vereinName: string;

@@ -9,6 +9,7 @@ export class DsbMannschaftDTO implements DataTransferObject {
   veranstaltungId: number;
   name: string;
   sortierung: number;
+  sportjahr: number;
   veranstaltungName: string;
   wettkampfTag: string;
   wettkampfOrtsname: string;

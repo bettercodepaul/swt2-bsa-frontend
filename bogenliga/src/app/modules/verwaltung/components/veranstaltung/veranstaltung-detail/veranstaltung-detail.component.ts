@@ -314,8 +314,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     this.router.navigateByUrl('/verwaltung/veranstaltung/' + this.currentVeranstaltung.id + '/' + this.currentVeranstaltung.id);
   }
 
-  // Falls Veranstaltungen erzeugt werden werden die Veranstaltungsattribute gesetzt
-  // Anschließend schickt er die Veranstaltung mittels eines Post Request an das Backend
+  // Falls Veranstaltungen erzeugt werden die Veranstaltungsattribute gesetzt
+  // Anschliessend schickt er die Veranstaltung mittels eines Post Request an das Backend
   public onSave(ignore: any): void {
     this.saveLoading = true;
 
@@ -805,6 +805,8 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
   }
 
 
+  // mit dem Delete wird nur die Zuordnung der Mannschaft zur Veransatltung entfernt
+  // die Mannschaft selbst bleibt erhalten und kann anderen Veranstaltungen zugewiesen werden.
   public onDeleteMannschaft(versionedDataObject: VersionedDataObject): void {
 
     this.notificationService.discardNotification();
@@ -812,32 +814,9 @@ export class VeranstaltungDetailComponent extends CommonComponentDirective imple
     const id = versionedDataObject.id;
     this.rows = showDeleteLoadingIndicatorIcon(this.rows, id);
 
-    const notification: Notification = {
-      id:               NOTIFICATION_DELETE_MANNSCHAFT + id,
-      title:            'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.TITLE',
-      description:      'MANAGEMENT.MANNSCHAFT_DETAIL.NOTIFICATION.DELETE.DESCRIPTION',
-      descriptionParam: '' + id,
-      severity:         NotificationSeverity.QUESTION,
-      origin:           NotificationOrigin.USER,
-      type:             NotificationType.YES_NO,
-      userAction:       NotificationUserAction.PENDING
-    };
-
-    const notificationEvent = this.notificationService.observeNotification(NOTIFICATION_DELETE_MANNSCHAFT + id)
-                                  .subscribe((myNotification) => {
-
-                                    if (myNotification.userAction === NotificationUserAction.ACCEPTED) {
-                                      this.mannschaftDataProvider.unassignMannschaftFromVeranstaltung(id)
-                                          .then((response) => this.loadMannschaftsTable())
-                                          .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
-                                    } else if (myNotification.userAction === NotificationUserAction.DECLINED) {
-                                      this.rows = hideLoadingIndicator(this.rows, id);
-                                      notificationEvent.unsubscribe();
-                                    }
-
-                                  });
-
-    this.notificationService.showNotification(notification);
+    this.mannschaftDataProvider.unassignMannschaftFromVeranstaltung(id)
+      .then((response) => this.loadMannschaftsTable())
+      .catch((response) => this.rows = hideLoadingIndicator(this.rows, id));
   }
 
 
