@@ -23,6 +23,11 @@ export const VEREIN_DETAIL_TABLE_CONFIG: TableConfig = {
         propertyName:   'veranstaltungName',
         width:          20,
       },
+      {
+        translationKey: 'MANAGEMENT.VEREIN_DETAIL.TABLE.HEADERS.SPORTJAHR',
+        propertyName:   'sportjahr',
+        width:          20,
+      },
     ],
     actions: {
       actionTypes: [TableActionType.EDIT, TableActionType.DELETE, TableActionType.DOWNLOADLIZENZEN, TableActionType.DOWNLOADRUECKENNUMMER],
