@@ -281,6 +281,48 @@ export class DsbMannschaftDataProviderService extends DataProviderService {
           });
     });
   }
+// Backend-Aufruf um eine Mannschaft eienr Veransatltung zuzuweisen.
+  public assignMannschaftToVeranstaltung(currentVeranstaltungID: string | number, mannschaftID: string | number): Promise<BogenligaResponse<void>> {
+
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).
+      path('assignMannschaftToVeranstaltung/' + currentVeranstaltungID + '/' + mannschaftID ).build())
+        .then((data: VersionedDataTransferObject) => {
+          resolve({result: RequestResult.SUCCESS});
+
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
+// Backend-Aufruf um eine Mannschaft asu einer Veranstaltung zu entfernen.
+  public unassignMannschaftFromVeranstaltung(mannschaftID: string | number): Promise<BogenligaResponse<void>> {
+
+    // return promise
+    // sign in success -> resolve promise
+    // sign in failure -> reject promise with result
+    return new Promise((resolve, reject) => {
+      this.restClient.GET<VersionedDataTransferObject>(new UriBuilder().fromPath(this.getUrl()).
+      path('unassignMannschaftFromVeranstaltung/'  + mannschaftID ).build())
+        .then((data: VersionedDataTransferObject) => {
+          resolve({result: RequestResult.SUCCESS});
+
+        }, (error: HttpErrorResponse) => {
+          if (error.status === 0) {
+            reject({result: RequestResult.CONNECTION_PROBLEM});
+          } else {
+            reject({result: RequestResult.FAILURE});
+          }
+        });
+    });
+  }
   public findAllByWarteschlangeId(): Promise<BogenligaResponse<DsbMannschaftDO[]>> {
     // return promise
     // sign in success -> resolve promise

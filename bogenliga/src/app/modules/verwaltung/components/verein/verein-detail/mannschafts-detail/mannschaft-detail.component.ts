@@ -690,8 +690,9 @@ export class MannschaftDetailComponent extends CommonComponentDirective implemen
 
   private existsMannschaftsNummer(mannschaftsnummer: string): boolean {
 
-    for (const mannschaft of this.mannschaften) {
-      if (parseInt(mannschaft.nummer , 10) === parseInt(mannschaftsnummer, 10)) {
+     for (const mannschaft of this.mannschaften) {
+      if (parseInt(mannschaft.nummer , 10) === parseInt(mannschaftsnummer, 10) &&
+        (typeof mannschaft.sportjahr  === 'undefined')) {
         this.notificationService.showNotification(this.duplicateMannschaftsNrNotification);
         this.mannschaften = [];
         return true;

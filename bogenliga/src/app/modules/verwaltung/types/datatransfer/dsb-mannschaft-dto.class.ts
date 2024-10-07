@@ -9,6 +9,7 @@ export class DsbMannschaftDTO implements DataTransferObject {
   veranstaltungId: number;
   name: string;
   sortierung: number;
+  sportjahr: number;
   veranstaltungName: string;
   wettkampfTag: string;
   wettkampfOrtsname: string;
@@ -24,6 +25,7 @@ export class DsbMannschaftDTO implements DataTransferObject {
     veranstaltungId?: number,
     name?: string,
     sortierung?: number,
+    sportjahr?: number,
     veranstaltungName?: string,
     wettkampfTag?: string,
     wettkampfOrtsname?: string,
@@ -61,6 +63,11 @@ export class DsbMannschaftDTO implements DataTransferObject {
       copy.sortierung = optional.sortierung;
     } else {
       copy.sortierung = null;
+    }
+    if (optional.sportjahr >= 0) {
+      copy.sportjahr = optional.sportjahr;
+    } else {
+      copy.sportjahr = null;
     }
     if (optional.mannschaftNummer >= 0) {
       copy.mannschaftNummer = optional.mannschaftNummer;

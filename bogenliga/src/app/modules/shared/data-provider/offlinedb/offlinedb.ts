@@ -52,7 +52,7 @@ export class OfflineDB extends Dexie {
       wettkampfTabelle: ', version, veranstaltungId, datum, beginn, tag, disziplinId, wettkampftypId, ' +
                           'ausrichter, strasse, plz, ortsname, ortsinfo, offlinetoken',
       // mannschaftTabelle - will read only - no offlineVersion, no sync back
-      mannschaftTabelle:          ', version, vereinId, nummer, benutzerId, veranstaltungId, sortierung',
+      mannschaftTabelle:          ', version, vereinId, nummer, benutzerId, veranstaltungId, sortierung, sportjahr',
       mannschaftsmitgliedTabelle: ', offlineVersion, id, mannschaftId, dsbMitgliedId, dsbMitgliedEingesetzt, rueckennummer',
       dsbMitgliedTabelle:         ', version, vorname, nachname, geburtsdatum, nationalitaet, mitgliedsnummer, vereinId, benutzerId, beitrittsdatum',
       // veranstaltungTabelle - will read only - no offlineVersion, no sync back

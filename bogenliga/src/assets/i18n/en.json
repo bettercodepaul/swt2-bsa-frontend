@@ -1030,6 +1030,7 @@
           "HEADERS": {
             "ID": "ID",
             "MANNSCHAFTSNAME": "Name",
+            "SPORTJAHR": "Year",
             "LIGA": "League"
           }
         },
