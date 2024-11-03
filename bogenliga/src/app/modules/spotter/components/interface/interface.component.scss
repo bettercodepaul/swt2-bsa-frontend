@@ -185,3 +185,32 @@
     }
 }
 
+.info-box-unsure {
+  display: flex;
+  align-items: center;
+  background-color: #eaf4fc;
+  border: 1px solid #b5d8f1;
+  border-radius: 8px;
+  padding: 2px;
+  margin: 10px 0;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  color: #0b5a8a;
+
+}
+
+.info-icon-unsure {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.info-content-unsure {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.info-content-unsure strong {
+  font-weight: bold;
+  color: #074a72;
+}
+
