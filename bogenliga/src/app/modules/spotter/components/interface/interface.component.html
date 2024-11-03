@@ -124,6 +124,16 @@
       </div>
     </div>
     <!--FOOTER-->
+    <div *ngIf="allowedToSaveSet" class="info-box-unsure">
+      <span class="info-icon-unsure">
+        <div class="info-content-unsure">
+          <strong>Hinweis:</strong>
+          <p>
+              Sie müssen alle "unsicheren" treffen, als "sicher" markieren um zum nächsten Satz bzw. um Match zu beenden.
+          </p>
+        </div>
+      </span>
+    </div>
     <div *ngIf="spotting || editing" class="row h-25 align-items-center" style="padding: 20px 0px;">
       <div class="col-4 text-center align-center">
         <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onBack()">{{'SPOTTER.COMPONENTS.BUTTON.BACK'| translate}}</button>
@@ -138,7 +148,7 @@
         <button type="button" class="btn btn-secondary" style="font-size: 25px;" (click)="onSave()">{{'SPOTTER.COMPONENTS.BUTTON.SAVE'| translate}}</button>
       </div>
     </div>
-    <div *ngIf="!spotting && !editing" class="row h-25 align-items-center" style="padding: 25px 0px;">
+    <div *ngIf="!spotting && !editing && !allowedToSaveSet" class="row h-25 align-items-center" style="padding: 25px 0px;">
       <div class="col-6 p-0 text-center">
         <button type="button" class="button-footer" (click)="onNextSet()" [disabled]="!match.set().canFinish()">{{'SPOTTER.COMPONENTS.BUTTON.NEACHSTERSATZ'| translate}}</button>
       </div>

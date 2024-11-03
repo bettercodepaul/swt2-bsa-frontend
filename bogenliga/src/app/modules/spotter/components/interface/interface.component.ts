@@ -18,6 +18,7 @@ export class InterfaceComponent implements OnInit {
   selectedPlayNumber = 1;
 
   match: Match;
+  matchTemp: Match;
 
   spotting = true;
 
@@ -27,6 +28,7 @@ export class InterfaceComponent implements OnInit {
 
   editing = false;
   editedPlay = -1;
+  allowedToSaveSet = false;
 
   constructor(private router: Router, private spotterService: SpotterService) { }
 
@@ -34,6 +36,8 @@ export class InterfaceComponent implements OnInit {
     if (localStorage.getItem('match')) {
       const temp = JSON.parse(localStorage.getItem('match'));
       this.match = MatchJsonToClass.parseMatch(temp);
+      this.checkResultIsSure();
+
       this.selectedPlayNumber = this.match.set().currentPlayNumber;
       if (this.match.set().play().result) {
         this.spotting = false;
@@ -47,7 +51,32 @@ export class InterfaceComponent implements OnInit {
    * Saves current selected value to result of current play of current set if not editing
    * Changes result of selected play of current set if editing
    */
+  checkResultIsSure(): boolean {
+    const temp = JSON.parse(localStorage.getItem('match'));
+    this.matchTemp = MatchJsonToClass.parseMatch(temp);
+
+    this.allowedToSaveSet = false;
+    if (this.checkAllPointsScored()) {
+      for (let i = 1; i < 7; i++) {
+        if (!this.matchTemp.set().play(i).final) {
+          this.allowedToSaveSet = true;
+        }
+      }
+    }
+    return this.allowedToSaveSet;
+  }
+  checkAllPointsScored(): boolean {
+    let pointsAreScored = true;
+    for ( let i = 0; i < 6 && pointsAreScored; i++) {
+      if ( this.matchTemp.set().plays[i].result === undefined) {
+        pointsAreScored = false;
+      }
+    }
+    return pointsAreScored;
+  }
+
   onSave() {
+    // tslint:disable-next-line:triple-equals
     if (!this.editing) {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
         this.match.set().play().result = this.selectedValue;
@@ -71,6 +100,7 @@ export class InterfaceComponent implements OnInit {
           }
         });
       }
+
     } else {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
         this.match.set().play(this.editedPlay).result = this.selectedValue;
@@ -84,8 +114,10 @@ export class InterfaceComponent implements OnInit {
           } else {
             this.onEdit(this.match.set().currentPlayNumber);
           }
-          this.unsure = false;
-          this.editing = false;
+          if (!this.checkResultIsSure()) {
+            this.unsure = false;
+            this.editing = false;
+          }
 
         }, (error: SpotterResult) => {
           if (error === SpotterResult.UNAUTHORIZED) {
@@ -99,6 +131,9 @@ export class InterfaceComponent implements OnInit {
       }
     }
     localStorage.setItem('match', JSON.stringify(this.match));
+    this.checkResultIsSure();
+    // tslint:disable-next-line:triple-equals
+
   }
 
   /**
