@@ -303,6 +303,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
+   * schon in neuer Struktur
    */
   it('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -344,6 +345,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test lists all "DSBMitglieder" items and checks if the URI has been updated accordingly
+   * schon in neuer Struktur
    */
   it('Anzeige DSBMitglieder', function() {
     cy.wait(1000)
@@ -357,6 +359,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a new "DSB-Mitglied"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Neues DSB-Mitglied', function() {
     const randomID = generateID().toString();
@@ -383,6 +386,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test searches for a specific "DSBMitglied" name and checks if the corresponding club name has been listed
+   * schon in neuer Struktur
    */
   it('Suche DSBMitglieder', function () {
       cy.get('.input-group > #undefined').click();
@@ -398,6 +402,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test searches for a specific "club name" name and checks if the corresponding name has been listed
+   * schon in neuer Struktur
    */
   it('Suche Verein eines DSBMitglieds', function () {
       cy.get('.input-group > #undefined').click();
@@ -413,6 +418,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test views a single member and redirects to the overview page afterward
+   * schon in neuer Struktur
    */
   it('View DSBMitglied Info', function() {
     cy.wait(1000)
@@ -426,6 +432,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
+   * schon in neuer Struktur
    */
   it('Edit DSBMitglied', function() {
     cy.wait(1000)
@@ -471,6 +478,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test deletes a single member and checks if after deletion the website redirects the user to the expected location
+   * schon in neuer Struktur
    */
   it('Löschen DSBMitglied', function() {
     cy.wait(1000)
@@ -623,6 +631,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test opens the administration table and check whether the table has any content
+   * schon in neuer Struktur
    */
   it('Anzeige Verwaltung Vereinsliste', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -636,6 +645,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to add a new club to the administration table successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Neuen Verein anlegen', function () {
     cy.get('body').then((body) => {
@@ -666,6 +676,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
+   * schon in neuer Struktur
    */
   it('Editieren eines Vereins', function () {
 
@@ -699,6 +710,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it is possible to add a new team to a club successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Neue Vereins-Mannschaft anlegen', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
@@ -721,6 +733,7 @@ describe('Admin User tests', function() {
 
   /**
    * The test checks if it's possible to edit a team successfully
+   * schon in neuer Struktur
    */
   it('Vereins-Mannschaft bearbeiten', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -743,6 +756,7 @@ describe('Admin User tests', function() {
 
   /**
    * The test checks if it's possible to delete a team successfully
+   * schon in neuer Struktur
    */
   it('Vereins-Mannschaft löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -771,6 +785,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if it's possible to delete a club successfully
+   * schon in neuer Struktur
    */
   it('Einen Verein löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
