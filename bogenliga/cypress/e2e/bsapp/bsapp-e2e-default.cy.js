@@ -57,6 +57,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
    */
   it('Sunburst details anzeigen', function () {
@@ -69,6 +70,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if after an item has been selected the website redirected to the correct location
    */
   it('Weiterleitung Ligatabelle', function () {
@@ -79,6 +81,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test opens the sidebar, selects the "REGIONEN" section, selects an item from the list and checks if the website
    * redirected to the correct item's overview page.
    */
