@@ -1,4 +1,13 @@
 /**
+ * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
+ * schon in neuer Struktur
+ */
+it('Login erfolgreich', function() {
+  cy.loginAdmin()
+  cy.url().should('include', '#/home');
+});
+
+/**
  *  This test checks if the Region-table is filled.
  */
 it('Regionen Anzeigen', function() {

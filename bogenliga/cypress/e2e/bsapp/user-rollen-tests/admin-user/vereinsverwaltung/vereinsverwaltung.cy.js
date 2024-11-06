@@ -1,4 +1,13 @@
 /**
+ * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
+ * schon in neuer Struktur
+ */
+it('Login erfolgreich', function() {
+  cy.loginAdmin()
+  cy.url().should('include', '#/home');
+});
+
+/**
  * This test opens the sidebar, selects the "REGIONEN" section, selects an item from the list and checks if the website
  * redirected to the correct item's overview page.
  */
@@ -8,6 +17,16 @@ it('Weiterleitung Vereinseite', function () {
   cy.get(':nth-child(11) > .main-arc').click({force:true})
   cy.wait(2000)
   cy.get('#vereine > bla-selectionlist > #undefined').select(0)
+  cy.wait(1000)
+  cy.url().should('include', '#/vereine')
+})
+
+/**
+ * This test opens the sidebar and clicks on the "VEREINE" tab and checks if the url has changed successfully
+ */
+it('Anzeige Vereine', function () {
+  cy.wait(1000)
+  cy.get('[data-cy=sidebar-vereine-button]').click({force:true})
   cy.wait(1000)
   cy.url().should('include', '#/vereine')
 })

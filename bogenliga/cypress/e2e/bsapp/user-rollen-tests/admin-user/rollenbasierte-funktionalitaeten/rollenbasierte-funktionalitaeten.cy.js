@@ -49,3 +49,12 @@ it('Tooltips prüfen (Hoover effekt)', function () {
   cy.get('[data-cy=verwaltung-einstellungen-button]').trigger('mouseenter')
   cy.get('[data-cy=verwaltung-einstellungen-button]').trigger('mouseleave')
 })
+/**
+ * This test shows the user tab in the administration
+ */
+it('Anzeige User', function () {
+  cy.get('[data-cy=sidebar-verwaltung-button]').click()
+  cy.url().should('include', '#/verwaltung')
+  cy.get('[data-cy=verwaltung-user-button]').click()
+  cy.url().should('include', '#/verwaltung/user')
+})
