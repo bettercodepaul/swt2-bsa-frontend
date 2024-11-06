@@ -1976,7 +1976,8 @@
           "BACK": "Back",
           "SAVE": "Save",
           "NEACHSTERSATZ": "Next set",
-          "BEENDEN": "End match"
+          "BEENDEN": "End match",
+          "UNSURE": "unsure?"
         },
         "TEXT": {
           "SATZPUNKTE": "Sentence points",
