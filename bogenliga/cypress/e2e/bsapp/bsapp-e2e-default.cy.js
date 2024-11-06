@@ -16,6 +16,7 @@ function generateLigaID() {
 describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
+   * schon in neuer Struktur
    */
   it('Home aufrufen / Wettkampftabelle gefüllt', function () {
     cy.clearLocalStorage();
@@ -26,6 +27,7 @@ describe('Anonyme User tests', function () {
 
   /**
    * This test presses the login button on the home page and checks whether the login page opens
+   * schon in neuer Struktur
    */
   it('Login möglich / Fenster öffnet sich', function() {
     cy.get('[data-cy=login-button]').click()
@@ -34,13 +36,16 @@ describe('Anonyme User tests', function () {
 
   /**
    * This test opens the sidebar and clicks on the "REGIONEN" tab and checks if the url has changed successfully
+   * schon in neuer Struktur
    */
   it('Anzeige Regionen', function() {
     cy.get('[data-cy=sidebar-regionen-button]').click()
     cy.url().should('include', '#/regionen')
   })
 
-  /*Test hilfeicon */
+  /**Test hilfeicon
+   * schon in neuer Struktur
+   * */
   it('test hilfeicon', function() {
     cy.visit('http://localhost:4200/')
     cy.get('[data-cy=login-button]').click()
