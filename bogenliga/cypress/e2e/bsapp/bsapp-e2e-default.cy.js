@@ -294,6 +294,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
+   * schon in neuer Struktur
    */
   it('Login erfolgreich', function() {
     cy.loginAdmin()
@@ -311,6 +312,7 @@ describe('Admin User tests', function() {
   /**
    * This test tries to hoover over the "VERWALTUNG" elements
    * important: only hoover not clicking!
+   * schon in neuer Struktur
    * */
   it('Tooltips prüfen (Hoover effekt)', function () {
 
@@ -792,6 +794,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if the League-table is filled.
+   * schon in neuer Struktur
    */
   it('Alle Ligen zu sehen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -803,6 +806,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a League and checks if it throughs a popup notification.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Liga Hinzufügen mit Unterstrich', function() {
     cy.get('body').then((body) => {
@@ -842,6 +846,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a League and checks if it gets added.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Liga Hinzufügen', function() {
     cy.get('body').then((body) => {
@@ -875,6 +880,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test deletes a League and checks if its deleted in the table.
+   * schon in neuer Struktur
    */
   it('Liga Löschen', function() {
     cy.wait(3000)
@@ -889,6 +895,7 @@ describe('Admin User tests', function() {
 
   /**
    *  This test checks if the Region-table is filled.
+   *  schon in neuer Struktur
    */
   it('Regionen Anzeigen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -901,6 +908,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a Region and checks if it gets added.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Region Hinzufügen', function() {
     cy.get('body').then((body) => {
@@ -922,6 +930,7 @@ describe('Admin User tests', function() {
 
   /**
    * this test changes a Region and checks if the changes worked.
+   * schon in neuer Struktur
    */
   it('Region Ändern', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
@@ -936,6 +945,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test deletes a Region and checks if its deleted in the table.
+   * schon in neuer Struktur
    */
   it('Region Löschen', function() {
     cy.get('tbody').should('contain.text', 'SWT3_Region17')
@@ -1000,9 +1010,9 @@ describe('Admin User tests', function() {
     cy.wait(20000)
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
     cy.wait(1000)
-    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Laufend')
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase]').select('Laufend')
     cy.wait(500)
-    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Geplant')
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase]').select('Geplant')
     cy.wait(500)
     cy.get('[data-cy=veranstaltung-detail-update-button]').click()
     cy.wait(1000)
