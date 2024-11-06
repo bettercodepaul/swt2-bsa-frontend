@@ -1,3 +1,31 @@
+import tinymce from "tinymce";
+
+/**
+ * Testblock describing all anonymous user tests as specified on Confluence
+ */
+function generateID() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
+
+function generateLigaID() {
+  //generates a number between 1 and the amount of ligas that exist
+  //this is an example if only 19 liga exist
+  return Math.floor(Math.random() * 18 + 1);
+}
+
+it('Login erfolgreich', function() {
+  cy.loginAdmin()
+  cy.url().should('include', '#/home');
+});
+
+/**
+ * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
+ */
+it('Anzeige Verwaltung', function() {
+  cy.get('[data-cy=sidebar-verwaltung-button]').click()
+  cy.url().should('include', '#/verwaltung')
+})
+
 /**
  * This test lists all "DSBMitglieder" items and checks if the URI has been updated accordingly
  */
