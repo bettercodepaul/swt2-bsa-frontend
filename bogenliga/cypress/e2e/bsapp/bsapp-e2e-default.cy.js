@@ -120,6 +120,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test opens the sidebar and clicks on the "LIGATABELLE" tab and checks if the url has changed successfully
    */
   it('Anzeige Ligatabelle', function () {
@@ -128,6 +129,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test checks if you can filter for a Competition-Day in Ligatablle
    */
   it('Wettkampftagauswahl Ligatabelle', function() {
@@ -140,6 +142,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test opens the sidebar and clicks on the "WETTKAEMPFE" tab and checks if the url has changed successfully
    */
   it('Anzeige Wettkampf Ergebnisse', function() {
@@ -148,6 +151,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur, schlägt fehl noch in default
    * This test checks if the selection of Sportjahr Liga and Mannschaft works
    */
   it('Auswahl Sportjahr Liga und Mannschaft', function() {
@@ -164,6 +168,7 @@ describe('Anonyme User tests', function () {
 
 
   /**
+   * schon in neuer Struktur
    * This test checks if the gesamtstatistik in Wettkaempfe show results
    */
   it('Gesamtstatistik anzeigen', function() {
@@ -173,6 +178,7 @@ describe('Anonyme User tests', function () {
     // required: add check if data is present in selected statistik
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Matchstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Matchstatistik anzeigen', function() {
@@ -180,6 +186,7 @@ describe('Anonyme User tests', function () {
     cy.wait(500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Wettkampftagestatistik anzeigen', function() {
@@ -187,6 +194,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur, schlägt fehl noch in default
    * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Saisonschnittstatistik anzeigen', function() {
@@ -194,6 +202,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Einzelstatistik anzeigen', function() {
@@ -201,6 +210,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Statistik eines Schützen über die letzten fünf Jahre', function() {
@@ -208,6 +218,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
    */
   it('Wettkampftagauswahl Wettkampfergebnisse', function() {
@@ -216,6 +227,7 @@ describe('Anonyme User tests', function () {
     cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the switch between Mannschaftsstatistik and Schptzenstatistik filter buttons works
    */
   it('Wechsel zwischen Mannschafts- und Schützenstatistik', function() {
@@ -224,6 +236,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Aktuelle Mannschaften shows results
    */
   it('Aktuelle Mannschaften anzeigen', function() {
@@ -232,6 +245,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test checks if the  Mannschaftentabellenverlauf over all years shows results
    */
   it('Mannschafttabellenverlauf', function() {
@@ -239,6 +253,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * kommt doppelt vor
    * This test checks if the  Mannschaftentabellenverlauf over veranstaltung shows results
    */
   it('Mannschafttabellenverlauf', function() {
@@ -246,6 +261,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the all Mannschaften shows results
    */
   it('Alle Mannschaften anzeigen', function() {
@@ -253,6 +269,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test opens the sidebar and clicks on the "HILFE" tab and checks if
    * the url has changed successfully
    */
@@ -261,7 +278,8 @@ describe('Anonyme User tests', function () {
     cy.url().should('include', '#/hilfe')
   })
 
-  /*
+  /**
+   * schon in neuer Struktur
     * This Test selects the "Startseite" in the Section and checks if
     * the iframe is shown/displays the right content
     * **/
@@ -274,6 +292,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This Test selects the "Arbeitsablauf als Ligaleiter" section and checks if
    * the iframe is shown/displays the right content
    * */
@@ -286,6 +305,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This Test selects the "Arbeitsablauf als Wettkampfdurchführung" section and checks if
    * the iframe is shown/displays the right content
    * */
