@@ -1977,7 +1977,8 @@
         "BACK": "Zurück",
         "SAVE": "Speichern",
         "NEACHSTERSATZ": "Nächster Satz",
-        "BEENDEN": "Match Beenden"
+        "BEENDEN": "Match Beenden",
+        "UNSURE": "unsicher?"
       },
       "TEXT": {
         "SATZPUNKTE": "Satzpunkte",
