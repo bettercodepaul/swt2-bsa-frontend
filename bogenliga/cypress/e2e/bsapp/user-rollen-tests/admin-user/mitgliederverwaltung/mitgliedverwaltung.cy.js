@@ -1,8 +1,4 @@
-import tinymce from "tinymce";
 
-/**
- * Testblock describing all anonymous user tests as specified on Confluence
- */
 function generateID() {
   return Math.floor(100000 + Math.random() * 900000);
 }
@@ -135,4 +131,114 @@ it('Löschen DSBMitglied', function() {
   cy.get('.modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
   cy.url().should('include', '#/verwaltung/dsbmitglieder')
   cy.wait(2000)
+})
+/**
+ * This test adds a new "DSB-Kampfrichter"
+ * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+ */
+it('Neuer DSB-Kampfrichter', function() {
+  cy.get('body').then((body) => {
+    if (!body.text().includes('KampfrichterVorname')) {
+      cy.get('.overview-dialog-header > .overview-dialog-add > bla-actionbutton > #undefined > .action-btn-circle').click()
+      cy.get('[data-cy=detail-vorname-feld]').type('KampfrichterVorname')
+      cy.get('[data-cy=detail-nachname-feld]').type('KampfrichterNachname')
+      cy.get('[data-cy=detail-geburtsdatum-feld]').type('2021-11-01')
+      cy.get('[data-cy=detail-mitgliedsnummer-feld]').type('34563456')
+      cy.get('[data-cy=detail-nationalitaet-feld]').select('Germany')
+      cy.get('[data-cy=detail-vereine-dsb]').select('BSC Stuttgart')
+      cy.get('[data-cy=detail-beitrittsdatum-feld]').click();
+      cy.get('[data-cy=detail-beitrittsdatum-feld]').type('2001-02-02');
+      cy.wait(1500)
+      cy.get('[data-cy=detail-save-button]').click()
+      cy.get('#OKBtn1').click()
+    }}
+  );
+})
+/**
+ * This test adds a new user with two-factor-authentication
+ */
+
+it('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
+
+  cy.get('[data-cy="dsb-mitglied-add-button"]').click();
+  cy.get('select[data-cy="bla-selection-list"]').select('KampfrichterNachname,KampfrichterVorname No.:34563456');
+  cy.get('[data-cy="username-input"]').type("DefaultCypressTestUser2WayAuth@cypressTestuser.com");
+  cy.get('[data-cy="password-input"]').type('Test123456');
+  cy.get('[data-cy="verify-password-input"]').type('Test123456');
+  cy.get('#user2FA').click()
+  cy.get('[data-cy="user-submit-button"]').click()
+
+  cy.contains('.modal-content', 'Erfolg').within(() => {
+    cy.get('.modal-dialog-ok button')
+      .should('contain', 'OK')
+      .click();
+  });
+
+  cy.wait(4000)
+  cy.get('#qr > img').should('exist');
+  cy.go('back')
+  cy.deleteTestUser("DefaultCypressTestUser2WayAuth@cypressTestuser.com");
+
+})
+
+
+/**
+ * This test adds a new user
+ */
+
+it('Testfall 11: User hinzufügen', function() {
+  cy.createUserTest("DefaultCypressTestUser@cypressTestuser.com");
+
+  cy.contains('.modal-content', 'Erfolg').within(() => {
+    cy.get('.modal-dialog-ok button')
+      .should('contain', 'OK')
+      .click();
+  });
+
+})
+
+
+
+/**
+ * This test edits a user
+ */
+
+it('Testfall 9: User bearbeiten', function () {
+  /*
+  //cy.get('div > #management\.user\.table\.headers\.roleSorted > .ng-fa-icon > .svg-inline--fa > path').click()
+  cy.get('[data-cy=TABLE.ACTIONS.EDIT]').last().click()
+  cy.get('bla-double-selectionlist > bla-col-layout > .col-layout > bla-selectionlist > #left').select('0: 1')
+  cy.get('bla-col-layout > .col-layout > bla-selectionlist > #left > option:nth-child(1)').click()
+  cy.get('.col-layout > .shift-buttons > .shift-button > bla-button > #shiftLeft-left').click()
+  cy.get('#userForm > .form-group > .col-sm-9 > bla-button > #userUpdateButton').click()
+  cy.get('#OKBtn1').click()*/
+  cy.assignRoleToTestUser("LIGALEITER", "DefaultCypressTestUser@cypressTestuser.com")
+  cy.contains('.modal-content', 'Erfolg').within(() => {
+    cy.get('.modal-dialog-ok button')
+      .should('contain', 'OK')
+      .click();
+  });
+})
+
+
+/**
+ * This test deletes a user
+ */
+
+it('Testfall 10: User löschen', function() {
+  /*
+  cy.get('#sidebarCollapseBottom').click()
+  cy.contains('VERWALTUNG').click()
+  cy.get('#sidebarCollapseBottom').click()
+  cy.url().should('include', '#/verwaltung')
+  cy.get('bla-grid-layout > .grid-layout > .card:nth-child(2) > .card-body > .btn').click()
+  cy.url().should('include', '#/verwaltung/user')
+
+  //löschen von Nicholas Corle - Moderator
+  cy.get('#payload-id-4 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-trash > path').click()
+  cy.get('    .modal-dialog > .modal-content > .modal-footer > bla-actionbutton:nth-child(2) > #undefined').click()
+   */
+  cy.deleteTestUser("DefaultCypressTestUser@cypressTestuser.com");
+
+  //cy.get('[ng-reflect-color="action-btn-primary"] > #undefined > .action-btn-circle').click();
 })

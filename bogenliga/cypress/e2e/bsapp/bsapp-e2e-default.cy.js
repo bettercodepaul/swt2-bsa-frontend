@@ -482,6 +482,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur
    * This test adds a new "DSB-Kampfrichter"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
@@ -517,6 +518,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur
    * This test shows the user tab in the administration
    */
   it('Anzeige User', function () {
@@ -527,6 +529,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test adds a new user with two-factor-authentication
    */
 
@@ -555,6 +558,7 @@ describe('Admin User tests', function() {
 
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test adds a new user
    */
 
@@ -572,6 +576,7 @@ describe('Admin User tests', function() {
 
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test edits a user
    */
 
@@ -594,6 +599,7 @@ describe('Admin User tests', function() {
 
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test deletes a user
    */
 
@@ -617,6 +623,7 @@ describe('Admin User tests', function() {
 
 
   /**
+   * schon in neuer Struktur
    * This test shows the "Wettkampfklassen" tab in administration
    */
   it('Anzeige Wettkampfklassen', function () {
@@ -626,6 +633,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur
    * This test edits a "Wettkampfklasse"
    */
   it('Wettkampfklasse bearbeiten', function () {
@@ -640,6 +648,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test adds a new "Wettkampfklasse"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
