@@ -97,6 +97,7 @@ describe('Anonyme User tests', function () {
 
   /**
    * This test opens the sidebar and clicks on the "VEREINE" tab and checks if the url has changed successfully
+   * schon in neuer Struktur
    */
   it('Anzeige Vereine', function () {
     cy.wait(1000)
@@ -107,6 +108,7 @@ describe('Anonyme User tests', function () {
 
   /**
    * This test checks if after typing in a search term the list shrinks in size accordingly
+   * schon in neuer Struktur
    */
   it('Vereinsliste Verringert sich', function() {
     cy.wait(1000)
@@ -1009,6 +1011,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if the Event-table gets filled.
+   * bereits in neuer Struktur
    */
 
   it('Veranstaltungen Anzeigen', function() {
@@ -1023,6 +1026,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a "Veranstaltung" and checks if it gets added
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
 
   it('Veranstaltungen hinzufügen', function() {
@@ -1053,6 +1057,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test edits a "Veranstaltung" and checks if it was changed
+   * schon in neuer Struktur
    */
 
   it('Veranstaltungen bearbeiten', function() {
@@ -1080,6 +1085,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks all functions of the queue
+   * schon in neuer Struktur
    */
 
     it('Filtert Teams basierend auf Suchbegriff', () => {
@@ -1117,6 +1123,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test creates an Platzhalter for the Veranstaltung
+   * schon in neuer Struktur
    */
 
   it('Platzhalter erstellen', function() {
@@ -1133,6 +1140,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
+   * schon in neuer Struktur
    */
 
   it('Veranstaltung Löschen', function() {
@@ -1145,6 +1153,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if "Wettkampftage" has entries.
+   * schon in neuer Struktur
    */
 
   it('Wettkampftage anzeigen', function() {
@@ -1159,6 +1168,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test edits a "Wettkampftag" and checks if it was changed.
+   * schon in neuer Struktur
    */
 
    it('Wettkampftage bearbeiten', function() {
