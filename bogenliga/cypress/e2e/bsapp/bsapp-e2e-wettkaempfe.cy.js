@@ -21,6 +21,11 @@ describe('Statistics dropdown menu', function() {
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('gesamtstatistik')
   })
 */
+
+  /*
+   * Bereits in neuer Struktur
+  */
+
   it('Select all Statistiken test', function() {
     cy.viewport(2558, 1103)
 
