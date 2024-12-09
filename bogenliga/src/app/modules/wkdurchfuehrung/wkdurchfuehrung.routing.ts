@@ -7,6 +7,7 @@ import {TabletEingabeComponent} from './components/tableteingabe/tableteingabe.c
 import {TabletAdminComponent} from './components/tablet-admin/tablet-admin.component';
 import {WkdurchfuehrungGuard} from './guards/wkdurchfuehrung.guard';
 import {FullscreenComponent} from './components/fullscreen/fullscreen.component';
+import {TabletAdminPopUpComponent} from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
 
 
 export const wkdurchfuehrung_ROUTES: Routes = [
@@ -14,6 +15,7 @@ export const wkdurchfuehrung_ROUTES: Routes = [
   {path: '', pathMatch: 'full', component: SchusszettelComponent},
   {path: '', pathMatch: 'full', component: TabletEingabeComponent},
   {path: '', pathMatch: 'full', component: TabletAdminComponent},
+  {path: '', pathMatch: 'full', component: TabletAdminPopUpComponent},
   {path: 'fullscreen', pathMatch: 'full', component: FullscreenComponent},
   {path: ':wettkampfId', pathMatch: 'full', component: WkdurchfuehrungComponent},
   {path: 'tabletadmin/:wettkampfId', pathMatch: 'full', component: TabletAdminComponent},
