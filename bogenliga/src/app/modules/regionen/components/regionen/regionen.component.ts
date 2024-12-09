@@ -48,7 +48,7 @@ export class RegionenComponent implements OnInit {
 
   private sessionHandling: SessionHandling;
 
-  private cache = new Map<number, RegionDO>(); // Cache für Region-Details
+  private RegionenCache = new Map<number, RegionDO>(); // Cache für Region-Details
 
   @ViewChild('chart', {static: true}) myDiv: ElementRef;
 
@@ -130,7 +130,7 @@ export class RegionenComponent implements OnInit {
     desc.style.display = 'block';
 
     const data = this.convertDataToTree(this.regionen.filter((f) =>
-      f.regionTyp === 'BUNDESVERBAND')[0], this.cache).toJsonString();
+      f.regionTyp === 'BUNDESVERBAND')[0], this.RegionenCache).toJsonString();
 
     this.myChart
         .data(JSON.parse(data))
@@ -235,8 +235,8 @@ export class RegionenComponent implements OnInit {
     }
 
     // Prüfen, ob die Daten im Cache sind
-    if (this.cache.has(Number(node.id))) {
-      this.currentRegionDO = this.cache.get(Number(node.id));
+    if (this.RegionenCache.has(Number(node.id))) {
+      this.currentRegionDO = this.RegionenCache.get(Number(node.id));
       this.loadDetails();
       return;
     }
@@ -246,7 +246,7 @@ export class RegionenComponent implements OnInit {
     this.debounceTimeout = setTimeout(() => {
       this.regionDataProviderService.findById(node.id).then((response: BogenligaResponse<RegionDO>) => {
         this.currentRegionDO = response.payload;
-        this.cache.set(node.id, this.currentRegionDO); // Daten cachen
+        this.RegionenCache.set(node.id, this.currentRegionDO); // Daten cachen
         this.loadDetails();
       });
     }, this.debouncingDelay);
@@ -345,7 +345,7 @@ export class RegionenComponent implements OnInit {
       this.regionen = response.payload;
 
       // Regionen in den Cache legen
-      this.regionen.forEach(region => this.cache.set(region.id, region));
+      this.regionen.forEach(region => this.RegionenCache.set(region.id, region));
 
       this.loadingRegionen = false;
       this.loadSunburst()
