@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TabletSessionDO} from '../../types/tablet-session-do.class';
 import {isUndefined} from '@shared/functions';
 import {BogenligaResponse} from '@shared/data-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
+import {TabletAdminPopUpComponent} from '@wkdurchfuehrung/components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
+import {MatDialog} from '@angular/material/dialog';
 
 export const STORAGE_KEY_TABLET_SESSION = 'tabletSession';
 
@@ -25,7 +27,8 @@ export class TabletAdminComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private tabletSessionService: TabletSessionProviderService) {
+              private tabletSessionService: TabletSessionProviderService,
+              private dialog: MatDialog) {
   }
 
   /**
@@ -58,6 +61,14 @@ export class TabletAdminComponent implements OnInit {
 
   public updateSession(scheibenNr: number) {
     const sessionToUpdate = this.sessions[scheibenNr - 1];
+    // Open the new dialog with options
+    const dialogRef = this.dialog.open(TabletAdminPopUpComponent, {
+      width: '400px',
+      data: {
+        QR: 'https://example.com/qr-code-image.png', // Set QR code data
+        isPopUp: true // Flag to control visibility
+      }
+    });
     sessionToUpdate.isActive = !sessionToUpdate.isActive;
     this.storeCurrentSession(sessionToUpdate);
     this.tabletSessionService.update(sessionToUpdate)
