@@ -49,6 +49,8 @@ export class RegionenComponent implements OnInit {
   private sessionHandling: SessionHandling;
 
   private RegionenCache = new Map<number, RegionDO>(); // Cache für Region-Details
+  private LigaCache = new Map<number, LigaDO>();  //Cache für Liga-Details
+  private VereinCache = new Map<number, VereinDO>();  //Cache für Verein-Details
 
   @ViewChild('chart', {static: true}) myDiv: ElementRef;
 
@@ -263,49 +265,56 @@ export class RegionenComponent implements OnInit {
 
 
   reloadVereineUndLigen() {
-    if (this.vereine && this.ligen && this.vereine.length > 0 && this.ligen.length > 0) {
-      return; // Daten bereits geladen
-    }
+    if (this.VereinCache.size > 0 && this.LigaCache.size > 0) {
+      //do nothing
+    }else {
+      this.vereinDataProviderService.findAll().then((response: BogenligaResponse<VereinDO[]>) => {
+        this.setVereinDataObjects(response);
+      });
 
-    this.vereinDataProviderService.findAll().then((response: BogenligaResponse<VereinDO[]>) => {
-      this.setVereinDataObjects(response);
+      this.ligaDataProviderService.findAll().then((response: BogenligaResponse<LigaDO[]>) => {
+        this.setLigaDataObjects(response);
+      });
+    }
+    this.setGetVariablen()
+  }
+
+  setGetVariablen() {
+    // Ligen aus dem Cache setzen
+    this.ligen = [];
+    this.LigaCache.forEach((liga) => {
+      if (liga.regionId === this.currentRegionDO.id) {
+        this.ligen.push(liga);
+      }
     });
 
-    this.ligaDataProviderService.findAll().then((response: BogenligaResponse<LigaDO[]>) => {
-      this.setLigaDataObjects(response);
+    // Vereine aus dem Cache setzen
+    this.vereine = [];
+    this.VereinCache.forEach((verein) => {
+      if (verein.regionId === this.currentRegionDO.id) {
+        this.vereine.push(verein);
+      }
     });
   }
 
-  public getVereine() {
+  public getVereine(): VereinDO[] {
     return this.vereine;
   }
 
-  public getLigen() {
+  public getLigen(): LigaDO[] {
     return this.ligen;
   }
 
   public setVereinDataObjects(response: BogenligaResponse<VereinDO[]>): void {
-
-    this.vereine = [];
-    response.payload.forEach((responseItem) => {
-      if (responseItem.regionId === this.currentRegionDO.id) {
-        this.vereine.push(responseItem);
-      }
+    response.payload.forEach((verein) => {
+      this.VereinCache.set(verein.id, verein);
     });
-    return;
   }
 
   public setLigaDataObjects(response: BogenligaResponse<LigaDO[]>): void {
-
-    this.ligen = [];
-    response.payload.forEach((responseItem) =>  {
-      if (responseItem.regionId === this.currentRegionDO.id) {
-        console.log(responseItem);
-        this.ligen.push(responseItem);
-      }
+    response.payload.forEach((liga) => {
+      this.LigaCache.set(liga.id, liga);
     });
-
-    return;
   }
 
   public onSelectVerein(event: VereinDO): void {
