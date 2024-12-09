@@ -25,7 +25,7 @@ import {
 } from '../wkdurchfuehrung/guards';
 import { TeilnemendeManschaftenTabelleComponent } from './components/teilnemende-manschaften-tabelle/teilnemende-manschaften-tabelle.component';
 import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
-
+import { TabletAdminPopUpComponent } from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
 @NgModule({
   imports:      [
     CommonModule,
@@ -45,6 +45,7 @@ import { FullscreenComponent } from './components/fullscreen/fullscreen.componen
     TabletAdminComponent,
     TeilnemendeManschaftenTabelleComponent,
     FullscreenComponent,
+    TabletAdminPopUpComponent,
   ],
   providers:    [
     WkdurchfuehrungGuard,
