@@ -152,7 +152,7 @@ Cypress.Commands.add('createUserTest', (testusermail) => {
 
   cy.get('[data-cy="verwaltung-user-button"]').click();
 
-  cy.get('[data-cy="dsb-mitglied-add-button"]').click();
+  cy.get('button.action-btn-success').click();
 
   cy.get('select[data-cy="bla-selection-list"]').select('KampfrichterNachname,KampfrichterVorname No.:34563456');
 
