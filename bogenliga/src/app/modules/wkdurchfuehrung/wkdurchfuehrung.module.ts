@@ -26,12 +26,14 @@ import {
 import { TeilnemendeManschaftenTabelleComponent } from './components/teilnemende-manschaften-tabelle/teilnemende-manschaften-tabelle.component';
 import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
 import { TabletAdminPopUpComponent } from './components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
+import {QRCodeModule} from 'angularx-qrcode';
 @NgModule({
-  imports:      [
+  imports: [
     CommonModule,
     RouterModule.forChild(wkdurchfuehrung_ROUTES),
     SharedModule.forChild(),
-    FormsModule
+    FormsModule,
+    QRCodeModule
   ],
   declarations: [
     WkdurchfuehrungComponent,
@@ -70,4 +72,3 @@ export class WkdurchfuehrungModule {
   }
 
 }
-
