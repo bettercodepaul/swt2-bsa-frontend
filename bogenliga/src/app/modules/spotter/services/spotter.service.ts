@@ -57,21 +57,6 @@ export class SpotterService {
     });
 
   }
-  /*
-  public findMatch(matchId: string) {
-    return new Promise((resolve, reject) => {
-      this.restClient.GET(new UriBuilder().fromPath(environment.backendBaseUrl).path("v1/match/" + matchId).build()).then((data: MatchDTOExt) => {
-        const match = MatchMapperExt.matchToDO(data);
-        resolve({result: RequestResult.SUCCESS, payload: match});
-      }, (error: HttpErrorResponse) => {
-        if (error.status === 0) {
-          reject({result: RequestResult.CONNECTION_PROBLEM});
-        } else {
-          reject({result: RequestResult.FAILURE});
-        }
-      });
-    });
-  }*/
   public nextSet(matchDOExt: MatchDOExt, match: Match) {
     this.matchDTOExt = MatchMapperExt.matchToDTO(matchDOExt);
     this.addPasse(match);
