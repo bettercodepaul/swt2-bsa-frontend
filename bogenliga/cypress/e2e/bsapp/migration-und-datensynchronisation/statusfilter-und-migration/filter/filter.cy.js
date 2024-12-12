@@ -1,5 +1,5 @@
 
-  before(() => {
+  beforeEach(() => {
     cy.wait(1000)
     cy.loginAdmin()
     cy.wait(2000)
