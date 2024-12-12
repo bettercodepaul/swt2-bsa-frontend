@@ -46,10 +46,8 @@ export class InterfaceComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('match') !== null) {
       const temp = JSON.parse(localStorage.getItem('match'));
-      console.log(temp.toString());
       this.match = MatchJsonToClass.parseMatch(temp);
       this.currentMatchNumberTemp = this.match.currentMatchNumber;
-      console.log(this.match);
       this.checkResultIsSure();
 
       this.selectedPlayNumber = this.match.set().currentPlayNumber;
@@ -71,7 +69,6 @@ export class InterfaceComponent implements OnInit {
     this.initMatches();
   }
   private async initMatches() {
-    console.log(this.wkID);
     try {
       const data: unknown = await this.spotterService.findMatch(this.wkID);
       // @ts-ignore
@@ -123,9 +120,6 @@ export class InterfaceComponent implements OnInit {
   }
 
   onSave() {
-
-
-
     if (!this.editing) {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
         this.match.set().play().result = this.selectedValue;
@@ -183,8 +177,6 @@ export class InterfaceComponent implements OnInit {
     console.log(this.match);
 
     this.checkResultIsSure();
-    // tslint:disable-next-line:triple-equals
-
   }
 
   /**
@@ -202,7 +194,6 @@ export class InterfaceComponent implements OnInit {
    */
   onNextSet() {
     console.log(this.match);
-    console.log("currentSetNumber: "+ this.match.currentSetNumber);
 
     if (this.match.addSet()) {
       this.spotterService.nextSet(this.spotterMatches[this.match.currentMatchNumber], this.matchTemp).then(() => {
