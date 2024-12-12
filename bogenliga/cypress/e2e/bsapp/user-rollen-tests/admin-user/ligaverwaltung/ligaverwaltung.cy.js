@@ -34,7 +34,6 @@ it('Alle Ligen zu sehen', function() {
   cy.get('tbody').should('have.length.at.least', 1)
 })
 
-
 /**
  * This test adds a League and checks if it throughs a popup notification.
  * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
@@ -47,7 +46,7 @@ it('Liga Hinzufügen mit Unterstrich', function() {
       cy.wait(4000)
       cy.get('tbody').should('have.length.at.least', 1)
 
-      cy.get('[data-cy=dsb-mitglied-add-button]').click()
+      cy.get('button.action-btn-success').click()
       cy.wait(5000)
       cy.get('[data-cy=liga-detail-name]').type('SWT_Liga_')
       cy.wait(5000)
@@ -81,7 +80,7 @@ it('Liga Hinzufügen mit Unterstrich', function() {
 it('Liga Hinzufügen', function() {
   cy.get('body').then((body) => {
     if (!body.text().includes('SWTLiga')) {
-      cy.get('[data-cy=dsb-mitglied-add-button]').click()
+      cy.get('button.action-btn-success').click()
       cy.wait(5000)
       cy.get('[data-cy=liga-detail-name]').type('SWTLiga')
       cy.wait(5000)
@@ -121,3 +120,4 @@ it('Liga Löschen', function() {
   cy.wait(10000)
   cy.get('tbody').should('not.contain.text', 'SWTLiga')
 })
+
