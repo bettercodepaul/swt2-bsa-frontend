@@ -16,6 +16,7 @@ function generateLigaID() {
 describe('Anonyme User tests', function () {
   /**
    * This test opens the home page and check whether the tournament table has any content
+   * schon in neuer Struktur
    */
   it('Home aufrufen / Wettkampftabelle gefüllt', function () {
     cy.clearLocalStorage();
@@ -26,6 +27,7 @@ describe('Anonyme User tests', function () {
 
   /**
    * This test presses the login button on the home page and checks whether the login page opens
+   * schon in neuer Struktur
    */
   it('Login möglich / Fenster öffnet sich', function() {
     cy.get('[data-cy=login-button]').click()
@@ -34,13 +36,16 @@ describe('Anonyme User tests', function () {
 
   /**
    * This test opens the sidebar and clicks on the "REGIONEN" tab and checks if the url has changed successfully
+   * schon in neuer Struktur
    */
   it('Anzeige Regionen', function() {
     cy.get('[data-cy=sidebar-regionen-button]').click()
     cy.url().should('include', '#/regionen')
   })
 
-  /*Test hilfeicon */
+  /**Test hilfeicon
+   * schon in neuer Struktur
+   * */
   it('test hilfeicon', function() {
     cy.visit('http://localhost:4200/')
     cy.get('[data-cy=login-button]').click()
@@ -52,6 +57,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test clicks on a single sunburst arc item and checks if details have loaded for the selected item
    */
   it('Sunburst details anzeigen', function () {
@@ -64,6 +70,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if after an item has been selected the website redirected to the correct location
    */
   it('Weiterleitung Ligatabelle', function () {
@@ -74,6 +81,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test opens the sidebar, selects the "REGIONEN" section, selects an item from the list and checks if the website
    * redirected to the correct item's overview page.
    */
@@ -89,6 +97,7 @@ describe('Anonyme User tests', function () {
 
   /**
    * This test opens the sidebar and clicks on the "VEREINE" tab and checks if the url has changed successfully
+   * schon in neuer Struktur
    */
   it('Anzeige Vereine', function () {
     cy.wait(1000)
@@ -99,6 +108,7 @@ describe('Anonyme User tests', function () {
 
   /**
    * This test checks if after typing in a search term the list shrinks in size accordingly
+   * schon in neuer Struktur
    */
   it('Vereinsliste Verringert sich', function() {
     cy.wait(1000)
@@ -112,6 +122,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test opens the sidebar and clicks on the "LIGATABELLE" tab and checks if the url has changed successfully
    */
   it('Anzeige Ligatabelle', function () {
@@ -120,6 +131,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test checks if you can filter for a Competition-Day in Ligatablle
    */
   it('Wettkampftagauswahl Ligatabelle', function() {
@@ -132,6 +144,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test opens the sidebar and clicks on the "WETTKAEMPFE" tab and checks if the url has changed successfully
    */
   it('Anzeige Wettkampf Ergebnisse', function() {
@@ -140,6 +153,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur, schlägt fehl noch in default
    * This test checks if the selection of Sportjahr Liga and Mannschaft works
    */
   it('Auswahl Sportjahr Liga und Mannschaft', function() {
@@ -156,6 +170,7 @@ describe('Anonyme User tests', function () {
 
 
   /**
+   * schon in neuer Struktur
    * This test checks if the gesamtstatistik in Wettkaempfe show results
    */
   it('Gesamtstatistik anzeigen', function() {
@@ -165,6 +180,7 @@ describe('Anonyme User tests', function () {
     // required: add check if data is present in selected statistik
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Matchstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Matchstatistik anzeigen', function() {
@@ -172,6 +188,7 @@ describe('Anonyme User tests', function () {
     cy.wait(500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Wettkampftagestatistik anzeigen', function() {
@@ -179,6 +196,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur, schlägt fehl noch in default
    * This test checks if the Wettkampftagestatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Saisonschnittstatistik anzeigen', function() {
@@ -186,6 +204,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Einzelstatistik anzeigen', function() {
@@ -193,6 +212,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Einzelstatistik of Schuetzen in Wettkaempfe shows results
    */
   it('Statistik eines Schützen über die letzten fünf Jahre', function() {
@@ -200,6 +220,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if you can filter for a Competition-Day in Wettkampfergebnisse
    */
   it('Wettkampftagauswahl Wettkampfergebnisse', function() {
@@ -208,6 +229,7 @@ describe('Anonyme User tests', function () {
     cy.get('#regionenForm > #selectWettkampftag > .row > .col-sm-8 > #wettkampftage').select('1: Object')
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the switch between Mannschaftsstatistik and Schptzenstatistik filter buttons works
    */
   it('Wechsel zwischen Mannschafts- und Schützenstatistik', function() {
@@ -216,6 +238,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the Aktuelle Mannschaften shows results
    */
   it('Aktuelle Mannschaften anzeigen', function() {
@@ -224,6 +247,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This test checks if the  Mannschaftentabellenverlauf over all years shows results
    */
   it('Mannschafttabellenverlauf', function() {
@@ -231,6 +255,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * kommt doppelt vor
    * This test checks if the  Mannschaftentabellenverlauf over veranstaltung shows results
    */
   it('Mannschafttabellenverlauf', function() {
@@ -238,6 +263,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test checks if the all Mannschaften shows results
    */
   it('Alle Mannschaften anzeigen', function() {
@@ -245,6 +271,7 @@ describe('Anonyme User tests', function () {
     cy.wait(1500)
   })
   /**
+   * schon in neuer Struktur
    * This test opens the sidebar and clicks on the "HILFE" tab and checks if
    * the url has changed successfully
    */
@@ -253,7 +280,8 @@ describe('Anonyme User tests', function () {
     cy.url().should('include', '#/hilfe')
   })
 
-  /*
+  /**
+   * schon in neuer Struktur
     * This Test selects the "Startseite" in the Section and checks if
     * the iframe is shown/displays the right content
     * **/
@@ -266,6 +294,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This Test selects the "Arbeitsablauf als Ligaleiter" section and checks if
    * the iframe is shown/displays the right content
    * */
@@ -278,6 +307,7 @@ describe('Anonyme User tests', function () {
   })
 
   /**
+   * schon in neuer Struktur
    * This Test selects the "Arbeitsablauf als Wettkampfdurchführung" section and checks if
    * the iframe is shown/displays the right content
    * */
@@ -294,6 +324,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
+   * schon in neuer Struktur
    */
   it('Login erfolgreich', function() {
     cy.loginAdmin()
@@ -302,6 +333,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
+   * schon in neuer Struktur
    */
   it('Anzeige Verwaltung', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -311,6 +343,7 @@ describe('Admin User tests', function() {
   /**
    * This test tries to hoover over the "VERWALTUNG" elements
    * important: only hoover not clicking!
+   * schon in neuer Struktur
    * */
   it('Tooltips prüfen (Hoover effekt)', function () {
 
@@ -342,6 +375,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test lists all "DSBMitglieder" items and checks if the URI has been updated accordingly
+   * schon in neuer Struktur
    */
   it('Anzeige DSBMitglieder', function() {
     cy.wait(1000)
@@ -355,6 +389,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a new "DSB-Mitglied"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Neues DSB-Mitglied', function() {
     const randomID = generateID().toString();
@@ -381,6 +416,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test searches for a specific "DSBMitglied" name and checks if the corresponding club name has been listed
+   * schon in neuer Struktur
    */
   it('Suche DSBMitglieder', function () {
       cy.get('.input-group > #undefined').click();
@@ -396,6 +432,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test searches for a specific "club name" name and checks if the corresponding name has been listed
+   * schon in neuer Struktur
    */
   it('Suche Verein eines DSBMitglieds', function () {
       cy.get('.input-group > #undefined').click();
@@ -411,6 +448,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test views a single member and redirects to the overview page afterward
+   * schon in neuer Struktur
    */
   it('View DSBMitglied Info', function() {
     cy.wait(1000)
@@ -424,6 +462,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test edits a single member and checks if after editing the website redirects the user to the expected location
+   * schon in neuer Struktur
    */
   it('Edit DSBMitglied', function() {
     cy.wait(1000)
@@ -445,6 +484,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur
    * This test adds a new "DSB-Kampfrichter"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
@@ -469,6 +509,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test deletes a single member and checks if after deletion the website redirects the user to the expected location
+   * schon in neuer Struktur
    */
   it('Löschen DSBMitglied', function() {
     cy.wait(1000)
@@ -479,6 +520,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur
    * This test shows the user tab in the administration
    */
   it('Anzeige User', function () {
@@ -489,6 +531,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test adds a new user with two-factor-authentication
    */
 
@@ -517,6 +560,7 @@ describe('Admin User tests', function() {
 
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test adds a new user
    */
 
@@ -534,6 +578,7 @@ describe('Admin User tests', function() {
 
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test edits a user
    */
 
@@ -556,6 +601,7 @@ describe('Admin User tests', function() {
 
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test deletes a user
    */
 
@@ -579,6 +625,7 @@ describe('Admin User tests', function() {
 
 
   /**
+   * schon in neuer Struktur
    * This test shows the "Wettkampfklassen" tab in administration
    */
   it('Anzeige Wettkampfklassen', function () {
@@ -588,6 +635,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur
    * This test edits a "Wettkampfklasse"
    */
   it('Wettkampfklasse bearbeiten', function () {
@@ -602,6 +650,7 @@ describe('Admin User tests', function() {
   })
 
   /**
+   * schon in neuer Struktur schlägt aber fehl bereits in default
    * This test adds a new "Wettkampfklasse"
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
    */
@@ -621,6 +670,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test opens the administration table and check whether the table has any content
+   * schon in neuer Struktur
    */
   it('Anzeige Verwaltung Vereinsliste', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -634,6 +684,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it's possible to add a new club to the administration table successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Neuen Verein anlegen', function () {
     cy.get('body').then((body) => {
@@ -664,6 +715,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if it's possible to edit a club (change the website...) successfully
+   * schon in neuer Struktur
    */
   it('Editieren eines Vereins', function () {
 
@@ -697,6 +749,7 @@ describe('Admin User tests', function() {
   /**
    * This test checks if it is possible to add a new team to a club successfully
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Neue Vereins-Mannschaft anlegen', function () {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
@@ -719,6 +772,7 @@ describe('Admin User tests', function() {
 
   /**
    * The test checks if it's possible to edit a team successfully
+   * schon in neuer Struktur
    */
   it('Vereins-Mannschaft bearbeiten', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -741,6 +795,7 @@ describe('Admin User tests', function() {
 
   /**
    * The test checks if it's possible to delete a team successfully
+   * schon in neuer Struktur
    */
   it('Vereins-Mannschaft löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -769,6 +824,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if it's possible to delete a club successfully
+   * schon in neuer Struktur
    */
   it('Einen Verein löschen', function () {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -792,6 +848,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if the League-table is filled.
+   * schon in neuer Struktur
    */
   it('Alle Ligen zu sehen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -803,6 +860,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a League and checks if it throughs a popup notification.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Liga Hinzufügen mit Unterstrich', function() {
     cy.get('body').then((body) => {
@@ -842,6 +900,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a League and checks if it gets added.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Liga Hinzufügen', function() {
     cy.get('body').then((body) => {
@@ -875,6 +934,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test deletes a League and checks if its deleted in the table.
+   * schon in neuer Struktur
    */
   it('Liga Löschen', function() {
     cy.wait(3000)
@@ -889,6 +949,7 @@ describe('Admin User tests', function() {
 
   /**
    *  This test checks if the Region-table is filled.
+   *  schon in neuer Struktur
    */
   it('Regionen Anzeigen', function() {
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
@@ -901,6 +962,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a Region and checks if it gets added.
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
   it('Region Hinzufügen', function() {
     cy.get('body').then((body) => {
@@ -922,6 +984,7 @@ describe('Admin User tests', function() {
 
   /**
    * this test changes a Region and checks if the changes worked.
+   * schon in neuer Struktur
    */
   it('Region Ändern', function() {
     cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
@@ -936,6 +999,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test deletes a Region and checks if its deleted in the table.
+   * schon in neuer Struktur
    */
   it('Region Löschen', function() {
     cy.get('tbody').should('contain.text', 'SWT3_Region17')
@@ -947,6 +1011,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if the Event-table gets filled.
+   * bereits in neuer Struktur
    */
 
   it('Veranstaltungen Anzeigen', function() {
@@ -961,6 +1026,7 @@ describe('Admin User tests', function() {
   /**
    * This test adds a "Veranstaltung" and checks if it gets added
    * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+   * schon in neuer Struktur
    */
 
   it('Veranstaltungen hinzufügen', function() {
@@ -991,6 +1057,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test edits a "Veranstaltung" and checks if it was changed
+   * schon in neuer Struktur
    */
 
   it('Veranstaltungen bearbeiten', function() {
@@ -1000,9 +1067,9 @@ describe('Admin User tests', function() {
     cy.wait(20000)
     cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
     cy.wait(1000)
-    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Laufend')
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase]').select('Laufend')
     cy.wait(500)
-    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase').select('Geplant')
+    cy.get('[data-cy=veranstaltung-detail-veranstaltungphase]').select('Geplant')
     cy.wait(500)
     cy.get('[data-cy=veranstaltung-detail-update-button]').click()
     cy.wait(1000)
@@ -1018,6 +1085,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks all functions of the queue
+   * schon in neuer Struktur
    */
 
     it('Filtert Teams basierend auf Suchbegriff', () => {
@@ -1055,6 +1123,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test creates an Platzhalter for the Veranstaltung
+   * schon in neuer Struktur
    */
 
   it('Platzhalter erstellen', function() {
@@ -1071,6 +1140,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test deletes a "Veranstaltung" and checks if it was deleted in the table.
+   * schon in neuer Struktur
    */
 
   it('Veranstaltung Löschen', function() {
@@ -1083,6 +1153,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test checks if "Wettkampftage" has entries.
+   * schon in neuer Struktur
    */
 
   it('Wettkampftage anzeigen', function() {
@@ -1097,6 +1168,7 @@ describe('Admin User tests', function() {
 
   /**
    * This test edits a "Wettkampftag" and checks if it was changed.
+   * schon in neuer Struktur
    */
 
    it('Wettkampftage bearbeiten', function() {
