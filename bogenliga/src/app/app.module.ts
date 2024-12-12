@@ -29,6 +29,7 @@ import {ChartsModule} from 'ng2-charts';
 
 import {MatDialogModule} from '@angular/material/dialog';
 import {EditorModule, TINYMCE_SCRIPT_SRC} from '@tinymce/tinymce-angular';
+import {QRCodeModule} from 'angularx-qrcode';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -53,6 +54,7 @@ export function createTranslateLoader(http: HttpClient) {
     FormsModule,
     ChartsModule,
     MatDialogModule,
+    QRCodeModule,
     TranslateModule.forRoot({
       loader: {
         provide:    TranslateLoader,
@@ -80,5 +82,4 @@ export function createTranslateLoader(http: HttpClient) {
 })
 export class AppModule {
 }
-
 
