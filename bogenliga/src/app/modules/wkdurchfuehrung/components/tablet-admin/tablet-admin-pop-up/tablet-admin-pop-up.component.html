@@ -1,0 +1,19 @@
+<bla-modal-dialog [visible]="isPopUp"
+                  (onClose)="onClose()">
+
+  <!-- Modal Header with Title -->
+  <h5 class="modal-dialog-header">
+    <i class="fa" [ngClass]="getModalDialogHeadingIconClass()"></i>
+    QR Code Bahn - Scheibe {{ scheibenNr }}
+  </h5>
+
+  <!-- Modal Content: space for QR Code -->
+  <div class="modal-dialog-content">
+    <div class="qr-code-container" >
+      <qrcode [qrdata]="QR" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
+  </div>
+
+  <!-- Modal Footer with Close Button -->
+
+</bla-modal-dialog>

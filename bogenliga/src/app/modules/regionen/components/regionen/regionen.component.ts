@@ -48,6 +48,10 @@ export class RegionenComponent implements OnInit {
 
   private sessionHandling: SessionHandling;
 
+  private RegionenCache = new Map<number, RegionDO>(); // Cache für Region-Details
+  private LigaCache = new Map<number, LigaDO>();  //Cache für Liga-Details
+  private VereinCache = new Map<number, VereinDO>();  //Cache für Verein-Details
+
   @ViewChild('chart', {static: true}) myDiv: ElementRef;
 
 
@@ -73,20 +77,34 @@ export class RegionenComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getDataAndShowSunburst();
     this.currentRegionDO = new RegionDO();
     this.loadRegionen();
   }
 
-  convertDataToTree(currentRegion: RegionDO, allRegions: RegionDO[]): ChartNode {
+  convertDataToTree(currentRegion: RegionDO, cache: Map<number, RegionDO>): ChartNode {
+    // Wenn der aktuelle Knoten nicht im Cache ist, speichere ihn
+    if (!cache.has(currentRegion.id)) {
+      cache.set(currentRegion.id, currentRegion);
+    }
 
-    const root = new ChartNode(currentRegion.regionName, this.createColor(currentRegion), currentRegion.id);
+    // Erstelle den aktuellen Knoten als ChartNode
+    const root = new ChartNode(
+      currentRegion.regionName,
+      this.createColor(currentRegion),
+      currentRegion.id
+    );
 
+    // Wenn der Knoten ein Kreis ist, gibt es keine Kinder
     if (currentRegion.regionTyp === 'KREIS') {
       return root;
     }
-    allRegions.filter((region) => region.regionUebergeordnet === currentRegion.id)
-              .forEach((r) => root.add(this.convertDataToTree(r, allRegions)));
+
+    // Suche Unterregionen im Cache oder im gesamten Regionsarray
+    const childRegions = this.regionen.filter(region => region.regionUebergeordnet === currentRegion.id);
+    childRegions.forEach(child => {
+      const childNode = this.convertDataToTree(cache.get(child.id) || child, cache);
+      root.add(childNode);
+    });
 
     return root;
   }
@@ -109,52 +127,31 @@ export class RegionenComponent implements OnInit {
     return color;
   }
 
-  getDataAndShowSunburst() {
-    this.regionDataProviderService.findAll()
-        .then((response: BogenligaResponse<RegionDO[]>) => {
-            this.regionen = response.payload;
-            this.loadSunburst();
-          }
-        );
-  }
-
   loadSunburst() {
     const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
     desc.style.display = 'block';
 
     const data = this.convertDataToTree(this.regionen.filter((f) =>
-      f.regionTyp === 'BUNDESVERBAND')[0], this.regionen).toJsonString();
+      f.regionTyp === 'BUNDESVERBAND')[0], this.RegionenCache).toJsonString();
 
     this.myChart
-      .data(JSON.parse(data))
-      .width(window.innerWidth * chartDetailsSizeMultiplikator)
-      .height(window.innerHeight * chartDetailsSizeMultiplikator)
-      .size('size')
-      .color('color')
-      .onClick((node) => {
-        // outsourced update function so it is possible to use for other functions
-        this.updateSunburst(node);
+        .data(JSON.parse(data))
+        .width(window.innerWidth * chartDetailsSizeMultiplikator)
+        .height(window.innerHeight * chartDetailsSizeMultiplikator)
+        .size('size')
+        .color('color')
+        .onClick((node) => {
+          this.updateSunburst(node);
+          this.selectInSelectionList(node);
+        })(this.myDiv.nativeElement);
 
-        this.selectInSelectionList(node);
-      })
-      (this.myDiv.nativeElement);
-
-    console.log(this.myChart.label());
-
-    // for automatic resizing
-    window.addEventListener('resize', (func) => {
-      const node = this.myChart.focusOnNode();
-      if (node != null) {
-        this.myChart
+    window.addEventListener('resize', () => {
+      this.myChart
           .width(window.innerWidth * chartDetailsSizeMultiplikator)
           .height(window.innerHeight * chartDetailsSizeMultiplikator);
-      } else {
-        this.myChart
-          .width(window.innerWidth * chartDetailsSizeMultiplikator)
-          .height(window.innerHeight * chartDetailsSizeMultiplikator);
-      }
     });
   }
+
 
   /**
    * Selects the item in the selectionListRegions according to the name of the selected node in the sunburst
@@ -219,71 +216,105 @@ export class RegionenComponent implements OnInit {
 
   // What should happen if we click on sunburst-diagramm
   updateSunburst(node) {
+    if (!node) return;
+
     this.myChart.focusOnNode(node);
     this.myChart.width(window.innerWidth * chartDetailsSizeMultiplikator);
     this.myChart.height(window.innerHeight * chartDetailsSizeMultiplikator);
+
+    // Nur Details anzeigen, wenn ein Knoten ausgewählt ist
     this.showDetails(node);
   }
 
-  showDetails(node) {
-    if (node != null) {
 
-      this.regionDataProviderService.findById(node.id)
-          .then((response: BogenligaResponse<RegionDO>) => {
-              this.currentRegionDO = response.payload;
-              this.loadDetails();
-            }
-          );
-    } else {
-      const details: HTMLInputElement = document.querySelector('#detailsWrapper') as HTMLInputElement;
-      details.style.display = 'none';
-      const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
-      desc.style.display = 'block';
-      const desc1: HTMLInputElement = document.querySelector('#descriptionWrapperClose') as HTMLInputElement;
-      desc1.style.display = 'none';
+  private debounceTimeout: any; // Speichert den Timeout
+  private debouncingDelay = 300; // Debounce-Delay in Millisekunden
+
+  showDetails(node) {
+    if (!node) {
+      this.hideDetails();
+      return;
     }
+
+    // Prüfen, ob die Daten im Cache sind
+    if (this.RegionenCache.has(Number(node.id))) {
+      this.currentRegionDO = this.RegionenCache.get(Number(node.id));
+      this.loadDetails();
+      return;
+    }
+
+    // Debouncing: Backend-Anfrage verzögern
+    clearTimeout(this.debounceTimeout);
+    this.debounceTimeout = setTimeout(() => {
+      this.regionDataProviderService.findById(node.id).then((response: BogenligaResponse<RegionDO>) => {
+        this.currentRegionDO = response.payload;
+        this.RegionenCache.set(node.id, this.currentRegionDO); // Daten cachen
+        this.loadDetails();
+      });
+    }, this.debouncingDelay);
   }
+
+  private hideDetails() {
+    const details: HTMLInputElement = document.querySelector('#detailsWrapper') as HTMLInputElement;
+    details.style.display = 'none';
+    const desc: HTMLInputElement = document.querySelector('#descriptionWrapper') as HTMLInputElement;
+    desc.style.display = 'block';
+    const desc1: HTMLInputElement = document.querySelector('#descriptionWrapperClose') as HTMLInputElement;
+    desc1.style.display = 'none';
+  }
+
 
   reloadVereineUndLigen() {
-    this.vereinDataProviderService.findAll()
-        .then((response: BogenligaResponse<VereinDO[]>) => this.setVereinDataObjects(response))
-        .catch((response: BogenligaResponse<VereinDO[]>) => this.getEmptyList());
+    if (this.VereinCache.size > 0 && this.LigaCache.size > 0) {
+      //do nothing
+    }else {
+      this.vereinDataProviderService.findAll().then((response: BogenligaResponse<VereinDO[]>) => {
+        this.setVereinDataObjects(response);
+      });
 
-    this.ligaDataProviderService.findAll()
-        .then((response: BogenligaResponse<LigaDO[]>) => this.setLigaDataObjects(response))
-        .catch((response: BogenligaResponse<LigaDO[]>) => this.getEmptyList());
+      this.ligaDataProviderService.findAll().then((response: BogenligaResponse<LigaDO[]>) => {
+        this.setLigaDataObjects(response);
+      });
+    }
+    this.setGetVariablen()
   }
 
-  public getVereine() {
+  setGetVariablen() {
+    // Ligen aus dem Cache setzen
+    this.ligen = [];
+    this.LigaCache.forEach((liga) => {
+      if (liga.regionId === this.currentRegionDO.id) {
+        this.ligen.push(liga);
+      }
+    });
+
+    // Vereine aus dem Cache setzen
+    this.vereine = [];
+    this.VereinCache.forEach((verein) => {
+      if (verein.regionId === this.currentRegionDO.id) {
+        this.vereine.push(verein);
+      }
+    });
+  }
+
+  public getVereine(): VereinDO[] {
     return this.vereine;
   }
 
-  public getLigen() {
+  public getLigen(): LigaDO[] {
     return this.ligen;
   }
 
   public setVereinDataObjects(response: BogenligaResponse<VereinDO[]>): void {
-
-    this.vereine = [];
-    response.payload.forEach((responseItem) => {
-      if (responseItem.regionId === this.currentRegionDO.id) {
-        this.vereine.push(responseItem);
-      }
+    response.payload.forEach((verein) => {
+      this.VereinCache.set(verein.id, verein);
     });
-    return;
   }
 
   public setLigaDataObjects(response: BogenligaResponse<LigaDO[]>): void {
-
-    this.ligen = [];
-    response.payload.forEach((responseItem) =>  {
-      if (responseItem.regionId === this.currentRegionDO.id) {
-        console.log(responseItem);
-        this.ligen.push(responseItem);
-      }
+    response.payload.forEach((liga) => {
+      this.LigaCache.set(liga.id, liga);
     });
-
-    return;
   }
 
   public onSelectVerein(event: VereinDO): void {
@@ -319,11 +350,15 @@ export class RegionenComponent implements OnInit {
 
   // backend-call to get the list of regionen
   private loadRegionen(): void {
-    this.regionen = [];
-    this.regionDataProviderService.findAll()
-        .then((response: BogenligaResponse<RegionDTO[]>) => {this.regionen = response.payload;  this.loadingRegionen = false; })
-        .catch((response: BogenligaResponse<RegionDTO[]>) => {this.regionen = response.payload; });
+    this.regionDataProviderService.findAll().then((response: BogenligaResponse<RegionDTO[]>) => {
+      this.regionen = response.payload;
 
+      // Regionen in den Cache legen
+      this.regionen.forEach(region => this.RegionenCache.set(region.id, region));
+
+      this.loadingRegionen = false;
+      this.loadSunburst()
+    })
   }
 
   // Loads details for the selected region
@@ -338,3 +373,4 @@ export class RegionenComponent implements OnInit {
   }
 
 }
+
