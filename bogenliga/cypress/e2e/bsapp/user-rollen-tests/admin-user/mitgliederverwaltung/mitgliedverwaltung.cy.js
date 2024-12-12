@@ -155,12 +155,20 @@ it('Neuer DSB-Kampfrichter', function() {
   );
 })
 /**
+ * This test shows the user tab in the administration
+ */
+it('Anzeige User', function () {
+  cy.get('[data-cy=sidebar-verwaltung-button]').click()
+  cy.url().should('include', '#/verwaltung')
+  cy.get('[data-cy=verwaltung-user-button]').click()
+  cy.url().should('include', '#/verwaltung/user')
+})
+/**
  * This test adds a new user with two-factor-authentication
  */
-
 it('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
 
-  cy.get('[data-cy="dsb-mitglied-add-button"]').click();
+  cy.get('button.action-btn-success').click();
   cy.get('select[data-cy="bla-selection-list"]').select('KampfrichterNachname,KampfrichterVorname No.:34563456');
   cy.get('[data-cy="username-input"]').type("DefaultCypressTestUser2WayAuth@cypressTestuser.com");
   cy.get('[data-cy="password-input"]').type('Test123456');
@@ -180,7 +188,6 @@ it('Testfall 12: User mit 2 Faktor Authentifizierung', function() {
   cy.deleteTestUser("DefaultCypressTestUser2WayAuth@cypressTestuser.com");
 
 })
-
 
 /**
  * This test adds a new user

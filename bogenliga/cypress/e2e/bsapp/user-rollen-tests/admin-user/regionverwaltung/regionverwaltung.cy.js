@@ -25,7 +25,7 @@ it('Regionen Anzeigen', function() {
 it('Region Hinzufügen', function() {
   cy.get('body').then((body) => {
     if (!body.text().includes('SWT3_Region')) {
-      cy.get('[data-cy=dsb-mitglied-add-button]').click()
+      cy.get('button.action-btn-success').click()
       cy.get('[data-cy=region-detail-name]').type('SWT3_Region')
       cy.get('[data-cy=region-detail-kuerzel]').type('SWT_R')
       cy.get('[data-cy=region-detail-typ]').select('KREIS')

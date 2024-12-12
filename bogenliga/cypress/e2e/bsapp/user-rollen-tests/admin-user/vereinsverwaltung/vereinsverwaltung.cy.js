@@ -50,7 +50,7 @@ it('Anzeige Verwaltung Vereinsliste', function () {
 it('Neuen Verein anlegen', function () {
   cy.get('body').then((body) => {
     if (!body.text().includes('CypressTest')) {
-      cy.get('[data-cy=dsb-mitglied-add-button]').click()
+      cy.get('button.action-btn-success').click()
       cy.url().should('include', '#/verwaltung/vereine/add')
       cy.wait(1000)
       cy.get('[data-cy=vereine-vereinsname]').click().type('CypressTest')

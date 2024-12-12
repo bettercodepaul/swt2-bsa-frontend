@@ -37,7 +37,7 @@ it('Wettkampfklasse bearbeiten', function () {
 it('Wettkampfklasse hinzufügen', function () {
   cy.get('body').then((body) => {
     if (!body.text().includes('Testfall')) {
-      cy.get('[data-cy=dsb-mitglied-add-button]').click()
+      cy.get('button.action-btn-success').click()
       cy.get('[data-cy=wettkampfklasse-nummer]').type('69')
       cy.get('[data-cy=wettkampfklasse-name]').type('Testfall')
       cy.get('[data-cy=wettkampfklassen-jahrgang-von-button]').type('2000')
