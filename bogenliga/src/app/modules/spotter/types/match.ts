@@ -8,6 +8,7 @@ export class Match {
 
     currentSetNumber: number;
     currentSet: Set;
+    currentMatchNumber: number;
 
     mannschaft: string;
     bahn: number;
@@ -17,7 +18,7 @@ export class Match {
         this.mannschaft = mannschaft;
         this.bahn = bahn;
         this.satzpunkte = 0;
-
+        this.currentMatchNumber = 0;
         this.selectedPlayNumber = 1;
         this.currentSetNumber = 1;
         this.currentSet = new Set(this.currentSetNumber);

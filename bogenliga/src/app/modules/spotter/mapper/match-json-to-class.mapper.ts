@@ -9,6 +9,7 @@ export class MatchJsonToClass {
         result.currentSetNumber = match.currentSetNumber;
         result.currentSet = result.sets[result.currentSetNumber - 1];
         result.satzpunkte = match.satzpunkte;
+        result.currentMatchNumber = match.currentMatchNumber;
         result.selectedPlayNumber = 0; // not used
         return result;
     }

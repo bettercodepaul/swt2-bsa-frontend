@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Match } from './../../types/match';
 import { Component, OnInit } from '@angular/core';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import {MatchDOExt} from "@wkdurchfuehrung/types/match-do-ext.class";
+import {BogenligaResponse} from "@shared/data-provider";
 
 @Component({
   selector: 'bla-interface',
@@ -19,6 +21,12 @@ export class InterfaceComponent implements OnInit {
 
   match: Match;
   matchTemp: Match;
+  matchDOs: MatchDOExt[];
+  spotterMatches: MatchDOExt[];
+  wkID: string;
+  scheibe = 0;
+
+  currentMatchNumberTemp = 0;
 
   spotting = true;
 
@@ -30,23 +38,62 @@ export class InterfaceComponent implements OnInit {
   editedPlay = -1;
   allowedToSaveSet = false;
 
-  constructor(private router: Router, private spotterService: SpotterService) { }
+  constructor(private router: Router, private spotterService: SpotterService) {
+    this.spotterMatches = [];
+    this.matchDOs = [];
+  }
 
   ngOnInit() {
-    if (localStorage.getItem('match')) {
+    if (localStorage.getItem('match') !== null) {
       const temp = JSON.parse(localStorage.getItem('match'));
+      console.log(temp.toString());
       this.match = MatchJsonToClass.parseMatch(temp);
+      this.currentMatchNumberTemp = this.match.currentMatchNumber;
+      console.log(this.match);
       this.checkResultIsSure();
 
       this.selectedPlayNumber = this.match.set().currentPlayNumber;
       if (this.match.set().play().result) {
-        this.spotting = false;
+        this.spotting = true;
       }
     } else {
       this.match = new Match('Nürtingen', 1);
+      this.match.currentMatchNumber = 0;
     }
+    console.log(this.match);
+    const urlParts = this.spotterService.getWettkampfIDundScheibe();
+    try {
+      this.wkID = urlParts.wkId;
+      this.scheibe = parseInt(urlParts.schreibe);
+    } catch (error) {
+      console.error("Fehler beim parsen von WettkampfId und Scheibe Nummer", error);
+    }
+    this.initMatches();
+  }
+  private async initMatches() {
+    console.log(this.wkID);
+    try {
+        const data: unknown = await this.spotterService.findMatch(this.wkID);
+        // @ts-ignore
+        this.matchDOs = data.payload;
+      } catch (error) {
+      console.error("Fehler beim Abrufen der Matches:", error); }
+
+    for (const element of this.matchDOs) {
+      if (element.matchScheibennummer === this.scheibe) {
+        this.spotterMatches.push(element);
+      }
+    }
+    this.setMannschaftsName(this.spotterMatches[this.match.currentMatchNumber].mannschaftName);
+    this.setBahn(this.scheibe);
   }
 
+  setMannschaftsName(name: string) {
+    this.match.mannschaft = name;
+  }
+  setBahn(scheibe: number) {
+    this.match.bahn = scheibe;
+  }
   /**
    * Saves current selected value to result of current play of current set if not editing
    * Changes result of selected play of current set if editing
@@ -76,12 +123,13 @@ export class InterfaceComponent implements OnInit {
   }
 
   onSave() {
-    // tslint:disable-next-line:triple-equals
+
+
+
     if (!this.editing) {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
         this.match.set().play().result = this.selectedValue;
         this.match.set().play().final = !this.unsure;
-
         this.spotterService.sendPlay(this.match.set().play()).then(() => {
           this.unsure = false;
           if (!this.match.nextPlay()) {
@@ -130,7 +178,10 @@ export class InterfaceComponent implements OnInit {
         });
       }
     }
+    this.match.currentMatchNumber = this.currentMatchNumberTemp;
     localStorage.setItem('match', JSON.stringify(this.match));
+    console.log(this.match);
+
     this.checkResultIsSure();
     // tslint:disable-next-line:triple-equals
 
@@ -150,8 +201,11 @@ export class InterfaceComponent implements OnInit {
    * If everything is final, create new set and send confirmation to backend, that set is finished
    */
   onNextSet() {
+    console.log(this.match);
+    console.log("currentSetNumber: "+ this.match.currentSetNumber);
+
     if (this.match.addSet()) {
-      this.spotterService.nextSet().then(() => {
+     this.spotterService.nextSet(this.spotterMatches[this.match.currentMatchNumber], this.matchTemp).then(() => {
         this.spotting = true;
         this.editing = false;
         this.selectedPlayNumber = 1;
@@ -167,7 +221,6 @@ export class InterfaceComponent implements OnInit {
           alert('There was an error with this request');
         }
       });
-
       localStorage.setItem('match', JSON.stringify(this.match));
     }
   }
@@ -177,11 +230,17 @@ export class InterfaceComponent implements OnInit {
    * The server will respond with the new information for the next match (Mannschaft)
    */
   onFinishMatch() {
+
+    console.log(this.match);
+
+    console.log(this.match.currentMatchNumber);
+    this.setMannschaftsName(this.spotterMatches[this.match.currentMatchNumber].mannschaftName);
+    this.setBahn(this.scheibe);
     if (this.match.canFinish()) {
 
-      this.spotterService.nextMatch().then((mannschaft: string) => {
+      this.spotterService.nextSet(this.spotterMatches[this.match.currentMatchNumber], this.matchTemp).then((mannschaft: string) => {
         localStorage.removeItem('match');
-        this.match = new Match(mannschaft, this.match.bahn);
+        this.match = new Match(this.spotterMatches[this.match.currentMatchNumber].mannschaftName, this.scheibe);
         this.spotting = true;
         this.editing = false;
         this.selectedPlayNumber = 1;
@@ -198,6 +257,11 @@ export class InterfaceComponent implements OnInit {
         }
       });
     }
+    this.match.currentMatchNumber += 1;
+    this.currentMatchNumberTemp = this.match.currentMatchNumber;
+    console.log(this.spotterMatches[this.match.currentMatchNumber]);
+    localStorage.setItem('match', JSON.stringify(this.match));
+
   }
 
   /**
