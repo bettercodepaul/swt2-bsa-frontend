@@ -10,6 +10,7 @@ export class TabletAdminPopUpComponent implements OnInit {
 
   QR: string;  // For QR code
   isPopUp: boolean;  // To control visibility
+  scheibenNr: number;
 
 
   constructor(
@@ -17,6 +18,7 @@ export class TabletAdminPopUpComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any // Inject the passed data
   ) {
     this.QR = data.QR; // Set the QR code from passed data
+    this.scheibenNr = data.scheibenNr;
     this.isPopUp = data.isPopUp; // Set the isPopUp flag from passed data
   }
 
