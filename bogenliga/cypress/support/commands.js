@@ -224,3 +224,13 @@ Cypress.Commands.add('loginUserTest', () => {
   cy.get('#loginButton').click({force: true});
 
 })
+
+Cypress.Commands.add('loginAusrichter', () => {
+  cy.visit('http://localhost:4200/#/home');
+  cy.get('[data-cy=login-button]').click();
+  cy.get('#loginEmail').click();
+  cy.get('#loginEmail').type('HSRT-Test2@bogenliga.de');
+  cy.get('#loginPassword').click();
+  cy.get('#loginPassword').type('mki4HSRT');
+});
+
