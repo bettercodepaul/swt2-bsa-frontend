@@ -85,9 +85,6 @@ describe('testvontest', function () {
   });
 
 
-
-
-
   it('DSB Mitglied anlegen (nur von Vereinen, die in der Veranstaltung sind, die er ausrichtet)', () => {
     const randomID = generateID().toString();
 
