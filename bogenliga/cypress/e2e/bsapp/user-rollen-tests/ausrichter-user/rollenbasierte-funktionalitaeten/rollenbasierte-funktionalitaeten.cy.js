@@ -251,8 +251,6 @@ describe('testvontest', function () {
   });
 
 
-
-
   it('Mitglieder der Mannschaft anzeigen', () => {
     cy.wait(1000)
     cy.contains('tr', 'vorname').find('[data-cy="TABLE.ACTIONS.VIEW"]').click();
