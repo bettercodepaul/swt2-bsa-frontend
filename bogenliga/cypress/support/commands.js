@@ -225,6 +225,7 @@ Cypress.Commands.add('loginUserTest', () => {
 
 })
 
+
 Cypress.Commands.add('loginAusrichter', () => {
   cy.visit('http://localhost:4200/#/home');
   cy.get('[data-cy=login-button]').click();
