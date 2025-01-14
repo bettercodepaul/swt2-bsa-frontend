@@ -107,7 +107,7 @@
                            ngFor>
                 <td *ngIf="j == 0">
                   <input [(ngModel)]="passe.rueckennummer"
-                         (ngModelChange)="onSchuetzeChange($event, 1, i)"
+                         (ngModelChange)="onSchuetzeChange($event, 1, i, j)"
                          blaSchuetzeNumberOnly
                          blaSchuetzenTabIndexDirective
                          type="number">
@@ -325,7 +325,7 @@
                            ngFor>
                 <td *ngIf="j == 0">
                   <input [(ngModel)]="passe.rueckennummer"
-                         (ngModelChange)="onSchuetzeChange($event, 1, i)"
+                         (ngModelChange)="onSchuetzeChange($event, 1, i, j)"
                          blaSchuetzeNumberOnly
                          blaSchuetzenTabIndexDirective
                          type="number">
