@@ -15,7 +15,7 @@ import {MIGRATION_OVERVIEW_CONFIG} from '@verwaltung/components/migration/migrat
 export class OverviewDialogComponent extends CommonSecuredDirective implements OnInit {
 
   @Input() public config: OverviewDialogConfig;
-  @Input() public rows: TableRow[];
+  //@Input() public rows: TableRow[];
   @Input() public hidden = true;
   @Input() public searchTerm: string;
   @Input() public buttonLabel: string;
@@ -58,6 +58,14 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   }
 
   ngOnInit() {
+  }
+
+  public _rows: TableRow[] = [];
+  @Input()
+  set rows(value: TableRow[]) {
+    if (value) {
+      this.lazyLoadRows(value); // Lazy Loading starten
+    }
   }
 
   public onView(versionedDataObject: VersionedDataObject): void {
@@ -106,5 +114,25 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
       return this.currentUserService.hasAnyPermisson(userPermissions);
     }
   }
+
+  private async lazyLoadRows(payload: TableRow[]): Promise<void> {
+    const chunkSize = this.getOptimalChunkSize(); // Dynamische Chunkgröße bestimmen
+    this._rows = [];
+
+    for (let i = 0; i < payload.length; i += chunkSize) {
+      const chunk = payload.slice(i, i + chunkSize);
+      this._rows = [...this._rows, ...chunk];
+
+      // Gib dem UI Zeit, sich zu aktualisieren
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    }
+  }
+
+  private getOptimalChunkSize(): number {
+    // Dynamische Berechnung basierend auf der Rechenleistung oder UI-Anforderungen
+    const isHighPerformanceDevice = window.navigator.hardwareConcurrency > 4;
+    return isHighPerformanceDevice ? 200 : 50;
+  }
+
 
 }
