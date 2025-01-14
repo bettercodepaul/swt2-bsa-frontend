@@ -38,6 +38,7 @@ const NOTIFICATION_SCHUSSZETTEL_SPEICHERN = 'schusszettelSave';
 const NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER = 'schusszettelEntschieden';
 const NOTIFACTION_SCHUETZE = 'schuetze';
 const PLATZHALTER = 'Platzhalter';
+const FALSCHER_SCHUETZE = ''
 
 
 @Component({
@@ -297,26 +298,29 @@ export class SchusszettelComponent implements OnInit {
     this.dirtyFlag = true; // Daten geändert
   }
 
-  async onSchuetzeChange(value: string, matchNr: number, rueckennummer: number) {
+  async onSchuetzeChange(value: string, matchNr: number, rueckennummer: number, satzNr: number) {
     const mannschaftId = matchNr === 1 ? this.match1.mannschaftId : this.match2.mannschaftId;
 
     let mitglied = null;
 
     try {
-      mitglied = await this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value);
+      if(value != null){
+        mitglied = await this.mannschaftsMitgliedDataProvider.findByTeamIdAndRueckennummer(mannschaftId, value);
+      }
     } catch (e) {
+
       this.notificationService.showNotification({
-        id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
+        id:          'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
-        severity:    NotificationSeverity.ERROR,
+        description: 'Schütze in diesem Wettkampf oder diesem Team nicht definiert',
+        severity:    NotificationSeverity.INFO,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
         userAction:  NotificationUserAction.ACCEPTED
       });
     }
-
   }
+
 
   onFehlerpunkteChange(value: string, matchNr: number, satzNr: number) {
     const match = this['match' + matchNr];
