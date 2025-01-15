@@ -124,13 +124,13 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
       this._rows = [...this._rows, ...chunk];
 
       // Gib dem UI Zeit, sich zu aktualisieren
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      await new Promise((resolve) => setTimeout(resolve, 1));
     }
   }
 
   private getOptimalChunkSize(): number {
     // Dynamische Berechnung basierend auf der Rechenleistung oder UI-Anforderungen
-    const isHighPerformanceDevice = window.navigator.hardwareConcurrency > 4;
+    const isHighPerformanceDevice = window.navigator.hardwareConcurrency > 6;
     return isHighPerformanceDevice ? 200 : 50;
   }
 
