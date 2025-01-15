@@ -312,7 +312,7 @@ export class SchusszettelComponent implements OnInit {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-        description: 'Schütze in diesem Wettkampf oder diesem Team nicht definiert',
+        description: 'Schütze ' + value + ' in diesem Wettkampf oder diesem Team nicht definiert',
         severity:    NotificationSeverity.INFO,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
