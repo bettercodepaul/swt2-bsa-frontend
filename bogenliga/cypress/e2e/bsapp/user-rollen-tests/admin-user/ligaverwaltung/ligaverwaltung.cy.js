@@ -120,4 +120,3 @@ it('Liga Löschen', function() {
   cy.wait(10000)
   cy.get('tbody').should('not.contain.text', 'SWTLiga')
 })
-

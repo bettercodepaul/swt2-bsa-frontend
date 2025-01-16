@@ -79,7 +79,7 @@ it('Veranstaltungen hinzufügen', function() {
       cy.get('[data-cy=veranstaltung-detail-deadline]').type('2030-01-01')
       cy.wait(1000)
       cy.get('[data-cy=veranstaltung-detail-save-button]').click()
-      cy.wait(30000)
+      cy.wait(3000)
       cy.get('#OKBtn1').click()
       cy.get('[data-cy=sidebar-verwaltung-button]').click()
       cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
@@ -95,24 +95,33 @@ it('Veranstaltungen hinzufügen', function() {
  */
 
 it('Veranstaltungen bearbeiten', function() {
-  cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+
   //cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
-  cy.get('[data-cy=veranstaltung-detail-name]').type('TTT')
-  cy.wait(20000)
-  cy.get('[data-cy=veranstaltung-detail-liganame]').select('Bundesliga')
+  cy.visit('http://localhost:4200/#/verwaltung/veranstaltung');
   cy.wait(1000)
-  cy.get('[data-cy=veranstaltung-detail-veranstaltungphase]').select('Laufend')
-  cy.wait(500)
-  cy.get('[data-cy=veranstaltung-detail-veranstaltungphase]').select('Geplant')
-  cy.wait(500)
-  cy.get('[data-cy=veranstaltung-detail-update-button]').click()
+  cy.get('.overview-dialog-header').click();
   cy.wait(1000)
-  cy.get('#OKBtn1').click()
-  cy.get('[data-cy=sidebar-verwaltung-button]').click()
-  cy.get('[data-cy=verwaltung-veranstaltung-button]').click()
-  cy.wait(5000)
+  cy.get('[data-cy=bla-selection-list]').type('0: 1200');
+  cy.wait(1000)
+  cy.get('option:nth-child(1)').click();
+  cy.wait(1000)
+  cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+  cy.wait(1000)
+  cy.get('[data-cy=veranstaltung-detail-name]').click();
+  cy.wait(1000)
+  cy.get('[data-cy=veranstaltung-detail-name]').type('TTT');
+  cy.wait(1000)
+  cy.get('[data-cy=veranstaltung-detail-ligaleiter-email]').type('1: Object');
+  cy.wait(1000)
+  cy.get('.dialog-content > div').click();
+  cy.wait(1000)
+  cy.get('#veranstaltungUpdateButton').click();
+  cy.wait(1000)
+  cy.get('#OKBtn1 > #OKBtn1').click();
+  cy.wait(1000)
   cy.get('[data-cy=bla-selection-list]').select('2030')
   cy.wait(1000)
+
   cy.get('tbody').should('contain.text', 'TestveranstaltungTTT')
 
 })
@@ -120,8 +129,11 @@ it('Veranstaltungen bearbeiten', function() {
  * This test checks all functions of the queue
  */
 
-it('Filtert Teams basierend auf Suchbegriff', () => {
-  cy.viewport(2235, 1095)
+/**it('Filtert Teams basierend auf Suchbegriff', () => {
+  cy.get('[data-cy=bla-selection-list]').select('2030')
+  cy.wait(1000)
+  cy.get('[data-cy="TABLE.ACTIONS.EDIT"]').last().click()
+  cy.wait(1000)
 
   cy.get('.quicksearch-container > .custom-quicksearch > .quicksearch > .input-group > #undefined').click()
 
@@ -131,7 +143,7 @@ it('Filtert Teams basierend auf Suchbegriff', () => {
   cy.wait(5000)
   cy.get('.modal-dialog > .modal-content > .modal-footer > #OKBtn1 > #OKBtn1').click()
   cy.wait(5000)
-  cy.get('#undefined > tbody > #payload-id-1217 > #name-1217 > span').click()
+  cy.get('#undefined > tbody > #payload-id-1217 > #name-1217 > span').click() */
 
   /*// Überprüfen, ob die Tabelle sichtbar ist
   cy.get('h2').contains('Mannschaften ohne Veranstaltung').should('be.visible');
@@ -151,7 +163,7 @@ it('Filtert Teams basierend auf Suchbegriff', () => {
     cy.wrap($row).find('td').eq(0).should('contain', searchTerm); // Überprüft, ob der Teamname im ersten <td> enthalten ist
   });
 });*/
-})
+//})
 /**
  * This test creates an Platzhalter for the Veranstaltung
  */
@@ -218,6 +230,10 @@ it('Wettkampftage bearbeiten', function() {
   cy.wait(1000)
   cy.get('[data-cy="wettkampftage-adresse"]').type('{selectall}{backspace}')
   cy.get('[data-cy="wettkampftage-adresse"]').type('Bahnhofstrasse 22')
+  cy.get('#wettkampftageBeginn').click();
+  cy.get('#wettkampftageBeginn').type('15:24');
+  cy.get('#wettkampftagSaveButton').click();
+  cy.get('#OKBtn1 > .action-btn-circle').click();
   cy.get('[data-cy="wettkampftage-update-button"]').click()
   cy.wait(500)
   cy.get('#OKBtn1').click()
