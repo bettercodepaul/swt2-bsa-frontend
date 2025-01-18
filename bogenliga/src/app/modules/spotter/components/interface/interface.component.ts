@@ -229,4 +229,7 @@ export class InterfaceComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
+  onButtonClick(s: string) {
+    console.log(`Button ${s} clicked`);
+  }
 }
