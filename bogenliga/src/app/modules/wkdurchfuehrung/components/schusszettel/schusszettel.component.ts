@@ -312,7 +312,7 @@ export class SchusszettelComponent implements OnInit {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_EINGABEFEHLER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-        description: 'Schütze ' + value + ' in diesem Wettkampf oder diesem Team nicht definiert',
+        description: 'Schütze ' + value + ' ist in diesem Wettkampf oder diesem Team nicht definiert',
         severity:    NotificationSeverity.INFO,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
@@ -421,7 +421,7 @@ export class SchusszettelComponent implements OnInit {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.TITLE',
-        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENNUMMER.DESCRIPTION',
+        description: 'Schütze Fehlt. Bitte alle Schützen eintragen',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
@@ -439,7 +439,7 @@ export class SchusszettelComponent implements OnInit {
       this.notificationService.showNotification({
         id:          'NOTIFICATION_SCHUSSZETTEL_SCHUETZENNUMMER',
         title:       'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.TITLE',
-        description: 'WKDURCHFUEHRUNG.SCHUSSZETTEL.NOTIFICATION.SCHUETZENEINDEUTIG.DESCRIPTION',
+        description: 'Doppelte Schützennummer eingetragen',
         severity:    NotificationSeverity.ERROR,
         origin:      NotificationOrigin.SYSTEM,
         type:        NotificationType.OK,
