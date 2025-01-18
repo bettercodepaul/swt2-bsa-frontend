@@ -118,19 +118,25 @@ export class OverviewDialogComponent extends CommonSecuredDirective implements O
   private async lazyLoadRows(payload: TableRow[]): Promise<void> {
     const chunkSize = this.getOptimalChunkSize(); // Dynamische Chunkgröße bestimmen
     this._rows = [];
+    let i = 0;
 
-    for (let i = 0; i < payload.length; i += chunkSize) {
-      const chunk = payload.slice(i, i + chunkSize);
-      this._rows = [...this._rows, ...chunk];
+    const processChunk = () => {
+      if (i < payload.length) {
+        const chunk = payload.slice(i, i + chunkSize);
+        this._rows = [...this._rows, ...chunk];
+        i += chunkSize;
 
-      // Gib dem UI Zeit, sich zu aktualisieren
-      await new Promise((resolve) => setTimeout(resolve, 1));
-    }
+        // Gib dem UI Zeit, sich zu aktualisieren
+        requestAnimationFrame(processChunk); // Setzt den nächsten Chunk in die Queue
+      }
+    };
+
+    processChunk();
   }
 
   private getOptimalChunkSize(): number {
     // Dynamische Berechnung basierend auf der Rechenleistung oder UI-Anforderungen
-    const isHighPerformanceDevice = window.navigator.hardwareConcurrency > 6;
+    const isHighPerformanceDevice = window.navigator.hardwareConcurrency > 8;
     return isHighPerformanceDevice ? 200 : 50;
   }
 
