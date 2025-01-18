@@ -636,9 +636,12 @@ public updateChartOptions(newXAxisLabel: string) {
     this.veranstaltungen = response.payload;
     this.currentVeranstaltung = this.veranstaltungen[0];
     this.areVeranstaltungenLoading = false;
+
     if (this.veranstaltungen.length !== 0) {
+
       await this.loadMannschaften(this.currentVeranstaltung.id);
-      await this.loadWettkaempfe(this.currentVeranstaltung.id);
+      const loadWettkaempfePromise = this.loadWettkaempfe(this.currentVeranstaltung.id);
+
       if (this.mannschaftStatistikActive) {
         this.selectedMannschaftStatistik = 'aktuelle_mannschaft';
         await this.loadErgebnisse(this.currentMannschaft);
@@ -646,10 +649,13 @@ public updateChartOptions(newXAxisLabel: string) {
         this.selectedStatistik = 'gesamtstatistik';
         await this.loadGesamtstatistik(this.currentMannschaft);
       }
+      // Warten bis alle benötigten Daten geladen sind
+      await loadWettkaempfePromise;
 
       await this.showStatistikOptions();
     }
   }
+
 
   public async loadMannschaften(veranstaltungsId: number) {
     await this.mannschaftDataProvider.findAllByVeranstaltungsId(veranstaltungsId)
@@ -703,9 +709,14 @@ public updateChartOptions(newXAxisLabel: string) {
    */
   public async handleLoadWettkaempfe(wettkaempfe: WettkampfDO[]) {
     this.wettkaempfe = wettkaempfe;
-    for (let index = 0; index < this.wettkaempfe.length; index++) {
-      await this.loadMatches(this.wettkaempfe[index].id, index);
-    }
+
+    // Erstelle ein Array von Promises für die `loadMatches`-Aufrufe
+    const loadPromises = this.wettkaempfe.map((wettkampf, index) =>
+      this.loadMatches(wettkampf.id, index)
+    );
+
+    // Warte, bis alle Promises abgeschlossen sind
+    await Promise.all(loadPromises);
   }
 
   public async loadMatches(wettkampfId: number, index: number) {
