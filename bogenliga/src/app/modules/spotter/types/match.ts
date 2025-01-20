@@ -29,12 +29,16 @@ export class Match {
 
   addSet(): boolean {
     if (this.currentSet.canFinish()) {
-      this.currentSetNumber++;
       this.currentSet = new Set(this.currentSetNumber);
       this.sets.push(this.currentSet);
       return true;
     }
     return false;
+  }
+
+  increaseCurrentSetNumber()
+  {
+    this.currentSetNumber += 1;
   }
 
   nextPlay(): boolean {

@@ -6,7 +6,7 @@ import { Match } from './../../types/match';
 import { Component, OnInit } from '@angular/core';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import {MatchDOExt} from "@wkdurchfuehrung/types/match-do-ext.class";
-import {BogenligaResponse} from "@shared/data-provider";
+import {BogenligaResponse, RequestResult} from '@shared/data-provider';
 
 @Component({
   selector: 'bla-interface',
@@ -37,6 +37,7 @@ export class InterfaceComponent implements OnInit {
   editing = false;
   editedPlay = -1;
   allowedToSaveSet = false;
+  matchDOExt: MatchDOExt;
 
   constructor(private router: Router, private spotterService: SpotterService) {
     this.spotterMatches = [];
@@ -119,30 +120,114 @@ export class InterfaceComponent implements OnInit {
     return pointsAreScored;
   }
 
-  onSave() {
+  async onSave() {
+    const currentSet = this.match.set();
+    const currentPlay = currentSet ? currentSet.play() : null;
+
+    console.log("this.editedPlay", this.editedPlay);
     if (!this.editing) {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
-        this.match.set().play().result = this.selectedValue;
-        this.match.set().play().final = !this.unsure;
-        this.spotterService.sendPlay(this.match.set().play()).then(() => {
-          this.unsure = false;
-          if (!this.match.nextPlay()) {
-            this.spotting = false;
-          } else {
-            this.selectedPlayNumber++;
-          }
-          this.selectedValue = -1;
-        }, (error: SpotterResult) => {
-          if (error === SpotterResult.UNAUTHORIZED) {
-            // TODO: Better error handling
-            alert('You are not authorized to do that');
-          } else {
-            // TODO: Better error handling
-            alert('There was an error with this request');
-          }
-        });
-      }
+        try {
+          if(!currentPlay.passeId) {
+            if (currentPlay.number > 1) {
+              if (currentPlay.number % 2 === 0) {
+                if (this.match.set().play(currentPlay.number - 1).passeId) {
+                  const data: unknown = await this.spotterService.nextSet(
+                    this.spotterMatches[this.match.currentMatchNumber],
+                    this.match,
+                    this.match.set().play(currentPlay.number - 1).passeId,
+                    currentPlay.number
+                  );
+                  console.log("%2")
+                  // @ts-ignore
+                  this.spotterMatches[this.match.currentMatchNumber] = data.payload;
+                  currentPlay.passeId = this.match.set().play(currentPlay.number - 1).passeId;
 
+                }
+              } else {
+                console.log("Zweiter Fall");
+
+                const data: unknown = await this.spotterService.nextSet(
+                  this.spotterMatches[this.match.currentMatchNumber],
+                  this.match,
+                  null,
+                  currentPlay.number);
+                // @ts-ignore
+                this.spotterMatches[this.match.currentMatchNumber] = data.payload;
+                let hoechsteId = 0;
+                // @ts-ignore
+                this.spotterMatches[this.match.currentMatchNumber].schuetzen.forEach((subListe) => {
+                  if (Array.isArray(subListe)) {
+                    const maxInSubListe = subListe.reduce((max, schuetze) => {
+                      return schuetze.id > max ? schuetze.id : max;
+                    }, 0);
+
+                    if (maxInSubListe > hoechsteId) {
+                      hoechsteId = maxInSubListe;
+                    }
+                  }
+                });
+                currentPlay.passeId = hoechsteId;
+              }
+            } else {
+              console.log("Null passe")
+              const data: unknown = await this.spotterService.nextSet(
+                this.spotterMatches[this.match.currentMatchNumber],
+                this.match,
+                null,
+                currentPlay.number);
+              // @ts-ignore
+              this.spotterMatches[this.match.currentMatchNumber] = data.payload;
+              let hoechsteId = 0;
+              console.log("Erster Fall");
+              // @ts-ignore
+              this.spotterMatches[this.match.currentMatchNumber].schuetzen.forEach((subListe) => {
+                if (Array.isArray(subListe)) {
+                  const maxInSubListe = subListe.reduce((max, schuetze) => {
+                    return schuetze.id > max ? schuetze.id : max;
+                  }, 0);
+
+                  if (maxInSubListe > hoechsteId) {
+                    hoechsteId = maxInSubListe;
+                  }
+                }
+              });
+              currentPlay.passeId = hoechsteId;
+              console.log("PasseID", currentPlay.passeId);
+            }
+          }else {
+            console.log("Passe Vorhanden", currentPlay.passeId)
+            const data: unknown = await this.spotterService.nextSet(
+              this.spotterMatches[this.match.currentMatchNumber],
+              this.match,
+              currentPlay.passeId,
+              currentPlay.number);
+            // @ts-ignore
+            this.spotterMatches[this.match.currentMatchNumber] = data.payload;
+          }
+        } catch (error)
+        {
+          console.log("Error", error);
+        }
+        if (currentPlay) {
+          currentPlay.result = this.selectedValue;
+
+          currentPlay.final = !this.unsure;
+          this.spotterService.sendPlay(currentPlay).then(() => {
+            this.unsure = false;
+            if (!this.match.nextPlay()) {
+              this.spotting = false;
+            } else {
+              this.selectedPlayNumber++;
+            }
+            this.selectedValue = -1;
+          }).catch((error: SpotterResult) => {
+            this.handleError(error);
+          });
+        } else {
+          console.error("Current play or set is not valid");
+        }
+      }
     } else {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
         this.match.set().play(this.editedPlay).result = this.selectedValue;
@@ -170,13 +255,39 @@ export class InterfaceComponent implements OnInit {
             alert('There was an error with this request');
           }
         });
+        if (this.editedPlay !== -1) {
+          const play = currentSet.play(this.editedPlay);
+          if (play && play.passeId !== null) {
+            console.log("Passe Vorhanden")
+            const data: unknown = await this.spotterService.nextSet(
+              this.spotterMatches[this.match.currentMatchNumber],
+              this.match,
+              play.passeId,
+              play.number);
+            // @ts-ignore
+            this.spotterMatches[this.match.currentMatchNumber] = data.payload;
+          }
+        }
       }
     }
+    //console.log("PasseID", this.match.set(this.match.currentSetNumber)..passeId);
+
     this.match.currentMatchNumber = this.currentMatchNumberTemp;
+    console.log("OnSave", this.match);
+
+
     localStorage.setItem('match', JSON.stringify(this.match));
-    console.log(this.match);
 
     this.checkResultIsSure();
+
+  }
+
+  handleError(error: SpotterResult) {
+    if (error === SpotterResult.UNAUTHORIZED) {
+      alert('You are not authorized to do that');
+    } else {
+      alert('There was an error with this request');
+    }
   }
 
   /**
@@ -194,51 +305,45 @@ export class InterfaceComponent implements OnInit {
    */
   onNextSet() {
     console.log(this.match);
-
     if (this.match.addSet()) {
-      this.spotterService.nextSet(this.spotterMatches[this.match.currentMatchNumber], this.matchTemp).then(() => {
         this.spotting = true;
         this.editing = false;
         this.selectedPlayNumber = 1;
         this.selectedValue = -1;
         this.editedPlay = -1;
         this.unsure = false;
-      }, (error: SpotterResult) => {
-        if (error === SpotterResult.UNAUTHORIZED) {
-          // TODO: Better error handling
-          alert('You are not authorized to do that');
-        } else {
-          // TODO: Better error handling
-          alert('There was an error with this request');
-        }
-      });
-      localStorage.setItem('match', JSON.stringify(this.match));
-    }
-  }
+        // @ts-ignore
+        this.match.increaseCurrentSetNumber();
+      }
+
+    localStorage.setItem('match', JSON.stringify(this.match));
+
+}
 
   /**
    * If the match can end (the current set is final) a confirmation will be sent to the Server
    * The server will respond with the new information for the next match (Mannschaft)
    */
   onFinishMatch() {
+    this.currentMatchNumberTemp = this.match.currentMatchNumber;
 
-    console.log(this.match);
+    localStorage.removeItem('match');
 
-    console.log(this.match.currentMatchNumber);
-    this.setMannschaftsName(this.spotterMatches[this.match.currentMatchNumber].mannschaftName);
+    this.match = new Match(this.spotterMatches[this.match.currentMatchNumber].mannschaftName, this.scheibe);
+    this.setMannschaftsName(this.spotterMatches[this.currentMatchNumberTemp + 1].mannschaftName);
     this.setBahn(this.scheibe);
+    this.match.currentMatchNumber += this.currentMatchNumberTemp + 1;
+
     if (this.match.canFinish()) {
 
-      this.spotterService.nextSet(this.spotterMatches[this.match.currentMatchNumber], this.matchTemp).then((mannschaft: string) => {
-        localStorage.removeItem('match');
-        this.match = new Match(this.spotterMatches[this.match.currentMatchNumber].mannschaftName, this.scheibe);
+
         this.spotting = true;
         this.editing = false;
         this.selectedPlayNumber = 1;
         this.selectedValue = -1;
         this.editedPlay = -1;
         this.unsure = false;
-      }, (error: SpotterResult) => {
+      /*}, (error: SpotterResult) => {
         if (error === SpotterResult.UNAUTHORIZED) {
           // TODO: Better error handling
           alert('You are not authorized to do that');
@@ -246,12 +351,15 @@ export class InterfaceComponent implements OnInit {
           // TODO: Better error handling
           alert('There was an error with this request');
         }
-      });
+      });*/
+
     }
-    this.match.currentMatchNumber += 1;
     this.currentMatchNumberTemp = this.match.currentMatchNumber;
+
     console.log(this.spotterMatches[this.match.currentMatchNumber]);
     localStorage.setItem('match', JSON.stringify(this.match));
+    console.log("this.match.currentMatchNumber", this.match.currentMatchNumber);
+
 
   }
 
