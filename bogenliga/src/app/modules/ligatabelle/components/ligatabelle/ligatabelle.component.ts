@@ -178,28 +178,28 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
     try {
       console.log(this.onOfflineService.isOffline());
+
+      // Lade alle Sportjahre
       const responseYear = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
       this.loadedYears = responseYear.payload;
 
-      for (const year of responseYear.payload) {
+      // Promises für paralleles Laden der Veranstaltungen
+      const veranstaltungenPromises = this.loadedYears.map(async (year) => {
         const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportjahrDestinct(year.sportjahr);
 
+        // Füge Veranstaltungen in die Map hinzu
         for (const veranstaltung of responseVeranstaltung.payload) {
-          /*
-           Sobald es keine Veranstaltung für dieses Sporjahr gibt bekommen wir einen leeren Array in responseVeranstaltung.payload zurück,
-           somit kann nicht iteriert werden. Ist veranstaltung als VeranstaltungDO aber vorhanden iterieren wir.
-           Dadurch wird gleichzeitig nur die Tabellen mit Werten befüllt die auch Veranstaltungen haben.
-           */
-
-          this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung); // -> Ligatabelle
+          this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung);
         }
+
+        // Speichere Veranstaltungen, wenn vorhanden
         if (responseVeranstaltung.payload.length > 0) {
-          this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);  // -> "Liga"
+          this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);
           if (!this.availableYears.includes(year)) {
-            this.availableYears.push(year); // -> "Sportjahr"
+            this.availableYears.push(year);
           }
         }
-      }
+      });
 
       // lese aktives Sportjahr aus Datenbank aus aus im Online-Modus
       if (!this.onOfflineService.isOffline()) {
