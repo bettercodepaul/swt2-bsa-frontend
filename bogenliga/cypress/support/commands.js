@@ -226,11 +226,16 @@ Cypress.Commands.add('loginUserTest', () => {
 })
 
 Cypress.Commands.add('loginAusrichter', () => {
+
   cy.visit('http://localhost:4200/#/home');
-  cy.get('[data-cy=login-button]').click();
-  cy.get('#loginEmail').click();
-  cy.get('#loginEmail').type('HSRT-Test2@bogenliga.de');
-  cy.get('#loginPassword').click();
-  cy.get('#loginPassword').type('mki4HSRT');
+
+  cy.get('[id=navbar]').then(($element) => {
+    if($element.find('[data-cy=login-button]').length > 0){
+      cy.get('[data-cy=login-button]').click();
+      cy.get('#loginEmail').type('HSRT-Test2@bogenliga.de');
+      cy.get('#loginPassword').type('mki4HSRT');
+      cy.get('[id=loginButton]').click();
+    }
+  })
 });
 
