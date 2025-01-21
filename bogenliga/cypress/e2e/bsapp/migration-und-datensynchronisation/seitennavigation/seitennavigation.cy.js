@@ -1,23 +1,24 @@
+before(() => {
+  // Einmalige Anmeldung als Admin
+  cy.loginAdmin();
+  cy.url().should('include', '#/home');
+});
+
 beforeEach(() => {
-  cy.wait(1000)
-  cy.loginAdmin()
-  cy.wait(2000)
-  cy.url().should('include', '#/home')
-  cy.get('[data-cy=sidebar-verwaltung-button]').click()
-  cy.wait(1000)
-  cy.url().should('include', '#/verwaltung')
-  cy.get('[data-cy=verwaltung-sync-button]').click()
-  cy.wait(1000)
-  cy.url().should('include', '#/verwaltung/migration')
+  cy.viewport(1920, 1080);
 
+  // Navigation zur Verwaltungsseite
+  cy.get('[data-cy=sidebar-verwaltung-button]').click();
+  cy.url().should('include', '#/verwaltung');
 
-})
+  // Sync starten
+  cy.get('[data-cy=verwaltung-sync-button]').click();
+  cy.url().should('include', '#/verwaltung/migration');
+});
 
 afterEach(() => {
   //NOTE: Preparation for next test
-  cy.wait(1000)
   cy.disbandModalIfShown()
-  cy.wait(1000)
 })
 
 
@@ -25,7 +26,6 @@ afterEach(() => {
 describe('Seitennavigation', function () {
 
     it('Previous Page Test', () => {
-      cy.viewport(1920, 1080)
       cy.intercept({
         method: 'GET',
         url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
@@ -34,7 +34,6 @@ describe('Seitennavigation', function () {
     })
 
     it('Next Page Test', () => {
-      cy.viewport(1920, 1080)
       cy.intercept({
         method: 'GET',
         url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
@@ -43,7 +42,6 @@ describe('Seitennavigation', function () {
     })
 
     it('Next Page Test Above', () => {
-      cy.viewport(1920, 1080)
       cy.intercept({
         method: 'GET',
         url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
@@ -52,7 +50,6 @@ describe('Seitennavigation', function () {
     })
 
     it('Previous Page Test Above', () => {
-      cy.viewport(1920, 1080)
       cy.intercept({
         method: 'GET',
         url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im letzten Jahr`,
@@ -60,5 +57,4 @@ describe('Seitennavigation', function () {
       cy.get('[data-cy=previous-page-button-above]').click()
     })
   })
-
 
