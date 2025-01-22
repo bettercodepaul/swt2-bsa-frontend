@@ -468,14 +468,10 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
             }
           })
           let allowedRegions: any[] = [];
-          let seenRegions: any[] = [];
 
-          // Erzeuge ein Array von Promises für alle rekursiven Aufrufe
-          const recursivePromises = ligaRegions.map(e =>
-            this.findAllowedRegions(e, allowedRegions, seenRegions)
-          );
-          // Warte auf den Abschluss aller rekursiven Aufrufe
-          await Promise.all(recursivePromises);
+          for (const regionId of ligaRegions) {
+            await this.regionProvider.findAllowedRegionsForVereine(regionId, allowedRegions);
+          }
 
           //Erlaubte Regionen in die Klappliste schreiben
           this.regionProvider.findAll().then((value) => {
@@ -492,19 +488,6 @@ export class VereinDetailComponent extends CommonComponentDirective implements O
         .finally(() => this.loading = false);
   }
 
-  public async findAllowedRegions(parentRegionId, allowedRegions, seenRegions): Promise<any> {
-    if (!(allowedRegions.includes(parentRegionId))) {
-      allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
-    }
-    const region = await this.regionProvider.findAll();
-    const subRegions = region.payload.filter(e => e.regionUebergeordnet === parentRegionId && !seenRegions.includes(e.id));
-    const recursivePromises = subRegions.map(e =>
-      this.findAllowedRegions(e.id, allowedRegions, seenRegions)
-    );
-
-    await Promise.all(recursivePromises);
-    return allowedRegions;
-  }
 
   private handleSuccess(response: BogenligaResponse<VereinDO>) {
     this.currentVerein = response.payload;
