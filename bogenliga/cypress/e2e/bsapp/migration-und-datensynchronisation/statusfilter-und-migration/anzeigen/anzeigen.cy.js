@@ -1,9 +1,50 @@
+/*
+  Test mit angewandten Best Practices, jedoch laeuft er nicht immer Fehlerfrei durch,
+  liegt an dem letzten .click
+ */
+/*
 beforeEach(() => {
-  cy.wait(1000)
-  cy.loginAdmin()
-  cy.wait(2000)
+  cy.loginAdmin();
+  //cy.get('[data-cy=welcome-banner]', { timeout: 10000 }).should('be.visible');
+});
 
-})
+
+afterEach(() => {
+  cy.disbandModalIfShown();
+});
+
+describe('Anzeige', function () {
+  it('Anzeige Migration Section and FindAll Call', () => {
+    cy.viewport(1920, 1080);
+
+    cy.intercept({
+      method: 'GET',
+      url: 'http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat',
+    }).as('findallErrors-request');
+
+    cy.get('[data-cy=sidebar-verwaltung-button]')
+      .should('be.visible')
+      .should('not.be.disabled')
+      .click();
+
+    cy.url().should('include', '#/verwaltung');
+
+    cy.get('[data-cy=verwaltung-sync-button]')
+      .should('be.visible')
+      .should('not.be.disabled')
+      .click();
+    cy.url().should('include', '#/verwaltung/migration');
+
+    cy.wait('@findallErrors-request').its('response.statusCode').should('eq', 200);
+  });
+});
+*/
+
+beforeEach(() => {
+  cy.loginAdmin()
+});
+
+
 
 afterEach(() => {
   //NOTE: Preparation for next test
@@ -46,22 +87,26 @@ describe('Anzeige', function () {
    * 4. if a call was made to Backend
    */
   /* This test includes "Anzeige Verwaltung" and "Anzeige Migration Overview" --> only this test ist needed*/
-  it('Anzeige Migration Section and FindAll Call', () => {
+
+
+it('Anzeige Migration Section and FindAll Call', () => {
     cy.viewport(1920, 1080)
     cy.intercept({
       method: 'GET',
       url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat`,
     }).as('findallErrors-request');
     cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.wait(1000)
+    //cy.wait(1000)
     cy.url().should('include', '#/verwaltung')
     cy.get('[data-cy=verwaltung-sync-button]').click()
-    cy.wait(1000)
+    //cy.wait(1000)
     cy.url().should('include', '#/verwaltung/migration')
 
-    cy.wait(1000)
+    //cy.wait(1000)
     cy.wait('@findallErrors-request')
   })
 })
+
+
 
 
