@@ -186,6 +186,34 @@ export class RegionDataProviderService extends DataProviderService {
           });
     });
   }
+  private cachedRegions: RegionDO[] | null = null;
 
+  public async getAllRegions(): Promise<RegionDO[]> {
+    if (this.cachedRegions === null) {
+      const response = await this.findAll();
+      this.cachedRegions = response.payload;
+    }
+    return this.cachedRegions;
+  }
+
+  public async findAllowedRegionsForVereine(parentRegionId: number, allowedRegions: number[],): Promise<number[]> {
+    const allRegions = await this.getAllRegions();
+    const queue: number[] = [parentRegionId];
+    const seenRegions: Set<number> = new Set();
+    while (queue.length > 0) {
+      const currentRegionId = queue.shift()!;
+      if (!seenRegions.has(currentRegionId)) {
+        if (!allowedRegions.includes(currentRegionId)) {
+          allowedRegions.push(currentRegionId);
+        }
+        seenRegions.add(currentRegionId);
+        const subRegions = allRegions.filter(
+          region => region.regionUebergeordnet === currentRegionId
+        );
+        queue.push(...subRegions.map(region => region.id));
+      }
+    }
+    return allowedRegions;
+  }
 
 }
