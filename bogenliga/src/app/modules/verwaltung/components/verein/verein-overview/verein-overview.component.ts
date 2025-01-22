@@ -153,14 +153,10 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
             }
           })
           let allowedRegions: any[] = [];
-          let seenRegions: any[] = [];
 
-          // Erzeuge ein Array von Promises für alle rekursiven Aufrufe
-          const recursivePromises = ligaRegions.map(e =>
-            this.findAllowedRegionsForVereine(e, allowedRegions, seenRegions)
-          );
-          // Warte auf den Abschluss aller rekursiven Aufrufe
-          await Promise.all(recursivePromises);
+          for (const regionId of ligaRegions) {
+            await this.regionProvider.findAllowedRegionsForVereine(regionId, allowedRegions);
+          }
           //Erlaubte Vereine in die Liste schreiben
           await this.vereinProvider.findAll().then((value) => {
             let filteredVereine = value.payload.filter((f) => {
@@ -178,19 +174,6 @@ export class VereinOverviewComponent extends CommonComponentDirective implements
               .finally(() => this.loading = false);
   }
 
-  public async findAllowedRegionsForVereine(parentRegionId, allowedRegions, seenRegions): Promise<any> {
-    if (!(allowedRegions.includes(parentRegionId))) {
-      allowedRegions.push(parentRegionId);  // Füge die übergeordnete Region zur erlaubten Regionenliste hinzu
-    }
-    const region = await this.regionProvider.findAll();
-    const subRegions = region.payload.filter(e => e.regionUebergeordnet === parentRegionId && !seenRegions.includes(e.id));
-    const recursivePromises = subRegions.map(e =>
-      this.findAllowedRegionsForVereine(e.id, allowedRegions, seenRegions)
-    );
-
-    await Promise.all(recursivePromises);
-    return allowedRegions;
-  }
 
   public findBySearch($event: string) {
     this.vereinDataProvider.findBySearch($event)
