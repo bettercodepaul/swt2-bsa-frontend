@@ -165,7 +165,7 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
     /*
      Hier werden zu Beginn alle benötigten Daten geladen und die jeweiligen Variablen geschrieben.
      Jahr -> Liga (ohne Dopplung) -> Veranstaltung
-     laodedYears sind dabei alle vorhanden Jahre, availableYears nur die in denen auch etwas steht.
+     loadedYears sind dabei alle vorhandenen Jahre, availableYears nur die, in denen auch etwas steht.
      */
 
     this.loadedYears = [];
@@ -178,51 +178,59 @@ export class LigatabelleComponent extends CommonComponentDirective implements On
 
     try {
       console.log(this.onOfflineService.isOffline());
+
+      // Lade alle Sportjahre
       const responseYear = await this.veranstaltungsDataProvider.findAllSportyearDestinct();
       this.loadedYears = responseYear.payload;
 
-      for (const year of responseYear.payload) {
+      // Promises für paralleles Laden der Veranstaltungen
+      const veranstaltungenPromises = this.loadedYears.map(async (year) => {
         const responseVeranstaltung = await this.veranstaltungsDataProvider.findBySportjahrDestinct(year.sportjahr);
 
+        // Füge Veranstaltungen in die Map hinzu
         for (const veranstaltung of responseVeranstaltung.payload) {
-          /*
-           Sobald es keine Veranstaltung für dieses Sporjahr gibt bekommen wir einen leeren Array in responseVeranstaltung.payload zurück,
-           somit kann nicht iteriert werden. Ist veranstaltung als VeranstaltungDO aber vorhanden iterieren wir.
-           Dadurch wird gleichzeitig nur die Tabellen mit Werten befüllt die auch Veranstaltungen haben.
-           */
-
-          this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung); // -> Ligatabelle
+          this.veranstaltungIdMap.set(veranstaltung.id, veranstaltung);
         }
+
+        // Speichere Veranstaltungen, wenn vorhanden
         if (responseVeranstaltung.payload.length > 0) {
-          this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);  // -> "Liga"
+          this.loadedVeranstaltungen.set(year.sportjahr, responseVeranstaltung.payload);
           if (!this.availableYears.includes(year)) {
-            this.availableYears.push(year); // -> "Sportjahr"
+            this.availableYears.push(year);
           }
         }
-      }
+      });
 
-      // lese aktives Sportjahr aus Datenbank aus aus im Online-Modus
+      // Warte, bis alle Promises abgeschlossen sind
+      await Promise.all(veranstaltungenPromises);
+
+      // Sortiere die verfügbaren Jahre in absteigender Reihenfolge (neustes Jahr zuerst)
+      this.availableYears.sort((a, b) => b.sportjahr - a.sportjahr);
+
+      // Lese aktives Sportjahr aus Datenbank im Online-Modus
       if (!this.onOfflineService.isOffline()) {
         this.aktivesSportjahr = await getActiveSportYear(this.einstellungenDataProvider);
       }
+
       this.selectedYearForVeranstaltung = this.availableYears[0].sportjahr;
       this.veranstaltungenForYear = this.loadedVeranstaltungen.get(this.selectedYearForVeranstaltung);
       this.loadVeranstaltung(this.veranstaltungenForYear[0]);
 
-      // Prüfe ob das aktive Sportjahr in der Liste der verfügbaren Jahre ist
+      // Prüfe, ob das aktive Sportjahr in der Liste der verfügbaren Jahre ist
       for (const sportjahr of this.availableYears) {
-        // finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
+        // Finde Index von aktivem Sportjahr in der Liste, sonst nimm neustes Jahr (index = 0, siehe Initialisierung)
         if (sportjahr.sportjahr === this.aktivesSportjahr) {
           indexOfSelectedYearInAvailableYears = counter;
         }
         counter++;
       }
+
       this.loading = false;
       this.loadingLigatabelle = false;
       this.selectedYearId = this.availableYears[indexOfSelectedYearInAvailableYears].id;
 
       if (this.availableYears.length > 0) {
-        // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (IndexOfSelectedYearInAvailableYears = 0)
+        // Selektiert das aktive Sportjahr (wenn vorhanden) oder das aktuellste Jahr (indexOfSelectedYearInAvailableYears = 0)
         selectedYear.push(this.availableYears[indexOfSelectedYearInAvailableYears]);
       }
     } catch (e) {
