@@ -1,6 +1,6 @@
 // CAN_READ_DEFAULT
 /**
- * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
+ * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in.
  */
 it('Login erfolgreich', function () {
   cy.loginAdmin();
@@ -21,7 +21,7 @@ it('Regionen Anzeigen', function () {
 // CAN_MODIFY_MY_ORT
 /**
  * This test adds a Region and checks if it gets added.
- * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
+ * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline.
  */
 it('Region Hinzufügen', function () {
   cy.get('body').then((body) => {
