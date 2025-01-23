@@ -145,4 +145,22 @@ export class TabletSessionProviderService extends DataProviderService {
   public createAccessToken() {
     return Math.floor(100000 + Math.random() * 900000);
   }
+
+  public toggleSessionActiveState(session: TabletSessionDO, isActive: boolean): Promise<BogenligaResponse<TabletSessionDO>> {
+    if (isActive === null || isActive === undefined) {
+      console.error("Invalid isActive value. It must be true or false.");
+      isActive = false;  // Default to false if isActive is invalid
+    }
+
+    session.isActive = isActive;
+    return this.update(session) // Call the existing update method
+               .then((response) => {
+                 console.log(`Session successfully updated. Active: ${isActive}`);
+                 return response;
+               })
+               .catch((error) => {
+                 console.error(`Failed to update session. Active: ${isActive}`, error);
+                 throw error; // Rethrow the error for handling in the caller
+               });
+  }
 }

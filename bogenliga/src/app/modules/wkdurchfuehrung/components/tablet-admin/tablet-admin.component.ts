@@ -54,112 +54,8 @@ export class TabletAdminComponent implements OnInit {
             });
       }
     });
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        console.log('NavigationStart: ', event.url);  // Logs when navigation starts
 
-        const currentUrl = event.url;
-
-        // Check if the URL ends with valid matchscheibennr and accessToken (spotter page)
-        if (this.isSpotterPage(currentUrl)) {
-          console.log('We are on the spotter page.');
-          // Extract matchscheibennr and accessToken from the URL
-          const [scheibenNr, accessToken] = currentUrl.split('/').slice(-2);
-          this.activateSession();
-          // Ensure both matchscheibennr and accessToken are integers and valid
-          if (this.isValidMatchScheibenNr(scheibenNr) && this.isValidAccessToken(accessToken)) {
-            console.log(`Tablet entered the page with QR: ${currentUrl}`);
-
-            const sessionKey = `${this.currentSession?.scheibenNr}-${this.currentSession?.accessToken}`;
-            localStorage.setItem(sessionKey, 'used'); // Mark the session as used
-            // Add session to active sessions (track in local memory)
-            this.activeSessions.add(sessionKey);
-          } else {
-            console.log('Invalid matchscheibennr or accessToken.');
-          }
-        } else {
-          console.log('We are on the normal tablet page.');
-          // Handle logic for the normal tablet page if needed
-          this.deactivateSession();  // Optionally deactivate session here if needed
-        }
-      }
-
-      if (event instanceof NavigationEnd) {
-        console.log('NavigationEnd: ', event.url);  // Logs when the navigation ends
-      }
-    });
   }
-  // Check if the session is active or blocked by checking localStorage
-  private checkActiveSession(scheibenNr: string, accessToken: string): boolean {
-    const sessionKey = `${scheibenNr}-${accessToken}`;
-    const sessionStatus = localStorage.getItem(sessionKey);
-
-    if (sessionStatus === 'used') {
-      console.log(`Session for ScheibenNr ${scheibenNr} and AccessToken ${accessToken} is already in use.`);
-      return false; // Block access
-    }
-    return true; // Session is available
-  }
-
-// Check if the current URL is valid and whether it's in use
-  private isSpotterPage(url: string): boolean {
-    const pathParts = url.split('/').filter(Boolean); // Split the URL into parts and remove empty segments
-    if (pathParts.length >= 2) {
-      const scheibenNr = pathParts[pathParts.length - 2];
-      const accessToken = pathParts[pathParts.length - 1];
-
-      if (this.isValidMatchScheibenNr(scheibenNr) && this.isValidAccessToken(accessToken)) {
-        // Check if the session is already in use
-        if (!this.checkActiveSession(scheibenNr, accessToken)) {
-          console.log('This session is already in use. Redirecting to blocked page.');
-          this.router.navigate(['/blocked']); // Redirect to blocked page
-          return false; // Do not allow access
-        }
-        return true; // Allow access if the session is not used
-      }
-    }
-    return false; // Not a valid spotter page
-  }
-
-// Helper method to check if the matchscheibennr is a valid integer
-  private isValidMatchScheibenNr(value: string): boolean {
-      return !isNaN(Number(value)) && Number(value) > 0;  // Ensure it's a positive integer
-    }
-
-// Helper method to check if the accessToken is a valid 6-digit integer
-  private isValidAccessToken(value: string): boolean {
-      return !isNaN(Number(value)) && value.length === 6;  // Ensure it's a 6-digit number
-    }
-
-// Method to deactivate the session (could be used when leaving the spotter page)
-  private deactivateSession() {
-    const scheibenNr = this.currentSession.scheibenNr;
-    const accessToken = this.currentSession.accessToken.toString();
-    const sessionKey = `${scheibenNr}-${accessToken}`;
-
-    // Remove the session state from localStorage
-    localStorage.removeItem(sessionKey);
-
-    // Remove from active sessions in the component's memory
-    this.activeSessions.delete(sessionKey);
-    console.log(`Session for ScheibenNr ${scheibenNr} and AccessToken ${accessToken} deactivated.`);
-  }
-
-
-// Method to activate the session (called when tablet enters the spotter page)
-  private activateSession() {
-    const scheibenNr = this.currentSession.scheibenNr;
-    const accessToken = this.currentSession.accessToken.toString();
-    const sessionKey = `${scheibenNr}-${accessToken}`;
-
-    // Mark the session as "used" in localStorage
-    localStorage.setItem(sessionKey, 'used'); // Mark as used
-
-    // Add session to active sessions (in the component memory)
-    this.activeSessions.add(sessionKey);
-    console.log(`Session for ScheibenNr ${scheibenNr} and AccessToken ${accessToken} is now active.`);
-  }
-
 
 
   public updateSession(scheibenNr: number) {
@@ -171,10 +67,26 @@ export class TabletAdminComponent implements OnInit {
       return; // Prevent activation
     }
 
-    sessionToUpdate.isActive = true;
-    this.activeSessions[scheibenNr] = sessionToUpdate.accessToken; // Link accessToken to scheibenNr
-    this.storeCurrentSession(sessionToUpdate);
+    // Set isActive to false before updating
+    this.tabletSessionService.toggleSessionActiveState(sessionToUpdate, true)
+        .then((success) => {
+          this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
+          this.storeCurrentSession(this.currentSession);
+          this.accessToken = '';
+          this.setTabletEingabeRoute();
 
+          // Log the updated session to verify the change
+          console.log('Updated Session (Active True):', this.currentSession);
+
+          if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
+            this.router.navigate([this.tabletEingabeRoute]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    // Update the session with isActive set to true
     this.tabletSessionService.update(sessionToUpdate)
         .then((success) => {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
@@ -195,8 +107,26 @@ export class TabletAdminComponent implements OnInit {
 
   public updateSessionWithoutTokenGeneration(scheibenNr: number) {
     const sessionToUpdate = this.sessions[scheibenNr - 1];
-    sessionToUpdate.isActive = !sessionToUpdate.isActive;
-    this.storeCurrentSession(sessionToUpdate);
+
+    // Set isActive to false before updating
+    this.tabletSessionService.toggleSessionActiveState(sessionToUpdate, false)
+        .then((success) => {
+          this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
+          this.storeCurrentSession(this.currentSession);
+          this.accessToken = '';
+          this.setTabletEingabeRoute();
+
+          // Log the updated session to verify the change
+          console.log('Updated Session (Active False):', this.currentSession);
+
+          if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
+            this.router.navigate([this.tabletEingabeRoute]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    // Update the session with isActive set to false
     this.tabletSessionService.updateWithoutTokenCreation(sessionToUpdate)
         .then((success) => {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
@@ -211,6 +141,7 @@ export class TabletAdminComponent implements OnInit {
         });
   }
 
+
   private setActiveSession() {
     const currentTabletSession = localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
     this.currentDeviceIsActive = Boolean(currentTabletSession) &&
@@ -222,6 +153,11 @@ export class TabletAdminComponent implements OnInit {
   }
 
   private storeCurrentSession(session: TabletSessionDO) {
+    // Ensure isActive is either true or false
+    if (session.isActive === null || session.isActive === undefined) {
+      session.isActive = false;  // Default to false if null or undefined
+    }
+
     if (session.isActive) {
       localStorage.setItem(STORAGE_KEY_TABLET_SESSION, JSON.stringify(session));
       this.currentDeviceIsActive = true;
