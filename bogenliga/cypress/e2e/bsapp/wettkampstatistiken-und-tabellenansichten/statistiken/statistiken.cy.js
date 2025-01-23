@@ -50,7 +50,6 @@ describe('Statistics dropdown menu', function() {
 
     cy.get('#regionenForm > #selectStatistik > .row > .col-sm-8 > #statistiken').select('gesamtstatistik', {force: true})
 
-
     })
 
 })
