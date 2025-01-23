@@ -1,14 +1,14 @@
 <div id="homePage">
 
   <!--Welcome Page Title and paragraph-->
-  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasLigaIDInUrl && (!hasLigaNameInUrl)">
+  <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="!hasLigaIDInUrl && (!hasLigaNameInUrl)" data-cy=welcome-banner>
     <h1 class="homeHeading">{{'HOME.HOME.WELCOME' | translate }}</h1>
     <p class="subtitle">{{ 'HOME.HOME.CONTENT' | translate }}</p>
   </div>
 
   <!--Ligadetail Page Title-->
   <div style="max-width: 75%; margin: 15px; padding: 5px" *ngIf="hasLigaIDInUrl || hasLigaNameInUrl" >
-    <h1 class="homeHeading" [innerHTML]="selectedLigaName" ></h1>
+    <h1 class="homeHeading" [innerHTML]="selectedLigaName"></h1>
   </div>
 
   <!--Wettkampftabelle-->
