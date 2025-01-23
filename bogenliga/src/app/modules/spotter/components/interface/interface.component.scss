@@ -1,216 +1,319 @@
-  .button-footer {
-    font-size: 25px;
-    background: #cbcbcb;
-    border-radius: 5px;
-    padding: 10px;
-    text-align: center;
-    color: #4a4a4a;
-    outline-style: none;
+.bla-spotter-container {
+  display: grid;
+  grid-template-rows: 10px 1fr 2fr 10px;
+  grid-template-columns: 10px 1fr 10px;
+  grid-template-areas:
+    ". . ."
+    ". bla-spotter-display ."
+    ". bla-spotter-nummernfeld ."
+    ". . .";
+  height: 100vh;
+  margin: 0;
+
+  .circle.active {
+    background-color: blue;
+    color: white;
+    border: 2px solid blue;
   }
 
-  ::ng-deep body {
-      overflow: hidden;
+  .selected-circle {
+    border: 2px solid blue;
   }
 
-  .button-square {
-    background: #C4C4C4;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    width: 125px;
-    height: 125px;
-    margin: 10px;
-    color: #595959;
-    font-size: 75px;
-    outline-style: none;
-    border: none;
+  .bla-spotter-display {
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+    grid-template-columns: 1fr 5fr;
+    grid-area: bla-spotter-display;
+    grid-template-areas:
+      "Mannschaftsname WeitereFelder"
+      "Bahnanzeige Punktefeld";
+    grid-gap: 5px 5px;
+
+    .display-header-Mannschaft {
+      grid-area: Mannschaftsname;
+      .mannschaft{
+        margin-left: 20%;
+        font-size: x-large;
+
+      }
+      .match-number{
+        margin-left: 20%;
+        font-size: large;
+
+      }
+    }
+
+    .display-header-Bahnanzeige {
+      grid-area: Bahnanzeige;
+      margin-left: 20%;
+
+      grid-template-areas:
+      "Circles"
+      "Bahn";
+
+      .circle-area {
+        grid-area: Circles;
+        grid-template-columns: repeat(8, 1fr);
+      }
+
+      .target {
+        position: relative;
+        width: 100%; // Gesamtgröße des Kreises
+        height: 0;
+        padding-bottom: 100%;
+      }
+
+      .small-circle {
+        position: absolute;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .bla-yellow {
+        width: 33.33%; // Größe des inneren Kreises relativ zur Gesamtgröße
+        height: 33.33%;
+        background-color: #FFCC34;
+        top: 33.33%; // Zentrierung
+        left: 33.33%;
+      }
+
+      .bla-red {
+        width: 66.66%; // Größe des mittleren Kreises relativ zur Gesamtgröße
+        height: 66.66%;
+        background-color: #F40E0E;
+        top: 16.66%; // Zentrierung
+        left: 16.66%;
+      }
+
+      .bla-blue {
+        width: 100%; // Größe des äußeren Kreises relativ zur Gesamtgröße
+        height: 100%;
+        background-color: #487AF5;
+        top: 0; // Zentrierung
+        left: 0;
+      }
+
+      .bla-gray {
+        width: 100%;
+        height: 100%;
+        background-color: #888888;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    .display-body {
+      grid-area: Punktefeld;
+      display: grid;
+      grid-template-rows: 2fr 1fr;
+      grid-template-areas:
+        "Display-Punkteanzeige"
+        "Display-Matchanzeige";
+
+      .punkteanzeige {
+        display: grid;
+        grid-area: Display-Punkteanzeige;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2%;
+        padding-left: 10%;
+        padding-right: 10%;
+        .btn-circle {
+          width: 100px;
+          height: 100px;
+          font-size: 45px;
+          margin: 5px;
+          border-radius: 50%;
+        }
+
+        .circle {
+          width: 100%;
+          height: 100%;
+          background-color: #888888;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 2rem;
+          font-weight: bold;
+        }
+
+        .circle-text {
+          display: inline-block;
+        }
+      }
+
+      .matchanzeige {
+        display: grid;
+        grid-area: Display-Matchanzeige;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5%;
+        padding-left: 20%;
+        padding-right: 20%;
+
+
+        .rounded-rectangle {
+          width: 100%;
+          height: 100%;
+          background-color: #888888;
+          border-radius: 25%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+
+        .rectangle-text {
+          display: inline-block;
+        }
+      }
+    }
   }
 
-  .button-square.selected {
-    background-color: #d69558;
-}
+  .bla-spotter-nummernfeld {
+    display: grid;
+    grid-area: bla-spotter-nummernfeld;
+    grid-template-columns: 1fr 5fr;
+    grid-template-areas: "MissShot Punktefelder";
+    grid-gap: 25px 25px;
+    margin-top: 1%;
+    .bla-nachstersatz
+    {
+      height: 75px;
+      background: gray;
+    }
+    .bla-beenden
+    {
+      height: 75px;
+      margin-left: 5%;
+      background: gray;
+    }
+    .nummernfeld-miss-shot {
+      display: grid;
+      grid-area: MissShot;
 
-.button-square.old {
-  background-color: #d69558;
-}
+      .punktefeld-M {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        background-color: #888888;
+        font-size: 5rem;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 10px;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: background-color 0.3s;
 
-.button-square.new {
-  background-color: #8ac679;
-}
+        &::before {
+          content: '';
+          position: absolute;
+          top: -10px;
+          bottom: -10px;
+          left: -10px;
+          right: -10px;
+        }
 
-.btn-circle {
-  background: #cbcbcb;
-  width: 150px;
-  height: 150px;
-  border-radius: 100%;
-  text-align: center;
-  margin-right: 10px;
-  margin-left: 10px;
-  font-size: 75px;
-  color: #4a4a4a;
-  outline-style: none;
-}
+        &:hover {
+          background-color: #d6d6d6;
+        }
+      }
+    }
 
-.btn-circle.header {
-  width: 75px;
-  height: 75px;
-  font-size: 30px;
-  margin-left: 5px;
-  margin-right: 5px;
-}
+    .nummernfeld-punktefelder {
+      display: grid;
+      grid-area: Punktefelder;
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-areas:
+        "zehn neun acht sieben sechs"
+        "zehn-unsicher neun-unsicher acht-unsicher sieben-unsicher sechs-unsicher";
+      grid-gap: 25px 25px;
 
-.btn-circle.header.selected {
-  border-color: #73e5ef;
-  border-width: 7.5px;
-}
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        font-size: 5rem;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 10px;
+        position: relative;
+        transition: background-color 0.3s;
 
-.btn-circle.current {
-  background-color: #d69558;
-}
+        &::before {
+          content: '';
+          position: absolute;
+          top: -20px;
+          bottom: -20px;
+          left: -20px;
+          right: -20px;
+        }
 
-.btn-circle.final {
-  background-color: #8ac679;
-}
+        &:hover {
+          background-color: #d6d6d6;
+        }
+      }
 
-.btn-circle.unsure {
-  background-color: #dd8583;
-}
+      .punktefeld-10-unsicher {
+        grid-area: zehn-unsicher;
+        background-color: #FFCC34;
+      }
 
-.checkbox-xl .custom-control-label::before,
-.checkbox-xl .custom-control-label::after {
-  width: 40px;
-  height: 40px;
-}
+      .punktefeld-9-unsicher {
+        grid-area: neun-unsicher;
+        background-color: #FFCC34;
+      }
 
-.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
-    background-color: #dd8583;
+      .punktefeld-8-unsicher {
+        grid-area: acht-unsicher;
+        background-color: #F40E0E;
+      }
+
+      .punktefeld-7-unsicher {
+        grid-area: sieben-unsicher;
+        background-color: #F40E0E;
+      }
+
+      .punktefeld-6-unsicher {
+        grid-area: sechs-unsicher;
+        background-color: #487AF5;
+      }
+
+      .punktefeld-10 {
+        grid-area: zehn;
+        background-color: #FFCC34;
+      }
+
+      .punktefeld-9 {
+        grid-area: neun;
+        background-color: #FFCC34;
+      }
+
+      .punktefeld-8 {
+        grid-area: acht;
+        background-color: #F40E0E;
+      }
+
+      .punktefeld-7 {
+        grid-area: sieben;
+        background-color: #F40E0E;
+      }
+
+      .punktefeld-6 {
+        grid-area: sechs;
+        background-color: #487AF5;
+      }
+    }
   }
-
-.checkbox-xl .custom-control-label {
-  padding-top: 5px;
-  padding-left: 30px;
-  color: whitesmoke;
-  font-size: 25px;
-  -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
-
-.custom-control {
-    padding-left: 0px;
-}
-
-#back-button {
-    background-color: transparent;
-    color: whitesmoke;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    border: none;
-    outline: none;
-    opacity: 25%;
-    cursor: pointer;
-    font-size: 25px;
-}
-
-@media (max-width: 1200px) {
-    .button-square {
-        width: 110px;
-        height: 110px;
-        margin: 7.5px;
-        font-size: 60px;
-    }
-    .btn-circle {
-        width: 125px;
-        height: 125px;
-        font-size: 65px;
-        margin: 7.5px;
-    }
-}
-
-@media (max-width: 992px) {
-    .button-square {
-        width: 80px;
-        height: 80px;
-        margin: 5px;
-        font-size: 45px;
-    }
-    .btn-circle {
-        width: 100px;
-        height: 100px;
-        font-size: 45px;
-        margin: 5px;
-    }
-}
-
-@media (max-width: 768px) {
-    .button-square {
-    width: 80px;
-    height: 80px;
-    margin: 5px;
-    font-size: 45px;
-    }
-    #miss {
-        margin-bottom: 25px;
-    }
-}
-
-@media (max-width: 576px) {
-    .button-square {
-        width: 65px;
-        height: 65px;
-        margin: 2.5px;
-        font-size: 20px;
-    }
-    .btn-circle.header {
-        width: 60px;
-        height: 60px;
-        font-size: 15px;
-        margin-left: 2.5px;
-        margin-right: 2.5px;
-    }
-    .btn-circle {
-        width: 100px;
-        height: 100px;
-        font-size: 35px;
-        margin: 5px;
-    }
-    .button-footer {
-        font-size: 20px;
-    }
-    #miss {
-        margin-bottom: 10px;
-    }
-}
-
-.info-box-unsure {
-  display: flex;
-  align-items: center;
-  background-color: #eaf4fc;
-  border: 1px solid #b5d8f1;
-  border-radius: 8px;
-  padding: 2px;
-  margin: 10px 0;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-  color: #0b5a8a;
-
-}
-
-.info-icon-unsure {
-  font-size: 24px;
-  margin-right: 10px;
-}
-
-.info-content-unsure {
-  font-size: 16px;
-  line-height: 1.4;
-}
-
-.info-content-unsure strong {
-  font-weight: bold;
-  color: #074a72;
-}
-

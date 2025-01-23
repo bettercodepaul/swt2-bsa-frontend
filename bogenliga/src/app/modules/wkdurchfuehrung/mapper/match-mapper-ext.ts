@@ -60,9 +60,8 @@ export class MatchMapperExt {
           }
         }
         for (const passen of schuetzen) {
-          for (let i = 0; i < passen.length && i < 5; i++) { // Sicherstellen, dass i in den gültigen Bereich fällt.
-            const { ringzahlPfeil1, ringzahlPfeil2 } = passen[i];
-            sumSatz[i] += ringzahlPfeil1 + ringzahlPfeil2;
+          if (i >= 0 && i < passen.length && i < 5) {
+            sumSatz[i] += passen[i].ringzahlPfeil1 + passen[i].ringzahlPfeil2;
           }
         }
       }
