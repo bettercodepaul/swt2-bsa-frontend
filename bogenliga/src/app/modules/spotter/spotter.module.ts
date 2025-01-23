@@ -9,11 +9,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { InterfaceGuard, AuthenticationGuard} from './guards';
 
 import { InterfaceComponent, AuthenticationComponent } from './components';
-import { NummernfeldComponent } from './components/interface/nummernfeld/nummernfeld.component';
-import { PunkteeingabeComponent } from './components/interface/punkteeingabe/punkteeingabe.component';
+//import { NummernfeldComponent } from './components/interface/nummernfeld/nummernfeld.component';
+//import { PunkteeingabeComponent } from './components/interface/punkteeingabe/punkteeingabe.component';
 
 @NgModule({
-  declarations: [InterfaceComponent, AuthenticationComponent, NummernfeldComponent, PunkteeingabeComponent],
+  //declarations: [InterfaceComponent, AuthenticationComponent, NummernfeldComponent, PunkteeingabeComponent],
+  declarations: [InterfaceComponent, AuthenticationComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(SPOTTER_ROUTES),

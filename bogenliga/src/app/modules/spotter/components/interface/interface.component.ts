@@ -31,6 +31,7 @@ export class InterfaceComponent implements OnInit {
   allowedToSaveSet = false;
 
   circles: { color: string, size: number, top: number, left: number }[] = [];
+  finish: boolean;
 
   constructor(private router: Router, private spotterService: SpotterService) { }
 
@@ -157,6 +158,9 @@ export class InterfaceComponent implements OnInit {
     this.editing = true;
     this.selectedValue = this.match.set().play(play).result;
     this.editedPlay = play;
+    if(play === 6){
+      this.finish = true;
+    }
   }
 
   onNextSet() {
@@ -218,6 +222,7 @@ export class InterfaceComponent implements OnInit {
     if (this.selectedValue >= 0 && this.selectedValue <= 10) {
       this.match.set().play(this.selectedPlayNumber).result = this.selectedValue;
     }
+    this.onSave();
   }
 
   onExit() {

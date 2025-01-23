@@ -10,6 +10,16 @@
   height: 100vh;
   margin: 0;
 
+  .circle.active {
+    background-color: blue; /* Blau als Hintergrundfarbe */
+    color: white; /* Weißer Text (optional) */
+    border: 2px solid blue; /* Optional: Wenn du auch den Rand hervorheben willst */
+  }
+
+  .selected-circle {
+    border: 2px solid blue; /* Blau für die Auswahl */
+  }
+
   .bla-spotter-display {
     display: grid;
     grid-template-rows: 1fr 3fr;
@@ -30,8 +40,7 @@
       background-color: #28A745;
       grid-template-areas:
       "Circles"
-      "Bahn"
-    ;
+      "Bahn";
 
       .circle-area {
         grid-area: Circles;
@@ -129,7 +138,6 @@
         padding-right: 20%;
 
 
-
         .rounded-rectangle {
           width: 100%;
           height: 100%;
@@ -200,8 +208,7 @@
       grid-template-columns: repeat(5, 1fr);
       grid-template-areas:
         "zehn neun acht sieben sechs"
-        "zehn-unsicher neun-unsicher acht-unsicher sieben-unsicher sechs-unsicher"
-    ;
+        "zehn-unsicher neun-unsicher acht-unsicher sieben-unsicher sechs-unsicher";
       grid-gap: 25px 25px;
 
       button {

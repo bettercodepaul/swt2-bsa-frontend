@@ -1,26 +1,56 @@
+<style>
+  .selected-circle {
+    border: 2px solid blue;
+  }
+</style>
+
 <div class="bla-spotter-container">
   <div class="bla-spotter-display">
-    <div class="display-header-Mannschaft"></div>
-    <div class="display-header-Bahnanzeige"> </div>
+    <div class="display-header-Mannschaft"> {{ match.mannschaft }}</div>
+    <div class="display-header-Bahnanzeige"></div>
     <div class="display-body">
       <div class="punkteanzeige">
-        <div class="circle">
-          <span class="circle-text">1</span>
+        <div class="circle"
+             [ngClass]="{'selected-circle': selectedPlayNumber === 1}">
+          <button class="btn-circle header" (click)="onEdit(1)"
+                  [ngClass]="{'selected': selectedPlayNumber === 1, 'final': match.set().play(1).final && match.set().currentPlayNumber > (1), 'unsure': !match.set().play(1).final}">
+            {{ match.set().play(1).result }}
+          </button>
         </div>
-        <div class="circle">
-          <span class="circle-text">2</span>
+        <div class="circle"
+             [ngClass]="{'selected-circle': selectedPlayNumber === 2}">
+          <button class="btn-circle header" (click)="onEdit(2)"
+                  [ngClass]="{'selected': selectedPlayNumber === 2, 'final': match.set().play(2).final && match.set().currentPlayNumber > (2), 'unsure': !match.set().play(2).final}">
+            {{ match.set().play(2).result }}
+          </button>
         </div>
-        <div class="circle">
-          <span class="circle-text">3</span>
+        <div class="circle"
+             [ngClass]="{'selected-circle': selectedPlayNumber === 3}">
+          <button class="btn-circle header" (click)="onEdit(3)"
+                  [ngClass]="{'selected': selectedPlayNumber === 3, 'final': match.set().play(3).final && match.set().currentPlayNumber > (3), 'unsure': !match.set().play(3).final}">
+            {{ match.set().play(3).result }}
+          </button>
         </div>
-        <div class="circle">
-          <span class="circle-text">4</span>
+        <div class="circle"
+             [ngClass]="{'selected-circle': selectedPlayNumber === 4}">
+          <button class="btn-circle header" (click)="onEdit(4)"
+                  [ngClass]="{'selected': selectedPlayNumber === 4, 'final': match.set().play(4).final && match.set().currentPlayNumber > (4), 'unsure': !match.set().play(4).final}">
+            {{ match.set().play(4).result }}
+          </button>
         </div>
-        <div class="circle">
-          <span class="circle-text">5</span>
+        <div class="circle"
+             [ngClass]="{'selected-circle': selectedPlayNumber === 5}">
+          <button class="btn-circle header" (click)="onEdit(5)"
+                  [ngClass]="{'selected': selectedPlayNumber === 5, 'final': match.set().play(5).final && match.set().currentPlayNumber > (5), 'unsure': !match.set().play(5).final}">
+            {{ match.set().play(5).result }}
+          </button>
         </div>
-        <div class="circle">
-          <span class="circle-text">6</span>
+        <div class="circle"
+             [ngClass]="{'selected-circle': selectedPlayNumber === 6}">
+          <button class="btn-circle header" (click)="onEdit(6)"
+                  [ngClass]="{'selected': selectedPlayNumber === 6, 'final': match.set().play(6).final && match.set().currentPlayNumber > (6), 'unsure': !match.set().play(6).final}">
+            {{ match.set().play(6).result }}
+          </button>
         </div>
       </div>
       <div class="matchanzeige">
@@ -44,19 +74,52 @@
   </div>
   <div class="bla-spotter-nummernfeld">
     <div class="nummernfeld-miss-shot">
-      <button class="punktefeld-M">M</button>
+      <button class="punktefeld-M"
+              (click)="selectResult(0)"
+              [ngClass]="{'selected': selectedValue === 0}"
+      >
+        M
+      </button>
     </div>
-    <div class="nummernfeld-punktefelder">
+    <div *ngIf="!spotting || !editing" class="nummernfeld-punktefelder">
       <button class="punktefeld-10-unsicher">10*</button>
       <button class="punktefeld-9-unsicher">9*</button>
       <button class="punktefeld-8-unsicher">8*</button>
       <button class="punktefeld-7-unsicher">7*</button>
       <button class="punktefeld-6-unsicher">6*</button>
-      <button class="punktefeld-10">10</button>
-      <button class="punktefeld-9">9</button>
-      <button class="punktefeld-8">8</button>
-      <button class="punktefeld-7">7</button>
-      <button class="punktefeld-6">6</button>
+      <button class="punktefeld-10" (click)="selectResult(10)"
+              [ngClass]="{'selected': selectedValue === 10}">
+        10
+      </button>
+      <button class="punktefeld-9" (click)="selectResult(9)"
+              [ngClass]="{'selected': selectedValue === 9}">
+        9
+      </button>
+
+      <button class="punktefeld-8" (click)="selectResult(8)"
+              [ngClass]="{'selected': selectedValue === 8}">
+        8
+      </button>
+
+      <button class="punktefeld-7" (click)="selectResult(7)"
+              [ngClass]="{'selected': selectedValue === 7}">
+        7
+      </button>
+
+      <button class="punktefeld-6" (click)="selectResult(6)"
+              [ngClass]="{'selected': selectedValue === 6}">6
+      </button>
+
+    </div>
+
+  </div>
+  <div *ngIf="!spotting && !editing && !allowedToSaveSet" class="" style="padding: 25px 0px;">
+    <div class="col-6 p-0 text-center">
+      <button type="button" class="button-footer" (click)="onNextSet()" [disabled]="!match.set().canFinish()">{{'SPOTTER.COMPONENTS.BUTTON.NEACHSTERSATZ'| translate}}</button>
+    </div>
+    <div class="col-6 p-0 text-center">
+      <button type="button" class="button-footer" (click)="onFinishMatch()"
+              [disabled]="!match.set().canFinish()">{{'SPOTTER.COMPONENTS.BUTTON.BEENDEN'| translate}}</button>
     </div>
   </div>
 </div>
