@@ -1,19 +1,22 @@
-import {SpotterResult} from './../../types/spotter-result.enum';
-import {SpotterService} from './../../services/spotter.service';
-import {MatchJsonToClass} from './../../mapper/match-json-to-class.mapper';
-import {Router} from '@angular/router';
-import {Match} from './../../types/match';
-import {Component, OnInit} from '@angular/core';
-import {faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons';
+import { SpotterResult } from './../../types/spotter-result.enum';
+import { SpotterService } from './../../services/spotter.service';
+import { MatchJsonToClass } from './../../mapper/match-json-to-class.mapper';
+import { Router } from '@angular/router';
+import { Match } from './../../types/match';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import {MatchDOExt} from "@wkdurchfuehrung/types/match-do-ext.class";
 import {BogenligaResponse, RequestResult} from '@shared/data-provider';
+import {TabletSessionDO} from '@wkdurchfuehrung/types/tablet-session-do.class';
+import {Session} from 'protractor';
+import {TabletSessionProviderService} from '@wkdurchfuehrung/services/tablet-session-provider.service';
 
 @Component({
   selector: 'bla-interface',
   templateUrl: './interface.component.html',
   styleUrls: ['./interface.component.scss']
 })
-export class InterfaceComponent implements OnInit {
+export class InterfaceComponent implements OnInit, OnDestroy{
 
   faArrowCircleLeft = faArrowCircleLeft;
 
@@ -37,9 +40,11 @@ export class InterfaceComponent implements OnInit {
   editing = false;
   editedPlay = -1;
   allowedToSaveSet = false;
-  finish: boolean;
+  TabletSession: TabletSessionProviderService;
+  session: TabletSessionDO;
+  private finish: boolean;
 
-  constructor(private router: Router, private spotterService: SpotterService) {
+  constructor(private router: Router, private spotterService: SpotterService, private tabletSession: TabletSessionProviderService ) {
     this.spotterMatches = [];
     this.matchDOs = [];
   }
@@ -67,9 +72,52 @@ export class InterfaceComponent implements OnInit {
     } catch (error) {
       console.error("Fehler beim parsen von WettkampfId und Scheibe Nummer", error);
     }
+    console.log("tabletsession:", this.tabletSession); // Check here if it's still undefined
+    // Fetch tablet session with wkID and scheibe
+    this.fetchTabletSession(this.wkID, this.scheibe);
     this.initMatches();
   }
 
+  private fetchTabletSession(wkID: string, scheibe: number) {
+    // Now, tabletSession should be properly defined
+    if (this.tabletSession) {
+      this.tabletSession.findTabletSession(wkID, scheibe.toString())
+          .then((response) => {
+            if (response.result === RequestResult.SUCCESS) {
+              this.session = response.payload;
+              console.log("Session fetched successfully:", this.session);
+
+              // Check session state
+              this.handleSessionState(this.session.isActive);
+            } else {
+              console.error("Failed to fetch the session:", response);
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching the session:", error);
+          });
+    } else {
+      console.error("tabletSession service is not defined!");
+    }
+  }
+  private handleSessionState(isActive: boolean) {
+    if (isActive == null || !isActive) {
+      // If the session is not active (null or false), block the page load
+      alert(`Session for Scheibe ${this.scheibe} and Wettkampf ${this.wkID} is already active.`);
+      console.log(`Session for Scheibe ${this.scheibe} and Wettkampf ${this.wkID} is already active.`);
+      // Redirect to a blocked page or show a message, depending on your flow
+      this.router.navigate(['/blocked']);  // This can be a page where users are informed
+    } else {
+      // If the session is active, allow loading and set it to true
+      console.log('Session is active, allowing page load.');
+      this.initMatches(); // Load the page content
+      this.tabletSession.toggleSessionActiveState(this.session,  false).then(() => {
+        console.log('Session set to inactive (false) on page load');
+      }).catch((error) => {
+        console.error('Error setting session to inactive:', error);
+      });
+    }
+  }
   private async initMatches() {
     try {
       const data: unknown = await this.spotterService.findMatch(this.wkID);
@@ -86,6 +134,16 @@ export class InterfaceComponent implements OnInit {
     }
     this.setMannschaftsName(this.spotterMatches[this.matchLS.currentMatchNumber].mannschaftName);
     this.setBahn(this.scheibe);
+  }
+  ngOnDestroy() {
+    // When leaving the page, set the session to active (true) again
+    if (this.session) {
+      this.tabletSession.toggleSessionActiveState(this.session, true).then(() => {
+        console.log('Session set back to active (true) when leaving the page');
+      }).catch(error => {
+        console.error('Error setting session back to active:', error);
+      });
+    }
   }
 
   setMannschaftsName(name: string) {
@@ -110,7 +168,6 @@ export class InterfaceComponent implements OnInit {
     }
     return this.allowedToSaveSet;
   }
-
   checkAllPointsScored(): boolean {
     let pointsAreScored = true;
     for (let i = 0; i < 6 && pointsAreScored; i++) {
