@@ -19,7 +19,7 @@ export class TabletSessionDO implements DataObject {
               accessToken?: string) {
     this.scheibenNr = !!scheibenNr ? scheibenNr : null;
     this.wettkampfID = !!wettkampfID ? wettkampfID : null;
-    this.isActive = !!isActive;
+    this.isActive = !!isActive ? isActive : null;
     this.satzNr = !!satzNr ? satzNr : null;
     this.matchID = !!matchID ? matchID : null;
     this.otherMatchId = !!otherMatchID ? otherMatchID : null;
