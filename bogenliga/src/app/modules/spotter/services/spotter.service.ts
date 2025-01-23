@@ -8,6 +8,8 @@ import {MatchDOExt} from '@wkdurchfuehrung/types/match-do-ext.class';
 import {environment} from '@environment';
 import {MatchDTOExt} from '@wkdurchfuehrung/types/datatransfer/match-dto-ext.class';
 import {Match} from '../types/match';
+import {PasseDO} from '@wkdurchfuehrung/types/passe-do.class';
+import {PasseDTO} from '@wkdurchfuehrung/types/datatransfer/passe-dto.class';
 
 @Injectable({
   providedIn: 'root'
@@ -57,50 +59,104 @@ export class SpotterService {
     });
 
   }
-  public nextSet(matchDOExt: MatchDOExt, match: Match) {
+  public nextSet(matchDOExt: MatchDOExt, match: Match, passeId, currentPasse) {
     this.matchDTOExt = MatchMapperExt.matchToDTO(matchDOExt);
-    this.addPasse(match);
+
+    this.addPasse(matchDOExt, match, passeId, currentPasse);
     // tslint:disable-next-line:no-shadowed-variable
     return new Promise((resolve, reject) => {
-      this.restClient.POST(new UriBuilder().fromPath(environment.backendBaseUrl).path('v1/match/spotter')
-        .build(), this.matchDTOExt).then((result: string) => {
-        resolve(result);
-      }, (error: HttpErrorResponse) => {
-        if (error.error === 401) {
-          reject(SpotterResult.UNAUTHORIZED);
-        } else {
-          reject(SpotterResult.FAILURE);
-        }
-      });
+      this.restClient
+          .POST(
+            new UriBuilder()
+              .fromPath(environment.backendBaseUrl)
+              .path("v1/match/spotter")
+              .build(),
+            this.matchDTOExt
+          )
+          .then(
+            (data: MatchDTOExt) => {
+              console.log("Rohdaten:", data);
+              const match = MatchMapperExt.matchToDO(data);
+              console.log("Match im Service: ", match);
+              resolve({ result: RequestResult.SUCCESS, payload: match });
+            },
+            (error: HttpErrorResponse) => {
+              if (error.status === 401) {
+                reject(SpotterResult.UNAUTHORIZED);
+              } else {
+                reject(SpotterResult.FAILURE);
+              }
+            }
+          );
     });
   }
+
   public getWettkampfIDundScheibe() {
     const url = window.location.href;
     const urlParts = url.split('/');
     const wkId = urlParts[6];
-    console.log(wkId);
     const schreibe = urlParts[7];
     return {wkId, schreibe};
   }
-  public addPasse(match: Match) {
-    console.log(match.currentSet.plays[0].result);
-    let j = 0;
-    for (let i = 0; i < 3; i++) {
-      const newPasse = {
-        id: null,
-        matchId: this.matchDTOExt.id,
-        mannschaftId: this.matchDTOExt.mannschaftId,
-        wettkampfId: this.matchDTOExt.wettkampfId,
-        matchNr: this.matchDTOExt.matchNr,
-        lfdNr: match.currentSetNumber,
-        dsbMitgliedId: null,
-        ringzahl: [match.currentSet.plays[i + j].result, match.currentSet.plays[i + j + 1].result, null, null, null, null],
-        rueckennummer: i + 1
-      };
-      j += 1;
-      this.matchDTOExt.passen.push(newPasse);
+
+
+
+  public addPasse(matchDOExt: MatchDOExt, match: Match, passeId, currentTrefferScheibe) {
+    if(passeId !== null) {
+      // tslint:disable-next-line:radix
+      passeId  = parseInt(passeId);
     }
+    // Control Variable to check if passeID exists
+    const newPasse = {
+      id: passeId,
+      matchId: this.matchDTOExt.id,
+      mannschaftId: this.matchDTOExt.mannschaftId,
+      wettkampfId: this.matchDTOExt.wettkampfId,
+      matchNr: this.matchDTOExt.matchNr,
+      lfdNr: match.currentSetNumber,
+      dsbMitgliedId: null,
+      ringzahl: [match.currentSet.plays[currentTrefferScheibe - 1].result, null, null, null, null, null],
+      rueckennummer: 1
+    };
+    // Set the rueckennummer for the new Passe
+    if (currentTrefferScheibe > 2 && currentTrefferScheibe <= 4) {
+      newPasse.rueckennummer = 2;
+    } else if (currentTrefferScheibe > 4) {
+      newPasse.rueckennummer = 3;
+    }
+    // Delete all Passe that have null as an passid
+    this.matchDTOExt.passen = this.matchDTOExt.passen.filter((passe) => passe.id !== null);
+    // Get passeIndex if it exists
+    const passeIndex = this.matchDTOExt.passen.findIndex((passe) => passe.id === passeId);
+
+    if (currentTrefferScheibe % 2 === 0) {
+       if (passeIndex !== -1 ) {
+         console.log("Passe mit ID bereits vorhanden, Index:", passeIndex);
+         newPasse.ringzahl = [match.currentSet.plays[currentTrefferScheibe - 2].result, match.currentSet.plays[currentTrefferScheibe - 1].result, null, null, null, null];
+         this.matchDTOExt.passen[passeIndex].ringzahl = newPasse.ringzahl;
+
+       } else {
+         console.log("Passe nicht gefunden, wird hinzugefügt:", newPasse);
+         this.matchDTOExt.passen.push(newPasse);
+       }
+    } else {
+      if (passeIndex !== -1 ) {
+        console.log("Passe mit ID bereits vorhanden, Index:", passeIndex);
+        newPasse.ringzahl = [match.currentSet.plays[currentTrefferScheibe - 1].result, match.currentSet.plays[currentTrefferScheibe].result, null, null, null, null];
+        console.log(newPasse.ringzahl);
+        this.matchDTOExt.passen[passeIndex].ringzahl = newPasse.ringzahl;
+
+      } else {
+        console.log("Passe nicht gefunden, wird hinzugefügt:", newPasse);
+        this.matchDTOExt.passen.push(newPasse);
+      }
+    }
+
+
+
+
   }
+
   public nextMatch(): Promise<string> {
     return new Promise((resolve, reject) => {
       resolve('Next Team'); // Temporary deactivation to demonstrate spotter interface

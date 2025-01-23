@@ -42,6 +42,7 @@ export class MatchJsonToClass {
     const result = new Play(play.number);
     result.final = play.final;
     result.result = play.result;
+    result.passeId = play.passeId;
     return result;
   }
 }
