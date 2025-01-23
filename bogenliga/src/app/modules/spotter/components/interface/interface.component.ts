@@ -1,10 +1,10 @@
-import { SpotterResult } from './../../types/spotter-result.enum';
-import { SpotterService } from './../../services/spotter.service';
-import { MatchJsonToClass } from './../../mapper/match-json-to-class.mapper';
-import { Router } from '@angular/router';
-import { Match } from './../../types/match';
-import { Component, OnInit } from '@angular/core';
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import {SpotterResult} from './../../types/spotter-result.enum';
+import {SpotterService} from './../../services/spotter.service';
+import {MatchJsonToClass} from './../../mapper/match-json-to-class.mapper';
+import {Router} from '@angular/router';
+import {Match} from './../../types/match';
+import {Component, OnInit} from '@angular/core';
+import {faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons';
 import {MatchDOExt} from "@wkdurchfuehrung/types/match-do-ext.class";
 import {BogenligaResponse, RequestResult} from '@shared/data-provider';
 
@@ -19,8 +19,8 @@ export class InterfaceComponent implements OnInit {
 
   selectedPlayNumber = 1;
 
-  match: Match;
-  matchTemp: Match;
+  matchLS: Match;
+  matchLSTemp: Match;
   matchDOs: MatchDOExt[];
   spotterMatches: MatchDOExt[];
   wkID: string;
@@ -37,7 +37,6 @@ export class InterfaceComponent implements OnInit {
   editing = false;
   editedPlay = -1;
   allowedToSaveSet = false;
-  matchDOExt: MatchDOExt;
 
   constructor(private router: Router, private spotterService: SpotterService) {
     this.spotterMatches = [];
@@ -47,19 +46,19 @@ export class InterfaceComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('match') !== null) {
       const temp = JSON.parse(localStorage.getItem('match'));
-      this.match = MatchJsonToClass.parseMatch(temp);
-      this.currentMatchNumberTemp = this.match.currentMatchNumber;
+      this.matchLS = MatchJsonToClass.parseMatch(temp);
+      this.currentMatchNumberTemp = this.matchLS.currentMatchNumber;
       this.checkResultIsSure();
 
-      this.selectedPlayNumber = this.match.set().currentPlayNumber;
-      if (this.match.set().play().result) {
+      this.selectedPlayNumber = this.matchLS.set().currentPlayNumber;
+      if (this.matchLS.set().play().result) {
         this.spotting = true;
       }
     } else {
-      this.match = new Match('Nürtingen', 1);
-      this.match.currentMatchNumber = 0;
+      this.matchLS = new Match('', 1);
+      this.matchLS.currentMatchNumber = 0;
     }
-    console.log(this.match);
+    console.log(this.matchLS);
     const urlParts = this.spotterService.getWettkampfIDundScheibe();
     try {
       this.wkID = urlParts.wkId;
@@ -69,153 +68,150 @@ export class InterfaceComponent implements OnInit {
     }
     this.initMatches();
   }
+
   private async initMatches() {
     try {
       const data: unknown = await this.spotterService.findMatch(this.wkID);
       // @ts-ignore
       this.matchDOs = data.payload;
     } catch (error) {
-      console.error("Fehler beim Abrufen der Matches:", error); }
+      console.error("Fehler beim Abrufen der Matches:", error);
+    }
 
     for (const element of this.matchDOs) {
       if (element.matchScheibennummer === this.scheibe) {
         this.spotterMatches.push(element);
       }
     }
-    this.setMannschaftsName(this.spotterMatches[this.match.currentMatchNumber].mannschaftName);
+    this.setMannschaftsName(this.spotterMatches[this.matchLS.currentMatchNumber].mannschaftName);
     this.setBahn(this.scheibe);
   }
 
   setMannschaftsName(name: string) {
-    this.match.mannschaft = name;
+    this.matchLS.mannschaft = name;
   }
+
   setBahn(scheibe: number) {
-    this.match.bahn = scheibe;
+    this.matchLS.bahn = scheibe;
   }
-  /**
-   * Saves current selected value to result of current play of current set if not editing
-   * Changes result of selected play of current set if editing
-   */
+
   checkResultIsSure(): boolean {
     const temp = JSON.parse(localStorage.getItem('match'));
-    this.matchTemp = MatchJsonToClass.parseMatch(temp);
+    this.matchLSTemp = MatchJsonToClass.parseMatch(temp);
 
     this.allowedToSaveSet = false;
     if (this.checkAllPointsScored()) {
       for (let i = 1; i < 7; i++) {
-        if (!this.matchTemp.set().play(i).final) {
+        if (!this.matchLSTemp.set().play(i).final) {
           this.allowedToSaveSet = true;
         }
       }
     }
     return this.allowedToSaveSet;
   }
+
   checkAllPointsScored(): boolean {
     let pointsAreScored = true;
-    for ( let i = 0; i < 6 && pointsAreScored; i++) {
-      if ( this.matchTemp.set().plays[i].result === undefined) {
+    for (let i = 0; i < 6 && pointsAreScored; i++) {
+      if (this.matchLSTemp.set().plays[i].result === undefined) {
         pointsAreScored = false;
       }
     }
     return pointsAreScored;
   }
 
+  /**
+   * Saves current selected value to result of current play of current set if not editing
+   * Changes result of selected play of current set if editing
+   */
+
+  async triggerBackendRequest(matchDOExt: MatchDOExt, passeID: number, tagretZielScheibenNumber: number) {
+    try {
+      const data: unknown = await this.spotterService.nextSet(
+        matchDOExt,
+        this.matchLS,
+        passeID,
+        tagretZielScheibenNumber
+      );
+      // @ts-ignore
+      this.spotterMatches[this.matchLS.currentMatchNumber] = data.payload;
+    } catch (error) {
+      console.log('Fehler beim eintragen in die Datenbank: ', error);
+    }
+  }
+  public findHighestPasseID(matchDO: MatchDOExt[], currentMatchNumber) {
+    let hoechsteId = 0;
+
+    matchDO[currentMatchNumber].schuetzen.forEach((subListe) => {
+      if (Array.isArray(subListe)) {
+        const maxInSubListe = subListe.reduce((max, schuetze) => {
+          return schuetze.id > max ? schuetze.id : max;
+        }, 0);
+
+        if (maxInSubListe > hoechsteId) {
+          hoechsteId = maxInSubListe;
+        }
+      }
+    });
+    return hoechsteId;
+  }
+
   async onSave() {
-    const currentSet = this.match.set();
+    const currentSet = this.matchLS.set();
     const currentPlay = currentSet ? currentSet.play() : null;
-
-    console.log("this.editedPlay", this.editedPlay);
+    const currentMatchDO = this.spotterMatches[this.matchLS.currentMatchNumber];
+    let currentPointNumber = 0;
+    // Handles new Point
     if (!this.editing) {
+      // Check if it's a valid Point
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
-        try {
-          if(!currentPlay.passeId) {
-            if (currentPlay.number > 1) {
-              if (currentPlay.number % 2 === 0) {
-                if (this.match.set().play(currentPlay.number - 1).passeId) {
-                  const data: unknown = await this.spotterService.nextSet(
-                    this.spotterMatches[this.match.currentMatchNumber],
-                    this.match,
-                    this.match.set().play(currentPlay.number - 1).passeId,
-                    currentPlay.number
-                  );
-                  console.log("%2")
-                  // @ts-ignore
-                  this.spotterMatches[this.match.currentMatchNumber] = data.payload;
-                  currentPlay.passeId = this.match.set().play(currentPlay.number - 1).passeId;
 
+        try {
+          // Check if current play has already a passeID
+          if (!currentPlay.passeId) {
+            // Check if it's the first point
+            if (currentPlay.number > 1) {
+              // Check if current Point is even number
+              if (currentPlay.number % 2 === 0) {
+                // => If yes it must have a passeID from the predecessor
+                if (this.matchLS.set().play(currentPlay.number - 1).passeId) {
+                  const prePasseID = this.matchLS.set().play(currentPlay.number - 1).passeId;
+                  currentPointNumber = currentPlay.number;
+
+                  await this.triggerBackendRequest(currentMatchDO, prePasseID, currentPointNumber);
+                  // Set the same passeID for predecessor Point
+                  currentPlay.passeId = this.matchLS.set().play(currentPlay.number - 1).passeId;
                 }
               } else {
-                console.log("Zweiter Fall");
+                // Case: odd tagretZielScheibenNumber without PasseID
+                // Because odd Number shoud have not a passeID in this case
+                currentPointNumber = currentPlay.number;
+                await this.triggerBackendRequest(currentMatchDO, null, currentPointNumber);
 
-                const data: unknown = await this.spotterService.nextSet(
-                  this.spotterMatches[this.match.currentMatchNumber],
-                  this.match,
-                  null,
-                  currentPlay.number);
-                // @ts-ignore
-                this.spotterMatches[this.match.currentMatchNumber] = data.payload;
-                let hoechsteId = 0;
-                // @ts-ignore
-                this.spotterMatches[this.match.currentMatchNumber].schuetzen.forEach((subListe) => {
-                  if (Array.isArray(subListe)) {
-                    const maxInSubListe = subListe.reduce((max, schuetze) => {
-                      return schuetze.id > max ? schuetze.id : max;
-                    }, 0);
-
-                    if (maxInSubListe > hoechsteId) {
-                      hoechsteId = maxInSubListe;
-                    }
-                  }
-                });
-                currentPlay.passeId = hoechsteId;
+                // Now we want to save PasseID from the current Point we added
+                // For that we need find the highest passeID
+                currentPlay.passeId = this.findHighestPasseID(this.spotterMatches, this.matchLS.currentMatchNumber);
               }
             } else {
-              console.log("Null passe")
-              const data: unknown = await this.spotterService.nextSet(
-                this.spotterMatches[this.match.currentMatchNumber],
-                this.match,
-                null,
-                currentPlay.number);
-              // @ts-ignore
-              this.spotterMatches[this.match.currentMatchNumber] = data.payload;
-              let hoechsteId = 0;
-              console.log("Erster Fall");
-              // @ts-ignore
-              this.spotterMatches[this.match.currentMatchNumber].schuetzen.forEach((subListe) => {
-                if (Array.isArray(subListe)) {
-                  const maxInSubListe = subListe.reduce((max, schuetze) => {
-                    return schuetze.id > max ? schuetze.id : max;
-                  }, 0);
-
-                  if (maxInSubListe > hoechsteId) {
-                    hoechsteId = maxInSubListe;
-                  }
-                }
-              });
-              currentPlay.passeId = hoechsteId;
-              console.log("PasseID", currentPlay.passeId);
+              // Case: It's the first Point => can't have already a PasseID
+              await this.triggerBackendRequest(currentMatchDO, null, currentPlay.number);
+              currentPlay.passeId = this.findHighestPasseID(this.spotterMatches, this.matchLS.currentMatchNumber);
             }
-          }else {
-            console.log("Passe Vorhanden", currentPlay.passeId)
-            const data: unknown = await this.spotterService.nextSet(
-              this.spotterMatches[this.match.currentMatchNumber],
-              this.match,
-              currentPlay.passeId,
-              currentPlay.number);
-            // @ts-ignore
-            this.spotterMatches[this.match.currentMatchNumber] = data.payload;
+          } else {
+            // Case: PasseID is already exiting for this Point
+            await this.triggerBackendRequest(currentMatchDO, currentPlay.passeId, currentPlay.number);
           }
-        } catch (error)
-        {
-          console.log("Error", error);
+        } catch (error) {
+          console.log("Error beim hinzufügen der Passe ID", error);
         }
+        // Set the data in Local Storage Cache
         if (currentPlay) {
           currentPlay.result = this.selectedValue;
 
           currentPlay.final = !this.unsure;
           this.spotterService.sendPlay(currentPlay).then(() => {
             this.unsure = false;
-            if (!this.match.nextPlay()) {
+            if (!this.matchLS.nextPlay()) {
               this.spotting = false;
             } else {
               this.selectedPlayNumber++;
@@ -230,16 +226,18 @@ export class InterfaceComponent implements OnInit {
       }
     } else {
       if (this.selectedValue >= 0 && this.selectedValue <= 10) {
-        this.match.set().play(this.editedPlay).result = this.selectedValue;
-        this.match.set().play(this.editedPlay).final = true;
+        // Set the data in Local Storage Cache
+
+        this.matchLS.set().play(this.editedPlay).result = this.selectedValue;
+        this.matchLS.set().play(this.editedPlay).final = true;
         if (this.spotting) {
-          this.match.set().play(this.editedPlay).final = !this.unsure;
+          this.matchLS.set().play(this.editedPlay).final = !this.unsure;
         }
-        this.spotterService.sendPlay(this.match.set().play(this.editedPlay)).then(() => {
+        this.spotterService.sendPlay(this.matchLS.set().play(this.editedPlay)).then(() => {
           if (!this.spotting) {
             this.spotting = false;
           } else {
-            this.onEdit(this.match.set().currentPlayNumber);
+            this.onEdit(this.matchLS.set().currentPlayNumber);
           }
           if (!this.checkResultIsSure()) {
             this.unsure = false;
@@ -256,30 +254,20 @@ export class InterfaceComponent implements OnInit {
           }
         });
         if (this.editedPlay !== -1) {
+          // If you're editing a number it already has a passeID
           const play = currentSet.play(this.editedPlay);
           if (play && play.passeId !== null) {
-            console.log("Passe Vorhanden")
-            const data: unknown = await this.spotterService.nextSet(
-              this.spotterMatches[this.match.currentMatchNumber],
-              this.match,
-              play.passeId,
-              play.number);
-            // @ts-ignore
-            this.spotterMatches[this.match.currentMatchNumber] = data.payload;
+            this.triggerBackendRequest(currentMatchDO, play.passeId, play.number);
           }
         }
       }
     }
-    //console.log("PasseID", this.match.set(this.match.currentSetNumber)..passeId);
 
-    this.match.currentMatchNumber = this.currentMatchNumberTemp;
-    console.log("OnSave", this.match);
+    this.matchLS.currentMatchNumber = this.currentMatchNumberTemp;
 
-
-    localStorage.setItem('match', JSON.stringify(this.match));
+    localStorage.setItem('match', JSON.stringify(this.matchLS));
 
     this.checkResultIsSure();
-
   }
 
   handleError(error: SpotterResult) {
@@ -296,7 +284,7 @@ export class InterfaceComponent implements OnInit {
   onEdit(play: number) {
     this.selectedPlayNumber = play;
     this.editing = true;
-    this.selectedValue = this.match.set().play(play).result;
+    this.selectedValue = this.matchLS.set().play(play).result;
     this.editedPlay = play;
   }
 
@@ -304,45 +292,45 @@ export class InterfaceComponent implements OnInit {
    * If everything is final, create new set and send confirmation to backend, that set is finished
    */
   onNextSet() {
-    console.log(this.match);
-    if (this.match.addSet()) {
-        this.spotting = true;
-        this.editing = false;
-        this.selectedPlayNumber = 1;
-        this.selectedValue = -1;
-        this.editedPlay = -1;
-        this.unsure = false;
-        // @ts-ignore
-        this.match.increaseCurrentSetNumber();
-      }
+    console.log(this.matchLS);
+    if (this.matchLS.addSet()) {
+      this.spotting = true;
+      this.editing = false;
+      this.selectedPlayNumber = 1;
+      this.selectedValue = -1;
+      this.editedPlay = -1;
+      this.unsure = false;
+      // @ts-ignore
+      this.matchLS.increaseCurrentSetNumber();
+    }
 
-    localStorage.setItem('match', JSON.stringify(this.match));
+    localStorage.setItem('match', JSON.stringify(this.matchLS));
 
-}
+  }
 
   /**
    * If the match can end (the current set is final) a confirmation will be sent to the Server
    * The server will respond with the new information for the next match (Mannschaft)
    */
   onFinishMatch() {
-    this.currentMatchNumberTemp = this.match.currentMatchNumber;
+    this.currentMatchNumberTemp = this.matchLS.currentMatchNumber;
 
     localStorage.removeItem('match');
 
-    this.match = new Match(this.spotterMatches[this.match.currentMatchNumber].mannschaftName, this.scheibe);
+    this.matchLS = new Match(this.spotterMatches[this.matchLS.currentMatchNumber].mannschaftName, this.scheibe);
     this.setMannschaftsName(this.spotterMatches[this.currentMatchNumberTemp + 1].mannschaftName);
     this.setBahn(this.scheibe);
-    this.match.currentMatchNumber += this.currentMatchNumberTemp + 1;
+    this.matchLS.currentMatchNumber += this.currentMatchNumberTemp + 1;
 
-    if (this.match.canFinish()) {
+    if (this.matchLS.canFinish()) {
 
 
-        this.spotting = true;
-        this.editing = false;
-        this.selectedPlayNumber = 1;
-        this.selectedValue = -1;
-        this.editedPlay = -1;
-        this.unsure = false;
+      this.spotting = true;
+      this.editing = false;
+      this.selectedPlayNumber = 1;
+      this.selectedValue = -1;
+      this.editedPlay = -1;
+      this.unsure = false;
       /*}, (error: SpotterResult) => {
         if (error === SpotterResult.UNAUTHORIZED) {
           // TODO: Better error handling
@@ -354,11 +342,11 @@ export class InterfaceComponent implements OnInit {
       });*/
 
     }
-    this.currentMatchNumberTemp = this.match.currentMatchNumber;
+    this.currentMatchNumberTemp = this.matchLS.currentMatchNumber;
 
-    console.log(this.spotterMatches[this.match.currentMatchNumber]);
-    localStorage.setItem('match', JSON.stringify(this.match));
-    console.log("this.match.currentMatchNumber", this.match.currentMatchNumber);
+    console.log(this.spotterMatches[this.matchLS.currentMatchNumber]);
+    localStorage.setItem('match', JSON.stringify(this.matchLS));
+    console.log("this.match.currentMatchNumber", this.matchLS.currentMatchNumber);
 
 
   }
@@ -367,8 +355,8 @@ export class InterfaceComponent implements OnInit {
    * Allows the spotter to directly go back to the previous play
    */
   onBack() {
-    if (this.match.set().currentPlayNumber > 1) {
-      this.onEdit(this.match.set().currentPlayNumber - 1);
+    if (this.matchLS.set().currentPlayNumber > 1) {
+      this.onEdit(this.matchLS.set().currentPlayNumber - 1);
     }
 
   }
@@ -380,7 +368,7 @@ export class InterfaceComponent implements OnInit {
   selectResult(selected: any) {
     this.selectedValue = selected;
     if (this.selectedValue >= 0 && this.selectedValue <= 10) {
-      this.match.set().play(this.selectedPlayNumber).result = this.selectedValue;
+      this.matchLS.set().play(this.selectedPlayNumber).result = this.selectedValue;
     }
   }
 
@@ -388,7 +376,7 @@ export class InterfaceComponent implements OnInit {
    * Redirects the spotter to the home page while maintaining the current match if not finished
    */
   onExit() {
-    localStorage.setItem('match', JSON.stringify(this.match));
+    localStorage.setItem('match', JSON.stringify(this.matchLS));
     this.router.navigateByUrl('/home');
   }
 

@@ -62,7 +62,7 @@ export class SpotterService {
   public nextSet(matchDOExt: MatchDOExt, match: Match, passeId, currentPasse) {
     this.matchDTOExt = MatchMapperExt.matchToDTO(matchDOExt);
 
-    this.addPasseTest(matchDOExt, match, passeId, currentPasse);
+    this.addPasse(matchDOExt, match, passeId, currentPasse);
     // tslint:disable-next-line:no-shadowed-variable
     return new Promise((resolve, reject) => {
       this.restClient
@@ -95,20 +95,19 @@ export class SpotterService {
     const url = window.location.href;
     const urlParts = url.split('/');
     const wkId = urlParts[6];
-    console.log(wkId);
     const schreibe = urlParts[7];
     return {wkId, schreibe};
   }
 
 
-  public addPasseTest(matchDOExt: MatchDOExt, match: Match, passeId, currentTrefferScheibe) {
-    if(passeId !== null)
-    {
+
+  public addPasse(matchDOExt: MatchDOExt, match: Match, passeId, currentTrefferScheibe) {
+    if(passeId !== null) {
       // tslint:disable-next-line:radix
       passeId  = parseInt(passeId);
     }
     // Control Variable to check if passeID exists
-    let newPasse = {
+    const newPasse = {
       id: passeId,
       matchId: this.matchDTOExt.id,
       mannschaftId: this.matchDTOExt.mannschaftId,
@@ -119,37 +118,21 @@ export class SpotterService {
       ringzahl: [match.currentSet.plays[currentTrefferScheibe - 1].result, null, null, null, null, null],
       rueckennummer: 1
     };
-    console.log(currentTrefferScheibe)
-    if(currentTrefferScheibe>2 && currentTrefferScheibe<=4)
-    {
+    // Set the rueckennummer for the new Passe
+    if (currentTrefferScheibe > 2 && currentTrefferScheibe <= 4) {
       newPasse.rueckennummer = 2;
-    }else if(currentTrefferScheibe>4)
-    {
+    } else if (currentTrefferScheibe > 4) {
       newPasse.rueckennummer = 3;
-
     }
-    /*for(const passe of matchDOExt.schuetzen)
-    {
-      console.log(passe);
-      if(passe[match.currentSetNumber-1].id)
-      {
-        console.log("PasseID", passe[match.currentSetNumber - 1].id);
-        passeIDexits = true;
-      }
-    }
-    if (passeIDexits) {
-      newPasse.id = passeID;
-      newPasse.ringzahl = [match.currentSet.plays[0].result, match.currentSet.plays[1].result, null, null, null, null]; // Second result for the ringzahl
-    }*/
-    console.log("PasseTest", passeId);
+    // Delete all Passe that have null as an passid
     this.matchDTOExt.passen = this.matchDTOExt.passen.filter((passe) => passe.id !== null);
-    const passeIndex = this.matchDTOExt.passen.findIndex(passe => passe.id === passeId);
-    if(currentTrefferScheibe % 2 === 0)
-    {
+    // Get passeIndex if it exists
+    const passeIndex = this.matchDTOExt.passen.findIndex((passe) => passe.id === passeId);
+
+    if (currentTrefferScheibe % 2 === 0) {
        if (passeIndex !== -1 ) {
          console.log("Passe mit ID bereits vorhanden, Index:", passeIndex);
          newPasse.ringzahl = [match.currentSet.plays[currentTrefferScheibe - 2].result, match.currentSet.plays[currentTrefferScheibe - 1].result, null, null, null, null];
-         console.log(newPasse.ringzahl);
          this.matchDTOExt.passen[passeIndex].ringzahl = newPasse.ringzahl;
 
        } else {
