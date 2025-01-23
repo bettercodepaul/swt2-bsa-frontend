@@ -21,14 +21,18 @@ export class MatchMapperExt {
   static matchToDO(payload: MatchDTOExt): MatchDOExt {
     const schuetzen = [];
     let sumSatz = [];
+    console.log("payload", payload);
     if (payload.passen.length > 0) {
       const schuetzenPasseMap = new Map<number, PasseDO[]>();
       schuetzen[0] = [];
       schuetzen[1] = [];
       schuetzen[2] = [];
       sumSatz = [0, 0, 0, 0, 0];
+      console.log("Payload Passe: ", payload.passen);
       // Map Passen to Schuetzen using rueckennummern
       for (const passe of payload.passen) {
+        console.log("Rueckennummer", passe.rueckennummer);
+
         const passeDO = PasseMapper.passeToDO(passe);
         if (!schuetzenPasseMap.has(passe.rueckennummer)) {
           const passen = [];
@@ -56,8 +60,9 @@ export class MatchMapperExt {
           }
         }
         for (const passen of schuetzen) {
-          if (i < 5) {
-            sumSatz[i] += passen[i].ringzahlPfeil1 + passen[i].ringzahlPfeil2;
+          for (let i = 0; i < passen.length && i < 5; i++) { // Sicherstellen, dass i in den gültigen Bereich fällt.
+            const { ringzahlPfeil1, ringzahlPfeil2 } = passen[i];
+            sumSatz[i] += ringzahlPfeil1 + ringzahlPfeil2;
           }
         }
       }
