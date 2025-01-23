@@ -42,6 +42,7 @@ export class InterfaceComponent implements OnInit, OnDestroy{
   allowedToSaveSet = false;
   TabletSession: TabletSessionProviderService;
   session: TabletSessionDO;
+  private finish: boolean;
 
   constructor(private router: Router, private spotterService: SpotterService, private tabletSession: TabletSessionProviderService ) {
     this.spotterMatches = [];
