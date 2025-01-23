@@ -1,11 +1,12 @@
 /*
-  Test mit angewandten Best Practices, jedoch laeuft er nicht immer Fehlerfrei durch,
-  liegt an dem letzten .click
+  Test mit angewandten Best Practices
+  laeuft mittlerweile durch, kann fehlschlagen falls Home Page nach login nicht richtig laedt
+  oder evtl kann es am letzten .click haengen
  */
-/*
+
 beforeEach(() => {
   cy.loginAdmin();
-  //cy.get('[data-cy=welcome-banner]', { timeout: 10000 }).should('be.visible');
+  cy.get('[data-cy=welcome-banner]', { timeout: 10000 }).should('be.visible');
 });
 
 
@@ -38,8 +39,11 @@ describe('Anzeige', function () {
     cy.wait('@findallErrors-request').its('response.statusCode').should('eq', 200);
   });
 });
-*/
 
+/* sollte der obige Test nicht durchlaufen, die untenstehenden auskommentieren
+
+ */
+/*
 beforeEach(() => {
   cy.loginAdmin()
 });
@@ -88,7 +92,7 @@ describe('Anzeige', function () {
    */
   /* This test includes "Anzeige Verwaltung" and "Anzeige Migration Overview" --> only this test ist needed*/
 
-
+/*
 it('Anzeige Migration Section and FindAll Call', () => {
     cy.viewport(1920, 1080)
     cy.intercept({
@@ -108,5 +112,5 @@ it('Anzeige Migration Section and FindAll Call', () => {
 })
 
 
-
+*/
 
