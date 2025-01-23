@@ -1,6 +1,100 @@
+/*
+  Test mit angewandten Best Practices
+ */
+
+describe('Liga Verwaltung Tests', () => {
+  const ligaName = 'SWTLiga';
+  const ligaNameWithUnderscore = 'SWT_Liga_';
+
+
+  const navigateToLiga = () => {
+    cy.get('[data-cy=sidebar-verwaltung-button]').click();
+    cy.get('[data-cy=verwaltung-liga-button]').click();
+    cy.get('tbody').should('exist');
+  };
+
+  const fillLigaDetails = (name) => {
+    cy.get('[data-cy=liga-detail-name]').type(name);
+    cy.get('[data-cy=liga-detail-region]').select('SWT2_Region');
+    cy.get('[data-cy=liga-detail-uebergeordnet]').select('Bundesliga');
+    cy.get('[data-cy=liga-detail-verantwortlicher]').select('admin@bogenliga.de');
+    cy.typeInIFrame('Testliga');
+    cy.get('[data-cy=liga-save-button]').click();
+  };
+
+  it('Login erfolgreich', () => {
+    cy.loginAdmin();
+    cy.url().should('include', '#/home');
+  });
+
+  it('Anzeige Verwaltung', () => {
+    cy.get('[data-cy=sidebar-verwaltung-button]').click();
+    cy.url().should('include', '#/verwaltung');
+  });
+
+  it('Alle Ligen zu sehen', () => {
+    navigateToLiga();
+    cy.get('tbody').should('have.length.at.least', 1);
+  });
+
+  it('Liga Hinzufügen mit Unterstrich', () => {
+    navigateToLiga();
+
+    cy.get('body').then((body) => {
+      if (!body.text().includes(ligaNameWithUnderscore)) {
+        cy.get('button.action-btn-success').click();
+        fillLigaDetails(ligaNameWithUnderscore);
+
+        cy.contains('.modal-content', 'Erfolg').within(() => {
+          cy.get('.modal-dialog-ok button').should('contain', 'OK').click();
+        });
+
+        // Überprüfen, dass die Liga hinzugefügt wurde
+        cy.get('tbody').should('contain.text', ligaNameWithUnderscore);
+      }
+    });
+  });
+
+  it('Liga Hinzufügen', () => {
+    navigateToLiga();
+
+    cy.get('body').then((body) => {
+      if (!body.text().includes(ligaName)) {
+        cy.get('button.action-btn-success').click();
+        fillLigaDetails(ligaName);
+
+        cy.contains('.modal-content', 'Erfolg').within(() => {
+          cy.get('.modal-dialog-ok button').should('contain', 'OK').click();
+        });
+
+        // Überprüfen, dass die Liga hinzugefügt wurde
+        cy.get('tbody').should('contain.text', ligaName);
+      }
+    });
+  });
+
+  it('Liga Löschen', () => {
+    navigateToLiga();
+
+    cy.get('tbody').should('contain.text', ligaName);
+    cy.get('[data-cy="TABLE.ACTIONS.DELETE"]').last().click();
+
+    // Bestätigungsdialog
+    cy.get('.modal-content').within(() => {
+      cy.contains('Ja').click(); // Klick auf den "Ja"-Button
+    });
+
+    // Überprüfen, dass die Liga gelöscht wurde
+    cy.get('tbody').should('not.contain.text', ligaName);
+  });
+});
+
+
+//Ab hier alte tests
 /**
  * Testblock describing all anonymous user tests as specified on Confluence
  */
+/*
 function generateID() {
   return Math.floor(100000 + Math.random() * 900000);
 }
@@ -11,33 +105,11 @@ function generateLigaID() {
   return Math.floor(Math.random() * 18 + 1);
 }
 
-it('Login erfolgreich', function() {
-  cy.loginAdmin()
-  cy.url().should('include', '#/home');
-});
-
-/**
- * This test opens the sidebar and clicks on the "VERWALTUNG" tab and checks if the url has changed successfully
- */
-it('Anzeige Verwaltung', function() {
-  cy.get('[data-cy=sidebar-verwaltung-button]').click()
-  cy.url().should('include', '#/verwaltung')
-})
-
-/**
- * This test checks if the League-table is filled.
- */
-it('Alle Ligen zu sehen', function() {
-  cy.get('[data-cy=sidebar-verwaltung-button]').click()
-  cy.get('[data-cy=verwaltung-liga-button]').click()
-  cy.wait(4500)
-  cy.get('tbody').should('have.length.at.least', 1)
-})
-
 /**
  * This test adds a League and checks if it throughs a popup notification.
  * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
  */
+/*
 it('Liga Hinzufügen mit Unterstrich', function() {
   cy.get('body').then((body) => {
     if (!body.text().includes('SWT_Liga_')) {
@@ -71,12 +143,13 @@ it('Liga Hinzufügen mit Unterstrich', function() {
     }
   });
 })
-
+*/
 
 /**
  * This test adds a League and checks if it gets added.
  * Robustness is only ever guaranteed if this test is run regularly in the CI/CD pipeline
  */
+/*
 it('Liga Hinzufügen', function() {
   cy.get('body').then((body) => {
     if (!body.text().includes('SWTLiga')) {
@@ -110,6 +183,7 @@ it('Liga Hinzufügen', function() {
 /**
  * This test deletes a League and checks if its deleted in the table.
  */
+/*
 it('Liga Löschen', function() {
   cy.wait(3000)
   cy.get('tbody').should('contain.text', 'SWTLiga')
@@ -120,3 +194,5 @@ it('Liga Löschen', function() {
   cy.wait(10000)
   cy.get('tbody').should('not.contain.text', 'SWTLiga')
 })
+
+*/
