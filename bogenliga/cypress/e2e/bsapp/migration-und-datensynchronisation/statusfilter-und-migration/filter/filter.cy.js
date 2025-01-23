@@ -1,162 +1,82 @@
+beforeEach(() => {
+  cy.loginAdmin();
+  cy.url().should('include', '#/home');
+  cy.get('[data-cy=sidebar-verwaltung-button]').click();
+  cy.url().should('include', '#/verwaltung');
+  cy.get('[data-cy=verwaltung-sync-button]')
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click();
+  cy.url().should('include', '#/verwaltung/migration');
+  cy.viewport(1920, 1080);
+});
 
-  beforeEach(() => {
-    cy.wait(1000)
-    cy.loginAdmin()
-    cy.wait(2000)
-    cy.url().should('include', '#/home')
-    cy.get('[data-cy=sidebar-verwaltung-button]').click()
-    cy.wait(1000)
-    cy.url().should('include', '#/verwaltung')
-    cy.get('[data-cy=verwaltung-sync-button]').click()
-    cy.wait(1000)
-    cy.url().should('include', '#/verwaltung/migration')
-    cy.viewport(1920,1080)
+afterEach(() => {
+  cy.disbandModalIfShown();
+});
 
-  })
-
-  afterEach(() => {
-    //NOTE: Preparation for next test
-    cy.wait(1000)
-    cy.disbandModalIfShown()
-    cy.wait(1000)
-  })
+/*
+  Diese Tests testen die Drop downs 'Zeitstempel' und 'Status'
+  auf der Seite Migration http://localhost:4200/#/verwaltung/migration
+ */
 
 describe('Filter', function () {
+  /*
+  Drop down 'Status'
+   */
+  const testCases = [
+    { filter: 'Erfolgreich', status: '1: Erfolgreich', urlPart: 'findSuccessed' },
+    { filter: 'Laufend', status: '2: Laufend', urlPart: 'findInProgress' },
+    { filter: 'Neu', status: '3: Neu', urlPart: 'findNews' },
+    { filter: 'Alle', status: '4: Alle', urlPart: 'findAllWithPages' },
+    { filter: 'Fehlgeschlagen', status: '0: Fehlgeschlagen', urlPart: 'findErrors', preSelect: '4: Alle' },
+  ];
 
-  it('Filtern nach erfolgreichen Einträgen', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findSuccessed?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat`,
-    }).as('filter');
-    cy.get('[data-cy=status-filter-selection]').select('1: Erfolgreich')
-    cy.wait(2000)
-    cy.wait('@filter')
-  })
+  testCases.forEach(({ filter, status, urlPart, preSelect }) => {
+    it(`Filtern nach ${filter} Einträgen`, () => {
+      if (preSelect) {
+        cy.get('[data-cy=status-filter-selection]').select(preSelect); // Erst etwas anderes auswählen
+      }
 
-  it('Filtern nach laufenden Einträgen', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findInProgress?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat`,
-    }).as('filter');
-    cy.get('[data-cy=status-filter-selection]').select('2: Laufend')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
+      cy.intercept({
+        method: 'GET',
+        url: `http://localhost:9000/v1/trigger/${urlPart}?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat`,
+      }).as('filter');
 
-  it('Filtern nach neuen Einträgen', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findNews?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat`,
-    }).as('filter');
-    cy.get('[data-cy=status-filter-selection]').select('3: Neu')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
+      cy.get('[data-cy=status-filter-selection]').select(status);
+      cy.wait('@filter');
+    });
+  });
 
-  it('Filtern nach allen Einträgen', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findAllWithPages?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat`,
-    }).as('filter');
-    cy.get('[data-cy=status-filter-selection]').select('4: Alle')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
+  /*
+  Drop down Zeitstempel
+   */
+  const timestampFilters = [
+    { label: 'letzten drei Monate', value: '1: letzten drei Monate', urlPart: 'letzten%20drei%20Monate' },
+    { label: 'letzter Monat', value: '0: letzter Monat', urlPart: 'letzter%20Monat', preSelect: '1: letzten drei Monate' },
+    { label: 'letzten sechs Monate', value: '2: letzten sechs Monate', urlPart: 'letzten%20sechs%20Monate' },
+    { label: 'im letzten Jahr', value: '3: im letzten Jahr', urlPart: 'im%20letzten%20Jahr' },
+    { label: 'älter als ein Monat', value: '4: älter als ein Monat', urlPart: '%C3%A4lter%20als%20ein%20Monat' },
+    { label: 'älter als drei Monate', value: '5: älter als drei Monate', urlPart: '%C3%A4lter%20als%20drei%20Monate' },
+    { label: 'älter als sechs Monate', value: '6: älter als sechs Monate', urlPart: '%C3%A4lter%20als%20sechs%20Monate' },
+    { label: 'alle', value: '7: alle', urlPart: 'alle' },
+  ];
 
-  it('Filtern nach error Einträgen', () => {
-    /* first you have to select something other than "Fehlgeschlagen" because that is the default and will prevent "filter" from running.*/
-    cy.get('[data-cy=status-filter-selection]').select('4: Alle')
-    cy.wait(1000)
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat`,
-    }).as('filter');
-    cy.get('[data-cy=status-filter-selection]').select('0: Fehlgeschlagen')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
+  timestampFilters.forEach(({ label, value, urlPart, preSelect }) => {
+    it(`Filtern nach Zeitstempel: ${label}`, () => {
+      if (preSelect) {
+        // Erst muss etwas anderes etwas anderes auswählen
+        cy.get('[data-cy=timestamp-filter-selection]').select(preSelect);
+      }
 
-  it('Filtern nach Zeitstempel letzten drei Monate', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzten%20drei%20Monate`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('1: letzten drei Monate')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
+      cy.intercept({
+        method: 'GET',
+        url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=${urlPart}`,
+      }).as('filter');
 
-  it('Filtern nach Zeitstempel letzter Monat', () => {
-    /* first you have to select something other than "letzer Monat" because that is the default and will prevent "filter" from running.*/
-    cy.get('[data-cy=timestamp-filter-selection]').select('1: letzten drei Monate')
-    cy.wait(1000)
+      cy.get('[data-cy=timestamp-filter-selection]').select(value);
+      cy.wait('@filter');
+    });
+  });
+});
 
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzter%20Monat`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('0: letzter Monat')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
-
-  it('Filtern nach Zeitstempel letzten sechs Monate', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=letzten%20sechs%20Monate`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('2: letzten sechs Monate')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
-
-  it('Filtern nach Zeitstempel im letzten Jahr', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=im%20letzten%20Jahr`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('3: im letzten Jahr')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
-
-  it('Filtern nach Zeitstempel älter als ein Monat', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=%C3%A4lter%20als%20ein%20Monat`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('4: älter als ein Monat')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
-
-  it('Filtern nach Zeitstempel älter als drei Monate', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=%C3%A4lter%20als%20drei%20Monate`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('5: älter als drei Monate')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
-
-  it('Filtern nach Zeitstempel älter als sechs Monate', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=%C3%A4lter%20als%20sechs%20Monate`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('6: älter als sechs Monate')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
-
-  it('Filtern nach Zeitstempel alle', () => {
-    cy.intercept({
-      method: 'GET',
-      url: `http://localhost:9000/v1/trigger/findErrors?offsetMultiplicator=0&queryPageLimit=500&dateInterval=alle`,
-    }).as('filter');
-    cy.get('[data-cy=timestamp-filter-selection]').select('7: alle')
-    cy.wait(1000)
-    cy.wait('@filter')
-  })
-})
