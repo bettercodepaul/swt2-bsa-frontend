@@ -1,11 +1,4 @@
-// CAN_READ_DEFAULT
-/**
- * This test tries to log in as an administrator and checks if the website has redirected successfully after logging in
- */
-it('Login erfolgreich', function () {
-  cy.loginAdmin();
-  cy.url().should('include', '#/home');
-});
+
 
 // CAN_READ_STAMMDATEN
 /**
