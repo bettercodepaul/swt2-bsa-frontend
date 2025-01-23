@@ -160,7 +160,6 @@ export class SchusszettelComponent implements OnInit {
             }
 
 
-
             /**
              * Limits the Schützen of match 1 to 3 and each passe-array
              * for each Schütze to 5
@@ -211,6 +210,7 @@ export class SchusszettelComponent implements OnInit {
             console.log('match1', this.match1);
             console.log('match2', this.match2);
             let shouldInitSumSatz = true;
+
             if (this.match1.schuetzen.length <= 0) {
               this.initSchuetzenMatch1();
               shouldInitSumSatz = false;
