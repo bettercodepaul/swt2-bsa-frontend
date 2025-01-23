@@ -1,13 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {TabletSessionDO} from '../../types/tablet-session-do.class';
-import {isUndefined} from '@shared/functions';
-import {BogenligaResponse} from '@shared/data-provider';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TabletSessionProviderService} from '../../services/tablet-session-provider.service';
-import {TabletAdminPopUpComponent} from '@wkdurchfuehrung/components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
-import {MatDialog} from '@angular/material/dialog';
-import {environment} from "@environment";
-
+import { Component, OnInit } from '@angular/core';
+import { TabletSessionDO } from '../../types/tablet-session-do.class';
+import { isUndefined } from '@shared/functions';
+import { BogenligaResponse } from '@shared/data-provider';
+import { ActivatedRoute, Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { TabletSessionProviderService } from '../../services/tablet-session-provider.service';
+import { TabletAdminPopUpComponent } from '@wkdurchfuehrung/components/tablet-admin/tablet-admin-pop-up/tablet-admin-pop-up.component';
+import { MatDialog } from '@angular/material/dialog';
+import { environment } from "@environment";
 
 export const STORAGE_KEY_TABLET_SESSION = 'tabletSession';
 
@@ -15,9 +14,9 @@ const SESSION_INVALID_STORAGE_VALUES = ['[]', 'null', 'undefined'];
 const MAX_NUM_SCHEIBEN = 8;
 
 @Component({
-  selector:    'bla-tablet-admin',
+  selector: 'bla-tablet-admin',
   templateUrl: './tablet-admin.component.html',
-  styleUrls:   ['./tablet-admin.component.scss']
+  styleUrls: ['./tablet-admin.component.scss']
 })
 export class TabletAdminComponent implements OnInit {
 
@@ -26,18 +25,14 @@ export class TabletAdminComponent implements OnInit {
   currentSession: TabletSessionDO;
   tabletEingabeRoute: string;
   accessToken = '';
-
-
+  private activeSessions: Set<string> = new Set();
   constructor(private route: ActivatedRoute,
               private router: Router,
               private tabletSessionService: TabletSessionProviderService,
               private dialog: MatDialog) {
   }
 
-  /**
-   * Called when component is initialized.
-   *
-   */
+
   ngOnInit() {
     this.route.params.subscribe((params) => {
       if (!isUndefined(params['wettkampfId'])) {
@@ -47,8 +42,7 @@ export class TabletAdminComponent implements OnInit {
               this.sessions = data.payload;
               this.setActiveSession();
               this.setTabletEingabeRoute();
-              // new CM
-              this.accessToken = this.currentSession.accessToken.toString();
+              this.accessToken = this.currentSession?.accessToken?.toString() || '';
             }, (error) => {
               console.error(error);
               // TESTWEISE DRIN, muss entfernt werden sobald backend service steht
@@ -60,44 +54,83 @@ export class TabletAdminComponent implements OnInit {
             });
       }
     });
+
   }
+
 
   public updateSession(scheibenNr: number) {
     const sessionToUpdate = this.sessions[scheibenNr - 1];
-    // Open the new dialog with options
-    sessionToUpdate.isActive = !sessionToUpdate.isActive;
-    this.storeCurrentSession(sessionToUpdate);
+
+    // Check if another device is already active for this scheibenNr
+    if (this.activeSessions[scheibenNr] && this.activeSessions[scheibenNr] !== sessionToUpdate.accessToken) {
+      alert(`Diese Bahn wird bereits von einem anderen Spotter verwendet`);
+      return; // Prevent activation
+    }
+
+    // Set isActive to false before updating
+    this.tabletSessionService.toggleSessionActiveState(sessionToUpdate, true)
+        .then((success) => {
+          this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
+          this.storeCurrentSession(this.currentSession);
+          this.accessToken = '';
+          this.setTabletEingabeRoute();
+
+          // Log the updated session to verify the change
+          console.log('Updated Session (Active True):', this.currentSession);
+
+          if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
+            this.router.navigate([this.tabletEingabeRoute]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    // Update the session with isActive set to true
     this.tabletSessionService.update(sessionToUpdate)
         .then((success) => {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
           this.storeCurrentSession(this.currentSession);
-          // new CM
           this.accessToken = this.currentSession.accessToken.toString();
           this.setTabletEingabeRoute();
           this.dialog.open(TabletAdminPopUpComponent, {
             data: {
-              QR: this.tabletEingabeRoute, // Set QR code data
+              QR: this.tabletEingabeRoute,
               scheibenNr,
-              isPopUp: true // Flag to control visibility
+              isPopUp: true,
             }
           });
-          if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
-            this.router.navigate([this.tabletEingabeRoute]);
-          }
         }, (error) => {
-          console.log(error);
+          console.error(error);
         });
   }
 
   public updateSessionWithoutTokenGeneration(scheibenNr: number) {
     const sessionToUpdate = this.sessions[scheibenNr - 1];
-    sessionToUpdate.isActive = !sessionToUpdate.isActive;
-    this.storeCurrentSession(sessionToUpdate);
+
+    // Set isActive to false before updating
+    this.tabletSessionService.toggleSessionActiveState(sessionToUpdate, false)
+        .then((success) => {
+          this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
+          this.storeCurrentSession(this.currentSession);
+          this.accessToken = '';
+          this.setTabletEingabeRoute();
+
+          // Log the updated session to verify the change
+          console.log('Updated Session (Active False):', this.currentSession);
+
+          if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
+            this.router.navigate([this.tabletEingabeRoute]);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    // Update the session with isActive set to false
     this.tabletSessionService.updateWithoutTokenCreation(sessionToUpdate)
         .then((success) => {
           this.sessions[scheibenNr - 1] = this.currentSession = success.payload;
           this.storeCurrentSession(this.currentSession);
-          // new CM
           this.accessToken = '';
           this.setTabletEingabeRoute();
           if (this.currentDeviceIsActive && this.currentSession && this.currentSession.otherMatchId) {
@@ -107,6 +140,7 @@ export class TabletAdminComponent implements OnInit {
           console.log(error);
         });
   }
+
 
   private setActiveSession() {
     const currentTabletSession = localStorage.getItem(STORAGE_KEY_TABLET_SESSION);
@@ -119,6 +153,11 @@ export class TabletAdminComponent implements OnInit {
   }
 
   private storeCurrentSession(session: TabletSessionDO) {
+    // Ensure isActive is either true or false
+    if (session.isActive === null || session.isActive === undefined) {
+      session.isActive = false;  // Default to false if null or undefined
+    }
+
     if (session.isActive) {
       localStorage.setItem(STORAGE_KEY_TABLET_SESSION, JSON.stringify(session));
       this.currentDeviceIsActive = true;
@@ -135,13 +174,21 @@ export class TabletAdminComponent implements OnInit {
       const wettkampfid = this.currentSession.wettkampfID;
       const accessToken = this.currentSession.accessToken;
       this.tabletEingabeRoute = window.location.href + `/${matchscheibennr}/${accessToken}/`;
-      console.log(this.tabletEingabeRoute);
+      console.log('Tablet QR Route Set:', this.tabletEingabeRoute);
     }
   }
-  private canNavigateToEingabe(session) {
-    return (this.currentDeviceIsActive &&
+
+  private canNavigateToEingabe(session: TabletSessionDO): boolean {
+    const isActiveForCurrentSession = (
+      this.activeSessions[session.scheibenNr] === session.accessToken
+    );
+
+    return (
+      this.currentDeviceIsActive &&
       this.currentSession &&
       this.currentSession.otherMatchId &&
-      this.currentSession.scheibenNr === session.scheibenNr);
+      this.currentSession.scheibenNr === session.scheibenNr &&
+      isActiveForCurrentSession
+    );
   }
 }
