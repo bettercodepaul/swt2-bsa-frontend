@@ -30,6 +30,8 @@ export class InterfaceComponent implements OnInit {
   editedPlay = -1;
   allowedToSaveSet = false;
 
+  circles: { color: string, size: number, top: number, left: number }[] = [];
+
   constructor(private router: Router, private spotterService: SpotterService) { }
 
   ngOnInit() {
@@ -45,12 +47,25 @@ export class InterfaceComponent implements OnInit {
     } else {
       this.match = new Match('Nürtingen', 1);
     }
+
+    this.generateCircles(8); // Anzahl der Kreise festlegen
   }
 
-  /**
-   * Saves current selected value to result of current play of current set if not editing
-   * Changes result of selected play of current set if editing
-   */
+  generateCircles(count: number) {
+    const colors = ['bla-yellow', 'bla-red', 'bla-blue', 'bla-gray'];
+    for (let i = 0; i < count; i++) {
+      const size = 100 - (i * 10); // Beispielgröße, die sich verringert
+      const top = (100 - size) / 2;
+      const left = (100 - size) / 2;
+      this.circles.push({
+        color: colors[i % colors.length],
+        size: size,
+        top: top,
+        left: left
+      });
+    }
+  }
+
   checkResultIsSure(): boolean {
     const temp = JSON.parse(localStorage.getItem('match'));
     this.matchTemp = MatchJsonToClass.parseMatch(temp);
@@ -65,6 +80,7 @@ export class InterfaceComponent implements OnInit {
     }
     return this.allowedToSaveSet;
   }
+
   checkAllPointsScored(): boolean {
     let pointsAreScored = true;
     for ( let i = 0; i < 6 && pointsAreScored; i++) {
@@ -136,9 +152,6 @@ export class InterfaceComponent implements OnInit {
 
   }
 
-  /**
-   * sets the attributes to display the result of the play to change
-   */
   onEdit(play: number) {
     this.selectedPlayNumber = play;
     this.editing = true;
@@ -146,9 +159,6 @@ export class InterfaceComponent implements OnInit {
     this.editedPlay = play;
   }
 
-  /**
-   * If everything is final, create new set and send confirmation to backend, that set is finished
-   */
   onNextSet() {
     if (this.match.addSet()) {
       this.spotterService.nextSet().then(() => {
@@ -172,10 +182,6 @@ export class InterfaceComponent implements OnInit {
     }
   }
 
-  /**
-   * If the match can end (the current set is final) a confirmation will be sent to the Server
-   * The server will respond with the new information for the next match (Mannschaft)
-   */
   onFinishMatch() {
     if (this.match.canFinish()) {
 
@@ -200,9 +206,6 @@ export class InterfaceComponent implements OnInit {
     }
   }
 
-  /**
-   * Allows the spotter to directly go back to the previous play
-   */
   onBack() {
     if (this.match.set().currentPlayNumber > 1) {
       this.onEdit(this.match.set().currentPlayNumber - 1);
@@ -210,10 +213,6 @@ export class InterfaceComponent implements OnInit {
 
   }
 
-  /**
-   * sets the selected result from the user interface
-   * @param selected selected result
-   */
   selectResult(selected: any) {
     this.selectedValue = selected;
     if (this.selectedValue >= 0 && this.selectedValue <= 10) {
@@ -221,9 +220,6 @@ export class InterfaceComponent implements OnInit {
     }
   }
 
-  /**
-   * Redirects the spotter to the home page while maintaining the current match if not finished
-   */
   onExit() {
     localStorage.setItem('match', JSON.stringify(this.match));
     this.router.navigateByUrl('/home');

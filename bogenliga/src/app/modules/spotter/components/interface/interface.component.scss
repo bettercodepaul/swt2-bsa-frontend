@@ -12,7 +12,7 @@
 
   .bla-spotter-display {
     display: grid;
-    grid-template-rows: 1fr 2fr;
+    grid-template-rows: 1fr 3fr;
     grid-template-columns: 1fr 5fr;
     grid-area: bla-spotter-display;
     grid-template-areas:
@@ -28,6 +28,62 @@
     .display-header-Bahnanzeige {
       grid-area: Bahnanzeige;
       background-color: #28A745;
+      grid-template-areas:
+      "Circles"
+      "Bahn"
+    ;
+
+      .circle-area {
+        grid-area: Circles;
+        grid-template-columns: repeat(8, 1fr);
+      }
+
+      .target {
+        position: relative;
+        width: 100%; // Gesamtgröße des Kreises
+        height: 0;
+        padding-bottom: 100%;
+      }
+
+      .small-circle {
+        position: absolute;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .bla-yellow {
+        width: 33.33%; // Größe des inneren Kreises relativ zur Gesamtgröße
+        height: 33.33%;
+        background-color: #FFCC34;
+        top: 33.33%; // Zentrierung
+        left: 33.33%;
+      }
+
+      .bla-red {
+        width: 66.66%; // Größe des mittleren Kreises relativ zur Gesamtgröße
+        height: 66.66%;
+        background-color: #F40E0E;
+        top: 16.66%; // Zentrierung
+        left: 16.66%;
+      }
+
+      .bla-blue {
+        width: 100%; // Größe des äußeren Kreises relativ zur Gesamtgröße
+        height: 100%;
+        background-color: #487AF5;
+        top: 0; // Zentrierung
+        left: 0;
+      }
+
+      .bla-gray {
+        width: 100%;
+        height: 100%;
+        background-color: #888888;
+        top: 0;
+        left: 0;
+      }
     }
 
     .display-body {
@@ -143,8 +199,9 @@
       grid-template-rows: 1fr 1fr;
       grid-template-columns: repeat(5, 1fr);
       grid-template-areas:
+        "zehn neun acht sieben sechs"
         "zehn-unsicher neun-unsicher acht-unsicher sieben-unsicher sechs-unsicher"
-        "zehn neun acht sieben sechs";
+    ;
       grid-gap: 25px 25px;
 
       button {
