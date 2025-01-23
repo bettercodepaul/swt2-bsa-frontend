@@ -37,6 +37,7 @@ export class InterfaceComponent implements OnInit {
   editing = false;
   editedPlay = -1;
   allowedToSaveSet = false;
+  finish: boolean;
 
   constructor(private router: Router, private spotterService: SpotterService) {
     this.spotterMatches = [];
@@ -261,6 +262,18 @@ export class InterfaceComponent implements OnInit {
           }
         }
       }
+
+      let control = true;
+      for (let i=0; i < 6; i++){
+        if(currentSet.play(i).final == null)
+        {
+          control = false;
+        }
+      }
+      if(control === true && this.finish === false)
+      {
+        this.finish = true;
+      }
     }
 
     this.matchLS.currentMatchNumber = this.currentMatchNumberTemp;
@@ -286,6 +299,9 @@ export class InterfaceComponent implements OnInit {
     this.editing = true;
     this.selectedValue = this.matchLS.set().play(play).result;
     this.editedPlay = play;
+    if(play === 6){
+      this.finish = true;
+    }
   }
 
   /**
@@ -305,7 +321,7 @@ export class InterfaceComponent implements OnInit {
     }
 
     localStorage.setItem('match', JSON.stringify(this.matchLS));
-
+    this.finish = false;
   }
 
   /**
@@ -370,6 +386,8 @@ export class InterfaceComponent implements OnInit {
     if (this.selectedValue >= 0 && this.selectedValue <= 10) {
       this.matchLS.set().play(this.selectedPlayNumber).result = this.selectedValue;
     }
+    this.onSave();
+
   }
 
   /**
