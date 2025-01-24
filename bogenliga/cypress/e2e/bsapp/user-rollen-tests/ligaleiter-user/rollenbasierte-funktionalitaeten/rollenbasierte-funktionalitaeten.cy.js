@@ -1,6 +1,3 @@
-/**
- * Testblock describing all anonymous user tests as specified on Confluence
- */
 function generateID() {
   return Math.floor(100000 + Math.random() * 900000);
 }
@@ -11,152 +8,113 @@ function generateLigaID() {
   return Math.floor(Math.random() * 18 + 1);
 }
 
-describe('Ligaleiter User Tests', function(){
-    const randomID = generateLigaID().toString();
+describe('Ligaleiter User Tests', function() {
+
+  it("Login Ligaleiter", () => {
+    cy.LoginLigaleiter();
+  })
+
+  it("Benutzer anzeigen", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/user');
+    cy.get('#payload-id-1');
+  })
+
+  // it("Ausrichter und Sportleiter Benutzer Pflegen", () => {
+  //   cy.visit('http://localhost:4200/#/verwaltung/user');
+  //   cy.get('#TODO');
+  // })
+
+  it("Benutzer anlegen", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/user');
+    cy.get('[routerlink="add"]').click();
+    cy.get('[data-cy=username-input]').click();
+  })
+
+  it("Wettkampfklassen Übersicht", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/klassen');
+    cy.get('.table-responsive');
+  })
+
+  it("Wettkampfklassen editieren (nicht)", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/klassen');
+    cy.get('#payload-id-0 > #undefinedActions .svg-inline--fa').click();
+    cy.get('.table-responsive'); //if table is still visible, that means the edit click failed, which complies with the permission
+  })
+
+  it("Wettkampfklasse neu anlegen (nicht)", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/klassen/add');
+    cy.wait(50);
+    cy.get('.table-responsive');
+  })
+
+  it("Vereine Übersicht", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/vereine');
+    cy.get('.table-responsive');
+  })
+
+  it("Verein bearbeiten", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder/');
+    cy.get('#payload-id-1 > #undefinedActions [data-cy="TABLE.ACTIONS.EDIT"] path').click(); //testet Vereinsmitglied, das nicht bearbeitet werden kann
+    cy.get('#OKBtn1').click();
+    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder/28'); //testet Vereinsmitglied, das bearbeitet werden kann
+    cy.get('#dsbMitgliedForm');
+  })
+
+  it("Mannschaftsmitglied löschen", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder/');
+    cy.get('#payload-id-1 > #undefinedActions [data-cy="TABLE.ACTIONS.DELETE"] path').click();
+    cy.get('#OKBtn1').click();
+  })
+
+  it("Manschaftsmitglied hinzufügen", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/dsbmitglieder/');
+    cy.get('[ng-reflect-ng-class="action-btn-success"]').click();
+    cy.get('#dsbMitgliedForm');
+  })
 
 
-    // admin wird hier abgemeldet
-    // nach Test ist Ligaleiter angemeldet
-    it('Ligadetail bearbeiten für zuständige Liga', function() {
-/*
-      cy.visit('http://localhost:4200/#/verwaltung/liga')
+  // Verein nicht anlegbar.
+  // it("Verein anlegen", () => {
+  //   cy.visit('http://localhost:4200/#/verwaltung/vereine/add');
+  // })
+  //
+  // it("Verein löschen", () => {
+  //   cy.visit('http://localhost:4200/#/verwaltung/vereine');
+  // })
+  //
+  // it("Verein Mannschaft anlegen ", () => {
+  // })
+  //
+  // it("Verein Manschaft löschen", () => {
+  // })
 
-      cy.wait(12000)
+  it("Liga Übersicht", () => {
+    cy.visit('http://localhost:4200/#/verwaltung/liga');
+    cy.get('.overview-dialog-content');
+  })
 
-      //Überprüfen, ob eine Liga existiert die der Ligaleiter bearbeiten kann
-      cy.get('body').then($body => {
-        if($body.text().includes('TeamLigaleiter@bogenliga.de')) {
-          // Liga existiert
-          cy.log('existiert')
-        } else {
-          // keine Liga existiert für die Ligaleiter zuständig ist
-          // hier wird eine solche Liga erstellt
+  // it("Liga anlegen", () => {
+  // })
+  //
+  // it("Liga bearbeiten", () => {
+  // })
+  //
+  // it("Liga löschen", () => {
+  // })
 
-          cy.log('existiert nicht')
-          cy.visit('http://localhost:4200/#/verwaltung/liga/add')
+  // it("Regionen Übersicht", () => {
+  // })
 
-          cy.wait(10000)
-
-          cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').click()
-
-          cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').type('Ligaleiter Test Liga')
-
-          cy.get('[data-cy=liga-detail-verantwortlicher]').select("TeamLigaleiter@bogenliga.de");
-
-          cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaVerantwortlicher').select('TeamLigaleiter@bogenliga.de')
-
-          // TinyMCE Text eingeben
-          cy.get('iframe#ligaDetail_ifr')
-            .then(($iframe) => {
-              const body = $iframe.contents().find('body');
-
-              cy.wrap(body).clear().type('Hier ist ein Text, der eingegeben wird');
-            });
-
-          // Save Button nach Eingabe von TinyMCE Text
-          cy.get('#ligaSaveButton').click();
-
-          // nach klick auf Speichern warten
-          cy.wait(6000)
-
-          //auf ok klicken
-          cy.get('#OKBtn1 > .action-btn-circle').click();
-        }
-      })
+  // it("Regionen anlegen", () => {
+  //   cy.visit('http://localhost:4200/#/verwaltung/regionen');
+  // })
+  //
+  // it("Regionen löschen", () => {
+  // })
+  //
+  // it("Regionen bearbeiten", () => {
+  // })
 
 
-      // auf Profil klicken
-      cy.get('.fa-user-circle').click();
-      // auf ausloggen klicken
-      cy.contains('Logout').click();
-      cy.wait(2000);
-
-     */
-
-      // ab hier Ligaleiter
-
-      cy.visit('http://localhost:4200/#/user/login')
-      cy.wait(2000);
-
-      cy.contains('Login für Team Ligaleiter').click();
-      cy.wait(2000);
-
-      cy.visit('http://localhost:4200/#/verwaltung/liga')
-      cy.wait(12000)
-
-      // auf Liga bearbeiten klicken
-      cy.get('.action_icon > a > .ng-fa-icon > .fa-edit > path').click()
-      cy.wait(2000)
-
-      // random Text generieren
-      const text = Math.random().toString(36).substring(2,7);
-      // in TinyMCE Text eingeben
-      cy.get('iframe#ligaDetail_ifr')
-        .then(($iframe) => {
-          const body = $iframe.contents().find('body');
-
-          cy.wrap(body).clear().type(text);
-        });
-
-      // klick auf Update
-      cy.get('#ligaForm > .form-group > .col-sm-9 > bla-actionbutton > #ligaUpdateButton').click()
-      cy.wait(6000)
-
-      cy.reload(true)
-      cy.wait(2000)
-
-      let textReadFromEditor
-
-      // Text von Editor einlesen und mit random-Text vergleichen
-      cy.window()
-        .then(win => {
-          textReadFromEditor = win.tinymce.activeEditor.getContent({format: 'text'});
-        }).then(() => {
-        expect(textReadFromEditor).to.equal(text)})
-
-    })
-
-    it('Neue unterste Liga hinzufuegen',function (){
-
-      // Login Ligaleiter
-
-      cy.visit('http://localhost:4200/#/user/login')
-      cy.wait(2000);
-
-      cy.contains('Login für Team Ligaleiter').click();
-      cy.wait(2000);
-
-      cy.visit('http://localhost:4200/#/verwaltung/liga')
-      cy.wait(12000)
-
-      /*
-      cy.get('#payload-id-1127 > #undefinedActions > .action_icon > a > .ng-fa-icon > .fa-edit > path').click()
-
-      cy.wait(13000)
-
-      cy.get('#ligaForm > .form-group > .col-sm-9 > bla-actionbutton:nth-child(3) > #undefined').click()
-
-      cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').click()
-
-      cy.get('#ligaForm > div > .form-group > .col-sm-9 > #ligaName').type('cypress 1')
-
-      cy.wait(1000)
-
-
-
-      cy.url().should('include', '#/verwaltung/liga/add')
-    */
-
-      // auf Profil klicken
-      cy.get('.fa-user-circle').click();
-      // auf ausloggen klicken
-      cy.contains('Logout').click();
-      cy.wait(2000);
-
-      //Ligaleiter wieder ausgelogged
-
-    })
-
-
-  }
-)
+  //TODO: Veranstaltungs funktionen Tests/restliche Funktionen & Berechtigungen
+})

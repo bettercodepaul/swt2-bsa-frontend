@@ -239,3 +239,16 @@ Cypress.Commands.add('loginAusrichter', () => {
   })
 });
 
+Cypress.Commands.add('LoginLigaleiter', () => {
+
+  cy.visit('http://localhost:4200/#/home');
+
+  cy.get('[id=navbar]').then(($element) => {
+    if($element.find('[data-cy=login-button]').length > 0){
+      cy.get('[data-cy=login-button]').click();
+      cy.get('#loginEmail').type('TeamLigaleiter@bogenliga.de');
+      cy.get('#loginPassword').type('swt2');
+      cy.get('[id=loginButton]').click();
+    }
+  })
+});
