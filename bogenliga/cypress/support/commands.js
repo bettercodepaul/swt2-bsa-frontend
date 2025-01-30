@@ -243,6 +243,15 @@ Cypress.Commands.add('LoginLigaleiter', () => {
 
   cy.visit('http://localhost:4200/#/home');
 
+  // Prüft, ob das "Sitzung Abgelaufen" popup getriggered wurde
+  cy.document().then((doc) => {
+    const elementContainsText = Cypress.$(doc.body).find(':contains("Sitzung Abgelaufen")').length > 0;
+
+    if (elementContainsText) {
+      cy.get('#OkBtn1').click();
+    }
+  });
+
   cy.get('[id=navbar]').then(($element) => {
     if($element.find('[data-cy=login-button]').length > 0){
       cy.get('[data-cy=login-button]').click();
