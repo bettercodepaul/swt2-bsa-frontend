@@ -1,7 +1,9 @@
+//alt
 function generateID() {
   return Math.floor(100000 + Math.random() * 900000);
 }
 
+//alt
 function generateLigaID() {
   //generates a number between 1 and the amount of ligas that exist
   //this is an example if only 19 liga exist
@@ -18,11 +20,6 @@ describe('Ligaleiter User Tests', function() {
     cy.visit('http://localhost:4200/#/verwaltung/user');
     cy.get('#payload-id-1');
   })
-
-  // it("Ausrichter und Sportleiter Benutzer Pflegen", () => {
-  //   cy.visit('http://localhost:4200/#/verwaltung/user');
-  //   cy.get('#TODO');
-  // })
 
   it("Benutzer anlegen", () => {
     cy.visit('http://localhost:4200/#/verwaltung/user');
